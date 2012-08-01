@@ -1,0 +1,64 @@
+/**
+ * @version: $Id: search.css 1655 2011-07-16 11:16:19Z Sigrid Suski $
+ * @package: SobiPro Library
+ * ===================================================
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: http://www.Sigsiu.NET
+ * ===================================================
+ * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
+ * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * ===================================================
+ * $Date: 2011-07-16 13:16:19 +0200 (Sat, 16 Jul 2011) $
+ * $Revision: 1655 $
+ * $Author: Sigrid Suski $
+ * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/usr/templates/default/css/search.css $
+ */
+
+div#SPSearchForm {
+	margin: 2px;
+	padding: 5px;
+}
+#SPSearchForm input,
+#SPSearchForm textarea,
+#SPSearchForm select,
+#SPSearchForm button {
+	border: 1px solid #ccc;
+	padding: 3px;
+}
+
+#SPSearchForm input[type=checkbox],
+#SPSearchForm input[type=radio]  {
+	border-style:none;
+}
+
+input.SPSearchBox {
+	float: left;
+	margin-right: 5px;
+}
+
+input#top_button {
+	float: left;
+	margin-right: 5px;
+}
+
+div.SPSearchCell {
+	margin-top: 5px;
+}
+
+div.SPSearchLabel {
+	width: 150px;
+	float:left;
+}
+
+div.SPSearchSelectRangeFrom,
+div.SPSearchSelectRangeTo {
+	min-width: 220px;
+	float:left;
+}
+
+div.SPSearchField {
+	float: left;
+}

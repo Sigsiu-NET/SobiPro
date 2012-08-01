@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://xml.sigsiu.net/SobiPro/template.xsd">
+	<name>Default SobiPro Template</name>
+	<id>default_template</id>
+	<authorName>Sigrid Suski and Radek Suski</authorName>
+	<authorEmail>sobi[at]sigsiu.net</authorEmail>
+	<authorUrl>http://www.Sigsiu.NET</authorUrl>
+	<copyright>Copyright (C) 2009-2010 Sigsiu.NET</copyright>
+	<license>GNU General Public License</license>
+	<creationDate>2010-01-01</creationDate>
+	<version>1.0</version>
+	<description>
+		Default SobiPro Template
+	</description>
+	<files>
+		<file path="category/view.xsl">
+			Default category view template inclusive top menu, navigation, entries and categories.
+		</file>
+		<file path="common/alphamenu.xsl">
+			Template for the alpha menu.
+		</file>
+		<file path="common/catchooser.xsl">
+			Sub-Template for the category chooser for the edit entry form.
+		</file>
+		<file path="common/category.xsl">
+			Template for a single category in the categories list.
+		</file>
+		<file path="common/entries.xsl">			
+			Template to display the block with all entries (entriesLoop) within a category or the search function. Build the structure of all entries and calls the "vcard" template while displaying single entry.
+		</file>				
+		<file path="common/manage.xsl">
+			Display the managing functions like edit entry, approve aso, within an entry.
+		</file>				
+		<file path="common/navigation.xsl">
+			Template for the site navigation.
+		</file>				
+		<file path="common/topmenu.xsl">
+			Template for the top menu.
+		</file>				
+		<file path="common/vcard.xsl">
+			Template to display single entry within a category or the search function.
+		</file>				
+		<file path="css/default.css">
+			Default CSS file.
+		</file>
+		<file path="css/edit.css">
+			CSS file with extra styles for the add antry or edit entry page.
+		</file>
+		<file path="css/search.css">
+			CSS file with extra styles for the search function.
+		</file>
+		<file path="entry/details.xsl">
+			Template for the entry details view page.
+		</file>
+		<file path="entry/edit.xsl">
+			Template for the add entry or edit entry page.
+		</file>
+		<file path="feeds/rss.xsl">
+			Template for Atom/RSS feeds.
+		</file>		
+		<file path="js/edit.js">
+			JavaScript functions for the edit entry page.
+		</file>
+		<file path="js/osx.js">
+			SimpleModal OSX Style Modal Dialog.
+		</file>
+		<file path="js/search.js">
+			JavaScript functions for the search page.
+		</file>		
+		<file path="listing/alpha.xsl">
+			Alpha-Listing template.
+		</file>
+		<file path="payment/payment.xsl">
+			View of the payment after an entry has been added.
+		</file>
+		<file path="payment/submit.xsl">
+			Template for the preview of the payment.
+		</file>
+		<file path="search/view.xsl">
+			Template for the search function.
+		</file>
+		<file path="section/view.xsl">
+			Template for the section main view.
+		</file>
+		<file path="template.php">
+			PHP file with additional functions to use within templates.
+		</file>
+	</files>
+</template>
