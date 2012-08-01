@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repository>
+    <name>SobiPro Repository</name>
+    <id>sobipro_core</id>
+    <url>https://repository.sobi-pro.eu/repository.php</url>
+    <token></token>
+    <certificate>
+        <serialnumber>55653</serialnumber>
+        <validfrom>1339368489</validfrom>
+        <validto>1402600781</validto>
+        <subject>
+            <description>2gytUQxjnL36An1d</description>
+            <c>DE</c>
+            <st>Hessen</st>
+            <l>Schaafheim</l>
+            <o>Sigsiu.NET GmbH</o>
+            <cn>*.sobi-pro.eu</cn>
+            <emailaddress>postmaster@sobi-pro.eu</emailaddress>
+        </subject>
+        <issuer>
+            <c>IL</c>
+            <o>StartCom Ltd.</o>
+            <ou>Secure Digital Certificate Signing</ou>
+            <cn>StartCom Class 2 Primary Intermediate Server CA</cn>
+        </issuer>
+        <hash>23b631e2</hash>
+    </certificate>
+    <description>
+        SobiPro Repository at https://repository.sobi-pro.eu
+    </description>
+    <maintainer>
+        <name>Sigsiu.NET GmbH</name>
+        <email>sobi[at]sigsiu.net</email>
+        <url>http://www.sigsiu.net/</url>
+        <supporturl>https://forum.sigsiu.net/</supporturl>
+    </maintainer>
+</repository>

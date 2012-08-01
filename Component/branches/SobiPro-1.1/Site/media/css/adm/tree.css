@@ -1,0 +1,71 @@
+/**
+ * @version: $Id: tree.css 717 2011-02-02 19:49:02Z Radek Suski $
+ * @package: SobiPro Library
+ * ===================================================
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: http://www.Sigsiu.NET
+ * ===================================================
+ * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
+ * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * ===================================================
+ * $Date: 2011-02-02 20:49:02 +0100 (Wed, 02 Feb 2011) $
+ * $Revision: 717 $
+ * $Author: Radek Suski $
+ * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/media/css/adm/tree.css $
+ */ /* Styles for SigsiuTree */
+	/* -------------------------------------------------------- */
+.sigsiuTree {
+	font-family: Arial, Verdana, Geneva, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #666;
+	white-space: nowrap;
+	overflow: auto;
+}
+
+.sigsiuTree img {
+	border: 0px;
+	vertical-align: middle;
+	float: none;
+	margin: 0;	
+}
+
+.sigsiuTree a {
+	color: #333;
+	text-decoration: none;
+	font-weight: normal;
+}
+
+.sigsiuTree a.node,.sigsiuTree a.nodeSel {
+	white-space: nowrap;
+	padding: 1px 2px 1px 2px;
+}
+
+.sigsiuTree a.node:hover,.sigsiuTree a.nodeSel:hover {
+	color: #333333;
+	text-decoration: underline;
+}
+
+.sigsiuTree a.nodeSel {
+	background-color: #c0d2ec;
+}
+
+.sigsiuTree .clip {
+	overflow: hidden;
+}
+
+div.sigsiuTree a,.sigsiuTree a,a.treeNode:hover,a.treeNode,a.treeNode:visited
+	{
+	color: #333333 !important;
+	text-decoration: none !important;
+	font-weight: normal !important;
+}
+
+a.treeNode:active,a.treeNode:focus {
+	color: #333333;
+	text-decoration: none;
+	font-weight: normal;
+	background-color: #c0d2ec;
+}

@@ -1,0 +1,299 @@
+/**
+ * @version: $Id: default.css 551 2011-01-11 14:34:26Z Radek Suski $
+ * @package: SobiPro Library
+ * ===================================================
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: http://www.Sigsiu.NET
+ * ===================================================
+ * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
+ * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * ===================================================
+ * $Date: 2011-01-11 15:34:26 +0100 (Tue, 11 Jan 2011) $
+ * $Revision: 551 $
+ * $Author: Radek Suski $
+ * File location: components/com_sobipro/usr/templates/vehicles/css/default.css $
+ */
+
+#SobiPro {
+	text-align: left;
+}
+span.spEntriesListEditLink a,
+span.spEntryEditLink a {
+  display:block;
+  float: right;
+  width: 80px;
+  border-style:solid;
+  text-align: center;
+  padding: 4px;
+  font-size: 12px;  
+  border: 1px solid silver;
+}
+
+span.spEntryEditLink a:active,
+span.spEntryEditLink a:focus,
+span.spEntryEditLink a:hover,
+span.spEntryEditLink a,
+span.spEntriesListEditLink a:active,
+span.spEntriesListEditLink a:focus,
+span.spEntriesListEditLink a:hover,
+span.spEntriesListEditLink a {
+  text-decoration: none!important;
+  background-color: none!important;
+}
+
+div.sigsiuTree {
+	text-align: left!important;
+}
+
+div.SobiPro {
+  width: 95%;
+  float:left;
+}
+div.spCatListCell {
+  margin-width: 1px;
+  padding: 5px;
+  float: left;
+  margin: 2px;
+}
+
+img.spFieldsData {
+  margin: 5px;
+}
+
+div.spField strong {
+  min-width: 120px;
+  display:block;
+  float: left;
+}
+
+select.spAlphaMenuSwitch {
+	border: 1px solid #ccc
+}
+
+div.spEntriesListContainer {
+  height: 100%;
+}
+
+div.spEntriesListCell {
+  margin: 1px;
+  padding: 10px;
+  margin-top: 2px;
+    border: solid #FFFFFF;
+  border-width: 5px 0px 0px 0px;
+  float: left;
+  margin: 0px;
+  position: relative;
+  background-color: #FBFBFB;
+  margin-left: 3px;
+}
+
+div.spEntriesListTitle {
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  display: block;
+  font-weight: bold;
+  font-family: Arial,Helvetica,sans-serif;
+  border: solid #CCCCCC;
+  padding-bottom: 8px;
+  padding-left: 3px;
+  border-width: 0px 0px 1px 0px;
+}
+
+div.spEntriesListRow {
+  clear:both;
+  margin-top: 1px;
+}
+
+div.spEntryCats {
+  font-size: 10px;
+  overflow: hidden;
+  height: 20px;
+  margin-top: 5px;
+}
+
+div.spSectionDesc {
+  padding: 5px;
+}
+
+/**
+ * Style of the submenu toolbar from khepri admin template
+ * Author: Andy Miller
+ */
+ 
+div.spTopMenu {
+  background:none repeat scroll 0 0 #F6F6F6;
+  margin-bottom:10px;
+}
+
+div.SPt, div.SPb {
+  height:6px;
+  margin:0;
+  overflow:hidden;
+  padding:0;
+}
+
+div.SPm {
+  border-left:1px solid #CCCCCC;
+  border-right:1px solid #CCCCCC;
+  padding:0 8px;
+}
+
+ul.spTopMenu {
+	list-style:none outside none;
+	margin:0!important;
+	padding:0;
+}
+
+ul.spTopMenu li a:link,
+ul.spTopMenu li a:visited,
+ul.spTopMenu li a:hover,
+ul.spTopMenu li a:focus,
+ul.spTopMenu li a:active {
+	text-decoration: none;
+	font-weight: normal;
+	background:#F6F6F6;
+}
+
+ul.spTopMenu li {
+	float:left;
+	padding:0;
+	font-size: 12px;
+	border-right:1px solid #CCCCCC;
+	color:#0B55C4;
+	font-weight:bold;
+	height:12px;
+	line-height:12px;
+	padding:0 15px!important;
+	list-style-type: none;
+	line-height: 12px!important;
+    background-image: none; /*because often defined :-(*/
+}
+
+div.spTopMenu div.SPb {
+  background:url("../../../../../../media/sobipro/styles/j_border.png") repeat-x scroll 0 100% transparent;
+}
+
+div.spTopMenu div.SPb div.SPb {
+  background:url("../../../../../../media/sobipro/styles/j_crn_br_dark.png") no-repeat scroll 100% 0 transparent;
+}
+
+div.spTopMenu div.SPb div.SPb div.SPb {
+  background:url("../../../../../../media/sobipro/styles/j_crn_bl_dark.png") no-repeat scroll 0 0 transparent;
+}
+
+div.spTopMenu div.SPt {
+  background:url("../../../../../../media/sobipro/styles/j_border.png") repeat-x scroll 0 0 transparent;
+}
+
+div.spTopMenu div.SPt div.SPt {
+  background:url("../../../../../../media/sobipro/styles/j_crn_tr_dark.png") no-repeat scroll 100% 0 transparent;
+}
+
+div.spTopMenu div.SPt div.SPt div.SPt {
+  background:url("../../../../../../media/sobipro/styles/j_crn_tl_dark.png") no-repeat scroll 0 0 transparent;
+}
+
+/**
+ * ^^^ Style of the submenu toolbar from khepri admin template
+ */
+
+span.spCatListSubCats {
+  font-size: 10px;
+}
+
+div.spCatsListTitle {
+  padding-top: 2px;
+}
+
+div.spCatsListTitle a {
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+div.spCatsListIntrotext {
+  
+}
+
+div.spCatListIcon {  
+  margin-left: 10px;
+}
+
+div.spPaymentHeader {
+  margin: 1px;
+  background-color: #EEEEEE;
+  float: left;
+  padding: 2px;
+  padding-left: 5px;
+}
+
+div.spPaymentPosition {
+  margin: 1px;
+  background-color: #f7f7f7;
+  float: left;
+  padding: 2px;
+  padding-left: 5px;
+}
+div.spPaymentExpl {
+  font-size: 15px;
+  font-weight: bold;
+  font-family: Arial,Helvetica,sans-serif;
+  margin: 3px;
+}
+div.spPaymentDiscount,
+div.spPaymentSum {
+  font-weight: bold;
+  font-family: Arial,Helvetica,sans-serif;
+  margin: 3px;
+}
+
+div.spPaymentSumPosition {
+  margin: 1px;
+  background-color: #f7f7f7;
+  float: left;
+  padding: 2px;
+  padding-left: 5px;
+}
+div.spPaymentSumDesc {
+  margin: 1px;
+  background-color: #EEEEEE;
+  float: left;
+  padding: 2px;
+  padding-left: 5px;
+}
+
+div.spPaymentPreview button {
+  margin: 5px;
+}
+
+a.spDisabled:hover {
+  text-decoration: none;
+}
+
+div.spAlphaMenu {
+  width:100%;
+  text-align:center!important;
+}
+
+div.spAlphaMenu span {
+  font-weight: normal;
+  font-size: 14px;
+  color: #868686;
+}
+div.spAlphaMenu a {
+  font-weight: bold;
+  text-decoration: none!important;
+}
+
+span.spAlphaLetterSelected  a {
+  color: #551A8B;
+  font-size: 16px;
+  font-style: cursive;
+}
+
+div.spCatListContainer {
+  margin-left: 35px;
+}

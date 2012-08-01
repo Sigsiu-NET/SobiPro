@@ -1,0 +1,510 @@
+<?php
+/**
+ * @version: $Id: tree.php 2076 2011-12-15 18:04:51Z Radek Suski $
+ * @package: SobiPro Library
+ * ===================================================
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: http://www.Sigsiu.NET
+ * ===================================================
+ * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
+ * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * ===================================================
+ * $Date: 2011-12-15 19:04:51 +0100 (Thu, 15 Dec 2011) $
+ * $Revision: 2076 $
+ * $Author: Radek Suski $
+ * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/mlo/tree.php $
+ */
+
+defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
+/**
+ * @author Radek Suski
+ * @version 1.0
+ * @created 10-Jan-2009 5:08:52 PM
+ */
+final class SigsiuTree extends SPObject
+{
+    /**
+     * array with all needed images
+     *
+     * @var array
+     */
+    private $_images = array(
+        'root' => 'base.gif',
+        'join' => 'join.gif',
+        'joinBottom' => 'joinbottom.gif',
+        'plus' => 'plus.gif',
+        'plusBottom' => 'plusbottom.gif',
+        'minus' => 'minus.gif',
+        'minusBottom' => 'minusbottom.gif',
+        'folder' => 'folder.gif',
+        'disabled' => 'disabled.gif',
+        'folderOpen' => 'folderopen.gif',
+        'line' => 'line.gif',
+        'empty' => 'empty.gif'
+    );
+    /**
+     * @var string
+     */
+    private $tree = null;
+    /**
+     * @var string
+     */
+    private $_task = 'tree.node';
+    /**
+     * @var string
+     */
+    private $_url = null;
+    /**
+     * @var string
+     */
+    private $_tag = 'div';
+    /**
+     * @var string
+     */
+    private $_id = 'sobiCats';
+    /**
+     * @var string
+     */
+    private $_ordering = 'position';
+    /**
+     * @var int
+     */
+    private $_sid = 0;
+    /**
+     * @var int
+     */
+    private $_pid = 0;
+    /**
+     * @var int
+     */
+    private $_disabled = array();
+
+    /**
+     * Set category, or set of categories id which should not be selectable in the tree
+     * @param int $cid
+     */
+    public function disable( $cid )
+    {
+        if ( is_array( $cid ) ) {
+            $this->_disabled = array_merge( $this->_disabled, $cid );
+        }
+        else {
+            $this->_disabled[ ] = $cid;
+        }
+    }
+
+    /**
+     * Return created Tree
+     * @return string
+     */
+    public function getTree()
+    {
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$this->tree ) );
+        return $this->tree;
+    }
+
+    /**
+     * @return string
+     */
+    public function display( $return = false )
+    {
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$this->tree ) );
+        if ( $return ) {
+            return $this->tree;
+        }
+        else {
+            echo $this->tree;
+        }
+    }
+
+    /**
+     * @param string $_id
+     */
+    public function setId( $id )
+    {
+        $this->_id = $id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setPid( $id )
+    {
+        $this->_pid = $id;
+    }
+
+    /**
+     * @param array $_images
+     */
+    public function setImages( $images )
+    {
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$images ) );
+        if ( $images && is_array( $images ) ) {
+            foreach ( $images as $img => $loc ) {
+                if ( file_exists( SOBI_ROOT . DS . $loc ) ) {
+                    $this->_images[ $img ] = $loc;
+                }
+            }
+            foreach ( $this->_images as $img => $loc ) {
+                $this->_images[ $img ] = Sobi::FixPath( Sobi::Cfg( 'tree_images', Sobi::Cfg( 'images_folder_live' ) . 'tree/' . $loc ) );
+            }
+        }
+    }
+
+    /**
+     * @param string $_tag
+     */
+    public function setTag( $_tag )
+    {
+        $this->_tag = $_tag;
+    }
+
+    /**
+     * @param string $_task
+     */
+    public function setTask( $_task )
+    {
+        $this->_task = $_task;
+    }
+
+    /**
+     * @param string $_url
+     */
+    public function setHref( $href )
+    {
+        $this->_url = $href;
+    }
+
+    /**
+     * constructor
+     * @param array $images
+     * @return SigsiuTree
+     */
+    public function __construct( $ordering = 'position' )
+    {
+        $this->_ordering = $ordering;
+        foreach ( $this->_images as $img => $loc ) {
+            $this->_images[ $img ] = Sobi::FixPath( Sobi::Cfg( 'tree_images', Sobi::Cfg( 'img_folder_live' ) . '/tree/' . $loc ) );
+        }
+    }
+
+    /**
+     * init tree
+     * @param int $sid - sobi id / section id
+     * @param int $current - actually displayed category
+     * @return string $tree
+     */
+    public function init( $sid, $current = 0 )
+    {
+        $head =& SPFactory::header();
+        if ( defined( 'SOBIPRO_ADM' ) ) {
+            $head->addCssFile( 'tree', true );
+        }
+        else {
+            if ( Sobi::Reg( 'current_template_path', null ) && SPFs::exists( Sobi::Reg( 'current_template_path' ) . 'css' . DS . 'tree.css' ) ) {
+                $head->addCssFile( 'absolute.' . Sobi::Reg( 'current_template_path' ) . 'css' . DS . 'tree.css' );
+            }
+            else {
+                $head->addCssFile( 'tree' );
+            }
+        }
+        $tree = null;
+        $matrix = null;
+        $this->_sid = $sid;
+        if ( $current ) {
+            $this->startScript( $current );
+        }
+
+        $section = $this->getSection( $sid );
+        $sectionLink = $this->parseLink( $section );
+        $sectionName = $section->get( 'name' );
+
+        $childs = array();
+        $childs = $this->getChilds( $sid );
+        //		if( count( $cats ) ) {
+        //			foreach ( $cats as $i => $cat ) {
+        //				$childs[ $cat->get( 'name' ).$i ] = $cat;
+        //			}
+        //		}
+        //		ksort( $childs );
+        $countNodes = count( $childs, 0 );
+        $lastNode = 0;
+
+        $tree .= "\n\t<{$this->_tag} class=\"sigsiuTree {$this->_id}SigsiuTree\">";
+        $tree .= "\n\t\t<{$this->_tag} class=\"sigsiuTreeNode\" id=\"{$this->_id}stNode0\">";
+        if ( !( in_array( $sid, $this->_disabled ) ) ) {
+            $tree .= "<a href=\"{$sectionLink}\" id=\"{$this->_id}_imgFolderUrl0\"><img id=\"{$this->_id}0\" src=\"{$this->_images['root']}\" alt=\"{$sectionName}\"/></a>";
+        }
+        else {
+            $tree .= "<img id=\"{$this->_id}0\" src=\"{$this->_images['root']}\" alt=\"{$sectionName}\"/>";
+        }
+        if ( !( in_array( $sid, $this->_disabled ) ) ) {
+            $tree .= "<a href=\"{$sectionLink}\" class = \"treeNode\" id=\"{$this->_id}_CatUrl0\">{$sectionName}</a>";
+        }
+        else {
+            $tree .= $sectionName;
+        }
+        $tree .= "</{$this->_tag}>";
+        $tree .= "\n\t\t<{$this->_tag} id=\"{$this->_id}\" class=\"clip\" style=\"display: block;\">";
+
+        if ( count( $childs ) ) {
+            foreach ( $childs as $cat ) {
+                $countNodes--;
+                // clean string produces htmlents and these are invalid in XML
+                $catName = /*$this->cleanString*/
+                        ( $cat->get( 'name' ) );
+                $hasChilds = count( $cat->getChilds( 'category' ) );
+                $cid = $cat->get( 'id' );
+                $url = $this->parseLink( $cat );
+                $disabled = ( in_array( $cid, $this->_disabled ) ) ? true : false;
+
+                $tree .= "\n\t\t\t<{$this->_tag} class=\"sigsiuTreeNode\" id=\"{$this->_id}stNode{$cid}\">";
+
+                if ( $hasChilds ) {
+                    if ( $countNodes == 0 && !$disabled ) {
+                        $lastNode = $cid;
+                        $tree .= "\n\t\t\t\t\t<a href=\"javascript:{$this->_id}_stmExpand( {$cid}, 0, {$this->_pid} );\" id=\"{$this->_id}_imgUrlExpand{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'plusBottom' ]}\" id=\"{$this->_id}_imgExpand{$cid}\"  style=\"border-style:none;\" alt=\"expand\"/>\n\t\t\t\t\t</a>";
+                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plusBottom' );";
+                    }
+                    elseif ( !$disabled ) {
+                        $tree .= "\n\t\t\t\t\t<a href=\"javascript:{$this->_id}_stmExpand( {$cid}, 0, {$this->_pid} );\" id=\"{$this->_id}_imgUrlExpand{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'plus' ]}\" id=\"{$this->_id}_imgExpand{$cid}\"  style=\"border-style:none;\" alt=\"expand\"/>\n\t\t\t\t\t</a>";
+                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plus' );";
+                    }
+                    else {
+                        $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'join' ]}\" id=\"{$this->_id}_imgExpand{$cid}\" style=\"border-style:none;\" alt=\"expand\"/>";
+                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plus' );";
+                    }
+                }
+                else {
+                    if ( $countNodes == 0 && !$disabled ) {
+                        $lastNode = $cid;
+                        $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'joinBottom' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgJoin{$cid}\" alt=\"\"/>";
+                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'join' );";
+                    }
+                    elseif ( !$disabled ) {
+                        $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'join' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgJoin{$cid}\" alt=\"\"/>";
+                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'joinBottom' );";
+                    }
+                    else {
+                        $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'joinBottom' ]}\" id=\"{$this->_id}_imgExpand{$cid}\" style=\"border-style:none;\" alt=\"expand\"/>";
+                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plus' );";
+                    }
+
+                }
+                if ( !$disabled ) {
+                    $tree .= "\n\t\t\t\t\t<a href=\"{$url}\" id=\"{$this->_id}_imgFolderUrl{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'folder' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>\n\t\t\t\t\t</a>\n\t\t\t\t\t<a href=\"{$url}\" class = \"treeNode\" id=\"{$this->_id}_CatUrl{$cid}\">\n\t\t\t\t\t\t{$catName}\n\t\t\t\t\t</a>";
+                }
+                else {
+                    $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'disabled' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>\n\t\t\t\t\t{$catName}\n\t\t\t\t\t</a>";
+                }
+
+                $tree .= "\n\t\t\t</{$this->_tag}>";
+                if ( $hasChilds && !$disabled ) {
+                    $tree .= "\n\t\t\t<{$this->_tag} id=\"{$this->_id}_childsContainer{$cid}\" class=\"clip\" style=\"display: block; display:none;\"></{$this->_tag}>";
+                }
+            }
+        }
+        $tree .= "\n\t\t</{$this->_tag}>";
+        $tree .= "\n\t</{$this->_tag}>\n\n";
+        $this->createScript( $lastNode, $childs, $matrix, $head );
+        $this->tree = $tree;
+    }
+
+    /**
+     * returning information about subcats in XML format
+     *
+     * @param int $sid
+     */
+    public function extend( $sid )
+    {
+        $childs = array();
+        $childs = $this->getChilds( $sid );
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$childs ) );
+        SPFactory::mainframe()->cleanBuffer();
+        header( 'Content-type: application/xml' );
+        echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+        echo "\n<root>";
+        if ( count( $childs ) ) {
+            foreach ( $childs as $cat ) {
+                $catName = $this->cleanString( $cat->get( 'name' ) );
+                $hasChilds = count( $cat->getChilds( 'category' ) );
+                $cid = $cat->get( 'id' );
+                $pid = $cat->get( 'parent' );
+                $url = preg_replace( '/&(?![#]?[a-z0-9]+;)/i', '&amp;', $this->parseLink( $cat ) );
+                $disabled = ( in_array( $cid, $this->_disabled ) ) ? true : false;
+                if ( $disabled ) {
+                    continue;
+                }
+                echo "\n\t <category>";
+                echo "\n\t\t <catid>{$cid}</catid>";
+                echo "\n\t\t <name>{$catName}</name>";
+                echo "\n\t\t <introtext>.</introtext>";
+                echo "\n\t\t <parentid>{$pid}</parentid>";
+                echo "\n\t\t <childs>{$hasChilds}</childs>";
+                echo "\n\t\t <url>{$url}</url>";
+                echo "\n\t </category>";
+            }
+        }
+        echo "\n</root>";
+        /* we don't need any others information so we can go out */
+        exit();
+    }
+
+    private function startScript( $current )
+    {
+        $path = SPFactory::config()->getParentPath( $current );
+
+        if ( !( $this->getChilds( $path[ count( $path ) - 1 ] ) ) ) {
+            unset( $path[ count( $path ) - 1 ] );
+        }
+        unset( $path[ 0 ] );
+        $func = $this->_id . '_stmExpand';
+        $script = null;
+        if ( count( $path ) ) {
+            foreach ( $path as $i => $cid ) {
+                $retard = $i * 150;
+                $script .= "\t\twindow.setTimeout( '{$func}( {$cid}, {$i}, 0 )', {$retard} );\n";
+            }
+            SPFactory::header()->addJsCode( "\tSobiPro.onReady( function () { \n{$script}\n \t} );" );
+        }
+    }
+
+    /**
+     */
+    private function createScript( $lastNode, $childs, $matrix, $head )
+    {
+        $params = array();
+        $params[ 'ID' ] = $this->_id;
+        $params[ 'LAST_NODE' ] = ( string )$lastNode;
+        $params[ 'IMAGES_ARR' ] = null;
+        $params[ 'IMAGES_MATRIX' ] = $matrix;
+        foreach ( $this->_images as $img => $loc ) {
+            $params[ 'IMAGES_ARR' ] .= "\n{$this->_id}_stmImgs[ '{$img}' ] = '{$loc}';";
+        }
+        $params[ 'URL' ] = Sobi::Url(
+            array(
+                'task' => $this->_task,
+                'sid' => $this->_sid,
+                'out' => 'xml',
+                'expand' => '__JS__',
+                'pid' => '__JS2__'
+            ),
+            true, false
+        );
+        $params[ 'URL' ] = str_replace( '__JS__', '" + ' . $this->_id . '_stmcid + "', $params[ 'URL' ] );
+        $params[ 'URL' ] = str_replace( '__JS2__', '" + ' . $this->_id . '_stmPid + "', $params[ 'URL' ] );
+        $params[ 'FAIL_MSG' ] = Sobi::Txt( 'AJAX_FAIL' );
+        $params[ 'TAG' ] = $this->_tag;
+        $params[ 'SPINNER' ] = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ) . '/styles/spinner.gif' );
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$params ) );
+        $head->addJsVarFile( 'tree', md5( count( $childs, COUNT_RECURSIVE ) . $this->_id . $this->_sid . $this->_task . serialize( $params ) ), $params );
+    }
+
+    /**
+     * @param int $sid
+     * @return SPSection
+     */
+    private function getChilds( $sid, $count = false )
+    {
+        $childs = array();
+        /* @var SPdb $db */
+        try {
+            $ids = SPFactory::db()
+                    ->select( 'id', 'spdb_relations', array( 'pid' => $sid, 'oType' => 'category' ) )
+                    ->loadResultArray();
+        }
+        catch ( SPException $x ) {
+            Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_CHILDS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+        }
+        if ( $count ) {
+            return count( $ids );
+        }
+        if ( count( $ids ) ) {
+            foreach ( $ids as $id ) {
+                $child = SPFactory::Category( $id );
+                if ( $child->get( 'state' ) || defined( 'SOBIPRO_ADM' ) ) {
+                    $childs[ ] = $child;
+                }
+            }
+        }
+        uasort( $childs, array( $this, 'sortChilds' ) );
+        return $childs;
+    }
+
+    public function sortChilds( $from, $to )
+    {
+        switch ( $this->_ordering ) {
+            case 'name':
+            case 'name.asc':
+            case 'name.desc':
+                $r = strcmp( $from->get( 'name' ), $to->get( 'name' ) );
+                if ( $this->_ordering == 'name.desc' ) {
+                    $r = $r * -1;
+                }
+                break;
+            default:
+            case 'order':
+            case 'order.asc':
+            case 'order.desc':
+                $r = ( $from->get( 'position' ) > $to->get( 'position' ) ) ? 1 : -1;
+                if ( $this->_ordering == 'order.desc' ) {
+                    $r = $r * -1;
+                }
+                break;
+        }
+        return $r;
+    }
+
+    /**
+     * @param int $sid
+     * @return SPSection
+     */
+    private function getSection( $sid )
+    {
+        SPLoader::loadModel( 'section' );
+        $section = new SPSection();
+        $section->init( $sid );
+        return $section;
+    }
+
+    /**
+     * parse link (replace placeholders)
+     * @param SPObject $cat
+     * @return string
+     */
+    private function parseLink( $cat )
+    {
+        static $placeHolders = array(
+            '{sid}',
+            '{name}',
+            '{introtext}',
+        );
+        $replacement = array(
+            $cat->get( 'id' ),
+            $cat->get( 'name' ),
+            $cat->get( 'introtext' ),
+        );
+        $link = str_replace( $placeHolders, $replacement, $this->_url );
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$link ) );
+        return $link;
+    }
+
+    /**
+     * cleaning string for javascript
+     *
+     * @param string $string
+     * @return string
+     */
+    private function cleanString( $string )
+    {
+        $string = htmlspecialchars( $string, ENT_COMPAT, 'UTF-8' );
+        $string = str_replace( '&amp;', '&#38;', $string );
+        return $string;
+    }
+}
+
+?>

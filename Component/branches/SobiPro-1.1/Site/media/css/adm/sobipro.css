@@ -1,0 +1,444 @@
+/**
+ * @version: $Id: sobipro.css 2006 2011-11-23 15:34:46Z Radek Suski $
+ * @package: SobiPro Library
+ * ===================================================
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: http://www.Sigsiu.NET
+ * ===================================================
+ * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
+ * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * ===================================================
+ * $Date: 2011-11-23 16:34:46 +0100 (Wed, 23 Nov 2011) $
+ * $Revision: 2006 $
+ * $Author: Radek Suski $
+ * File location: components/com_sobipro/media/css/adm/sobipro.css $
+ */
+  
+div.SPFListAlias {
+	font-size: 0.9em !important;
+}
+
+input, textarea, select, button {
+	border: 1px solid #ccc !important;
+    font-size: 1.091em !important;
+}
+
+fieldset label {
+	clear:none !important;
+	float:none !important;
+}
+
+element.style {
+	float:none !important;
+	width:auto !important;
+}
+
+fieldset input, fieldset textarea, fieldset select, fieldset img, fieldset button {
+	float: none !important;
+	margin: 0 !important;
+}
+
+fieldset.adminform label {
+	width:auto !important;
+}
+fieldset.adminform {
+	margin: 0px!important;
+}
+
+fieldset label {
+    clear: none !important;
+    display:inline !important;
+    float: none !important;
+    margin:0 !important;
+}
+
+form#SPadmintable a.selected {
+	font-weight: bold;
+	font-style: italic;
+}
+
+td.key {
+	min-width: 100px;
+	padding: 8px;
+}
+table.admintable td.key {
+    text-align: right;
+    width: 140px;
+    padding: 4px;
+}
+
+div.width-70 {
+	width: 65%!important;
+	float:left;
+}
+
+div.width-30 {
+    float: left;
+    width: 30%;
+}
+
+div.SPCpTabs {
+	background: #f9f9f9;
+}
+div.SPCpTabs h4,
+div.SPCpTabNews h4 {
+	font-size: 14px;
+	margin-bottom: 8px;
+	margin-top: 4px;
+}
+div.SPCpTabs h1,
+div.SPCpTabNews h1 {
+	margin: 10px 0 5px 10px;
+	padding-bottom: 0px;
+	font-size: 15px;
+}
+div.SPCpTabs p,
+div.SPCpTabNews p {
+	margin: 0 0 4px 10px;
+}
+span.SPCPCurrentVer {
+	font-size: 14px;
+}
+
+div#SPVerUpd {
+	margin: 10px;
+}
+
+/*  hide Joomla! pagebreak and readmore buttons in editor area  */
+div.button2-left div.pagebreak,div.button2-left div.readmore {
+	display: none;
+}
+
+table.admintable tbody tr.row1 {
+	background: #f9f9f9;
+	background-color: #f9f9f9;
+	border-top: 1px solid #fff;
+}
+
+table.admintable tbody tr.row0:hover td,table.admintable tbody tr.row1:hover td
+	{
+	background-color: #ffd;
+}
+
+table.admintable tbody tr.row1 td {
+	background: #f9f9f9;
+	border-top: 1px solid #FFF;
+}
+
+table.adminlist {
+	background-color: #E7E7E7!important;
+}
+table.adminlist td {
+	padding: 0px!important;
+	padding-left: 4px!important;
+	height: 24px!important;
+}
+table.adminlist td a {
+	font-size: 1em!important;
+}
+#submenu a:hover, #submenu a.active, #submenu span.nolink.active {
+	background-color: #F4F4F4!important;
+}
+
+
+.sheader {
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 42px;
+	color: #0B55C4;
+	padding-left: 55px;
+	background-repeat: no-repeat;
+	margin-left: 10px;
+	min-height: 50px;
+}
+
+.spCfgNumberSelectList {
+	min-width: 50px;
+	text-align: center;
+}
+
+li.spOption, li.spOptionGroup, li.sspOption, li.spOptionHead, li.sspOptionHead {
+	padding: 4px 4px 4px 4px;
+	color: #fff;
+	list-style: none;
+	width: 490px;
+	height: 15px;
+	background-color: #f6f6f6;
+	font-weight: bold;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #e9e9e9;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #e9e9e9;
+	border-style: solid;
+	clear:both;
+}
+
+li.sspOption, li.sspOptionHead {
+	width: 533px;
+}
+
+li.spOption, li.spOptionGroup {
+	width: 580px!important;
+}
+
+div.SPhandle, div.sSPhandle {
+    background-image:
+        url(../../../../media/sobipro/16x16/option-move.png);
+	height: 16px;
+	width: 16px;
+	margin-right: 0px;
+	margin-left: 5px;
+	cursor: pointer;
+	float: left;
+}
+
+div.spOptionContent {
+	width: 530px;
+	float: left;
+	color: #666666;
+}
+
+div.sspOptionContent {
+	width: 475px;
+	float: left;
+}
+
+th.spConfigTableHeader {
+	text-align: left;
+	font-size: 13px;
+	padding: 15px 5px 0px 5px;
+	color: #0b55c4;
+	background-color: #ffffff;
+}
+
+li.spOptionGroup, div.spOptionContent {
+	width: 521px;
+}
+
+li.sspOption {
+	width: 521px;
+}
+
+div.SPOptDel {
+    background-image:
+        url(../../../../media/sobipro/16x16/option-delete.png);
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+	margin-left: 20px;
+	float: left;
+}
+
+li.sspOption div.SPOptDel {
+	margin-left: 5px;
+}
+
+div.spOptGroup {
+	margin-top:5px;
+	margin-bottom:2px;
+	float: left;
+	background-color: #CCCBCB;
+}
+
+div.spFieldUrlLabel, div.spFieldUrl {
+	margin: 3px; 
+}
+
+span.spFieldUrlProtocol {
+	font-weight: bold;
+	vertical-align: bottom;
+}
+
+div.spFieldEmailLabel label, 
+div.spFieldEmail label {	
+	display: block;
+	float: left;
+	min-width: 80px;
+}
+
+li.spOptionGroup {
+	/* background-color: #CCCBCB; */
+}
+
+.spClearFix {
+	clear: both;
+}
+
+.icon-48-SobiPro {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-sobipro.png);
+}
+
+.icon-48-SobiApplication {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-application.png);
+}
+
+.icon-48-SobiApplicationSection {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-application-section.png);
+}
+
+.icon-48-SobiTemplate {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-templates.png);
+}
+
+.icon-48-SobiTemplateSection {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-template-section.png);
+}
+
+.icon-48-SobiSection {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-section.png);
+}
+
+.icon-48-SobiSectionCfg {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-section-cfg.png);
+}
+
+.icon-48-SobiCategory {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-category.png);
+}
+
+.icon-48-SobiCatList {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-categories.png);
+}
+
+.icon-48-SobiFields {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-fieldsmanager.png);
+}
+
+.icon-48-SobiFieldList {
+	background-image:
+		url(../../../../media/sobipro/48x48/fields.png);
+}
+
+.icon-48-SobiConfig {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-configuration.png);
+}
+
+.icon-48-SobiEdit {
+	background-image:
+		url(../../../../media/sobipro/48x48/editor.png);
+}
+
+.icon-48-SobiFieldEdit {
+	background-image:
+		url(../../../../media/sobipro/48x48/edit-rename.png);
+}
+
+.icon-48-SobiEntries {
+	background-image:
+		url(../../../../media/sobipro/48x48/entries.png);
+}
+.icon-48-SobiUser {
+	background-image:
+		url(../../../../media/sobipro/48x48/sobipro-acl-edit.png);
+}
+.icon-48-SobiLevels {
+	background-image:
+		url(../../../../media/sobipro/48x48/sobipro-acl.png);
+}
+
+.icon-32-delete {
+	background-image: url(../../../../media/sobipro/32x32/delete.png)!important; 
+}
+
+.icon-32-download { 
+	background-image: url(../../../../media/sobipro/32x32/download.png); 
+}
+
+.icon-32-list { 
+	background-image: url(../../../../media/sobipro/32x32/software-update.png); 
+}
+
+.icon-32-cleanCache { 
+	background-image: url(../../../../media/sobipro/32x32/eraser.png); 
+}
+
+.icon-32-document-save-all {
+	background-image: url(../../../../media/sobipro/32x32/document-save-all.png);
+}
+
+.icon-32-save {
+	background-image: url(../../../../media/sobipro/32x32/document-save.png)!important;
+}
+
+.icon-32-help {
+	background-image: url(../../../../media/sobipro/32x32/sobipro-help.png)!important;
+}
+
+div#spTpl {
+	margin: 5px;
+	padding: 5px;
+}
+
+div.SPPbarMsgbox {
+	width: 514px;
+	height: 50px;
+	font-family: "Trebuchet MS", Arial, Helvetica;
+	font-size: 20px;
+	font-weight: bold;
+	color: #999999;
+	text-align: center;
+	clear:both;
+	vertical-align: top;
+}
+div.SPPbarMessage {
+	font-family: Arial, Helvetica;
+	font-size: 12px;
+	font-weight: bold;
+	color: #606060;
+	text-align: left;
+}
+
+div.SPPbarProgressbar {
+	margin-right: auto;
+	margin-left: auto;
+	background-repeat: no-repeat; 
+	height: 60px; 
+	width: 514px; 
+	margin:0px 10px 10px 10px;
+}
+
+div.SPPbarPercentbox {
+	width: 514px;
+	height: 60px;
+	font-family: "Trebuchet MS", Arial, Helvetica;
+	font-size: 24px;
+	font-weight: bold;
+	margin-left: 7px;
+	padding-top: 10px;
+}
+
+del a, del {
+	color: red!important;
+	font-weight: bold;
+}
+
+div.SPCpanelIcon {
+	width: 80px; 
+	height: 80px; 
+	float: left;
+	margin: 2px; 
+	padding: 5px;
+	text-align:center; 
+	border-color:#cccccc; 
+	border-style:solid; 
+	border-width:thin;
+}
+div.SPCpanelIcon a {
+	text-decoration: none;
+}

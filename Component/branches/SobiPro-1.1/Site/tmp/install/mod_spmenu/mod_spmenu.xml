@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0" client="administrator">
+	<name>SobiPro Admin Menu</name>
+    <creationDate>9 March 2011</creationDate>
+    <author>Sigrid Suski &amp; Radek Suski</author>
+    <authorEmail>sobi[at]sigsiu.net</authorEmail>
+    <authorUrl>http://www.Sigsiu.NET</authorUrl>
+    <copyright>Copyright (C) 2006-2011 Sigsiu.NET GmbH</copyright>
+    <license>GNU General Public License v3</license>
+    <version>1.1</version>
+    <description></description>    
+	<description>This module adds SobiPro sections to the Joomla adm menu</description>
+	<files>
+		<filename module="mod_spmenu">mod_spmenu.php</filename>
+		<filename>sphelper.php</filename>
+	</files>
+	<params>
+	</params>
+</install>

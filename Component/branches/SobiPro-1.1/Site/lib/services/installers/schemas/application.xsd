@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="SobiProApp">
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="id" minOccurs="1" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="[a-zA-Z0-9_-]{5,25}"/>
+							<xs:whiteSpace value="preserve"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="authorName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="authorEmail" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="authorUrl" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="copyright" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="license" type="xs:string" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="creationDate" type="xs:date" minOccurs="1" maxOccurs="1"/>
+				<xs:choice minOccurs="1" maxOccurs="1">
+					<xs:element name="type">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="application"/>
+								<xs:enumeration value="global_application"/>
+								<xs:enumeration value="payment" />
+								<xs:enumeration value="update" />
+							</xs:restriction>
+	  					</xs:simpleType>
+					</xs:element>
+					<xs:element name="fieldType">
+						<xs:complexType mixed="true">
+							<xs:attribute name="typeId" use="required">
+							  <xs:simpleType>
+							    <xs:restriction base="xs:string">
+							      <xs:pattern value="[a-zA-Z_]*"/>
+							    </xs:restriction>
+							  </xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="fieldGroup" use="required">
+							  <xs:simpleType>
+							    <xs:restriction base="xs:string">
+							      <xs:pattern value="[a-zA-Z_]*"/>
+							    </xs:restriction>
+							  </xs:simpleType>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+				<xs:element name="version" minOccurs="1" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="(\d+\.)?(\d+\.)?(\d+)?(\.\d+)?"/>
+							<xs:whiteSpace value="preserve"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="sql" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="exec" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="[a-zA-Z0-9]{3,50}\.php"/>
+							<xs:whiteSpace value="preserve"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="language" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="file" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="langFile">
+											<xs:attribute name="lang" use="required">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:pattern value="[a-z]{2}_[A-Z]{2}"/>
+														<xs:whiteSpace value="preserve"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="admin" default="false"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="folder" use="optional">
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="files" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:choice minOccurs="1" maxOccurs="unbounded">
+							<xs:element name="folder" minOccurs="0" type="xs:string" maxOccurs="unbounded"/>
+							<xs:element name="file" minOccurs="0" type="xs:string" maxOccurs="unbounded"/>
+						</xs:choice>
+						<xs:attribute name="path" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:pattern value="(home|root|lib|ctrl|media|models|views|js|css|img|adm|fields|templates|front|config)+:[0-9a-z\-A-Z\._]*"/>
+									<xs:whiteSpace value="preserve"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="actions" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="action" maxOccurs="unbounded">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="[a-zA-Z\-\.\*_]*"/>
+										<xs:whiteSpace value="preserve"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="permissions" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="permission" maxOccurs="unbounded">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="[a-zA-Z\.\-_\*]*"/>
+										<xs:whiteSpace value="preserve"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="requirements" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:choice minOccurs="0" maxOccurs="unbounded">
+							<xs:element name="core" type="requirement" minOccurs="0" maxOccurs="1"/>
+							<xs:element name="cms" type="requirement" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="plugin" type="requirement" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="application" type="requirement" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="field" type="requirement" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="php" type="requirement" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+	        </xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="requirement" mixed="true">
+		<xs:attribute name="version" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="(\d+\.)?(\d+\.)?(\d+)?(\.)?(\d+)?"/>
+					<xs:whiteSpace value="preserve"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="type" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="function|class"/>
+					<xs:whiteSpace value="preserve"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="langFile">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9\.\-_]{3,100}\.(ini|mo|po)"/>
+			<xs:whiteSpace value="preserve"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

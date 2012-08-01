@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translation>
+	<term value="Disable Entry">
+		<value lang="de-DE">Eintrag Deaktivieren</value>
+		<value lang="pl-PL">Deaktywuj Wpis</value>
+	</term>	
+	<term value="Enable Entry">
+		<value lang="de-DE">Eintrag Aktivieren</value>
+		<value lang="pl-PL">Aktywuj Wpis</value>
+	</term>	
+	<term value="Approve Entry">
+		<value lang="de-DE">Eintrag Genehmigen</value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="Edit Entry">
+		<value lang="de-DE">Eintrag Editieren</value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="Located in:">
+		<value lang="de-DE">Eingetragen in:</value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="Extended Search">
+		<value lang="de-DE">Erweiterte Parameter</value>
+		<value lang="pl-PL">Wyszukiwanie Zaawansowane</value>
+	</term>	
+	<term value="You have chosen following non-free options">
+		<value lang="de-DE">Sie haben die folgenden kostenpflichtigen Optionen gewählt</value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="Name">
+		<value lang="de-DE">Name</value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="Netto">
+		<value lang="de-DE">Netto</value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="Brutto">
+		<value lang="de-DE">Brutto</value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="Discount">
+		<value lang="de-DE"></value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="Summary">
+		<value lang="de-DE">Total</value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="VAT">
+		<value lang="de-DE">VAT</value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="What do you like to do">
+		<value lang="de-DE">Was möchten Sie machen</value>
+		<value lang="pl-PL"></value>
+	</term>	
+	<term value="Please select payment method below">
+		<value lang="de-DE">Bitte wählen Sie eine Zahlmethode aus</value>
+		<value lang="pl-PL"></value>
+	</term>	
+</translation>
