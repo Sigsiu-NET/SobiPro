@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<menu>
+		<options var="task">
+			<default name="SOBI_SECTION" msg="SOBI_SECTION_EXPL" />
+			<option value="search" name="SOBI_SEARCH" msg="SOBI_SEARCH_EXPL"/>
+			<option value="entry.add" name="SOBI_ADD_FORM" msg="SOBI_ADD_FORM_EXPL" />
+		</options>
+		<fields name="request">
+			<fieldset name="request" label="COM_MENUS_BASIC_FIELDSET_LABEL" addfieldpath="/components/com_sobipro/lib/cms/joomla16/elements">
+				<field name="SOBI_SELECT_SECTION" type="spsection" description="SOBI_SELECT_SECTION_EXPL" />
+				<field name="cid" type="spcid" label="SOBI_SELECT_CATEGORY" description="SOBI_SELECT_CATEGORY_EXPL" />
+				<field name="sid" type="spsid" label="" />						
+			</fieldset>
+		</fields>
+	</menu>
+	<state>
+		<url addpath="/components/com_sobipro/lib/cms/joomla_common/elements" >
+			<param name="SOBI_SELECT_SECTION" type="spsection" msg="SOBI_SELECT_SECTION_EXPL" />
+			<param name="cid" type="spsection" msg="SOBI_SELECT_CATEGORY_EXPL" />
+			<param name="sid" type="spsection" />
+		</url>
+	</state>
+</metadata>

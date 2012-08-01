@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="1.6.0" method="upgrade" overwrite="true">
+    <name>SobiPro</name>
+    <creationDate>20 July 2012</creationDate>
+    <author>Sigsiu.NET GmbH</author>
+    <authorEmail>sobi[at]sigsiu.net</authorEmail>
+    <authorUrl>http://www.Sigsiu.NET</authorUrl>
+    <copyright>Copyright (C) 2006-2012 Sigsiu.NET GmbH</copyright>
+    <license>GNU General Public License v3</license>
+    <version>1.0.8.E</version>
+    <codename>Sparrow</codename>
+    <description></description>
+    <version_number>1.0.8</version_number>
+    <svn>$Revision: 2615 $</svn>
+    <SobiPro>
+	  <requirements>
+	    <core version="1.0.0.1900"/>
+	  </requirements>
+    </SobiPro>
+	<install>
+		<sql>
+			<file charset="utf8" driver="mysql">install16.sql</file>
+		</sql>
+	</install>
+	<installfile>install16.php</installfile>
+	<uninstallfile>uninstall16.php</uninstallfile>
+	<files folder="Site">
+			<folder>etc</folder>
+			<folder>lib</folder>
+			<folder>media</folder>
+			<folder>opt</folder>
+			<folder>tmp</folder>
+			<folder>usr</folder>
+			<folder>var</folder>
+			<folder>views</folder>
+			<filename>sobipro.php</filename>
+			<filename>changelog.txt</filename>
+			<filename>metadata.xml</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.ini</language>
+		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.js.ini</language>
+		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.err.ini</language>
+	</languages>
+
+	<media folder="Site/media" destination="sobipro">
+		<folder>css</folder>
+		<folder>16x16</folder>
+		<folder>32x32</folder>
+		<folder>48x48</folder>
+		<folder>browser</folder>
+		<folder>icons</folder>
+		<folder>progress</folder>
+		<folder>styles</folder>
+		<folder>tree</folder>
+		<filename>donate.png</filename>
+		<filename>join-the-club.png</filename>
+		<filename>SobiPro_16.png</filename>
+		<filename>sobipro-main.png</filename>
+		<filename>sobipro-menu.png</filename>
+		<filename>sobipro.png</filename>
+	</media>
+
+	<administration>
+		<menu img="../media/sobipro/SobiPro_16.png" view="cpanel">COM_SOBIPRO</menu>
+		<files folder="Admin">
+			<folder>about</folder>
+			<folder>acl</folder>
+			<folder>category</folder>
+			<folder>config</folder>
+			<folder>entry</folder>
+			<folder>extensions</folder>
+			<folder>field</folder>
+			<folder>front</folder>
+			<folder>section</folder>
+			<folder>template</folder>
+			<filename>sobipro.php</filename>
+			<filename>install16.sql</filename>
+		</files>
+		<files>
+			<filename>sobipro16.xml</filename>
+		</files>
+		<languages>
+			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.ini</language>
+			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.js.ini</language>
+			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.sys.ini</language>
+			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.about.ini</language>
+		</languages>
+	</administration>
+</extension>
