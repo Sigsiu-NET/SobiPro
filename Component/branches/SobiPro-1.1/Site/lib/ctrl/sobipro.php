@@ -142,9 +142,7 @@ final class SobiProCtrl
         }
 
         /* load css and js files */
-        SPFactory::header()
-                ->addCssFile( 'sobipro' )
-                ->addJsFile( 'sobipro' );
+        SPFactory::header()->initBase();
 
         $sectionName = SPLang::translateObject( $this->_section, 'name', 'section' );
         SPFactory::registry()->set( 'current_section_name', $sectionName[ $this->_section ][ 'value' ] );
