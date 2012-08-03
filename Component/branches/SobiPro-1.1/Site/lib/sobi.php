@@ -383,7 +383,7 @@ abstract class Sobi
     public static function Init( $root, $lang, $sid = 0 )
     {
         if ( !( defined( 'SOBI_CMS' ) ) ) {
-            define( 'SOBI_CMS', version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' );
+            define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15'  ) );
         }
         defined( 'SOBIPRO' ) || define( 'SOBIPRO', true );
         defined( 'SOBI_TASK' ) || define( 'SOBI_TASK', 'task' );
@@ -394,7 +394,7 @@ abstract class Sobi
         defined( 'SOBI_PATH' ) || define( 'SOBI_PATH', SOBI_ROOT . DS . 'components' . DS . 'com_sobipro' );
         defined( 'SOBI_LIVE_PATH' ) || define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );
         require_once ( SOBI_PATH . DS . 'lib' . DS . 'base' . DS . 'fs' . DS . 'loader.php' );
-        $class = SPLoader::loadController( 'sobipro' );
+        SPLoader::loadController( 'sobipro' );
         SPLoader::loadController( 'interface' );
         SPLoader::loadClass( 'base.exception' );
         SPLoader::loadClass( 'base.const' );
@@ -405,6 +405,8 @@ abstract class Sobi
         SPLoader::loadClass( 'models.dbobject' );
         SPLoader::loadClass( 'base.factory' );
         SPLoader::loadClass( 'base.config' );
+        SPLoader::loadClass( 'cms.base.fs' );
+        SPFactory::config()->set( 'live_site', JURI::root() );
         if ( $sid ) {
             $db =& SPFactory::db();
             $section = null;

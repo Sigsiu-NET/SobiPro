@@ -92,6 +92,24 @@ final class SPHeader
         return $head;
     }
 
+    public function & initBase( $adm = false )
+    {
+        if ( $adm ) {
+            $this->addCssFile( 'sobipro', true )
+                    ->addJsFile( array( 'sobipro', 'adm.sobipro' ) );
+
+        }
+        else {
+            $this->addCssFile( 'sobipro' )
+                    ->addJsFile( 'sobipro' );
+        }
+        if ( SOBI_CMS != 'joomla3' ) {
+            $this->addCssFile( 'bootstrap.bootstrap' )
+                    ->addJsFile( array( 'jquery', 'bootstrap' ) );
+        }
+        return $this;
+    }
+
     /**
      * Add raw code to the site header
      * @param string $html

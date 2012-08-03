@@ -116,9 +116,7 @@ final class SobiProAdmCtrl
         }
 
         /* load admin html files */
-        SPFactory::header()->addCssFile( 'sobipro', true );
-        SPFactory::header()->addJsFile( 'sobipro' );
-        SPFactory::header()->addJsFile( 'adm.sobipro' );
+        SPFactory::header()->initBase( true );
 
         /** @noinspection PhpParamsInspection */
         $sectionName = SPLang::translateObject( $this->_section, 'name', 'section' );
