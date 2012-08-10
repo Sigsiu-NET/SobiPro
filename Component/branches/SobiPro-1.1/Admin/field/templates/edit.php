@@ -18,8 +18,23 @@
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Admin/field/edit/inbox.php $
  */
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+$data = $this->getData();
+SPConfig::debOut( $data );
 ?>
-<h1>1111</h1>
+
+<ul class="nav nav-tabs">
+	<?php foreach ( $data[ 'tabs' ] as $tab ) : ?>
+		<li class="active">
+			<a href="#<?php echo $tab[ 'id' ]; ?>">
+				<?php echo $tab[ 'label' ]; ?>
+			</a>
+		</li>
+	<?php endforeach; ?>
+</ul>
+
+
+
+<h1>111eee1</h1>
 
 <ul class="nav nav-tabs" id="myTab">
 	<li class="active"><a href="#home">Home</a></li>

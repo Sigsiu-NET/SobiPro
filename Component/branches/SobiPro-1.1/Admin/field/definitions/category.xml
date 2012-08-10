@@ -9,27 +9,6 @@
 	</config>
 	<header>
 		<title value="FM.EDIT_FIELD"/>
-		<script>
-			SPErrMsg = SobiPro.Txt( "Please fill in all required fields!" );
-			function submitbutton( task )
-			{
-				var form = document.adminForm;
-				if ( task == 'field.cancel' || SPValidateForm()  ) {
-					if( SP_id( 'field.nid' ).value == '' ) {
-						SP_id( 'field.nid' ).value = SP_id( 'field.name' ).value;
-					}
-					var nid = SP_id( 'field.nid' ).value;
-					nid = nid.replace( /(\s+)/g, '_' );
-					nid = nid.replace( /[^\w_]/g, '' );
-					SP_id( 'field.nid' ).value = nid.toLowerCase();
-					if( SP_id( 'field.nid' ).value.indexOf( 'field_' ) != 0 ) {
-						SP_id( 'field.nid' ).value = 'field_' + SP_id( 'field.nid' ).value;
-					}
-					submitform( task );
-				}
-			}
-			try { Joomla.submitbutton = function( task ) { submitbutton( task ); } } catch( e ) {}
-		</script>
 		<file type="script" filename="bootstrap.tabs"/>
 	</header>
 	<toolbar title="site_title" icon="SobiFieldEdit">
@@ -86,6 +65,8 @@
 					</add>
 				</field>
 			</fieldset>
+		</tab>
+		<tab label="FM.FIELD_TYPE">
 		</tab>
 	</body>
 </definition>
