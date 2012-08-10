@@ -109,18 +109,18 @@ function SPResetCount( type )
 		} } ).request();
 	}
 }
-window.addEvent( 'domready', function ()
-{
-	try {
-		$( 'general.show_pb_no' ).addEvent( 'click', function ()
-		{
-			if ( $( 'general.show_pb_no' ).checked ) {
-				SobiPro.Alert( 'PBY_NO' );
-			}
-		} );
-	}
-	catch ( e ) {
-	}
-	;
-} );
-
+//window.addEvent( 'domready', function ()
+//{
+//	try {
+//		$( 'general.show_pb_no' ).addEvent( 'click', function ()
+//		{
+//			if ( $( 'general.show_pb_no' ).checked ) {
+//				SobiPro.Alert( 'PBY_NO' );
+//			}
+//		} );
+//	}
+//	catch ( e ) {
+//	}
+//	;
+//} );
+//

@@ -71,7 +71,6 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			Sobi::Error( 'Section', SPLang::e( 'Missing section identifier' ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 		$this->_model->init( Sobi::Section() );
-
 		/* get the lists ordering and limits */
 		$eLimit 	= Sobi::GetUserState( 'adm.entries.limit', 'elimit', $config->key( 'adm_list.entries_limit', 25 ) );
 		$cLimit 	= Sobi::GetUserState( 'adm.categories.limit', 'climit', $config->key( 'adm_list.cats_limit', 15 ) );
@@ -149,7 +148,6 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				$categories[ $i ] = SPFactory::Category( $category );
 			}
 		}
-
 		/* create menu */
 		$mClass = SPLoader::loadClass( 'helpers.adm.menu' );
 		$menu = new $mClass( 'section.'.$this->_task, Sobi::Section() );
@@ -173,7 +171,6 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$tree->init( Sobi::Reg( 'current_section' ) );
 		/* add the tree into the menu */
 		$menu->addCustom( 'AMN.ENT_CAT', $tree->getTree() );
-
 
 		/* get view class */
 		$class 	= SPLoader::loadView( 'section', true );

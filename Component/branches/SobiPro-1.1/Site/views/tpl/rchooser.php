@@ -21,33 +21,16 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 ?>
 <script language="javascript" type="text/javascript">
-    var selectedCat = 0;
-    var selectedPath = '';
-	function SP_selectCat( sid )
-	{
-		try {
-			SP_id( 'sobiCats_CatUrl' + sid ).focus();
-		} catch( e ) {}
-		selectedCat = sid;
-	}
-	function SP_Select()
-	{
-		parent.document.getElementById( 'sid' ).value = selectedCat;
-		parent.SP_close();
-	}
+    function SP_selectCat( sid )
+    {
+        try {
+            SP_id( 'sobiCats_CatUrl' + sid ).focus();
+        }
+        catch ( e ) {}
+        parent.document.getElementById( 'selectedCat' ).value = sid;
+        parent.document.getElementById( 'selectedCatName' ).value = SP_id( 'sobiCats_CatUrl' + sid ).innerHTML;
+    }
 </script>
 <div style="margin: 5px; padding: 5px;">
-	<div style="clear: both; margin-bottom: 10px;" class="hasTip">
-		<?php $this->txt( 'CC.JMENU_DESC' ); ?>
-	</div>
-	<div class="col width-100" style="min-width: 600px;">
-		<fieldset class="adminform">
-			<legend><?php $this->txt( 'Select category' ); ?></legend>
-			<div><?php $this->get( 'tree' )->display(); ?></div>
-		</fieldset>
-	</div>
-	<div style="clear: both"></div>
-	<div style="padding: 10px">
-		<?php $this->field( 'button', 'save', 'translate:[CC.JMENU_SAVE]', array( 'onclick' => 'SP_Select();', 'size' => 50, 'class' => 'button', 'style' => 'border: 1px solid silver;' ) ); ?>
-	</div>
+    <div><?php $this->get( 'tree' )->display(); ?></div>
 </div>

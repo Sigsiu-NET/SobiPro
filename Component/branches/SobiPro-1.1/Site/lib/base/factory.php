@@ -246,6 +246,21 @@ abstract class SPFactory
     }
 
     /**
+     * Factory method for category models
+     * @param id of the entry $sid
+     * @return SPCategory
+     */
+    public static function & Section( $sid )
+    {
+        static $sections = array();
+        if ( !( isset( $sections[ $sid ] ) ) ) {
+            $sections[ $sid ] = self::Model( 'section' );
+            $sections[ $sid ]->init( $sid );
+        }
+        return $sections[ $sid ];
+    }
+
+    /**
      * @param string $name
      * @return SPController
      */
