@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<config>
+		<action value="index.php?option=com_sobipro"/>
+		<hidden>
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+		</hidden>
+	</config>
+	<header>
+		<title value="FM.EDIT_FIELD"/>
+		<script>
+			SPErrMsg = SobiPro.Txt( "Please fill in all required fields!" );
+			function submitbutton( task )
+			{
+				var form = document.adminForm;
+				if ( task == 'field.cancel' || SPValidateForm()  ) {
+					if( SP_id( 'field.nid' ).value == '' ) {
+						SP_id( 'field.nid' ).value = SP_id( 'field.name' ).value;
+					}
+					var nid = SP_id( 'field.nid' ).value;
+					nid = nid.replace( /(\s+)/g, '_' );
+					nid = nid.replace( /[^\w_]/g, '' );
+					SP_id( 'field.nid' ).value = nid.toLowerCase();
+					if( SP_id( 'field.nid' ).value.indexOf( 'field_' ) != 0 ) {
+						SP_id( 'field.nid' ).value = 'field_' + SP_id( 'field.nid' ).value;
+					}
+					submitform( task );
+				}
+			}
+			try { Joomla.submitbutton = function( task ) { submitbutton( task ); } } catch( e ) {}
+		</script>
+		<file type="script" filename="bootstrap.tabs"/>
+	</header>
+	<toolbar title="site_title" icon="SobiFieldEdit">
+		<group label="TB.SAVE">
+			<button type="apply" task="field.apply" label="TB.APPLY"/>
+			<button type="save"  label="TB.SAVE"/>
+			<button type="duplicate" task="field.clone" label="TB.DUPLICATE"/>
+		</group>
+		<divider/>
+		<button type="cancel" task="field.cancel" label="TB.CANCEL"/>
+		<divider/>
+		<button type="help" label="TB.HELP"/>
+	</toolbar>
+	<body>
+		<tab label="FM.FIELD_PARAMETERS">
+			<fieldset label="FM.FIELD_PARAMETERS">
+				<field type="text" name="field.name" value="field.name" label="FM.FIELD_LABEL" size="50" maxlength="255"/>
+				<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
+				<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX"/>
+				<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" width="550" height="30"/>
+				<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" width="550" height="30"/>
+			</fieldset>
+			<fieldset label="FM.FIELD_PARAMETERS">
+				<field type="states" name="field.enabled" value="field.enabled" label="ENABLED"/>
+				<field type="select" name="field.showIn" selected="field.showIn" label="FM.AVAILABLE_IN">
+					<values>
+						<option value="both" label="FM.BOTH_OPT"/>
+						<option value="details" label="FM.DETAILS_VIEW_OPT"/>
+						<option value="vcard" label="FM.V_CARD_OPT"/>
+						<option value="hidden" label="FM.HIDDEN_OPT"/>
+					</values>
+				</field>
+				<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS"/>
+				<field type="states" name="field.adminField" value="field.adminField" label="FM.ADM_FIELD" prefix="yes_no"/>
+				<field type="states" name="field.required" value="field.required" label="FM.IS_REQUIRED" prefix="yes_no"/>
+				<field type="states" name="field.editable" value="field.editable" label="FM.IS_EDITABLE" prefix="yes_no"/>
+				<field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
+				<field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
+				<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS"/>
+				<field type="output" value="field.version" label="VERSION"/>
+			</fieldset>
+			<fieldset label="FM.FIELD_TYPE">
+				<field type="select" name="field.fieldType" selected="field.fieldType" values="types" label="FM.FIELD_TYPE"/>
+			</fieldset>
+			<fieldset label="FM.PAYMENT">
+				<field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no"/>
+				<field type="text" name="field.fee" value="field.fee" label="FM.FIELD_FEE">
+					<add where="after">
+						<call function="Sobi::Cfg">
+							<param>payments.currency</param>
+							<param>EUR</param>
+							<param value="field.suffix"/>
+						</call>
+					</add>
+				</field>
+			</fieldset>
+		</tab>
+	</body>
+</definition>
