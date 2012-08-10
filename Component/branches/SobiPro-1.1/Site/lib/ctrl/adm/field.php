@@ -113,15 +113,33 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$view->assign( $field, 'field' );
 		$view->assign( $this->_task, 'task' );
 		$field->onFieldEdit( $view );
-		if( SPLoader::translatePath( 'field.edit.'.$field->get( 'fieldType' ), 'adm', true, 'ini' ) ) {
-			$view->loadConfig( 'field.edit.'.$field->get( 'fieldType' ) );
+		/*
+		 * 1.1 native - config and view in xml
+		 */
+		if( SPLoader::translatePath( 'field.definitions.'.$field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
+			/** Cae we have also override  */
+			if( SPLoader::translatePath( 'field.definitions.'.$field->get( 'fieldType' ).'_override', 'adm', true, 'xml' ) ) {
+				$view->loadDefinition( 'field.definitions.'.$field->get( 'fieldType' ).'_override' );
+			}
+			else {
+				$view->loadDefinition( 'field.definitions.'.$field->get( 'fieldType' ) );
+			}
+			if( SPLoader::translatePath( 'field.templates.'.$field->get( 'fieldType' ), 'adm' ) ) {
+				$view->setTemplate( 'field.templates.'.$field->get( 'fieldType' ) );
+			}
+			else {
+				$view->setTemplate( 'field.templates.edit' );
+			}
 		}
+		/** Legacy code */
 		else {
-			$view->loadConfig( 'field.edit' );
-		}
-		$view->setTemplate( 'field.edit' );
-		if( SPLoader::translatePath( 'field.edit.'.$field->get( 'fieldType' ), 'adm' ) ) {
-			$view->setTemplate( 'field.edit.'.$field->get( 'fieldType' ) );
+			if( SPLoader::translatePath( 'field.edit.'.$field->get( 'fieldType' ), 'adm', true, 'ini' ) ) {
+				$view->loadConfig( 'field.edit.'.$field->get( 'fieldType' ) );
+			}
+			else {
+				$view->loadConfig( 'field.edit' );
+			}
+			$view->setTemplate( 'field.edit' );
 		}
 		$view->display();
 	}

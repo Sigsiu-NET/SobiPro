@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -22,30 +22,10 @@ SPLoader::loadClass( 'opt.fields.fieldtype' );
 /**
  * @author Radek Suski
  * @version 1.0
- * @created 09-Sep-2009 12:52:45 PM
+ * @created 09-Aug-2012 14:11:54
  */
-class SPField_Inbox extends SPFieldType implements SPFieldInterface
+class SPField_Category extends SPFieldType implements SPFieldInterface
 {
-    /**
-     * @var int
-     */
-    protected $maxLength = 150;
-    /**
-     * @var int
-     */
-    protected $width = 350;
-    /**
-     * @var string
-     */
-    protected $cssClass = "";
-    /**
-     * @var string
-     */
-    protected $searchRangeValues = "";
-    /**
-     * @var string
-     */
-    protected $searchMethod = 'general';
 
     /**
      * Shows the field in the edit entry or add entry form
@@ -80,7 +60,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
      */
     protected function getAttr()
     {
-        return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues' );
+        return array();
     }
 
     /**
@@ -92,6 +72,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
      */
     public function submit( &$entry, $tsid = null, $request = 'POST' )
     {
+	    JFactory::getMailer();
         $data = $this->verify( $entry, $request );
         if ( strlen( $data ) ) {
             return SPRequest::search( $this->nid, $request );
@@ -350,5 +331,3 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
         }
     }
 }
-
-?>

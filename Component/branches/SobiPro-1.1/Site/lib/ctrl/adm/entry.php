@@ -30,7 +30,6 @@ SPLoader::loadController( 'entry' );
  */
 class SPEntryAdmCtrl extends SPEntryCtrl
 {
-
     /**
      */
     public function execute()
@@ -64,6 +63,9 @@ class SPEntryAdmCtrl extends SPEntryCtrl
                 $r = true;
                 $this->reorder();
                 break;
+            case 'search':
+                $this->search();
+                break;
             default:
                 /* case plugin didn't registered this task, it was an error */
                 if ( !parent::execute() ) {
@@ -75,6 +77,21 @@ class SPEntryAdmCtrl extends SPEntryCtrl
                 break;
         }
         return $r;
+    }
+
+    protected function search()
+    {
+        $term = SPRequest::string( 'search', null, false /*, 'post' */ );
+        $fid = Sobi::Cfg( 'entry.name_field' );
+        /**
+         * @var $field SPField
+         */
+        $field = SPFactory::Model( 'field' );
+        $field->init( $fid );
+        $data = $field->searchSuggest( $term, Sobi::Section(), true, true );
+        SPFactory::mainframe()->cleanBuffer();
+        echo json_encode( $data );
+        exit;
     }
 
     protected function save( $apply, $clone = false )
@@ -123,8 +140,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
                 else {
                     SPFactory::cache()->deleteObj( 'entry', $sid );
                 }
-            }
-            catch ( SPException $x ) {
+            } catch ( SPException $x ) {
                 Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
             }
             SPFactory::cache()->purgeSectionVars();
@@ -157,8 +173,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
             try {
                 $db->update( 'spdb_relations', array( 'position' => ++$LimStart ), array( 'id' => $sid, 'oType' => 'entry', 'pid' => $pid ) );
                 SPFactory::cache()->deleteObj( 'entry', $sid );
-            }
-            catch ( SPException $x ) {
+            } catch ( SPException $x ) {
                 Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
             }
         }
@@ -186,8 +201,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
                 $current = $up ? $current-- : $current++;
                 $db->update( 'spdb_relations', array( 'position' => $current ), array( 'oType' => 'entry', 'pid' => SPRequest::int( 'pid' ), 'id' => $this->_model->get( 'id' ) ), 1 );
             }
-        }
-        catch ( SPException $x ) {
+        } catch ( SPException $x ) {
             Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
         }
         Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), "[MSG]Entry Position Changed" );

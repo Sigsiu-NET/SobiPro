@@ -19,6 +19,12 @@
 
 function SobiPro()
 {
+	this.DebOut = function( object )
+	{
+		try {
+			console.log( object );
+		} catch( e ) {}
+	}
 	this.Json = function ( url, options )
 	{
 		try {

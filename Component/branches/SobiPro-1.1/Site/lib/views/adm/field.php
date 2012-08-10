@@ -155,7 +155,7 @@ class SPFieldAdmView extends SPAdmView
 
 		$this->assign( $allowedAttributes, 'allowedAttributes' );
 		$this->assign( $allowedTags, 'allowedTags' );
-
+		echo '<div class="SobiPro">'."\n";
 		echo $action ? "\n<form action=\"{$action}\" method=\"post\" name=\"adminForm\" id=\"SPAdminForm\" enctype=\"multipart/form-data\" accept-charset=\"utf-8\" >\n" : null;
 		foreach ( $this->_templates as $tpl ) {
 			$template = SPLoader::path( $tpl, 'adm.template' );

@@ -131,7 +131,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 		$out = SPRequest::cmd( 'out', null );
 		$exp = SPRequest::int( 'expand', 0 );
 		$multi = SPRequest::int( 'multiple', 0 );
-		$tpl = SPRequest::word( 'treetpl', 0 );
+		$tpl = SPRequest::word( 'treetpl', null );
 		/* load the SigsiuTree class */
 		$tree = SPLoader::loadClass( 'mlo.tree' );
 		$ordering = defined( 'SOBI_ADM_PATH' ) ? Sobi::GetUserState( 'categories.order', 'corder', 'position.asc' ) : Sobi::Cfg( 'list.categories_ordering' );
