@@ -16,19 +16,12 @@
  * $Author: Radek Suski $
  * File location: components/com_sobipro/media/css/adm/sobipro.css $
  */
-  
-div.SPFListAlias {
-	font-size: 0.9em !important;
-}
 
-input, textarea, select, button {
-	border: 1px solid #ccc !important;
-    font-size: 1.091em !important;
+#toolbar-box {
+	display: none;
 }
-
-fieldset label {
-	clear:none !important;
-	float:none !important;
+.submenu-box, div.m {
+	background-color: #ffffff;
 }
 
 element.style {
@@ -246,7 +239,7 @@ div.spOptGroup {
 }
 
 div.spFieldUrlLabel, div.spFieldUrl {
-	margin: 3px; 
+	margin: 3px;
 }
 
 span.spFieldUrlProtocol {
@@ -254,8 +247,8 @@ span.spFieldUrlProtocol {
 	vertical-align: bottom;
 }
 
-div.spFieldEmailLabel label, 
-div.spFieldEmail label {	
+div.spFieldEmailLabel label,
+div.spFieldEmail label {
 	display: block;
 	float: left;
 	min-width: 80px;
@@ -269,114 +262,114 @@ li.spOptionGroup {
 	clear: both;
 }
 
-.icon-48-SobiPro {
+.spicon-48-SobiPro {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-sobipro.png);
 }
 
-.icon-48-SobiApplication {
+.spicon-48-SobiApplication {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-application.png);
 }
 
-.icon-48-SobiApplicationSection {
+.spicon-48-SobiApplicationSection {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-application-section.png);
 }
 
-.icon-48-SobiTemplate {
+.spicon-48-SobiTemplate {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-templates.png);
 }
 
-.icon-48-SobiTemplateSection {
+.spicon-48-SobiTemplateSection {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-template-section.png);
 }
 
-.icon-48-SobiSection {
+.spicon-48-SobiSection {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-section.png);
 }
 
-.icon-48-SobiSectionCfg {
+.spicon-48-SobiSectionCfg {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-section-cfg.png);
 }
 
-.icon-48-SobiCategory {
+.spicon-48-SobiCategory {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-category.png);
 }
 
-.icon-48-SobiCatList {
+.spicon-48-SobiCatList {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-categories.png);
 }
 
-.icon-48-SobiFields {
+.spicon-48-SobiFields {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-fieldsmanager.png);
 }
 
-.icon-48-SobiFieldList {
+.spicon-48-SobiFieldList {
 	background-image:
 		url(../../../../media/sobipro/48x48/fields.png);
 }
 
-.icon-48-SobiConfig {
+.spicon-48-SobiConfig {
 	background-image:
 		url(../../../../media/sobipro/48x48/folder-configuration.png);
 }
 
-.icon-48-SobiEdit {
+.spicon-48-SobiEdit {
 	background-image:
 		url(../../../../media/sobipro/48x48/editor.png);
 }
 
-.icon-48-SobiFieldEdit {
+.spicon-48-SobiFieldEdit {
 	background-image:
 		url(../../../../media/sobipro/48x48/edit-rename.png);
 }
 
-.icon-48-SobiEntries {
+.spicon-48-SobiEntries {
 	background-image:
 		url(../../../../media/sobipro/48x48/entries.png);
 }
-.icon-48-SobiUser {
+.spicon-48-SobiUser {
 	background-image:
 		url(../../../../media/sobipro/48x48/sobipro-acl-edit.png);
 }
-.icon-48-SobiLevels {
+.spicon-48-SobiLevels {
 	background-image:
 		url(../../../../media/sobipro/48x48/sobipro-acl.png);
 }
 
-.icon-32-delete {
-	background-image: url(../../../../media/sobipro/32x32/delete.png)!important; 
+.spicon-32-delete {
+	background-image: url(../../../../media/sobipro/32x32/delete.png)!important;
 }
 
-.icon-32-download { 
-	background-image: url(../../../../media/sobipro/32x32/download.png); 
+.spicon-32-download {
+	background-image: url(../../../../media/sobipro/32x32/download.png);
 }
 
-.icon-32-list { 
-	background-image: url(../../../../media/sobipro/32x32/software-update.png); 
+.spicon-32-list {
+	background-image: url(../../../../media/sobipro/32x32/software-update.png);
 }
 
-.icon-32-cleanCache { 
-	background-image: url(../../../../media/sobipro/32x32/eraser.png); 
+.spicon-32-cleanCache {
+	background-image: url(../../../../media/sobipro/32x32/eraser.png);
 }
 
-.icon-32-document-save-all {
+.spicon-32-document-save-all {
 	background-image: url(../../../../media/sobipro/32x32/document-save-all.png);
 }
 
-.icon-32-save {
+.spicon-32-save {
 	background-image: url(../../../../media/sobipro/32x32/document-save.png)!important;
 }
 
-.icon-32-help {
+.spicon-32-help {
 	background-image: url(../../../../media/sobipro/32x32/sobipro-help.png)!important;
 }
 
@@ -407,9 +400,9 @@ div.SPPbarMessage {
 div.SPPbarProgressbar {
 	margin-right: auto;
 	margin-left: auto;
-	background-repeat: no-repeat; 
-	height: 60px; 
-	width: 514px; 
+	background-repeat: no-repeat;
+	height: 60px;
+	width: 514px;
 	margin:0px 10px 10px 10px;
 }
 
@@ -429,14 +422,14 @@ del a, del {
 }
 
 div.SPCpanelIcon {
-	width: 80px; 
-	height: 80px; 
+	width: 80px;
+	height: 80px;
 	float: left;
-	margin: 2px; 
+	margin: 2px;
 	padding: 5px;
-	text-align:center; 
-	border-color:#cccccc; 
-	border-style:solid; 
+	text-align:center;
+	border-color:#cccccc;
+	border-style:solid;
 	border-width:thin;
 }
 div.SPCpanelIcon a {

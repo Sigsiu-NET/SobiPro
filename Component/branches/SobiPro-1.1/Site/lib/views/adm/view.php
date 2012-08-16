@@ -65,7 +65,6 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	protected $_xml = false;
 
-
 	/**
 	 */
 	public function __construct()
@@ -105,6 +104,30 @@ class SPAdmView extends SPObject implements SPView
 		$this->parseDefinition( $this->_xml->getElementsByTagName( 'definition' ) );
 	}
 
+	public function determineTemplate( $type, $template )
+	{
+		if ( SPLoader::translatePath( $type . '.definitions.' . $template, 'adm', true, 'xml' ) ) {
+			/** Case we have also override  */
+			if ( SPLoader::translatePath( $type . '.definitions.' . $template . '_override', 'adm', true, 'xml' ) ) {
+				$this->loadDefinition( $type . '.definitions.' . $template . '_override' );
+			}
+			else {
+				$this->loadDefinition( $type . '.definitions.' . $template );
+			}
+			if ( SPLoader::translatePath( $type . '.templates.' . $template . '_override', 'adm' ) ) {
+				$this->setTemplate( $type . '.templates.' . $template . '_override' );
+			}
+			else {
+				$this->setTemplate( $type . '.templates.' . $template );
+			}
+		}
+		else {
+			$this->loadConfig( "{$type}.{$template}" );
+			$this->setTemplate( "{$type}.{$template}" );
+		}
+	}
+
+
 	/**
 	 * @param DOMNodeList $xml
 	 * @return void
@@ -121,10 +144,10 @@ class SPAdmView extends SPObject implements SPView
 					$this->xmlConfig( $node->childNodes );
 					break;
 				case 'toolbar':
-					$this->xmlToolbar( $node->childNodes );
+					$this->xmlToolbar( $node );
 					break;
 				case 'body':
-					$this->xmlBody( $node->childNodes, $this->_output );
+					$this->xmlBody( $node->childNodes, $this->_output[ 'data' ] );
 					break;
 				case 'definition':
 					$this->parseDefinition( $node->childNodes );
@@ -138,13 +161,138 @@ class SPAdmView extends SPObject implements SPView
 		return $this->_output;
 	}
 
+	public function toolbar()
+	{
+		return SPFactory::AdmToolbar()->render();
+	}
+
+	public function & getParser()
+	{
+		static $parser = null;
+		if ( !( $parser ) ) {
+			$parser = SPFactory::Instance( 'views.adm.parser' );
+		}
+		return $parser;
+	}
+
 	/**
-	 * @param DOMNodeList $xml
+	 * @param DOMNode $xml
 	 * @return void
 	 */
 	private function xmlToolbar( $xml )
 	{
+		$title = $xml
+				->attributes
+				->getNamedItem( 'title' )
+				->nodeValue;
+		$icon = $xml
+				->attributes
+				->getNamedItem( 'icon' )
+				->nodeValue;
+		SPFactory::AdmToolbar()->setTitle( array( 'title' => $this->parseValue( $title ), 'icon' => $icon ) );
+		$buttons = array();
+		foreach ( $xml->childNodes as $node ) {
+			if ( $node->nodeName == '#text' ) {
+				continue;
+			}
+			/** @var DOMNode $node */
+			switch ( $node->nodeName ) {
+				case 'button':
+					$buttons[ ] = $this->xmlButton( $node );
+					break;
+				case 'divider':
+					$buttons[ ] = array( 'element' => 'divider' );
+					break;
+				case 'group':
+					$group = array( 'element' => 'group', 'buttons' => array() );
+					foreach ( $node->attributes as $attr ) {
+						if ( $attr->nodeName == 'label' ) {
+							$group[ $attr->nodeName ] = Sobi::Txt( $attr->nodeValue );
+						}
+						else {
+							$group[ $attr->nodeName ] = $attr->nodeValue;
+						}
+					}
+					foreach ( $node->childNodes as $bt ) {
+						if ( $bt->nodeName == '#text' ) {
+							continue;
+						}
+						$group[ 'buttons' ][ ] = $this->xmlButton( $bt );
+					}
+					$buttons[ ] = $group;
+					break;
+				case 'buttons':
+					$group = array( 'element' => 'buttons', 'buttons' => array(), 'label' => $node->attributes->getNamedItem( 'label' )->nodeValue );
+					foreach ( $node->attributes as $attr ) {
+						$group[ $attr->nodeName ] = $attr->nodeValue;
+					}
+					/** it has to have child nodes or these childs are defined in value  */
+					if ( $node->hasChildNodes() ) {
+						foreach ( $node->childNodes as $bt ) {
+							if ( $bt->nodeName == '#text' ) {
+								continue;
+							}
+							$group[ 'buttons' ][ ] = $this->xmlButton( $bt );
+						}
+					}
+					else {
+						$group[ 'buttons' ] = $this->get( $node->attributes->getNamedItem( 'buttons' )->nodeValue );
+					}
+					SPConfig::debOut($node->attributes->getNamedItem( 'buttons' )->nodeValue);
+					$buttons[ ] = $group;
+					break;
+			}
+		}
+		SPFactory::AdmToolbar()->addButtons( $buttons );
+	}
 
+	/**
+	 * @param DOMNode $xml
+	 * @return void
+	 */
+	private function xmlButton( $xml )
+	{
+		$button = array(
+			'type' => null,
+			'task' => null,
+			'label' => null,
+			'icon' => null,
+			'target' => null,
+			'buttons' => null,
+			'element' => 'button'
+		);
+		if ( $xml->attributes->length ) {
+			/** @var DOMElement $attr */
+			foreach ( $xml->attributes as $attr ) {
+				if ( $attr->nodeName == 'label' ) {
+					$button[ $attr->nodeName ] = Sobi::Txt( $attr->nodeValue );
+				}
+				else {
+					$button[ $attr->nodeName ] = $attr->nodeValue;
+				}
+			}
+			if ( $xml->hasChildNodes() ) {
+				foreach ( $xml->childNodes as $node ) {
+					if ( $node->nodeName == '#text' ) {
+						continue;
+					}
+					$button[ 'buttons' ][ ] = $this->xmlButton( $node );
+				}
+			}
+		}
+		return $button;
+	}
+
+	protected function parseValue( $key )
+	{
+		if ( strstr( $key, 'var:[' ) ) {
+			preg_match( '/var\:\[([a-zA-Z0-9\.\_\-]*)\]/', $key, $matches );
+			$key = str_replace( $matches[ 0 ], $this->get( $matches[ 1 ] ), $key );
+		}
+		else {
+			$key = Sobi::Txt( $key );
+		}
+		return $key;
 	}
 
 	/**
@@ -158,20 +306,17 @@ class SPAdmView extends SPObject implements SPView
 				continue;
 			}
 			$element = array(
-				'title' => null,
+				'label' => null,
 				'type' => $node->nodeName,
-				'content' => null
+				'content' => null,
+				'attributes' => null
 			);
 			/** @var DOMNode $node */
 			switch ( $node->nodeName ) {
 				case 'tab':
-					$this->_output[ 'tabs' ][] = array(
-						'id' => SPLang::nid( $node->attributes->getNamedItem( 'label' )->nodeValue  ),
-						'label' => Sobi::Txt( $node->attributes->getNamedItem( 'label' )->nodeValue )
-					);
-				case 'tab':
 				case 'fieldset':
-					$element[ 'title' ] = Sobi::Txt( $node->attributes->getNamedItem( 'label' )->nodeValue );
+					$element[ 'label' ] = Sobi::Txt( $node->attributes->getNamedItem( 'label' )->nodeValue );
+					$element[ 'id' ] = SPLang::nid( $node->attributes->getNamedItem( 'label' )->nodeValue );
 					if ( $node->hasChildNodes() ) {
 						$this->xmlBody( $node->childNodes, $element[ 'content' ] );
 					}
@@ -183,11 +328,18 @@ class SPAdmView extends SPObject implements SPView
 					$this->xmlField( $node, $element );
 					break;
 				default:
+					$attributes = $node->attributes;
+					if ( $attributes->length ) {
+						/** @var DOMElement $attribute */
+						foreach ( $attributes as $attribute ) {
+							$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+						}
+					}
 					if ( $node->hasChildNodes() ) {
 						$this->xmlBody( $node->childNodes, $element[ 'content' ] );
 					}
-					if ( $node->nodeName != '#text' ) {
-						$output[ $node->nodeName ] = $node->nodeValue;
+					elseif ( $node->nodeName != '#text' ) {
+						$element[ 'content' ] = $node->nodeValue;
 					}
 					break;
 			}
@@ -213,14 +365,23 @@ class SPAdmView extends SPObject implements SPView
 				$xml[ $attribute->nodeName ] = $attribute->nodeValue;
 				switch ( $attribute->nodeName ) {
 					case 'name':
+						$args[ 'id' ] = SPLang::nid( $attribute->nodeValue );
+						$element[ 'id' ] = $args[ 'id' ];
+						$params[ 'id' ] = $args[ 'id' ];
+					case 'name':
 					case 'type':
-					case 'editor':
 					case 'width':
 					case 'height':
-					case 'selected':
+					case 'prefix':
 						$args[ $attribute->nodeName ] = $attribute->nodeValue;
 						break;
+					case 'editor':
+					case 'multi':
+						$args[ $attribute->nodeName ] = $attribute->nodeValue == 'true' ? true : false;
+						break;
 					case 'value':
+					case 'values':
+					case 'selected':
 						$args[ $attribute->nodeName ] = $this->get( $attribute->nodeValue );
 						break;
 					case 'label':
@@ -260,6 +421,9 @@ class SPAdmView extends SPObject implements SPView
 								if ( $value->nodeName == 'call' ) {
 									$v = $this->xmlCall( $value );
 								}
+								elseif ( $value->nodeName == 'text' ) {
+									$v = $value->nodeValue;
+								}
 								$adds[ $child->attributes->getNamedItem( 'where' )->nodeValue ][ ] = $v;
 							}
 						}
@@ -267,12 +431,16 @@ class SPAdmView extends SPObject implements SPView
 				}
 			}
 		}
+		if ( !( isset( $params[ 'class' ] ) ) ) {
+			$params[ 'class' ] = 'input-xlarge';
+		}
 		$args[ 'params' ] = $params;
 		$element[ 'args' ] = $args;
 		$element[ 'adds' ] = $adds;
 		$element[ 'request' ] = $xml;
 		switch ( $args[ 'type' ] ) {
 			case 'output':
+				$element[ 'content' ] = $args[ 'value' ];
 				break;
 			default:
 				if ( method_exists( 'SPHtml_input', $args[ 'type' ] ) ) {
@@ -281,6 +449,12 @@ class SPAdmView extends SPObject implements SPView
 					foreach ( $method->getParameters() as $param ) {
 						if ( isset( $args[ $param->name ] ) ) {
 							$methodArgs[ ] = $args[ $param->name ];
+						}
+						elseif ( $param->isDefaultValueAvailable() ) {
+							$methodArgs[ ] = $param->getDefaultValue();
+						}
+						else {
+							$methodArgs[ ] = null;
 						}
 					}
 					$element[ 'content' ] = call_user_func_array( array( 'SPHtml_input', $args[ 'type' ] ), $methodArgs );
@@ -361,7 +535,7 @@ class SPAdmView extends SPObject implements SPView
 					break;
 				default:
 					if ( $node->nodeName != '#text' ) {
-						$this->_config[ $node->nodeName ] = $node->attributes->getNamedItem( 'value' )->nodeValue;
+						$this->_config[ 'general' ][ $node->nodeName ] = $node->attributes->getNamedItem( 'value' )->nodeValue;
 					}
 					break;
 			}
@@ -386,7 +560,7 @@ class SPAdmView extends SPObject implements SPView
 							->addCSSCode( $node->nodeValue );
 					break;
 				case 'file':
-					if ( $node->attributes->getNamedItem( 'type' )->nodeValue == 'css' ) {
+					if ( $node->attributes->getNamedItem( 'type' )->nodeValue == 'style' ) {
 						$this->loadCSSFile( $node->attributes->getNamedItem( 'filename' )->nodeValue, false );
 					}
 					elseif ( $node->attributes->getNamedItem( 'type' )->nodeValue == 'script' ) {
@@ -770,16 +944,16 @@ class SPAdmView extends SPObject implements SPView
 		}
 		Sobi::Trigger( 'Display', $this->name(), array( &$this ) );
 		$action = $this->key( 'action' );
-		echo '<div class="SobiPro">'."\n";
+		echo '<div class="SobiPro">' . "\n";
 		echo $action ? "\n<form action=\"{$action}\" method=\"post\" name=\"adminForm\" id=\"SPAdminForm\" enctype=\"multipart/form-data\" accept-charset=\"utf-8\" >\n" : null;
 		include( $tpl );
 		if ( count( $this->_hidden ) ) {
 			$this->_hidden[ SPFactory::mainframe()->token() ] = 1;
 			foreach ( $this->_hidden as $name => $value ) {
-				echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$name}\" value=\"{$value}\"/>";
+				echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"SP_{$name}\" value=\"{$value}\"/>";
 			}
 		}
-		echo '</div>'."\n";
+		echo '</div>' . "\n";
 		echo $action ? "\n</form>\n" : null;
 		echo '</div>';
 		Sobi::Trigger( 'AfterDisplay', $this->name() );

@@ -171,11 +171,10 @@ class SPFieldAdmView extends SPAdmView
 		if( count( $this->_hidden ) ) {
 			$this->_hidden[ SPFactory::mainframe()->token() ] = 1;
 			foreach ( $this->_hidden as $name => $value ) {
-				echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$name}\" value=\"{$value}\"/>";
+				echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"SP_{$name}\" value=\"{$value}\"/>";
 			}
 		}
 		echo $action ? "\n</form>\n" : null;
 		Sobi::Trigger( 'AfterDisplay', $this->name() );
 	}
 }
-?>

@@ -48,7 +48,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$fid = SPRequest::int( 'fid' );
 
 		/* if adding new field - call #add */
-		if( !$fid ) {
+		if ( !$fid ) {
 			return $this->add();
 		}
 
@@ -70,19 +70,18 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$field->extend( $f );
 
 		/* get cognate field types */
-		if( $f->tGroup != 'special' ) {
+		if ( $f->tGroup != 'special' ) {
 			try {
 				$db->select( '*', 'spdb_field_types', array( 'tGroup' => $f->tGroup ), 'fPos' );
 				$fTypes = $db->loadObjectList();
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_TYPES_DB_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 			}
 
-			if( count( $fTypes ) ) {
+			if ( count( $fTypes ) ) {
 				$pre = 'FIELD.TYPE_OPTG_';
 				foreach ( $fTypes as $type ) {
-					$groups[ str_replace( $pre, null, Sobi::Txt( $pre.$type->tGroup ) ) ][ $type->tid ] = $type->fType;
+					$groups[ str_replace( $pre, null, Sobi::Txt( $pre . $type->tGroup ) ) ][ $type->tid ] = $type->fType;
 				}
 			}
 		}
@@ -91,13 +90,13 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 
 		/* get input filters */
-		$registry =& SPFactory::registry();
+		$registry = SPFactory::registry();
 		$registry->loadDBSection( 'fields_filter' );
-		$helpTask = 'field.'.$field->get( 'fieldType' );
+		$helpTask = 'field.' . $field->get( 'fieldType' );
 		$registry->set( 'help_task', $helpTask );
 		$filters = $registry->get( 'fields_filter' );
 		$f = array( 0 => Sobi::Txt( 'FM.NO_FILTER' ) );
-		if( count( $filters ) ) {
+		if ( count( $filters ) ) {
 			foreach ( $filters as $filter => $data ) {
 				$f[ $filter ] = Sobi::Txt( $data[ 'value' ] );
 			}
@@ -116,16 +115,16 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		/*
 		 * 1.1 native - config and view in xml
 		 */
-		if( SPLoader::translatePath( 'field.definitions.'.$field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
+		if ( SPLoader::translatePath( 'field.definitions.' . $field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
 			/** Cae we have also override  */
-			if( SPLoader::translatePath( 'field.definitions.'.$field->get( 'fieldType' ).'_override', 'adm', true, 'xml' ) ) {
-				$view->loadDefinition( 'field.definitions.'.$field->get( 'fieldType' ).'_override' );
+			if ( SPLoader::translatePath( 'field.definitions.' . $field->get( 'fieldType' ) . '_override', 'adm', true, 'xml' ) ) {
+				$view->loadDefinition( 'field.definitions.' . $field->get( 'fieldType' ) . '_override' );
 			}
 			else {
-				$view->loadDefinition( 'field.definitions.'.$field->get( 'fieldType' ) );
+				$view->loadDefinition( 'field.definitions.' . $field->get( 'fieldType' ) );
 			}
-			if( SPLoader::translatePath( 'field.templates.'.$field->get( 'fieldType' ), 'adm' ) ) {
-				$view->setTemplate( 'field.templates.'.$field->get( 'fieldType' ) );
+			if ( SPLoader::translatePath( 'field.templates.' . $field->get( 'fieldType' ) . '_override', 'adm' ) ) {
+				$view->setTemplate( 'field.templates.' . $field->get( 'fieldType' ) . '_override' );
 			}
 			else {
 				$view->setTemplate( 'field.templates.edit' );
@@ -133,8 +132,8 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 		/** Legacy code */
 		else {
-			if( SPLoader::translatePath( 'field.edit.'.$field->get( 'fieldType' ), 'adm', true, 'ini' ) ) {
-				$view->loadConfig( 'field.edit.'.$field->get( 'fieldType' ) );
+			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm', true, 'ini' ) ) {
+				$view->loadConfig( 'field.edit.' . $field->get( 'fieldType' ) );
 			}
 			else {
 				$view->loadConfig( 'field.edit' );
@@ -155,8 +154,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		try {
 			$db->select( '*', $db->join( array( array( 'table' => 'spdb_field', 'as' => 'sField', 'key' => 'fieldType' ), array( 'table' => 'spdb_field_types', 'as' => 'sType', 'key' => 'tid' ) ) ), array( 'fid' => $fid ) );
 			$f = $db->loadObject();
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
 		return $f;
@@ -170,55 +168,64 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		SPLoader::loadClass( 'html.input' );
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
+		$groups = $this->getFieldTypes( $db );
 
+
+		/* create dummy field with initial values */
+		$field = array(
+			'name' => '',
+			'nid' => '',
+			'notice' => '',
+			'description' => '',
+			'adminField' => 0,
+			'enabled' => 1,
+			'fee' => 0,
+			'isFree' => 1,
+			'withLabel' => 1,
+			'version' => 1,
+			'editable' => 1,
+			'required' => 0,
+			'showIn' => 'details',
+			'editLimit' => -1,
+			'version' => 1,
+			'inSearch' => 0,
+			'cssClass' => '',
+			'fieldType' => ''
+		);
+
+		/* get view class */
+		$class = SPLoader::loadView( 'field', true );
+		$view = new $class();
+		$view->addHidden( SPRequest::sid(), 'sid' );
+		$view->assign( $groups, 'types' );
+		$view->assign( $field, 'field' );
+		$view->assign( $this->_task, 'task' );
+		$view->loadConfig( 'field.edit' );
+		$view->setTemplate( 'field.edit' );
+		$view->display();
+	}
+
+	protected function getFieldTypes()
+	{
+		$db = SPFactory::db();
 		/* get all existing field types */
 		try {
-			$db->select( '*', 'spdb_field_types', null, 'fPos' );
-			$fTypes = $db->loadObjectList();
-		}
-		catch ( SPException $x ) {
+			$fTypes = $db
+					->select( '*', 'spdb_field_types', null, 'fPos' )
+					->loadObjectList();
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
 
 		$groups = array();
-		if( count( $fTypes ) ) {
+		if ( count( $fTypes ) ) {
 			$pre = 'FIELD.TYPE_OPTG_';
 			foreach ( $fTypes as $type ) {
-				$groups[ str_replace( $pre, null, Sobi::Txt( $pre.$type->tGroup ) ) ][ $type->tid ] = $type->fType;
+				$groups[ str_replace( $pre, null, Sobi::Txt( $pre . $type->tGroup ) ) ][ $type->tid ] = $type->fType;
 			}
+			return $groups;
 		}
-		/* create dummy field with initial values */
-		$field = array(
-            'name' 			=> '',
-            'nid' 			=> '',
-            'notice' 		=> '',
-            'description' 	=> '',
-            'adminField' 	=> 0,
-            'enabled' 		=> 1,
-            'fee' 			=> 0,
-            'isFree' 		=> 1,
-			'withLabel'		=> 1,
-            'version' 		=> 1,
-            'editable' 		=> 1,
-            'required' 		=> 0,
-            'showIn' 		=> 'details',
-            'editLimit' 	=> -1,
-            'version' 		=> 1,
-            'inSearch' 		=> 0,
-			'cssClass'		=> '',
-            'fieldType' 	=> ''
-         );
-
-         /* get view class */
-         $class  = SPLoader::loadView( 'field', true );
-         $view   = new $class();
-         $view->addHidden( SPRequest::sid(), 'sid' );
-         $view->assign( $groups, 'types' );
-         $view->assign( $field, 'field' );
-         $view->assign( $this->_task, 'task' );
-         $view->loadConfig( 'field.edit' );
-         $view->setTemplate( 'field.edit' );
-         $view->display();
+		return $groups;
 	}
 
 	/**
@@ -230,7 +237,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	public function saveNew()
 	{
-		$fc= SPLoader::loadModel( 'field', true );
+		$fc = SPLoader::loadModel( 'field', true );
 		$field = new $fc();
 		$this->getRequest();
 		return $field->saveNew( $this->attr );
@@ -242,7 +249,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	private function getRequest()
 	{
 		foreach ( $_REQUEST as $k => $v ) {
-			if( strstr( $k, 'field_' ) ) {
+			if ( strstr( $k, 'field_' ) ) {
 				$value = SPRequest::raw( $k );
 				$this->attr[ str_replace( 'field_', null, $k ) ] = $value;
 			}
@@ -255,22 +262,22 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 		$fids = array();
 		$m = array();
-		if( $id ) {
-			$fids[] = $id;
+		if ( $id ) {
+			$fids[ ] = $id;
 		}
 		else {
-			if( SPRequest::int( 'fid', 0 ) ) {
-				$fids[] = SPRequest::int( 'fid', 0 );
+			if ( SPRequest::int( 'fid', 0 ) ) {
+				$fids[ ] = SPRequest::int( 'fid', 0 );
 			}
 			else {
 				$fids = SPRequest::arr( 'p_fid', array() );
 			}
 		}
 		foreach ( $fids as $id ) {
-			$fc= SPLoader::loadModel( 'field', true );
+			$fc = SPLoader::loadModel( 'field', true );
 			$field = new $fc();
 			$field->extend( $this->loadField( $id ) );
-			$m[] = $field->delete();
+			$m[ ] = $field->delete();
 		}
 		SPMainFrame::msg( $m );
 		return $m;
@@ -293,7 +300,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	protected function save( $clone = false )
 	{
-		if( !( SPFactory::mainframe()->checkToken() ) ) {
+		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$fid = SPRequest::int( 'fid' );
@@ -306,7 +313,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		/* in case we are changing the sort by field */
 		$onid = $field->get( 'nid' );
 
-		if( $clone ) {
+		if ( $clone ) {
 			SPRequest::set( 'fid', 0, 'post' );
 			$fid = $field->saveNew( $this->attr );
 			$field->save( $this->attr );
@@ -316,13 +323,13 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 
 		/* in case we are changing the sort by field */
-		if( Sobi::Cfg( 'list.entries_ordering' ) == $onid && $field->get( 'nid' ) != $onid ) {
+		if ( Sobi::Cfg( 'list.entries_ordering' ) == $onid && $field->get( 'nid' ) != $onid ) {
 			SPFactory::config()->saveCfg( 'list.entries_ordering', $field->get( 'nid' ) );
 		}
 
 		SPFactory::cache()->cleanSection();
-		if( $this->_task == 'apply' || $clone ) {
-			if( $clone ) {
+		if ( $this->_task == 'apply' || $clone ) {
+			if ( $clone ) {
 				$msg = Sobi::Txt( 'FM.FIELD_CLONED' );
 			}
 			else {
@@ -342,7 +349,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	private function listFields()
 	{
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		$ord = $this->parseOrdering( 'forder', 'position.asc' );
 		SPLoader::loadClass( 'html.input' );
 		Sobi::ReturnPoint();
@@ -353,17 +360,18 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$menu = new $menuc( 'field.list', $sid );
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
-		if( count( $cfg ) ) {
+		if ( count( $cfg ) ) {
 			foreach ( $cfg as $section => $keys ) {
 				$menu->addSection( $section, $keys );
 			}
 		}
+
 		Sobi::Trigger( 'AfterCreate', 'AdmMenu', array( &$menu ) );
 		/* create new SigsiuTree */
 		$tree = SPLoader::loadClass( 'mlo.tree' );
 		$tree = new $tree( Sobi::GetUserState( 'categories.order', 'corder', 'position.asc' ) );
 		/* set link */
-		$tree->setHref( Sobi::Url( array( 'sid' => '{sid}') ) );
+		$tree->setHref( Sobi::Url( array( 'sid' => '{sid}' ) ) );
 		$tree->setId( 'menuTree' );
 		/* set the task to expand the tree */
 		$tree->setTask( 'category.expand' );
@@ -374,27 +382,43 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		try {
 			$db->select( '*', 'spdb_field', array( 'section' => $sid ), $ord );
 			$results = $db->loadObjectList();
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		$fields = array();
-		if( count( $results ) ) {
-			foreach ($results as $result ) {
+		if ( count( $results ) ) {
+			foreach ( $results as $result ) {
 				$field = SPFactory::Model( 'field', true );
 				$field->extend( $result );
-				$fields[] = $field;
+				$fields[ ] = $field;
+			}
+		}
+		$fieldTypes = $this->getFieldTypes();
+		$subMenu = array();
+		foreach ( $fieldTypes as $type => $group ) {
+			asort( $group );
+			$subMenu[ ] = array(
+				'label' => $type,
+				'element' => 'nav-header'
+			);
+			foreach( $group as $t => $l ) {
+				$subMenu[ ] = array(
+					'type' => null,
+					'task' => 'field.add.'.$t,
+					'label' => $l,
+					'ico' => 'tasks',
+					'element' => 'button'
+				);
 			}
 		}
 		/* get view class */
-		$class  = SPLoader::loadView( 'field', true );
-		$view   = new $class();
+		$view = SPFactory::View( 'field', true );
 		$view->addHidden( $sid, 'sid' );
-		$view->loadConfig( 'field.list' );
-		$view->setTemplate( 'field.list' );
 		$view->assign( $fields, 'fields' );
+		$view->assign( $subMenu, 'fieldTypes' );
 		$view->assign( $menu, 'menu' );
 		$view->assign( $this->_task, 'task' );
+		$view->determineTemplate( 'field', 'list' );
 		$view->display();
 	}
 
@@ -409,32 +433,32 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$ord = $order;
 		$dir = 'asc';
 
-		if( strstr( $ord, '.' ) ) {
+		if ( strstr( $ord, '.' ) ) {
 			$ord = explode( '.', $ord );
 			$dir = $ord[ 1 ];
 			$ord = $ord[ 0 ];
 		}
 		$ord = ( $ord == 'state' ) ? 'enabled' : $ord;
 		$ord = ( $ord == 'order' ) ? 'position' : $ord;
-		if( $ord == 'name' ) {
+		if ( $ord == 'name' ) {
 			/* @var SPdb $db */
 			$db =& SPFactory::db();
-			$db->select( 'fid', 'spdb_language', array( 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.'.$dir );
+			$db->select( 'fid', 'spdb_language', array( 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.' . $dir );
 			$fields = $db->loadResultArray();
-			if( !count( $fields ) && Sobi::Lang() != Sobi::DefLang() ) {
-				$db->select( 'id', 'spdb_language', array( 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.'.$dir );
+			if ( !count( $fields ) && Sobi::Lang() != Sobi::DefLang() ) {
+				$db->select( 'id', 'spdb_language', array( 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.' . $dir );
 				$fields = $db->loadResultArray();
 			}
-			if( count( $fields ) ) {
+			if ( count( $fields ) ) {
 				$fields = implode( ',', $fields );
 				$ord = "field( fid, {$fields} )";
 			}
 			else {
-				$ord = 'fid.'.$dir;
+				$ord = 'fid.' . $dir;
 			}
 		}
 		else {
-			$ord = $ord.'.'.$dir;
+			$ord = $ord . '.' . $dir;
 		}
 		Sobi::setUserState( 'fields.order', $order );
 		return $ord;
@@ -454,8 +478,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			$pos++;
 			try {
 				$db->update( 'spdb_field', array( 'position' => $c ), array( 'fid' => $fid ) );
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 			}
 		}
@@ -466,7 +489,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	private function singleReorder( $up )
 	{
-		$up = ( bool ) $up;
+		$up = ( bool )$up;
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		$fid = SPRequest::int( 'fid' );
@@ -476,20 +499,19 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$field->extend( $fdata );
 		$eq = $up ? '<' : '>';
 		$dir = $up ? 'position.desc' : 'position.asc';
-		$current = $field->get( 'position' ) ;
+		$current = $field->get( 'position' );
 		try {
-			$db->select( 'position, fid', 'spdb_field', array( 'position'.$eq => $current, 'section' => SPRequest::int( 'sid' ) ), $dir, 1 );
+			$db->select( 'position, fid', 'spdb_field', array( 'position' . $eq => $current, 'section' => SPRequest::int( 'sid' ) ), $dir, 1 );
 			$interchange = $db->loadAssocList();
-			if( $interchange && count( $interchange ) ) {
-				$db->update( 'spdb_field', array( 'position' => $interchange[ 0 ][ 'position' ] ), array( 'section' => SPRequest::int( 'sid' ), 'fid' => $field->get( 'fid' ) ) , 1 );
-				$db->update( 'spdb_field', array( 'position' => $current ), array( 'section' => SPRequest::int( 'sid' ), 'fid' => $interchange[ 0 ][ 'fid' ] ) , 1 );
+			if ( $interchange && count( $interchange ) ) {
+				$db->update( 'spdb_field', array( 'position' => $interchange[ 0 ][ 'position' ] ), array( 'section' => SPRequest::int( 'sid' ), 'fid' => $field->get( 'fid' ) ), 1 );
+				$db->update( 'spdb_field', array( 'position' => $current ), array( 'section' => SPRequest::int( 'sid' ), 'fid' => $interchange[ 0 ][ 'fid' ] ), 1 );
 			}
 			else {
 				$current = $up ? $current-- : $current++;
 				$db->update( 'spdb_field', array( 'position' => $current ), array( 'section' => SPRequest::int( 'sid' ), 'fid' => $field->get( 'fid' ) ), 1 );
 			}
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
 	}
@@ -528,17 +550,16 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$state = ( $task == 'setFree' ) ? 1 : 0;
 				break;
 		}
-		if( !$fids ) {
+		if ( !$fids ) {
 			$fids = array( SPRequest::int( 'fid' ) );
 		}
 		$msg = null;
-		if( count( $fids ) ) {
+		if ( count( $fids ) ) {
 			foreach ( $fids as $fid ) {
 				try {
-					$db->update( 'spdb_field', array( $col => $state ), array( 'fid' => $fid ) , 1 );
+					$db->update( 'spdb_field', array( $col => $state ), array( 'fid' => $fid ), 1 );
 					$msg .= Sobi::Txt( 'FM.STATE_CHANGED', array( 'fid' => $fid ) );
-				}
-				catch ( SPException $x ) {
+				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 					$msg .= Sobi::Txt( 'FM.STATE_NOT_CHANGED', array( 'fid' => $fid ) );
 				}
@@ -586,7 +607,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			case 'delete':
 				$r = true;
 				SPFactory::cache()->cleanSection();
-				SPMainFrame::setRedirect( Sobi::Back(), $this->delete()  );
+				SPMainFrame::setRedirect( Sobi::Back(), $this->delete() );
 				break;
 			case 'reorder':
 				$r = true;
@@ -616,18 +637,17 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
-				if( !Sobi::Trigger( 'Execute', $this->name(), array( &$this ) ) ) {
+				if ( !Sobi::Trigger( 'Execute', $this->name(), array( &$this ) ) ) {
 					$fid = SPRequest::int( 'fid' );
 					$method = $this->_task;
-					if( $fid ) {
+					if ( $fid ) {
 						SPLoader::loadModel( 'field', true );
 						$fdata = $this->loadField( $fid );
 						$field = new SPAdmField();
 						$field->extend( $fdata );
 						try {
 							$field->$method();
-						}
-						catch ( SPException $x ) {
+						} catch ( SPException $x ) {
 							Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 						}
 					}
@@ -640,4 +660,5 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		return $r;
 	}
 }
+
 ?>

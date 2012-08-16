@@ -107,6 +107,12 @@ final class SPHeader
             $this->addCssFile( 'bootstrap.bootstrap' )
                     ->addJsFile( array( 'jquery', 'bootstrap' ) );
         }
+	    if ( $adm ) {
+		    $this->addCssFile( 'adm.bootstrap' );
+	    }
+	    else {
+		    $this->addCssFile( 'bootstrap.sobipro' );
+	    }
         return $this;
     }
 

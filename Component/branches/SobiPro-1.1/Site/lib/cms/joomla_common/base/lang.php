@@ -332,7 +332,8 @@ class SPJoomlaLang
         $var =& $obj;
         foreach ( $properties as $property ) {
             if ( ( $var instanceof SPDBObject ) || ( method_exists( $var, 'get' ) ) ) {
-                if ( strstr( $property, 'field_' && $var instanceof SPEntry ) ) {
+	            if ( strstr( $property, 'field_' ) && $var instanceof SPEntry  ) {
+//                if ( strstr( $property, 'field_' && $var instanceof SPEntry ) ) {
                     $var = $var->getField( $property )->data();
                 }
                 // after an entry has been saved this attribut is being emptied

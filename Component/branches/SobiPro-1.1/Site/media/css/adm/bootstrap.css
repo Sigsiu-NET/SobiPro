@@ -1,0 +1,59 @@
+#SPAdmToolbar .nav {
+	margin-bottom: 0px
+}
+
+#SPAdmToolbar .well {
+	margin-bottom: 3px;
+	height: 30px;
+}
+
+#SPAdmToolbar .container-fluid {
+	padding: 0px;
+}
+
+#SPAdmToolbar .container-fluid [class*="span"] {
+	margin-left: 0px;
+}
+
+#SPAdmToolbar .nav-pills > .active > a,
+#SPAdmToolbar .SobiPro .nav-pills > .active > a:hover {
+	color: inherit;
+	background-color: whiteSmoke;
+}
+
+div.spScreenTitle {
+	background-repeat: no-repeat;
+	background-position: 2%;
+}
+
+div.spScreenTitle:first-child {
+	padding-left: 70px;
+}
+
+#SPAdmToolbar .btn-group {
+	float: left;
+}
+
+#SPAdmToolbar .btn {
+	float: left;
+}
+
+#SPAdmToolbar .dropdown-menu .SpDropDownBt li {
+	/*display: block;*/
+	min-width: 150px;
+}
+
+#SPAdmToolbar .dropdown-menu .SpDropDownBt li a:hover {
+	background-color: #0088cc;
+}
+
+#SPAdmToolbar .divider {
+	padding: 0 5px;
+	color: #999;
+	float: left;
+	display: block;
+	margin: 0.2pt;
+}
+#SPAdmToolbar .nav .nav-header {
+	white-space:nowrap;
+}
