@@ -17,6 +17,7 @@
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/js/adm/sobipro.js $
  */
 
+
 function SP_close()
 {
 	$( "sbox-btn-close" ).fireEvent( "click" );
