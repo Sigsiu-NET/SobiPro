@@ -59,49 +59,49 @@ class SPFieldAdmView extends SPAdmView
 		$c = $this->get( 'fields' );
 		$fields = array();
 		$this->assign(
-		SPLists::tableHeader(
-			array(
-	                    'checkbox'      => SP_TBL_HEAD_SELECTION_BOX,
-	                    'fid'           => SP_TBL_HEAD_SORTABLE,
-	                    'name'          => SP_TBL_HEAD_SORTABLE,
-	                    'fieldType'     => SP_TBL_HEAD_SORTABLE,
-	                    'state'         => SP_TBL_HEAD_STATE,
-	                    'showIn'        => SP_TBL_HEAD_SORTABLE,
-	                    'validSince'    => SP_TBL_HEAD_SORTABLE,
-	                    'validUntil'    => SP_TBL_HEAD_SORTABLE,
-	                    'isFree'        => SP_TBL_HEAD_SORTABLE,
-	                    'editable'      => SP_TBL_HEAD_SORTABLE,
-	                    'required'      => SP_TBL_HEAD_SORTABLE,
-	                    'order'         => SP_TBL_HEAD_ORDER,
-			),  'field', 'p_fid', 'forder' ), 'header'
+			SPLists::tableHeader(
+				array(
+					'checkbox' => SP_TBL_HEAD_SELECTION_BOX,
+					'fid' => SP_TBL_HEAD_SORTABLE,
+					'name' => SP_TBL_HEAD_SORTABLE,
+					'fieldType' => SP_TBL_HEAD_SORTABLE,
+					'state' => SP_TBL_HEAD_STATE,
+					'showIn' => SP_TBL_HEAD_SORTABLE,
+					'validSince' => SP_TBL_HEAD_SORTABLE,
+					'validUntil' => SP_TBL_HEAD_SORTABLE,
+					'isFree' => SP_TBL_HEAD_SORTABLE,
+					'editable' => SP_TBL_HEAD_SORTABLE,
+					'required' => SP_TBL_HEAD_SORTABLE,
+					'order' => SP_TBL_HEAD_ORDER,
+				), 'field', 'p_fid', 'forder' ), 'header'
 		);
 		$sid = Sobi::Reg( 'current_section' );
 		SPRequest::set( 'sid', $sid );
-		if( count( $c ) ) {
+		if ( count( $c ) ) {
 			foreach ( $c as $f ) {
 				$attr = $f->getAttributes();
 				$field = array();
 				foreach ( $attr as $a ) {
 					$field[ $a ] = $f->get( $a );
 				}
-				if( $f->get( '_off' ) ) {
+				if ( $f->get( '_off' ) ) {
 					$field[ 'name' ] = "<del style=\"color: red!important;font-weight: bold;\">{$field[ 'name' ]}</del>";
-					$field[ 'field_type' ]	= '<del style="color: red!important;font-weight: bold;">'.Sobi::Txt( $field[ 'fieldType' ] )."<del>";
+					$field[ 'field_type' ] = '<del style="color: red!important;font-weight: bold;">' . Sobi::Txt( $field[ 'fieldType' ] ) . "<del>";
 				}
 				else {
-					$url = Sobi::Url( array( 'task' => 'field.edit', 'fid' => $f->get( 'fid' ) , 'sid' => $sid ) );
+					$url = Sobi::Url( array( 'task' => 'field.edit', 'fid' => $f->get( 'fid' ), 'sid' => $sid ) );
 					$field[ 'name' ] = "<a href=\"{$url}\">{$field[ 'name' ]}</a>";
-					$field[ 'field_type' ]	= Sobi::Txt( $field[ 'fieldType' ] );
+					$field[ 'field_type' ] = Sobi::Txt( $field[ 'fieldType' ] );
 				}
-				$field[ 'checkbox' ] 	= SPLists::checkedOut( $f, 'p_fid' );
-				$field[ 'state' ] 		= SPLists::state( $f, 'fid', 'field', 'enabled' );
-				$field[ 'order' ] 		= SPLists::position( $f, count( $c ), 'fid', 'field', 'sid', 'fid' );
+				$field[ 'checkbox' ] = SPLists::checkedOut( $f, 'p_fid' );
+				$field[ 'state' ] = SPLists::state( $f, 'fid', 'field', 'enabled' );
+				$field[ 'order' ] = SPLists::position( $f, count( $c ), 'fid', 'field', 'sid', 'fid' );
 
-				$field[ 'is_free' ] 	= SPLists::state( $f, 'fid', 'field', 'isFree', array( 'on' => 'setFree', 'off' => 'setFee') );
-				$field[ 'required' ] 	= SPLists::state( $f, 'fid', 'field', 'required', array( 'on' => 'setRequired', 'off' => 'setNotRequired') );
-				$field[ 'editable' ] 	= SPLists::state( $f, 'fid', 'field', 'editable', array( 'on' => 'setEditable', 'off' => 'setNotEditable') );
-				$field[ 'show_in' ] 	= Sobi::Txt( $field[ 'showIn' ] );
-				$fields[] 				= $field;
+				$field[ 'is_free' ] = SPLists::state( $f, 'fid', 'field', 'isFree', array( 'on' => 'setFree', 'off' => 'setFee' ) );
+				$field[ 'required' ] = SPLists::state( $f, 'fid', 'field', 'required', array( 'on' => 'setRequired', 'off' => 'setNotRequired' ) );
+				$field[ 'editable' ] = SPLists::state( $f, 'fid', 'field', 'editable', array( 'on' => 'setEditable', 'off' => 'setNotEditable' ) );
+				$field[ 'show_in' ] = Sobi::Txt( $field[ 'showIn' ] );
+				$fields[ ] = $field;
 			}
 		}
 		$this->assign( $fields, 'fields' );
@@ -112,30 +112,24 @@ class SPFieldAdmView extends SPAdmView
 	 */
 	public function setTitle( $title )
 	{
-		$titles = array();
-		if( strstr( $title, '|' ) ) {
-			$titleArr = explode( '|', $title );
-			foreach ( $titleArr as $t ) {
-				$t = explode( '=', $t );
-				$titles[ trim( $t[ 0 ] ) ] = $t[ 1 ];
-			}
-			$title = $titles[ $this->get( 'task' ) ];
+		if ( strstr( SPRequest::task(), '.add' ) ) {
+			$title = str_replace( 'EDIT', 'ADD', $title );
 		}
-		$name = $this->get( 'field.name' );
-		$title = Sobi::Txt( $title, array( 'field' => $name ) );
+		$title = Sobi::Txt( $title, array( 'field' => $this->get( 'field.name' ), 'field_type' => $this->get( 'field.fieldType' ) ) );
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
 		SPFactory::header()->setTitle( $title );
-		$this->set( $title, 'site_title');
+		$this->set( $title, 'site_title' );
 	}
+
 	/**
 	 * @param string $template
 	 */
 	public function setTemplate( $template )
 	{
-		if( ! $this ->_template ) {
+		if ( !$this->_template ) {
 			$this->_template = $template;
 		}
-		$this->_templates[] = $template;
+		$this->_templates[ ] = $template;
 		Sobi::Trigger( 'setTemplate', $this->name(), array( &$this->_templates ) );
 	}
 
@@ -150,16 +144,16 @@ class SPFieldAdmView extends SPAdmView
 		$allowedTags = $this->get( 'field.allowedTags' );
 		$allowedTags = is_array( $allowedTags ) ? implode( '|', $allowedTags ) : null;
 
-		$allowedAttributes =  $this->get( 'field.allowedAttributes' );
-		$allowedAttributes =  is_array( $allowedAttributes ) ?  implode( '|', $allowedAttributes ) : null;
+		$allowedAttributes = $this->get( 'field.allowedAttributes' );
+		$allowedAttributes = is_array( $allowedAttributes ) ? implode( '|', $allowedAttributes ) : null;
 
 		$this->assign( $allowedAttributes, 'allowedAttributes' );
 		$this->assign( $allowedTags, 'allowedTags' );
-		echo '<div class="SobiPro">'."\n";
+		echo '<div class="SobiPro">' . "\n";
 		echo $action ? "\n<form action=\"{$action}\" method=\"post\" name=\"adminForm\" id=\"SPAdminForm\" enctype=\"multipart/form-data\" accept-charset=\"utf-8\" >\n" : null;
 		foreach ( $this->_templates as $tpl ) {
 			$template = SPLoader::path( $tpl, 'adm.template' );
-			if( !$template ) {
+			if ( !$template ) {
 				$tpl = SPLoader::translatePath( $tpl, 'adm.template', false );
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_LOAD_TEMPLATE_AT', $tpl ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
@@ -168,7 +162,7 @@ class SPFieldAdmView extends SPAdmView
 			}
 		}
 
-		if( count( $this->_hidden ) ) {
+		if ( count( $this->_hidden ) ) {
 			$this->_hidden[ SPFactory::mainframe()->token() ] = 1;
 			foreach ( $this->_hidden as $name => $value ) {
 				echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"SP_{$name}\" value=\"{$value}\"/>";

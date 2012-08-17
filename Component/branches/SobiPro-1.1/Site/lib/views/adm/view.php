@@ -192,7 +192,7 @@ class SPAdmView extends SPObject implements SPView
 		SPFactory::AdmToolbar()->setTitle( array( 'title' => $this->parseValue( $title ), 'icon' => $icon ) );
 		$buttons = array();
 		foreach ( $xml->childNodes as $node ) {
-			if ( $node->nodeName == '#text' ) {
+			if ( strstr( $node->nodeName, '#' ) ){
 				continue;
 			}
 			/** @var DOMNode $node */
@@ -214,7 +214,7 @@ class SPAdmView extends SPObject implements SPView
 						}
 					}
 					foreach ( $node->childNodes as $bt ) {
-						if ( $bt->nodeName == '#text' ) {
+						if ( strstr( $bt->nodeName, '#' ) ) {
 							continue;
 						}
 						$group[ 'buttons' ][ ] = $this->xmlButton( $bt );
@@ -229,16 +229,20 @@ class SPAdmView extends SPObject implements SPView
 					/** it has to have child nodes or these childs are defined in value  */
 					if ( $node->hasChildNodes() ) {
 						foreach ( $node->childNodes as $bt ) {
-							if ( $bt->nodeName == '#text' ) {
+							if ( strstr( $bt->nodeName, '#' ) ) {
 								continue;
 							}
-							$group[ 'buttons' ][ ] = $this->xmlButton( $bt );
+							if ( $bt->nodeName == 'nav-header' ) {
+								$group[ 'buttons' ][ ] = array( 'element' => 'nav-header', 'label' => Sobi::Txt( $bt->attributes->getNamedItem( 'label' )->nodeValue ) );
+							}
+							else {
+								$group[ 'buttons' ][ ] = $this->xmlButton( $bt );
+							}
 						}
 					}
 					else {
 						$group[ 'buttons' ] = $this->get( $node->attributes->getNamedItem( 'buttons' )->nodeValue );
 					}
-					SPConfig::debOut($node->attributes->getNamedItem( 'buttons' )->nodeValue);
 					$buttons[ ] = $group;
 					break;
 			}
@@ -273,7 +277,7 @@ class SPAdmView extends SPObject implements SPView
 			}
 			if ( $xml->hasChildNodes() ) {
 				foreach ( $xml->childNodes as $node ) {
-					if ( $node->nodeName == '#text' ) {
+					if ( strstr( $node->nodeName, '#' ) ) {
 						continue;
 					}
 					$button[ 'buttons' ][ ] = $this->xmlButton( $node );
@@ -302,7 +306,7 @@ class SPAdmView extends SPObject implements SPView
 	private function xmlBody( $xml, &$output )
 	{
 		foreach ( $xml as $node ) {
-			if ( $node->nodeName == '#text' ) {
+			if ( strstr( $node->nodeName, '#' ) ) {
 				continue;
 			}
 			$element = array(
@@ -338,7 +342,7 @@ class SPAdmView extends SPObject implements SPView
 					if ( $node->hasChildNodes() ) {
 						$this->xmlBody( $node->childNodes, $element[ 'content' ] );
 					}
-					elseif ( $node->nodeName != '#text' ) {
+					elseif ( !(strstr( $node->nodeName, '#' ) ) ){
 						$element[ 'content' ] = $node->nodeValue;
 					}
 					break;
@@ -379,9 +383,9 @@ class SPAdmView extends SPObject implements SPView
 					case 'multi':
 						$args[ $attribute->nodeName ] = $attribute->nodeValue == 'true' ? true : false;
 						break;
+					case 'selected':
 					case 'value':
 					case 'values':
-					case 'selected':
 						$args[ $attribute->nodeName ] = $this->get( $attribute->nodeValue );
 						break;
 					case 'label':
@@ -402,7 +406,7 @@ class SPAdmView extends SPObject implements SPView
 							$values = array();
 							/** @var DOMNode $value */
 							foreach ( $child->childNodes as $value ) {
-								if ( $value->nodeName == '#text' ) {
+								if ( strstr( $value->nodeName, '#' ) ) {
 									continue;
 								}
 								$xml[ 'childs' ][ $child->nodeName ][ $value->attributes->getNamedItem( 'value' )->nodeValue ] = $value->attributes->getNamedItem( 'label' )->nodeValue;
@@ -415,7 +419,7 @@ class SPAdmView extends SPObject implements SPView
 						if ( $child->childNodes->length ) {
 							/** @var DOMNode $value */
 							foreach ( $child->childNodes as $value ) {
-								if ( $value->nodeName == '#text' ) {
+								if ( strstr( $value->nodeName, '#' ) ) {
 									continue;
 								}
 								if ( $value->nodeName == 'call' ) {
@@ -473,7 +477,7 @@ class SPAdmView extends SPObject implements SPView
 		if ( $value->hasChildNodes() ) {
 			$params = array();
 			foreach ( $value->childNodes as $p ) {
-				if ( $p->nodeName == '#text' ) {
+				if ( strstr( $p->nodeName, '#' ) ) {
 					continue;
 				}
 				if ( $p->attributes->length && $p->attributes->getNamedItem( 'value' ) ) {
@@ -522,7 +526,7 @@ class SPAdmView extends SPObject implements SPView
 				case 'hidden':
 					$hidden = $node->childNodes;
 					foreach ( $hidden as $field ) {
-						if ( $field->nodeName != '#text' ) {
+						if ( !( strstr( $field->nodeName, '#' ) ) ){
 							$this->addHidden(
 								SPRequest::string(
 									$field->attributes->getNamedItem( 'name' )->nodeValue,
@@ -534,7 +538,7 @@ class SPAdmView extends SPObject implements SPView
 					}
 					break;
 				default:
-					if ( $node->nodeName != '#text' ) {
+					if ( !( strstr( $node->nodeName, '#' ) ) ){
 						$this->_config[ 'general' ][ $node->nodeName ] = $node->attributes->getNamedItem( 'value' )->nodeValue;
 					}
 					break;
@@ -576,6 +580,7 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param string $path
+	 * @deprecated since 1.1
 	 */
 	public function loadConfig( $path )
 	{

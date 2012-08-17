@@ -18,6 +18,7 @@
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Admin/field/list.php $
  */
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+$data = $this->getData();
 ?>
 
 <?php echo $this->toolbar(); ?>
@@ -26,6 +27,14 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 <div style="float: left; width: 20em; margin-left: 3px;">
 	<?php $this->menu(); ?>
 </div>
+<!--starts here-->
+<?php foreach ( $data[ 'data' ] as $element ) : ?>
+	<?php $this->getParser()->parse( $element ); ?>
+<?php endforeach; ?>
+<!--ends here-->
+
+
+
 <?php $this->trigger( 'AfterDisplayMenu' ); ?>
 <div style="margin-left: 20.8em; margin-top: 3px;">
 <div class="sheader icon-48-SobiFieldList">

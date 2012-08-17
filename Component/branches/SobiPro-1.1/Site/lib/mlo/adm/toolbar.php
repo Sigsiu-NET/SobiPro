@@ -29,7 +29,10 @@ class SpAdmToolbar
 		'save' => 'share',
 		'duplicate' => 'edit',
 		'new' => 'plus-sign',
-		'delete' => 'trash'
+		'delete' => 'trash',
+		'actions' => 'plane',
+		'publish' => 'ok',
+		'hide' => 'remove'
 	);
 	private $labels = array(
 		'apply' => 'SAVE_ONLY',
@@ -38,7 +41,10 @@ class SpAdmToolbar
 		'save' => 'SAVE_EXIT',
 		'duplicate' => 'SAVE_NEW',
 		'new' => 'ADD_NEW',
-		'delete' => 'DELETE'
+		'delete' => 'DELETE',
+		'actions' => 'ACTIONS',
+		'publish' => 'PUBLISH',
+		'hide' => 'UNPUBLISH',
 	);
 	protected $btClass = 'btn';
 

@@ -16,71 +16,33 @@
 	<toolbar title="FM.SITE_TITLE" icon="SobiFields">
 		<buttons type="new" buttons="fieldTypes"/>
 		<divider/>
-		<button type="delete" task="field.delete"/>
+		<buttons type="actions">
+			<button type="delete" task="field.delete"/>
+			<nav-header label="TB.PUBLISHING"/>
+			<button type="publish" task="field.publish"/>
+			<button type="hide" task="field.hide"/>
+			<!--<nav-header label="TB.REQUIRED"/>-->
+			<!--<button type="custom" task="field.setRequired" label="TB.SET_REQ" ico="asterisk"/>-->
+			<!--<button type="custom" task="field.setNotRequired" label="TB.SET_NOT_REQ" ico="remove-sign"/>-->
+			<!--<nav-header label="TB.EDITABLE_FIELD"/>-->
+			<!--<button type="custom" task="field.setEditable" label="TB.SET_EDITABLE" ico="pencil"/>-->
+			<!--<button type="custom" task="field.setNotEditable" label="TB.SET_NOT_EDITABLE" ico="remove-sign"/>-->
+		</buttons>
 		<divider/>
 		<button type="help" target="_blank"/>
 	</toolbar>
 	<body>
-		<tabs>
-			<tab label="FM.FIELD_PARAMETERS">
-				<div class="well">
-					<div class="row">
-						<div class="span10">
-							<fieldset label="FM.FIELD_PARAMETERS">
-								<field type="text" name="field.name" value="field.name" label="FM.FIELD_LABEL" size="50"
-								       maxlength="255"/>
-								<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
-								<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX"/>
-								<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES"
-								       editor="false" width="350" height="30"/>
-								<field type="textarea" name="field.description" value="field.description"
-								       label="FM.DESCRIPTION" editor="false" width="350" height="30"/>
-							</fieldset>
-						</div>
-						<div class="span6">
-							<fieldset label="FM.FIELD_PARAMETERS">
-								<field type="states" name="field.enabled" value="field.enabled" label="ENABLED"
-								       prefix="yes_no"/>
-								<field type="select" name="field.showIn" selected="field.showIn"
-								       label="FM.AVAILABLE_IN">
-									<values>
-										<option value="both" label="FM.BOTH_OPT"/>
-										<option value="details" label="FM.DETAILS_VIEW_OPT"/>
-										<option value="vcard" label="FM.V_CARD_OPT"/>
-										<option value="hidden" label="FM.HIDDEN_OPT"/>
-									</values>
-								</field>
-								<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS"
-								       class="span3"/>
-								<field type="states" name="field.adminField" value="field.adminField"
-								       label="FM.ADM_FIELD" prefix="yes_no"/>
-								<field type="states" name="field.required" value="field.required" label="FM.IS_REQUIRED"
-								       prefix="yes_no"/>
-								<field type="states" name="field.editable" value="field.editable" label="FM.IS_EDITABLE"
-								       prefix="yes_no"/>
-								<field type="states" name="field.withLabel" value="field.withLabel"
-								       label="FM.SHOW_LABEL" prefix="yes_no"/>
-								<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS"
-								       class="span1"/>
-								<field type="output" value="field.version" label="VERSION"/>
-								<field type="select" name="field.fieldType" selected="field.fieldType" size="5"
-								       multi="false" values="types" label="FM.FIELD_TYPE"/>
-								<field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE"
-								       prefix="yes_no"/>
-								<field type="text" name="field.fee" value="field.fee" label="FM.FIELD_FEE"
-								       class="span2">
-									<add where="after">
-										<call function="Sobi::Cfg">
-											<param>payments.currency</param>
-											<param>EUR</param>
-										</call>
-									</add>
-								</field>
-							</fieldset>
-						</div>
-					</div>
-				</div>
-			</tab>
-		</tabs>
+		<header label="FM.FIELDS_FOR" icon="SobiFieldList" />
+		<table>
+			<head>
+				<cell />
+			</head>
+			<loop>
+				<cell />
+			</loop>
+			<foot>
+				<navigation/>
+			</foot>
+		</table>
 	</body>
 </definition>

@@ -24,6 +24,6 @@ $parser = $this->getParser();
 <?php echo $this->toolbar(); ?>
 <!--starts here-->
 <?php foreach ( $data[ 'data' ] as $element ) : ?>
-<?php $this->getParser()->parse( $element ); ?>
+	<?php $this->getParser()->parse( $element ); ?>
 <?php endforeach; ?>
 <!--ends here-->

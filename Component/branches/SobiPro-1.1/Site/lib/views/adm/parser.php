@@ -82,9 +82,9 @@ class SPTplParser
 				}
 				echo '</div>' . "\n";
 				echo '</div>' . "\n";
-				if( $this->table ) {
-
-				}
+				break;
+			default:
+//				SPConfig::debOut( $element );
 				break;
 		}
 	}

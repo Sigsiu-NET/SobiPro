@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -33,6 +33,10 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 * @var string
 	 */
 	protected $_type = 'field';
+	/**
+	 * @var string
+	 */
+	protected $_fieldType = 'field';
 	/**
 	 * @var string
 	 */
@@ -61,33 +65,15 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 
 		/* load base data */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		$f = $this->loadField( $fid );
 		$groups = array();
 
 		$fc = SPLoader::loadModel( 'field', true );
 		$field = new $fc();
 		$field->extend( $f );
+		$groups = $this->getFieldGroup( $f->fType, $f->tGroup );
 
-		/* get cognate field types */
-		if ( $f->tGroup != 'special' ) {
-			try {
-				$db->select( '*', 'spdb_field_types', array( 'tGroup' => $f->tGroup ), 'fPos' );
-				$fTypes = $db->loadObjectList();
-			} catch ( SPException $x ) {
-				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_TYPES_DB_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
-			}
-
-			if ( count( $fTypes ) ) {
-				$pre = 'FIELD.TYPE_OPTG_';
-				foreach ( $fTypes as $type ) {
-					$groups[ str_replace( $pre, null, Sobi::Txt( $pre . $type->tGroup ) ) ][ $type->tid ] = $type->fType;
-				}
-			}
-		}
-		else {
-			$groups[ Sobi::Txt( 'FIELD.TYPE_OPTG_SPECIAL' ) ][ $field->get( 'fieldType' ) ] = $f->fType;
-		}
 
 		/* get input filters */
 		$registry = SPFactory::registry();
@@ -143,6 +129,39 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$view->display();
 	}
 
+	private function getFieldGroup( $fType, $group = null )
+	{
+		if ( !( $group ) ) {
+			$group = SPFactory::db()
+					->select( 'tGroup', 'spdb_field_types', array( 'tid' => $fType ) )
+					->loadResult();
+		}
+		/* get cognate field types */
+		if ( $group != 'special' ) {
+			try {
+				$fTypes = SPFactory::db()
+						->select( '*', 'spdb_field_types', array( 'tGroup' => $group ), 'fPos' )
+						->loadObjectList();
+			} catch ( SPException $x ) {
+				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_TYPES_DB_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
+			}
+
+			if ( count( $fTypes ) ) {
+				$pre = 'FIELD.TYPE_OPTG_';
+				foreach ( $fTypes as $type ) {
+					$groups[ str_replace( $pre, null, Sobi::Txt( $pre . $type->tGroup ) ) ][ $type->tid ] = $type->fType;
+				}
+			}
+		}
+		else {
+			$name = SPFactory::db()
+					->select( 'fType', 'spdb_field_types', array( 'tid' => $fType ) )
+					->loadResult();
+			$groups[ Sobi::Txt( 'FIELD.TYPE_OPTG_SPECIAL' ) ][ $fType ] = $name;
+		}
+		return $groups;
+	}
+
 	/**
 	 * @param int $fid
 	 * @return stdClass
@@ -166,10 +185,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	private function add()
 	{
 		SPLoader::loadClass( 'html.input' );
-		/* @var SPdb $db */
-		$db =& SPFactory::db();
-		$groups = $this->getFieldTypes( $db );
-
+		$groups = $this->getFieldGroup( $this->_fieldType );
 
 		/* create dummy field with initial values */
 		$field = array(
@@ -190,18 +206,34 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			'version' => 1,
 			'inSearch' => 0,
 			'cssClass' => '',
-			'fieldType' => ''
+			'fieldType' => $this->_fieldType
 		);
 
 		/* get view class */
-		$class = SPLoader::loadView( 'field', true );
-		$view = new $class();
+		$view = SPFactory::View( 'field', true );
 		$view->addHidden( SPRequest::sid(), 'sid' );
 		$view->assign( $groups, 'types' );
 		$view->assign( $field, 'field' );
 		$view->assign( $this->_task, 'task' );
-		$view->loadConfig( 'field.edit' );
-		$view->setTemplate( 'field.edit' );
+
+		if ( SPLoader::translatePath( 'field.definitions.' . $this->_fieldType, 'adm', true, 'xml' ) ) {
+			/** Cae we have also override  */
+			if ( SPLoader::translatePath( 'field.definitions.' . $this->_fieldType . '_override', 'adm', true, 'xml' ) ) {
+				$view->loadDefinition( 'field.definitions.' . $this->_fieldType . '_override' );
+			}
+			else {
+				$view->loadDefinition( 'field.definitions.' . $this->_fieldType );
+			}
+			if ( SPLoader::translatePath( 'field.templates.' . $this->_fieldType . '_override', 'adm' ) ) {
+				$view->setTemplate( 'field.templates.' . $this->_fieldType . '_override' );
+			}
+			else {
+				$view->setTemplate( 'field.templates.edit' );
+			}
+		}
+		else {
+			Sobi::Error( $this->name(), SPLang::e( 'NO_FIELD_DEF' ), SPC::WARNING, 500, __LINE__, __FILE__ );
+		}
 		$view->display();
 	}
 
@@ -401,10 +433,10 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				'label' => $type,
 				'element' => 'nav-header'
 			);
-			foreach( $group as $t => $l ) {
+			foreach ( $group as $t => $l ) {
 				$subMenu[ ] = array(
 					'type' => null,
-					'task' => 'field.add.'.$t,
+					'task' => 'field.add.' . $t,
 					'label' => $l,
 					'ico' => 'tasks',
 					'element' => 'button'
@@ -576,6 +608,11 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 		/* parent class executes the plugins */
 		$r = false;
+		if ( strstr( $this->_task, '.' ) ) {
+			$this->_task = explode( '.', $this->_task );
+			$this->_fieldType = $this->_task[ 1 ];
+			$this->_task = $this->_task[ 0 ];
+		}
 		switch ( $this->_task ) {
 			case 'list':
 				$r = true;
@@ -660,5 +697,3 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		return $r;
 	}
 }
-
-?>
