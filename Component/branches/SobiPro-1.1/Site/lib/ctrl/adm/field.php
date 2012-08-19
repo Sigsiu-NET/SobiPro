@@ -125,6 +125,9 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$view->loadConfig( 'field.edit' );
 			}
 			$view->setTemplate( 'field.edit' );
+			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm' ) ) {
+				$view->setTemplate( 'field.edit.' . $field->get( 'fieldType' ) );
+			}
 		}
 		$view->display();
 	}
@@ -185,7 +188,12 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	private function add()
 	{
 		SPLoader::loadClass( 'html.input' );
-		$groups = $this->getFieldGroup( $this->_fieldType );
+		if ( $this->_fieldType ) {
+			$groups = $this->getFieldGroup( $this->_fieldType );
+		}
+		else {
+			$groups = $this->getFieldTypes();
+		}
 
 		/* create dummy field with initial values */
 		$field = array(
@@ -448,7 +456,9 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$view->addHidden( $sid, 'sid' );
 		$view->assign( $fields, 'fields' );
 		$view->assign( $subMenu, 'fieldTypes' );
+		$view->assign( Sobi::Section( true ), 'section' );
 		$view->assign( $menu, 'menu' );
+		$view->assign( Sobi::GetUserState( 'fields.order', 'forder', 'position.asc' ), 'ordering' );
 		$view->assign( $this->_task, 'task' );
 		$view->determineTemplate( 'field', 'list' );
 		$view->display();

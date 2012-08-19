@@ -13,9 +13,20 @@ SobiPro.jQuery( document ).ready( function ()
 		var task = SobiPro.jQuery( this ).attr( 'rel' );
 		if ( task.length ) {
 			e.preventDefault();
-			alert( '@todo: '+task );
+			alert( '@todo: ' + task );
 			SobiPro.jQuery( '#SP_task' ).val( task );
 			SobiPro.jQuery( '#SPAdminForm' ).submit();
 		}
 	} );
+
+	SobiPro.jQuery( '.spOrdering' ).change( function ()
+	{
+		SobiPro.jQuery( '#SPAdminForm' ).submit();
+	} );
+
+	SobiPro.jQuery( '[name="spToggle"]' ).change( function ()
+	{
+		SobiPro.jQuery( '[name="' + SobiPro.jQuery( this ).attr( 'rel' ) + '[]"]' ).prop( 'checked', SobiPro.jQuery( this ).is( ':checked' ) );
+	} );
+
 } );

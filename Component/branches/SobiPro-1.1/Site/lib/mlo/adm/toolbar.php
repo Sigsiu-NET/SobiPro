@@ -32,7 +32,9 @@ class SpAdmToolbar
 		'delete' => 'trash',
 		'actions' => 'plane',
 		'publish' => 'ok',
-		'hide' => 'remove'
+		'hide' => 'remove',
+		'enable' => 'ok',
+		'disable' => 'remove',
 	);
 	private $labels = array(
 		'apply' => 'SAVE_ONLY',
@@ -45,6 +47,8 @@ class SpAdmToolbar
 		'actions' => 'ACTIONS',
 		'publish' => 'PUBLISH',
 		'hide' => 'UNPUBLISH',
+		'enable' => 'ENABLE',
+		'disable' => 'DISABLE',
 	);
 	protected $btClass = 'btn';
 
@@ -133,14 +137,12 @@ class SpAdmToolbar
 	private function renderButton( $button, $list = false )
 	{
 		$rel = null;
-		if ( isset( $button[ 'task' ] ) ) {
-			if ( !( $button[ 'task' ] ) ) {
-				$href = $this->getLink( $button );
-			}
-			else {
-				$rel = $button[ 'task' ];
-				$href = '#';
-			}
+		if ( !( isset( $button[ 'task' ] ) ) || !( $button[ 'task' ] ) ) {
+			$href = $this->getLink( $button );
+		}
+		else {
+			$rel = $button[ 'task' ];
+			$href = '#';
 		}
 		if ( !( isset( $button[ 'label' ] ) ) || !( $button[ 'label' ] ) ) {
 			$label = $this->getLabel( $button );

@@ -192,7 +192,7 @@ class SPAdmView extends SPObject implements SPView
 		SPFactory::AdmToolbar()->setTitle( array( 'title' => $this->parseValue( $title ), 'icon' => $icon ) );
 		$buttons = array();
 		foreach ( $xml->childNodes as $node ) {
-			if ( strstr( $node->nodeName, '#' ) ){
+			if ( strstr( $node->nodeName, '#' ) ) {
 				continue;
 			}
 			/** @var DOMNode $node */
@@ -331,24 +331,110 @@ class SPAdmView extends SPObject implements SPView
 				case 'field':
 					$this->xmlField( $node, $element );
 					break;
+				case 'loop':
+					$element[ 'content' ] = $this->xmlLoop( $node, $element );
+					break;
 				default:
 					$attributes = $node->attributes;
 					if ( $attributes->length ) {
 						/** @var DOMElement $attribute */
 						foreach ( $attributes as $attribute ) {
-							$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+							if ( $attribute->nodeName == 'label' ) {
+								$element[ 'attributes' ][ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+							}
+							else {
+								$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+							}
+							$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
 						}
 					}
 					if ( $node->hasChildNodes() ) {
 						$this->xmlBody( $node->childNodes, $element[ 'content' ] );
 					}
-					elseif ( !(strstr( $node->nodeName, '#' ) ) ){
+					elseif ( !( strstr( $node->nodeName, '#' ) ) ) {
 						$element[ 'content' ] = $node->nodeValue;
 					}
 					break;
 			}
 			$output[ ] = $element;
 		}
+	}
+
+	/**
+	 * @param DOMNode $node
+	 * @return void
+	 */
+	private function xmlLoop( $node, &$element )
+	{
+		$subject = $node->attributes->getNamedItem( 'subject' )->nodeValue;
+		$objectsCount = $this->count( $subject );
+		$objects = array();
+		for ( $i = 0; $i < $objectsCount; $i++ ) {
+			/** @var DOMNode $cell */
+			foreach ( $node->childNodes as $cell ) {
+				if ( strstr( $cell->nodeName, '#' ) ) {
+					continue;
+				}
+				$this->xmlCell( $cell, $subject, $i, $objects );
+			}
+		}
+		SPConfig::debOut( $objects );
+	}
+
+	/**
+	 * @param DOMNode $cell
+	 * @return void
+	 */
+	private function xmlCell( $cell, $subject, $i, &$objects )
+	{
+		$element = array(
+			'label' => null,
+			'type' => $cell->nodeName,
+			'content' => null,
+			'attributes' => null,
+		);
+		/** @var DOMElement $attribute */
+		foreach ( $cell->attributes as $attribute ) {
+			if ( $attribute->nodeName == 'label' ) {
+				$element[ 'label' ] = Sobi::Txt( $attribute->nodeValue );
+			}
+			elseif ( $attribute->nodeName == 'value' ) {
+				$element[ 'content' ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
+			}
+			else {
+				$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+			}
+		}
+		if ( $cell->hasChildNodes() ) {
+			/** @var DOMNode $child */
+			foreach ( $cell->childNodes as $child ) {
+				if ( strstr( $child->nodeName, '#' ) ) {
+					continue;
+				}
+				/** @var DOMNode $param */
+				if ( $child->nodeName == 'url' ) {
+//					$url = array();
+//					foreach ( $child->childNodes as $param ) {
+//						if ( $param->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
+//							$url[ $param->attributes->getNamedItem( 'name' ) ] = $this->get( $subject . '.' . $param->attributes->getNamedItem( 'value' )->nodeValue, $i );
+//						}
+//						else {
+//							$url[ $param->attributes->getNamedItem( 'name' ) ] = $param->attributes->getNamedItem( 'value' )->nodeValue;
+//						}
+//					}
+//					if ( $child->attributes->getNamedItem( 'type' )->nodeValue == 'intern' ) {
+//						$element[ 'link' ] = Sobi::Url( $url );
+//					}
+//					else {
+////						$element['link']
+//					}
+				}
+				else {
+					$this->xmlCell( $child, $subject, $i, $element[ 'childs' ] );
+				}
+			}
+		}
+		$objects[ ] = $element;
 	}
 
 	/**
@@ -526,7 +612,7 @@ class SPAdmView extends SPObject implements SPView
 				case 'hidden':
 					$hidden = $node->childNodes;
 					foreach ( $hidden as $field ) {
-						if ( !( strstr( $field->nodeName, '#' ) ) ){
+						if ( !( strstr( $field->nodeName, '#' ) ) ) {
 							$this->addHidden(
 								SPRequest::string(
 									$field->attributes->getNamedItem( 'name' )->nodeValue,
@@ -538,7 +624,7 @@ class SPAdmView extends SPObject implements SPView
 					}
 					break;
 				default:
-					if ( !( strstr( $node->nodeName, '#' ) ) ){
+					if ( !( strstr( $node->nodeName, '#' ) ) ) {
 						$this->_config[ 'general' ][ $node->nodeName ] = $node->attributes->getNamedItem( 'value' )->nodeValue;
 					}
 					break;
