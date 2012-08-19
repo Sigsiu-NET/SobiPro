@@ -19,8 +19,8 @@
 		<buttons type="actions">
 			<button type="delete" task="field.delete"/>
 			<nav-header label="TB.PUBLISHING"/>
-			<button type="publish" task="field.publish"/>
-			<button type="hide" task="field.hide"/>
+			<button type="enable" task="field.publish"/>
+			<button type="disable" task="field.hide"/>
 			<!--<nav-header label="TB.REQUIRED"/>-->
 			<!--<button type="custom" task="field.setRequired" label="TB.SET_REQ" ico="asterisk"/>-->
 			<!--<button type="custom" task="field.setNotRequired" label="TB.SET_NOT_REQ" ico="remove-sign"/>-->
@@ -32,13 +32,64 @@
 		<button type="help" target="_blank"/>
 	</toolbar>
 	<body>
-		<header label="FM.FIELDS_FOR" icon="SobiFieldList" />
+		<header label="FM.FIELDS_FOR" icon="SobiFieldList">
+			<div class="btn-group pull-right form-horizontal">
+				<field type="select" name="forder" selected="ordering" label="FMN_ORDER_BY"
+				       class="input-medium spOrdering">
+					<values>
+						<option value="fid.asc" label="FMN.ORDER_BY_ID_ASC"/>
+						<option value="fid.desc" label="FMN.ORDER_BY_ID_DESC"/>
+						<option value="name.asc" label="FMN.ORDER_BY_NAME_ASC"/>
+						<option value="name.desc" label="FMN.ORDER_BY_NAME_DESC"/>
+						<option value="state.asc" label="FMN.ORDER_BY_STATE_ASC"/>
+						<option value="state.asc" label="FMN.ORDER_BY_STATE_ASC"/>
+						<option value="fieldType.asc" label="FMN.ORDER_BY_FIELDTYPE_ASC"/>
+						<option value="fieldType.desc" label="FMN.ORDER_BY_FIELDTYPE_DESC"/>
+						<option value="showIn.asc" label="FMN.ORDER_BY_SHOWIN_ASC"/>
+						<!--<option value="showIn.desc" label="FMN.ORDER_BY_SHOWIN_DESC"/>-->
+						<option value="required.asc" label="FMN.ORDER_BY_REQUIRED_ASC"/>
+						<option value="required.desc" label="FMN.ORDER_BY_REQUIRED_DESC"/>
+						<option value="editable.asc" label="FMN.ORDER_BY_EDITABLE_ASC"/>
+						<option value="editable.desc" label="FMN.ORDER_BY_EDITABLE_DESC"/>
+						<option value="isFree.asc" label="FMN.ORDER_BY_ISFREE_ASC"/>
+						<option value="isFree.desc" label="FMN.ORDER_BY_ISFREE_DESC"/>
+						<option value="order.asc" label="FMN.ORDER_BY_ORDER_ASC"/>
+						<option value="order.desc" label="FMN.ORDER_BY_ORDER_DESC"/>
+					</values>
+				</field>
+			</div>
+		</header>
 		<table>
 			<head>
-				<cell />
+				<cell label="HEADER_ID" order="fid" type="text"/>
+				<cell type="checkbox" rel="p_fid"/>
+				<cell label="HEADER_FIELD_NAME" type="text"/>
+				<cell label="HEADER_FIELD_STATE" type="text"/>
+				<cell label="HEADER_FIELD_TYPE" type="text"/>
+				<cell label="HEADER_FIELD_SHOW_IN" type="text"/>
+				<cell label="HEADER_FIELD_IS_REQUIRED" type="text"/>
+				<cell label="HEADER_FIELD_IS_EDITABLE" order="editable" type="text"/>
+				<cell label="HEADER_FIELD_IS_FREE" type="text"/>
+				<cell label="HEADER_FIELD_POSITION" type="ordering"/>
 			</head>
-			<loop>
-				<cell />
+			<loop subject="fields">
+				<cell label="HEADER_ID" order="fid" type="text" value="id"/>
+				<cell type="checkbox" name="p_fid" value="id"/>
+				<cell label="HEADER_FIELD_NAME" type="link" value="name">
+					<url type="intern">
+						<param name="task" value="field.edit"/>
+						<param name="fid" value="fid" parse="true"/>
+						<param name="sid" value="sid" parse="true"/>
+					</url>
+					<cell type="subtext" value="nid"/>
+				</cell>
+				<cell label="HEADER_FIELD_STATE" type="text" value="state"/>
+				<cell label="HEADER_FIELD_TYPE" type="text" value="field_type"/>
+				<cell label="HEADER_FIELD_SHOW_IN" type="text" value="show_in"/>
+				<cell label="HEADER_FIELD_IS_REQUIRED" type="ticker" value="required"/>
+				<cell label="HEADER_FIELD_IS_EDITABLE" type="ticker" value="editable"/>
+				<cell label="HEADER_FIELD_IS_FREE" type="ticker" value="is_free"/>
+				<cell label="HEADER_FIELD_POSITION" type="ordering" value="order"/>
 			</loop>
 			<foot>
 				<navigation/>

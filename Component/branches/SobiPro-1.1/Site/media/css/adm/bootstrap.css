@@ -1,3 +1,10 @@
+#toolbar-box {
+	display: none;
+}
+.submenu-box, div.m {
+	background-color: #ffffff;
+}
+
 #SPAdmToolbar .nav {
 	margin-bottom: 0px
 }
@@ -21,12 +28,19 @@
 	background-color: whiteSmoke;
 }
 
-div.spScreenTitle {
+div.spScreenTitle,
+div.spScreenSubHead {
 	background-repeat: no-repeat;
 	background-position: 2%;
 }
 
-div.spScreenTitle:first-child {
+div.spScreenSubHead {
+	font-weight: bold;
+	font-size: 15px;
+}
+
+div.spScreenTitle:first-child,
+div.spScreenSubHead:first-child {
 	padding-left: 70px;
 }
 
@@ -54,6 +68,133 @@ div.spScreenTitle:first-child {
 	display: block;
 	margin: 0.2pt;
 }
+
 #SPAdmToolbar .nav .nav-header {
-	white-space:nowrap;
+	white-space: nowrap;
+}
+
+#SPAdminForm table .control-label {
+	padding-top: 5px;
+}
+
+.sp-mini-bt {
+	width: 25px;
+	height: 20px;
+	padding: 0px!important;
+}
+
+.spScreenSubHead {
+	padding: 10px;
+}
+
+
+.spicon-48-SobiPro {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-sobipro.png);
+}
+
+.spicon-48-SobiApplication {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-application.png);
+}
+
+.spicon-48-SobiApplicationSection {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-application-section.png);
+}
+
+.spicon-48-SobiTemplate {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-templates.png);
+}
+
+.spicon-48-SobiTemplateSection {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-template-section.png);
+}
+
+.spicon-48-SobiSection {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-section.png);
+}
+
+.spicon-48-SobiSectionCfg {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-section-cfg.png);
+}
+
+.spicon-48-SobiCategory {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-category.png);
+}
+
+.spicon-48-SobiCatList {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-categories.png);
+}
+
+.spicon-48-SobiFields {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-fieldsmanager.png);
+}
+
+.spicon-48-SobiFieldList {
+	background-image:
+		url(../../../../media/sobipro/48x48/fields.png);
+}
+
+.spicon-48-SobiConfig {
+	background-image:
+		url(../../../../media/sobipro/48x48/folder-configuration.png);
+}
+
+.spicon-48-SobiEdit {
+	background-image:
+		url(../../../../media/sobipro/48x48/editor.png);
+}
+
+.spicon-48-SobiFieldEdit {
+	background-image:
+		url(../../../../media/sobipro/48x48/edit-rename.png);
+}
+
+.spicon-48-SobiEntries {
+	background-image:
+		url(../../../../media/sobipro/48x48/entries.png);
+}
+.spicon-48-SobiUser {
+	background-image:
+		url(../../../../media/sobipro/48x48/sobipro-acl-edit.png);
+}
+.spicon-48-SobiLevels {
+	background-image:
+		url(../../../../media/sobipro/48x48/sobipro-acl.png);
+}
+
+.spicon-32-delete {
+	background-image: url(../../../../media/sobipro/32x32/delete.png)!important;
+}
+
+.spicon-32-download {
+	background-image: url(../../../../media/sobipro/32x32/download.png);
+}
+
+.spicon-32-list {
+	background-image: url(../../../../media/sobipro/32x32/software-update.png);
+}
+
+.spicon-32-cleanCache {
+	background-image: url(../../../../media/sobipro/32x32/eraser.png);
+}
+
+.spicon-32-document-save-all {
+	background-image: url(../../../../media/sobipro/32x32/document-save-all.png);
+}
+
+.spicon-32-save {
+	background-image: url(../../../../media/sobipro/32x32/document-save.png)!important;
+}
+
+.spicon-32-help {
+	background-image: url(../../../../media/sobipro/32x32/sobipro-help.png)!important;
 }
