@@ -28,5 +28,8 @@ SobiPro.jQuery( document ).ready( function ()
 	{
 		SobiPro.jQuery( '[name="' + SobiPro.jQuery( this ).attr( 'rel' ) + '[]"]' ).prop( 'checked', SobiPro.jQuery( this ).is( ':checked' ) );
 	} );
-
+	SobiPro.jQuery( '[name="spReorder"]' ).click( function ()
+	{
+		alert(SobiPro.jQuery(this ).attr('rel') )
+	} );
 } );

@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definition>
-	<config>
-		<action value="index.php?option=com_sobipro"/>
-		<hidden>
-			<field name="option" default="com_sobipro"/>
-			<field name="task" default=""/>
-			<field name="boxchecked"/>
-			<field name="method" default="xhr"/>
-		</hidden>
-	</config>
 	<header>
 		<title value="FM.SITE_TITLE"/>
-		<file type="script" filename="bootstrap.tabs"/>
 	</header>
 	<toolbar title="FM.SITE_TITLE" icon="SobiFields">
 		<buttons type="new" buttons="fieldTypes"/>
@@ -61,39 +51,74 @@
 		</header>
 		<table>
 			<head>
-				<cell label="HEADER_ID" order="fid" type="text"/>
-				<cell type="checkbox" rel="p_fid"/>
+				<cell label="HEADER_ID" type="text" class="center"/>
+				<cell type="checkbox" rel="p_fid" class="center"/>
 				<cell label="HEADER_FIELD_NAME" type="text"/>
-				<cell label="HEADER_FIELD_STATE" type="text"/>
-				<cell label="HEADER_FIELD_TYPE" type="text"/>
-				<cell label="HEADER_FIELD_SHOW_IN" type="text"/>
-				<cell label="HEADER_FIELD_IS_REQUIRED" type="text"/>
-				<cell label="HEADER_FIELD_IS_EDITABLE" order="editable" type="text"/>
-				<cell label="HEADER_FIELD_IS_FREE" type="text"/>
-				<cell label="HEADER_FIELD_POSITION" type="ordering"/>
+				<cell label="HEADER_FIELD_STATE" type="text" class="center"/>
+				<cell label="HEADER_FIELD_TYPE" type="text" class="center"/>
+				<cell label="HEADER_FIELD_SHOW_IN" type="text" class="center"/>
+				<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="center"/>
+				<cell label="HEADER_FIELD_IS_EDITABLE" order="editable" type="text" class="center"/>
+				<cell label="HEADER_FIELD_IS_FREE" type="text" class="center"/>
+				<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="field"/>
 			</head>
 			<loop subject="fields">
-				<cell label="HEADER_ID" order="fid" type="text" value="id"/>
-				<cell type="checkbox" name="p_fid" value="id"/>
-				<cell label="HEADER_FIELD_NAME" type="link" value="name">
-					<url type="intern">
-						<param name="task" value="field.edit"/>
-						<param name="fid" value="fid" parse="true"/>
-						<param name="sid" value="sid" parse="true"/>
-					</url>
-					<cell type="subtext" value="nid"/>
+				<cell type="text" value="id" class="center"/>
+				<cell type="checkbox" name="p_fid" value="id" class="center"/>
+				<cell>
+					<cell type="link" value="name">
+						<url type="intern">
+							<param name="task" value="field.edit"/>
+							<param name="fid" value="fid" parse="true"/>
+							<param name="sid" value="request.sid" parse="true" subject="skip"/>
+						</url>
+					</cell>
+					<cell type="text" value="nid" class="subText"/>
 				</cell>
-				<cell label="HEADER_FIELD_STATE" type="text" value="state"/>
-				<cell label="HEADER_FIELD_TYPE" type="text" value="field_type"/>
-				<cell label="HEADER_FIELD_SHOW_IN" type="text" value="show_in"/>
-				<cell label="HEADER_FIELD_IS_REQUIRED" type="ticker" value="required"/>
-				<cell label="HEADER_FIELD_IS_EDITABLE" type="ticker" value="editable"/>
-				<cell label="HEADER_FIELD_IS_FREE" type="ticker" value="is_free"/>
-				<cell label="HEADER_FIELD_POSITION" type="ordering" value="order"/>
+				<cell type="ticker" value="enabled" class="center">
+					<url type="intern">
+						<param name="task" value="field.toggle.publish"/>
+						<param name="fid" value="fid" parse="true"/>
+						<param name="sid" value="request.sid" parse="true" subject="skip"/>
+					</url>
+				</cell>
+				<cell type="text" value="fieldType" class="center"/>
+				<cell type="text" value="showIn" class="center"/>
+				<cell type="ticker" value="required" class="center" icons="{'0':'cog','1':'asterisk'}">
+					<url type="intern">
+						<param name="task" value="field.toggle.required"/>
+						<param name="fid" value="fid" parse="true"/>
+						<param name="sid" value="request.sid" parse="true" subject="skip"/>
+					</url>
+				</cell>
+				<cell type="ticker" value="editable" class="center" icons="{'0':'lock','1':'edit'}">
+					<url type="intern">
+						<param name="task" value="field.toggle.editable"/>
+						<param name="fid" value="fid" parse="true"/>
+						<param name="sid" value="request.sid" parse="true" subject="skip"/>
+					</url>
+				</cell>
+				<cell type="ticker" value="isFree" class="center" icons="{'0':'shopping-cart','1':'gift'}">
+					<url type="intern">
+						<param name="task" value="field.toggle.payment"/>
+						<param name="fid" value="fid" parse="true"/>
+						<param name="sid" value="request.sid" parse="true" subject="skip"/>
+					</url>
+				</cell>
+				<cell type="ordering" value="position" name="fid[var:[id]]" class="center"/>
 			</loop>
 			<foot>
 				<navigation/>
 			</foot>
 		</table>
 	</body>
+	<config>
+		<action value="index.php?option=com_sobipro"/>
+		<hidden>
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+			<field name="boxchecked"/>
+			<field name="method" default="xhr"/>
+		</hidden>
+	</config>
 </definition>

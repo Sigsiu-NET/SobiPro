@@ -1,9 +1,627 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb" dir="ltr">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="keywords" content="Sobi, SobiPro, Sigsiu.NET, Joomla!, directory, component, CCK, content construction, SobiPro Demo, directory extension"/>
+    <meta name="description" content="Welcome to the SobiPro demo site. SobiPro is a powerful directory extension for the Joomla! Content Management System that is designed to easily create multiple directories or content types. SobiPro will allow you and your site visitors to submit, search, filter and view custom content on your Joomla! powered website with ease."/>
+    <meta name="generator" content="Joomla! - Open Source Content Management"/>
+    <title>Edit Field &quot;Car Name&quot;</title>
+    <link href="/Neo/Dev/administrator/templates/bluestork/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+    <link rel="stylesheet" href="/Neo/Dev/media/system/css/modal.css" type="text/css"/>
+    <link rel="stylesheet" href="templates/system/css/system.css" type="text/css"/>
+    <link rel="stylesheet" href="templates/bluestork/css/template.css" type="text/css"/>
+    <script src="/Neo/Dev/media/system/js/mootools-core.js" type="text/javascript"></script>
+    <script src="/Neo/Dev/media/system/js/core.js" type="text/javascript"></script>
+    <script src="/Neo/Dev/media/system/js/mootools-more.js" type="text/javascript"></script>
+    <script src="/Neo/Dev/media/system/js/modal.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.addEvent( 'domready', function ()
+        {
+            $$( '.hasTip' ).each( function ( el )
+            {
+                var title = el.get( 'title' );
+                if ( title ) {
+                    var parts = title.split( '::', 2 );
+                    el.store( 'tip:title', parts[0] );
+                    el.store( 'tip:text', parts[1] );
+                }
+            } );
+            var JTooltips = new Tips( $$( '.hasTip' ), { maxTitleChars:50, fixed:false} );
+        } );
+        window.addEvent( 'domready', function ()
+        {
+
+            SqueezeBox.initialize( {} );
+            SqueezeBox.assign( $$( 'a.modal' ), {
+                parse:'rel'
+            } );
+        } );
+    </script>
+    <!--  SobiPro Head Tags Output  -->
+    <script type="text/javascript">/*
+     <![CDATA[*/
+    var SobiProUrl = 'http://192.168.1.100/Neo/Dev/administrator/index.php?option=com_sobipro&task=%task%';
+    var SobiProSection = 40;
+    var SPLiveSite = 'http://192.168.1.100/Neo/Dev/';
+    /*]]>*/
+    </script>
+    <script type="text/javascript">/* <![CDATA[ */
+    var SobiProAdmUrl = 'http://192.168.1.100/Neo/Dev/administrator/index.php?option=com_sobipro&task=%task%';
+    /* ]]> */</script>
+    <link rel="stylesheet" href="http://192.168.1.100/Neo/Dev/media/sobipro/css/bootstrap/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="http://192.168.1.100/Neo/Dev/media/sobipro/css/adm/sobipro.css" type="text/css"/>
+    <script type="text/javascript" src="http://192.168.1.100/Neo/Dev/components/com_sobipro/lib/js/sobipro.js"></script>
+    <script type="text/javascript" src="http://192.168.1.100/Neo/Dev/components/com_sobipro/lib/js/adm/sobipro.js"></script>
+    <script type="text/javascript" src="http://192.168.1.100/Neo/Dev/components/com_sobipro/lib/js/jquery.js"></script>
+    <script type="text/javascript" src="http://192.168.1.100/Neo/Dev/components/com_sobipro/lib/js/jqnc.js"></script>
+    <script type="text/javascript" src="http://192.168.1.100/Neo/Dev/components/com_sobipro/lib/js/bootstrap.js"></script>
+    <script type="text/javascript" src="http://192.168.1.100/Neo/Dev/components/com_sobipro/lib/js/bootstrap/tabs.js"></script>
+    <script type="text/javascript" src="http://192.168.1.100/Neo/Dev/components/com_sobipro/lib/js/adm/toolbar.js"></script>
+    <script type="text/javascript" src="index.php?option=com_sobipro&amp;task=txt.js&amp;tmpl=component"></script>
+    <!--  SobiPro (10) Head Tags Output -->
+
 </head>
-<body>
+<body class="contentpane">
+
+<div id="system-message-container">
+</div>
+<div class="SobiPro">
+
+<form action="index.php?option=com_sobipro" method="post" name="adminForm" id="SPAdminForm" enctype="multipart/form-data" accept-charset="utf-8">
+<div class="breadcrumb" id="SPAdmToolbar">
+    <div class="container-fluid">
+        <div class="spicon-48-SobiFieldEdit spScreenTitle well span8">
+            <h3>Edit Field &#34;Car Name&#34;</h3>
+        </div>
+        <div class="spIconBar">
+            <div class="spIconBar nav nav-pills pull-right">
+                <div class="well">
+                    <div class="btn-group">
+                        <a href="#" class="btn" rel="field.apply">
+                            <i class="icon-ok"></i>&nbsp;&nbsp;Save
+                        </a>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>&nbsp;
+                        </button>
+                        <div class="dropdown-menu" id="spmenu-field_apply">
+                            <ul class="nav nav-stacked SpDropDownBt">
+                                <li><a href="#" rel="field.save">
+                                    <i class="icon-share"></i>&nbsp;&nbsp;Save &amp; Exit
+                                </a></li>
+                                <li><a href="#" rel="field.clone">
+                                    <i class="icon-edit"></i>&nbsp;&nbsp;Save as New
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <span class="divider"></span>
+                    <a href="#" rel="field.cancel" class="btn">
+                        <i class="icon-ban-circle"></i>&nbsp;&nbsp;Cancel
+                    </a>
+                    <span class="divider"></span>
+                    <a href="http://sobipro.sigsiu.net/help_screen/field.inbox" rel="" class="btn" target="_blank">
+                        <i class="icon-question-sign"></i>&nbsp;&nbsp;Help
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--starts here-->
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#fmn_field_general">General Field Settings</a></li>
+
+    <li><a href="#fmn_field_entryinput">Entry Input Field Settings</a></li>
+
+    <li><a href="#fmn_field_entryview">Entry View Field Settings</a></li>
+
+    <li><a href="#fmn_field_search">Search Field Settings</a></li>
+
+</ul>
+
+<div class="tab-content">
+<div class="tab-pane active" id="fmn_field_general">
+    <div class="well">
+        <div class="row-fluid">
+            <div class="span8">
+                <fieldset class="form-horizontal control-group">
+                    <label class="control-label"></label>
+
+                    <div class="control-group">
+                        <label class="control-label" for="field_name">Label</label>
+
+                        <div class="controls">
+
+
+                            <!-- InputBox 'field.name' Output -->
+                            <input type="text" name="field.name" value="Car Name" id="field_name" size="50" maxlength="255" class="input-xlarge"/>
+                            <!-- InputBox 'field.name' End -->
+
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_nid">Alias</label>
+
+                        <div class="controls">
+
+
+                            <!-- InputBox 'field.nid' Output -->
+                            <input type="text" name="field.nid" value="field_name" id="field_nid" class="input-xlarge"/>
+                            <!-- InputBox 'field.nid' End -->
+
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_suffix">Suffix</label>
+
+                        <div class="controls">
+
+
+                            <!-- InputBox 'field.suffix' Output -->
+                            <input type="text" name="field.suffix" value="" id="field_suffix" class="span3"/>
+                            <!-- InputBox 'field.suffix' End -->
+
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_uniquedata">Unique Data</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.uniqueData' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_uniquedata">
+                                <button class="btn" value="1">Yes</button>
+                                <button class="btn active" value="0">No</button>
+                            </div>
+                            <!-- States 'field.uniqueData' End -->
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_cssclass">CSS Class</label>
+
+                        <div class="controls">
+
+
+                            <!-- InputBox 'field.cssClass' Output -->
+                            <input type="text" name="field.cssClass" value="" id="field_cssclass" class="span3"/>
+                            <!-- InputBox 'field.cssClass' End -->
+
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_admlist">Show in Admin List</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.admList' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_admlist">
+                                <button class="btn" value="1">Yes</button>
+                                <button class="btn active" value="0">No</button>
+                            </div>
+                            <!-- States 'field.admList' End -->
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_notice">Notices</label>
+
+                        <div class="controls">
+
+
+                            <!-- TextArea 'field.notice' Output -->
+                            <textarea name="field.notice" id="field_notice" class="input-xlarge" rows="2" style="width: 550px; height: 350px;"></textarea>
+                            <!-- TextArea 'field.notice' End -->
+
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="span4">
+                <fieldset class="form-horizontal control-group">
+                    <label class="control-label"></label>
+
+                    <div class="control-group">
+                        <label class="control-label" for="field_enabled">Enabled</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.enabled' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_enabled">
+                                <button class="btn active" value="1">Yes</button>
+                                <button class="btn" value="0">No</button>
+                            </div>
+                            <!-- States 'field.enabled' End -->
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="span4">
+                <fieldset class="form-horizontal control-group">
+                    <label class="control-label"></label>
+
+                    <div class="control-group">
+                        <label class="control-label" for="field_fieldtype">Type</label>
+
+                        <div class="controls">
+
+
+                            <!-- SelectList 'field.fieldType' Output -->
+                            <select name="field.fieldType" id="field_fieldtype" size="5" class="input-xlarge">
+                                <optgroup label="Simple fields with single data">
+                                    <option selected="selected" value="inbox">Input Box</option>
+                                    <option value="textarea">Text Area</option>
+                                    <option value="calendar">Calendar Field</option>
+                                </optgroup>
+                            </select>
+                            <!-- SelectList 'field.fieldType' End -->
+
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-pane" id="fmn_field_entryinput">
+    <div class="well">
+        <div class="row-fluid">
+            <div class="span8">
+                <fieldset class="form-horizontal control-group">
+                    <label class="control-label"></label>
+
+                    <div class="control-group">
+                        <label class="control-label" for="field_width">Width</label>
+
+                        <div class="controls input-append">
+
+
+                            <!-- InputBox 'field.width' Output -->
+                            <input type="text" name="field.width" value="350" id="field_width" maxlength="10" class="span2"/>
+                            <!-- InputBox 'field.width' End -->
+
+
+                            <span class="add-on">px</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_maxlength">Max. Length</label>
+
+                        <div class="controls">
+
+
+                            <!-- InputBox 'field.maxLength' Output -->
+                            <input type="text" name="field.maxLength" value="150" id="field_maxlength" maxlength="10" class="span2"/>
+                            <!-- InputBox 'field.maxLength' End -->
+
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_adminfield">Administrative</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.adminField' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_adminfield">
+                                <button class="btn" value="1">Yes</button>
+                                <button class="btn active" value="0">No</button>
+                            </div>
+                            <!-- States 'field.adminField' End -->
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_required">Required</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.required' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_required">
+                                <button class="btn active" value="1">Yes</button>
+                                <button class="btn" value="0">No</button>
+                            </div>
+                            <!-- States 'field.required' End -->
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_editable">Editable</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.editable' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_editable">
+                                <button class="btn active" value="1">Yes</button>
+                                <button class="btn" value="0">No</button>
+                            </div>
+                            <!-- States 'field.editable' End -->
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_editlimit">Edit Limits</label>
+
+                        <div class="controls">
+
+
+                            <!-- InputBox 'field.editLimit' Output -->
+                            <input type="text" name="field.editLimit" value="0" id="field_editlimit" class="span1"/>
+                            <!-- InputBox 'field.editLimit' End -->
+
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_filter">Filter</label>
+
+                        <div class="controls">
+
+
+                            <!-- SelectList 'field.filter' Output -->
+                            <select name="field.filter" id="field_filter" class="span5">
+                                <option value="0">No Filter</option>
+                                <option value="alpha">Alphabetic String</option>
+                                <option value="alphanum">Alphanumeric String</option>
+                                <option value="integer">Decimal Value</option>
+                                <option value="email">Email Address</option>
+                                <option value="float">Float Value</option>
+                                <option value="single_letter">Single Letter</option>
+                                <option value="phone">Telephone Number</option>
+                                <option value="twitter">Twitter</option>
+                                <option selected="selected" value="title">Valid Title</option>
+                                <option value="website">Website w/o Protocol</option>
+                                <option value="website_full">Website with Protocol</option>
+                            </select>
+                            <!-- SelectList 'field.filter' End -->
+
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_description">Description</label>
+
+                        <div class="controls">
+
+
+                            <!-- TextArea 'field.description' Output -->
+                            <textarea name="field.description" id="field_description" class="input-xlarge" rows="2" style="width: 550px; height: 350px;"></textarea>
+                            <!-- TextArea 'field.description' End -->
+
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="span4">
+                <fieldset class="form-horizontal control-group">
+                    <label class="control-label"></label>
+
+                    <div class="control-group">
+                        <label class="control-label">Version</label>
+
+                        <div class="controls">
+
+                            3
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="form-horizontal control-group">
+                    <label class="control-label">Payment Settings</label>
+
+                    <div class="control-group">
+                        <label class="control-label" for="field_isfree">For Free</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.isFree' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_isfree">
+                                <button class="btn" value="1">Yes</button>
+                                <button class="btn active" value="0">No</button>
+                            </div>
+                            <!-- States 'field.isFree' End -->
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_fee">Fee</label>
+
+                        <div class="controls input-append">
+
+
+                            <!-- InputBox 'field.fee' Output -->
+                            <input type="text" name="field.fee" value="0,00" id="field_fee" class="span2"/>
+                            <!-- InputBox 'field.fee' End -->
+
+
+                            <span class="add-on">₤₡</span>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-pane" id="fmn_field_entryview">
+    <div class="well">
+        <div class="row-fluid">
+            <div class="span8">
+                <fieldset class="form-horizontal control-group">
+                    <label class="control-label"></label>
+
+                    <div class="control-group">
+                        <label class="control-label" for="field_showin">Availability</label>
+
+                        <div class="controls">
+
+
+                            <!-- SelectList 'field.showIn' Output -->
+                            <select name="field.showIn" id="field_showin" class="span4">
+                                <option selected="selected" value="both">Both</option>
+                                <option value="details">Details View</option>
+                                <option value="vcard">vCard</option>
+                                <option value="hidden">None</option>
+                            </select>
+                            <!-- SelectList 'field.showIn' End -->
+
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_withlabel">Show Label</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.withLabel' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_withlabel">
+                                <button class="btn" value="1">Yes</button>
+                                <button class="btn active" value="0">No</button>
+                            </div>
+                            <!-- States 'field.withLabel' End -->
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_addtometakeys">Add to Meta Keys</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.addToMetaKeys' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_addtometakeys">
+                                <button class="btn" value="1">Yes</button>
+                                <button class="btn active" value="0">No</button>
+                            </div>
+                            <!-- States 'field.addToMetaKeys' End -->
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_addtometadesc">Add to Meta Description</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.addToMetaDesc' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_addtometadesc">
+                                <button class="btn" value="1">Yes</button>
+                                <button class="btn active" value="0">No</button>
+                            </div>
+                            <!-- States 'field.addToMetaDesc' End -->
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tab-pane" id="fmn_field_search">
+    <div class="well">
+        <div class="row-fluid">
+            <div class="span8">
+                <fieldset class="form-horizontal control-group">
+                    <label class="control-label"></label>
+
+                    <div class="control-group">
+                        <label class="control-label" for="field_insearch">Searchable</label>
+
+                        <div class="controls">
+
+
+                            <!-- States 'field.inSearch' Output -->
+                            <div class="btn-group" data-toggle="buttons-radio" id="field_insearch">
+                                <button class="btn active" value="1">Yes</button>
+                                <button class="btn" value="0">No</button>
+                            </div>
+                            <!-- States 'field.inSearch' End -->
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_priority">Search Priority</label>
+
+                        <div class="controls">
+
+
+                            <!-- SelectList 'field.priority' Output -->
+                            <select name="field.priority" id="field_priority" class="span1">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            <!-- SelectList 'field.priority' End -->
+
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_searchmethod">Search Method</label>
+
+                        <div class="controls">
+
+
+                            <!-- SelectList 'field.searchMethod' Output -->
+                            <select name="field.searchMethod" id="field_searchmethod" class="span3">
+                                <option selected="selected" value="general">via input field only</option>
+                                <option value="select">select list</option>
+                                <option value="range">range search</option>
+                            </select>
+                            <!-- SelectList 'field.searchMethod' End -->
+
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="field_searchrangevalues">Range Search Values</label>
+
+                        <div class="controls">
+
+
+                            <!-- TextArea 'field.searchRangeValues' Output -->
+                            <textarea name="field.searchRangeValues" id="field_searchrangevalues" class="input-xlarge" style="width: 500px; height: 100px;"></textarea>
+                            <!-- TextArea 'field.searchRangeValues' End -->
+
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--ends here-->
+
+<input type="hidden" name="fid" id="SP_fid" value="14"/>
+<input type="hidden" name="sid" id="SP_sid" value="40"/>
+<input type="hidden" name="option" id="SP_option" value="com_sobipro"/>
+<input type="hidden" name="task" id="SP_task" value="field.edit"/>
+<input type="hidden" name="method" id="SP_method" value="xhr"/>
+<input type="hidden" name="50b829301a5a5a5999bd7cab6bee1f38" id="SP_50b829301a5a5a5999bd7cab6bee1f38" value="1"/>
+</form>
+<script type="text/javascript">SobiPro.Ready();</script>
 </body>
 </html>

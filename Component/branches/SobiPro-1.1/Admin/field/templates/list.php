@@ -21,9 +21,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 $data = $this->getData();
 ?>
 <?php echo $this->toolbar(); ?>
-
 <?php $this->trigger( 'OnStart' ); ?>
-
 <div class="row-fluid">
 	<div class="span2">
 		<?php $this->menu(); ?>
@@ -36,90 +34,4 @@ $data = $this->getData();
 		<!--ends here-->
 	</div>
 </div>
-
-
-<?php $this->trigger( 'AfterDisplayMenu' ); ?>
-<div style="margin-left: 20.8em; margin-top: 3px;">
-	<div class="sheader icon-48-SobiFieldList">
-		<?php $this->txt( 'FM.FIELDS_FOR', array( 'section' => $this->get( 'current_path' ) ) ); ?>
-	</div>
-	<?php $this->trigger( 'BeforeDisplayList' ); ?>
-	<table class="adminlist" cellspacing="1" style="width: 100%">
-		<thead>
-		<tr>
-			<th width="5%">
-				<?php $this->show( 'header.fid' ); ?>
-			</th>
-			<th width="5%">
-				<?php $this->show( 'header.checkbox' ); ?>
-			</th>
-			<th class="title">
-				<?php $this->show( 'header.name' ); ?>
-			</th>
-			<th width="10%">
-				<?php $this->show( 'header.state' ); ?>
-			</th>
-			<th width="10%">
-				<?php $this->show( 'header.fieldType' ); ?>
-			</th>
-			<th width="10%">
-				<?php $this->show( 'header.showIn' ); ?>
-			</th>
-			<th width="10%">
-				<?php $this->show( 'header.required' ); ?>
-			</th>
-			<th width="10%">
-				<?php $this->show( 'header.editable' ); ?>
-			</th>
-			<th width="10%">
-				<?php $this->show( 'header.isFree' ); ?>
-			</th>
-			<th width="15%">
-				<?php $this->show( 'header.order' ); ?>
-			</th>
-		</tr>
-		</thead>
-		<?php
-		$c = $this->count( 'fields' );
-		for ( $i = 0; $i < $c; $i++ ) {
-			$style = $i % 2;
-			?>
-			<tr class="row<?php echo $style;?>">
-				<td style="text-align: center">
-					<?php $this->show( 'fields.id', $i ); ?>
-				</td>
-				<td style="text-align: center">
-					<?php $this->show( 'fields.checkbox', $i ); ?>
-				</td>
-				<td style="text-align: left">
-					<?php $this->show( 'fields.name', $i ); ?>
-					<div class="SPFListAlias"><?php $this->show( 'fields.nid', $i ); ?></div>
-				</td>
-				<td style="text-align: center">
-					<?php $this->show( 'fields.state', $i ); ?>
-				</td>
-				<td style="text-align: center">
-					<?php $this->show( 'fields.field_type', $i ); ?>
-				</td>
-				<td style="text-align: center">
-					<?php $this->show( 'fields.show_in', $i ); ?>
-				</td>
-				<td style="text-align: center">
-					<?php $this->show( 'fields.required', $i ); ?>
-				</td>
-				<td style="text-align: center">
-					<?php $this->show( 'fields.editable', $i ); ?>
-				</td>
-				<td style="text-align: center">
-					<?php $this->show( 'fields.is_free', $i ); ?>
-				</td>
-				<td style="text-align: center">
-					<?php $this->show( 'fields.order', $i ); ?>
-				</td>
-			</tr>
-			<?php } ?>
-	</table>
-	<br/>
-	<br/>
-	<?php $this->trigger( 'AfterDisplayList' ); ?></div>
 <?php $this->trigger( 'OnEnd' ); ?>

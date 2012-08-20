@@ -95,8 +95,7 @@ final class SPHeader
     public function & initBase( $adm = false )
     {
         if ( $adm ) {
-            $this->addCssFile( 'sobipro', true )
-                    ->addJsFile( array( 'sobipro', 'adm.sobipro' ) );
+            $this->addJsFile( array( 'sobipro', 'adm.sobipro' ) );
 
         }
         else {
@@ -108,7 +107,7 @@ final class SPHeader
                     ->addJsFile( array( 'jquery', 'bootstrap' ) );
         }
 	    if ( $adm ) {
-		    $this->addCssFile( 'adm.bootstrap' );
+		    $this->addCssFile( 'adm.sobipro' );
 	    }
 	    else {
 		    $this->addCssFile( 'bootstrap.sobipro' );

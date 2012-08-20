@@ -56,7 +56,7 @@ class SpAdmToolbar
 
 	private function __construct()
 	{
-		SPFactory::header()->addJsFile( 'adm.toolbar' );
+		SPFactory::header()->addJsFile( 'adm.interface' );
 	}
 
 	/**

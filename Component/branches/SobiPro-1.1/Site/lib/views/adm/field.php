@@ -169,6 +169,7 @@ class SPFieldAdmView extends SPAdmView
 			}
 		}
 		echo $action ? "\n</form>\n" : null;
+		echo '</div>';
 		Sobi::Trigger( 'AfterDisplay', $this->name() );
 	}
 }
