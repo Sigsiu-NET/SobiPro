@@ -23,16 +23,16 @@ class SPTplParser
 	protected $table = true;
 	protected $thTd = 'th';
 	protected $_out = array();
+	protected $loopOpen = false;
+	protected $_tickerIcons = array( 0 => 'remove', 1 => 'ok' );
 
-	public function __construct( $table = true )
+	public function __construct( $table = false )
 	{
 		$this->table = $table;
 	}
 
 	public function parse( $data )
 	{
-		static $deep = 0;
-		$deep++;
 		$this->openElement( $data );
 		$this->parseElement( $data );
 		if ( is_array( $data[ 'content' ] ) && count( $data[ 'content' ] ) && !( is_string( $data[ 'content' ] ) ) ) {
@@ -41,11 +41,7 @@ class SPTplParser
 			}
 		}
 		$this->closeElement( $data );
-		$nesting = null;
-//		for ( $i = 0; $i < $deep; $i++ ) {
-//			$nesting .= "\t";
-//		}
-		echo implode( "\n" . $nesting, $this->_out );
+		echo implode( "\n\t", $this->_out );
 		$this->_out = array();
 	}
 
@@ -64,17 +60,20 @@ class SPTplParser
 				if ( $this->table ) {
 					$this->_out[ ] = '</td>';
 				}
-				$class = 'controls';
+				$this->_out[ ] = "<div class=\"controls\">\n";
+				$class = null;
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {
 					$class .= ' input-prepend';
 				}
 				if ( count( $element[ 'adds' ][ 'after' ] ) ) {
 					$class .= ' input-append';
 				}
+				if ( $class ) {
+					$this->_out[ ] = "<div class=\"{$class}\">\n";
+				}
 				if ( $this->table ) {
 					$this->_out[ ] = '<td>';
 				}
-				$this->_out[ ] = "<div class=\"{$class}\">\n";
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {
 					foreach ( $element[ 'adds' ][ 'before' ] as $o ) {
 						$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
@@ -85,6 +84,9 @@ class SPTplParser
 					foreach ( $element[ 'adds' ][ 'after' ] as $o ) {
 						$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
 					}
+				}
+				if ( $class ) {
+					$this->_out[ ] = "</div>\n";
 				}
 				if ( $this->table ) {
 					$this->_out[ ] = '</td>';
@@ -125,7 +127,9 @@ class SPTplParser
 					$this->_out[ ] = '<tbody>';
 				}
 				$this->_out[ ] = '<fieldset class="form-horizontal control-group">';
-				$this->_out[ ] = '<label class="control-label">' . $data[ 'label' ] . '</label>';
+				if ( isset( $data[ 'label' ] ) && $data[ 'label' ] ) {
+					$this->_out[ ] = '<label class="control-label">' . $data[ 'label' ] . '</label>';
+				}
 				break;
 			case 'table':
 				$data[ 'attributes' ][ 'class' ] = 'table table-striped';
@@ -146,10 +150,17 @@ class SPTplParser
 				$this->_out[ ] = '<tr>';
 				break;
 			case 'cell':
-				$this->proceedCell( $data );
+				$this->proceedCell( $data, $this->thTd );
 				break;
 			case 'header':
 				$this->_out[ ] = '<div>';
+				break;
+			case 'loop':
+				$this->_out[ ] = '<tbody>';
+				$this->loopOpen = true;
+				break;
+			case 'loop-row':
+				$this->_out[ ] = '<tr>';
 				break;
 			default:
 //				SPConfig::debOut( $data[ 'type' ] );
@@ -186,34 +197,81 @@ class SPTplParser
 			case 'header':
 				$this->_out[ ] = '</div>';
 				break;
+			case 'loop':
+				$this->_out[ ] = '</tbody>';
+				$this->loopOpen = false;
+				break;
+			case 'loop-row':
+				$this->_out[ ] = '</tr>';
+				break;
+
 		}
 	}
 
-	public function proceedCell( $cell )
+	public function proceedCell( $cell, $span = null )
 	{
-		$this->_out[ ] = "<{$this->thTd}>";
+		if ( isset( $cell[ 'attributes' ][ 'class' ] ) ) {
+			$c = 'SpCell' . ucfirst( $cell[ 'attributes' ][ 'class' ] );
+			$this->_out[ ] = "\n<{$span} class=\"{$c}\">\n";
+		}
+		else {
+			$this->_out[ ] = "\n<{$span}>\n";
+		}
 		switch ( $cell[ 'attributes' ][ 'type' ] ) {
+			case 'link':
+				$this->_out[ ] = "<a href=\"{$cell['link']}\" >";
 			case 'text':
-				$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
-				break;
-			case 'ordering':
-				$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
-				$this->_out[ ] = '<div class="pull-right">';
-				$this->_out[ ] = '<button class="btn sp-mini-bt">';
-				$this->_out[ ] = '<i class="icon-check"></i>';
-				$this->_out[ ] = '</button>';
-				$this->_out[ ] = '</div>';
-				break;
-			case 'checkbox':
-				if ( isset( $cell[ 'attributes' ][ 'rel' ] ) && $cell[ 'attributes' ][ 'rel' ] ) {
-					$this->_out[ ] = '<input type="checkbox" name="spToggle" value="1" rel="'.$cell[ 'attributes' ][ 'rel' ].'">';
+				if ( isset( $cell[ 'attributes' ][ 'label' ] ) && $cell[ 'attributes' ][ 'label' ] ) {
+					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
 				}
 				else {
-					$this->_out[ ] = '<input type="checkbox" name="'.$cell[ 'attributes' ][ 'name' ].'[]" value="1">';
+					$this->_out[ ] = $cell[ 'content' ];
+				}
+			case 'link':
+				$this->_out[ ] = "</a>";
+				break;
+			case 'ordering':
+				if ( isset( $cell[ 'attributes' ][ 'label' ] ) ) {
+					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
+					$this->_out[ ] = '<button class="btn sp-mini-bt" name="spReorder" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
+					$this->_out[ ] = '<i class="icon-check"></i>';
+					$this->_out[ ] = '</button>';
+				}
+				else {
+					$this->_out[ ] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], array( 'class' => 'input-mini sp-input-micro' ) );
+				}
+				break;
+				case 'checkbox':
+				if ( isset( $cell[ 'attributes' ][ 'rel' ] ) && $cell[ 'attributes' ][ 'rel' ] ) {
+					$this->_out[ ] = '<input type="checkbox" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
+				}
+				else {
+					$this->_out[ ] = '<input type="checkbox" name="' . $cell[ 'attributes' ][ 'name' ] . '[]" value="1">';
+				}
+				break;
+			case 'ticker':
+				if ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
+					$this->_out[ ] = "<a href=\"{$cell['link']}\" >";
+				}
+				$icons = array();
+				if ( isset( $cell[ 'attributes' ][ 'icons' ] ) && $cell[ 'attributes' ][ 'icons' ] ) {
+					$icons = json_decode( str_replace( "'", '"', $cell[ 'attributes' ][ 'icons' ] ), true );
+				}
+				if ( !( count( $icons ) ) ) {
+					$icons = $this->_tickerIcons;
+				}
+				$this->_out[ ] = '<i class="icon-' . $icons[ $cell[ 'content' ] ] . '"></i>';
+				if ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
+					$this->_out[ ] = "</a>";
 				}
 				break;
 		}
-		$this->_out[ ] = "</{$this->thTd}>";
+		if ( isset( $cell[ 'childs' ] ) && count( $cell[ 'childs' ] ) ) {
+			foreach ( $cell[ 'childs' ] as $child ) {
+				$this->proceedCell( $child, 'div' );
+			}
+		}
+		$this->_out[ ] = "\n</{$span}>\n";
 	}
 
 	public function tabsHeader( $element )

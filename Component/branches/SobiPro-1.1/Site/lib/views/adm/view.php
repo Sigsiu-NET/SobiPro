@@ -92,6 +92,7 @@ class SPAdmView extends SPObject implements SPView
 	public function addHidden( $var, $label )
 	{
 		$this->_hidden[ $label ] = $var;
+		$this->_attr[ 'request' ][ $label ] = $var;
 	}
 
 	/**
@@ -287,11 +288,11 @@ class SPAdmView extends SPObject implements SPView
 		return $button;
 	}
 
-	protected function parseValue( $key )
+	protected function parseValue( $key, $i = -1 )
 	{
 		if ( strstr( $key, 'var:[' ) ) {
 			preg_match( '/var\:\[([a-zA-Z0-9\.\_\-]*)\]/', $key, $matches );
-			$key = str_replace( $matches[ 0 ], $this->get( $matches[ 1 ] ), $key );
+			$key = str_replace( $matches[ 0 ], $this->get( $matches[ 1 ], $i ), $key );
 		}
 		else {
 			$key = Sobi::Txt( $key );
@@ -332,7 +333,7 @@ class SPAdmView extends SPObject implements SPView
 					$this->xmlField( $node, $element );
 					break;
 				case 'loop':
-					$element[ 'content' ] = $this->xmlLoop( $node, $element );
+					$this->xmlLoop( $node, $element );
 					break;
 				default:
 					$attributes = $node->attributes;
@@ -370,15 +371,29 @@ class SPAdmView extends SPObject implements SPView
 		$objectsCount = $this->count( $subject );
 		$objects = array();
 		for ( $i = 0; $i < $objectsCount; $i++ ) {
+			$row = array();
 			/** @var DOMNode $cell */
 			foreach ( $node->childNodes as $cell ) {
 				if ( strstr( $cell->nodeName, '#' ) ) {
 					continue;
 				}
-				$this->xmlCell( $cell, $subject, $i, $objects );
+				$this->xmlCell( $cell, $subject, $i, $row );
 			}
+			$a = array();
+			if ( $node->hasAttributes() ) {
+				/** @var DOMElement $attribute */
+				foreach ( $node->attributes as $attribute ) {
+					$a[ $attribute->nodeName ] = $attribute->nodeValue;
+				}
+			}
+			$objects[ ] = array(
+				'label' => null,
+				'type' => 'loop-row',
+				'content' => $row,
+				'attributes' => $a
+			);
 		}
-		SPConfig::debOut( $objects );
+		$element[ 'content' ] = $objects;
 	}
 
 	/**
@@ -402,7 +417,7 @@ class SPAdmView extends SPObject implements SPView
 				$element[ 'content' ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
 			}
 			else {
-				$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+				$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( str_replace( 'var:[', 'var:[' . $subject . '.', $attribute->nodeValue ), $i );
 			}
 		}
 		if ( $cell->hasChildNodes() ) {
@@ -413,21 +428,40 @@ class SPAdmView extends SPObject implements SPView
 				}
 				/** @var DOMNode $param */
 				if ( $child->nodeName == 'url' ) {
-//					$url = array();
-//					foreach ( $child->childNodes as $param ) {
-//						if ( $param->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
-//							$url[ $param->attributes->getNamedItem( 'name' ) ] = $this->get( $subject . '.' . $param->attributes->getNamedItem( 'value' )->nodeValue, $i );
-//						}
-//						else {
-//							$url[ $param->attributes->getNamedItem( 'name' ) ] = $param->attributes->getNamedItem( 'value' )->nodeValue;
-//						}
-//					}
-//					if ( $child->attributes->getNamedItem( 'type' )->nodeValue == 'intern' ) {
-//						$element[ 'link' ] = Sobi::Url( $url );
-//					}
-//					else {
-////						$element['link']
-//					}
+					$url = array();
+					foreach ( $child->childNodes as $param ) {
+						if ( strstr( $param->nodeName, '#' ) ) {
+							continue;
+						}
+						if ( $param->attributes->getNamedItem( 'parse' ) && $param->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
+							$currentSubject = $subject . '.';
+							/** wee need to skip sometimes, and sometimes override the current subject
+							 * i.e getting section id which is not a part of the object*/
+							if ( $param->attributes->getNamedItem( 'subject' ) ) {
+								if ( $param->attributes->getNamedItem( 'subject' )->nodeValue == 'skip' ) {
+									$currentSubject = null;
+								}
+								else {
+									$currentSubject = $param->attributes->getNamedItem( 'subject' )->nodeValue . '.';
+								}
+							}
+							if ( $currentSubject ) {
+								$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->get( $currentSubject . $param->attributes->getNamedItem( 'value' )->nodeValue, $i );
+							}
+							else {
+								$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->get( $param->attributes->getNamedItem( 'value' )->nodeValue );
+							}
+						}
+						else {
+							$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $param->attributes->getNamedItem( 'value' )->nodeValue;
+						}
+					}
+					if ( $child->attributes->getNamedItem( 'type' ) && $child->attributes->getNamedItem( 'type' )->nodeValue == 'intern' ) {
+						$element[ 'link' ] = Sobi::Url( $url );
+					}
+					else {
+						$element[ 'link' ] = $child->attributes->getNamedItem( 'host' )->nodeValue . http_build_query( $url );
+					}
 				}
 				else {
 					$this->xmlCell( $child, $subject, $i, $element[ 'childs' ] );
