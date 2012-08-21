@@ -80,6 +80,44 @@ div.spScreenSubHead:first-child {
 
 #SPAdminForm table .control-label {
 	padding-top: 5px;
+    color: #000099;
+}
+#SPAdminForm table a {
+    color: #000099;
+}
+
+#SPAdminForm .control-label {
+    padding-top: 0px;
+    width: 180px;
+}
+
+#SPAdminForm .controls {
+    margin-left: 200px;
+}
+#SPAdminForm .nav-tabs a {
+    color: #000099; /*#0088cc;*/
+    text-decoration: none;
+}
+
+#SPAdminForm .nav-tabs a:hover {
+    color: #000099; /*#005580;*/
+}
+
+#SPAdminForm .controls .btn:active,
+#SPAdminForm .controls .btn.active {
+    background-color: #993333;
+    color:#f5f5f5;
+}
+#SPAdminForm input,
+#SPAdminForm textarea,
+#SPAdminForm select,
+#SPAdminForm .uneditable-input {
+    color: #666666;
+}
+
+#SPAdminForm .nav-tabs .active a {
+    font-weight: bold;
+    color: #555555;
 }
 
 input.sp-input-micro[type="text"]{

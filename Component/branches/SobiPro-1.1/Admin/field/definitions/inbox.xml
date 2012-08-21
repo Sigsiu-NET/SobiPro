@@ -25,123 +25,107 @@
 	<body>
 		<tabs>
 			<tab label="FMN.FIELD_GENERAL">
-				<div class="well">
-					<div class="row-fluid">
-						<div class="span8">
-							<fieldset>
-								<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255"/>
-								<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
-                                <field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="span3"/>
-                                <field type="states" name="field.uniqueData" value="field.uniqueData" label="FM.UNIQUE_DATA" prefix="yes_no" />
-                                <field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="span3" />
-                                <field type="states" name="field.admList" value="field.admList" label="FM.INBOX.IN_ADMIN_LIST" prefix="yes_no" />
-                                <field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-xlarge" rows="2" />
-                            </fieldset>
-						</div>
-                        <div class="span4">
-                            <fieldset>
-                                <field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no"/>
-                            </fieldset>
-                        </div>
-                        <div class="span4">
-                            <fieldset>
-                                <field type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FMN.FIELD_TYPE"/>
-                            </fieldset>
-                        </div>
+                <div class="row">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no"/>
+                        </fieldset>
+                        <fieldset>
+                            <field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255"/>
+                            <field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
+                            <field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium"/>
+                            <field type="states" name="field.uniqueData" value="field.uniqueData" label="FM.UNIQUE_DATA" prefix="yes_no" />
+                            <field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
+                            <field type="states" name="field.admList" value="field.admList" label="FM.INBOX.IN_ADMIN_LIST" prefix="yes_no" />
+                            <field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-xlarge" rows="2" />
+                            <field type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FMN.FIELD_TYPE"/>
+                        </fieldset>
                     </div>
-				</div>
+                </div>
 			</tab>
             <tab label="FMN.FIELD_ENTRYINPUT">
-                <div class="well">
-                    <div class="row-fluid">
-                        <div class="span8">
-                            <fieldset>
-                                <field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-small">
-                                    <add where="after">
-                                        <text>px</text>
-                                    </add>
-                                </field>
-                                <field type="text" name="field.maxLength" value="field.maxLength" label="FM.MAX_LENGTH" maxlength="10" class="span2" />
-                                <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
-                                <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
-                                <field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no"/>
-                                <field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
-                                <field type="select" name="field.filter" values="filters" label="FM.FILTER" multi="false" selected="field.filter" class="span5" />
-                                <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-xlarge" rows="2"/>
-                            </fieldset>
-                        </div>
-                        <div class="span4">
-                            <fieldset>
-                                <field type="output" value="field.version" label="VERSION"/>
-                            </fieldset>
-                            <fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
-                                <field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no"/>
-                                <field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-small">
-                                 <add where="after">
-                                        <call function="Sobi::Cfg">
-                                            <param>payments.currency</param>
-                                            <param>EUR</param>
-                                      </call>
-                                 </add>
-                                </field>
-                            </fieldset>
-                        </div>
+                <div class="row">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
+                                <add where="after">
+                                    <text>px</text>
+                                </add>
+                            </field>
+                            <field type="text" name="field.maxLength" value="field.maxLength" label="FM.MAX_LENGTH" maxlength="10" class="input-mini" />
+                            <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
+                            <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
+                            <field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no"/>
+                            <field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
+                            <field type="select" name="field.filter" values="filters" label="FM.FILTER" multi="false" selected="field.filter" class="input-large" />
+                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-xlarge" rows="2"/>
+                        </fieldset>
+                        <fieldset>
+                            <field type="output" value="field.version" label="VERSION"/>
+                        </fieldset>
+                        <fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
+                            <field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no"/>
+                            <field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
+                             <add where="after">
+                                    <call function="Sobi::Cfg">
+                                        <param>payments.currency</param>
+                                        <param>EUR</param>
+                                  </call>
+                             </add>
+                            </field>
+                        </fieldset>
                     </div>
                 </div>
             </tab>
             <tab label="FMN.FIELD_ENTRYVIEW">
-                <div class="well">
-                    <div class="row-fluid">
-                        <div class="span8">
-                            <fieldset>
-                                <field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="span4">
-                                    <values>
-                                        <option value="both" label="FM.BOTH_OPT"/>
-                                        <option value="details" label="FM.DETAILS_VIEW_OPT"/>
-                                        <option value="vcard" label="FM.V_CARD_OPT"/>
-                                        <option value="hidden" label="FMN.HIDDEN_OPT"/>
-                                    </values>
-                                </field>
-                                <field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
+                <div class="row">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
+                                <values>
+                                    <option value="both" label="FM.BOTH_OPT"/>
+                                    <option value="details" label="FM.DETAILS_VIEW_OPT"/>
+                                    <option value="vcard" label="FM.V_CARD_OPT"/>
+                                    <option value="hidden" label="FMN.HIDDEN_OPT"/>
+                                </values>
+                            </field>
+                            <field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
 
 
-                                <field type="states" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
-                                <field type="states" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
+                            <field type="states" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
+                            <field type="states" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
                         </fieldset>
-                        </div>
                     </div>
                 </div>
             </tab>
             <tab label="FMN.FIELD_SEARCH">
-                <div class="well">
-                    <div class="row-fluid">
-                        <div class="span8">
-                            <fieldset>
-                               <field type="states" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
-                                <field type="select" name="field.priority" value="field.priority" label="FM.SEARCH_PRIORITY" multi="false" class="span1">
-                                    <values>
-                                        <option value="1" label="1" />
-                                        <option value="2" label="2" />
-                                        <option value="3" label="3" />
-                                        <option value="4" label="4" />
-                                        <option value="5" label="5" />
-                                        <option value="6" label="6" />
-                                        <option value="7" label="7" />
-                                        <option value="8" label="8" />
-                                        <option value="9" label="9" />
-                                        <option value="10" label="10" />
-                                    </values>
-                                </field>
-                                <field type="select" name="field.searchMethod" selected="field.searchMethod" label="FM.SEARCH_METHOD" multi="false" class="span3">
-                                    <values>
-                                        <option value="general" label="FM.GENERAL_SEARCH_OPT" />
-                                        <option value="select" label="FM.SELECT_LIST_OPT" />
-                                        <option value="range" label="FM.RANGE_LIST_OPT" />
-                                    </values>
-                                </field>
-                                <field type="textarea" name="field.searchRangeValues" value="field.searchRangeValues" label="FM.SEARCH_RANGE_SETTINGS" editor="false" width="500" height="100" />
-                            </fieldset>
-                        </div>
+                <div class="row">
+                    <div class="span12">
+                        <fieldset>
+                           <field type="states" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
+                            <field type="select" name="field.priority" value="field.priority" label="FM.SEARCH_PRIORITY" multi="false" class="span1">
+                                <values>
+                                    <option value="1" label="1" />
+                                    <option value="2" label="2" />
+                                    <option value="3" label="3" />
+                                    <option value="4" label="4" />
+                                    <option value="5" label="5" />
+                                    <option value="6" label="6" />
+                                    <option value="7" label="7" />
+                                    <option value="8" label="8" />
+                                    <option value="9" label="9" />
+                                    <option value="10" label="10" />
+                                </values>
+                            </field>
+                            <field type="select" name="field.searchMethod" selected="field.searchMethod" label="FM.SEARCH_METHOD" multi="false" class="input-large">
+                                <values>
+                                    <option value="general" label="FM.GENERAL_SEARCH_OPT" />
+                                    <option value="select" label="FM.SELECT_LIST_OPT" />
+                                    <option value="range" label="FM.RANGE_LIST_OPT" />
+                                </values>
+                            </field>
+                            <field type="textarea" name="field.searchRangeValues" value="field.searchRangeValues" label="FM.SEARCH_RANGE_SETTINGS" editor="false" width="500" height="100" />
+                        </fieldset>
                     </div>
                 </div>
             </tab>
