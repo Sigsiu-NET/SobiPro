@@ -402,11 +402,12 @@ abstract class SPController extends SPObject implements SPControl
 		}
 	}
 
-	protected function response( $message, $url, $redirect = true, $type = 'message' )
+	protected function response( $url, $message = null, $redirect = true, $type = 'message' )
 	{
 		if ( SPRequest::cmd( 'method', null ) == 'xhr' ) {
-			if( $redirect ) {
+			if( $redirect && $message ) {
 				SPFactory::mainframe()->msg( $message, $type );
+				SPFactory::mainframe()->proceedMessageQueue();
 			}
 			SPFactory::mainframe()->cleanBuffer();
 			header( 'Content-type: application/json' );

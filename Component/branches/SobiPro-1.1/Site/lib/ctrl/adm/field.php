@@ -370,15 +370,15 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		if ( $this->_task == 'apply' || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'FM.FIELD_CLONED' );
-				$this->response( $msg, Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ) );
+				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $msg );
 			}
 			else {
 				$msg = Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' );
-				$this->response( $msg, Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), false, 'success' );
+				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $msg, false, 'success' );
 			}
 		}
 		else {
-			$this->response( Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' ), Sobi::Back() );
+			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' ) );
 		}
 	}
 
@@ -635,7 +635,6 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 		/* parent class executes the plugins */
 		$r = false;
-		SPFactory::mainframe()->msg( 'Bla bla', 'message' );
 		if ( strstr( $this->_task, '.' ) ) {
 			$this->_task = explode( '.', $this->_task );
 			$this->_fieldType = $this->_task[ 1 ];
@@ -654,7 +653,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			case 'cancel':
 				$r = true;
 				$this->checkIn();
-				Sobi::Redirect( Sobi::Back() );
+				$this->response( Sobi::Back() );
 				break;
 			case 'addNew':
 				$r = true;
