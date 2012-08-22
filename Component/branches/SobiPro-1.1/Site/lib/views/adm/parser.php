@@ -171,6 +171,16 @@ class SPTplParser
 			case 'loop-row':
 				$this->_out[ ] = '<tr>';
 				break;
+			case 'message':
+				$attr = array();
+				if( count($data['attributes'])) {
+					foreach( $data['attributes'] as $n => $v ) {
+						$attr[] = "{$n}=\"{$v}\"";
+					}
+				}
+				$attr = implode( ' ', $attr );
+				$this->_out[ ] = "<div {$attr}>&nbsp;</div>";
+				break;
 			default:
 //				SPConfig::debOut( $data[ 'type' ] );
 				break;

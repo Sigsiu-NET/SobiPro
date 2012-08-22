@@ -281,7 +281,7 @@ final class SobiProAdmCtrl
 								count( SPRequest::arr( 'e_sid' ) )
 				)
 			) {
-				$sid = key_exists( 'sid', $_REQUEST ) ? 'sid' : ( key_exists( 'c_sid', $_REQUEST ) ? 'c_sid' : 'e_sid' );
+				$sid = array_key_exists( 'sid', $_REQUEST ) ? 'sid' : ( array_key_exists( 'c_sid', $_REQUEST ) ? 'c_sid' : 'e_sid' );
 				if ( count( SPRequest::arr( $sid ) ) ) {
 					/* @var SPdb $db */
 					$db =& SPFactory::db();

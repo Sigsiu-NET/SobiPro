@@ -25,6 +25,7 @@ class SpAdmToolbar
 	private $icons = array(
 		'apply' => 'ok',
 		'cancel' => 'ban-circle',
+		'exit' => 'ban-circle',
 		'help' => 'question-sign',
 		'save' => 'share',
 		'duplicate' => 'edit',
@@ -39,6 +40,7 @@ class SpAdmToolbar
 	private $labels = array(
 		'apply' => 'SAVE_ONLY',
 		'cancel' => 'CANCEL',
+		'exit' => 'EXIT',
 		'help' => 'HELP',
 		'save' => 'SAVE_EXIT',
 		'duplicate' => 'SAVE_NEW',

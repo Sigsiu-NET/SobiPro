@@ -204,8 +204,8 @@ class SPJoomlaMainFrame
             else {
                 $type = null;
             }
-            $app =& JFactory::getApplication();
-            $app->redirect( $r[ 'address' ], $msg, $type );
+            JFactory::getApplication()
+		            ->redirect( $r[ 'address' ], $msg, $type );
         }
     }
 

@@ -58,7 +58,7 @@
 				<cell label="HEADER_FIELD_TYPE" type="text" class="center"/>
 				<cell label="HEADER_FIELD_SHOW_IN" type="text" class="center"/>
 				<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="center"/>
-				<cell label="HEADER_FIELD_IS_EDITABLE" order="editable" type="text" class="center"/>
+				<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="center"/>
 				<cell label="HEADER_FIELD_IS_FREE" type="text" class="center"/>
 				<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="field"/>
 			</head>
@@ -77,7 +77,7 @@
 				</cell>
 				<cell type="ticker" value="enabled" class="center">
 					<url type="intern">
-						<param name="task" value="field.toggle.publish"/>
+						<param name="task" value="field.toggle.enabled"/>
 						<param name="fid" value="fid" parse="true"/>
 						<param name="sid" value="request.sid" parse="true" subject="skip"/>
 					</url>
@@ -100,7 +100,7 @@
 				</cell>
 				<cell type="ticker" value="isFree" class="center" icons="{'0':'shopping-cart','1':'gift'}">
 					<url type="intern">
-						<param name="task" value="field.toggle.payment"/>
+						<param name="task" value="field.toggle.free"/>
 						<param name="fid" value="fid" parse="true"/>
 						<param name="sid" value="request.sid" parse="true" subject="skip"/>
 					</url>
@@ -117,8 +117,7 @@
 		<hidden>
 			<field name="option" default="com_sobipro"/>
 			<field name="task" default=""/>
-			<field name="boxchecked"/>
-			<field name="method" default="xhr"/>
+			<field name="boxchecked" default=""/>
 		</hidden>
 	</config>
 </definition>

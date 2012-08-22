@@ -62,8 +62,8 @@ abstract class SPController extends SPObject implements SPControl
 	 */
 	public function setModel( $model )
 	{
-		if( is_string( $model ) ) {
-			if( !class_exists( $model ) && !( $model = SPLoader::loadModel( $model ) ) ) {
+		if ( is_string( $model ) ) {
+			if ( !class_exists( $model ) && !( $model = SPLoader::loadModel( $model ) ) ) {
 				throw new SPException( SPLang::e( 'Cannot instantiate model for "%s" controller. Missing class definition', $this->name() ) );
 			}
 			$this->_model = new $model();
@@ -94,12 +94,12 @@ abstract class SPController extends SPObject implements SPControl
 	 */
 	protected function authorise( $action = 'access', $ownership = 'valid' )
 	{
-		if( !( Sobi::Can( $this->_type, $action, $ownership, Sobi::Section() ) ) ) {
-			if( $action == 'add' && $this->_type == 'entry' && Sobi::Cfg( 'redirects.entry_enabled', false ) && strlen( Sobi::Cfg( 'redirects.entry_url', null ) ) ) {
+		if ( !( Sobi::Can( $this->_type, $action, $ownership, Sobi::Section() ) ) ) {
+			if ( $action == 'add' && $this->_type == 'entry' && Sobi::Cfg( 'redirects.entry_enabled', false ) && strlen( Sobi::Cfg( 'redirects.entry_url', null ) ) ) {
 				$redirect = Sobi::Cfg( 'redirects.entry_url', null );
 				$msg = Sobi::Cfg( 'redirects.entry_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) );
 				$msgtype = Sobi::Cfg( 'redirects.entry_msgtype', 'message' );
-				if( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
+				if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
 					$redirect = Sobi::Url( $redirect );
 				}
 				Sobi::Redirect( $redirect, Sobi::Txt( $msg ), $msgtype, true );
@@ -118,21 +118,21 @@ abstract class SPController extends SPObject implements SPControl
 	public function execute()
 	{
 		$r = false;
-        SPRequest::set( 'task', $this->_type.'.'.$this->_task );
+		SPRequest::set( 'task', $this->_type . '.' . $this->_task );
 		switch ( $this->_task ) {
 			/* if someone want edit an object - just check if it is not checked out */
 			case 'edit':
-				if( $this->_model && $this->_model->isCheckedOut() ) {
-					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'MSG.OBJ_CHECKED_OUT', array( 'type' => Sobi::Txt( $this->_type ) ) ) , SPC::ERROR_MSG, true );
+				if ( $this->_model && $this->_model->isCheckedOut() ) {
+					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'MSG.OBJ_CHECKED_OUT', array( 'type' => Sobi::Txt( $this->_type ) ) ), SPC::ERROR_MSG, true );
 					exit();
 				}
 				break;
 			case 'hide':
 			case 'publish':
-				if( $this->authorise( 'manage' ) ) {
+				if ( $this->authorise( 'manage' ) ) {
 					$r = true;
 					$this->_model->changeState( $this->_task == 'publish' );
-					$state = ( int ) ( $this->_task == 'publish' );
+					$state = ( int )( $this->_task == 'publish' );
 					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'MSG.OBJ_CHANGED', array( 'type' => Sobi::Txt( $this->_type ) ) ) );
 				}
 				break;
@@ -142,16 +142,16 @@ abstract class SPController extends SPObject implements SPControl
 				$this->save( $this->_task == 'apply' );
 				break;
 			case 'cancel':
-				if( defined( 'SOBI_ADM_PATH' ) ) {
+				if ( defined( 'SOBI_ADM_PATH' ) ) {
 					$this->checkIn( SPRequest::sid(), false );
 					Sobi::Redirect( Sobi::Back(), null, null, true );
 				}
 				$this->checkIn( SPRequest::int( 'sid' ) );
 				$r = true;
-				if( SPRequest::int( 'sid' )  ) {
+				if ( SPRequest::int( 'sid' ) ) {
 					Sobi::Redirect( Sobi::Url( array( 'sid' => SPRequest::sid() ) ) );
 				}
-				elseif( SPRequest::int( 'pid' ) ) {
+				elseif ( SPRequest::int( 'pid' ) ) {
 					Sobi::Redirect( Sobi::Url( array( 'sid' => SPRequest::int( 'pid' ) ) ) );
 				}
 				else {
@@ -159,7 +159,7 @@ abstract class SPController extends SPObject implements SPControl
 				}
 				break;
 			case 'delete':
-				if( $this->authorise( 'delete', '*' ) ) {
+				if ( $this->authorise( 'delete', '*' ) ) {
 					$r = true;
 					$this->_model->delete();
 					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'MSG.OBJ_DELETED', array( 'type' => Sobi::Txt( $this->_type ) ) ) );
@@ -171,7 +171,7 @@ abstract class SPController extends SPObject implements SPControl
 				$this->view();
 				break;
 			case 'resetCounter':
-				if( $this->authorise( 'edit', '*' ) ) {
+				if ( $this->authorise( 'edit', '*' ) ) {
 					$r = true;
 					$this->_model->countVisit( true );
 				}
@@ -197,7 +197,7 @@ abstract class SPController extends SPObject implements SPControl
 	public function setTask( $task )
 	{
 		$this->_task = strlen( $task ) ? $task : $this->_defTask;
-		$helpTask = $this->_type.'.'.$this->_task;
+		$helpTask = $this->_type . '.' . $this->_task;
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_task ) );
 		SPFactory::registry()->set( 'task', $helpTask );
 	}
@@ -218,20 +218,20 @@ abstract class SPController extends SPObject implements SPControl
 	 */
 	protected function save( $apply, $clone = false )
 	{
-		if( !( SPFactory::mainframe()->checkToken() ) ) {
+		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$apply = ( int ) $apply;
-		if( !$this->_model ) {
+		$apply = ( int )$apply;
+		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
 		}
-		$sid = SPRequest::sid() ? SPRequest::sid() : SPRequest::int( $this->_type.'_id' );
-		if( $sid ) {
+		$sid = SPRequest::sid() ? SPRequest::sid() : SPRequest::int( $this->_type . '_id' );
+		if ( $sid ) {
 			$this->_model->init( $sid );
 		}
 		$this->_model->getRequest( $this->_type );
-		if( $this->_model->get( 'id' ) ) {
-			if( Sobi::My( 'id' ) &&  Sobi::My( 'id' ) == $this->_model->get( 'owner' ) ) {
+		if ( $this->_model->get( 'id' ) ) {
+			if ( Sobi::My( 'id' ) && Sobi::My( 'id' ) == $this->_model->get( 'owner' ) ) {
 				$this->authorise( 'edit', 'own' );
 			}
 			else {
@@ -243,17 +243,17 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		$this->_model->save();
 		$sid = $this->_model->get( 'id' );
-		if( $apply || $clone ) {
-			if( $clone ) {
+		if ( $apply || $clone ) {
+			if ( $clone ) {
 				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_type ) ) );
 			}
 			else {
 				$msg = Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) );
 			}
-			Sobi::Redirect( Sobi::Url( array( 'task' => $this->_type.'.edit', 'sid' => $sid ) ), $msg );
+			Sobi::Redirect( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg );
 		}
 		else {
-			Sobi::Redirect( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) )  );
+			Sobi::Redirect( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) ) );
 		}
 	}
 
@@ -261,8 +261,8 @@ abstract class SPController extends SPObject implements SPControl
 	 */
 	protected function visible()
 	{
-		$type =  $this->_model->get( 'oType' );
-		if( Sobi::Can( $type, 'access', '*' ) ) {
+		$type = $this->_model->get( 'oType' );
+		if ( Sobi::Can( $type, 'access', '*' ) ) {
 			return true;
 		}
 		$error = false;
@@ -270,47 +270,47 @@ abstract class SPController extends SPObject implements SPControl
 		$state = $this->_model->get( 'state' );
 		Sobi::Trigger( $type, 'CheckVisibility', array( &$state, &$owner ) );
 		/* if it's unpublished */
-		if( !( $state ) ) {
-			if( $owner == Sobi::My( 'id' ) ) {
-				if( !( Sobi::Can( $type, 'access', 'unpublished_own' ) ) ) {
+		if ( !( $state ) ) {
+			if ( $owner == Sobi::My( 'id' ) ) {
+				if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) ) ) {
 					$error = true;
 				}
 			}
 			else {
-				if( !( Sobi::Can( $type, 'access', 'unpublished_any' ) ) ) {
+				if ( !( Sobi::Can( $type, 'access', 'unpublished_any' ) ) ) {
 					$error = true;
 				}
 			}
 		}
 		else {
-			if( !( Sobi::Can( $type, 'access', 'valid' ) ) ) {
+			if ( !( Sobi::Can( $type, 'access', 'valid' ) ) ) {
 				$error = true;
 			}
 		}
 		/* if it's expired or not valid yet  */
 		$va = $this->_model->get( 'validUntil' );
 		$va = $va ? strtotime( $va ) : 0;
-		if( !( $error ) ) {
-			if( strtotime( $this->_model->get( 'validSince' ) ) > time() || $va > 0 && $va < time() ) {
-				if( $owner == Sobi::My( 'id' ) ) {
-					if( !( Sobi::Can( $type, 'access', 'unpublished_own' ) ) ) {
+		if ( !( $error ) ) {
+			if ( strtotime( $this->_model->get( 'validSince' ) ) > time() || $va > 0 && $va < time() ) {
+				if ( $owner == Sobi::My( 'id' ) ) {
+					if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) ) ) {
 						$error = true;
 					}
 				}
 				else {
-					if( !( Sobi::Can( $type, 'access', 'unpublished_any' ) ) ) {
+					if ( !( Sobi::Can( $type, 'access', 'unpublished_any' ) ) ) {
 						$error = true;
 					}
 				}
 			}
 		}
-		if( $error ) {
-			$redirect = Sobi::Cfg( 'redirects.'.$type.'_url', null );
-			if( Sobi::Cfg( 'redirects.'.$type.'_enabled', false ) && strlen( $redirect ) ) {
-				$msg = Sobi::Cfg( 'redirects.'.$type.'_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) );
-				$msgtype = Sobi::Cfg( 'redirects.'.$type.'_msgtype', 'message' );
-				if( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
-					$redirect =  Sobi::Url( $redirect );
+		if ( $error ) {
+			$redirect = Sobi::Cfg( 'redirects.' . $type . '_url', null );
+			if ( Sobi::Cfg( 'redirects.' . $type . '_enabled', false ) && strlen( $redirect ) ) {
+				$msg = Sobi::Cfg( 'redirects.' . $type . '_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) );
+				$msgtype = Sobi::Cfg( 'redirects.' . $type . '_msgtype', 'message' );
+				if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
+					$redirect = Sobi::Url( $redirect );
 				}
 				Sobi::Redirect( $redirect, Sobi::Txt( $msg ), $msgtype, true );
 				exit;
@@ -325,7 +325,7 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		/* determine template file */
 		$template = SPRequest::cmd( 'sptpl', $this->_task );
-		if( strstr( $template, '.' ) ) {
+		if ( strstr( $template, '.' ) ) {
 			$template = explode( '.', $template );
 			$this->templateType = $template[ 0 ];
 			$this->template = $template[ 1 ];
@@ -341,7 +341,7 @@ abstract class SPController extends SPObject implements SPControl
 	protected function tplCfg( $path, $task = null )
 	{
 		$file = explode( '.', $path );
-		if( strstr( $file[ 0 ], 'cms:' ) ) {
+		if ( strstr( $file[ 0 ], 'cms:' ) ) {
 			$file[ 0 ] = str_replace( 'cms:', null, $file[ 0 ] );
 			$file = SPFactory::mainframe()->path( implode( '.', $file ) );
 			$path = SPLoader::dirPath( $file, 'root', true );
@@ -349,15 +349,15 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		else {
 			$this->_tCfg = SPLoader::loadIniFile( "usr.templates.{$path}.config" );
-			$path = SPLoader::dirPath( 'usr.templates.'.$path, 'front', true );
+			$path = SPLoader::dirPath( 'usr.templates.' . $path, 'front', true );
 		}
-		if( !$task ) {
+		if ( !$task ) {
 			$task = ( $this->_task == 'add' || $this->_task == 'submit' ) ? 'edit' : $this->template;
 		}
-		if( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'ini' ) ) {
+		if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'ini' ) ) {
 			$taskCfg = SPLoader::loadIniFile( "{$path}.{$this->templateType}.{$task}", true, false, false, true );
 			foreach ( $taskCfg as $section => $keys ) {
-				if( isset( $this->_tCfg[ $section ] ) ) {
+				if ( isset( $this->_tCfg[ $section ] ) ) {
 					$this->_tCfg[ $section ] = array_merge( $this->_tCfg[ $section ], $keys );
 				}
 				else {
@@ -382,9 +382,9 @@ abstract class SPController extends SPObject implements SPControl
 	 * @param string $def
 	 * @return string
 	 */
-	protected function parseOrdering( $subject, $col, $def  )
+	protected function parseOrdering( $subject, $col, $def )
 	{
-        return Sobi::GetUserState( $subject.'.ordering.'.SPLang::nid( Sobi::Section( true ) ), $col, $def );
+		return Sobi::GetUserState( $subject . '.ordering.' . SPLang::nid( Sobi::Section( true ) ), $col, $def );
 	}
 
 	/**
@@ -392,13 +392,34 @@ abstract class SPController extends SPObject implements SPControl
 	 */
 	protected function checkIn( $sid, $redirect = true )
 	{
-		if( $sid ) {
+		if ( $sid ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
 			$this->_model->load( $sid );
 			$this->_model->checkIn();
 		}
-		if( $redirect ) {
+		if ( $redirect ) {
 			Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ) );
+		}
+	}
+
+	protected function response( $message, $url, $redirect = true, $type = 'message' )
+	{
+		if ( SPRequest::cmd( 'method', null ) == 'xhr' ) {
+			if( $redirect ) {
+				SPFactory::mainframe()->msg( $message, $type );
+			}
+			SPFactory::mainframe()->cleanBuffer();
+			header( 'Content-type: application/json' );
+			echo json_encode(
+				array(
+					'message' => array( 'text' => $message, 'type' => $type ),
+					'redirect' => array( 'url' => $url, 'execute' => ( bool ) $redirect ),
+				)
+			);
+			exit;
+		}
+		else {
+			Sobi::Redirect( $url, $message, $type );
 		}
 	}
 }
