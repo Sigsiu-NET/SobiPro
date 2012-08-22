@@ -33,6 +33,7 @@ class SPTplParser
 
 	public function parse( $data )
 	{
+        ////////SPConfig::debOut($data);
 		$this->openElement( $data );
 		$this->parseElement( $data );
 		if ( is_array( $data[ 'content' ] ) && count( $data[ 'content' ] ) && !( is_string( $data[ 'content' ] ) ) ) {
@@ -62,6 +63,11 @@ class SPTplParser
 				}
 				$this->_out[ ] = "<div class=\"controls\">\n";
 				$class = null;
+
+                if ($element['args']['type'] == 'output') {
+                    $outclass = $element['args']['params']['class'];
+                    $this->_out[ ] = "<div class=\"{$outclass}\">\n";
+                }
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {
 					$class .= ' input-prepend';
 				}
@@ -85,6 +91,9 @@ class SPTplParser
 						$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
 					}
 				}
+                if ($element['args']['type'] == 'output') {
+                    $this->_out[ ] = "</div>\n";
+                }
 				if ( $class ) {
 					$this->_out[ ] = "</div>\n";
 				}
