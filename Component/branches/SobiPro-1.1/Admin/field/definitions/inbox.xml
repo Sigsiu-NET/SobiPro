@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definition>
-	<config>
-		<action value="index.php?option=com_sobipro"/>
-		<hidden>
-			<field name="option" default="com_sobipro"/>
-			<field name="task" default=""/>
-			<field name="method" default="xhr"/>
-		</hidden>
-	</config>
 	<header>
 		<title value="FM.EDIT_FIELD"/>
 		<file type="script" filename="bootstrap.tabs"/>
@@ -18,11 +10,12 @@
 			<button type="duplicate" task="field.clone" />
 		</button>
 		<divider/>
-		<button type="cancel" task="field.cancel" />
+		<button type="exit" task="field.cancel" />
 		<divider/>
 		<button type="help" target="_blank" />
 	</toolbar>
 	<body>
+		<message id="spMessage"/>
 		<tabs>
 			<tab label="FMN.FIELD_GENERAL">
                 <div class="row-fluid">
@@ -37,7 +30,7 @@
                             <field type="states" name="field.uniqueData" value="field.uniqueData" label="FM.UNIQUE_DATA" prefix="yes_no" />
                             <field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
                             <field type="states" name="field.admList" value="field.admList" label="FM.INBOX.IN_ADMIN_LIST" prefix="yes_no" />
-                            <field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-xlarge" rows="2" />
+                            <field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-xlarge" rows="2" style="" />
                             <field type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FMN.FIELD_TYPE"/>
                         </fieldset>
                     </div>
@@ -61,7 +54,7 @@
                             <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-xlarge" rows="2"/>
                         </fieldset>
                         <fieldset>
-                            <field type="output" value="field.version" label="VERSION"/>
+                            <field type="output" value="field.version" label="VERSION" class="spVersion"/>
                         </fieldset>
                         <fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
                             <field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no"/>
@@ -131,4 +124,13 @@
             </tab>
         </tabs>
 	</body>
+	<config>
+		<action value="index.php?option=com_sobipro"/>
+		<hidden>
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+			<field name="method" default="xhr"/>
+			<field name="format" default="raw"/>
+		</hidden>
+	</config>
 </definition>
