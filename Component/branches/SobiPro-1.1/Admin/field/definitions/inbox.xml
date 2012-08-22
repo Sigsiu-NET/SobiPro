@@ -146,6 +146,7 @@
 			<field name="option" default="com_sobipro"/>
 			<field name="task" default=""/>
 			<field name="method" default="xhr"/>
+			<field name="format" default="raw"/>
 		</hidden>
 	</config>
 </definition>
