@@ -86,12 +86,12 @@ div.spScreenSubHead:first-child {
     color: #000099;
 }
 
-#SPAdminForm .control-label {
+#SPAdminForm fieldset .control-label {
     padding-top: 0px;
     width: 180px;
 }
 
-#SPAdminForm .controls {
+#SPAdminForm fieldset .controls {
     margin-left: 200px;
 }
 #SPAdminForm .nav-tabs a {
