@@ -342,11 +342,11 @@ class SPAdmView extends SPObject implements SPView
 						foreach ( $attributes as $attribute ) {
 							if ( $attribute->nodeName == 'label' ) {
 								$element[ 'attributes' ][ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+								$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
 							}
 							else {
 								$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
 							}
-							$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
 						}
 					}
 					if ( $node->hasChildNodes() ) {

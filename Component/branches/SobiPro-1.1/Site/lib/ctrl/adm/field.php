@@ -345,8 +345,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 		$fid = SPRequest::int( 'fid' );
 		$f = $this->loadField( $fid );
-		$fClass = SPLoader::loadModel( 'field', true );
-		$field = new $fClass();
+		$field = SPFactory::Model( 'field', true );
 		$field->extend( $f );
 		$this->getRequest();
 
@@ -371,16 +370,16 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		if ( $this->_task == 'apply' || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'FM.FIELD_CLONED' );
+				$this->response( $msg, Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ) );
 			}
 			else {
 				$msg = Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' );
+				$this->response( $msg, Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), false, 'success' );
 			}
-			Sobi::Redirect( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $msg );
 		}
 		else {
-			Sobi::Redirect( Sobi::Back(), Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' ) );
+			$this->response( Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' ), Sobi::Back() );
 		}
-
 	}
 
 	/**
@@ -565,11 +564,13 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	protected function changeState( $task )
 	{
-		/* @var SPdb $db */
-		$db =& SPFactory::db();
-		$fids = SPRequest::arr( 'p_fid' );
+		$fIds = SPRequest::arr( 'p_fid' );
 		$col = 'enabled';
 		$state = '0';
+		$msg = null;
+		if ( !$fIds ) {
+			$fIds = array( SPRequest::int( 'fid' ) );
+		}
 		switch ( $task ) {
 			case 'hide':
 			case 'publish':
@@ -591,15 +592,31 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$col = 'isFree';
 				$state = ( $task == 'setFree' ) ? 1 : 0;
 				break;
-		}
-		if ( !$fids ) {
-			$fids = array( SPRequest::int( 'fid' ) );
-		}
-		$msg = null;
-		if ( count( $fids ) ) {
-			foreach ( $fids as $fid ) {
+			/** @since 1.1 - single row only from the field list  */
+			case 'toggle':
+				$fIds = array();
+				$fid = SPRequest::int( 'fid' );
+				$attribute = explode( '.', SPRequest::task() );
+				/** now you know what a naming convention is for! Right? Damn!!! */
+				$attribute = in_array( $attribute[ 2 ], array( 'editable', 'enabled', 'required' ) ) ? $attribute[ 2 ] : 'is' . ucfirst( $attribute[ 2 ] );
+				$this->_model = SPFactory::Model( 'field', true )
+						->init( $fid );
+				$current = $this->_model->get( $attribute );
 				try {
-					$db->update( 'spdb_field', array( $col => $state ), array( 'fid' => $fid ), 1 );
+					SPFactory::db()
+							->update( 'spdb_field', array( $attribute => !( $current ) ), array( 'fid' => $fid ), 1 );
+					$msg = Sobi::Txt( 'FM.STATE_CHANGED', array( 'fid' => $fid ) );
+				} catch ( SPException $x ) {
+					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
+					$msg = Sobi::Txt( 'FM.STATE_NOT_CHANGED', array( 'fid' => $fid ) );
+				}
+				break;
+		}
+		if ( count( $fIds ) ) {
+			foreach ( $fIds as $fid ) {
+				try {
+					SPFactory::db()
+							->update( 'spdb_field', array( $col => $state ), array( 'fid' => $fid ), 1 );
 					$msg .= Sobi::Txt( 'FM.STATE_CHANGED', array( 'fid' => $fid ) );
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
@@ -618,6 +635,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 		/* parent class executes the plugins */
 		$r = false;
+		SPFactory::mainframe()->msg( 'Bla bla', 'message' );
 		if ( strstr( $this->_task, '.' ) ) {
 			$this->_task = explode( '.', $this->_task );
 			$this->_fieldType = $this->_task[ 1 ];
@@ -677,6 +695,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			case 'setNotEditable':
 			case 'setFee':
 			case 'setFree':
+			case 'toggle':
 				$r = true;
 				$this->authorise( $this->_task );
 				SPFactory::cache()->cleanSection();
