@@ -25,7 +25,7 @@
 	<body>
 		<tabs>
 			<tab label="FMN.FIELD_GENERAL">
-                <div class="row">
+                <div class="row-fluid">
                     <div class="span12">
                         <fieldset>
                             <field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no"/>
@@ -44,7 +44,7 @@
                 </div>
 			</tab>
             <tab label="FMN.FIELD_ENTRYINPUT">
-                <div class="row">
+                <div class="row-fluid">
                     <div class="span12">
                         <fieldset>
                             <field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
@@ -78,7 +78,7 @@
                 </div>
             </tab>
             <tab label="FMN.FIELD_ENTRYVIEW">
-                <div class="row">
+                <div class="row-fluid">
                     <div class="span12">
                         <fieldset>
                             <field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
@@ -99,7 +99,7 @@
                 </div>
             </tab>
             <tab label="FMN.FIELD_SEARCH">
-                <div class="row">
+                <div class="row-fluid">
                     <div class="span12">
                         <fieldset>
                            <field type="states" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
