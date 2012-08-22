@@ -55,8 +55,8 @@ class SPTplParser
 				}
 				$this->_out[ ] = '<div class="control-group">';
 				if ( isset( $element[ 'label' ] ) ) {
-					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element[ 'id' ]}\">{$element[ 'label' ]}</label>\n";
-				}
+         			$this->_out[ ] = "<label class=\"control-label\" for=\"{$element[ 'id' ]}\">{$element[ 'label' ]}</label>\n";
+    			}
 				if ( $this->table ) {
 					$this->_out[ ] = '</td>';
 				}
