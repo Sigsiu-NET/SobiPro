@@ -88,11 +88,20 @@ div.spScreenSubHead:first-child {
 
 #SPAdminForm fieldset .control-label {
     padding-top: 0px;
+    width: 200px;
+}
+#SPAdminForm .spFieldGroup {
+    margin-bottom: 0px;
+}
+#SPAdminForm .spFieldGroup label {
+    color: #993333;
+    border-bottom: 1px solid #CC9999;
+    margin-left: 20px;
     width: 180px;
 }
 
 #SPAdminForm fieldset .controls {
-    margin-left: 200px;
+    margin-left: 220px;
 }
 #SPAdminForm .nav-tabs a {
     color: #000099; /*#0088cc;*/
@@ -115,6 +124,10 @@ div.spScreenSubHead:first-child {
     color: #666666;
 }
 
+#SPAdminForm .input-splarge {
+    width: 400px;
+}
+
 #SPAdminForm .nav-tabs .active a {
     font-weight: bold;
     color: #555555;
@@ -123,6 +136,11 @@ div.spScreenSubHead:first-child {
 input.sp-input-micro[type="text"]{
 	width: 25px;
 	text-align: center;
+}
+
+.spOutput {
+    min-height: 23px;
+    padding-top: 5px;
 }
 
 .sp-mini-bt {

@@ -33,7 +33,7 @@ class SPTplParser
 
 	public function parse( $data )
 	{
-        ////////SPConfig::debOut($data);
+        /////SPConfig::debOut($data);
 		$this->openElement( $data );
 		$this->parseElement( $data );
 		if ( is_array( $data[ 'content' ] ) && count( $data[ 'content' ] ) && !( is_string( $data[ 'content' ] ) ) ) {
@@ -65,8 +65,14 @@ class SPTplParser
 				$class = null;
 
                 if ($element['args']['type'] == 'output') {
+                    $this->_out[ ] = "<div class=\"spOutput\">";
                     $outclass = $element['args']['params']['class'];
-                    $this->_out[ ] = "<div class=\"{$outclass}\">\n";
+                    if ($outclass) {
+                        $this->_out[ ] = "<span class=\"{$outclass}\">\n";
+                    }
+                    else {
+                        $this->_out[ ] = "<span>\n";
+                    }
                 }
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {
 					$class .= ' input-prepend';
@@ -92,7 +98,7 @@ class SPTplParser
 					}
 				}
                 if ($element['args']['type'] == 'output') {
-                    $this->_out[ ] = "</div>\n";
+                    $this->_out[ ] = "</div></span>\n";
                 }
 				if ( $class ) {
 					$this->_out[ ] = "</div>\n";
@@ -137,7 +143,7 @@ class SPTplParser
 				}
 				$this->_out[ ] = '<fieldset class="form-horizontal control-group">';
 				if ( isset( $data[ 'label' ] ) && $data[ 'label' ] ) {
-					$this->_out[ ] = '<label class="control-label">' . $data[ 'label' ] . '</label>';
+					$this->_out[ ] = '<div class="control-group spFieldGroup"><label class="control-label">' . $data[ 'label' ] . '</label></div>';
 				}
 				break;
 			case 'table':
