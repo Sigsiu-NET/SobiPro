@@ -548,10 +548,9 @@ abstract class SPHtml_Input
 		$value = (int) $value;
 		$field = null;
 		$field .= "\n" . '<div class="btn-group" data-toggle="buttons-radio" id="'.$id.'">';
-		$field .= "\n\t" . '<button class="btn'.( $value ? ' active' : '' ).'" value="1">' . Sobi::Txt( $prefix . '_yes' ) . '</button>';
-		$field .= "\n\t" . '<button class="btn'.( $value ? '' : ' active' ).'" value="0">' . Sobi::Txt( $prefix . '_no' ) . '</button>';
+		$field .= "\n\t" . '<button type="button" name="'.$name.'" class="btn'.( $value ? ' active' : '' ).'" value="1">' . Sobi::Txt( $prefix . '_yes' ) . '</button>';
+		$field .= "\n\t" . '<button type="button" name="'.$name.'" class="btn'.( $value ? '' : ' active' ).'" value="0">' . Sobi::Txt( $prefix . '_no' ) . '</button>';
 		$field .= "\n" . '</div>';
-//		return self::radioList( $name, array( '0' => "translate:[{$prefix}_no]", '1' => "translate:[{$prefix}_yes]" ), $id, ( int )$value, $params, $side );
 		return "\n<!-- States '{$name}' Output -->{$field}\n<!-- States '{$name}' End -->\n";
 	}
 

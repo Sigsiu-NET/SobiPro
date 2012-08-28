@@ -29,15 +29,16 @@ final class SPAdmSiteMenu
 {
 	private $_sections = array();
 	private $_sid = 0;
-	private $_view = null;
+	private $_view = array();
 	private $_task = null;
 	private $_open = null;
 	private $_custom = array();
 
 	public function __construct( $task, $sid = 0 )
 	{
-		SPFactory::header()->addCSSFile( 'menu', true );
-		SPFactory::header()->addJsFile( 'menu', true );
+		SPFactory::header()
+				->addCSSFile( 'menu', true )
+				->addJsFile( 'menu', true );
 		Sobi::LoadLangFile( 'menu', true, true );
 		$this->_task = $task;
 		$this->_sid = $sid;
@@ -47,16 +48,16 @@ final class SPAdmSiteMenu
 	public function addSection( $name, $section )
 	{
 		Sobi::Trigger( 'addSection', 'SPAdmSiteMenu', array( $name, $section ) );
-		if( $name == 'AMN.APPS_HEAD' || $name == 'AMN.APPS_SECTION_HEAD' ) {
+		if ( $name == 'AMN.APPS_HEAD' || $name == 'AMN.APPS_SECTION_HEAD' ) {
 			$p = SPFactory::Controller( 'extensions', true );
 			$links = $p->appsMenu();
-			if( is_array( $links ) ) {
+			if ( is_array( $links ) ) {
 				$section = array_merge( $section, $links );
 			}
 		}
-		elseif( $name == 'AMN.APPS_SECTION_TPL' && Sobi::Section() && Sobi::Cfg( 'section.template', 'default' ) ) {
+		elseif ( $name == 'AMN.APPS_SECTION_TPL' && Sobi::Section() && Sobi::Cfg( 'section.template', 'default' ) ) {
 			$p = SPFactory::Controller( 'template', true );
-			$this->_custom[ $name ][ 'after' ][] = $p->getTemplateTree( Sobi::Cfg( 'section.template', 'default' ) );
+			$this->_custom[ $name ][ 'after' ][ ] = $p->getTemplateTree( Sobi::Cfg( 'section.template', 'default' ) );
 		}
 		$this->_sections[ $name ] =& $section;
 	}
@@ -65,7 +66,7 @@ final class SPAdmSiteMenu
 	{
 		$i = $before ? 'before' : 'after';
 		Sobi::Trigger( 'addCustom', 'SPAdmSiteMenu', array( $html, $section ) );
-		$this->_custom[ $section ][ $i ][] = $html;
+		$this->_custom[ $section ][ $i ][ ] = $html;
 	}
 
 	/**
@@ -73,37 +74,43 @@ final class SPAdmSiteMenu
 	 */
 	public function display()
 	{
-		$this->_view .= "\n <!-- Sobi Pro - admin side menu start -->";
-		$this->_view .= "\n<div id=\"SPaccordionTabs\" class=\"SPmenuTabs\">";
+		$this->_view[ ] = "\n <!-- Sobi Pro - admin side menu start -->";
+		$this->_view[ ] = "\n<div id=\"SPaccordionTabs\" class=\"SPmenuTabs\">";
 		$media = Sobi::Cfg( 'img_folder_live' );
-		$this->_view .= "\n<a href=\"http://www.Sigsiu.NET\" target=\"_blank\" title=\"Sigsiu.NET Software Development\"><img src=\"{$media}/sobipro-menu.png\" alt=\"Sigsiu.NET Software Development\" style=\"border-style:none;\" /></a>\n";
+		$this->_view[ ] = "\n<a href=\"http://www.Sigsiu.NET\" target=\"_blank\" title=\"Sigsiu.NET Software Development\"><img src=\"{$media}/sobipro-menu.png\" alt=\"Sigsiu.NET Software Development\" style=\"border-style:none;\" /></a>\n";
+
 		$fs = null;
-		if( count( $this->_sections ) ) {
+		if ( count( $this->_sections ) ) {
+			$this->_view[ ] = '<div class="accordion" id="spMenu">';
 			foreach ( $this->_sections as $section => $list ) {
-				$sectionId = preg_replace( '/[^\w\.]/', null, str_replace( ' ', '_', $section ) );
-				if( !$fs ) {
-					$fs = $sectionId;
+				$sid = SPLang::nid( $section );
+				$in = false;
+				if ( !$fs ) {
+					$fs = $sid;
 				}
-				if( !$this->_open && key_exists( $this->_task, $list ) ) {
-					$this->_open = $sectionId;
+				if ( !$this->_open && array_key_exists( $this->_task, $list ) ) {
+					$this->_open = $sid;
+					$in = ' in';
 				}
-				$label = Sobi::Txt( $section );
-				$this->_view .= "\n\n <!-- Sobi Pro - admin side menu - Section {$section} - header -->";
-				$this->_view .= "\n\t<div class=\"SPmenuTabHeader\" id=\"{$sectionId}TabHeader\" onclick=\"SPopenMenu( '{$sectionId}' );\">\n\t\t<div class=\"SPmenuWrapper\">\n\t\t\t{$label}\n\t\t</div>\n\t</div>";
-				$this->_view .= "\n <!-- Sobi Pro - admin side menu - Section {$section} - header end -->";
-				$list = $this->section( $list, $section );
-				$this->_view .= "\n <!-- Sobi Pro - admin side menu - Section {$section} - content -->";
-				$this->_view .= "\n\t<div class=\"SPcontentTabHeader\" id=\"{$sectionId}\">\n\t\t<div class=\"SPmenuWrapper\">\n\t\t\t{$list}\n\t\t</div>\n\t</div>";
-				$this->_view .= "\n <!-- Sobi Pro - admin side menu - Section {$section} - content end -->\n";
+				$this->_view[ ] = '<div class="accordion-group">';
+				$this->_view[ ] = '<div class="accordion-heading">';
+				$this->_view[ ] = '<a class="accordion-toggle" data-toggle="collapse" data-parent="#spMenu" href="#' . $sid . '">';
+				$this->_view[ ] = Sobi::Txt( $section );
+				$this->_view[ ] = '</a>';
+				$this->_view[ ] = '</div>';
+				$this->_view[ ] = '<div id="'.$sid.'" class="accordion-body collapse'.$in.'">';
+				$this->_view[ ] = '<div class="accordion-inner">';
+				$this->_view[ ] = $this->section( $list, $section );
+				$this->_view[ ] = '</div>';
+				$this->_view[ ] = '</div>';
+				$this->_view[ ] = '</div>';
 			}
+			$this->_view[ ] = '</div>';
 		}
-		if( !$this->_open ) {
-			$this->_open = $fs;
-		}
-		$this->_view .= "\n</div>\n";
-		$this->_view .= "\n<script>SPinitMenu( '{$this->_open}' );</script>\n";
-		$this->_view .= "<!-- Sobi Pro - admin side menu end --> \n";
-		return $this->_view;
+		$this->_view[ ] = "\n</div>\n";
+//		$this->_view[ ] = "\n<script>SPinitMenu( '{$this->_open}' );</script>\n";
+		$this->_view[ ] = "<!-- Sobi Pro - admin side menu end --> \n";
+		return implode( "\n", $this->_view );
 	}
 
 	public function setOpen( $open )
@@ -114,28 +121,28 @@ final class SPAdmSiteMenu
 	private function section( $section, $tab )
 	{
 		$v = null;
-		if( isset( $this->_custom[ $tab ][ 'before' ] ) && is_array( $this->_custom[ $tab ][ 'before' ] ) ) {
+		if ( isset( $this->_custom[ $tab ][ 'before' ] ) && is_array( $this->_custom[ $tab ][ 'before' ] ) ) {
 			foreach ( $this->_custom[ $tab ][ 'before' ] as $html ) {
 				$v .= "\n\t\t\t{$html}";
 			}
 		}
-		if( count( $section ) ) {
+		if ( count( $section ) ) {
 			$v .= "\n\t\t\t<ul>";
 			foreach ( $section as $pos => $label ) {
-				if( !( SPFactory::user()->can( $pos ) ) ) {
+				if ( !( SPFactory::user()->can( $pos ) ) ) {
 					continue;
 				}
-				if( strlen( $label ) < 3 ) {
+				if ( strlen( $label ) < 3 ) {
 					$label = str_replace( '.', '_', $pos );
 				}
 				$label = Sobi::Txt( $label );
-				if( $this->_sid ) {
+				if ( $this->_sid ) {
 					$url = Sobi::Url( array( 'task' => $pos, 'pid' => $this->_sid ) );
 				}
 				else {
 					$url = Sobi::Url( array( 'task' => $pos ) );
 				}
-				if( SPRequest::task() == $pos ) {
+				if ( SPRequest::task() == $pos ) {
 					$v .= "\n\t\t\t\t<li><a href=\"{$url}\" class=\"SPMenuActive\">{$label}</a></li>";
 				}
 				else {
@@ -144,7 +151,7 @@ final class SPAdmSiteMenu
 			}
 			$v .= "\n\t\t\t</ul>";
 		}
-		if( isset( $this->_custom[ $tab ][ 'after' ] ) && is_array( $this->_custom[ $tab ][ 'after' ] ) ) {
+		if ( isset( $this->_custom[ $tab ][ 'after' ] ) && is_array( $this->_custom[ $tab ][ 'after' ] ) ) {
 			foreach ( $this->_custom[ $tab ][ 'after' ] as $html ) {
 				$v .= "\n\t\t\t{$html}";
 			}
@@ -152,4 +159,3 @@ final class SPAdmSiteMenu
 		return $v;
 	}
 }
-?>
