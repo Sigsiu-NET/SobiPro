@@ -555,9 +555,6 @@ class SPAdmView extends SPObject implements SPView
 				}
 			}
 		}
-		if ( !( isset( $params[ 'class' ] ) ) ) {
-			$params[ 'class' ] = 'input-xlarge';
-		}
 		$args[ 'params' ] = $params;
 		$element[ 'args' ] = $args;
 		$element[ 'adds' ] = $adds;

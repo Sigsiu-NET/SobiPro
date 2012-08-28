@@ -1,4 +1,4 @@
- /**
+/**
  * @version: $Id: menu.js 551 2011-01-11 14:34:26Z Radek Suski $
  * @package: SobiPro Library
  * ===================================================
@@ -16,21 +16,32 @@
  * $Author: Radek Suski $
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/js/adm/menu.js $
  */
- function SPinitMenu( el )
- {
- 	SobiPro.onReady( function () { SPcloseMenu(); SP_id( el ).style.display = 'block'; } );
- }
+function SPinitMenu( el )
+{
+	SobiPro.onReady( function ()
+	{
+		SPcloseMenu();
+		SP_id( el ).style.display = 'block';
+	} );
+}
 
- function SPopenMenu( el )
- {
+function SPopenMenu( el )
+{
 	SPcloseMenu();
- 	SP_id( el ).style.display = 'block';
- }
+	SP_id( el ).style.display = 'block';
+}
 
- function SPcloseMenu()
- {
- 	var tabs = SP_class( 'SPcontentTabHeader', SP_id( 'SPaccordionTabs' ) );
-	for( var i = 0, j = tabs.length; i < j; i++ ) {
+function SPcloseMenu()
+{
+	var tabs = SP_class( 'SPcontentTabHeader', SP_id( 'SPaccordionTabs' ) );
+	for ( var i = 0, j = tabs.length; i < j; i++ ) {
 		tabs[ i ].style.display = 'none';
 	}
- }
+}
+SobiPro.jQuery( document ).ready( function ()
+{
+	SobiPro.jQuery( '#spMenu' ).on( 'show hide', function ()
+	{
+		SobiPro.jQuery( this ).css( 'height', 'auto' );
+	} );
+} );
