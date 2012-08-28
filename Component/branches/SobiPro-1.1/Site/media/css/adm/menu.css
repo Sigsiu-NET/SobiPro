@@ -16,6 +16,7 @@
  * $Author: Radek Suski $
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/media/css/adm/menu.css $
  */
+
 div.SPmenuTabHeader {
 	color: #333333;
 	font-size: 12px;
@@ -32,7 +33,7 @@ div.SPmenuTabHeader {
 	margin-top: -1px;
 	margin-bottom: -1px;
     margin: 1px;
-    
+
 }
 
 div#SPaccordionTabs {
