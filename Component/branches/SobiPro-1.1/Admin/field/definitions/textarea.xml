@@ -27,9 +27,7 @@
                             <field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255"/>
                             <field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
                             <field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium"/>
-                            <field type="states" name="field.uniqueData" value="field.uniqueData" label="FM.UNIQUE_DATA" prefix="yes_no" />
                             <field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
-                            <field type="states" name="field.admList" value="field.admList" label="FM.INBOX.IN_ADMIN_LIST" prefix="yes_no" />
                             <field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
                         </fieldset>
 
@@ -48,12 +46,37 @@
                                     <text>px</text>
                                 </add>
                             </field>
-                            <field type="text" name="field.maxLength" value="field.maxLength" label="FM.MAX_LENGTH" maxlength="10" class="input-mini" />
+                            <field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
+                                <add where="after">
+                                    <text>px</text>
+                                </add>
+                            </field>
+                            <field type="text" name="field.maxLength" value="field.maxLength" label="FM.MAX_LENGTH" maxlength="10" class="input-mini">
+                                    <add where="after">
+                                        <call function="Sobi::Txt">
+                                            <param>FMN.LENGTH_CHAR</param>
+                                        </call>
+                                    </add>
+                            </field>
                             <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
                             <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
-                            <field type="select" name="field.filter" values="filters" label="FM.FILTER" multi="false" selected="field.filter" class="input-large" />
-                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />0
+                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
                         </fieldset>
+
+
+                        <fieldset label="FMN.FIELD_ENTRYINPUT_HTML">
+                            <field type="states" name="field.editor" value="field.editor" label="FM.TXT.ENABLE_WYSIWYG" prefix="yes_no"/>
+                            <field type="select" name="field.allowHtml" selected="field.allowHtml" label="FM.TXT.ALLOW_HTML" class="input-large">
+                                <values>
+                                    <option value="0" label="FM.TXT.ALLOW_HTML_NO"/>
+                                    <option value="1" label="FM.TXT.ALLOW_HTML_YES"/>
+                                    <option value="2" label="FM.TXT.ALLOW_HTML_RAW"/>
+                                </values>
+                            </field>
+                            <field type="textarea" name="field.allowedTags" value="field.allowedTags" label="FM.TXT.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="textarea" name="field.allowedAttributes" value="field.allowedAttributes" label="FM.TXT.ALLOWED_ATTR" editor="false" class="input-splarge" rows="2" style="" />
+                        </fieldset>
+
                         <fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
                             <field type="output" value="field.version" label="VERSION" class="badge"/>
                             <field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no"/>
@@ -87,9 +110,9 @@
                                 </values>
                             </field>
                             <field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
+                            <field type="states" name="field.parse" value="field.parse" label="FM.TXT.PARSE_CONTENT" prefix="yes_no"/>
                         </fieldset>
                         <fieldset label="FMN.FIELD_ENTRYVIEW_META">
-                            <field type="states" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
                             <field type="states" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
                         </fieldset>
                     </div>
@@ -114,14 +137,6 @@
                                     <option value="10" label="10" />
                                 </values>
                             </field>
-                            <field type="select" name="field.searchMethod" selected="field.searchMethod" label="FM.SEARCH_METHOD" multi="false" class="input-large">
-                                <values>
-                                    <option value="general" label="FM.GENERAL_SEARCH_OPT" />
-                                    <option value="select" label="FM.SELECT_LIST_OPT" />
-                                    <option value="range" label="FM.RANGE_LIST_OPT" />
-                                </values>
-                            </field>
-                            <field type="textarea" name="field.searchRangeValues" value="field.searchRangeValues" label="FM.SEARCH_RANGE_SETTINGS" editor="false" class="input-splarge" rows="4" style="" />
                         </fieldset>
                     </div>
                 </div>

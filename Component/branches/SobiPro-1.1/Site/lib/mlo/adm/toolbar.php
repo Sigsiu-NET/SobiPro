@@ -89,12 +89,13 @@ class SpAdmToolbar
 		$id = isset( $options[ 'id' ] ) ? $options[ 'id' ] : 'SPAdmToolbar';
 		$this->output[ ] = '<div class="breadcrumb" id="' . $id . '">';
 		$this->output[ ] = '<div class="container-fluid">';
-		$this->output[ ] = '<div class="spicon-48-' . $this->icon . ' spScreenTitle well span8">';
-		$this->output[ ] = "<h3>{$this->title}</h3>";
+        $this->output[ ] = '<div class="row-fluid">';
+        $this->output[ ] = '<div class="spicon-48-' . $this->icon . ' spScreenTitle span6">';
+		$this->output[ ] = "<h4>{$this->title}</h4>";
 		$this->output[ ] = '</div>';
-		$this->output[ ] = '<div class="spIconBar">';
-		$this->output[ ] = '<div class="spIconBar nav nav-pills pull-right">';
-		$this->output[ ] = '<div class="well">';
+		$this->output[ ] = '<div class="spIconBar span6">';
+		$this->output[ ] = '<div class="nav nav-pills pull-right">';
+		$this->output[ ] = '<div class="">';
 		foreach ( $this->buttons as $button ) {
 			switch ( $button[ 'element' ] ) {
 				case 'group':
@@ -131,7 +132,8 @@ class SpAdmToolbar
 		$this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
-		$this->output[ ] = '</div>';
+        $this->output[ ] = '</div>';
+        $this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
 		return implode( "\n", $this->output );
 	}
