@@ -51,7 +51,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
-				if( !( parent::execute() ) ) {
+				if ( !( parent::execute() ) ) {
 					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}
 				break;
@@ -67,31 +67,30 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$db = SPFactory::db();
 		$c = array();
 		$e = array();
-		if( !( Sobi::Section() ) ) {
+		if ( !( Sobi::Section() ) ) {
 			Sobi::Error( 'Section', SPLang::e( 'Missing section identifier' ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 		$this->_model->init( Sobi::Section() );
 		/* get the lists ordering and limits */
-		$eLimit 	= Sobi::GetUserState( 'adm.entries.limit', 'elimit', $config->key( 'adm_list.entries_limit', 25 ) );
-		$cLimit 	= Sobi::GetUserState( 'adm.categories.limit', 'climit', $config->key( 'adm_list.cats_limit', 15 ) );
-		$eLimStart 	= SPRequest::int( 'eLimStart', 0 );
-		$cLimStart 	= SPRequest::int( 'cLimStart', 0 );
+		$eLimit = Sobi::GetUserState( 'adm.entries.limit', 'elimit', $config->key( 'adm_list.entries_limit', 25 ) );
+		$cLimit = Sobi::GetUserState( 'adm.categories.limit', 'climit', $config->key( 'adm_list.cats_limit', 15 ) );
+		$eLimStart = SPRequest::int( 'eLimStart', 0 );
+		$cLimStart = SPRequest::int( 'cLimStart', 0 );
 
 		/* get child categories and entries */
 		/* @todo: need better method - the query can be very large with lot of entries  */
-		if( !( $allEntries ) ) {
+		if ( !( $allEntries ) ) {
 			$e = $this->_model->getChilds();
 			$c = $this->_model->getChilds( 'category' );
 		}
-		elseif( !( $term && $allEntries ) ) {
+		elseif ( !( $term && $allEntries ) ) {
 			$c = $this->_model->getChilds( 'category', true );
-			$c[] = Sobi::Section();
-			if( count( $c ) ) {
+			$c[ ] = Sobi::Section();
+			if ( count( $c ) ) {
 				try {
 					$db->select( 'id', 'spdb_object', array( 'parent' => $c, 'oType' => 'entry' ) );
 					$e = $db->loadResultArray();
-				}
-				catch ( SPException $x ) {
+				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
 			}
@@ -100,15 +99,14 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			try {
 				$db->select( 'sid', 'spdb_field_data', array( 'section' => Sobi::Section(), 'fid' => Sobi::Cfg( 'entry.name_field' ), 'baseData' => "%{$term}%" ) );
 				$e = $db->loadResultArray();
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
 
-		$cCount		= count( $c );
-		$eCount		= count( $e );
-		$entries 	= array();
+		$cCount = count( $c );
+		$eCount = count( $e );
+		$entries = array();
 		$categories = array();
 
 		SPLoader::loadClass( 'models.dbobject' );
@@ -116,15 +114,14 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 //		$eClass = SPLoader::loadModel( 'entry' );
 
 		/* if there are entries in the root */
-		if( count( $e ) ) {
+		if ( count( $e ) ) {
 			try {
 				$Limit = $eLimit > 0 ? $eLimit : 0;
-				$LimStart = $eLimStart ? ( ( $eLimStart - 1 ) * $eLimit ) : $eLimStart ;
+				$LimStart = $eLimStart ? ( ( $eLimStart - 1 ) * $eLimit ) : $eLimStart;
 				$eOrder = $this->parseOrdering( 'entries', 'eorder', 'position.asc', $Limit, $LimStart, $e );
 				$db->select( 'id', 'spdb_object', array( 'id' => $e, 'oType' => 'entry' ), $eOrder, $Limit, $LimStart );
 				$results = $db->loadResultArray();
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			foreach ( $results as $i => $entry ) {
@@ -133,15 +130,14 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		}
 
 		/* if there are categories in the root */
-		if( count( $c ) ) {
+		if ( count( $c ) ) {
 			try {
-				$LimStart = $cLimStart ? ( ( $cLimStart - 1 ) * $cLimit ) : $cLimStart ;
+				$LimStart = $cLimStart ? ( ( $cLimStart - 1 ) * $cLimit ) : $cLimStart;
 				$Limit = $cLimit > 0 ? $cLimit : 0;
 				$cOrder = $this->parseOrdering( 'categories', 'corder', 'order.asc', $Limit, $LimStart, $c );
 				$db->select( 'id', 'spdb_object', array( 'id' => $c, 'oType' => 'category' ), $cOrder, $Limit, $LimStart );
 				$results = $db->loadResultArray();
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			foreach ( $results as $i => $category ) {
@@ -150,11 +146,11 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		}
 		/* create menu */
 		$mClass = SPLoader::loadClass( 'helpers.adm.menu' );
-		$menu = new $mClass( 'section.'.$this->_task, Sobi::Section() );
+		$menu = new $mClass( 'section.' . $this->_task, Sobi::Section() );
 		/* load the menu definition */
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
-		if( count( $cfg ) ) {
+		if ( count( $cfg ) ) {
 			foreach ( $cfg as $section => $keys ) {
 				$menu->addSection( $section, $keys );
 			}
@@ -172,36 +168,28 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		/* add the tree into the menu */
 		$menu->addCustom( 'AMN.ENT_CAT', $tree->getTree() );
 
-		/* get view class */
-		$class 	= SPLoader::loadView( 'section', true );
 		$entriesName = SPFactory::config()->nameField()->get( 'name' );
 		$entriesField = SPFactory::config()->nameField()->get( 'nid' );
-		$view 	= new $class();
-		$view->assign( $entriesName, 'entries_name' );
-		$view->assign( $entriesField, 'entries_field' );
-		$view->assign( $eLimit, '$eLimit' );
-		$view->assign( $cLimit, '$cLimit' );
-		$view->assign( $eLimStart, '$eLimStart' );
-		$view->assign( $cLimStart, '$cLimStart' );
-		$view->assign( $cCount, '$cCount' );
-		$view->assign( $eCount, '$eCount' );
-		$view->assign( $this->_task, 'task' );
-		$view->assign( $term, 'filter' );
-		$view->assign( $this->customCols(), 'fields' );
-		$view->assign( $this->_model, 'section' );
-		if( $allEntries ) {
-			$view->loadConfig( 'section.entries' );
-			$view->setTemplate( 'section.entries' );
-		}
-		else {
-			$view->loadConfig( 'section.list' );
-			$view->setTemplate( 'section.list' );
-		}
-		$view->assign( $categories, 'categories' );
-		$view->assign( $entries, 'entries' );
-		$view->assign( SPFactory::config()->nameField()->get( 'name' ), 'entries_name' );
-		$view->assign( $menu, 'menu' );
-		$view->addHidden( Sobi::Section(), 'pid' );
+		$view =& SPFactory::View( 'section', true );
+		$view->assign( $entriesName, 'entries_name' )
+			->assign( $entriesField, 'entries_field' )
+			->assign( $eLimit, '$eLimit' )
+			->assign( $cLimit, '$cLimit' )
+			->assign( $eLimStart, '$eLimStart' )
+			->assign( $cLimStart, '$cLimStart' )
+			->assign( $cCount, '$cCount' )
+			->assign( $eCount, '$eCount' )
+			->assign( $this->_task, 'task' )
+			->assign( $term, 'filter' )
+			->assign( $this->customCols(), 'fields' )
+			->assign( $this->_model, 'section' )
+			->assign( $categories, 'categories' )
+			->assign( $entries, 'entries' )
+			->assign( SPFactory::config()->nameField()->get( 'name' ), 'entries_name' )
+			->assign( $menu, 'menu' )
+			->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' ), 'ordering' )
+			->assign( Sobi::Section( true ), 'category' )
+			->addHidden( Sobi::Section(), 'pid' );
 		Sobi::Trigger( 'Section', 'View', array( &$view ) );
 		$view->display();
 	}
@@ -213,23 +201,23 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$fields = array();
 		try {
 			$fieldsData = SPFactory::db()
-				->select( '*', 'spdb_field', array( '!admList' => 0, 'section' => Sobi::Reg( 'current_section' ) ), 'admList' )
-				->loadObjectList();
-		}
-		catch ( SPException $x ) {
+					->select( '*', 'spdb_field', array( '!admList' => 0, 'section' => Sobi::Reg( 'current_section' ) ), 'admList' )
+					->loadObjectList();
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		if( count( $fieldsData ) ) {
+		if ( count( $fieldsData ) ) {
 			$fModel = SPLoader::loadModel( 'field', true );
 			foreach ( $fieldsData as $field ) {
 				$fit = new $fModel();
 				/* @var SPField $fit */
 				$fit->extend( $field );
-				$fields[] = $fit;
+				$fields[ ] = $fit;
 			}
 		}
 		return $fields;
 	}
+
 	/**
 	 * @param string $subject
 	 * @param string $col
@@ -240,20 +228,20 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	 */
 	protected function parseOrdering( $subject, $col, $def, &$lim, &$lStart, &$sids )
 	{
-		$ord = Sobi::GetUserState( $subject.'.order', $col, $def );
+		$ord = Sobi::GetUserState( $subject . '.order', $col, $def );
 		$ord = str_replace( array( 'e_s', 'c_s' ), null, $ord );
-		if( strstr( $ord, '.' ) ) {
+		if ( strstr( $ord, '.' ) ) {
 			$ord = explode( '.', $ord );
 			$dir = $ord[ 1 ];
 			$ord = $ord[ 0 ];
 		}
-		if( $ord == 'order' || $ord == 'position' ) {
+		if ( $ord == 'order' || $ord == 'position' ) {
 			$subject = $subject == 'categories' ? 'category' : 'entry';
 			/* @var SPdb $db */
-			$db	=& SPFactory::db();
-			$db->select( 'id', 'spdb_relations', array( 'oType' => $subject, 'pid' => $this->_model->get( 'id' ) ), 'position.'.$dir, $lim, $lStart );
+			$db =& SPFactory::db();
+			$db->select( 'id', 'spdb_relations', array( 'oType' => $subject, 'pid' => $this->_model->get( 'id' ) ), 'position.' . $dir, $lim, $lStart );
 			$fields = $db->loadResultArray();
-			if( count( $fields ) ) {
+			if ( count( $fields ) ) {
 				$sids = $fields;
 				$fields = implode( ',', $fields );
 				$ord = "field( id, {$fields} )";
@@ -261,40 +249,39 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				$lim = 0;
 			}
 			else {
-				$ord = 'id.'.$dir;
+				$ord = 'id.' . $dir;
 			}
 		}
-		elseif( $ord == 'name' ) {
+		elseif ( $ord == 'name' ) {
 			$subject = $subject == 'categories' ? 'category' : 'entry';
 			/* @var SPdb $db */
-			$db	=& SPFactory::db();
-			$db->select( 'id', 'spdb_language', array( 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.'.$dir );
+			$db =& SPFactory::db();
+			$db->select( 'id', 'spdb_language', array( 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.' . $dir );
 			$fields = $db->loadResultArray();
-			if( !count( $fields ) && Sobi::Lang() != Sobi::DefLang() ) {
-				$db->select( 'id', 'spdb_language', array( 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.'.$dir );
+			if ( !count( $fields ) && Sobi::Lang() != Sobi::DefLang() ) {
+				$db->select( 'id', 'spdb_language', array( 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.' . $dir );
 				$fields = $db->loadResultArray();
 			}
-			if( count( $fields ) ) {
+			if ( count( $fields ) ) {
 				$fields = implode( ',', $fields );
 				$ord = "field( id, {$fields} )";
 			}
 			else {
-				$ord = 'id.'.$dir;
+				$ord = 'id.' . $dir;
 			}
 		}
-		elseif( strstr( $ord, 'field_' ) ) {
-			$db	=& SPFactory::db();
+		elseif ( strstr( $ord, 'field_' ) ) {
+			$db =& SPFactory::db();
 			static $field = null;
-			if( !$field ) {
+			if ( !$field ) {
 				try {
 					$db->select( 'fieldType', 'spdb_field', array( 'nid' => $ord, 'section' => Sobi::Section() ) );
 					$fType = $db->loadResult();
-				}
-				catch ( SPException $x ) {
+				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DETERMINE_FIELD_TYPE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
-				if( $fType ) {
-					$field = SPLoader::loadClass( 'opt.fields.'.$fType );
+				if ( $fType ) {
+					$field = SPLoader::loadClass( 'opt.fields.' . $fType );
 				}
 			}
 			/* *
@@ -302,30 +289,30 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			 * We could use the same field 'sortBy' method for backend and frontend.
 			 * The current method could be very inefficient !!!
 			 */
-			if( $field && method_exists( $field, 'sortByAdm' ) ) {
-				$fields =  call_user_func_array( array( $field, 'sortByAdm' ), array( &$ord, &$dir ) );
+			if ( $field && method_exists( $field, 'sortByAdm' ) ) {
+				$fields = call_user_func_array( array( $field, 'sortByAdm' ), array( &$ord, &$dir ) );
 			}
 			else {
 				$join = array(
 					array( 'table' => 'spdb_field', 'as' => 'def', 'key' => 'fid' ),
 					array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' )
 				);
-				$db->select( 'sid', $db->join( $join ), array( 'def.nid' => $ord, 'lang' => Sobi::Lang() ), 'baseData.'.$dir );
+				$db->select( 'sid', $db->join( $join ), array( 'def.nid' => $ord, 'lang' => Sobi::Lang() ), 'baseData.' . $dir );
 				$fields = $db->loadResultArray();
 			}
-			if( count( $fields ) ) {
+			if ( count( $fields ) ) {
 				$fields = implode( ',', $fields );
 				$ord = "field( id, {$fields} )";
 			}
 			else {
-				$ord = 'id.'.$dir;
+				$ord = 'id.' . $dir;
 			}
 		}
-		elseif( $ord == 'state' ) {
-			$ord = $ord.'.'.$dir.', validSince.'.$dir.', validUntil.'.$dir;
+		elseif ( $ord == 'state' ) {
+			$ord = $ord . '.' . $dir . ', validSince.' . $dir . ', validUntil.' . $dir;
 		}
 		else {
-			$ord = $ord.'.'.$dir;
+			$ord = $ord . '.' . $dir;
 		}
 		return $ord;
 	}

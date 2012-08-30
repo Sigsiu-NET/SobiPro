@@ -32,10 +32,12 @@ class SpAdmToolbar
 		'new' => 'plus-sign',
 		'delete' => 'trash',
 		'actions' => 'plane',
-		'publish' => 'ok',
-		'hide' => 'remove',
 		'enable' => 'ok',
 		'disable' => 'remove',
+		'publish' => 'bullhorn',
+		'hide' => 'off',
+		'approve' => 'thumbs-up',
+		'revoke' => 'thumbs-down',
 	);
 	private $labels = array(
 		'apply' => 'SAVE_ONLY',
@@ -51,6 +53,8 @@ class SpAdmToolbar
 		'hide' => 'UNPUBLISH',
 		'enable' => 'ENABLE',
 		'disable' => 'DISABLE',
+		'approve' => 'APPROVE',
+		'revoke' => 'REVOKE',
 	);
 	protected $btClass = 'btn';
 

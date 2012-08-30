@@ -76,12 +76,15 @@ final class SPAdmSiteMenu
 	{
 		$this->_view[ ] = "\n <!-- Sobi Pro - admin side menu start -->";
 		$this->_view[ ] = "\n<div id=\"SPaccordionTabs\" class=\"SPmenuTabs\">";
+		$this->_view[ ] = '<div id="SPMenuCtrl">';
+		$this->_view[ ] = ' <button class="btn btn-mini btn-primary" id="SPMenuCtrlBt" type="button">-</button>';
+		$this->_view[ ] = '</div>';
 		$media = Sobi::Cfg( 'img_folder_live' );
 		$this->_view[ ] = "\n<a href=\"http://www.Sigsiu.NET\" target=\"_blank\" title=\"Sigsiu.NET Software Development\"><img src=\"{$media}/sobipro-menu.png\" alt=\"Sigsiu.NET Software Development\" style=\"border-style:none;\" /></a>\n";
 
 		$fs = null;
 		if ( count( $this->_sections ) ) {
-			$this->_view[ ] = '<div class="accordion" id="spMenu">';
+			$this->_view[ ] = '<div class="accordion" id="SpMenu">';
 			foreach ( $this->_sections as $section => $list ) {
 				$sid = SPLang::nid( $section );
 				$in = false;
@@ -94,11 +97,11 @@ final class SPAdmSiteMenu
 				}
 				$this->_view[ ] = '<div class="accordion-group">';
 				$this->_view[ ] = '<div class="accordion-heading">';
-				$this->_view[ ] = '<a class="accordion-toggle" data-toggle="collapse" data-parent="#spMenu" href="#' . $sid . '">';
+				$this->_view[ ] = '<a class="accordion-toggle" data-toggle="collapse" data-parent="#SpMenu" href="#' . $sid . '">';
 				$this->_view[ ] = Sobi::Txt( $section );
 				$this->_view[ ] = '</a>';
 				$this->_view[ ] = '</div>';
-				$this->_view[ ] = '<div id="'.$sid.'" class="accordion-body collapse'.$in.'">';
+				$this->_view[ ] = '<div id="' . $sid . '" class="accordion-body collapse' . $in . '">';
 				$this->_view[ ] = '<div class="accordion-inner">';
 				$this->_view[ ] = $this->section( $list, $section );
 				$this->_view[ ] = '</div>';

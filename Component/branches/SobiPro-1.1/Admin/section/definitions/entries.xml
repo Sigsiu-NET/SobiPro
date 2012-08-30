@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="Section: var:[name]"/>
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiFields">
+		<buttons type="new">
+			<button type="new" task="entry.add" label="AMN.ADD_ENTRY" ico="file"/>
+			<button type="new" task="category.add" label="AMN.ADD_CAT" ico="book"/>
+		</buttons>
+		<divider/>
+		<buttons type="actions">
+			<button type="delete" task="entry.delete"/>
+			<nav-header label="TB.PUBLISHING"/>
+			<button type="publish" task="entry.publish"/>
+			<button type="hide" task="entry.hide"/>
+			<nav-header label="TB.APPROVAL"/>
+			<button type="approve" task="entry.approve"/>
+			<button type="revoke" task="entry.unapprove"/>
+		</buttons>
+		<divider/>
+		<button type="help" target="_blank"/>
+	</toolbar>
+	<body>
+		<message id="spMessage"/>
+		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
+			<div class="btn-group pull-right form-horizontal">
+				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" label="EMN_ORDER_BY" class="input-medium spOrdering"/>
+				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" label="EMN_ORDER_BY" class="input-medium spOrdering"/>
+			</div>
+		</header>
+		<!--<table>-->
+			<!--<head>-->
+				<!--<cell label="HEADER_ID" type="text" class="center"/>-->
+				<!--<cell type="checkbox" rel="p_fid" class="center"/>-->
+				<!--<cell label="HEADER_FIELD_NAME" type="text"/>-->
+				<!--<cell label="HEADER_FIELD_STATE" type="text" class="center"/>-->
+				<!--<cell label="HEADER_FIELD_TYPE" type="text" class="center"/>-->
+				<!--<cell label="HEADER_FIELD_SHOW_IN" type="text" class="center"/>-->
+				<!--<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="center"/>-->
+				<!--<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="center"/>-->
+				<!--<cell label="HEADER_FIELD_IS_FREE" type="text" class="center"/>-->
+				<!--<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="field"/>-->
+			<!--</head>-->
+			<!--<loop subject="fields">-->
+				<!--<cell type="text" value="id" class="center"/>-->
+				<!--<cell type="checkbox" name="p_fid" value="id" class="center"/>-->
+				<!--<cell>-->
+					<!--<cell type="link" value="name">-->
+						<!--<url type="intern">-->
+							<!--<param name="task" value="field.edit"/>-->
+							<!--<param name="fid" value="fid" parse="true"/>-->
+							<!--<param name="sid" value="request.sid" parse="true" subject="skip"/>-->
+						<!--</url>-->
+					<!--</cell>-->
+					<!--<cell type="text" value="nid" class="subText"/>-->
+				<!--</cell>-->
+				<!--<cell type="ticker" value="enabled" class="center">-->
+					<!--<url type="intern">-->
+						<!--<param name="task" value="field.toggle.enabled"/>-->
+						<!--<param name="fid" value="fid" parse="true"/>-->
+						<!--<param name="sid" value="request.sid" parse="true" subject="skip"/>-->
+					<!--</url>-->
+				<!--</cell>-->
+				<!--<cell type="text" value="fieldType" class="center"/>-->
+				<!--<cell type="text" value="showIn" class="center"/>-->
+				<!--<cell type="ticker" value="required" class="center" icons="{'0':'cog','1':'asterisk'}">-->
+					<!--<url type="intern">-->
+						<!--<param name="task" value="field.toggle.required"/>-->
+						<!--<param name="fid" value="fid" parse="true"/>-->
+						<!--<param name="sid" value="request.sid" parse="true" subject="skip"/>-->
+					<!--</url>-->
+				<!--</cell>-->
+				<!--<cell type="ticker" value="editable" class="center" icons="{'0':'lock','1':'edit'}">-->
+					<!--<url type="intern">-->
+						<!--<param name="task" value="field.toggle.editable"/>-->
+						<!--<param name="fid" value="fid" parse="true"/>-->
+						<!--<param name="sid" value="request.sid" parse="true" subject="skip"/>-->
+					<!--</url>-->
+				<!--</cell>-->
+				<!--<cell type="ticker" value="isFree" class="center" icons="{'0':'shopping-cart','1':'gift'}">-->
+					<!--<url type="intern">-->
+						<!--<param name="task" value="field.toggle.free"/>-->
+						<!--<param name="fid" value="fid" parse="true"/>-->
+						<!--<param name="sid" value="request.sid" parse="true" subject="skip"/>-->
+					<!--</url>-->
+				<!--</cell>-->
+				<!--<cell type="ordering" value="position" name="fid[var:[id]]" class="center"/>-->
+			<!--</loop>-->
+			<!--<foot>-->
+				<!--<navigation/>-->
+			<!--</foot>-->
+		<!--</table>-->
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro"/>
+		<hidden>
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+			<field name="boxchecked" default=""/>
+		</hidden>
+	</config>
+</definition>
