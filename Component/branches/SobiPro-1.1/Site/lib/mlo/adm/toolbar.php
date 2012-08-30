@@ -88,6 +88,8 @@ class SpAdmToolbar
 	{
 		$id = isset( $options[ 'id' ] ) ? $options[ 'id' ] : 'SPAdmToolbar';
 		$this->output[ ] = '<div class="breadcrumb" id="' . $id . '">';
+		$this->output[ ] = '<div id="SPRightMenuHold">';
+		$this->output[ ] = '</div>';
 		$this->output[ ] = '<div class="container-fluid">';
         $this->output[ ] = '<div class="row-fluid">';
         $this->output[ ] = '<div class="spicon-48-' . $this->icon . ' spScreenTitle span6">';
