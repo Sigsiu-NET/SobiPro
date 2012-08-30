@@ -16,32 +16,40 @@
  * $Author: Radek Suski $
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/js/adm/menu.js $
  */
-function SPinitMenu( el )
-{
-	SobiPro.onReady( function ()
-	{
-		SPcloseMenu();
-		SP_id( el ).style.display = 'block';
-	} );
-}
-
-function SPopenMenu( el )
-{
-	SPcloseMenu();
-	SP_id( el ).style.display = 'block';
-}
-
-function SPcloseMenu()
-{
-	var tabs = SP_class( 'SPcontentTabHeader', SP_id( 'SPaccordionTabs' ) );
-	for ( var i = 0, j = tabs.length; i < j; i++ ) {
-		tabs[ i ].style.display = 'none';
-	}
-}
 SobiPro.jQuery( document ).ready( function ()
 {
-	SobiPro.jQuery( '#spMenu' ).on( 'show hide', function ()
+	SobiPro.jQuery( '#SPMenuCtrlBt' ).click( function ()
 	{
-		SobiPro.jQuery( this ).css( 'height', 'auto' );
+		SPRightMenu();
 	} );
+
+	function SPRightMenu()
+	{
+		if ( SobiPro.jQuery( '#SPRightMenu' ).css( 'display' ) == 'block' ) {
+			SobiPro.jQuery( '#SPRightMenu' ).hide( 'slide' );
+			SobiPro.jQuery( '#SPRightMenuHold' ).hide();
+			SobiPro.jQuery( '#SPRightMenuHold' ).html( SobiPro.jQuery( '#SPMenuCtrl' ).html() );
+			SobiPro.jQuery( '#SPMenuCtrl' ).html( '' );
+			SobiPro.jQuery( '#SPMenuCtrlBt' ).html( '+ menu' )
+			SobiPro.jQuery( '#SPRightMenuHold' ).fadeIn( 'slide' );
+			SobiPro.jQuery( '#SPRightMenu' )
+				.siblings( 'div' )
+				.removeClass( 'span10' )
+				.addClass( 'span11' );
+		}
+		else {
+			SobiPro.jQuery( '#SPRightMenu' ).show( 'slide' );
+			SobiPro.jQuery( '#SPMenuCtrl' ).html( SobiPro.jQuery( '#SPRightMenuHold' ).html() );
+			SobiPro.jQuery( '#SPRightMenuHold' ).html( '' )
+			SobiPro.jQuery( '#SPMenuCtrlBt' ).html( '-' )
+			SobiPro.jQuery( '#SPRightMenu' )
+				.siblings( 'div' )
+				.removeClass( 'span11' )
+				.addClass( 'span10' );
+		}
+		SobiPro.jQuery( '#SPMenuCtrlBt' ).click( function ()
+		{
+			SPRightMenu();
+		} );
+	}
 } );

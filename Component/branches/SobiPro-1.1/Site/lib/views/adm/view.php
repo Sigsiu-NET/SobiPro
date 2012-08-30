@@ -78,21 +78,25 @@ class SPAdmView extends SPObject implements SPView
 	 *
 	 * @param var
 	 * @param label
+	 * @return SPAdmView
 	 */
-	public function assign( &$var, $label )
+	public function & assign( &$var, $label )
 	{
 		$this->_attr[ $label ] =& $var;
+		return $this;
 	}
 
 	/**
 	 *
 	 * @param var
 	 * @param label
+	 * @return SPAdmView
 	 */
-	public function addHidden( $var, $label )
+	public function & addHidden( $var, $label )
 	{
 		$this->_hidden[ $label ] = $var;
 		$this->_attr[ 'request' ][ $label ] = $var;
+		return $this;
 	}
 
 	/**
@@ -137,6 +141,9 @@ class SPAdmView extends SPObject implements SPView
 	{
 		/** @var DOMNode $node */
 		foreach ( $xml as $node ) {
+			if( strstr( $node->nodeName, '#' ) ) {
+				continue;
+			}
 			switch ( $node->nodeName ) {
 				case 'header':
 					$this->xmlHeader( $node->childNodes );
