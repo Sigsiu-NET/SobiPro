@@ -698,7 +698,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$r = true;
 				$this->authorise( $this->_task );
 				SPFactory::cache()->cleanSection();
-				SPMainFrame::setRedirect( Sobi::Back(), $this->changeState( $this->_task ) );
+				$this->response( Sobi::Back(), $this->changeState( $this->_task ), true );
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
