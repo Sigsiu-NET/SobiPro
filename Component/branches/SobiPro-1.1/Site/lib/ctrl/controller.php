@@ -420,7 +420,7 @@ abstract class SPController extends SPObject implements SPControl
 			exit;
 		}
 		else {
-			Sobi::Redirect( $url, $message, $type );
+			Sobi::Redirect( $url, $message, $type, true );
 		}
 	}
 }
