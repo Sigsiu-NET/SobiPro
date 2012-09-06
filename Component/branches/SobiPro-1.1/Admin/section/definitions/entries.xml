@@ -32,64 +32,45 @@
 		<table>
 			<head>
 				<cell label="HEADER_ID" type="text" class="center"/>
-				<cell type="checkbox" rel="p_fid" class="center"/>
+				<cell type="checkbox" rel="e_sid" class="center"/>
 				<cell label="HEADER_ENTRIES_NAME" type="text"/>
+				<cells value="customHeader" class="center" type="text"/>
 				<cell label="HEADER_ENTRIES_STATE" type="text" class="center"/>
-				<cell label="HEADER_ENTRIES_TYPE" type="text" class="center"/>
-				<cell label="HEADER_FIELD_SHOW_IN" type="text" class="center"/>
-				<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="center"/>
-				<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="center"/>
-				<cell label="HEADER_FIELD_IS_FREE" type="text" class="center"/>
-				<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="field"/>
+				<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="center"/>
+				<cell label="HEADER_FIELD_AUTHOR" type="text" class="center"/>
+				<!--<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="field"/>-->
 			</head>
-			<!--<loop subject="fields">-->
-				<!--<cell type="text" value="id" class="center"/>-->
-				<!--<cell type="checkbox" name="p_fid" value="id" class="center"/>-->
-				<!--<cell>-->
-					<!--<cell type="link" value="name">-->
-						<!--<url type="intern">-->
-							<!--<param name="task" value="field.edit"/>-->
-							<!--<param name="fid" value="fid" parse="true"/>-->
-							<!--<param name="sid" value="request.sid" parse="true" subject="skip"/>-->
-						<!--</url>-->
-					<!--</cell>-->
-					<!--<cell type="text" value="nid" class="subText"/>-->
-				<!--</cell>-->
-				<!--<cell type="ticker" value="enabled" class="center">-->
-					<!--<url type="intern">-->
-						<!--<param name="task" value="field.toggle.enabled"/>-->
-						<!--<param name="fid" value="fid" parse="true"/>-->
-						<!--<param name="sid" value="request.sid" parse="true" subject="skip"/>-->
-					<!--</url>-->
-				<!--</cell>-->
-				<!--<cell type="text" value="fieldType" class="center"/>-->
-				<!--<cell type="text" value="showIn" class="center"/>-->
-				<!--<cell type="ticker" value="required" class="center" icons="{'0':'cog','1':'asterisk'}">-->
-					<!--<url type="intern">-->
-						<!--<param name="task" value="field.toggle.required"/>-->
-						<!--<param name="fid" value="fid" parse="true"/>-->
-						<!--<param name="sid" value="request.sid" parse="true" subject="skip"/>-->
-					<!--</url>-->
-				<!--</cell>-->
-				<!--<cell type="ticker" value="editable" class="center" icons="{'0':'lock','1':'edit'}">-->
-					<!--<url type="intern">-->
-						<!--<param name="task" value="field.toggle.editable"/>-->
-						<!--<param name="fid" value="fid" parse="true"/>-->
-						<!--<param name="sid" value="request.sid" parse="true" subject="skip"/>-->
-					<!--</url>-->
-				<!--</cell>-->
-				<!--<cell type="ticker" value="isFree" class="center" icons="{'0':'shopping-cart','1':'gift'}">-->
-					<!--<url type="intern">-->
-						<!--<param name="task" value="field.toggle.free"/>-->
-						<!--<param name="fid" value="fid" parse="true"/>-->
-						<!--<param name="sid" value="request.sid" parse="true" subject="skip"/>-->
-					<!--</url>-->
-				<!--</cell>-->
+			<loop subject="entries">
+				<cell type="text" value="id" class="center"/>
+				<cell type="checkbox" name="e_sid" value="id" class="center"/>
+				<cell>
+					<cell type="link" value="name">
+						<url type="intern">
+							<param name="task" value="entry.edit"/>
+							<param name="sid" value="sid" parse="true"/>
+						</url>
+					</cell>
+				</cell>
+				<!--<cell type="text" value="field_price"/>-->
+				<cells value="customFields" class="center"/>
+				<cell type="ticker" value="state" class="center">
+					<url type="intern">
+						<param name="task" value="entry.toggle.enabled"/>
+						<param name="sid" value="id" parse="true"/>
+					</url>
+				</cell>
+				<cell type="ticker" value="approved" class="center" icons="{'0':'cog','1':'asterisk'}">
+					<url type="intern">
+						<param name="task" value="entry.toggle.approval"/>
+						<param name="sid" value="id" parse="true"/>
+					</url>
+				</cell>
+				<cell type="text" value="owner" class="center"/>
 				<!--<cell type="ordering" value="position" name="fid[var:[id]]" class="center"/>-->
-			<!--</loop>-->
-			<!--<foot>-->
-				<!--<navigation/>-->
-			<!--</foot>-->
+			</loop>
+			<foot>
+				<navigation/>
+			</foot>
 		</table>
 	</body>
 	<config>
