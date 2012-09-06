@@ -490,12 +490,12 @@ class SPJoomlaMainFrame
 		}
 		if ( $live ) {
 			/*
-* SubDir Issues:
-* when using SEF Joomla! router returns also the subdir
-* and JURI::base returns the subdir too
-* So if the URL should be SEF we have to remove the subdirectory once
-* Otherwise it doesn't pass the JRoute::_ method so there is no subdir included
-* */
+			 * SubDir Issues:
+			 * when using SEF Joomla! router returns also the subdir
+			 * and JURI::base returns the subdir too
+			 * So if the URL should be SEF we have to remove the subdirectory once
+			 * Otherwise it doesn't pass the JRoute::_ method so there is no subdir included
+			* */
 			if ( $sef ) {
 				$base = JURI::base( true );
 				$root = str_replace( $base, null, Sobi::Cfg( 'live_site' ) );

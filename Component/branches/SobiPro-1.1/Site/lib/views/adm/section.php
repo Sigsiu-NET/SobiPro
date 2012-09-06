@@ -152,13 +152,19 @@ class SPSectionAdmView extends SPAdmView
 			'order.desc' => Sobi::Txt( 'EMN.ORDER_BY_ORDER_DESC' ),
 		);
 		$customFields = array();
+		$customHeader = array();
 		if ( count( $f ) ) {
 			/* @var SPField $fit */
 			foreach ( $f as $field ) {
 				$entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ) ] = $field->get( 'name' );
 				$customFields[ ] = $field->get( 'nid' );
+				$customHeader[ ] = array(
+					'content' => $field->get( 'name' ),
+					'attributes' => array( 'type' => 'text' ),
+				);
 			}
 		}
+		$this->assign( $customHeader, 'customHeader' );
 		$this->assign( $customFields, 'custom_fields' );
 		$this->assign( $entriesOrdering, 'entriesOrdering' );
 
@@ -180,9 +186,8 @@ class SPSectionAdmView extends SPAdmView
 			foreach ( $e as $sentry ) {
 				/* @var SPEntryAdm $sentry */
 				$entry = array();
-				/* data needed to display in the list */
-				$entry[ 'state' ] = SPLists::state( $sentry );
-				$entry[ 'approved' ] = SPLists::approval( $sentry );
+				$entry[ 'state' ] = $sentry->get( 'state' );
+				$entry[ 'approved' ] = $sentry->get( 'approved' );
 
 				if ( isset( $usersData[ $sentry->get( 'owner' ) ] ) ) {
 					$uName = $usersData[ $sentry->get( 'owner' ) ]->name;
@@ -236,6 +241,11 @@ class SPSectionAdmView extends SPAdmView
 				if ( count( $fields ) ) {
 					foreach ( $fields as $field ) {
 						$entry[ $field->get( 'nid' ) ] = $field->data();
+					}
+				}
+				if ( count( ( $customFields ) ) ) {
+					foreach ( $customFields as $customField ) {
+						$entry[ 'customFields' ][ $customField ] = $entry[ $customField ];
 					}
 				}
 				/* in case we are showing all entries in a section */

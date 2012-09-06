@@ -141,7 +141,7 @@ class SPAdmView extends SPObject implements SPView
 	{
 		/** @var DOMNode $node */
 		foreach ( $xml as $node ) {
-			if( strstr( $node->nodeName, '#' ) ) {
+			if ( strstr( $node->nodeName, '#' ) ) {
 				continue;
 			}
 			switch ( $node->nodeName ) {
@@ -323,6 +323,20 @@ class SPAdmView extends SPObject implements SPView
 				'content' => null,
 				'attributes' => null
 			);
+			$attributes = $node->attributes;
+			if ( $attributes->length ) {
+				/** @var DOMElement $attribute */
+				foreach ( $attributes as $attribute ) {
+					if ( $attribute->nodeName == 'label' ) {
+						$element[ 'attributes' ][ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+						$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
+					}
+					else {
+						$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+					}
+				}
+			}
+
 			/** @var DOMNode $node */
 			switch ( $node->nodeName ) {
 				case 'tab':
@@ -343,26 +357,27 @@ class SPAdmView extends SPObject implements SPView
 					$this->xmlLoop( $node, $element );
 					break;
 				default:
-					$attributes = $node->attributes;
-					if ( $attributes->length ) {
-						/** @var DOMElement $attribute */
-						foreach ( $attributes as $attribute ) {
-							if ( $attribute->nodeName == 'label' ) {
-								$element[ 'attributes' ][ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
-								$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
-							}
-							else {
-								$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
-							}
-						}
-					}
 					if ( $node->hasChildNodes() ) {
 						$this->xmlBody( $node->childNodes, $element[ 'content' ] );
 					}
 					elseif ( !( strstr( $node->nodeName, '#' ) ) ) {
 						$element[ 'content' ] = $node->nodeValue;
 					}
+					/** No break here */
+				case 'cells':
+					$customCells = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
+					if ( count( $customCells ) ) {
+						foreach ( $customCells as $cell ) {
+							$element[ 'content' ][ ] = array(
+								'label' => isset( $cell[ 'label' ] ) ? $cell[ 'label' ] : null,
+								'type' => 'cell',
+								'content' => $cell[ 'content' ],
+								'attributes' => $element[ 'attributes' ]
+							);
+						}
+					}
 					break;
+
 			}
 			$output[ ] = $element;
 		}
@@ -415,6 +430,7 @@ class SPAdmView extends SPObject implements SPView
 			'content' => null,
 			'attributes' => null,
 		);
+
 		/** @var DOMElement $attribute */
 		foreach ( $cell->attributes as $attribute ) {
 			if ( $attribute->nodeName == 'label' ) {
@@ -425,6 +441,21 @@ class SPAdmView extends SPObject implements SPView
 			}
 			else {
 				$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( str_replace( 'var:[', 'var:[' . $subject . '.', $attribute->nodeValue ), $i );
+			}
+		}
+		if ( $cell->nodeName == 'cells' ) {
+			$customCells = $this->get( $subject . '.' . $cell->attributes->getNamedItem( 'value' )->nodeValue, $i );
+			if ( count( $customCells ) ) {
+				$a = $element[ 'attributes' ];
+				$a[ 'type' ] = 'text';
+				foreach ( $customCells as $customCell ) {
+					$objects[ ] = array(
+						'label' => null,
+						'type' => 'cell',
+						'content' => $customCell,
+						'attributes' => $a,
+					);
+				}
 			}
 		}
 		if ( $cell->hasChildNodes() ) {

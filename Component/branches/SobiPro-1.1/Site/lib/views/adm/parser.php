@@ -33,7 +33,7 @@ class SPTplParser
 
 	public function parse( $data )
 	{
-        /////SPConfig::debOut($data);
+		/////SPConfig::debOut($data);
 		$this->openElement( $data );
 		$this->parseElement( $data );
 		if ( is_array( $data[ 'content' ] ) && count( $data[ 'content' ] ) && !( is_string( $data[ 'content' ] ) ) ) {
@@ -56,24 +56,24 @@ class SPTplParser
 				}
 				$this->_out[ ] = '<div class="control-group">';
 				if ( isset( $element[ 'label' ] ) ) {
-         			$this->_out[ ] = "<label class=\"control-label\" for=\"{$element[ 'id' ]}\">{$element[ 'label' ]}</label>\n";
-    			}
+					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element[ 'id' ]}\">{$element[ 'label' ]}</label>\n";
+				}
 				if ( $this->table ) {
 					$this->_out[ ] = '</td>';
 				}
 				$this->_out[ ] = "<div class=\"controls\">\n";
 				$class = null;
 
-                if ($element['args']['type'] == 'output') {
-                    $this->_out[ ] = "<div class=\"spOutput\">";
-                    $outclass = $element['args']['params']['class'];
-                    if ($outclass) {
-                        $this->_out[ ] = "<span class=\"{$outclass}\">\n";
-                    }
-                    else {
-                        $this->_out[ ] = "<span>\n";
-                    }
-                }
+				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
+					$this->_out[ ] = "<div class=\"spOutput\">";
+					$outclass = $element[ 'args' ][ 'params' ][ 'class' ];
+					if ( $outclass ) {
+						$this->_out[ ] = "<span class=\"{$outclass}\">\n";
+					}
+					else {
+						$this->_out[ ] = "<span>\n";
+					}
+				}
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {
 					$class .= ' input-prepend';
 				}
@@ -97,9 +97,9 @@ class SPTplParser
 						$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
 					}
 				}
-                if ($element['args']['type'] == 'output') {
-                    $this->_out[ ] = "</div></span>\n";
-                }
+				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
+					$this->_out[ ] = "</div></span>\n";
+				}
 				if ( $class ) {
 					$this->_out[ ] = "</div>\n";
 				}
@@ -179,9 +179,9 @@ class SPTplParser
 				break;
 			case 'message':
 				$attr = array();
-				if( count($data['attributes'])) {
-					foreach( $data['attributes'] as $n => $v ) {
-						$attr[] = "{$n}=\"{$v}\"";
+				if ( count( $data[ 'attributes' ] ) ) {
+					foreach ( $data[ 'attributes' ] as $n => $v ) {
+						$attr[ ] = "{$n}=\"{$v}\"";
 					}
 				}
 				$attr = implode( ' ', $attr );
@@ -245,6 +245,7 @@ class SPTplParser
 		switch ( $cell[ 'attributes' ][ 'type' ] ) {
 			case 'link':
 				$this->_out[ ] = "<a href=\"{$cell['link']}\" >";
+			/** no break here - continue */
 			case 'text':
 				if ( isset( $cell[ 'attributes' ][ 'label' ] ) && $cell[ 'attributes' ][ 'label' ] ) {
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
@@ -252,6 +253,7 @@ class SPTplParser
 				else {
 					$this->_out[ ] = $cell[ 'content' ];
 				}
+			/** no break here - continue */
 			case 'link':
 				$this->_out[ ] = "</a>";
 				break;
@@ -266,12 +268,12 @@ class SPTplParser
 					$this->_out[ ] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], array( 'class' => 'input-mini sp-input-micro' ) );
 				}
 				break;
-				case 'checkbox':
+			case 'checkbox':
 				if ( isset( $cell[ 'attributes' ][ 'rel' ] ) && $cell[ 'attributes' ][ 'rel' ] ) {
 					$this->_out[ ] = '<input type="checkbox" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
 				}
 				else {
-					$this->_out[ ] = '<input type="checkbox" name="' . $cell[ 'attributes' ][ 'name' ] . '[]" value="1">';
+					$this->_out[ ] = '<input type="checkbox" name="' . $cell[ 'attributes' ][ 'name' ] . '[]" value="' . $cell[ 'content' ] . '">';
 				}
 				break;
 			case 'ticker':
