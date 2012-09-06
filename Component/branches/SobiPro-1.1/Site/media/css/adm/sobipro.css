@@ -51,6 +51,9 @@ div.m {
 #SPAdmToolbar .nav {
   margin-bottom: 0px;
 }
+#SPAdmToolbar h3 {
+  line-height: 20px;
+}
 #SPAdmToolbar .container-fluid {
   padding: 0;
 }
@@ -147,7 +150,7 @@ div.spScreenTitle h4 {
   background-color: #993333;
   color: #f5f5f5;
 }
-.btn-sobipro {
+.SobiPro .btn-sobipro {
   color: #f5f5f5;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #a83939;
@@ -163,23 +166,23 @@ div.spScreenTitle h4 {
   filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffd31010', endColorstr='#ff993333', GradientType=0);
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
-.btn-sobipro:hover,
-.btn-sobipro:active,
-.btn-sobipro.active,
-.btn-sobipro.disabled,
-.btn-sobipro[disabled] {
+.SobiPro .btn-sobipro:hover,
+.SobiPro .btn-sobipro:active,
+.SobiPro .btn-sobipro.active,
+.SobiPro .btn-sobipro.disabled,
+.SobiPro .btn-sobipro[disabled] {
   color: #f5f5f5;
   background-color: #993333;
   *background-color: #990000;
 }
-.btn-sobipro:active,
-.btn-sobipro.active {
+.SobiPro .btn-sobipro:active,
+.SobiPro .btn-sobipro.active {
   background-color: #003399 \9;
 }
-.btn-group.open .btn-sobipro.dropdown-toggle {
+.SobiPro .btn-group.open .btn-sobipro.dropdown-toggle {
   background-color: #993333;
 }
-.btn-sobipro .caret {
+.SobiPro .btn-sobipro .caret {
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
 }
@@ -196,7 +199,7 @@ div.spScreenTitle h4 {
   font-weight: bold;
   color: #555555;
 }
-.btn-sobipro.active {
+.SobiPro .btn-sobipro.active {
   color: rgba(255, 255, 255, 0.75);
 }
 input.sp-input-micro[type="text"] {
@@ -286,7 +289,4 @@ input.sp-input-micro[type="text"] {
 }
 .spicon-32-help {
   background-image: url(../../../../media/sobipro/32x32/sobipro-help.png) !important;
-}
-#SPAdmToolbar h3 {
-  line-height: 20px;
 }
