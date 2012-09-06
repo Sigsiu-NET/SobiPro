@@ -122,7 +122,7 @@ final class SobiProAdmCtrl
 		SPFactory::registry()->set( 'current_section_name', $sectionName[ $this->_section ][ 'value' ] );
 
 		/* check if it wasn't plugin custom task */
-		if ( !Sobi::Trigger( 'custom', 'task', array( $this, SPRequest::task() ) ) ) {
+		if ( !( Sobi::Trigger( 'custom', 'task', array( $this, SPRequest::task() ) ) ) ) {
 			/* if not, start to route */
 			try {
 				$this->route();

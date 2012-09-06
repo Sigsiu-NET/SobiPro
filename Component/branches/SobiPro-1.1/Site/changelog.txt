@@ -28,10 +28,14 @@
 
 
 -------------------
-1.0.8 (28 April 2012)
+1.1.0
 -------------------
 
+   (+) XML based template engine for administrator templates
+   (+) Possibility to override administrator templates for particular section
+
    (!) SPHeader::addMeta() takes now optional list of custom parameters as an array
+   (!) SPLang::nid using JFilterOutput::stringURLSafe now
 
 -------------------
 1.0.8 (28 April 2012)

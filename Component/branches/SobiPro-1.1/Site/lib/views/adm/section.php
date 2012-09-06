@@ -140,17 +140,19 @@ class SPSectionAdmView extends SPAdmView
 		/* handle the fields in this section for header */
 		$f = $this->get( 'fields' );
 		$entriesOrdering = array(
-			'sid.asc' => Sobi::Txt( 'EMN.ORDER_BY_ID_ASC' ),
-			'sid.desc' => Sobi::Txt( 'EMN.ORDER_BY_ID_DESC' ),
+			'e_sid.asc' => Sobi::Txt( 'EMN.ORDER_BY_ID_ASC' ),
+			'e_sid.desc' => Sobi::Txt( 'EMN.ORDER_BY_ID_DESC' ),
 			'name.asc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_ASC' ),
 			'name.desc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_DESC' ),
 			'state.asc' => Sobi::Txt( 'EMN.ORDER_BY_STATE_ASC' ),
-			'state.asc' => Sobi::Txt( 'EMN.ORDER_BY_STATE_ASC' ),
-			'approval.asc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_ASC' ),
-			'approval.desc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_DESC' ),
-			'order.asc' => Sobi::Txt( 'EMN.ORDER_BY_ORDER_ASC' ),
-			'order.desc' => Sobi::Txt( 'EMN.ORDER_BY_ORDER_DESC' ),
+			'state.desc' => Sobi::Txt( 'EMN.ORDER_BY_STATE_DESC' ),
+			'approved.asc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_ASC' ),
+			'approved.desc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_DESC' ),
 		);
+		if ( $this->get( 'task' ) == 'view' ) {
+			$entriesOrdering[ 'order.asc' ] = Sobi::Txt( 'EMN.ORDER_BY_ORDER_ASC' );
+			$entriesOrdering[ 'order.desc' ] = Sobi::Txt( 'EMN.ORDER_BY_ORDER_DESC' );
+		}
 		$customFields = array();
 		$customHeader = array();
 		if ( count( $f ) ) {
@@ -164,6 +166,7 @@ class SPSectionAdmView extends SPAdmView
 				);
 			}
 		}
+		$entriesOrdering[ 'owner.desc' ] = Sobi::Txt( 'EMN.ORDER_BY_OWNER' );
 		$this->assign( $customHeader, 'customHeader' );
 		$this->assign( $customFields, 'custom_fields' );
 		$this->assign( $entriesOrdering, 'entriesOrdering' );

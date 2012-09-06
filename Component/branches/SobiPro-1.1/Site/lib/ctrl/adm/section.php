@@ -108,11 +108,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$eCount = count( $e );
 		$entries = array();
 		$categories = array();
-
 		SPLoader::loadClass( 'models.dbobject' );
-//		$cClass = SPLoader::loadModel( 'category' );
-//		$eClass = SPLoader::loadModel( 'entry' );
-
 		/* if there are entries in the root */
 		if ( count( $e ) ) {
 			try {
