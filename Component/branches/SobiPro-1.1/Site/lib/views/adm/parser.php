@@ -168,7 +168,7 @@ class SPTplParser
 				$this->proceedCell( $data, $this->thTd );
 				break;
 			case 'header':
-				$this->_out[ ] = '<div>';
+				$this->_out[ ] = '<div id="SPAdmNavBar">';
 				break;
 			case 'loop':
 				$this->_out[ ] = '<tbody>';

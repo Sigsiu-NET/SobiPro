@@ -94,7 +94,7 @@ class SpAdmToolbar
 		$this->output[ ] = '<div class="breadcrumb" id="' . $id . '">';
 		$this->output[ ] = '<div id="SPRightMenuHold">';
 		$this->output[ ] = '</div>';
-		$this->output[ ] = '<div class="container-fluid">';
+		//$this->output[ ] = '<div class="container-fluid">';
         $this->output[ ] = '<div class="row-fluid">';
         $this->output[ ] = '<div class="spicon-48-' . $this->icon . ' spScreenTitle span6">';
 		$this->output[ ] = "<h4>{$this->title}</h4>";
@@ -139,7 +139,7 @@ class SpAdmToolbar
 		$this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
         $this->output[ ] = '</div>';
-        $this->output[ ] = '</div>';
+        //$this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
 		return implode( "\n", $this->output );
 	}
