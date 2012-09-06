@@ -77,7 +77,7 @@ final class SPAdmSiteMenu
 		$this->_view[ ] = "\n <!-- Sobi Pro - admin side menu start -->";
 		$this->_view[ ] = "\n<div id=\"SPaccordionTabs\" class=\"SPmenuTabs\">";
 		$this->_view[ ] = '<div id="SPMenuCtrl">';
-		$this->_view[ ] = ' <button class="btn btn-mini btn-primary" id="SPMenuCtrlBt" type="button">-</button>';
+		$this->_view[ ] = ' <button class="btn btn-mini btn-sobipro" id="SPMenuCtrlBt" type="button">-</button>';
 		$this->_view[ ] = '</div>';
 		$media = Sobi::Cfg( 'img_folder_live' );
 		$this->_view[ ] = "\n<a href=\"http://www.Sigsiu.NET\" target=\"_blank\" title=\"Sigsiu.NET Software Development\"><img src=\"{$media}/sobipro-menu.png\" alt=\"Sigsiu.NET Software Development\" style=\"border-style:none;\" /></a>\n";

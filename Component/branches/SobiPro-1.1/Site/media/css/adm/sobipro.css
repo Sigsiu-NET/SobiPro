@@ -69,16 +69,18 @@ div.m {
 div.spScreenTitle,
 div.spScreenSubHead {
   background-repeat: no-repeat;
-  background-position: 2%;
   height: 45px;
 }
 div.spScreenSubHead {
   font-weight: bold;
-  font-size: 15px;
+  font-size: 16px;
 }
 div.spScreenTitle:first-child,
 div.spScreenSubHead:first-child {
-  padding-left: 70px;
+  padding-left: 55px;
+}
+div.spScreenTitle h4 {
+  margin-top: 14px;
 }
 #SPAdmToolbar .btn-group {
   float: left;
@@ -113,6 +115,10 @@ div.spScreenSubHead:first-child {
   padding-top: 0px;
   width: 200px;
 }
+#SPAdmNavBar .control-group {
+  float: left;
+  padding-left: 12px;
+}
 #SPAdminForm .spFieldGroup {
   margin-bottom: 0px;
 }
@@ -141,6 +147,42 @@ div.spScreenSubHead:first-child {
   background-color: #993333;
   color: #f5f5f5;
 }
+.btn-sobipro {
+  color: #f5f5f5;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #a83939;
+  *background-color: #993333;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d31010), to(#993333));
+  background-image: -webkit-linear-gradient(top, #d31010, #993333);
+  background-image: -o-linear-gradient(top, #d31010, #993333);
+  background-image: linear-gradient(to bottom, #d31010, #993333);
+  background-image: -moz-linear-gradient(top, #d31010, #993333);
+  background-repeat: repeat-x;
+  border-color: #993333 #993333 #660000;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffd31010', endColorstr='#ff993333', GradientType=0);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+.btn-sobipro:hover,
+.btn-sobipro:active,
+.btn-sobipro.active,
+.btn-sobipro.disabled,
+.btn-sobipro[disabled] {
+  color: #f5f5f5;
+  background-color: #993333;
+  *background-color: #990000;
+}
+.btn-sobipro:active,
+.btn-sobipro.active {
+  background-color: #003399 \9;
+}
+.btn-group.open .btn-sobipro.dropdown-toggle {
+  background-color: #993333;
+}
+.btn-sobipro .caret {
+  border-top-color: #ffffff;
+  border-bottom-color: #ffffff;
+}
 #SPAdminForm input,
 #SPAdminForm textarea,
 #SPAdminForm select,
@@ -153,6 +195,9 @@ div.spScreenSubHead:first-child {
 #SPAdminForm .nav-tabs .active a {
   font-weight: bold;
   color: #555555;
+}
+.btn-sobipro.active {
+  color: rgba(255, 255, 255, 0.75);
 }
 input.sp-input-micro[type="text"] {
   width: 25px;
