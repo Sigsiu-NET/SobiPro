@@ -185,7 +185,7 @@ class SPTplParser
 					}
 				}
 				$attr = implode( ' ', $attr );
-				$this->_out[ ] = "<div {$attr}>&nbsp;</div>";
+				$this->_out[ ] = "<div {$attr}></div>";
 				break;
 			default:
 //				SPConfig::debOut( $data[ 'type' ] );
