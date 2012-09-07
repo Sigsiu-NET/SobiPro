@@ -312,7 +312,7 @@ abstract class Sobi
 		if ( !( $name ) ) {
 			return SPFactory::registry()->get( 'current_section' );
 		}
-		elseif ( $name == 'nid' ) {
+		elseif ( ( string ) $name == 'nid' ) {
 			return SPLang::nid( SPFactory::registry()->get( 'current_section_name' ) );
 		}
 		else {

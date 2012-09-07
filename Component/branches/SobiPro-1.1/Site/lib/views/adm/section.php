@@ -51,7 +51,7 @@ class SPSectionAdmView extends SPAdmView
 		switch ( $this->get( 'task' ) ) {
 			case 'view':
 				$this->listSection();
-				$this->determineTemplate( 'section', 'list' );
+				$this->determineTemplate( 'section', 'category' );
 				break;
 			case 'entries':
 				$this->listSection();
@@ -140,6 +140,7 @@ class SPSectionAdmView extends SPAdmView
 		/* handle the fields in this section for header */
 		$f = $this->get( 'fields' );
 		$entriesOrdering = array(
+			Sobi::Txt( 'EMN_ORDER_BY' ) => array(),
 			'e_sid.asc' => Sobi::Txt( 'EMN.ORDER_BY_ID_ASC' ),
 			'e_sid.desc' => Sobi::Txt( 'EMN.ORDER_BY_ID_DESC' ),
 			'name.asc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_ASC' ),
