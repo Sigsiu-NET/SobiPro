@@ -60,6 +60,11 @@
     background-color: @background;
 }
 
+#SPAdminForm #SPAdmToolbar a:hover,
+#SPAdminForm #SPAdmToolbar a {
+    color: #333333;
+}
+
 #SPAdmToolbar .nav {
     margin-bottom: 0px
 }
@@ -111,6 +116,7 @@ div.spScreenTitle h4 {
 
 #SPAdmToolbar .btn {
     float: left;
+    padding: 4px 10px;
 }
 
 #SPAdmToolbar .dropdown-menu .SpDropDownBt li { //    display: block;
@@ -133,13 +139,16 @@ div.spScreenTitle h4 {
     white-space: nowrap;
 }
 
-#SPAdminForm table .control-label {
-    padding-top: 5px;
-    color: #000099;
+#SPAdminForm a {
+    color: #0000b3;
+}
+#SPAdminForm a:hover {
+    color: #00007b;
 }
 
-#SPAdminForm table a {
-    color: #000099;
+#SPAdminForm table .control-label {
+    padding-top: 5px;
+    color: #0000b3;
 }
 
 #SPAdminForm fieldset .control-label {
@@ -168,33 +177,44 @@ div.spScreenTitle h4 {
 }
 
 #SPAdminForm .nav-tabs a {
-    color: #000099; /*#0088cc;*/
+    color: #0000b3; /*#0088cc;*/
     text-decoration: none;
 }
 
 #SPAdminForm .nav-tabs a:hover {
-    color: #000099; /*#005580;*/
+    color: #00007b; /*#005580;*/
 }
 
 #SPAdminForm .controls .btn:active,
 #SPAdminForm .controls .btn.active {
     background-color: #993333;
-    color: #f5f5f5;
+    color: #ffffff;
 }
+.SobiPro .brand {
+    color: #7f7f7f;
+    font-size: 11px;
+    margin-left: 4px;
+    margin-top: -15px;
+}
+.SobiPro .brand a {
+    color: #7f7f7f;
+    text-decoration: none;
+}
+
 .SobiPro .btn-sobipro {
-    color: #f5f5f5;
+    color: #ffffff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    background-color: #a83939;
-    *background-color: #993333;
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d31010), to(#993333));
-    background-image: -webkit-linear-gradient(top, #d31010, #993333);
-    background-image: -o-linear-gradient(top, #d31010, #993333);
-    background-image: linear-gradient(to bottom, #d31010, #993333);
-    background-image: -moz-linear-gradient(top, #d31010, #993333);
+    background-color: #a90000;
+    *background-color: #890000;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#a90000), to(#890000));
+    background-image: -webkit-linear-gradient(top, #a90000, #890000);
+    background-image: -o-linear-gradient(top, #a90000, #890000);
+    background-image: linear-gradient(to bottom, #a90000, #890000);
+    background-image: -moz-linear-gradient(top, #a90000, #890000);
     background-repeat: repeat-x;
-    border-color: #993333 #993333 #660000;
+    border-color: #a90000 #a90000 #890000;
     border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffd31010', endColorstr='#ff993333', GradientType=0);
+    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffa90000', endColorstr='#ff890000', GradientType=0);
     filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 .SobiPro .btn-sobipro:hover,
@@ -202,9 +222,9 @@ div.spScreenTitle h4 {
 .SobiPro .btn-sobipro.active,
 .SobiPro .btn-sobipro.disabled,
 .SobiPro .btn-sobipro[disabled] {
-    color: #f5f5f5;
-    background-color: #993333;
-    *background-color: #990000;
+    color: #e4e4e4;
+    background-color: #890000;
+    *background-color: #890000;
 }
 
 .SobiPro .btn-sobipro:active,
