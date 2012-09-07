@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="Section: var:[name]"/>
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiFields">
+		<buttons type="entry">
+			<button type="new" task="entry.add" label="AMN.ADD_ENTRY" ico="file"/>
+			<button type="delete" task="entry.delete"/>
+			<nav-header label="TB.PUBLISHING"/>
+			<button type="publish" task="entry.publish"/>
+			<button type="hide" task="entry.hide"/>
+			<nav-header label="TB.APPROVAL"/>
+			<button type="approve" task="entry.approve"/>
+			<button type="revoke" task="entry.unapprove"/>
+		</buttons>
+		<divider/>
+		<buttons type="category">
+			<button type="new" task="category.add" label="AMN.ADD_CAT" ico="book"/>
+			<button type="delete" task="entry.delete"/>
+			<nav-header label="TB.PUBLISHING"/>
+			<button type="publish" task="entry.publish"/>
+			<button type="hide" task="entry.hide"/>
+			<nav-header label="TB.APPROVAL"/>
+			<button type="approve" task="entry.approve"/>
+			<button type="revoke" task="entry.unapprove"/>
+		</buttons>
+		<divider/>
+		<button type="help" target="_blank"/>
+	</toolbar>
+	<body>
+		<message id="spMessage"/>
+		<!--<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">-->
+			<!--<div class="btn-group pull-right form-horizontal" id="spEntriesFilterHead">-->
+				<!--<field type="text" name="sp_entries_filter" id="spEntriesFilter" values="filter" label="EMN_FILTER" class="input-medium"/>-->
+				<!--<field type="select" name="eorder" selected="ordering" values="entriesOrdering" label="EMN_ORDER_BY" class="input-medium spOrdering"/>-->
+			<!--</div>-->
+		<!--</header>-->
+		<!--<table>-->
+			<!--<head>-->
+				<!--<cell label="HEADER_ID" type="text" class="center"/>-->
+				<!--<cell type="checkbox" rel="e_sid" class="center"/>-->
+				<!--<cell label="HEADER_ENTRIES_NAME" type="text"/>-->
+				<!--<cells value="customHeader" class="center" type="text"/>-->
+				<!--<cell label="HEADER_ENTRIES_STATE" type="text" class="center"/>-->
+				<!--<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="center"/>-->
+				<!--<cell label="HEADER_FIELD_AUTHOR" type="text" class="center"/>-->
+				<!--&lt;!&ndash;<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="field"/>&ndash;&gt;-->
+			<!--</head>-->
+			<!--<loop subject="entries">-->
+				<!--<cell type="text" value="id" class="center"/>-->
+				<!--<cell type="checkbox" name="e_sid" value="id" class="center"/>-->
+				<!--<cell>-->
+					<!--<cell type="link" value="name">-->
+						<!--<url type="intern">-->
+							<!--<param name="task" value="entry.edit"/>-->
+							<!--<param name="sid" value="sid" parse="true"/>-->
+						<!--</url>-->
+					<!--</cell>-->
+				<!--</cell>-->
+				<!--&lt;!&ndash;<cell type="text" value="field_price"/>&ndash;&gt;-->
+				<!--<cells value="customFields" class="center"/>-->
+				<!--<cell type="ticker" value="state" class="center">-->
+					<!--<url type="intern">-->
+						<!--<param name="task" value="entry.toggle.enabled"/>-->
+						<!--<param name="sid" value="id" parse="true"/>-->
+					<!--</url>-->
+				<!--</cell>-->
+				<!--<cell type="ticker" value="approved" class="center" icons="{'0':'cog','1':'asterisk'}">-->
+					<!--<url type="intern">-->
+						<!--<param name="task" value="entry.toggle.approval"/>-->
+						<!--<param name="sid" value="id" parse="true"/>-->
+					<!--</url>-->
+				<!--</cell>-->
+				<!--<cell type="text" value="owner" class="center"/>-->
+				<!--&lt;!&ndash;<cell type="ordering" value="position" name="fid[var:[id]]" class="center"/>&ndash;&gt;-->
+			<!--</loop>-->
+			<!--<foot>-->
+				<!--<navigation/>-->
+			<!--</foot>-->
+		<!--</table>-->
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro"/>
+		<hidden>
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+			<field name="boxchecked" default=""/>
+		</hidden>
+	</config>
+</definition>

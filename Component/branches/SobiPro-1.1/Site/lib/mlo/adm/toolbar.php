@@ -38,6 +38,8 @@ class SpAdmToolbar
 		'hide' => 'off',
 		'approve' => 'thumbs-up',
 		'revoke' => 'thumbs-down',
+		'entry' => 'file',
+		'category' => 'book',
 	);
 	private $labels = array(
 		'apply' => 'SAVE_ONLY',
@@ -239,7 +241,7 @@ class SpAdmToolbar
 			$label = Sobi::Txt( 'TB.' . $this->labels[ $button[ 'type' ] ] );
 		}
 		else {
-			$label = 'UNDEFINED';
+			$label = Sobi::Txt( 'TB.' . $button[ 'type' ] );
 		}
 		return $label;
 	}
