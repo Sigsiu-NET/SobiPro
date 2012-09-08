@@ -3,7 +3,7 @@
 	<header>
 		<title value="Section: var:[name]"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiFields">
+	<toolbar title="var:[site_title]" icon="SobiSection">
 		<buttons type="entry">
 			<button type="new" task="entry.add" label="AMN.ADD_ENTRY" ico="file"/>
 			<button type="delete" task="entry.delete"/>
