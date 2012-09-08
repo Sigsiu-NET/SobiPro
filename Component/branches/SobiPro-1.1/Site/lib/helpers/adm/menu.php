@@ -84,6 +84,9 @@ final class SPAdmSiteMenu
 
 		$fs = null;
 		if ( count( $this->_sections ) ) {
+			if ( $this->_task == 'section.view' ) {
+				$this->_task = 'section.entries';
+			}
 			$this->_view[ ] = '<div class="accordion" id="SpMenu">';
 			foreach ( $this->_sections as $section => $list ) {
 				$sid = SPLang::nid( $section );
@@ -91,7 +94,7 @@ final class SPAdmSiteMenu
 				if ( !$fs ) {
 					$fs = $sid;
 				}
-				if ( !$this->_open && array_key_exists( $this->_task, $list ) ) {
+				if ( !( $this->_open ) && array_key_exists( $this->_task, $list ) ) {
 					$this->_open = $sid;
 					$in = ' in';
 				}
@@ -111,8 +114,7 @@ final class SPAdmSiteMenu
 			$this->_view[ ] = '</div>';
 		}
 		$this->_view[ ] = "\n</div>\n";
-//		$this->_view[ ] = "\n<script>SPinitMenu( '{$this->_open}' );</script>\n";
-        $this->_view[ ] = '<div class="brand">© <a href="http://www.sigsiu.net">Sigsiu.NET GmbH</a></div>';
+		$this->_view[ ] = '<div class="brand" style="display: inherit;">© <a href="http://www.sigsiu.net">Sigsiu.NET GmbH</a></div>';
 		$this->_view[ ] = "\n<!-- Sobi Pro - admin side menu end -->\n";
 		return implode( "\n", $this->_view );
 	}
