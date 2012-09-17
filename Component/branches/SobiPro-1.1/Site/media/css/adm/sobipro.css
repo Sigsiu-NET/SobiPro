@@ -23,8 +23,46 @@
   -moz-box-shadow: inset 0 1px 0 #ffffff;
   box-shadow: inset 0 1px 0 white;
 }
+.SobiPro .firstspan {
+  margin-left: 0px!important;
+}
 #SPAdmToolbar .dropdown-menu .SpDropDownBt li {
-  min-width: 150px;
+  min-width: 160px;
+}
+#SPAdmToolbar .dropdown-menu .SpDropDownBt li .nav-header {
+  min-width: 160px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+#SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt li a:hover,
+#SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt li a:focus,
+#SPAdminForm #SPAdmToolbar .dropdown-submenu:hover a {
+  color: #ffffff;
+  background-color: #a90000;
+  *background-color: #890000;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#a90000), to(#890000));
+  background-image: -webkit-linear-gradient(top, #a90000, #890000);
+  background-image: -o-linear-gradient(top, #a90000, #890000);
+  background-image: linear-gradient(to bottom, #a90000, #890000);
+  background-image: -moz-linear-gradient(top, #a90000, #890000);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffa90000', endColorstr='#ff890000', GradientType=0);
+  border-color: #a90000 #a90000 #890000;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+#SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt li a:hover [class^="icon-"],
+#SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt li a:hover [class*=" icon-"],
+#SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt .active a [class^="icon-"],
+#SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt .active a [class*=" icon-"] {
+  background-image: url("../img/glyphicons-halflings-white.png");
+}
+#SPAdminForm #SPAdmToolbar .dropdown-toggle {
+  color: #333333;
+}
+#SPAdminForm #SPAdmToolbar .dropdown-toggle .caret {
+  border-bottom-color: #993333;
+  border-top-color: #993333;
+  margin-top: 6px;
 }
 .SobiPro .btn-group {
   font-size: 0;
@@ -36,6 +74,9 @@
 }
 .SobiPro .breadcrumb .active a {
   color: #333333;
+}
+.SobiPro .breadcrumb li {
+  display: inline-block;
 }
 #toolbar-box {
   display: none;
@@ -96,12 +137,6 @@ div.spScreenTitle h4 {
   float: left;
   padding: 4px 10px;
 }
-#SPAdmToolbar .dropdown-menu .SpDropDownBt li {
-  min-width: 150px;
-}
-#SPAdmToolbar .dropdown-menu .SpDropDownBt li a:hover {
-  background-color: #0088cc;
-}
 #SPAdmToolbar .divider {
   padding: 0 5px;
   color: #999;
@@ -160,7 +195,7 @@ div.spScreenTitle h4 {
 }
 .SobiPro .brand {
   color: #7f7f7f;
-  font-size: 11px;
+  font-size: 9px;
   margin-left: 4px;
   margin-top: -15px;
 }
