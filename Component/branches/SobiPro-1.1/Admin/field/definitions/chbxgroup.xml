@@ -31,6 +31,11 @@
                             <field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
                         </fieldset>
 
+                        <fieldset label="FM.SEL.LIST_OPTIONS">
+                            <!-- Upload INI File -->
+                            <!-- List Options -->
+                        </fieldset>
+
                         <fieldset label="FM.FIELD_TYPE">
                             <field type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FMN.FIELD_TYPE"/>
                         </fieldset>
@@ -41,42 +46,33 @@
                 <div class="row-fluid">
                     <div class="span12">
                         <fieldset>
-                            <field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
+                            <field type="select" name="field.optInLine" selected="field.optInLine" label="FM.CHBXGR.OPTS_IN_LINE" class="input-mini">
+                                <values>
+                                    <option value="1" label="1" />
+                                    <option value="2" label="2" />
+                                    <option value="3" label="3" />
+                                    <option value="4" label="4" />
+                                    <option value="5" label="5" />
+                                    <option value="6" label="6" />
+                                    <option value="7" label="7" />
+                                    <option value="8" label="8" />
+                                </values>
+                            </field>
+                            <field type="text" name="field.optWidth" value="field.optWidth" label="FM.CHBXGR.CELL_WIDTH" maxlength="10" class="input-mini">
                                 <add where="after">
                                     <text>px</text>
                                 </add>
                             </field>
-                            <field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
-                                <add where="after">
-                                    <text>px</text>
-                                </add>
-                            </field>
-                            <field type="text" name="field.maxLength" value="field.maxLength" label="FM.MAX_LENGTH" maxlength="10" class="input-mini">
-                                    <add where="after">
-                                        <call function="Sobi::Txt">
-                                            <param>FMN.LENGTH_CHAR</param>
-                                        </call>
-                                    </add>
+                            <field type="select" name="field.labelSite" selected="field.labelSite" label="FM.CHBXGR.LABEL_SITE" class="input-medium">
+                                <values>
+                                    <option value="right" label="FM.CHBXGR.RIGHT_SITE_OPT" />
+                                    <option value="left" label="FM.CHBXGR.LEFT_SITE_OPT" />
+                                </values>
                             </field>
                             <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
                             <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
                             <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
                         </fieldset>
-
-
-                        <fieldset label="FMN.FIELD_ENTRYINPUT_HTML">
-                            <field type="states" name="field.editor" value="field.editor" label="FM.TXT.ENABLE_WYSIWYG" prefix="yes_no"/>
-                            <field type="select" name="field.allowHtml" selected="field.allowHtml" label="FM.TXT.ALLOW_HTML" class="input-large">
-                                <values>
-                                    <option value="0" label="FM.TXT.ALLOW_HTML_NO"/>
-                                    <option value="1" label="FM.TXT.ALLOW_HTML_YES"/>
-                                    <option value="2" label="FM.TXT.ALLOW_HTML_RAW"/>
-                                </values>
-                            </field>
-                            <field type="textarea" name="field.allowedTags" value="field.allowedTags" label="FM.TXT.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />
-                            <field type="textarea" name="field.allowedAttributes" value="field.allowedAttributes" label="FM.TXT.ALLOWED_ATTR" editor="false" class="input-splarge" rows="2" style="" />
-                        </fieldset>
-
                         <fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
                             <field type="output" value="field.version" label="VERSION" class="badge"/>
                             <field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no"/>
@@ -110,9 +106,9 @@
                                 </values>
                             </field>
                             <field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
-                            <field type="states" name="field.parse" value="field.parse" label="FM.TXT.PARSE_CONTENT" prefix="yes_no"/>
                         </fieldset>
                         <fieldset label="FMN.FIELD_ENTRYVIEW_META">
+                            <field type="states" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
                             <field type="states" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
                         </fieldset>
                     </div>
@@ -135,6 +131,15 @@
                                     <option value="8" label="8" />
                                     <option value="9" label="9" />
                                     <option value="10" label="10" />
+                                </values>
+                            </field>
+                            <field type="select" name="field.searchMethod" selected="field.searchMethod" label="FM.SEARCH_METHOD" multi="false" class="input-large">
+                                <values>
+                                    <option value="general" label="FM.GENERAL_SEARCH_OPT" />
+                                    <option value="chbx" label="FM.CHECKBOX_GROUP_OPT" />
+                                    <option value="radio" label="FM.RADIO_BUTTONS_OPT" />
+                                    <option value="select" label="FM.SELECT_LIST_OPT" />
+                                    <option value="mselect" label="FM.MSELECT_LIST_OPT" />
                                 </values>
                             </field>
                         </fieldset>

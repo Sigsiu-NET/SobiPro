@@ -49,16 +49,16 @@
                                 </add>
                             </field>
                             <field type="text" name="field.maxLength" value="field.maxLength" label="FM.MAX_LENGTH" maxlength="10" class="input-mini">
-                            <add where="after">
-                                <call function="Sobi::Txt">
-                                    <param>FMN.LENGTH_CHAR</param>
-                                </call>
-                            </add>
-                        </field>
-                        <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
+                                <add where="after">
+                                    <call function="Sobi::Txt">
+                                        <param>FMN.LENGTH_CHAR</param>
+                                    </call>
+                                </add>
+                            </field>
+                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />0
+                            <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
                             <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
                             <field type="select" name="field.filter" values="filters" label="FM.FILTER" multi="false" selected="field.filter" class="input-large" />
-                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />0
                         </fieldset>
                         <fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
                             <field type="output" value="field.version" label="VERSION" class="badge"/>
