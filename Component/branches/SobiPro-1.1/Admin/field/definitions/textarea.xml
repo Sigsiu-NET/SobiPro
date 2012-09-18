@@ -32,7 +32,7 @@
                         </fieldset>
 
                         <fieldset label="FM.FIELD_TYPE">
-                            <field type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FMN.FIELD_TYPE"/>
+                            <field type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span3"/>
                         </fieldset>
                     </div>
                 </div>
