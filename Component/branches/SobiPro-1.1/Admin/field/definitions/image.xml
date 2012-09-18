@@ -31,14 +31,8 @@
                             <field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
                         </fieldset>
 
-                        <fieldset label="FM.SEL.LIST_OPTIONS">
-                        <field type="text" name="field.defSel" value="field.defSel" label="FMN.RADIO.DEFSEL" class="input-medium" />
-                            <!-- Upload INI File -->
-                            <!-- List Options -->
-                        </fieldset>
-
                         <fieldset label="FM.FIELD_TYPE">
-                            <field type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FMN.FIELD_TYPE" class="span4"/>
+                            <field type="select" name="field.fieldType" selected="field.fieldType" size="2" multi="false" values="types" label="FMN.FIELD_TYPE" class="span2"/>
                         </fieldset>
                     </div>
                 </div>
@@ -47,33 +41,56 @@
                 <div class="row-fluid">
                     <div class="span12">
                         <fieldset>
-                            <field type="select" name="field.optInLine" selected="field.optInLine" label="FM.CHBXGR.OPTS_IN_LINE" class="input-mini">
-                                <values>
-                                    <option value="1" label="1" />
-                                    <option value="2" label="2" />
-                                    <option value="3" label="3" />
-                                    <option value="4" label="4" />
-                                    <option value="5" label="5" />
-                                    <option value="6" label="6" />
-                                    <option value="7" label="7" />
-                                    <option value="8" label="8" />
-                                </values>
-                            </field>
-                            <field type="text" name="field.optWidth" value="field.optWidth" label="FM.CHBXGR.CELL_WIDTH" maxlength="10" class="input-mini">
+                            <field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
                                 <add where="after">
                                     <text>px</text>
                                 </add>
                             </field>
-                            <field type="select" name="field.labelSite" selected="field.labelSite" label="FM.CHBXGR.LABEL_SITE" class="input-medium">
-                                <values>
-                                    <option value="right" label="FM.CHBXGR.RIGHT_SITE_OPT" />
-                                    <option value="left" label="FM.CHBXGR.LEFT_SITE_OPT" />
-                                </values>
-                            </field>
-                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
+                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />0
                             <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
                             <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
                         </fieldset>
+
+                        <fieldset label="FMN.FIELD_ENTRYINPUT_IMAGE">
+                            <field type="text" name="field.maxSize" value="field.maxSize" label="FMN.IMG.MAX_FILE_SIZE" maxlength="50" class="input-medium">
+                                <add where="after">
+                                    <call function="Sobi::Txt">
+                                        <param>FMN.LENGTH_BYTES</param>
+                                    </call>
+                                </add>
+                            </field>
+                            <field type="text" name="field.savePath" value="field.savePath" label="FMN.IMG.IMAGE_SAVE_PATH" maxlength="150" class="input-splarge"/>
+                            <field type="states" name="field.keepOrg" value="field.keepOrg" label="FMN.IMG.KEEP_ORG" prefix="yes_no" />
+
+                            <field type="text" name="field.imageName" value="field.imageName" label="FM.IMG.IMG_NAME" maxlength="100" class="input-large"/>
+                            <field type="states" name="field.resize" value="field.resize" label="FM.IMG.RESIZE_IMG" prefix="yes_no" />
+                            <field type="text" name="field.resizeWidth" value="field.resizeWidth" label="FM.IMG.RESIZEWIDTH_TO" maxlength="50" class="input-mini">
+                                <add where="after">
+                                    <text>px</text>
+                                </add>
+                            </field>
+                            <field type="text" name="field.resizeHeight" value="field.resizeHeight" label="FM.IMG.RESIZEHEIGHT_TO" maxlength="50" class="input-mini">
+                                <add where="after">
+                                    <text>px</text>
+                                </add>
+                            </field>
+                        </fieldset>
+
+                        <fieldset label="FMN.FIELD_ENTRYINPUT_THUMB">
+                            <field type="states" name="field.generateThumb" value="field.generateThumb" label="FM.IMG.CREATE_THUMB" prefix="yes_no" />
+                            <field type="text" name="field.thumbName" value="field.thumbName" label="FM.IMG.THUMB_NAME" maxlength="100" class="input-large"/>
+                            <field type="text" name="field.thumbWidth" value="field.thumbWidth" label="FM.IMG.RESIZEWIDTH_TO" maxlength="50" class="input-mini">
+                                <add where="after">
+                                    <text>px</text>
+                                </add>
+                            </field>
+                            <field type="text" name="field.thumbHeight" value="field.thumbHeight" label="FM.IMG.RESIZEHEIGHT_TO" maxlength="50" class="input-mini">
+                                <add where="after">
+                                    <text>px</text>
+                                </add>
+                            </field>
+                        </fieldset>
+
                         <fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
                             <field type="output" value="field.version" label="VERSION" class="badge"/>
                             <field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no"/>
@@ -107,40 +124,32 @@
                                 </values>
                             </field>
                             <field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
-                        </fieldset>
-                        <fieldset label="FMN.FIELD_ENTRYVIEW_META">
-                            <field type="states" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
-                            <field type="states" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
-                        </fieldset>
-                    </div>
-                </div>
-            </tab>
-            <tab label="FMN.FIELD_SEARCH">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <fieldset>
-                            <field type="states" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
-                            <field type="select" name="field.priority" value="field.priority" label="FM.SEARCH_PRIORITY" multi="false" class="span1">
+                            <field type="select" name="field.inVcard" selected="field.inVcard" label="FM.IMG.SHOW_IN_V_CARD" class="input-medium">
                                 <values>
-                                    <option value="1" label="1" />
-                                    <option value="2" label="2" />
-                                    <option value="3" label="3" />
-                                    <option value="4" label="4" />
-                                    <option value="5" label="5" />
-                                    <option value="6" label="6" />
-                                    <option value="7" label="7" />
-                                    <option value="8" label="8" />
-                                    <option value="9" label="9" />
-                                    <option value="10" label="10" />
+                                    <option value="thumb" label="FM.IMG.THUMBAIL_OPT"/>
+                                    <option value="image" label="FM.IMG.IMAGE_OPT"/>
+                                    <option value="original" label="FM.IMG.ORGINAL_OPT"/>
                                 </values>
                             </field>
-                            <field type="select" name="field.searchMethod" selected="field.searchMethod" label="FM.SEARCH_METHOD" multi="false" class="input-large">
+                            <field type="select" name="field.inDetails" selected="field.inDetails" label="FM.IMG.SHOW_IN_DETAILS_VIEW" class="input-medium">
                                 <values>
-                                    <option value="general" label="FM.GENERAL_SEARCH_OPT" />
-                                    <option value="chbx" label="FM.CHECKBOX_GROUP_OPT" />
-                                    <option value="radio" label="FM.RADIO_BUTTONS_OPT" />
-                                    <option value="select" label="FM.SELECT_LIST_OPT" />
-                                    <option value="mselect" label="FM.MSELECT_LIST_OPT" />
+                                    <option value="thumb" label="FM.IMG.THUMBAIL_OPT"/>
+                                    <option value="image" label="FM.IMG.IMAGE_OPT"/>
+                                    <option value="original" label="FM.IMG.ORGINAL_OPT"/>
+                                </values>
+                            </field>
+                            <field type="select" name="field.thumbFloat" selected="field.thumbFloat" label="FM.IMG.THUMB_FLOAT" class="input-medium">
+                                <values>
+                                    <option value="" label="FM.IMG.FLOAT_NO_OPT"/>
+                                    <option value="right" label="FM.IMG.FLOAT_RIGHT_OPT"/>
+                                    <option value="left" label="FM.IMG.FLOAT_LEFT_OPT"/>
+                                </values>
+                            </field>
+                            <field type="select" name="field.imageFloat" selected="field.imageFloat" label="FM.IMG.IMG_FLOAT" class="input-medium">
+                                <values>
+                                    <option value="" label="FM.IMG.FLOAT_NO_OPT"/>
+                                    <option value="right" label="FM.IMG.FLOAT_RIGHT_OPT"/>
+                                    <option value="left" label="FM.IMG.FLOAT_LEFT_OPT"/>
                                 </values>
                             </field>
                         </fieldset>
