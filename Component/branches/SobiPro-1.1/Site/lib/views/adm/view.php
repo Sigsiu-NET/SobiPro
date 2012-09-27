@@ -112,7 +112,7 @@ class SPAdmView extends SPObject implements SPView
 	public function determineTemplate( $type, $template )
 	{
 		if ( SPLoader::translatePath( $type . '.definitions.' . $template, 'adm', true, 'xml' ) ) {
-			$nid = '-'.Sobi::Section( 'nid' );
+			$nid = '-' . Sobi::Section( 'nid' );
 			/** Case we have also override  */
 			if ( SPLoader::translatePath( $type . '.definitions.' . $template . $nid, 'adm', true, 'xml' ) ) {
 				$this->loadDefinition( $type . '.definitions.' . $template . $nid );
@@ -130,7 +130,7 @@ class SPAdmView extends SPObject implements SPView
 				$this->setTemplate( $type . '.templates.' . $template . '_override' );
 			}
 			elseif ( SPLoader::translatePath( $type . '.templates.' . $template, 'adm' ) ) {
-				$this->setTemplate( $type . '.templates.' . $template  );
+				$this->setTemplate( $type . '.templates.' . $template );
 			}
 			else {
 				$this->setTemplate( $type . '.templates.default' );
@@ -373,7 +373,7 @@ class SPAdmView extends SPObject implements SPView
 					elseif ( !( strstr( $node->nodeName, '#' ) ) ) {
 						$element[ 'content' ] = $node->nodeValue;
 					}
-					/** No break here */
+				/** No break here */
 				case 'cells':
 					$customCells = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
 					if ( count( $customCells ) ) {
