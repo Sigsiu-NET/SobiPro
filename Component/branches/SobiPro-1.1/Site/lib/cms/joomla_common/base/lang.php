@@ -346,7 +346,7 @@ class SPJoomlaLang
                         array(
                             'title' => $var->get( 'name' ),
                             'pid' => $var->get( 'primary' ),
-                            'sid' => $var->get( 'sid' )
+                            'sid' => $var->get( 'id' )
                         ), false, true, true
                     );
                 }
