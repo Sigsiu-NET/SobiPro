@@ -40,12 +40,12 @@ final class SPData_Array extends SPObject
 	 */
 	public function fromString( $str, $sep, $sep2 = null )
 	{
-		if( strstr( $str, $sep ) ) {
+		if ( strstr( $str, $sep ) ) {
 			$arr = explode( $sep, $str );
-			if( $sep2 ) {
+			if ( $sep2 ) {
 				$c = 0;
 				foreach ( $arr as $field ) {
-					if( strstr( $field, $sep2 ) ) {
+					if ( strstr( $field, $sep2 ) ) {
 						$f = explode( $sep2, $field );
 						$this->_arr[ $f[ 0 ] ] = $f[ 1 ];
 					}
@@ -67,16 +67,16 @@ final class SPData_Array extends SPObject
 	 * @param $outDel
 	 * @return string
 	 */
-	function toString( $array = null, $inDel = '=', $outDel = ' ' )
+	function toString( $array, $inDel = '=', $outDel = ' ' )
 	{
 		$out = array();
-		if( is_array( $array ) && count( $array ) ) {
-			foreach( $array as $key => $item ) {
-				if( is_array( $item ) ) {
-					$out[] = $this->toString( $item, $inDel, $outDel );
+		if ( is_array( $array ) && count( $array ) ) {
+			foreach ( $array as $key => $item ) {
+				if ( is_array( $item ) ) {
+					$out[ ] = $this->toString( $item, $inDel, $outDel );
 				}
 				else {
-					$out[] = "{$key}{$inDel}\"{$item}\"";
+					$out[ ] = "{$key}{$inDel}\"{$item}\"";
 				}
 			}
 		}
@@ -86,7 +86,7 @@ final class SPData_Array extends SPObject
 	/**
 	 * @return array
 	 */
-	public function toArr()
+	public function toArr( $array )
 	{
 		return $this->_arr;
 	}
@@ -99,15 +99,45 @@ final class SPData_Array extends SPObject
 	 */
 	public static function is_int( $arr )
 	{
-		if( is_array( $arr ) && count( $arr ) ) {
+		if ( is_array( $arr ) && count( $arr ) ) {
 			foreach ( $arr as $i => $k ) {
-				if( ( int ) $k != $k  ) {
+				if ( ( int )$k != $k ) {
 					return false;
 				}
 			}
 		}
 		return true;
 	}
+
+	public function toINIString( $arr )
+	{
+		$this->_arr = $arr;
+		$out = array();
+		if ( count( $this->_arr ) ) {
+			foreach ( $this->_arr as $key => $value ) {
+				if ( is_array( $value ) && !( is_string( $value ) ) ) {
+					$out[ ] = "[{$key}]";
+					if ( count( $value ) ) {
+						foreach ( $value as $k => $v ) {
+							$k = $this->_cleanIni( $k );
+							$out[ ] = "{$k} = \"{$v}\"";
+						}
+					}
+				}
+				else {
+					$key = $this->_cleanIni( $key );
+					$out[ ] = "{$key} = \"{$value}\"";
+				}
+			}
+		}
+		return implode( "\n", $out );
+	}
+
+	private function _cleanIni( $txt )
+	{
+		return str_replace( array( '?{}|&~![()^"' ), null, $txt );
+	}
+
 	public function toXML( $arr, $root = 'root' )
 	{
 		$content = null;
@@ -121,14 +151,14 @@ final class SPData_Array extends SPObject
 
 	private function _toXML( $arr, &$node, &$dom )
 	{
-		if( is_array( $arr ) && count( $arr ) ) {
+		if ( is_array( $arr ) && count( $arr ) ) {
 			foreach ( $arr as $name => $value ) {
-				if( is_array( $value ) ) {
+				if ( is_array( $value ) ) {
 					$nn = $node->appendChild( $dom->createElement( SPLang::nid( $name ) ) );
 					$this->_toXML( $value, $nn, $dom );
 				}
 				else {
-					if( is_numeric( $name ) ) {
+					if ( is_numeric( $name ) ) {
 						$name = 'value';
 					}
 					$node->appendChild( $dom->createElement( SPLang::nid( $name ), preg_replace( '/&(?![#]?[a-z0-9]+;)/i', '&amp;', $value ) ) );
@@ -157,8 +187,8 @@ final class SPData_Array extends SPObject
 	private function _fromXML( $dom, &$arr )
 	{
 		foreach ( $dom as $node ) {
-			if( $node->hasChildNodes() ) {
-				if( $node->childNodes->item( 0 )->nodeName == '#text' && $node->childNodes->length == 1 ) {
+			if ( $node->hasChildNodes() ) {
+				if ( $node->childNodes->item( 0 )->nodeName == '#text' && $node->childNodes->length == 1 ) {
 					$arr[ $node->nodeName ] = $node->nodeValue;
 				}
 				else {
@@ -167,7 +197,7 @@ final class SPData_Array extends SPObject
 				}
 			}
 			else {
-				if( $node->nodeName != '#text' ) {
+				if ( $node->nodeName != '#text' ) {
 					$arr[ $node->nodeName ] = $node->nodeValue;
 				}
 			}

@@ -323,9 +323,8 @@ class SPFieldType extends SPObject
         );
     }
 
-    protected function parseOptsFile( $file, $sections = true )
+    protected function parseOptsFile( $file )
     {
-        $file = parse_ini_file( $file, $sections );
         $p = 0;
         $group = null;
         $gid = null;
@@ -348,7 +347,7 @@ class SPFieldType extends SPObject
                             if ( is_numeric( $k ) ) {
                                 $k = SPLang::nid( $v );
                             }
-                            $options[ ] = array( 'id' => SPLang::nid( $gid . '_' . $k ), 'name' => $v, 'parent' => $gid, 'position' => ++$p );
+                            $options[ ] = array( 'id' => SPLang::nid( /*$gid . '_' .*/ $k ), 'name' => $v, 'parent' => $gid, 'position' => ++$p );
                         }
                     }
                 }
