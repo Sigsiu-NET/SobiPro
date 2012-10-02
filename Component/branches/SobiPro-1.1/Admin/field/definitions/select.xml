@@ -3,6 +3,17 @@
     <header>
         <title value="FM.EDIT_FIELD"/>
         <file type="script" filename="bootstrap.tabs"/>
+	     <!--there is still no real support for uploading files with Ajax -->
+	    <script>
+		    SobiPro.jQuery( document ).ready( function ()
+		    {
+		        SobiPro.jQuery( 'input:file' ).change( function () {
+		            if( SobiPro.jQuery( this ).val() ) {
+		                SobiPro.jQuery( '#SP_method' ).val( 'html' );
+		            }
+		        } );
+			} );
+	    </script>
     </header>
     <toolbar title="var:[site_title]" icon="SobiFieldEdit">
         <button task="field.apply" type="apply">
@@ -32,7 +43,9 @@
                         </fieldset>
 
                         <fieldset label="FM.SEL.LIST_OPTIONS">
+	                        <field type="file" name="spfieldsopts" label="FM.UPLOAD_OPT_FILE" />
                             <!-- Upload INI File -->
+	                        <field type="textarea" name="field.options" value="options" label="FMN.OPTIONS" editor="false" class="input-splarge" rows="20" style="" />
                             <!-- List Options -->
                         </fieldset>
 
