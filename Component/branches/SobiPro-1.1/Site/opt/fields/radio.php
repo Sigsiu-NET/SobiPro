@@ -41,7 +41,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	/**
 	 * @var string
 	 */
-	protected $cssClass = "";
+	public $cssClass = "";
 	/**
 	 * @var string
 	 */

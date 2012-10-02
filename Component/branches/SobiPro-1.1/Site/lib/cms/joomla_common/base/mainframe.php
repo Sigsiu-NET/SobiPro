@@ -183,10 +183,10 @@ class SPJoomlaMainFrame
 	public static function msg( $msg, $type = null )
 	{
 		if ( is_array( $msg ) ) {
-			$type = isset( $msg[ 'msgtype' ] ) && strlen( $msg[ 'msgtype' ] ) ? Sobi::Txt( $msg[ 'msgtype' ] ) : null;
-			$msg = isset( $msg[ 'msg' ] ) && strlen( $msg[ 'msg' ] ) ? Sobi::Txt( $msg[ 'msg' ] ) : null;
+			$type = isset( $msg[ 'msgtype' ] ) && strlen( $msg[ 'msgtype' ] ) ? ( $msg[ 'msgtype' ] ) : null;
+			$msg = isset( $msg[ 'msg' ] ) && strlen( $msg[ 'msg' ] ) ? ( $msg[ 'msg' ] ) : null;
 		}
-		JFactory::getApplication()->enqueueMessage( $msg, $type );
+		JFactory::getApplication()->enqueueMessage( Sobi::Txt( $msg ), $type );
 	}
 
 	public function proceedMessageQueue()
