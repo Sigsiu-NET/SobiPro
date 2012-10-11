@@ -240,7 +240,7 @@ class SPAdmView extends SPObject implements SPView
 					$buttons[ ] = $group;
 					break;
 				case 'buttons':
-					$group = array( 'element' => 'buttons', 'buttons' => array(), 'label' => $node->attributes->getNamedItem( 'label' )->nodeValue );
+					$group = array( 'element' => 'buttons', 'buttons' => array(), 'label' => $node->attributes->getNamedItem( 'label' ) ? $node->attributes->getNamedItem( 'label' )->nodeValue : '' );
 					foreach ( $node->attributes as $attr ) {
 						$group[ $attr->nodeName ] = $attr->nodeValue;
 					}
@@ -351,8 +351,8 @@ class SPAdmView extends SPObject implements SPView
 			switch ( $node->nodeName ) {
 				case 'tab':
 				case 'fieldset':
-					$element[ 'label' ] = Sobi::Txt( $node->attributes->getNamedItem( 'label' )->nodeValue );
-					$element[ 'id' ] = SPLang::nid( $node->attributes->getNamedItem( 'label' )->nodeValue );
+					$element[ 'label' ] = $node->attributes->getNamedItem( 'label' ) ? Sobi::Txt( $node->attributes->getNamedItem( 'label' )->nodeValue ) : null;
+					$element[ 'id' ] = $node->attributes->getNamedItem( 'label' ) ? SPLang::nid( $node->attributes->getNamedItem( 'label' )->nodeValue ) : null;
 					if ( $node->hasChildNodes() ) {
 						$this->xmlBody( $node->childNodes, $element[ 'content' ] );
 					}
@@ -375,15 +375,17 @@ class SPAdmView extends SPObject implements SPView
 					}
 				/** No break here */
 				case 'cells':
-					$customCells = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
-					if ( count( $customCells ) ) {
-						foreach ( $customCells as $cell ) {
-							$element[ 'content' ][ ] = array(
-								'label' => isset( $cell[ 'label' ] ) ? $cell[ 'label' ] : null,
-								'type' => 'cell',
-								'content' => $cell[ 'content' ],
-								'attributes' => $element[ 'attributes' ]
-							);
+					if ( $node->attributes->getNamedItem( 'value' ) ) {
+						$customCells = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
+						if ( count( $customCells ) ) {
+							foreach ( $customCells as $cell ) {
+								$element[ 'content' ][ ] = array(
+									'label' => isset( $cell[ 'label' ] ) ? $cell[ 'label' ] : null,
+									'type' => 'cell',
+									'content' => $cell[ 'content' ],
+									'attributes' => $element[ 'attributes' ]
+								);
+							}
 						}
 					}
 					break;

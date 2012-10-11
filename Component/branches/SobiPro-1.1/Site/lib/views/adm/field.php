@@ -141,14 +141,6 @@ class SPFieldAdmView extends SPAdmView
 		Sobi::Trigger( 'Display', $this->name(), array( &$this ) );
 		$action = $this->key( 'action' );
 
-		$allowedTags = $this->get( 'field.allowedTags' );
-		$allowedTags = is_array( $allowedTags ) ? implode( '|', $allowedTags ) : null;
-
-		$allowedAttributes = $this->get( 'field.allowedAttributes' );
-		$allowedAttributes = is_array( $allowedAttributes ) ? implode( '|', $allowedAttributes ) : null;
-
-		$this->assign( $allowedAttributes, 'allowedAttributes' );
-		$this->assign( $allowedTags, 'allowedTags' );
 		echo '<div class="SobiPro">' . "\n";
 		echo $action ? "\n<form action=\"{$action}\" method=\"post\" name=\"adminForm\" id=\"SPAdminForm\" enctype=\"multipart/form-data\" accept-charset=\"utf-8\" >\n" : null;
 		foreach ( $this->_templates as $tpl ) {

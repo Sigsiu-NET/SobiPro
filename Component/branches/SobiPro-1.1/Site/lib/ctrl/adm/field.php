@@ -101,7 +101,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		/*
 		 * 1.1 native - config and view in xml
 		 */
-		$nid = '-'.Sobi::Section( 'nid' );
+		$nid = '-' . Sobi::Section( 'nid' );
 		if ( SPLoader::translatePath( 'field.definitions.' . $field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
 			/** Case we have also override  */
 			/** section override */
@@ -219,7 +219,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			'editable' => 1,
 			'required' => 0,
 			'showIn' => 'details',
-			'editLimit' => -1,
+			'editLimit' => '',
 			'version' => 1,
 			'inSearch' => 0,
 			'cssClass' => '',
@@ -229,6 +229,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		/* get view class */
 		$view = SPFactory::View( 'field', true );
 		$view->addHidden( SPRequest::sid(), 'sid' );
+		$view->addHidden( 0, 'fid' );
 		$view->assign( $groups, 'types' );
 		$view->assign( $field, 'field' );
 		$view->assign( $this->_task, 'task' );
@@ -280,7 +281,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	/**
 	 * @TODO should be moved to the model ????
 	 * Adding new field
-	 * Save base data and redirect to the edit function when the field type has been chosed
+	 * Save base data and redirect to the edit function when the field type has been chosen
 	 * @todo it should be moved to the model
 	 * @return integer
 	 */
@@ -344,32 +345,65 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 	}
 
+	protected function validate( $field )
+	{
+		$type = SPRequest::cmd( 'field_fieldType' );
+		$definition = SPLoader::path( 'field.definitions.' . $type, 'adm', true, 'xml' );
+		$xdef = new DOMXPath( DOMdocument::load( $definition ) );
+		$required = $xdef->query( '//field[@required="true"]' );
+		if ( $required->length ) {
+			for ( $i = 0; $i < $required->length; $i++ ) {
+				$node = $required->item( $i );
+				$name = $node->attributes->getNamedItem( 'name' )->nodeValue;
+				if ( !( SPRequest::raw( str_replace( '.', '_', $name ) ) ) ) {
+					$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $field->get( 'fid' ), 'sid' => SPRequest::sid() ) ), Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, 'error', array( 'required' => $name ) );
+				}
+			}
+		}
+	}
+
 	/**
 	 * Save existing field
 	 */
 	protected function save( $clone = false )
 	{
+		$sets = array();
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$fid = SPRequest::int( 'fid' );
-		$f = $this->loadField( $fid );
 		$field = SPFactory::Model( 'field', true );
-		$field->extend( $f );
+		if ( $fid ) {
+			$f = $this->loadField( $fid );
+			$field->extend( $f );
+		}
+		else {
+			$field->loadType( SPRequest::cmd( 'field_fieldType' ) );
+		}
+		$nid = SPRequest::cmd( 'field_nid' );
+		if ( !( $nid ) || !( strstr( $nid, 'field_' ) ) ) {
+			/** give me my spaces back!!! */
+			$nid = str_replace( '-', '_', SPLang::nid( 'field_' . SPRequest::cmd( 'field_name' ) ) );
+			SPRequest::set( 'field_nid', $nid );
+			$sets[ 'field.nid' ] = $nid;
+		}
 		$this->getRequest();
-
+		$this->validate( $field );
 		/* in case we are changing the sort by field */
 		$onid = $field->get( 'nid' );
 
-		if ( $clone ) {
-			SPRequest::set( 'fid', 0, 'post' );
-			$fid = $field->saveNew( $this->attr );
-			$field->save( $this->attr );
+		if ( $clone || !( $fid ) ) {
+			try {
+				$fid = $field->saveNew( $this->attr );
+				$field->save( $this->attr );
+			} catch ( SPException $x ) {
+//				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $msg, false, 'success' );
+			}
 		}
 		else {
 			$field->save( $this->attr );
 		}
-
+		$sets[ 'fid' ] = $field->get( 'fid' );
 		/* in case we are changing the sort by field */
 		if ( Sobi::Cfg( 'list.entries_ordering' ) == $onid && $field->get( 'nid' ) != $onid ) {
 			SPFactory::config()->saveCfg( 'list.entries_ordering', $field->get( 'nid' ) );
@@ -383,7 +417,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			}
 			else {
 				$msg = Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' );
-				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $msg, false, 'success' );
+				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $msg, false, 'success', array( 'sets' => $sets ) );
 			}
 		}
 		else {

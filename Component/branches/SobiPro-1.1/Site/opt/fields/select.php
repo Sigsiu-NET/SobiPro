@@ -49,7 +49,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	/**
 	 * @var string
 	 */
-	public $cssClass = "";
+	protected $cssClass = "";
 	/**
 	 * @var bool
 	 */

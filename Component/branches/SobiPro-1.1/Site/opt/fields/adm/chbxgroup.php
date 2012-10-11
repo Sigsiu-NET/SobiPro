@@ -29,6 +29,7 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 {
 	public $cssClass = null;
 
+
 	public function save( &$attr )
 	{
 		static $lang = null;

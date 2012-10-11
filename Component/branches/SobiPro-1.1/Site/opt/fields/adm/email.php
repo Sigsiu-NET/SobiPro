@@ -29,7 +29,7 @@ class SPField_EmailAdm extends SPField_Email {
 	/**
 	 * @var string
 	 */
-	protected $cssClass = "inputbox";
+	public $cssClass = "inputbox";
 
 	public function save( &$attr )
 	{

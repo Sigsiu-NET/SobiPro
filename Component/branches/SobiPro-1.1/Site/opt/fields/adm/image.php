@@ -30,6 +30,6 @@ class SPField_ImageAdm extends SPField_Image {
 	/**
 	 * @var string
 	 */
-	protected $cssClass = "inputbox";
+	public $cssClass = "inputbox";
 }
 ?>

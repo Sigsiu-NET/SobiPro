@@ -30,5 +30,5 @@ class SPField_CategoryAdm extends SPField_Category
 	/**
 	 * @var string
 	 */
-	protected $cssClass = "inputbox";
+	public $cssClass = "inputbox";
 }

@@ -31,33 +31,25 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="states" name="field.enabled" value="field.enabled" label="ENABLED"
-							       prefix="yes_no"/>
+							<field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no"/>
 						</fieldset>
 						<fieldset>
-							<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50"
-							       maxlength="255"/>
+							<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true"/>
 							<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
-							<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX"
-							       class="input-medium"/>
-							<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS"
-							       class="input-medium"/>
-							<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES"
-							       editor="false" class="input-splarge" rows="2" style=""/>
+							<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium"/>
+							<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium"/>
+							<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style=""/>
 						</fieldset>
 						<fieldset label="FM.SEL.LIST_OPTIONS">
-							<field type="text" name="field.defSel" value="field.defSel" label="FMN.RADIO.DEFSEL"
-							       class="input-medium"/>
+							<field type="text" name="field.defSel" value="field.defSel" label="FMN.RADIO.DEFSEL" class="input-medium"/>
 							<field type="file" name="spfieldsopts" label="FM.UPLOAD_OPT_FILE"/>
 							<!-- Upload INI File -->
-							<field type="textarea" name="field.options" value="options" label="FMN.OPTIONS"
-							       editor="false" class="input-splarge" rows="20" style=""/>
+							<field type="textarea" name="field.options" value="options" label="FMN.OPTIONS" editor="false" class="input-splarge" rows="20" style=""/>
 							<!-- List Options -->
 						</fieldset>
 
 						<fieldset label="FM.FIELD_TYPE">
-							<field type="select" name="field.fieldType" selected="field.fieldType" size="5"
-							       multi="false" values="types" label="FMN.FIELD_TYPE" class="span4"/>
+							<field type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FMN.FIELD_TYPE" class="span4"/>
 						</fieldset>
 					</div>
 				</div>

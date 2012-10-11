@@ -402,7 +402,7 @@ abstract class SPController extends SPObject implements SPControl
 		}
 	}
 
-	protected function response( $url, $message = null, $redirect = true, $type = 'message' )
+	protected function response( $url, $message = null, $redirect = true, $type = 'message', $data = array() )
 	{
 		if ( SPRequest::cmd( 'method', null ) == 'xhr' ) {
 			if( $redirect && $message ) {
@@ -415,6 +415,7 @@ abstract class SPController extends SPObject implements SPControl
 				array(
 					'message' => array( 'text' => $message, 'type' => $type ),
 					'redirect' => array( 'url' => $url, 'execute' => ( bool ) $redirect ),
+					'data' => $data
 				)
 			);
 			exit;

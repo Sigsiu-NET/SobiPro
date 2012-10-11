@@ -29,7 +29,7 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	/**
 	 * @var string
 	 */
-	public $cssClass = '';
+	protected $cssClass = '';
 	/**
 	 * @var bool
 	 */
