@@ -103,7 +103,7 @@ class SPEntryCtrl extends SPController
     private function approve()
     {
         if ( $this->_model->isCheckedOut() ) {
-            Sobi::Redirect( Sobi::Back(), Sobi::Txt( 'EN.IS_CHECEKD_OUT' ), SPC::ERROR_MSG, true );
+            Sobi::Redirect( Sobi::Back(), Sobi::Txt( 'EN.IS_CHECKED_OUT' ), SPC::ERROR_MSG, true );
         }
         if ( ( ( $this->_model->get( 'owner' ) == Sobi::My( 'id' ) ) && Sobi::Can( 'entry.manage.own' ) ) || Sobi::Can( 'entry.manage.*' ) ) {
             try {

@@ -37,7 +37,9 @@
    (!) SPHeader::addMeta() takes now optional list of custom parameters as an array
    (!) SPLang::nid using JFilterOutput::stringURLSafe now
 
-   (#) {entry.url} placeholder doesn't work (Issue #708 )
+   (#) {entry.url} placeholder doesn't work (Issue #708)
+   (#) Typo in text label in Entry Manager
+
 
 -------------------
 1.0.8 (28 April 2012)
