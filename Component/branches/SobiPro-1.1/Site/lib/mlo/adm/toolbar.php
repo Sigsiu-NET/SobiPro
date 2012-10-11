@@ -97,8 +97,8 @@ class SpAdmToolbar
 		$this->output[ ] = '<div id="SPRightMenuHold">';
 		$this->output[ ] = '</div>';
 		//$this->output[ ] = '<div class="container-fluid">';
-        $this->output[ ] = '<div class="row-fluid">';
-        $this->output[ ] = '<div class="spicon-48-' . $this->icon . ' spScreenTitle span6">';
+		$this->output[ ] = '<div class="row-fluid">';
+		$this->output[ ] = '<div class="spicon-48-' . $this->icon . ' spScreenTitle span6">';
 		$this->output[ ] = "<h4>{$this->title}</h4>";
 		$this->output[ ] = '</div>';
 		$this->output[ ] = '<div class="spIconBar span6">';
@@ -140,8 +140,8 @@ class SpAdmToolbar
 		$this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
-        $this->output[ ] = '</div>';
-        //$this->output[ ] = '</div>';
+		$this->output[ ] = '</div>';
+		//$this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
 		return implode( "\n", $this->output );
 	}
@@ -164,7 +164,7 @@ class SpAdmToolbar
 		}
 		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button[ 'target' ]}\"" : null;
 
-		if ( count( $button[ 'buttons' ] ) ) {
+		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
 			$this->output[ ] = '<div class="btn-group">';
 			$this->output[ ] = "<a href=\"{$href}\" class=\"{$this->btClass}\"{$target} rel=\"{$rel}\">";
 			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
@@ -216,10 +216,13 @@ class SpAdmToolbar
 
 	private function getLink( $button )
 	{
-		switch ( $button[ 'type' ] ) {
-			case 'help':
-				$link = 'http://sobipro.sigsiu.net/help_screen/' . Sobi::Reg( 'help_task', Sobi::Reg( 'task', SPRequest::task() ) );
-				break;
+		$link = null;
+		if ( isset( $button[ 'type' ] ) ) {
+			switch ( $button[ 'type' ] ) {
+				case 'help':
+					$link = 'http://sobipro.sigsiu.net/help_screen/' . Sobi::Reg( 'help_task', Sobi::Reg( 'task', SPRequest::task() ) );
+					break;
+			}
 		}
 		return $link;
 	}

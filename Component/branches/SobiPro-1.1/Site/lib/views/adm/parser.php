@@ -56,6 +56,9 @@ class SPTplParser
 				}
 				$this->_out[ ] = '<div class="control-group">';
 				if ( isset( $element[ 'label' ] ) && strlen( $element[ 'label' ] ) ) {
+					if ( !( isset( $element[ 'id' ] ) ) ) {
+						$element[ 'id' ] = SPLang::nid( $element[ 'label' ] );
+					}
 					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element[ 'id' ]}\">{$element[ 'label' ]}</label>\n";
 				}
 				if ( $this->table ) {

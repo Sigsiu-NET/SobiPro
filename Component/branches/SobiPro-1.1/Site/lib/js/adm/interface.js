@@ -28,7 +28,7 @@ SobiPro.jQuery( document ).ready( function ()
 				SobiPro.jQuery( '#SP_task' ).val( task );
 				SobiPro.jQuery.ajax( {
 					url:'index.php',
-					data: req,
+					data:req,
 					type:'post',
 					dataType:'json',
 					success:function ( data )
@@ -36,11 +36,28 @@ SobiPro.jQuery( document ).ready( function ()
 						if ( !( data.redirect.execute ) ) {
 							count++;
 							c = '';
-							if( count > 1 ) {
+							if ( count > 1 ) {
 								c = '<strong>&nbsp;(&nbsp;' + count + '&nbsp;)</strong>';
 							}
-							alert = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + c +'</div>';
+							alert = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + c + '</div>';
 							SobiPro.jQuery( '#spMessage' ).html( alert );
+							SobiPro.jQuery.each( data.data.sets, function( i, val ) {
+								SobiPro.jQuery( '[name^="' + i + '"]' ).val( val );
+							} );
+							if ( data.data.required ) {
+								SobiPro.jQuery( '[name^="' + data.data.required + '"]' )
+									.addClass( 'error' )
+									.focus()
+									.focusout( function ()
+									{
+										if ( SobiPro.jQuery( this ).val() ) {
+											SobiPro.jQuery( this )
+												.removeClass( 'error' )
+												.addClass( 'success' );
+										}
+									} )
+								;
+							}
 						}
 						else {
 							window.location.replace( data.redirect.url );

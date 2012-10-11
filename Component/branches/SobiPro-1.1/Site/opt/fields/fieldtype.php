@@ -46,6 +46,10 @@ class SPFieldType extends SPObject
      * @var string
      */
     protected $_rdata = null;
+	/**
+	 * @var string
+	 */
+	protected $cssClass = "inputbox";
 
 
     public function __construct( &$field )

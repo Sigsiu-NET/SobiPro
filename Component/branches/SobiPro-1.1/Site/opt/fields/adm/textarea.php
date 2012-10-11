@@ -29,5 +29,5 @@ class SPField_TextareaAdm extends SPField_Textarea
 	/**
 	 * @var string
 	 */
-	protected $cssClass = "inputbox";
+	public $cssClass = "inputbox";
 }

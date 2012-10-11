@@ -29,7 +29,7 @@ class SPField_UrlAdm extends SPField_Url {
 	/**
 	 * @var string
 	 */
-	protected $cssClass = "inputbox";
+	public $cssClass = "inputbox";
 
 	public function onFieldEdit()
 	{

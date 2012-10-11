@@ -30,7 +30,7 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 	/**
 	 * @var string
 	 */
-	protected $cssClass = "inputbox";
+	public $cssClass = "inputbox";
 
 	public function save( &$attr )
 	{
