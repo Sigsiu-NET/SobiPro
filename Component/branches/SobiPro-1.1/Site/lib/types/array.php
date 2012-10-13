@@ -86,7 +86,7 @@ final class SPData_Array extends SPObject
 	/**
 	 * @return array
 	 */
-	public function toArr( $array )
+	public function toArr()
 	{
 		return $this->_arr;
 	}

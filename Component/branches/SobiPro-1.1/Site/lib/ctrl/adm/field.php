@@ -65,15 +65,11 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 
 		/* load base data */
-		$db = SPFactory::db();
 		$f = $this->loadField( $fid );
-		$groups = array();
 
-		$fc = SPLoader::loadModel( 'field', true );
-		$field = new $fc();
+		$field = SPFactory::Model( 'field', true );
 		$field->extend( $f );
-		$groups = $this->getFieldGroup( $f->fType, $f->tGroup );
-
+		$groups = $this->getFieldGroup( $f->fieldType, $f->tGroup );
 
 		/* get input filters */
 		$registry = SPFactory::registry();
@@ -130,13 +126,11 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm', true, 'ini' ) ) {
 				$view->loadConfig( 'field.edit.' . $field->get( 'fieldType' ) );
 			}
-			else {
-				$view->loadConfig( 'field.edit' );
-			}
 			$view->setTemplate( 'field.edit' );
 			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm' ) ) {
 				$view->setTemplate( 'field.edit.' . $field->get( 'fieldType' ) );
 			}
+			SPFactory::header()->addCSSCode( '#toolbar-box { display: block }' );
 		}
 		$view->display();
 	}
@@ -199,6 +193,8 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		SPLoader::loadClass( 'html.input' );
 		if ( $this->_fieldType ) {
 			$groups = $this->getFieldGroup( $this->_fieldType );
+			$fieldModel = SPFactory::Model( 'field', true );
+			$fieldModel->loadType( $this->_fieldType );
 		}
 		else {
 			$groups = $this->getFieldTypes();
@@ -233,6 +229,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$view->assign( $groups, 'types' );
 		$view->assign( $field, 'field' );
 		$view->assign( $this->_task, 'task' );
+		$fieldModel->onFieldEdit( $view );
 
 		if ( SPLoader::translatePath( 'field.definitions.' . $this->_fieldType, 'adm', true, 'xml' ) ) {
 			/** Cae we have also override  */
@@ -248,6 +245,17 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			else {
 				$view->setTemplate( 'field.templates.edit' );
 			}
+		}
+		/** legacy */
+		elseif ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm' ) ) {
+			if ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm', true, 'ini' ) ) {
+				$view->loadConfig( 'field.edit.' . $this->_fieldType );
+			}
+			$view->setTemplate( 'field.edit' );
+			if ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm' ) ) {
+				$view->setTemplate( 'field.edit.' . $this->_fieldType );
+			}
+			SPFactory::header()->addCSSCode( '#toolbar-box { display: block }' );
 		}
 		else {
 			Sobi::Error( $this->name(), SPLang::e( 'NO_FIELD_DEF' ), SPC::WARNING, 500, __LINE__, __FILE__ );
@@ -349,14 +357,16 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 		$type = SPRequest::cmd( 'field_fieldType' );
 		$definition = SPLoader::path( 'field.definitions.' . $type, 'adm', true, 'xml' );
-		$xdef = new DOMXPath( DOMdocument::load( $definition ) );
-		$required = $xdef->query( '//field[@required="true"]' );
-		if ( $required->length ) {
-			for ( $i = 0; $i < $required->length; $i++ ) {
-				$node = $required->item( $i );
-				$name = $node->attributes->getNamedItem( 'name' )->nodeValue;
-				if ( !( SPRequest::raw( str_replace( '.', '_', $name ) ) ) ) {
-					$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $field->get( 'fid' ), 'sid' => SPRequest::sid() ) ), Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, 'error', array( 'required' => $name ) );
+		if ( $definition ) {
+			$xdef = new DOMXPath( DOMdocument::load( $definition ) );
+			$required = $xdef->query( '//field[@required="true"]' );
+			if ( $required->length ) {
+				for ( $i = 0; $i < $required->length; $i++ ) {
+					$node = $required->item( $i );
+					$name = $node->attributes->getNamedItem( 'name' )->nodeValue;
+					if ( !( SPRequest::raw( str_replace( '.', '_', $name ) ) ) ) {
+						$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $field->get( 'fid' ), 'sid' => SPRequest::sid() ) ), Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, 'error', array( 'required' => $name ) );
+					}
 				}
 			}
 		}

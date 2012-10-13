@@ -232,6 +232,9 @@ class SPConfig
 			elseif ( strstr( $data, ';' ) ) {
 				$data = explode( ';', $data );
 			}
+			else {
+				$data = array( $data );
+			}
 		}
 		return $data;
 	}
