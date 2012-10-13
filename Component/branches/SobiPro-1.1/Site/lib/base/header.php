@@ -103,7 +103,7 @@ final class SPHeader
 					->addJsFile( 'sobipro' );
 		}
 		if ( SOBI_CMS != 'joomla3' ) {
-			$this->addCssFile( 'bootstrap.bootstrap' )
+			$this->addCssFile( array( 'bootstrap.bootstrap', 'adm.icons' ) )
 					->addJsFile( array( 'jquery', 'bootstrap' ) );
 		}
 		if ( $adm ) {
