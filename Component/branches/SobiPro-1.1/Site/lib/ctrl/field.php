@@ -36,6 +36,11 @@ class SPFieldCtrl extends SPController
 	{
 	}
 
+	public function execute()
+	{
+
+	}
+
 	public function authorise()
 	{
 	}

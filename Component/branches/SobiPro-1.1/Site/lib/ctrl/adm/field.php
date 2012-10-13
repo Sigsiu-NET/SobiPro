@@ -219,7 +219,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			'version' => 1,
 			'inSearch' => 0,
 			'cssClass' => '',
-			'fieldType' => $this->_fieldType
+			'fieldType' => $this->_fieldType,
 		);
 
 		/* get view class */
