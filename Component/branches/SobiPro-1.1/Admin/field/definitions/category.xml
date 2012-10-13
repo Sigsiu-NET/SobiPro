@@ -1,74 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definition>
-	<config>
-		<action value="index.php?option=com_sobipro"/>
-		<hidden>
-			<field name="option" default="com_sobipro"/>
-			<field name="task" default=""/>
-			<field name="method" default="xhr"/>
-		</hidden>
-	</config>
-	<header>
-		<title value="FM.EDIT_FIELD"/>
-		<file type="script" filename="bootstrap.tabs"/>
-	</header>
-	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
-		<button task="field.apply" type="apply">
-			<button type="save" task="field.save" />
-			<button type="duplicate" task="field.clone" />
-		</button>
-		<divider/>
-		<button type="cancel" task="field.cancel" />
-		<divider/>
-		<button type="help" target="_blank" />
-	</toolbar>
-	<body>
-		<tabs>
-			<tab label="FM.FIELD_PARAMETERS">
-				<div class="well">
-					<div class="row">
-						<div class="span10">
-							<fieldset label="FM.FIELD_PARAMETERS">
-								<field type="text" name="field.name" value="field.name" label="FM.FIELD_LABEL" size="50" maxlength="255"/>
-								<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
-								<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX"/>
-								<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" width="350" height="30"/>
-								<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" width="350" height="30"/>
-							</fieldset>
-						</div>
-						<div class="span6">
-							<fieldset label="FM.FIELD_PARAMETERS">
-								<field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no"/>
-								<field type="select" name="field.showIn" selected="field.showIn" label="FM.AVAILABLE_IN">
-									<values>
-										<option value="both" label="FM.BOTH_OPT"/>
-										<option value="details" label="FM.DETAILS_VIEW_OPT"/>
-										<option value="vcard" label="FM.V_CARD_OPT"/>
-										<option value="hidden" label="FM.HIDDEN_OPT"/>
-									</values>
-								</field>
-								<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="span3" />
-								<field type="states" name="field.adminField" value="field.adminField" label="FM.ADM_FIELD" prefix="yes_no"/>
-								<field type="states" name="field.required" value="field.required" label="FM.IS_REQUIRED" prefix="yes_no"/>
-								<field type="states" name="field.editable" value="field.editable" label="FM.IS_EDITABLE" prefix="yes_no"/>
-								<field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
-								<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
-								<field type="output" value="field.version" label="VERSION"/>
-								<field type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FM.FIELD_TYPE"/>
-								<field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no"/>
-								<field type="text" name="field.fee" value="field.fee" label="FM.FIELD_FEE" class="span2">
-									<add where="after">
-										<call function="Sobi::Cfg">
-											<param>payments.currency</param>
-											<param>EUR</param>
-										</call>
-									</add>
-								</field>
-							</fieldset>
-						</div>
-					</div>
-				</div>
-			</tab>
-		</tabs>
-	</body>
+    <header>
+        <title value="FM.EDIT_FIELD"/>
+        <file type="script" filename="bootstrap.tabs"/>
+    </header>
+    <toolbar title="var:[site_title]" icon="SobiFieldEdit">
+        <button task="field.apply" type="apply">
+            <button type="save" task="field.save" />
+            <button type="duplicate" task="field.clone" />
+        </button>
+        <divider/>
+        <button type="exit" task="field.cancel" />
+        <divider/>
+        <button type="help" target="_blank" />
+    </toolbar>
+    <body>
+        <message id="spMessage"/>
+        <tabs>
+            <tab label="FMN.FIELD_GENERAL">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no"/>
+                        </fieldset>
+                        <fieldset>
+                            <field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255"/>
+                            <field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
+                            <field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium"/>
+                            <field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
+                            <field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
+                        </fieldset>
+                        <fieldset label="FM.FIELD_TYPE">
+                            <field type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span3"/>
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
+            <tab label="FMN.FIELD_ENTRYINPUT">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />0
+                            <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
+                            <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
+                        </fieldset>
+                        <fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
+                            <field type="output" value="field.version" label="VERSION" class="badge"/>
+                            <field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no"/>
+                            <field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
+            <tab label="FMN.FIELD_ENTRYVIEW">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
+                                <values>
+                                    <option value="both" label="FM.BOTH_OPT"/>
+                                    <option value="details" label="FM.DETAILS_VIEW_OPT"/>
+                                    <option value="vcard" label="FM.V_CARD_OPT"/>
+                                    <option value="hidden" label="FMN.HIDDEN_OPT"/>
+                                </values>
+                            </field>
+                            <field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
+                        </fieldset>
+                        <fieldset label="FMN.FIELD_ENTRYVIEW_META">
+                            <field type="states" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
+                            <field type="states" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
+            <tab label="FMN.FIELD_SEARCH">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="states" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
+        </tabs>
+    </body>
+    <config>
+        <action value="index.php?option=com_sobipro"/>
+        <hidden>
+            <field name="option" default="com_sobipro"/>
+            <field name="task" default=""/>
+            <field name="method" default="xhr"/>
+            <field name="format" default="raw"/>
+        </hidden>
+    </config>
 </definition>
