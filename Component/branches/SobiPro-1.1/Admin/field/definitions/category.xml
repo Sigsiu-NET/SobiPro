@@ -40,6 +40,14 @@
                 <div class="row-fluid">
                     <div class="span12">
                         <fieldset>
+	                        <field type="select" name="field.method" selected="field.method" label="FMN.CC_METHOD" class="input-medium">
+                             <values>
+                                 <option value="tree" label="FM.CC_TREE"/>
+                                 <option value="select" label="FM.CC_SELECT_LIST"/>
+                                 <option value="mselect" label="FM.CC_MSELECT"/>
+                                 <option value="hidden" label="FMN.HIDDEN_OPT"/>
+                             </values>
+                         </field>
                             <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />0
                             <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
                             <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
