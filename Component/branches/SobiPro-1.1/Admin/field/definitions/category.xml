@@ -50,22 +50,49 @@
 									<option value="fixed" label="FMN.CC_FIXED" />
 								</values>
 							</field>
-							<field type="states" name="field.catsWithChilds" value="field.catsWithCHilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
 							<div class="hide spCcMethod" id="spCc-tree">
 								<fieldset label="FMN.CC_TREE">
 									<field type="states" name="field.modal" value="field.modal" label="FMN.CC_TREE_MODAL" prefix="fmn.cc_modal" />
-									<field type="text" name="field.treeCatsLimit" value="field.treeCatsLimit" label="FM.CC_CATS_LIMIT" />
+									<field type="text" name="field.CatsLimit" value="field.CatsLimit" label="FMN.CC_CATS_LIMIT" class="input-mini">
+										<add where="after">
+											<call function="Sobi::Txt">
+												<param>FMN.CC_CATS_LIMIT_SUFFIX</param>
+											</call>
+										</add>
+									</field>
+									<field type="states" name="field.catsWithChilds" value="field.catsWithCHilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
 								</fieldset>
 							</div>
 							<div class="hide spCcMethod" id="spCc-select">
 								<fieldset label="FMN.CC_SELECT_LIST">
-									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" />
+									<field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
+									<field type="states" name="field.catsWithChilds" value="field.catsWithCHilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
 								</fieldset>
 							</div>
 							<div class="hide spCcMethod" id="spCc-mselect">
 								<fieldset label="FMN.CC_MSELECT">
-									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" />
-									<field type="text" name="field.mselectCatsLimit" value="field.mselectCatsLimit" label="FM.CC_CATS_LIMIT" />
+									<field type="text" name="field.CatsLimit" value="field.CatsLimit" label="FMN.CC_CATS_LIMIT" maxlength="10" class="input-mini">
+										<add where="after">
+											<call function="Sobi::Txt">
+												<param>FMN.CC_CATS_LIMIT_SUFFIX</param>
+											</call>
+										</add>
+									</field>
+									<field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
+									<field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
+									<field type="states" name="field.catsWithChilds" value="field.catsWithCHilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
 								</fieldset>
 							</div>
 							<div class="hide spCcMethod" id="spCc-fixed">
