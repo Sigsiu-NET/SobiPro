@@ -16,15 +16,15 @@ SobiPro.jQuery( document ).ready( function ()
 	function SpCcSwapMethod( method )
 	{
 		SobiPro.jQuery( '.spCcMethod' ).hide();
+		SobiPro.jQuery( '.spCcMethod :input' ).attr( 'disabled', 'disabled' );
+		SobiPro.jQuery( '#spCc-' + method + ' :input' ).removeAttr( 'disabled', 'disabled' );
 		SobiPro.jQuery( '#spCc-' + method ).show();
 		if ( method == 'fixed' ) {
 			SobiPro.jQuery( '#field-editable :button' ).attr( 'disabled', 'disabled' );
-			SobiPro.jQuery( '#field-catswithchilds :button' ).attr( 'disabled', 'disabled' );
 			SobiPro.jQuery( '#field-editlimit' ).attr( 'disabled', 'disabled' );
 		}
 		else {
 			SobiPro.jQuery( '#field-editable :button' ).removeAttr( 'disabled', 'disabled' );
-			SobiPro.jQuery( '#field-catswithchilds :button' ).removeAttr( 'disabled', 'disabled' );
 			SobiPro.jQuery( '#field-editlimit' ).removeAttr( 'disabled', 'disabled' );
 		}
 	}
