@@ -130,7 +130,9 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm' ) ) {
 				$view->setTemplate( 'field.edit.' . $field->get( 'fieldType' ) );
 			}
-			SPFactory::header()->addCSSCode( '#toolbar-box { display: block }' );
+			SPFactory::header()
+					->addCSSCode( '#toolbar-box { display: block }' )
+					->addCssFile( 'bootstrap.legacy' );
 		}
 		$view->display();
 	}
