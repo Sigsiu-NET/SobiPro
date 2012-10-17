@@ -50,12 +50,6 @@
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
-#SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt li a:hover [class^="icon-"],
-#SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt li a:hover [class*=" icon-"],
-#SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt .active a [class^="icon-"],
-#SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt .active a [class*=" icon-"] {
-  background-image: url("../img/glyphicons-halflings-white.png");
-}
 #SPAdminForm #SPAdmToolbar .dropdown-toggle {
   color: #333333;
 }
@@ -63,6 +57,9 @@
   border-bottom-color: #993333;
   border-top-color: #993333;
   margin-top: 6px;
+}
+.SobiPro #SPAdmToolbar .icon-remove-sign {
+  font-size: 124%;
 }
 .SobiPro .btn-group {
   font-size: 0;
@@ -84,6 +81,7 @@
 .SobiPro .table th.SpCellCenter,
 .SobiPro .table td.SpCellCenter {
   text-align: center;
+  vertical-align: middle;
 }
 .submenu-box,
 div.m {
@@ -146,6 +144,9 @@ div.spScreenTitle h4 {
 }
 #SPAdmToolbar .nav-header {
   white-space: nowrap;
+}
+#SPAdmToolbar i {
+  font-size: 110%;
 }
 #SPAdminForm a {
   color: #0000b3;
@@ -244,6 +245,32 @@ div.spScreenTitle h4 {
 #SPAdminForm select,
 #SPAdminForm .uneditable-input {
   color: #666666;
+}
+.SobiPro .SpCellCenter input[type="text"] {
+  margin-bottom: 0px;
+}
+.SobiPro .SpCellCenter input[type="radio"],
+.SobiPro .SpCellCenter input[type="checkbox"] {
+  margin-top: 0px;
+}
+.SobiPro .SpCellCenter i {
+  color: #333333;
+  font-size: 110%;
+}
+.SobiPro .SpCellCenter .icon-ok {
+  color: green;
+}
+.SobiPro .SpCellCenter .icon-remove-sign {
+  color: #993333;
+  font-size: 124%;
+}
+.SobiPro .SpCellCenter .icon-shopping-cart,
+.SobiPro .SpCellCenter .icon-check-empty,
+.SobiPro .SpCellCenter .icon-lock {
+  color: grey;
+}
+.SobiPro .SpCellCenter .sp-mini-bt {
+  padding: 4px 14px!important;
 }
 #SPAdminForm .input-splarge {
   width: 400px;

@@ -51,7 +51,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * @var bool
 	 */
-	protected $allowHtml = true;
+	protected $allowHtml = 2;
 
 	/**
 	 * Shows the field in the edit entry or add entry form

@@ -8,7 +8,7 @@
 		<divider/>
 		<buttons type="actions">
 			<button type="delete" task="field.delete"/>
-			<nav-header label="TB.PUBLISHING"/>
+			<nav-header label="TB.ENABLED"/>
 			<button type="enable" task="field.publish"/>
 			<button type="disable" task="field.hide"/>
 			<!--<nav-header label="TB.REQUIRED"/>-->
@@ -33,15 +33,15 @@
 						<option value="name.asc" label="FMN.ORDER_BY_NAME_ASC"/>
 						<option value="name.desc" label="FMN.ORDER_BY_NAME_DESC"/>
 						<option value="state.asc" label="FMN.ORDER_BY_STATE_ASC"/>
-						<option value="state.asc" label="FMN.ORDER_BY_STATE_ASC"/>
+						<option value="state.desc" label="FMN.ORDER_BY_STATE_DESC"/>
 						<option value="fieldType.asc" label="FMN.ORDER_BY_FIELDTYPE_ASC"/>
 						<option value="fieldType.desc" label="FMN.ORDER_BY_FIELDTYPE_DESC"/>
 						<option value="showIn.asc" label="FMN.ORDER_BY_SHOWIN_ASC"/>
 						<!--<option value="showIn.desc" label="FMN.ORDER_BY_SHOWIN_DESC"/>-->
-						<option value="required.asc" label="FMN.ORDER_BY_REQUIRED_ASC"/>
 						<option value="required.desc" label="FMN.ORDER_BY_REQUIRED_DESC"/>
-						<option value="editable.asc" label="FMN.ORDER_BY_EDITABLE_ASC"/>
+                        <option value="required.asc" label="FMN.ORDER_BY_REQUIRED_ASC"/>
 						<option value="editable.desc" label="FMN.ORDER_BY_EDITABLE_DESC"/>
+                        <option value="editable.asc" label="FMN.ORDER_BY_EDITABLE_ASC"/>
 						<option value="isFree.asc" label="FMN.ORDER_BY_ISFREE_ASC"/>
 						<option value="isFree.desc" label="FMN.ORDER_BY_ISFREE_DESC"/>
 						<option value="order.asc" label="FMN.ORDER_BY_ORDER_ASC"/>
@@ -76,7 +76,7 @@
 					</cell>
 					<cell type="text" value="nid" class="subText"/>
 				</cell>
-				<cell type="ticker" value="enabled" class="center">
+				<cell type="ticker" value="enabled" class="center" icons="{'0':'remove-sign','1':'ok'}">
 					<url type="intern">
 						<param name="task" value="field.toggle.enabled"/>
 						<param name="fid" value="fid" parse="true"/>
@@ -85,7 +85,7 @@
 				</cell>
 				<cell type="text" value="fieldType" class="center"/>
 				<cell type="text" value="showIn" class="center"/>
-				<cell type="ticker" value="required" class="center" icons="{'0':'cog','1':'asterisk'}">
+				<cell type="ticker" value="required" class="center" icons="{'0':'check-empty','1':'check'}">
 					<url type="intern">
 						<param name="task" value="field.toggle.required"/>
 						<param name="fid" value="fid" parse="true"/>

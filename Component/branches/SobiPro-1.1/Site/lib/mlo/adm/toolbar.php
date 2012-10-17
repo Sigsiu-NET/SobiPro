@@ -28,12 +28,12 @@ class SpAdmToolbar
 		'exit' => 'ban-circle',
 		'help' => 'question-sign',
 		'save' => 'share',
-		'duplicate' => 'edit',
+		'duplicate' => 'paste',
 		'new' => 'plus-sign',
 		'delete' => 'trash',
 		'actions' => 'plane',
 		'enable' => 'ok',
-		'disable' => 'remove',
+		'disable' => 'remove-sign',
 		'publish' => 'bullhorn',
 		'hide' => 'off',
 		'approve' => 'thumbs-up',
@@ -175,7 +175,7 @@ class SpAdmToolbar
 			}
 			$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
 			$this->output[ ] = '</a>';
-			$this->output[ ] = '<button class="' . $this->btClass . ' dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>&nbsp;</button>';
+			$this->output[ ] = '<button class="' . $this->btClass . ' dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span>&nbsp;</button>';
 			$this->output[ ] = '<div class="dropdown-menu" id="spmenu-' . SPLang::nid( $button[ 'task' ] ) . '">';
 			$this->output[ ] = '<ul class="nav nav-stacked SpDropDownBt">';
 			foreach ( $button[ 'buttons' ] as $bt ) {
