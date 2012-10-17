@@ -18,16 +18,11 @@
  */
 
 #toolbar-box {
-	display: block
+	display: block;
 }
 
 div.SPFListAlias {
 	font-size: 0.9em !important;
-}
-
-input, textarea, select, button {
-	border: 1px solid #ccc !important;
-	font-size: 1.091em !important;
 }
 
 fieldset label {
@@ -40,9 +35,18 @@ element.style {
 	width: auto !important;
 }
 
+div.pagetitle h2 {
+    color: #303030;
+    font-size: 18px;
+}
+
 fieldset input, fieldset textarea, fieldset select, fieldset img, fieldset button {
 	float: none !important;
 	margin: 0 !important;
+}
+
+fieldset input, fieldset select {
+    width: auto !important;
 }
 
 fieldset.adminform label {
@@ -50,7 +54,23 @@ fieldset.adminform label {
 }
 
 fieldset.adminform {
-	margin: 0px !important;
+	margin: 0px!important;
+    border: none!important;
+    font-size: 13px;
+}
+
+fieldset.adminform legend {
+    font-size: 14px;
+}
+
+fieldset.adminform .btn:active,
+fieldset.adminform .btn.active {
+    background-color: #993333;
+    color: #ffffff;
+}
+
+.admintable td {
+   padding: 10px;
 }
 
 fieldset label {
@@ -74,6 +94,7 @@ table.admintable td.key {
 	text-align: right;
 	width: 140px;
 	padding: 4px;
+    vertical-align: middle;
 }
 
 div.width-70 {
@@ -279,97 +300,74 @@ li.spOptionGroup {
 }
 
 .icon-48-SobiPro {
-	background-image: url(../../../../media/sobipro/48x48/folder-sobipro.png);
+    background-image: url(../../../../media/sobipro/48x48/folder-sobipro.png);
 }
-
+.icon-48-SobiFields {
+    background-image: url(../../../../media/sobipro/48x48/folder-fieldsmanager.png);
+}
+.icon-48-SobiSection {
+    background-image: url(../../../../media/sobipro/48x48/folder-section.png);
+}
+.icon-48-SobiFieldEdit {
+    background-image: url(../../../../media/sobipro/48x48/edit-rename.png);
+}
 .icon-48-SobiApplication {
 	background-image: url(../../../../media/sobipro/48x48/folder-application.png);
 }
-
 .icon-48-SobiApplicationSection {
 	background-image: url(../../../../media/sobipro/48x48/folder-application-section.png);
 }
-
 .icon-48-SobiTemplate {
 	background-image: url(../../../../media/sobipro/48x48/folder-templates.png);
 }
-
 .icon-48-SobiTemplateSection {
 	background-image: url(../../../../media/sobipro/48x48/folder-template-section.png);
 }
-
-.icon-48-SobiSection {
-	background-image: url(../../../../media/sobipro/48x48/folder-section.png);
-}
-
 .icon-48-SobiSectionCfg {
 	background-image: url(../../../../media/sobipro/48x48/folder-section-cfg.png);
 }
-
 .icon-48-SobiCategory {
 	background-image: url(../../../../media/sobipro/48x48/folder-category.png);
 }
-
 .icon-48-SobiCatList {
 	background-image: url(../../../../media/sobipro/48x48/folder-categories.png);
 }
-
-.icon-48-SobiFields {
-	background-image: url(../../../../media/sobipro/48x48/folder-fieldsmanager.png);
-}
-
 .icon-48-SobiFieldList {
 	background-image: url(../../../../media/sobipro/48x48/fields.png);
 }
-
 .icon-48-SobiConfig {
 	background-image: url(../../../../media/sobipro/48x48/folder-configuration.png);
 }
-
 .icon-48-SobiEdit {
 	background-image: url(../../../../media/sobipro/48x48/editor.png);
 }
-
-.icon-48-SobiFieldEdit {
-	background-image: url(../../../../media/sobipro/48x48/edit-rename.png);
-}
-
 .icon-48-SobiEntries {
 	background-image: url(../../../../media/sobipro/48x48/entries.png);
 }
-
 .icon-48-SobiUser {
 	background-image: url(../../../../media/sobipro/48x48/sobipro-acl-edit.png);
 }
-
 .icon-48-SobiLevels {
 	background-image: url(../../../../media/sobipro/48x48/sobipro-acl.png);
 }
-
 .icon-32-delete {
 	background-image: url(../../../../media/sobipro/32x32/delete.png) !important;
 }
-
 .icon-32-download {
 	background-image: url(../../../../media/sobipro/32x32/download.png);
 }
-
 .icon-32-list {
 	background-image: url(../../../../media/sobipro/32x32/software-update.png);
 }
-
 .icon-32-cleanCache {
 	background-image: url(../../../../media/sobipro/32x32/eraser.png);
 }
-
 .icon-32-document-save-all {
 	background-image: url(../../../../media/sobipro/32x32/document-save-all.png);
 }
-
 .icon-32-save {
 	background-image: url(../../../../media/sobipro/32x32/document-save.png) !important;
 }
-
 .icon-32-help {
 	background-image: url(../../../../media/sobipro/32x32/sobipro-help.png) !important;
 }
