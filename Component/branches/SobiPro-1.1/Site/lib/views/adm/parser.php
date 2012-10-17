@@ -264,7 +264,7 @@ class SPTplParser
 				if ( isset( $cell[ 'attributes' ][ 'label' ] ) ) {
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
 					$this->_out[ ] = '<button class="btn sp-mini-bt" name="spReorder" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
-					$this->_out[ ] = '<i class="icon-check"></i>';
+					$this->_out[ ] = '<i class="icon-reorder"></i>';
 					$this->_out[ ] = '</button>';
 				}
 				else {
