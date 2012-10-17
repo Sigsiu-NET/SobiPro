@@ -1,5 +1,5 @@
 /**
- * @version: $Id: menu.css 551 2011-01-11 14:34:26Z Radek Suski $
+ * @version: $Id$
  * @package: SobiPro Library
  * ===================================================
  * @author
@@ -11,10 +11,10 @@
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
- * $Date: 2011-01-11 15:34:26 +0100 (Tue, 11 Jan 2011) $
- * $Revision: 551 $
- * $Author: Radek Suski $
- * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/media/css/adm/menu.css $
+ * $Date$
+ * $Revision$
+ * $Author$
+ * $HeadURL$
  */
 #SpMenu .accordion-inner {
   min-height: 200px;
