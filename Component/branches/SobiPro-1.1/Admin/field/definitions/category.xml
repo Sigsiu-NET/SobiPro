@@ -53,14 +53,14 @@
 							<div class="hide spCcMethod" id="spCc-tree">
 								<fieldset label="FMN.CC_TREE">
 									<field type="states" name="field.modal" value="field.modal" label="FMN.CC_TREE_MODAL" prefix="fmn.cc_modal" />
-									<field type="text" name="field.CatsLimit" value="field.CatsLimit" label="FMN.CC_CATS_LIMIT" class="input-mini">
+									<field type="text" name="field.catsMaxLimit" value="field.catsMaxLimit" label="FMN.CC_CATS_LIMIT" class="input-mini">
 										<add where="after">
 											<call function="Sobi::Txt">
 												<param>FMN.CC_CATS_LIMIT_SUFFIX</param>
 											</call>
 										</add>
 									</field>
-									<field type="states" name="field.catsWithChilds" value="field.catsWithCHilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
+									<field type="states" name="field.childs" value="field.childs" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
 								</fieldset>
 							</div>
 							<div class="hide spCcMethod" id="spCc-select">
@@ -70,12 +70,12 @@
 											<text>px</text>
 										</add>
 									</field>
-									<field type="states" name="field.catsWithChilds" value="field.catsWithCHilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
+									<field type="states" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
 								</fieldset>
 							</div>
 							<div class="hide spCcMethod" id="spCc-mselect">
 								<fieldset label="FMN.CC_MSELECT">
-									<field type="text" name="field.CatsLimit" value="field.CatsLimit" label="FMN.CC_CATS_LIMIT" maxlength="10" class="input-mini">
+									<field type="text" name="field.catsMaxLimit" value="field.catsMaxLimit" label="FMN.CC_CATS_LIMIT" maxlength="10" class="input-mini">
 										<add where="after">
 											<call function="Sobi::Txt">
 												<param>FMN.CC_CATS_LIMIT_SUFFIX</param>
@@ -92,7 +92,7 @@
 											<text>px</text>
 										</add>
 									</field>
-									<field type="states" name="field.catsWithChilds" value="field.catsWithCHilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
+									<field type="states" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
 								</fieldset>
 							</div>
 							<div class="hide spCcMethod" id="spCc-fixed">
