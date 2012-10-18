@@ -42,7 +42,7 @@
 					<div class="span12">
 						<fieldset>
 							<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
-							<field type="select" name="field.method" selected="field.method" label="FMN.CC_METHOD" class="input-medium">
+							<field type="select" name="field.method" selected="field.method" label="FMN.CC_METHOD" class="input-large">
 								<values>
 									<option value="tree" label="FMN.CC_TREE" />
 									<option value="select" label="FMN.CC_SELECT_LIST" />
@@ -97,7 +97,7 @@
 							</div>
 							<div class="hide spCcMethod" id="spCc-fixed">
 								<fieldset label="FMN.CC_FIXED">
-									<field type="text" name="field.fixedCid" value="field.fixedCid" label="FMN.CC_FIXED_CID" />
+									<field type="text" name="field.fixedCid" value="field.fixedCid" label="FMN.CC_FIXED_CID" class="input-mini" />
 								</fieldset>
 							</div>
 						</fieldset>
