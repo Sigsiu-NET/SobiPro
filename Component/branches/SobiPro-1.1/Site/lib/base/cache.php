@@ -323,7 +323,7 @@ final class SPCache
             }
 
             if ( $type == 'entry' ) {
-                // entry has to report if it should be revalidate
+                // entry has to report if it should be re-validate
                 if ( !( isset( $this->_check[ $type ][ $id ] ) ) || !( $this->_check[ $type ][ $id ] ) ) {
                     return $this;
                 }

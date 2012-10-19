@@ -241,7 +241,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
             throw new SPException( SPLang::e( 'CANNOT_GET_FIELDS_IN_SECTION', Sobi::Reg( 'current_section' ) ) );
         }
         $f = array();
-        foreach ( $fields as $index => $field ) {
+        foreach ( $fields as $field ) {
             if ( ( $field->get( 'enabled' ) ) && $field->enabled( 'form' ) ) {
                 $f[ ] = $field;
             }

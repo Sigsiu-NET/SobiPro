@@ -40,6 +40,12 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	protected $height = 100;
 	/** @var string */
 	protected $fixedCid = '';
+	/** @var array */
+	protected $_selectedCats = array();
+	/** @var array */
+	protected $_cats = array();
+	/** @var bool */
+	protected $isPrimary = false;
 
 	/**
 	 * Shows the field in the edit entry or add entry form
@@ -51,20 +57,140 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
-		$params = array( 'id' => $this->nid, 'size' => $this->width, 'class' => $class );
-		if ( $this->maxLength ) {
-			$params[ 'maxlength' ] = $this->maxLength;
+
+		$this->_selectedCats = $this->getRaw();
+		if ( !( $this->_selectedCats ) && $this->sid ) {
+			$entry = SPFactory::Entry( $this->sid );
+			$this->_selectedCats = $entry->get( 'categories' );
+			$this->loadCategories();
 		}
-		if ( $this->width ) {
-			$params[ 'style' ] = "width: {$this->width}px;";
+
+		switch ( $this->method ) {
+			case 'tree':
+				$field = $this->tree();
+				break;
+			case 'select':
+				$field = $this->select();
+				break;
+			case 'mselect':
+				$this->showLabel = false;
+				$field = $this->mSelect();
+				break;
+			case 'fixed':
+				$this->showLabel = false;
+				return true;
+				break;
 		}
-		$field = SPHtml_Input::text( $this->nid, $this->getRaw(), $params );
 		if ( !$return ) {
 			echo $field;
 		}
 		else {
 			return $field;
+		}
+
+	}
+
+	protected function tree()
+	{
+
+	}
+
+	protected function select()
+	{
+		if ( count( $this->_cats ) ) {
+			$values = array();
+			$params = array(
+				'style' => "width: {$this->width}px;",
+				'id' => $this->nid,
+				'class' => 'required ' . $this->cssClass
+			);
+			$this->createValues( $this->_cats, $values, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) );
+			$selected = array_keys( $this->_selectedCats );
+			if ( count( $selected ) ) {
+				foreach ( $selected as $i => $v ) {
+					$selected[ $i ] = (string)$v;
+				}
+			}
+			$field = SPHtml_Input::select( $this->nid, $values, $selected, false, $params );
+			return $field;
+		}
+	}
+
+	protected function mSelect()
+	{
+		if ( count( $this->_cats ) ) {
+			$values = array();
+			$params = array(
+				'style' => "width: {$this->width}px; height: {$this->height}px",
+				'id' => $this->nid,
+				'class' => 'required ' . $this->cssClass
+			);
+			$this->createValues( $this->_cats, $values, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) );
+			$selected = array_keys( $this->_selectedCats );
+			if ( count( $selected ) ) {
+				foreach ( $selected as $i => $v ) {
+					$selected[ $i ] = (string)$v;
+				}
+			}
+			$field = SPHtml_Input::select( $this->nid, $values, $selected, true, $params );
+			$opt = json_encode( array( 'id' => $this->nid, 'limit' => $this->catsMaxLimit ) );
+			SPFactory::header()
+					->addJsFile( 'opt.field_category' )
+					->addJsCode( "SPCategoryChooser( {$opt} )" );
+			return $field;
+		}
+	}
+
+	private function createValues( $cats, &$result, $margin )
+	{
+		foreach ( $cats as $cat ) {
+			if ( !( $cat[ 'state' ] ) && !( Sobi::Can( 'category', 'access', 'unpublished_any' ) ) ) {
+				continue;
+			}
+			$params = array();
+			if ( $cat[ 'type' ] == 'section' || ( count( ( $cat[ 'childs' ] ) ) && !( $this->childs ) ) ) {
+				$params[ 'disabled' ] = 'disabled';
+			}
+			$result[ ] = array(
+				'label' => $margin . ' ' . $cat[ 'name' ],
+				'value' => $cat[ 'sid' ],
+				'params' => $params
+			);
+			if ( count( ( $cat[ 'childs' ] ) ) ) {
+				$this->createValues( $cat[ 'childs' ], $result, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) . $margin );
+			}
+		}
+	}
+
+	protected function loadCategories()
+	{
+		if ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
+			$this->_cats = SPFactory::cache()
+					->getVar( 'categories_tree', Sobi::Section() );
+			if ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
+				$this->travelCats( Sobi::Section(), $this->_cats, true );
+				SPFactory::cache()
+						->addVar( $this->_cats, 'categories_tree', Sobi::Section() );
+			}
+		}
+	}
+
+	private function travelCats( $sid, &$cats, $init = false )
+	{
+		$category = SPFactory::Model( $init == true ? 'section' : 'category' );
+		$category->init( $sid );
+		$cats[ $sid ] = array(
+			'sid' => $sid,
+			'state' => $category->get( 'state' ),
+			'name' => $category->get( 'name' ),
+			'type' => $category->get( 'oType' ),
+			'childs' => array(),
+		);
+		$childs = $category->getChilds( 'category', true );
+		if ( count( $childs ) ) {
+			foreach ( $childs as $id => $name ) {
+				$this->travelCats( $id, $cats[ $sid ][ 'childs' ] );
+			}
 		}
 	}
 
@@ -87,7 +213,6 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	 */
 	public function submit( &$entry, $tsid = null, $request = 'POST' )
 	{
-		JFactory::getMailer();
 		$data = $this->verify( $entry, $request );
 		if ( strlen( $data ) ) {
 			return SPRequest::search( $this->nid, $request );

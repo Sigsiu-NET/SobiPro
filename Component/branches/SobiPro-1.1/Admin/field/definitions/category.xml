@@ -71,6 +71,7 @@
 										</add>
 									</field>
 									<field type="states" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
+									<field type="states" name="field.isPrimary" value="field.isPrimary" label="FMN.CC_IS_PRIMARY" prefix="yes_no" />
 								</fieldset>
 							</div>
 							<div class="hide spCcMethod" id="spCc-mselect">
