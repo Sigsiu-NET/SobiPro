@@ -119,7 +119,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 		parent::save();
 		$properties = get_class_vars( __CLASS__ );
 
-		/* get database colums and their ordering */
+		/* get database columns and their ordering */
 		$cols	= $db->getColumns( $this->_dbTable );
 		$values = array();
 

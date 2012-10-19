@@ -451,52 +451,74 @@ abstract class SPHtml_Input
 		elseif ( !( is_array( $selected ) ) ) {
 			$selected = array();
 		}
-		$n = str_replace( '.', '_', $name );
 		$cells = array();
 		$t = null;
 		$gt = null;
 		if ( is_array( $values ) && count( $values ) ) {
 			foreach ( $values as $v => $l ) {
 				/* if one of both values was an array - it is a group */
-				if ( is_array( $l ) || is_array( $v ) ) {
-					if ( !is_array( $v ) ) {
-						$vt = $v;
-					}
-//					if( $title ) {
-//						$gt = Sobi::Txt( ( "{$n}_optg_{$v}" ) );
-//						$gt = " title=\"{$gt}\" ";
-//					}
-//					$vt = SPLang::entities( /*Sobi::Txt*/htmlentities( $v ), true );
+				if ( ( is_array( $l ) || is_array( $v ) ) && !( isset( $l[ 'label' ] ) ) ) {
 					$cells[ ] = "<optgroup label=\"{$v}\"{$gt}>";
 					if ( count( $l ) ) {
 						foreach ( $l as $ov => $ol ) {
-							if ( is_array( $ol ) ) {
-								self::optGrp( $cells, $selected, $ol, /*Sobi::Txt*/
-									( $ov ) );
+							/** when there is a group */
+							if ( is_array( $ol ) && !( isset( $ol[ 'label' ] ) ) ) {
+								self::optGrp( $cells, $selected, $ol, $ov );
 							}
 							else {
-								$sel = in_array( ( string )$ov, $selected, true ) ? ' selected="selected" ' : null;
-//								if( $title ) {
-//									$t = Sobi::Txt( ( "{$n}_opt_{$v}_{$ov}" ) );
-//									$t = " title=\"{$t}\" ";
-//								}
-								$ol = self::cleanOpt( $ol );
-								$ov = self::cleanOpt( $ov );
-								$cells[ ] = "\t<option {$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
+								/** when we have special params */
+								if ( is_array( $ol ) && ( isset( $ol[ 'label' ] ) ) ) {
+									$sel = in_array( ( string )$ol[ 'value' ], $selected, true ) ? ' selected="selected" ' : null;
+									$ol = self::cleanOpt( $ol[ 'label' ] );
+									$ov = self::cleanOpt( $ol[ 'value' ] );
+									$p = null;
+									$oParams = array();
+									if ( isset( $ol[ 'params' ] ) && count( $ol[ 'params' ] ) ) {
+										foreach ( $ol[ 'params' ] as $param => $value ) {
+											$oParams[ ] = "{$param}=\"{$value}\"";
+										}
+									}
+									if ( count( $oParams ) ) {
+										$p = implode( ' ', $oParams );
+									}
+									$cells[ ] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
+								}
+								else {
+									$sel = in_array( ( string )$ov, $selected, true ) ? ' selected="selected" ' : null;
+									$ol = self::cleanOpt( $ol );
+									$ov = self::cleanOpt( $ov );
+									$cells[ ] = "\t<option {$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
+								}
 							}
 						}
 					}
 					$cells[ ] = "</optgroup>";
 				}
 				else {
-					$sel = in_array( ( string )$v, $selected, true ) ? ' selected="selected" ' : null;
-//					if( $title ) {
-//						$t = Sobi::Txt( ( "{$title}.{$n}_opt_{$v}" ) );
-//						$t = " title=\"{$t}\" ";
-//					}
-					$v = self::cleanOpt( $v );
-					$l = self::cleanOpt( self::translate( $l ) );
-					$cells[ ] = "<option {$sel}value=\"{$v}\"{$t}>{$l}</option>";
+					/** when we have special params */
+					if ( is_array( $l ) && ( isset( $l[ 'label' ] ) ) ) {
+						$sel = in_array( ( string )$l[ 'value' ], $selected, true ) ? ' selected="selected" ' : null;
+						$ol = self::cleanOpt( $l[ 'label' ] );
+						$ov = self::cleanOpt( $l[ 'value' ] );
+						$p = null;
+						$oParams = array();
+						if ( isset( $l[ 'params' ] ) && count( $l[ 'params' ] ) ) {
+							foreach ( $l[ 'params' ] as $param => $value ) {
+								$oParams[ ] = "{$param}=\"{$value}\"";
+							}
+						}
+						if ( count( $oParams ) ) {
+							$p = implode( ' ', $oParams );
+						}
+						$cells[ ] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
+					}
+					else {
+						$sel = in_array( ( string )$v, $selected, true ) ? ' selected="selected" ' : null;
+						$v = self::cleanOpt( $v );
+						$l = self::cleanOpt( self::translate( $l ) );
+						$cells[ ] = "<option {$sel}value=\"{$v}\"{$t}>{$l}</option>";
+
+					}
 				}
 			}
 		}
@@ -543,13 +565,13 @@ abstract class SPHtml_Input
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @return string
 	 */
-	public static function states( $name, $value, $id, $prefix/*, $params = null*/ )
+	public static function states( $name, $value, $id, $prefix /*, $params = null*/ )
 	{
-		$value = (int) $value;
+		$value = (int)$value;
 		$field = null;
-		$field .= "\n" . '<div class="btn-group" data-toggle="buttons-radio" id="'.$id.'">';
-		$field .= "\n\t" . '<button type="button" name="'.$name.'" class="btn'.( $value ? ' active' : '' ).'" value="1">' . Sobi::Txt( $prefix . '_yes' ) . '</button>';
-		$field .= "\n\t" . '<button type="button" name="'.$name.'" class="btn'.( $value ? '' : ' active' ).'" value="0">' . Sobi::Txt( $prefix . '_no' ) . '</button>';
+		$field .= "\n" . '<div class="btn-group" data-toggle="buttons-radio" id="' . $id . '">';
+		$field .= "\n\t" . '<button type="button" name="' . $name . '" class="btn' . ( $value ? ' active' : '' ) . '" value="1">' . Sobi::Txt( $prefix . '_yes' ) . '</button>';
+		$field .= "\n\t" . '<button type="button" name="' . $name . '" class="btn' . ( $value ? '' : ' active' ) . '" value="0">' . Sobi::Txt( $prefix . '_no' ) . '</button>';
 		$field .= "\n" . '</div>';
 		return "\n<!-- States '{$name}' Output -->{$field}\n<!-- States '{$name}' End -->\n";
 	}
