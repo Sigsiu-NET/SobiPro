@@ -169,10 +169,10 @@ abstract class SPDBObject extends SPObject
 		'metaRobots' => 'string',
 		'name' => 'string',
 		'nid' => 'cmd',
-	/**
-	 * the id is not needed (and it's dengerous) because if we updating an object it's beeing created through the id anyway
-	 * so at that point we have to already have it. If not, we don't need it because then we are creating a new object
-	 */
+		/**
+		 * the id is not needed (and it's dangerous) because if we updating an object it's being created through the id anyway
+		 * so at that point we have to already have it. If not, we don't need it because then we are creating a new object
+		 */
 //		'id' => 'int',
 		'owner' => 'int',
 		'ownerIP' => 'ip',
@@ -497,7 +497,7 @@ abstract class SPDBObject extends SPObject
 
 		/* and sort the properties in the same order */
 		foreach ( $cols as $col ) {
-			$values[ $col ] = key_exists( $col, $properties ) ? $this->$col : '';
+			$values[ $col ] = array_key_exists( $col, $properties ) ? $this->$col : '';
 		}
 		/* trigger plugins */
 		Sobi::Trigger( 'save', $this->name(), array( &$this ) );

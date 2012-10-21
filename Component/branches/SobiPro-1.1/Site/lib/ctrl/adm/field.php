@@ -295,8 +295,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	public function saveNew()
 	{
-		$fc = SPLoader::loadModel( 'field', true );
-		$field = new $fc();
+		$field = SPFactory::Model( 'field', true );
 		$this->getRequest();
 		return $field->saveNew( $this->attr );
 	}
@@ -393,7 +392,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$nid = SPRequest::cmd( 'field_nid' );
 		if ( !( $nid ) || !( strstr( $nid, 'field_' ) ) ) {
 			/** give me my spaces back!!! */
-			$nid = str_replace( '-', '_', SPLang::nid( 'field_' . SPRequest::cmd( 'field_name' ) ) );
+			$nid = str_replace( '-', '_', SPLang::nid( 'field_' . SPRequest::string( 'field_name' ) ) );
 			SPRequest::set( 'field_nid', $nid );
 			$sets[ 'field.nid' ] = $nid;
 		}

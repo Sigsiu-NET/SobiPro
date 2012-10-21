@@ -21,8 +21,8 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.fieldtype' );
 /**
  * @author Radek Suski
- * @version 1.0
- * @created 09-Aug-2012 14:11:54
+ * @version 1.1
+ * @created Sat, Oct 20, 2012 11:52:12
  */
 class SPField_Category extends SPFieldType implements SPFieldInterface
 {
@@ -46,6 +46,12 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	protected $_cats = array();
 	/** @var bool */
 	protected $isPrimary = false;
+	/** @var string */
+	protected $searchMethod = 'select';
+	/** @var int */
+	protected $searchWidth = 100;
+	/** @var int */
+	protected $searchHeight = 100;
 
 	/**
 	 * Shows the field in the edit entry or add entry form
@@ -59,12 +65,14 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 
 		$this->_selectedCats = $this->getRaw();
+		$this->loadCategories();
 		if ( !( $this->_selectedCats ) && $this->sid ) {
 			$entry = SPFactory::Entry( $this->sid );
-			$this->_selectedCats = $entry->get( 'categories' );
-			$this->loadCategories();
+			$this->_selectedCats = array_keys( $entry->get( 'categories' ) );
 		}
-
+		else {
+			$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
+		}
 		switch ( $this->method ) {
 			case 'tree':
 				$field = $this->tree();
@@ -87,7 +95,6 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		else {
 			return $field;
 		}
-
 	}
 
 	protected function tree()
@@ -100,12 +107,14 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( count( $this->_cats ) ) {
 			$values = array();
 			$params = array(
-				'style' => "width: {$this->width}px;",
 				'id' => $this->nid,
 				'class' => 'required ' . $this->cssClass
 			);
+			if ( $this->width ) {
+				$params[ 'style' ] = "width: {$this->width}px;";
+			}
 			$this->createValues( $this->_cats, $values, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) );
-			$selected = array_keys( $this->_selectedCats );
+			$selected = $this->_selectedCats;
 			if ( count( $selected ) ) {
 				foreach ( $selected as $i => $v ) {
 					$selected[ $i ] = (string)$v;
@@ -121,12 +130,14 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( count( $this->_cats ) ) {
 			$values = array();
 			$params = array(
-				'style' => "width: {$this->width}px; height: {$this->height}px",
 				'id' => $this->nid,
 				'class' => 'required ' . $this->cssClass
 			);
+			if ( $this->width && $this->height ) {
+				$params[ 'style' ] = "width: {$this->width}px; height: {$this->height}px";
+			}
 			$this->createValues( $this->_cats, $values, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) );
-			$selected = array_keys( $this->_selectedCats );
+			$selected = $this->_selectedCats;
 			if ( count( $selected ) ) {
 				foreach ( $selected as $i => $v ) {
 					$selected[ $i ] = (string)$v;
@@ -141,15 +152,17 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 	}
 
-	private function createValues( $cats, &$result, $margin )
+	private function createValues( $cats, &$result, $margin, $selector = true )
 	{
 		foreach ( $cats as $cat ) {
 			if ( !( $cat[ 'state' ] ) && !( Sobi::Can( 'category', 'access', 'unpublished_any' ) ) ) {
 				continue;
 			}
 			$params = array();
-			if ( $cat[ 'type' ] == 'section' || ( count( ( $cat[ 'childs' ] ) ) && !( $this->childs ) ) ) {
-				$params[ 'disabled' ] = 'disabled';
+			if ( $selector || $cat[ 'type' ] == 'section' ) {
+				if ( $cat[ 'type' ] == 'section' || ( count( ( $cat[ 'childs' ] ) ) && !( $this->childs ) ) ) {
+					$params[ 'disabled' ] = 'disabled';
+				}
 			}
 			$result[ ] = array(
 				'label' => $margin . ' ' . $cat[ 'name' ],
@@ -157,7 +170,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				'params' => $params
 			);
 			if ( count( ( $cat[ 'childs' ] ) ) ) {
-				$this->createValues( $cat[ 'childs' ], $result, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) . $margin );
+				$this->createValues( $cat[ 'childs' ], $result, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) . $margin, $selector );
 			}
 		}
 	}
@@ -195,6 +208,55 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	}
 
 	/**
+	 * Shows the field in the search form
+	 * @param bool $return return or display directly
+	 * @return string
+	 */
+	public function searchForm( $return = true )
+	{
+		$this->loadCategories();
+		if ( count( $this->_cats ) ) {
+			if ( $this->searchMethod == 'select' ) {
+				$values = array( '' => Sobi::Txt( 'FMN.CC_SEARCH_SELECT_CAT' ) );
+			}
+			else {
+				$values = array();
+			}
+			$this->createValues( $this->_cats, $values, Sobi::Cfg( 'category_chooser.margin_sign', '-' ), false );
+			$selected = $this->_selected;
+			if ( $selected ) {
+				if ( is_numeric( $selected ) ) {
+					$selected = array( $selected );
+				}
+				foreach ( $selected as $i => $v ) {
+					$selected[ $i ] = (string)$v;
+				}
+			}
+		}
+		if ( $this->searchMethod == 'select' ) {
+			$params = array(
+				'id' => $this->nid,
+				'class' => $this->cssClass
+			);
+			if ( $this->searchWidth ) {
+				$params[ 'style' ] = "width: {$this->searchWidth}px;";
+			}
+			$field = SPHtml_Input::select( $this->nid, $values, $selected, false, $params );
+		}
+		elseif ( $this->searchMethod == 'mselect' ) {
+			$params = array(
+				'id' => $this->nid,
+				'class' => $this->cssClass
+			);
+			if ( $this->searchWidth && $this->searchHeight ) {
+				$params[ 'style' ] = "width: {$this->searchWidth}px; height: {$this->searchHeight}px";
+			}
+			$field = SPHtml_Input::select( $this->nid, $values, $selected, true, $params );
+		}
+		return $field;
+	}
+
+	/**
 	 * Returns the parameter list
 	 * @return array
 	 */
@@ -229,26 +291,17 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
-		$data = SPRequest::raw( $this->nid, null, $request );
-		$dexs = strlen( $data );
+		$data = SPRequest::arr( $this->nid, array(), $request );
+		if ( !( $data ) ) {
+			$dataString = SPRequest::int( $this->nid, 0, $request );
+			if ( $dataString ) {
+				$data = array( $dataString );
+			}
+		}
+		$dexs = count( $data );
 		/* check if it was required */
 		if ( $this->required && !( $dexs ) ) {
 			throw new SPException( SPLang::e( 'FIELD_REQUIRED_ERR', $this->name ) );
-		}
-		/* check if there was a filter */
-		if ( $this->filter && $dexs ) {
-			$registry =& SPFactory::registry();
-			$registry->loadDBSection( 'fields_filter' );
-			$filters = $registry->get( 'fields_filter' );
-			$filter = isset( $filters[ $this->filter ] ) ? $filters[ $this->filter ] : null;
-			if ( !( count( $filter ) ) ) {
-				throw new SPException( SPLang::e( 'FIELD_FILTER_ERR', $this->filter ) );
-			}
-			else {
-				if ( !( preg_match( base64_decode( $filter[ 'params' ] ), $data ) ) ) {
-					throw new SPException( str_replace( '$field', $this->name, SPLang::e( $filter[ 'description' ] ) ) );
-				}
-			}
 		}
 		/* check if there was an adminField */
 		if ( $this->adminField && $dexs ) {
@@ -260,13 +313,6 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( !( $this->isFree ) && $this->fee && $dexs ) {
 			SPFactory::payment()->add( $this->fee, $this->name, $entry->get( 'id' ), $this->fid );
 		}
-		/* check if it should contains unique data */
-		if ( $this->uniqueData && $dexs ) {
-			$matches = $this->searchData( $data, Sobi::Reg( 'current_section' ) );
-			if ( count( $matches ) > 1 || ( ( count( $matches ) == 1 ) && ( $matches[ 0 ] != $entry->get( 'id' ) ) ) ) {
-				throw new SPException( SPLang::e( 'FIELD_NOT_UNIQUE', $this->name ) );
-			}
-		}
 		/* check if it was editLimit */
 		if ( $this->editLimit == 0 && !( Sobi::Can( 'entry.adm_fields.edit' ) ) && $dexs ) {
 			throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_EXP', $this->name ) );
@@ -276,7 +322,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_NOT_ED', $this->name ) );
 		}
 		if ( !( $dexs ) ) {
-			$data = null;
+			$data = array();
 		}
 		$this->setData( $data );
 		return $data;
@@ -293,8 +339,20 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
+		if ( $this->method == 'fixed' ) {
+			$fixed = $this->fixedCid;
+			$fixed = explode( ',', $fixed );
+			$data = array();
+			if ( count( $fixed ) ) {
+				foreach ( $fixed as $cid ) {
+					$data[ ] = trim( $cid );
+				}
+			}
 
-		$data = $this->verify( $entry, $request );
+		}
+		else {
+			$data = $this->verify( $entry, $request );
+		}
 		$time = SPRequest::now();
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		$uid = Sobi::My( 'id' );
@@ -314,7 +372,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params[ 'enabled' ] = $entry->get( 'state' );
 		$params[ 'params' ] = null;
 		$params[ 'options' ] = null;
-		$params[ 'baseData' ] = strip_tags( $db->escape( trim( $data ) ) );
+		$params[ 'baseData' ] = SPConfig::serialize( $data );
 		$params[ 'approved' ] = $entry->get( 'approved' );
 		$params[ 'confirmed' ] = $entry->get( 'confirmed' );
 		/* if it is the first version, it is new entry */
@@ -355,119 +413,70 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
+		/** Last important thing - join selected categories  */
+		$cats = SPFactory::registry()->get( 'request_categories', array() );
+		$cats = array_unique( array_merge( $cats, $data ) );
+		SPFactory::registry()->set( 'request_categories', $cats );
+		if ( $this->method == 'select' && $this->isPrimary ) {
+			$entry->set( $data[ 0 ], 'parent' );
+		}
 	}
 
+
 	/**
-	 * Shows the field in the search form
-	 * @param bool $return return or display directly
-	 * @return string
+	 * @param string $data
+	 * @param int $section
+	 * @return array
 	 */
-	public function searchForm( $return = false )
+	public function searchNarrowResults( $data, &$results )
 	{
-		if ( $this->searchMethod == 'general' ) {
-			return false;
-		}
-
-		if ( $this->searchMethod == 'range' ) {
-			return $this->rangeSearch( $this->searchRangeValues );
-		}
-
-		$db =& SPFactory::db();
-		$fdata = array();
-		try {
-			$db->dselect( array( 'baseData' ), 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1 ), 'field( lang, \'' . Sobi::Lang() . '\'), baseData', 0, 0, 'baseData' );
-			$data = $db->loadResultArray();
-		} catch ( SPException $x ) {
-			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELDS_DATA_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-		}
-
-		$data = ( ( array )$data );
-		if ( count( $data ) ) {
-			$fdata[ '' ] = Sobi::Txt( 'FD.INBOX_SEARCH_SELECT', array( 'name' => $this->name ) );
-			foreach ( $data as $i => $d ) {
-				if ( strlen( $d ) ) {
-					$fdata[ strip_tags( $d ) ] = strip_tags( $d );
+		if ( count( $data ) && count( $results ) ) {
+			if ( is_numeric( $data ) ) {
+				$data = array( $data );
+			}
+			$this->loadCategories();
+			if ( count( $this->_cats ) ) {
+				$categories = array();
+				foreach ( $data as $cid ) {
+					$this->getChildCategories( $this->_cats, $cid, $categories );
 				}
 			}
-		}
-		return SPHtml_Input::select( $this->nid, $fdata, $this->_selected, false, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1' ) );
-	}
-
-	/**
-	 * @param string $data
-	 * @param int $section
-	 * @param bool $regex
-	 * @return array
-	 */
-	public function searchString( $data, $section, $regex = false )
-	{
-		return $this->search( ( $regex ? $data : "%{$data}%" ), $section );
-	}
-
-	/**
-	 * @param string $data
-	 * @param int $section
-	 * @param bool $startWith
-	 * @return array
-	 */
-	public function searchSuggest( $data, $section, $startWith = true, $ids = false )
-	{
-		$terms = array();
-		$data = $startWith ? "{$data}%" : "%{$data}%";
-		$request = array( 'baseData' );
-		if ( $ids ) {
-			$request[ ] = 'sid';
-		}
-		try {
-			if ( $ids ) {
-				$result = SPFactory::db()
-						->dselect( $request, 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ) )
-						->loadAssocList();
-				$terms = array();
-				if ( count( $result ) ) {
-					foreach ( $result as $row ) {
-						$terms[ ] = array( 'id' => $row[ 'sid' ], 'name' => $row[ 'baseData' ] );
+			if ( count( $categories ) ) {
+				$db = SPFactory::db();
+				foreach ( $results as $index => $sid ) {
+					$relation = $db
+							->select( 'id', 'spdb_relations', array( 'id' => $sid, 'oType' => 'entry', 'pid' => $categories ) )
+							->loadResultArray();
+					if ( !( count( $relation ) ) ) {
+						unset( $results[ $index ] );
 					}
 				}
 			}
-			else {
-				$terms = SPFactory::db()
-						->select( $request, 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ) )
-						->loadResultArray();
+		}
+		return $results;
+	}
+
+	private function getChildCategories( $categories, $cid, &$results )
+	{
+		foreach ( $categories as $id => $category ) {
+			if ( $cid == $id ) {
+				$results[ ] = $id;
+				$this->categoryChilds( $results, $category[ 'childs' ] );
+				break;
 			}
-		} catch ( SPException $x ) {
-			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SEARCH_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			if ( count( $category[ 'childs' ] ) ) {
+				$this->getChildCategories( $category[ 'childs' ], $cid, $results );
+			}
 		}
-		return $terms;
 	}
 
-	/**
-	 * @param string $data
-	 * @param int $section
-	 * @return array
-	 */
-	private function search( $data, $section )
+	private function categoryChilds( &$results, $categories )
 	{
-		$sids = array();
-		try {
-			SPFactory::db()->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ) );
-			$sids = SPFactory::db()->loadResultArray();
-		} catch ( SPException $x ) {
-			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SEARCH_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-		}
-		return $sids;
-	}
-
-	/* (non-PHPdoc)
-	  * @see Site/opt/fields/SPFieldType#searchData()
-	  */
-	public function searchData( $request, $section )
-	{
-		if ( is_array( $request ) && ( isset( $request[ 'from' ] ) || isset( $request[ 'to' ] ) ) ) {
-			return $this->searchForRange( $request, $section );
-		}
-		else {
-			return $this->search( "REGEXP:^{$request}$", $section );
+		foreach ( $categories as $cid => $category ) {
+			$results[ ] = $cid;
+			if ( count( $category[ 'childs' ] ) ) {
+				$this->categoryChilds( $results, $category[ 'childs' ] );
+			}
 		}
 	}
 }
