@@ -572,7 +572,7 @@ class SPEntry extends SPDBObject implements SPDataModel
         }
         $values = array();
         /* get categories */
-        $cats = SPRequest::arr( 'entry_parent', array(), $request );
+        $cats = SPRequest::arr( 'entry_parent', SPFactory::registry()->get( 'request_categories', array() ), $request );
         /* by default it should be comma separated string */
         if ( !( count( $cats ) ) ) {
             $cats = SPRequest::string( 'entry_parent', null, $request );

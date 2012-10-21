@@ -82,4 +82,3 @@ interface SPFieldInterface
 	public function metaDesc();
 	public function metaKeys();
 }
-?>

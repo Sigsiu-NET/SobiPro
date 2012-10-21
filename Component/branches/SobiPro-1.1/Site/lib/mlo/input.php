@@ -480,6 +480,7 @@ abstract class SPHtml_Input
 									}
 									if ( count( $oParams ) ) {
 										$p = implode( ' ', $oParams );
+										$p = " {$p} ";
 									}
 									$cells[ ] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
 								}
@@ -509,6 +510,7 @@ abstract class SPHtml_Input
 						}
 						if ( count( $oParams ) ) {
 							$p = implode( ' ', $oParams );
+							$p = " {$p} ";
 						}
 						$cells[ ] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
 					}

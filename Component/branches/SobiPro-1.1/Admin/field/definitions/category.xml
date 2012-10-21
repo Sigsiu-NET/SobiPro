@@ -71,7 +71,7 @@
 										</add>
 									</field>
 									<field type="states" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
-									<field type="states" name="field.isPrimary" value="field.isPrimary" label="FMN.CC_IS_PRIMARY" prefix="yes_no" />
+									<!--<field type="states" name="field.isPrimary" value="field.isPrimary" label="FMN.CC_IS_PRIMARY" prefix="yes_no" />-->
 								</fieldset>
 							</div>
 							<div class="hide spCcMethod" id="spCc-mselect">
@@ -107,35 +107,62 @@
 							<field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
 							<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
 						</fieldset>
-					</div>
-				</div>
-			</tab>
-			<tab label="FMN.FIELD_ENTRYVIEW">
-				<div class="row-fluid">
-					<div class="span12">
-						<fieldset>
-							<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
-								<values>
-									<option value="both" label="FM.BOTH_OPT" />
-									<option value="details" label="FM.DETAILS_VIEW_OPT" />
-									<option value="vcard" label="FM.V_CARD_OPT" />
-									<option value="hidden" label="FMN.HIDDEN_OPT" />
-								</values>
+						<fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
+							<field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no" />
+							<field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
+								<add where="after">
+									<call function="Sobi::Cfg">
+										<param>payments.currency</param>
+										<param>EUR</param>
+									</call>
+								</add>
 							</field>
-							<field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
-						</fieldset>
-						<fieldset label="FMN.FIELD_ENTRYVIEW_META">
-							<field type="states" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
-							<field type="states" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
 						</fieldset>
 					</div>
 				</div>
 			</tab>
+			<!--<tab label="FMN.FIELD_ENTRYVIEW">-->
+				<!--<div class="row-fluid">-->
+					<!--<div class="span12">-->
+						<!--<fieldset>-->
+							<!--<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">-->
+								<!--<values>-->
+									<!--<option value="both" label="FM.BOTH_OPT" />-->
+									<!--<option value="details" label="FM.DETAILS_VIEW_OPT" />-->
+									<!--<option value="vcard" label="FM.V_CARD_OPT" />-->
+									<!--<option value="hidden" label="FMN.HIDDEN_OPT" />-->
+								<!--</values>-->
+							<!--</field>-->
+							<!--<field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />-->
+						<!--</fieldset>-->
+						<!--<fieldset label="FMN.FIELD_ENTRYVIEW_META">-->
+							<!--<field type="states" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />-->
+							<!--<field type="states" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />-->
+						<!--</fieldset>-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</tab>-->
 			<tab label="FMN.FIELD_SEARCH">
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
 							<field type="states" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
+							<field type="select" name="field.searchMethod" selected="field.searchMethod" label="FMN.CC_SEARCH_METHOD" class="input-large">
+								<values>
+									<option value="select" label="FMN.CC_SELECT_LIST" />
+									<option value="mselect" label="FMN.CC_MSELECT" />
+								</values>
+							</field>
+							<field type="text" name="field.searchWidth" value="field.searchWidth" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
+								<add where="after">
+									<text>px</text>
+								</add>
+							</field>
+							<field type="text" name="field.searchHeight" value="field.searchHeight" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
+								<add where="after">
+									<text>px</text>
+								</add>
+							</field>
 						</fieldset>
 					</div>
 				</div>
