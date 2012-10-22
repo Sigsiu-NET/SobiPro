@@ -34,6 +34,7 @@
    (+) XML based template engine for administrator templates
    (+) Possibility to override administrator templates for particular section
    (+) Definition file for Radio Button field
+   (+) Field controller implements now a proxy pattern to the field type
 
    (!) SPHeader::addMeta() takes now optional list of custom parameters as an array
    (!) SPLang::nid using JFilterOutput::stringURLSafe now
