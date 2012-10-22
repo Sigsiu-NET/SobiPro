@@ -287,7 +287,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	/**
 	 * @param SPEntry $entry
 	 * @param string $request
+	 * @throws SPException
 	 * @return string
+	 * @throw SPException
 	 */
 	private function verify( $entry, $request )
 	{
@@ -296,6 +298,11 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$dataString = SPRequest::int( $this->nid, 0, $request );
 			if ( $dataString ) {
 				$data = array( $dataString );
+			}
+		}
+		else {
+			if ( count( $data ) > $this->catsMaxLimit ) {
+				$data = array_slice( $data, 0, $this->catsMaxLimit );
 			}
 		}
 		$dexs = count( $data );
@@ -332,6 +339,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	/**
 	 * Gets the data for a field and save it in the database
 	 * @param SPEntry $entry
+	 * @param string $request
 	 * @return bool
 	 */
 	public function saveData( &$entry, $request = 'POST' )

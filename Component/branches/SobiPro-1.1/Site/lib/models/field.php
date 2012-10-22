@@ -337,10 +337,10 @@ class SPField extends SPObject
 	{
 		$this->fid = $id;
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
 		try {
-			$db->select( '*', 'spdb_field', array( 'fid' => $id ) );
-			$field = $db->loadObject();
+			$field = SPFactory::db()
+					->select( '*', 'spdb_field', array( 'fid' => $id ) )
+					->loadObject();
 			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$field ) );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );

@@ -29,8 +29,12 @@ SPLoader::loadController( 'controller' );
  */
 class SPFieldCtrl extends SPController
 {
-	protected $m_SPField;
-
+	/** @var string */
+	protected $nid = '';
+	/** @var int */
+	protected $fid = '';
+	/** @var SPField */
+	protected $field = null;
 
 	public function __construct()
 	{
@@ -38,55 +42,14 @@ class SPFieldCtrl extends SPController
 
 	public function execute()
 	{
-
-	}
-
-	public function authorise()
-	{
-	}
-
-	public function extend( $extend )
-	{
-	}
-
-	public function getModel()
-	{
-	}
-
-	public function setModel( $name )
-	{
-	}
-
-	/**
-	 *
-	 * @param sid
-	 */
-	public function loadData($sid)
-	{
-	}
-
-	/**
-	 *
-	 * @param sid
-	 */
-	public function loadDefinitions($sid)
-	{
-	}
-
-	/**
-	 *
-	 * @param fid
-	 */
-	public function getField($fid)
-	{
-	}
-
-	/**
-	 *
-	 * @param sid
-	 */
-	public function loadViewData($sid)
-	{
+		$method = explode( '.', $this->_task );
+		$this->nid = $method[ 0 ];
+		$method = $method[ 1 ];
+		$this->fid = SPFactory::db()
+				->select( 'fid', 'spdb_field', array( 'nid' => $this->nid, 'section' => Sobi::Section() ) )
+				->loadResult();
+		$this->field = SPFactory::Model( 'field' );
+		$this->field->init( $this->fid );
+		$this->field->$method();
 	}
 }
-?>
