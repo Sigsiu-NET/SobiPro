@@ -314,6 +314,10 @@ class SPAdmView extends SPObject implements SPView
 		else {
 			$key = Sobi::Txt( $key );
 		}
+//		if ( strstr( $key, 'var:[' ) ) {
+//			preg_match( '/var\:\[([a-zA-Z0-9\.\_\-]*)\]/', $key, $matches );
+//			$key = str_replace( $matches[ 0 ], $this->get( $matches[ 1 ], $i ), $key );
+//		}
 		return $key;
 	}
 
@@ -579,8 +583,23 @@ class SPAdmView extends SPObject implements SPView
 								if ( strstr( $value->nodeName, '#' ) ) {
 									continue;
 								}
-								$xml[ 'childs' ][ $child->nodeName ][ $value->attributes->getNamedItem( 'value' )->nodeValue ] = $value->attributes->getNamedItem( 'label' )->nodeValue;
-								$values[ $value->attributes->getNamedItem( 'value' )->nodeValue ] = Sobi::Txt( $value->attributes->getNamedItem( 'label' )->nodeValue );
+								/** select list with groups e.g. */
+								if ( $value->nodeName == 'values' ) {
+									$group = array();
+									if ( $value->hasChildNodes() ) {
+										foreach ( $value->childNodes as $groupNode ) {
+											if ( strstr( $groupNode->nodeName, '#' ) ) {
+												continue;
+											}
+											$group[ $groupNode->attributes->getNamedItem( 'value' )->nodeValue ] = Sobi::Txt( $groupNode->attributes->getNamedItem( 'label' )->nodeValue );
+										}
+									}
+									$values[ Sobi::Txt( $value->attributes->getNamedItem( 'label' )->nodeValue ) ] = $group;
+								}
+								else {
+									$xml[ 'childs' ][ $child->nodeName ][ $value->attributes->getNamedItem( 'value' )->nodeValue ] = $value->attributes->getNamedItem( 'label' )->nodeValue;
+									$values[ $value->attributes->getNamedItem( 'value' )->nodeValue ] = Sobi::Txt( $value->attributes->getNamedItem( 'label' )->nodeValue );
+								}
 							}
 						}
 						$args[ 'values' ] = $values;
