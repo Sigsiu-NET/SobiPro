@@ -35,7 +35,6 @@
 				<cell label="HEADER_ENTRIES_STATE" type="text" class="center"/>
 				<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="center"/>
 				<cell label="HEADER_FIELD_AUTHOR" type="text" class="center"/>
-				<!--<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="field"/>-->
 			</head>
 			<loop subject="entries">
 				<cell type="text" value="id" class="center"/>
