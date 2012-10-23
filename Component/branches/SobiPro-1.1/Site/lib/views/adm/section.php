@@ -92,8 +92,8 @@ class SPSectionAdmView extends SPAdmView
 				$category = array();
 				/* data needed to display in the list */
 				$category[ 'name' ] = $cat->get( 'name' );
-				$category[ 'state' ] = SPLists::state( $cat );
-				$category[ 'approved' ] = SPLists::approval( $cat );
+				$category[ 'state' ] = $cat->get( 'state' );
+				$category[ 'approved' ] = $cat->get( 'approved' );
 
 				if ( isset( $usersData[ $cat->get( 'owner' ) ] ) ) {
 					$uName = $usersData[ $cat->get( 'owner' ) ]->name;

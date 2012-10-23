@@ -34,7 +34,7 @@
 			<div class="btn-group pull-right form-horizontal" id="spCategoriesFilterHead">
 				<field type="select" name="corder" selected="cordering" class="input-medium spOrdering">
 					<values>
-						<values label="EMN_ORDER_BY"/>
+						<values label="EMN_ORDER_BY" />
 						<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
 						<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
 						<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC" />
@@ -48,9 +48,49 @@
 				</field>
 			</div>
 		</header>
+		<table>
+			<head>
+				<cell label="HEADER_ID" type="text" class="center" />
+				<cell type="checkbox" rel="c_sid" class="center" />
+				<cell label="HEADER_CATS_NAME" type="text" />
+				<cell label="HEADER_CATS_STATE" type="text" class="center" />
+				<cell label="HEADER_CATS_APPROVAL" type="text" class="center" />
+				<cell label="HEADER_CATS_AUTHOR" type="text" class="center" />
+				<cell label="HEADER_CATS_POSITION" type="ordering" class="center" rel="category" />
+			</head>
+			<loop subject="categories">
+				<cell type="text" value="id" class="center" />
+				<cell type="checkbox" name="c_sid" value="id" class="center" />
+				<cell>
+					<cell type="link" value="name">
+						<url type="intern">
+							<param name="task" value="category.edit" />
+							<param name="sid" value="sid" parse="true" />
+						</url>
+					</cell>
+				</cell>
+				<cell type="ticker" value="state" class="center">
+					<url type="intern">
+						<param name="task" value="category.toggle.enabled" />
+						<param name="sid" value="id" parse="true" />
+					</url>
+				</cell>
+				<cell type="ticker" value="approved" class="center" icons="{'0':'cog','1':'asterisk'}">
+					<url type="intern">
+						<param name="task" value="category.toggle.approval" />
+						<param name="sid" value="id" parse="true" />
+					</url>
+				</cell>
+				<cell type="text" value="owner" class="center" />
+				<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="center" />
+			</loop>
+			<foot>
+				<navigation />
+			</foot>
+		</table>
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 			<div class="btn-group pull-right form-horizontal" id="spEntriesFilterHead">
-				<field type="text" name="sp_entries_filter" id="spEntriesFilter" values="filter" placeholder="EMN_FILTER" class="input-medium"/>
+				<field type="text" name="sp_entries_filter" id="spEntriesFilter" values="filter" placeholder="EMN_FILTER" class="input-medium" />
 				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-medium spOrdering" />
 			</div>
 		</header>
@@ -63,7 +103,7 @@
 				<cell label="HEADER_ENTRIES_STATE" type="text" class="center" />
 				<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="center" />
 				<cell label="HEADER_FIELD_AUTHOR" type="text" class="center" />
-				<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="field" />
+				<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="entry" />
 			</head>
 			<loop subject="entries">
 				<cell type="text" value="id" class="center" />
@@ -90,7 +130,7 @@
 					</url>
 				</cell>
 				<cell type="text" value="owner" class="center" />
-				<cell type="ordering" value="position" name="fid[var:[id]]" class="center" />
+				<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="center" />
 			</loop>
 			<foot>
 				<navigation />
