@@ -40,6 +40,8 @@ class SPSectionAdmView extends SPAdmView
 		$title = Sobi::Txt( $title, array( 'name' => $name ) );
 		SPFactory::header()->setTitle( $title );
 		$this->set( $title, 'site_title' );
+		$this->set( $name, 'section_name' );
+		$this->set( $name, 'category_name' );
 	}
 
 	/**

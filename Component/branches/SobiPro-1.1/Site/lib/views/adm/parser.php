@@ -33,15 +33,18 @@ class SPTplParser
 
 	public function parse( $data )
 	{
-		/////SPConfig::debOut($data);
-		$this->openElement( $data );
-		$this->parseElement( $data );
-		if ( is_array( $data[ 'content' ] ) && count( $data[ 'content' ] ) && !( is_string( $data[ 'content' ] ) ) ) {
+		if ( isset( $data[ 'type' ] ) ) {
+			$this->openElement( $data );
+			$this->parseElement( $data );
+		}
+		if ( isset( $data[ 'content' ] ) && !( is_string( $data[ 'content' ] ) ) && is_array( $data[ 'content' ] ) && count( $data[ 'content' ] ) ) {
 			foreach ( $data[ 'content' ] as $element ) {
 				$this->parse( $element );
 			}
 		}
-		$this->closeElement( $data );
+		if ( isset( $data[ 'type' ] ) ) {
+			$this->closeElement( $data );
+		}
 		echo implode( "\n\t", $this->_out );
 		$this->_out = array();
 	}
@@ -171,7 +174,7 @@ class SPTplParser
 				$this->proceedCell( $data, $this->thTd );
 				break;
 			case 'header':
-				$this->_out[ ] = '<div id="SPAdmNavBar">';
+				$this->_out[ ] = '<div class="SPAdmNavBar">';
 				break;
 			case 'loop':
 				$this->_out[ ] = '<tbody>';

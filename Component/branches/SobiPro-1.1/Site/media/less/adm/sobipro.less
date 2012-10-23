@@ -20,6 +20,7 @@
 @background: #ffffff;
 @font: #333;
 @font-size: 15px;
+@admIcons: '../../../../media/sobipro/48x48';
 
 .SobiPro {
   color: @font;
@@ -217,7 +218,7 @@ div.spScreenTitle h4 {
   width: 200px;
 }
 
-#SPAdmNavBar .control-group {
+.SPAdmNavBar .control-group {
   float: left;
   padding-left: 12px;
 }
@@ -381,19 +382,22 @@ input.sp-input-micro[type="text"] {
 }
 
 .spicon-48-SobiPro {
-  background-image: url(../../../../media/sobipro/48x48/folder-sobipro.png);
+  background-image: url('@{admIcons}/folder-sobipro.png');
 }
 .spicon-48-SobiFields {
-  background-image: url(../../../../media/sobipro/48x48/folder-fieldsmanager.png);
+  background-image: url('@{admIcons}/folder-fieldsmanager.png');
 }
 .spicon-48-SobiSection {
-  background-image: url(../../../../media/sobipro/48x48/folder-section.png);
+  background-image: url('@{admIcons}/folder-section.png');
 }
 .spicon-48-SobiFieldEdit {
-  background-image: url(../../../../media/sobipro/48x48/edit-rename.png);
+  background-image: url('@{admIcons}/edit-rename.png');
 }
 .spicon-48-SobiEntries {
-  background-image: url(../../../../media/sobipro/48x48/entries.png);
+  background-image: url('@{admIcons}/entries.png');
+}
+.spicon-48-SobiCatList {
+	background-image: url('@{admIcons}/folder-categories.png');
 }
 
 

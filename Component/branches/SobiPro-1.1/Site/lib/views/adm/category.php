@@ -34,20 +34,12 @@ class SPCategoryAdmView extends SPSectionAdmView
 	 */
 	public function setTitle( $title )
 	{
-		$titles = array();
-		if( strstr( $title, '|' ) ) {
-			$titleArr = explode( '|', $title );
-			foreach ( $titleArr as $t ) {
-				$t = explode( '=', $t );
-				$titles[ trim( $t[ 0 ] ) ] = $t[ 1 ];
-			}
-			$title = $titles[ $this->get( 'task' ) ];
-		}
 		$name = $this->get( 'category.name' );
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-		$title = Sobi::Txt( $title, array( 'category' => $name ) );
+		$title = Sobi::Txt( $title, array( 'category_name' => $name ) );
 		SPFactory::header()->setTitle( $title );
 		$this->set( $title, 'site_title');
+		$this->set( $name, 'category_name');
 	}
 
 	/**
