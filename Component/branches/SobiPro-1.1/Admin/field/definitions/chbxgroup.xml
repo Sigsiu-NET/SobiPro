@@ -148,7 +148,7 @@
                                     <option value="general" label="FM.GENERAL_SEARCH_OPT" />
                                     <option value="chbx" label="FM.CHECKBOX_GROUP_OPT" />
                                     <option value="radio" label="FM.RADIO_BUTTONS_OPT" />
-                                    <option value="select" label="FM.SELECT_LIST_OPT" />
+                                    <option value="select" label="FMN.SELECT_LIST_OPT" />
                                     <option value="mselect" label="FM.MSELECT_LIST_OPT" />
                                 </values>
                             </field>

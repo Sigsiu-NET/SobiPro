@@ -123,7 +123,7 @@
                             <field type="select" name="field.searchMethod" selected="field.searchMethod" label="FM.SEARCH_METHOD" multi="false" class="input-large">
                                 <values>
                                     <option value="general" label="FM.GENERAL_SEARCH_OPT" />
-                                    <option value="select" label="FM.SELECT_LIST_OPT" />
+                                    <option value="select" label="FMN.SELECT_LIST_OPT" />
                                     <option value="range" label="FM.RANGE_LIST_OPT" />
                                 </values>
                             </field>
