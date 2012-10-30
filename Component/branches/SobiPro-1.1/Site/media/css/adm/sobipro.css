@@ -258,6 +258,9 @@ div.spScreenTitle h4 {
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
 }
+.SobiPro .spCcMethod .form-horizontal {
+  margin-bottom: 0;
+}
 #SPAdminForm input,
 #SPAdminForm textarea,
 #SPAdminForm select,
@@ -288,7 +291,7 @@ div.spScreenTitle h4 {
   color: grey;
 }
 .SobiPro .SpCellCenter .sp-mini-bt {
-  padding: 4px 14px!important;
+  padding: 4px 4px!important;
 }
 #SPAdminForm .input-splarge {
   width: 400px;
