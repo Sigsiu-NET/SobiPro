@@ -1157,7 +1157,7 @@ INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) V
 ('radio', 'Radio Buttons', 'predefined_multi_data_single_choice', 8),
 ('image', 'Image', 'special', 9),
 ('url', 'URL', 'special', 10),
-('category', 'category', 'special', 11),
+('category', 'Category', 'special', 11),
 ('email', 'Email', 'special', 12);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_language` (

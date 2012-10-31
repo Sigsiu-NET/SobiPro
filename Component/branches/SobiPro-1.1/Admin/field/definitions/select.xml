@@ -71,8 +71,8 @@
                                     </call>
                                 </add>
                             </field>
-                            <field type="text" name="field.selectLabel" value="field.selectLabel" label="FM.SEL.SELECT_LABEL" maxlength="150" class="input-medium" />
-                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />0
+                            <field type="text" name="field.selectLabel" value="field.selectLabel" label="FM.SEL.SELECT_LABEL" maxlength="150" class="input-medium" required="true"/>
+                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
                             <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
                             <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
                         </fieldset>
