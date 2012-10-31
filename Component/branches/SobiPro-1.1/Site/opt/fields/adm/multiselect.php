@@ -128,10 +128,4 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 		}
 		$attr[ 'params' ] = $properties;
 	}
-
-	public function onFieldEdit( &$view )
-	{
-		$view->assign( $this->options, 'options' );
-	}
 }
-?>

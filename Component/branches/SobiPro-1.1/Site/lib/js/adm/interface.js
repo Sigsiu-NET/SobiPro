@@ -41,7 +41,8 @@ SobiPro.jQuery( document ).ready( function ()
 							}
 							alert = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + c + '</div>';
 							SobiPro.jQuery( '#spMessage' ).html( alert );
-							SobiPro.jQuery.each( data.data.sets, function( i, val ) {
+							SobiPro.jQuery.each( data.data.sets, function ( i, val )
+							{
 								SobiPro.jQuery( '[name^="' + i + '"]' ).val( val );
 							} );
 							if ( data.data.required ) {
@@ -80,10 +81,15 @@ SobiPro.jQuery( document ).ready( function ()
 	{
 		SobiPro.jQuery( '[name="' + SobiPro.jQuery( this ).attr( 'rel' ) + '[]"]' ).prop( 'checked', SobiPro.jQuery( this ).is( ':checked' ) );
 	} );
+
 	SobiPro.jQuery( '[name="spReorder"]' ).click( function ( e )
 	{
 		e.preventDefault();
 		SobiPro.jQuery( '#SP_task' ).val( SobiPro.jQuery( this ).attr( 'rel' ) + '.reorder' );
 		SobiPro.jQuery( '#SPAdminForm' ).submit();
 	} );
+
+	if ( SobiPro.jQuery( '.spOrdering' ).val().indexOf( 'order' ) == -1 ) {
+		SobiPro.jQuery( '[name="spReorder"]' ).attr( 'disabled', 'disabled' );
+	}
 } );

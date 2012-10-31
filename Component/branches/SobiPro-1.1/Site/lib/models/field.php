@@ -330,7 +330,11 @@ class SPField extends SPObject
 	 */
 	public function __construct()
 	{
+		/** it's when a developer cannot his own convention
+		 * Bad Radek, very bad ;)
+		 * */
 		$this->id =& $this->fid;
+		$this->fieldType =& $this->type;
 	}
 
 	public function & init( $id )
@@ -483,7 +487,7 @@ class SPField extends SPObject
 		}
 		$this->priority = $this->priority ? $this->priority : 5;
 		/* if field is an admin filed - it cannot be required */
-		if ( $this->adminField || !( $this->editable ) || !( $this->enabled ) ) {
+		if ( ( $this->adminField || !( $this->editable ) || !( $this->enabled ) ) && ( SPRequest::task() != 'field.list' ) ) {
 			$this->required = false;
 		}
 	}

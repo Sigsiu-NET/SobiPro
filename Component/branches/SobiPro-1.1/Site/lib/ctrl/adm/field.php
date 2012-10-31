@@ -193,34 +193,33 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		SPLoader::loadClass( 'html.input' );
 		if ( $this->_fieldType ) {
 			$groups = $this->getFieldGroup( $this->_fieldType );
-			$fieldModel = SPFactory::Model( 'field', true );
-			$fieldModel->loadType( $this->_fieldType );
+			$field = SPFactory::Model( 'field', true );
+			$field->loadType( $this->_fieldType );
 		}
 		else {
 			$groups = $this->getFieldTypes();
+			/* create dummy field with initial values */
+			$field = array(
+				'name' => '',
+				'nid' => '',
+				'notice' => '',
+				'description' => '',
+				'adminField' => 0,
+				'enabled' => 1,
+				'fee' => 0,
+				'isFree' => 1,
+				'withLabel' => 1,
+				'version' => 1,
+				'editable' => 1,
+				'required' => 0,
+				'showIn' => 'details',
+				'editLimit' => '',
+				'version' => 1,
+				'inSearch' => 0,
+				'cssClass' => '',
+				'fieldType' => $this->_fieldType,
+			);
 		}
-
-		/* create dummy field with initial values */
-		$field = array(
-			'name' => '',
-			'nid' => '',
-			'notice' => '',
-			'description' => '',
-			'adminField' => 0,
-			'enabled' => 1,
-			'fee' => 0,
-			'isFree' => 1,
-			'withLabel' => 1,
-			'version' => 1,
-			'editable' => 1,
-			'required' => 0,
-			'showIn' => 'details',
-			'editLimit' => '',
-			'version' => 1,
-			'inSearch' => 0,
-			'cssClass' => '',
-			'fieldType' => $this->_fieldType,
-		);
 
 		/* get view class */
 		$view = SPFactory::View( 'field', true );
@@ -229,7 +228,9 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$view->assign( $groups, 'types' );
 		$view->assign( $field, 'field' );
 		$view->assign( $this->_task, 'task' );
-		$fieldModel->onFieldEdit( $view );
+		if ( $this->_fieldType ) {
+			$field->onFieldEdit( $view );
+		}
 
 		if ( SPLoader::translatePath( 'field.definitions.' . $this->_fieldType, 'adm', true, 'xml' ) ) {
 			/** Cae we have also override  */
@@ -471,8 +472,10 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$menu->addCustom( 'AMN.ENT_CAT', $tree->getTree() );
 
 		try {
-			$db->select( '*', 'spdb_field', array( 'section' => $sid ), $ord );
-			$results = $db->loadObjectList();
+			$results = SPFactory::db()
+					->select( '*', 'spdb_field', array( 'section' => $sid ), $ord )
+					->loadObjectList();
+//			SPConfig::debOut( $results );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
@@ -621,7 +624,15 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$state = '0';
 		$msg = null;
 		if ( !$fIds ) {
-			$fIds = array( SPRequest::int( 'fid' ) );
+			if ( SPRequest::int( 'fid' ) ) {
+				$fIds = array( SPRequest::int( 'fid' ) );
+			}
+			else {
+				$fIds = array();
+			}
+		}
+		if ( !( count( $fIds ) ) ) {
+			return array( 'msg' => Sobi::Txt( 'FMN.STATE_CHANGE_NO_ID' ), 'msgtype' => SPC::ERROR_MSG );
 		}
 		switch ( $task ) {
 			case 'hide':
