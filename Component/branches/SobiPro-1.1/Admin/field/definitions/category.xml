@@ -25,7 +25,7 @@
 							<field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no" />
 						</fieldset>
 						<fieldset>
-							<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true"/>
+							<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true" />
 							<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" />
 							<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
 							<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
