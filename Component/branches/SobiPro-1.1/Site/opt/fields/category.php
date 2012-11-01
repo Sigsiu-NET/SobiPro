@@ -74,6 +74,10 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
 		}
 		switch ( $this->method ) {
+			case 'fixed':
+				$this->showLabel = false;
+				return true;
+				break;
 			case 'tree':
 				$field = $this->tree();
 				break;
@@ -83,10 +87,6 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			case 'mselect':
 				$this->showLabel = false;
 				$field = $this->mSelect();
-				break;
-			case 'fixed':
-				$this->showLabel = false;
-				return true;
 				break;
 		}
 		if ( !$return ) {
@@ -355,6 +355,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				foreach ( $fixed as $cid ) {
 					$data[ ] = trim( $cid );
 				}
+			}
+			if ( !( count( $data ) ) ) {
+				throw new SPException( SPLang::e( 'FIELD_CC_FIXED_CID_NOT_SELECTED', $this->name ) );
 			}
 
 		}

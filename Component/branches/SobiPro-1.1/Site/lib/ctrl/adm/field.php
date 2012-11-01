@@ -332,12 +332,12 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			}
 		}
 		foreach ( $fids as $id ) {
-			$fc = SPLoader::loadModel( 'field', true );
-			$field = new $fc();
+			$field = SPFactory::Model( 'field', true );
 			$field->extend( $this->loadField( $id ) );
-			$m[ ] = $field->delete();
+			$msg = $field->delete();
+			SPMainFrame::msg( $msg );
+			$m[ ] = $msg;
 		}
-		SPMainFrame::msg( $m );
 		return $m;
 	}
 
