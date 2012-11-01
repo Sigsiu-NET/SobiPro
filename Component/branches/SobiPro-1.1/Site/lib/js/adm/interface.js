@@ -37,14 +37,18 @@ SobiPro.jQuery( document ).ready( function ()
 							count++;
 							c = '';
 							if ( count > 1 ) {
-								c = '<strong>&nbsp;(&nbsp;' + count + '&nbsp;)</strong>';
+								c = '&nbsp;(' + count + ')';
 							}
 							alert = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + c + '</div>';
 							SobiPro.jQuery( '#spMessage' ).html( alert );
-							SobiPro.jQuery.each( data.data.sets, function ( i, val )
-							{
-								SobiPro.jQuery( '[name^="' + i + '"]' ).val( val );
-							} );
+							try {
+								SobiPro.jQuery.each( data.data.sets, function ( i, val )
+								{
+									SobiPro.jQuery( '[name^="' + i + '"]' ).val( val );
+								} );
+							}
+							catch ( e ) {
+							}
 							if ( data.data.required ) {
 								SobiPro.jQuery( '[name^="' + data.data.required + '"]' )
 									.addClass( 'error' )
@@ -88,8 +92,11 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery( '#SP_task' ).val( SobiPro.jQuery( this ).attr( 'rel' ) + '.reorder' );
 		SobiPro.jQuery( '#SPAdminForm' ).submit();
 	} );
-
-	if ( SobiPro.jQuery( '.spOrdering' ).val().indexOf( 'order' ) == -1 ) {
-		SobiPro.jQuery( '[name="spReorder"]' ).attr( 'disabled', 'disabled' );
+	try {
+		if ( SobiPro.jQuery( '.spOrdering' ).val().indexOf( 'order' ) == -1 ) {
+			SobiPro.jQuery( '[name="spReorder"]' ).attr( 'disabled', 'disabled' );
+		}
+	}
+	catch ( e ) {
 	}
 } );
