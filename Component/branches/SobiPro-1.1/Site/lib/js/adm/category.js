@@ -8,24 +8,19 @@
 
 SobiPro.jQuery( document ).ready( function ()
 {
-	SpCcSwapMethod( SobiPro.jQuery( '#field-method' ).val() );
-	SobiPro.jQuery( '#field-method' ).change( function ()
+	SobiPro.jQuery( '.spCategoryChooser' ).click( function ()
 	{
-		SpCcSwapMethod( SobiPro.jQuery( this ).val() );
+		var requestUrl = SobiPro.jQuery( this ).attr( 'rel' );
+		SobiPro.jQuery( "#spCatsChooser" ).html( '<iframe id="spCatSelectFrame" src="' + requestUrl + '" style="width: 100%; height: 100%; border: none;"> </iframe>' );
+		SobiPro.jQuery( '#spCat' ).modal();
 	} );
-	function SpCcSwapMethod( method )
+	SobiPro.jQuery( '#spCatSelect' ).bind( "click", function ( e )
 	{
-		SobiPro.jQuery( '.spCcMethod' ).hide();
-		SobiPro.jQuery( '.spCcMethod :input' ).attr( 'disabled', 'disabled' );
-		SobiPro.jQuery( '#spCc-' + method + ' :input' ).removeAttr( 'disabled', 'disabled' );
-		SobiPro.jQuery( '#spCc-' + method ).show();
-		if ( method == 'fixed' ) {
-			SobiPro.jQuery( '#field-editable :button' ).attr( 'disabled', 'disabled' );
-			SobiPro.jQuery( '#field-editlimit' ).attr( 'disabled', 'disabled' );
+		if ( !( SobiPro.jQuery( '#SP_selectedCid' ).val() ) ) {
+			return;
 		}
-		else {
-			SobiPro.jQuery( '#field-editable :button' ).removeAttr( 'disabled', 'disabled' );
-			SobiPro.jQuery( '#field-editlimit' ).removeAttr( 'disabled', 'disabled' );
-		}
-	}
+		SobiPro.jQuery( '#selectedCatPath' ).html( SobiPro.jQuery( '#SP_selectedCatPath' ).val() );
+		SobiPro.jQuery( '#categoryParent' ).val( SobiPro.jQuery( '#SP_selectedCid' ).val() );
+		SobiPro.jQuery( '#categoryParentName' ).html( SobiPro.jQuery( '#SP_selectedCatName' ).val() );
+	} );
 } );

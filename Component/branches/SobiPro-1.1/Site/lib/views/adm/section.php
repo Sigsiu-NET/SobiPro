@@ -35,6 +35,7 @@ class SPSectionAdmView extends SPAdmView
 	 */
 	public function setTitle( $title )
 	{
+		$title = parent::setTitle( $title );
 		$name = $this->get( 'section.name' );
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
 		$title = Sobi::Txt( $title, array( 'name' => $name ) );

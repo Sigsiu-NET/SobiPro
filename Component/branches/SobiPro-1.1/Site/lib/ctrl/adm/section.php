@@ -166,26 +166,26 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 
 		$entriesName = SPFactory::config()->nameField()->get( 'name' );
 		$entriesField = SPFactory::config()->nameField()->get( 'nid' );
-		$view =& SPFactory::View( 'section', true );
+		$view = SPFactory::View( 'section', true );
 		$view->assign( $entriesName, 'entries_name' )
-			->assign( $entriesField, 'entries_field' )
-			->assign( $eLimit, '$eLimit' )
-			->assign( $cLimit, '$cLimit' )
-			->assign( $eLimStart, '$eLimStart' )
-			->assign( $cLimStart, '$cLimStart' )
-			->assign( $cCount, '$cCount' )
-			->assign( $eCount, '$eCount' )
-			->assign( $this->_task, 'task' )
-			->assign( $term, 'filter' )
-			->assign( $this->customCols(), 'fields' )
-			->assign( $this->_model, 'section' )
-			->assign( $categories, 'categories' )
-			->assign( $entries, 'entries' )
-			->assign( SPFactory::config()->nameField()->get( 'name' ), 'entries_name' )
-			->assign( $menu, 'menu' )
-			->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' ), 'ordering' )
-			->assign( Sobi::Section( true ), 'category' )
-			->addHidden( Sobi::Section(), 'pid' );
+				->assign( $entriesField, 'entries_field' )
+				->assign( $eLimit, '$eLimit' )
+				->assign( $cLimit, '$cLimit' )
+				->assign( $eLimStart, '$eLimStart' )
+				->assign( $cLimStart, '$cLimStart' )
+				->assign( $cCount, '$cCount' )
+				->assign( $eCount, '$eCount' )
+				->assign( $this->_task, 'task' )
+				->assign( $term, 'filter' )
+				->assign( $this->customCols(), 'fields' )
+				->assign( $this->_model, 'section' )
+				->assign( $categories, 'categories' )
+				->assign( $entries, 'entries' )
+				->assign( SPFactory::config()->nameField()->get( 'name' ), 'entries_name' )
+				->assign( $menu, 'menu' )
+				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' ), 'ordering' )
+				->assign( Sobi::Section( true ), 'category' )
+				->addHidden( Sobi::Section(), 'pid' );
 		Sobi::Trigger( 'Section', 'View', array( &$view ) );
 		$view->display();
 	}
@@ -317,9 +317,8 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	 */
 	private function editForm()
 	{
-		$class = SPLoader::loadView( 'section', true );
 		$this->_model->formatDatesToEdit();
-		$view = new $class();
+		$view = SPFactory::View( 'section', true );
 		$view->assign( $this->_task, 'task' );
 		$view->loadConfig( 'section.edit' );
 		$view->setTemplate( 'section.edit' );

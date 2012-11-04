@@ -71,7 +71,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			case 'hide':
 			case 'publish':
 				$r = true;
-			$this->state(  $this->_task == 'publish' );
+				$this->state( $this->_task == 'publish' );
 				break;
 			case 'toggle.enabled':
 			case 'toggle.approval':
@@ -98,7 +98,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 
 	protected function toggleState()
 	{
-		if( $this->_task == 'toggle.enabled' ) {
+		if ( $this->_task == 'toggle.enabled' ) {
 			$this->state( !( $this->_model->get( 'state' ) ) );
 		}
 		else {
@@ -307,16 +307,13 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		else {
 			$this->_model->checkOut();
 		}
-		$class = SPLoader::loadView( 'category', true );
-		$view = new $class();
-		$view->assign( $this->_model, 'category' );
-		$view->assign( $this->_task, 'task' );
-		$view->assign( SPFactory::CmsHelper()->userSelect( 'category.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true ), 'owner' );
-		$view->assign( $id, 'cid' );
-		$view->assign( SPFactory::registry()->get( 'current_section' ), 'sid' );
-		$view->loadConfig( 'category.edit' );
-		$view->setTemplate( 'category.edit' );
-		$view->addHidden( Sobi::Section(), 'pid' );
+		$view = SPFactory::View( 'category', true );
+		$view->assign( $this->_model, 'category' )
+				->assign( $this->_task, 'task' )
+				->assign( SPFactory::CmsHelper()->userSelect( 'category.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true ), 'owner' )
+				->assign( $id, 'cid' )
+				->assign( SPFactory::registry()->get( 'current_section' ), 'sid' )
+				->addHidden( Sobi::Section(), 'pid' );
 		Sobi::Trigger( 'Category', 'EditView', array( &$view ) );
 		$view->display();
 	}
@@ -396,7 +393,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			 * The current method could be very inefficient !!!
 			 */
 			if ( $field && method_exists( $field, 'sortByAdm' ) ) {
-				$fields = call_user_func_array( array( $field, 'sortByAdm' ) );
+				$fields = call_user_func_array( array( $field, 'sortByAdm' ), array() );
 			}
 			else {
 				$join = array(
@@ -419,79 +416,6 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		}
 		return $ord;
 	}
-
-//	/**
-//	 * Show category chooser
-//	 *
-//	 */
-//	protected function chooser( $menu = false )
-//	{
-//		$out = SPRequest::cmd( 'out', null );
-//		$exp = SPRequest::int( 'expand', 0 );
-//		$multi = SPRequest::int( 'multiple', 0 );
-//
-//		/* load the SigsiuTree class */
-//		$tree = SPLoader::loadClass( 'mlo.tree' );
-//
-//		/* create new instance */
-//		$tree = new $tree();
-//
-//		/* set link */
-//		if( $menu ) {
-//			$tree->setId( 'menuTree' );
-//			$link = Sobi::Url( array( 'sid' => '{sid}') );
-//		}
-//		else {
-//			$link = "javascript:SP_selectCat( '{sid}' )";
-//		}
-//		$tree->setHref( $link );
-//
-//		/* set the task to expand the tree */
-//		$tree->setTask( 'category.chooser' );
-//
-//		/* disable the category which is currently edited - category cannot be within it self */
-//		if( !$multi ) {
-//			$tree->disable( SPRequest::sid() );
-//			$tree->setPid( SPRequest::sid() );
-//		}
-//		else {
-//			$tree->disable( Sobi::Reg( 'current_section' ) );
-//		}
-//
-//		/* case we extending existing tree */
-//		if( $out == 'xml' && $exp ) {
-//			$pid = SPRequest::int( 'pid', 0 );
-//			$pid = $pid ? $pid : SPRequest::sid();
-//			$tree->setPid( $pid );
-//			$tree->disable( $pid );
-//			$tree->extend( $exp );
-//		}
-//
-//		/* otherwise we are creating new tree */
-//		else {
-//			/* init the tree for the current section */
-//			$tree->init( Sobi::Reg( 'current_section' ) );
-//			/* load model */
-//			if( !$this->_model ) {
-//				$this->setModel( SPLoader::loadModel( 'category' ) );
-//			}
-//			/* create new view */
-//			$class  = SPLoader::loadView( 'category', true );
-//			$view   = new $class();
-//			/* assign the task and the tree */
-//			$view->assign( $this->_task, 'task' );
-//			$view->assign( $tree, 'tree' );
-//			$view->assign( $this->_model, 'category' );
-//			/* select template to show */
-//			if( $multi ) {
-//				$view->setTemplate( 'category.mchooser' );
-//			}
-//			else {
-//				$view->setTemplate( 'category.chooser' );
-//			}
-//			$view->display();
-//		}
-//	}
 
 	/**
 	 * @param bool $up

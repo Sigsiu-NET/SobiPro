@@ -73,8 +73,12 @@ class SPTplParser
 				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
 					$this->_out[ ] = "<div class=\"spOutput\">";
 					$outclass = $element[ 'args' ][ 'params' ][ 'class' ];
+					$id = null;
+					if( isset( $element[ 'args' ][ 'params' ][ 'id' ] ) ) {
+						$id = ' id="'.$element[ 'args' ][ 'params' ][ 'id' ].'" ';
+					}
 					if ( $outclass ) {
-						$this->_out[ ] = "<span class=\"{$outclass}\">\n";
+						$this->_out[ ] = "<span class=\"{$outclass}\"{$id}>\n";
 					}
 					else {
 						$this->_out[ ] = "<span>\n";
@@ -121,6 +125,9 @@ class SPTplParser
 				$this->_out[ ] = $element[ 'attributes' ][ 'label' ];
 				$this->_out[ ] = '</div>';
 				break;
+			case 'text':
+				$this->_out[ ] = $element[ 'content' ];
+				break;
 			default:
 //				SPConfig::debOut( $element['type'] );
 				break;
@@ -157,6 +164,11 @@ class SPTplParser
 			case 'div':
 			case 'span':
 			case 'p':
+			case 'h1':
+			case 'h2':
+			case 'h3':
+			case 'a':
+			case 'button':
 				$a = null;
 				if ( count( $data[ 'attributes' ] ) ) {
 					foreach ( $data[ 'attributes' ] as $att => $value ) {
@@ -217,6 +229,11 @@ class SPTplParser
 			case 'div':
 			case 'span':
 			case 'p':
+			case 'h1':
+			case 'h2':
+			case 'h3':
+			case 'a':
+			case 'button':
 			case 'table':
 				$this->_out[ ] = "</{$data['type']}>";
 				break;

@@ -37,9 +37,9 @@ class SPCategoryAdmView extends SPSectionAdmView
 		$name = $this->get( 'category.name' );
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
 		$title = Sobi::Txt( $title, array( 'category_name' => $name ) );
-		SPFactory::header()->setTitle( $title );
-		$this->set( $title, 'site_title');
-		$this->set( $name, 'category_name');
+		$this->set( $name, 'category_name' );
+		$title = parent::setTitle( $title );
+		return $title;
 	}
 
 	/**
@@ -55,6 +55,7 @@ class SPCategoryAdmView extends SPSectionAdmView
 			case 'edit':
 			case 'add':
 				$this->edit();
+				$this->determineTemplate( 'category', 'edit' );
 				break;
 			case 'chooser':
 				$this->chooser();
@@ -69,31 +70,26 @@ class SPCategoryAdmView extends SPSectionAdmView
 	{
 		$pid = $this->get( 'category.parent' );
 		$path = null;
-		if( !$pid ) {
+		if ( !$pid ) {
 			$pid = SPRequest::int( 'pid' );
 		}
 		$this->assign( $pid, 'parent' );
 		$id = $this->get( 'category.id' );
-		if( $id ) {
+		if ( $id ) {
 			$this->addHidden( $id, 'category.id' );
 		}
-		$head =& SPFactory::header();
-//		$head->addJsFile( 'windoo' );
-//		$head->addCssFile( 'windoo.windoo');
-//		$head->addCssFile( 'windoo.aero');
-//		$head->addCssFile( 'windoo.aqua');
-//		$head->addCssFile( 'windoo.alphacube' );
-		if( $this->get( 'category.icon' ) && SPFs::exists( Sobi::Cfg( 'images.category_icons' ).DS.$this->get( 'category.icon' ) ) ) {
-			$i = Sobi::Cfg( 'images.category_icons_live' ).$this->get( 'category.icon' );
+		if ( $this->get( 'category.icon' ) && SPFs::exists( Sobi::Cfg( 'images.category_icons' ) . DS . $this->get( 'category.icon' ) ) ) {
+			$i = Sobi::FixPath( Sobi::Cfg( 'images.category_icons_live' ) . $this->get( 'category.icon' ) );
 			$this->assign( $i, 'category_icon' );
 		}
-		/* if edititng - get the full path. Otherwise get the path of the parent element */
+		/* if editing - get the full path. Otherwise get the path of the parent element */
 		$id = $id ? $id : $pid;
-		if( $id ) {
+		if ( $id ) {
 			$path = $this->parentPath( $id );
 		}
 		$this->assign( $path, 'parent_path' );
-		if( SPRequest::sid() ) {
+		$this->assign( $this->parentPath( $id, false, true ), 'parent_cat' );
+		if ( SPRequest::sid() ) {
 			$this->assign( Sobi::Url( array( 'task' => 'category.chooser', 'sid' => SPRequest::sid(), 'out' => 'html' ), true ), 'cat_chooser_url' );
 		}
 		elseif ( SPRequest::int( 'pid' ) ) {
@@ -106,13 +102,13 @@ class SPCategoryAdmView extends SPSectionAdmView
 	{
 		$pid = $this->get( 'category.parent' );
 		$path = null;
-		if( !$pid ) {
+		if ( !$pid ) {
 			$pid = SPRequest::sid();
 		}
 		$this->assign( $pid, 'parent' );
 		$id = $this->get( 'category.id' );
 		$id = $id ? $id : $pid;
-		if( $id ) {
+		if ( $id ) {
 			$path = $this->parentPath( $id );
 		}
 		$this->assign( $path, 'parent_path' );

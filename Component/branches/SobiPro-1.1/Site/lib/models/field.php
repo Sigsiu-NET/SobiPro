@@ -750,7 +750,7 @@ class SPField extends SPObject
 		if ( $this->_type && method_exists( $this->_type, $method ) ) {
 			$Args = array();
 			// http://www.php.net/manual/en/function.call-user-func-array.php#91503
-			foreach ( $args as $k => $arg ) {
+			foreach ( $args as $k => &$arg ) {
 				$Args[ $k ] =& $arg;
 			}
 			Sobi::Trigger( 'Field', ucfirst( $method ), array( &$Args ) );
