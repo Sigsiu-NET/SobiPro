@@ -292,7 +292,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
     public function searchSuggest( $data, $section, $startWith = true, $ids = false )
     {
         $terms = array();
-        $data = $startWith ? "{$data}%" : "%{$data}%";
+        echo $data = $startWith ? "{$data}%" : "%{$data}%";
         $request = array( 'baseData' );
         if ( $ids ) {
             $request[ ] = 'sid';

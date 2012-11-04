@@ -204,13 +204,13 @@ function SPJoomlaMenu()
 
 function SPSetObjectType( type )
 {
-	if( !( SPJmenuStrings.task ) ) {
+	if ( !( SPJmenuStrings.task ) ) {
 		SobiPro.jQuery( "#otype" ).val( type );
 	}
 }
 function SPReloadTemplates( type )
 {
-	if( ( SPJmenuStrings.task ) ) {
+	if ( ( SPJmenuStrings.task ) ) {
 		type = SPJmenuStrings.task;
 	}
 	sid = SobiPro.jQuery( "#spsection option:selected" ).val();

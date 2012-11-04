@@ -65,7 +65,7 @@
 					<cell type="link" value="name">
 						<url type="intern">
 							<param name="task" value="category.edit" />
-							<param name="sid" value="sid" parse="true" />
+							<param name="sid" value="id" parse="true" />
 						</url>
 					</cell>
 				</cell>

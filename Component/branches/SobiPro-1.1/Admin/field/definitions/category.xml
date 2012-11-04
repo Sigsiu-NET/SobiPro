@@ -3,7 +3,7 @@
 	<header>
 		<title value="FM.EDIT_FIELD" />
 		<file type="script" filename="bootstrap.tabs" />
-		<file type="script" filename="adm.category" />
+		<file type="script" filename="adm.fields.category" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
 		<button task="field.apply" type="apply">

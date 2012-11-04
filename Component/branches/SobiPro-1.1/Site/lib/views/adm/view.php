@@ -139,6 +139,7 @@ class SPAdmView extends SPObject implements SPView
 		else {
 			$this->loadConfig( "{$type}.{$template}" );
 			$this->setTemplate( "{$type}.{$template}" );
+			SPFactory::header()->addCssFile( 'adm.legacy' );
 		}
 	}
 
@@ -364,6 +365,18 @@ class SPAdmView extends SPObject implements SPView
 						$element[ 'content' ] = $node->nodeValue;
 					}
 					break;
+				case 'text':
+					$value = null;
+					if ( $node->attributes->getNamedItem( 'value' ) ) {
+						if ( $node->attributes->getNamedItem( 'parse' ) && $node->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
+							$value = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
+						}
+						else {
+							$value = Sobi::Txt( $node->attributes->getNamedItem( 'value' )->nodeValue );
+						}
+					}
+					$element[ 'content' ] = $value;
+					break;
 				case 'field':
 					$this->xmlField( $node, $element );
 					break;
@@ -566,7 +579,12 @@ class SPAdmView extends SPObject implements SPView
 						$element[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
 						break;
 					default:
-						$params[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+						if ( strstr( $attribute->nodeValue, 'var:[' ) ) {
+							$params[ $attribute->nodeName ] = $this->parseValue( $attribute->nodeValue );
+						}
+						else {
+							$params[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+						}
 						break;
 				}
 			}
@@ -716,7 +734,7 @@ class SPAdmView extends SPObject implements SPView
 							$this->addHidden(
 								SPRequest::string(
 									$field->attributes->getNamedItem( 'name' )->nodeValue,
-									$field->attributes->getNamedItem( 'default' )->nodeValue
+									$this->get( $field->attributes->getNamedItem( 'default' )->nodeValue )
 								),
 								$field->attributes->getNamedItem( 'name' )->nodeValue
 							);
@@ -935,8 +953,16 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	public function setTitle( $title )
 	{
+		if ( strstr( $title, '{' ) ) {
+			$title = SPFactory::config()->structuralData( 'json://' . $title );
+			$task = SPRequest::task();
+			$title = $title->$task;
+		}
+		$title = $this->parseValue( Sobi::Txt( $title ) );
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-		SPFactory::header()->setTitle( Sobi::Txt( $title ) );
+		SPFactory::header()->setTitle( $title );
+		$this->set( $title, 'site_title' );
+		return $title;
 	}
 
 	/**
@@ -1180,17 +1206,24 @@ class SPAdmView extends SPObject implements SPView
 	 * @param int $id
 	 * @return array
 	 */
-	protected function parentPath( $id, $parents = false )
+	protected function parentPath( $id, $parents = false, $last = false )
 	{
-		$path = SPFactory::config()->getParentPath( $id, true, $parents );
-		if ( is_array( $path ) ) {
-			if ( strstr( $this->get( 'task' ), 'edit' ) ) {
-				unset( $path[ count( $path ) - 1 ] );
+		static $path = null;
+		if ( !( $path ) ) {
+			$path = SPFactory::config()->getParentPath( $id, true, $parents );
+		}
+		if ( !( $last ) ) {
+			if ( is_array( $path ) ) {
+				if ( strstr( $this->get( 'task' ), 'edit' ) ) {
+					unset( $path[ count( $path ) - 1 ] );
+				}
+				$path = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), $path );
 			}
-			$path = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), $path );
 		}
 		else {
-			$path = null;
+			if ( is_array( $path ) ) {
+				$path = SPLang::clean( $path[ count( $path ) - 1 ] );
+			}
 		}
 		return SPLang::clean( $path );
 	}

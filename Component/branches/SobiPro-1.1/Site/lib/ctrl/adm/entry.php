@@ -81,14 +81,15 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 
     protected function search()
     {
-        $term = SPRequest::string( 'search', null, false /*, 'post' */ );
+	    $term = SPRequest::string( 'search', null, false /*, 'post' */ );
         $fid = Sobi::Cfg( 'entry.name_field' );
         /**
          * @var $field SPField
          */
         $field = SPFactory::Model( 'field' );
         $field->init( $fid );
-        $data = $field->searchSuggest( $term, Sobi::Section(), true, true );
+	    $s=Sobi::Section();
+        $data = $field->searchSuggest( $term, $s, true, true );
         SPFactory::mainframe()->cleanBuffer();
         echo json_encode( $data );
         exit;
