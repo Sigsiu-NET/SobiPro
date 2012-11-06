@@ -106,8 +106,7 @@ abstract class SPHtml_Input
 	public static function text( $name, $value = null, $params = null )
 	{
 		$params = self::params( $params );
-		$value = strlen( $value ) ? str_replace( '"', '&quot;', SPLang::entities( /*Sobi::Txt*/
-			( $value ), true ) ) : null;
+		$value = strlen( $value ) ? str_replace( '"', '&quot;', SPLang::entities( $value, true ) ) : null;
 		$f = "\n<input type=\"text\" name=\"{$name}\" value=\"{$value}\"{$params}/>\n";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
 		return "\n<!-- InputBox '{$name}' Output -->{$f}<!-- InputBox '{$name}' End -->\n\n";
@@ -624,5 +623,64 @@ abstract class SPHtml_Input
 		$header->addJsFile( 'calendar.calendar' );
 		$header->addJsFile( "calendar.lang.calendar-{$lang}" );
 		$header->addJsVarFile( 'calendar.init', md5( "{$dateFormat}_{$dateFormatTxt}" ), array( 'FORMAT' => $dateFormat, 'FORMAT_TXT' => $dateFormatTxt ) );
+	}
+
+	public static function datePicker( $name, $value, $dateFormat = 'Y-m-d H:i:s', $params = null, $icon = 'th' )
+	{
+		self::createLangFile();
+		$value = strtotime( $value );
+		/** The stupid JavaScript to PHP conversion. */
+		$jsDateFormat = str_replace(
+			array( 'y', 'Y', 'F', 'n', 'm', 'd', 'j' ),
+			array( 'yy', 'yyyy', 'MM', 'm', 'mm', 'dd', 'd' ),
+			$dateFormat
+		);
+		$valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat ) : null;
+		$params = self::checkArray( $params );
+		if ( !( isset( $params[ 'id' ] ) ) ) {
+			$params[ 'id' ] = SPLang::nid( $name );
+		}
+		SPFactory::header()
+				->addCssFile( 'bootstrap.datepicker' )
+				->addJsFile( array( 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ) );
+		$params = self::params( $params );
+		$f = "\n";
+		$f .= '<div class="input-append date spDatePicker" data-date-format="' . $jsDateFormat . '">';
+		$f .= "\n\t";
+		$f .= '<input type="text" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder"/>';
+		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '"/>';
+		$f .= "\n\t";
+		$f .= '<span class="add-on"><i class="icon-' . $icon . '"></i></span>';
+		$f .= "\n";
+		$f .= '</div>';
+		$f .= "\n";
+		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
+		return "\n<!-- Date Picker '{$name}' Output -->{$f}<!-- Date Picker '{$name}' End -->\n\n";
+	}
+
+	private static function createLangFile()
+	{
+		static $loaded = false;
+		if ( !( $loaded ) ) {
+			$lang = array(
+				'months' => Sobi::Txt( 'JS_CALENDAR_MONTHS' ),
+				'monthsShort' => Sobi::Txt( 'JS_CALENDAR_MONTHS_SHORT' ),
+				'days' => Sobi::Txt( 'JS_CALENDAR_DAYS' ),
+				'daysShort' => Sobi::Txt( 'JS_CALENDAR_DAYS_SHORT' ),
+				'daysMin' => Sobi::Txt( 'JS_CALENDAR_DAYS_MINI' ),
+				'today' => Sobi::Txt( 'JS_CALENDAR_TODAY' ),
+			);
+			$check = md5( serialize( $lang ) );
+			if ( !( SPLoader::JsFile( 'locale.' . Sobi::Lang( false ) . '_date_picker', false, true, false ) ) || !( stripos( SPFs::read( SPLoader::JsFile( 'locale.' . Sobi::Lang( false ) . '_date_picker', false, false, false ) ), $check ) ) ) {
+				foreach ( $lang as $k => $v ) {
+					$lang[ $k ] = explode( ',', $v );
+				}
+				$lang = json_encode( $lang );
+				$c = "\nvar spDatePickerLang={$lang}";
+				$c .= "\n//{$check}";
+				SPFs::write( SPLoader::JsFile( 'locale.' . Sobi::Lang( false ) . '_date_picker', false, false, false ), $c );
+			}
+		}
+		$loaded = true;
 	}
 }

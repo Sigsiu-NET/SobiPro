@@ -23,4 +23,13 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery( '#categoryParent' ).val( SobiPro.jQuery( '#SP_selectedCid' ).val() );
 		SobiPro.jQuery( '#categoryParentName' ).html( SobiPro.jQuery( '#SP_selectedCatName' ).val() );
 	} );
+	if ( SobiPro.jQuery( '#SP_categoryIconHolder' ).val() ) {
+		SobiPro.jQuery( '#catIcoChooser' ).html( '<img src="' + SobiPro.jQuery( '#SP_categoryIconHolder' ).val() + '" style="max-width: 55px; max-height: 55px;" />' );
+	}
+	SobiPro.jQuery( '#catIcoChooser' ).click( function ()
+	{
+		var requestUrl = SobiPro.jQuery( this ).attr( 'rel' );
+		SobiPro.jQuery( "#spIcoChooser" ).html( '<iframe id="spIcoSelectFrame" src="' + requestUrl + '" style="width: 650px; height: 500px; border: none;"> </iframe>' );
+		SobiPro.jQuery( '#spIco' ).modal();
+	} );
 } );

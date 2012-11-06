@@ -585,6 +585,7 @@ class SPAdmView extends SPObject implements SPView
 						else {
 							$params[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
 						}
+						$args[ $attribute->nodeName ] = $params[ $attribute->nodeName ];
 						break;
 				}
 			}
@@ -1161,7 +1162,7 @@ class SPAdmView extends SPObject implements SPView
 		}
 		Sobi::Trigger( 'Display', $this->name(), array( &$this ) );
 		$action = $this->key( 'action' );
-		echo '<div class="SobiPro">' . "\n";
+		echo '<div class="SobiPro" id="SobiPro">' . "\n";
 		echo $action ? "\n<form action=\"{$action}\" method=\"post\" name=\"adminForm\" id=\"SPAdminForm\" enctype=\"multipart/form-data\" accept-charset=\"utf-8\" >\n" : null;
 		include( $tpl );
 		if ( count( $this->_hidden ) ) {

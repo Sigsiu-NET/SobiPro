@@ -558,7 +558,7 @@ class SPConfig
 	 * @param string $format - section and key in the config
 	 * @return string
 	 */
-	public function date( $time = null, $format = 'date.publishing_format' )
+	public function date( $time = null, $formatKey = 'date.publishing_format', $format = null )
 	{
 		if ( $time == SPFactory::db()->getNullDate() ) {
 			return null;
@@ -569,8 +569,9 @@ class SPConfig
 		if ( !( $time ) || ( $time < 0 ) ) {
 			return 0;
 		}
-		$format = $this->key( $format, 'Y-m-d H:i:s' );
-		$format = str_replace( array( 'dd', 'y' ), array( 'd', 'Y' ), $format );
+		if ( !( $format ) ) {
+			$format = $this->key( $formatKey, 'Y-m-d H:i:s' );
+		}
 		$date = $time ? ( is_numeric( $time ) ? $time : strtotime( $time ) ) : time();
 		return date( $format, $date );
 	}
