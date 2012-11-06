@@ -25,6 +25,7 @@ $fc = $this->count( 'files' );
 	function spSelect( e )
 	{
 		parent.<?php $this->show( 'callback' ); ?>( e.src, e.alt );
+		e.focus();
 	}
 </script>
 <?php if( $dc ) { ?>

@@ -3,7 +3,7 @@
 	<header>
 		<title value="{'category.add':'ADD_NEW_CATEGORY','category.edit':'EDIT_EXISTING_CATEGORY'}" />
 		<file type="script" filename="adm.category" />
-		<file type="script" filename="bootstrap.tabs"/>
+		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiEdit">
 		<button task="category.apply" type="apply">
@@ -24,7 +24,7 @@
 						<fieldset>
 							<field type="text" name="category.name" value="category.name" label="CAT.CATEGORY_NAME" size="50" maxlength="255" required="true" />
 							<field type="text" name="category.nid" value="category.nid" label="CAT.CATEGORY_ALIAS" />
-							<field type="output" value="parent_path" label="CAT.CATEGORY_PATH" id="selectedCatPath" class="well"/>
+							<field type="output" value="parent_path" label="CAT.CATEGORY_PATH" id="selectedCatPath" class="well" />
 							<field type="button" label="CAT.SELECT_PARENT_BUTTON" name="parent_cat" value="parent_cat" class="btn spCategoryChooser" id="categoryParentName" rel="var:[cat_chooser_url]" />
 							<field type="text" name="categoryParent" value="category.parent" class="input-mini" readonly="readonly" id="categoryParent" />
 						</fieldset>
@@ -40,12 +40,41 @@
 						<fieldset>
 							<field type="textarea" name="field.notice" value="category.introtext" label="CAT.CATEGORY_INTROTEXT" editor="false" class="input-splarge" rows="2" style="" />
 							<field type="textarea" name="field.notice" value="category.description" label="CAT.CATEGORY_DESCRIPTION" editor="true" class="input-splarge" rows="2" style="" />
-							<field type="button" label="CAT.SELECT_CATEGORY_ICON" name="cat_ico" value="category_icon" class="btn" id="cat_ico" rel="var:[icon_chooser_url]" />
+							<field type="button" label="CAT.SELECT_CATEGORY_ICON" name="cat_ico" class="btn" id="catIcoChooser" rel="var:[icon_chooser_url]" />
+							<field type="select" label="CAT.SHOW_ICON" name="category.showIcon" class="input-small">
+								<values>
+									<option value="2" label="OPT_GLOBAL" />
+									<option value="1" label="OPT_YES" />
+									<option value="0" label="OPT_NO" />
+								</values>
+							</field>
+							<field type="select" label="CAT.SHOW_INTROTEXT" name="category.showIntrotext" class="input-small">
+								<values>
+									<option value="2" label="OPT_GLOBAL" />
+									<option value="1" label="OPT_YES" />
+									<option value="0" label="OPT_NO" />
+								</values>
+							</field>
+							<field type="select" label="CAT.PARSE_CAT_DES" name="category.parseDesc" class="input-small">
+								<values>
+									<option value="2" label="OPT_GLOBAL" />
+									<option value="1" label="OPT_YES" />
+									<option value="0" label="OPT_NO" />
+								</values>
+							</field>
 						</fieldset>
 					</div>
 				</div>
 			</tab>
+			<tab label="CAT.CATEGORY_PUBLISHING">
+				<fieldset>
+					<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="span2" dateFormat="Y-m-d H:i:s" icon="edit"/>
+					<field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="span2" dateFormat="Y-m-d H:i:s" icon="unlock"/>
+					<field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class="span2" dateFormat="Y-m-d H:i:s" icon="lock"/>
+				</fieldset>
+			</tab>
 		</tabs>
+
 		<div class="modal hide" id="spCat" style="width:500px;">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">×</button>
@@ -65,6 +94,22 @@
 				</a>
 			</div>
 		</div>
+		<div class="modal hide" id="spIco" style="width:700px;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<h3>
+					<text value="CAT.JS_SELECT_CAT_ICON" />
+				</h3>
+			</div>
+			<div class="modal-body">
+				<div id="spIcoChooser"></div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal">
+					<text value="CAT.CATEGORY_CLOSE_WINDOW" />
+				</a>
+			</div>
+		</div>
 	</body>
 	<config>
 		<action value="index.php?option=com_sobipro" />
@@ -75,7 +120,7 @@
 			<field name="selectedCatName" default="" />
 			<field name="selectedCatPath" default="" />
 			<field name="categoryIconHolder" default="category_icon" />
-			<field name="category.icon" default="category_icon" />
+			<field name="category.icon" default="category.icon" />
 		</hidden>
 	</config>
 </definition>
