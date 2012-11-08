@@ -52,7 +52,9 @@
 .SobiPro a [class^="icon-"],
 .SobiPro a [class*=" icon-"] {
   display: inline-block;
-  text-decoration: inherit;
+  text-decoration: none;
+  /* Sigsiu.NET */
+
 }
 .SobiPro .icon-large:before {
   vertical-align: middle;
@@ -723,4 +725,3 @@
 .SobiPro .icon-user-md:before {
   content: "\f200";
 }
-
