@@ -146,7 +146,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
             }
             SPFactory::cache()->purgeSectionVars();
         }
-        Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), $approve ? 'Entry has been approved' : 'Entry has been un-approved' );
+        Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), $approve ? Sobi::Txt( 'EMN.APPROVED' ) : Sobi::Txt( 'EMN.UNAPPROVED' ) );
     }
 
     /**
@@ -178,7 +178,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
                 Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
             }
         }
-        Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), 'Entries are re-ordered now' );
+        Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'EMN.REORDERED' ) );
     }
 
     /**
