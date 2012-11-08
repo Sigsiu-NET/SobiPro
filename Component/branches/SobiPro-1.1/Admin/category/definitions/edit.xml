@@ -28,9 +28,6 @@
 							<field type="button" label="CAT.SELECT_PARENT_BUTTON" name="parent_cat" value="parent_cat" class="btn spCategoryChooser" id="categoryParentName" rel="var:[cat_chooser_url]" />
 							<field type="text" name="categoryParent" value="category.parent" class="input-mini" readonly="readonly" id="categoryParent" />
 						</fieldset>
-						<fieldset>
-							<field type="states" name="category.enabled" value="category.enabled" label="ENABLED" prefix="yes_no" />
-						</fieldset>
 					</div>
 				</div>
 			</tab>
@@ -68,9 +65,13 @@
 			</tab>
 			<tab label="CAT.CATEGORY_PUBLISHING">
 				<fieldset>
+					<field type="states" name="category.enabled" value="category.enabled" label="ENABLED" prefix="yes_no" />
+				</fieldset>
+				<fieldset>
 					<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="span2" dateFormat="Y-m-d H:i:s" icon="edit"/>
 					<field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="span2" dateFormat="Y-m-d H:i:s" icon="unlock"/>
 					<field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class="span2" dateFormat="Y-m-d H:i:s" icon="lock"/>
+					<field type="users" label="AUTHOR" name="category.owner" value="category.owner" class="span2"/>
 				</fieldset>
 			</tab>
 		</tabs>
@@ -119,8 +120,8 @@
 			<field name="selectedCid" default="" />
 			<field name="selectedCatName" default="" />
 			<field name="selectedCatPath" default="" />
-			<field name="categoryIconHolder" default="category_icon" />
-			<field name="category.icon" default="category.icon" />
+			<field name="categoryIconHolder" value="category_icon" />
+			<field name="category.icon" value="category.icon" />
 		</hidden>
 	</config>
 </definition>

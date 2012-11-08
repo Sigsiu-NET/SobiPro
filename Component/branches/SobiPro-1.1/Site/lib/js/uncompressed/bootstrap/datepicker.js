@@ -713,7 +713,7 @@
 	SobiPro.jQuery.fn.spDatepicker.defaults = {
 	};
 	SobiPro.jQuery.fn.spDatepicker.Constructor = SPDatepicker;
-	var dates = SobiPro.jQuery.fn.spDatepicker.dates = spDatePickerLang;
+	var dates = SobiPro.jQuery.fn.spDatepicker.dates = { en: spDatePickerLang };
 //	{
 //		en:{
 //			days:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],

@@ -14,6 +14,6 @@
  * $Date$
  * $Revision$
  * $Author$
- * $HeadURL:$
+ * $HeadURL$
  */
 SobiPro.setJq( jQuery.noConflict() );
