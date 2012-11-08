@@ -625,6 +625,14 @@ abstract class SPHtml_Input
 		$header->addJsVarFile( 'calendar.init', md5( "{$dateFormat}_{$dateFormatTxt}" ), array( 'FORMAT' => $dateFormat, 'FORMAT_TXT' => $dateFormatTxt ) );
 	}
 
+	/**
+	 * @param $name - field name
+	 * @param $value - field value
+	 * @param string $dateFormat - date format in PHP
+	 * @param null $params - additional parameters
+	 * @param string $icon - field icon
+	 * @return string
+	 */
 	public static function datePicker( $name, $value, $dateFormat = 'Y-m-d H:i:s', $params = null, $icon = 'th' )
 	{
 		self::createLangFile();
@@ -682,5 +690,30 @@ abstract class SPHtml_Input
 			}
 		}
 		$loaded = true;
+	}
+
+	public static function users( $name, $value, $groups = null, $params = null, $icon = 'user' )
+	{
+		$params = self::checkArray( $params );
+		if ( !( isset( $params[ 'id' ] ) ) ) {
+			$params[ 'id' ] = SPLang::nid( $name );
+		}
+		$user = null;
+		SPFactory::header()
+				->addCssFile( 'bootstrap.datepicker' )
+				->addJsFile( array( 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ) );
+		$params = self::params( $params );
+		$f = "\n";
+		$f .= '<div class="input-append">';
+		$f .= "\n\t";
+		$f .= '<input type="text" value="' . $user . '" ' . $params . ' name="' . $name . 'Holder"/>';
+		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '"/>';
+		$f .= "\n\t";
+		$f .= '<span class="add-on"><i class="icon-' . $icon . '"></i></span>';
+		$f .= "\n";
+		$f .= '</div>';
+		$f .= "\n";
+		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
+		return "\n<!-- User Picker '{$name}' Output -->{$f}<!-- User Picker '{$name}' End -->\n\n";
 	}
 }

@@ -732,13 +732,14 @@ class SPAdmView extends SPObject implements SPView
 					$hidden = $node->childNodes;
 					foreach ( $hidden as $field ) {
 						if ( !( strstr( $field->nodeName, '#' ) ) ) {
-							$this->addHidden(
-								SPRequest::string(
-									$field->attributes->getNamedItem( 'name' )->nodeValue,
-									$this->get( $field->attributes->getNamedItem( 'default' )->nodeValue )
-								),
-								$field->attributes->getNamedItem( 'name' )->nodeValue
-							);
+							$value = null;
+							if( $field->attributes->getNamedItem( 'value' ) && $field->attributes->getNamedItem( 'value' )->nodeValue ) {
+								$value = $this->get( $field->attributes->getNamedItem( 'value' )->nodeValue );
+							}
+							else {
+								$value = $field->attributes->getNamedItem( 'default' )->nodeValue;
+							}
+							$this->addHidden( SPRequest::string( $field->attributes->getNamedItem( 'name' )->nodeValue, $value ), $field->attributes->getNamedItem( 'name' )->nodeValue );
 						}
 					}
 					break;
