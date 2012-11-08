@@ -25,9 +25,9 @@
 		<message id="spMessage"/>
 		<header label="FM.FIELDS_FOR" icon="SobiFieldList">
 			<div class="btn-group pull-right form-horizontal">
-				<field type="select" name="forder" selected="ordering" label="FMN_ORDER_BY"
-				       class="input-large spOrdering">
+				<field type="select" name="forder" selected="ordering" class="input-large spOrdering">
 					<values>
+                        <values label="EMN_ORDER_BY" />
 						<option value="fid.asc" label="FMN.ORDER_BY_ID_ASC"/>
 						<option value="fid.desc" label="FMN.ORDER_BY_ID_DESC"/>
 						<option value="name.asc" label="FMN.ORDER_BY_NAME_ASC"/>

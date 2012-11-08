@@ -22,8 +22,8 @@
 		<message id="spMessage"/>
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 			<div class="btn-group pull-right" id="spEntriesFilterHead">
-				<field type="text" name="sp_entries_filter" id="spEntriesFilter" values="filter" placeholder="EMN_FILTER" class="input-medium"/>
-				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-medium spOrdering"/>
+				<field type="text" name="sp_entries_filter" id="spEntriesFilter" values="filter" placeholder="EMN_FILTER" class="input-large"/>
+				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-large spOrdering"/>
 			</div>
 		</header>
 		<table>
@@ -49,13 +49,13 @@
 				</cell>
 				<!--<cell type="text" value="field_price"/>-->
 				<cells value="customFields" class="center"/>
-				<cell type="ticker" value="state" class="center">
+				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}">
 					<url type="intern">
 						<param name="task" value="entry.toggle.enabled"/>
 						<param name="sid" value="id" parse="true"/>
 					</url>
 				</cell>
-				<cell type="ticker" value="approved" class="center" icons="{'0':'cog','1':'asterisk'}">
+				<cell type="ticker" value="approved" class="center" icons="{'0':'thumbs-down','1':'thumbs-up'}">
 					<url type="intern">
 						<param name="task" value="entry.toggle.approval"/>
 						<param name="sid" value="id" parse="true"/>
