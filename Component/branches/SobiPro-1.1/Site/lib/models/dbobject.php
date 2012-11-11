@@ -161,7 +161,7 @@ abstract class SPDBObject extends SPObject
 		'approved' => 'bool',
 		'confirmed' => 'bool',
 		'counter' => 'int',
-		'createdTime' => 'datetime',
+		'createdTime' => 'int',
 		'defURL' => 'string',
 		'metaAuthor' => 'string',
 		'metaDesc' => 'string',
@@ -179,8 +179,8 @@ abstract class SPDBObject extends SPObject
 		'parent' => 'int',
 		'state' => 'int',
 		'stateExpl' => 'string',
-		'validSince' => 'datetime',
-		'validUntil' => 'datetime',
+		'validSince' => 'int',
+		'validUntil' => 'int',
 	);
 	/**
 	 * @var array
@@ -192,19 +192,19 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function __construct()
 	{
-		$this->validUntil 	= SPFactory::config()->date( SPFactory::db()->getNullDate(), 'date.db_format' );
-		$this->createdTime	= SPFactory::config()->date( time(), 'date.db_format' );
-		$this->validSince 	= SPFactory::config()->date( time(), 'date.db_format' );
+		$this->validUntil = SPFactory::config()->date( SPFactory::db()->getNullDate(), 'date.db_format' );
+		$this->createdTime = SPFactory::config()->date( time(), 'date.db_format' );
+		$this->validSince = SPFactory::config()->date( time(), 'date.db_format' );
 		Sobi::Trigger( 'CreateModell', $this->name(), array( &$this ) );
 	}
 
 	public function formatDatesToEdit()
 	{
-		if( $this->validUntil ) {
+		if ( $this->validUntil ) {
 			$this->validUntil = SPFactory::config()->date( $this->validUntil, 'date.publishing_format' );
 		}
-		$this->createdTime	= SPFactory::config()->date( $this->createdTime, 'date.publishing_format' );
-		$this->validSince 	= SPFactory::config()->date( $this->validSince, 'date.publishing_format' );
+		$this->createdTime = SPFactory::config()->date( $this->createdTime, 'date.publishing_format' );
+		$this->validSince = SPFactory::config()->date( $this->validSince, 'date.publishing_format' );
 	}
 
 	/**
@@ -214,9 +214,8 @@ abstract class SPDBObject extends SPObject
 	public function changeState( $state, $reason = null )
 	{
 		try {
-			SPFactory::db()->update( 'spdb_object', array( 'state' => ( int ) $state, 'stateExpl' => $reason ), array( 'id' => $this->id ) );
-		}
-		catch ( SPException $x ) {
+			SPFactory::db()->update( 'spdb_object', array( 'state' => ( int )$state, 'stateExpl' => $reason ), array( 'id' => $this->id ) );
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 		SPFactory::cache()->purgeSectionVars();
@@ -228,13 +227,12 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function checkIn()
 	{
-		if( $this->id ) {
+		if ( $this->id ) {
 			$this->cout = 0;
 			$this->coutTime = null;
 			try {
 				SPFactory::db()->update( 'spdb_object', array( 'coutTime' => $this->coutTime, 'cout' => $this->cout ), array( 'id' => $this->id ) );
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
@@ -245,15 +243,14 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function checkOut()
 	{
-		if( $this->id ) {
+		if ( $this->id ) {
 			/* @var SPdb $db */
 			$config =& SPFactory::config();
 			$this->cout = Sobi::My( 'id' );
 			$this->coutTime = $config->date( ( time() + $config->key( 'editing.def_cout_time', 3600 ) ), 'date.db_format' );
 			try {
 				SPFactory::db()->update( 'spdb_object', array( 'coutTime' => $this->coutTime, 'cout' => $this->cout ), array( 'id' => $this->id ) );
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
@@ -266,20 +263,17 @@ abstract class SPDBObject extends SPObject
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( $this->id ) );
 		try {
 			SPFactory::db()->delete( 'spdb_object', array( 'id' => $this->id ) );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		try {
 			SPFactory::db()->delete( 'spdb_relations', array( 'id' => $this->id, 'oType' => $this->type() ) );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		try {
 			SPFactory::db()->delete( 'spdb_language', array( 'id' => $this->id, 'oType' => $this->type() ) );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 	}
@@ -291,16 +285,16 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function getChilds( $type = 'entry', $recursive = false, $state = 0, $name = false )
 	{
-		$childs = SPFactory::cache()->getVar( 'childs_'.$type.( $recursive ? '_recursive' : '' ).( $name ? '_full' : '' ).$state, $this->id );
-		if( $childs ) {
+		$childs = SPFactory::cache()->getVar( 'childs_' . $type . ( $recursive ? '_recursive' : '' ) . ( $name ? '_full' : '' ) . $state, $this->id );
+		if ( $childs ) {
 			return $childs == SPC::NO_VALUE ? array() : $childs;
 		}
-		$db	=& SPFactory::db();
+		$db = SPFactory::db();
 		$childs = array();
 		try {
 			$cond = array( 'pid' => $this->id );
-			if( $state ) {
-				$cond[ 'so.state' ] = $state ;
+			if ( $state ) {
+				$cond[ 'so.state' ] = $state;
 				$tables = $db->join(
 					array(
 						array( 'table' => 'spdb_object', 'as' => 'so', 'key' => 'id' ),
@@ -313,39 +307,38 @@ abstract class SPDBObject extends SPObject
 				$db->select( array( 'id', 'oType' ), 'spdb_relations', $cond );
 			}
 			$results = $db->loadAssocList( 'id' );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_CHILDS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		if( $recursive && count( $results ) ) {
+		if ( $recursive && count( $results ) ) {
 			foreach ( $results as $cid ) {
-				$this->rGetChilds( $results, $cid, $state );
+				$this->rGetChilds( $results, $cid, $type );
 			}
 		}
-		if( count( $results ) ) {
-			if( $type == 'all' ) {
+		if ( count( $results ) ) {
+			if ( $type == 'all' ) {
 				foreach ( $results as $id => $r ) {
 					$childs[ $id ] = $r[ 'id' ];
 				}
 			}
 			else {
 				foreach ( $results as $id => $r ) {
-					if( $r[ 'oType' ] == $type ) {
+					if ( $r[ 'oType' ] == $type ) {
 						$childs[ $id ] = $id;
 					}
 				}
 			}
 		}
-		if( $name && count( $childs ) ) {
+		if ( $name && count( $childs ) ) {
 			$names = SPLang::translateObject( $childs, 'name', $type );
-			if( is_array( $names ) && !empty( $names ) ) {
+			if ( is_array( $names ) && !empty( $names ) ) {
 				foreach ( $childs as $i => $id ) {
 					$childs[ $i ] = $names[ $id ][ 'value' ];
 				}
 			}
 		}
-		if( !$state ) {
-			SPFactory::cache()->addVar( $childs, 'childs_'.$type.( $recursive ? '_recursive' : '' ).( $name ? '_full' : '' ).$state, $this->id );
+		if ( !$state ) {
+			SPFactory::cache()->addVar( $childs, 'childs_' . $type . ( $recursive ? '_recursive' : '' ) . ( $name ? '_full' : '' ) . $state, $this->id );
 		}
 		return $childs;
 	}
@@ -355,25 +348,27 @@ abstract class SPDBObject extends SPObject
 	 * @param string $type
 	 * @param int $id
 	 */
-	private function rGetChilds( &$results, $id )
+	private function rGetChilds( &$results, $id, $type = 'entry' )
 	{
-		if( is_array( $id ) ) {
+		if ( is_array( $id ) ) {
 			$id = $id[ 'id' ];
 		}
 		/* @var SPdb $db */
-		$db	=& SPFactory::db();
+		$db =& SPFactory::db();
 		try {
 			$cond = array( 'pid' => $id );
+			if ( $type ) {
+				$cond[ 'oType' ] = $type;
+			}
 			$db->select( array( 'id', 'oType' ), 'spdb_relations', $cond );
 			$r = $db->loadAssocList( 'id' );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_CHILDS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		if( count( $r ) ) {
+		if ( count( $r ) ) {
 			foreach ( $r as $id => $rs ) {
 				$results[ $id ] = $rs;
-				$this->rGetChilds( $results, $id );
+				$this->rGetChilds( $results, $id, $type );
 			}
 		}
 	}
@@ -391,32 +386,32 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function getRequest( $prefix = null, $request = 'POST' )
 	{
-		$prefix = $prefix ? $prefix.'_' : null;
+		$prefix = $prefix ? $prefix . '_' : null;
 		/* get data types of my  properties */
 		$properties = get_object_vars( $this );
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ).'Start', array( &$properties ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', array( &$properties ) );
 		/* and of the parent proporties */
 		$types = array_merge( $this->types(), self::$types );
 		foreach ( $properties as $property => $values ) {
 			/* if this is an internal variable */
-			if( substr( $property, 0, 1 ) == '_' ) {
+			if ( substr( $property, 0, 1 ) == '_' ) {
 				continue;
 			}
 			/* if no data type has been declared */
-			if( !isset( $types[ $property ] ) ) {
+			if ( !isset( $types[ $property ] ) ) {
 				continue;
 			}
 			/* if there was no data for this property ( not if it was just empty ) */
-			if( !( SPRequest::exists( $prefix.$property, $request ) ) ) {
+			if ( !( SPRequest::exists( $prefix . $property, $request ) ) ) {
 				continue;
 			}
 			/* if the declared data type has not handler in request class */
-			if( !method_exists( 'SPRequest', $types[ $property ] ) ) {
+			if ( !method_exists( 'SPRequest', $types[ $property ] ) ) {
 				Sobi::Error( $this->name(), SPLang::e( 'Method %s does not exists', $types[ $property ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				continue;
 			}
 			/* now we get it ;) */
-			$this->$property = SPRequest::$types[ $property ]( $prefix.$property, null, $request );
+			$this->$property = SPRequest::$types[ $property ]( $prefix . $property, null, $request );
 		}
 		/* trigger plugins */
 		Sobi::Trigger( 'getRequest', $this->name(), array( &$this ) );
@@ -439,11 +434,10 @@ abstract class SPDBObject extends SPObject
 	{
 		$count = true;
 		Sobi::Trigger( 'CountVisit', ucfirst( $this->type() ), array( &$count, $this->id ) );
-		if( $this->id && $count ) {
+		if ( $this->id && $count ) {
 			try {
 				SPFactory::db()->update( 'spdb_object', array( 'counter' => ( $reset ? '0' : '++' ) ), array( 'id' => $this->id ), 1 );
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_INC_COUNTER_DB', $x->getMessage() ), SPC::ERROR, 0, __LINE__, __FILE__ );
 			}
 		}
@@ -455,34 +449,37 @@ abstract class SPDBObject extends SPObject
 	{
 		$this->version++;
 		/* get current data */
-		$this->updatedTime 	= SPRequest::now();
+		$this->updatedTime = SPRequest::now();
 		$this->updaterIP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		$this->updater = Sobi::My( 'id' );
 		$this->nid = SPLang::nid( $this->nid );
+		if ( !( $this->nid ) ) {
+			$this->nid = SPLang::nid( $this->name );
+		}
 		/* get THIS class properties */
 		$properties = get_class_vars( __CLASS__ );
 
 		/* if new object */
-		if( !$this->id ) {
-			$this->createdTime 	= $this->createdTime ? $this->createdTime : $this->updatedTime;
-			$this->owner		= $this->owner ? $this->owner : $this->updater;
-			$this->ownerIP 		= $this->updaterIP;
+		if ( !$this->id ) {
+			$this->createdTime = $this->createdTime ? $this->createdTime : $this->updatedTime;
+			$this->owner = $this->owner ? $this->owner : $this->updater;
+			$this->ownerIP = $this->updaterIP;
 		}
 		/* just a security check to avoid mistakes */
 		else {
 			$obj = SPFactory::object( $this->id );
 			if ( $obj->oType != $this->oType ) {
-				Sobi::Error( 'Object Save',  sprintf( 'Serious security violation. Trying to save an object which claims to be an %s but it is a %s. Task was %s',  $this->oType, $obj->oType, SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+				Sobi::Error( 'Object Save', sprintf( 'Serious security violation. Trying to save an object which claims to be an %s but it is a %s. Task was %s', $this->oType, $obj->oType, SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 				exit;
 			}
 		}
 
 		/* @var SPdb $db */
-		$db	=& SPFactory::db();
+		$db = SPFactory::db();
 		$db->transaction();
 
-		/* get database colums and their ordering */
-		$cols	= $db->getColumns( 'spdb_object' );
+		/* get database columns and their ordering */
+		$cols = $db->getColumns( 'spdb_object' );
 		$values = array();
 
 		/*
@@ -491,20 +488,25 @@ abstract class SPDBObject extends SPObject
 		//$this->approved = Sobi::Can( $this->type(), 'manage', 'own' );
 		$this->approved = Sobi::Can( $this->type(), 'publish', 'own' );
 		/* if not published, check if user can manage own and if yes, publish it */
-		if( !( $this->state ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
+		if ( !( $this->state ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			$this->state = Sobi::Can( $this->type(), 'publish', 'own' );
 		}
+
+		$this->validSince = $this->validSince ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validSince ) : null;
+		$this->createdTime = $this->createdTime ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->createdTime ) : null;
+		$this->validUntil = $this->validUntil ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validUntil ) : null;
 
 		/* and sort the properties in the same order */
 		foreach ( $cols as $col ) {
 			$values[ $col ] = array_key_exists( $col, $properties ) ? $this->$col : '';
 		}
+
 		/* trigger plugins */
 		Sobi::Trigger( 'save', $this->name(), array( &$this ) );
 		/* try to save */
 		try {
 			/* if new object */
-			if( !$this->id ) {
+			if ( !$this->id ) {
 				$db->insert( 'spdb_object', $values );
 				$this->id = $db->insertid();
 			}
@@ -512,8 +514,7 @@ abstract class SPDBObject extends SPObject
 			else {
 				$db->update( 'spdb_object', $values, array( 'id' => $this->id ) );
 			}
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			$db->rollback();
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_OBJECT_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
@@ -523,23 +524,22 @@ abstract class SPDBObject extends SPObject
 		$labels = array();
 		$defLabels = array();
 		foreach ( $attributes as $attr ) {
-			if( $this->has( $attr ) ) {
-				$labels[] = array( 'sKey' => $attr, 'sValue' => $this->$attr, 'language' => Sobi::Lang(), 'id' => $this->id, 'oType' => $this->type(), 'fid' => 0 );
-				if( Sobi::Lang() != Sobi::DefLang() ) {
-					$defLabels[] = array( 'sKey' => $attr, 'sValue' => $this->$attr, 'language' => Sobi::DefLang(), 'id' => $this->id, 'oType' => $this->type(), 'fid' => 0 );
+			if ( $this->has( $attr ) ) {
+				$labels[ ] = array( 'sKey' => $attr, 'sValue' => $this->$attr, 'language' => Sobi::Lang(), 'id' => $this->id, 'oType' => $this->type(), 'fid' => 0 );
+				if ( Sobi::Lang() != Sobi::DefLang() ) {
+					$defLabels[ ] = array( 'sKey' => $attr, 'sValue' => $this->$attr, 'language' => Sobi::DefLang(), 'id' => $this->id, 'oType' => $this->type(), 'fid' => 0 );
 				}
 			}
 		}
 
 		/* save translatable properties */
-		if( count( $labels ) ) {
+		if ( count( $labels ) ) {
 			try {
-				if( Sobi::Lang() != Sobi::DefLang() ) {
+				if ( Sobi::Lang() != Sobi::DefLang() ) {
 					$db->insertArray( 'spdb_language', $defLabels, false, true );
 				}
 				$db->insertArray( 'spdb_language', $labels, true );
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_OBJECT_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
 		}
@@ -560,18 +560,14 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function extend( $obj )
 	{
-		if( !empty( $obj ) ) {
+		if ( !empty( $obj ) ) {
 			foreach ( $obj as $k => $v ) {
 				$this->_set( $k, $v );
 			}
 		}
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$obj ) );
 		$this->loadTable();
-		// causing some date formatting issues
-//		$this->createdTime	= SPFactory::config()->date( $this->createdTime, 'Y-m-d H:i:s' );
-//		$this->updatedTime	= SPFactory::config()->date( $this->updatedTime, 'Y-m-d H:i:s' );
-//		$this->validSince 	= SPFactory::config()->date( $this->validSince, 'Y-m-d H:i:s' );
-		$this->validUntil 	= SPFactory::config()->date( $this->validUntil, 'Y-m-d H:i:s' );
+		$this->validUntil = SPFactory::config()->date( $this->validUntil, 'Y-m-d H:i:s' );
 	}
 
 	/**
@@ -579,14 +575,14 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function & init( $id = 0 )
 	{
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ).'Start', array( &$id ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', array( &$id ) );
 		$this->id = $id ? $id : $this->id;
-		if( $this->id ) {
+		if ( $this->id ) {
 			try {
 				$obj = SPFactory::object( $this->id );
-				if( !empty( $obj ) ) {
+				if ( !empty( $obj ) ) {
 					/* ensure that the id was right */
-					if( $obj->oType == $this->oType ) {
+					if ( $obj->oType == $this->oType ) {
 						$this->extend( $obj );
 					}
 					else {
@@ -595,11 +591,10 @@ abstract class SPDBObject extends SPObject
 				}
 				$this->createdTime = SPFactory::config()->date( $this->createdTime );
 				$this->validSince = SPFactory::config()->date( $this->validSince );
-				if( $this->validUntil ) {
+				if ( $this->validUntil ) {
 					$this->validUntil = SPFactory::config()->date( $this->validUntil );
 				}
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_OBJECT_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
 			$this->loadTable();
@@ -618,17 +613,16 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function loadTable()
 	{
-		if( $this->has( '_dbTable' ) && $this->_dbTable ) {
+		if ( $this->has( '_dbTable' ) && $this->_dbTable ) {
 			try {
 				$db =& SPFactory::db();
-				$db->select( '*', $this->_dbTable, array( 'id' => $this->id )  );
+				$db->select( '*', $this->_dbTable, array( 'id' => $this->id ) );
 				$obj = $db->loadObject();
 				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$obj ) );
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
-			if( !empty( $obj ) ) {
+			if ( !empty( $obj ) ) {
 				foreach ( $obj as $k => $v ) {
 					$this->_set( $k, $v );
 				}
@@ -645,28 +639,27 @@ abstract class SPDBObject extends SPObject
 	protected function translate()
 	{
 		$attributes = array_merge( $this->translatable(), self::$translatable );
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ).'Start', array( &$attributes ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', array( &$attributes ) );
 		$db =& SPFactory::db();
 		try {
 			$db->select( 'sValue, sKey', 'spdb_language', array( 'id' => $this->id, 'sKey' => $attributes, 'language' => Sobi::Lang(), 'oType' => $this->type() ) );
 			$labels = $db->loadAssocList( 'sKey' );
 			/* get labels in the default lang first */
-			if( Sobi::Lang( false ) != Sobi::DefLang() ) {
+			if ( Sobi::Lang( false ) != Sobi::DefLang() ) {
 				$db->select( 'sValue, sKey', 'spdb_language', array( 'id' => $this->id, 'sKey' => $attributes, 'language' => Sobi::DefLang(), 'oType' => $this->type() ) );
 				$dlabels = $db->loadAssocList( 'sKey' );
-				if( count( $dlabels ) ) {
+				if ( count( $dlabels ) ) {
 					foreach ( $dlabels as $k => $v ) {
-						if( !( isset( $labels[ $k ] ) ) || !( $labels[ $k ] ) ) {
+						if ( !( isset( $labels[ $k ] ) ) || !( $labels[ $k ] ) ) {
 							$labels[ $k ] = $v;
 						}
 					}
 				}
 			}
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		if( count( $labels ) ) {
+		if ( count( $labels ) ) {
 			foreach ( $labels as $k => $v ) {
 				$this->_set( $k, $v[ 'sValue' ] );
 			}
@@ -680,12 +673,11 @@ abstract class SPDBObject extends SPObject
 	 */
 	protected function _set( $var, $val )
 	{
-		if( $this->has( $var ) ) {
-			if( is_array( $this->$var ) && is_string( $val )  && strlen( $val ) > 2 ) {
+		if ( $this->has( $var ) ) {
+			if ( is_array( $this->$var ) && is_string( $val ) && strlen( $val ) > 2 ) {
 				try {
 					$val = SPConfig::unserialize( $val, $var );
-				}
-				catch ( SPException $x ) {
+				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( '%s.', $x->getMessage() ), SPC::NOTICE, 0, __LINE__, __FILE__ );
 				}
 			}
@@ -694,14 +686,14 @@ abstract class SPDBObject extends SPObject
 	}
 
 	/**
-	 *  @return bool
+	 * @return bool
 	 */
 	public function isCheckedOut()
 	{
-		if(
-		$this->cout &&
-		$this->cout != Sobi::My( 'id' ) &&
-		strtotime( $this->coutTime ) > time()
+		if (
+			$this->cout &&
+			$this->cout != Sobi::My( 'id' ) &&
+			strtotime( $this->coutTime ) > time()
 		) {
 			return true;
 		}
@@ -717,15 +709,14 @@ abstract class SPDBObject extends SPObject
 	public function set( $var, $val )
 	{
 		static $types = array();
-		if( !count( $types ) ) {
+		if ( !count( $types ) ) {
 			$types = array_merge( $this->types(), self::$types );
 		}
-		if( $this->has( $var ) && isset( $types[ $var ] ) ) {
-			if( is_array( $this->$var ) && is_string( $val ) && strlen( $val ) > 2 ) {
+		if ( $this->has( $var ) && isset( $types[ $var ] ) ) {
+			if ( is_array( $this->$var ) && is_string( $val ) && strlen( $val ) > 2 ) {
 				try {
 					$val = SPConfig::unserialize( $val, $var );
-				}
-				catch ( SPException $x ) {
+				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( '%s.', $x->getMessage() ), SPC::NOTICE, 0, __LINE__, __FILE__ );
 				}
 			}
@@ -742,4 +733,3 @@ abstract class SPDBObject extends SPObject
 	}
 
 }
-?>

@@ -36,13 +36,12 @@
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 6px;
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
   -webkit-box-shadow: inset 0 1px 0 white;
   -moz-box-shadow: inset 0 1px 0 #ffffff;
   box-shadow: inset 0 1px 0 white;
 }
 .SobiPro .firstspan {
-  margin-left: 0px!important;
+  margin-left: 0px !important;
 }
 #SPAdmToolbar .dropdown-menu .SpDropDownBt li {
   min-width: 160px;
@@ -63,7 +62,6 @@
   background-image: -o-linear-gradient(top, #a90000, #890000);
   background-image: linear-gradient(to bottom, #a90000, #890000);
   background-image: -moz-linear-gradient(top, #a90000, #890000);
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffa90000', endColorstr='#ff890000', GradientType=0);
   border-color: #a90000 #a90000 #890000;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -235,8 +233,6 @@ div.spScreenTitle h4 {
   background-repeat: repeat-x;
   border-color: #a90000 #a90000 #890000;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffa90000', endColorstr='#ff890000', GradientType=0);
-  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 .SobiPro .btn-sobipro:hover,
 .SobiPro .btn-sobipro:active,
@@ -292,7 +288,7 @@ div.spScreenTitle h4 {
   color: grey;
 }
 .SobiPro .SpCellCenter .sp-mini-bt {
-  padding: 4px 4px!important;
+  padding: 4px 4px !important;
 }
 #SPAdminForm .input-splarge {
   width: 400px;
@@ -343,4 +339,14 @@ input.sp-input-micro[type="text"] {
 }
 .spicon-48-SobiFieldList {
   background-image: url('../../../../media/sobipro/48x48/fields.png');
+}
+.user-selector .response .btn {
+  margin: 5px;
+  width: 200px;
+}
+.user-selector .btn-block {
+  margin-top: 15px;
+}
+.user-selector .response {
+  min-height: 300px;
 }

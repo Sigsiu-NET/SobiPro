@@ -19,30 +19,13 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-SPLoader::loadController( 'txt' );
+SPLoader::loadController( 'user' );
 
 /**
  * @author Radek Suski
- * @version 1.0
- * @created 15-Jul-2010 18:17:28
+ * @version 1.1
+ * @created Fri, Nov 9, 2012 10:50:29
  */
-class SPJsTxtAdm extends SPJsTxt
+class SPUserCtrlAdm extends SPUserCtrl
 {
-	protected function js()
-	{
-		$lang = SPLang::jsLang( true );
-		if( count( $lang ) ) {
-			foreach ( $lang as $term => $text ) {
-				unset( $lang[ $term ] );
-				$term = str_replace( 'SP.JS_', null, $term );
-				$lang[ $term ] = $text;
-			}
-		}
-		if( !( SPRequest::int( 'deb' ) ) ) {
-			SPFactory::mainframe()->cleanBuffer();
-			header( 'Content-type: text/javascript' );
-		}
-		echo 'SobiPro.setLang( '.json_encode( $lang ).' );';
-		exit;
-	}
 }

@@ -692,28 +692,93 @@ abstract class SPHtml_Input
 		$loaded = true;
 	}
 
-	public static function users( $name, $value, $groups = null, $params = null, $icon = 'user' )
+	public static function userSelector( $name, $value, $groups = null, $params = null, $icon = 'user', $header = 'USER_SELECT_HEADER', $format = '%user', $orderBy = 'id' )
 	{
 		$params = self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
 			$params[ 'id' ] = SPLang::nid( $name );
 		}
 		$user = null;
-		SPFactory::header()
-				->addCssFile( 'bootstrap.datepicker' )
-				->addJsFile( array( 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ) );
+		SPFactory::header()->addJsFile( 'user_selector' );
+		$user = SPUser::getBaseData( ( int )$value );
+		$settings = array(
+			'groups' => $groups,
+			'format' => $format,
+			'user' => Sobi::My( 'id' ),
+			'ordering' => $orderBy,
+			'time' => microtime( true ),
+		);
+		$session = SPFactory::user()->getUserState( 'userSelector', null, array() );
+		if ( count( $session ) ) {
+			foreach ( $session as $id => $data ) {
+				if ( microtime( true ) - $data[ 'time' ] > 3600 ) {
+					unset( $session[ $id ] );
+				}
+			}
+		}
+		$ssid = md5( microtime() . Sobi::My( 'id' ) );
+		$session[ $ssid ] = $settings;
+		SPFactory::user()->setUserState( 'userSelector', $session );
+		$userData = null;
+		if ( $user ) {
+			$replacements = array();
+			preg_match_all( '/\%[a-z]*/', $format, $replacements );
+			$placeholders = array();
+			if ( isset( $replacements[ 0 ] ) && count( $replacements[ 0 ] ) ) {
+				foreach ( $replacements[ 0 ] as $placeholder ) {
+					$placeholders[ ] = str_replace( '%', null, $placeholder );
+				}
+			}
+			if ( count( $replacements ) ) {
+				foreach ( $placeholders as $attribute ) {
+					if ( isset( $user->$attribute ) ) {
+						$format = str_replace( '%' . $attribute, $user->$attribute, $format );
+					}
+				}
+				$userData = $format;
+			}
+		}
+		$modal = '<div class="response btn-group" data-toggle="buttons-radio"></div><br/><button class="btn btn-block btn-primary hide more" type="button">' . Sobi::Txt( 'LOAD_MORE' ) . '</button>';
+		$filter = '<input type="text" placeholder="' . Sobi::Txt( 'FILTER' ) . '" class="search pull-right" name="q">';
 		$params = self::params( $params );
 		$f = "\n";
+		$f .= '<div class="user-selector">';
 		$f .= '<div class="input-append">';
 		$f .= "\n\t";
-		$f .= '<input type="text" value="' . $user . '" ' . $params . ' name="' . $name . 'Holder"/>';
-		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '"/>';
+		$f .= '<input type="text" value="' . $userData . '" ' . $params . ' name="' . $name . 'Holder" class="btn trigger user-name"/>';
+		$f .= '<span class="add-on trigger"><i class="icon-' . $icon . '"></i></span>';
+		$f .= '</div>';
+		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '" rel="selected"/>';
+		$f .= '<input type="hidden" value="' . $ssid . '" name="' . $name . 'Ssid"/>';
+		$f .= '<input type="hidden" value="1" name="' . SPFactory::mainframe()->token() . '"/>';
 		$f .= "\n\t";
-		$f .= '<span class="add-on"><i class="icon-' . $icon . '"></i></span>';
 		$f .= "\n";
+		$f .= self::modalWindow( Sobi::Txt( $header ).$filter, $params[ 'id' ] . 'window', $modal );
 		$f .= '</div>';
 		$f .= "\n";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
 		return "\n<!-- User Picker '{$name}' Output -->{$f}<!-- User Picker '{$name}' End -->\n\n";
+	}
+
+	public static function modalWindow( $header, $id, $content = null, $classes = 'modal hide', $closeText = 'CLOSE', $saveText = 'SAVE', $style = null )
+	{
+		$html = null;
+		if ( $style ) {
+			$style = " style=\"{$style}\"";
+		}
+		$html .= '<div class="' . $classes . '" id="' . $id . '"' . $style . '>
+					<div class="modal-header">
+						<h3>' . ( $header ) . '</h3>
+					</div>
+					<div class="modal-body">
+					' . $content . '
+					</div>
+					<div class="modal-footer">
+						<a href="#" class="btn" data-dismiss="modal">' . Sobi::Txt( $closeText ) . '</a>
+						<a href="#" id="' . $id . 'Save" class="btn btn-primary save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>
+					</div>
+				</div>
+		';
+		return $html;
 	}
 }

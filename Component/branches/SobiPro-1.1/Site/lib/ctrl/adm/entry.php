@@ -81,7 +81,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 
     protected function search()
     {
-	    $term = SPRequest::string( 'search', null, false /*, 'post' */ );
+	    $term = SPRequest::string( 'search', null, false, 'post' );
         $fid = Sobi::Cfg( 'entry.name_field' );
         /**
          * @var $field SPField

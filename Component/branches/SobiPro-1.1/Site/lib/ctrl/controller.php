@@ -213,11 +213,12 @@ abstract class SPController extends SPObject implements SPControl
 
 	/**
 	 * Save an object
-	 *
 	 * @param bool $apply
+	 * @param bool $clone
 	 */
 	protected function save( $apply, $clone = false )
 	{
+		$sets = array();
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
@@ -243,17 +244,21 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		$this->_model->save();
 		$sid = $this->_model->get( 'id' );
+		$sets[ 'sid' ] = $sid;
+		$sets[ $this->_type .'.nid' ] = $this->_model->get( 'nid' );
+		$sets[ $this->_type .'.id' ] = $sid;
 		if ( $apply || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_type ) ) );
+				$this->response( Sobi::Url( array( $this->_type . '.edit', 'sid' => $sid ) ), $msg );
 			}
 			else {
-				$msg = Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) );
+				$msg = Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' );
+				$this->response( Sobi::Url( array( $this->_type . '.edit', 'sid' => $sid ) ), $msg, false, 'success', array( 'sets' => $sets ) );
 			}
-			Sobi::Redirect( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg );
 		}
 		else {
-			Sobi::Redirect( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) ) );
+			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) ) );
 		}
 	}
 
