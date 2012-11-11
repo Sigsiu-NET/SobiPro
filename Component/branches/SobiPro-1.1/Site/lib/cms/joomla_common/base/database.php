@@ -325,7 +325,7 @@ class SPJoomlaDb
             foreach ( $where as $col => $val ) {
                 $equal = '=';
                 $not = false;
-                // sort of workaround for incomaptibility between RC3 and RC4
+                // sort of workaround for incompatibility between RC3 and RC4
                 if ( $col == 'language' && !( count( $val ) ) ) {
                     $val = 'en-GB';
                 }
@@ -380,7 +380,7 @@ class SPJoomlaDb
                      */
                 elseif ( is_array( $val ) ) {
                     $v = array();
-                    foreach ( $val as $i => $k ) {
+                    foreach ( $val as $k ) {
                         if ( strlen( $k ) || $k == SPC::NO_VALUE ) {
                             $k = $k == SPC::NO_VALUE ? null : $k;
                             $k = $this->escape( $k );

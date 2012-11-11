@@ -366,11 +366,10 @@ class SPJomlaUser extends JUser
 		if( !count( $ids ) ) {
 			return false;
 		}
-		/* @var SPdb $db */
-		$db =& SPFactory::db();
 		try {
-			$db->select( '*', '#__users', array( 'id' => $ids ) );
-			$data = $db->loadObjectList( 'id' );
+			$data = SPFactory::db()
+					->select( '*', '#__users', array( 'id' => $ids ) )
+					->loadObjectList( 'id' );
 		}
 		catch ( SPException $x ) {
 			Sobi::Error( 'user', SPLang::e( 'CANNOT_GET_USERS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );

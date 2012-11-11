@@ -583,7 +583,7 @@ class SPAdmView extends SPObject implements SPView
 							$params[ $attribute->nodeName ] = $this->parseValue( $attribute->nodeValue );
 						}
 						else {
-							$params[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+							$params[ $attribute->nodeName ] = ( $attribute->nodeValue );
 						}
 						$args[ $attribute->nodeName ] = $params[ $attribute->nodeName ];
 						break;

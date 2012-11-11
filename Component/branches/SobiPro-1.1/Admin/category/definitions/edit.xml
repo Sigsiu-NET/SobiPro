@@ -35,24 +35,24 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="textarea" name="field.notice" value="category.introtext" label="CAT.CATEGORY_INTROTEXT" editor="false" class="input-splarge" rows="2" style="" />
-							<field type="textarea" name="field.notice" value="category.description" label="CAT.CATEGORY_DESCRIPTION" editor="true" class="input-splarge" rows="2" style="" />
+							<field type="textarea" name="category.introtext" value="category.introtext" label="CAT.CATEGORY_INTROTEXT" editor="false" class="input-splarge" rows="2" style="" />
+							<field type="textarea" name="category.description" value="category.description" label="CAT.CATEGORY_DESCRIPTION" editor="true" class="input-splarge" rows="2" style="" />
 							<field type="button" label="CAT.SELECT_CATEGORY_ICON" name="cat_ico" class="btn" id="catIcoChooser" rel="var:[icon_chooser_url]" />
-							<field type="select" label="CAT.SHOW_ICON" name="category.showIcon" class="input-small">
+							<field type="select" label="CAT.SHOW_ICON" name="category.showIcon" selected="category.showIcon" class="input-small">
 								<values>
 									<option value="2" label="OPT_GLOBAL" />
 									<option value="1" label="OPT_YES" />
 									<option value="0" label="OPT_NO" />
 								</values>
 							</field>
-							<field type="select" label="CAT.SHOW_INTROTEXT" name="category.showIntrotext" class="input-small">
+							<field type="select" label="CAT.SHOW_INTROTEXT" name="category.showIntrotext" selected="category.showIntrotext" class="input-small">
 								<values>
 									<option value="2" label="OPT_GLOBAL" />
 									<option value="1" label="OPT_YES" />
 									<option value="0" label="OPT_NO" />
 								</values>
 							</field>
-							<field type="select" label="CAT.PARSE_CAT_DES" name="category.parseDesc" class="input-small">
+							<field type="select" label="CAT.PARSE_CAT_DES" name="category.parseDesc" selected="category.parseDesc" class="input-small" >
 								<values>
 									<option value="2" label="OPT_GLOBAL" />
 									<option value="1" label="OPT_YES" />
@@ -64,15 +64,35 @@
 				</div>
 			</tab>
 			<tab label="CAT.CATEGORY_PUBLISHING">
-				<fieldset>
-					<field type="states" name="category.enabled" value="category.enabled" label="ENABLED" prefix="yes_no" />
-				</fieldset>
-				<fieldset>
-					<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="span2" dateFormat="Y-m-d H:i:s" icon="edit"/>
-					<field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="span2" dateFormat="Y-m-d H:i:s" icon="unlock"/>
-					<field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class="span2" dateFormat="Y-m-d H:i:s" icon="lock"/>
-					<field type="users" label="AUTHOR" name="category.owner" value="category.owner" class="span2"/>
-				</fieldset>
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset>
+							<field type="states" name="category.state" value="category.state" label="ENABLED" prefix="yes_no" />
+						</fieldset>
+						<fieldset>
+							<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="span2" dateFormat="Y-m-d H:i:s" icon="edit" />
+							<field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="span2" dateFormat="Y-m-d H:i:s" icon="unlock" />
+							<field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class="span2" dateFormat="Y-m-d H:i:s" icon="lock" />
+							<field type="userSelector" label="AUTHOR" name="category.owner" value="category.owner" class="span2" format="%name (%id)" />
+							<field type="output" value="category.version" label="VERSION" class="badge" />
+						</fieldset>
+						<fieldset label="COUNTER">
+							<field type="button" label="CAT.RESET_COUNT" value="category.counter" name="counter" class="btn counter-reset" rel="category" />
+						</fieldset>
+					</div>
+				</div>
+			</tab>
+			<tab label="META_DATA">
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset>
+							<field type="textarea" name="category.metaDesc" value="category.metaDesc" label="META_DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+							<field type="textarea" name="category.metaKeys" value="category.metaKeys" label="META_KEYS" editor="false" class="input-splarge" rows="2" style="" />
+							<field type="text" name="category.metaAuthor" value="category.metaAuthor" label="AUTHOR" size="50" maxlength="255" required="true" />
+							<field type="text" name="category.metaRobots" value="category.metaRobots" label="META_ROBOTS" />
+						</fieldset>
+					</div>
+				</div>
 			</tab>
 		</tabs>
 
@@ -122,6 +142,7 @@
 			<field name="selectedCatPath" default="" />
 			<field name="categoryIconHolder" value="category_icon" />
 			<field name="category.icon" value="category.icon" />
+			<field name="method" default="xhr"/>
 		</hidden>
 	</config>
 </definition>

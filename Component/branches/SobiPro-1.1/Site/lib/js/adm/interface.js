@@ -16,6 +16,7 @@ SobiPro.jQuery( document ).ready( function ()
 		if ( task.length ) {
 			e.preventDefault();
 			if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
+				SPTriggerFrakingWYSIWYGEditors();
 				req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
 				buttons = {};
 				SobiPro.jQuery( SobiPro.jQuery( '#SPAdminForm' ).find( ':button' ) ).each( function ( i, b )
@@ -98,5 +99,54 @@ SobiPro.jQuery( document ).ready( function ()
 		}
 	}
 	catch ( e ) {
+	}
+
+	try {
+		SobiPro.jQuery( '.counter-reset' ).each( function ( i, e )
+		{
+			"use strict";
+			var el = SobiPro.jQuery( e );
+			if ( el.html() == 0 ) {
+				el.attr( 'disabled', 'disabled' );
+			}
+		} );
+	}
+	catch ( e ) {
+	}
+	SobiPro.jQuery( '.counter-reset' ).click( function ()
+	{
+		"use strict";
+		var button = SobiPro.jQuery( this );
+		if ( button.html() ) {
+			SobiPro.jQuery.ajax( {
+				'type':'post',
+				'url':SobiProAdmUrl.replace( '%task%', button.attr( 'rel' ) + '.resetCounter' ),
+				'data':{
+					'sid':SobiPro.jQuery( '[name^="' + button.attr( 'rel' ) + '.id"]' ).val(),
+					'format':'raw'
+				},
+				'dataType':'json',
+				success:function ()
+				{
+					button.html( 0 );
+					button.attr( 'disabled', 'disabled' );
+				}
+			} );
+		}
+		else {
+			button.attr( 'disabled', 'disabled' );
+		}
+	} )
+	function SPTriggerFrakingWYSIWYGEditors()
+	{
+		"use strict";
+		var events = [ 'unload', 'onbeforeunload', 'onunload' ];
+		for ( var i = 0; i < events.length; i++ ) {
+			try { window.dispatchEvent( events[ i ] ); } catch ( e ) {}
+			try { window.fireEvent( events[ i ] ); } catch ( e ) {}
+			try { SobiPro.jQuery( document ).triggerHandler( events[ i ] ); } catch ( e ) {}
+		}
+		tinyMCE.triggerSave();
+
 	}
 } );

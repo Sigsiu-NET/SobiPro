@@ -33,3 +33,12 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery( '#spIco' ).modal();
 	} );
 } );
+function SPSelectIcon( src, name )
+{
+	SobiPro.jQuery( '#SP_categoryIconHolder' ).val( src );
+	SobiPro.jQuery( '[name^="category.icon"]' ).val( name );
+	if ( SobiPro.jQuery( '#SP_categoryIconHolder' ).val() ) {
+		SobiPro.jQuery( '#catIcoChooser' ).html( '<img src="' + SobiPro.jQuery( '#SP_categoryIconHolder' ).val() + '" style="max-width: 55px; max-height: 55px;" />' );
+	}
+	SobiPro.jQuery( '#spIco' ).modal( 'hide' );
+}
