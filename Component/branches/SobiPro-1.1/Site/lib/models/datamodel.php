@@ -45,4 +45,3 @@ interface SPDataModel
 	public function type();
 	public function update();
 }
-?>
