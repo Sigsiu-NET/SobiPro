@@ -578,6 +578,9 @@ class SPAdmView extends SPObject implements SPView
 					case 'label':
 						$element[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
 						break;
+					case 'placeholder':
+						$params[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+						break;
 					default:
 						if ( strstr( $attribute->nodeValue, 'var:[' ) ) {
 							$params[ $attribute->nodeName ] = $this->parseValue( $attribute->nodeValue );

@@ -22,7 +22,7 @@
 		<message id="spMessage"/>
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 			<div class="btn-group pull-right" id="spEntriesFilterHead">
-				<field type="text" name="sp_entries_filter" id="spEntriesFilter" values="filter" placeholder="EMN_FILTER" class="input-medium"/>
+				<field type="text" name="sp_entries_filter" id="spEntriesFilter" values="filter" placeholder="FILTER" class="input-medium"/>
 				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-medium spOrdering"/>
 			</div>
 		</header>

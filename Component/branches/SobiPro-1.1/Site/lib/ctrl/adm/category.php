@@ -90,10 +90,15 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 
 	protected function state( $state )
 	{
-		$this->authorise( $this->_task );
-		$this->_model->changeState( $state );
-		$state = ( int )( $this->_task == 'publish' );
-		Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'CAT.STATE_CHANGED', $state ) );
+		if ( $this->_model->get( 'id' ) ) {
+			$this->authorise( $this->_task );
+			$this->_model->changeState( $state );
+			$state = ( int )( $this->_task == 'publish' );
+			$this->response( Sobi::Back(), Sobi::Txt( $state ? 'CAT.PUBLISHED' : 'CAT.UNPUBLISHED' ), false );
+		}
+		else {
+			$this->response( Sobi::Back(), Sobi::Txt( 'CHANGE_NO_ID' ), false, SPC::ERROR_MSG );
+		}
 	}
 
 	protected function toggleState()
@@ -111,8 +116,16 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 	private function approval( $approve )
 	{
 		$sids = SPRequest::arr( 'c_sid', array() );
-		if ( !count( $sids ) ) {
-			$sids = array( $this->_model->get( 'id' ) );
+		if ( !( count( $sids ) ) ) {
+			if ( $this->_model->get( 'id' ) ) {
+				$sids = array( $this->_model->get( 'id' ) );
+			}
+			else {
+				$sids = array();
+			}
+		}
+		if ( !( count( $sids ) ) ) {
+			$this->response( Sobi::Back(), Sobi::Txt( 'CHANGE_NO_ID' ), false, SPC::ERROR_MSG );
 		}
 		foreach ( $sids as $sid ) {
 			try {
@@ -121,7 +134,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
-		Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), $approve ? 'Category has been approved' : 'Category has been un-approved' );
+		$this->response( Sobi::Back(), Sobi::Txt( $approve ? 'CAT.APPROVED' : 'CAT.UNAPPROVED' ), false );
 	}
 
 	/**

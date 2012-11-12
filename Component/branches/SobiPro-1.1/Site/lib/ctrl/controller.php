@@ -133,6 +133,7 @@ abstract class SPController extends SPObject implements SPControl
 					$r = true;
 					$this->_model->changeState( $this->_task == 'publish' );
 					$state = ( int )( $this->_task == 'publish' );
+					$this->response( Sobi::Back(), Sobi::Txt(  $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
 					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'MSG.OBJ_CHANGED', array( 'type' => Sobi::Txt( $this->_type ) ) ) );
 				}
 				break;
@@ -162,8 +163,13 @@ abstract class SPController extends SPObject implements SPControl
 			case 'delete':
 				if ( $this->authorise( 'delete', '*' ) ) {
 					$r = true;
-					$this->_model->delete();
-					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'MSG.OBJ_DELETED', array( 'type' => Sobi::Txt( $this->_type ) ) ) );
+					if ( $this->_model->get( 'id' ) ) {
+						$this->_model->delete();
+						$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_DELETED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
+					}
+					else {
+						$this->response( Sobi::Back(), Sobi::Txt( 'CHANGE_NO_ID' ), false, SPC::ERROR_MSG );
+					}
 				}
 				break;
 			case 'view':
