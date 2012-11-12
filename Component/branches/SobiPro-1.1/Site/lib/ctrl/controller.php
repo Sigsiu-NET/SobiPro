@@ -144,19 +144,20 @@ abstract class SPController extends SPObject implements SPControl
 			case 'cancel':
 				if ( defined( 'SOBI_ADM_PATH' ) ) {
 					$this->checkIn( SPRequest::sid(), false );
-					Sobi::Redirect( Sobi::Back(), null, null, true );
+					$this->response( Sobi::Back() );
 				}
 				$this->checkIn( SPRequest::int( 'sid' ) );
 				$r = true;
 				if ( SPRequest::int( 'sid' ) ) {
-					Sobi::Redirect( Sobi::Url( array( 'sid' => SPRequest::sid() ) ) );
+					$url = Sobi::Url( array( 'sid' => SPRequest::sid() ) );
 				}
 				elseif ( SPRequest::int( 'pid' ) ) {
-					Sobi::Redirect( Sobi::Url( array( 'sid' => SPRequest::int( 'pid' ) ) ) );
+					$url = Sobi::Url( array( 'sid' => SPRequest::int( 'pid' ) ) );
 				}
 				else {
-					Sobi::Redirect( Sobi::Url( array( 'sid' => Sobi::Section() ) ) );
+					$url = Sobi::Url( array( 'sid' => Sobi::Section() ) );
 				}
+				$this->response( $url );
 				break;
 			case 'delete':
 				if ( $this->authorise( 'delete', '*' ) ) {
@@ -245,8 +246,8 @@ abstract class SPController extends SPObject implements SPControl
 		$this->_model->save();
 		$sid = $this->_model->get( 'id' );
 		$sets[ 'sid' ] = $sid;
-		$sets[ $this->_type .'.nid' ] = $this->_model->get( 'nid' );
-		$sets[ $this->_type .'.id' ] = $sid;
+		$sets[ $this->_type . '.nid' ] = $this->_model->get( 'nid' );
+		$sets[ $this->_type . '.id' ] = $sid;
 		if ( $apply || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_type ) ) );
@@ -410,7 +411,7 @@ abstract class SPController extends SPObject implements SPControl
 	protected function response( $url, $message = null, $redirect = true, $type = 'message', $data = array() )
 	{
 		if ( SPRequest::cmd( 'method', null ) == 'xhr' ) {
-			if( $redirect && $message ) {
+			if ( $redirect && $message ) {
 				SPFactory::mainframe()->msg( $message, $type );
 				SPFactory::mainframe()->proceedMessageQueue();
 			}
@@ -419,7 +420,7 @@ abstract class SPController extends SPObject implements SPControl
 			echo json_encode(
 				array(
 					'message' => array( 'text' => $message, 'type' => $type ),
-					'redirect' => array( 'url' => $url, 'execute' => ( bool ) $redirect ),
+					'redirect' => array( 'url' => $url, 'execute' => ( bool )$redirect ),
 					'data' => $data
 				)
 			);
