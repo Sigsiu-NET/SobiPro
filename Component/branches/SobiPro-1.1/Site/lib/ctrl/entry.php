@@ -62,6 +62,7 @@ class SPEntryCtrl extends SPController
 				break;
 			case 'publish':
 			case 'unpublish':
+			case 'hide':
 				$r = true;
 				$this->state( $this->_task == 'publish' );
 				break;

@@ -146,7 +146,8 @@ SobiPro.jQuery( document ).ready( function ()
 			try { window.fireEvent( events[ i ] ); } catch ( e ) {}
 			try { SobiPro.jQuery( document ).triggerHandler( events[ i ] ); } catch ( e ) {}
 		}
-		tinyMCE.triggerSave();
-
+		try {
+			tinyMCE.triggerSave();
+		} catch ( e ) { }
 	}
 } );

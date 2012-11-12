@@ -134,7 +134,6 @@ abstract class SPController extends SPObject implements SPControl
 					$this->_model->changeState( $this->_task == 'publish' );
 					$state = ( int )( $this->_task == 'publish' );
 					$this->response( Sobi::Back(), Sobi::Txt(  $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
-					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'MSG.OBJ_CHANGED', array( 'type' => Sobi::Txt( $this->_type ) ) ) );
 				}
 				break;
 			case 'apply':
