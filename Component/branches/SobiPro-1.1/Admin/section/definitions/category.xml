@@ -31,8 +31,8 @@
 	<body>
 		<message id="spMessage" />
 		<header label="CAT.CATEGORY_LIST_HEAD" icon="SobiCatList">
-			<div class="btn-group pull-right form-horizontal" id="spCategoriesFilterHead">
-				<field type="select" name="corder" selected="cordering" class="input-medium spOrdering">
+			<div class="btn-group pull-right" id="spCategoriesFilterHead">
+				<field type="select" name="corder" selected="cordering" class="input-large spOrdering">
 					<values>
 						<values label="EMN_ORDER_BY" />
 						<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
@@ -69,13 +69,13 @@
 						</url>
 					</cell>
 				</cell>
-				<cell type="ticker" value="state" class="center">
+				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}">
 					<url type="intern">
 						<param name="task" value="category.toggle.enabled" />
 						<param name="sid" value="id" parse="true" />
 					</url>
 				</cell>
-				<cell type="ticker" value="approved" class="center" icons="{'0':'cog','1':'asterisk'}">
+				<cell type="ticker" value="approved" class="center" icons="{'0':'thumbs-down','1':'thumbs-up'}">
 					<url type="intern">
 						<param name="task" value="category.toggle.approval" />
 						<param name="sid" value="id" parse="true" />
@@ -88,10 +88,11 @@
 				<navigation />
 			</foot>
 		</table>
+        <div style="padding-top:30px;" />
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
-			<div class="btn-group pull-right form-horizontal" id="spEntriesFilterHead">
-				<field type="text" name="sp_entries_filter" id="spEntriesFilter" values="filter" placeholder="FILTER" class="input-medium" />
-				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-medium spOrdering" />
+			<div class="btn-group pull-right" id="spEntriesFilterHead">
+				<field type="text" name="sp_entries_filter" id="spEntriesFilter" values="filter" placeholder="FILTER" class="input-large" />
+				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-large spOrdering" />
 			</div>
 		</header>
 		<table>
@@ -117,13 +118,13 @@
 					</cell>
 				</cell>
 				<cells value="customFields" class="center" />
-				<cell type="ticker" value="state" class="center">
+				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}">
 					<url type="intern">
 						<param name="task" value="entry.toggle.enabled" />
 						<param name="sid" value="id" parse="true" />
 					</url>
 				</cell>
-				<cell type="ticker" value="approved" class="center" icons="{'0':'cog','1':'asterisk'}">
+				<cell type="ticker" value="approved" class="center" icons="{'0':'thumbs-down','1':'thumbs-up'}">
 					<url type="intern">
 						<param name="task" value="entry.toggle.approval" />
 						<param name="sid" value="id" parse="true" />
