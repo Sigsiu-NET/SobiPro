@@ -72,7 +72,10 @@ class SPTplParser
 
 				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
 					$this->_out[ ] = "<div class=\"spOutput\">";
-					$outclass = $element[ 'args' ][ 'params' ][ 'class' ];
+                    $outclass = null;
+                    if( isset( $element[ 'args' ][ 'params' ][ 'class' ] ) ) {
+    					$outclass = $element[ 'args' ][ 'params' ][ 'class' ];
+                    }
 					$id = null;
 					if( isset( $element[ 'args' ][ 'params' ][ 'id' ] ) ) {
 						$id = ' id="'.$element[ 'args' ][ 'params' ][ 'id' ].'" ';
@@ -81,7 +84,7 @@ class SPTplParser
 						$this->_out[ ] = "<span class=\"{$outclass}\"{$id}>\n";
 					}
 					else {
-						$this->_out[ ] = "<span>\n";
+						$this->_out[ ] = "<span{$id}>\n";
 					}
 				}
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {

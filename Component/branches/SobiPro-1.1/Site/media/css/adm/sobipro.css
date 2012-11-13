@@ -207,7 +207,6 @@ div.spScreenTitle h4 {
 }
 #SPAdminForm .controls .btn:active,
 #SPAdminForm .controls .btn.active {
-  background-color: #993333;
   color: #ffffff;
 }
 .SobiPro .brand {
@@ -254,8 +253,18 @@ div.spScreenTitle h4 {
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
 }
+.SobiPro .btn-danger:hover,
+.SobiPro .btn-danger:active,
+.SobiPro .btn-danger.active,
+.SobiPro .btn-danger.disabled,
+.SobiPro .btn-danger[disabled] {
+  background-color: #993333;
+}
 .SobiPro .spCcMethod .form-horizontal {
   margin-bottom: 0;
+}
+#selectedCatPath {
+  color: #808080;
 }
 #SPAdminForm input,
 #SPAdminForm textarea,

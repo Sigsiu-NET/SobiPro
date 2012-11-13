@@ -22,56 +22,53 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="text" name="category.name" value="category.name" label="CAT.CATEGORY_NAME" size="50" maxlength="255" required="true" />
-							<field type="text" name="category.nid" value="category.nid" label="CAT.CATEGORY_ALIAS" />
-							<field type="output" value="parent_path" label="CAT.CATEGORY_PATH" id="selectedCatPath" class="well" />
-							<field type="button" label="CAT.SELECT_PARENT_BUTTON" name="parent_cat" value="parent_cat" class="btn spCategoryChooser" id="categoryParentName" rel="var:[cat_chooser_url]" />
-							<field type="text" name="categoryParent" value="category.parent" class="input-mini" readonly="readonly" id="categoryParent" />
+							<field type="text" name="category.name" value="category.name" label="CATN.CATEGORY_NAME" class="input-xlarge" maxlength="255" required="true" />
+							<field type="text" name="category.nid" value="category.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
+                        </fieldset>
+
+                        <fieldset label="CATN.CATEGORY_LOCATION">
+                            <field type="output" value="parent_path" label="CATN.CATEGORY_PATH" id="selectedCatPath"  />
+                            <field type="button" label="CATN.SELECT_PARENT_BUTTON" name="parent_cat" value="parent_cat" class="btn spCategoryChooser" id="categoryParentName" rel="var:[cat_chooser_url]" />
+                         </fieldset>
+
+                         <fieldset label="CATN.CATEGORY_DATA">
+                            <field type="select" label="CAT.SHOW_ICON" name="category.showIcon" selected="category.showIcon" class="input-small">
+                                 <values>
+                                     <option value="2" label="OPT_GLOBAL" />
+                                     <option value="1" label="OPT_YES" />
+                                     <option value="0" label="OPT_NO" />
+                                 </values>
+                            </field>
+                            <field type="button" label="CATN.SELECT_CATEGORY_ICON" name="cat_ico" class="btn" id="catIcoChooser" rel="var:[icon_chooser_url]" />
+                             <field type="select" label="CAT.SHOW_INTROTEXT" name="category.showIntrotext" selected="category.showIntrotext" class="input-small">
+                                 <values>
+                                     <option value="2" label="OPT_GLOBAL" />
+                                     <option value="1" label="OPT_YES" />
+                                     <option value="0" label="OPT_NO" />
+                                 </values>
+                             </field>
+							<field type="textarea" name="category.introtext" value="category.introtext" label="CATN.CATEGORY_INTROTEXT" editor="false" class="input-splarge" rows="2" style="" />
+							<field type="textarea" name="category.description" value="category.description" label="CATN.CATEGORY_DESCRIPTION" editor="true" class="input-splarge" rows="2" style="" />
+                            <field type="select" label="CATN.PARSE_CAT_DES" name="category.parseDesc" selected="category.parseDesc" class="input-small" >
+                                <values>
+                                    <option value="2" label="OPT_GLOBAL" />
+                                    <option value="1" label="OPT_YES" />
+                                    <option value="0" label="OPT_NO" />
+                                </values>
+                            </field>
 						</fieldset>
 					</div>
 				</div>
 			</tab>
-			<tab label="CAT.CATEGORY_DESCRIPTION">
-				<div class="row-fluid">
-					<div class="span12">
-						<fieldset>
-							<field type="textarea" name="category.introtext" value="category.introtext" label="CAT.CATEGORY_INTROTEXT" editor="false" class="input-splarge" rows="2" style="" />
-							<field type="textarea" name="category.description" value="category.description" label="CAT.CATEGORY_DESCRIPTION" editor="true" class="input-splarge" rows="2" style="" />
-							<field type="button" label="CAT.SELECT_CATEGORY_ICON" name="cat_ico" class="btn" id="catIcoChooser" rel="var:[icon_chooser_url]" />
-							<field type="select" label="CAT.SHOW_ICON" name="category.showIcon" selected="category.showIcon" class="input-small">
-								<values>
-									<option value="2" label="OPT_GLOBAL" />
-									<option value="1" label="OPT_YES" />
-									<option value="0" label="OPT_NO" />
-								</values>
-							</field>
-							<field type="select" label="CAT.SHOW_INTROTEXT" name="category.showIntrotext" selected="category.showIntrotext" class="input-small">
-								<values>
-									<option value="2" label="OPT_GLOBAL" />
-									<option value="1" label="OPT_YES" />
-									<option value="0" label="OPT_NO" />
-								</values>
-							</field>
-							<field type="select" label="CAT.PARSE_CAT_DES" name="category.parseDesc" selected="category.parseDesc" class="input-small" >
-								<values>
-									<option value="2" label="OPT_GLOBAL" />
-									<option value="1" label="OPT_YES" />
-									<option value="0" label="OPT_NO" />
-								</values>
-							</field>
-						</fieldset>
-					</div>
-				</div>
-			</tab>
-			<tab label="CAT.CATEGORY_PUBLISHING">
+			<tab label="CATN.CATEGORY_PUBLISHING">
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
 							<field type="states" name="category.state" value="category.state" label="ENABLED" prefix="yes_no" />
 						</fieldset>
 						<fieldset>
-							<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="span2" dateFormat="Y-m-d H:i:s" icon="edit" />
-							<field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="span2" dateFormat="Y-m-d H:i:s" icon="unlock" />
+							<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="span2" dateFormat="d-m-Y H:i:s" icon="edit" />
+							<field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
 							<field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class="span2" dateFormat="Y-m-d H:i:s" icon="lock" />
 							<field type="userSelector" label="AUTHOR" name="category.owner" value="category.owner" class="span2" format="%name (%id)" />
 							<field type="output" value="category.version" label="VERSION" class="badge" />
@@ -142,6 +139,7 @@
 			<field name="selectedCatPath" default="" />
 			<field name="categoryIconHolder" value="category_icon" />
 			<field name="category.icon" value="category.icon" />
+            <field name="category.parent" value="category.parent" />
 			<field name="method" default="xhr"/>
 		</hidden>
 	</config>

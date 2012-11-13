@@ -745,7 +745,7 @@ abstract class SPHtml_Input
 		$f .= '<div class="user-selector">';
 		$f .= '<div class="input-append">';
 		$f .= "\n\t";
-		$f .= '<input type="text" value="' . $userData . '" ' . $params . ' name="' . $name . 'Holder" class="btn trigger user-name"/>';
+		$f .= '<input type="text" value="' . $userData . '" ' . $params . ' name="' . $name . 'Holder" readonly="readonly" class="trigger user-name"/>';
 		$f .= '<span class="add-on trigger"><i class="icon-' . $icon . '"></i></span>';
 		$f .= '</div>';
 		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '" rel="selected"/>';
