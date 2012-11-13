@@ -88,7 +88,9 @@
 				<navigation />
 			</foot>
 		</table>
+
         <div style="padding-top:30px;" />
+
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 			<div class="btn-group pull-right" id="spEntriesFilterHead">
 				<field type="text" name="sp_entries_filter" id="spEntriesFilter" values="filter" placeholder="FILTER" class="input-large" />
