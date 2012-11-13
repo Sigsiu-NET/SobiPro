@@ -41,6 +41,7 @@
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
+   (#) getChilds in model do not cares about the child type
 
 
 -------------------

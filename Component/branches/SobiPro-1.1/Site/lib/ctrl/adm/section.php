@@ -231,6 +231,9 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			$dir = $ord[ 1 ];
 			$ord = $ord[ 0 ];
 		}
+		else {
+			$dir = 'asc';
+		}
 		if ( $ord == 'order' || $ord == 'position' ) {
 			$subject = $subject == 'categories' ? 'category' : 'entry';
 			/* @var SPdb $db */

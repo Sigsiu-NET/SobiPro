@@ -570,9 +570,9 @@ abstract class SPHtml_Input
 	{
 		$value = (int)$value;
 		$field = null;
-		$field .= "\n" . '<div class="btn-group" data-toggle="buttons-radio" id="' . $id . '">';
-		$field .= "\n\t" . '<button type="button" name="' . $name . '" class="btn' . ( $value ? ' active' : '' ) . '" value="1">' . Sobi::Txt( $prefix . '_yes' ) . '</button>';
-		$field .= "\n\t" . '<button type="button" name="' . $name . '" class="btn' . ( $value ? '' : ' active' ) . '" value="0">' . Sobi::Txt( $prefix . '_no' ) . '</button>';
+		$field .= "\n" . '<div class="btn-group buttons-radio" data-toggle="buttons-radio" id="' . $id . '">';
+		$field .= "\n\t" . '<button type="button" name="' . $name . '" class="btn btn-success' . ( $value ? ' active selected' : '' ) . '" value="1">' . Sobi::Txt( $prefix . '_yes' ) . '</button>';
+		$field .= "\n\t" . '<button type="button" name="' . $name . '" class="btn btn-danger' . ( $value ? '' : ' active selected' ) . '" value="0">' . Sobi::Txt( $prefix . '_no' ) . '</button>';
 		$field .= "\n" . '</div>';
 		return "\n<!-- States '{$name}' Output -->{$field}\n<!-- States '{$name}' End -->\n";
 	}
