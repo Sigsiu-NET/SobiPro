@@ -142,12 +142,62 @@ SobiPro.jQuery( document ).ready( function ()
 		"use strict";
 		var events = [ 'unload', 'onbeforeunload', 'onunload' ];
 		for ( var i = 0; i < events.length; i++ ) {
-			try { window.dispatchEvent( events[ i ] ); } catch ( e ) {}
-			try { window.fireEvent( events[ i ] ); } catch ( e ) {}
-			try { SobiPro.jQuery( document ).triggerHandler( events[ i ] ); } catch ( e ) {}
+			try {
+				window.dispatchEvent( events[ i ] );
+			}
+			catch ( e ) {
+			}
+			try {
+				window.fireEvent( events[ i ] );
+			}
+			catch ( e ) {
+			}
+			try {
+				SobiPro.jQuery( document ).triggerHandler( events[ i ] );
+			}
+			catch ( e ) {
+			}
 		}
 		try {
 			tinyMCE.triggerSave();
-		} catch ( e ) { }
+		}
+		catch ( e ) {
+		}
 	}
+
+	SobiPro.jQuery( '#spEntriesFilter' ).keydown(
+		function ( e )
+		{
+			"use strict";
+			if ( e.keyCode == 13 ) {
+				e.preventDefault();
+				SobiPro.jQuery( '#SPAdminForm' ).submit();
+			}
+		}
+	)
+	SobiPro.jQuery( '.buttons-radio :button' ).each( function ( i, e )
+	{
+		"use strict"
+		if ( !( e.hasClass( 'selected' ) ) ) {
+			e.removeClass( 'btn-success' )
+				.removeClass( 'btn-danger' );
+		}
+		SobiPro.jQuery( e ).click( function ()
+		{
+			SobiPro.jQuery( e )
+				.parent()
+				.parent()
+				.find('.buttons-radio :button')
+				.removeClass( 'btn-danger' )
+				.removeClass( 'btn-success' )
+			switch ( parseInt( SobiPro.jQuery( this ).val() ) ) {
+				case 0:
+					e.addClass( 'btn-danger' );
+					break;
+				case 1:
+					e.addClass( 'btn-success' );
+					break;
+			}
+		} );
+	} )
 } );

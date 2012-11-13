@@ -35,14 +35,14 @@ class SPSectionAdmView extends SPAdmView
 	 */
 	public function setTitle( $title )
 	{
-		$title = parent::setTitle( $title );
 		$name = $this->get( 'section.name' );
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-		$title = Sobi::Txt( $title, array( 'name' => $name ) );
-		SPFactory::header()->setTitle( $title );
-		$this->set( $title, 'site_title' );
-		$this->set( $name, 'section_name' );
+		$title = Sobi::Txt( $title, array( 'category_name' => $name ) );
 		$this->set( $name, 'category_name' );
+		$this->set( $name, 'section_name' );
+		$this->set( $title, 'site_title' );
+		$title = parent::setTitle( $title );
+		return $title;
 	}
 
 	/**
@@ -54,7 +54,7 @@ class SPSectionAdmView extends SPAdmView
 		switch ( $this->get( 'task' ) ) {
 			case 'view':
 				$this->listSection();
-				$this->determineTemplate( 'section', 'category' );
+				$this->determineTemplate( 'section', 'list' );
 				break;
 			case 'entries':
 				$this->listSection();
@@ -142,12 +142,13 @@ class SPSectionAdmView extends SPAdmView
 
 		/* handle the fields in this section for header */
 		$f = $this->get( 'fields' );
+
 		$entriesOrdering = array(
 			Sobi::Txt( 'EMN_ORDER_BY' ) => array(),
 			'e_sid.asc' => Sobi::Txt( 'EMN.ORDER_BY_ID_ASC' ),
 			'e_sid.desc' => Sobi::Txt( 'EMN.ORDER_BY_ID_DESC' ),
-			'name.asc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_ASC' ),
-			'name.desc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_DESC' ),
+			$this->get('entries_field').'.asc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_ASC' ),
+			$this->get('entries_field').'.desc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_DESC' ),
 			'state.asc' => Sobi::Txt( 'EMN.ORDER_BY_STATE_ASC' ),
 			'state.desc' => Sobi::Txt( 'EMN.ORDER_BY_STATE_DESC' ),
 			'approved.asc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_ASC' ),
