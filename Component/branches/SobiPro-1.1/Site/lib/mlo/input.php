@@ -191,13 +191,13 @@ abstract class SPHtml_Input
 	 * @param string $image - url of an image
 	 * @return string
 	 */
-	public static function textarea( $name, $value = null, $editor = false, $width = 550, $height = 350, $params = null )
+	public static function textarea( $name, $value = null, $editor = false, $width = 550, $height = 350, $params = '')
 	{
 		self::checkArray( $params );
 		if ( !isset( $params[ 'style' ] ) ) {
 			$params[ 'style' ] = "width: {$width}px; height: {$height}px;";
 		}
-		Sobi::Trigger( 'BeforeCreateField', ucfirst( __FUNCTION__ ), array( &$name, &$value, &$editor, &$width, &$height, &$params ) );
+        Sobi::Trigger( 'BeforeCreateField', ucfirst( __FUNCTION__ ), array( &$name, &$value, &$editor, &$width, &$height, &$params ) );
 		$value = SPLang::entities( $value );
 		if ( $editor ) {
 			$e = Sobi::Cfg( 'html.editor', 'cms.html.editor' );

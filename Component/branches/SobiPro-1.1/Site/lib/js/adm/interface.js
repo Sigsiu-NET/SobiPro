@@ -174,8 +174,9 @@ SobiPro.jQuery( document ).ready( function ()
 				SobiPro.jQuery( '#SPAdminForm' ).submit();
 			}
 		}
-	)
-	SobiPro.jQuery( '.buttons-radio :button' ).each( function ( i, e )
+	);
+
+    SobiPro.jQuery( '.buttons-radio :button' ).each( function ( i, e )
 	{
 		"use strict"
 		if ( !( e.hasClass( 'selected' ) ) ) {

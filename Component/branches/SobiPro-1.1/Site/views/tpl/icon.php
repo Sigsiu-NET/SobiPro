@@ -29,7 +29,7 @@ $fc = $this->count( 'files' );
 	}
 </script>
 <?php if( $dc ) { ?>
-	<div style="margin: 5px; padding: 5px; max-height: 200px; overflow:scroll;">
+	<div style="padding-left: 20px; max-height: 220px; min-width: 550px; display: inline-block;">
 	<?php for ( $i = 0; $i < $dc ; ++$i ) { ?>
 		<div style="float: left; width: 90px; height: 90px; padding: 5px; text-align:center">
 			<a href="<?php $this->show( 'directories.url', $i ); ?>" >
@@ -37,7 +37,7 @@ $fc = $this->count( 'files' );
 			</a>
 			<br/>
 			<a href="<?php $this->show( 'directories.url', $i ); ?>" >
-				<?php $this->show( 'directories.name', $i ); ?> ( <?php $this->show( 'directories.count', $i ); ?> )
+				<?php $this->show( 'directories.name', $i ); ?> (<?php $this->show( 'directories.count', $i ); ?>)
 			</a>
 		</div>
 		<?php if( ( $i+1 ) % 5 == 0 ) { ?>
@@ -46,7 +46,7 @@ $fc = $this->count( 'files' );
 	<?php } ?>
 </div>
 <?php } ?>
-<div style="margin: 5px; padding: 5px; max-height: 300px; overflow:scroll;">
+<div style="padding-top:10px; padding-left: 25px; max-height: 300px; display: inline-block;">
 <?php for ( $i = 0; $i < $fc ; ++$i ) { ?>
 	<div style="float: left; width: 60px; height: 60px; cursor:pointer">
 		<img alt="<?php $this->show( 'files.name', $i ); ?>" title="<?php $this->show( 'files.name', $i ); ?>" src="<?php $this->show( 'files.path', $i ); ?>" style="max-width: 55px; max-height: 55px;" onclick="spSelect( this )">
