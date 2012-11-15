@@ -133,7 +133,7 @@ abstract class SPController extends SPObject implements SPControl
 					$r = true;
 					$this->_model->changeState( $this->_task == 'publish' );
 					$state = ( int )( $this->_task == 'publish' );
-					$this->response( Sobi::Back(), Sobi::Txt(  $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
+					$this->response( Sobi::Back(), Sobi::Txt( $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
 				}
 				break;
 			case 'apply':
@@ -228,6 +228,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
+		$this->validate( $this->_type . '.definitions.edit', $this->_type );
 		$apply = ( int )$apply;
 		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
@@ -435,4 +436,23 @@ abstract class SPController extends SPObject implements SPControl
 			Sobi::Redirect( $url, $message, $type, true );
 		}
 	}
+
+	protected function validate( $xml, $type )
+	{
+		$definition = SPLoader::path( $xml, 'adm', true, 'xml' );
+		if ( $definition ) {
+			$xdef = new DOMXPath( DOMdocument::load( $definition ) );
+			$required = $xdef->query( '//field[@required="true"]' );
+			if ( $required->length ) {
+				for ( $i = 0; $i < $required->length; $i++ ) {
+					$node = $required->item( $i );
+					$name = $node->attributes->getNamedItem( 'name' )->nodeValue;
+					if ( !( SPRequest::raw( str_replace( '.', '_', $name ) ) ) ) {
+						$this->response( Sobi::Url( array( 'task' => $type . '.edit', 'sid' => SPRequest::sid() ) ), Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, 'error', array( 'required' => $name ) );
+					}
+				}
+			}
+		}
+	}
+
 }

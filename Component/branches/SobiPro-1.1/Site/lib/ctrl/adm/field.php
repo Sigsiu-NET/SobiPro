@@ -85,8 +85,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 
 		/* get view class */
-		$class = SPLoader::loadView( 'field', true );
-		$view = new $class();
+		$view = SPFactory::View( 'field', true );
 		$view->addHidden( SPRequest::int( 'fid' ), 'fid' );
 		$view->addHidden( SPRequest::sid(), 'sid' );
 		$view->assign( $groups, 'types' );
