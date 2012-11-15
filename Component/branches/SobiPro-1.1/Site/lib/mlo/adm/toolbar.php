@@ -39,7 +39,7 @@ class SpAdmToolbar
 		'approve' => 'thumbs-up',
 		'revoke' => 'thumbs-down',
 		'entry' => 'file',
-		'category' => 'book',
+		'category' => 'folder-open',
 	);
 	private $labels = array(
 		'apply' => 'SAVE_ONLY',

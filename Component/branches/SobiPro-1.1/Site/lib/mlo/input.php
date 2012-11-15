@@ -764,7 +764,50 @@ abstract class SPHtml_Input
 		return "\n<!-- User Picker '{$name}' Output -->{$f}<!-- User Picker '{$name}' End -->\n\n";
 	}
 
-	public static function modalWindow( $header, $id, $content = null, $classes = 'modal hide', $closeText = 'CLOSE', $saveText = 'SAVE', $style = null )
+    public static function userGetter( $name, $value, $params = null, $class = null, $format = '%user' )
+    {
+        $params = self::checkArray( $params );
+        if ( !( isset( $params[ 'id' ] ) ) ) {
+            $params[ 'id' ] = SPLang::nid( $name );
+        }
+        if ($class) {
+            $params[ 'class' ] = $class;
+        }
+        $user = null;
+        $user = SPUser::getBaseData( ( int )$value );
+        $userData = null;
+        if ( $user ) {
+            $replacements = array();
+            preg_match_all( '/\%[a-z]*/', $format, $replacements );
+            $placeholders = array();
+            if ( isset( $replacements[ 0 ] ) && count( $replacements[ 0 ] ) ) {
+                foreach ( $replacements[ 0 ] as $placeholder ) {
+                    $placeholders[ ] = str_replace( '%', null, $placeholder );
+                }
+            }
+            if ( count( $replacements ) ) {
+                foreach ( $placeholders as $attribute ) {
+                    if ( isset( $user->$attribute ) ) {
+                        $format = str_replace( '%' . $attribute, $user->$attribute, $format );
+                    }
+                }
+                $userData = $format;
+            }
+        }
+        $params = self::params( $params );
+        $f = "\n";
+        $f .= '<div class="spOutput">';
+        $f .= "\n\t";
+        $f .= '<span '. $params . '>' . $userData . '</span>';
+        $f .= "\n";
+        $f .= '</div>';
+        $f .= "\n";
+        Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
+        return "\n<!-- User Getter '{$name}' Output -->{$f}<!-- User Getter '{$name}' End -->\n\n";
+    }
+
+
+    public static function modalWindow( $header, $id, $content = null, $classes = 'modal hide', $closeText = 'CLOSE', $saveText = 'SAVE', $style = null )
 	{
 		$html = null;
 		if ( $style ) {

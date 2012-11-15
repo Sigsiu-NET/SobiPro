@@ -19,7 +19,7 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-SPFactory::header()->addCSSCode( '.sigsiuTree {height: 270px;}' );
+//SPFactory::header()->addCSSCode( '.sigsiuTree {height: 270px;}' );
 
 ?>
 <script language="javascript" type="text/javascript">
