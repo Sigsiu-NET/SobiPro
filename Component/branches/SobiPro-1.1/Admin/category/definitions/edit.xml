@@ -74,7 +74,7 @@
 							<field type="userSelector" label="CREATED_BY" name="category.owner" value="category.owner" class="span2" format="%name (%id)" />
                             <field type="output" label="CREATED_BY_IP" name="category.ownerIP" value="category.ownerIP" class="infoText" />
                             <field type="output" label="MODIFIED_AT" name="category.updatedTime" value="category.updatedTime" class="infoText" dateFormat="d-m-Y H:i:s" icon="edit" />
-                            <field type="userGetter" label="MODIFIED_BY" name="category.updater" value="category.updater" class="span2" format="%name (%id)" />
+                            <field type="userGetter" label="MODIFIED_BY" name="category.updater" value="category.updater" class="infoText" format="%name (%id)" />
                             <field type="output" label="MODIFIED_BY_IP" name="category.updaterIP" value="category.updaterIP" class="infoText" />
 						</fieldset>
 						<fieldset label="CLICKCOUNTER">
