@@ -1,86 +1,157 @@
-<?xml version="1.0" encoding="utf-8"?>
-<install type="component" version="1.5.0" method="upgrade">
-	<name>SobiPro</name>
-	<creationDate>08 November 2012</creationDate>
-	<author>Sigsiu.NET GmbH</author>
-	<authorEmail>sobi[at]sigsiu.net</authorEmail>
-	<authorUrl>http://www.Sigsiu.NET</authorUrl>
-	<copyright>Copyright (C) 2006-2012 Sigsiu.NET GmbH</copyright>
-	<license>GNU General Public License v3</license>
-	<version>1.1.0.B</version>
-	<codename>Budgie</codename>
-	<description></description>
-	<version_number>1.1.0</version_number>
-	<svn>$Revision: 2615 $</svn>
-	<SobiPro>
-		<requirements>
-			<core version="1.0.0.1900" />
-		</requirements>
-	</SobiPro>
-	<files folder="Site">
-		<folder>etc</folder>
-		<folder>lib</folder>
-		<folder>media</folder>
-		<folder>opt</folder>
-		<folder>tmp</folder>
-		<folder>usr</folder>
-		<folder>var</folder>
-		<folder>views</folder>
-		<filename>sobipro.php</filename>
-		<filename>changelog.txt</filename>
-		<filename>metadata.xml</filename>
-	</files>
-	<installfile>install.php</installfile>
-	<uninstallfile>uninstall.php</uninstallfile>
-	<install>
-		<sql>
-			<file charset="utf8" driver="mysql">install.sql</file>
-		</sql>
-	</install>
-	<languages>
-		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.err.ini</language>
-	</languages>
-	<media folder="Site/media" destination="sobipro">
-		<folder>css</folder>
-		<folder>16x16</folder>
-		<folder>32x32</folder>
-		<folder>48x48</folder>
-		<folder>browser</folder>
-		<folder>icons</folder>
-		<folder>progress</folder>
-		<folder>styles</folder>
-		<folder>tree</folder>
-		<filename>donate.png</filename>
-		<filename>join-the-club.png</filename>
-		<filename>SobiPro_16.png</filename>
-		<filename>sobipro-main.png</filename>
-		<filename>sobipro-menu.png</filename>
-		<filename>sobipro.png</filename>
-	</media>
-	<administration>
-		<menu img="../media/sobipro/SobiPro_16.png">SobiPro</menu>
-		<files folder="Admin">
-			<folder>about</folder>
-			<folder>acl</folder>
-			<folder>category</folder>
-			<folder>config</folder>
-			<folder>entry</folder>
-			<folder>extensions</folder>
-			<folder>field</folder>
-			<folder>front</folder>
-			<folder>section</folder>
-			<folder>template</folder>
-			<filename>sobipro.php</filename>
-			<filename>install.sql</filename>
-		</files>
-		<files>
-			<filename>sobipro.xml</filename>
-		</files>
-		<languages>
-			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.ini</language>
-			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.js.ini</language>
-			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.about.ini</language>
-		</languages>
-	</administration>
-	<!--Generated at: Tue, 19 Jul 11 11:15:19 +0200-->
-</install>
+<response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="http://xdebug.org/dbgp/xdebug" command="context_get" transaction_id="17" context="0">
+	<property name="attribute" fullname="$attribute" type="uninitialized"></property>
+	<property name="data" fullname="$data" type="uninitialized"></property>
+	<property name="f" fullname="$f" type="uninitialized"></property>
+	<property name="filter" fullname="$filter" type="uninitialized"></property>
+	<property name="format" fullname="$format" type="uninitialized"></property>
+	<property name="groups" fullname="$groups" type="uninitialized"></property>
+	<property name="header" fullname="$header" type="uninitialized"></property>
+	<property name="icon" fullname="$icon" type="uninitialized"></property>
+	<property name="id" fullname="$id" type="uninitialized"></property>
+	<property name="modal" fullname="$modal" type="uninitialized"></property>
+	<property name="name" fullname="$name" type="uninitialized"></property>
+	<property name="orderBy" fullname="$orderBy" type="uninitialized"></property>
+	<property name="params" fullname="$params" type="uninitialized"></property>
+	<property name="placeholder" fullname="$placeholder" type="uninitialized"></property>
+	<property name="placeholders" fullname="$placeholders" type="uninitialized"></property>
+	<property name="replacements" fullname="$replacements" type="uninitialized"></property>
+	<property name="session" fullname="$session" type="uninitialized"></property>
+	<property name="settings" fullname="$settings" type="uninitialized"></property>
+	<property name="ssid" fullname="$ssid" type="uninitialized"></property>
+	<property name="user" fullname="$user" type="uninitialized"></property>
+	<property name="userData" fullname="$userData" type="uninitialized"></property>
+	<property name="value" fullname="$value" type="uninitialized"></property>
+</response>
+
+<response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="http://xdebug.org/dbgp/xdebug" command="context_get" transaction_id="18" context="1">
+<property name="_COOKIE" fullname="$_COOKIE" address="139689998398816" type="array" children="1" numchildren="12" page="0" pagesize="100">
+	<property name="sigsiusite_tpl" fullname="$_COOKIE[&apos;sigsiusite_tpl&apos;]" address="139689999704632" type="string" size="10" encoding="base64">
+		<![CDATA[c2lnc2l1c2l0ZQ==]]></property>
+	<property name="_pk_id_10_6a50" fullname="$_COOKIE[&apos;_pk_id_10_6a50&apos;]" address="139689999705376" type="string" size="52" encoding="base64">
+		<![CDATA[OTA5MzQwMzc3MzQ2ZDEzMS4xMzM0MDcxMDI2LjIuMTMzNzU5NjUzOS4xMzM0MDcxMDQ4Lg==]]></property>
+	<property name="ja_xenia_ii_tpl" fullname="$_COOKIE[&apos;ja_xenia_ii_tpl&apos;]" address="139689999705936" type="string" size="11" encoding="base64">
+		<![CDATA[amFfeGVuaWFfaWk=]]></property>
+	<property name="_pk_id_3_6a50" fullname="$_COOKIE[&apos;_pk_id_3_6a50&apos;]" address="139689999706576" type="string" size="52" encoding="base64">
+		<![CDATA[NzRlNzFkZGZlNDIzNmQzZC4xMzQyMzQ1MjU1LjkuMTM1MjM3MDkxNS4xMzQ1NTU2ODU5Lg==]]></property>
+	<property name="4a06bdf30e60cc2a98ed58ea7e045c56" fullname="$_COOKIE[&apos;4a06bdf30e60cc2a98ed58ea7e045c56&apos;]" address="139689999707776" type="string" size="140" encoding="base64">
+		<![CDATA[IDI1RSAwIEExQTExIEUgRTVCMTUxNDE2IDcxNDU4NTQ1QyAzMUE1RDEyIEYgNiA4MUI2RDQzNTA1ODVEMTYxRjQxNUY0MSBBNTk1ODE2NDYgMDQ0MTIxMiBEMTQ1MjE3IEExNSAyNTc1MyBGMTMgNDRBNTA0OTU2NTA0NyA3MTAgNiBBIDUxMjVBMUY=]]></property>
+	<property name="_pk_id_8_6a50" fullname="$_COOKIE[&apos;_pk_id_8_6a50&apos;]" address="139689999708432" type="string" size="52" encoding="base64">
+		<![CDATA[YjhiZmQ1NDUzMDM3NTFmMy4xMzQ1MjA1Njc2LjMuMTM1MjM3MTA3Ny4xMzQ3MzQ3MDU0Lg==]]></property>
+	<property name="4f2ba9fd5694805a8a631bee81475d24" fullname="$_COOKIE[&apos;4f2ba9fd5694805a8a631bee81475d24&apos;]" address="139689999709120" type="string" size="26" encoding="base64">
+		<![CDATA[dGg1ZGdrZmdobjN1bzRvMWhzaGcwcDVxYjc=]]></property>
+	<property name="7eee808424dc74dff7e1e65ea41ac251" fullname="$_COOKIE[&apos;7eee808424dc74dff7e1e65ea41ac251&apos;]" address="139689999709744" type="string" size="26" encoding="base64">
+		<![CDATA[Y2poc2Mzbzh0czlhNnJ2Y3JsZDVzZ3YyYTA=]]></property>
+	<property name="109bc0a90e93caf029ca06173fcb484d" fullname="$_COOKIE[&apos;109bc0a90e93caf029ca06173fcb484d&apos;]" address="139689999710544" type="string" size="26" encoding="base64">
+		<![CDATA[ZnFxYzZqNW0ycThucGtmbGc4ZHE0aWNmNTU=]]></property>
+	<property name="jpanesliders_panel-sliders" fullname="$_COOKIE[&apos;jpanesliders_panel-sliders&apos;]" address="139689999711264" type="string" size="1" encoding="base64">
+		<![CDATA[MA==]]></property>
+	<property name="jpanesliders_sliders" fullname="$_COOKIE[&apos;jpanesliders_sliders&apos;]" address="139689999710952" type="string" size="1" encoding="base64">
+		<![CDATA[MA==]]></property>
+	<property name="XDEBUG_SESSION" fullname="$_COOKIE[&apos;XDEBUG_SESSION&apos;]" address="139689999712328" type="string" size="15" encoding="base64">
+		<![CDATA[bmV0YmVhbnMteGRlYnVn]]></property>
+</property>
+<property name="_ENV" fullname="$_ENV" address="139689999703760" type="array" children="0" numchildren="0" page="0" pagesize="100"></property>
+<property name="_FILES" fullname="$_FILES" address="139689999703680" type="array" children="0" numchildren="0" page="0" pagesize="100"></property>
+<property name="_GET" fullname="$_GET" address="139690005285632" type="array" children="1" numchildren="3" page="0" pagesize="100">
+	<property name="option" fullname="$_GET[&apos;option&apos;]" address="139690003051456" type="string" size="11" encoding="base64">
+		<![CDATA[Y29tX3NvYmlwcm8=]]></property>
+	<property name="task" fullname="$_GET[&apos;task&apos;]" address="139689999701992" type="string" size="13" encoding="base64">
+		<![CDATA[Y2F0ZWdvcnkuZWRpdA==]]></property>
+	<property name="sid" fullname="$_GET[&apos;sid&apos;]" address="139689999702576" type="string" size="1" encoding="base64">
+		<![CDATA[NA==]]></property>
+</property>
+<property name="_POST" fullname="$_POST" address="139690008456224" type="array" children="0" numchildren="0" page="0" pagesize="100"></property>
+<property name="_REQUEST" fullname="$_REQUEST" address="139689999713264" type="array" children="1" numchildren="3" page="0" pagesize="100">
+	<property name="option" fullname="$_REQUEST[&apos;option&apos;]" address="139690003051456" type="string" size="11" encoding="base64">
+		<![CDATA[Y29tX3NvYmlwcm8=]]></property>
+	<property name="task" fullname="$_REQUEST[&apos;task&apos;]" address="139689999701992" type="string" size="13" encoding="base64">
+		<![CDATA[Y2F0ZWdvcnkuZWRpdA==]]></property>
+	<property name="sid" fullname="$_REQUEST[&apos;sid&apos;]" address="139689999702576" type="string" size="1" encoding="base64">
+		<![CDATA[NA==]]></property>
+</property>
+<property name="_SERVER" fullname="$_SERVER" address="139689999714088" type="array" children="1" numchildren="29" page="0" pagesize="100">
+	<property name="HTTP_AUTHORIZATION" fullname="$_SERVER[&apos;HTTP_AUTHORIZATION&apos;]" address="139689999715048" type="string" size="0" encoding="base64">
+		<![CDATA[]]></property>
+	<property name="HTTP_HOST" fullname="$_SERVER[&apos;HTTP_HOST&apos;]" address="139689999715552" type="string" size="13" encoding="base64">
+		<![CDATA[c2lnc2l1LXNlcnZlcg==]]></property>
+	<property name="HTTP_USER_AGENT" fullname="$_SERVER[&apos;HTTP_USER_AGENT&apos;]" address="139689999716256" type="string" size="81" encoding="base64">
+		<![CDATA[TW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTAuNzsgcnY6MTYuMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC8xNi4w]]></property>
+	<property name="HTTP_ACCEPT" fullname="$_SERVER[&apos;HTTP_ACCEPT&apos;]" address="139689999716912" type="string" size="63" encoding="base64">
+		<![CDATA[dGV4dC9odG1sLGFwcGxpY2F0aW9uL3hodG1sK3htbCxhcHBsaWNhdGlvbi94bWw7cT0wLjksKi8qO3E9MC44]]></property>
+	<property name="HTTP_ACCEPT_LANGUAGE" fullname="$_SERVER[&apos;HTTP_ACCEPT_LANGUAGE&apos;]" address="139689999717352" type="string" size="35" encoding="base64">
+		<![CDATA[ZGUtZGUsZGU7cT0wLjgsZW4tdXM7cT0wLjUsZW47cT0wLjM=]]></property>
+	<property name="HTTP_ACCEPT_ENCODING" fullname="$_SERVER[&apos;HTTP_ACCEPT_ENCODING&apos;]" address="139689999717800" type="string" size="13" encoding="base64">
+		<![CDATA[Z3ppcCwgZGVmbGF0ZQ==]]></property>
+	<property name="HTTP_CONNECTION" fullname="$_SERVER[&apos;HTTP_CONNECTION&apos;]" address="139689999718496" type="string" size="10" encoding="base64">
+		<![CDATA[a2VlcC1hbGl2ZQ==]]></property>
+	<property name="HTTP_REFERER" fullname="$_SERVER[&apos;HTTP_REFERER&apos;]" address="139689999719184" type="string" size="77" encoding="base64">
+		<![CDATA[aHR0cDovL3NpZ3NpdS1zZXJ2ZXIvTmVvL0Rldi9hZG1pbmlzdHJhdG9yL2luZGV4LnBocD9vcHRpb249Y29tX3NvYmlwcm8mc2lkPTE=]]></property>
+	<property name="HTTP_COOKIE" fullname="$_SERVER[&apos;HTTP_COOKIE&apos;]" address="139689999721296" type="string" size="703" encoding="base64">
+		<![CDATA[c2lnc2l1c2l0ZV90cGw9c2lnc2l1c2l0ZTsgX3BrX2lkLjEwLjZhNTA9OTA5MzQwMzc3MzQ2ZDEzMS4xMzM0MDcxMDI2LjIuMTMzNzU5NjUzOS4xMzM0MDcxMDQ4LjsgamFfeGVuaWFfaWlfdHBsPWphX3hlbmlhX2lpOyBfcGtfaWQuMy42YTUwPTc0ZTcxZGRmZTQyMzZkM2QuMTM0MjM0NTI1NS45LjEzNTIzNzA5MTUuMTM0NTU1Njg1OS47IDRhMDZiZGYzMGU2MGNjMmE5OGVkNThlYTdlMDQ1YzU2PSsyNUUrMCtBMUExMStFK0U1QjE1MTQxNis3MTQ1ODU0NUMrMzFBNUQxMitGKzYrODFCNkQ0MzUwNTg1RDE2MUY0MTVGNDErQTU5NTgxNjQ2KzA0NDEyMTIrRDE0NTIxNytBMTUrMjU3NTMrRjEzKzQ0QTUwNDk1NjUwNDcrNzEwKzYrQSs1MTI1QTFGOyBfcGtfaWQuOC42YTUwPWI4YmZkNTQ1MzAzNzUxZjMuMTM0NTIwNTY3Ni4zLjEzNTIzNzEwNzcuMTM0NzM0NzA1NC47IDRmMmJhOWZkNTY5NDgwNWE4YTYzMWJlZTgxNDc1ZDI0PXRoNWRna2ZnaG4zdW80bzFoc2hnMHA1cWI3OyA3ZWVlODA4NDI0ZGM3NGRmZjdlMWU2NWVhNDFhYzI1MT1jamhzYzNvOHRzOWE2cnZjcmxkNXNndjJhMDsgMTA5YmMwYTkwZTkzY2FmMDI5Y2EwNjE3M2ZjYjQ4NGQ9ZnFxYzZqNW0ycThucGtmbGc4ZHE0aWNmNTU7IGpwYW5lc2xpZGVyc19wYW5lbC1zbGlkZXJzPTA7IGpwYW5lc2xpZGVyc19zbGlkZXJzPTA7IFhERUJVR19TRVNTSU9OPW5ldGJlYW5zLXhkZWJ1Zw==]]></property>
+	<property name="HTTP_CACHE_CONTROL" fullname="$_SERVER[&apos;HTTP_CACHE_CONTROL&apos;]" address="139689999721912" type="string" size="9" encoding="base64">
+		<![CDATA[bWF4LWFnZT0w]]></property>
+	<property name="PATH" fullname="$_SERVER[&apos;PATH&apos;]" address="139689999722616" type="string" size="28" encoding="base64">
+		<![CDATA[L3Vzci9sb2NhbC9iaW46L3Vzci9iaW46L2Jpbg==]]></property>
+	<property name="SERVER_SIGNATURE" fullname="$_SERVER[&apos;SERVER_SIGNATURE&apos;]" address="139689999723296" type="string" size="74" encoding="base64">
+		<![CDATA[PGFkZHJlc3M+QXBhY2hlLzIuMi4xNyAoVWJ1bnR1KSBTZXJ2ZXIgYXQgc2lnc2l1LXNlcnZlciBQb3J0IDgwPC9hZGRyZXNzPgo=]]></property>
+	<property name="SERVER_SOFTWARE" fullname="$_SERVER[&apos;SERVER_SOFTWARE&apos;]" address="139689999723856" type="string" size="22" encoding="base64">
+		<![CDATA[QXBhY2hlLzIuMi4xNyAoVWJ1bnR1KQ==]]></property>
+	<property name="SERVER_NAME" fullname="$_SERVER[&apos;SERVER_NAME&apos;]" address="139689999724416" type="string" size="13" encoding="base64">
+		<![CDATA[c2lnc2l1LXNlcnZlcg==]]></property>
+	<property name="SERVER_ADDR" fullname="$_SERVER[&apos;SERVER_ADDR&apos;]" address="139689999724976" type="string" size="13" encoding="base64">
+		<![CDATA[MTkyLjE2OC4xLjEwMA==]]></property>
+	<property name="SERVER_PORT" fullname="$_SERVER[&apos;SERVER_PORT&apos;]" address="139689999725408" type="string" size="2" encoding="base64">
+		<![CDATA[ODA=]]></property>
+	<property name="REMOTE_ADDR" fullname="$_SERVER[&apos;REMOTE_ADDR&apos;]" address="139689999726272" type="string" size="12" encoding="base64">
+		<![CDATA[MTkyLjE2OC4xLjMy]]></property>
+	<property name="DOCUMENT_ROOT" fullname="$_SERVER[&apos;DOCUMENT_ROOT&apos;]" address="139689999727136" type="string" size="8" encoding="base64">
+		<![CDATA[L3Zhci93d3c=]]></property>
+	<property name="SERVER_ADMIN" fullname="$_SERVER[&apos;SERVER_ADMIN&apos;]" address="139689999727712" type="string" size="19" encoding="base64">
+		<![CDATA[d2VibWFzdGVyQGxvY2FsaG9zdA==]]></property>
+	<property name="SCRIPT_FILENAME" fullname="$_SERVER[&apos;SCRIPT_FILENAME&apos;]" address="139689999728240" type="string" size="40" encoding="base64">
+		<![CDATA[L3Zhci93d3cvTmVvL0Rldi9hZG1pbmlzdHJhdG9yL2luZGV4LnBocA==]]></property>
+	<property name="REMOTE_PORT" fullname="$_SERVER[&apos;REMOTE_PORT&apos;]" address="139689999728784" type="string" size="5" encoding="base64">
+		<![CDATA[NDkzNzY=]]></property>
+	<property name="GATEWAY_INTERFACE" fullname="$_SERVER[&apos;GATEWAY_INTERFACE&apos;]" address="139689999729480" type="string" size="7" encoding="base64">
+		<![CDATA[Q0dJLzEuMQ==]]></property>
+	<property name="SERVER_PROTOCOL" fullname="$_SERVER[&apos;SERVER_PROTOCOL&apos;]" address="139689999730048" type="string" size="8" encoding="base64">
+		<![CDATA[SFRUUC8xLjE=]]></property>
+	<property name="REQUEST_METHOD" fullname="$_SERVER[&apos;REQUEST_METHOD&apos;]" address="139689999730592" type="string" size="3" encoding="base64">
+		<![CDATA[R0VU]]></property>
+	<property name="QUERY_STRING" fullname="$_SERVER[&apos;QUERY_STRING&apos;]" address="139689999731216" type="string" size="43" encoding="base64">
+		<![CDATA[b3B0aW9uPWNvbV9zb2JpcHJvJnRhc2s9Y2F0ZWdvcnkuZWRpdCZzaWQ9NA==]]></property>
+	<property name="REQUEST_URI" fullname="$_SERVER[&apos;REQUEST_URI&apos;]" address="139689999731904" type="string" size="76" encoding="base64">
+		<![CDATA[L05lby9EZXYvYWRtaW5pc3RyYXRvci9pbmRleC5waHA/b3B0aW9uPWNvbV9zb2JpcHJvJnRhc2s9Y2F0ZWdvcnkuZWRpdCZzaWQ9NA==]]></property>
+	<property name="SCRIPT_NAME" fullname="$_SERVER[&apos;SCRIPT_NAME&apos;]" address="139689999732512" type="string" size="32" encoding="base64">
+		<![CDATA[L05lby9EZXYvYWRtaW5pc3RyYXRvci9pbmRleC5waHA=]]></property>
+	<property name="PHP_SELF" fullname="$_SERVER[&apos;PHP_SELF&apos;]" address="139689999733112" type="string" size="32" encoding="base64">
+		<![CDATA[L05lby9EZXYvYWRtaW5pc3RyYXRvci9pbmRleC5waHA=]]></property>
+	<property name="REQUEST_TIME" fullname="$_SERVER[&apos;REQUEST_TIME&apos;]" address="139689999733320" type="int">
+		<![CDATA[1352904485]]></property>
+</property>
+<property name="_SESSION" fullname="$_SESSION" address="139689998398896" type="array" children="1" numchildren="1" page="0" pagesize="100">
+	<property name="__default" fullname="$_SESSION[&apos;__default&apos;]" address="139690000650856" type="array" children="1" numchildren="8"></property>
+</property>
+<property name="GLOBALS" fullname="$GLOBALS" address="139689999625568" type="array" children="1" numchildren="15" page="0" pagesize="100">
+	<property name="GLOBALS" fullname="$GLOBALS[&apos;GLOBALS&apos;]" address="139689999625568" type="array" children="1" recursive="1"></property>
+	<property name="_POST" fullname="$GLOBALS[&apos;_POST&apos;]" address="139690008456224" type="array" children="0" numchildren="0"></property>
+	<property name="_GET" fullname="$GLOBALS[&apos;_GET&apos;]" address="139690005285632" type="array" children="1" numchildren="3"></property>
+	<property name="_COOKIE" fullname="$GLOBALS[&apos;_COOKIE&apos;]" address="139689998398816" type="array" children="1" numchildren="12"></property>
+	<property name="_FILES" fullname="$GLOBALS[&apos;_FILES&apos;]" address="139689999703680" type="array" children="0" numchildren="0"></property>
+	<property name="_ENV" fullname="$GLOBALS[&apos;_ENV&apos;]" address="139689999703760" type="array" children="0" numchildren="0"></property>
+	<property name="_REQUEST" fullname="$GLOBALS[&apos;_REQUEST&apos;]" address="139689999713264" type="array" children="1" numchildren="3"></property>
+	<property name="_SERVER" fullname="$GLOBALS[&apos;_SERVER&apos;]" address="139689999714088" type="array" children="1" numchildren="29"></property>
+	<property name="parts" fullname="$GLOBALS[&apos;parts&apos;]" address="139689999779496" type="array" children="1" numchildren="5"></property>
+	<property name="os" fullname="$GLOBALS[&apos;os&apos;]" address="139689999791368" type="string" size="3" encoding="base64">
+		<![CDATA[TElO]]></property>
+	<property name="jversion" fullname="$GLOBALS[&apos;jversion&apos;]" address="139689999801016" type="object" classname="JVersion" children="1" numchildren="11">
+		<property name="CLASSNAME" type="string"><![CDATA[JVersion]]></property>
+	</property>
+	<property name="_JREQUEST" fullname="$GLOBALS[&apos;_JREQUEST&apos;]" address="139689998399032" type="array" children="1" numchildren="3"></property>
+	<property name="_SESSION" fullname="$GLOBALS[&apos;_SESSION&apos;]" address="139689998398896" type="array" children="1" numchildren="1"></property>
+	<property name="app" fullname="$GLOBALS[&apos;app&apos;]" address="139690000110432" type="object" classname="JAdministrator" children="1" numchildren="8">
+		<property name="CLASSNAME" type="string"><![CDATA[JAdministrator]]></property>
+	</property>
+	<property name="IDE_EVAL_CACHE" fullname="$GLOBALS[&apos;IDE_EVAL_CACHE&apos;]" address="139690007545752" type="array" children="1" numchildren="1"></property>
+</property>
+</response>

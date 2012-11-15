@@ -401,7 +401,7 @@ class SPJomlaUser extends JUser
 	 * @param	string	$value 	- The value of the variable.
 	 * @return	mixed	The previous state, if one existed.
 	 */
-	public function setUserState(  $key, $value )
+	public function setUserState(  $key, &$value )
 	{
 		return JFactory::getApplication()->setUserState( "com_sobipro.{$key}", $value );
 	}
@@ -414,7 +414,7 @@ class SPJomlaUser extends JUser
 	 * @param	string $type	- Filter for the variable.
 	 * @return	mixed
 	 */
-	public function getUserState( $key, $request, $default = null, $type = 'none' )
+	public function & getUserState( $key, $request, $default = null, $type = 'none' )
 	{
         $r = JFactory::getApplication()->getUserStateFromRequest( "com_sobipro.{$key}", $request, $default, $type );
         SPRequest::set( $request, $r );
