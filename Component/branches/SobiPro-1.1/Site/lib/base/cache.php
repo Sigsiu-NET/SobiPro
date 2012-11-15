@@ -28,7 +28,6 @@ defined( 'SQLITE_ASSOC' ) || define( 'SQLITE_ASSOC', null );
 
 final class SPCache
 {
-
     /**
      * @var SQLiteDatabase
      */

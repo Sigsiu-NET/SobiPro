@@ -639,8 +639,8 @@ abstract class SPHtml_Input
 		$value = strtotime( $value );
 		/** The stupid JavaScript to PHP conversion. */
 		$jsDateFormat = str_replace(
-			array( 'y', 'Y', 'F', 'n', 'm', 'd', 'j' ),
-			array( 'yy', 'yyyy', 'MM', 'm', 'mm', 'dd', 'd' ),
+			array( 'y', 'Y', 'F', 'n', 'm', 'd', 'j', 'h', 'H', 'i', 's' ),
+			array( 'yy', 'yyyy', 'MM', 'm', 'mm', 'dd', 'd', 'hh', 'hh', 'ii', 'ss' ),
 			$dateFormat
 		);
 		$valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat ) : null;
@@ -694,6 +694,11 @@ abstract class SPHtml_Input
 
 	public static function userSelector( $name, $value, $groups = null, $params = null, $icon = 'user', $header = 'USER_SELECT_HEADER', $format = '%user', $orderBy = 'id' )
 	{
+		static $count = 0;
+		static $session = null;
+		if( !( $session ) ) {
+			$session = SPFactory::user()->getUserState( 'userSelector', null, array() );
+		}
 		$params = self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
 			$params[ 'id' ] = SPLang::nid( $name );
@@ -708,7 +713,6 @@ abstract class SPHtml_Input
 			'ordering' => $orderBy,
 			'time' => microtime( true ),
 		);
-		$session = SPFactory::user()->getUserState( 'userSelector', null, array() );
 		if ( count( $session ) ) {
 			foreach ( $session as $id => $data ) {
 				if ( microtime( true ) - $data[ 'time' ] > 3600 ) {
@@ -716,8 +720,8 @@ abstract class SPHtml_Input
 				}
 			}
 		}
-		$ssid = md5( microtime() . Sobi::My( 'id' ) );
-		$session[ $ssid ] = $settings;
+		$ssid = md5( microtime() . Sobi::My( 'id' ) . ++$count );
+		$session[ $ssid ] =& $settings;
 		SPFactory::user()->setUserState( 'userSelector', $session );
 		$userData = null;
 		if ( $user ) {

@@ -36,11 +36,13 @@ class SPSectionAdmView extends SPAdmView
 	public function setTitle( $title )
 	{
 		$name = $this->get( 'section.name' );
-		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-		$title = Sobi::Txt( $title, array( 'category_name' => $name ) );
-		$this->set( $name, 'category_name' );
-		$this->set( $name, 'section_name' );
-		$this->set( $title, 'site_title' );
+		if ( $name ) {
+			Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
+			$title = Sobi::Txt( $title, array( 'category_name' => $name ) );
+			$this->set( $name, 'category_name' );
+			$this->set( $name, 'section_name' );
+			$this->set( $title, 'site_title' );
+		}
 		$title = parent::setTitle( $title );
 		return $title;
 	}
@@ -147,8 +149,8 @@ class SPSectionAdmView extends SPAdmView
 			Sobi::Txt( 'EMN_ORDER_BY' ) => array(),
 			'e_sid.asc' => Sobi::Txt( 'EMN.ORDER_BY_ID_ASC' ),
 			'e_sid.desc' => Sobi::Txt( 'EMN.ORDER_BY_ID_DESC' ),
-			$this->get('entries_field').'.asc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_ASC' ),
-			$this->get('entries_field').'.desc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_DESC' ),
+			$this->get( 'entries_field' ) . '.asc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_ASC' ),
+			$this->get( 'entries_field' ) . '.desc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_DESC' ),
 			'state.asc' => Sobi::Txt( 'EMN.ORDER_BY_STATE_ASC' ),
 			'state.desc' => Sobi::Txt( 'EMN.ORDER_BY_STATE_DESC' ),
 			'approved.asc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_ASC' ),

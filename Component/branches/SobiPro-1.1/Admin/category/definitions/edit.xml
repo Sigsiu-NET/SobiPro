@@ -65,15 +65,19 @@
 					<div class="span12">
 						<fieldset>
 							<field type="states" name="category.state" value="category.state" label="ENABLED" prefix="yes_no" />
+                            <field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
+                            <field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
 						</fieldset>
-						<fieldset>
-							<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="span2" dateFormat="d-m-Y H:i:s" icon="edit" />
-							<field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
-							<field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class="span2" dateFormat="Y-m-d H:i:s" icon="lock" />
-							<field type="userSelector" label="AUTHOR" name="category.owner" value="category.owner" class="span2" format="%name (%id)" />
-							<field type="output" value="category.version" label="VERSION" class="badge" />
+                        <fieldset label="CATN.EDIT_DATA">
+                            <field type="output" value="category.version" label="VERSION" class="badge" />
+                            <field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="span2" dateFormat="d-m-Y H:i:s" icon="edit" />
+							<field type="userSelector" label="CREATED_BY" name="category.owner" value="category.owner" class="span2" format="%name (%id)" />
+                            <field type="output" label="CREATED_BY_IP" name="category.ownerIP" value="category.ownerIP" class="infoText" />
+                            <field type="output" label="MODIFIED_AT" name="category.updatedTime" value="category.updatedTime" class="infoText" dateFormat="d-m-Y H:i:s" icon="edit" />
+                            <field type="userGetter" label="MODIFIED_BY" name="category.updater" value="category.updater" class="span2" format="%name (%id)" />
+                            <field type="output" label="MODIFIED_BY_IP" name="category.updaterIP" value="category.updaterIP" class="infoText" />
 						</fieldset>
-						<fieldset label="COUNTER">
+						<fieldset label="CLICKCOUNTER">
 							<field type="button" label="CAT.RESET_COUNT" value="category.counter" name="counter" class="btn counter-reset" rel="category" />
 						</fieldset>
 					</div>
@@ -83,10 +87,18 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="textarea" name="category.metaDesc" value="category.metaDesc" label="META_DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-							<field type="textarea" name="category.metaKeys" value="category.metaKeys" label="META_KEYS" editor="false" class="input-splarge" rows="2" style="" />
-							<field type="text" name="category.metaAuthor" value="category.metaAuthor" label="AUTHOR" size="50" maxlength="255" required="true" />
-							<field type="text" name="category.metaRobots" value="category.metaRobots" label="META_ROBOTS" />
+							<field type="textarea" name="category.metaDesc" value="category.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+							<field type="textarea" name="category.metaKeys" value="category.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+							<field type="text" name="category.metaAuthor" value="category.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+                            <field type="select" label="ROBOTS" name="category.metaRobots" selected="category.metaRobots" class="input-large" >
+                                <values>
+                                    <option value="" label="ROBOTS_NONE" />
+                                    <option value="index, follow" label="index, follow" />
+                                    <option value="index, nofollow" label="index, nofollow" />
+                                    <option value="noindex, follow" label="noindex, follow" />
+                                    <option value="noindex, nofollow" label="noindex, nofollow" />
+                                </values>
+                            </field>
 						</fieldset>
 					</div>
 				</div>
@@ -96,9 +108,7 @@
 		<div class="modal hide" id="spCat" style="width:500px;">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">×</button>
-				<h3>
-					<text value="CAT.SELECT_CATEGORY_PATH" />
-				</h3>
+				<h3><text value="CAT.SELECT_CATEGORY_PATH" /></h3>
 			</div>
 			<div class="modal-body">
 				<div id="spCatsChooser"></div>

@@ -1213,21 +1213,21 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	protected function parentPath( $id, $parents = false, $last = false )
 	{
-		static $path = null;
-		if ( !( $path ) ) {
-			$path = SPFactory::config()->getParentPath( $id, true, $parents );
+		static $pathArray = null;
+		if ( !( $pathArray ) ) {
+			$pathArray = SPFactory::config()->getParentPath( $id, true, $parents );
 		}
 		if ( !( $last ) ) {
-			if ( is_array( $path ) ) {
-				if ( strstr( $this->get( 'task' ), 'edit' ) ) {
-					unset( $path[ count( $path ) - 1 ] );
-				}
-				$path = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), $path );
+			if ( is_array( $pathArray ) ) {
+//				if ( strstr( $this->get( 'task' ), 'edit' ) ) {
+//					unset( $path[ count( $path ) - 1 ] );
+//				}
+				$path = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), $pathArray );
 			}
 		}
 		else {
-			if ( is_array( $path ) ) {
-				$path = SPLang::clean( $path[ count( $path ) - 1 ] );
+			if ( is_array( $pathArray ) ) {
+				$path = SPLang::clean( $pathArray[ count( $pathArray ) - 2 ] );
 			}
 		}
 		return SPLang::clean( $path );
