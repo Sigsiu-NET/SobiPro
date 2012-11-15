@@ -21,6 +21,7 @@
  * Fits for mootools-more compat
  * Renamed to prevent name conflicts
  * extended to include time
+ * added time to date - partially based on Gus' version
  * ========================================================= */
 
 !function ()
@@ -38,12 +39,12 @@
 
 	var SPDatepicker = function ( element, options )
 	{
-		var that = this;
-
+		var proxy = this;
 		this.element = SobiPro.jQuery( element );
 		this.language = options.language || this.element.data( 'date-language' ) || "en";
 		this.language = this.language in dates ? this.language : "en";
-		this.format = DPGlobal.parseFormat( options.format || this.element.data( 'date-format' ) || 'mm/dd/yyyy' );
+//		this.format = DPGlobal.parseFormat( options.format || this.element.data( 'date-format' ) || 'mm/dd/yyyy' );
+		this.format = options.format || SobiPro.jQuery( element ).data( "date-format" ) || 'mm/dd/yyyy hh:ii:ss';
 		this.picker = SobiPro.jQuery( DPGlobal.template )
 			.appendTo( SobiPro.jQuery( '#SobiPro' ) )
 			.on( {
@@ -52,13 +53,16 @@
 		this.isInput = this.element.is( 'input' );
 		this.component = this.element.is( '.date' ) ? this.element.find( '.add-on' ) : false;
 		this.hasInput = this.component && this.element.find( 'input' ).length;
-		if ( this.component && this.component.length === 0 )
+		this.ident = this.element.find( 'input' ).length ? this.element.find( 'input' ).attr( 'name' ) : 'undef';
+		if ( this.component && this.component.length === 0 ) {
 			this.component = false;
+		}
 
 		if ( this.isInput ) {
 			this.element.on( {
 				focus:SobiPro.jQuery.proxy( this.show, this ),
 				keyup:SobiPro.jQuery.proxy( this.update, this ),
+				blur:SobiPro.jQuery.proxy( this.update, this ),
 				keydown:SobiPro.jQuery.proxy( this.keydown, this )
 			} );
 		}
@@ -82,11 +86,11 @@
 		{
 			// Clicked outside the datepicker, hide it
 			if ( SobiPro.jQuery( e.target ).closest( '.datepicker' ).length == 0 ) {
-				SobiPro.jQuery( '.datepicker' ).hide();
+				proxy.hide();
 			}
 		} );
 
-		this.autoclose = false;
+		this.autoclose = true;
 		if ( 'autoclose' in options ) {
 			this.autoclose = options.autoclose;
 		}
@@ -132,9 +136,12 @@
 	};
 	SPDatepicker.prototype = {
 		constructor:SPDatepicker,
-
+		time:{},
+		saveTime:true,
 		show:function ( e )
 		{
+			/* after the initialisation it should be set to false so only a "keyup" event can change the time */
+			this.saveTime = false;
 			this.picker.show();
 			this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
 			this.update();
@@ -161,10 +168,13 @@
 			}
 			if ( e && e.currentTarget.value )
 				this.setValue();
-			this.element.trigger( {
-				type:'hide',
-				date:this.date
-			} );
+			/* for some reason it is hiding the whole input box as well
+			 * probably only Joomla! problem caused by mt or something similar
+			 */
+//			this.element.trigger( {
+//				type:'hide',
+//				date:this.date
+//			} );
 		},
 
 		getDate:function ()
@@ -207,7 +217,7 @@
 		{
 			this.startDate = startDate || -Infinity;
 			if ( this.startDate !== -Infinity ) {
-				this.startDate = DPGlobal.parseDate( this.startDate, this.format, this.language );
+				this.startDate = DPGlobal.parseDate( this.startDate, this.format );
 			}
 			this.update();
 			this.updateNavArrows();
@@ -217,7 +227,7 @@
 		{
 			this.endDate = endDate || Infinity;
 			if ( this.endDate !== Infinity ) {
-				this.endDate = DPGlobal.parseDate( this.endDate, this.format, this.language );
+				this.endDate = DPGlobal.parseDate( this.endDate, this.format );
 			}
 			this.update();
 			this.updateNavArrows();
@@ -237,11 +247,22 @@
 			} );
 		},
 
-		update:function ()
+		update:function ( e )
 		{
+			if ( !( this.time[ this.ident ]) ) {
+				this.time[ this.ident ] = {'hours':00, 'minutes':00, 'seconds':00 };
+			}
+			try {
+				if ( e.type == 'keyup' ) {
+					this.saveTime = true;
+				}
+			}
+			catch ( e ) {
+			}
+			// 				this.isInput ? this.element.prop( 'value' ) : this.element.data( 'date' ) || this.element.find( 'input' ).prop( 'value' ),
 			this.date = DPGlobal.parseDate(
-				this.isInput ? this.element.prop( 'value' ) : this.element.data( 'date' ) || this.element.find( 'input' ).prop( 'value' ),
-				this.format, this.language
+				this.element.find( 'input' ).prop( 'value' ),
+				this.format, this.time[ this.ident ], this.saveTime
 			);
 			if ( this.date < this.startDate ) {
 				this.viewDate = new Date( this.startDate );
@@ -252,7 +273,12 @@
 			else {
 				this.viewDate = new Date( this.date );
 			}
+//			SobiPro.DebOut(this.date);
 			this.fill();
+			this.element.trigger( {
+				type:'changeDate',
+				date:this.date
+			} );
 		},
 
 		fillDow:function ()
@@ -321,7 +347,9 @@
 					prevMonth.getUTCDate() == today.getDate() ) {
 					clsName += ' today';
 				}
-				if ( prevMonth.valueOf() == currentDate ) {
+				/** no questions here */
+//				if ( prevMonth.getDay() == currentDate ) {
+				if ( ( prevMonth.getDay() == this.date.getDay() ) && ( prevMonth.getWeek() == this.date.getWeek() ) ) {
 					clsName += ' active';
 				}
 				if ( prevMonth.valueOf() < this.startDate || prevMonth.valueOf() > this.endDate ) {
@@ -435,13 +463,11 @@
 								break;
 							case 'today':
 								var date = new Date();
-								date.setUTCHours( 0 );
-								date.setUTCMinutes( 0 );
-								date.setUTCSeconds( 0 );
 								date.setUTCMilliseconds( 0 );
-
 								this.showMode( -2 );
 								var which = this.todayBtn == 'linked' ? null : 'view';
+								this.time[ this.ident ] = { 'hours':date.getHours(), 'minutes':date.getMinutes(), 'seconds':date.getSeconds() };
+								this.date = DPGlobal.parseDate( date, this.format, this.time[ this.ident ], true );
 								this._setDate( date, which );
 								break;
 						}
@@ -469,8 +495,10 @@
 							this.fill();
 						}
 						break;
+					// this is when a date has been selected in the picker << this is a comment for Gods' sake
 					case 'td':
 						if ( target.is( '.day' ) && !target.is( '.disabled' ) ) {
+							this.saveTime = false;
 							var day = parseInt( target.text(), 10 ) || 1;
 							var year = this.viewDate.getUTCFullYear(),
 								month = this.viewDate.getUTCMonth();
@@ -492,7 +520,18 @@
 									month += 1;
 								}
 							}
-							this._setDate( UTCDate( year, month, day, 0, 0, 0, 0 ) );
+							var setDate = UTCDate( year, month, day, 0, 0, 0, 0 );
+							storedTime = this.time[ this.ident ];
+							if ( storedTime.hours ) {
+								setDate.setHours( storedTime.hours );
+							}
+							if ( storedTime.minutes ) {
+								setDate.setMinutes( storedTime.minutes );
+							}
+							if ( storedTime.seconds ) {
+								setDate.setSeconds( storedTime.seconds );
+							}
+							this._setDate( setDate );
 						}
 						break;
 				}
@@ -713,7 +752,7 @@
 	SobiPro.jQuery.fn.spDatepicker.defaults = {
 	};
 	SobiPro.jQuery.fn.spDatepicker.Constructor = SPDatepicker;
-	var dates = SobiPro.jQuery.fn.spDatepicker.dates = { en: spDatePickerLang };
+	var dates = SobiPro.jQuery.fn.spDatepicker.dates = { en:spDatePickerLang };
 //	{
 //		en:{
 //			days:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
@@ -764,128 +803,102 @@
 			}
 			return {separators:separators, parts:parts};
 		},
-		parseDate:function ( date, format, language )
+		parseDate:function ( dateStr, format, time, saveTime )
 		{
-			if ( date instanceof Date ) return date;
-			if ( /^[-+]\d+[dmwy]([\s,]+[-+]\d+[dmwy])*SobiPro.jQuery/.test( date ) ) {
-				var part_re = /([-+]\d+)([dmwy])/,
-					parts = date.match( /([-+]\d+)([dmwy])/g ),
-					part, dir;
-				date = new Date();
-				for ( var i = 0; i < parts.length; i++ ) {
-					part = part_re.exec( parts[i] );
-					dir = parseInt( part[1] );
-					switch ( part[2] ) {
-						case 'd':
-							date.setUTCDate( date.getUTCDate() + dir );
-							break;
-						case 'm':
-							date = SPDatepicker.prototype.moveMonth.call( SPDatepicker.prototype, date, dir );
-							break;
-						case 'w':
-							date.setUTCDate( date.getUTCDate() + dir * 7 );
-							break;
-						case 'y':
-							date = SPDatepicker.prototype.moveYear.call( SPDatepicker.prototype, date, dir );
-							break;
-					}
-				}
-				return UTCDate( date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0 );
+			if ( dateStr instanceof Date ) {
+				return dateStr;
 			}
-			var parts = date && date.match( this.nonpunctuation ) || [],
-				date = new Date(),
-				parsed = {},
-				setters_order = ['yyyy', 'yy', 'M', 'MM', 'm', 'mm', 'd', 'dd'],
-				setters_map = {
-					yyyy:function ( d, v )
-					{
-						return d.setUTCFullYear( v );
-					},
-					yy:function ( d, v )
-					{
-						return d.setUTCFullYear( 2000 + v );
-					},
-					m:function ( d, v )
-					{
-						v -= 1;
-						while ( v < 0 ) v += 12;
-						v %= 12;
-						d.setUTCMonth( v );
-						while ( d.getUTCMonth() != v )
-							d.setUTCDate( d.getUTCDate() - 1 );
-						return d;
-					},
-					d:function ( d, v )
-					{
-						return d.setUTCDate( v );
+			if ( !( dateStr ) ) {
+				this.date = 0;
+				return new Date();
+			}
+			//convert str into date
+			var strParts = dateStr.split( /[^a-zA-Z0-9]/g );
+			var formatParts = format.split( /[^a-zA-Z]/g );
+
+			date = new Date(),
+				date.setHours( 0 );
+			date.setMinutes( 0 );
+			date.setSeconds( 0 );
+			date.setMilliseconds( 0 );
+			for ( var key in formatParts ) {
+				if ( typeof strParts[key] != 'undefined' ) {
+					val = strParts[key];
+					switch ( formatParts[key] ) {
+						case 'dd':
+						case 'd':
+							date.setDate( val );
+							break;
+						case 'mm':
+						case 'm':
+							date.setMonth( val - 1 );
+							break;
+						case 'yy':
+							date.setFullYear( 2000 + val );
+							break;
+						case 'yyyy':
+							date.setFullYear( val );
+							break;
+						case 'hh':
+						case 'h':
+							if ( saveTime ) {
+								time.hours = val;
+								date.setHours( val );
+							}
+							else {
+								date.setHours( time.hours );
+							}
+							break;
+						case 'ii':
+						case 'i':
+							if ( saveTime ) {
+								time.minutes = val;
+								date.setMinutes( val );
+							}
+							else {
+								date.setMinutes( time.minutes );
+							}
+							break;
+						case 'ss':
+						case 's':
+							if ( saveTime ) {
+								time.seconds = val;
+								date.setSeconds( val );
+							}
+							else {
+								date.setSeconds( time.seconds );
+							}
+							break;
 					}
-				},
-				val, filtered, part;
-			setters_map['M'] = setters_map['MM'] = setters_map['mm'] = setters_map['m'];
-			setters_map['dd'] = setters_map['d'];
-			date = UTCDate( date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0 );
-			if ( parts.length == format.parts.length ) {
-				for ( var i = 0, cnt = format.parts.length; i < cnt; i++ ) {
-					val = parseInt( parts[i], 10 );
-					part = format.parts[i];
-					if ( isNaN( val ) ) {
-						switch ( part ) {
-							case 'MM':
-								filtered = SobiPro.jQuery( dates[language].months ).filter( function ()
-								{
-									var m = this.slice( 0, parts[i].length ),
-										p = parts[i].slice( 0, m.length );
-									return m == p;
-								} );
-								val = SobiPro.jQuery.inArray( filtered[0], dates[language].months ) + 1;
-								break;
-							case 'M':
-								filtered = SobiPro.jQuery( dates[language].monthsShort ).filter( function ()
-								{
-									var m = this.slice( 0, parts[i].length ),
-										p = parts[i].slice( 0, m.length );
-									return m == p;
-								} );
-								val = SobiPro.jQuery.inArray( filtered[0], dates[language].monthsShort ) + 1;
-								break;
-						}
-					}
-					parsed[part] = val;
-				}
-				for ( var i = 0, s; i < setters_order.length; i++ ) {
-					s = setters_order[i];
-					if ( s in parsed )
-						setters_map[s]( date, parsed[s] )
 				}
 			}
 			return date;
 		},
-		formatDate:function ( date, format, language )
-		{
-			var val = {
-				d:date.getUTCDate(),
-				m:date.getUTCMonth() + 1,
-				M:dates[language].monthsShort[date.getUTCMonth()],
-				MM:dates[language].months[date.getUTCMonth()],
-				yy:date.getUTCFullYear().toString().substring( 2 ),
-				yyyy:date.getUTCFullYear(),
-				G:date.getUTCHours(),
-				i:date.getUTCMinutes(),
-				s:date.getUTCSeconds()
+		formatDate:function ( date, format )
+		{ // build a formatted string
+			var templateParts = {
+				dd:(date.getDate() < 10 ? '0' : '') + date.getDate(),
+				d:date.getDate(),
+				mm:((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1),
+				m:date.getMonth() + 1,
+				yyyy:date.getFullYear(),
+				yy:date.getFullYear().toString().substring( 2 ),
+				hh:(date.getHours() < 10 ? '0' : '') + date.getHours(),
+				h:date.getHours(),
+				ii:(date.getMinutes() < 10 ? '0' : '') + date.getMinutes(),
+				i:date.getMinutes(),
+				ss:(date.getSeconds() < 10 ? '0' : '') + date.getSeconds(),
+				s:date.getSeconds()
 			};
-			val.dd = (val.d < 10 ? '0' : '') + val.d;
-			val.mm = (val.m < 10 ? '0' : '') + val.m;
-			val.H = (val.G < 10 ? '0' : '') + val.G;
-			val.i = (val.i < 10 ? '0' : '') + val.i;
-			val.s = (val.s < 10 ? '0' : '') + val.s;
-			var date = [];
-			var seps = SobiPro.jQuery.extend( [], format.separators );
-			for ( var i = 0, cnt = format.parts.length; i < cnt; i++ ) {
-				if ( seps.length )
-					date.push( seps.shift() );
-				date.push( val[format.parts[i]] );
+
+			var dateStr = format;
+
+			for ( var key in templateParts ) {
+				val = templateParts[key];
+				dateStr = dateStr.replace( key, val );
 			}
-			return date.join( '' );
+
+			return dateStr;
 		},
 		headTemplate:'<thead>' +
 			'<tr>' +
@@ -924,11 +937,18 @@
 
 SobiPro.jQuery( document ).ready( function ()
 {
-	SobiPro.jQuery( '.spDatePicker' ).spDatepicker()
-		.on( 'changeDate', function ( ev )
-		{
-			SobiPro.jQuery( ev.currentTarget )
-				.find( ':hidden' )
-				.val( new Date( ev.date.valueOf() - ( new Date().getTimezoneOffset() * 60000 ) ).valueOf() / 1000 );
-		} );
+	SobiPro.jQuery( '.spDatePicker' ).each( function ( i, e )
+	{
+		"use strict";
+		SobiPro.jQuery( e )
+			.spDatepicker()
+			.on( 'changeDate', function ( ev )
+			{
+				if ( ev.date.valueOf() ) {
+					SobiPro.jQuery( ev.currentTarget )
+						.find( ':hidden' )
+						.val( new Date( ev.date.valueOf() ) / 1000 );
+				}
+			} );
+	} );
 } );
