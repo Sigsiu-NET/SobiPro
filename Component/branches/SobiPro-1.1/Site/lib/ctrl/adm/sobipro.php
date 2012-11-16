@@ -113,7 +113,6 @@ final class SobiProAdmCtrl
 		} catch ( SPException $x ) {
 			Sobi::Error( 'CoreCtrl', SPLang::e( 'Cannot register language domain: %s.', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-
 		/* load admin html files */
 		SPFactory::header()->initBase( true );
 

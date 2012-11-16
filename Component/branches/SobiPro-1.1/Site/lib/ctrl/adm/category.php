@@ -173,10 +173,10 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 	 */
 	protected function view()
 	{
-		$config =& SPFactory::config();
-		$user =& SPFactory::user();
+		$config = SPFactory::config();
+		$user = SPFactory::user();
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 
 		/* get the lists ordering and limits */
 		$eLimit = $user->getUserState( 'adm.entries.limit', 'elimit', $config->key( 'adm_list.entries_limit', 25 ) );
@@ -254,25 +254,24 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$menu->addCustom( 'AMN.ENT_CAT', $tree->getTree() );
 
 		/* get view class */
-		$class = SPLoader::loadView( 'category', true );
-		$view = new $class();
-		$view->assign( $eLimit, '$eLimit' );
-		$view->assign( $cLimit, '$cLimit' );
-		$view->assign( $eLimStart, '$eLimStart' );
-		$view->assign( $cLimStart, '$cLimStart' );
-		$view->assign( $cCount, '$cCount' );
-		$view->assign( $eCount, '$eCount' );
-		$view->assign( $this->_task, 'task' );
-		$view->assign( $this->_model, 'category' );
-		$view->loadConfig( 'category.list' );
-		$view->setTemplate( 'category.list' );
-		$view->assign( $categories, 'categories' );
-		$view->assign( $entries, 'entries' );
-		$view->assign( $this->customCols(), 'fields' );
-		$view->assign( $entriesName, 'entries_name' );
-		$view->assign( $entriesField, 'entries_field' );
-		$view->assign( $menu, 'menu' );
-		$view->addHidden( Sobi::Section(), 'pid' );
+		$view = SPFactory::View( 'category', true );
+		$view->assign( $eLimit, '$eLimit' )
+				->assign( $cLimit, '$cLimit' )
+				->assign( $eLimStart, '$eLimStart' )
+				->assign( $cLimStart, '$cLimStart' )
+				->assign( $cCount, '$cCount' )
+				->assign( $eCount, '$eCount' )
+				->assign( $this->_task, 'task' )
+				->assign( $this->_model, 'category' )
+				->assign( $categories, 'categories' )
+				->assign( $entries, 'entries' )
+				->assign( $this->customCols(), 'fields' )
+				->assign( $entriesName, 'entries_name' )
+				->assign( $entriesField, 'entries_field' )
+				->assign( $menu, 'menu' )
+				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' ), 'eorder' )
+				->assign( Sobi::GetUserState( 'categories.corder', 'corder', 'position.asc' ), 'corder' )
+				->addHidden( Sobi::Section(), 'pid' );
 		Sobi::Trigger( 'Category', 'View', array( &$view ) );
 		$view->display();
 	}

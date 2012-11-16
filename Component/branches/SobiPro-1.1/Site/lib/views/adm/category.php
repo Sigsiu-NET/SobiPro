@@ -78,17 +78,26 @@ class SPCategoryAdmView extends SPSectionAdmView
 		if ( $id ) {
 			$this->addHidden( $id, 'category.id' );
 		}
-		if ( $this->get( 'category.icon' ) && SPFs::exists( Sobi::Cfg( 'images.category_icons' ) . DS . $this->get( 'category.icon' ) ) ) {
+		if ( $this->get( 'category.icon' ) && SPFs::exists( Sobi::Cfg( 'images.category_icons' ) . '/' . $this->get( 'category.icon' ) ) ) {
 			$i = Sobi::FixPath( Sobi::Cfg( 'images.category_icons_live' ) . $this->get( 'category.icon' ) );
+			$this->assign( $i, 'category_icon' );
+		}
+		else {
+			$i = Sobi::FixPath( Sobi::Cfg( 'images.category_icons_live' ) . Sobi::Cfg( 'icons.default_selector_image', '48x48/image.png' ) );
 			$this->assign( $i, 'category_icon' );
 		}
 		/* if editing - get the full path. Otherwise get the path of the parent element */
 		$id = $id ? $id : $pid;
-		if ( $id ) {
+		if ( $this->get( 'category.id' ) ) {
 			$path = $this->parentPath( $id );
+			$parentCat = $this->parentPath( $id, false, true );
+		}
+		else {
+			$path = $this->parentPath( SPRequest::sid() );
+			$parentCat = $this->parentPath( SPRequest::sid(), false, true, 1 );
 		}
 		$this->assign( $path, 'parent_path' );
-		$this->assign( $this->parentPath( $id, false, true ), 'parent_cat' );
+		$this->assign( $parentCat, 'parent_cat' );
 		if ( SPRequest::sid() ) {
 			$this->assign( Sobi::Url( array( 'task' => 'category.chooser', 'sid' => SPRequest::sid(), 'out' => 'html' ), true ), 'cat_chooser_url' );
 		}
