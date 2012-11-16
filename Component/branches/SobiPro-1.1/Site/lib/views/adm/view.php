@@ -109,7 +109,7 @@ class SPAdmView extends SPObject implements SPView
 		$this->parseDefinition( $this->_xml->getElementsByTagName( 'definition' ) );
 	}
 
-	public function determineTemplate( $type, $template )
+	public function & determineTemplate( $type, $template )
 	{
 		if ( SPLoader::translatePath( $type . '.definitions.' . $template, 'adm', true, 'xml' ) ) {
 			$nid = '-' . Sobi::Section( 'nid' );
@@ -141,6 +141,7 @@ class SPAdmView extends SPObject implements SPView
 			$this->setTemplate( "{$type}.{$template}" );
 			SPFactory::header()->addCssFile( 'adm.legacy' );
 		}
+		return $this;
 	}
 
 
@@ -365,6 +366,12 @@ class SPAdmView extends SPObject implements SPView
 						$element[ 'content' ] = $node->nodeValue;
 					}
 					break;
+				case 'url':
+					$element[ 'label' ] = $node->attributes->getNamedItem( 'label' ) ? Sobi::Txt( $node->attributes->getNamedItem( 'label' )->nodeValue ) : null;
+					$element[ 'link' ] = $this->xmlUrl( $node );
+					$element[ 'attributes' ][ 'href' ] = $element[ 'link' ];
+					$element[ 'content' ] = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
+					break;
 				case 'text':
 					$value = null;
 					if ( $node->attributes->getNamedItem( 'value' ) ) {
@@ -495,40 +502,7 @@ class SPAdmView extends SPObject implements SPView
 				}
 				/** @var DOMNode $param */
 				if ( $child->nodeName == 'url' ) {
-					$url = array();
-					foreach ( $child->childNodes as $param ) {
-						if ( strstr( $param->nodeName, '#' ) ) {
-							continue;
-						}
-						if ( $param->attributes->getNamedItem( 'parse' ) && $param->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
-							$currentSubject = $subject . '.';
-							/** wee need to skip sometimes, and sometimes override the current subject
-							 * i.e getting section id which is not a part of the object*/
-							if ( $param->attributes->getNamedItem( 'subject' ) ) {
-								if ( $param->attributes->getNamedItem( 'subject' )->nodeValue == 'skip' ) {
-									$currentSubject = null;
-								}
-								else {
-									$currentSubject = $param->attributes->getNamedItem( 'subject' )->nodeValue . '.';
-								}
-							}
-							if ( $currentSubject ) {
-								$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->get( $currentSubject . $param->attributes->getNamedItem( 'value' )->nodeValue, $i );
-							}
-							else {
-								$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->get( $param->attributes->getNamedItem( 'value' )->nodeValue );
-							}
-						}
-						else {
-							$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $param->attributes->getNamedItem( 'value' )->nodeValue;
-						}
-					}
-					if ( $child->attributes->getNamedItem( 'type' ) && $child->attributes->getNamedItem( 'type' )->nodeValue == 'intern' ) {
-						$element[ 'link' ] = Sobi::Url( $url );
-					}
-					else {
-						$element[ 'link' ] = $child->attributes->getNamedItem( 'host' )->nodeValue . http_build_query( $url );
-					}
+					$element[ 'link' ] = $this->xmlUrl( $child, $subject, $i );
 				}
 				else {
 					$this->xmlCell( $child, $subject, $i, $element[ 'childs' ] );
@@ -536,6 +510,46 @@ class SPAdmView extends SPObject implements SPView
 			}
 		}
 		$objects[ ] = $element;
+	}
+
+	private function xmlUrl( $node, $subject = null, $index = -1 )
+	{
+		$url = array();
+		$link = null;
+		foreach ( $node->childNodes as $param ) {
+			if ( strstr( $param->nodeName, '#' ) ) {
+				continue;
+			}
+			if ( $param->attributes->getNamedItem( 'parse' ) && $param->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
+				$currentSubject = $subject ? $subject . '.' : null;
+				/** wee need to skip sometimes, and sometimes override the current subject
+				 * i.e getting section id which is not a part of the object*/
+				if ( $param->attributes->getNamedItem( 'subject' ) ) {
+					if ( $param->attributes->getNamedItem( 'subject' )->nodeValue == 'skip' ) {
+						$currentSubject = null;
+					}
+					else {
+						$currentSubject = $param->attributes->getNamedItem( 'subject' )->nodeValue . '.';
+					}
+				}
+				if ( $currentSubject ) {
+					$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->get( $currentSubject . $param->attributes->getNamedItem( 'value' )->nodeValue, $index );
+				}
+				else {
+					$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->get( $param->attributes->getNamedItem( 'value' )->nodeValue );
+				}
+			}
+			else {
+				$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $param->attributes->getNamedItem( 'value' )->nodeValue;
+			}
+		}
+		if ( $node->attributes->getNamedItem( 'type' ) && $node->attributes->getNamedItem( 'type' )->nodeValue == 'intern' ) {
+			$link = Sobi::Url( $url );
+		}
+		else {
+			$link = $node->attributes->getNamedItem( 'host' )->nodeValue . http_build_query( $url );
+		}
+		return $link;
 	}
 
 	/**
@@ -625,6 +639,45 @@ class SPAdmView extends SPObject implements SPView
 							}
 						}
 						$args[ 'values' ] = $values;
+						break;
+					case 'value':
+						if ( $child->childNodes->length ) {
+							/** @var DOMNode $value */
+							foreach ( $child->childNodes as $value ) {
+								if ( strstr( $value->nodeName, '#' ) ) {
+									continue;
+								}
+								switch ( $value->nodeName ) {
+									case 'url':
+										$params = array( 'href' => $this->xmlUrl( $value ) );
+										$content = 'no content given';
+										foreach ( $value->attributes as $a ) {
+											switch ( $a->nodeName ) {
+												case 'type':
+												case 'host':
+													break;
+												case 'content':
+													$v = $this->get( trim( $a->nodeValue ) );
+													if ( !( $v ) ) {
+														$v = Sobi::Txt( trim( $a->nodeValue ) );
+													}
+													$content = $v;
+													break;
+												default:
+													$params[ $a->nodeName ] = $a->nodeValue;
+													break;
+											}
+										}
+										$link = '<a ';
+										foreach ( $params as $k => $v ) {
+											$link .= $k . '="' . $v . '" ';
+										}
+										$link .= '>' . $content . '</a>';
+										$args[ 'value' ] = $link;
+										break;
+								}
+							}
+						}
 						break;
 					case 'add':
 						if ( $child->childNodes->length ) {

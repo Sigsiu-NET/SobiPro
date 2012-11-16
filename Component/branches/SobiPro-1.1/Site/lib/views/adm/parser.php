@@ -72,13 +72,13 @@ class SPTplParser
 
 				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
 					$this->_out[ ] = "<div class=\"spOutput\">";
-                    $outclass = null;
-                    if( isset( $element[ 'args' ][ 'params' ][ 'class' ] ) ) {
-    					$outclass = $element[ 'args' ][ 'params' ][ 'class' ];
-                    }
+					$outclass = null;
+					if ( isset( $element[ 'args' ][ 'params' ][ 'class' ] ) ) {
+						$outclass = $element[ 'args' ][ 'params' ][ 'class' ];
+					}
 					$id = null;
-					if( isset( $element[ 'args' ][ 'params' ][ 'id' ] ) ) {
-						$id = ' id="'.$element[ 'args' ][ 'params' ][ 'id' ].'" ';
+					if ( isset( $element[ 'args' ][ 'params' ][ 'id' ] ) ) {
+						$id = ' id="' . $element[ 'args' ][ 'params' ][ 'id' ] . '" ';
 					}
 					if ( $outclass ) {
 						$this->_out[ ] = "<span class=\"{$outclass}\"{$id}>\n";
@@ -129,6 +129,7 @@ class SPTplParser
 				$this->_out[ ] = '</div>';
 				break;
 			case 'text':
+			case 'url':
 				$this->_out[ ] = $element[ 'content' ];
 				break;
 			default:
@@ -172,13 +173,18 @@ class SPTplParser
 			case 'h3':
 			case 'a':
 			case 'button':
+			case 'url':
+				$tag = $data[ 'type' ];
+				if ( $data[ 'type' ] == 'url' ) {
+					$tag = 'a';
+				}
 				$a = null;
 				if ( count( $data[ 'attributes' ] ) ) {
 					foreach ( $data[ 'attributes' ] as $att => $value ) {
 						$a .= " {$att}=\"{$value}\"";
 					}
 				}
-				$this->_out[ ] = "<{$data['type']}{$a}>";
+				$this->_out[ ] = "<{$tag}{$a}>";
 				break;
 			case 'head':
 				$this->thTd = 'th';
@@ -229,6 +235,8 @@ class SPTplParser
 				}
 				$this->_out[ ] = '</fieldset>';
 				break;
+			case 'link':
+				$data[ 'type' ] = 'a';
 			case 'div':
 			case 'span':
 			case 'p':
@@ -238,7 +246,12 @@ class SPTplParser
 			case 'a':
 			case 'button':
 			case 'table':
-				$this->_out[ ] = "</{$data['type']}>";
+			case 'url':
+				$tag = $data[ 'type' ];
+				if ( $data[ 'type' ] == 'url' ) {
+					$tag = 'a';
+				}
+				$this->_out[ ] = "</{$tag}>";
 				break;
 			case 'head':
 				$this->thTd = 'td';
