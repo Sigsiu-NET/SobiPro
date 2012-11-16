@@ -736,7 +736,7 @@ class SPAdmView extends SPObject implements SPView
 					foreach ( $hidden as $field ) {
 						if ( !( strstr( $field->nodeName, '#' ) ) ) {
 							$value = null;
-							if( $field->attributes->getNamedItem( 'value' ) && $field->attributes->getNamedItem( 'value' )->nodeValue ) {
+							if ( $field->attributes->getNamedItem( 'value' ) && $field->attributes->getNamedItem( 'value' )->nodeValue ) {
 								$value = $this->get( $field->attributes->getNamedItem( 'value' )->nodeValue );
 							}
 							else {
@@ -1211,9 +1211,10 @@ class SPAdmView extends SPObject implements SPView
 	 * @param int $id
 	 * @return array
 	 */
-	protected function parentPath( $id, $parents = false, $last = false )
+	protected function parentPath( $id, $parents = false, $last = false, $offset = 2 )
 	{
 		static $pathArray = null;
+		$path = null;
 		if ( !( $pathArray ) ) {
 			$pathArray = SPFactory::config()->getParentPath( $id, true, $parents );
 		}
@@ -1226,8 +1227,8 @@ class SPAdmView extends SPObject implements SPView
 			}
 		}
 		else {
-			if ( is_array( $pathArray ) ) {
-				$path = SPLang::clean( $pathArray[ count( $pathArray ) - 2 ] );
+			if ( is_array( $pathArray ) && isset( $pathArray[ count( $pathArray ) - $offset ] ) ) {
+				$path = $pathArray[ count( $pathArray ) - $offset ];
 			}
 		}
 		return SPLang::clean( $path );
