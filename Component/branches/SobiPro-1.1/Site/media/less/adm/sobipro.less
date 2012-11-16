@@ -209,20 +209,22 @@ div.spScreenTitle h4 {
   color: #00007b;
 }
 
-#spIco .btn,
-#spIco .btn:hover,
-#spCat .btn,
-#spCat .btn:hover {
-  color: #333333;
+.modal-footer .btn,
+.modal-footer .btn:hover {
+  color: #333333!important;
 }
 
-#spCat .btn-primary,
-#spCat .btn-primary:hover,
-#spCat .btn-danger,
-#spCat .btn-danger:hover,
-#spCat .btn-success,
-#spCat .btn-success:hover {
-  color: #ffffff;
+.modal-footer .btn-primary,
+.modal-footer .btn-primary:hover,
+.modal-footer .btn-danger,
+.modal-footer .btn-danger:hover,
+.modal-footer .btn-success,
+.modal-footer .btn-success:hover {
+  color: #ffffff!important;
+}
+
+.SobiPro .modal {
+  width: 500px;
 }
 
 #SPAdminForm table .control-label {
@@ -266,7 +268,7 @@ div.spScreenTitle h4 {
 
 #SPAdminForm .controls .btn:active,
 #SPAdminForm .controls .btn.active {
-  color: #ffffff;
+  /*color: #ffffff; suchen wo benötigt und detaillierter lösen!!*/
 }
 
 .SobiPro .brand {
@@ -346,6 +348,11 @@ div.spScreenTitle h4 {
   min-width: 50px;
   margin-top: -3px;
   padding: 2px 5px 0 5px;
+}
+
+.infoText a,
+.infoText a:hover {
+  color: #6699ff!important;
 }
 
 #SPAdminForm input,
@@ -459,17 +466,21 @@ input.sp-input-micro[type="text"] {
   background-image: url('@{admIcons}/fields.png');
 }
 
-.user-selector .response .btn {
+.spUserSelector .response .btn {
   margin: 5px;
   width: 200px;
 }
 
-.user-selector .btn-block {
+.spUserSelector .btn-block {
   margin-top: 15px;
 }
 
-.user-selector .response {
+.spUserSelector .response {
   min-height: 300px;
+  margin-left: 20px;
+}
+
+.spUserName {
 }
 
 .SobiPro table.mceLayout {

@@ -29,9 +29,9 @@ $fc = $this->count( 'files' );
 	}
 </script>
 <?php if( $dc ) { ?>
-	<div style="padding-left: 20px; max-height: 220px; min-width: 550px; display: inline-block;">
+	<div style="padding-left: 10px; min-width: 450px; display: inline-block">
 	<?php for ( $i = 0; $i < $dc ; ++$i ) { ?>
-		<div style="float: left; width: 90px; height: 90px; padding: 5px; text-align:center">
+		<div style="float: left; width: 100px; height: 90px; padding: 5px; text-align:center">
 			<a href="<?php $this->show( 'directories.url', $i ); ?>" >
 				<img alt="<?php $this->show( 'directories.name', $i ); ?>" title="<?php $this->show( 'directories.name', $i ); ?>" src="<?php $this->show( 'folder' ); ?>" style="max-width: 55px; max-height: 55px;" >
 			</a>
@@ -40,18 +40,18 @@ $fc = $this->count( 'files' );
 				<?php $this->show( 'directories.name', $i ); ?> (<?php $this->show( 'directories.count', $i ); ?>)
 			</a>
 		</div>
-		<?php if( ( $i+1 ) % 5 == 0 ) { ?>
+		<?php if( ( $i+1 ) % 4 == 0 ) { ?>
 			<div style="clear:both"></div>
 		<?php } ?>
 	<?php } ?>
 </div>
 <?php } ?>
-<div style="padding-top:10px; padding-left: 25px; max-height: 300px; display: inline-block;">
+<div style="padding-top:10px; padding-left: 10px; display: inline-block;">
 <?php for ( $i = 0; $i < $fc ; ++$i ) { ?>
-	<div style="float: left; width: 60px; height: 60px; cursor:pointer">
-		<img alt="<?php $this->show( 'files.name', $i ); ?>" title="<?php $this->show( 'files.name', $i ); ?>" src="<?php $this->show( 'files.path', $i ); ?>" style="max-width: 55px; max-height: 55px;" onclick="spSelect( this )">
+	<div style="float: left; width: 65px; height: 65px; cursor:pointer">
+		<img alt="<?php $this->show( 'files.name', $i ); ?>" title="<?php $this->show( 'files.name', $i ); ?>" src="<?php $this->show( 'files.path', $i ); ?>" style="max-width: 60px; max-height: 60px;" onclick="spSelect( this )">
 	</div>
-	<?php if( ( $i+1 ) % 9 == 0 ) { ?>
+	<?php if( ( $i+1 ) % 7 == 0 ) { ?>
 		<div style="clear:both"></div>
 	<?php } ?>
 <?php } ?>

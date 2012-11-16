@@ -72,11 +72,23 @@
                             <field type="output" value="category.version" label="VERSION" class="badge" />
                             <field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="span2" dateFormat="d-m-Y H:i:s" icon="edit" />
 							<field type="userSelector" label="CREATED_BY" name="category.owner" value="category.owner" class="span2" format="%name (%id)" />
-                            <field type="output" label="CREATED_BY_IP" name="category.ownerIP" value="category.ownerIP" class="infoText" />
+                            <field type="output" label="CREATED_BY_IP" name="category.ownerIP" class="infoText" >
+                                <value>
+                                    <url type="external" host="http://apps.db.ripe.net/search/query.html?" content="category.ownerIP" target="_blank">
+                                        <param name="searchtext" value="category.ownerIP" parse="true" />
+                                    </url>
+                                </value>
+                            </field>
                             <field type="dateGetter" label="MODIFIED_AT" name="category.updatedTime" value="category.updatedTime" class="infoText" dateFormat="d-m-Y H:i:s" />
                             <field type="userGetter" label="MODIFIED_BY" name="category.updater" value="category.updater" class="infoText" format="%name (%id)" />
-                            <field type="output" label="MODIFIED_BY_IP" name="category.updaterIP" value="category.updaterIP" class="infoText" />
-						</fieldset>
+                            <field type="output" label="MODIFIED_BY_IP" name="category.updaterIP" class="infoText" >
+                                <value>
+                                    <url type="external" host="http://apps.db.ripe.net/search/query.html?" content="category.updaterIP" target="_blank">
+                                        <param name="searchtext" value="category.updaterIP" parse="true" />
+                                    </url>
+                                </value>
+                            </field>
+                        </fieldset>
 						<fieldset label="CLICKCOUNTER">
 							<field type="button" label="CAT.RESET_COUNT" value="category.counter" name="counter" class="btn counter-reset" rel="category" />
 						</fieldset>
@@ -105,6 +117,7 @@
 			</tab>
 		</tabs>
 
+
 		<div class="modal hide" id="spCat" style="width:500px;">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">×</button>
@@ -122,7 +135,7 @@
 				</a>
 			</div>
 		</div>
-		<div class="modal hide" id="spIco" style="width:600px;">
+		<div class="modal hide" id="spIco" style="width:500px;">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">×</button>
 				<h3>
