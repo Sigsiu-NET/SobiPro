@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="{'entry.add':'ADD_NEW_ENTRY','entry.edit':'EDIT_EXISTING_ENTRY'}" />
+		<file type="script" filename="bootstrap.tabs" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiEdit">
+		<button task="category.apply" type="apply">
+			<button type="save" task="entry.save" />
+			<button type="duplicate" task="entry.clone" />
+		</button>
+		<divider />
+		<button type="exit" task="entry.cancel" />
+		<divider />
+		<button type="help" target="_blank" />
+	</toolbar>
+	<body>
+		<message id="spMessage" />
+		<tabs>
+			<tab label="CAT.CATEGORY_GENERAL_SETTINGS">
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset>
+							<field type="text" name="entry.name" value="entry.name" label="CATN.CATEGORY_NAME" class="input-xlarge" maxlength="255" required="true" />
+							<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
+							<field type="output" label="CREATED_BY_IP" name="entry.ownerIP" class="infoText">
+								<value>
+									<url type="external" host="http://www.sigsiu.net/index.php?" content="entry.ownerIP" target="_blank" >
+										<param name="nameOfTheParameter" value="entry.ownerIP" parse="true" />
+									</url>
+								</value>
+							</field>
+						</fieldset>
+					</div>
+				</div>
+			</tab>
+
+		</tabs>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="method" default="xhr" />
+		</hidden>
+	</config>
+</definition>

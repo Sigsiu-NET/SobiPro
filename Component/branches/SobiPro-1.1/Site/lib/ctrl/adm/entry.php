@@ -257,9 +257,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		}
 		/* create the validation script to check if required fields are filled in and the filters, if any, match */
 		$this->createValidationScript( $fields );
-
-		$class = SPLoader::loadView( 'entry', true );
-		$view = new $class();
+		$view = SPFactory::View( 'entry', true );
 		$view->assign( $this->_model, 'entry' );
 
 		/* get the categories */
@@ -291,14 +289,13 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			$view->assign( $n, 'parent_path' );
 		}
 
-		$view->assign( $this->_task, 'task' );
-		$view->assign( $f, 'fields' );
-		$view->assign( $id, 'id' );
-		$view->assign( SPFactory::CmsHelper()->userSelect( 'entry.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true ), 'owner' );
-		$view->assign( Sobi::Reg( 'current_section' ), 'sid' );
-		$view->loadConfig( 'entry.edit' );
-		$view->setTemplate( 'entry.edit' );
-		$view->addHidden( $sid, 'pid' );
+		$view->assign( $this->_task, 'task' )
+				->assign( $f, 'fields' )
+				->assign( $id, 'id' )
+				->assign( SPFactory::CmsHelper()->userSelect( 'entry.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true ), 'owner' )
+				->assign( Sobi::Reg( 'current_section' ), 'sid' )
+				->determineTemplate( 'entry', 'edit' )
+				->addHidden( $sid, 'pid' );
 		$view->display();
 	}
 }
