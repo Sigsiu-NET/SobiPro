@@ -76,6 +76,9 @@ class SPTplParser
 					if ( isset( $element[ 'args' ][ 'params' ][ 'class' ] ) ) {
 						$outclass = $element[ 'args' ][ 'params' ][ 'class' ];
 					}
+					elseif ( isset( $element[ 'attributes' ][ 'class' ] ) ) {
+						$outclass = $element[ 'attributes' ][ 'class' ];
+					}
 					$id = null;
 					if ( isset( $element[ 'args' ][ 'params' ][ 'id' ] ) ) {
 						$id = ' id="' . $element[ 'args' ][ 'params' ][ 'id' ] . '" ';
