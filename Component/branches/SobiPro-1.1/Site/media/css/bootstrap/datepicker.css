@@ -150,8 +150,10 @@
 .datepicker thead tr:first-child th:hover {
   background: #eeeeee;
 }
+.datepicker .year,
 .datepicker .month {
-  padding-left: 5px;
+  padding-left: 4px;
+  padding-right: 2px;
 }
 .input-append.date .add-on i,
 .input-prepend.date .add-on i {

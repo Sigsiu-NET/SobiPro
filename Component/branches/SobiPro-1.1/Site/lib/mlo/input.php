@@ -666,6 +666,40 @@ abstract class SPHtml_Input
 		return "\n<!-- Date Picker '{$name}' Output -->{$f}<!-- Date Picker '{$name}' End -->\n\n";
 	}
 
+    /**
+     * @param $name - field name
+     * @param $value - field value
+     * @param string $dateFormat - date format in PHP
+     * @param null $params - additional parameters
+     * @param string $icon - field icon
+     * @return string
+     */
+    public static function dateGetter( $name, $value, $class = null, $dateFormat = 'Y-m-d H:i:s', $params = null )
+    {
+        self::createLangFile();
+        $value = strtotime( $value );
+        $valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat ) : null;
+        $params = self::checkArray( $params );
+        if ( !( isset( $params[ 'id' ] ) ) ) {
+            $params[ 'id' ] = SPLang::nid( $name );
+        }
+        if ($class) {
+            $params[ 'class' ] = $class;
+        }
+        $params = self::params( $params );
+
+        $f = "\n";
+        $f .= '<div class="spOutput">';
+        $f .= "\n\t";
+        $f .= '<span '. $params . '>' . $valueDisplay . '</span>';
+        $f .= "\n";
+        $f .= '</div>';
+        $f .= "\n";
+
+        Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
+        return "\n<!-- Date Getter '{$name}' Output -->{$f}<!-- Date Getter '{$name}' End -->\n\n";
+    }
+
 	private static function createLangFile()
 	{
 		static $loaded = false;
