@@ -71,6 +71,7 @@ class SPAdmView extends SPObject implements SPView
 	{
 		SPLoader::loadClass( 'helpers.adm.lists' );
 		SPLoader::loadClass( 'mlo.input' );
+        SPFactory::header()->addJsFile( 'adm.interface' );
 		Sobi::Trigger( 'Create', $this->name(), array( &$this ) );
 	}
 

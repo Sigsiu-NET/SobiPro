@@ -67,7 +67,7 @@ class SPUserCtrl extends SPController
 		$setting = $session[ $ssid ];
 		/* get the site to display */
 		$site = SPRequest::int( 'site', 1 );
-		$eLim = Sobi::Cfg( 'user_selector.entries_limit', 20 );
+		$eLim = Sobi::Cfg( 'user_selector.entries_limit', 4 );
 		$eLimStart = ( ( $site - 1 ) * $eLim );
 		$params = array();
 		if ( $query ) {

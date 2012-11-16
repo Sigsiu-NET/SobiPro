@@ -65,8 +65,6 @@ fieldset.adminform legend {
 
 fieldset.adminform .btn:active,
 fieldset.adminform .btn.active {
-    background-color: #993333;
-    color: #ffffff;
 }
 
 .admintable td {

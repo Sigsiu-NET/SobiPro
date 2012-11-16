@@ -22,7 +22,7 @@ function SpUserSelector()
 	var selected = 0;
 	var responseContainer = null;
 	var query = '';
-	SobiPro.jQuery( '.SobiPro .user-selector .trigger' ).click( function ( ev )
+	SobiPro.jQuery( '.SobiPro .spUserSelector .trigger' ).click( function ( ev )
 	{
 		if ( this.semaphor ) {
 			return true;
@@ -50,7 +50,7 @@ function SpUserSelector()
 		} );
 	} );
 
-	SobiPro.jQuery( '.user-selector .more' ).click( function ()
+	SobiPro.jQuery( '.spUserSelector .more' ).click( function ()
 	{
 		var request = SpUserSelector.getForm( SpUserSelector.form );
 		request['site'] = ++SpUserSelector.site;
@@ -58,7 +58,7 @@ function SpUserSelector()
 		SpUserSelector.getUsers( request );
 	} );
 
-	SobiPro.jQuery( '.user-selector .search' ).keyup( function ()
+	SobiPro.jQuery( '.spUserSelector .search' ).keyup( function ()
 	{
 		var request = SpUserSelector.getForm( SpUserSelector.form );
 		request[ 'q' ] = SobiPro.jQuery( this ).val();
@@ -110,10 +110,10 @@ function SpUserSelector()
 				{
 					var active = '';
 					if ( e.id == SpUserSelector.selected && !( SpUserSelector.active ) ) {
-						active = ' active';
+						active = ' btn-success active';
 					}
 					SpUserSelector.responseContainer.html(
-						SpUserSelector.responseContainer.html() + '<div class="span5"><button class="btn btn-small' + active + '" type="button" value="' + e.id + '" name="userSelect">' + e.text + '</button></div>'
+						SpUserSelector.responseContainer.html() + '<div class="spUserName"><button class="btn btn-small' + active + '" type="button" value="' + e.id + '" name="userSelect">' + e.text + '</button></div>'
 					);
 				} );
 				SpUserSelector.responseContainer.find( '.btn' ).click( function ()
@@ -121,6 +121,7 @@ function SpUserSelector()
 					SpUserSelector.active = true;
 					SpUserSelector.selected = { 'id':SobiPro.jQuery( this ).val(), 'text':SobiPro.jQuery( this ).html() };
 					SpUserSelector.responseContainer.find( '.btn' ).removeClass( 'active' );
+                    SpUserSelector.responseContainer.find( '.btn' ).removeClass( 'btn-success' );
 				} );
 			}
 		} );

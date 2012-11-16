@@ -776,11 +776,11 @@ abstract class SPHtml_Input
 				$userData = $format;
 			}
 		}
-		$modal = '<div class="response btn-group" data-toggle="buttons-radio"></div><br/><button class="btn btn-block btn-primary hide more" type="button">' . Sobi::Txt( 'LOAD_MORE' ) . '</button>';
+		$modal = '<div class="response btn-group" data-toggle="buttons-radio"></div><br/><button class="btn btn-block hide more" type="button">' . Sobi::Txt( 'LOAD_MORE' ) . '</button>';
 		$filter = '<input type="text" placeholder="' . Sobi::Txt( 'FILTER' ) . '" class="search pull-right" name="q">';
 		$params = self::params( $params );
 		$f = "\n";
-		$f .= '<div class="user-selector">';
+		$f .= '<div class="spUserSelector">';
 		$f .= '<div class="input-append">';
 		$f .= "\n\t";
 		$f .= '<input type="text" value="' . $userData . '" ' . $params . ' name="' . $name . 'Holder" readonly="readonly" class="trigger user-name"/>';
