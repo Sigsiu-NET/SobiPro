@@ -33,20 +33,13 @@ class SPEntryAdmView extends SPAdmView
 	 */
 	public function setTitle( $title )
 	{
-		$titles = array();
-		if( strstr( $title, '|' ) ) {
-			$titleArr = explode( '|', $title );
-			foreach ( $titleArr as $t ) {
-				$t = explode( '=', $t );
-				$titles[ trim( $t[ 0 ] ) ] = $t[ 1 ];
-			}
-			$title = $titles[ $this->get( 'task' ) ];
-		}
 		$name = $this->get( 'entry.name' );
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-		$title = Sobi::Txt( $title, array( 'title' => $name ) );
-		SPFactory::header()->setTitle( $title );
-		$this->set( $title, 'site_title');
+		$title = Sobi::Txt( $title, array( 'entry_name' => $name ) );
+		$this->set( $name, 'entry_name' );
+		$title = parent::setTitle( $title );
+		return $title;
+
 	}
 
 	/**

@@ -131,13 +131,14 @@ class SPEntry extends SPDBObject implements SPDataModel
      * Std. getter. Returns a property of the object or the default value if the property is not set.
      * @param string $attr
      * @param mixed $default
+     * @param boolean $object - return object instead of data
      * @return mixed
      */
-    public function get( $attr, $default = null )
+    public function get( $attr, $default = null, $object = false )
     {
         if ( strstr( $attr, 'field_' ) ) {
             if ( isset( $this->fieldsNids[ trim( $attr ) ] ) ) {
-                return $this->fieldsNids[ trim( $attr ) ]->data();
+                return $object ? $this->fieldsNids[ trim( $attr ) ] : $this->fieldsNids[ trim( $attr ) ]->data();
             }
         }
         else {
