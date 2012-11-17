@@ -390,6 +390,9 @@ class SPField extends SPObject
 		if ( isset( $this->$var ) ) {
 			$this->$var = $val;
 		}
+		if ( $this->_type && method_exists( $this->_type, 'set' ) ) {
+			$this->_type->set( $var, $val );
+		}
 	}
 
 	public function delete()
@@ -643,6 +646,9 @@ class SPField extends SPObject
 	 */
 	public function get( $attr, $default = null )
 	{
+		if ( $attr == 'value' ) {
+			return $this->getRaw();
+		}
 		if ( isset( $this->$attr ) ) {
 			return $this->$attr;
 		}

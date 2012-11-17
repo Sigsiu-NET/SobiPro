@@ -71,7 +71,7 @@ class SPAdmView extends SPObject implements SPView
 	{
 		SPLoader::loadClass( 'helpers.adm.lists' );
 		SPLoader::loadClass( 'mlo.input' );
-        SPFactory::header()->addJsFile( 'adm.interface' );
+		SPFactory::header()->addJsFile( 'adm.interface' );
 		Sobi::Trigger( 'Create', $this->name(), array( &$this ) );
 	}
 
@@ -610,6 +610,9 @@ class SPAdmView extends SPObject implements SPView
 		}
 		if ( $node->hasChildNodes() ) {
 			foreach ( $node->childNodes as $child ) {
+				if ( strstr( $child->nodeName, '#' ) ) {
+					continue;
+				}
 				/** @var DOMNode $child */
 				switch ( $child->nodeName ) {
 					case 'values':
@@ -680,6 +683,17 @@ class SPAdmView extends SPObject implements SPView
 							}
 						}
 						break;
+					case 'attribute':
+						$name = $child->attributes->getNamedItem( 'name' )->nodeValue;
+						$value = $this->get( $child->attributes->getNamedItem( 'value' )->nodeValue );
+						if ( $name == 'label' ) {
+							$element[ $name ] = $value;
+						}
+						else {
+							$params[ $name ] = $value;
+							$args[ $name ] = $value;
+						}
+						break;
 					case 'add':
 						if ( $child->childNodes->length ) {
 							/** @var DOMNode $value */
@@ -707,6 +721,21 @@ class SPAdmView extends SPObject implements SPView
 		switch ( $args[ 'type' ] ) {
 			case 'output':
 				$element[ 'content' ] = $args[ 'value' ];
+				break;
+			case 'custom':
+				$field = $this->get( $args[ 'fid' ] );
+				if ( $field && $field instanceof SPField ) {
+					$element[ 'label' ] = $field->get( 'name' );
+					if ( count( $params ) ) {
+						foreach ( $params as $k => $p ) {
+							if( $k == 'class' ) {
+								$k = 'cssClass';
+							}
+							$field->set( $k, $p );
+						}
+					}
+					$element[ 'content' ] = $field->field( true );
+				}
 				break;
 			default:
 				if ( method_exists( 'SPHtml_input', $args[ 'type' ] ) ) {
@@ -1179,7 +1208,7 @@ class SPAdmView extends SPObject implements SPView
 					/* it has to be SPObject subclass to access the attribute */
 					if ( method_exists( $var, 'has' ) /*&& $var->has( $property )*/ ) {
 						if ( method_exists( $var, 'get' ) ) {
-							$var = $var->get( $property );
+							$var = $var->get( $property, null, true );
 						}
 					}
 					/* otherwise try to access std object */

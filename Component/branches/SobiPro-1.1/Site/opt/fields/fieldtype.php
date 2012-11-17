@@ -66,7 +66,7 @@ class SPFieldType extends SPObject
 			}
 		}
 		$this->cssClass = $field->get( 'cssClass' );
-		if( !( $this->cssClass ) ) {
+		if ( !( $this->cssClass ) ) {
 			$this->cssClass = 'input-medium';
 		}
 	}
@@ -107,6 +107,17 @@ class SPFieldType extends SPObject
 		}
 		else {
 			throw new SPException( SPLang::e( 'CALL_TO_UNDEFINED_METHOD_S', $method ) );
+		}
+	}
+
+	/**
+	 * @param string $var
+	 * @param mixed $val
+	 */
+	public function set( $var, $val )
+	{
+		if ( isset( $this->$var ) ) {
+			$this->$var = $val;
 		}
 	}
 
