@@ -100,6 +100,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
+		$sets = array();
 		$sid = SPRequest::sid() ? SPRequest::sid() : SPRequest::int( 'entry_id' );
 		$apply = ( int )$apply;
 		if ( !$this->_model ) {
@@ -108,20 +109,46 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$this->_model->init( $sid );
 		$this->_model->getRequest( $this->_type );
 		$this->authorise( $this->_model->get( 'id' ) ? 'edit' : 'add' );
+
+		try {
+			$this->_model->validate( 'post' );
+		} catch ( SPException $x ) {
+			$back = Sobi::GetUserState( 'back_url', Sobi::Url( array( 'task' => 'entry.add', 'sid' => Sobi::Section() ) ) );
+			$data = $x->getData();
+			$this->response( $back, $x->getMessage(), false, 'error', array( 'required' => $data[ 'field' ] ) );
+		}
+
 		$this->_model->save();
 		$sid = $this->_model->get( 'id' );
+		$sets[ 'sid' ] = $sid;
+		$sets[ 'entry.nid' ] = $this->_model->get( 'nid' );
+		$sets[ 'entry.id' ] = $sid;
+
 		if ( $apply || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
+				$this->response( Sobi::Url( array( $this->_type . '.edit', 'sid' => $sid ) ), $msg );
 			}
 			else {
 				$msg = Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
+				$this->response( Sobi::Url( array( $this->_type . '.edit', 'sid' => $sid ) ), $msg, false, 'success', array( 'sets' => $sets ) );
 			}
-			Sobi::Redirect( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg );
 		}
 		else {
-			Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) ) );
+			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) ) );
 		}
+//		if ( $apply || $clone ) {
+//			if ( $clone ) {
+//				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
+//			}
+//			else {
+//				$msg = Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
+//			}
+//			Sobi::Redirect( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg );
+//		}
+//		else {
+//			Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) ) );
+//		}
 	}
 
 	/**

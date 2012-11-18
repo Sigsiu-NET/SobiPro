@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -264,12 +264,12 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
      * @param string $request
      * @return array
      */
-    protected function verify( $entry, &$db, $request )
+    protected function verify( $entry, $request )
     {
         $save = array();
         $data = SPRequest::raw( $this->nid . '_url', null, $request );
         $dexs = strlen( $data );
-        $data = $db->escape( $data );
+        $data = SPFactory::db()->escape( $data );
 
         if ( $this->ownLabel ) {
             $save[ 'label' ] = SPRequest::raw( $this->nid, null, $request );
@@ -348,6 +348,15 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
         $this->setData( $save );
         return $save;
     }
-}
 
-?>
+	/**
+	 * @param SPEntry $entry
+	 * @param string $request
+	 * @return string
+	 */
+	public function validate( $entry, $request )
+	{
+		return $this->verify( $entry, $request );
+	}
+
+}

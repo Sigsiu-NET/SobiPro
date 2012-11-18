@@ -76,7 +76,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		switch ( $this->method ) {
 			case 'fixed':
 				$this->showLabel = false;
-				return true;
+				return null;
 				break;
 			case 'tree':
 				$field = $this->tree();
@@ -489,5 +489,15 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				$this->categoryChilds( $results, $category[ 'childs' ] );
 			}
 		}
+	}
+
+	/**
+	 * @param SPEntry $entry
+	 * @param string $request
+	 * @return string
+	 */
+	public function validate( $entry, $request )
+	{
+		return $this->verify( $entry, $request );
 	}
 }
