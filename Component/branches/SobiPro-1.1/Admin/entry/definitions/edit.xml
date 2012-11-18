@@ -5,7 +5,7 @@
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiEdit">
-		<button task="category.apply" type="apply">
+		<button task="entry.apply" type="apply">
 			<button type="save" task="entry.save" />
 			<button type="duplicate" task="entry.clone" />
 		</button>
@@ -21,7 +21,7 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="custom" fid="entry.field_name" class="input-xlarge"/>
+							<loop subject="entry.fields"/>
 						</fieldset>
 					</div>
 				</div>

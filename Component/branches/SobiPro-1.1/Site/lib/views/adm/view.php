@@ -427,6 +427,9 @@ class SPAdmView extends SPObject implements SPView
 	private function xmlLoop( $node, &$element )
 	{
 		$subject = $node->attributes->getNamedItem( 'subject' )->nodeValue;
+		if ( $subject == 'entry.fields' ) {
+			return $this->xmlFields( $element );
+		}
 		$objectsCount = $this->count( $subject );
 		$objects = array();
 		for ( $i = 0; $i < $objectsCount; $i++ ) {
@@ -451,6 +454,29 @@ class SPAdmView extends SPObject implements SPView
 				'content' => $row,
 				'attributes' => $a
 			);
+		}
+		$element[ 'content' ] = $objects;
+	}
+
+	private function xmlFields( &$element )
+	{
+		$fields = $this->get( 'fields' );
+		$objects = array();
+		foreach ( $fields as $i => $field ) {
+			$output = $field->field( true );
+			if ( !( $output ) ) {
+				continue;
+			}
+			$objects[ $i ] = array(
+				'label' => $field->get( 'name' ),
+				'type' => 'field',
+				'content' => $output,
+				'args' => array( 'type' => $field->get( 'type' ) ),
+				'adds' => array( 'before' => null, 'after' => null )
+			);
+			if ( !( $field->get( 'showLabel' ) ) ) {
+				$objects[ $i ][ 'label' ] = null;
+			}
 		}
 		$element[ 'content' ] = $objects;
 	}
@@ -728,7 +754,7 @@ class SPAdmView extends SPObject implements SPView
 					$element[ 'label' ] = $field->get( 'name' );
 					if ( count( $params ) ) {
 						foreach ( $params as $k => $p ) {
-							if( $k == 'class' ) {
+							if ( $k == 'class' ) {
 								$k = 'cssClass';
 							}
 							$field->set( $k, $p );

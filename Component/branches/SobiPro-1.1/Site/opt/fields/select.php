@@ -675,4 +675,14 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			}
 		}
 	}
+
+	/**
+	 * @param SPEntry $entry
+	 * @param string $request
+	 * @return string
+	 */
+	public function validate( $entry, $request )
+	{
+		return $this->verify( $entry, $request, $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ) ) );
+	}
 }

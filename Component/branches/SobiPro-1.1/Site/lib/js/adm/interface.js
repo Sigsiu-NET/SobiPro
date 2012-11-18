@@ -8,6 +8,12 @@
 
 SobiPro.jQuery( document ).ready( function ()
 {
+	SobiPro.jQuery( 'input:file' ).change( function ()
+	{
+		if ( SobiPro.jQuery( this ).val() ) {
+			SobiPro.jQuery( '#SP_method' ).val( 'html' );
+		}
+	} );
 	var count = 0;
 	SobiPro.jQuery( '#SPAdmToolbar a' ).click( function ( e )
 	{
@@ -176,7 +182,7 @@ SobiPro.jQuery( document ).ready( function ()
 		}
 	);
 
-    SobiPro.jQuery( '.buttons-radio :button' ).each( function ( i, e )
+	SobiPro.jQuery( '.buttons-radio :button' ).each( function ( i, e )
 	{
 		"use strict"
 		if ( !( e.hasClass( 'selected' ) ) ) {
@@ -188,7 +194,7 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( e )
 				.parent()
 				.parent()
-				.find('.buttons-radio :button')
+				.find( '.buttons-radio :button' )
 				.removeClass( 'btn-danger' )
 				.removeClass( 'btn-success' )
 			switch ( parseInt( SobiPro.jQuery( this ).val() ) ) {
