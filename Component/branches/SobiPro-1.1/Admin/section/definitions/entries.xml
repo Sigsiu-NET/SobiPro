@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definition>
 	<header>
-		<title value="Section: var:[name]"/>
+		<title value="SECTION_ALL_ENTRIES_TITLE"/>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSection">
 		<divider/>
