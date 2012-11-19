@@ -127,41 +127,36 @@ class SPConfigAdmCtrl extends SPController
 	protected function view()
 	{
 		Sobi::ReturnPoint();
-		if ( SPLoader::path( 'config.' . $this->_task, 'adm', true, 'ini', false ) ) {
-			/** @var $view SPAdmView  */
-			$view = $this->getView( 'config.' . $this->_task );
-			$view->setCtrl( $this );
-			if ( $this->_task == 'general' ) {
-				$fields = $this->getNameFields();
-				$nameFields = array();
+		/** @var $view SPAdmView  */
+		$view = $this->getView( 'config.' . $this->_task );
+		$view->setCtrl( $this );
+		if ( $this->_task == 'general' ) {
+			$fields = $this->getNameFields();
+			$nameFields = array();
+			if ( count( $fields ) ) {
+				foreach ( $fields as $field ) {
+					$nameFields[ $field->get( 'fid' ) ] = $field->get( 'name' );
+				}
+			}
+			$alphaFields = array();
+			$fields = $this->getNameFields( true, Sobi::Cfg( 'alphamenu.field_types' ) );
+			if ( count( $fields ) ) {
 				if ( count( $fields ) ) {
 					foreach ( $fields as $field ) {
-						$nameFields[ $field->get( 'fid' ) ] = $field->get( 'name' );
+						$alphaFields[ $field->get( 'fid' ) ] = $field->get( 'name' );
 					}
 				}
-				$alphaFields = array();
-				$fields = $this->getNameFields( true, Sobi::Cfg( 'alphamenu.field_types' ) );
-				if ( count( $fields ) ) {
-					if ( count( $fields ) ) {
-						foreach ( $fields as $field ) {
-							$alphaFields[ $field->get( 'fid' ) ] = $field->get( 'name' );
-						}
-					}
-				}
-				$view->assign( $nameFields, 'nameFields' );
-				$view->assign( $view->templatesList(), 'templatesList' );
-				$view->assign( $view->namesFields( null, true ), 'entriesOrdering' );
-				$view->assign( $alphaFields, 'alphaMenuFields' );
 			}
-			Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
-			$view->determineTemplate( 'config', $this->_task );
-			$view->display();
-			Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
-			return true;
+			$view->assign( $nameFields, 'nameFields' );
+			$view->assign( $view->templatesList(), 'templatesList' );
+			$view->assign( $view->namesFields( null, true ), 'entriesOrdering' );
+			$view->assign( $alphaFields, 'alphaMenuFields' );
 		}
-		else {
-			throw new SPException( SPLang::e( 'CANNOT_LOAD_CONFIG_VIEW', SPLoader::path( "config.{$this->_task}", 'adm', false, 'ini', false ) ) );
-		}
+		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
+		$view->determineTemplate( 'config', $this->_task );
+		$view->display();
+		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
+		return true;
 	}
 
 	protected function listTemplates( $tpl = null, $cmsOv = true )
