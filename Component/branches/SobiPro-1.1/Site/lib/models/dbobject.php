@@ -195,6 +195,11 @@ abstract class SPDBObject extends SPObject
 		$this->validUntil = SPFactory::config()->date( SPFactory::db()->getNullDate(), 'date.db_format' );
 		$this->createdTime = SPFactory::config()->date( time(), 'date.db_format' );
 		$this->validSince = SPFactory::config()->date( time(), 'date.db_format' );
+		$this->ownerIP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$this->updaterIP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$this->updater = Sobi::My('id');
+		$this->owner = Sobi::My('id');
+		$this->updatedTime = SPFactory::config()->date( time(), 'date.db_format' );
 		Sobi::Trigger( 'CreateModell', $this->name(), array( &$this ) );
 	}
 
