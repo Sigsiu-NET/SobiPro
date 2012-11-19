@@ -663,8 +663,10 @@ class SPAdmView extends SPObject implements SPView
 									$values[ Sobi::Txt( $value->attributes->getNamedItem( 'label' )->nodeValue ) ] = $group;
 								}
 								else {
-									$xml[ 'childs' ][ $child->nodeName ][ $value->attributes->getNamedItem( 'value' )->nodeValue ] = $value->attributes->getNamedItem( 'label' )->nodeValue;
-									$values[ $value->attributes->getNamedItem( 'value' )->nodeValue ] = Sobi::Txt( $value->attributes->getNamedItem( 'label' )->nodeValue );
+									$vv = $value->attributes->getNamedItem( 'value' )->nodeValue;
+									$vl = $value->attributes->getNamedItem( 'label' ) ? $value->attributes->getNamedItem( 'label' )->nodeValue : $vv;
+									$xml[ 'childs' ][ $child->nodeName ][ $vv ] = $vl;
+									$values[ $vv ] = Sobi::Txt( $vl );
 								}
 							}
 						}
