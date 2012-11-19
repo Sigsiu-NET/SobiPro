@@ -180,7 +180,11 @@ class SPConfig
 				}
 				$_c = explode( '_', $row->sKey );
 				if ( $_c[ count( $_c ) - 1 ] == 'array' ) {
+					try {
 					$row->sValue = self::unserialize( $row->sValue );
+					} catch ( SPException $x ) {
+						Sobi::Error( 'config', $x->getMessage().' [ '.$row->sKey.' ] ', SPC::WARNING, 0, __LINE__, __CLASS__ );
+					}
 				}
 				if ( $row->configsection == 'debug' && $row->sKey == 'level' ) {
 					if ( !( defined( 'PHP_VERSION_ID' ) ) || PHP_VERSION_ID < 50300 ) {
@@ -189,10 +193,10 @@ class SPConfig
 				}
 				$this->_store[ $row->configsection ][ $row->sKey ] = $this->structuralData( $row->sValue );
 			}
-			return true;
 		} catch ( SPException $x ) {
-			Sobi::Error( 'config', SPLang::e( 'NO_CONFIG_VALUES', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
+			Sobi::Error( 'config', $x->getMessage(), SPC::WARNING, 0, __LINE__, __CLASS__ );
 		}
+		return true;
 	}
 
 	public function structuralData( $data, $force = false )
