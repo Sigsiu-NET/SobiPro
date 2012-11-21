@@ -142,7 +142,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 		if ( $show ) {
 			$img = Sobi::Cfg( 'live_site' ) . $show;
-			$field .= "\n<div id=\"{$this->nid}_img_preview\">";
+			$field .= "\n<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
 			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\"/>";
 			$field .= SPHtml_Input::checkbox( $this->nid . '_delete', 1, Sobi::Txt( 'FD.IMG_DELETE_CURRENT_IMAGE' ), $this->nid . '_delete', false, array( 'class' => $this->cssClass ) );
 			$field .= "\n</div>\n";
