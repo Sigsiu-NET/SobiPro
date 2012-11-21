@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="FLR.SITE_TITLE" />
+	</header>
+	<toolbar title="FLR.SITE_TITLE" icon="SobiFields">
+		<button type="new" class="filter-edit"/>
+		<divider />
+		<button type="help" target="_blank" />
+	</toolbar>
+	<body>
+		<message id="spMessage" />
+		<!--<header label="FM.FIELDS_FOR" icon="SobiFieldList"/>-->
+		<table>
+			<head>
+				<cell label="FLR.EDIT_FILTER" type="text" />
+				<cell label="FLR.FILTER_ID" type="text" />
+				<cell label="FLR.FILTER_NAME" type="text" />
+				<cell label="FLR.FILTER_VALUE" type="text" />
+			</head>
+			<loop subject="filters">
+				<cell type="text">
+					<button type="new" class="filter-edit" ico="cog"/>
+				</cell>
+				<cell type="text" value="id" />
+				<cell type="text" value="name" class="center" />
+				<cell type="text">
+					<text value="FLR.FILTER_MSG" />
+					<cell type="text" value="message" class="subText" />
+					<text value="FLR.FILTER_REGEX" />
+					<cell type="text" value="regex" />
+				</cell>
+			</loop>
+			<foot>
+				<navigation />
+			</foot>
+		</table>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="boxchecked" default="" />
+		</hidden>
+	</config>
+</definition>

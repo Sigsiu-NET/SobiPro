@@ -374,16 +374,7 @@ class SPAdmView extends SPObject implements SPView
 					$element[ 'content' ] = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
 					break;
 				case 'text':
-					$value = null;
-					if ( $node->attributes->getNamedItem( 'value' ) ) {
-						if ( $node->attributes->getNamedItem( 'parse' ) && $node->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
-							$value = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
-						}
-						else {
-							$value = Sobi::Txt( $node->attributes->getNamedItem( 'value' )->nodeValue );
-						}
-					}
-					$element[ 'content' ] = $value;
+					$element[ 'content' ] = $this->xmlText( $node );
 					break;
 				case 'field':
 					$this->xmlField( $node, $element );
@@ -418,6 +409,22 @@ class SPAdmView extends SPObject implements SPView
 			}
 			$output[ ] = $element;
 		}
+	}
+
+	private function xmlText( $node )
+	{
+		$value = null;
+		if ( $node->attributes->getNamedItem( 'value' ) ) {
+			if ( $node->attributes->getNamedItem( 'parse' ) && $node->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
+				$value = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
+				return $value;
+			}
+			else {
+				$value = Sobi::Txt( $node->attributes->getNamedItem( 'value' )->nodeValue );
+				return $value;
+			}
+		}
+		return $value;
 	}
 
 	/**
@@ -521,6 +528,9 @@ class SPAdmView extends SPObject implements SPView
 				}
 			}
 		}
+		elseif ( $cell->nodeName == 'text' ) {
+			$element[ 'content' ] = $this->xmlText( $cell );
+		}
 		if ( $cell->hasChildNodes() ) {
 			/** @var DOMNode $child */
 			foreach ( $cell->childNodes as $child ) {
@@ -528,11 +538,16 @@ class SPAdmView extends SPObject implements SPView
 					continue;
 				}
 				/** @var DOMNode $param */
-				if ( $child->nodeName == 'url' ) {
-					$element[ 'link' ] = $this->xmlUrl( $child, $subject, $i );
-				}
-				else {
-					$this->xmlCell( $child, $subject, $i, $element[ 'childs' ] );
+				switch ( $child->nodeName ) {
+					case 'url':
+						$element[ 'link' ] = $this->xmlUrl( $child, $subject, $i );
+						break;
+					case 'button':
+						$element[ 'content' ] = $this->xmlButton( $child );
+						break;
+					default:
+						$this->xmlCell( $child, $subject, $i, $element[ 'childs' ] );
+						break;
 				}
 			}
 		}

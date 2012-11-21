@@ -196,7 +196,7 @@ SobiPro.jQuery( document ).ready( function ()
 				.parent()
 				.find( '.buttons-radio :button' )
 				.removeClass( 'btn-danger' )
-				.removeClass( 'btn-success' )
+				.removeClass( 'btn-success' );
 			switch ( parseInt( SobiPro.jQuery( this ).val() ) ) {
 				case 0:
 					e.addClass( 'btn-danger' );
@@ -206,5 +206,23 @@ SobiPro.jQuery( document ).ready( function ()
 					break;
 			}
 		} );
-	} )
+	} );
+	try {
+		SobiPro.jQuery( '#spcfg-general-show-pb' ).click( function ()
+		{
+			if ( SobiPro.jQuery( this ).find( '.active' ).val() == 1 ) {
+				SobiPro.Alert( 'PBY_NO' );
+			}
+		} );
+	}
+	catch ( e ) {
+	}
+	try {
+		SobiPro.jQuery( '.filter-edit' ).click( function ( e )
+		{
+			alert( 'kupe' )
+		} );
+	}
+	catch ( e ) {
+	}
 } );

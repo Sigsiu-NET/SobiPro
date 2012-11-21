@@ -45,7 +45,7 @@ class SPTplParser
 		if ( isset( $data[ 'type' ] ) ) {
 			$this->closeElement( $data );
 		}
-		echo implode( "\n\t", $this->_out );
+		echo implode( " ", $this->_out );
 		$this->_out = array();
 	}
 
@@ -277,6 +277,12 @@ class SPTplParser
 
 	public function proceedCell( $cell, $span = null )
 	{
+		if ( $cell[ 'type' ] == 'text' ) {
+			return $this->parseElement( $cell );
+		}
+//		if ( isset( $cell[ 'content' ][ 'element' ] ) && $cell[ 'content' ][ 'element' ] == 'button' ) {
+//			return $this->renderButton( $cell );
+//		}
 		if ( isset( $cell[ 'attributes' ][ 'class' ] ) ) {
 			$c = 'SpCell' . ucfirst( $cell[ 'attributes' ][ 'class' ] );
 			$this->_out[ ] = "\n<{$span} class=\"{$c}\">\n";
@@ -291,6 +297,9 @@ class SPTplParser
 			case 'text':
 				if ( isset( $cell[ 'attributes' ][ 'label' ] ) && $cell[ 'attributes' ][ 'label' ] ) {
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
+				}
+				elseif ( isset( $cell[ 'content' ][ 'element' ] ) && $cell[ 'content' ][ 'element' ] == 'button' ) {
+					$this->renderButton( $cell );
 				}
 				else {
 					$this->_out[ ] = $cell[ 'content' ];
@@ -360,5 +369,79 @@ class SPTplParser
 		}
 		$this->_out[ ] = '</ul>';
 		$this->_out[ ] = "\n" . '<div class="tab-content">';
+	}
+
+	public function renderButton( $button, $list = false )
+	{
+		$rel = null;
+		$class = isset( $button[ 'class' ] ) ? ' ' . $button[ 'class' ] : null;
+		if ( !( isset( $button[ 'task' ] ) ) || !( $button[ 'task' ] ) ) {
+			$href = null;
+			$rel = null;
+		}
+		else {
+			$rel = $button[ 'task' ];
+			$href = null;
+		}
+		$label = $button[ 'label' ];
+		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button[ 'target' ]}\"" : null;
+		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
+			$this->_out[ ] = '<div class="btn-group">';
+			$this->_out[ ] = "<a href=\"{$href}\" class=\"btn {$class}\"{$target} rel=\"{$rel}\">";
+			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
+				$icon = $this->getIcon( $button, true );
+			}
+			else {
+				$icon = $button[ 'ico' ];
+			}
+			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+			$this->_out[ ] = '</a>';
+			$this->_out[ ] = '<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span>&nbsp;</button>';
+			$this->_out[ ] = '<div class="dropdown-menu" id="' . SPLang::nid( $button[ 'task' ] ) . '">';
+			$this->_out[ ] = '<ul class="nav nav-stacked SpDropDownBt">';
+			foreach ( $button[ 'buttons' ] as $bt ) {
+				$this->renderButton( $bt, true );
+			}
+			$this->_out[ ] = '</ul>';
+			$this->_out[ ] = '</div>';
+			$this->_out[ ] = '</div>';
+		}
+		elseif ( !( $list ) ) {
+			if ( $rel || $href ) {
+				$this->_out[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"btn {$class}\"{$target}>";
+			}
+			else {
+				$this->_out[ ] = "<div class=\"btn {$class}\"{$target}>";
+			}
+			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
+				$icon = 'cog';
+			}
+			else {
+				$icon = $button[ 'ico' ];
+			}
+			$this->_out[ ] = '&nbsp;<i class="icon-' . $icon . '"></i>&nbsp;' . $label;
+			if ( $rel || $href ) {
+				$this->_out[ ] = '</a>';
+			}
+			else {
+				$this->_out[ ] = '</div>';
+			}
+		}
+		else {
+			if ( $button[ 'element' ] == 'nav-header' ) {
+				$this->_out[ ] = '<li class="nav-header">' . $button[ 'label' ] . '</li>';
+			}
+			else {
+				$this->_out[ ] = '<li><a href="' . $href . $target . '" rel="' . $rel . '">';
+				if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
+					$icon = 'cog';
+				}
+				else {
+					$icon = $button[ 'ico' ];
+				}
+				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+				$this->_out[ ] = '</a></li>';
+			}
+		}
 	}
 }
