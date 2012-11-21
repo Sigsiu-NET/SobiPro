@@ -148,6 +148,7 @@ class SpAdmToolbar
 	private function renderButton( $button, $list = false )
 	{
 		$rel = null;
+		$class = isset( $button[ 'class' ] ) ? ' '.$button[ 'class' ] : null;
 		if ( !( isset( $button[ 'task' ] ) ) || !( $button[ 'task' ] ) ) {
 			$href = $this->getLink( $button );
 		}
@@ -162,10 +163,9 @@ class SpAdmToolbar
 			$label = $button[ 'label' ];
 		}
 		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button[ 'target' ]}\"" : null;
-
 		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
 			$this->output[ ] = '<div class="btn-group">';
-			$this->output[ ] = "<a href=\"{$href}\" class=\"{$this->btClass}\"{$target} rel=\"{$rel}\">";
+			$this->output[ ] = "<a href=\"{$href}\" class=\"{$this->btClass}{$class}\"{$target} rel=\"{$rel}\">";
 			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
 				$icon = $this->getIcon( $button, true );
 			}
@@ -185,7 +185,7 @@ class SpAdmToolbar
 			$this->output[ ] = '</div>';
 		}
 		elseif ( !( $list ) ) {
-			$this->output[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"{$this->btClass}\"{$target}>";
+			$this->output[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"{$this->btClass}{$class}\"{$target}>";
 			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
 				$icon = $this->getIcon( $button );
 			}
