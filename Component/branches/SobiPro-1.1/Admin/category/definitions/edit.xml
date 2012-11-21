@@ -64,7 +64,7 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="states" name="category.state" value="category.state" label="ENABLED" prefix="yes_no" />
+							<field type="states" name="category.state" value="category.state" label="PUBLISHED" prefix="yes_no" />
                             <field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
                             <field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
 						</fieldset>

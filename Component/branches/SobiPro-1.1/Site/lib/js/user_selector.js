@@ -122,6 +122,7 @@ function SpUserSelector()
 					SpUserSelector.selected = { 'id':SobiPro.jQuery( this ).val(), 'text':SobiPro.jQuery( this ).html() };
 					SpUserSelector.responseContainer.find( '.btn' ).removeClass( 'active' );
                     SpUserSelector.responseContainer.find( '.btn' ).removeClass( 'btn-success' );
+                    SobiPro.jQuery(this).addClass('btn-success');
 				} );
 			}
 		} );

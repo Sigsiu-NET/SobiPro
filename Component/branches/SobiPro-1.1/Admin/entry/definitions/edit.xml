@@ -29,12 +29,21 @@
 			<tab label="EN.ENTRY_GENERAL_SETTINGS">
 				<div class="row-fluid">
 					<div class="span12">
-						<fieldset>
-							<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
-							<field type="states" name="entry.state" value="entry.state" label="ENABLED" prefix="yes_no" />
-							<field type="datePicker" label="VALID_SINCE" name="entry.validSince" value="entry.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
-							<field type="datePicker" label="VALID_UNTIL" name="entry.validUntil" value="entry.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
-						</fieldset>
+                        <fieldset>
+                            <field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
+
+            <tab label="EN.ENTRY_PUBLISHING">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="states" name="entry.state" value="entry.state" label="PUBLISHED" prefix="yes_no" />
+                            <field type="datePicker" label="VALID_SINCE" name="entry.validSince" value="entry.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
+                            <field type="datePicker" label="VALID_UNTIL" name="entry.validUntil" value="entry.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
+                        </fieldset>
 						<fieldset label="CATN.EDIT_DATA">
 							<field type="output" value="entry.version" label="VERSION" class="badge" />
 							<field type="datePicker" label="CREATED_AT" name="entry.createdTime" value="entry.createdTime" class="span2" dateFormat="d-m-Y H:i:s" icon="edit" />
@@ -62,7 +71,28 @@
 					</div>
 				</div>
 			</tab>
-		</tabs>
+            <tab label="META_DATA">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="textarea" name="entry.metaDesc" value="entry.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="textarea" name="entry.metaKeys" value="entry.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="text" name="entry.metaAuthor" value="entry.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+                            <field type="select" label="ROBOTS" name="entry.metaRobots" selected="entry.metaRobots" class="input-large" >
+                                <values>
+                                    <option value="" label="ROBOTS_NONE" />
+                                    <option value="index, follow" label="index, follow" />
+                                    <option value="index, nofollow" label="index, nofollow" />
+                                    <option value="noindex, follow" label="noindex, follow" />
+                                    <option value="noindex, nofollow" label="noindex, nofollow" />
+                                </values>
+                            </field>
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
+
+        </tabs>
 	</body>
 	<config>
 		<action value="index.php?option=com_sobipro" />
