@@ -4,7 +4,7 @@
 		<title value="FLR.SITE_TITLE" />
 	</header>
 	<toolbar title="FLR.SITE_TITLE" icon="SobiFields">
-		<button type="new" class="filter-edit"/>
+		<button type="new" class="filter-edit" />
 		<divider />
 		<button type="help" target="_blank" />
 	</toolbar>
@@ -13,27 +13,21 @@
 		<!--<header label="FM.FIELDS_FOR" icon="SobiFieldList"/>-->
 		<table>
 			<head>
-				<cell label="FLR.EDIT_FILTER" type="text" />
 				<cell label="FLR.FILTER_ID" type="text" />
 				<cell label="FLR.FILTER_NAME" type="text" />
-				<cell label="FLR.FILTER_VALUE" type="text" />
+				<cell label="FLR.FILTER_MSG" type="text" />
+				<cell label="FLR.FILTER_REGEX" type="text" />
+				<cell label="FLR.EDIT_FILTER" type="text" class="center"/>
 			</head>
 			<loop subject="filters">
-				<cell type="text">
-					<button type="new" class="filter-edit" ico="cog"/>
-				</cell>
-				<cell type="text" value="id" />
-				<cell type="text" value="name" class="center" />
-				<cell type="text">
-					<text value="FLR.FILTER_MSG" />
-					<cell type="text" value="message" class="subText" />
-					<text value="FLR.FILTER_REGEX" />
-					<cell type="text" value="regex" />
+				<cell type="text" value="id" class="filterId"/>
+				<cell type="text" value="name"/>
+				<cell type="text" value="message" />
+				<cell type="text" value="regex" />
+				<cell type="text" class="center">
+					<button type="new" class="filter-edit" ico="cog" rel="var:[id]" />
 				</cell>
 			</loop>
-			<foot>
-				<navigation />
-			</foot>
 		</table>
 	</body>
 	<config>

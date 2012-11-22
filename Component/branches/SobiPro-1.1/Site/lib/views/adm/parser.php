@@ -25,6 +25,7 @@ class SPTplParser
 	protected $_out = array();
 	protected $loopOpen = false;
 	protected $_tickerIcons = array( 0 => 'remove', 1 => 'ok' );
+	static $newLine = "\n";
 
 	public function __construct( $table = false )
 	{
@@ -33,17 +34,19 @@ class SPTplParser
 
 	public function parse( $data )
 	{
-		if ( isset( $data[ 'type' ] ) ) {
-			$this->openElement( $data );
-			$this->parseElement( $data );
-		}
-		if ( isset( $data[ 'content' ] ) && !( is_string( $data[ 'content' ] ) ) && is_array( $data[ 'content' ] ) && count( $data[ 'content' ] ) ) {
-			foreach ( $data[ 'content' ] as $element ) {
-				$this->parse( $element );
+		if ( is_array( $data ) && !( is_string( $data ) ) ) {
+			if ( isset( $data[ 'type' ] ) ) {
+				$this->openElement( $data );
+				$this->parseElement( $data );
 			}
-		}
-		if ( isset( $data[ 'type' ] ) ) {
-			$this->closeElement( $data );
+			if ( isset( $data[ 'content' ] ) && !( is_string( $data[ 'content' ] ) ) && is_array( $data[ 'content' ] ) && count( $data[ 'content' ] ) ) {
+				foreach ( $data[ 'content' ] as $element ) {
+					$this->parse( $element );
+				}
+			}
+			if ( isset( $data[ 'type' ] ) ) {
+				$this->closeElement( $data );
+			}
 		}
 		echo implode( " ", $this->_out );
 		$this->_out = array();
@@ -53,6 +56,10 @@ class SPTplParser
 	{
 		switch ( $element[ 'type' ] ) {
 			case 'field':
+				if ( isset( $element[ 'attributes' ][ 'stand-alone' ] ) && $element[ 'attributes' ][ 'stand-alone' ] == 'true' ) {
+					$this->_out[ ] = $element[ 'content' ];
+					break;
+				}
 				if ( $this->table ) {
 					$this->_out[ ] = '<tr>';
 					$this->_out[ ] = '<td>';
@@ -133,6 +140,7 @@ class SPTplParser
 				break;
 			case 'text':
 			case 'url':
+				SPConfig::debOut( $element );
 				$this->_out[ ] = $element[ 'content' ];
 				break;
 			default:
@@ -280,9 +288,6 @@ class SPTplParser
 		if ( $cell[ 'type' ] == 'text' ) {
 			return $this->parseElement( $cell );
 		}
-//		if ( isset( $cell[ 'content' ][ 'element' ] ) && $cell[ 'content' ][ 'element' ] == 'button' ) {
-//			return $this->renderButton( $cell );
-//		}
 		if ( isset( $cell[ 'attributes' ][ 'class' ] ) ) {
 			$c = 'SpCell' . ucfirst( $cell[ 'attributes' ][ 'class' ] );
 			$this->_out[ ] = "\n<{$span} class=\"{$c}\">\n";
@@ -299,7 +304,7 @@ class SPTplParser
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
 				}
 				elseif ( isset( $cell[ 'content' ][ 'element' ] ) && $cell[ 'content' ][ 'element' ] == 'button' ) {
-					$this->renderButton( $cell );
+					$this->renderButton( $cell[ 'content' ] );
 				}
 				else {
 					$this->_out[ ] = $cell[ 'content' ];
@@ -387,9 +392,9 @@ class SPTplParser
 		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button[ 'target' ]}\"" : null;
 		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
 			$this->_out[ ] = '<div class="btn-group">';
-			$this->_out[ ] = "<a href=\"{$href}\" class=\"btn {$class}\"{$target} rel=\"{$rel}\">";
+			$this->_out[ ] = "<a href=\"{$href}\" class=\"btn{$class}\"{$target} rel=\"{$rel}\">";
 			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
-				$icon = $this->getIcon( $button, true );
+				$icon = 'cog';
 			}
 			else {
 				$icon = $button[ 'ico' ];
@@ -408,10 +413,13 @@ class SPTplParser
 		}
 		elseif ( !( $list ) ) {
 			if ( $rel || $href ) {
-				$this->_out[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"btn {$class}\"{$target}>";
+				$this->_out[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"btn{$class}\"{$target}>";
 			}
 			else {
-				$this->_out[ ] = "<div class=\"btn {$class}\"{$target}>";
+				if ( isset( $button[ 'rel' ] ) ) {
+					$r = "rel=\"{$button[ 'rel' ]}\" ";
+				}
+				$this->_out[ ] = "<div class=\"btn{$class}\"{$r}{$target}>";
 			}
 			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
 				$icon = 'cog';

@@ -215,7 +215,7 @@ class SpAdmToolbar
 
 	private function getLink( $button )
 	{
-		$link = null;
+		$link = '#';
 		if ( isset( $button[ 'type' ] ) ) {
 			switch ( $button[ 'type' ] ) {
 				case 'help':
