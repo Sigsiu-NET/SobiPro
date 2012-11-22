@@ -275,7 +275,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNode $xml
 	 * @return void
 	 */
-	private function xmlButton( $xml )
+	private function xmlButton( $xml, $attributes = array() )
 	{
 		$button = array(
 			'type' => null,
@@ -301,9 +301,12 @@ class SPAdmView extends SPObject implements SPView
 					if ( strstr( $node->nodeName, '#' ) ) {
 						continue;
 					}
-					$button[ 'buttons' ][ ] = $this->xmlButton( $node );
+					$button[ 'buttons' ][ ] = $this->xmlButton( $node, $attributes );
 				}
 			}
+		}
+		if ( count( $attributes ) ) {
+			$button = array_merge(  $button, $attributes );
 		}
 		return $button;
 	}
@@ -531,6 +534,9 @@ class SPAdmView extends SPObject implements SPView
 		elseif ( $cell->nodeName == 'text' ) {
 			$element[ 'content' ] = $this->xmlText( $cell );
 		}
+		elseif ( $cell->nodeName == 'field' ) {
+			$this->xmlField( $cell, $element, $element[ 'content' ] );
+		}
 		if ( $cell->hasChildNodes() ) {
 			/** @var DOMNode $child */
 			foreach ( $cell->childNodes as $child ) {
@@ -543,7 +549,11 @@ class SPAdmView extends SPObject implements SPView
 						$element[ 'link' ] = $this->xmlUrl( $child, $subject, $i );
 						break;
 					case 'button':
-						$element[ 'content' ] = $this->xmlButton( $child );
+						$attributes = array();
+						foreach ( $child->attributes as $attribute ) {
+							$attributes[ $attribute->nodeName ] = $this->parseValue( str_replace( 'var:[', 'var:[' . $subject . '.', $attribute->nodeValue ), $i );
+						}
+						$element[ 'content' ] = $this->xmlButton( $child, $attributes );
 						break;
 					default:
 						$this->xmlCell( $child, $subject, $i, $element[ 'childs' ] );
@@ -598,12 +608,12 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNode $node
 	 * @return void
 	 */
-	private function xmlField( $node, &$element )
+	private function xmlField( $node, &$element, $value = null )
 	{
 		/** process all attributes  */
 		$attributes = $node->attributes;
 		$params = array();
-		$args = array( 'type' => null, 'name' => null, 'value' => null );
+		$args = array( 'type' => null, 'name' => null, 'value' => $value );
 		$adds = array( 'before' => null, 'after' => null );
 		$xml = array();
 		if ( $attributes->length ) {
@@ -628,11 +638,19 @@ class SPAdmView extends SPObject implements SPView
 						break;
 					case 'selected':
 					case 'value':
+						if ( $value ) {
+							break;
+						}
 					case 'values':
 						$args[ $attribute->nodeName ] = $this->get( $attribute->nodeValue );
 						break;
+					case 'value-parsed':
+						$args[ 'value' ] = $attribute->nodeValue;
+						break;
 					case 'label':
+					case 'header':
 						$element[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+						$args[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
 						break;
 					case 'placeholder':
 						$params[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );

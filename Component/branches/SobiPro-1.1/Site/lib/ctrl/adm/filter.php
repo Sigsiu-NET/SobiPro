@@ -121,7 +121,6 @@ class SPFilter extends SPConfigAdmCtrl
 	private function edit()
 	{
 		$id = SPRequest::cmd( 'fid' );
-		$Filters = array();
 		$filters = $this->getFilters();
 		if ( count( $filters ) && isset( $filters[ $id ] ) ) {
 			$Filter = array(

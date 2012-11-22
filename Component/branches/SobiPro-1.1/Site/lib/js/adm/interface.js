@@ -220,7 +220,7 @@ SobiPro.jQuery( document ).ready( function ()
 	try {
 		SobiPro.jQuery( '.filter-edit' ).click( function ( e )
 		{
-			alert( 'kupe' )
+			alert(SobiPro.jQuery( this ).attr('rel'))
 		} );
 	}
 	catch ( e ) {

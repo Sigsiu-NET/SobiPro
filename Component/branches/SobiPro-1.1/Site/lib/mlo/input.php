@@ -862,4 +862,11 @@ abstract class SPHtml_Input
 		';
 		return $html;
 	}
+
+	public static function hidden( $name, $value = null, $id = null)
+	{
+		$id = $id ? $id : SPLang::nid( $name );
+		$f = "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\"/>";
+		return "\n<!--  '{$name}' Output -->{$f}<!-- '{$name}' End -->\n\n";
+	}
 }
