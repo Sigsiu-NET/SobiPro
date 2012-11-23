@@ -24,7 +24,6 @@ SobiPro.jQuery( document ).ready( function ()
 			if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
 				SPTriggerFrakingWYSIWYGEditors();
 				req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
-				buttons = {};
 				SobiPro.jQuery( SobiPro.jQuery( '#SPAdminForm' ).find( ':button' ) ).each( function ( i, b )
 				{
 					bt = SobiPro.jQuery( b );
@@ -220,7 +219,54 @@ SobiPro.jQuery( document ).ready( function ()
 	try {
 		SobiPro.jQuery( '.filter-edit' ).click( function ( e )
 		{
-			alert(SobiPro.jQuery( this ).attr('rel'))
+			var requestUrl = SobiProAdmUrl.replace( '%task%', 'filter.edit' ) + '&tmpl=component';
+			if ( SobiPro.jQuery( this ).attr( 'rel' ) ) {
+				requestUrl += '&fid=' + SobiPro.jQuery( this ).attr( 'rel' );
+			}
+			SobiPro.jQuery( "#filter-edit-window" )
+				.css( 'width', '720px' )
+				.find( '.modal-body' )
+				.html( '<iframe src="' + requestUrl + '" id="filter-edit-window-frame" style="width: 690px; height: 250px; border: none;"> </iframe>' );
+			SobiPro.jQuery( '#filter-edit-window' ).modal();
+//			SobiPro.jQuery( "#filter-edit-window" )
+//				.find( '.save' )
+//				.click( function ( e )
+//				{
+//					"use strict";
+//					window.location.replace( window.location );
+//				} );
+			SobiPro.jQuery( "#filter-edit-window" )
+				.find( '.save' )
+				.click( function ( e )
+				{
+					SobiPro.jQuery.ajax( {
+						url:'index.php',
+						data:SobiPro.jQuery( '#filter-edit-window-frame' ).contents().find( 'body #SPAdminForm' ).serialize(),
+						type:'post',
+						dataType:'json',
+						success:function ( data )
+						{
+							iframe = SobiPro.jQuery( '#filter-edit-window-frame' ).contents().find( 'body #SPAdminForm' );
+							alert = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + '</div>';
+							iframe.find( '#spMessage' ).html( alert );
+							if ( data.data.required ) {
+								stop = true;
+								iframe.find( '[name^="' + data.data.required + '"]' )
+									.addClass( 'error' )
+									.focus()
+									.focusout( function ()
+									{
+										if ( SobiPro.jQuery( this ).val() ) {
+											SobiPro.jQuery( this )
+												.removeClass( 'error' )
+												.addClass( 'success' );
+										}
+									} );
+							}
+						}
+					} );
+					e.stopPropagation();
+				} );
 		} );
 	}
 	catch ( e ) {

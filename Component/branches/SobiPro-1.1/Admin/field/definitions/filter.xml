@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<body>
+		<message id="spMessage"/>
+		<fieldset type="vertical">
+			<field type="text" name="filter.id" value="filter.id" label="FLR.FILTER_ID" required="true">
+				<attribute name="readonly" value="filter.readonly" />
+			</field>
+			<field type="text" name="filter.name" value="filter.name" label="FLR.FILTER_NAME" required="true" />
+			<field type="text" name="filter.message" value="filter.message" label="FLR.FILTER_MSG" required="true" class="input-splarge" />
+			<field type="textarea" name="filter.regex" value="filter.regex" label="FLR.FILTER_REGEX" editor="false" class="input-splarge" rows="2" style="">
+				<attribute name="readonly" value="filter.readonly" />
+			</field>
+		</fieldset>
+	</body>
+	<config>
+		<action value="index.php" />
+		<hidden>
+			<field name="option" const="com_sobipro" />
+			<field name="task" const="filter.save" />
+			<field name="method" const="xhr" />
+		</hidden>
+	</config>
+</definition>

@@ -30,6 +30,10 @@ class SPFilter extends SPConfigAdmCtrl
 	 * @var string
 	 */
 	protected $_defTask = 'list';
+	/**
+	 * @var string
+	 */
+	protected $_type = 'filter';
 
 	public function execute()
 	{
@@ -75,11 +79,12 @@ class SPFilter extends SPConfigAdmCtrl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
+		$this->validate( 'field.definitions.filter', 'filter' );
 		$filters = $this->getFilters();
 		$id = SPRequest::cmd( 'filter_id' );
-		$name = SPRequest::string( 'filter_name' );
-		$msg = str_replace( array( "\n", "\t", "\r" ), null, SPLang::clean( SPRequest::string( 'filter_message' ) ) );
-		$regex = SPLang::clean( SPRequest::raw( 'filter_regex' ) );
+		$name = SPRequest::string( 'filter_name', 'Filter Name' );
+		$msg = str_replace( array( "\n", "\t", "\r" ), null, SPLang::clean( SPRequest::string( 'filter_message', 'The data entered in the $field field contains not allowed characters' ) ) );
+		$regex = SPLang::clean( SPRequest::raw( 'filter_regex', '/^[\.*]+$/' ) );
 		$regex = str_replace( '[:apostrophes:]', '\"' . "\'", $regex );
 		$regex = base64_encode( str_replace( array( "\n", "\t", "\r" ), null, $regex ) );
 		$custom = 'custom';
@@ -95,8 +100,7 @@ class SPFilter extends SPConfigAdmCtrl
 			'options' => $custom
 		);
 		SPFactory::registry()->saveDBSection( $filters, 'fields_filter' );
-		SPMainFrame::msg( array( 'msg' => Sobi::Txt( 'FLR.MSG_FILTER_SAVED' ), 'msgtype' => SPC::ERROR_MSG ) );
-		echo '<script>parent.location.reload();</script>';
+		$this->response( Sobi::Back(), Sobi::Txt( 'FLR.MSG_FILTER_SAVED' ), false, 'success' );
 	}
 
 	private function getFilters()
@@ -128,27 +132,18 @@ class SPFilter extends SPConfigAdmCtrl
 				'regex' => str_replace( '\"' . "\'", '[:apostrophes:]', base64_decode( $filters[ $id ][ 'params' ] ) ),
 				'name' => $filters[ $id ][ 'value' ],
 				'message' => $filters[ $id ][ 'description' ],
-				'editable' => strlen( $filters[ $id ][ 'options' ] )
+				'editable' => strlen( $filters[ $id ][ 'options' ] ),
+				'readonly' => !( strlen( $filters[ $id ][ 'options' ] ) )
 			);
 		}
 		else {
-			$Filter = array( 'id' => '', 'regex' => '', 'name' => '', 'message' => '', 'editable' => true );
+			$Filter = array( 'id' => '', 'regex' => '', 'name' => '', 'message' => '', 'editable' => true, 'readonly' => false );
 		}
-		$raw = Sobi::Url( array( 'out' => 'raw' ), true );
-		$raw = explode( '&', $raw );
-		$view =& SPFactory::View( 'view', true );
+		$view = SPFactory::View( 'view', true );
 		$view->assign( $this->_task, 'task' );
-		$view->loadConfig( 'field.filter' );
 		$view->assign( $Filter, 'filter' );
-		if ( count( $raw ) ) {
-			foreach ( $raw as $line ) {
-				if ( !( strstr( $line, '?' ) ) ) {
-					$line = explode( '=', $line );
-					$view->addHidden( $line[ 1 ], $line[ 0 ] );
-				}
-			}
-		}
-		$view->setTemplate( 'field.filter' );
+		$view->determineTemplate( 'field', 'filter' );
+		$view->setTemplate( 'field.templates.edit' );
 		$view->display();
 	}
 
@@ -174,6 +169,9 @@ class SPFilter extends SPConfigAdmCtrl
 				->assign( Sobi::Url( array( 'task' => 'filter.edit', 'out' => 'html' ), true ), 'edit_url' )
 				->assign( $Filters, 'filters' )
 				->determineTemplate( 'field', 'filters' );
+		$menu = $view->get( 'menu' );
+		$menu->setOpen( 'filter' );
+		$view->assign( $menu, 'menu' );
 		$view->display();
 	}
 }

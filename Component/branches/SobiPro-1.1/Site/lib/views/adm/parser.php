@@ -140,7 +140,6 @@ class SPTplParser
 				break;
 			case 'text':
 			case 'url':
-				SPConfig::debOut( $element );
 				$this->_out[ ] = $element[ 'content' ];
 				break;
 			default:
@@ -169,7 +168,8 @@ class SPTplParser
 					$this->_out[ ] = '<table class="table table-striped table-bordered table-condensed">';
 					$this->_out[ ] = '<tbody>';
 				}
-				$this->_out[ ] = '<fieldset class="form-horizontal control-group">';
+				$formType = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? $data[ 'attributes' ][ 'type' ] : 'horizontal';
+				$this->_out[ ] = '<fieldset class="form-'.$formType.' control-group">';
 				if ( isset( $data[ 'label' ] ) && $data[ 'label' ] ) {
 					$this->_out[ ] = '<div class="control-group spFieldGroup"><label class="control-label">' . $data[ 'label' ] . '</label></div>';
 				}

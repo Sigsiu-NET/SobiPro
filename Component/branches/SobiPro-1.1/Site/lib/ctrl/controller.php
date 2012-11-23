@@ -265,7 +265,7 @@ abstract class SPController extends SPObject implements SPControl
 			}
 		}
 		else {
-			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) ) );
+			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false, 'success' );
 		}
 	}
 
@@ -454,5 +454,4 @@ abstract class SPController extends SPObject implements SPControl
 			}
 		}
 	}
-
 }
