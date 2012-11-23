@@ -306,7 +306,7 @@ class SPAdmView extends SPObject implements SPView
 			}
 		}
 		if ( count( $attributes ) ) {
-			$button = array_merge(  $button, $attributes );
+			$button = array_merge( $button, $attributes );
 		}
 		return $button;
 	}
@@ -747,6 +747,9 @@ class SPAdmView extends SPObject implements SPView
 					case 'attribute':
 						$name = $child->attributes->getNamedItem( 'name' )->nodeValue;
 						$value = $this->get( $child->attributes->getNamedItem( 'value' )->nodeValue );
+						if ( in_array( $name, array( 'disabled', 'readonly' ) ) && !( $value ) ) {
+							continue;
+						}
 						if ( $name == 'label' ) {
 							$element[ $name ] = $value;
 						}
@@ -879,14 +882,20 @@ class SPAdmView extends SPObject implements SPView
 					$hidden = $node->childNodes;
 					foreach ( $hidden as $field ) {
 						if ( !( strstr( $field->nodeName, '#' ) ) ) {
-							$value = null;
-							if ( $field->attributes->getNamedItem( 'value' ) && $field->attributes->getNamedItem( 'value' )->nodeValue ) {
-								$value = $this->get( $field->attributes->getNamedItem( 'value' )->nodeValue );
+							if ( $field->attributes->getNamedItem( 'const' ) && $field->attributes->getNamedItem( 'const' )->nodeValue ) {
+								$this->addHidden( $field->attributes->getNamedItem( 'const' )->nodeValue, $field->attributes->getNamedItem( 'name' )->nodeValue );
 							}
 							else {
-								$value = $field->attributes->getNamedItem( 'default' )->nodeValue;
+								$value = null;
+								$name = $field->attributes->getNamedItem( 'name' )->nodeValue;
+								if ( $field->attributes->getNamedItem( 'value' ) && $field->attributes->getNamedItem( 'value' )->nodeValue ) {
+									$value = $this->get( $field->attributes->getNamedItem( 'value' )->nodeValue );
+								}
+								else {
+									$value = $field->attributes->getNamedItem( 'default' )->nodeValue;
+								}
+								$this->addHidden( SPRequest::string( $name, $value ), $name );
 							}
-							$this->addHidden( SPRequest::string( $field->attributes->getNamedItem( 'name' )->nodeValue, $value ), $field->attributes->getNamedItem( 'name' )->nodeValue );
 						}
 					}
 					break;

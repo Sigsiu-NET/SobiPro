@@ -10,7 +10,6 @@
 	</toolbar>
 	<body>
 		<message id="spMessage" />
-		<!--<header label="FM.FIELDS_FOR" icon="SobiFieldList"/>-->
 		<table>
 			<head>
 				<cell label="FLR.FILTER_ID" type="text" />
@@ -29,13 +28,13 @@
 				</cell>
 			</loop>
 		</table>
+		<field type="modalWindow" id="filter-edit-window" style="100px"/>
 	</body>
 	<config>
 		<action value="index.php?option=com_sobipro" />
 		<hidden>
-			<field name="option" default="com_sobipro" />
+			<field name="option" const="com_sobipro" />
 			<field name="task" default="" />
-			<field name="boxchecked" default="" />
 		</hidden>
 	</config>
 </definition>

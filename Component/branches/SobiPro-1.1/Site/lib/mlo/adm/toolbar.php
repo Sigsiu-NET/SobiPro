@@ -91,6 +91,9 @@ class SpAdmToolbar
 
 	public function render( $options = array() )
 	{
+		if ( !( count( $this->buttons ) ) ) {
+			return null;
+		}
 		$id = isset( $options[ 'id' ] ) ? $options[ 'id' ] : 'SPAdmToolbar';
 		$this->output[ ] = '<div class="breadcrumb" id="' . $id . '">';
 		$this->output[ ] = '<div id="SPRightMenuHold">';
@@ -148,7 +151,7 @@ class SpAdmToolbar
 	private function renderButton( $button, $list = false )
 	{
 		$rel = null;
-		$class = isset( $button[ 'class' ] ) ? ' '.$button[ 'class' ] : null;
+		$class = isset( $button[ 'class' ] ) ? ' ' . $button[ 'class' ] : null;
 		if ( !( isset( $button[ 'task' ] ) ) || !( $button[ 'task' ] ) ) {
 			$href = $this->getLink( $button );
 		}
