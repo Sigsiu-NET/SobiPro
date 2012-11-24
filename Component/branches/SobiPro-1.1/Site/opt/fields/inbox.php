@@ -58,7 +58,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 			return false;
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
-		$params = array( 'id' => $this->nid, 'size' => $this->width, 'class' => $class );
+		$params = array( 'id' => $this->nid, /*'size' => $this->width,*/ 'class' => $class );
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}

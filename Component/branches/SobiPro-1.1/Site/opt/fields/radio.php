@@ -86,7 +86,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 		if( count( $list ) ) {
 			$c = 0;
 			foreach ( $list as $radio ) {
-				$radio = '<div style="float:left; width:'.$this->optWidth.'px;" >'.$radio.'</div>';
+				$radio = '<div style="width:'.$this->optWidth.'px;" class="spFieldRadio">'.$radio.'</div>';
 				$field .= "\n".$radio;
 				if( !( ( ++$c ) % $this->optInLine ) ) {
 					$field .= "\n<div style=\"clear:both;\"></div>\n";

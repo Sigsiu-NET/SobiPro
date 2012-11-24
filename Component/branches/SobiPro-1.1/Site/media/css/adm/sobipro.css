@@ -213,6 +213,10 @@ div.spScreenTitle h4 {
   margin: 5px;
   float: none;
   display: inline;
+  color: #808080;
+}
+#SPAdminForm fieldset.form-horizontal label {
+  clear: none;
 }
 #SPAdminForm .nav-tabs a {
   color: #0000b3;
@@ -399,6 +403,54 @@ input.sp-input-micro[type="text"] {
   min-height: 300px;
   margin-left: 20px;
 }
+.spFieldUrlLabel {
+  display: block;
+  height: 40px;
+}
+.spFieldUrlLabel label {
+  padding-right: 5px;
+  color: #666666;
+}
+.spFieldUrl {
+  display: block;
+}
+.spFieldUrl select {
+  width: 100px;
+}
+.spFieldCheckbox {
+  float: left;
+}
+.spFieldCheckbox label {
+  color: #666666;
+}
+.spFieldCheckbox input {
+  margin-top: 8px!important;
+  margin-left: 5px!important;
+  margin-right: 5px!important;
+}
+.spFieldRadio {
+  float: left;
+}
+.spFieldRadio label {
+  color: #666666;
+}
+.spFieldRadio input {
+  margin-top: 8px!important;
+  margin-left: 5px!important;
+  margin-right: 5px!important;
+}
 .SobiPro table.mceLayout {
   border-radius: 3px;
+}
+/* Compatibility Styles */
+/* GeoMap Field */
+.SPGeoLabel {
+  display: block;
+  float: left;
+  margin-right: 10px;
+  margin-top: 6px;
+  color: #666666;
+}
+.GeoMap {
+  margin-right: 10px!important;
 }

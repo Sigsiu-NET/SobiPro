@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -33,13 +33,21 @@ class SPField_UrlAdm extends SPField_Url {
 
 	public function onFieldEdit()
 	{
-		$this->allowedProtocols =  is_array( $this->allowedProtocols ) ?  implode( '|', $this->allowedProtocols ) : null;
+		$this->allowedProtocols =  is_array( $this->allowedProtocols ) ?  implode( ',', $this->allowedProtocols ) : null;
 	}
 	public function save( &$attr )
 	{
-		if( isset( $attr[ 'allowedProtocols' ] ) ) {
-			$attr[ 'allowedProtocols' ] = explode( '|', $attr[ 'allowedProtocols' ] );
+		if( isset( $attr[ 'allowedProtocols' ] ) && $attr[ 'allowedProtocols' ]) {
+			$attr[ 'allowedProtocols' ] = explode( ',', $attr[ 'allowedProtocols' ] );
+            if (count($attr[ 'allowedProtocols' ] )) {
+                foreach ($attr[ 'allowedProtocols' ] as $ap => $apvalue) {
+                    $attr[ 'allowedProtocols' ][$ap] = trim($apvalue);
+                }
+            }
 		}
+        else {
+            $attr[ 'allowedProtocols' ] = array();
+        }
 		$myAttr = $this->getAttr();
 		$properties = array();
 		if( count( $myAttr ) ) {
@@ -50,4 +58,3 @@ class SPField_UrlAdm extends SPField_Url {
 		$attr[ 'params' ] = $properties;
 	}
 }
-?>

@@ -92,7 +92,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		}
 		if( $this->ownLabel ) {
 			$fieldTitle = null;
-			$params = array( 'id' => $this->nid, 'size' => $this->labelWidth, 'class' => $this->cssClass.'Title' );
+			$params = array( 'id' => $this->nid, /*'size' => $this->labelWidth, */'class' => $this->cssClass.'Title' );
 			if( $this->labelMaxLength ) {
 				$params[ 'maxlength' ] = $this->labelMaxLength;
 			}
@@ -108,18 +108,18 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		$protocols = array();
 		if( count( $this->allowedProtocols ) ) {
 			foreach ( $this->allowedProtocols as $protocol ) {
-				$protocols[ $protocol ] = $protocol;
+				$protocols[ $protocol ] = $protocol.'://';
 			}
 		}
 		else {
-			$protocols = array( 'http' => 'http', 'https' => 'https' );
+			$protocols = array( 'http' => 'http://', 'https' => 'https://' );
 		}
 		$params = array( 'id' => $this->nid.'_protocol', 'size' => 1, 'class' => $this->cssClass.'Protocol' );
 		$field .= SPHtml_Input::select( $this->nid.'_protocol', $protocols, ( ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : 'http' ), false, $params );
-		$field .= '<span class="spFieldUrlProtocol">://</span>';
+		//$field .= '<span class="spFieldUrlProtocol">://</span>';
 		$class =  $this->required ? $this->cssClass.' required' : $this->cssClass;
 		$this->nid .= '_url';
-		$params = array( 'id' => $this->nid, 'size' => $this->width, 'class' => $class );
+		$params = array( 'id' => $this->nid, /*'size' => $this->width, */'class' => $class );
 		if( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
@@ -131,6 +131,9 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		if( $this->ownLabel ) {
 			$field = "\n<div class=\"spFieldUrlLabel\">{$fieldTitle}</div>\n<div class=\"spFieldUrl\">{$field}</div>";
 		}
+        else {
+            $field = "\n<div class=\"spFieldUrl\">{$field}</div>";
+        }
 		if( !$return ) {
 			echo $field;
 		}
