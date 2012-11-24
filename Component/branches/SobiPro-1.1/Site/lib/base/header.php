@@ -110,7 +110,7 @@ final class SPHeader
 			$this->addCssFile( 'adm.sobipro' );
 		}
 		else {
-			$this->addCssFile( 'bootstrap.sobipro' );
+			$this->addCssFile( 'sobipro' );
 		}
 		return $this;
 	}

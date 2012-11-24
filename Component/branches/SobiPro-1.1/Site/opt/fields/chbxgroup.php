@@ -66,7 +66,7 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 		if ( count( $list ) ) {
 			$c = 0;
 			foreach ( $list as $box ) {
-				$box = '<div style="float:left; width:' . $this->optWidth . 'px;">' . $box . '</div>';
+				$box = '<div style="width:' . $this->optWidth . 'px;" class="spFieldCheckbox">' . $box . '</div>';
 				$field .= "\n" . $box;
 				if ( !( ( ++$c ) % $this->optInLine ) ) {
 					$field .= "\n<div style=\"clear:both;\"></div>\n";
