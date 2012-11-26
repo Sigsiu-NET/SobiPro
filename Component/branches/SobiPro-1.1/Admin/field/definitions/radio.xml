@@ -51,6 +51,7 @@
 							<field type="select" name="field.optInLine" selected="field.optInLine"
 							       label="FM.CHBXGR.OPTS_IN_LINE" class="input-mini">
 								<values>
+                                    <option value="0" label="FM.OPTIONS" />
 									<option value="1" label="1"/>
 									<option value="2" label="2"/>
 									<option value="3" label="3"/>
