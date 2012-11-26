@@ -26,11 +26,32 @@
 					</div>
 				</div>
 			</tab>
-			<tab label="EN.ENTRY_GENERAL_SETTINGS">
+			<tab label="EN.ENTRY_GENERAL_DATA">
 				<div class="row-fluid">
 					<div class="span12">
                         <fieldset>
                             <field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
+
+            <tab label="META_DATA">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="textarea" name="entry.metaDesc" value="entry.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="textarea" name="entry.metaKeys" value="entry.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="text" name="entry.metaAuthor" value="entry.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+                            <field type="select" label="ROBOTS" name="entry.metaRobots" selected="entry.metaRobots" class="input-large" >
+                                <values>
+                                    <option value="" label="ROBOTS_NONE" />
+                                    <option value="index, follow" label="index, follow" />
+                                    <option value="index, nofollow" label="index, nofollow" />
+                                    <option value="noindex, follow" label="noindex, follow" />
+                                    <option value="noindex, nofollow" label="noindex, nofollow" />
+                                </values>
+                            </field>
                         </fieldset>
                     </div>
                 </div>
@@ -71,27 +92,6 @@
 					</div>
 				</div>
 			</tab>
-            <tab label="META_DATA">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <fieldset>
-                            <field type="textarea" name="entry.metaDesc" value="entry.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-                            <field type="textarea" name="entry.metaKeys" value="entry.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
-                            <field type="text" name="entry.metaAuthor" value="entry.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
-                            <field type="select" label="ROBOTS" name="entry.metaRobots" selected="entry.metaRobots" class="input-large" >
-                                <values>
-                                    <option value="" label="ROBOTS_NONE" />
-                                    <option value="index, follow" label="index, follow" />
-                                    <option value="index, nofollow" label="index, nofollow" />
-                                    <option value="noindex, follow" label="noindex, follow" />
-                                    <option value="noindex, nofollow" label="noindex, nofollow" />
-                                </values>
-                            </field>
-                        </fieldset>
-                    </div>
-                </div>
-            </tab>
-
         </tabs>
 	</body>
 	<config>

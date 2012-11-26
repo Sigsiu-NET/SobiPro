@@ -18,7 +18,7 @@
 	<body>
 		<message id="spMessage" />
 		<tabs>
-			<tab label="CAT.CATEGORY_GENERAL_SETTINGS">
+			<tab label="CAT.CATEGORY_GENERAL_DATA">
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
@@ -60,6 +60,26 @@
 					</div>
 				</div>
 			</tab>
+            <tab label="META_DATA">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="textarea" name="category.metaDesc" value="category.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="textarea" name="category.metaKeys" value="category.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="text" name="category.metaAuthor" value="category.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+                            <field type="select" label="ROBOTS" name="category.metaRobots" selected="category.metaRobots" class="input-large" >
+                                <values>
+                                    <option value="" label="ROBOTS_NONE" />
+                                    <option value="index, follow" label="index, follow" />
+                                    <option value="index, nofollow" label="index, nofollow" />
+                                    <option value="noindex, follow" label="noindex, follow" />
+                                    <option value="noindex, nofollow" label="noindex, nofollow" />
+                                </values>
+                            </field>
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
 			<tab label="CATN.CATEGORY_PUBLISHING">
 				<div class="row-fluid">
 					<div class="span12">
@@ -91,26 +111,6 @@
                         </fieldset>
 						<fieldset label="CLICKCOUNTER">
 							<field type="button" label="CAT.RESET_COUNT" value="category.counter" name="counter" class="btn counter-reset" rel="category" />
-						</fieldset>
-					</div>
-				</div>
-			</tab>
-			<tab label="META_DATA">
-				<div class="row-fluid">
-					<div class="span12">
-						<fieldset>
-							<field type="textarea" name="category.metaDesc" value="category.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-							<field type="textarea" name="category.metaKeys" value="category.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
-							<field type="text" name="category.metaAuthor" value="category.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
-                            <field type="select" label="ROBOTS" name="category.metaRobots" selected="category.metaRobots" class="input-large" >
-                                <values>
-                                    <option value="" label="ROBOTS_NONE" />
-                                    <option value="index, follow" label="index, follow" />
-                                    <option value="index, nofollow" label="index, nofollow" />
-                                    <option value="noindex, follow" label="noindex, follow" />
-                                    <option value="noindex, nofollow" label="noindex, nofollow" />
-                                </values>
-                            </field>
 						</fieldset>
 					</div>
 				</div>
