@@ -88,7 +88,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			$c[ ] = Sobi::Section();
 			if ( count( $c ) ) {
 				try {
-					$db->select( 'id', 'spdb_object', array( 'parent' => $c, 'oType' => 'entry' ) );
+					$db->select( 'id', 'spdb_relations', array( 'pid' => $c, 'oType' => 'entry' ) );
 					$e = $db->loadResultArray();
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -237,7 +237,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		if ( $ord == 'order' || $ord == 'position' ) {
 			$subject = $subject == 'categories' ? 'category' : 'entry';
 			/* @var SPdb $db */
-			$db =& SPFactory::db();
+			$db = SPFactory::db();
 			$db->select( 'id', 'spdb_relations', array( 'oType' => $subject, 'pid' => $this->_model->get( 'id' ) ), 'position.' . $dir, $lim, $lStart );
 			$fields = $db->loadResultArray();
 			if ( count( $fields ) ) {
