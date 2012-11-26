@@ -86,11 +86,22 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 		if( count( $list ) ) {
 			$c = 0;
 			foreach ( $list as $radio ) {
-				$radio = '<div style="width:'.$this->optWidth.'px;" class="spFieldRadio">'.$radio.'</div>';
-				$field .= "\n".$radio;
-				if( !( ( ++$c ) % $this->optInLine ) ) {
-					$field .= "\n<div style=\"clear:both;\"></div>\n";
-				}
+                $field .= '<div class="spFieldRadio"';
+                if ($this->optWidth) {
+                    $field .= ' style="width:' . $this->optWidth . 'px;"';
+                }
+                $field = $field . '>' . $radio . '</div>';
+                $field .= "\n";
+
+
+
+                //$radio = '<div style="width:'.$this->optWidth.'px;" class="spFieldRadio">'.$radio.'</div>';
+				//$field .= "\n".$radio;
+                if ($this->optInLine) {
+                    if( !( ( ++$c ) % $this->optInLine ) ) {
+                        $field .= "\n<div class=\"clearall\"></div>\n";
+                    }
+                }
 			}
 			$field = "<div id=\"{$this->nid}\" class=\"{$class}\">{$field}</div>";
 		}
@@ -130,16 +141,16 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 						$box = '<div style="float:left; width:'.$this->optWidth.'px;">'.$box.'</div>';
 						$field .= "\n".$box;
 						if( !( ( ++$c ) % $this->optInLine ) ) {
-							$field .= "\n<div style=\"clear:both;\"></div>\n";
+							$field .= "\n<div class=\"clearall\"></div>\n";
 						}
 					}
 					$field = "<div id=\"{$this->nid}\" >{$field}</div>";
-					$field .= "\n<div style=\"clear:both;\"></div>\n";
+					$field .= "\n<div class=\"clearall\"></div>\n";
 				}
 				break;
 			case 'radio':
 				$field = $this->getField( $this->cssClass.' '.Sobi::Cfg( 'search.form_radio_def_css', 'SPSearchRadio' ), $this->_selected );
-				$field .= "\n<div style=\"clear:both;\"></div>\n";
+				$field .= "\n<div class=\"clearall\"></div>\n";
 				break;
 			case 'select':
 			case 'mselect':

@@ -50,7 +50,7 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 			return false;
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
-		$params = array( 'class' => $class );
+		$params = array( 'class' => $class . ' checkbox' );
 		$values = array();
 		if ( count( $this->options ) ) {
 			foreach ( $this->options as $option ) {
@@ -65,15 +65,22 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 		$field = null;
 		if ( count( $list ) ) {
 			$c = 0;
-			foreach ( $list as $box ) {
-				$box = '<div style="width:' . $this->optWidth . 'px;" class="spFieldCheckbox">' . $box . '</div>';
-				$field .= "\n" . $box;
-				if ( !( ( ++$c ) % $this->optInLine ) ) {
-					$field .= "\n<div style=\"clear:both;\"></div>\n";
-				}
-			}
-			$field = "<div id=\"{$this->nid}\" class=\"{$class}\">{$field}\n<div style=\"clear:both;\"></div>\n</div>";
-		}
+            foreach ( $list as $box ) {
+                $field .= '<div class="spFieldCheckbox"';
+                if ($this->optWidth) {
+                    $field .= ' style="width:' . $this->optWidth . 'px;"';
+                }
+                $field = $field . '>' . $box . '</div>';
+                $field .= "\n";
+
+                if ($this->optInLine) {
+                    if ( !( ( ++$c ) % $this->optInLine ) ) {
+                        $field .= "\n<div class=\"clearall\"></div>\n";
+                    }
+                }
+            }
+            $field = "<div id=\"{$this->nid}\" class=\"{$class}\">{$field}\n<div class=\"clearall\"></div>\n</div>";
+        }
 		if ( !$return ) {
 			echo $field;
 		}
