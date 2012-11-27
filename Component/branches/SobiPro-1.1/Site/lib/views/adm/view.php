@@ -506,14 +506,21 @@ class SPAdmView extends SPObject implements SPView
 
 		/** @var DOMElement $attribute */
 		foreach ( $cell->attributes as $attribute ) {
-			if ( $attribute->nodeName == 'label' ) {
-				$element[ 'label' ] = Sobi::Txt( $attribute->nodeValue );
-			}
-			elseif ( $attribute->nodeName == 'value' ) {
-				$element[ 'content' ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
-			}
-			else {
-				$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( str_replace( 'var:[', 'var:[' . $subject . '.', $attribute->nodeValue ), $i );
+			switch ( $attribute->nodeName ) {
+				case 'label':
+					$element[ 'label' ] = Sobi::Txt( $attribute->nodeValue );
+					break;
+				case 'value':
+					$element[ 'content' ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
+				case 'checked-out-by':
+				case 'checked-out-time':
+				case 'valid-since':
+				case 'valid-until':
+					$element[ 'attributes' ][ $attribute->nodeName ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
+					break;
+				default:
+					$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( str_replace( 'var:[', 'var:[' . $subject . '.', $attribute->nodeValue ), $i );
+					break;
 			}
 		}
 		if ( $cell->nodeName == 'cells' ) {
