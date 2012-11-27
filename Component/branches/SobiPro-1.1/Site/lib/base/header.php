@@ -636,7 +636,7 @@ final class SPHeader
 			$this->css = array( "<style type=\"text/css\">\n{$cssCode}\n</style>" );
 		}
 		$this->head[ 'keywords' ] = $this->keywords;
-		$this->head[ 'authors' ] = $this->authors;
+		$this->head[ 'author' ] = $this->authors;
 		$this->head[ 'robots' ] = $this->robots;
 		$this->head[ 'description' ] = $this->description;
 		$this->head[ 'css' ] = $this->_cssFiles();
