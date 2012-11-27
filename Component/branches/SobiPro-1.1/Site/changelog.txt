@@ -28,20 +28,29 @@
 
 
 -------------------
-1.1.0
+1.1.0 Beta 1 ()
 -------------------
 
    (+) XML based template engine for administrator templates
    (+) Possibility to override administrator templates for particular section
    (+) Definition file for Radio Button field
    (+) Field controller implements now a proxy pattern to the field type
+   (+) Definition file for Radio Button field
+   (+) Category Chooser Field with different category selection methods implemented
+   (+) Category Search to filter the search results by one or more category
+   (+) IP search query link added to category and entry publishing IP (admin interface)
+   (+) Button to hide left menu in order to stretch the content screen
 
    (!) SPHeader::addMeta() takes now optional list of custom parameters as an array
-   (!) SPLang::nid using JFilterOutput::stringURLSafe now
+   (!) SPLang::nid() using JFilterOutput::stringURLSafe now
+   (!) Administrator UI redesigned using Bootstrap library and new XML templates
+   (!) Category and entry Meta Robots parameter selection improved (admin interface)
+   (!) Category and entry publishing information extended (admin interface)
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
-   (#) getChilds in model do not cares about the child type
+   (#) getChilds() in model does not care about the child type
+   (#) Meta author corrected to 'author'
 
 
 -------------------
