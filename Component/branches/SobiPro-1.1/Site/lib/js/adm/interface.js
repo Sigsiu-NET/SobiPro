@@ -271,4 +271,10 @@ SobiPro.jQuery( document ).ready( function ()
 	}
 	catch ( e ) {
 	}
+	SobiPro.jQuery( 'a[rel=tooltip]' )
+		.tooltip( { 'html': true })
+		.click( function ( e )
+		{
+			e.preventDefault()
+		} );
 } );

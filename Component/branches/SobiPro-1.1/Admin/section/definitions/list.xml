@@ -2,6 +2,7 @@
 <definition>
 	<header>
 		<title value="CATEGORY_LIST_TITLE" />
+		<file type="script" filename="bootstrap.tooltips" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSection">
 		<buttons type="entry">
@@ -60,7 +61,7 @@
 			</head>
 			<loop subject="categories">
 				<cell type="text" value="id" class="center" />
-				<cell type="checkbox" name="c_sid" value="id" class="center" />
+				<cell type="checkbox" name="c_sid" value="id" class="center" checked-out-time="coutTime" checked-out-by="cout" checked-out-ico="lock" />
 				<cell>
 					<cell type="link" value="name">
 						<url type="intern">
@@ -69,7 +70,7 @@
 						</url>
 					</cell>
 				</cell>
-				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}">
+				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 					<url type="intern">
 						<param name="task" value="category.toggle.enabled" />
 						<param name="sid" value="id" parse="true" />
@@ -89,7 +90,7 @@
 			</foot>
 		</table>
 
-        <div style="padding-top:30px;" />
+		<div style="padding-top:30px;" />
 
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 			<div class="btn-group pull-right" id="spEntriesFilterHead">
@@ -120,7 +121,7 @@
 					</cell>
 				</cell>
 				<cells value="customFields" class="center" />
-				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}">
+				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 					<url type="intern">
 						<param name="task" value="entry.toggle.enabled" />
 						<param name="sid" value="id" parse="true" />
@@ -146,7 +147,7 @@
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="category.view" />
 			<field name="boxchecked" default="" />
-			<field name="sid" default=""/>
+			<field name="sid" default="" />
 		</hidden>
 	</config>
 </definition>

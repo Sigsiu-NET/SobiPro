@@ -24,7 +24,13 @@ class SPTplParser
 	protected $thTd = 'th';
 	protected $_out = array();
 	protected $loopOpen = false;
-	protected $_tickerIcons = array( 0 => 'remove', 1 => 'ok' );
+	protected $_tickerIcons = array(
+		0 => 'remove',
+		1 => 'ok',
+		-1 => 'stop',
+		-2 => 'pause'
+	);
+	protected $_checkedOutIcon = 'lock';
 	static $newLine = "\n";
 
 	public function __construct( $table = false )
@@ -169,7 +175,7 @@ class SPTplParser
 					$this->_out[ ] = '<tbody>';
 				}
 				$formType = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? $data[ 'attributes' ][ 'type' ] : 'horizontal';
-				$this->_out[ ] = '<fieldset class="form-'.$formType.' control-group">';
+				$this->_out[ ] = '<fieldset class="form-' . $formType . ' control-group">';
 				if ( isset( $data[ 'label' ] ) && $data[ 'label' ] ) {
 					$this->_out[ ] = '<div class="control-group spFieldGroup"><label class="control-label">' . $data[ 'label' ] . '</label></div>';
 				}
@@ -325,28 +331,10 @@ class SPTplParser
 				}
 				break;
 			case 'checkbox':
-				if ( isset( $cell[ 'attributes' ][ 'rel' ] ) && $cell[ 'attributes' ][ 'rel' ] ) {
-					$this->_out[ ] = '<input type="checkbox" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
-				}
-				else {
-					$this->_out[ ] = '<input type="checkbox" name="' . $cell[ 'attributes' ][ 'name' ] . '[]" value="' . $cell[ 'content' ] . '">';
-				}
+				$cell = $this->checkbox( $cell );
 				break;
 			case 'ticker':
-				if ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
-					$this->_out[ ] = "<a href=\"{$cell['link']}\" >";
-				}
-				$icons = array();
-				if ( isset( $cell[ 'attributes' ][ 'icons' ] ) && $cell[ 'attributes' ][ 'icons' ] ) {
-					$icons = json_decode( str_replace( "'", '"', $cell[ 'attributes' ][ 'icons' ] ), true );
-				}
-				if ( !( count( $icons ) ) ) {
-					$icons = $this->_tickerIcons;
-				}
-				$this->_out[ ] = '<i class="icon-' . $icons[ $cell[ 'content' ] ] . '"></i>';
-				if ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
-					$this->_out[ ] = "</a>";
-				}
+				$cell = $this->ticker( $cell );
 				break;
 		}
 		if ( isset( $cell[ 'childs' ] ) && count( $cell[ 'childs' ] ) ) {
@@ -355,6 +343,67 @@ class SPTplParser
 			}
 		}
 		$this->_out[ ] = "\n</{$span}>\n";
+	}
+
+	public function ticker( $cell )
+	{
+		$index = $cell[ 'content' ];
+		/** is expired ? */
+		if ( isset( $cell[ 'attributes' ][ 'valid-until' ] ) && $cell[ 'attributes' ][ 'valid-until' ] && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) < time() ) {
+			$index = -1;
+			$txt = Sobi::Txt( 'ROW_EXPIRED', $cell[ 'attributes' ][ 'valid-until' ] );
+			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="expired">';
+		}
+		/** is pending */
+		elseif ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] ) > time() ) {
+			$index = -2;
+			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );
+			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="pending">';
+		}
+		elseif ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
+			$this->_out[ ] = "<a href=\"{$cell['link']}\" >";
+		}
+		$icons = array();
+		if ( isset( $cell[ 'attributes' ][ 'icons' ] ) && $cell[ 'attributes' ][ 'icons' ] ) {
+			$icons = json_decode( str_replace( "'", '"', $cell[ 'attributes' ][ 'icons' ] ), true );
+		}
+		if ( !( count( $icons ) ) ) {
+			$icons = $this->_tickerIcons;
+		}
+		$icon = ( isset( $icons[ $index ] ) && $icons[ $index ] ) ? $icons[ $index ] : $this->_tickerIcons[ $index ];
+		$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
+		if ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
+			$this->_out[ ] = "</a>";
+			return $cell;
+		}
+		return $cell;
+	}
+
+	public function checkbox( $cell )
+	{
+		/** First let's check if it is not checked out */
+		if ( isset( $cell[ 'attributes' ][ 'checked-out-by' ] ) && isset( $cell[ 'attributes' ][ 'checked-out-time' ] ) && $cell[ 'attributes' ][ 'checked-out-by' ] && $cell[ 'attributes' ][ 'checked-out-by' ] != Sobi::My( 'id' ) && strtotime( $cell[ 'attributes' ][ 'checked-out-time' ] ) > time() ) {
+			if ( isset( $cell[ 'attributes' ][ 'checked-out-ico' ] ) && $cell[ 'attributes' ][ 'checked-out-ico' ] ) {
+				$icon = $cell[ 'attributes' ][ 'checked-out-ico' ];
+			}
+			else {
+				$icon = $this->_checkedOutIcon;
+			}
+			$user = SPUser::getInstance( $cell[ 'attributes' ][ 'checked-out-by' ] );
+			$txt = Sobi::Txt( 'CHECKED_OUT', $user->get( 'name' ), $cell[ 'attributes' ][ 'checked-out-time' ] );
+			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '">';
+			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
+			$this->_out[ ] = '</a>';
+			return $cell;
+		}
+		if ( isset( $cell[ 'attributes' ][ 'rel' ] ) && $cell[ 'attributes' ][ 'rel' ] ) {
+			$this->_out[ ] = '<input type="checkbox" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
+			return $cell;
+		}
+		else {
+			$this->_out[ ] = '<input type="checkbox" name="' . $cell[ 'attributes' ][ 'name' ] . '[]" value="' . $cell[ 'content' ] . '">';
+			return $cell;
+		}
 	}
 
 	public function tabsHeader( $element )
