@@ -342,6 +342,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 	{
 		$ord = SPFactory::user()->getUserState( $subject . '.order', $col, $def );
 		$ord = str_replace( array( 'e_s', 'c_s' ), null, $ord );
+		$dir = 'asc';
 		if ( strstr( $ord, '.' ) ) {
 			$ord = explode( '.', $ord );
 			$dir = $ord[ 1 ];
@@ -350,7 +351,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		if ( $ord == 'order' ) {
 			$subject = $subject == 'categories' ? 'category' : 'entry';
 			/* @var SPdb $db */
-			$db =& SPFactory::db();
+			$db = SPFactory::db();
 			$db->select( 'id', 'spdb_relations', array( 'oType' => $subject, 'pid' => $this->_model->get( 'id' ) ), 'position.' . $dir, $lim, $lStart );
 			$fields = $db->loadResultArray();
 			if ( count( $fields ) ) {

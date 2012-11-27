@@ -165,7 +165,7 @@ class SPSectionAdmView extends SPAdmView
 		if ( count( $f ) ) {
 			/* @var SPField $fit */
 			foreach ( $f as $field ) {
-				$entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ) ] = $field->get( 'name' );
+				$entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ).'.asc' ] = $field->get( 'name' );
 				$customFields[ ] = $field->get( 'nid' );
 				$customHeader[ ] = array(
 					'content' => $field->get( 'name' ),
