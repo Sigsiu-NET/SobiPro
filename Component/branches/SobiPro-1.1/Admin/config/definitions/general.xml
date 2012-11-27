@@ -18,9 +18,9 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="text" name="section.name" value="section.name" label="SEC.CFG.SECTION_NAME" class="input-xlarge" />
-							<field type="text" name="section.nid" value="section.nid" readonly="readonly" label="SEC.ADD_SECTION_ALIAS" class="input-xlarge" />
-							<field type="textarea" name="section.description" value="section.description" editor="true" label="SEC.CFG.SECTION_DESCRIPTION" />
+							<field type="text" name="section.name" value="section.name" label="SECN.CFG.SECTION_NAME" class="input-xlarge" />
+							<field type="text" name="section.nid" value="section.nid" readonly="readonly" label="SECN.ADD_SECTION_ALIAS" class="input-xlarge" />
+							<field type="textarea" name="section.description" value="section.description" editor="true" label="SECN.CFG.SECTION_DESCRIPTION" />
 							<field type="states" name="section.state" value="section.state" label="ENABLED" prefix="yes_no" />
 							<field type="datePicker" label="CREATED_AT" name="section.createdTime" value="section.createdTime" class="span2" dateFormat="d-m-Y H:i:s" icon="edit" />
 							<field type="datePicker" label="VALID_SINCE" name="section.validSince" value="section.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
