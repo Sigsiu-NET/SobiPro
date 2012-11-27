@@ -38,7 +38,7 @@
 			</head>
 			<loop subject="entries">
 				<cell type="text" value="id" class="center"/>
-				<cell type="checkbox" name="e_sid" value="id" class="center"/>
+				<cell type="checkbox" name="e_sid" value="id" class="center" checked-out-time="coutTime" checked-out-by="cout" />
 				<cell>
 					<cell type="link" value="name">
 						<url type="intern">
@@ -49,7 +49,7 @@
 				</cell>
 				<!--<cell type="text" value="field_price"/>-->
 				<cells value="customFields" class="center"/>
-				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}">
+				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 					<url type="intern">
 						<param name="task" value="entry.toggle.enabled"/>
 						<param name="sid" value="id" parse="true"/>
