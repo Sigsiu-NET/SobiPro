@@ -3,6 +3,7 @@
 	<header>
 		<title value="{'entry.add':'ADD_NEW_ENTRY','entry.edit':'EDIT_EXISTING_ENTRY'}" />
 		<file type="script" filename="bootstrap.tabs" />
+		<file type="script" filename="bootstrap.tooltips" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiEdit">
 		<button task="entry.apply" type="apply">

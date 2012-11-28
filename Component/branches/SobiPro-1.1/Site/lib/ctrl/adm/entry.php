@@ -127,11 +127,11 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		if ( $apply || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
-				$this->response( Sobi::Url( array( $this->_type . '.edit', 'sid' => $sid ) ), $msg );
+				$this->response( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg );
 			}
 			else {
 				$msg = Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
-				$this->response( Sobi::Url( array( $this->_type . '.edit', 'sid' => $sid ) ), $msg, false, 'success', array( 'sets' => $sets ) );
+				$this->response( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg, false, 'success', array( 'sets' => $sets ) );
 			}
 		}
 		else {

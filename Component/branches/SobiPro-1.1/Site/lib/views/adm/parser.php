@@ -62,7 +62,7 @@ class SPTplParser
 	{
 		switch ( $element[ 'type' ] ) {
 			case 'field':
-				if ( isset( $element[ 'attributes' ][ 'stand-alone' ] ) && $element[ 'attributes' ][ 'stand-alone' ] == 'true' ) {
+				if ( isset( $element[ 'attributes' ][ 'stand-alone' ] ) && $element[ 'attributes' ][ 'help-text' ] == 'true' ) {
 					$this->_out[ ] = $element[ 'content' ];
 					break;
 				}
@@ -74,6 +74,9 @@ class SPTplParser
 				if ( isset( $element[ 'label' ] ) && strlen( $element[ 'label' ] ) ) {
 					if ( !( isset( $element[ 'id' ] ) ) ) {
 						$element[ 'id' ] = SPLang::nid( $element[ 'label' ] );
+					}
+					if ( isset( $element[ 'help-text' ] ) && $element[ 'help-text' ] ) {
+						$element[ 'label' ] = '<a href="#" rel="tooltip" data-original-title="' . $element[ 'help-text' ] . '">' . $element[ 'label' ] . '</a>';
 					}
 					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element[ 'id' ]}\">{$element[ 'label' ]}</label>\n";
 				}
@@ -120,6 +123,7 @@ class SPTplParser
 						$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
 					}
 				}
+				/** here is the right content output */
 				$this->_out[ ] = $element[ 'content' ];
 				if ( count( $element[ 'adds' ][ 'after' ] ) ) {
 					foreach ( $element[ 'adds' ][ 'after' ] as $o ) {
