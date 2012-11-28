@@ -76,7 +76,7 @@ class SPTplParser
 						$element[ 'id' ] = SPLang::nid( $element[ 'label' ] );
 					}
 					if ( isset( $element[ 'help-text' ] ) && $element[ 'help-text' ] ) {
-						$element[ 'label' ] = '<a href="#" rel="tooltip" data-original-title="' . $element[ 'help-text' ] . '">' . $element[ 'label' ] . '</a>';
+						$element[ 'label' ] = '<a href="#" rel="popover" data-original-title="' . $element[ 'help-text' ] . '">' . $element[ 'label' ] . '</a>';
 					}
 					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element[ 'id' ]}\">{$element[ 'label' ]}</label>\n";
 				}
@@ -359,7 +359,7 @@ class SPTplParser
 			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="expired">';
 		}
 		/** is pending */
-		elseif ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] ) > time() ) {
+		elseif ( (isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] ) > time()) && $index == 1  ) {
 			$index = -2;
 			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );
 			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="pending">';
@@ -395,7 +395,7 @@ class SPTplParser
 			}
 			$user = SPUser::getInstance( $cell[ 'attributes' ][ 'checked-out-by' ] );
 			$txt = Sobi::Txt( 'CHECKED_OUT', $user->get( 'name' ), $cell[ 'attributes' ][ 'checked-out-time' ] );
-			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '">';
+			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="checkedout">';
 			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
 			$this->_out[ ] = '</a>';
 			return $cell;

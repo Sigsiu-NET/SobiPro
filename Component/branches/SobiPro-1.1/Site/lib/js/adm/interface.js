@@ -271,10 +271,16 @@ SobiPro.jQuery( document ).ready( function ()
 	}
 	catch ( e ) {
 	}
-	SobiPro.jQuery( 'a[rel=tooltip]' )
-		.tooltip( { 'html': true })
-		.click( function ( e )
-		{
-			e.preventDefault()
-		} );
+    SobiPro.jQuery( 'a[rel=tooltip]' )
+        .tooltip( { 'html': true })
+        .click( function ( e )
+        {
+            e.preventDefault()
+        } );
+    SobiPro.jQuery( 'a[rel=popover]' )
+        .popover( { 'html': true })
+        .click( function ( e )
+        {
+            e.preventDefault()
+        } );
 } );

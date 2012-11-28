@@ -51,6 +51,7 @@
    (#) Typo in text label in Entry Manager
    (#) getChilds() in model does not care about the child type
    (#) Meta author corrected to 'author'
+   (#) Suffix not shown in backend
 
 
 -------------------
