@@ -364,7 +364,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	{
 		$sid = $sid ? $sid : $this->section;
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 
 		static $fields = array();
 		static $lang = null;
@@ -396,7 +396,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 					if ( $this->approved || $noCopy ) {
 						$ordering = 'copy.desc';
 					}
-					/* otherweise - if the entry is not approved, get the non-copies first */
+					/* otherwise - if the entry is not approved, get the non-copies first */
 					else {
 						$ordering = 'copy.asc';
 					}
@@ -547,6 +547,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			'new' => !( $this->id )
 		);
 		parent::save( $request );
+		$this->loadFields( Sobi::Section() );
 		$nameField = $this->nameField();
 		/* get the fields for this section */
 		foreach ( $this->fields as $field ) {
