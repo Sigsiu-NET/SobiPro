@@ -70,7 +70,7 @@
 						</url>
 					</cell>
 				</cell>
-				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','enabled':'ok'}" valid-since="validSince" valid-until="validUntil">
 					<url type="intern">
 						<param name="task" value="category.toggle.enabled" />
 						<param name="sid" value="id" parse="true" />
@@ -116,7 +116,8 @@
 					<cell type="link" value="name">
 						<url type="intern">
 							<param name="task" value="entry.edit" />
-							<param name="sid" value="sid" parse="true" />
+							<param name="sid" value="id" parse="true" />
+							<param name="pid" value="request.sid" parse="true" subject="skip"/>
 						</url>
 					</cell>
 				</cell>
