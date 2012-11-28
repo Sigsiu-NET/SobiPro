@@ -99,7 +99,7 @@
 						<param name="sid" value="request.sid" parse="true" subject="skip"/>
 					</url>
 				</cell>
-				<cell type="ticker" value="isFree" class="center" icons="{'0':'shopping-cart','1':'gift'}">
+				<cell type="ticker" value="isFree" class="center" icons="{'0':'money','1':'gift'}">
 					<url type="intern">
 						<param name="task" value="field.toggle.free"/>
 						<param name="fid" value="fid" parse="true"/>
