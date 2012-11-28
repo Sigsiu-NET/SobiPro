@@ -83,21 +83,21 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			$e = $this->_model->getChilds();
 			$c = $this->_model->getChilds( 'category' );
 		}
-		elseif ( !( $term && $allEntries ) ) {
-			$c = $this->_model->getChilds( 'category', true );
-			$c[ ] = Sobi::Section();
-			if ( count( $c ) ) {
-				try {
-					$db->select( 'id', 'spdb_relations', array( 'pid' => $c, 'oType' => 'entry' ) );
-					$e = $db->loadResultArray();
-				} catch ( SPException $x ) {
-					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-				}
-			}
-		}
+//		elseif ( !( $term && $allEntries ) ) {
+//			$c = $this->_model->getChilds( 'category', true );
+//			$c[ ] = Sobi::Section();
+//			if ( count( $c ) ) {
+//				try {
+//					$db->select( 'id', 'spdb_relations', array( 'pid' => $c, 'oType' => 'entry' ) );
+//					$e = $db->loadResultArray();
+//				} catch ( SPException $x ) {
+//					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+//				}
+//			}
+//		}
 		else {
 			try {
-				$db->select( 'sid', 'spdb_field_data', array( 'section' => Sobi::Section(), 'fid' => Sobi::Cfg( 'entry.name_field' ), 'baseData' => "%{$term}%" ) );
+				$db->dselect( 'sid', 'spdb_field_data', array( 'section' => Sobi::Section(), 'fid' => Sobi::Cfg( 'entry.name_field' ), 'baseData' => "%{$term}%" ) );
 				$e = $db->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
