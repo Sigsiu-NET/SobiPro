@@ -477,12 +477,18 @@ class SPAdmView extends SPObject implements SPView
 			if ( !( $output ) ) {
 				continue;
 			}
+			$adds = null;
+			$suffix = $field->get( 'suffix' );
+			if ( $suffix ) {
+				$adds = array( $suffix );
+			}
 			$objects[ $i ] = array(
 				'label' => $field->get( 'name' ),
 				'type' => 'field',
 				'content' => $output,
 				'args' => array( 'type' => $field->get( 'type' ) ),
-				'adds' => array( 'before' => null, 'after' => null )
+				'adds' => array( 'before' => null, 'after' => $adds ),
+				'help-text' => $field->get( 'description' )
 			);
 			if ( !( $field->get( 'showLabel' ) ) ) {
 				$objects[ $i ][ 'label' ] = null;
@@ -493,6 +499,9 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param DOMNode $cell
+	 * @param string $subject
+	 * @param integer $i
+	 * @param array $objects
 	 * @return void
 	 */
 	private function xmlCell( $cell, $subject, $i, &$objects )

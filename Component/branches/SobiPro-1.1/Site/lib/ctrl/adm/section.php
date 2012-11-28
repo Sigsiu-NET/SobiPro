@@ -270,7 +270,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			}
 		}
 		elseif ( strstr( $ord, 'field_' ) ) {
-			$db =& SPFactory::db();
+			$db = SPFactory::db();
 			static $field = null;
 			if ( !$field ) {
 				try {
