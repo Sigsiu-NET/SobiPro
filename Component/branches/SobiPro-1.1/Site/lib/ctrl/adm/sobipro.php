@@ -194,7 +194,7 @@ final class SobiProAdmCtrl
 		$pid = SPRequest::int( 'pid' );
 		$pid = $pid ? $pid : $this->_sid;
 		if ( $pid ) {
-			$this->_model = & SPFactory::object( $pid );
+			$this->_model = SPFactory::object( $pid );
 			/** @noinspection PhpParamsInspection
 			 * @var $this->_model stdClass
 			 */
@@ -202,7 +202,7 @@ final class SobiProAdmCtrl
 				$this->_section = $this->_model->id;
 			}
 			else {
-				$db =& SPFactory::db();
+				$db = SPFactory::db();
 				$path = array();
 				$id = $pid;
 				while ( $id > 0 ) {

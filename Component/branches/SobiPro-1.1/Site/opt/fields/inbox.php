@@ -180,7 +180,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 
 		/* if we are here, we can save these data */
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 
 		/* collect the needed params */
 		$params = array();

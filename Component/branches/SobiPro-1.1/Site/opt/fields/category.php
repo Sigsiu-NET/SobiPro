@@ -33,7 +33,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	/** @var int */
 	protected $catsMaxLimit = 10;
 	/** @var bool */
-	protected $childs = true;
+	protected $catsWithChilds = true;
 	/** @var int */
 	protected $width = 100;
 	/** @var int */
@@ -73,6 +73,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		else {
 			$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
 		}
+		$this->showLabel = true;
 		switch ( $this->method ) {
 			case 'fixed':
 				$this->showLabel = false;
@@ -85,7 +86,6 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				$field = $this->select();
 				break;
 			case 'mselect':
-				$this->showLabel = false;
 				$field = $this->mSelect();
 				break;
 		}
@@ -160,7 +160,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			}
 			$params = array();
 			if ( $selector || $cat[ 'type' ] == 'section' ) {
-				if ( $cat[ 'type' ] == 'section' || ( count( ( $cat[ 'childs' ] ) ) && !( $this->childs ) ) ) {
+				if ( $cat[ 'type' ] == 'section' || ( count( ( $cat[ 'childs' ] ) ) && !( $this->catsWithChilds ) ) ) {
 					$params[ 'disabled' ] = 'disabled';
 				}
 			}

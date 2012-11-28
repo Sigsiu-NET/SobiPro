@@ -312,6 +312,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$id = $this->_model->get( 'id' );
 		if ( !$id ) {
 			$this->_model->set( 'state', 1 );
+			$this->_model->set( 'parent', SPRequest::sid() );
 		}
 		if ( $this->_model->isCheckedOut() ) {
 			SPMainFrame::msg( Sobi::Txt( 'CAT.IS_CHECKED_OUT' ), SPC::ERROR_MSG );
