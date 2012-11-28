@@ -44,7 +44,8 @@
 					<cell type="link" value="name" class="var:[valid]">
 						<url type="intern">
 							<param name="task" value="entry.edit"/>
-							<param name="sid" value="sid" parse="true"/>
+							<param name="sid" value="id" parse="true"/>
+							<param name="pid" value="request.pid" parse="true" subject="skip"/>
 						</url>
 					</cell>
 				</cell>
@@ -53,7 +54,7 @@
 				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 					<url type="intern">
 						<param name="task" value="entry.toggle.enabled"/>
-						<param name="sid" value="id" parse="true"/>
+						<param name="sid" value="pid" parse="true"/>
 					</url>
 				</cell>
 				<cell type="ticker" value="approved" class="center" icons="{'0':'thumbs-down','1':'thumbs-up'}">

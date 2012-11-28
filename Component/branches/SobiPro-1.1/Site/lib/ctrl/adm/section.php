@@ -185,7 +185,8 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				->assign( $menu, 'menu' )
 				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' ), 'ordering' )
 				->assign( Sobi::Section( true ), 'category' )
-				->addHidden( Sobi::Section(), 'pid' );
+				->addHidden( Sobi::Section(), 'pid' )
+				->addHidden( SPRequest::sid(), 'sid' );
 		Sobi::Trigger( 'Section', 'View', array( &$view ) );
 		$view->display();
 	}
