@@ -388,7 +388,6 @@ class SPEntry extends SPDBObject implements SPDataModel
 
 		if ( !( $this->_loaded ) ) {
 			if ( count( $fields[ $sid ] ) ) {
-				$fmod = SPLoader::loadModel( 'field', defined( 'SOBIPRO_ADM' ) );
 				/* if it is an entry - prefetch the basic fields data */
 				if ( $this->id ) {
 					$noCopy = $this->checkCopy();
@@ -448,7 +447,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				}
 				foreach ( $fields[ $sid ] as $f ) {
 					/* @var SPField $field */
-					$field = new $fmod();
+					$field = SPFactory::Model( 'field', defined( 'SOBIPRO_ADM' ) );
 					$field->extend( $f );
 					$field->loadData( $this->id );
 					$this->fields[ ] = $field;
@@ -504,7 +503,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 */
 	public function validate( $request = 'post' )
 	{
-		$this->loadFields( Sobi::Reg( 'current_section' ) );
+		$this->loadFields( Sobi::Section() );
 		foreach ( $this->fields as $field ) {
 			/* @var $field SPField */
 			if ( $field->enabled( 'form', !( $this->id ) ) ) {
@@ -525,10 +524,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 */
 	public function save( $request = 'post' )
 	{
+		$this->loadFields( Sobi::Section() );
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( $this->id ) );
 		/* save the base object data */
 		/* @var SPdb $db */
-//		$this->loadFields( Sobi::Reg( 'current_section' ) );
 		$db = SPFactory::db();
 		$db->transaction();
 		if ( !$this->nid ) {
@@ -547,7 +546,6 @@ class SPEntry extends SPDBObject implements SPDataModel
 			'new' => !( $this->id )
 		);
 		parent::save( $request );
-		$this->loadFields( Sobi::Section() );
 		$nameField = $this->nameField();
 		/* get the fields for this section */
 		foreach ( $this->fields as $field ) {
@@ -588,7 +586,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 		$values = array();
 		/* get categories */
-		$cats = SPRequest::arr( 'entry_parent', SPFactory::registry()->get( 'request_categories', array() ), $request );
+		$cats = Sobi::Reg( 'request_categories' );
+		if ( !( count( $cats ) ) ) {
+			$cats = SPRequest::arr( 'entry_parent', SPFactory::registry()->get( 'request_categories', array() ), $request );
+		}
 		/* by default it should be comma separated string */
 		if ( !( count( $cats ) ) ) {
 			$cats = SPRequest::string( 'entry_parent', null, $request );
@@ -604,7 +605,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 					}
 				}
 			}
-			else {
+			elseif ( strlen( $cats ) ) {
 				$cats = array( ( int )$cats );
 			}
 		}

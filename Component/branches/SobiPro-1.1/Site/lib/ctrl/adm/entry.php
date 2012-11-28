@@ -118,7 +118,12 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			$this->response( $back, $x->getMessage(), false, 'error', array( 'required' => $data[ 'field' ] ) );
 		}
 
-		$this->_model->save();
+		try {
+			$this->_model->save();
+		} catch ( SPException $x ) {
+			$back = Sobi::GetUserState( 'back_url', Sobi::Url( array( 'task' => 'entry.add', 'sid' => Sobi::Section() ) ) );
+			$this->response( $back, $x->getMessage(), false, 'error' );
+		}
 		$sid = $this->_model->get( 'id' );
 		$sets[ 'sid' ] = $sid;
 		$sets[ 'entry.nid' ] = $this->_model->get( 'nid' );
@@ -247,8 +252,8 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 	 */
 	private function editForm()
 	{
-		$sid = SPRequest::sid();
-		$sid = $sid ? $sid : SPRequest::int( 'pid' );
+		$sid = SPRequest::int( 'pid' );
+		$sid = $sid ? $sid : SPRequest::sid();
 
 		/* if adding new */
 		if ( !$this->_model ) {

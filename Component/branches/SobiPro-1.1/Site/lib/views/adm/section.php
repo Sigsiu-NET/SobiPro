@@ -165,7 +165,7 @@ class SPSectionAdmView extends SPAdmView
 		if ( count( $f ) ) {
 			/* @var SPField $fit */
 			foreach ( $f as $field ) {
-				$entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ).'.asc' ] = $field->get( 'name' );
+				$entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ) . '.asc' ] = $field->get( 'name' );
 				$customFields[ ] = $field->get( 'nid' );
 				$customHeader[ ] = array(
 					'content' => $field->get( 'name' ),
@@ -240,7 +240,9 @@ class SPSectionAdmView extends SPAdmView
 				$entry[ 'version' ] = $sentry->get( 'version' );
 				$fields = $sentry->getFields();
 				$entry[ 'fields' ] = $fields;
+				$entry[ 'valid' ] = $sentry->get( 'valid' ) ? 'valid' : 'invalid';
 				$entry[ 'object' ] =& $sentry;
+				$entry[ 'name' ] = $sentry->get( 'name' );
 				/* fields data init */
 				if ( count( $f ) ) {
 					foreach ( $f as $field ) {
@@ -259,18 +261,18 @@ class SPSectionAdmView extends SPAdmView
 					}
 				}
 				/* in case we are showing all entries in a section */
-				if ( $this->get( 'task' ) == 'entries' ) {
-					$ehref = Sobi::Url( array( 'task' => 'entry.edit', 'sid' => $sentry->get( 'id' ), 'pid' => Sobi::Section() ) );
-				}
-				else {
-					$ehref = Sobi::Url( array( 'task' => 'entry.edit', 'sid' => $sentry->get( 'id' ) ) );
-				}
-				if ( $sentry->get( 'valid' ) ) {
-					$entry[ 'name' ] = '<a href="' . $ehref . '" title="' . Sobi::Txt( 'EN.EDIT_ENTRY_NAME', array( 'name' => $sentry->get( 'name' ) ) ) . '">' . ( strlen( $sentry->get( 'name' ) ) ? $sentry->get( 'name' ) : Sobi::Txt( 'No Name' ) ) . '</a>';
-				}
-				else {
-					$entry[ 'name' ] = '<del><a href="' . $ehref . '" title="' . Sobi::Txt( 'EN.EDIT_ENTRY_NAME', array( 'name' => $sentry->get( 'name' ) ) ) . '">' . ( strlen( $sentry->get( 'name' ) ) ? $sentry->get( 'name' ) : Sobi::Txt( 'No Name' ) ) . '</a></del>';
-				}
+//				if ( $this->get( 'task' ) == 'entries' ) {
+//					$ehref = Sobi::Url( array( 'task' => 'entry.edit', 'sid' => $sentry->get( 'id' ), 'pid' => Sobi::Section() ) );
+//				}
+//				else {
+//					$ehref = Sobi::Url( array( 'task' => 'entry.edit', 'sid' => $sentry->get( 'id' ) ) );
+//				}
+//				if ( $sentry->get( 'valid' ) ) {
+//					$entry[ 'name' ] = '<a href="' . $ehref . '" title="' . Sobi::Txt( 'EN.EDIT_ENTRY_NAME', array( 'name' => $sentry->get( 'name' ) ) ) . '">' . ( strlen( $sentry->get( 'name' ) ) ? $sentry->get( 'name' ) : Sobi::Txt( 'No Name' ) ) . '</a>';
+//				}
+//				else {
+//					$entry[ 'name' ] = '<del><a href="' . $ehref . '" title="' . Sobi::Txt( 'EN.EDIT_ENTRY_NAME', array( 'name' => $sentry->get( 'name' ) ) ) . '">' . ( strlen( $sentry->get( 'name' ) ) ? $sentry->get( 'name' ) : Sobi::Txt( 'No Name' ) ) . '</a></del>';
+//				}
 				$entries[ ] = $entry;
 			}
 		}

@@ -101,6 +101,7 @@
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
 			<field name="method" default="xhr" />
+			<field name="sid" value="entry.sid" />
 		</hidden>
 	</config>
 </definition>

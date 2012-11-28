@@ -307,7 +307,11 @@ class SPTplParser
 		}
 		switch ( $cell[ 'attributes' ][ 'type' ] ) {
 			case 'link':
-				$this->_out[ ] = "<a href=\"{$cell['link']}\" >";
+				$class = null;
+				if ( isset( $cell[ 'attributes' ][ 'class' ] ) && $cell[ 'attributes' ][ 'class' ] ) {
+					$class = "class=\"{$cell[ 'attributes' ][ 'class' ]}\" ";
+				}
+				$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class} >";
 			/** no break here - continue */
 			case 'text':
 				if ( isset( $cell[ 'attributes' ][ 'label' ] ) && $cell[ 'attributes' ][ 'label' ] ) {
@@ -359,7 +363,7 @@ class SPTplParser
 			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="expired">';
 		}
 		/** is pending */
-		elseif ( (isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] ) > time()) && $index == 1  ) {
+		elseif ( ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] ) > time() ) && $index == 1 ) {
 			$index = -2;
 			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );
 			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="pending">';
