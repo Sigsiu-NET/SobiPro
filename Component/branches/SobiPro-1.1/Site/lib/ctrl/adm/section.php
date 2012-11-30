@@ -109,13 +109,13 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$cPages = ceil( $cCount / $cLimit );
 		if ( $cLimStart > $cPages ) {
 			$cLimStart = $cPages;
-			SPRequest::set( 'cSite', $cLimit + 1 );
+			SPRequest::set( 'cSite', $cPages );
 		}
 		$eCount = count( $e );
 		$ePages = ceil( $eCount / $eLimit );
 		if ( $eLimStart > $ePages ) {
 			$eLimStart = $ePages;
-			SPRequest::set( 'eSite', $eLimit + 1 );
+			SPRequest::set( 'eSite', $ePages );
 		}
 
 		$entries = array();
