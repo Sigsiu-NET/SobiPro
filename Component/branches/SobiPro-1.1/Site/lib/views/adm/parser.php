@@ -76,7 +76,7 @@ class SPTplParser
 						$element[ 'id' ] = SPLang::nid( $element[ 'label' ] );
 					}
 					if ( isset( $element[ 'help-text' ] ) && $element[ 'help-text' ] ) {
-						$element[ 'label' ] = '<a href="#" rel="popover" data-original-title="' . $element[ 'help-text' ] . '">' . $element[ 'label' ] . '</a>';
+						$element[ 'label' ] = '<a href="#" rel="popover" data-title="' . htmlspecialchars($element[ 'label' ],ENT_COMPAT) . '" data-content="' . htmlspecialchars($element[ 'help-text' ],ENT_COMPAT) . '">' . $element[ 'label' ] . '</a>';
 					}
 					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element[ 'id' ]}\">{$element[ 'label' ]}</label>\n";
 				}

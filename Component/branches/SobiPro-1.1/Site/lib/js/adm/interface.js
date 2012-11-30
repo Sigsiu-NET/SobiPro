@@ -275,6 +275,6 @@ SobiPro.jQuery( document ).ready( function ()
         .tooltip( { 'html': true })
         .click( function ( e ) { e.preventDefault() } );
     SobiPro.jQuery( 'a[rel=popover]' )
-        .popover( { 'html': true })
+        .popover( { 'html': true, 'trigger': 'click', 'placement': 'top' })
         .click( function ( e ) { e.preventDefault() } );
 } );
