@@ -92,7 +92,7 @@ class SPConfigAdmCtrl extends SPController
 		Sobi::Trigger( 'AfterCreate', 'AdmMenu', array( &$menu ) );
 		if ( $sid ) {
 			if ( Sobi::Cfg( 'section.template' ) == 'default' ) {
-				SPMainFrame::msg( array( 'msg' => Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), 'msgtype' => SPC::ERROR_MSG ) );
+				SPMainFrame::msg( array( 'msg' => Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), 'msgtype' => SPC::WARN_MSG ) );
 			}
 			/* create new SigsiuTree */
 			$tree = SPLoader::loadClass( 'mlo.tree' );

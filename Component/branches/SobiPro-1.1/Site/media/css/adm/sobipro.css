@@ -366,6 +366,12 @@ div.spScreenTitle h4 {
 .SobiPro .tooltip.bottom .tooltip-arrow {
   border-bottom-color: #000066;
 }
+.SobiPro .popover {
+  width: 310px;
+}
+.SobiPro .popover-inner {
+  text-align: left;
+}
 #SPAdminForm .input-splarge {
   width: 400px;
 }

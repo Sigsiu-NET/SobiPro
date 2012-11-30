@@ -40,12 +40,15 @@
    (+) Category Search to filter the search results by one or more category
    (+) IP search query link added to category and entry publishing IP (admin interface)
    (+) Button to hide left menu in order to stretch the content screen
+   (+) Field description shown in backend 'Edit Entry' as popover
 
    (!) SPHeader::addMeta() takes now optional list of custom parameters as an array
    (!) SPLang::nid() using JFilterOutput::stringURLSafe now
    (!) Administrator UI redesigned using Bootstrap library and new XML templates
    (!) Category and entry Meta Robots parameter selection improved (admin interface)
    (!) Category and entry publishing information extended (admin interface)
+   (!) Message type for 'Use of Default Template' set to warning
+   (!) Field description now allows HTML code
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
