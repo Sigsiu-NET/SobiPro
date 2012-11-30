@@ -74,8 +74,8 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		/* get the lists ordering and limits */
 		$eLimit = Sobi::GetUserState( 'adm.entries.limit', 'elimit', $config->key( 'adm_list.entries_limit', 25 ) );
 		$cLimit = Sobi::GetUserState( 'adm.categories.limit', 'climit', $config->key( 'adm_list.cats_limit', 15 ) );
-		$eLimStart = SPRequest::int( 'eLimStart', 0 );
-		$cLimStart = SPRequest::int( 'cLimStart', 0 );
+		$eLimStart = SPRequest::int( 'eSite', 0 );
+		$cLimStart = SPRequest::int( 'cSite', 0 );
 
 		/* get child categories and entries */
 		/* @todo: need better method - the query can be very large with lot of entries  */
@@ -104,8 +104,20 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			}
 		}
 
+		// just in case the given site is grater than all existing sites
 		$cCount = count( $c );
+		$cPages = ceil( $cCount / $cLimit );
+		if ( $cLimStart > $cPages ) {
+			$cLimStart = $cPages;
+			SPRequest::set( 'cSite', $cLimit + 1 );
+		}
 		$eCount = count( $e );
+		$ePages = ceil( $eCount / $eLimit );
+		if ( $eLimStart > $ePages ) {
+			$eLimStart = $ePages;
+			SPRequest::set( 'eSite', $eLimit + 1 );
+		}
+
 		$entries = array();
 		$categories = array();
 		SPLoader::loadClass( 'models.dbobject' );
@@ -167,14 +179,15 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$entriesName = SPFactory::config()->nameField()->get( 'name' );
 		$entriesField = SPFactory::config()->nameField()->get( 'nid' );
 		$view = SPFactory::View( 'section', true );
+
 		$view->assign( $entriesName, 'entries_name' )
 				->assign( $entriesField, 'entries_field' )
-				->assign( $eLimit, '$eLimit' )
-				->assign( $cLimit, '$cLimit' )
-				->assign( $eLimStart, '$eLimStart' )
-				->assign( $cLimStart, '$cLimStart' )
-				->assign( $cCount, '$cCount' )
-				->assign( $eCount, '$eCount' )
+				->assign( $eLimit, 'entries-limit' )
+				->assign( $cLimit, 'categories-limit' )
+				->assign( SPRequest::int( 'eSite', 1 ), 'entries-site' )
+				->assign( SPRequest::int( 'cSite', 1 ), 'categories-site' )
+				->assign( $cCount, 'categories-count' )
+				->assign( $eCount, 'entries-count' )
 				->assign( $this->_task, 'task' )
 				->assign( $term, 'filter' )
 				->assign( $this->customCols(), 'fields' )

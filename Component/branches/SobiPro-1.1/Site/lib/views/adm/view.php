@@ -385,6 +385,9 @@ class SPAdmView extends SPObject implements SPView
 				case 'loop':
 					$this->xmlLoop( $node, $element );
 					break;
+				case 'pagination':
+					$this->xmlPagination( $node, $element );
+					break;
 				default:
 					if ( $node->hasChildNodes() ) {
 						$this->xmlBody( $node->childNodes, $element[ 'content' ] );
@@ -414,6 +417,27 @@ class SPAdmView extends SPObject implements SPView
 		}
 	}
 
+	private function xmlPagination( $node, &$element )
+	{
+		$args = array();
+		/** @var DOMElement $attribute */
+		foreach ( $node->attributes as $attribute ) {
+			$args[ $attribute->nodeName ] = $attribute->nodeValue;
+		}
+		foreach ( $node->childNodes as $param ) {
+			if ( strstr( $param->nodeName, '#' ) ) {
+				continue;
+			}
+			$args[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->xmlParams( $param );
+		}
+		/** @var $pagination SPPagination */
+		$pagination = SPFactory::Instance( 'views.adm.pagination' );
+		foreach ( $args as $var => $val ) {
+			$pagination->set( $var, $val );
+		}
+		$element[ 'content' ] = $pagination->display( true );
+	}
+
 	private function xmlText( $node )
 	{
 		$value = null;
@@ -432,6 +456,7 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param DOMNode $node
+	 * @param array $element
 	 * @return void
 	 */
 	private function xmlLoop( $node, &$element )
@@ -588,6 +613,27 @@ class SPAdmView extends SPObject implements SPView
 			if ( strstr( $param->nodeName, '#' ) ) {
 				continue;
 			}
+			$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->xmlParams( $param, $subject, $index );
+		}
+		if ( $node->attributes->getNamedItem( 'type' ) && $node->attributes->getNamedItem( 'type' )->nodeValue == 'intern' ) {
+			$link = Sobi::Url( $url );
+		}
+		else {
+			$link = $node->attributes->getNamedItem( 'host' )->nodeValue . http_build_query( $url );
+		}
+		return $link;
+	}
+
+	/**
+	 * @param DOMNode $param
+	 * @param string $subject
+	 * @param integer $index
+	 * @return mixed
+	 */
+	private function xmlParams( $param, $subject = null, $index = -1 )
+	{
+		$value = null;
+		if ( !( $param->hasChildNodes() ) ) {
 			if ( $param->attributes->getNamedItem( 'parse' ) && $param->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
 				$currentSubject = $subject ? $subject . '.' : null;
 				/** wee need to skip sometimes, and sometimes override the current subject
@@ -601,27 +647,37 @@ class SPAdmView extends SPObject implements SPView
 					}
 				}
 				if ( $currentSubject ) {
-					$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->get( $currentSubject . $param->attributes->getNamedItem( 'value' )->nodeValue, $index );
+					$value = $this->get( $currentSubject . $param->attributes->getNamedItem( 'value' )->nodeValue, $index );
 				}
 				else {
-					$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->get( $param->attributes->getNamedItem( 'value' )->nodeValue );
+					$value = $this->get( $param->attributes->getNamedItem( 'value' )->nodeValue );
 				}
 			}
 			else {
-				$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $param->attributes->getNamedItem( 'value' )->nodeValue;
+				$value = isset( $param->attributes->getNamedItem( 'value' )->nodeValue ) ? $param->attributes->getNamedItem( 'value' )->nodeValue : null;
 			}
 		}
-		if ( $node->attributes->getNamedItem( 'type' ) && $node->attributes->getNamedItem( 'type' )->nodeValue == 'intern' ) {
-			$link = Sobi::Url( $url );
-		}
 		else {
-			$link = $node->attributes->getNamedItem( 'host' )->nodeValue . http_build_query( $url );
+			$value = array();
+			foreach ( $param->childNodes as $node ) {
+				if ( strstr( $node->nodeName, '#' ) ) {
+					continue;
+				}
+				if ( isset( $node->attributes->getNamedItem( 'name' )->nodeValue ) && $node->attributes->getNamedItem( 'name' )->nodeValue ) {
+					$value[ $node->attributes->getNamedItem( 'name' )->nodeValue ] = $this->xmlParams( $node, $subject, $index );
+				}
+				else {
+					$value[ ] = $this->xmlParams( $node, $subject, $index );
+				}
+			}
 		}
-		return $link;
+		return $value;
 	}
 
 	/**
 	 * @param DOMNode $node
+	 * @param array $element
+	 * @param mixed $value
 	 * @return void
 	 */
 	private function xmlField( $node, &$element, $value = null )
@@ -1251,7 +1307,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param int $index
 	 * @return mixed
 	 */
-	protected function set( $attr, $name )
+	public function set( $attr, $name )
 	{
 		$this->_attr[ $name ] = $attr;
 	}

@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -36,7 +36,9 @@ class SPObject
 		return get_class( $this );
 	}
 
-	public function __construct() {}
+	public function __construct()
+	{
+	}
 
 	/**
 	 */
@@ -51,7 +53,7 @@ class SPObject
 	 */
 	public function castArray( $arr )
 	{
-		if( is_array( $arr ) && count( $arr ) ) {
+		if ( is_array( $arr ) && count( $arr ) ) {
 			foreach ( $arr as $attr => $value ) {
 				$this->$attr = $value;
 			}
@@ -66,8 +68,8 @@ class SPObject
 	 */
 	public function get( $attr, $default = null )
 	{
-		if( $this->has( $attr ) ) {
-			if( is_string( $this->$attr ) ) {
+		if ( $this->has( $attr ) ) {
+			if ( is_string( $this->$attr ) ) {
 				return stripslashes( $this->$attr );
 			}
 			else {
@@ -80,6 +82,25 @@ class SPObject
 	}
 
 	/**
+	 * @param string $var
+	 * @param mixed $val
+	 */
+	public function & set( $var, $val )
+	{
+		if ( isset( $this->$var ) || property_exists( $this, $var ) ) {
+			if ( is_array( $this->$var ) && is_string( $val ) && strlen( $val ) > 2 ) {
+				try {
+					$val = SPConfig::unserialize( $val, $var );
+				} catch ( SPException $x ) {
+					Sobi::Error( $this->name(), SPLang::e( '%s.', $x->getMessage() ), SPC::NOTICE, 0, __LINE__, __FILE__ );
+				}
+			}
+			$this->$var = $val;
+		}
+		return $this;
+	}
+
+	/**
 	 * Check if attribute exist
 	 *
 	 * @param string $var
@@ -87,7 +108,7 @@ class SPObject
 	 */
 	public function has( $var )
 	{
-		return /*isset( $this->$var ); // */property_exists( $this, $var );
+		return /*isset( $this->$var ); // */
+				property_exists( $this, $var );
 	}
 }
-?>

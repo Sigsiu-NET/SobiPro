@@ -47,6 +47,17 @@
 						<option value="owner.desc" label="CATN.ORDER_BY_OWNER" />
 					</values>
 				</field>
+				<field type="select" name="climit" selected="categories-limit" class="input-mini spOrdering">
+					<values>
+						<values label="LISTING_LIMIT" />
+						<option value="2"/>
+						<option value="5"/>
+						<option value="15"/>
+						<option value="25"/>
+						<option value="50"/>
+						<option value="100"/>
+					</values>
+				</field>
 			</div>
 		</header>
 		<table>
@@ -89,13 +100,31 @@
 				<navigation />
 			</foot>
 		</table>
-
+		<pagination set="cSite" class="pagination pagination-centered pagination-small" inputbox="right">
+			<param name="count" value="categories-count" parse="true" />
+			<param name="limit" value="categories-limit" parse="true" />
+			<param name="current" value="categories-site" parse="true"/>
+			<param name="url">
+				<param name="option" value="com_sobipro"/>
+				<param name="sid" value="request.sid" parse="true" />
+			</param>
+		</pagination>
 		<div style="padding-top:30px;" />
 
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 			<div class="btn-group pull-right" id="spEntriesFilterHead">
-				<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large" />
+				<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large SpSubmit" />
 				<field type="select" name="eorder" selected="eorder" values="entriesOrdering" class="input-large spOrdering" />
+				<field type="select" name="elimit" selected="entries-limit" class="input-mini spOrdering">
+					<values>
+						<values label="LISTING_LIMIT" />
+						<option value="5"/>
+						<option value="15"/>
+						<option value="25"/>
+						<option value="50"/>
+						<option value="100"/>
+					</values>
+				</field>
 			</div>
 		</header>
 		<table>
@@ -141,6 +170,15 @@
 				<navigation />
 			</foot>
 		</table>
+		<pagination set="eSite" class="pagination pagination-centered pagination-small" inputbox="right">
+			<param name="count" value="entries-count" parse="true" />
+			<param name="limit" value="entries-limit" parse="true" />
+			<param name="current" value="entries-site" parse="true"/>
+			<param name="url">
+				<param name="option" value="com_sobipro"/>
+				<param name="sid" value="request.sid" parse="true" />
+			</param>
+		</pagination>
 	</body>
 	<config>
 		<action value="index.php?option=com_sobipro" />
