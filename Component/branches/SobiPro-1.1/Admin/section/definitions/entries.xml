@@ -1,81 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definition>
 	<header>
-		<title value="SECTION_ALL_ENTRIES_TITLE"/>
+		<title value="SECTION_ALL_ENTRIES_TITLE" />
 		<file type="script" filename="bootstrap.tooltips" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSection">
-		<divider/>
+		<divider />
 		<buttons type="actions">
-			<button type="new" task="entry.add" label="AMN.ADD_ENTRY" ico="file"/>
-			<button type="delete" task="entry.delete"/>
-			<nav-header label="TB.PUBLISHING"/>
-			<button type="publish" task="entry.publish"/>
-			<button type="hide" task="entry.hide"/>
-			<nav-header label="TB.APPROVAL"/>
-			<button type="approve" task="entry.approve"/>
-			<button type="revoke" task="entry.unapprove"/>
+			<button type="new" task="entry.add" label="AMN.ADD_ENTRY" ico="file" />
+			<button type="delete" task="entry.delete" />
+			<nav-header label="TB.PUBLISHING" />
+			<button type="publish" task="entry.publish" />
+			<button type="hide" task="entry.hide" />
+			<nav-header label="TB.APPROVAL" />
+			<button type="approve" task="entry.approve" />
+			<button type="revoke" task="entry.unapprove" />
 		</buttons>
-		<divider/>
-		<button type="help" target="_blank"/>
+		<divider />
+		<button type="help" target="_blank" />
 	</toolbar>
 	<body>
-		<message id="spMessage"/>
+		<message id="spMessage" />
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 			<div class="btn-group pull-right" id="spEntriesFilterHead">
-				<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large"/>
-				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-large spOrdering"/>
+				<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large SpSubmit" />
+				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-large spOrdering" />
+				<field type="select" name="elimit" selected="entries-limit" class="input-mini spOrdering">
+					<values>
+						<values label="LISTING_LIMIT" />
+						<option value="5"/>
+						<option value="15"/>
+						<option value="25"/>
+						<option value="50"/>
+						<option value="100"/>
+					</values>
+				</field>
 			</div>
 		</header>
 		<table>
 			<head>
-				<cell label="HEADER_ID" type="text" class="center"/>
-				<cell type="checkbox" rel="e_sid" class="center"/>
-				<cell label="HEADER_ENTRIES_NAME" type="text"/>
-				<cells value="customHeader" class="center" type="text"/>
-				<cell label="HEADER_ENTRIES_STATE" type="text" class="center"/>
-				<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="center"/>
-				<cell label="HEADER_FIELD_AUTHOR" type="text" class="center"/>
+				<cell label="HEADER_ID" type="text" class="center" />
+				<cell type="checkbox" rel="e_sid" class="center" />
+				<cell label="HEADER_ENTRIES_NAME" type="text" />
+				<cells value="customHeader" class="center" type="text" />
+				<cell label="HEADER_ENTRIES_STATE" type="text" class="center" />
+				<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="center" />
+				<cell label="HEADER_FIELD_AUTHOR" type="text" class="center" />
 			</head>
 			<loop subject="entries">
-				<cell type="text" value="id" class="center"/>
+				<cell type="text" value="id" class="center" />
 				<cell type="checkbox" name="e_sid" value="id" class="center" checked-out-time="coutTime" checked-out-by="cout" />
 				<cell>
 					<cell type="link" value="name" class="var:[valid]">
 						<url type="intern">
-							<param name="task" value="entry.edit"/>
-							<param name="sid" value="id" parse="true"/>
-							<param name="pid" value="request.pid" parse="true" subject="skip"/>
+							<param name="task" value="entry.edit" />
+							<param name="sid" value="id" parse="true" />
+							<param name="pid" value="request.pid" parse="true" subject="skip" />
 						</url>
 					</cell>
 				</cell>
 				<!--<cell type="text" value="field_price"/>-->
-				<cells value="customFields" class="center"/>
+				<cells value="customFields" class="center" />
 				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 					<url type="intern">
-						<param name="task" value="entry.toggle.enabled"/>
-						<param name="sid" value="pid" parse="true"/>
+						<param name="task" value="entry.toggle.enabled" />
+						<param name="sid" value="pid" parse="true" />
 					</url>
 				</cell>
 				<cell type="ticker" value="approved" class="center" icons="{'0':'thumbs-down','1':'thumbs-up'}">
 					<url type="intern">
-						<param name="task" value="entry.toggle.approval"/>
-						<param name="sid" value="id" parse="true"/>
+						<param name="task" value="entry.toggle.approval" />
+						<param name="sid" value="id" parse="true" />
 					</url>
 				</cell>
-				<cell type="text" value="owner" class="center"/>
+				<cell type="text" value="owner" class="center" />
 			</loop>
-			<foot>
-				<navigation/>
-			</foot>
 		</table>
+		<pagination set="eSite" class="pagination pagination-centered pagination-small" inputbox="right">
+			<param name="count" value="entries-count" parse="true" />
+			<param name="limit" value="entries-limit" parse="true" />
+			<param name="current" value="entries-site" parse="true"/>
+			<param name="url">
+				<param name="option" value="com_sobipro"/>
+				<param name="task" value="section.entries"/>
+				<param name="pid" value="request.pid" parse="true" />
+				<param name="eSite" value=""/>
+			</param>
+		</pagination>
 	</body>
 	<config>
-		<action value="index.php?option=com_sobipro"/>
+		<action value="index.php?option=com_sobipro" />
 		<hidden>
-			<field name="option" default="com_sobipro"/>
-			<field name="task" default=""/>
-			<field name="boxchecked" default=""/>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="boxchecked" default="" />
 		</hidden>
 	</config>
 </definition>

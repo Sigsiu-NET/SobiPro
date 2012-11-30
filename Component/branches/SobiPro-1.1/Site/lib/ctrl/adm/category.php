@@ -173,23 +173,34 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 	 */
 	protected function view()
 	{
-		$config = SPFactory::config();
-		$user = SPFactory::user();
 		/* @var SPdb $db */
 		$db = SPFactory::db();
 
 		/* get the lists ordering and limits */
-		$eLimit = $user->getUserState( 'adm.entries.limit', 'elimit', $config->key( 'adm_list.entries_limit', 25 ) );
-		$cLimit = $user->getUserState( 'adm.categories.limit', 'climit', $config->key( 'adm_list.cats_limit', 15 ) );
-		$eLimStart = SPRequest::int( 'eLimStart', 0 );
-		$cLimStart = SPRequest::int( 'cLimStart', 0 );
+		$eLimit = Sobi::GetUserState( 'adm.entries.limit', 'elimit', Sobi::Cfg( 'adm_list.entries_limit', 25 ) );
+		$cLimit = Sobi::GetUserState( 'adm.categories.limit', 'climit', Sobi::Cfg( 'adm_list.cats_limit', 15 ) );
+
+		$eLimStart = SPRequest::int( 'eSite', 0 );
+		$cLimStart = SPRequest::int( 'cSite', 0 );
 
 		/* get child categories and entries */
 		$e = $this->_model->getChilds();
 		$c = $this->_model->getChilds( 'category' );
 
+		// just in case the given site is grater than all existing sites
 		$cCount = count( $c );
+		$cPages = ceil( $cCount / $cLimit );
+		if ( $cLimStart > $cPages ) {
+			$cLimStart = $cPages;
+			SPRequest::set( 'cSite', $cLimit + 1 );
+		}
 		$eCount = count( $e );
+		$ePages = ceil( $eCount / $eLimit );
+		if ( $eLimStart > $ePages ) {
+			$eLimStart = $ePages;
+			SPRequest::set( 'eSite', $eLimit + 1 );
+		}
+
 		$entries = array();
 		$categories = array();
 		SPLoader::loadClass( 'models.dbobject' );
@@ -256,11 +267,12 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		/* get view class */
 		$view = SPFactory::View( 'category', true );
 		$view->assign( $eLimit, '$eLimit' )
-				->assign( $cLimit, '$cLimit' )
-				->assign( $eLimStart, '$eLimStart' )
-				->assign( $cLimStart, '$cLimStart' )
-				->assign( $cCount, '$cCount' )
-				->assign( $eCount, '$eCount' )
+				->assign( $eLimit, 'entries-limit' )
+				->assign( $cLimit, 'categories-limit' )
+				->assign( SPRequest::int( 'eSite', 1 ), 'entries-site' )
+				->assign( SPRequest::int( 'cSite', 1 ), 'categories-site' )
+				->assign( $cCount, 'categories-count' )
+				->assign( $eCount, 'entries-count' )
 				->assign( $this->_task, 'task' )
 				->assign( $this->_model, 'category' )
 				->assign( $categories, 'categories' )

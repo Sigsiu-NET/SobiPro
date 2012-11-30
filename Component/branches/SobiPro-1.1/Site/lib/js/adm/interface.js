@@ -170,12 +170,13 @@ SobiPro.jQuery( document ).ready( function ()
 		}
 	}
 
-	SobiPro.jQuery( '#spEntriesFilter' ).keydown(
+	SobiPro.jQuery( '.SpSubmit' ).keydown(
 		function ( e )
 		{
 			"use strict";
 			if ( e.keyCode == 13 ) {
 				e.preventDefault();
+				e.stopPropagation();
 				SobiPro.jQuery( '#SPAdminForm' ).submit();
 			}
 		}
