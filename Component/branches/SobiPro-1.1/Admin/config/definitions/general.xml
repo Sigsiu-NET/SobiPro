@@ -33,7 +33,7 @@
                             <field type="textarea" name="section.metaDesc" value="section.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
                             <field type="textarea" name="section.metaKeys" value="section.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
                             <field type="text" name="section.metaAuthor" value="section.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
-                            <field type="select" label="ROBOTS" name="section.metaRobots" selected="category.metaRobots" class="input-large">
+                            <field type="select" label="ROBOTS" name="section.metaRobots" selected="section.metaRobots" class="input-large">
                                 <values>
                                     <option value="" label="ROBOTS_NONE" />
                                     <option value="index, follow" label="index, follow" />
@@ -51,66 +51,72 @@
 				<div class="row-fluid">
 					<div class="span12">
                         <fieldset>
-                            <field type="select" label="SEC.CFG.SECTION_TEMPLATE" name="spcfg[section.template]" selected="section.template" values="templatesList" class="input-large" />
-                            <field type="states" name="spcfg[general.top_menu]" value="general.top_menu" label="SEC.CFG.SHOW_TOP_MENU" prefix="yes_no" />
-                            <field type="states" name="spcfg[general.parse_template_content]" value="general.parse_template_content" label="SEC.CFG.PARSE_TPL_CONTENT" prefix="yes_no" />
+                            <field type="select" label="SECN.CFG.SECTION_TEMPLATE" name="spcfg[section.template]" selected="section.template" values="templatesList" class="input-xlarge" />
+                            <field type="states" name="spcfg[general.top_menu]" value="general.top_menu" label="SECN.CFG.SHOW_TOP_MENU" prefix="show" />
+                            <field type="states" name="spcfg[general.parse_template_content]" value="general.parse_template_content" label="SECN.CFG.PARSE_TPL_CONTENT" prefix="yes_no" />
                         </fieldset>
                         <div style="margin-top:40px;"></div>
 						<tabs>
 							<tab label="SECN.CFG.CLISTING_SETTINGS">
-                                <fieldset label="SEC.CFG.CATEGORY_SETTINGS">
-                                    <field type="states" name="spcfg[category.show_icon]" value="category.show_icon" label="SECN.CFG.SHOW_CATEGORY_ICONS" prefix="show" />
-                                    <field type="states" name="spcfg[category.show_intro]" value="category.show_intro" label="SECN.CFG.SHOW_CATEGORY_INTROTEXT" prefix="show" />
+                                <fieldset>
                                     <field type="states" name="spcfg[category.show_desc]" value="category.show_desc" label="SECN.CFG.SHOW_CATEGORY_DESC" prefix="show" />
                                     <field type="states" name="spcfg[category.parse_desc]" value="category.parse_desc" label="SECN.CFG.PARSE_CATEGORY_DESC" prefix="yes_no" />
                                 </fieldset>
-								<fieldset>
-									<field type="select" label="SEC.CFG.NUMBER_CATS_LINE" name="spcfg[list.categories_in_line]" selected="list.categories_in_line" class="input-small">
-										<values>
-											<option value="1" />
-											<option value="2" />
-											<option value="3" />
-											<option value="4" />
-											<option value="5" />
-										</values>
-									</field>
-									<field type="select" label="SECN.CFG.ORDER_CATEGORIES_BY" name="spcfg[list.categories_ordering]" selected="list.categories_ordering" class="input-large">
-										<values>
-											<option value="name.asc" label="ORDER_BY_NAME_ASCENDING" />
-											<option value="name.desc" label="ORDER_BY_NAME_DESCENDING" />
-											<option value="position.asc" label="ORDER_BY_POSITION_ASCENDING" />
-											<option value="position.desc" label="ORDER_BY_POSITION_DESCENDING" />
-											<option value="counter.asc" label="ORDER_BY_COUNT_ASCENDING" />
-											<option value="counter.desc" label="ORDER_BY_COUNT_DESCENDING" />
-											<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_ASC" />
-											<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC" />
-											<option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC" />
-											<option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC" />
-											<option value="validUntil.asc" label="ORDER_BY_EXPIRATION_DATE_ASC" />
-											<option value="validUntil.desc" label="ORDER_BY_EXPIRATION_DATE_DESC" />
-										</values>
-									</field>
+                                <fieldset label="SECN.CFG.CATEGORY_SETTINGS">
+                                    <field type="states" name="spcfg[category.show_icon]" value="category.show_icon" label="SECN.CFG.SHOW_CATEGORY_ICONS" prefix="show" />
+                                    <field type="states" name="spcfg[category.show_intro]" value="category.show_intro" label="SECN.CFG.SHOW_CATEGORY_INTROTEXT" prefix="show" />
+                                    <field type="select" label="SECN.CFG.NUMBER_CATS_LINE" name="spcfg[list.categories_in_line]" selected="list.categories_in_line" class="input-mini">
+                                        <values>
+                                            <option value="1" />
+                                            <option value="2" />
+                                            <option value="3" />
+                                            <option value="4" />
+                                            <option value="5" />
+                                        </values>
+                                    </field>
+                                    <field type="select" label="SECN.CFG.ORDER_CATEGORIES_BY" name="spcfg[list.categories_ordering]" selected="list.categories_ordering" class="input-xlarge">
+                                        <values>
+                                            <option value="name.asc" label="ORDER_BY_NAME_ASCENDING" />
+                                            <option value="name.desc" label="ORDER_BY_NAME_DESCENDING" />
+                                            <option value="position.asc" label="ORDER_BY_POSITION_ASCENDING" />
+                                            <option value="position.desc" label="ORDER_BY_POSITION_DESCENDING" />
+                                            <option value="counter.asc" label="ORDER_BY_POPULARITY_ASCENDING" />
+                                            <option value="counter.desc" label="ORDER_BY_POPULARITY_DESCENDING" />
+                                            <option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC" />
+                                            <option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC" />
+                                            <option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC" />
+                                            <option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC" />
+                                            <option value="validUntil.asc" label="ORDER_BY_EXPIRATION_DATE_ASC" />
+                                            <option value="validUntil.desc" label="ORDER_BY_EXPIRATION_DATE_DESC" />
+                                        </values>
+                                    </field>
+                                </fieldset>
+								<fieldset label="SECN.CFG.SUBCATEGORY_SETTINGS">
+                                    <field type="states" name="spcfg[list.subcats]" value="list.subcats" label="SECN.CFG.PASS_SUBCATS_TO_TEMPLATE" prefix="show" />
+                                    <field type="select" label="SECN.CFG.NUMBER_SUBCATS" name="spcfg[list.num_subcats]" selected="list.num_subcats" class="input-mini">
+                                        <values>
+                                            <option value="1" />
+                                            <option value="2" />
+                                            <option value="3" />
+                                            <option value="4" />
+                                            <option value="5" />
+                                            <option value="6" />
+                                            <option value="7" />
+                                            <option value="8" />
+                                            <option value="9" />
+                                            <option value="10" />
+                                            <option value="15" />
+                                            <option value="20" />
+                                        </values>
+                                    </field>
+                                 </fieldset>
+                                <fieldset label="SECN.CFG.PASS_TO_TEMPLATE">
 									<field type="states" name="spcfg[list.cat_desc]" value="list.cat_desc" label="SECN.CFG.PASS_CAT_DESC_TO_TEMPLATE" prefix="yes_no" />
 									<field type="states" name="spcfg[list.cat_meta]" value="list.cat_meta" label="SECN.CFG.PASS_CAT_DATA_TO_TEMPLATE" prefix="yes_no" />
-									<field type="states" name="spcfg[list.subcats]" value="list.subcats" label="SEC.CFG.PASS_SUBCATS_TO_TEMPLATE" prefix="yes_no" />
-									<field type="select" label="SEC.CFG.NUMBER_CATS_LINE" name="spcfg[list.num_subcats]" selected="list.num_subcats" class="input-small">
-										<values>
-											<option value="1" />
-											<option value="2" />
-											<option value="3" />
-											<option value="4" />
-											<option value="5" />
-											<option value="6" />
-											<option value="7" />
-											<option value="8" />
-											<option value="9" />
-											<option value="10" />
-										</values>
-									</field>
 								</fieldset>
 							</tab>
 							<tab label="SECN.CFG.ELISTING_SETTINGS">
-                                <fieldset label="SECN.CFG.ENTRY_SETTINGS">
+                                <fieldset>
                                     <field type="select" label="SECN.CFG.ENTRY_TITLE_FIELD" name="entry.name_field" selected="entry.name_field" values="nameFields" class="input-large" />
                                     <field type="text" name="spcfg[entry.publish_limit]" value="entry.publish_limit" label="SECN.CFG.STOP_PUBLISHING_ENTRY_AFTER" class="input-mini">
                                         <add where="after">
@@ -120,9 +126,9 @@
                                         </add>
                                     </field>
                                 </fieldset>
-								<fieldset>
-									<field type="select" label="SECN.CFG.ORDER_ENTRIES_BY" name="spcfg[list.entries_ordering]" selected="list.entries_ordering" values="entriesOrdering" class="input-large" />
-									<field type="select" label="SEC.CFG.NUMBER_ENTRIES_PAGE" name="spcfg[list.entries_limit]" selected="list.entries_limit" class="input-small">
+                                <fieldset label="SECN.CFG.ENTRY_SETTINGS">
+									<field type="select" label="SECN.CFG.ORDER_ENTRIES_BY" name="spcfg[list.entries_ordering]" selected="list.entries_ordering" values="entriesOrdering" class="input-xlarge" />
+									<field type="select" label="SECN.CFG.NUMBER_ENTRIES_PAGE" name="spcfg[list.entries_limit]" selected="list.entries_limit" class="input-mini">
 										<values>
 											<option value="1" />
 											<option value="2" />
@@ -141,7 +147,7 @@
 											<option value="15" />
 										</values>
 									</field>
-									<field type="select" label="SEC.CFG.NUMBER_ENTRIES_LINE" name="spcfg[list.entries_in_line]" selected="list.entries_in_line" class="input-small">
+									<field type="select" label="SECN.CFG.NUMBER_ENTRIES_LINE" name="spcfg[list.entries_in_line]" selected="list.entries_in_line" class="input-mini">
 										<values>
 											<option value="1" />
 											<option value="2" />
@@ -150,21 +156,23 @@
 											<option value="5" />
 										</values>
 									</field>
+                                </fieldset>
+                                <fieldset label="SECN.CFG.PASS_TO_VCARD">
 									<field type="states" name="spcfg[list.entry_meta]" value="list.entry_meta" label="SECN.CFG.PASS_ENTRY_META_TEMPLATE" prefix="yes_no" />
-									<field type="states" name="spcfg[list.entry_cats]" value="list.entry_cats" label="SEC.CFG.PASS_SEL_CATS_OF_ENTRY_TO_TEMPLATE" prefix="yes_no" />
+									<field type="states" name="spcfg[list.entry_cats]" value="list.entry_cats" label="SECN.CFG.PASS_SEL_CATS_OF_ENTRY_TO_TEMPLATE" prefix="yes_no" />
 								</fieldset>
 							</tab>
 							<tab label="SEC.CFG.ALPHAMENU_SETTINGS">
 								<fieldset>
-									<field type="states" name="spcfg[alphamenu.show]" value="alphamenu.show" label="SEC.CFG.SHOW_ALPHA_MENU" prefix="yes_no" />
-									<field type="text" name="spcfg[alphamenu.letters]" value="alphamenu.letters" label="SEC.CFG.ALPHA_LETTERS" class="input-xlarge" />
-									<field type="states" name="spcfg[alphamenu.verify]" value="alphamenu.verify" label="SEC.CFG.SHOW_ALPHA_VERIFY" prefix="yes_no" />
-									<field type="select" label="SEC.CFG.ALPHA_FIELD" name="spcfg[alphamenu.primary_field]" selected="alphamenu.primary_field" values="alphaMenuFields" class="input-large" />
-									<field type="select" label="SEC.CFG.ALPHA_FIELDS" multiple="true" size="7" name="spcfg[alphamenu.extra_fields_array]" selected="alphamenu.extra_fields_array" values="alphaMenuFields" class="input-large" />
+									<field type="states" name="spcfg[alphamenu.show]" value="alphamenu.show" label="SECN.CFG.SHOW_ALPHA_MENU" prefix="show" />
+									<field type="text" name="spcfg[alphamenu.letters]" value="alphamenu.letters" label="SECN.CFG.ALPHA_LETTERS" class="input-splarge" />
+									<field type="states" name="spcfg[alphamenu.verify]" value="alphamenu.verify" label="SECN.CFG.SHOW_ALPHA_VERIFY" prefix="yes_no" />
+									<field type="select" label="SECN.CFG.ALPHA_FIELD" name="spcfg[alphamenu.primary_field]" selected="alphamenu.primary_field" values="alphaMenuFields" class="input-large" />
+									<field type="select" label="SECN.CFG.ALPHA_FIELDS" multiple="true" size="12" name="spcfg[alphamenu.extra_fields_array]" selected="alphamenu.extra_fields_array" values="alphaMenuFields" class="input-large" />
 								</fieldset>
 							</tab>
 						</tabs>
-                        <div class="alert"><text value="CAT.JS_SELECT_CAT_ICON" /></div>
+                        <div class="alert" style="max-width:600px;"><text value="SECN.CFG.WARNING" /></div>
 					</div>
 				</div>
 			</tab>
