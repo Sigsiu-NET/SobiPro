@@ -299,6 +299,13 @@ abstract class SPController extends SPObject implements SPControl
 				$error = true;
 			}
 		}
+		/** if not approved */
+		$approved = $this->_model->get( 'approved' );
+		if ( !( $approved ) ) {
+			if ( !( Sobi::Can( $type, 'access', 'unapproved_any' ) ) ) {
+				$error = true;
+			}
+		}
 		/* if it's expired or not valid yet  */
 		$va = $this->_model->get( 'validUntil' );
 		$va = $va ? strtotime( $va ) : 0;

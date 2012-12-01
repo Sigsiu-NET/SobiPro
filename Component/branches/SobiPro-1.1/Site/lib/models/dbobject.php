@@ -197,8 +197,8 @@ abstract class SPDBObject extends SPObject
 		$this->validSince = SPFactory::config()->date( time(), 'date.db_format' );
 		$this->ownerIP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		$this->updaterIP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
-		$this->updater = Sobi::My('id');
-		$this->owner = Sobi::My('id');
+		$this->updater = Sobi::My( 'id' );
+		$this->owner = Sobi::My( 'id' );
 		$this->updatedTime = SPFactory::config()->date( time(), 'date.db_format' );
 		Sobi::Trigger( 'CreateModell', $this->name(), array( &$this ) );
 	}
@@ -223,8 +223,10 @@ abstract class SPDBObject extends SPObject
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
-		SPFactory::cache()->purgeSectionVars();
-		SPFactory::cache()->deleteObj( $this->type(), $this->id );
+		SPFactory::cache()
+				->purgeSectionVars()
+				->deleteObj( $this->type(), $this->id )
+				->deleteObj( 'category', $this->parent );
 	}
 
 	/**
@@ -300,6 +302,7 @@ abstract class SPDBObject extends SPObject
 			$cond = array( 'pid' => $this->id );
 			if ( $state ) {
 				$cond[ 'so.state' ] = $state;
+				$cond[ 'so.approved' ] = $state;
 				$tables = $db->join(
 					array(
 						array( 'table' => 'spdb_object', 'as' => 'so', 'key' => 'id' ),

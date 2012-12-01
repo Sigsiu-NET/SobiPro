@@ -94,7 +94,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 	{
 		/* initial org settings */
 		/* @var SPdb $db */
-		$db	=& SPFactory::db();
+		$db	= SPFactory::db();
 		/* check nid */
 		$c = 1;
 		while ( $c ) {
