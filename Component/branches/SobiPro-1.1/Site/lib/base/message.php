@@ -20,14 +20,22 @@ class SPMessage
 {
 	/** @var array */
 	private $messages = array();
+	/** @var bool */
 	private $reset = false;
+	/** @var bool */
 	private $langLoaded = false;
 
+	/**
+	 * @return SPMessage
+	 */
 	private function __construct()
 	{
 		$this->messages = Sobi::GetUserData( 'messages-queue', $this->messages );
 	}
 
+	/**
+	 * @return void
+	 */
 	public function storeMessages()
 	{
 		Sobi::SetUserData( 'messages-queue', $this->messages );

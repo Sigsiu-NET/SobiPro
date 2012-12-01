@@ -184,8 +184,7 @@
 		<action value="index.php?option=com_sobipro" />
 		<hidden>
 			<field name="option" default="com_sobipro" />
-			<field name="task" default="category.view" />
-			<field name="boxchecked" default="" />
+			<field name="task" default="" />
 			<field name="sid" default="" />
 		</hidden>
 	</config>

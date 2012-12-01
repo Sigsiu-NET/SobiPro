@@ -93,7 +93,6 @@
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
-			<field name="boxchecked" default="" />
 		</hidden>
 	</config>
 </definition>

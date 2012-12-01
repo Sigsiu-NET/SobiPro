@@ -271,17 +271,11 @@ final class SobiProAdmCtrl
 			$ctrl = SPLoader::loadController( $obj, true );
 
 			/* route task for multiple objects - e.g removing or publishing elements from a list */
-			if (
-				/* if there was no model */
-				/*!( $this->_model && ( $this->_model instanceof stdClass ) ) &&*/
-				(
-					/* and there was some of multiple sids */
-						count( SPRequest::arr( 'sid' ) ) ||
-								count( SPRequest::arr( 'c_sid' ) ) ||
-								count( SPRequest::arr( 'e_sid' ) )
-				)
-			) {
-				$sid = array_key_exists( 'sid', $_REQUEST ) ? 'sid' : ( array_key_exists( 'c_sid', $_REQUEST ) ? 'c_sid' : 'e_sid' );
+			$sids = SPRequest::arr( 'sid' );
+			$csids = SPRequest::arr( 'c_sid' );
+			$esids = SPRequest::arr( 'e_sid' );
+			if ( count( $sids ) || count( $csids ) || count( $esids ) ) {
+				$sid = array_key_exists( 'sid', $_REQUEST ) && is_array( $_REQUEST[ 'sid' ] ) ? 'sid' : ( array_key_exists( 'c_sid', $_REQUEST ) ? 'c_sid' : 'e_sid' );
 				if ( count( SPRequest::arr( $sid ) ) ) {
 					/* @var SPdb $db */
 					$db =& SPFactory::db();
