@@ -37,6 +37,7 @@
    (+) Field controller implements now a proxy pattern to the field type
    (+) Definition file for Radio Button field
    (+) Category Chooser Field with different category selection methods implemented
+   (+) Prohibition of assigning an entry to parent category added to new Category Chooser Field
    (+) Category Search to filter the search results by one or more category
    (+) IP search query link added to category and entry publishing IP (admin interface)
    (+) Button to hide left menu in order to stretch the content screen

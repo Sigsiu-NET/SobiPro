@@ -28,21 +28,6 @@
 							<field type="datePicker" label="VALID_SINCE" name="section.validSince" value="section.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
 							<field type="datePicker" label="VALID_UNTIL" name="section.validUntil" value="section.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
 						</fieldset>
-                        <fieldset label="META_DATA">
-                            <field type="states" name="spcfg[meta.always_add_section]" value="meta.always_add_section" label="SECN.CFG.ADD_SECTION_META_DATA" prefix="yes_no" />
-                            <field type="textarea" name="section.metaDesc" value="section.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-                            <field type="textarea" name="section.metaKeys" value="section.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
-                            <field type="text" name="section.metaAuthor" value="section.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
-                            <field type="select" label="ROBOTS" name="section.metaRobots" selected="section.metaRobots" class="input-large">
-                                <values>
-                                    <option value="" label="ROBOTS_NONE" />
-                                    <option value="index, follow" label="index, follow" />
-                                    <option value="index, nofollow" label="index, nofollow" />
-                                    <option value="noindex, follow" label="noindex, follow" />
-                                    <option value="noindex, nofollow" label="noindex, nofollow" />
-                                </values>
-                            </field>
-                        </fieldset>
 					</div>
 				</div>
 			</tab>
@@ -176,63 +161,182 @@
 					</div>
 				</div>
 			</tab>
-			<tab label="SEC.CFG.REDIRECTS">
-				<div class="row-fluid">
-					<div class="span12">
-                        <fieldset label="SEC.CFG.REDIRECTS_ENTRY_SPACER">
-                            <field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_enabled]" selected="redirects.entry_enabled" class="input-large">
+
+            <tab label="META_DATA">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset label="SECN.CFG.META_DATA_SECTION">
+                            <field type="states" name="spcfg[meta.always_add_section]" value="meta.always_add_section" label="SECN.CFG.META_DATA_ADD" prefix="yes_no" />
+                            <field type="textarea" name="section.metaDesc" value="section.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="textarea" name="section.metaKeys" value="section.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="text" name="section.metaAuthor" value="section.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+                            <field type="select" label="ROBOTS" name="section.metaRobots" selected="section.metaRobots" class="input-large">
                                 <values>
-                                    <option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
-                                    <option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+                                    <option value="" label="ROBOTS_NONE" />
+                                    <option value="index, follow" label="index, follow" />
+                                    <option value="index, nofollow" label="index, nofollow" />
+                                    <option value="noindex, follow" label="noindex, follow" />
+                                    <option value="noindex, nofollow" label="noindex, nofollow" />
                                 </values>
                             </field>
-                            <field type="text" name="spcfg[redirects.entry_url]" value="redirects.entry_url" label="SEC.CFG.REDIRECTS_TO" class="input-xlarge" />
-                            <field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_msgtype]" selected="redirects.entry_msgtype" class="input-large">
-                                <values>
-                                    <option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
-                                    <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
-                                    <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
-                                </values>
-                            </field>
-                            <field type="text" name="spcfg[redirects.entry_msg]" value="redirects.entry_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-xlarge" />
                         </fieldset>
-                        <fieldset label="SEC.CFG.REDIRECTS_CAT_SPACER">
-                            <field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.category_enabled]" selected="redirects.category_enabled" class="input-large">
+                        <fieldset label="SECN.CFG.META_DATA_INPUT">
+                            <div style="text-transform:uppercase; color:red;"><text value="not yet implemented!!" /></div>
+                            <field type="states" name="spcfg[meta.always_add_entryinput]" value="meta.always_add_entryinput" label="SECN.CFG.META_DATA_ADD" prefix="yes_no" />
+                            <field type="textarea" name="entryinput.metaDesc" value="entryinput.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="textarea" name="entryinput.metaKeys" value="entryinput.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="text" name="entryinput.metaAuthor" value="entryinput.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+                            <field type="select" label="ROBOTS" name="entryinput.metaRobots" selected="entryinput.metaRobots" class="input-large">
                                 <values>
-                                    <option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
-                                    <option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+                                    <option value="" label="ROBOTS_NONE" />
+                                    <option value="index, follow" label="index, follow" />
+                                    <option value="index, nofollow" label="index, nofollow" />
+                                    <option value="noindex, follow" label="noindex, follow" />
+                                    <option value="noindex, nofollow" label="noindex, nofollow" />
                                 </values>
                             </field>
-                            <field type="text" name="spcfg[redirects.category_url]" value="redirects.category_url" label="SEC.CFG.REDIRECTS_TO" class="input-xlarge" />
-                            <field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.category_msgtype]" selected="redirects.category_msgtype" class="input-large">
-                                <values>
-                                    <option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
-                                    <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
-                                    <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
-                                </values>
-                            </field>
-                            <field type="text" name="spcfg[redirects.category_msg]" value="redirects.category_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-xlarge" />
                         </fieldset>
-                        <fieldset label="SEC.CFG.REDIRECTS_SECTION_SPACER">
-                            <field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_enabled]" selected="redirects.section_enabled" class="input-large">
+                        <fieldset label="SECN.CFG.META_DATA_SEARCH">
+                            <div style="text-transform:uppercase; color:red;"><text value="not yet implemented!!" /></div>
+                            <field type="states" name="spcfg[meta.always_add_search]" value="meta.always_add_search" label="SECN.CFG.META_DATA_ADD" prefix="yes_no" />
+                            <field type="textarea" name="search.metaDesc" value="search.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="textarea" name="search.metaKeys" value="search.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="text" name="search.metaAuthor" value="search.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+                            <field type="select" label="ROBOTS" name="search.metaRobots" selected="search.metaRobots" class="input-large">
                                 <values>
-                                    <option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
-                                    <option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+                                    <option value="" label="ROBOTS_NONE" />
+                                    <option value="index, follow" label="index, follow" />
+                                    <option value="index, nofollow" label="index, nofollow" />
+                                    <option value="noindex, follow" label="noindex, follow" />
+                                    <option value="noindex, nofollow" label="noindex, nofollow" />
                                 </values>
                             </field>
-                            <field type="text" name="spcfg[redirects.section_url]" value="redirects.section_url" label="SEC.CFG.REDIRECTS_TO" class="input-xlarge" />
-                            <field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_msgtype]" selected="redirects.section_msgtype" class="input-large">
-                                <values>
-                                    <option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
-                                    <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
-                                    <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
-                                </values>
-                            </field>
-                            <field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-xlarge" />
                         </fieldset>
-					</div>
-				</div>
-			</tab>
+                    </div>
+                </div>
+            </tab>
+
+            <tab label="SEC.CFG.REDIRECTS">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="alert" style="max-width:600px;"><text value="SECN.CFG.REDIRECT_INFO" /></div>
+                        <tabs>
+                            <tab label="SECN.CFG.REDIRECT_SECTION">
+                                <fieldset label="SECN.CFG.REDIRECTS_SECTION_SPACER">
+                                    <field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_enabled]" selected="redirects.section_enabled" class="input-xlarge">
+                                        <values>
+                                            <option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
+                                            <option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.section_url]" value="redirects.section_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+                                    <field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_msgtype]" selected="redirects.section_msgtype" class="input-large">
+                                        <values>
+                                            <option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
+                                            <option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
+                                            <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+                                </fieldset>
+                                <fieldset label="SECN.CFG.REDIRECTS_SEARCH_SPACER">
+                                    <div style="text-transform:uppercase; color:red;"><text value="not yet implemented!!" /></div>
+                                    <field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_enabled]" selected="redirects.section_enabled" class="input-xlarge">
+                                        <values>
+                                            <option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
+                                            <option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.section_url]" value="redirects.section_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+                                    <field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_msgtype]" selected="redirects.section_msgtype" class="input-large">
+                                        <values>
+                                            <option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
+                                            <option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
+                                            <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+                                </fieldset>
+                            </tab>
+                            <tab label="SECN.CFG.REDIRECT_CATEGORY">
+                                <fieldset label="SECN.CFG.REDIRECTS_CAT_SPACER">
+                                    <field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.category_enabled]" selected="redirects.category_enabled" class="input-xlarge">
+                                        <values>
+                                            <option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
+                                            <option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.category_url]" value="redirects.category_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+                                    <field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.category_msgtype]" selected="redirects.category_msgtype" class="input-large">
+                                        <values>
+                                            <option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
+                                            <option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
+                                            <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.category_msg]" value="redirects.category_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+                                </fieldset>
+                            </tab>
+                            <tab label="SECN.CFG.REDIRECT_ENTRY">
+                                <fieldset label="SECN.CFG.REDIRECTS_ENTRY_SPACER">
+                                    <field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_enabled]" selected="redirects.entry_enabled" class="input-xlarge">
+                                        <values>
+                                            <option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
+                                            <option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.entry_url]" value="redirects.entry_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+                                    <field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_msgtype]" selected="redirects.entry_msgtype" class="input-large">
+                                        <values>
+                                            <option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
+                                            <option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
+                                            <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.entry_msg]" value="redirects.entry_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+                                </fieldset>
+                                <fieldset label="SECN.CFG.REDIRECTS_INPUT">
+                                    <div style="text-transform:uppercase; color:red;"><text value="not yet implemented!!" /></div>
+                                    <field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_enabled]" selected="redirects.section_enabled" class="input-xlarge">
+                                        <values>
+                                            <option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
+                                            <option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.section_url]" value="redirects.section_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+                                    <field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_msgtype]" selected="redirects.section_msgtype" class="input-large">
+                                        <values>
+                                            <option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
+                                            <option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
+                                            <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+                                </fieldset>
+                                <fieldset label="SECN.CFG.REDIRECTS_SAVE">
+                                    <div style="text-transform:uppercase; color:red;"><text value="not yet implemented!!" /></div>
+                                    <field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_enabled]" selected="redirects.section_enabled" class="input-xlarge">
+                                        <values>
+                                            <option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
+                                            <option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.section_url]" value="redirects.section_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+                                    <field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_msgtype]" selected="redirects.section_msgtype" class="input-large">
+                                        <values>
+                                            <option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
+                                            <option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
+                                            <option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+                                        </values>
+                                    </field>
+                                    <field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+                                </fieldset>
+                            </tab>
+                        </tabs>
+                    </div>
+                </div>
+            </tab>
+
 			<tab label="SECN.CFG.SECURITY_SETTINGS">
 				<div class="row-fluid">
 					<div class="span12">
