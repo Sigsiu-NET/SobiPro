@@ -342,7 +342,7 @@
 					<div class="span12">
                         <fieldset>
                             <field type="textarea" name="spcfg[html.allowed_tags_array]" value="html.allowed_tags_array" label="SEC.CFG.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />
-                            <field type="textarea" name="spcfg[section.metaKeys]" value="html.allowed_attributes_array" label="SEC.CFG.ALLOWED_ATTRIBUTES" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="textarea" name="spcfg[html.allowed_attributes_array]" value="html.allowed_attributes_array" label="SEC.CFG.ALLOWED_ATTRIBUTES" editor="false" class="input-splarge" rows="2" style="" />
                         </fieldset>
 					</div>
 				</div>
