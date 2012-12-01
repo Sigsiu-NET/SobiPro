@@ -474,7 +474,6 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			$results = SPFactory::db()
 					->select( '*', 'spdb_field', array( 'section' => $sid ), $ord )
 					->loadObjectList();
-//			SPConfig::debOut( $results );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
@@ -675,14 +674,15 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				break;
 		}
 		if ( count( $fIds ) ) {
+			$msg = array();
 			foreach ( $fIds as $fid ) {
 				try {
 					SPFactory::db()
 							->update( 'spdb_field', array( $col => $state ), array( 'fid' => $fid ), 1 );
-					$msg .= Sobi::Txt( 'FM.STATE_CHANGED', array( 'fid' => $fid ) );
+					$msg[ ] = array( 'text' => Sobi::Txt( 'FM.STATE_CHANGED', array( 'fid' => $fid ) ), 'type' => 'success' );
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
-					$msg .= Sobi::Txt( 'FM.STATE_NOT_CHANGED', array( 'fid' => $fid ) );
+					$msg[ ] = array( 'text' => Sobi::Txt( 'FM.STATE_NOT_CHANGED', array( 'fid' => $fid ) ), 'type' => 'error' );
 				}
 			}
 		}

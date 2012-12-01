@@ -140,8 +140,9 @@ final class SobiProAdmCtrl
 	{
 		$this->_mem = number_format( ( ( memory_get_usage() - $this->_mem ) / 1024 / 1024 ), 2 );
 		$this->_time = number_format( ( ( microtime() - $this->_time ) ), 2 );
-		//		$db = & SPFactory::db();
-		//		SPConfig::debOut( "Number of Queries: " . $db->getCount() . " / Memory: {$this->_mem} MB / Time: {$this->_time} Seconds / Loaded files " . SPLoader::getCount(), true );
+//		$db = & SPFactory::db();
+//		SPConfig::debOut( "Number of Queries: " . $db->getCount() . " / Memory: {$this->_mem} MB / Time: {$this->_time} Seconds / Loaded files " . SPLoader::getCount(), true );
+//		exit;
 	}
 
 	/**

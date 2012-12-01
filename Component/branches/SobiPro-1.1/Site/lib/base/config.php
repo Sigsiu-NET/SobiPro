@@ -181,9 +181,9 @@ class SPConfig
 				$_c = explode( '_', $row->sKey );
 				if ( $_c[ count( $_c ) - 1 ] == 'array' ) {
 					try {
-					$row->sValue = self::unserialize( $row->sValue );
+						$row->sValue = self::unserialize( $row->sValue );
 					} catch ( SPException $x ) {
-						Sobi::Error( 'config', $x->getMessage().' [ '.$row->sKey.' ] ', SPC::WARNING, 0, __LINE__, __CLASS__ );
+						Sobi::Error( 'config', $x->getMessage() . ' [ ' . $row->sKey . ' ] ', SPC::WARNING, 0, __LINE__, __CLASS__ );
 					}
 				}
 				if ( $row->configsection == 'debug' && $row->sKey == 'level' ) {
@@ -524,13 +524,17 @@ class SPConfig
 	public function nameField()
 	{
 		if ( !( isset( self::$fields[ Sobi::Section() ][ Sobi::Cfg( 'entry.name_field' ) ] ) ) ) {
-			$fModel = SPLoader::loadModel( 'field', true );
-			/* @var SPField $f */
-			$f = new $fModel();
-			$f->init( Sobi::Cfg( 'entry.name_field' ) );
-			self::$fields[ Sobi::Section() ][ Sobi::Cfg( 'entry.name_field' ) ] = $f;
+			if ( Sobi::Cfg( 'entry.name_field' ) ) {
+				/* @var SPField $f */
+				$f = SPFactory::Model( 'field', true );
+				$f->init( Sobi::Cfg( 'entry.name_field' ) );
+				self::$fields[ Sobi::Section() ][ Sobi::Cfg( 'entry.name_field' ) ] = $f;
+			}
+			else {
+				SPFactory::message()->warning( 'NO_NAME_FIELD_SELECTED' );
+			}
 		}
-		return self::$fields[ Sobi::Section() ][ Sobi::Cfg( 'entry.name_field' ) ];
+		return isset( self::$fields[ Sobi::Section() ][ Sobi::Cfg( 'entry.name_field' ) ] ) ? self::$fields[ Sobi::Section() ][ Sobi::Cfg( 'entry.name_field' ) ] : SPFactory::Model( 'field', true ) ;
 	}
 
 //	/**

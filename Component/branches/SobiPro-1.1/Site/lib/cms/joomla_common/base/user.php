@@ -51,6 +51,7 @@ class SPJomlaUser extends JUser
 	protected $_prequest = array();
 
 	protected $_special = array( 'txt.js', 'progress' );
+
 	/**
 	 */
 	public function __destruct()
@@ -63,16 +64,15 @@ class SPJomlaUser extends JUser
 	protected function parentGids()
 	{
 		$hold = array();
-		if( count( $this->gid ) ) {
-			foreach ( $this->gid  as $gid ) {
-				if( $gid >= 5000 ) {
+		if ( count( $this->gid ) ) {
+			foreach ( $this->gid as $gid ) {
+				if ( $gid >= 5000 ) {
 					$gids = array();
 					while ( $gid > 5000 ) {
 						try {
 							$gid = SPFactory::db()->select( 'pid', 'spdb_user_group', array( 'gid' => $gid, 'enabled' => 1 ) )->loadResult();
-							$gids[] = $gid;
-						}
-						catch ( SPException $x ) {
+							$gids[ ] = $gid;
+						} catch ( SPException $x ) {
 							Sobi::Error( 'permissions', SPLang::e( 'Cannot load additional gids. %s', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
 						}
 					}
@@ -82,13 +82,13 @@ class SPJomlaUser extends JUser
 				else {
 					$gids = JFactory::getACL()->get_group_parents( $gid, 'ARO', 'RECURSE' );
 				}
-				if( is_array( $gids ) && count( $gids ) ) {
-					$this->gid  = array_merge( $gids, $this->gid );
+				if ( is_array( $gids ) && count( $gids ) ) {
+					$this->gid = array_merge( $gids, $this->gid );
 				}
 			}
 		}
 		// PHP 5.2.9 bug work-around
-		if( defined( 'PHP_VERSION_ID' ) && version_compare( PHP_VERSION, '5.2.9' ) < 0 ) {
+		if ( defined( 'PHP_VERSION_ID' ) && version_compare( PHP_VERSION, '5.2.9' ) < 0 ) {
 			$this->gid = array_unique( $this->gid, SORT_STRING );
 		}
 		else {
@@ -106,11 +106,10 @@ class SPJomlaUser extends JUser
 				array( 'table' => 'spdb_users_relation', 'as' => 'rel', 'key' => 'gid' )
 			);
 			$gids = $db->select( 'rel.gid', $db->join( $join ), array( '@VALID' => $valid, 'uid' => $this->id ) )->loadResultArray();
-			if( count( $gids ) ) {
+			if ( count( $gids ) ) {
 				$this->gid = array_merge( $gids, $this->gid );
 			}
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( 'permissions', sprintf( 'Cannot load additional gids. %s', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
 		}
 	}
@@ -118,24 +117,24 @@ class SPJomlaUser extends JUser
 	public static function groups( $gids )
 	{
 		$groups = array();
-		if( $gids instanceof self ) {
+		if ( $gids instanceof self ) {
 			$gids = $gids->get( 'gid' );
 		}
-		if( count( $gids ) ) {
+		if ( count( $gids ) ) {
 			$groups = array_flip( $gids );
 			$r = SPFactory::db()->select( array( 'groupName', 'gid' ), 'spdb_user_group', array( 'gid' => $gids ) )->loadAssocList( 'gid' );
-			if( count( $r ) ) {
+			if ( count( $r ) ) {
 				foreach ( $r as $gid => $data ) {
-					if( isset( $groups[ $gid ] ) ) {
+					if ( isset( $groups[ $gid ] ) ) {
 						$groups[ $gid ] = $data[ 'groupName' ];
 					}
 				}
 			}
-			if( count( $r ) < count( $groups ) ) {
+			if ( count( $r ) < count( $groups ) ) {
 				$r = SPFactory::db()->select( array( 'name', 'id' ), '#__core_acl_aro_groups', array( 'id' => $gids ) )->loadAssocList( 'id' );
-				if( count( $r ) ) {
+				if ( count( $r ) ) {
 					foreach ( $r as $gid => $data ) {
-						if( isset( $groups[ $gid ] ) ) {
+						if ( isset( $groups[ $gid ] ) ) {
 							$groups[ $gid ] = $data[ 'name' ];
 						}
 					}
@@ -149,13 +148,13 @@ class SPJomlaUser extends JUser
 	{
 		$groups = array( 0 => 'visitor' );
 		$r = SPFactory::db()->select( array( 'groupName', 'gid' ), 'spdb_user_group' )->loadAssocList( 'gid' );
-		if( count( $r ) ) {
+		if ( count( $r ) ) {
 			foreach ( $r as $gid => $data ) {
 				$groups[ $gid ] = $data[ 'groupName' ];
 			}
 		}
 		$r = SPFactory::db()->select( array( 'name', 'id' ), '#__core_acl_aro_groups' )->loadAssocList( 'id' );
-		if( count( $r ) ) {
+		if ( count( $r ) ) {
 			foreach ( $r as $gid => $data ) {
 				$groups[ $gid ] = $data[ 'name' ];
 			}
@@ -169,22 +168,22 @@ class SPJomlaUser extends JUser
 	 * @param string $ownership - e.g. own, all or global
 	 * @return bool - true if authorized
 	 */
-	public function can( $subject, $action = 'access', $value = 'valid', $section = null  )
+	public function can( $subject, $action = 'access', $value = 'valid', $section = null )
 	{
 		$can = false;
-		if( strstr( $subject, '.' ) ) {
+		if ( strstr( $subject, '.' ) ) {
 			$subject = explode( '.', $subject );
 			$action = $subject[ 1 ];
-			if( isset( $subject[ 2 ] ) ) {
+			if ( isset( $subject[ 2 ] ) ) {
 				$value = $subject[ 2 ];
 			}
 			$subject = $subject[ 0 ];
 		}
-		if( !$section ) {
+		if ( !$section ) {
 			$section = SPFactory::registry()->get( 'current_section', 0 );
 		}
 		$can = $this->authorise( $section, $subject, $action, $value );
-		if( SPFactory::registry()->__isset( 'plugins' ) ) {
+		if ( SPFactory::registry()->__isset( 'plugins' ) ) {
 			Sobi::Trigger( 'Authorise', 'Permission', array( &$can, $section, $subject, $action, $value ) );
 		}
 		return $can;
@@ -200,7 +199,7 @@ class SPJomlaUser extends JUser
 	 */
 	public function authorise( $section, $subject, $action, $value )
 	{
-		if( $this->isAdmin() ) {
+		if ( $this->isAdmin() ) {
 			return true;
 		}
 		/* translate automatic created request */
@@ -223,13 +222,13 @@ class SPJomlaUser extends JUser
 			case 'view':
 				$action = 'access';
 		}
-		if( in_array( $subject, array( 'acl', 'config', 'extensions' ) ) ) {
+		if ( in_array( $subject, array( 'acl', 'config', 'extensions' ) ) ) {
 			$action = 'manage';
 			$section = 0;
 		}
-		if( !$section ) {
+		if ( !$section ) {
 			$value = 'global';
-			if( in_array( SPRequest::task(), $this->_special ) ) {
+			if ( in_array( SPRequest::task(), $this->_special ) ) {
 				return true;
 			}
 		}
@@ -238,30 +237,30 @@ class SPJomlaUser extends JUser
 		/* initialise */
 		$auth = false;
 		/* if not initialised */
-		if( !count( $this->_permissions ) ) {
+		if ( !count( $this->_permissions ) ) {
 			$this->getPermissions();
 		}
 
 		/* if already requested, return the answer */
 		$i = "[{$site}][{$section}][{$action}][{$subject}][{$value}]";
-		if( isset( $this->_prequest[ $i ] ) ) {
+		if ( isset( $this->_prequest[ $i ] ) ) {
 			return $this->_prequest[ $i ];
 		}
-		if( isset( $this->_permissions[ $section ] ) ) {
-			if( isset( $this->_permissions[ $section ][ $subject ] ) ) {
-				if( isset( $this->_permissions[ $section ][ $subject ][ $action ] ) ) {
-					if( isset( $this->_permissions[ $section ][ $subject ][ $action ][ $value ] ) ) {
+		if ( isset( $this->_permissions[ $section ] ) ) {
+			if ( isset( $this->_permissions[ $section ][ $subject ] ) ) {
+				if ( isset( $this->_permissions[ $section ][ $subject ][ $action ] ) ) {
+					if ( isset( $this->_permissions[ $section ][ $subject ][ $action ][ $value ] ) ) {
 						$auth = $this->_permissions[ $section ][ $subject ][ $action ][ $value ];
 					}
-					elseif( isset( $this->_permissions[ $section ][ $subject ][ $action ][ '*' ] ) ) {
+					elseif ( isset( $this->_permissions[ $section ][ $subject ][ $action ][ '*' ] ) ) {
 						$auth = $this->_permissions[ $section ][ $subject ][ $action ][ '*' ];
 					}
 				}
-				elseif( isset( $this->_permissions[ $section ][ $subject ][ '*' ] ) ) {
+				elseif ( isset( $this->_permissions[ $section ][ $subject ][ '*' ] ) ) {
 					$auth = $this->_permissions[ $section ][ $subject ][ '*' ];
 				}
 			}
-			elseif( isset( $this->_permissions[ $section ][ '*' ] ) ) {
+			elseif ( isset( $this->_permissions[ $section ][ '*' ] ) ) {
 				$auth = $this->_permissions[ $section ][ '*' ];
 			}
 		}
@@ -291,11 +290,11 @@ class SPJomlaUser extends JUser
 	protected function getPermissions( $sid = null )
 	{
 		$sid = $sid ? $sid : Sobi::Section();
-		if( isset( $this->_permissions[ $sid ] ) ) {
+		if ( isset( $this->_permissions[ $sid ] ) ) {
 			return true;
 		}
 		/* if it is for super admin - always true */
-		if( $this->isAdmin() ) {
+		if ( $this->isAdmin() ) {
 			return true;
 		}
 		/* @var SPdb $db */
@@ -312,17 +311,15 @@ class SPJomlaUser extends JUser
 		$db->dselect( 'sprl.rid', $db->join( $join ), array( '@VALID' => $valid ) );
 		try {
 			$this->_prules = $db->loadResultArray();
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( 'permissions', SPLang::e( 'CANNOT_GET_PERMISSIONS', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __CLASS__ );
 		}
 		/* if we have the rules ids we need to get permission for this section and global permsion */
-		if( count( $this->_prules ) ) {
+		if ( count( $this->_prules ) ) {
 			try {
 				$db->select( 'pid', 'spdb_permissions_map', array( 'sid' => $sid, 'rid' => $this->_prules ) );
 				$permissions = $db->loadResultArray();
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( 'permissions', SPLang::e( 'CANNOT_GET_USERS_DATA', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __CLASS__ );
 			}
 		}
@@ -330,16 +327,15 @@ class SPJomlaUser extends JUser
 		try {
 			$db->select( '*', 'spdb_permissions', array( 'site' => SOBI_ACL, 'published' => 1 ) );
 			$this->_availablePerm = $db->loadAssocList( 'pid' );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( 'permissions', SPLang::e( 'CANNOT_GET_PERMISSIONS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
 		}
 		$this->_permissions[ $sid ] = array();
 		/* create permissions array */
-		if( count( $permissions ) ) {
+		if ( count( $permissions ) ) {
 			foreach ( $permissions as $perm ) {
-				if( isset( $this->_availablePerm[ $perm ] ) ) {
-					if( !( isset( $this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ] ) ) ) {
+				if ( isset( $this->_availablePerm[ $perm ] ) ) {
+					if ( !( isset( $this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ] ) ) ) {
 						$this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ] = array();
 					}
 					$this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ][ $this->_availablePerm[ $perm ][ 'action' ] ][ $this->_availablePerm[ $perm ][ 'value' ] ] = true;
@@ -357,24 +353,23 @@ class SPJomlaUser extends JUser
 	 */
 	public static function getBaseData( $id )
 	{
-		if( is_int( $id ) ) {
+		if ( is_int( $id ) ) {
 			$ids = array( $id );
 		}
 		else {
 			$ids = $id;
 		}
-		if( !count( $ids ) ) {
+		if ( !count( $ids ) ) {
 			return false;
 		}
 		try {
 			$data = SPFactory::db()
 					->select( '*', '#__users', array( 'id' => $ids ) )
 					->loadObjectList( 'id' );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( 'user', SPLang::e( 'CANNOT_GET_USERS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
 		}
-		if( is_int( $id ) ) {
+		if ( is_int( $id ) ) {
 			return isset( $data[ $id ] ) ? $data[ $id ] : null;
 		}
 		else {
@@ -397,27 +392,50 @@ class SPJomlaUser extends JUser
 
 	/**
 	 * Sets the value of a user state variable.
-	 * @param	string	$key 	- The path of the state.
-	 * @param	string	$value 	- The value of the variable.
-	 * @return	mixed	The previous state, if one existed.
+	 * @param    string    $key     - The path of the state.
+	 * @param    string    $value     - The value of the variable.
+	 * @return    mixed    The previous state, if one existed.
 	 */
-	public function setUserState(  $key, &$value )
+	public function setUserState( $key, &$value )
 	{
 		return JFactory::getApplication()->setUserState( "com_sobipro.{$key}", $value );
 	}
 
 	/**
 	 * Gets the value of a user state variable.
-	 * @param	string $key 	- The key of the user state variable.
-	 * @param	string $request - The name of the variable passed in a request.
-	 * @param	string $default - The default value for the variable if not found. Optional.
-	 * @param	string $type	- Filter for the variable.
-	 * @return	mixed
+	 * @param    string $key     - The key of the user state variable.
+	 * @param    string $request - The name of the variable passed in a request.
+	 * @param    string $default - The default value for the variable if not found. Optional.
+	 * @param    string $type    - Filter for the variable.
+	 * @return    mixed
 	 */
 	public function & getUserState( $key, $request, $default = null, $type = 'none' )
 	{
-        $r = JFactory::getApplication()->getUserStateFromRequest( "com_sobipro.{$key}", $request, $default, $type );
-        SPRequest::set( $request, $r );
+		$r = JFactory::getApplication()->getUserStateFromRequest( "com_sobipro.{$key}", $request, $default, $type );
+		SPRequest::set( $request, $r );
+		return $r;
+	}
+
+	/**
+	 * Sets the value of a user data.
+	 * @param    string    $key     - The path of the state.
+	 * @param    string    $value     - The value of the variable.
+	 * @return    mixed    The previous state, if one existed.
+	 */
+	public function setUserData( $key, &$value )
+	{
+		return self::setUserState( $key, $value );
+	}
+
+	/**
+	 * Gets the value of a user data stored in session
+	 * @param    string $key - The key of the user state variable.
+	 * @param    string $default - The default value for the variable if not found. Optional.
+	 * @return    mixed
+	 */
+	public function & getUserData( $key, $default = null )
+	{
+		$r = JFactory::getApplication()->getUserState( "com_sobipro.{$key}", $default );
 		return $r;
 	}
 
@@ -427,6 +445,6 @@ class SPJomlaUser extends JUser
 	 */
 	public static function userUrl( $id )
 	{
-		return 'index.php?option=com_users&amp;task=edit&amp;cid[]='.$id;
+		return 'index.php?option=com_users&amp;task=edit&amp;cid[]=' . $id;
 	}
 }

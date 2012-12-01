@@ -24,6 +24,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  * @author Sigrid Suski
  * @version 1.0
  * @created 04-Mar-2009 03:05:59 PM
+ * @deprecated
  */
 final class SPAdmPageNav
 {
@@ -62,6 +63,7 @@ final class SPAdmPageNav
 	 * @param int $current
 	 * @param string $func
 	 * @param array $limits
+	 * @deprecated
 	 */
 	public function __construct( $limit, $count, $current, $func, $box, $boxFunc, $limits = array( 5, 10, 15, 25, 50 ) )
 	{
@@ -76,6 +78,7 @@ final class SPAdmPageNav
 	}
 
 	/**
+	 * @deprecated
 	 */
 	public function display( $return = false )
 	{
