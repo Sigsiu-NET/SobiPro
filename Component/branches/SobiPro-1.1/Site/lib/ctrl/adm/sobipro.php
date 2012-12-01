@@ -229,9 +229,10 @@ final class SobiProAdmCtrl
 
 	/**
 	 * Try to find out what we have to do
-	 *     - If we have a task - parse task
+	 *  - If we have a task - parse task
 	 *  - If we don't have a task, but sid, we are going via default object task
 	 *  - Otherwise it could be only the frontpage
+	 * @throws SPException
 	 * @return void
 	 */
 	private function route()

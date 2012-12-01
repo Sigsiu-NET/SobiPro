@@ -297,7 +297,7 @@ final class SobiProCtrl
 			/* route task for multiple objects - e.g removing or publishing elements from a list */
 			/* and there was some of multiple sids */
 			if ( count( SPRequest::arr( 'sid' ) ) || count( SPRequest::arr( 'c_sid' ) ) || count( SPRequest::arr( 'e_sid' ) ) ) {
-				$sid = key_exists( 'sid', $_REQUEST ) ? 'sid' : ( key_exists( 'c_sid', $_REQUEST ) ? 'c_sid' : 'e_sid' );
+				$sid = array_key_exists( 'sid', $_REQUEST ) ? 'sid' : ( array_key_exists( 'c_sid', $_REQUEST ) ? 'c_sid' : 'e_sid' );
 				if ( count( SPRequest::arr( $sid ) ) ) {
 					/* @var SPdb $db */
 					$db =& SPFactory::db();
@@ -371,8 +371,7 @@ final class SobiProCtrl
 	private function routeObj()
 	{
 		try {
-			$ctrl = SPLoader::loadController( $this->_model->oType );
-			$ctrl = new $ctrl();
+			$ctrl = SPFactory::Controller( $this->_model->oType );
 			if ( $ctrl instanceof SPController ) {
 				$this->setController( $ctrl );
 				if ( $this->_model->id == SPRequest::sid() ) {

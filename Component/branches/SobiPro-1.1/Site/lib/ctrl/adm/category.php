@@ -94,6 +94,11 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			$this->authorise( $this->_task );
 			$this->_model->changeState( $state );
 			$state = ( int )( $this->_task == 'publish' );
+			SPFactory::cache()
+					->purgeSectionVars()
+					->deleteObj( 'category', $this->_model->get( 'id' ) )
+					->deleteObj( 'category', $this->_model->get( 'parent' ) );
+
 			$this->response( Sobi::Back(), Sobi::Txt( $state ? 'CAT.PUBLISHED' : 'CAT.UNPUBLISHED' ), false );
 		}
 		else {
@@ -130,10 +135,12 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		foreach ( $sids as $sid ) {
 			try {
 				SPFactory::db()->update( 'spdb_object', array( 'approved' => $approve ? 1 : 0 ), array( 'id' => $sid, 'oType' => 'category' ) );
+				SPFactory::cache()->deleteObj( 'category', $sid );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
+		SPFactory::cache()->purgeSectionVars();
 		$this->response( Sobi::Back(), Sobi::Txt( $approve ? 'CAT.APPROVED' : 'CAT.UNAPPROVED' ), false );
 	}
 
