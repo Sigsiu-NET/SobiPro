@@ -16,6 +16,13 @@
  * $Revision:$
  * $Author:$
  */
+/**
+ * @author Sigrid Suski
+ * @version 1.1
+ * @created 04-Mar-2009 03:05:59 PM
+ * @updated Sat, Dec 1, 2012 13:15:30
+ * @deprecated
+ */
 final class SPPagination extends SPObject
 {
 	/** @var int */
@@ -41,7 +48,6 @@ final class SPPagination extends SPObject
 	{
 		$pn = null;
 		$pages = $this->limit > 0 ? ceil( $this->count / $this->limit ) : 0;
-//		$pn .= Sobi::Txt( 'PN.DISPLAY' );
 		/** if we have any pages */
 		if ( $pages > 1 ) {
 			$this->_content[ ] = "<div class=\"{$this->class}\">";

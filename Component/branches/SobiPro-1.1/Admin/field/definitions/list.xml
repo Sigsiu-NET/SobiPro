@@ -42,8 +42,8 @@
                         <option value="required.asc" label="FMN.ORDER_BY_REQUIRED_ASC"/>
 						<option value="editable.desc" label="FMN.ORDER_BY_EDITABLE_DESC"/>
                         <option value="editable.asc" label="FMN.ORDER_BY_EDITABLE_ASC"/>
-						<option value="isFree.asc" label="FMN.ORDER_BY_ISFREE_ASC"/>
-						<option value="isFree.desc" label="FMN.ORDER_BY_ISFREE_DESC"/>
+						<option value="isFree.desc" label="FMN.ORDER_BY_ISFREE_ASC"/>
+						<option value="isFree.asc" label="FMN.ORDER_BY_ISFREE_DESC"/>
 						<option value="order.asc" label="FMN.ORDER_BY_ORDER_ASC"/>
 						<option value="order.desc" label="FMN.ORDER_BY_ORDER_DESC"/>
 					</values>

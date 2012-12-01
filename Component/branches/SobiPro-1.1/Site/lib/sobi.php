@@ -136,7 +136,6 @@ abstract class Sobi
 	 */
 	public static function Redirect( $address, $msg = null, $msgtype = 'message', $now = false )
 	{
-		SPFactory::mainframe();
 		SPMainFrame::setRedirect( $address, $msg, $msgtype );
 		if ( $now ) {
 			SPMainFrame::redirect();
@@ -258,6 +257,28 @@ abstract class Sobi
 		return SPFactory::user()->getUserState( $key, $request, $default, $type );
 	}
 
+	/**
+	 * Sets the value of a user data.
+	 * @param    string    $key     - The path of the state.
+	 * @param    string    $value     - The value of the variable.
+	 * @return    mixed    The previous state, if one existed.
+	 */
+	public static function SetUserData( $key, $value )
+	{
+		return SPFactory::user()->setUserState( $key, $value );
+	}
+
+	/**
+	 * Gets the value of a user data stored in session
+	 * @param    string $key - The key of the user state variable.
+	 * @param    string $default - The default value for the variable if not found. Optional.
+	 * @return    mixed
+	 */
+	public static function GetUserData( $key, $default = null )
+	{
+		return SPFactory::user()->getUserData( $key, $default );
+	}
+
 	public static function Back()
 	{
 		return SPMainFrame::getBack();
@@ -312,7 +333,7 @@ abstract class Sobi
 		if ( !( $name ) ) {
 			return SPFactory::registry()->get( 'current_section' );
 		}
-		elseif ( ( string ) $name == 'nid' ) {
+		elseif ( ( string )$name == 'nid' ) {
 			return SPLang::nid( SPFactory::registry()->get( 'current_section_name' ) );
 		}
 		else {

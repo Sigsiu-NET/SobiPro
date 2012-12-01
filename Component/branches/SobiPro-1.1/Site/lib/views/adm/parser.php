@@ -233,6 +233,19 @@ class SPTplParser
 					}
 				}
 				$attr = implode( ' ', $attr );
+				$messages = SPFactory::message()->getMessages();
+				if ( count( $messages ) ) {
+					foreach ( $messages as $type => $texts ) {
+						if ( count( $texts ) ) {
+							$this->_out[ ] = "<div class=\"alert alert-{$type}\">";
+							$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
+							foreach( $texts as $text ) {
+								$this->_out[ ] = "<div>{$text}</div>";
+							}
+							$this->_out[ ] = '</div>';
+						}
+					}
+				}
 				$this->_out[ ] = "<div {$attr}></div>";
 				break;
 			case 'pagination':

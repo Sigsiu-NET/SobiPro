@@ -490,7 +490,7 @@ class SPField extends SPObject
 		}
 		$this->priority = $this->priority ? $this->priority : 5;
 		/* if field is an admin filed - it cannot be required */
-		if ( ( $this->adminField || !( $this->editable ) || !( $this->enabled ) ) && ( SPRequest::task() != 'field.list' ) ) {
+		if ( ( $this->adminField || !( $this->editable ) || !( $this->enabled ) ) && ( !( defined( 'SOBIPRO_ADM' ) ) ) ) {
 			$this->required = false;
 		}
 	}

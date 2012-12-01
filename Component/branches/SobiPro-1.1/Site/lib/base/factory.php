@@ -126,8 +126,16 @@ abstract class SPFactory
 	public static function & header()
 	{
 		SPLoader::loadClass( 'base.header' );
-		$h =& SPHeader::getInstance();
-		return $h;
+		return SPHeader::getInstance();
+	}
+
+	/**
+	 * @return SPMessage
+	 */
+	public static function & message()
+	{
+		SPLoader::loadClass( 'base.message' );
+		return SPMessage::getInstance();
 	}
 
 	/**

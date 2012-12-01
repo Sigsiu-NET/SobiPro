@@ -418,8 +418,7 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		if ( SPRequest::cmd( 'method', null ) == 'xhr' ) {
 			if ( $redirect && $message ) {
-				SPFactory::mainframe()->msg( $message, $type );
-				SPFactory::mainframe()->proceedMessageQueue();
+				SPFactory::message()->setMessage( $message, false, $type );
 			}
 			SPFactory::mainframe()->cleanBuffer();
 			header( 'Content-type: application/json' );
@@ -433,7 +432,8 @@ abstract class SPController extends SPObject implements SPControl
 			exit;
 		}
 		else {
-			Sobi::Redirect( $url, $message, $type, true );
+			SPFactory::message()->setMessage( $message, false, $type );
+			Sobi::Redirect( $url, null, null, true );
 		}
 	}
 
