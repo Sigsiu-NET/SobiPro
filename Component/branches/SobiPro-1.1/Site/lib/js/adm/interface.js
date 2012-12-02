@@ -272,10 +272,22 @@ SobiPro.jQuery( document ).ready( function ()
 	}
 	catch ( e ) {
 	}
-    SobiPro.jQuery( 'a[rel=tooltip]' )
-        .tooltip( { 'html': true })
-        .click( function ( e ) { e.preventDefault() } );
-    SobiPro.jQuery( 'a[rel=popover]' )
-        .popover( { 'html': true, 'trigger': 'click', 'placement': 'top' })
-        .click( function ( e ) { e.preventDefault() } );
+	SobiPro.jQuery( 'a[rel=tooltip]' )
+		.tooltip( { 'html':true } )
+		.click( function ( e )
+		{
+			e.preventDefault()
+		} );
+	var template = '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="pull-right close">x</div><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>';
+	SobiPro.jQuery( 'a[rel=popover]' )
+		.popover( { 'html':true, 'trigger':'click', 'placement':'top', 'template':template } )
+		.click( function ( e )
+		{
+			e.preventDefault();
+			var proxy = SobiPro.jQuery( this );
+			SobiPro.jQuery( this ).parent().find( '.popover' ).find( '.close' ).click( function ()
+			{
+				proxy.popover( 'hide' );
+			} )
+		} );
 } );
