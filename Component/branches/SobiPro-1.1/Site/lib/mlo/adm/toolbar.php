@@ -40,6 +40,11 @@ class SpAdmToolbar
 		'revoke' => 'thumbs-down',
 		'entry' => 'file',
 		'category' => 'folder-open',
+		'panel' => 'dashboard',
+		'config' => 'wrench',
+		'acl' => 'key',
+		'extensions' => 'magic',
+		'options' => 'cogs',
 	);
 	private $labels = array(
 		'apply' => 'SAVE_ONLY',
@@ -57,6 +62,11 @@ class SpAdmToolbar
 		'disable' => 'DISABLE',
 		'approve' => 'APPROVE',
 		'revoke' => 'REVOKE',
+		'panel' => 'CONTROL_PANEL',
+		'config' => 'GLOBAL_CONFIG',
+		'acl' => 'ACL',
+		'extensions' => 'SAM',
+		'options' => 'OPTIONS'
 	);
 	protected $btClass = 'btn';
 
@@ -124,11 +134,12 @@ class SpAdmToolbar
 				case 'buttons':
 					$icon = ( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ? $button[ 'ico' ] : $this->getIcon( $button );
 					$label = ( isset( $button[ 'label' ] ) && $button[ 'label' ] ) ? $button[ 'label' ] : $this->getLabel( $button );
+					$class = isset( $button[ 'dropdown-class' ] ) ? ' '.$button[ 'dropdown-class' ] : null;
 					$this->output[ ] = '<div class="btn-group">';
 					$this->output[ ] = '<button class="' . $this->btClass . ' dropdown-toggle" data-toggle="dropdown">';
 					$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
 					$this->output[ ] = '<span class="caret"></span>&nbsp;</button>';
-					$this->output[ ] = '<div class="dropdown-menu">';
+					$this->output[ ] = "<div class=\"dropdown-menu{$class}\">";
 					$this->output[ ] = '<ul class="nav nav-stacked SpDropDownBt">';
 					foreach ( $button[ 'buttons' ] as $bt ) {
 						$this->renderButton( $bt, true );
@@ -152,7 +163,11 @@ class SpAdmToolbar
 	{
 		$rel = null;
 		$class = isset( $button[ 'class' ] ) ? ' ' . $button[ 'class' ] : null;
-		if ( !( isset( $button[ 'task' ] ) ) || !( $button[ 'task' ] ) ) {
+		if ( isset( $button[ 'type' ] ) && $button[ 'type' ] == 'url' ) {
+			$rel = null;
+			$href = $this->getLink( $button );
+		}
+		elseif ( ( !( isset( $button[ 'task' ] ) ) || !( $button[ 'task' ] ) ) ) {
 			$href = $this->getLink( $button );
 		}
 		else {
@@ -224,6 +239,9 @@ class SpAdmToolbar
 				case 'help':
 					$link = 'http://sobipro.sigsiu.net/help_screen/' . Sobi::Reg( 'help_task', Sobi::Reg( 'task', SPRequest::task() ) );
 					break;
+				case 'url':
+					$link = Sobi::Url( $button[ 'task' ] );
+					break;
 			}
 		}
 		return $link;
@@ -231,6 +249,10 @@ class SpAdmToolbar
 
 	private function getIcon( $button, $group = false )
 	{
+		if ( $button[ 'type' ] == 'url' ) {
+			$button[ 'type' ] = $button[ 'task' ];
+			return $this->getIcon( $button );
+		}
 		if ( isset( $this->icons[ $button[ 'type' ] ] ) ) {
 			$icon = $this->icons[ $button[ 'type' ] ];
 		}
@@ -242,6 +264,10 @@ class SpAdmToolbar
 
 	private function getLabel( $button )
 	{
+		if ( $button[ 'type' ] == 'url' ) {
+			$button[ 'type' ] = $button[ 'task' ];
+			return $this->getLabel( $button );
+		}
 		if ( isset( $this->labels[ $button[ 'type' ] ] ) ) {
 			$label = Sobi::Txt( 'TB.' . $this->labels[ $button[ 'type' ] ] );
 		}

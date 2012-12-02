@@ -17,7 +17,13 @@
 			<button type="revoke" task="entry.unapprove" />
 		</buttons>
 		<divider />
-		<button type="help" target="_blank" />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="help" target="_blank" />
+		</buttons>
 	</toolbar>
 	<body>
 		<message id="spMessage" />
@@ -28,11 +34,11 @@
 				<field type="select" name="elimit" selected="entries-limit" class="input-mini spOrdering">
 					<values>
 						<values label="LISTING_LIMIT" />
-						<option value="5"/>
-						<option value="15"/>
-						<option value="25"/>
-						<option value="50"/>
-						<option value="100"/>
+						<option value="5" />
+						<option value="15" />
+						<option value="25" />
+						<option value="50" />
+						<option value="100" />
 					</values>
 				</field>
 			</div>
@@ -79,12 +85,12 @@
 		<pagination set="eSite" class="pagination pagination-centered pagination-small" inputbox="right">
 			<param name="count" value="entries-count" parse="true" />
 			<param name="limit" value="entries-limit" parse="true" />
-			<param name="current" value="entries-site" parse="true"/>
+			<param name="current" value="entries-site" parse="true" />
 			<param name="url">
-				<param name="option" value="com_sobipro"/>
-				<param name="task" value="section.entries"/>
+				<param name="option" value="com_sobipro" />
+				<param name="task" value="section.entries" />
 				<param name="pid" value="request.pid" parse="true" />
-				<param name="eSite" value=""/>
+				<param name="eSite" value="" />
 			</param>
 		</pagination>
 	</body>
