@@ -148,6 +148,10 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 					}
 				}
 				$this->_loaded = true;
+				if ( !( strlen( $this->name ) ) ) {
+					$this->name = Sobi::Txt( 'ENTRY_NO_NAME' );
+					SPFactory::message()->warning( 'ENTRIES_BASE_DATA_INCOMPLETE' );
+				}
 			}
 		}
 	}
