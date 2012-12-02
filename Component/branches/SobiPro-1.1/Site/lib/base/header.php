@@ -54,7 +54,7 @@ final class SPHeader
 	/**
 	 * @var array
 	 */
-	private $authors = array();
+	private $author = array();
 	/**
 	 * @var array
 	 */
@@ -468,7 +468,7 @@ final class SPHeader
 			$this->addKeyword( $obj->get( 'metaKeys' ) );
 		}
 		if ( $obj->get( 'metaAuthor' ) ) {
-			$this->authors[ ] = $obj->get( 'metaAuthor' );
+			$this->author[ ] = $obj->get( 'metaAuthor' );
 		}
 		if ( $obj->get( 'metaRobots' ) ) {
 			$this->robots[ ] = $obj->get( 'metaRobots' );
@@ -517,7 +517,7 @@ final class SPHeader
 	public function & reset()
 	{
 		$this->keywords = array();
-		$this->authors = array();
+		$this->author = array();
 		$this->robots = array();
 		$this->description = array();
 		$this->cssFiles = array();
@@ -636,7 +636,7 @@ final class SPHeader
 			$this->css = array( "<style type=\"text/css\">\n{$cssCode}\n</style>" );
 		}
 		$this->head[ 'keywords' ] = $this->keywords;
-		$this->head[ 'author' ] = $this->authors;
+		$this->head[ 'author' ] = $this->author;
 		$this->head[ 'robots' ] = $this->robots;
 		$this->head[ 'description' ] = $this->description;
 		$this->head[ 'css' ] = $this->_cssFiles();

@@ -73,8 +73,9 @@ final class SPMainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface
 						break;
 					}
 					case 'robots' :
-					case 'authors': {
-						$document->setHeadData( array( $type => implode( ', ', $code ) ) );
+					case 'author': {
+						$document->setMetaData( $type, implode( ', ', $code ) );
+//						$document->setHeadData( array( $type => implode( ', ', $code ) ) );
 						break;
 					}
 					case 'keywords': {

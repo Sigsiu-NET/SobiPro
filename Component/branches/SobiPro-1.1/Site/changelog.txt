@@ -56,7 +56,8 @@
    (#) getChilds() in model does not care about the child type
    (#) Meta author corrected to 'author'
    (#) Suffix not shown in backend
-   (#) Approved state has no effect
+   (#) Approved state for category has no effect
+   (#) Meta author and robots not added to header (Issue #734)
 
 
 -------------------

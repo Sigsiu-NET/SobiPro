@@ -713,6 +713,7 @@ class SPAdmView extends SPObject implements SPView
 						if ( $value ) {
 							break;
 						}
+						/** no break here */
 					case 'values':
 						$args[ $attribute->nodeName ] = $this->get( $attribute->nodeValue );
 						break;

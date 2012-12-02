@@ -18,7 +18,7 @@
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/cms/joomla16/base/mainframe.php $
  */
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-require_once dirname(__FILE__).'/../../joomla_common/base/mainframe.php';
+require_once dirname( __FILE__ ) . '/../../joomla_common/base/mainframe.php';
 /**
  * Interface between SobiPro and the used CMS
  * @author Radek Suski
@@ -34,10 +34,10 @@ final class SPMainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface
 	{
 		parent::getBasicCfg();
 		$cfg =& SPFactory::config();
-		if( defined( 'SOBIPRO_ADM' ) ) {
+		if ( defined( 'SOBIPRO_ADM' ) ) {
 			$cfg->change( 'adm_img_folder_live',
 				Sobi::FixPath(
-					JURI::root().DS.SOBI_ADM_FOLDER.DS.'templates'.DS.JFactory::getApplication()->getTemplate().'/images/admin'
+					JURI::root() . DS . SOBI_ADM_FOLDER . DS . 'templates' . DS . JFactory::getApplication()->getTemplate() . '/images/admin'
 				), 'general'
 			);
 		}
@@ -49,67 +49,72 @@ final class SPMainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface
 	 */
 	public function addHead( $head )
 	{
-		if( SPRequest::cmd( 'format' ) == 'raw' ) {
+		if ( SPRequest::cmd( 'format' ) == 'raw' ) {
 			return true;
 		}
-		$document =& JFactory::getDocument();
-		$mf =& JFactory::getApplication();
+		/** @var JDocument $document */
+		$document = JFactory::getDocument();
 		$c = 0;
-		if( count( $head ) ) {
+		if ( count( $head ) ) {
 			$document->addCustomTag( "\n\t<!--  SobiPro Head Tags Output  -->\n" );
-			$document->addCustomTag( "\n\t<script type=\"text/javascript\">/*\n<![CDATA[*/ \n\tvar SobiProUrl = '". Sobi::FixPath( self::Url( array( 'task' => '%task%' ), true, false, true ) )."'; \n\tvar SobiProSection = ".( Sobi::Section() ? Sobi::Section() : 0 )."; \n\tvar SPLiveSite = '".Sobi::Cfg( 'live_site' )."'; \n/*]]>*/\n</script>\n" );
-			if( defined( 'SOBI_ADM_PATH' ) ) {
-				$document->addCustomTag( "\n\t<script type=\"text/javascript\">/* <![CDATA[ */ \n\tvar SobiProAdmUrl = '". Sobi::FixPath( Sobi::Cfg( 'live_site' ).SOBI_ADM_FOLDER.'/'.self::Url( array( 'task' => '%task%' ), true, false ) )."'; \n/* ]]> */</script>\n" );
+			$document->addCustomTag( "\n\t<script type=\"text/javascript\">/*\n<![CDATA[*/ \n\tvar SobiProUrl = '" . Sobi::FixPath( self::Url( array( 'task' => '%task%' ), true, false, true ) ) . "'; \n\tvar SobiProSection = " . ( Sobi::Section() ? Sobi::Section() : 0 ) . "; \n\tvar SPLiveSite = '" . Sobi::Cfg( 'live_site' ) . "'; \n/*]]>*/\n</script>\n" );
+			if ( defined( 'SOBI_ADM_PATH' ) ) {
+				$document->addCustomTag( "\n\t<script type=\"text/javascript\">/* <![CDATA[ */ \n\tvar SobiProAdmUrl = '" . Sobi::FixPath( Sobi::Cfg( 'live_site' ) . SOBI_ADM_FOLDER . '/' . self::Url( array( 'task' => '%task%' ), true, false ) ) . "'; \n/* ]]> */</script>\n" );
 			}
 			foreach ( $head as $type => $code ) {
-				switch( $type ) {
-					default: {
-						if( count( $code ) ) {
+				switch ( $type ) {
+					default:
+						{
+						if ( count( $code ) ) {
 							foreach ( $code as $html ) {
 								++$c;
 								$document->addCustomTag( $html );
 							}
 						}
 						break;
-					}
+						}
 					case 'robots' :
-					case 'authors': {
-						$document->setHeadData( array( $type => implode( ', ', $code ) ) );
+					case 'author':
+					{
+						$document->setMetaData( $type, implode( ', ', $code ) );
+//						$document->setHeadData( array( $type => implode( ', ', $code ) ) );
 						break;
 					}
-					case 'keywords': {
-							$metaKeys = trim( implode( ', ', $code ) );
-							if( Sobi::Cfg( 'meta.keys_append', true ) ) {
-								$metaKeys .= Sobi::Cfg( 'string.meta_keys_separator', ',' ) . $document->getMetaData( 'keywords' );
-							}
-							$metaKeys = explode( Sobi::Cfg( 'string.meta_keys_separator', ',' ), $metaKeys );
-							if( count( $metaKeys ) ) {
-								foreach ( $metaKeys as $i => $p ) {
-									if( strlen( trim( $p ) ) ) {
-										$metaKeys[ $i ] = trim( $p );
-									}
-									else {
-										unset( $metaKeys[ $i ] );
-									}
+					case 'keywords':
+					{
+						$metaKeys = trim( implode( ', ', $code ) );
+						if ( Sobi::Cfg( 'meta.keys_append', true ) ) {
+							$metaKeys .= Sobi::Cfg( 'string.meta_keys_separator', ',' ) . $document->getMetaData( 'keywords' );
+						}
+						$metaKeys = explode( Sobi::Cfg( 'string.meta_keys_separator', ',' ), $metaKeys );
+						if ( count( $metaKeys ) ) {
+							foreach ( $metaKeys as $i => $p ) {
+								if ( strlen( trim( $p ) ) ) {
+									$metaKeys[ $i ] = trim( $p );
 								}
-								$metaKeys = implode( ', ', $metaKeys );
+								else {
+									unset( $metaKeys[ $i ] );
+								}
 							}
-							else {
-								$metaKeys = null;
-							}
-							$document->setMetadata( 'keywords', $metaKeys );
-							break;
+							$metaKeys = implode( ', ', $metaKeys );
+						}
+						else {
+							$metaKeys = null;
+						}
+						$document->setMetadata( 'keywords', $metaKeys );
+						break;
 					}
-					case 'description': {
+					case 'description':
+					{
 						$metaDesc = implode( '. ', $code );
-						if( strlen( $metaDesc ) ) {
-							if( Sobi::Cfg( 'meta.desc_append', true ) ) {
+						if ( strlen( $metaDesc ) ) {
+							if ( Sobi::Cfg( 'meta.desc_append', true ) ) {
 								$metaDesc .= '. ' . $document->get( 'description' );
 							}
 							$metaDesc = explode( ' ', $metaDesc );
-							if( count( $metaDesc ) ) {
+							if ( count( $metaDesc ) ) {
 								foreach ( $metaDesc as $i => $p ) {
-									if( strlen( trim( $p ) ) ) {
+									if ( strlen( trim( $p ) ) ) {
 										$metaDesc[ $i ] = trim( $p );
 									}
 									else {
@@ -128,10 +133,11 @@ final class SPMainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface
 				}
 			}
 			$jsUrl = Sobi::FixPath( self::Url( array( 'task' => 'txt.js', 'tmpl' => 'component' ), true, false, false ) );
-			$document->addCustomTag( "\n\t<script type=\"text/javascript\" src=\"".str_replace( '&', '&amp;', $jsUrl )."\"></script>\n" );
+			$document->addCustomTag( "\n\t<script type=\"text/javascript\" src=\"" . str_replace( '&', '&amp;', $jsUrl ) . "\"></script>\n" );
 			$c++;
 			$document->addCustomTag( "\n\t<!--  SobiPro ({$c}) Head Tags Output -->\n" );
 		}
 	}
 }
+
 ?>
