@@ -191,13 +191,13 @@ abstract class SPHtml_Input
 	 * @param string $image - url of an image
 	 * @return string
 	 */
-	public static function textarea( $name, $value = null, $editor = false, $width = 550, $height = 350, $params = '')
+	public static function textarea( $name, $value = null, $editor = false, $width = 550, $height = 350, $params = '' )
 	{
 		self::checkArray( $params );
 		if ( !isset( $params[ 'style' ] ) ) {
 			$params[ 'style' ] = "width: {$width}px; height: {$height}px;";
 		}
-        Sobi::Trigger( 'BeforeCreateField', ucfirst( __FUNCTION__ ), array( &$name, &$value, &$editor, &$width, &$height, &$params ) );
+		Sobi::Trigger( 'BeforeCreateField', ucfirst( __FUNCTION__ ), array( &$name, &$value, &$editor, &$width, &$height, &$params ) );
 		$value = SPLang::entities( $value );
 		if ( $editor ) {
 			$e = Sobi::Cfg( 'html.editor', 'cms.html.editor' );
@@ -666,39 +666,39 @@ abstract class SPHtml_Input
 		return "\n<!-- Date Picker '{$name}' Output -->{$f}<!-- Date Picker '{$name}' End -->\n\n";
 	}
 
-    /**
-     * @param $name - field name
-     * @param $value - field value
-     * @param string $dateFormat - date format in PHP
-     * @param null $params - additional parameters
-     * @param string $icon - field icon
-     * @return string
-     */
-    public static function dateGetter( $name, $value, $class = null, $dateFormat = 'Y-m-d H:i:s', $params = null )
-    {
-        self::createLangFile();
-        $value = strtotime( $value );
-        $valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat ) : null;
-        $params = self::checkArray( $params );
-        if ( !( isset( $params[ 'id' ] ) ) ) {
-            $params[ 'id' ] = SPLang::nid( $name );
-        }
-        if ($class) {
-            $params[ 'class' ] = $class;
-        }
-        $params = self::params( $params );
+	/**
+	 * @param $name - field name
+	 * @param $value - field value
+	 * @param string $dateFormat - date format in PHP
+	 * @param null $params - additional parameters
+	 * @param string $icon - field icon
+	 * @return string
+	 */
+	public static function dateGetter( $name, $value, $class = null, $dateFormat = 'Y-m-d H:i:s', $params = null )
+	{
+		self::createLangFile();
+		$value = strtotime( $value );
+		$valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat ) : null;
+		$params = self::checkArray( $params );
+		if ( !( isset( $params[ 'id' ] ) ) ) {
+			$params[ 'id' ] = SPLang::nid( $name );
+		}
+		if ( $class ) {
+			$params[ 'class' ] = $class;
+		}
+		$params = self::params( $params );
 
-        $f = "\n";
-        $f .= '<div class="spOutput">';
-        $f .= "\n\t";
-        $f .= '<span '. $params . '>' . $valueDisplay . '</span>';
-        $f .= "\n";
-        $f .= '</div>';
-        $f .= "\n";
+		$f = "\n";
+		$f .= '<div class="spOutput">';
+		$f .= "\n\t";
+		$f .= '<span ' . $params . '>' . $valueDisplay . '</span>';
+		$f .= "\n";
+		$f .= '</div>';
+		$f .= "\n";
 
-        Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-        return "\n<!-- Date Getter '{$name}' Output -->{$f}<!-- Date Getter '{$name}' End -->\n\n";
-    }
+		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
+		return "\n<!-- Date Getter '{$name}' Output -->{$f}<!-- Date Getter '{$name}' End -->\n\n";
+	}
 
 	private static function createLangFile()
 	{
@@ -730,7 +730,7 @@ abstract class SPHtml_Input
 	{
 		static $count = 0;
 		static $session = null;
-		if( !( $session ) ) {
+		if ( !( $session ) ) {
 			$session = SPFactory::user()->getUserState( 'userSelector', null, array() );
 		}
 		$params = self::checkArray( $params );
@@ -778,6 +778,7 @@ abstract class SPHtml_Input
 		}
 		$modal = '<div class="response btn-group" data-toggle="buttons-radio"></div><br/><button class="btn btn-block hide more" type="button">' . Sobi::Txt( 'LOAD_MORE' ) . '</button>';
 		$filter = '<input type="text" placeholder="' . Sobi::Txt( 'FILTER' ) . '" class="search pull-right" name="q">';
+		$id = $params[ 'id' ];
 		$params = self::params( $params );
 		$f = "\n";
 		$f .= '<div class="spUserSelector">';
@@ -791,63 +792,64 @@ abstract class SPHtml_Input
 		$f .= '<input type="hidden" value="1" name="' . SPFactory::mainframe()->token() . '"/>';
 		$f .= "\n\t";
 		$f .= "\n";
-		$f .= self::modalWindow( Sobi::Txt( $header ).$filter, $params[ 'id' ] . 'window', $modal );
+		$f .= self::modalWindow( Sobi::Txt( $header ) . $filter, $id . '-window', $modal );
 		$f .= '</div>';
 		$f .= "\n";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
 		return "\n<!-- User Picker '{$name}' Output -->{$f}<!-- User Picker '{$name}' End -->\n\n";
 	}
 
-    public static function userGetter( $name, $value, $params = null, $class = null, $format = '%user' )
-    {
-        $params = self::checkArray( $params );
-        if ( !( isset( $params[ 'id' ] ) ) ) {
-            $params[ 'id' ] = SPLang::nid( $name );
-        }
-        if ($class) {
-            $params[ 'class' ] = $class;
-        }
-        $user = null;
-        $user = SPUser::getBaseData( ( int )$value );
-        $userData = null;
-        if ( $user ) {
-            $replacements = array();
-            preg_match_all( '/\%[a-z]*/', $format, $replacements );
-            $placeholders = array();
-            if ( isset( $replacements[ 0 ] ) && count( $replacements[ 0 ] ) ) {
-                foreach ( $replacements[ 0 ] as $placeholder ) {
-                    $placeholders[ ] = str_replace( '%', null, $placeholder );
-                }
-            }
-            if ( count( $replacements ) ) {
-                foreach ( $placeholders as $attribute ) {
-                    if ( isset( $user->$attribute ) ) {
-                        $format = str_replace( '%' . $attribute, $user->$attribute, $format );
-                    }
-                }
-                $userData = $format;
-            }
-        }
-        $params = self::params( $params );
-        $f = "\n";
-        $f .= '<div class="spOutput">';
-        $f .= "\n\t";
-        $f .= '<span '. $params . '>' . $userData . '</span>';
-        $f .= "\n";
-        $f .= '</div>';
-        $f .= "\n";
-        Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-        return "\n<!-- User Getter '{$name}' Output -->{$f}<!-- User Getter '{$name}' End -->\n\n";
-    }
+	public static function userGetter( $name, $value, $params = null, $class = null, $format = '%user' )
+	{
+		$params = self::checkArray( $params );
+		if ( !( isset( $params[ 'id' ] ) ) ) {
+			$params[ 'id' ] = SPLang::nid( $name );
+		}
+		if ( $class ) {
+			$params[ 'class' ] = $class;
+		}
+		$user = null;
+		$user = SPUser::getBaseData( ( int )$value );
+		$userData = null;
+		if ( $user ) {
+			$replacements = array();
+			preg_match_all( '/\%[a-z]*/', $format, $replacements );
+			$placeholders = array();
+			if ( isset( $replacements[ 0 ] ) && count( $replacements[ 0 ] ) ) {
+				foreach ( $replacements[ 0 ] as $placeholder ) {
+					$placeholders[ ] = str_replace( '%', null, $placeholder );
+				}
+			}
+			if ( count( $replacements ) ) {
+				foreach ( $placeholders as $attribute ) {
+					if ( isset( $user->$attribute ) ) {
+						$format = str_replace( '%' . $attribute, $user->$attribute, $format );
+					}
+				}
+				$userData = $format;
+			}
+		}
+		$params = self::params( $params );
+		$f = "\n";
+		$f .= '<div class="spOutput">';
+		$f .= "\n\t";
+		$f .= '<span ' . $params . '>' . $userData . '</span>';
+		$f .= "\n";
+		$f .= '</div>';
+		$f .= "\n";
+		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
+		return "\n<!-- User Getter '{$name}' Output -->{$f}<!-- User Getter '{$name}' End -->\n\n";
+	}
 
 
-    public static function modalWindow( $header, $id, $content = null, $classes = 'modal hide', $closeText = 'CLOSE', $saveText = 'SAVE', $style = null )
+	public static function modalWindow( $header, $id = null, $content = null, $classes = 'modal hide', $closeText = 'CLOSE', $saveText = 'SAVE', $style = null )
 	{
 		$html = null;
 		if ( $style ) {
 			$style = " style=\"{$style}\"";
 		}
-		$html .= '<div class="' . $classes . '" id="' . $id . '"' . $style . '>
+		$id = strlen( $id ) ? '" id="' . $id . '"' : null;
+		$html .= '<div class="' . $classes . $id . $style . '>
 					<div class="modal-header">
 						<h3>' . ( $header ) . '</h3>
 					</div>
@@ -863,7 +865,7 @@ abstract class SPHtml_Input
 		return $html;
 	}
 
-	public static function hidden( $name, $value = null, $id = null)
+	public static function hidden( $name, $value = null, $id = null )
 	{
 		$id = $id ? $id : SPLang::nid( $name );
 		$f = "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\"/>";

@@ -257,7 +257,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $apply || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_type ) ) );
-				$this->response( Sobi::Url( array( $this->_type . '.edit', 'sid' => $sid ) ), $msg );
+				$this->response( Sobi::Url( array( $this->_type . '.edit', 'sid' => $sid ) ), $msg,false, 'success', array( 'sets' => $sets )  );
 			}
 			else {
 				$msg = Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' );
@@ -265,7 +265,7 @@ abstract class SPController extends SPObject implements SPControl
 			}
 		}
 		else {
-			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false, 'success' );
+			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) ), true, 'success' );
 		}
 	}
 
