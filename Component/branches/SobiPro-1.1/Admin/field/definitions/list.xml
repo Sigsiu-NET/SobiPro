@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definition>
 	<header>
-		<title value="FM.SITE_TITLE"/>
+		<title value="FM.SITE_TITLE" />
 	</header>
 	<toolbar title="FM.SITE_TITLE" icon="SobiFields">
-		<buttons type="new" buttons="fieldTypes"/>
-		<divider/>
+		<buttons type="new" buttons="fieldTypes" />
+		<divider />
 		<buttons type="actions">
-			<button type="delete" task="field.delete"/>
-			<nav-header label="TB.ENABLED"/>
-			<button type="enable" task="field.publish"/>
-			<button type="disable" task="field.hide"/>
+			<button type="delete" task="field.delete" />
+			<nav-header label="TB.ENABLED" />
+			<button type="enable" task="field.publish" />
+			<button type="disable" task="field.hide" />
 			<!--<nav-header label="TB.REQUIRED"/>-->
 			<!--<button type="custom" task="field.setRequired" label="TB.SET_REQ" ico="asterisk"/>-->
 			<!--<button type="custom" task="field.setNotRequired" label="TB.SET_NOT_REQ" ico="remove-sign"/>-->
@@ -18,107 +18,113 @@
 			<!--<button type="custom" task="field.setEditable" label="TB.SET_EDITABLE" ico="pencil"/>-->
 			<!--<button type="custom" task="field.setNotEditable" label="TB.SET_NOT_EDITABLE" ico="remove-sign"/>-->
 		</buttons>
-		<divider/>
-		<button type="help" target="_blank"/>
+		<divider />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="help" target="_blank" />
+		</buttons>
 	</toolbar>
 	<body>
-		<message id="spMessage"/>
+		<message id="spMessage" />
 		<header label="FM.FIELDS_FOR" icon="SobiFieldList">
 			<div class="btn-group pull-right form-horizontal">
 				<field type="select" name="forder" selected="ordering" class="input-large spOrdering">
 					<values>
-                        <values label="EMN_ORDER_BY" />
-						<option value="fid.asc" label="FMN.ORDER_BY_ID_ASC"/>
-						<option value="fid.desc" label="FMN.ORDER_BY_ID_DESC"/>
-						<option value="name.asc" label="FMN.ORDER_BY_NAME_ASC"/>
-						<option value="name.desc" label="FMN.ORDER_BY_NAME_DESC"/>
-						<option value="state.asc" label="FMN.ORDER_BY_STATE_ASC"/>
-						<option value="state.desc" label="FMN.ORDER_BY_STATE_DESC"/>
-						<option value="fieldType.asc" label="FMN.ORDER_BY_FIELDTYPE_ASC"/>
-						<option value="fieldType.desc" label="FMN.ORDER_BY_FIELDTYPE_DESC"/>
-						<option value="showIn.asc" label="FMN.ORDER_BY_SHOWIN_ASC"/>
+						<values label="EMN_ORDER_BY" />
+						<option value="fid.asc" label="FMN.ORDER_BY_ID_ASC" />
+						<option value="fid.desc" label="FMN.ORDER_BY_ID_DESC" />
+						<option value="name.asc" label="FMN.ORDER_BY_NAME_ASC" />
+						<option value="name.desc" label="FMN.ORDER_BY_NAME_DESC" />
+						<option value="state.asc" label="FMN.ORDER_BY_STATE_ASC" />
+						<option value="state.desc" label="FMN.ORDER_BY_STATE_DESC" />
+						<option value="fieldType.asc" label="FMN.ORDER_BY_FIELDTYPE_ASC" />
+						<option value="fieldType.desc" label="FMN.ORDER_BY_FIELDTYPE_DESC" />
+						<option value="showIn.asc" label="FMN.ORDER_BY_SHOWIN_ASC" />
 						<!--<option value="showIn.desc" label="FMN.ORDER_BY_SHOWIN_DESC"/>-->
-						<option value="required.desc" label="FMN.ORDER_BY_REQUIRED_DESC"/>
-                        <option value="required.asc" label="FMN.ORDER_BY_REQUIRED_ASC"/>
-						<option value="editable.desc" label="FMN.ORDER_BY_EDITABLE_DESC"/>
-                        <option value="editable.asc" label="FMN.ORDER_BY_EDITABLE_ASC"/>
-						<option value="isFree.desc" label="FMN.ORDER_BY_ISFREE_ASC"/>
-						<option value="isFree.asc" label="FMN.ORDER_BY_ISFREE_DESC"/>
-						<option value="order.asc" label="FMN.ORDER_BY_ORDER_ASC"/>
-						<option value="order.desc" label="FMN.ORDER_BY_ORDER_DESC"/>
+						<option value="required.desc" label="FMN.ORDER_BY_REQUIRED_DESC" />
+						<option value="required.asc" label="FMN.ORDER_BY_REQUIRED_ASC" />
+						<option value="editable.desc" label="FMN.ORDER_BY_EDITABLE_DESC" />
+						<option value="editable.asc" label="FMN.ORDER_BY_EDITABLE_ASC" />
+						<option value="isFree.desc" label="FMN.ORDER_BY_ISFREE_ASC" />
+						<option value="isFree.asc" label="FMN.ORDER_BY_ISFREE_DESC" />
+						<option value="order.asc" label="FMN.ORDER_BY_ORDER_ASC" />
+						<option value="order.desc" label="FMN.ORDER_BY_ORDER_DESC" />
 					</values>
 				</field>
 			</div>
 		</header>
 		<table>
 			<head>
-				<cell label="HEADER_ID" type="text" class="center"/>
-				<cell type="checkbox" rel="p_fid" class="center"/>
-				<cell label="HEADER_FIELD_NAME" type="text"/>
-				<cell label="HEADER_FIELD_STATE" type="text" class="center"/>
-				<cell label="HEADER_FIELD_TYPE" type="text" class="center"/>
-				<cell label="HEADER_FIELD_SHOW_IN" type="text" class="center"/>
-				<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="center"/>
-				<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="center"/>
-				<cell label="HEADER_FIELD_IS_FREE" type="text" class="center"/>
-				<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="field"/>
+				<cell label="HEADER_ID" type="text" class="center" />
+				<cell type="checkbox" rel="p_fid" class="center" />
+				<cell label="HEADER_FIELD_NAME" type="text" />
+				<cell label="HEADER_FIELD_STATE" type="text" class="center" />
+				<cell label="HEADER_FIELD_TYPE" type="text" class="center" />
+				<cell label="HEADER_FIELD_SHOW_IN" type="text" class="center" />
+				<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="center" />
+				<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="center" />
+				<cell label="HEADER_FIELD_IS_FREE" type="text" class="center" />
+				<cell label="HEADER_FIELD_POSITION" type="ordering" class="center" rel="field" />
 			</head>
 			<loop subject="fields">
-				<cell type="text" value="id" class="center"/>
-				<cell type="checkbox" name="p_fid" value="id" class="center"/>
+				<cell type="text" value="id" class="center" />
+				<cell type="checkbox" name="p_fid" value="id" class="center" />
 				<cell>
 					<cell type="link" value="name">
 						<url type="intern">
-							<param name="task" value="field.edit"/>
-							<param name="fid" value="fid" parse="true"/>
-							<param name="sid" value="request.sid" parse="true" subject="skip"/>
+							<param name="task" value="field.edit" />
+							<param name="fid" value="fid" parse="true" />
+							<param name="sid" value="request.sid" parse="true" subject="skip" />
 						</url>
 					</cell>
-					<cell type="text" value="nid" class="subText"/>
+					<cell type="text" value="nid" class="subText" />
 				</cell>
 				<cell type="ticker" value="enabled" class="center" icons="{'0':'remove-sign','1':'ok'}">
 					<url type="intern">
-						<param name="task" value="field.toggle.enabled"/>
-						<param name="fid" value="fid" parse="true"/>
-						<param name="sid" value="request.sid" parse="true" subject="skip"/>
+						<param name="task" value="field.toggle.enabled" />
+						<param name="fid" value="fid" parse="true" />
+						<param name="sid" value="request.sid" parse="true" subject="skip" />
 					</url>
 				</cell>
-				<cell type="text" value="fieldType" class="center"/>
-				<cell type="text" value="showIn" class="center"/>
+				<cell type="text" value="fieldType" class="center" />
+				<cell type="text" value="showIn" class="center" />
 				<cell type="ticker" value="required" class="center" icons="{'0':'check-empty','1':'check'}">
 					<url type="intern">
-						<param name="task" value="field.toggle.required"/>
-						<param name="fid" value="fid" parse="true"/>
-						<param name="sid" value="request.sid" parse="true" subject="skip"/>
+						<param name="task" value="field.toggle.required" />
+						<param name="fid" value="fid" parse="true" />
+						<param name="sid" value="request.sid" parse="true" subject="skip" />
 					</url>
 				</cell>
 				<cell type="ticker" value="editable" class="center" icons="{'0':'lock','1':'edit'}">
 					<url type="intern">
-						<param name="task" value="field.toggle.editable"/>
-						<param name="fid" value="fid" parse="true"/>
-						<param name="sid" value="request.sid" parse="true" subject="skip"/>
+						<param name="task" value="field.toggle.editable" />
+						<param name="fid" value="fid" parse="true" />
+						<param name="sid" value="request.sid" parse="true" subject="skip" />
 					</url>
 				</cell>
 				<cell type="ticker" value="isFree" class="center" icons="{'0':'money','1':'gift'}">
 					<url type="intern">
-						<param name="task" value="field.toggle.free"/>
-						<param name="fid" value="fid" parse="true"/>
-						<param name="sid" value="request.sid" parse="true" subject="skip"/>
+						<param name="task" value="field.toggle.free" />
+						<param name="fid" value="fid" parse="true" />
+						<param name="sid" value="request.sid" parse="true" subject="skip" />
 					</url>
 				</cell>
-				<cell type="ordering" value="position" name="fid[var:[id]]" class="center"/>
+				<cell type="ordering" value="position" name="fid[var:[id]]" class="center" />
 			</loop>
 			<foot>
-				<navigation/>
+				<navigation />
 			</foot>
 		</table>
 	</body>
 	<config>
-		<action value="index.php?option=com_sobipro"/>
+		<action value="index.php?option=com_sobipro" />
 		<hidden>
-			<field name="option" default="com_sobipro"/>
-			<field name="task" default=""/>
-			<field name="boxchecked" default=""/>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="boxchecked" default="" />
 		</hidden>
 	</config>
 </definition>

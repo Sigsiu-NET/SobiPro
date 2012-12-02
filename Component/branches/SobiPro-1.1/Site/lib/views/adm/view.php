@@ -243,8 +243,11 @@ class SPAdmView extends SPObject implements SPView
 					$buttons[ ] = $group;
 					break;
 				case 'buttons':
-					$group = array( 'element' => 'buttons', 'buttons' => array(), 'label' => $node->attributes->getNamedItem( 'label' ) ? $node->attributes->getNamedItem( 'label' )->nodeValue : '' );
+					$group = array( 'element' => 'buttons', 'buttons' => array(), 'label' => $node->attributes->getNamedItem( 'label' ) ? Sobi::Txt( $node->attributes->getNamedItem( 'label' )->nodeValue ) : '' );
 					foreach ( $node->attributes as $attr ) {
+						if ( $attr->nodeName == 'label' ) {
+							continue;
+						}
 						$group[ $attr->nodeName ] = $attr->nodeValue;
 					}
 					/** it has to have child nodes or these childs are defined in value  */
@@ -713,7 +716,7 @@ class SPAdmView extends SPObject implements SPView
 						if ( $value ) {
 							break;
 						}
-						/** no break here */
+					/** no break here */
 					case 'values':
 						$args[ $attribute->nodeName ] = $this->get( $attribute->nodeValue );
 						break;

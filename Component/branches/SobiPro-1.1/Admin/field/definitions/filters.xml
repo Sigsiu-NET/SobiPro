@@ -6,7 +6,13 @@
 	<toolbar title="FLR.SITE_TITLE" icon="SobiFields">
 		<button type="new" class="filter-edit" />
 		<divider />
-		<button type="help" target="_blank" />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="help" target="_blank" />
+		</buttons>
 	</toolbar>
 	<body>
 		<message id="spMessage" />
