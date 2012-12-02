@@ -218,4 +218,3 @@ final class SPSection extends SPDBObject implements SPDataModel
 		return self::$translatable;
 	}
 }
-?>

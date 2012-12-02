@@ -336,13 +336,13 @@ class SPJoomlaMainFrame
 						break;
 						}
 					case 'robots' :
-					case 'authors':
-						{
+					case 'author':
+					{
 						if ( !( defined( 'SOBI_ADM_PATH' ) ) ) {
 							$document->setMetadata( $type, implode( ', ', $code ) );
 						}
 						break;
-						}
+					}
 					case 'keywords':
 						if ( !( defined( 'SOBI_ADM_PATH' ) ) ) {
 							$metaKeys = trim( implode( ', ', $code ) );
@@ -368,7 +368,7 @@ class SPJoomlaMainFrame
 						}
 						break;
 					case 'description':
-						{
+					{
 						$metaDesc = implode( '. ', $code );
 						if ( strlen( $metaDesc ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
 							if ( Sobi::Cfg( 'meta.desc_append', true ) ) {
@@ -392,7 +392,7 @@ class SPJoomlaMainFrame
 							$document->setDescription( $metaDesc );
 						}
 						break;
-						}
+					}
 				}
 			}
 			$jsUrl = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . ( defined( 'SOBI_ADM_FOLDER' ) ? SOBI_ADM_FOLDER . '/' : '' ) . self::Url( array( 'task' => 'txt.js', 'tmpl' => 'component' ), true, false ) );

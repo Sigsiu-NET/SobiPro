@@ -300,10 +300,16 @@ abstract class SPController extends SPObject implements SPControl
 			}
 		}
 		/** if not approved */
-		$approved = $this->_model->get( 'approved' );
-		if ( !( $approved ) ) {
-			if ( !( Sobi::Can( $type, 'access', 'unapproved_any' ) ) ) {
-				$error = true;
+		/** and unapproved entry can be accessed
+		 * because then the previously created version
+		 * should be displayed
+		 */
+		if ( $type == 'category' ) {
+			$approved = $this->_model->get( 'approved' );
+			if ( !( $approved ) ) {
+				if ( !( Sobi::Can( $type, 'access', 'unapproved_any' ) ) ) {
+					$error = true;
+				}
 			}
 		}
 		/* if it's expired or not valid yet  */

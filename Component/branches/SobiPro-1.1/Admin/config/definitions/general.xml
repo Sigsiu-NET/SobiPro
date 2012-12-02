@@ -102,7 +102,7 @@
 							</tab>
 							<tab label="SECN.CFG.ELISTING_SETTINGS">
                                 <fieldset>
-                                    <field type="select" label="SECN.CFG.ENTRY_TITLE_FIELD" name="entry.name_field" selected="entry.name_field" values="nameFields" class="input-large" />
+                                    <field type="select" label="SECN.CFG.ENTRY_TITLE_FIELD" name="spcfg[entry.name_field]" selected="entry.name_field" values="nameFields" class="input-large" />
                                     <field type="text" name="spcfg[entry.publish_limit]" value="entry.publish_limit" label="SECN.CFG.STOP_PUBLISHING_ENTRY_AFTER" class="input-mini">
                                         <add where="after">
                                             <call function="Sobi::Txt">
