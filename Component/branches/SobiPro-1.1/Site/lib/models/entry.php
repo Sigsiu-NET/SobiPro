@@ -125,6 +125,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 			$this->url = Sobi::Url( array( 'title' => $this->get( 'name' ), 'pid' => $this->get( 'primary' ), 'sid' => $this->id ) );
 			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fieldsIds, &$this->fieldsNids ) );
 		}
+		if ( !( strlen( $this->name ) ) ) {
+			$this->name = Sobi::Txt( 'ENTRY_NO_NAME' );
+		}
 	}
 
 	/**
