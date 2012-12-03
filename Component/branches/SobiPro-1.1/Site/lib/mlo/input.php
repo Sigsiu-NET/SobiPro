@@ -95,6 +95,14 @@ abstract class SPHtml_Input
 		return "\n<!-- FileBox '{$name}' Output -->{$f}<!-- FileBox '{$name}' End -->\n\n";
 	}
 
+	public static function fileUpload( $name, $size = 50, $params = null, $accept = '*' )
+	{
+		SPFactory::header()->addJsFile( array( 'jquery', 'jquery-form', 'fileupload' ) );
+		$f = self::file( $name, $size, array( 'class' => 'spFileUpload' ), $accept );
+		$f .= '<botton class="btn">Start Upload</botton>';
+		return $f;
+	}
+
 	/**
 	 * Creates a HTML file box
 	 *
