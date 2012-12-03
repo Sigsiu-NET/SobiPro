@@ -147,7 +147,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$field .= SPHtml_Input::checkbox( $this->nid . '_delete', 1, Sobi::Txt( 'FD.IMG_DELETE_CURRENT_IMAGE' ), $this->nid . '_delete', false, array( 'class' => $this->cssClass ) );
 			$field .= "\n</div>\n";
 		}
-		$field .= SPHtml_Input::file( $this->nid, 20, $params, 'image/*' );
+		$field .= SPHtml_Input::fileUpload( $this->nid, 20, $params, 'image/*' );
 		if ( !$return ) {
 			echo $field;
 		}

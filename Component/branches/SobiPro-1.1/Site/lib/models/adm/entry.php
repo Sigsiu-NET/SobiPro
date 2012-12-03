@@ -74,7 +74,6 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 
 		if ( !( $this->_loaded ) ) {
 			if ( count( $fields[ $sid ] ) ) {
-				$fmod = SPLoader::loadModel( 'field', defined( 'SOBIPRO_ADM' ) );
 				/* if it is an entry - prefetch the basic fields data */
 				if ( $this->id ) {
 					$noCopy = $this->checkCopy();
@@ -133,7 +132,7 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 				}
 				foreach ( $fields[ $sid ] as $f ) {
 					/* @var SPField $field */
-					$field = new $fmod();
+					$field = SPFactory::Model( 'field', defined( 'SOBIPRO_ADM' ) );
 					$field->extend( $f );
 					$field->loadData( $this->id );
 					$this->fields[ ] = $field;
@@ -151,6 +150,7 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 				if ( !( strlen( $this->name ) ) ) {
 					$this->name = Sobi::Txt( 'ENTRY_NO_NAME' );
 					SPFactory::message()->warning( 'ENTRIES_BASE_DATA_INCOMPLETE' );
+					$this->valid = false;
 				}
 			}
 		}

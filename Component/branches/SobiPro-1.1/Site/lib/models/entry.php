@@ -111,7 +111,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				$this->section = isset( $sid[ 0 ] ) && $sid[ 0 ] ? $sid[ 0 ] : Sobi::Section();
 			}
 			// we need to get some information from the object table
-			$this->valid = count( $this->categories ) > 0;
+			$this->valid = $this->valid && count( $this->categories ) > 0;
 			$this->loadFields();
 			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fields ) );
 			if ( count( $this->fields ) ) {
