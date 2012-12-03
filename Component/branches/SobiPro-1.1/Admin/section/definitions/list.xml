@@ -35,6 +35,7 @@
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
+
 	<body>
 		<message id="spMessage" />
 		<header label="CAT.CATEGORY_LIST_HEAD" icon="SobiCatList">
@@ -106,7 +107,7 @@
 				<navigation />
 			</foot>
 		</table>
-		<pagination set="cSite" class="pagination pagination-centered pagination-small" inputbox="right">
+		<pagination set="cSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
 			<param name="count" value="categories-count" parse="true" />
 			<param name="limit" value="categories-limit" parse="true" />
 			<param name="current" value="categories-site" parse="true" />
@@ -115,11 +116,11 @@
 				<param name="sid" value="request.sid" parse="true" />
 			</param>
 		</pagination>
-		<div style="padding-top:30px;" />
 
+		<div style="padding-top:30px;" />
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 			<div class="btn-group pull-right" id="spEntriesFilterHead">
-				<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large SpSubmit" />
+				<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large spSubmit" />
 				<field type="select" name="eorder" selected="eorder" values="entriesOrdering" class="input-large spOrdering" />
 				<field type="select" name="elimit" selected="entries-limit" class="input-mini spOrdering">
 					<values>
@@ -176,7 +177,7 @@
 				<navigation />
 			</foot>
 		</table>
-		<pagination set="eSite" class="pagination pagination-centered pagination-small" inputbox="right">
+		<pagination set="eSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
 			<param name="count" value="entries-count" parse="true" />
 			<param name="limit" value="entries-limit" parse="true" />
 			<param name="current" value="entries-site" parse="true" />

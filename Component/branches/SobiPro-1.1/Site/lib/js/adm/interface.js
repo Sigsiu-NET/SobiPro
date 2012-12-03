@@ -170,7 +170,7 @@ SobiPro.jQuery( document ).ready( function ()
 		}
 	}
 
-	SobiPro.jQuery( '.SpSubmit' ).keydown(
+	SobiPro.jQuery( '.spSubmit' ).keydown(
 		function ( e )
 		{
 			"use strict";

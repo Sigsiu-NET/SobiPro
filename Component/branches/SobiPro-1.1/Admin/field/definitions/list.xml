@@ -54,6 +54,18 @@
 						<option value="order.desc" label="FMN.ORDER_BY_ORDER_DESC" />
 					</values>
 				</field>
+
+                <!-- <field type="select" name="flimit" selected="fields-limit" class="input-mini spOrdering">
+                    <values>
+                        <values label="LISTING_LIMIT" />
+                        <option value="2" />
+                        <option value="5" />
+                        <option value="15" />
+                        <option value="25" />
+                        <option value="50" />
+                        <option value="100" />
+                    </values>
+                </field> -->
 			</div>
 		</header>
 		<table>
@@ -118,6 +130,15 @@
 				<navigation />
 			</foot>
 		</table>
+        <pagination set="fSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
+            <param name="count" value="fields-count" parse="true" />
+            <param name="limit" value="fields-limit" parse="true" />
+            <param name="current" value="fields-site" parse="true" />
+            <param name="url">
+                <param name="option" value="com_sobipro" />
+                <param name="sid" value="request.sid" parse="true" />
+            </param>
+        </pagination>
 	</body>
 	<config>
 		<action value="index.php?option=com_sobipro" />
