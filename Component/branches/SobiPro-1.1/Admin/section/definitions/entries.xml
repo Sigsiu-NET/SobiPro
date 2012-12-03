@@ -29,7 +29,7 @@
 		<message id="spMessage" />
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 			<div class="btn-group pull-right" id="spEntriesFilterHead">
-				<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large SpSubmit" />
+				<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large spSubmit" />
 				<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-large spOrdering" />
 				<field type="select" name="elimit" selected="entries-limit" class="input-mini spOrdering">
 					<values>
@@ -82,7 +82,7 @@
 				<cell type="text" value="owner" class="center" />
 			</loop>
 		</table>
-		<pagination set="eSite" class="pagination pagination-centered pagination-small" inputbox="right">
+		<pagination set="eSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
 			<param name="count" value="entries-count" parse="true" />
 			<param name="limit" value="entries-limit" parse="true" />
 			<param name="current" value="entries-site" parse="true" />

@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/gpl.html GNU/GPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU General Public License version 3
  * ===================================================
@@ -41,6 +41,8 @@ final class SPPagination extends SPObject
 	protected $url = array();
 	/** @var string */
 	protected $inputbox = null;
+    /** @var string */
+    protected $type = null;
 
 	/**
 	 */
@@ -55,15 +57,17 @@ final class SPPagination extends SPObject
 			if( $this->inputbox == 'left' ) {
 				$this->inputbox();
 			}
+            $type = $this->type;
 			if ( $this->current == 1 ) {
-				$this->cell( Sobi::Txt( 'PN.START' ), '#', 'disabled' );
-				$this->cell( Sobi::Txt( 'PN.PREVIOUS' ), '#', 'disabled' );
+				$this->cell( Sobi::Txt( 'PN.START'.$type ), '#', 'disabled' );
+                //$this->cell( Sobi::Txt( 'PN.START' ), '#', 'disabled' );
+				$this->cell( Sobi::Txt( 'PN.PREVIOUS'.$type ), '#', 'disabled' );
 			}
 			else {
 				$this->url[ $this->set ] = 1;
-				$this->cell( Sobi::Txt( 'PN.START' ), Sobi::Url( $this->url ) );
+				$this->cell( Sobi::Txt( 'PN.START'.$type ), Sobi::Url( $this->url ) );
 				$this->url[ $this->set ] = $this->current - 1;
-				$this->cell( Sobi::Txt( 'PN.PREVIOUS' ), Sobi::Url( $this->url ) );
+				$this->cell( Sobi::Txt( 'PN.PREVIOUS'.$type ), Sobi::Url( $this->url ) );
 			}
 			for ( $page = 1; $page <= $pages; $page++ ) {
 				if ( $pages > 1000 && ( $page % 1000 != 0 ) ) {
@@ -84,21 +88,21 @@ final class SPPagination extends SPObject
 				}
 			}
 			if ( $this->current == $pages ) {
-				$this->cell( Sobi::Txt( 'PN.NEXT' ), '#', 'disabled' );
-				$this->cell( Sobi::Txt( 'PN.END' ), '#', 'disabled' );
+				$this->cell( Sobi::Txt( 'PN.NEXT'.$type ), '#', 'disabled' );
+				$this->cell( Sobi::Txt( 'PN.END'.$type ), '#', 'disabled' );
 			}
 			else {
 				$this->url[ $this->set ] = $this->current + 1;
-				$this->cell( Sobi::Txt( 'PN.NEXT' ), Sobi::Url( $this->url ) );
+				$this->cell( Sobi::Txt( 'PN.NEXT'.$type ), Sobi::Url( $this->url ) );
 				$this->url[ $this->set ] = $pages;
-				$this->cell( Sobi::Txt( 'PN.END' ), Sobi::Url( $this->url ) );
+				$this->cell( Sobi::Txt( 'PN.END'.$type ), Sobi::Url( $this->url ) );
 			}
-			if( $this->inputbox == 'right' ) {
-				$this->inputbox();
-			}
-			$this->_content[ ] = "</ul>";
+            if( $this->inputbox == 'right' ) {
+                $this->inputbox();
+            }
+            $this->_content[ ] = "</ul>";
 			// close overall container
-			$this->_content[ ] = "<div class=\"{$this->class}\">";
+			$this->_content[ ] = "</div>";
 		}
 		$pn = implode( "\n", $this->_content );
 		if ( $return ) {
@@ -119,9 +123,9 @@ final class SPPagination extends SPObject
 
 	private function inputbox()
 	{
-		$this->_content[ ] = "<div class=\"input-append\">
-		  <input class=\"span2 SpSubmit\" type=\"text\" name=\"{$this->set}\" value=\"{$this->current}\">
+		$this->_content[ ] = "<li class=\"pagination-page\"><div class=\"input-append pagination-page\">
+		  <input class=\"span2 spSubmit\" type=\"text\" name=\"{$this->set}\" value=\"{$this->current}\">
 		  <button class=\"btn\" type=\"submit\">".Sobi::Txt( 'PN.GO' )."</button>
-		</div>";
+		</div></li>";
 	}
 }
