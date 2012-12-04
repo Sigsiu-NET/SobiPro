@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -39,7 +39,7 @@ class SPJsTxt extends SPController
 	{
 		$this->_task = strlen( $this->_task ) ? $this->_task : $this->_defTask;
 		switch ( $this->_task ) {
-			case 'js':				
+			case 'js':
 				$this->js();
 				break;
 		}
@@ -63,4 +63,3 @@ class SPJsTxt extends SPController
 		exit;
 	}
 }
-?>

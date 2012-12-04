@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -49,7 +49,7 @@ class SPArchive extends SPFile
 					catch( SPException $x ) {
 						$t = Sobi::FixPath( Sobi::Cfg( 'fs.temp' ).DS.md5( microtime() ) );
 						SPFs::mkdir( $t, 0777 );
-						$dir =& SPFactory::Instance( 'base.fs.directory', $t );
+						$dir = SPFactory::Instance( 'base.fs.directory', $t );
 						if( $zip->extractTo( $t ) ) {
 							$zip->close();
 							$dir->moveFiles( $to );
@@ -64,4 +64,3 @@ class SPArchive extends SPFile
 		return $r;
 	}
 }
-?>

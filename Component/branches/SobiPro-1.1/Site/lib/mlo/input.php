@@ -90,7 +90,7 @@ abstract class SPHtml_Input
 	public static function file( $name, $size = 50, $params = null, $accept = '*' )
 	{
 		$params = self::params( $params );
-		$f = "\n<input name=\"{$name}\" type=\"file\" size=\"{$size}\" accept=\"{$accept}\"{$params}/>\n";
+		$f = "\n<input name=\"{$name}\" type=\"file\" size=\"{$size}\" value=\"\" accept=\"{$accept}\"{$params}/>\n";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
 		return "\n<!-- FileBox '{$name}' Output -->{$f}<!-- FileBox '{$name}' End -->\n\n";
 	}
@@ -98,8 +98,26 @@ abstract class SPHtml_Input
 	public static function fileUpload( $name, $size = 50, $params = null, $accept = '*' )
 	{
 		SPFactory::header()->addJsFile( array( 'jquery', 'jquery-form', 'fileupload' ) );
-		$f = self::file( $name, $size, array( 'class' => 'spFileUpload' ), $accept );
-		$f .= '<botton class="btn">Start Upload</botton>';
+		$request = array(
+			'option' => 'com_sobipro',
+			'task' => 'file.upload',
+			'sid' => Sobi::Section(),
+			'ident' => $name.'-file',
+			SPFactory::mainframe()->token() => 1
+		);
+		$f = null;
+		$f .= '<div class="spFileUpload">';
+		$f .= '<div class="file">';
+		$f .= self::file( $name.'-file', $size, array( 'class' => 'spFileUpload' ), $accept );
+		$f .= '</div>';
+		$f .= '<button class="btn" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
+		$f .= '<div class="hide progress-container">';
+		$f .= '<div class="progress progress-info"><div class="bar"></div></div>';
+		$f .= '<span class="progress-message badge badge-info pull-left"></span>';
+		$f .= '</div>';
+		$f .= '<div class="alert hide"><button type="button" class="close" data-dismiss="alert">×</button><div>&nbsp;</div></div>';
+		$f .= self::hidden( $name );
+		$f .= '</div>';
 		return $f;
 	}
 

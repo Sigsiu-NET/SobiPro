@@ -175,7 +175,7 @@ div.spScreenTitle h4 {
 }
 .modal-footer .btn,
 .modal-footer .btn:hover {
-  color: #333333!important;
+  color: #333333 !important;
 }
 .modal-footer .btn-primary,
 .modal-footer .btn-primary:hover,
@@ -183,7 +183,7 @@ div.spScreenTitle h4 {
 .modal-footer .btn-danger:hover,
 .modal-footer .btn-success,
 .modal-footer .btn-success:hover {
-  color: #ffffff!important;
+  color: #ffffff !important;
 }
 .SobiPro .modal {
   width: 500px;
@@ -307,7 +307,7 @@ div.spScreenTitle h4 {
 }
 .infoText a,
 .infoText a:hover {
-  color: #6699ff!important;
+  color: #6699ff !important;
 }
 #SPAdminForm input,
 #SPAdminForm textarea,
@@ -486,9 +486,9 @@ input.sp-input-micro[type="text"] {
   color: #666666;
 }
 .spFieldCheckbox input {
-  margin-top: 8px!important;
-  margin-left: 5px!important;
-  margin-right: 5px!important;
+  margin-top: 8px !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
 }
 .spFieldRadio {
   float: left;
@@ -497,9 +497,9 @@ input.sp-input-micro[type="text"] {
   color: #666666;
 }
 .spFieldRadio input {
-  margin-top: 8px!important;
-  margin-left: 5px!important;
-  margin-right: 5px!important;
+  margin-top: 8px !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
 }
 .SobiPro table.mceLayout {
   border-radius: 3px;
@@ -514,7 +514,7 @@ input.sp-input-micro[type="text"] {
   color: #666666;
 }
 .GeoMap {
-  margin-right: 10px!important;
+  margin-right: 10px !important;
 }
 .GeoMap img {
   max-width: inherit;
@@ -524,7 +524,26 @@ input.sp-input-micro[type="text"] {
   border-radius: 3px;
 }
 a.invalid {
-  color: red!important;
+  color: red !important;
   font-weight: normal;
   text-decoration: line-through;
+}
+.spFileUpload .progress {
+  clear: left;
+  width: 400px;
+  float: left;
+  margin: 10px;
+}
+.spFileUpload .file input {
+  margin-bottom: 10px;
+}
+.spFileUpload .progress-message {
+  margin-top: 10px;
+}
+.spFileUpload .alert {
+  clear: both;
+  width: 400px;
+}
+.spFileUpload button {
+  margin-left: 10px;
 }
