@@ -65,11 +65,10 @@ abstract class SPRequest
 	private static function init( $name, $method )
 	{
 		self::$method = strtoupper( $method );
-		$name = ( self::$method == 'COOKIE' ) ? 'SPro_'.$name : $name;
+		$name = ( self::$method == 'COOKIE' ) ? 'SPro_' . $name : $name;
 		self::$name = $name;
 
-		switch ( self::$method )
-		{
+		switch ( self::$method ) {
 			case 'GET':
 				self::$request =& $_GET;
 				break;
@@ -128,8 +127,8 @@ abstract class SPRequest
 	 */
 	public static function filter( $value )
 	{
-		if( class_exists( 'SPFactory' ) ) {
-			if( ( SPFactory::user()->isAdmin() ) ) {
+		if ( class_exists( 'SPFactory' ) ) {
+			if ( ( SPFactory::user()->isAdmin() ) ) {
 				return stripslashes( $value );
 			}
 		}
@@ -144,7 +143,7 @@ abstract class SPRequest
 	 */
 	public static function resetFilter()
 	{
-		if( !self::$filter || !( self::$filter instanceof Zend_Filter_StripTags ) ) {
+		if ( !self::$filter || !( self::$filter instanceof Zend_Filter_StripTags ) ) {
 			self::$filter = new Zend_Filter_StripTags();
 		}
 		self::$filter->setAttributesAllowed( Sobi::Cfg( 'html.allowed_attributes_array' ) );
@@ -153,7 +152,7 @@ abstract class SPRequest
 
 	private static function createFilter()
 	{
-		if( !self::$filter || !( self::$filter instanceof Zend_Filter_StripTags ) ) {
+		if ( !self::$filter || !( self::$filter instanceof Zend_Filter_StripTags ) ) {
 			self::$filter = new Zend_Filter_StripTags();
 		}
 	}
@@ -170,8 +169,8 @@ abstract class SPRequest
 	{
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
-		if( ! is_array( self::$val ) ) {
-			self::$val = ( int ) self::$val;
+		if ( !is_array( self::$val ) ) {
+			self::$val = ( int )self::$val;
 		}
 		else {
 			self::$val = $default;
@@ -217,7 +216,7 @@ abstract class SPRequest
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
 		self::$val = preg_replace( "/[^0-9\.]/", null, self::$val );
-		self::$val = ( float ) self::$val;
+		self::$val = ( float )self::$val;
 		return self::$val;
 	}
 
@@ -234,7 +233,7 @@ abstract class SPRequest
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
 		self::$val = preg_replace( '/[^0-9\.]/', null, self::$val );
-		self::$val = ( double ) self::$val;
+		self::$val = ( double )self::$val;
 		return self::$val;
 	}
 
@@ -249,9 +248,9 @@ abstract class SPRequest
 	{
 		self::init( null, $method );
 		self::$val = array();
-		if( count( self::$request ) ) {
+		if ( count( self::$request ) ) {
 			foreach ( self::$request as $name => $value ) {
-				if( strstr( $name, $search ) ) {
+				if ( strstr( $name, $search ) ) {
 					self::$val[ $name ] = $value;
 				}
 			}
@@ -272,7 +271,7 @@ abstract class SPRequest
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
 		self::$val = preg_replace( "/[^0-1]/", null, self::$val );
-		self::$val = ( bool ) self::$val;
+		self::$val = ( bool )self::$val;
 		return self::$val;
 	}
 
@@ -338,32 +337,32 @@ abstract class SPRequest
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
 		$back = array();
-		if( $html == 1 ) {
+		if ( $html == 1 ) {
 			$val = self::$val;
-			if( preg_match_all( '/(<pre((?!>).)*>*)(((?!<\/pre|<pre).)+)\s*<\/pre>/s', $val, $matches ) ) {
+			if ( preg_match_all( '/(<pre((?!>).)*>*)(((?!<\/pre|<pre).)+)\s*<\/pre>/s', $val, $matches ) ) {
 				self::createFilter();
 				$allowed = self::$filter->getTagsAllowed();
-				if( isset( $allowed[ 'pre' ] ) ) {
+				if ( isset( $allowed[ 'pre' ] ) ) {
 					foreach ( $matches[ 3 ] as $i => $pre ) {
-						$id = '[%pre%]'.$i.'[%pre%]';
-						$back[ $id ] = array( 'content' => $pre, 'tag' => $matches[ 1][ $i ] );
-						$val = str_replace( $matches[ 1 ][ $i ].$pre, $id, $val );
+						$id = '[%pre%]' . $i . '[%pre%]';
+						$back[ $id ] = array( 'content' => $pre, 'tag' => $matches[ 1 ][ $i ] );
+						$val = str_replace( $matches[ 1 ][ $i ] . $pre, $id, $val );
 					}
 				}
 			}
 			$val = self::filter( $val );
 			$conv = Sobi::Cfg( 'html.pre_to_entities', true );
-			if( count( $back ) ) {
+			if ( count( $back ) ) {
 				foreach ( $back as $id => $pre ) {
-					if( $conv ) {
+					if ( $conv ) {
 						$pre[ 'content' ] = htmlentities( $pre[ 'content' ] );
 					}
-					$val = str_replace( $id, $pre[ 'tag' ].$pre[ 'content' ], $val );
+					$val = str_replace( $id, $pre[ 'tag' ] . $pre[ 'content' ], $val );
 				}
 			}
 			self::$val = $val;
 		}
-		elseif( !( $html ) ) {
+		elseif ( !( $html ) ) {
 			self::$val = strip_tags( self::$val );
 		}
 		return filter_var( self::$val, FILTER_SANITIZE_MAGIC_QUOTES );
@@ -410,7 +409,7 @@ abstract class SPRequest
 		$config =& SPFactory::config();
 		$config->addIniFile( 'etc.calendar' );
 		self::$val = self::string( $name, $default, false, $method );
-		if( self::$val ) {
+		if ( self::$val ) {
 			self::$val = SPFactory::config()->rdate( self::$val );
 			self::$val = date( 'Y-m-d H:i:s', self::$val );
 		}
@@ -446,10 +445,10 @@ abstract class SPRequest
 	{
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
-		if( is_array( self::$val ) ) {
-			self::$val = ( array ) self::$val;
+		if ( is_array( self::$val ) ) {
+			self::$val = ( array )self::$val;
 			self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
-            self::$val = self::cleanArray( self::$val );
+			self::$val = self::cleanArray( self::$val );
 		}
 		else {
 			self::$val = $default;
@@ -473,15 +472,24 @@ abstract class SPRequest
 	}
 
 	/**
-	 * Returns raw value of requested variable
-	 *
 	 * @param string $name variable name
-	 * @param string $default default value
-	 * @param string $method request method
+	 * @param string $property
+	 * @param string $request request method
 	 * @return string
 	 */
 	static public function file( $name, $property = null, $request = 'files' )
 	{
+		if ( $request == 'files' ) {
+			/** check for Ajax uploaded files */
+			$check = self::string( $name );
+			if ( $check ) {
+				$secret = md5( Sobi::Cfg( 'secret' ) );
+				$fileName = str_replace( 'file://', null, $check );
+				$path = SPLoader::dirPath( "tmp.files.{$secret}", 'front', false ) . '/' . $fileName;
+				$data = SPConfig::unserialize( SPFs::read( $path ) );
+				$_FILES[ $name ] = $data;
+			}
+		}
 		self::init( $name, $request );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : null;
 		return ( $property && isset( self::$val[ $property ] ) ) ? self::$val[ $property ] : self::$val;
@@ -520,14 +528,14 @@ abstract class SPRequest
 	 */
 	static public function cleanArray( $arr, $delEmpty = false )
 	{
-		if( !empty( $arr ) ) {
-			foreach ( $arr as  $k => $v ) {
-				if( is_array( $v ) ) {
+		if ( !empty( $arr ) ) {
+			foreach ( $arr as $k => $v ) {
+				if ( is_array( $v ) ) {
 					$arr[ $k ] = self::cleanArray( $v, $delEmpty );
 				}
 				else {
 					$arr[ $k ] = self::filter( $v );
-					if( $delEmpty && !( strlen( $v ) ) ) {
+					if ( $delEmpty && !( strlen( $v ) ) ) {
 						unset( $arr[ $k ] );
 					}
 				}

@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/gpl.html GNU/GPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU General Public License version 3
  * ===================================================
@@ -26,4 +26,3 @@ require_once dirname(__FILE__).'/../../joomla_common/base/mainframe.php';
  * @created 10-Jan-2009 5:50:43 PM
  */
 final class SPMainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface {}
-?>

@@ -47,7 +47,6 @@ abstract class SPLoader
     public static function loadClass( $name, $adm = false, $type = null, $raiseErr = true )
     {
         static $types = array( 'base' => 'base', 'controller' => 'ctrl', 'controls' => 'ctrl', 'ctrl' => 'ctrl', 'model' => 'models', 'plugin' => 'plugins', 'application' => 'plugins', 'view' => 'views' );
-        static $loaded = array();
         $type = strtolower( trim( $type ) );
         $name = strtolower( trim( $name ) );
         if ( isset( $types[ $type ] ) ) {

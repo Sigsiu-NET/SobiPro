@@ -82,6 +82,7 @@ class SPJoomlaMainFrame
 		$cfg->set( 'smtpport', $jconfig->getValue( 'config.smtpport' ), 'mail' );
 
 		$cfg->set( 'language', $jconfig->getValue( 'language' ) );
+		$cfg->set( 'secret', $jconfig->getValue( 'secret' ) );
 		$cfg->set( 'site_name', $jconfig->getValue( 'config.sitename' ) );
 		$cfg->set( 'images_folder', SOBI_ROOT . DS . 'media/sobipro/' );
 		$cfg->set( 'img_folder_live', JURI::root() . '/media/sobipro' );
