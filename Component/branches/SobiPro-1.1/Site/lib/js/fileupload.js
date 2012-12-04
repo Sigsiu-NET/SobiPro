@@ -58,6 +58,7 @@ SobiPro.jQuery( document ).ready( function ()
 				responseMsg.find( 'div' ).html( response.text );
 				idStore.val( response.id );
 				button.attr( 'disabled', 'disabled' );
+				file
 			}
 		} ).submit();
 	} );
