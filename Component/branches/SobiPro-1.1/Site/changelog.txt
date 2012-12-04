@@ -32,24 +32,28 @@
 -------------------
 
    (+) XML based template engine for administrator templates
-   (+) Possibility to override administrator templates for particular section
+   (+) Possibility to override administrator templates for particular sections
    (+) Definition file for Radio Button field
    (+) Field controller implements now a proxy pattern to the field type
-   (+) Definition file for Radio Button field
    (+) Category Chooser Field with different category selection methods implemented
    (+) Prohibition of assigning an entry to parent category added to new Category Chooser Field
-   (+) Category Search to filter the search results by one or more category
+   (+) Frontend Category Search to filter the search results by one or more category
    (+) IP search query link added to category and entry publishing IP (admin interface)
-   (+) Button to hide left menu in order to stretch the content screen
+   (+) Button to hide left menu in order to stretch the content screen (admin interface)
    (+) Field description shown in backend 'Edit Entry' as popover
+   (+) 'Sort Entries by Field' reversible for frontend and backend sorting
+   (+) Direct Entry Selection via Joomla! Menu Manager
+   (+) Template override for specific categories and entries via Joomla! Menu Manager
+   (+) Workaround to bypass Joomla! menu type bug
 
+   (!) Administrator UI redesigned using Bootstrap library and new XML templates
    (!) SPHeader::addMeta() takes now optional list of custom parameters as an array
    (!) SPLang::nid() using JFilterOutput::stringURLSafe now
-   (!) Administrator UI redesigned using Bootstrap library and new XML templates
    (!) Category and entry Meta Robots parameter selection improved (admin interface)
    (!) Category and entry publishing information extended (admin interface)
-   (!) Message type for 'Use of Default Template' set to warning
+   (!) Message type for 'Use of Default Template' set to warning (admin interface)
    (!) Field description now allows HTML code
+   (!) Default settings while creating a new section changed
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
@@ -64,16 +68,15 @@
 1.0.8 (28 April 2012)
 -------------------
 
-   (!) Updated jQuery to v1.7.2
-   (!) Updated jQueryUi to 1.8.18
    (!) Added "token" to placeholders in SPlang::replacePlaceHolders method
    (!) Changed method for discovering the right return point
+   (!) SobiPro Repository Certificate data renewed
 
-   (#) Plugged Apps wasn't able to trigger own actions. Caused for example that the payment method wasn't delivered to the notification App (Issue Bug #598)
+   (#) Plugged Apps wasn't able to trigger own actions. Caused for example that the payment method wasn't delivered to the notification App (Issue #598)
    (#) Missing entry data in entry.payment task (SPEntry::checkCopy method - entry.payment added to exceptions)
    (#) UTF-8 chars destroyed in PayPal App - SPPPaypal::content - htmlentities removed (Issue #637)
    (#) Entry AfterApprove trigger doubled SPEntry::save():637 (Issue #630)
-   (#) Disabling links verification for alpha index crash Sobipro front (Issue #626)
+   (#) Disabling links verification for alpha index crash SobiPro front-end (Issue #626)
    (#) Non static data missing in search results (Issue #627)
    (#) Missing section identifier in language values (method screen) in PayPal and Bank Transfer Apps (Issue #635)
    (#) Wrong SQL-query in alpha listing for unicode characters (Issue #638)
