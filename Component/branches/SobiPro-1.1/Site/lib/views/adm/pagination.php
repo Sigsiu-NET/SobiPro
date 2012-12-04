@@ -124,7 +124,7 @@ final class SPPagination extends SPObject
 	private function inputbox()
 	{
 		$this->_content[ ] = "<li class=\"pagination-page\"><div class=\"input-append pagination-page\">
-		  <input class=\"span2 spSubmit\" type=\"text\" name=\"{$this->set}\" value=\"{$this->current}\">
+		  <input class=\"spSubmit\" type=\"text\" name=\"{$this->set}\" value=\"{$this->current}\">
 		  <button class=\"btn\" type=\"submit\">".Sobi::Txt( 'PN.GO' )."</button>
 		</div></li>";
 	}

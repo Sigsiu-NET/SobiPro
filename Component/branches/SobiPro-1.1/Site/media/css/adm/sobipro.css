@@ -372,6 +372,11 @@ div.spScreenTitle h4 {
 .SobiPro .popover-inner {
   text-align: left;
 }
+.SobiPro .popover-inner .spclose {
+  padding-right: 8px;
+  padding-top: 5px;
+  font-size: 15px;
+}
 #SPAdminForm .pagination-toolbar a {
   line-height: 28px;
   color: #1337d1;
@@ -397,6 +402,9 @@ div.spScreenTitle h4 {
 }
 #SPAdminForm .pagination .disabled a:hover {
   background-color: transparent;
+}
+#SPAdminForm .pagination-page input {
+  width: 60px;
 }
 #SPAdminForm .spSubmit {
   text-align: right;
