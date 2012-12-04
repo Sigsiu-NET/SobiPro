@@ -378,4 +378,13 @@ class SPFieldType extends SPObject
 		}
 		return $options;
 	}
+	/**
+	 * @param SPEntry $entry
+	 * @param string $request
+	 * @return string
+	 */
+	public function validate( $entry, $request )
+	{
+		return true;
+	}
 }

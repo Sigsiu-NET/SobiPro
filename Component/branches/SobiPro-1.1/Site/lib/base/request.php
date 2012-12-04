@@ -486,7 +486,8 @@ abstract class SPRequest
 				$secret = md5( Sobi::Cfg( 'secret' ) );
 				$fileName = str_replace( 'file://', null, $check );
 				$path = SPLoader::dirPath( "tmp.files.{$secret}", 'front', false ) . '/' . $fileName;
-				$data = SPConfig::unserialize( SPFs::read( $path ) );
+				$cfg = SPFs::read( "{$path}.txt" );
+				$data = SPConfig::unserialize( $cfg );
 				$_FILES[ $name ] = $data;
 			}
 		}
