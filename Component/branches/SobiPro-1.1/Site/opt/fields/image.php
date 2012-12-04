@@ -242,11 +242,12 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * Gets the data for a field and save it in the database
 	 * @param SPEntry $entry
+	 * @param string $request
+	 * @throws SPException
 	 * @return bool
 	 */
 	public function saveData( &$entry, $request = 'POST' )
 	{
-
 		if ( !( $this->enabled ) ) {
 			return false;
 		}

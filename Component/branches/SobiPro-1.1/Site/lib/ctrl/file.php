@@ -48,7 +48,7 @@ class SPFileUploader extends SPController
 		$secret = md5( Sobi::Cfg( 'secret' ) );
 		if ( $data ) {
 			$properties = SPRequest::file( $ident );
-			$fileName = md5( SPRequest::file( $ident, 'name' ) . $secret );
+			$fileName = md5( SPRequest::file( $ident, 'name' ) . time() . $secret );
 			$path = SPLoader::dirPath( "tmp.files.{$secret}", 'front', false ) . '/' . $fileName;
 			/** @var $file SPFile */
 			$file = SPFactory::Instance( 'base.fs.file' );
@@ -61,7 +61,7 @@ class SPFileUploader extends SPController
 			SPFs::write( $path . '.txt', SPConfig::serialize( $properties ) );
 			$response = array(
 				'type' => 'success',
-				'text' => $fileName . '   all ok ' . $type,
+				'text' => Sobi::Txt( 'FILE_UPLOADED', $properties[ 'name' ], $type ),
 				'id' => 'file://' . $fileName
 			);
 		}
