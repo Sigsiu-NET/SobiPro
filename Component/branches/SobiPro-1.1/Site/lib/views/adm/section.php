@@ -32,6 +32,7 @@ class SPSectionAdmView extends SPAdmView
 
 	/**
 	 * @param string $title
+	 * @return string
 	 */
 	public function setTitle( $title )
 	{

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="AMN.APPS" />
+		<file type="script" filename="bootstrap.tooltips" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiSection">
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="help" target="_blank" />
+		</buttons>
+	</toolbar>
+	<body>
+		<message id="spMessage"/>
+		<message value="EX.SECTION_EXPL" type="info"/>
+		<table>
+			<head>
+				<cell label="EXTENSIONS.HEADER_NAME" type="text" class="center" />
+				<cell label="EXTENSIONS.HEADER_TYPE" type="text" class="center" />
+				<cell label="EXTENSIONS.HEADER_PID" type="text" class="center" />
+				<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="center" />
+				<cell label="EXTENSIONS.HEADER_ENABLED" type="text" class="center" />
+			</head>
+			<loop subject="entries">
+				<cell type="text" value="id" class="center" />
+				<cell type="checkbox" name="e_sid" value="id" class="center" checked-out-time="coutTime" checked-out-by="cout" />
+				<cell>
+					<cell type="link" value="name" class="var:[valid]">
+						<url type="intern">
+							<param name="task" value="entry.edit" />
+							<param name="sid" value="id" parse="true" />
+							<param name="pid" value="request.pid" parse="true" subject="skip" />
+						</url>
+					</cell>
+				</cell>
+				<!--<cell type="text" value="field_price"/>-->
+				<cells value="customFields" class="center" />
+				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+					<url type="intern">
+						<param name="task" value="entry.toggle.enabled" />
+						<param name="sid" value="id" parse="true" />
+					</url>
+				</cell>
+				<cell type="ticker" value="approved" class="center" icons="{'0':'thumbs-down','1':'thumbs-up'}">
+					<url type="intern">
+						<param name="task" value="entry.toggle.approval" />
+						<param name="sid" value="id" parse="true" />
+					</url>
+				</cell>
+				<cell type="text" value="owner" class="center" />
+			</loop>
+		</table>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+		</hidden>
+	</config>
+</definition>
