@@ -47,7 +47,7 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 		var file = proxy.find( 'input:file' );
 		proxy.find( '.upload, .remove' ).attr( 'disabled', 'disabled' );
 		proxy.find( '.selected' ).val( '' );
-		proxy.find( 'input:hidden' ).val( '' );
+		proxy.find( 'idStore' ).val( '' );
 		file.clone( file ).appendTo( file.parent() );
 		file.detach()
 	} );
@@ -69,7 +69,7 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 		var responseContainer = proxy.find( '.progress-container' );
 		var progressMessage = proxy.find( '.progress-message' );
 		var responseMsg = proxy.find( '.alert' );
-		var idStore = proxy.find( 'input:hidden' );
+		var idStore = proxy.find( '.idStore' );
 		var button = proxy.find( '.upload' );
 		form.ajaxForm( {
 			'dataType':'json',
@@ -78,6 +78,7 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 				responseContainer.removeClass( 'hide' );
 				var percentVal = '0%';
 				bar.width( percentVal );
+				progressMessage.html( percentVal );
 			},
 			uploadProgress:function ( event, position, total, percentComplete )
 			{
@@ -87,6 +88,9 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 			},
 			complete:function ( xhr )
 			{
+				var percentVal = '100%';
+				bar.width( percentVal );
+				progressMessage.html( percentVal );
 				var response = SobiPro.jQuery.parseJSON( xhr.responseText );
 				if ( proxy.settings.hideProgressBar ) {
 					responseContainer.addClass( 'hide' );
