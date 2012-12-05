@@ -80,11 +80,12 @@ abstract class SPHtml_Input
 	}
 
 	/**
-	 * Creates simple HTML inputbox
+	 * Creates simple file field
 	 *
 	 * @param string $name - name of the html field
 	 * @param int $size - field size
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param string $accept - accepted file types
 	 * @return string
 	 */
 	public static function file( $name, $size = 50, $params = null, $accept = '*' )
@@ -95,22 +96,33 @@ abstract class SPHtml_Input
 		return "\n<!-- FileBox '{$name}' Output -->{$f}<!-- FileBox '{$name}' End -->\n\n";
 	}
 
-	public static function fileUpload( $name, $size = 50, $params = null, $accept = '*' )
+
+	/**
+	 * Creates ajax file field
+	 *
+	 * @param string $name - name of the html field
+	 * @param string $accept - accepted file types
+	 * @param string $class - class name
+	 * @param string $value - possible value for the inbox
+	 * @param string $task - task override
+	 * @return string
+	 */
+	public static function fileUpload( $name, $accept = '*', $value = null, $class = 'spFileUpload', $task = 'file.upload' )
 	{
 		SPFactory::header()->addJsFile( array( 'jquery', 'jquery-form', 'fileupload' ) );
 		$request = array(
 			'option' => 'com_sobipro',
-			'task' => 'file.upload',
+			'task' => $task,
 			'sid' => Sobi::Section(),
 			'ident' => $name . '-file',
 			SPFactory::mainframe()->token() => 1
 		);
 		$f = null;
-		$f .= '<div class="spFileUpload">';
+		$f .= "<div class=\"{$class}\">";
 		$f .= '<div class="file">';
-		$f .= self::file( $name . '-file', $size, array( 'class' => 'spFileUpload hide' ), $accept );
+		$f .= self::file( $name . '-file', 0, array( 'class' => 'spFileUpload hide' ), $accept );
 		$f .= '</div>';
-		$f .= '<input type="text" readonly="readonly" class="input-xlarge selected"/>';
+		$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-xlarge selected\" value=\"{$value}\"/>";
 		$f .= '<div class="btn-group">';
 		$f .= '<button class="btn select" type="button"><i class="icon-eye-open"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
 		$f .= '<button class="btn remove" disabled="disabled" type="button">' . '&nbsp;<i class="icon-remove"></i></button>';
