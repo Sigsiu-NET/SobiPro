@@ -23,6 +23,46 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 	{
 		proxy.find( element ).css( styles );
 	} );
+	var bar = proxy.find( '.bar' );
+	var responseContainer = proxy.find( '.progress-container' );
+	var progressMessage = proxy.find( '.progress-message' );
+	var responseMsg = proxy.find( '.alert' );
+	var idStore = proxy.find( '.idStore' );
+	var button = proxy.find( '.upload' );
+
+	this.complete = function ( xhr )
+	{
+		proxy.trigger( 'uploadComplete', [xhr] );
+		var percentVal = '100%';
+		bar.width( percentVal );
+		progressMessage.html( percentVal );
+		var response = SobiPro.jQuery.parseJSON( xhr.responseText );
+		if ( proxy.settings.hideProgressBar ) {
+			responseContainer.addClass( 'hide' );
+		}
+		responseMsg.removeClass( 'hide' );
+		responseMsg.addClass( 'alert-' + response.type );
+		responseMsg.find( 'div' ).html( response.text );
+		idStore.val( response.id );
+		button.attr( 'disabled', 'disabled' );
+	};
+
+	this.uploadProgress = function ( event, position, total, percentComplete )
+	{
+		proxy.trigger( 'uploadProgress', [ event, position, total, percentComplete ] );
+		var percentVal = percentComplete + '%';
+		bar.width( percentVal );
+		progressMessage.html( percentVal );
+	};
+
+	this.beforeSend = function ()
+	{
+		proxy.trigger( 'beforeSend', [ this ] );
+		responseContainer.removeClass( 'hide' );
+		var percentVal = '0%';
+		bar.width( percentVal );
+		progressMessage.html( percentVal );
+	};
 
 	this.find( 'input:file' ).change( function ()
 		{
@@ -38,10 +78,12 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 			}
 		}
 	);
+
 	this.find( '.select' ).click( function ()
 	{
 		proxy.find( 'input:file' ).trigger( 'click' );
 	} );
+
 	this.find( '.remove' ).click( function ()
 	{
 		var file = proxy.find( 'input:file' );
@@ -51,9 +93,11 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 		file.clone( file ).appendTo( file.parent() );
 		file.detach()
 	} );
+
 	this.find( '.upload' ).click( function ()
 	{
 		var request = SobiPro.jQuery.parseJSON( SobiPro.jQuery( this ).attr( 'rel' ) );
+		proxy.trigger( 'createRequest', [ request ] );
 		var container = proxy.find( '.file' );
 		var form = '<form action="index.php" method="post" enctype="multipart/form-data">';
 		for ( var field in request ) {
@@ -65,42 +109,21 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 		file.appendTo( form );
 		var c = file.clone( file );
 		c.appendTo( container );
-		var bar = proxy.find( '.bar' );
-		var responseContainer = proxy.find( '.progress-container' );
-		var progressMessage = proxy.find( '.progress-message' );
-		var responseMsg = proxy.find( '.alert' );
-		var idStore = proxy.find( '.idStore' );
-		var button = proxy.find( '.upload' );
 		form.ajaxForm( {
 			'dataType':'json',
 			beforeSend:function ()
 			{
-				responseContainer.removeClass( 'hide' );
-				var percentVal = '0%';
-				bar.width( percentVal );
-				progressMessage.html( percentVal );
+				proxy.beforeSend();
 			},
 			uploadProgress:function ( event, position, total, percentComplete )
 			{
-				var percentVal = percentComplete + '%';
-				bar.width( percentVal )
-				progressMessage.html( percentVal );
+				proxy.uploadProgress( event, position, total, percentComplete )
 			},
 			complete:function ( xhr )
 			{
-				var percentVal = '100%';
-				bar.width( percentVal );
-				progressMessage.html( percentVal );
-				var response = SobiPro.jQuery.parseJSON( xhr.responseText );
-				if ( proxy.settings.hideProgressBar ) {
-					responseContainer.addClass( 'hide' );
-				}
-				responseMsg.removeClass( 'hide' );
-				responseMsg.addClass( 'alert-' + response.type )
-				responseMsg.find( 'div' ).html( response.text );
-				idStore.val( response.id );
-				button.attr( 'disabled', 'disabled' );
+				proxy.complete( xhr );
 			}
 		} ).submit();
-	} )
+	} );
+	return this;
 }
