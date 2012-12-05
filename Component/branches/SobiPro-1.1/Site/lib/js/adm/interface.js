@@ -290,4 +290,8 @@ SobiPro.jQuery( document ).ready( function ()
 				proxy.popover( 'hide' );
 			} )
 		} );
+	SobiPro.jQuery( document ).ready( function ()
+	{
+		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
+	} );
 } );
