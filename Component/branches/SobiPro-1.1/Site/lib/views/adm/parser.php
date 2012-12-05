@@ -350,7 +350,7 @@ class SPTplParser
 					$this->_out[ ] = '</button>';
 				}
 				else {
-					$this->_out[ ] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], array( 'class' => 'input-mini sp-input-micro' ) );
+					$this->_out[ ] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], array( 'class' => 'input-mini sp-input-micro spSubmit' ) );
 				}
 				break;
 			case 'checkbox':
