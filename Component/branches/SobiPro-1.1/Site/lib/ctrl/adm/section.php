@@ -197,6 +197,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				->assign( SPFactory::config()->nameField()->get( 'name' ), 'entries_name' )
 				->assign( $menu, 'menu' )
 				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' ), 'ordering' )
+				->assign( Sobi::GetUserState( 'categories.corder', 'corder', 'position.asc' ), 'corder' )
 				->assign( Sobi::Section( true ), 'category' )
 				->addHidden( Sobi::Section(), 'pid' )
 				->addHidden( SPRequest::sid(), 'sid' );
