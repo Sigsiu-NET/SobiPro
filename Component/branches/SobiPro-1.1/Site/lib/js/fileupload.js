@@ -10,7 +10,7 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 	"use strict";
 	var proxy = this;
 	this.settings = {
-		'hideProgressBar':false,
+		'hideProgressBar':true,
 		'styles':{
 			'.progress':{'clear':'left', 'width':'500px', 'float':'left', 'margin':'10px' },
 			'.alert':{'clear':'both', 'width':'500px' },
