@@ -121,7 +121,7 @@ abstract class SPHtml_Input
 		$f .= '<span class="progress-message badge badge-info pull-left"></span>';
 		$f .= '</div>';
 		$f .= '<div class="alert hide"><button type="button" class="close" data-dismiss="alert">×</button><div>&nbsp;</div></div>';
-		$f .= self::hidden( $name );
+		$f .= "<input type=\"hidden\" name=\"{$name}\" value=\"\" class='idStore'/>";
 		$f .= '</div>';
 		return $f;
 	}
