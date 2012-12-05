@@ -536,22 +536,3 @@ a.invalid {
   font-weight: normal;
   text-decoration: line-through;
 }
-.spFileUpload .progress {
-  clear: left;
-  width: 400px;
-  float: left;
-  margin: 10px;
-}
-.spFileUpload .file input {
-  margin-bottom: 10px;
-}
-.spFileUpload .progress-message {
-  margin-top: 10px;
-}
-.spFileUpload .alert {
-  clear: both;
-  width: 400px;
-}
-.spFileUpload button {
-  margin-left: 10px;
-}

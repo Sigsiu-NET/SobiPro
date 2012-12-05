@@ -102,15 +102,20 @@ abstract class SPHtml_Input
 			'option' => 'com_sobipro',
 			'task' => 'file.upload',
 			'sid' => Sobi::Section(),
-			'ident' => $name.'-file',
+			'ident' => $name . '-file',
 			SPFactory::mainframe()->token() => 1
 		);
 		$f = null;
 		$f .= '<div class="spFileUpload">';
 		$f .= '<div class="file">';
-		$f .= self::file( $name.'-file', $size, array( 'class' => 'spFileUpload' ), $accept );
+		$f .= self::file( $name . '-file', $size, array( 'class' => 'spFileUpload hide' ), $accept );
 		$f .= '</div>';
-		$f .= '<button class="btn" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
+		$f .= '<input type="text" readonly="readonly" class="input-xlarge selected"/>';
+		$f .= '<div class="btn-group">';
+		$f .= '<button class="btn select" type="button"><i class="icon-eye-open"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
+		$f .= '<button class="btn remove" disabled="disabled" type="button">' . '&nbsp;<i class="icon-remove"></i></button>';
+		$f .= '<button class="btn upload" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
+		$f .= '</div>';
 		$f .= '<div class="hide progress-container">';
 		$f .= '<div class="progress progress-info"><div class="bar"></div></div>';
 		$f .= '<span class="progress-message badge badge-info pull-left"></span>';
