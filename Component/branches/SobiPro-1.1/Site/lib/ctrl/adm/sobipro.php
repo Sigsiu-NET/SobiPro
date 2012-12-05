@@ -361,9 +361,11 @@ final class SobiProAdmCtrl
 	 */
 	private function routeObj()
 	{
+		if ( $this->_sid && $this->_model->sid != $this->_sid ) {
+			$this->_model = SPFactory::object( $this->_sid );
+		}
 		try {
-			$ctrl = SPLoader::loadController( $this->_model->oType, true );
-			$ctrl = new $ctrl();
+			$ctrl = SPFactory::Controller( $this->_model->oType, true );
 			if ( $ctrl instanceof SPController ) {
 				$this->setController( $ctrl );
 				$this->_ctrl->setModel( SPLoader::loadModel( $this->_model->oType ) );

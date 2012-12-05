@@ -149,7 +149,7 @@
 				<cell type="text" value="id" class="center" />
 				<cell type="checkbox" name="e_sid" value="id" class="center" />
 				<cell>
-					<cell type="link" value="name">
+					<cell type="link" value="name" class="var:[valid]">
 						<url type="intern">
 							<param name="task" value="entry.edit" />
 							<param name="sid" value="id" parse="true" />
