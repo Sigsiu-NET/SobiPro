@@ -209,7 +209,6 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	private function section()
 	{
 		Sobi::ReturnPoint();
-		SPLoader::loadClass( 'html.input' );
 
 		/* create menu */
 		$menu = SPFactory::Instance( 'helpers.adm.menu', 'extensions.manage', Sobi::Section() );
@@ -235,7 +234,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$cSec = SPFactory::Model( 'section' );
 		$cSec->init( Sobi::Section() );
 
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		$all = $db->select( '*', 'spdb_plugins', array( '!type' => Sobi::Cfg( 'apps.global_types_array' ), 'enabled' => 1 ) )->loadAssocList( 'pid' );
 		$list = $db->select( '*', 'spdb_plugin_section', array( 'section' => Sobi::Section() ) )->loadAssocList( 'pid' );
 		if( count( $all ) ) {
@@ -251,13 +250,12 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$all[ $id ][ 'repository' ] = null;
 			}
 		}
-
+		/** @var $view SPExtensionsView */
 		$view = SPFactory::View( 'extensions', true );
-		$view->assign( $this->_task, 'task' );
-		$view->loadConfig( 'extensions.section' );
-		$view->setTemplate( 'extensions.section' );
-		$view->assign( $menu, 'menu' );
-		$view->assign( $all, 'plugins' );
+		$view->assign( $this->_task, 'task' )
+				->assign( $menu, 'menu' )
+				->assign( $all, 'plugins' )
+				->determineTemplate( 'extensions','section' );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
 		$view->display();
 		Sobi::Trigger( 'After'.ucfirst( $this->_task ), $this->name(), array( &$view ) );

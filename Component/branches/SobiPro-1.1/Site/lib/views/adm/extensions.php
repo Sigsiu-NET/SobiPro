@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -174,11 +174,19 @@ class SPExtensionsView extends SPAdmView
 
 	/**
 	 * @param string $title
+	 * @return string
 	 */
 	public function setTitle( $title )
 	{
-		parent::setTitle( $title );
-		$this->set( $title, 'site_title');
+//		$name = $this->get( 'section.name' );
+//		if ( $name ) {
+//			Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
+//			$title = Sobi::Txt( $title, array( 'category_name' => $name ) );
+//			$this->set( $name, 'category_name' );
+//			$this->set( $name, 'section_name' );
+//			$this->set( $title, 'site_title' );
+//		}
+		$title = parent::setTitle( $title );
+		return $title;
 	}
 }
-?>
