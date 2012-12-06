@@ -232,9 +232,10 @@ class SPTplParser
 						$attr[ ] = "{$n}=\"{$v}\"";
 					}
 				}
+                $class = isset($data['attributes']['class']) && $data['attributes']['class'] ? $data['attributes']['class'] : null;
 				if ( $data[ 'attributes' ][ 'label' ] ) {
 					$type = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? ' alert-' . $data[ 'attributes' ][ 'type' ] : null;
-					$this->_out[ ] = "<div class=\"alert {$type}\">";
+					$this->_out[ ] = "<div class=\"alert {$type} {$class}\">";
 					if ( isset( $data[ 'attributes' ][ 'dismiss-button' ] ) && $data[ 'attributes' ][ 'dismiss-button' ] == 'true' ) {
 						$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
 					}

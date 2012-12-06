@@ -366,6 +366,9 @@ div.spScreenTitle h4 {
 .SobiPro .tooltip.bottom .tooltip-arrow {
   border-bottom-color: #000066;
 }
+.spConfigAlert {
+  max-width: 600px;
+}
 .SobiPro .popover {
   width: 310px;
 }
