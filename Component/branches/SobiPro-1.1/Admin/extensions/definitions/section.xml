@@ -2,9 +2,8 @@
 <definition>
 	<header>
 		<title value="AMN.APPS" />
-		<file type="script" filename="bootstrap.tooltips" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiSection">
+	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" />
@@ -14,43 +13,30 @@
 		</buttons>
 	</toolbar>
 	<body>
-		<message id="spMessage"/>
-		<message value="EX.SECTION_EXPL" type="info"/>
+		<message id="spMessage" />
+		<message label="EX.SECTION_EXPL" type="info" dismiss-button="false" />
 		<table>
 			<head>
-				<cell label="EXTENSIONS.HEADER_NAME" type="text" class="center" />
-				<cell label="EXTENSIONS.HEADER_TYPE" type="text" class="center" />
-				<cell label="EXTENSIONS.HEADER_PID" type="text" class="center" />
+				<cell label="EXTENSIONS.HEADER_NAME" type="text" class="left" />
+				<cell label="EXTENSIONS.HEADER_TYPE" type="text" class="left" />
+				<cell label="EXTENSIONS.HEADER_PID" type="text" class="left" />
+				<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="center" />
 				<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="center" />
 				<cell label="EXTENSIONS.HEADER_ENABLED" type="text" class="center" />
 			</head>
-			<loop subject="entries">
-				<cell type="text" value="id" class="center" />
-				<cell type="checkbox" name="e_sid" value="id" class="center" checked-out-time="coutTime" checked-out-by="cout" />
-				<cell>
-					<cell type="link" value="name" class="var:[valid]">
-						<url type="intern">
-							<param name="task" value="entry.edit" />
-							<param name="sid" value="id" parse="true" />
-							<param name="pid" value="request.pid" parse="true" subject="skip" />
-						</url>
-					</cell>
-				</cell>
-				<!--<cell type="text" value="field_price"/>-->
-				<cells value="customFields" class="center" />
-				<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+			<loop subject="applications">
+				<cell type="text" value="name" class="left" />
+				<cell type="text" value="type" class="left" />
+				<cell type="text" value="pid" class="left" />
+				<cell type="text" value="version" class="center" />
+				<cell type="text" value="author" class="center" />
+				<cell type="ticker" value="enabled" class="center" icons="{'0':'remove-sign','1':'ok'}">
 					<url type="intern">
-						<param name="task" value="entry.toggle.enabled" />
-						<param name="sid" value="id" parse="true" />
+						<param name="task" value="extensions.toggle" />
+						<param name="plid" value="id" parse="true" />
+						<param name="sid" value="sid" parse="true" subject="skip" />
 					</url>
 				</cell>
-				<cell type="ticker" value="approved" class="center" icons="{'0':'thumbs-down','1':'thumbs-up'}">
-					<url type="intern">
-						<param name="task" value="entry.toggle.approval" />
-						<param name="sid" value="id" parse="true" />
-					</url>
-				</cell>
-				<cell type="text" value="owner" class="center" />
 			</loop>
 		</table>
 	</body>
@@ -59,6 +45,7 @@
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
+			<field name="pid" value="pid" />
 		</hidden>
 	</config>
 </definition>

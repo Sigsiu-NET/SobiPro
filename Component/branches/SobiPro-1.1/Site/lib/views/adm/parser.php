@@ -232,17 +232,28 @@ class SPTplParser
 						$attr[ ] = "{$n}=\"{$v}\"";
 					}
 				}
-				$attr = implode( ' ', $attr );
-				$messages = SPFactory::message()->getMessages();
-				if ( count( $messages ) ) {
-					foreach ( $messages as $type => $texts ) {
-						if ( count( $texts ) ) {
-							$this->_out[ ] = "<div class=\"alert alert-{$type}\">";
-							$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
-							foreach( $texts as $text ) {
-								$this->_out[ ] = "<div>{$text}</div>";
+				if ( $data[ 'attributes' ][ 'label' ] ) {
+					$type = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? ' alert-' . $data[ 'attributes' ][ 'type' ] : null;
+					$this->_out[ ] = "<div class=\"alert {$type}\">";
+					if ( isset( $data[ 'attributes' ][ 'dismiss-button' ] ) && $data[ 'attributes' ][ 'dismiss-button' ] == 'true' ) {
+						$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
+					}
+					$this->_out[ ] = $data[ 'attributes' ][ 'label' ];
+					$this->_out[ ] = '</div>';
+				}
+				else {
+					$attr = implode( ' ', $attr );
+					$messages = SPFactory::message()->getMessages();
+					if ( count( $messages ) ) {
+						foreach ( $messages as $type => $texts ) {
+							if ( count( $texts ) ) {
+								$this->_out[ ] = "<div class=\"alert alert-{$type}\">";
+								$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
+								foreach ( $texts as $text ) {
+									$this->_out[ ] = "<div>{$text}</div>";
+								}
+								$this->_out[ ] = '</div>';
 							}
-							$this->_out[ ] = '</div>';
 						}
 					}
 				}
@@ -377,7 +388,7 @@ class SPTplParser
 			$txt = Sobi::Txt( 'ROW_EXPIRED', $cell[ 'attributes' ][ 'valid-until' ] );
 			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="expired">';
 		}
-		/** is pending */
+		/** is pending ? */
 		elseif ( ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] ) > time() ) && $index == 1 ) {
 			$index = -2;
 			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );

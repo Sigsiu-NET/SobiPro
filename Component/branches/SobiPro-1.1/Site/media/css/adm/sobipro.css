@@ -460,6 +460,9 @@ input.sp-input-micro[type="text"] {
 .spicon-48-SobiSectionCfg {
   background-image: url('../../../../media/sobipro/48x48/folder-section-cfg.png');
 }
+.spicon-48-SobiApplicationSection {
+  background-image: url('../../../../media/sobipro/48x48/folder-application-section.png');
+}
 .spUserSelector .response .btn {
   margin: 5px;
   width: 200px;
