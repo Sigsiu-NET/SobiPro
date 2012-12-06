@@ -1174,6 +1174,7 @@ class SPAdmView extends SPObject implements SPView
 	}
 
 	/**
+	 * @deprecated
 	 * @param string $template
 	 */
 	public function setTemplate( $template )

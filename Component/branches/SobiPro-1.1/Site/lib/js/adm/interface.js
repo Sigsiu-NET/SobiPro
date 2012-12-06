@@ -21,6 +21,7 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery( '#SP_task' ).val( task );
 		if ( task.length ) {
 			e.preventDefault();
+			e.stopPropagation();
 			if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
 				SPTriggerFrakingWYSIWYGEditors();
 				req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
@@ -290,8 +291,7 @@ SobiPro.jQuery( document ).ready( function ()
 				proxy.popover( 'hide' );
 			} )
 		} );
-	SobiPro.jQuery( document ).ready( function ()
-	{
+	if ( SobiPro.jQuery( '.spFileUpload' ).length ) {
 		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
-	} );
+	}
 } );

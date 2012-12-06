@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="APP.BANK_TRANSFER_NAME" />
+		<file type="script" filename="bootstrap.tabs" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
+		<button type="apply" task="bank_transfer.save" />
+		<divider />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="help" target="_blank" />
+		</buttons>
+	</toolbar>
+	<body>
+		<message id="spMessage" />
+		<div class="row-fluid">
+			<div class="span12">
+				<message label="APP.BANK_TRANSFER_DATA_EXPL" type="info"/>
+				<fieldset label="APP.BANK_TRANSFER_NAME">
+					<field type="textarea" name="category.description" value="category.description" label="CATN.CATEGORY_DESCRIPTION" editor="true" class="input-splarge" rows="2" style="" />
+				</fieldset>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="method" default="xhr" />
+			<field name="format" default="raw" />
+			<field name="pid" value="pid" />
+		</hidden>
+	</config>
+</definition>
