@@ -21,7 +21,7 @@
 			<div class="span12">
 				<message label="APP.BANK_TRANSFER_DATA_EXPL" type="info"/>
 				<fieldset label="APP.BANK_TRANSFER_NAME">
-					<field type="textarea" name="category.description" value="category.description" label="CATN.CATEGORY_DESCRIPTION" editor="true" class="input-splarge" rows="2" style="" />
+					<field type="textarea" name="bankdata" label="APP.BANK_TRANSFER_DATA" editor="true" class="input-splarge" rows="2"/>
 				</fieldset>
 			</div>
 		</div>
