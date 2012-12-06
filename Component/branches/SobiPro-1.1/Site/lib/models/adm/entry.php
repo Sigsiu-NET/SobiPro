@@ -149,6 +149,7 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 				$this->_loaded = true;
 				if ( !( strlen( $this->name ) ) ) {
 					$this->name = Sobi::Txt( 'ENTRY_NO_NAME' );
+					// well yeah - screw the pattern :-/
 					SPFactory::message()->warning( 'ENTRIES_BASE_DATA_INCOMPLETE' );
 					$this->valid = false;
 				}

@@ -69,6 +69,10 @@ class SPConfigAdmCtrl extends SPController
 		}
 	}
 
+	/**
+	 * @param string
+	 * @return SPConfigAdmView
+	 */
 	protected function getView( $task )
 	{
 		SPLoader::loadClass( 'html.input' );
@@ -92,7 +96,7 @@ class SPConfigAdmCtrl extends SPController
 		Sobi::Trigger( 'AfterCreate', 'AdmMenu', array( &$menu ) );
 		if ( $sid ) {
 			if ( Sobi::Cfg( 'section.template' ) == 'default' ) {
-				SPMainFrame::msg( array( 'msg' => Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), 'msgtype' => SPC::WARN_MSG ) );
+				SPFactory::message()->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false );
 			}
 			/* create new SigsiuTree */
 			$tree = SPLoader::loadClass( 'mlo.tree' );
