@@ -46,41 +46,20 @@ class SPExtensionsView extends SPAdmView
 	{
 		SPLoader::loadClass( 'html.tooltip' );
 		/* create the header */
-		$this->assign(
-			SPLists::tableHeader(
-				array(
-						'checkbox' 		=> SP_TBL_HEAD_RAW,
-						'name' 			=> SP_TBL_HEAD_RAW,
-						'type' 			=> SP_TBL_HEAD_RAW,
-						'version' 		=> SP_TBL_HEAD_RAW,
-						'author' 		=> SP_TBL_HEAD_RAW,
-						'license' 		=> SP_TBL_HEAD_RAW,
-						'availability' 	=> SP_TBL_HEAD_RAW,
-						'pid' 			=> SP_TBL_HEAD_RAW,
-						'state' 		=> SP_TBL_HEAD_RAW,
-						'enabled'		=> SP_TBL_HEAD_RAW,
-						), 'extensions'
-				),
-			'header'
-		);
 		$list =& $this->get( 'plugins' );
 		$plugins = array();
-		$cl = count( $list );
-		if( count( $list ) ) {
+		if ( count( $list ) ) {
 			$c = 0;
-			foreach ( $list as $pid => $plugin ) {
-				$p = array( 'class' => 'text_area' );
-				$plugin[ 'radio' ] = SPHtml_Input::radio( 'plid', $plugin[ 'repository' ].'.'.$plugin[ 'type' ].'.'.$plugin[ 'pid' ], null, $plugin[ 'pid' ], false, $p  );
-				$plugin[ 'name' ] = SPTooltip::toolTip( $plugin[ 'description' ], $plugin[ 'name' ], null, null, $plugin[ 'name' ], isset( $plugin[ 'description_url' ] ) ? $plugin[ 'description_url' ] : null );
-				if( isset( $plugin[ 'availability_expl' ] ) ) {
-					if( isset( $plugin[ 'availability_link' ] ) ) {
+			foreach ( $list as $plugin ) {
+				if ( isset( $plugin[ 'availability_expl' ] ) ) {
+					if ( isset( $plugin[ 'availability_link' ] ) ) {
 						$plugin[ 'availability' ] = SPTooltip::toolTip( $plugin[ 'availability_expl' ], $plugin[ 'availability' ], null, null, $plugin[ 'availability' ], $plugin[ 'availability_link' ] );
 					}
 					else {
 						$plugin[ 'availability' ] = SPTooltip::toolTip( $plugin[ 'availability_expl' ], $plugin[ 'availability' ], null, null, $plugin[ 'availability' ] );
 					}
 				}
-				if( isset( $plugin[ 'installed' ] ) ) {
+				if ( isset( $plugin[ 'installed' ] ) ) {
 					switch ( $plugin[ 'installed' ] ) {
 						case 0:
 							$plugin[ 'installed' ] = SPTooltip::toolTip(
@@ -88,62 +67,41 @@ class SPExtensionsView extends SPAdmView
 								Sobi::Txt( 'EX.BRWOSE_NOT_INSTALLED' ),
 								Sobi::Cfg( 'list_icons.category_goin' )
 							);
-						break;
+							break;
 						case 1:
 							$plugin[ 'installed' ] = SPTooltip::toolTip(
 								Sobi::Txt( 'EX.BRWOSE_INSTALLED_EXPL' ),
 								Sobi::Txt( 'EX.BRWOSE_INSTALLED' ),
 								Sobi::Cfg( 'list_icons.field_editable_1' )
 							);
-						break;
+							break;
 						case 2:
 							$plugin[ 'installed' ] = SPTooltip::toolTip(
 								Sobi::Txt( 'EX.BRWOSE_INSTALLED_UPD_EXPL' ),
 								Sobi::Txt( 'EX.BRWOSE_INSTALLED_UPD' ),
 								Sobi::Cfg( 'list_icons.field_editable_0' )
 							);
-						break;
+							break;
 					}
 				}
-				$plugin[ 'id' ] = $plugin[ 'type' ].'.'.$plugin[ 'pid' ];
-				$row = new SPObject();
-				$row->castArray( $plugin );
-				if( $this->get( 'task' ) == 'manage' ) {
-					$plugin[ 'enabled' ] = SPLists::state( $row, 'plid', 'extensions', 'enabled', array( 'on' => 'publish', 'off' => 'unpublish' ), Sobi::Section() );
-				}
+				$plugin[ 'id' ] = $plugin[ 'type' ] . '.' . $plugin[ 'pid' ];
 				$plugins[ $c++ ] = $plugin;
 			}
 		}
-		$this->assign( $plugins, 'plugins' );
+		$this->assign( $plugins, 'applications' );
+		$this->assign( Sobi::Section( true ), 'section' );
+		$this->determineTemplate( 'extensions', 'section' );
 	}
 
 	private function installed()
 	{
-		/* create the header */
-		$this->assign(
-			SPLists::tableHeader(
-				array(
-						'checkbox' 		=> SP_TBL_HEAD_RAW,
-						'pid' 			=> SP_TBL_HEAD_RAW,
-						'name' 			=> SP_TBL_HEAD_RAW,
-						'type' 			=> SP_TBL_HEAD_RAW,
-						'version' 		=> SP_TBL_HEAD_RAW,
-						'author' 		=> SP_TBL_HEAD_RAW,
-						'license' 		=> SP_TBL_HEAD_RAW,
-						'availability' 	=> SP_TBL_HEAD_RAW,
-						'createdTime' 	=> SP_TBL_HEAD_RAW,
-						'enabled'		=> SP_TBL_HEAD_RAW,
-						), 'extensions'
-				),
-			'header'
-		);
 		$list =& $this->get( 'plugins' );
 		$cl = count( $list );
-		for( $i = 0; $i < $cl; $i++ ) {
+		for ( $i = 0; $i < $cl; $i++ ) {
 			$p = array( 'class' => 'text_area' );
-			if( ( $list[ $i ][ 'pid' ] != 'router' ) && ( !( in_array( $list[ $i ][ 'type' ], array( 'field', 'language', 'module', 'plugin' ) ) ) ) ) {
+			if ( ( $list[ $i ][ 'pid' ] != 'router' ) && ( !( in_array( $list[ $i ][ 'type' ], array( 'field', 'language', 'module', 'plugin' ) ) ) ) ) {
 				$list[ $i ][ 'oType' ] = 'extension';
-				$list[ $i ][ 'id' ] = $list[ $i ][ 'type' ].'.'.$list[ $i ][ 'pid' ];
+				$list[ $i ][ 'id' ] = $list[ $i ][ 'type' ] . '.' . $list[ $i ][ 'pid' ];
 				$row = new SPObject();
 				$row->castArray( $list[ $i ] );
 				$list[ $i ][ 'enabled' ] = SPLists::state( $row, 'plid', 'extensions', 'enabled', array( 'on' => 'publish', 'off' => 'unpublish' ) );
@@ -155,7 +113,7 @@ class SPExtensionsView extends SPAdmView
 					Sobi::Cfg( 'list_icons.extensions_locked' )
 				);
 			}
-			if( !( $list[ $i ][ 'deletable' ] ) ) {
+			if ( !( $list[ $i ][ 'deletable' ] ) ) {
 				$list[ $i ][ 'radio' ] = SPTooltip::toolTip(
 					Sobi::Txt( 'EX.CORE_PLUGIN' ),
 					Sobi::Txt( 'EX.CORE_PLUGIN' ),
@@ -163,9 +121,9 @@ class SPExtensionsView extends SPAdmView
 				);
 			}
 			else {
-				$list[ $i ][ 'radio' ] = SPHtml_Input::radio( 'plid', $list[ $i ][ 'type' ].'.'.$list[ $i ][ 'pid' ], null, $list[ $i ][ 'pid' ], false, $p  );
+				$list[ $i ][ 'radio' ] = SPHtml_Input::radio( 'plid', $list[ $i ][ 'type' ] . '.' . $list[ $i ][ 'pid' ], null, $list[ $i ][ 'pid' ], false, $p );
 			}
-			if( $list[ $i ][ 'authorURL' ] ) {
+			if ( $list[ $i ][ 'authorURL' ] ) {
 				$list[ $i ][ 'author' ] = "<a href=\"{$list[ $i ][ 'authorURL' ]}\" target=\"_blank\">{$list[ $i ][ 'author' ]}</a>";
 			}
 		}
