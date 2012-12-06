@@ -21,45 +21,36 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset label="GB.CFG.LANG">
-							<field type="states" name="spcfg[lang.multimode]" value="lang.multimode" label="GB.CFG.MULTILANG" prefix="yes_no" />
+							<field type="states" name="spcfg[lang.multimode]" value="lang.multimode" label="GB.CFG.MULTILANG" prefix="onoff" />
 						</fieldset>
-						<fieldset label="GB.CFG.CACHE">
-							<field type="states" name="spcfg[cache.l3_enabled]" value="cache.l3_enabled" label="GB.CFG.DATA_ACCELERATOR" prefix="yes_no" />
-							<field type="states" name="spcfg[cache.include_files]" value="cache.include_files" label="GB.CFG.INCLUDE_FILES_CACHE" prefix="yes_no" />
-							<field type="states" name="spcfg[cache.compress_js]" value="cache.compress_js" label="GB.CFG.COMPRESS_JS_FILES" prefix="yes_no" />
-						</fieldset>
-						<fieldset label="GB.CFG.HTML_INPUT">
+						<fieldset label="GBN.CFG.HTML_INPUT">
 							<field type="textarea" name="spcfg[html.allowed_tags_array]" value="html.allowed_tags_array" label="GB.CFG.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />
 							<field type="textarea" name="spcfg[html.allowed_attributes_array]" value="html.allowed_attributes_array" label="GB.CFG.ALLOWED_ATTRIBUTES" editor="false" class="input-splarge" rows="2" style="" />
 						</fieldset>
-						<fieldset label="GB.CFG.DEB_HEAD">
-							<field type="states" name="spcfg[debug.xml_raw]" value="debug.xml_raw" label="GB.CFG.DEB_XML_RAW" prefix="yes_no" />
-							<field type="states" name="spcfg[debug.display_errors]" value="debug.display_errors" label="GB.CFG.DEB_DISPLAY_ERRORS" prefix="yes_no" />
-							<field type="select" label="GB.CFG.DEB_LEVEL" name="spcfg[debug.level]" selected="debug.level" class="input-xlarge">
-								<values>
-									<option value="0" label="GB.CFG.DEB_LEVEL_NONE" />
-									<option value="1" label="GB.CFG.DEB_LEVEL_ERROR" />
-									<option value="2" label="GB.CFG.DEB_LEVEL_WARNING" />
-									<option value="30719" label="GB.CFG.DEB_LEVEL_ALL" />
-								</values>
-							</field>
-						</fieldset>
+                        <fieldset label="GBN.CFG.PBY_SUPPORT">
+                            <field type="states" name="spcfg[general.show_pb]" value="general.show_pb" label="GB.CFG.PBY_HEAD" prefix="show" />
+                        </fieldset>
 					</div>
 				</div>
 			</tab>
-			<tab label="GB.CFG.PAYMENTS">
+			<tab label="GBN.CFG.PAYMENTS">
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="text" name="spcfg[payments.dec_point]" value="payments.dec_point" label="GB.CFG.PMN_DEC_POINT" class="input-small" />
-							<field type="text" name="spcfg[payments.currency]" value="payments.currency" label="GB.CFG.CURRENCY" class="input-small" />
-							<field type="select" label="GB.CFG.PMN_FORMAT" name="spcfg[payments.format]" selected="debug.level" class="input-xlarge">
+							<field type="select" name="spcfg[payments.dec_point]" value="payments.dec_point" selected="payments.dec_point" label="GBN.CFG.PMN_DEC_POINT" class="input-mini" >
+                                <values>
+                                    <option value="," label="," />
+                                    <option value="." label="." />
+                                </values>
+                            </field>
+							<field type="text" name="spcfg[payments.currency]" value="payments.currency" label="GB.CFG.CURRENCY" class="input-mini" />
+							<field type="select" label="GB.CFG.PMN_FORMAT" name="spcfg[payments.format]" selected="payments.format" class="input-xlarge">
 								<values>
 									<option value="%value %currency" label="GB.CFG.PMN_FORMAT_VC" />
 									<option value="%currency %value" label="GB.CFG.PMN_FORMAT_CV" />
 								</values>
 							</field>
-							<field type="text" name="spcfg[payments.vat]" value="payments.vat" label="GB.CFG.PMN_VAT" class="input-small">
+							<field type="text" name="spcfg[payments.vat]" value="payments.vat" label="GBN.CFG.PMN_VAT" class="input-mini">
 								<add where="after">
 									<text>%</text>
 								</add>
@@ -76,15 +67,44 @@
 					</div>
 				</div>
 			</tab>
-			<tab label="GB.CFG.MISC">
-				<div class="row-fluid">
-					<div class="span12">
-						<fieldset label="GB.CFG.PBY_HEAD">
-							<field type="states" name="spcfg[general.show_pb]" value="general.show_pb" label="GB.CFG.PBY" prefix="yes_no" />
-						</fieldset>
-					</div>
-				</div>
-			</tab>
+            <tab label="GBN.CFG.CACHE_HEAD">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset>
+                            <message label="GBN.CFG.ACCEL" type="error" dismiss-button="false" class="spConfigAlert" />
+                            <field type="states" name="spcfg[cache.l3_enabled]" value="cache.l3_enabled" label="GB.CFG.DATA_ACCELERATOR" prefix="onoff" />
+                        </fieldset>
+                        <fieldset label="GB.CFG.CACHE">
+                            <field type="states" name="spcfg[cache.include_files]" value="cache.include_files" label="GBN.CFG.INCLUDE_FILES_CACHE" prefix="onoff" />
+                        </fieldset>
+                        <fieldset label="GBN.CFG.COMPRESS_FILES">
+                            <field type="states" name="spcfg[cache.compress_js]" value="cache.compress_js" label="GBN.CFG.COMPRESS_JS_FILES" prefix="onoff" />
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
+            <tab label="GBN.CFG.DEB_HEAD">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset label="GBN.CFG.DEB_DEBUG">
+                            <field type="states" name="spcfg[debug.xml_raw]" value="debug.xml_raw" label="GBN.CFG.DEB_XML_RAW" prefix="onoff" />
+                            <div style="text-transform:uppercase; color:red;"><text value="not yet implemented!!" /></div>
+                            <field type="text" name="spcfg[debug.xml_ip]" value="debug.xml_ip" label="GBN.CFG.DEB_XML_IP" class="input-medium" />
+                        </fieldset>
+                        <fieldset label="GBN.CFG.DEB_LOG">
+                            <field type="states" name="spcfg[debug.display_errors]" value="debug.display_errors" label="GBN.CFG.DEB_DISPLAY_ERRORS" prefix="yes_no" />
+                            <field type="select" label="GBN.CFG.DEB_LEVEL" name="spcfg[debug.level]" selected="debug.level" class="input-xlarge">
+                                <values>
+                                    <option value="0" label="GB.CFG.DEB_LEVEL_NONE" />
+                                    <option value="1" label="GB.CFG.DEB_LEVEL_ERROR" />
+                                    <option value="2" label="GB.CFG.DEB_LEVEL_WARNING" />
+                                    <option value="30719" label="GB.CFG.DEB_LEVEL_ALL" />
+                                </values>
+                            </field>
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
 		</tabs>
 	</body>
 	<config>
