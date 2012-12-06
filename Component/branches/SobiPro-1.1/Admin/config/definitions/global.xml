@@ -29,6 +29,7 @@
 						</fieldset>
                         <fieldset label="GBN.CFG.PBY_SUPPORT">
                             <field type="states" name="spcfg[general.show_pb]" value="general.show_pb" label="GB.CFG.PBY_HEAD" prefix="show" />
+                            <message label="GBN.CFG.PBY_EXPL" class="spConfigAlert" type="warning" dismiss-button="false" />
                         </fieldset>
 					</div>
 				</div>

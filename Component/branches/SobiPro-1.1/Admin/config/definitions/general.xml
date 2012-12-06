@@ -163,7 +163,7 @@
 								</fieldset>
 							</tab>
 						</tabs>
-                        <div class="alert" style="max-width:600px;"><text value="SECN.CFG.WARNING" /></div>
+                        <message label="SECN.CFG.WARNING" type="info" dismiss-button="false" class="spConfigAlert" />
 					</div>
 				</div>
 			</tab>
@@ -225,7 +225,7 @@
             <tab label="SEC.CFG.REDIRECTS">
                 <div class="row-fluid">
                     <div class="span12">
-                        <div class="alert" style="max-width:600px;"><text value="SECN.CFG.REDIRECT_INFO" /></div>
+                        <message label="SECN.CFG.REDIRECT_INFO" type="info" dismiss-button="false" class="spConfigAlert" />
                         <tabs>
                             <tab label="SECN.CFG.REDIRECT_SECTION">
                                 <fieldset label="SECN.CFG.REDIRECTS_SECTION_SPACER">
