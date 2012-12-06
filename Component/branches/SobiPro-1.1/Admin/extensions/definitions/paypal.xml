@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definition>
 	<header>
-		<title value="APP.BANK_TRANSFER_NAME" />
+		<title value="APP.PPP_NAME" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
-		<button type="apply" task="bank_transfer.save" />
+		<button type="apply" task="paypal.save" />
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
@@ -19,10 +19,13 @@
 		<message id="spMessage" />
 		<div class="row-fluid">
 			<div class="span12">
-				<!--<message label="APP.BANK_TRANSFER_DATA_EXPL" type="info"/>-->
-				<text value="APP.BANK_TRANSFER_DATA_EXPL"/>
-				<fieldset label="APP.BANK_TRANSFER_NAME">
-					<field type="textarea" name="bankdata" label="APP.BANK_TRANSFER_DATA" editor="true" class="input-splarge" rows="2"/>
+				<fieldset label="APP.PPP_NAME">
+					<field type="textarea" name="ppexpl" label="APP.PPP_EXPL" editor="true" class="input-splarge" rows="2" />
+					<field type="text" name="ppsubject" label="APP.PPP_SUBJECT" required="true" class="input-xxlarge" />
+					<field type="text" name="ppurl" label="APP.PPP_URL" required="true" class="input-xxlarge" />
+					<field type="text" name="ppemail" label="APP.PPP_EMAIL" required="true" class="input-xxlarge" />
+					<field type="text" name="pprurl" label="APP.PPP_RURL" required="true" class="input-xxlarge" />
+					<field type="text" name="ppcc" label="APP.PPP_CC" required="true" class="input-mini" />
 				</fieldset>
 			</div>
 		</div>

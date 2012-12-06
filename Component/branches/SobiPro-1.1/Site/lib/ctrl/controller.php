@@ -257,7 +257,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $apply || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_type ) ) );
-				$this->response( Sobi::Url( array( $this->_type . '.edit', 'sid' => $sid ) ), $msg,false, 'success', array( 'sets' => $sets )  );
+				$this->response( Sobi::Url( array( $this->_type . '.edit', 'sid' => $sid ) ), $msg, false, 'success', array( 'sets' => $sets ) );
 			}
 			else {
 				$msg = Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' );
@@ -450,10 +450,20 @@ abstract class SPController extends SPObject implements SPControl
 		}
 	}
 
+	/**
+	 * @param $xml - path to xml file inside the administrator directory (e.g. field.definitions.filter)
+	 * @param $type - object type or array with error url
+	 * */
 	protected function validate( $xml, $type )
 	{
 		$definition = SPLoader::path( $xml, 'adm', true, 'xml' );
 		if ( $definition ) {
+			if ( is_array( $type ) ) {
+				$errorUrl = Sobi::Url( $type );
+			}
+			else {
+				$errorUrl = Sobi::Url( array( 'task' => $type . '.edit', 'sid' => SPRequest::sid() ) );
+			}
 			$xdef = new DOMXPath( DOMdocument::load( $definition ) );
 			$required = $xdef->query( '//field[@required="true"]' );
 			if ( $required->length ) {
@@ -461,7 +471,7 @@ abstract class SPController extends SPObject implements SPControl
 					$node = $required->item( $i );
 					$name = $node->attributes->getNamedItem( 'name' )->nodeValue;
 					if ( !( SPRequest::raw( str_replace( '.', '_', $name ) ) ) ) {
-						$this->response( Sobi::Url( array( 'task' => $type . '.edit', 'sid' => SPRequest::sid() ) ), Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, 'error', array( 'required' => $name ) );
+						$this->response( $errorUrl, Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, 'error', array( 'required' => $name ) );
 					}
 				}
 			}
