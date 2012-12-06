@@ -881,9 +881,13 @@ class SPAdmView extends SPObject implements SPView
 				if ( method_exists( 'SPHtml_input', $args[ 'type' ] ) ) {
 					$method = new ReflectionMethod( 'SPHtml_input', $args[ 'type' ] );
 					$methodArgs = array();
-					foreach ( $method->getParameters() as $param ) {
+					$methodParams = $method->getParameters();
+					foreach ( $methodParams as $param ) {
 						if ( isset( $args[ $param->name ] ) ) {
 							$methodArgs[ ] = $args[ $param->name ];
+						}
+						elseif ( $param->name == 'value' && !( isset( $args[ 'value' ] ) ) && isset( $args[ 'name' ] ) ) {
+							$methodArgs[ ] = $this->get( $args[ 'name' ] );
 						}
 						elseif ( $param->isDefaultValueAvailable() ) {
 							$methodArgs[ ] = $param->getDefaultValue();
@@ -1184,8 +1188,8 @@ class SPAdmView extends SPObject implements SPView
 	}
 
 	/**
-	 *
 	 * @param string $title
+	 * @return string
 	 */
 	public function setTitle( $title )
 	{
