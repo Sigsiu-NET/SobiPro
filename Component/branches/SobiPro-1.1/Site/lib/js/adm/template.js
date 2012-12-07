@@ -18,9 +18,24 @@ SobiPro.jQuery( document ).ready( function ()
 	} );
 } );
 
-function SPInitTplEditor()
+function SPInitTplEditor( mode )
 {
-	var editor = CodeMirror.fromTextArea( document.getElementById( 'file_content' ) );
+	var options = {
+		lineNumbers:true,
+		matchBrackets:true,
+		indentUnit:4,
+		indentWithTabs:true,
+		enterMode:"keep",
+		tabMode:"shift"
+	}
+	if( mode ) {
+		options[ 'mode' ] = mode;
+	}
+	var editor = CodeMirror.fromTextArea( document.getElementById( 'file_content' ), options );
+
 	editor.setSize( '95%', '1000px' );
-	SobiPro.jQuery( '#SPAdminForm' ).bind( 'BeforeAjaxSubmit', function () { editor.save(); } );
+	SobiPro.jQuery( '#SPAdminForm' ).bind( 'BeforeAjaxSubmit', function ()
+	{
+		editor.save();
+	} );
 }

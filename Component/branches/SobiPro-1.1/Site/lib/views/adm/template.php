@@ -61,6 +61,7 @@ class SPAdmTemplateView extends SPAdmView
 	{
 		$jsFiles = array( 'codemirror.codemirror' );
 		$ext = $this->get( 'file_ext' );
+		$mode = null;
 		switch ( strtolower( $ext ) ) {
 			case 'xsl':
 			case 'xml':
@@ -73,7 +74,13 @@ class SPAdmTemplateView extends SPAdmView
 				$jsFiles[] = 'codemirror.mode.javascript.javascript';
 				break;
 			case 'php':
+				$jsFiles[] = 'codemirror.mode.clike.clike';
 				$jsFiles[] = 'codemirror.mode.php.php';
+				$jsFiles[] = 'codemirror.mode.htmlmixed.htmlmixed';
+				$jsFiles[] = 'codemirror.mode.xml.xml';
+				$jsFiles[] = 'codemirror.mode.javascript.javascript';
+				$jsFiles[] = 'codemirror.mode.css.css';
+				$mode = 'application/x-httpd-php';
 				break;
 			case 'ini':
 				$jsFiles[] = 'codemirror.mode.properties.properties';
@@ -82,6 +89,6 @@ class SPAdmTemplateView extends SPAdmView
 		SPFactory::header()
 				->addJsFile( $jsFiles )
 				->addCssFile( 'codemirror.codemirror' )
-				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SPInitTplEditor() } );' );
+				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SPInitTplEditor( "'.$mode.'") } );' );
 	}
 }
