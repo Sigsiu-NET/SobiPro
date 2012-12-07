@@ -54,6 +54,8 @@
    (!) Message type for 'Use of Default Template' set to warning (admin interface)
    (!) Field description now allows HTML code
    (!) Default settings while creating a new section changed
+   (!) CodeMirror upgraded to version 2.36
+   (!) jQuery upgraded to version 1.8.2
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
