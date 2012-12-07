@@ -17,26 +17,26 @@
 		<message label="EX.SECTION_EXPL" type="info" dismiss-button="false" />
 		<table>
 			<head>
-				<cell label="EXTENSIONS.HEADER_NAME" type="text" class="left" />
-				<cell label="EXTENSIONS.HEADER_TYPE" type="text" class="left" />
-				<cell label="EXTENSIONS.HEADER_PID" type="text" class="left" />
+                <cell label="EXTENSIONS.HEADER_ENABLED" type="text" class="center" />
+				<cell label="EX.HEADER_NAME" type="text" class="left" />
+				<cell label="EX.HEADER_TYPE" type="text" class="center" />
+				<cell label="EXTENSIONS.HEADER_PID" type="text" class="center" />
 				<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="center" />
 				<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="center" />
-				<cell label="EXTENSIONS.HEADER_ENABLED" type="text" class="center" />
 			</head>
 			<loop subject="applications">
+                <cell type="ticker" value="enabled" class="center" icons="{'0':'remove-sign','1':'ok'}">
+                    <url type="intern">
+                        <param name="task" value="extensions.toggle" />
+                        <param name="plid" value="id" parse="true" />
+                        <param name="sid" value="sid" parse="true" subject="skip" />
+                    </url>
+                </cell>
 				<cell type="text" value="name" class="left" />
-				<cell type="text" value="type" class="left" />
-				<cell type="text" value="pid" class="left" />
+				<cell type="text" value="type" class="center" />
+				<cell type="text" value="pid" class="center" />
 				<cell type="text" value="version" class="center" />
 				<cell type="text" value="author" class="center" />
-				<cell type="ticker" value="enabled" class="center" icons="{'0':'remove-sign','1':'ok'}">
-					<url type="intern">
-						<param name="task" value="extensions.toggle" />
-						<param name="plid" value="id" parse="true" />
-						<param name="sid" value="sid" parse="true" subject="skip" />
-					</url>
-				</cell>
 			</loop>
 		</table>
 	</body>

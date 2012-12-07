@@ -19,11 +19,10 @@
 		<message id="spMessage" />
 		<div class="row-fluid">
 			<div class="span12">
-				<!--<message label="APP.BANK_TRANSFER_DATA_EXPL" type="info"/>-->
-				<text value="APP.BANK_TRANSFER_DATA_EXPL"/>
 				<fieldset label="APP.BANK_TRANSFER_NAME">
 					<field type="textarea" name="bankdata" label="APP.BANK_TRANSFER_DATA" editor="true" class="input-splarge" rows="2"/>
 				</fieldset>
+                <message label="APP.BANK_TRANSFER_DATA_EXPL" type="info" class="spConfigAlert"/>
 			</div>
 		</div>
 	</body>
