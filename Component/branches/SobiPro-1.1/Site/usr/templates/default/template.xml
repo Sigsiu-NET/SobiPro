@@ -6,7 +6,7 @@
 	<authorName>Sigrid Suski and Radek Suski</authorName>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
-	<copyright>Copyright (C) 2009-2010 Sigsiu.NET</copyright>
+	<copyright>Copyright (C) 2009-2012 Sigsiu.NET</copyright>
 	<license>GNU General Public License</license>
 	<creationDate>2010-01-01</creationDate>
 	<version>1.0</version>
@@ -27,7 +27,7 @@
 			Template for a single category in the categories list.
 		</file>
 		<file path="common/entries.xsl">			
-			Template to display the block with all entries (entriesLoop) within a category or the search function. Build the structure of all entries and calls the "vcard" template while displaying single entry.
+			Template to display the block with all entries (entriesLoop) within a category or the search function. Build the structure of all entries and calls the "vCard" template while displaying single entry.
 		</file>				
 		<file path="common/manage.xsl">
 			Display the managing functions like edit entry, approve aso, within an entry.
