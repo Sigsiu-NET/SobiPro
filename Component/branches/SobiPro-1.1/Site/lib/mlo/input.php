@@ -129,8 +129,8 @@ abstract class SPHtml_Input
 		$f .= '<button class="btn upload" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
 		$f .= '</div>';
 		$f .= '<div class="hide progress-container">';
-		$f .= '<div class="progress progress-info"><div class="bar"></div></div>';
-		$f .= '<span class="progress-message badge badge-info pull-left"></span>';
+		$f .= '<div class="progress progress-success"><div class="bar"></div></div>';
+		$f .= '<span class="progress-message badge badge-success pull-left"></span>';
 		$f .= '</div>';
 		$f .= '<div class="alert hide"><button type="button" class="close" data-dismiss="alert">×</button><div>&nbsp;</div></div>';
 		$f .= "<input type=\"hidden\" name=\"{$name}\" value=\"\" class='idStore'/>";

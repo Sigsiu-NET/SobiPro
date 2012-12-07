@@ -12,7 +12,7 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 	this.settings = {
 		'hideProgressBar':true,
 		'styles':{
-			'.progress':{'clear':'left', 'width':'500px', 'float':'left', 'margin':'10px' },
+			'.progress':{'clear':'left', 'width':'500px', 'float':'left', 'margin':'10px 10px 10px 0' },
 			'.alert':{'clear':'both', 'width':'500px' },
 			'.file input':{ 'margin-bottom':'10px'},
 			'.progress-message':{ 'margin-top':'10px'}
