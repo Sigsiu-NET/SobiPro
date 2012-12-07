@@ -71,7 +71,7 @@
 			<head>
 				<cell label="HEADER_ID" type="text" class="center" />
 				<cell type="checkbox" rel="c_sid" class="center" />
-				<cell label="HEADER_CATS_NAME" type="text" />
+				<cell label="HEADER_CATS_NAME" type="text" class="left" />
 				<cell label="HEADER_CATS_STATE" type="text" class="center" />
 				<cell label="HEADER_CATS_APPROVAL" type="text" class="center" />
 				<cell label="HEADER_CATS_AUTHOR" type="text" class="center" />
@@ -80,7 +80,7 @@
 			<loop subject="categories">
 				<cell type="text" value="id" class="center" />
 				<cell type="checkbox" name="c_sid" value="id" class="center" checked-out-time="coutTime" checked-out-by="cout" checked-out-ico="lock" />
-				<cell>
+				<cell class="left">
 					<cell type="link" value="name">
 						<url type="intern">
 							<param name="task" value="category.edit" />
@@ -138,7 +138,7 @@
 			<head>
 				<cell label="HEADER_ID" type="text" class="center" />
 				<cell type="checkbox" rel="e_sid" class="center" />
-				<cell label="HEADER_ENTRIES_NAME" type="text" />
+				<cell label="HEADER_ENTRIES_NAME" type="text" class="left" />
 				<cells value="customHeader" class="center" type="text" />
 				<cell label="HEADER_ENTRIES_STATE" type="text" class="center" />
 				<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="center" />
@@ -148,7 +148,7 @@
 			<loop subject="entries">
 				<cell type="text" value="id" class="center" />
 				<cell type="checkbox" name="e_sid" value="id" class="center" />
-				<cell>
+				<cell class="left">
 					<cell type="link" value="name" class="var:[valid]">
 						<url type="intern">
 							<param name="task" value="entry.edit" />
