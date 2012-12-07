@@ -228,7 +228,7 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( "#filter-edit-window" )
 				.css( 'width', '600px' )
 				.find( '.modal-body' )
-				.html( '<iframe src="' + requestUrl + '" id="filter-edit-window-frame" style="width: 570px; height: 240px; border: none;"> </iframe>' );
+				.html( '<iframe src="' + requestUrl + '" id="filter-edit-window-frame" style="width: 570px; height: 210px; border: none; overflow-y: hidden;"> </iframe>' );
 			SobiPro.jQuery( '#filter-edit-window' ).modal();
 //			SobiPro.jQuery( "#filter-edit-window" )
 //				.find( '.save' )
