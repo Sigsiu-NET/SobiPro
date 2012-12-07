@@ -156,6 +156,9 @@ class SPAdmView extends SPObject implements SPView
 			if ( strstr( $node->nodeName, '#' ) ) {
 				continue;
 			}
+			if ( !( $this->xmlCondition( $node ) ) ) {
+				continue;
+			}
 			switch ( $node->nodeName ) {
 				case 'header':
 					$this->xmlHeader( $node->childNodes );
@@ -375,7 +378,7 @@ class SPAdmView extends SPObject implements SPView
 						$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
 					}
 					else {
-						$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+						$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $attribute->nodeValue );
 					}
 				}
 			}
@@ -705,6 +708,9 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	private function xmlField( $node, &$element, $value = null )
 	{
+		if ( !( $this->xmlCondition( $node ) ) ) {
+			return;
+		}
 		/** process all attributes  */
 		$attributes = $node->attributes;
 		$params = array();
@@ -810,7 +816,7 @@ class SPAdmView extends SPObject implements SPView
 								}
 								switch ( $value->nodeName ) {
 									case 'url':
-										$params = array( 'href' => $this->xmlUrl( $value ) );
+										$params = array();
 										$content = 'no content given';
 										foreach ( $value->attributes as $a ) {
 											switch ( $a->nodeName ) {
@@ -824,10 +830,15 @@ class SPAdmView extends SPObject implements SPView
 													}
 													$content = $v;
 													break;
+												case 'uri':
+													$params[ 'href' ] = $this->get( trim( $a->nodeValue ) );
 												default:
 													$params[ $a->nodeName ] = $a->nodeValue;
 													break;
 											}
+										}
+										if ( !( isset( $params[ 'href' ] ) ) ) {
+											$params[ 'href' ] = $this->xmlUrl( $value );
 										}
 										$link = '<a ';
 										foreach ( $params as $k => $v ) {

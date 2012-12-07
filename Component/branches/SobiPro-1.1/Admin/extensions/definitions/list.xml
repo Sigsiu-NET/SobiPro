@@ -103,9 +103,6 @@
 				<cell type="text" value="owner" class="center" />
 				<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="center" />
 			</loop>
-			<foot>
-				<navigation />
-			</foot>
 		</table>
 		<pagination set="cSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
 			<param name="count" value="categories-count" parse="true" />

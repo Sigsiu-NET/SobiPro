@@ -207,6 +207,7 @@ class SPTplParser
 			case 'a':
 			case 'button':
 			case 'url':
+			case 'img':
 				$tag = $data[ 'type' ];
 				if ( $data[ 'type' ] == 'url' ) {
 					$tag = 'a';
@@ -307,6 +308,7 @@ class SPTplParser
 			case 'button':
 			case 'table':
 			case 'url':
+			case 'img':
 				$tag = $data[ 'type' ];
 				if ( $data[ 'type' ] == 'url' ) {
 					$tag = 'a';

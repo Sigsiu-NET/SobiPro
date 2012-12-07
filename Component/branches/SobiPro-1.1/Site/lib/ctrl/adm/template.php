@@ -140,29 +140,27 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	private function delete()
 	{
-		$dir = $this->dir( SPRequest::cmd( 'sp_fedit' ) );
-		if ( SPRequest::cmd( 'sp_fedit' ) == 'default' ) {
-			Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'TP.DO_NOT_REMOVE' ), SPC::ERROR_MSG, true );
-			exit();
+		$dir = $this->dir( SPRequest::cmd( 'templateName' ) );
+		if ( SPRequest::cmd( 'templateName' ) == 'default' ) {
+			$this->response( Sobi::Back(), Sobi::Txt( 'TP.DO_NOT_REMOVE' ), false, 'error' );
 		}
 		if ( SPFs::delete( $dir ) ) {
-			Sobi::Redirect( Sobi::Url( array( 'task' => 'config.general' ) ), Sobi::Txt( 'TP.REMOVED' ) );
+			$this->response( Sobi::Url( array( 'task' => 'config.general' ) ), Sobi::Txt( 'TP.REMOVED' ), false, 'success' );
 		}
 		else {
-			Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'TP.CANNOT_REMOVE' ), SPC::ERROR_MSG );
+			$this->response( Sobi::Back(), Sobi::Txt( 'TP.CANNOT_REMOVE' ), false, 'error' );
 		}
-
 	}
 
 	private function cloneTpl()
 	{
-		$dir = $this->dir( SPRequest::cmd( 'sp_fedit' ) );
-		$newName = SPRequest::word( 'sptplname', 'Duplicated Template', 'post' );
+		$dir = $this->dir( SPRequest::cmd( 'templateName' ) );
+		$newName = SPRequest::word( 'templateNewName', 'Duplicated Template', 'post' );
 		$dirName = SPLang::nid( $newName );
 		$dirNameOrg = $dirName;
 		$c = 1;
 		while ( SPFs::exists( SPLoader::dirPath( 'usr.templates.' . $dirName, 'front', false ) ) ) {
-			$dirName = $dirNameOrg . '_' . $c;
+			$dirName = $dirNameOrg . '-' . $c++;
 		}
 		$newPath = SPLoader::dirPath( 'usr.templates.' . $dirName, 'front', false );
 		if ( !( SPFs::copy( $dir, $newPath ) ) ) {
@@ -185,7 +183,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$file->content( $def->saveXML() );
 			$file->save();
 		}
-		Sobi::Redirect( Sobi::Url( array( 'task' => 'template.info', 'template' => str_replace( SOBI_PATH . DS . 'usr' . DS . 'templates' . DS, null, $dirName ) ) ), Sobi::Txt( 'TP.DUPLICATED' ) );
+		$this->response( Sobi::Url( array( 'task' => 'template.info', 'template' => str_replace( SOBI_PATH . DS . 'usr' . DS . 'templates' . DS, null, $dirName ) ) ), Sobi::Txt( 'TP.DUPLICATED' ), false, 'success' );
 	}
 
 	private function info()
@@ -197,9 +195,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			SPFactory::message()->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false );
 		}
 
-		if ( SPFs::exists( $dir . DS . 'template.xml' ) ) {
+		if ( SPFs::exists( $dir . '/template.xml' ) ) {
 			$info = new DOMDocument();
-			$info->load( $dir . DS . 'template.xml' );
+			$info->load( $dir . '/template.xml' );
 			$xinfo = new DOMXPath( $info );
 			$template = array();
 			$template[ 'name' ] = $xinfo->query( '/template/name' )->item( 0 )->nodeValue;
@@ -214,15 +212,21 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$template[ 'date' ] = $xinfo->query( '/template/creationDate' )->item( 0 )->nodeValue;
 			$template[ 'version' ] = $xinfo->query( '/template/version' )->item( 0 )->nodeValue;
 			$template[ 'description' ] = $xinfo->query( '/template/description' )->item( 0 )->nodeValue;
+			$template[ 'id' ] = $xinfo->query( '/template/id' )->item( 0 )->nodeValue;
 			if ( $xinfo->query( '/template/previewImage' )->length && $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue ) {
-				$template[ 'preview' ] = Sobi::Cfg( 'live_site' ) . str_replace( '\\', '/', str_replace( SOBI_ROOT . DS, null, $dir ) ) . '/' . $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue;
+				$template[ 'preview' ] = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . str_replace( '\\', '/', str_replace( SOBI_ROOT . DS, null, $dir ) ) . '/' . $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue );
 			}
 			if ( $xinfo->query( '/template/files/file' )->length ) {
 				$files = array();
 				foreach ( $xinfo->query( '/template/files/file' ) as $file ) {
-					$files[ ] = array( 'file' => $file->attributes->getNamedItem( 'path' )->nodeValue, 'description' => $file->nodeValue );
+					$files[ ] = array(
+						'file' => $file->attributes->getNamedItem( 'path' )->nodeValue,
+						'description' => $file->nodeValue,
+						'filepath' => SPRequest::cmd( 'template' ) . '.' . str_replace( '/', '.', $file->attributes->getNamedItem( 'path' )->nodeValue )
+					);
 				}
 				$template[ 'files' ] = $files;
+				$view->assign( $files, 'files' );
 			}
 			$view->assign( $template, 'template' );
 		}
@@ -238,7 +242,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		$view->assign( $menu, 'menu' )
 				->assign( $this->_task, 'task' )
-				->addHidden( SPRequest::cmd( 'template' ), 'sp_fedit' )
+				->assign( Sobi::Section(), 'sid' )
+				->addHidden( SPRequest::cmd( 'template' ), 'templateName' )
 				->determineTemplate( 'template', 'info' );
 		Sobi::Trigger( 'Info', $this->name(), array( &$file, &$view ) );
 		$view->display();
