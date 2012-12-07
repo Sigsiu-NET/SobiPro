@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="{'category.add':'ADD_NEW_CATEGORY','category.edit':'EDIT_EXISTING_CATEGORY'}" />
+		<file type="script" filename="adm.category" />
+		<file type="script" filename="bootstrap.tabs" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiEdit">
+		<button task="category.apply" type="apply">
+			<button type="save" task="category.save" />
+			<button type="duplicate" task="category.clone" />
+		</button>
+		<divider />
+		<button type="exit" task="category.cancel" />
+		<divider />
+		<button type="help" target="_blank" />
+	</toolbar>
+	<body>
+		<message id="spMessage" />
+		<tabs>
+			<tab label="CAT.CATEGORY_GENERAL_DATA">
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset>
+							<field type="text" name="category.name" value="category.name" label="CATN.CATEGORY_NAME" class="input-xlarge" maxlength="255" required="true" />
+							<field type="text" name="category.nid" value="category.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
+                        </fieldset>
+
+                        <fieldset label="CATN.CATEGORY_LOCATION">
+                            <field type="output" value="parent_path" label="CATN.CATEGORY_PATH" id="selectedCatPath"  />
+                            <field type="button" label="CATN.SELECT_PARENT_BUTTON" name="parent_cat" value="parent_cat" class="btn spCategoryChooser" id="categoryParentName" rel="var:[cat_chooser_url]" />
+                         </fieldset>
+
+                         <fieldset label="CATN.CATEGORY_DATA">
+                            <field type="select" label="CAT.SHOW_ICON" name="category.showIcon" selected="category.showIcon" class="input-small">
+                                 <values>
+                                     <option value="2" label="OPT_GLOBAL" />
+                                     <option value="1" label="OPT_YES" />
+                                     <option value="0" label="OPT_NO" />
+                                 </values>
+                            </field>
+                            <field type="button" label="CATN.SELECT_CATEGORY_ICON" name="cat_ico" class="btn" id="catIcoChooser" rel="var:[icon_chooser_url]" />
+                             <field type="select" label="CAT.SHOW_INTROTEXT" name="category.showIntrotext" selected="category.showIntrotext" class="input-small">
+                                 <values>
+                                     <option value="2" label="OPT_GLOBAL" />
+                                     <option value="1" label="OPT_YES" />
+                                     <option value="0" label="OPT_NO" />
+                                 </values>
+                             </field>
+							<field type="textarea" name="category.introtext" value="category.introtext" label="CATN.CATEGORY_INTROTEXT" editor="false" class="input-splarge" rows="2" style="" />
+							<field type="textarea" name="category.description" value="category.description" label="CATN.CATEGORY_DESCRIPTION" editor="true" class="input-splarge" rows="2" style="" />
+                            <field type="select" label="CATN.PARSE_CAT_DES" name="category.parseDesc" selected="category.parseDesc" class="input-small" >
+                                <values>
+                                    <option value="2" label="OPT_GLOBAL" />
+                                    <option value="1" label="OPT_YES" />
+                                    <option value="0" label="OPT_NO" />
+                                </values>
+                            </field>
+						</fieldset>
+					</div>
+				</div>
+			</tab>
+            <tab label="META_DATA">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <fieldset>
+                            <field type="textarea" name="category.metaDesc" value="category.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="textarea" name="category.metaKeys" value="category.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+                            <field type="text" name="category.metaAuthor" value="category.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+                            <field type="select" label="ROBOTS" name="category.metaRobots" selected="category.metaRobots" class="input-large" >
+                                <values>
+                                    <option value="" label="ROBOTS_NONE" />
+                                    <option value="index, follow" label="index, follow" />
+                                    <option value="index, nofollow" label="index, nofollow" />
+                                    <option value="noindex, follow" label="noindex, follow" />
+                                    <option value="noindex, nofollow" label="noindex, nofollow" />
+                                </values>
+                            </field>
+                        </fieldset>
+                    </div>
+                </div>
+            </tab>
+			<tab label="CATN.CATEGORY_PUBLISHING">
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset>
+							<field type="states" name="category.state" value="category.state" label="PUBLISHED" prefix="yes_no" />
+                            <field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
+                            <field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
+						</fieldset>
+                        <fieldset label="CATN.EDIT_DATA">
+                            <field type="output" value="category.version" label="VERSION" class="badge" />
+                            <field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="span2" dateFormat="d-m-Y H:i:s" icon="edit" />
+							<field type="userSelector" label="CREATED_BY" name="category.owner" value="category.owner" class="span2" format="%name (%id)" />
+                            <field type="output" label="CREATED_BY_IP" name="category.ownerIP" class="infoText" >
+                                <value>
+                                    <url type="external" host="http://apps.db.ripe.net/search/query.html?" content="category.ownerIP" target="_blank">
+                                        <param name="searchtext" value="category.ownerIP" parse="true" />
+                                    </url>
+                                </value>
+                            </field>
+                            <field type="dateGetter" label="MODIFIED_AT" name="category.updatedTime" value="category.updatedTime" class="infoText" dateFormat="d-m-Y H:i:s" />
+                            <field type="userGetter" label="MODIFIED_BY" name="category.updater" value="category.updater" class="infoText" format="%name (%id)" />
+                            <field type="output" label="MODIFIED_BY_IP" name="category.updaterIP" class="infoText" >
+                                <value>
+                                    <url type="external" host="http://apps.db.ripe.net/search/query.html?" content="category.updaterIP" target="_blank">
+                                        <param name="searchtext" value="category.updaterIP" parse="true" />
+                                    </url>
+                                </value>
+                            </field>
+                        </fieldset>
+						<fieldset label="CLICKCOUNTER">
+							<field type="button" label="CAT.RESET_COUNT" value="category.counter" name="counter" class="btn counter-reset" rel="category" />
+						</fieldset>
+					</div>
+				</div>
+			</tab>
+		</tabs>
+
+
+		<div class="modal hide" id="spCat" style="width:500px;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<h3><text value="CAT.SELECT_CATEGORY_PATH" /></h3>
+			</div>
+			<div class="modal-body">
+				<div id="spCatsChooser"></div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal">
+					<text value="CAT.CATEGORY_CLOSE_WINDOW" />
+				</a>
+				<a href="#" id="spCatSelect" class="btn btn-primary" data-dismiss="modal">
+					<text value="CAT.CATEGORY_SAVE_SELECTION" />
+				</a>
+			</div>
+		</div>
+		<div class="modal hide" id="spIco" style="width:500px;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<h3>
+					<text value="CAT.JS_SELECT_CAT_ICON" />
+				</h3>
+			</div>
+			<div class="modal-body" style="padding:0px;">
+				<div id="spIcoChooser"></div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal">
+					<text value="CAT.CATEGORY_CLOSE_WINDOW" />
+				</a>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="selectedCid" default="" />
+			<field name="selectedCatName" default="" />
+			<field name="selectedCatPath" default="" />
+			<field name="categoryIconHolder" value="category_icon" />
+			<field name="category.icon" value="category.icon" />
+            <field name="category.parent" value="category.parent" />
+			<field name="method" default="xhr"/>
+		</hidden>
+	</config>
+</definition>

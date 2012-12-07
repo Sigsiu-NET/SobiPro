@@ -62,7 +62,7 @@ class SPTplParser
 	{
 		switch ( $element[ 'type' ] ) {
 			case 'field':
-				if ( isset( $element[ 'attributes' ][ 'stand-alone' ] ) && $element[ 'attributes' ][ 'help-text' ] == 'true' ) {
+				if ( $this->istSet( $element, 'content', 'true' ) ) {
 					$this->_out[ ] = $element[ 'content' ];
 					break;
 				}
@@ -158,6 +158,18 @@ class SPTplParser
 		}
 	}
 
+	private function istSet( $element, $index, $value = null )
+	{
+		if ( !( isset( $element[ $index ] ) ) ) {
+			return false;
+		}
+		if ( $value ) {
+			return $element[ $index ] == $value;
+		}
+		return true;
+
+	}
+
 	public function openElement( $data )
 	{
 		switch ( $data[ 'type' ] ) {
@@ -232,8 +244,8 @@ class SPTplParser
 						$attr[ ] = "{$n}=\"{$v}\"";
 					}
 				}
-                $class = isset($data['attributes']['class']) && $data['attributes']['class'] ? $data['attributes']['class'] : null;
-				if ( $data[ 'attributes' ][ 'label' ] ) {
+				$class = isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ] ? $data[ 'attributes' ][ 'class' ] : null;
+				if ( $this->istSet( $data[ 'attributes' ], 'label' ) ) {
 					$type = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? ' alert-' . $data[ 'attributes' ][ 'type' ] : null;
 					$this->_out[ ] = "<div class=\"alert {$type} {$class}\">";
 					if ( isset( $data[ 'attributes' ][ 'dismiss-button' ] ) && $data[ 'attributes' ][ 'dismiss-button' ] == 'true' ) {
@@ -332,7 +344,8 @@ class SPTplParser
 		else {
 			$this->_out[ ] = "\n<{$span}>\n";
 		}
-		switch ( $cell[ 'attributes' ][ 'type' ] ) {
+		$type = isset( $cell[ 'attributes' ][ 'type' ] ) ? $cell[ 'attributes' ][ 'type' ] : 'text';
+		switch ( $type ) {
 			case 'link':
 				$class = null;
 				if ( isset( $cell[ 'attributes' ][ 'class' ] ) && $cell[ 'attributes' ][ 'class' ] ) {

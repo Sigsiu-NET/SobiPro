@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="TP.INFO_SITE_TITLE" />
+		<file type="script" filename="bootstrap.tabs" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiEdit">
+		<button task="category.apply" type="apply">
+			<button type="save" task="category.save" />
+			<button type="duplicate" task="category.clone" />
+		</button>
+		<divider />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="help" target="_blank" />
+		</buttons>
+	</toolbar>
+	<body>
+		<message id="spMessage" />
+		<message label="BBBBBBBBB" />
+		<tabs>
+			<tab label="CAT.CATEGORY_GENERAL_DATA">
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset>
+							<field type="output" value="template.name" label="TP.TEMPLATE_NAME" />
+							<field type="output" value="template.author.name" label="TP.AUTHOR" />
+							<field type="output" value="template.author.url" label="TP.AUTHOR_URL">
+								<value>
+									<url type="external" target="_blank" content="template.author.name">
+										<param name="host" value="template.author.url" parse="true" />
+									</url>
+								</value>
+							</field>
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+						</fieldset>
+					</div>
+				</div>
+			</tab>
+			<tab label="CAT.CATEGORY_GENERAL_DATA" condition="template.files.length">
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset>
+							<field type="output" value="template.name" label="TP.TEMPLATE_NAME" />
+							<field type="output" value="template.author.name" label="TP.AUTHOR" />
+							<field type="output" value="template.author.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+							<field type="output" value="template.name.url" label="TP.AUTHOR_URL" />
+						</fieldset>
+					</div>
+				</div>
+			</tab>
+		</tabs>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="method" default="xhr" />
+		</hidden>
+	</config>
+</definition>
