@@ -34,7 +34,7 @@
 				<cell type="text" value="regex" class="left" />
 			</loop>
 		</table>
-		<field type="modalWindow" id="filter-edit-window" style="100px"/>
+		<field type="modalWindow" id="filter-edit-window" header="FLR.EDIT_FILTER" style="100px"/>
 	</body>
 	<config>
 		<action value="index.php?option=com_sobipro" />
