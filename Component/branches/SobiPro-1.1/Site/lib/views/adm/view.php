@@ -140,7 +140,6 @@ class SPAdmView extends SPObject implements SPView
 		else {
 			$this->loadConfig( "{$type}.{$template}" );
 			$this->setTemplate( "{$type}.{$template}" );
-			SPFactory::header()->addCssFile( 'adm.legacy' );
 		}
 		return $this;
 	}
@@ -276,6 +275,24 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param DOMNode $xml
+	 * @return bool
+	 */
+	private function xmlCondition( $xml )
+	{
+		if ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'condition' ) && $xml->attributes->getNamedItem( 'condition' )->nodeValue ) {
+			return $this->get( $xml->attributes->getNamedItem( 'condition' )->nodeValue );
+		}
+		elseif ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'invert-condition' ) && $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue ) {
+			return !( $this->get( $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue ) );
+		}
+		else {
+			return true;
+		}
+	}
+
+	/**
+	 * @param DOMNode $xml
+	 * @param $attributes
 	 * @return void
 	 */
 	private function xmlButton( $xml, $attributes = array() )
@@ -338,6 +355,9 @@ class SPAdmView extends SPObject implements SPView
 	{
 		foreach ( $xml as $node ) {
 			if ( strstr( $node->nodeName, '#' ) ) {
+				continue;
+			}
+			if ( !( $this->xmlCondition( $node ) ) ) {
 				continue;
 			}
 			$element = array(
@@ -1027,6 +1047,7 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	public function loadConfig( $path )
 	{
+		SPFactory::header()->addCssFile( 'adm.legacy' );
 		if ( strlen( $path ) ) {
 			$this->_config = SPLoader::loadIniFile( $path, true, true, true );
 		}
@@ -1366,6 +1387,10 @@ class SPAdmView extends SPObject implements SPView
 					/* otherwise try to access std object */
 					elseif ( is_object( $var ) && isset( $var->$property ) ) {
 						$var = $var->$property;
+					}
+					elseif ( $property == 'length' && is_array( $var ) ) {
+						$r = count( $var );
+						return $r;
 					}
 					/* otherwise try to access array field */
 					elseif ( is_array( $var ) && isset( $var[ $property ] ) ) {

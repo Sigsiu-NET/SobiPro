@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -31,9 +31,6 @@ class SPAdmTemplateView extends SPAdmView
 	public function display()
 	{
 		switch ( $this->get( 'task' ) ) {
-			case 'info':
-				$this->info();
-				break;
 			case 'edit':
 				$this->edit();
 				break;
@@ -41,12 +38,9 @@ class SPAdmTemplateView extends SPAdmView
 		parent::display();
 	}
 
-	private function info()
-	{
-	}
-
 	/**
 	 * @param string $title
+	 * @return void
 	 */
 	public function setTitle( $title )
 	{
@@ -59,7 +53,6 @@ class SPAdmTemplateView extends SPAdmView
 			$title = Sobi::Txt( $title, array( 'template' => $name ) );
 		}
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-
 		SPFactory::header()->setTitle( $title );
 		$this->set( $title, 'site_title');
 	}
@@ -126,4 +119,3 @@ class SPAdmTemplateView extends SPAdmView
 		}
 	}
 }
-?>
