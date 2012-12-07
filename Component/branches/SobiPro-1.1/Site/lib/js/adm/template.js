@@ -18,3 +18,11 @@ SobiPro.jQuery( document ).ready( function ()
 	} );
 } );
 
+function SPInitTplEditor()
+{
+	var editor = CodeMirror.fromTextArea( document.getElementById( 'file_content' ) );
+	editor.setSize( '95%', '1000px' );
+	SobiPro.jQuery( '#SPAdminForm' ).bind( 'BeforeAjaxSubmit', function () {
+		editor.save();
+	} );
+}

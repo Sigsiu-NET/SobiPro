@@ -260,25 +260,23 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$content = SPRequest::raw( 'file_content', null, 'post' );
-		SPConfig::debOut( SPRequest::cmd( 'sp_fedit' ) );
-
-		$file = $this->file( SPRequest::cmd( 'sp_fedit' ), !( $new ) );
+		$file = $this->file( SPRequest::cmd( 'fileName' ), !( $new ) );
 		Sobi::Trigger( 'Save', $this->name(), array( &$content, &$file ) );
-		if ( !$file ) {
-			throw new SPException( SPLang::e( 'Missing  file to save %s', SPRequest::cmd( 'sp_fedit' ) ) );
+		if ( !( $file ) ) {
+			throw new SPException( SPLang::e( 'Missing  file to save %s', SPRequest::cmd( 'fileName' ) ) );
 		}
-		$fClass = SPLoader::loadClass( 'base.fs.file' );
-		$File = new $fClass( $file );
+		$File = SPFactory::Instance( 'base.fs.file', $file );
 		$File->content( stripslashes( $content ) );
-		if ( $File->save() ) {
-			$u = array( 'task' => 'template.edit', 'file' => SPRequest::cmd( 'sp_fedit' ) );
+		try {
+			$File->save();
+			$u = array( 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) );
 			if ( SPRequest::sid() ) {
 				$u[ 'sid' ] = SPRequest::sid();
 			}
-			Sobi::Redirect( Sobi::Url( $u ), Sobi::Txt( 'TP.FILE_SAVED' ) );
+			$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.FILE_SAVED' ), false, 'success' );
 		}
-		else {
-			Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'TP.CANNOT_SAVE' ), SPC::ERROR_MSG );
+		catch( SPException $x ) {
+			$this->response( Sobi::Back(), $x->getMessage(), false, 'error' );
 		}
 	}
 
@@ -323,17 +321,17 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	private function editFile()
 	{
 		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == 'default' ) {
-			SPMainFrame::msg( array( 'msg' => Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), 'msgtype' => SPC::ERROR_MSG ) );
+			SPFactory::message()->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false );
 		}
 		$file = SPRequest::cmd( 'file' );
 		$file = $this->file( $file );
 		$ext = SPFs::getExt( $file );
-		$fcontent = SPFs::read( $file );
+		$fileContent = SPFs::read( $file );
 		if ( strstr( $file, SOBI_PATH ) ) {
-			$fname = str_replace( SOBI_PATH . DS . 'usr' . DS . 'templates' . DS, null, $file );
+			$filename = str_replace( SOBI_PATH . DS . 'usr' . DS . 'templates' . DS, null, $file );
 		}
 		else {
-			$fname = str_replace( SOBI_ROOT, null, $file );
+			$filename = str_replace( SOBI_ROOT, null, $file );
 		}
 		$menu = $this->createMenu();
 		if ( Sobi::Section() ) {
@@ -342,16 +340,16 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		else {
 			$menu->setOpen( 'GB.CFG.GLOBAL_TEMPLATES' );
 		}
-		$class = SPLoader::loadView( 'template', true );
-		$view = new $class();
-		$view->assign( $fcontent, 'file_content' );
-		$view->assign( $fname, 'file_name' );
-		$view->assign( $ext, 'file_ext' );
-		$view->assign( $menu, 'menu' );
-		$view->assign( $this->_task, 'task' );
-		$view->addHidden( SPRequest::cmd( 'file' ), 'sp_fedit' );
-		$view->loadConfig( 'template.edit' );
-		$view->setTemplate( 'template.edit' );
+		/** @var $view SPAdmTemplateView */
+		$view = SPFactory::View( 'template', true )
+				->assign( $fileContent, 'file_content' )
+				->assign( $filename, 'file_name' )
+				->assign( $ext, 'file_ext' )
+				->assign( $menu, 'menu' )
+				->assign( $this->_task, 'task' )
+				->assign( Sobi::Section(), 'sid' )
+				->addHidden( SPRequest::cmd( 'file' ), 'fileName' )
+				->determineTemplate( 'template', 'edit' );
 		Sobi::Trigger( 'Edit', $this->name(), array( &$file, &$view ) );
 		$view->display();
 	}

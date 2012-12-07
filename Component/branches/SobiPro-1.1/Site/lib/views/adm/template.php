@@ -45,7 +45,7 @@ class SPAdmTemplateView extends SPAdmView
 	public function setTitle( $title )
 	{
 		$name = $this->get( 'template_name' );
-		if( !( strlen( $name ) ) ) {
+		if ( !( strlen( $name ) ) ) {
 			$name = $this->get( 'file_name' );
 			$title = Sobi::Txt( $title, array( 'path' => $name ) );
 		}
@@ -54,68 +54,34 @@ class SPAdmTemplateView extends SPAdmView
 		}
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
 		SPFactory::header()->setTitle( $title );
-		$this->set( $title, 'site_title');
+		$this->set( $title, 'site_title' );
 	}
 
 	private function edit()
 	{
-		SPFactory::header()->addJsFile( 'codemirror.codemirror' );
+		$jsFiles = array( 'codemirror.codemirror' );
 		$ext = $this->get( 'file_ext' );
-		$jpath = Sobi::Cfg( 'live_site' ).SOBI_LIVE_PATH.'/lib/js/codemirror/';
-		$spath = SOBI_MEDIA_LIVE.'/css/codemirror/';
 		switch ( strtolower( $ext ) ) {
 			case 'xsl':
 			case 'xml':
-				$jf = '"parsexml.js"';
-				$sf = '"'.$spath.'xmlcolors.css"';
+				$jsFiles[] = 'codemirror.mode.xml.xml';
 				break;
 			case 'css':
-				$jf = '"parsecss.js"';
-				$sf = '"'.$spath.'csscolors.css"';
+				$jsFiles[] = 'codemirror.mode.css.css';
 				break;
 			case 'js':
-				$jf = '["tokenizejavascript.js", "parsejavascript.js"]';
-				$sf = '"'.$spath.'jscolors.css"';
+				$jsFiles[] = 'codemirror.mode.javascript.javascript';
 				break;
 			case 'php':
-				$jf = '["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "tokenizephp.js", "parsephp.js", "parsephphtmlmixed.js" ]';
-				$sf = '["'.$spath.'xmlcolors.css", "'.$spath.'jscolors.css", "'.$spath.'csscolors.css", "'.$spath.'phpcolors.css"] ';
+				$jsFiles[] = 'codemirror.mode.php.php';
 				break;
-			case '':
+			case 'ini':
+				$jsFiles[] = 'codemirror.mode.properties.properties';
 				break;
 		}
-		if( isset( $jf ) && isset( $sf ) ) {
-			SPFactory::header()->addJsCode( '
-				window.addEvent( "domready", function() {
-					  var editor = CodeMirror.fromTextArea( "file_content", {
-					    	height: "1200px",
-					    	parserfile: '.$jf.',
-					    	stylesheet: '.$sf.',
-					   	 	path: "'.$jpath.'",
-					    	continuousScanning: 500,
-					    	lineNumbers: true
-					  });
-					  var spSave = $$( "#toolbar-save a" )[ 0 ];
-					  spSaveFn = spSave.onclick;
-					  spSave.onclick = null;
-					  $( "toolbar-save" ).addEvent( "click", function() {
-					  		$( "file_content" ).value = editor.getCode();
-							spSaveFn();
-					  } );
-				  });
-			' );
-			SPFactory::header()->addCSSCode( '
-			      .CodeMirror-line-numbers {
-			        width: 2.2em;
-			        color: #aaa;
-			        background-color: #eee;
-			        text-align: right;
-			        padding-right: .3em;
-			        font-size: 10pt;
-			        font-family: monospace;
-			        padding-top: .4em;
-			      }
-			' );
-		}
+		SPFactory::header()
+				->addJsFile( $jsFiles )
+				->addCssFile( 'codemirror.codemirror' )
+				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SPInitTplEditor() } );' );
 	}
 }
