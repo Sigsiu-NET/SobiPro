@@ -270,8 +270,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		try {
 			$File->save();
 			$u = array( 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) );
-			if ( SPRequest::sid() ) {
-				$u[ 'sid' ] = SPRequest::sid();
+			if ( Sobi::Section() ) {
+				$u[ 'sid' ] = Sobi::Section();
 			}
 			$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.FILE_SAVED' ), $new, 'success' );
 		}
