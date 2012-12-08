@@ -22,7 +22,7 @@
 				<fieldset label="APP.BANK_TRANSFER_NAME">
 					<field type="textarea" name="bankdata" label="APP.BANK_TRANSFER_DATA" editor="true" class="input-splarge" rows="2"/>
 				</fieldset>
-                <message label="APP.BANK_TRANSFER_DATA_EXPL" type="info" class="spConfigAlert"/>
+                <message label="APP.BANK_TRANSFER_DATA_EXPL" type="info" class="spAppAlert"/>
 			</div>
 		</div>
 	</body>

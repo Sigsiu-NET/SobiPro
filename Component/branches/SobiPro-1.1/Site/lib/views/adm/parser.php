@@ -298,7 +298,7 @@ class SPTplParser
 			if ( count( $messages ) ) {
 				foreach ( $messages as $type => $texts ) {
 					if ( count( $texts ) ) {
-						$this->_out[ ] = "<div class=\"alert alert-{$type}\">";
+						$this->_out[ ] = "<div class=\"alert alert-{$type} spSystemAlert\">";
 						$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
 						foreach ( $texts as $text ) {
 							$this->_out[ ] = "<div>{$text}</div>";

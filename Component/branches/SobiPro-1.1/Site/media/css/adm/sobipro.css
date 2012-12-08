@@ -172,10 +172,10 @@ div.spScreenTitle h4 {
 #SPAdmToolbar i {
   font-size: 110%;
 }
-#SPAdminForm a {
+.SobiPro a {
   color: #0000b3;
 }
-#SPAdminForm a:hover {
+.SobiPro a:hover {
   color: #00007b;
 }
 .modal-footer .btn,
@@ -378,12 +378,17 @@ div.spScreenTitle h4 {
 .SobiPro .tooltip.bottom .tooltip-arrow {
   border-bottom-color: #000066;
 }
-#SPAdminForm .spConfigAlert {
+.SobiPro .spConfigAlert {
   max-width: 600px;
   margin-left: 20px;
 }
-#SPAdminForm .spConfigAlert a {
+.SobiPro .spAppAlert {
+  max-width: 700px;
+  margin-left: 20px;
+}
+.SobiPro .spSystemAlert a {
   color: inherit;
+  text-decoration: underline;
 }
 .SobiPro .popover {
   width: 310px;
