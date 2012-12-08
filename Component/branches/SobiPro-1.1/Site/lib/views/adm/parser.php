@@ -58,7 +58,7 @@ class SPTplParser
 		$this->_out = array();
 	}
 
-	private function parseElement( $element )
+	protected function parseElement( $element )
 	{
 		switch ( $element[ 'type' ] ) {
 			case 'field':
@@ -158,7 +158,7 @@ class SPTplParser
 		}
 	}
 
-	private function istSet( $element, $index, $value = null )
+	protected function istSet( $element, $index, $value = null )
 	{
 		if ( !( isset( $element[ $index ] ) ) ) {
 			return false;
@@ -239,39 +239,11 @@ class SPTplParser
 				$this->_out[ ] = '<tr>';
 				break;
 			case 'message':
-				$attr = array();
-				if ( count( $data[ 'attributes' ] ) ) {
-					foreach ( $data[ 'attributes' ] as $n => $v ) {
-						$attr[ ] = "{$n}=\"{$v}\"";
-					}
-				}
-				$class = isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ] ? $data[ 'attributes' ][ 'class' ] : null;
-				if ( $this->istSet( $data[ 'attributes' ], 'label' ) ) {
-					$type = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? ' alert-' . $data[ 'attributes' ][ 'type' ] : null;
-					$this->_out[ ] = "<div class=\"alert {$type} {$class}\">";
-					if ( isset( $data[ 'attributes' ][ 'dismiss-button' ] ) && $data[ 'attributes' ][ 'dismiss-button' ] == 'true' ) {
-						$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
-					}
-					$this->_out[ ] = $data[ 'attributes' ][ 'label' ];
-					$this->_out[ ] = '</div>';
-				}
-				else {
-					$attr = implode( ' ', $attr );
-					$messages = SPFactory::message()->getMessages();
-					if ( count( $messages ) ) {
-						foreach ( $messages as $type => $texts ) {
-							if ( count( $texts ) ) {
-								$this->_out[ ] = "<div class=\"alert alert-{$type}\">";
-								$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
-								foreach ( $texts as $text ) {
-									$this->_out[ ] = "<div>{$text}</div>";
-								}
-								$this->_out[ ] = '</div>';
-							}
-						}
-					}
-				}
-				$this->_out[ ] = "<div {$attr}></div>";
+				$this->message( $data );
+				break;
+			case 'tooltip':
+			case 'popover':
+				$this->tooltip( $data );
 				break;
 			case 'pagination':
 				$this->_out[ ] = $data[ 'content' ];
@@ -279,6 +251,64 @@ class SPTplParser
 //				SPConfig::debOut( $data[ 'type' ] );
 				break;
 		}
+	}
+
+	protected function tooltip( $data )
+	{
+		if ( !( isset( $data[ 'attributes' ][ 'href' ] ) ) ) {
+			$data[ 'attributes' ][ 'href' ] = '#';
+		}
+		$data[ 'attributes' ][ 'rel' ] = $data[ 'type' ];
+		if ( $data[ 'type' ] == 'tooltip' ) {
+			$data[ 'attributes' ][ 'title' ] = htmlspecialchars( $data[ 'content' ], ENT_COMPAT );
+		}
+		elseif ( $data[ 'type' ] == 'popover' ) {
+			$data[ 'attributes' ][ 'data-title' ] = htmlspecialchars( $data[ 'title' ], ENT_COMPAT );
+			$data[ 'attributes' ][ 'data-content' ] = htmlspecialchars( $data[ 'content' ], ENT_COMPAT );
+		}
+		$el = '<a ';
+		foreach ( $data[ 'attributes' ] as $tag => $val ) {
+			$el .= "{$tag}=\"{$val}\" ";
+		}
+		$el .= ">{$data[ 'title' ]}</a>";
+		$this->_out[ ] = $el;
+	}
+
+	protected function message( $data )
+	{
+		$attr = array();
+		if ( count( $data[ 'attributes' ] ) ) {
+			foreach ( $data[ 'attributes' ] as $n => $v ) {
+				$attr[ ] = "{$n}=\"{$v}\"";
+			}
+		}
+		$class = isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ] ? $data[ 'attributes' ][ 'class' ] : null;
+		if ( $this->istSet( $data[ 'attributes' ], 'label' ) ) {
+			$type = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? ' alert-' . $data[ 'attributes' ][ 'type' ] : null;
+			$this->_out[ ] = "<div class=\"alert {$type} {$class}\">";
+			if ( isset( $data[ 'attributes' ][ 'dismiss-button' ] ) && $data[ 'attributes' ][ 'dismiss-button' ] == 'true' ) {
+				$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
+			}
+			$this->_out[ ] = $data[ 'attributes' ][ 'label' ];
+			$this->_out[ ] = '</div>';
+		}
+		else {
+			$attr = implode( ' ', $attr );
+			$messages = SPFactory::message()->getMessages();
+			if ( count( $messages ) ) {
+				foreach ( $messages as $type => $texts ) {
+					if ( count( $texts ) ) {
+						$this->_out[ ] = "<div class=\"alert alert-{$type}\">";
+						$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
+						foreach ( $texts as $text ) {
+							$this->_out[ ] = "<div>{$text}</div>";
+						}
+						$this->_out[ ] = '</div>';
+					}
+				}
+			}
+		}
+		$this->_out[ ] = "<div {$attr}></div>";
 	}
 
 	public function closeElement( $data )
