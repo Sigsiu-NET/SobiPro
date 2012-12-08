@@ -369,6 +369,9 @@ class SPTplParser
 		if ( $cell[ 'type' ] == 'text' ) {
 			return $this->parseElement( $cell );
 		}
+		if ( $cell[ 'type' ] == 'tooltip'  || $cell[ 'type' ] == 'popover' ) {
+			return $this->tooltip( $cell );
+		}
 		if ( isset( $cell[ 'attributes' ][ 'class' ] ) ) {
 			$c = 'SpCell' . ucfirst( $cell[ 'attributes' ][ 'class' ] );
 			$this->_out[ ] = "\n<{$span} class=\"{$c}\">\n";
