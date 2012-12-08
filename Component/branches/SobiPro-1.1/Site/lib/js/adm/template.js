@@ -42,7 +42,6 @@ function SPInitTplEditor( mode )
 		options[ 'mode' ] = mode;
 	}
 	var editor = CodeMirror.fromTextArea( document.getElementById( 'file_content' ), options );
-
 	editor.setSize( '95%', '1000px' );
 	SobiPro.jQuery( '#SPAdminForm' ).bind( 'BeforeAjaxSubmit', function ()
 	{
