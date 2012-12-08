@@ -411,6 +411,9 @@ class SPAdmView extends SPObject implements SPView
 				case 'loop':
 					$this->xmlLoop( $node, $element );
 					break;
+				case 'tooltip':
+					$this->xmlToolTip( $node, $element );
+					break;
 				case 'pagination':
 					$this->xmlPagination( $node, $element );
 					break;
@@ -440,6 +443,25 @@ class SPAdmView extends SPObject implements SPView
 
 			}
 			$output[ ] = $element;
+		}
+	}
+
+	private function xmlToolTip( $node, &$element )
+	{
+		foreach ( $node->attributes as $attribute ) {
+			$element[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+		}
+		foreach ( $node->childNodes as $param ) {
+			if ( strstr( $param->nodeName, '#' ) ) {
+				continue;
+			}
+			$element[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->xmlParams( $param );
+		}
+		$unsets = array( 'type', 'title', 'content' );
+		foreach ( $unsets as $unset ) {
+			if ( isset( $element[ 'attributes' ][ $unset ] ) ) {
+				unset( $element[ 'attributes' ][ $unset ] );
+			}
 		}
 	}
 
