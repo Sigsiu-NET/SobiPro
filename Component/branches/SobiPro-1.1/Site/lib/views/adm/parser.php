@@ -270,7 +270,12 @@ class SPTplParser
 		foreach ( $data[ 'attributes' ] as $tag => $val ) {
 			$el .= "{$tag}=\"{$val}\" ";
 		}
-		$el .= ">{$data[ 'title' ]}</a>";
+		if ( $this->istSet( $data, 'icon' ) ) {
+			$el .= "><i class=\"icon-{$data['icon']}\"></i></a>";
+		}
+		else {
+			$el .= ">{$data[ 'title' ]}</a>";
+		}
 		$this->_out[ ] = $el;
 	}
 
@@ -369,7 +374,7 @@ class SPTplParser
 		if ( $cell[ 'type' ] == 'text' ) {
 			return $this->parseElement( $cell );
 		}
-		if ( $cell[ 'type' ] == 'tooltip'  || $cell[ 'type' ] == 'popover' ) {
+		if ( $cell[ 'type' ] == 'tooltip' || $cell[ 'type' ] == 'popover' ) {
 			return $this->tooltip( $cell );
 		}
 		if ( isset( $cell[ 'attributes' ][ 'class' ] ) ) {
