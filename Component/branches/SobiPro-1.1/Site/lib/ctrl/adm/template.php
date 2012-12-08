@@ -273,7 +273,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			if ( SPRequest::sid() ) {
 				$u[ 'sid' ] = SPRequest::sid();
 			}
-			$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.FILE_SAVED' ), false, 'success' );
+			$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.FILE_SAVED' ), $new, 'success' );
 		}
 		catch( SPException $x ) {
 			$this->response( Sobi::Back(), $x->getMessage(), false, 'error' );
@@ -349,6 +349,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				->assign( $this->_task, 'task' )
 				->assign( Sobi::Section(), 'sid' )
 				->addHidden( SPRequest::cmd( 'file' ), 'fileName' )
+				->addHidden( $filename, 'filePath' )
 				->determineTemplate( 'template', 'edit' );
 		Sobi::Trigger( 'Edit', $this->name(), array( &$file, &$view ) );
 		$view->display();

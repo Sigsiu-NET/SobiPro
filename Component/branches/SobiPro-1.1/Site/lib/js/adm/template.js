@@ -16,6 +16,16 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( '#SPAdminForm' ).submit();
 		}
 	} );
+	SobiPro.jQuery( '[rel^="template.saveAs"]' ).unbind( 'click' ).click( function ( e )
+	{
+		var name = window.prompt( SobiPro.Txt( 'SAVE_AS_TEMPL_FILE' ), SobiPro.jQuery( '#SP_filePath' ).val() );
+		if ( name ) {
+			SobiPro.jQuery( '#SP_fileName' ).val( name.replace( /\//g, "." ).replace( /\\/g, "." ) );
+			SobiPro.jQuery( '#SP_task' ).val( SobiPro.jQuery( this ).attr( 'rel' ) );
+			SobiPro.jQuery( '#SP_method' ).val( 'html' );
+			SobiPro.jQuery( '#SPAdminForm' ).submit();
+		}
+	} );
 } );
 
 function SPInitTplEditor( mode )
@@ -28,7 +38,7 @@ function SPInitTplEditor( mode )
 		enterMode:"keep",
 		tabMode:"shift"
 	}
-	if( mode ) {
+	if ( mode ) {
 		options[ 'mode' ] = mode;
 	}
 	var editor = CodeMirror.fromTextArea( document.getElementById( 'file_content' ), options );
