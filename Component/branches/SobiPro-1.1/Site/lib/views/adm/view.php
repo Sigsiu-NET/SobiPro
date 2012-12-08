@@ -446,7 +446,7 @@ class SPAdmView extends SPObject implements SPView
 		}
 	}
 
-	private function xmlToolTip( $node, &$element )
+	private function xmlToolTip( $node, &$element, $subject = null, $index = -1 )
 	{
 		foreach ( $node->attributes as $attribute ) {
 			$element[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
@@ -455,7 +455,7 @@ class SPAdmView extends SPObject implements SPView
 			if ( strstr( $param->nodeName, '#' ) ) {
 				continue;
 			}
-			$element[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->xmlParams( $param );
+			$element[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->xmlParams( $param, $subject, $index );
 		}
 		$unsets = array( 'type', 'title', 'content' );
 		foreach ( $unsets as $unset ) {
@@ -636,6 +636,9 @@ class SPAdmView extends SPObject implements SPView
 				switch ( $child->nodeName ) {
 					case 'url':
 						$element[ 'link' ] = $this->xmlUrl( $child, $subject, $i );
+						break;
+					case 'tooltip':
+						$this->xmlToolTip( $child, $element, $subject, $i );
 						break;
 					case 'button':
 						$attributes = array();
