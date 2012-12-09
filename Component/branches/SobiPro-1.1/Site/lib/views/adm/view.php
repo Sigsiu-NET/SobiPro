@@ -64,6 +64,10 @@ class SPAdmView extends SPObject implements SPView
 	 * @var DOMDocument
 	 */
 	protected $_xml = false;
+	/**
+	 * @var bool
+	 */
+	protected $_compatibility = false;
 
 	/**
 	 */
@@ -1083,7 +1087,10 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	public function loadConfig( $path )
 	{
-		SPFactory::header()->addCssFile( 'adm.legacy' );
+		SPFactory::header()
+				->addCssFile( 'adm.legacy' )
+				->addJsFile( 'adm.legacy' );
+		$this->_compatibility = true;
 		if ( strlen( $path ) ) {
 			$this->_config = SPLoader::loadIniFile( $path, true, true, true );
 		}
@@ -1463,6 +1470,9 @@ class SPAdmView extends SPObject implements SPView
 		Sobi::Trigger( 'Display', $this->name(), array( &$this ) );
 		$action = $this->key( 'action' );
 		echo '<div class="SobiPro" id="SobiPro">' . "\n";
+		if ( $this->_compatibility ) {
+			echo '<div class="row-fluid">' . "\n";
+		}
 		echo $action ? "\n<form action=\"{$action}\" method=\"post\" name=\"adminForm\" id=\"SPAdminForm\" enctype=\"multipart/form-data\" accept-charset=\"utf-8\" >\n" : null;
 		include( $tpl );
 		if ( count( $this->_hidden ) ) {
@@ -1473,6 +1483,9 @@ class SPAdmView extends SPObject implements SPView
 		}
 		echo '</div>' . "\n";
 		echo $action ? "\n</form>\n" : null;
+		if ( $this->_compatibility ) {
+			echo '</div>' . "\n";
+		}
 		echo '</div>';
 		Sobi::Trigger( 'AfterDisplay', $this->name() );
 	}
