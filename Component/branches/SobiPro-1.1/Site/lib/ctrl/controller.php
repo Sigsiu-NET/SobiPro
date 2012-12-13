@@ -129,12 +129,13 @@ abstract class SPController extends SPObject implements SPControl
 				break;
 			case 'hide':
 			case 'publish':
-				if ( $this->authorise( 'manage' ) ) {
-					$r = true;
-					$this->_model->changeState( $this->_task == 'publish' );
-					$state = ( int )( $this->_task == 'publish' );
-					$this->response( Sobi::Back(), Sobi::Txt( $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
-				}
+				$r = true;
+				$this->state( $this->_task == 'publish' );
+				break;
+			case 'toggle.enabled':
+			case 'toggle.approval':
+				$r = true;
+				$this->toggleState();
 				break;
 			case 'apply':
 			case 'save':
@@ -187,6 +188,15 @@ abstract class SPController extends SPObject implements SPControl
 				break;
 		}
 		return $r;
+	}
+
+	protected function state( $state )
+	{
+		if ( $this->authorise( 'manage' ) ) {
+			$this->_model->changeState( $state );
+			$state = ( int )( $this->_task == 'publish' );
+			$this->response( Sobi::Back(), Sobi::Txt( $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
+		}
 	}
 
 	/**
@@ -266,6 +276,18 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		else {
 			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) ), true, 'success' );
+		}
+	}
+
+	protected function toggleState()
+	{
+		if ( $this->authorise( 'manage' ) ) {
+			if ( $this->_task == 'toggle.enabled' ) {
+				$this->state( !( $this->_model->get( 'state' ) ) );
+			}
+			else {
+				$this->approval( !( $this->_model->get( 'approved' ) ) );
+			}
 		}
 	}
 

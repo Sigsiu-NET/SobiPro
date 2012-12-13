@@ -46,69 +46,62 @@ class SPAdminPanel extends SPController
 	private function getSections()
 	{
 		$order = $this->parseOrdering();
-		/* @var SPdb $db */
-		$db =& SPFactory::db();
 		try {
-			$db->select( '*', 'spdb_object', array( 'oType' => 'section' ), $order );
-			$sections = $db->loadObjectList();
-		}
-		catch ( SPException $x ) {
+			$sections = SPFactory::db()
+					->select( '*', 'spdb_object', array( 'oType' => 'section' ), $order )
+					->loadObjectList();
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
-		if( count( $sections ) ) {
+		if ( count( $sections ) ) {
 			SPLoader::loadClass( 'models.datamodel' );
 			SPLoader::loadClass( 'models.dbobject' );
 			SPLoader::loadModel( 'section' );
 			foreach ( $sections as $section ) {
-				if( Sobi::Can( 'section', 'access', 'valid', $section->id ) ) {
+				if ( Sobi::Can( 'section', 'access', 'valid', $section->id ) ) {
 					$s = new SPSection();
 					$s->extend( $section );
-					$this->_sections[] = $s;
+					$this->_sections[ ] = $s;
 				}
 			}
 		}
 	}
+
 	/**
-	 * @param string $col
-	 * @param string $def
-	 * @param int $lim
-	 * @param int $lStart
-	 * @return string
 	 */
 	protected function parseOrdering()
 	{
 		$order = Sobi::GetUserState( 'sections.order', 'order', 'name.asc' );
 		$ord = $order;
 		$dir = 'asc';
-		if( strstr( $order, '.' ) ) {
+		if ( strstr( $order, '.' ) ) {
 			$ord = explode( '.', $ord );
 			$dir = $ord[ 1 ];
 			$ord = $ord[ 0 ];
 		}
-		if( $ord == 'position' ) {
+		if ( $ord == 'position' ) {
 			$ord = 'name';
 		}
-		if( $ord == 'name' ) {
+		if ( $ord == 'name' ) {
 			/* @var SPdb $db */
-			$db	=& SPFactory::db();
+			$db =& SPFactory::db();
 			try {
-				$db->select( 'id', 'spdb_language', array( 'oType' => 'section', 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.'.$dir );
+				$db->select( 'id', 'spdb_language', array( 'oType' => 'section', 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.' . $dir );
 				$fields = $db->loadResultArray();
-				if( !count( $fields ) && Sobi::Lang() != Sobi::DefLang() ) {
-					$db->select( 'id', 'spdb_language', array( 'oType' => 'section', 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.'.$dir );
+				if ( !count( $fields ) && Sobi::Lang() != Sobi::DefLang() ) {
+					$db->select( 'id', 'spdb_language', array( 'oType' => 'section', 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.' . $dir );
 					$fields = $db->loadResultArray();
 				}
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 				return false;
 			}
-			if( count( $fields ) ) {
+			if ( count( $fields ) ) {
 				$fields = implode( ',', $fields );
 				$ord = "field( id, {$fields} )";
 			}
 			else {
-				$ord = 'id.'.$dir;
+				$ord = 'id.' . $dir;
 			}
 		}
 		else {
@@ -128,17 +121,19 @@ class SPAdminPanel extends SPController
 				$cfg = SPLoader::loadIniFile( 'etc.adm.cpanel' );
 				foreach ( $cfg as $sec => $set ) {
 					$set[ 'name' ] = $sec;
-					$icons[] = $set;
+					$icons[ ] = $set;
 				}
 				$this->getSections();
-				$class = SPLoader::loadView( 'front', true );
-				$view = new $class();
-				$view->loadConfig( 'front.config' );
-				$view->setTemplate( 'front.default' );
-				$view->assign( $this->_sections, 'sections' );
-				$view->assign( $icons, 'icons' );
+				/** @var $view SPAdmPanelView */
+				$view = SPFactory::View( 'front', true )
+						->assign( $this->_sections, 'sections' )
+						->assign( $this->getNews(), 'news' )
+						->assign( Sobi::GetUserState( 'sections.order', 'order', 'name.asc' ), 'order' )
+						->assign( SPFactory::CmsHelper()->myVersion( true ), 'version' )
+						->assign( $icons, 'icons' );
 				$about = SPFactory::Instance( 'cms.html.about' );
 				$about->add( $view );
+				$view->determineTemplate( 'front', 'cpanel' );
 				Sobi::Trigger( 'Panel', 'View', array( &$view ) );
 				ob_start( array( $about, 'update' ) );
 				$view->display();
@@ -147,10 +142,67 @@ class SPAdminPanel extends SPController
 
 			default:
 				/* case plugin didn't registered this task, it was an error */
-				if( !parent::execute() ) {
+				if ( !parent::execute() ) {
 					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}
 				break;
 		}
+	}
+
+	private function getNews()
+	{
+		$out = array();
+		$path = SPLoader::path( 'etc.news', 'front', false, 'xml' );
+		if ( SPFs::exists( $path ) && ( time() - filemtime( $path ) < ( 60 * 60 * 12 ) ) ) {
+			$content = SPFs::read( SPLoader::path( 'etc.news', 'front', false, 'xml' ) );
+		}
+		else {
+			$connection = SPFactory::Instance( 'services.remote' );
+			$news = 'http://www.sigsiu.net/news.rss';
+			$connection->setOptions(
+				array(
+					'url' => $news,
+					'connecttimeout' => 10,
+					'header' => false,
+					'returntransfer' => true,
+				)
+			);
+			$file = SPFactory::Instance( 'base.fs.file', $path );
+			$content = $connection->exec();
+			$cinf = $connection->info();
+			if ( isset( $cinf[ 'http_code' ] ) && $cinf[ 'http_code' ] != 200 ) {
+				return Sobi::Error( 'about', sprintf( 'CANNOT_GET_NEWS', $news, $cinf[ 'http_code' ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			}
+			$file->content( $content );
+			$file->save();
+		}
+		try {
+			$news = new DOMXPath( DOMDocument::loadXML( $content ) );
+			$out[ 'title' ] = $news->query( '/rss/channel/title' )->item( 0 )->nodeValue;
+			$items = $news->query( '/rss/channel/item[*]' );
+			$c = 5;
+			$open = false;
+			foreach ( $items as $item ) {
+				$date = $item->getElementsByTagName( 'pubDate' )->item( 0 )->nodeValue;
+				if ( !( $open ) && time() - strtotime( $date ) < ( 60 * 60 * 24 ) ) {
+					$open = true;
+				}
+				$feed = array(
+					'url' => $item->getElementsByTagName( 'link' )->item( 0 )->nodeValue,
+					'title' => $item->getElementsByTagName( 'title' )->item( 0 )->nodeValue,
+					'content' => $item->getElementsByTagName( 'description' )->item( 0 )->nodeValue
+				);
+				if ( !( $c-- ) ) {
+					break;
+				}
+				$out[ 'feeds' ][ ] = $feed;
+			}
+			if ( $open ) {
+				SPFactory::header()->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( \'#SobiProNews\' ).trigger(\'click\'); } );' );
+			}
+		} catch ( DOMException $x ) {
+			return Sobi::Error( 'about', sprintf( 'CANNOT_LOAD_NEWS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+		}
+		return $out;
 	}
 }

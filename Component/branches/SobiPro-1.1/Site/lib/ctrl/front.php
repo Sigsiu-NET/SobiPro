@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -45,24 +45,19 @@ class SPFront extends SPController
 	 */
 	private function getSections()
 	{
-		/* @var SPdb $db */
-		$db =& SPFactory::db();
 		try {
-			$db->select( '*', 'spdb_object', array( 'oType' => 'section' ), 'id' );
-			$sections = $db->loadObjectList();
-		}
-		catch ( SPException $x ) {
+			$sections = SPFactory::db()
+					->select( '*', 'spdb_object', array( 'oType' => 'section' ), 'id' )
+					->loadObjectList();
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_SECTIONS_LIST', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
-		if( count( $sections ) ) {
-			SPLoader::loadClass( 'models.datamodel' );
-			SPLoader::loadClass( 'models.dbobject' );
-			SPLoader::loadModel( 'section' );
+		if ( count( $sections ) ) {
 			foreach ( $sections as $section ) {
-				if( Sobi::Can( 'section', 'access', $section->id, 'valid' ) ) {
-					$s = new SPSection();
+				if ( Sobi::Can( 'section', 'access', $section->id, 'valid' ) ) {
+					$s = SPFactory::Section( $section->id );
 					$s->extend( $section );
-					$this->_sections[] = $s;
+					$this->_sections[ ] = $s;
 				}
 			}
 			Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_sections ) );
@@ -74,27 +69,26 @@ class SPFront extends SPController
 	public function execute()
 	{
 		/* parent class executes the plugins */
-        SPRequest::set( 'task', $this->_type.'.'.$this->_task );
+		SPRequest::set( 'task', $this->_type . '.' . $this->_task );
 		switch ( $this->_task ) {
 			case 'front':
 				$this->getSections();
-				$class = SPLoader::loadView( 'front' );
-				$view = new $class( $this->template );
+				/** @var $view SPAdmPanelView */
+				$view = SPFactory::View( 'front' );
 				/* load template config */
-				$this->tplCfg( 'front' );
-				$view->setConfig( $this->_tCfg, 'general' );
-				$view->setTemplate( 'front.default' );
+//				$this->tplCfg( 'front' );
+//				$view->setConfig( $this->_tCfg, 'general' );
+				$view->determineTemplate( 'front', 'default' );
 				$view->assign( $this->_sections, 'sections' );
 				$view->display();
 				break;
 
 			default:
 				/* case parents or plugin didn't registered this task, it was an error */
-				if( !( parent::execute() ) ) {
+				if ( !( parent::execute() ) ) {
 					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}
 				break;
 		}
 	}
 }
-?>
