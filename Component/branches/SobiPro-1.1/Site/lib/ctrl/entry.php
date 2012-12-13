@@ -50,11 +50,6 @@ class SPEntryCtrl extends SPController
 				SPLoader::loadClass( 'html.input' );
 				$this->editForm();
 				break;
-			case 'toggle.enabled':
-			case 'toggle.approval':
-				$r = true;
-				$this->toggleState();
-				break;
 			case 'approve':
 			case 'unapprove':
 				$r = true;
@@ -89,16 +84,6 @@ class SPEntryCtrl extends SPController
 		return $r;
 	}
 
-	protected function toggleState()
-	{
-		if ( $this->_task == 'toggle.enabled' ) {
-			$this->state( !( $this->_model->get( 'state' ) ) );
-		}
-		else {
-			$this->approval( !( $this->_model->get( 'approved' ) ) );
-		}
-	}
-
 	/**
 	 */
 	private function approve()
@@ -131,7 +116,7 @@ class SPEntryCtrl extends SPController
 
 	/**
 	 */
-	private function state( $state )
+	protected function state( $state )
 	{
 		if ( $this->_model->get( 'id' ) ) {
 			if ( $this->_model->isCheckedOut() ) {

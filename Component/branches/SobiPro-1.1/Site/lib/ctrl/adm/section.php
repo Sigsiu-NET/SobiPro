@@ -36,7 +36,6 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	{
 		switch ( $this->_task ) {
 			case 'add':
-				SPLoader::loadClass( 'html.input' );
 				$this->setModel( SPLoader::loadModel( 'section' ) );
 				$this->editForm();
 				break;
@@ -48,6 +47,10 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				SPLoader::loadClass( 'html.input' );
 				Sobi::ReturnPoint();
 				$this->view( $this->_task == 'entries', Sobi::GetUserState( 'entries_filter', 'sp_entries_filter', null ) );
+				break;
+			case 'toggle.enabled':
+			case 'toggle.approval':
+				$this->toggleState();
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */

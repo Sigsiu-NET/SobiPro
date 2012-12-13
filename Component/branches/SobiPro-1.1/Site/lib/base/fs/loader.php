@@ -422,6 +422,7 @@ abstract class SPLoader
                 $spoint = SOBI_MEDIA . DS . 'img' . DS;
                 break;
             case 'adm':
+	        case 'administrator':
                 if ( defined( 'SOBI_ADM_PATH' ) ) {
                     $spoint = SOBI_ADM_PATH . DS;
                 }

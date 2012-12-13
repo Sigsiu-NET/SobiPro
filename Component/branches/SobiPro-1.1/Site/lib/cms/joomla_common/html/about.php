@@ -53,7 +53,7 @@ class SPJoomlaCredits
 	 */
 	public function add( SPAdmView &$view )
 	{
-		SPFactory::header()->addJsFile( 'front', true );
+//		SPFactory::header()->addJsFile( 'front', true );
 		JFactory::getLanguage()->load( 'com_sobipro.about', JPATH_ADMINISTRATOR, 'en-GB' );
 		if( JFactory::getConfig()->getValue( 'language' ) != 'en-GB' ) {
 			JFactory::getLanguage()->load( 'com_sobipro.about' );

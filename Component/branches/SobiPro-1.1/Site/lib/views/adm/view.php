@@ -421,6 +421,9 @@ class SPAdmView extends SPObject implements SPView
 				case 'pagination':
 					$this->xmlPagination( $node, $element );
 					break;
+				case 'file':
+					$this->xmlFile( $node, $element );
+					break;
 				default:
 					if ( $node->hasChildNodes() ) {
 						$this->xmlBody( $node->childNodes, $element[ 'content' ] );
@@ -449,6 +452,31 @@ class SPAdmView extends SPObject implements SPView
 			$output[ ] = $element;
 		}
 	}
+
+	private function xmlFile( $node, &$element )
+	{
+		$type = $node->attributes->getNamedItem( 'type' )->nodeValue;
+		$translatable = $node->attributes->getNamedItem( 'translatable' ) ? $node->attributes->getNamedItem( 'translatable' )->nodeValue : false;
+		$admin = $node->attributes->getNamedItem( 'start-path' ) ? $node->attributes->getNamedItem( 'start-path' )->nodeValue : 'front';
+		$filename = $node->attributes->getNamedItem( 'filename' )->nodeValue;
+		$path = explode( '.', $filename );
+		$filename = array_pop( $path );
+		$dirPath = implode( '.', $path );
+		$element[ 'type' ] = 'text';
+		if ( $translatable ) {
+			$file = SPLoader::path( $dirPath . '.' . Sobi::Lang() . '.' . $filename, $admin, true, $type );
+			if ( !( $file ) ) {
+				$file = SPLoader::path( $dirPath . '.en-GB.' . $filename, $admin, true, $type );
+			}
+			if ( $file ) {
+				$element[ 'content' ] = SPFs::read( $file );
+			}
+			else {
+				$element[ 'content' ] = SPLoader::path( $dirPath . '.' . Sobi::Lang() . '.' . $filename, $admin, false, $type );
+			}
+		}
+	}
+
 
 	private function xmlToolTip( $node, &$element, $subject = null, $index = -1 )
 	{
@@ -490,17 +518,39 @@ class SPAdmView extends SPObject implements SPView
 		$element[ 'content' ] = $pagination->display( true );
 	}
 
+
+	/**
+	 * @param DOMNode $node
+	 * @return string
+	 */
 	private function xmlText( $node )
 	{
 		$value = null;
 		if ( $node->attributes->getNamedItem( 'value' ) ) {
 			if ( $node->attributes->getNamedItem( 'parse' ) && $node->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
 				$value = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
-				return $value;
 			}
 			else {
-				$value = Sobi::Txt( $node->attributes->getNamedItem( 'value' )->nodeValue );
-				return $value;
+				$args = array( $node->attributes->getNamedItem( 'value' )->nodeValue );
+				if ( $node->hasChildNodes() ) {
+					foreach ( $node->childNodes as $param ) {
+						if ( strstr( $param->nodeName, '#' ) ) {
+							continue;
+						}
+						if ( $param->attributes->getNamedItem( 'value' ) ) {
+							if ( $param->attributes->getNamedItem( 'parse' ) && $param->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
+								$args[ ] = $this->get( $param->attributes->getNamedItem( 'value' )->nodeValue );
+							}
+							else {
+								$args[ ] = $param->attributes->getNamedItem( 'value' )->nodeValue;
+							}
+						}
+						else {
+							$args[ ] = $param->nodeValue;
+						}
+					}
+				}
+				$value = call_user_func_array( array( 'SPLang', '_' ), $args );
 			}
 		}
 		return $value;
@@ -514,8 +564,14 @@ class SPAdmView extends SPObject implements SPView
 	private function xmlLoop( $node, &$element )
 	{
 		$subject = $node->attributes->getNamedItem( 'subject' )->nodeValue;
+		static $count = 0;
 		if ( $subject == 'entry.fields' ) {
 			return $this->xmlFields( $element );
+		}
+		elseif ( strstr( $subject, '.' ) ) {
+			$tempSubject = $this->get( $subject );
+			$this->assign( $tempSubject, 'temporary' . ++$count );
+			$subject = 'temporary' . $count;
 		}
 		$objectsCount = $this->count( $subject );
 		$objects = array();
@@ -674,7 +730,18 @@ class SPAdmView extends SPObject implements SPView
 			$link = Sobi::Url( $url );
 		}
 		else {
-			$link = $node->attributes->getNamedItem( 'host' )->nodeValue . http_build_query( $url );
+			$link = $node->attributes->getNamedItem( 'host' )->nodeValue;
+			if ( !( strstr( $link, '://' ) ) ) {
+				if ( $subject ) {
+					$link = $this->get( $subject . '.' . $link, $index );
+				}
+				else {
+					$link = $this->get( $link, $index );
+				}
+			}
+			if ( count( $url ) ) {
+				$link .= http_build_query( $url );
+			}
 		}
 		return $link;
 	}

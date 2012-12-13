@@ -56,6 +56,7 @@
    (!) Default settings while creating a new section changed
    (!) CodeMirror upgraded to version 2.36
    (!) jQuery upgraded to version 1.8.2
+   (!) jQuery UI updated to version v1.9.2
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager

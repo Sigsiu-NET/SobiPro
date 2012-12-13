@@ -32,6 +32,7 @@ class SPTplParser
 	);
 	protected $_checkedOutIcon = 'lock';
 	static $newLine = "\n";
+	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'a', 'button', 'url', 'img', 'table', 'ul', 'li' );
 
 	public function __construct( $table = false )
 	{
@@ -196,30 +197,6 @@ class SPTplParser
 					$this->_out[ ] = '<div class="control-group spFieldGroup"><label class="control-label">' . $data[ 'label' ] . '</label></div>';
 				}
 				break;
-			case 'table':
-				$data[ 'attributes' ][ 'class' ] = 'table table-striped';
-			case 'div':
-			case 'span':
-			case 'p':
-			case 'h1':
-			case 'h2':
-			case 'h3':
-			case 'a':
-			case 'button':
-			case 'url':
-			case 'img':
-				$tag = $data[ 'type' ];
-				if ( $data[ 'type' ] == 'url' ) {
-					$tag = 'a';
-				}
-				$a = null;
-				if ( count( $data[ 'attributes' ] ) ) {
-					foreach ( $data[ 'attributes' ] as $att => $value ) {
-						$a .= " {$att}=\"{$value}\"";
-					}
-				}
-				$this->_out[ ] = "<{$tag}{$a}>";
-				break;
 			case 'head':
 				$this->thTd = 'th';
 				$this->_out[ ] = '<thead>';
@@ -247,8 +224,23 @@ class SPTplParser
 				break;
 			case 'pagination':
 				$this->_out[ ] = $data[ 'content' ];
+				break;
+			case 'table':
+				$data[ 'attributes' ][ 'class' ] = 'table table-striped';
 			default:
-//				SPConfig::debOut( $data[ 'type' ] );
+				if ( in_array( $data[ 'type' ], $this->html ) ) {
+					$tag = $data[ 'type' ];
+					if ( $data[ 'type' ] == 'url' ) {
+						$tag = 'a';
+					}
+					$a = null;
+					if ( count( $data[ 'attributes' ] ) ) {
+						foreach ( $data[ 'attributes' ] as $att => $value ) {
+							$a .= " {$att}=\"{$value}\"";
+						}
+					}
+					$this->_out[ ] = "<{$tag}{$a}>";
+				}
 				break;
 		}
 	}
@@ -331,25 +323,6 @@ class SPTplParser
 				}
 				$this->_out[ ] = '</fieldset>';
 				break;
-			case 'link':
-				$data[ 'type' ] = 'a';
-			case 'div':
-			case 'span':
-			case 'p':
-			case 'h1':
-			case 'h2':
-			case 'h3':
-			case 'a':
-			case 'button':
-			case 'table':
-			case 'url':
-			case 'img':
-				$tag = $data[ 'type' ];
-				if ( $data[ 'type' ] == 'url' ) {
-					$tag = 'a';
-				}
-				$this->_out[ ] = "</{$tag}>";
-				break;
 			case 'head':
 				$this->thTd = 'td';
 				$this->_out[ ] = '</tr>';
@@ -365,6 +338,18 @@ class SPTplParser
 			case 'loop-row':
 				$this->_out[ ] = '</tr>';
 				break;
+			case 'link':
+				$data[ 'type' ] = 'a';
+			default:
+				if ( in_array( $data[ 'type' ], $this->html ) ) {
+					$tag = $data[ 'type' ];
+					if ( $data[ 'type' ] == 'url' ) {
+						$tag = 'a';
+					}
+					$this->_out[ ] = "</{$tag}>";
+				}
+				break;
+
 
 		}
 	}

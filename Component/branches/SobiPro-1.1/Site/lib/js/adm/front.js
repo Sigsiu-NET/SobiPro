@@ -1,4 +1,4 @@
- /**
+/**
  * @version: $Id: front.js 2078 2011-12-16 16:11:14Z Radek Suski $
  * @package: SobiPro Library
  * ===================================================
@@ -17,39 +17,38 @@
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/js/adm/front.js $
  */
 var SPUpdSemaphor = 0;
-window.addEvent( 'domready', function()
+SobiPro.jQuery( document ).ready( function ()
 {
-	$( 'sp-panel-updates' ).addEvent( 'click', function()
+	SobiPro.jQuery( '#SobiProUpdates' ).on( 'shown', function ()
 	{
-		if( SPUpdSemaphor == 0 ) {
-			$( 'SPVerUpd' ).innerHTML = SobiPro.Txt( 'CHECKING_FOR_UPDATES' ) + '&nbsp;<img src="../media/sobipro/styles/progress.gif"/>';
+		if ( SPUpdSemaphor == 0 ) {
 			SPUpdSemaphor = 1;
-			new SobiPro.Json( SobiProAdmUrl.replace( '%task%', 'extensions.updates' ), {
-				onComplete: function( updates )
+			SobiPro.jQuery( '#SPVerUpd' ).html( SobiPro.Txt( 'CHECKING_FOR_UPDATES' ) + '&nbsp;<img src="../media/sobipro/styles/progress.gif"/>' );
+			SobiPro.jQuery.ajax( {
+				url:SobiProAdmUrl.replace( '%task%', 'extensions.updates' ),
+				dataType:'json',
+				success:function ( updates )
 				{
-					if( updates.err ) {
-						$( 'SPVerUpd' ).innerHTML = '<span style="color:red;font-weight:bold;">' + updates.err + '</span>';
+					"use strict";
+					if ( updates.err ) {
+						SobiPro.jQuery( '#SPVerUpd' ).html( '<span style="color:red;font-weight:bold;">' + updates.err + '</span>' );
 					}
 					else {
 						var output = '';
 						for ( var x in updates ) {
-							name = updates[ x ].name + ' (' + updates[ x ].type + ') ';
-							if( updates[ x ].update == 'false' ) {
-								state = '&nbsp;<span style="color:#0000F7;">' + updates[ x ].update_txt + '</span>';
+							var name = updates[ x ].name + ' (' + updates[ x ].type + ') ';
+							if ( updates[ x ].update == 'false' ) {
+								var state = '&nbsp;<span style="color:#0000F7;">' + updates[ x ].update_txt + '</span>';
 							}
 							else {
-								state = '&nbsp;<span style="color:#F7022B;font-weight: bold">' + updates[ x ].update_txt + '</span>';
+								var state = '&nbsp;<span style="color:#F7022B;font-weight: bold">' + updates[ x ].update_txt + '</span>';
 							}
 							output += '<div style="min-width:260px; float: left; padding: 1px; margin-left: 10px;">' + name + '</div><div style="padding: 1px;"> ' + state + '</div>';
 						}
-						$( 'SPVerUpd' ).innerHTML = output + '<div style="clear: both;"></div>';
-						if( SPResize ) {
-							SPAcc.display( 2 );
-						}
-						SPAcc.display( 1 );
+						SobiPro.jQuery( '#SPVerUpd' ).html( output + '<div style="clear: both;"></div>' );
 					}
 				}
-			} ).send();
+			} );
 		}
-	} );
+	} )
 } );

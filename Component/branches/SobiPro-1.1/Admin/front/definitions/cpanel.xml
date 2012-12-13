@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="SEC.SITE_TITLE" />
+		<file type="script" filename="bootstrap.tooltips" />
+		<file type="script" filename="adm.front" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiPro">
+		<divider />
+		<buttons type="actions">
+			<button type="new" task="section.add" label="TB.ADD_NEW" ico="file" />
+			<button type="delete" task="section.delete" />
+			<nav-header label="TB.PUBLISHING" />
+			<button type="publish" task="section.publish" />
+			<button type="hide" task="section.hide" />
+		</buttons>
+		<divider />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="help" target="_blank" />
+		</buttons>
+	</toolbar>
+	<body>
+		<message id="spMessage" />
+		<div class="row">
+			<div class="span10">
+				<header label="SECTIONS" icon="SobiCatList">
+					<div class="btn-group pull-right" id="SectionFilterHead">
+						<field type="select" name="order" selected="order" class="input-large spOrdering">
+							<values>
+								<values label="EMN_ORDER_BY" />
+								<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
+								<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
+								<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC" />
+								<option value="state.desc" label="CATN.ORDER_BY_STATE_DESC" />
+							</values>
+						</field>
+					</div>
+				</header>
+				<table>
+					<head>
+						<cell type="checkbox" rel="c_sid" class="center" />
+						<cell label="SECTIONS.HEADER_ID" type="text" class="center" />
+						<cell label="SECTIONS.HEADER_NAME" type="text" />
+						<cell label="SECTION.STATE_HEAD" type="text" class="center" />
+					</head>
+					<loop subject="sections">
+						<cell type="checkbox" name="c_sid" value="id" class="center" />
+						<cell type="text" value="id" class="center" />
+						<cell>
+							<cell type="link" value="name">
+								<url type="intern">
+									<param name="sid" value="id" parse="true" />
+								</url>
+							</cell>
+						</cell>
+						<cells value="customFields" class="center" />
+						<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+							<url type="intern">
+								<param name="task" value="section.toggle.enabled" />
+								<param name="sid" value="id" parse="true" />
+							</url>
+						</cell>
+					</loop>
+				</table>
+			</div>
+			<div class="span6">
+				<!--<div class="hero-unit">-->
+				<!--<h1><text value="Heading"/></h1>-->
+				<!--<p>Tagline</p>-->
+				<!--<p>-->
+				<!--<a class="btn btn-primary btn-large">-->
+				<!--Learn more-->
+				<!--</a>-->
+				<!--</p>-->
+				<!--</div>-->
+				<div class="accordion" id="SobiProAccordion">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProAccordion" href="#collapseOne">
+								<text value="ABOUT.ABOUT_PANE" />
+							</a>
+						</div>
+						<div id="collapseOne" class="accordion-body collapse in">
+							<div class="accordion-inner">
+								<a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
+									<img src="../media/sobipro/sobipro.png" alt="Sigsiu.NET Software Development" />
+									<a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
+										<img src="../media/sobipro/sobipro-main.png" alt="Sigsiu.NET Software Development" />
+									</a>
+								</a>
+								<text value="ABOUT.SP_DESC" />
+								<text value="ABOUT.DEVELOPED_AND_DESIGNED">
+									<param>
+										<![CDATA[<a href="http://sigrid.suski.eu" target="_blank" title="Sigrid Suski">Sigrid Suski</a>]]>
+									</param>
+									<param>
+										<![CDATA[<a href="http://sigrid.suski.eu" target="_blank" title="Sigrid Suski">Sigrid Suski</a>]]>
+									</param>
+								</text>
+								<text value="ABOUT.SP_CLUB" />
+								<text value="ABOUT.SP_CLUB_DESC" />
+								<ul>
+									<li>
+										<a href="https://forum.Sigsiu.NET" target="_blank">
+											<text value="Sigsiu.NET Forum" />
+										</a>
+									</li>
+									<li>
+										<text value="ABOUT.SP_CLUB_WEB">
+											<param>
+												<![CDATA[<a href="http://SobiPro.Sigsiu.NET" target="_blank" >SobiPro Club</a>]]>
+											</param>
+										</text>
+									</li>
+								</ul>
+								<a href="http://SobiPro.Sigsiu.NET" target="_blank" title="The SobiPro Club - Support, Documentation, Applications and much more .... ">
+									<img src="../media/sobipro/join-the-club.png" alt="The SobiPro Club - Support, Documentation, Applications and much more .... " />
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProAccordion" href="#SobiProUpdates">
+								<text value="ABOUT.UPDATES_PANE" />
+							</a>
+						</div>
+						<div id="SobiProUpdates" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<text value="ABOUT.UD.YOU_ARE_USING">
+									<param value="version" parse="true"/>
+								</text>
+								<div id="SPVerUpd"/>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProAccordion" href="#SobiProNewsPane" id="SobiProNews">
+								<text value="news.title" parse="true" />
+							</a>
+						</div>
+						<div id="SobiProNewsPane" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<loop subject="news.feeds">
+									<cell type="link" value="title">
+										<url type="extern" host="url" />
+									</cell>
+									<cell type="text" value="content" />
+								</loop>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProAccordion" href="#SobiProCreditsPane">
+								<text value="ABOUT.CREDITS_PANE" />
+							</a>
+						</div>
+						<div id="SobiProCreditsPane" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<file filename="about.credits" type="html" translatable="true" start-path="administrator"/>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProAccordion" href="#SobiProLicensePane">
+								<text value="ABOUT.LICENSE_PANE" />
+							</a>
+						</div>
+						<div id="SobiProLicensePane" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<file filename="about.license" type="html" translatable="true" start-path="administrator"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+		</hidden>
+	</config>
+</definition>
