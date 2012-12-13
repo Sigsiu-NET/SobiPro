@@ -26,17 +26,17 @@
 					<div class="span6">
 						<fieldset>
 							<field type="output" value="template.name" label="TP.TEMPLATE_NAME" />
-							<field type="output" value="template.author.url" label="TP.AUTHOR_URL" condition="template.author.url">
+							<field type="output" value="template.author.url" label="TP.AUTHORURL" condition="template.author.url">
 								<value>
 									<url type="external" target="_blank" content="template.author.name" uri="template.author.url" />
 								</value>
 							</field>
-							<field type="output" value="template.author.name" label="TP.AUTHOR" invert-condition="template.author.url" />
-							<field type="output" value="template.copyright" label="TP.COPYRIGHT" />
-							<field type="output" value="template.license" label="TP.LICENSE" />
+							<field type="output" value="template.author.name" label="TP.AUTHORURL" invert-condition="template.author.url" />
+							<field type="output" value="template.copyright" label="TP.COPYR" />
+							<field type="output" value="template.license" label="TP.LIC" />
 							<field type="output" value="template.version" label="TP.VER" />
-							<field type="output" value="template.date" label="TP.DATE" />
-							<field type="output" value="template.description" label="TP.DESCRIPTION" />
+							<field type="dateGetter" value="template.date" label="TP.DATE" dateFormat="d-m-Y" />
+							<field type="output" value="template.description" label="TP.DESC" />
 						</fieldset>
 					</div>
 					<div class="span6" condition="template.preview">
@@ -49,8 +49,8 @@
 					<div class="span12">
 						<table>
 							<head>
-								<cell label="TP.HEAD_FILENAME" type="text" class="center" />
-								<cell label="TP.HEAD_FILE_DESC" type="text" class="center" />
+								<cell label="TP.HEAD_FILENAME" type="text" class="left" />
+								<cell label="TP.HEAD_FILE_DESC" type="text" class="left" />
 							</head>
 							<loop subject="files">
 								<cell type="link" value="file">

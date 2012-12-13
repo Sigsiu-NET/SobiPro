@@ -293,6 +293,9 @@ li.spOptionGroup {
 	/* background-color: #CCCBCB; */
 }
 
+div#SPMenuCtrl {
+    display: none;
+}
 .spClearFix {
 	clear: both;
 }
