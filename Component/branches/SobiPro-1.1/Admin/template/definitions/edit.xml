@@ -3,7 +3,6 @@
 	<header>
 		<title value="TP.EDIT_SITE_TITLE" />
 		<file type="script" filename="adm.template" />
-
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiTemplate">
 		<button type="apply" task="template.save">

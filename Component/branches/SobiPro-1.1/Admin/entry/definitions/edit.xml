@@ -78,7 +78,7 @@
 									</url>
 								</value>
 							</field>
-							<field type="dateGetter" label="MODIFIED_AT" name="entry.updatedTime" value="entry.updatedTime" class="infoText" dateFormat="d-m-Y H:i:s" />
+							<field type="dateGetter" label="MODIFIED_AT" name="entry.updatedTime" value="entry.updatedTime" class="infoText" />
 							<field type="userGetter" label="MODIFIED_BY" name="entry.updater" value="entry.updater" class="infoText" format="%name (%id)" />
 							<field type="output" label="MODIFIED_BY_IP" name="entry.updaterIP" class="infoText">
 								<value>
