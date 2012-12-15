@@ -57,17 +57,15 @@ class SPMessage
 	public function storeMessages()
 	{
 		Sobi::SetUserData( 'messages-queue', $this->messages );
-		if ( count( $this->store ) ) {
-			$messages = SPConfig::serialize( $this->store );
-			$store = array(
-				'params' => $messages,
-				'key' => 'queue',
-				'value' => date( DATE_RFC822 ),
-				'description' => null,
-				'options' => null
-			);
-			SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
-		}
+		$messages = SPConfig::serialize( $this->store );
+		$store = array(
+			'params' => $messages,
+			'key' => 'queue',
+			'value' => date( DATE_RFC822 ),
+			'description' => null,
+			'options' => null
+		);
+		SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
 	}
 
 	/**
@@ -81,6 +79,15 @@ class SPMessage
 			$this->reset();
 		}
 		return $r;
+	}
+
+	/**
+	 * @return SPMessage
+	 */
+	public function resetSystemMessages()
+	{
+		$this->store = array();
+		$this->storeMessages();
 	}
 
 	/**
