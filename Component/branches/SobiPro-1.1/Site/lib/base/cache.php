@@ -203,6 +203,7 @@ final class SPCache
 		if ( $section > 0 ) {
 			$this->cleanSection( -1 );
 		}
+		SPFactory::message()->resetSystemMessages();
 		return $this;
 	}
 
