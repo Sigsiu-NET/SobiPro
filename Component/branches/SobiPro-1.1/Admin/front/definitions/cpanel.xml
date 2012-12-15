@@ -3,6 +3,7 @@
 	<header>
 		<title value="SEC.SITE_TITLE" />
 		<file type="script" filename="bootstrap.tooltips" />
+		<file type="script" filename="bootstrap.tabs" />
 		<file type="script" filename="adm.front" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiPro">
@@ -27,6 +28,29 @@
 		<message id="spMessage" />
 		<div class="row">
 			<div class="span10">
+				<ul class="thumbnails">
+					<li class="span2">
+						<url type="intern" label="CPANEL.GCONF" image="../media/sobipro/48x48/folder-configuration.png">
+							<param name="task" value="config" />
+						</url>
+					</li>
+					<li class="span2">
+						<url type="intern" label="CPANEL.ACL" image="../media/sobipro/48x48/sobipro-acl-edit.png">
+							<param name="task" value="acl" />
+						</url>
+					</li>
+					<li class="span2">
+						<url type="intern" label="CPANEL.SAM" image="../media/sobipro/48x48/folder-application">
+							<param name="task" value="extensions" />
+						</url>
+					</li>
+					<li class="span2">
+						<url type="intern" label="CPANEL.TMPL" image="../media/sobipro/48x48/folder-templates.png">
+							<param name="task" value="template.info" />
+							<param name="template" value="default" />
+						</url>
+					</li>
+				</ul>
 				<header label="SECTIONS" icon="SobiCatList">
 					<div class="btn-group pull-right" id="SectionFilterHead">
 						<field type="select" name="order" selected="order" class="input-large spOrdering">
@@ -57,7 +81,6 @@
 								</url>
 							</cell>
 						</cell>
-						<cells value="customFields" class="center" />
 						<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="section.toggle.enabled" />
@@ -66,17 +89,141 @@
 						</cell>
 					</loop>
 				</table>
+				<tabs condition="show-entries">
+					<tab label="CPANEL_POPULAR_ENTRIES">
+						<table condition="entries.popular.length">
+							<head>
+								<cell label="ENTRY.HEADER_NAME" type="text" />
+								<cell label="ENTRY.HEADER_COUNTER" type="text" class="center" />
+								<cell label="ENTRY.HEADER_SECTION" type="text" />
+							</head>
+							<loop subject="entries.popular">
+								<cell>
+									<cell type="link" value="name">
+										<url type="intern">
+											<param name="task" value="entry.edit" parse="false" />
+											<param name="sid" value="id" parse="true" />
+										</url>
+									</cell>
+								</cell>
+								<cell type="text" value="counter" class="center" />
+								<cell>
+									<cell type="link" value="properties.section.name">
+										<url type="intern">
+											<param name="sid" value="properties.section.id" parse="true" />
+										</url>
+									</cell>
+								</cell>
+							</loop>
+						</table>
+					</tab>
+					<tab label="CPANEL_NEW_ENTRIES">
+						<table condition="entries.latest.length">
+							<head>
+								<cell label="ENTRY.HEADER_NAME" type="text" />
+								<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="center" />
+								<cell label="ENTRY.HEADER_SECTION" type="text" />
+							</head>
+							<loop subject="entries.latest">
+								<cell>
+									<cell type="link" value="name">
+										<url type="intern">
+											<param name="task" value="entry.edit" parse="false" />
+											<param name="sid" value="id" parse="true" />
+										</url>
+									</cell>
+								</cell>
+								<cell type="text" value="createdTime" class="center" />
+								<cell>
+									<cell type="link" value="properties.section.name">
+										<url type="intern">
+											<param name="sid" value="properties.section.id" parse="true" />
+										</url>
+									</cell>
+								</cell>
+							</loop>
+						</table>
+					</tab>
+					<tab label="CPANEL_AWAITING_APPROVAL">
+						<table condition="entries.unapproved.length">
+							<head>
+								<cell label="ENTRY.HEADER_NAME" type="text" />
+								<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="center" />
+								<cell label="ENTRY.HEADER_SECTION" type="text" />
+							</head>
+							<loop subject="entries.unapproved">
+								<cell>
+									<cell type="link" value="name">
+										<url type="intern">
+											<param name="task" value="entry.edit" parse="false" />
+											<param name="sid" value="id" parse="true" />
+										</url>
+									</cell>
+								</cell>
+								<cell type="text" value="createdTime" class="center" />
+								<cell>
+									<cell type="link" value="properties.section.name">
+										<url type="intern">
+											<param name="sid" value="properties.section.id" parse="true" />
+										</url>
+									</cell>
+								</cell>
+							</loop>
+						</table>
+					</tab>
+				</tabs>
 			</div>
 			<div class="span6">
-				<!--<div class="hero-unit">-->
-				<!--<h1><text value="Heading"/></h1>-->
-				<!--<p>Tagline</p>-->
-				<!--<p>-->
-				<!--<a class="btn btn-primary btn-large">-->
-				<!--Learn more-->
-				<!--</a>-->
-				<!--</p>-->
-				<!--</div>-->
+				<div class="well">
+					<h1>
+						<text value="CPANEL_SYSTEM_STATUS" />
+					</h1>
+					<message parse="system-state.accelerator" dismiss-button="false" />
+					<message parse="system-state.javascript-cache" dismiss-button="false" />
+					<message parse="system-state.css-cache" dismiss-button="false" />
+					<message parse="system-state.display-errors" dismiss-button="false" />
+					<message parse="system-state.debug-level" dismiss-button="false" />
+					<p condition="system-state.messages.length">
+						<a href="#ReportedIssues" role="button" class="btn btn-warning" data-toggle="modal">
+							<text value="CPANEL_REPORTED_ISSUES">
+								<param value="system-state.messages.length" parse="true" />
+							</text>
+						</a>
+					</p>
+					<div class="modal hide" id="ReportedIssues" condition="system-state.messages.length" >
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<text value="CLOSE_X" />
+							</button>
+							<h3>
+								<text value="CPANEL_REPORTED_ISSUES">
+									<param value="system-state.messages.length" parse="true" />
+								</text>
+							</h3>
+						</div>
+						<div class="modal-body">
+							<table>
+								<head>
+									<cell label="CPANEL_ISSUES_TYPE" type="text" />
+									<cell label="CPANEL_ISSUES_SECTION" type="text" class="center" />
+									<cell label="CPANEL_ISSUES_MESSAGE" type="text" />
+								</head>
+								<loop subject="system-state.messages">
+									<cell type="text">
+										<cell type="text" value="type-text" class="left label label-var:[type]" />
+									</cell>
+									<cell type="text" value="section.link" class="left" />
+									<cell type="text" value="message" class="left" />
+								</loop>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<a href="#" class="btn" data-dismiss="modal">
+								<text value="CLOSE" />
+							</a>
+						</div>
+					</div>
+				</div>
 				<div class="accordion" id="SobiProAccordion">
 					<div class="accordion-group">
 						<div class="accordion-heading">
@@ -132,9 +279,9 @@
 						<div id="SobiProUpdates" class="accordion-body collapse">
 							<div class="accordion-inner">
 								<text value="ABOUT.UD.YOU_ARE_USING">
-									<param value="version" parse="true"/>
+									<param value="version" parse="true" />
 								</text>
-								<div id="SPVerUpd"/>
+								<div id="SPVerUpd" />
 							</div>
 						</div>
 					</div>
@@ -163,7 +310,7 @@
 						</div>
 						<div id="SobiProCreditsPane" class="accordion-body collapse">
 							<div class="accordion-inner">
-								<file filename="about.credits" type="html" translatable="true" start-path="administrator"/>
+								<file filename="about.credits" type="html" translatable="true" start-path="administrator" />
 							</div>
 						</div>
 					</div>
@@ -175,7 +322,7 @@
 						</div>
 						<div id="SobiProLicensePane" class="accordion-body collapse">
 							<div class="accordion-inner">
-								<file filename="about.license" type="html" translatable="true" start-path="administrator"/>
+								<file filename="about.license" type="html" translatable="true" start-path="administrator" />
 							</div>
 						</div>
 					</div>

@@ -219,7 +219,7 @@ final class SPHeader
 					$jsFile = SPLoader::JsFile( $script, $adm, true, true, $ext );
 				}
 
-				if ( Sobi::Cfg( 'cache.include_files', true ) && !( $params || $force || $adm || defined( 'SOBIPRO_ADM' ) ) ) {
+				if ( Sobi::Cfg( 'cache.include_js_files', true ) && !( $params || $force || $adm || defined( 'SOBIPRO_ADM' ) ) ) {
 					if ( !( $override ) ) {
 						$jsFile = SPLoader::JsFile( $script, $adm, true, false, $ext );
 					}
@@ -300,7 +300,7 @@ final class SPHeader
 				Sobi::Error( __FUNCTION__, SPLang::e( 'CANNOT_LOAD_FILE_AT', $file ), SPC::NOTICE, 0, __LINE__, __FILE__ );
 			}
 		}
-		if ( Sobi::Cfg( 'cache.include_files', true ) && !( $adm || defined( 'SOBIPRO_ADM' ) ) ) {
+		if ( Sobi::Cfg( 'cache.include_js_files', true ) && !( $adm || defined( 'SOBIPRO_ADM' ) ) ) {
 			$this->_cache[ 'js' ][ ++$this->count ] = $varFile;
 		}
 		else {
@@ -371,7 +371,7 @@ final class SPHeader
 				else {
 					$cssFile = SPLoader::CssFile( $file, $adm, true, true, $ext );
 				}
-				if ( Sobi::Cfg( 'cache.include_files', true ) && !( $media || $params || $force || $adm || defined( 'SOBIPRO_ADM' ) ) ) {
+				if ( Sobi::Cfg( 'cache.include_css_files', true ) && !( $media || $params || $force || $adm || defined( 'SOBIPRO_ADM' ) ) ) {
 					if ( !( $override ) ) {
 						$cssFile = SPLoader::CssFile( $file, $adm, true, false, $ext );
 					}
@@ -531,7 +531,7 @@ final class SPHeader
 
 	private function _cssFiles()
 	{
-		if ( Sobi::Cfg( 'cache.include_files', true ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
+		if ( Sobi::Cfg( 'cache.include_css_files', true ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			if ( count( $this->_cache[ 'css' ] ) ) {
 				/*
 * create the right checksum
@@ -583,7 +583,7 @@ final class SPHeader
 
 	private function _jsFiles()
 	{
-		if ( Sobi::Cfg( 'cache.include_files', true ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
+		if ( Sobi::Cfg( 'cache.include_js_files', true ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			if ( count( $this->_cache[ 'js' ] ) ) {
 				$compression = Sobi::Cfg( 'cache.compress_js', false );
 				$comprLevel = Sobi::Cfg( 'cache.compress_level', 0 );

@@ -404,7 +404,16 @@ class SPAdmView extends SPObject implements SPView
 					$element[ 'label' ] = $node->attributes->getNamedItem( 'label' ) ? Sobi::Txt( $node->attributes->getNamedItem( 'label' )->nodeValue ) : null;
 					$element[ 'link' ] = $this->xmlUrl( $node );
 					$element[ 'attributes' ][ 'href' ] = $element[ 'link' ];
-					$element[ 'content' ] = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
+					if ( $node->attributes->getNamedItem( 'value' ) ) {
+						$content = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
+						if ( !( $content ) ) {
+							$content = $node->attributes->getNamedItem( 'value' )->nodeValue;
+						}
+						$element[ 'content' ] = $content;
+					}
+					if ( !( $element[ 'content' ] ) ) {
+						$element[ 'content' ] = $element[ 'label' ];
+					}
 					break;
 				case 'text':
 					$element[ 'content' ] = $this->xmlText( $node );
@@ -420,6 +429,12 @@ class SPAdmView extends SPObject implements SPView
 					break;
 				case 'pagination':
 					$this->xmlPagination( $node, $element );
+					break;
+				case 'message':
+					if ( $node->attributes->getNamedItem( 'parse' ) && $node->attributes->getNamedItem( 'parse' )->nodeValue ) {
+						$element[ 'attributes' ][ 'label' ] = $this->get( $node->attributes->getNamedItem( 'parse' )->nodeValue . '.label' );
+						$element[ 'attributes' ][ 'type' ] = $this->get( $node->attributes->getNamedItem( 'parse' )->nodeValue . '.type' );
+					}
 					break;
 				case 'file':
 					$this->xmlFile( $node, $element );
