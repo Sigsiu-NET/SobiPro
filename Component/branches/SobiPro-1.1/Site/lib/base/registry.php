@@ -123,17 +123,16 @@ final class SPRegistry
 
 	/**
 	 * @param string $section
-	 * @return void
+	 * @return SPRegistry
 	 */
 	public function & loadDBSection( $section )
 	{
 		static $loaded = array();
 		if( !( in_array( $section, $loaded ) ) ) {
-			/* @var Spdb $db */
-			$db =& SPFactory::db();
 			try {
-				$db->select( '*', 'spdb_registry', array( 'section' => $section ), 'value' );
-				$keys = $db->loadObjectList();
+				$keys = SPFactory::db()
+						->select( '*', 'spdb_registry', array( 'section' => $section ), 'value' )
+						->loadObjectList();
 			}
 			catch ( SPException $x ) {
 				Sobi::Error( __FUNCTION__, SPLang::e( 'Cannot load registry section. Db reports %s.', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -157,7 +156,6 @@ final class SPRegistry
 	 */
 	public function saveDBSection( $values, $section )
 	{
-		$db =& SPFactory::db();
 		foreach ( $values as $i => $value ) {
 			$value[ 'section' ] = $section;
 			$value[ 'params' ] = isset( $value[ 'params' ] ) ? $value[ 'params' ] : null;
@@ -167,8 +165,8 @@ final class SPRegistry
 		}
 		Sobi::Trigger( 'Registry', 'SaveDb', array( &$values ) );
 		try {
-			$db->delete( 'spdb_registry', array( 'section' => $section ) );
-			$db->insertArray( 'spdb_registry', $values );
+			SPFactory::db()->delete( 'spdb_registry', array( 'section' => $section ) );
+			SPFactory::db()->insertArray( 'spdb_registry', $values );
 		}
 		catch ( SPException $x ) {
 			Sobi::Error( __FUNCTION__, SPLang::e( 'Cannot save registry section. Db reports %s.', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );

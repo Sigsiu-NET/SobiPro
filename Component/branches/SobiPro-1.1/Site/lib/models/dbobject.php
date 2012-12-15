@@ -151,6 +151,19 @@ abstract class SPDBObject extends SPObject
 	 * @var int
 	 */
 	protected $version = 0;
+	/**
+	 * @var array
+	 */
+	protected $properties = array();
+
+	/**
+	 * @param string $name
+	 * @param array $data
+	 */
+	public function setProperty( $name, $data )
+	{
+		$this->properties[ $name ] = $data;
+	}
 
 	/**
 	 * list of adjustable proporties and the corresponding request method for each property.
@@ -200,7 +213,7 @@ abstract class SPDBObject extends SPObject
 		$this->updater = Sobi::My( 'id' );
 		$this->owner = Sobi::My( 'id' );
 		$this->updatedTime = SPFactory::config()->date( time(), 'date.db_format' );
-		Sobi::Trigger( 'CreateModell', $this->name(), array( &$this ) );
+		Sobi::Trigger( 'CreateModel', $this->name(), array( &$this ) );
 	}
 
 	public function formatDatesToEdit()

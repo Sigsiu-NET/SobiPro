@@ -33,6 +33,7 @@ class SPTplParser
 	protected $_checkedOutIcon = 'lock';
 	static $newLine = "\n";
 	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'a', 'button', 'url', 'img', 'table', 'ul', 'li' );
+	protected $internalAttributes = array( 'condition' );
 
 	public function __construct( $table = false )
 	{
@@ -42,6 +43,11 @@ class SPTplParser
 	public function parse( $data )
 	{
 		if ( is_array( $data ) && !( is_string( $data ) ) ) {
+			foreach ( $this->internalAttributes as $attribute ) {
+				if ( isset( $data[ 'attributes' ][ $attribute ] ) ) {
+					unset( $data[ 'attributes' ][ $attribute ] );
+				}
+			}
 			if ( isset( $data[ 'type' ] ) ) {
 				$this->openElement( $data );
 				$this->parseElement( $data );
@@ -63,7 +69,7 @@ class SPTplParser
 	{
 		switch ( $element[ 'type' ] ) {
 			case 'field':
-				if ( $this->istSet( $element, 'content', 'true' ) ) {
+				if ( $this->istSet( $element[ 'attributes' ], 'stand-alone', 'true' ) ) {
 					$this->_out[ ] = $element[ 'content' ];
 					break;
 				}
@@ -149,12 +155,16 @@ class SPTplParser
 				$this->_out[ ] = $element[ 'attributes' ][ 'label' ];
 				$this->_out[ ] = '</div>';
 				break;
-			case 'text':
 			case 'url':
+				if ( isset( $element[ 'attributes' ][ 'image' ] ) ) {
+					$this->_out[ ] = "<img src=\"{$element[ 'attributes' ][ 'image' ]}\" alt=\"{$element[ 'attributes' ][ 'label' ]}\" />";
+					$this->closeElement( $element );
+					$this->openElement( $element );
+				}
 				$this->_out[ ] = $element[ 'content' ];
 				break;
-			default:
-//				SPConfig::debOut( $element['type'] );
+			case 'text':
+				$this->_out[ ] = $element[ 'content' ];
 				break;
 		}
 	}
@@ -236,6 +246,9 @@ class SPTplParser
 					$a = null;
 					if ( count( $data[ 'attributes' ] ) ) {
 						foreach ( $data[ 'attributes' ] as $att => $value ) {
+							if ( in_array( $att, array( 'type', 'image', 'label' ) ) ) {
+								continue;
+							}
 							$a .= " {$att}=\"{$value}\"";
 						}
 					}

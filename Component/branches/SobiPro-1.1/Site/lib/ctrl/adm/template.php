@@ -192,7 +192,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		/** @var $view SPAdmTemplateView */
 		$view = SPFactory::View( 'template', true );
 		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == 'default' ) {
-			SPFactory::message()->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false );
+			SPFactory::message()
+					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false )
+					->setSystemMessage();
 		}
 
 		if ( SPFs::exists( $dir . '/template.xml' ) ) {
@@ -231,7 +233,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$view->assign( $template, 'template' );
 		}
 		else {
-			SPFactory::message()->warning( Sobi::Txt( 'TP.MISSING_DEFINITION_FILE' ), false );
+			SPFactory::message()
+					->warning( Sobi::Txt( 'TP.MISSING_DEFINITION_FILE' ), false )
+					->setSystemMessage();
 		}
 		$menu = $this->createMenu();
 		if ( Sobi::Section() ) {
@@ -274,8 +278,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				$u[ 'sid' ] = Sobi::Section();
 			}
 			$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.FILE_SAVED' ), $new, 'success' );
-		}
-		catch( SPException $x ) {
+		} catch ( SPException $x ) {
 			$this->response( Sobi::Back(), $x->getMessage(), false, 'error' );
 		}
 	}
@@ -321,7 +324,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	private function editFile()
 	{
 		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == 'default' ) {
-			SPFactory::message()->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false );
+			SPFactory::message()
+					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false )
+					->setSystemMessage();
 		}
 		$file = SPRequest::cmd( 'file' );
 		$file = $this->file( $file );

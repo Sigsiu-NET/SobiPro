@@ -24,6 +24,10 @@ class SPMessage
 	private $reset = false;
 	/** @var bool */
 	private $langLoaded = false;
+	/** @var array */
+	private $store = array();
+	/** @var array */
+	private $current = array();
 
 	/**
 	 * @return SPMessage
@@ -31,6 +35,20 @@ class SPMessage
 	private function __construct()
 	{
 		$this->messages = Sobi::GetUserData( 'messages-queue', $this->messages );
+		$registry = SPFactory::registry()
+				->loadDBSection( 'messages' )
+				->get( 'messages.queue.params' );
+		if ( $registry ) {
+			$this->store = SPConfig::unserialize( $registry );
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getSystemMessages()
+	{
+		return $this->store;
 	}
 
 	/**
@@ -39,6 +57,17 @@ class SPMessage
 	public function storeMessages()
 	{
 		Sobi::SetUserData( 'messages-queue', $this->messages );
+		if ( count( $this->store ) ) {
+			$messages = SPConfig::serialize( $this->store );
+			$store = array(
+				'params' => $messages,
+				'key' => 'queue',
+				'value' => date( DATE_RFC822 ),
+				'description' => null,
+				'options' => null
+			);
+			SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
+		}
 	}
 
 	/**
@@ -98,7 +127,19 @@ class SPMessage
 			}
 		}
 		$this->messages[ $type ][ $message ] = $translate ? Sobi::Txt( strtoupper( $type ) . '.' . $message ) : $message;
+		$this->current = array( 'message' => $this->messages[ $type ][ $message ], 'type' => $type, 'section' => array( 'id' => Sobi::Section(), 'name' => Sobi::Section( true ) ) );
 		$this->storeMessages();
+		return $this;
+	}
+
+	/**
+	 * @param $section string
+	 * @return SPMessage
+	 */
+	public function & setSystemMessage( $section = 'configuration' )
+	{
+		$this->current[ 'issue-type' ] = $section;
+		$this->store[ md5( serialize( $this->current ) ) ] = $this->current;
 		return $this;
 	}
 

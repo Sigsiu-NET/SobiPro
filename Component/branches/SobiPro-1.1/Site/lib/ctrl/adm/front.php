@@ -130,14 +130,16 @@ class SPAdminPanel extends SPController
 						->assign( $this->getNews(), 'news' )
 						->assign( Sobi::GetUserState( 'sections.order', 'order', 'name.asc' ), 'order' )
 						->assign( SPFactory::CmsHelper()->myVersion( true ), 'version' )
+						->assign( Sobi::Cfg( 'cpanel.show_entries', false ), 'show-entries' )
+						->assign( $this->getState(), 'system-state' )
 						->assign( $icons, 'icons' );
-				$about = SPFactory::Instance( 'cms.html.about' );
-				$about->add( $view );
+				if ( Sobi::Cfg( 'cpanel.show_entries', false ) ) {
+					$view->assign( $this->getEntries(), 'entries' );
+				}
+				SPLang::load( 'com_sobipro.about' );
 				$view->determineTemplate( 'front', 'cpanel' );
 				Sobi::Trigger( 'Panel', 'View', array( &$view ) );
-				ob_start( array( $about, 'update' ) );
 				$view->display();
-				ob_end_flush();
 				break;
 
 			default:
@@ -204,5 +206,86 @@ class SPAdminPanel extends SPController
 			return Sobi::Error( 'about', sprintf( 'CANNOT_LOAD_NEWS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		return $out;
+	}
+
+	protected function getEntries()
+	{
+		$entries = array();
+		$popular = SPFactory::db()
+				->select( 'id', 'spdb_object', array( 'oType' => 'entry' ), 'counter.desc', 5 )
+				->loadResultArray();
+		$entries[ 'popular' ] = $this->addEntries( $popular );
+		$latest = SPFactory::db()
+				->select( 'id', 'spdb_object', array( 'oType' => 'entry' ), 'createdTime.desc', 5 )
+				->loadResultArray();
+		$entries[ 'latest' ] = $this->addEntries( $latest );
+		$unapproved = SPFactory::db()
+				->select( 'id', 'spdb_object', array( 'oType' => 'entry', 'approved' => 0 ), 'createdTime.desc', 5 )
+				->loadResultArray();
+		$entries[ 'unapproved' ] = $this->addEntries( $unapproved );
+//		$expiring = SPFactory::db()
+//				->select( 'id', 'spdb_object', array( 'oType' => 'entry', 'validUntil' ), 'validUntil.desc', 5 )
+//				->loadResultArray();
+		$entries[ 'expiring' ] = $this->addEntries( $popular );
+		return $entries;
+	}
+
+	protected function addEntries( $ids )
+	{
+		static $sections = array();
+		$entries = array();
+		if ( count( $ids ) ) {
+			foreach ( $ids as $sid ) {
+				$entry = SPFactory::Entry( $sid );
+				if ( !( isset( $sections[ $entry->get( 'section' ) ] ) ) ) {
+					$sections[ $entry->get( 'section' ) ] = SPFactory::Section( $entry->get( 'section' ) );
+				}
+				$entry->setProperty( 'section', $sections[ $entry->get( 'section' ) ] );
+				$entries[ ] = $entry;
+			}
+		}
+		return $entries;
+	}
+
+	protected function getState()
+	{
+		$state = SPFactory::cache()->getVar( 'system_state', -1 );
+		if ( !( $state ) ) {
+			SPLang::load( 'com_sobipro.messages' );
+			$state = array();
+			$state[ 'accelerator' ] = array(
+				'type' => Sobi::Cfg( 'cache.l3_enabled', true ) ? 'success' : 'error',
+				'label' => Sobi::Cfg( 'cache.l3_enabled', true ) ? Sobi::Txt( 'ACCELERATOR_ENABLED' ) : Sobi::Txt( 'ACCELERATOR_DISABLED' ),
+			);
+			$state[ 'javascript-cache' ] = array(
+				'type' => Sobi::Cfg( 'cache.include_js_files', true ) ? 'success' : 'warning',
+				'label' => Sobi::Cfg( 'cache.include_js_files', true ) ? Sobi::Txt( 'JS_CACHE_ENABLED' ) : Sobi::Txt( 'JS_CACHE_DISABLED' ),
+			);
+			$state[ 'css-cache' ] = array(
+				'type' => Sobi::Cfg( 'cache.include_js_files', true ) ? 'success' : 'warning',
+				'label' => Sobi::Cfg( 'cache.include_js_files', true ) ? Sobi::Txt( 'CSS_CACHE_ENABLED' ) : Sobi::Txt( 'CSS_CACHE_ENABLED' ),
+			);
+			$state[ 'display-errors' ] = array(
+				'type' => Sobi::Cfg( 'debug.display_errors', false ) ? 'error' : 'success',
+				'label' => Sobi::Cfg( 'debug.display_errors', false ) ? Sobi::Txt( 'DISPLAY_ERRORS_DISABLED' ) : Sobi::Txt( 'DISPLAY_ERRORS_ENABLED' ),
+			);
+			$state[ 'debug-level' ] = array(
+				'type' => Sobi::Cfg( 'debug.level', 0 ) > 2 ? 'warning' : 'success',
+				'label' => Sobi::Cfg( 'debug.level', 0 ) > 2 ? Sobi::Txt( 'DEBUG_LEVEL_TOO_HIGH' ) : Sobi::Txt( 'DEBUG_LEVEL_OK' ),
+			);
+			$messages = SPFactory::message()->getSystemMessages();
+			$content = null;
+			if ( count( $messages ) ) {
+				foreach ( $messages as $message ) {
+					$url = Sobi::Url( array( 'sid' => $message[ 'section' ][ 'id' ] ) );
+					$url = "<a href=\"{$url}\">{$message[ 'section' ][ 'name' ]}</a> ";
+					$message[ 'section' ][ 'link' ] = $url;
+					$message[ 'type-text' ] = ucfirst( Sobi::Txt( $message[ 'type' ] ) );
+					$state[ 'messages' ][ ] = $message;
+				}
+			}
+			SPFactory::cache()->addVar( $state, 'system_state', -1 );
+		}
+		return $state;
 	}
 }
