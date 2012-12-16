@@ -34,7 +34,7 @@ SPFactory::header()->addCSSCode( '.sigsiuTree {height: 330px;}');
     else {
     	var SPObjType = 'entry';
     }
-    var maxCat = <?php echo Sobi::Cfg( 'entry.maxCats', '5'  ); ?>;
+    var maxCat = <?php echo Sobi::Cfg( 'legacy.maxCats', '5'  ); ?>;
     var Cinit = new String( parent.document.getElementById( 'entry.parent' ).value );
     if( Cinit != '' ) {
 		var cats = Cinit.split( ',' );

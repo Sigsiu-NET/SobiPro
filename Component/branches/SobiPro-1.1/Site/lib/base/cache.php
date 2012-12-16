@@ -185,15 +185,12 @@ final class SPCache
 	 * @param $section - section id. If not given, current section will be used
 	 * @return SPCache
 	 */
-	public function & cleanSection( $section, $system = true )
+	public function & cleanSection( $section = -1, $system = true )
 	{
 		$section = $section ? $section : $this->_section;
 		if ( $section == Sobi::Section() && $this->enabled() ) {
 			$this->Exec( "BEGIN; DELETE FROM vars; COMMIT;" );
 			$this->Exec( "BEGIN; DELETE FROM objects; COMMIT;" );
-			//            $this->Exec( "BEGIN; TRUNCATE TABLE vars; COMMIT;" );
-			//            $this->Exec( "BEGIN; TRUNCATE TABLE objects; COMMIT;" );
-			//$this->init();
 		}
 		elseif ( SPFs::exists( $this->_store . '.htCache_' . $section . '.db' ) ) {
 			// we need an exception because this files are owned by Apache probably

@@ -630,7 +630,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			}
 		}
 		if ( !( count( $fIds ) ) ) {
-			return array( 'msg' => Sobi::Txt( 'FMN.STATE_CHANGE_NO_ID' ), 'msgtype' => SPC::ERROR_MSG );
+			return array( 'text' => Sobi::Txt( 'FMN.STATE_CHANGE_NO_ID' ), 'type' => SPC::ERROR_MSG );
 		}
 		switch ( $task ) {
 			case 'hide':
