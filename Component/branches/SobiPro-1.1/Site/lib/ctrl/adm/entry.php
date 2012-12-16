@@ -101,7 +101,12 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$sets = array();
-		$sid = SPRequest::sid() ? SPRequest::sid() : SPRequest::int( 'entry_id' );
+		if ( !( $clone ) ) {
+			$sid = SPRequest::sid() ? SPRequest::sid() : SPRequest::int( 'entry_id' );
+		}
+		else {
+			$sid = 0;
+		}
 		$apply = ( int )$apply;
 		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );

@@ -98,7 +98,10 @@ final class SPAdmSiteMenu
 					$this->_open = $sid;
 					$in = ' in';
 				}
-				elseif( $this->_open  && $section == $this->_open ) {
+				elseif ( $this->_open && $section == $this->_open ) {
+					$in = ' in';
+				}
+				elseif ( $this->_open && array_key_exists( $this->_task, $list ) ) {
 					$in = ' in';
 				}
 				$this->_view[ ] = '<div class="accordion-group">';

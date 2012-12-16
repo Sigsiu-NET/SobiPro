@@ -170,7 +170,7 @@ class SPFilter extends SPConfigAdmCtrl
 				->assign( $Filters, 'filters' )
 				->determineTemplate( 'field', 'filters' );
 		$menu = $view->get( 'menu' );
-		$menu->setOpen( 'filter' );
+		$menu->setOpen( 'GB.CFG.GLOBAL_CONFIG' );
 		$view->assign( $menu, 'menu' );
 		$view->display();
 	}

@@ -361,8 +361,8 @@ final class SobiProAdmCtrl
 	 */
 	private function routeObj()
 	{
-		if ( $this->_model instanceof stdClass && isset( $this->_model->sid ) ) {
-			if ( $this->_sid && $this->_model->sid != $this->_sid ) {
+		if ( $this->_model instanceof stdClass && isset( $this->_model->id ) ) {
+			if ( $this->_sid && $this->_model->id != $this->_sid ) {
 				$this->_model = SPFactory::object( $this->_sid );
 			}
 		}
@@ -392,7 +392,7 @@ final class SobiProAdmCtrl
 	{
 		if ( $objType == $obj->oType ) {
 			if ( $ctrlClass ) {
-				/* create controler */
+				/* create controller */
 				$ctrl = new $ctrlClass();
 				/* set model */
 				/** @noinspection PhpUndefinedMethodInspection */
