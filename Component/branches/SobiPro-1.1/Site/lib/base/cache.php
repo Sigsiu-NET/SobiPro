@@ -36,6 +36,7 @@ final class SPCache
 	private $_enabled = true;
 	private $_store = null;
 	private $_check = null;
+	private $_section = -1;
 	private $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', 'publish' );
 
 	/**
@@ -72,6 +73,7 @@ final class SPCache
 		$this->_enabled = Sobi::Cfg( 'cache.l3_enabled', true );
 		if ( $this->_enabled ) {
 			$sid = Sobi::Section();
+			$this->_section = $sid ? $sid : $this->_section;
 			$this->_store = Sobi::Cfg( 'cache.store', SOBI_PATH . '/var/cache/' );
 			if ( !( strlen( $this->_store ) ) ) {
 				$this->_store = SOBI_PATH . DS . 'var' . DS . 'cache' . DS;
@@ -80,12 +82,12 @@ final class SPCache
 				$this->cleanAll();
 				SPFs::delete( SOBI_PATH . '/var/reset' );
 			}
-			$init = SPFs::exists( $this->_store . '.htCache_' . $sid . '.db' ) ? false : true;
+			$init = SPFs::exists( $this->_store . '.htCache_' . $this->_section . '.db' ) ? false : true;
 			if ( class_exists( 'SQLiteDatabase' ) ) {
 				$msg = null;
 				$this->_driver = 'SQLITE';
 				try {
-					$this->_db = new SQLiteDatabase( $this->_store . '.htCache_' . $sid . '.db', 0400, $msg );
+					$this->_db = new SQLiteDatabase( $this->_store . '.htCache_' . $this->_section . '.db', 0400, $msg );
 					if ( strlen( $msg ) ) {
 						Sobi::Error( 'cache', sprintf( 'SQLite error: %s', $msg ), SPC::WARNING, 0, __LINE__, __FILE__ );
 						$this->_enabled = false;
@@ -100,7 +102,7 @@ final class SPCache
 			elseif ( class_exists( 'PDO' ) ) {
 				try {
 					$this->_driver = 'PDO';
-					$this->_db = new PDO( 'sqlite:' . $this->_store . '.htCache_' . $sid . '.db' );
+					$this->_db = new PDO( 'sqlite:' . $this->_store . '.htCache_' . $this->_section . '.db' );
 				} catch ( PDOException $e ) {
 					Sobi::Error( 'cache', sprintf( 'SQLite database not supported. %s', $e->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 					$this->_enabled = false;
@@ -183,9 +185,9 @@ final class SPCache
 	 * @param $section - section id. If not given, current section will be used
 	 * @return SPCache
 	 */
-	public function & cleanSection( $section = 0 )
+	public function & cleanSection( $section, $system = true )
 	{
-		$section = $section ? $section : Sobi::Section();
+		$section = $section ? $section : $this->_section;
 		if ( $section == Sobi::Section() && $this->enabled() ) {
 			$this->Exec( "BEGIN; DELETE FROM vars; COMMIT;" );
 			$this->Exec( "BEGIN; DELETE FROM objects; COMMIT;" );
@@ -201,9 +203,11 @@ final class SPCache
 			}
 		}
 		if ( $section > 0 ) {
-			$this->cleanSection( -1 );
+			$this->cleanSection( 0 );
 		}
-		SPFactory::message()->resetSystemMessages();
+		if( $system ) {
+			SPFactory::message()->resetSystemMessages();
+		}
 		return $this;
 	}
 
@@ -216,7 +220,7 @@ final class SPCache
 	{
 		$this->cleanTemp();
 		if ( $this->enabled() ) {
-			$section = $section ? $section : Sobi::Section();
+			$section = $section ? $section : $this->_section;
 			$this->Exec( "BEGIN; DELETE FROM vars WHERE( section = '{$section}' ); COMMIT;" );
 		}
 		return $this;
@@ -237,7 +241,7 @@ final class SPCache
 			if ( !( $var ) ) {
 				$var = SPC::NO_VALUE;
 			}
-			$section = $section ? $section : Sobi::Section();
+			$section = $section ? $section : $this->_section;
 			$lang = $lang ? $lang : Sobi::Lang();
 			$checksum = null; //md5( serialize( $var ) );
 			$var = SPConfig::serialize( $var );
@@ -258,7 +262,7 @@ final class SPCache
 	public function getVar( $id, $sid = 0, $lang = null, $section = 0 )
 	{
 		if ( $this->enabled() ) {
-			$section = $section ? $section : Sobi::Section();
+			$section = $section ? $section : $this->_section;
 			$lang = $lang ? $lang : Sobi::Lang( false );
 			$result = $this->Query( "SELECT * FROM vars WHERE( name = '{$id}' AND lang = '{$lang}' AND section = '{$section}' AND sid = {$sid} )" );
 			if ( !( is_array( $result ) ) || !( count( $result ) ) || !( strlen( $result[ 'data' ] ) ) ) {
@@ -329,6 +333,7 @@ final class SPCache
 			}
 			$id = ( int )$id;
 			$sid = ( int )$sid;
+			$sid = $sid ? $sid : $this->_section;
 			$loaded = serialize( SPLoader::getLoaded() );
 			$lang = Sobi::Lang( false );
 			$checksum = null; //md5( serialize( $obj ) );
@@ -344,8 +349,7 @@ final class SPCache
 	 * Removes stored object from the cache
 	 * @param string $type - type of object entry/category/section
 	 * @param int $id - id of the object
-	 * @param string $lang - language
-	 * @param id $section - section id
+	 * @param int $sid - section id
 	 * @return SPCache
 	 */
 	public function & deleteObj( $type, $id, $sid = 0 )
@@ -369,7 +373,7 @@ final class SPCache
 	public function & deleteVar( $id, $section = 0 )
 	{
 		if ( $this->enabled() ) {
-			$section = $section ? $section : Sobi::Section();
+			$section = $section ? $section : $this->_section;
 			$this->Exec( "BEGIN; DELETE FROM vars WHERE( name = '{$id}' AND section = '{$section}' ); COMMIT;" );
 		}
 		return $this;

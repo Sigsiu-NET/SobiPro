@@ -56,18 +56,18 @@ abstract class Sobi
 	public static function Error( $section, $msg, $type = SPC::NOTICE, $code = 0, $line = null, $file = null, $smsg = null )
 	{
 		/*
-		* Mi., Jul 4, 2012
-		* So now could someone explain me what was the sense of the code below and why trigger_error was commented out??!!
-		*
-		* Mi., Jul 4, 2012
-		* Ok, it doesn't make much sense.
-		* This is what actually should be removed.
-		* 		if( Sobi::Cfg( 'debug.level', 0 ) < $type ) { return true; }
-		* It was the problem with the ACL when error reporting was disabled.
-		* But why the hell I removed the damn trigger_error from it?!!!
-		* Being sloppy again?!!!!
-		* Frack me - it means that since 20.07.2011 the whole error reporting went in nirvana??
-		*/
+* Mi., Jul 4, 2012
+* So now could someone explain me what was the sense of the code below and why trigger_error was commented out??!!
+*
+* Mi., Jul 4, 2012
+* Ok, it doesn't make much sense.
+* This is what actually should be removed.
+* 		if( Sobi::Cfg( 'debug.level', 0 ) < $type ) { return true; }
+* It was the problem with the ACL when error reporting was disabled.
+* But why the hell I removed the damn trigger_error from it?!!!
+* Being sloppy again?!!!!
+* Frack me - it means that since 20.07.2011 the whole error reporting went in nirvana??
+*/
 		if ( $type == E_USER_ERROR ) {
 			$rType = E_ERROR;
 		}
