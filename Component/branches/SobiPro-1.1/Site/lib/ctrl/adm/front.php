@@ -254,12 +254,12 @@ class SPAdminPanel extends SPController
 				'label' => Sobi::Cfg( 'cache.l3_enabled', true ) ? Sobi::Txt( 'ACCELERATOR_ENABLED' ) : Sobi::Txt( 'ACCELERATOR_DISABLED' ),
 			);
 			$state[ 'javascript-cache' ] = array(
-				'type' => Sobi::Cfg( 'cache.include_js_files', true ) ? 'success' : 'warning',
-				'label' => Sobi::Cfg( 'cache.include_js_files', true ) ? Sobi::Txt( 'JS_CACHE_ENABLED' ) : Sobi::Txt( 'JS_CACHE_DISABLED' ),
+				'type' => Sobi::Cfg( 'cache.include_js_files', false ) ? 'success' : 'warning',
+				'label' => Sobi::Cfg( 'cache.include_js_files', false ) ? Sobi::Txt( 'JS_CACHE_ENABLED' ) : Sobi::Txt( 'JS_CACHE_DISABLED' ),
 			);
 			$state[ 'css-cache' ] = array(
-				'type' => Sobi::Cfg( 'cache.include_js_files', true ) ? 'success' : 'warning',
-				'label' => Sobi::Cfg( 'cache.include_js_files', true ) ? Sobi::Txt( 'CSS_CACHE_ENABLED' ) : Sobi::Txt( 'CSS_CACHE_ENABLED' ),
+				'type' => Sobi::Cfg( 'cache.include_css_files', false ) ? 'success' : 'warning',
+				'label' => Sobi::Cfg( 'cache.include_css_files', false ) ? Sobi::Txt( 'CSS_CACHE_ENABLED' ) : Sobi::Txt( 'CSS_CACHE_DISABLED' ),
 			);
 			$state[ 'display-errors' ] = array(
 				'type' => Sobi::Cfg( 'debug.display_errors', false ) ? 'error' : 'success',
@@ -268,6 +268,10 @@ class SPAdminPanel extends SPController
 			$state[ 'debug-level' ] = array(
 				'type' => Sobi::Cfg( 'debug.level', 0 ) > 2 ? 'warning' : 'success',
 				'label' => Sobi::Cfg( 'debug.level', 0 ) > 2 ? Sobi::Txt( 'DEBUG_LEVEL_TOO_HIGH' ) : Sobi::Txt( 'DEBUG_LEVEL_OK' ),
+			);
+			$state[ 'debug-xml' ] = array(
+				'type' => Sobi::Cfg( 'debug.xml_raw', false ) ? 'error' : 'success',
+				'label' => Sobi::Cfg( 'debug.xml_raw', false )  ? Sobi::Txt( 'DEBUG_XML_ENABLED' ) : Sobi::Txt( 'DEBUG_XML_DISABLED' ),
 			);
 			$messages = SPFactory::message()->getSystemMessages();
 			$content = null;

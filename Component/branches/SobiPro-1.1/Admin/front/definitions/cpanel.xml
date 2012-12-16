@@ -183,6 +183,7 @@
 					<message parse="system-state.css-cache" dismiss-button="false" />
 					<message parse="system-state.display-errors" dismiss-button="false" />
 					<message parse="system-state.debug-level" dismiss-button="false" />
+					<message parse="system-state.debug-xml" dismiss-button="false" />
 					<p condition="system-state.messages.length">
 						<a href="#ReportedIssues" role="button" class="btn btn-warning" data-toggle="modal">
 							<text value="CPANEL_REPORTED_ISSUES">
