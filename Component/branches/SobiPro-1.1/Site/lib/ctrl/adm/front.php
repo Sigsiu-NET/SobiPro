@@ -223,10 +223,6 @@ class SPAdminPanel extends SPController
 				->select( 'id', 'spdb_object', array( 'oType' => 'entry', 'approved' => 0 ), 'createdTime.desc', 5 )
 				->loadResultArray();
 		$entries[ 'unapproved' ] = $this->addEntries( $unapproved );
-//		$expiring = SPFactory::db()
-//				->select( 'id', 'spdb_object', array( 'oType' => 'entry', 'validUntil' ), 'validUntil.desc', 5 )
-//				->loadResultArray();
-		$entries[ 'expiring' ] = $this->addEntries( $popular );
 		return $entries;
 	}
 
@@ -249,7 +245,7 @@ class SPAdminPanel extends SPController
 
 	protected function getState()
 	{
-		$state = SPFactory::cache()->getVar( 'system_state', -1 );
+		$state = SPFactory::cache()->getVar( 'system_state');
 		if ( !( $state ) ) {
 			SPLang::load( 'com_sobipro.messages' );
 			$state = array();
@@ -284,7 +280,7 @@ class SPAdminPanel extends SPController
 					$state[ 'messages' ][ ] = $message;
 				}
 			}
-			SPFactory::cache()->addVar( $state, 'system_state', -1 );
+			SPFactory::cache()->addVar( $state, 'system_state');
 		}
 		return $state;
 	}
