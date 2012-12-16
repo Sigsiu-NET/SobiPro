@@ -451,11 +451,16 @@ abstract class SPController extends SPObject implements SPControl
 
 	protected function response( $url, $message = null, $redirect = true, $type = 'message', $data = array() )
 	{
+		if ( is_array( $message ) ) {
+			$type = $message[ 'type' ];
+			$message = $message[ 'text' ];
+		}
 		if ( SPRequest::cmd( 'method', null ) == 'xhr' ) {
 			if ( $redirect && $message ) {
 				SPFactory::message()->setMessage( $message, false, $type );
 			}
 			SPFactory::mainframe()->cleanBuffer();
+			$url = str_replace( '&amp;', '&', $url );
 			header( 'Content-type: application/json' );
 			echo json_encode(
 				array(

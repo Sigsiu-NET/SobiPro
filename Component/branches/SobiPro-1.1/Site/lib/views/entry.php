@@ -67,7 +67,7 @@ class SPEntryView extends SPFrontView implements SPView
 			$head = SPFactory::header();
 			$params = array();
 			$params[ 'URL' ] = Sobi::Url( array( 'task' => 'category.parents', 'out' => 'json' ), true, false, true );
-			$params[ 'MAXCATS' ] = Sobi::Cfg( 'entry.maxCats', '5' );
+			$params[ 'MAXCATS' ] = Sobi::Cfg( 'legacy.maxCats', '5' );
 			$params[ 'SEPARATOR' ] = Sobi::Cfg( 'string.path_separator', ' > ' );
 			$head->addJsVarFile( 'edit', md5( Sobi::Section() . Sobi::Section( true ) . serialize( $params ) ), $params );
 		}
