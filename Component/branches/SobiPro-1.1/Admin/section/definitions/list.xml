@@ -120,7 +120,7 @@
 		<div style="padding-top:30px;" />
 		<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries" condition="entries.length">
 			<div class="btn-group pull-right" id="spEntriesFilterHead">
-				<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large spSubmit" />
+				<!--<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large spSubmit" />-->
 				<field type="select" name="eorder" selected="eorder" values="entriesOrdering" class="input-large spOrdering" />
 				<field type="select" name="elimit" selected="entries-limit" class="input-mini spOrdering">
 					<values>

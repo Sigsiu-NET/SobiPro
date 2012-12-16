@@ -69,7 +69,7 @@ class SPTplParser
 	{
 		switch ( $element[ 'type' ] ) {
 			case 'field':
-				if ( $this->istSet( $element[ 'attributes' ], 'stand-alone', 'true' ) ) {
+				if ( isset( $element[ 'attributes' ] ) && $this->istSet( $element[ 'attributes' ], 'stand-alone', 'true' ) ) {
 					$this->_out[ ] = $element[ 'content' ];
 					break;
 				}

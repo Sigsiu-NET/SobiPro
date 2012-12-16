@@ -340,7 +340,7 @@ final class SobiProCtrl
 
 				/* if the basic object we got from the #getSection method is the same one ... */
 				if ( ( $this->_model instanceof stdClass ) && ( $this->_model->oType == $obj ) ) {
-					/*... extend the empty model of these data we've allredy got */
+					/*... extend the empty model of these data we've already got */
 					$this->_ctrl->extend( $this->_model );
 				}
 				/* ... and so on... */
@@ -412,7 +412,7 @@ final class SobiProCtrl
 	{
 		if ( $objType == $obj->oType ) {
 			if ( $ctrlClass ) {
-				/* create controler */
+				/* create controller */
 				$ctrl = new $ctrlClass();
 				/* set model */
 				$ctrl->setModel( SPLoader::loadModel( $objType ) );
