@@ -138,7 +138,7 @@ class SPAdmView extends SPObject implements SPView
 				$this->setTemplate( $type . '.templates.' . $template );
 			}
 			else {
-				$this->setTemplate( $type . '.templates.default' );
+				$this->setTemplate( 'default' );
 			}
 		}
 		else {
@@ -438,6 +438,9 @@ class SPAdmView extends SPObject implements SPView
 					break;
 				case 'file':
 					$this->xmlFile( $node, $element );
+					break;
+				case 'menu':
+					$element[ 'content' ] = $this->menu( true );
 					break;
 				default:
 					if ( $node->hasChildNodes() ) {
@@ -1324,7 +1327,6 @@ class SPAdmView extends SPObject implements SPView
 	}
 
 	/**
-	 * @deprecated
 	 * @param string $template
 	 */
 	public function setTemplate( $template )
@@ -1574,11 +1576,16 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 */
-	protected function menu()
+	protected function menu( $return = false )
 	{
 		$m = $this->get( 'menu' );
 		if ( $m && method_exists( $m, 'display' ) ) {
-			echo $m->display();
+			if ( $return ) {
+				return $m->display();
+			}
+			else {
+				echo $m->display();
+			}
 		}
 	}
 

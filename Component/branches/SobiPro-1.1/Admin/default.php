@@ -22,16 +22,9 @@ $data = $this->getData();
 ?>
 <?php echo $this->toolbar(); ?>
 <?php $this->trigger( 'OnStart' ); ?>
-<div class="row-fluid">
-	<div class="span2" id="SPRightMenu">
-		<?php $this->menu(); ?>
-	</div>
-	<div class="span10">
-		<!--starts here-->
-		<?php foreach ( $data[ 'data' ] as $element ) : ?>
-			<?php $this->getParser()->parse( $element ); ?>
-		<?php endforeach; ?>
-		<!--ends here-->
-	</div>
-</div>
+<!--starts here-->
+<?php foreach ( $data[ 'data' ] as $element ) : ?>
+	<?php $this->getParser()->parse( $element ); ?>
+<?php endforeach; ?>
+<!--ends here-->
 <?php $this->trigger( 'OnEnd' ); ?>
