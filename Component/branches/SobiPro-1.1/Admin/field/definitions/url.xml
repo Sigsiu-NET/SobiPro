@@ -1,132 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definition>
-    <header>
-        <title value="FM.EDIT_FIELD"/>
-        <file type="script" filename="bootstrap.tabs"/>
-    </header>
-    <toolbar title="var:[site_title]" icon="SobiFieldEdit">
-        <button task="field.apply" type="apply">
-            <button type="save" task="field.save" />
-            <button type="duplicate" task="field.clone" />
-        </button>
-        <divider/>
-        <button type="exit" task="field.cancel" />
-        <divider/>
-        <button type="help" target="_blank" />
-    </toolbar>
-    <body>
-        <message id="spMessage"/>
-        <tabs>
-            <tab label="FMN.FIELD_GENERAL">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <fieldset>
-                            <field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no"/>
-                        </fieldset>
-                        <fieldset>
-                            <field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true"/>
-                            <field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
-                            <field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium"/>
-                            <field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
-                            <field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
-                        </fieldset>
+	<header>
+		<title value="FM.EDIT_FIELD" />
+		<file type="script" filename="bootstrap.tabs" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
+		<button task="field.apply" type="apply">
+			<button type="save" task="field.save" />
+			<button type="duplicate" task="field.clone" />
+		</button>
+		<divider />
+		<button type="exit" task="field.cancel" />
+		<divider />
+		<button type="help" target="_blank" />
+	</toolbar>
+	<body>
+		<div class="row-fluid">
+			<div class="span12">
 
-                        <fieldset label="FMN.FIELD_GENERAL_URL">
-                            <field type="states" name="field.validateUrl" value="field.validateUrl" label="FMN.URL.VALIDATE_URL" prefix="yes_no" />
-                            <field type="textarea" name="field.allowedProtocols" value="field.allowedProtocols" label="FMN.URL.ALLOWED_PROTO" class="input-large" rows="2" style="" />
-                        </fieldset>
-                        <fieldset label="FM.FIELD_TYPE">
-                            <field type="select" name="field.fieldType" selected="field.fieldType" size="2" multi="false" values="types" label="FMN.FIELD_TYPE"/>
-                        </fieldset>
-                    </div>
-                </div>
-            </tab>
-            <tab label="FMN.FIELD_ENTRYINPUT">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <fieldset>
-                            <field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
-                                <add where="after">
-                                    <text>px</text>
-                                </add>
-                            </field>
-                            <field type="text" name="field.maxLength" value="field.maxLength" label="FM.MAX_LENGTH" maxlength="10" class="input-mini">
-                                <add where="after">
-                                    <call function="Sobi::Txt">
-                                        <param>FMN.LENGTH_CHAR</param>
-                                    </call>
-                                </add>
-                            </field>
-                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
-                            <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
-                            <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
-                        </fieldset>
+				<message id="spMessage" />
+				<tabs>
+					<tab label="FMN.FIELD_GENERAL">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no" />
+								</fieldset>
+								<fieldset>
+									<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true" />
+									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" />
+									<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
+									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
+									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
+								</fieldset>
 
-                        <fieldset label="FMN.FIELD_ENTRYINPUT_URLTITLE">
-                            <field type="states" name="field.ownLabel" value="field.ownLabel" label="FMN.URL.OWN_TITLE" prefix="yes_no" />
-                            <field type="text" name="field.labelsLabel" value="field.labelsLabel" label="FMN.URL.LABEL_TITLE" maxlength="150" class="input-medium" />
-                            <field type="text" name="field.labelWidth" value="field.labelWidth" label="FMN.URL.TITLE_FIELD_WIDTH" maxlength="10" class="input-mini">
-                                <add where="after">
-                                    <text>px</text>
-                                </add>
-                            </field>
-                            <field type="text" name="field.labelMaxLength" value="field.labelMaxLength" label="FMN.URL.TITLE_MAX_LENGTH" maxlength="10" class="input-mini">
-                                <add where="after">
-                                    <call function="Sobi::Txt">
-                                        <param>FMN.LENGTH_CHAR</param>
-                                    </call>
-                                </add>
-                            </field>
-                            <field type="select" name="field.filter" value="filters" label="FMN.URL.TITLE_FILTER" multi="false" selected="field.filter" class="input-large" />
-                        </fieldset>
+								<fieldset label="FMN.FIELD_GENERAL_URL">
+									<field type="states" name="field.validateUrl" value="field.validateUrl" label="FMN.URL.VALIDATE_URL" prefix="yes_no" />
+									<field type="textarea" name="field.allowedProtocols" value="field.allowedProtocols" label="FMN.URL.ALLOWED_PROTO" class="input-large" rows="2" style="" />
+								</fieldset>
+								<fieldset label="FM.FIELD_TYPE">
+									<field type="select" name="field.fieldType" selected="field.fieldType" size="2" multi="false" values="types" label="FMN.FIELD_TYPE" />
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+					<tab label="FMN.FIELD_ENTRYINPUT">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
+									<field type="text" name="field.maxLength" value="field.maxLength" label="FM.MAX_LENGTH" maxlength="10" class="input-mini">
+										<add where="after">
+											<call function="Sobi::Txt">
+												<param>FMN.LENGTH_CHAR</param>
+											</call>
+										</add>
+									</field>
+									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
+									<field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
+									<field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+								</fieldset>
 
-                        <fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
-                            <field type="output" value="field.version" label="VERSION" class="badge"/>
-                            <field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no"/>
-                            <field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
-                        </fieldset>
+								<fieldset label="FMN.FIELD_ENTRYINPUT_URLTITLE">
+									<field type="states" name="field.ownLabel" value="field.ownLabel" label="FMN.URL.OWN_TITLE" prefix="yes_no" />
+									<field type="text" name="field.labelsLabel" value="field.labelsLabel" label="FMN.URL.LABEL_TITLE" maxlength="150" class="input-medium" />
+									<field type="text" name="field.labelWidth" value="field.labelWidth" label="FMN.URL.TITLE_FIELD_WIDTH" maxlength="10" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
+									<field type="text" name="field.labelMaxLength" value="field.labelMaxLength" label="FMN.URL.TITLE_MAX_LENGTH" maxlength="10" class="input-mini">
+										<add where="after">
+											<call function="Sobi::Txt">
+												<param>FMN.LENGTH_CHAR</param>
+											</call>
+										</add>
+									</field>
+									<field type="select" name="field.filter" value="filters" label="FMN.URL.TITLE_FILTER" multi="false" selected="field.filter" class="input-large" />
+								</fieldset>
 
-                        <fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
-                            <field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no"/>
-                            <field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
-                                <add where="after">
-                                    <call function="Sobi::Cfg">
-                                        <param>payments.currency</param>
-                                        <param>EUR</param>
-                                    </call>
-                                </add>
-                            </field>
-                        </fieldset>
-                    </div>
-                </div>
-            </tab>
-            <tab label="FMN.FIELD_ENTRYVIEW">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <fieldset>
-                            <field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
-                                <values>
-                                    <option value="both" label="FM.BOTH_OPT"/>
-                                    <option value="details" label="FM.DETAILS_VIEW_OPT"/>
-                                    <option value="vcard" label="FM.V_CARD_OPT"/>
-                                    <option value="hidden" label="FMN.HIDDEN_OPT"/>
-                                </values>
-                            </field>
-                            <field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
-                            <field type="states" name="field.newWindow" value="field.newWindow" label="FM.URL.NEW_WINDOW" prefix="yes_no" />
-                        </fieldset>
-                    </div>
-                </div>
-            </tab>
-        </tabs>
-    </body>
-    <config>
-        <action value="index.php?option=com_sobipro"/>
-        <hidden>
-            <field name="option" default="com_sobipro"/>
-            <field name="task" default=""/>
-            <field name="method" default="xhr"/>
-            <field name="format" default="raw"/>
-        </hidden>
-    </config>
+								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
+									<field type="output" value="field.version" label="VERSION" class="badge" />
+									<field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
+									<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
+								</fieldset>
+
+								<fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
+									<field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no" />
+									<field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
+										<add where="after">
+											<call function="Sobi::Cfg">
+												<param>payments.currency</param>
+												<param>EUR</param>
+											</call>
+										</add>
+									</field>
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+					<tab label="FMN.FIELD_ENTRYVIEW">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
+										<values>
+											<option value="both" label="FM.BOTH_OPT" />
+											<option value="details" label="FM.DETAILS_VIEW_OPT" />
+											<option value="vcard" label="FM.V_CARD_OPT" />
+											<option value="hidden" label="FMN.HIDDEN_OPT" />
+										</values>
+									</field>
+									<field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
+									<field type="states" name="field.newWindow" value="field.newWindow" label="FM.URL.NEW_WINDOW" prefix="yes_no" />
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+				</tabs>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="method" default="xhr" />
+			<field name="format" default="raw" />
+		</hidden>
+	</config>
 </definition>

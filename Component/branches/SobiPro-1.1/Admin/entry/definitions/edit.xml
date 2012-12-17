@@ -17,84 +17,87 @@
 		<button type="help" target="_blank" />
 	</toolbar>
 	<body>
-		<message id="spMessage" />
-		<tabs>
-			<tab label="EN.BASE_DATA">
-				<div class="row-fluid">
-					<div class="span12">
-						<fieldset>
-							<loop subject="entry.fields"/>
-						</fieldset>
-					</div>
-				</div>
-			</tab>
-			<tab label="EN.ENTRY_GENERAL_DATA">
-				<div class="row-fluid">
-					<div class="span12">
-                        <fieldset>
-                            <field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
-                        </fieldset>
-                    </div>
-                </div>
-            </tab>
+		<div class="row-fluid">
+			<div class="span12">
+				<message id="spMessage" />
+				<tabs>
+					<tab label="EN.BASE_DATA">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<loop subject="entry.fields" />
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+					<tab label="EN.ENTRY_GENERAL_DATA">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+					<tab label="META_DATA">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="textarea" name="entry.metaDesc" value="entry.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="textarea" name="entry.metaKeys" value="entry.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="text" name="entry.metaAuthor" value="entry.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+									<field type="select" label="ROBOTS" name="entry.metaRobots" selected="entry.metaRobots" class="input-large">
+										<values>
+											<option value="" label="ROBOTS_NONE" />
+											<option value="index, follow" label="index, follow" />
+											<option value="index, nofollow" label="index, nofollow" />
+											<option value="noindex, follow" label="noindex, follow" />
+											<option value="noindex, nofollow" label="noindex, nofollow" />
+										</values>
+									</field>
+								</fieldset>
+							</div>
+						</div>
+					</tab>
 
-            <tab label="META_DATA">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <fieldset>
-                            <field type="textarea" name="entry.metaDesc" value="entry.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-                            <field type="textarea" name="entry.metaKeys" value="entry.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
-                            <field type="text" name="entry.metaAuthor" value="entry.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
-                            <field type="select" label="ROBOTS" name="entry.metaRobots" selected="entry.metaRobots" class="input-large" >
-                                <values>
-                                    <option value="" label="ROBOTS_NONE" />
-                                    <option value="index, follow" label="index, follow" />
-                                    <option value="index, nofollow" label="index, nofollow" />
-                                    <option value="noindex, follow" label="noindex, follow" />
-                                    <option value="noindex, nofollow" label="noindex, nofollow" />
-                                </values>
-                            </field>
-                        </fieldset>
-                    </div>
-                </div>
-            </tab>
-
-            <tab label="EN.ENTRY_PUBLISHING">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <fieldset>
-                            <field type="states" name="entry.state" value="entry.state" label="PUBLISHED" prefix="yes_no" />
-                            <field type="datePicker" label="VALID_SINCE" name="entry.validSince" value="entry.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
-                            <field type="datePicker" label="VALID_UNTIL" name="entry.validUntil" value="entry.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
-                        </fieldset>
-						<fieldset label="CATN.EDIT_DATA">
-							<field type="output" value="entry.version" label="VERSION" class="badge" />
-							<field type="datePicker" label="CREATED_AT" name="entry.createdTime" value="entry.createdTime" class="span2" dateFormat="d-m-Y H:i:s" icon="edit" />
-							<field type="userSelector" label="OWNER" name="entry.owner" value="entry.owner" class="span2" format="%name (%id)" />
-							<field type="output" label="CREATED_BY_IP" name="entry.ownerIP" class="infoText">
-								<value>
-									<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="entry.ownerIP" target="_blank">
-										<param name="searchtext" value="entry.ownerIP" parse="true" />
-									</url>
-								</value>
-							</field>
-							<field type="dateGetter" label="MODIFIED_AT" name="entry.updatedTime" value="entry.updatedTime" class="infoText" />
-							<field type="userGetter" label="MODIFIED_BY" name="entry.updater" value="entry.updater" class="infoText" format="%name (%id)" />
-							<field type="output" label="MODIFIED_BY_IP" name="entry.updaterIP" class="infoText">
-								<value>
-									<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="entry.updaterIP" target="_blank">
-										<param name="searchtext" value="entry.updaterIP" parse="true" />
-									</url>
-								</value>
-							</field>
-						</fieldset>
-						<fieldset label="CLICKCOUNTER">
-							<field type="button" label="CAT.RESET_COUNT" value="entry.counter" name="counter" class="btn counter-reset" rel="entry" />
-						</fieldset>
-					</div>
-				</div>
-			</tab>
-        </tabs>
+					<tab label="EN.ENTRY_PUBLISHING">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="states" name="entry.state" value="entry.state" label="PUBLISHED" prefix="yes_no" />
+									<field type="datePicker" label="VALID_SINCE" name="entry.validSince" value="entry.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
+									<field type="datePicker" label="VALID_UNTIL" name="entry.validUntil" value="entry.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
+								</fieldset>
+								<fieldset label="CATN.EDIT_DATA">
+									<field type="output" value="entry.version" label="VERSION" class="badge" />
+									<field type="datePicker" label="CREATED_AT" name="entry.createdTime" value="entry.createdTime" class="span2" dateFormat="d-m-Y H:i:s" icon="edit" />
+									<field type="userSelector" label="OWNER" name="entry.owner" value="entry.owner" class="span2" format="%name (%id)" />
+									<field type="output" label="CREATED_BY_IP" name="entry.ownerIP" class="infoText">
+										<value>
+											<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="entry.ownerIP" target="_blank">
+												<param name="searchtext" value="entry.ownerIP" parse="true" />
+											</url>
+										</value>
+									</field>
+									<field type="dateGetter" label="MODIFIED_AT" name="entry.updatedTime" value="entry.updatedTime" class="infoText" />
+									<field type="userGetter" label="MODIFIED_BY" name="entry.updater" value="entry.updater" class="infoText" format="%name (%id)" />
+									<field type="output" label="MODIFIED_BY_IP" name="entry.updaterIP" class="infoText">
+										<value>
+											<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="entry.updaterIP" target="_blank">
+												<param name="searchtext" value="entry.updaterIP" parse="true" />
+											</url>
+										</value>
+									</field>
+								</fieldset>
+								<fieldset label="CLICKCOUNTER">
+									<field type="button" label="CAT.RESET_COUNT" value="entry.counter" name="counter" class="btn counter-reset" rel="entry" />
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+				</tabs>
+			</div>
+		</div>
 	</body>
 	<config>
 		<action value="index.php?option=com_sobipro" />

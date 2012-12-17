@@ -18,10 +18,17 @@
 		</buttons>
 	</toolbar>
 	<body>
-		<message id="spMessage" />
 		<div class="row-fluid">
-			<div class="span12">
-				<field type="textarea" name="file_content" editor="false" class="input-xxlarge" id="file_content" stand-alone="true"/>
+			<div class="span2" id="SPRightMenu">
+				<menu />
+			</div>
+			<div class="span10">
+				<message id="spMessage" />
+				<div class="row-fluid">
+					<div class="span12">
+						<field type="textarea" name="file_content" editor="false" class="input-xxlarge" id="file_content" stand-alone="true" />
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>

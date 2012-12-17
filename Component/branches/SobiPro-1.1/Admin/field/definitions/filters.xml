@@ -15,26 +15,33 @@
 		</buttons>
 	</toolbar>
 	<body>
-		<message id="spMessage" />
-		<table>
-			<head>
-				<cell label="FLR.FILTER_ID" type="text" class="left" />
-                <cell label="FLR.EDIT_FILTER" type="text" class="center"/>
-				<cell label="FLR.FILTER_NAME" type="text" class="left" />
-				<cell label="FLR.FILTER_MSG" type="text" class="left" />
-				<cell label="FLR.FILTER_REGEX" type="text" class="left" />
-			</head>
-			<loop subject="filters">
-				<cell type="text" value="id" class="left filterId"/>
-                <cell type="text" class="center">
-                    <button type="new" class="filter-edit" ico="edit" rel="var:[id]" />
-                </cell>
-				<cell type="text" value="name" class="left"/>
-				<cell type="text" value="message" class="left" />
-				<cell type="text" value="regex" class="left" />
-			</loop>
-		</table>
-		<field type="modalWindow" id="filter-edit-window" header="FLR.EDIT_FILTER" style="100px"/>
+		<div class="row-fluid">
+			<div class="span2" id="SPRightMenu">
+				<menu />
+			</div>
+			<div class="span10">
+				<message id="spMessage" />
+				<table>
+					<head>
+						<cell label="FLR.FILTER_ID" type="text" class="left" />
+						<cell label="FLR.EDIT_FILTER" type="text" class="center" />
+						<cell label="FLR.FILTER_NAME" type="text" class="left" />
+						<cell label="FLR.FILTER_MSG" type="text" class="left" />
+						<cell label="FLR.FILTER_REGEX" type="text" class="left" />
+					</head>
+					<loop subject="filters">
+						<cell type="text" value="id" class="left filterId" />
+						<cell type="text" class="center">
+							<button type="new" class="filter-edit" ico="edit" rel="var:[id]" />
+						</cell>
+						<cell type="text" value="name" class="left" />
+						<cell type="text" value="message" class="left" />
+						<cell type="text" value="regex" class="left" />
+					</loop>
+				</table>
+				<field type="modalWindow" id="filter-edit-window" header="FLR.EDIT_FILTER" style="100px" />
+			</div>
+		</div>
 	</body>
 	<config>
 		<action value="index.php?option=com_sobipro" />
