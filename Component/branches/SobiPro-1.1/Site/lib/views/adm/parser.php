@@ -164,6 +164,7 @@ class SPTplParser
 				$this->_out[ ] = $element[ 'content' ];
 				break;
 			case 'text':
+			case 'menu':
 				$this->_out[ ] = $element[ 'content' ];
 				break;
 		}

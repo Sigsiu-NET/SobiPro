@@ -339,11 +339,11 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	private function editForm()
 	{
 		$this->_model->formatDatesToEdit();
+		/** @var $view SPSectionAdmView */
 		$view = SPFactory::View( 'section', true );
-		$view->assign( $this->_task, 'task' );
-		$view->loadConfig( 'section.edit' );
-		$view->setTemplate( 'section.edit' );
-		$view->assign( $this->_model, 'section' );
-		$view->display();
+		$view->assign( $this->_task, 'task' )
+				->assign( $this->_model, 'section' )
+				->determineTemplate( 'section', 'edit' )
+				->display();
 	}
 }
