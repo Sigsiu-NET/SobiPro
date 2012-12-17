@@ -34,13 +34,13 @@ final class SPAdmSiteMenu
 	private $_open = null;
 	private $_custom = array();
 
-	public function __construct( $task, $sid = 0 )
+	public function __construct( $task = null, $sid = 0 )
 	{
 		SPFactory::header()
 				->addCSSFile( 'menu', true )
 				->addJsFile( 'menu', true );
 		Sobi::LoadLangFile( 'menu', true, true );
-		$this->_task = $task;
+		$this->_task = $task ? $task : SPRequest::task();
 		$this->_sid = $sid;
 		SPFactory::registry()->set( 'adm_menu', $this );
 	}
@@ -81,7 +81,6 @@ final class SPAdmSiteMenu
 		$this->_view[ ] = '</div>';
 		$media = Sobi::Cfg( 'img_folder_live' );
 		$this->_view[ ] = "\n<div class='well well-small'><a href=\"http://www.Sigsiu.NET\" target=\"_blank\" title=\"Sigsiu.NET Software Development\"><img src=\"{$media}/sobipro-menu.png\" alt=\"Sigsiu.NET Software Development\" style=\"border-style:none;\" /></a></div>\n";
-
 		$fs = null;
 		if ( count( $this->_sections ) ) {
 			if ( $this->_task == 'section.view' ) {
@@ -98,10 +97,10 @@ final class SPAdmSiteMenu
 					$this->_open = $sid;
 					$in = ' in';
 				}
-				elseif ( $this->_open && $section == $this->_open ) {
+				if ( $this->_open && $section == $this->_open ) {
 					$in = ' in';
 				}
-				elseif ( $this->_open && array_key_exists( $this->_task, $list ) ) {
+				if ( $this->_open && array_key_exists( $this->_task, $list ) ) {
 					$in = ' in';
 				}
 				$this->_view[ ] = '<div class="accordion-group">';

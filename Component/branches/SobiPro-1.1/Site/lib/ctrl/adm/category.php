@@ -249,7 +249,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$entriesField = SPFactory::config()->nameField()->get( 'nid' );
 
 		/* create menu */
-		SPLoader::loadClass( 'helpers.adm.menu' );
+		SPLoader::loadClass( 'views.adm.menu' );
 		$menu = new SPAdmSiteMenu( 'section.' . $this->_task, SPRequest::sid() );
 		/* load the menu definition */
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );

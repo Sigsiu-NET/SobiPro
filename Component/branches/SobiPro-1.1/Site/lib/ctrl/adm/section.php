@@ -156,7 +156,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			}
 		}
 		/* create menu */
-		$mClass = SPLoader::loadClass( 'helpers.adm.menu' );
+		$mClass = SPLoader::loadClass( 'views.adm.menu' );
 		$menu = new $mClass( 'section.' . $this->_task, Sobi::Section() );
 		/* load the menu definition */
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );

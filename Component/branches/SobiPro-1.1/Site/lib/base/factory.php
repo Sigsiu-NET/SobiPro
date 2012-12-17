@@ -107,7 +107,7 @@ abstract class SPFactory
 	 */
 	public static function & AdmToolbar()
 	{
-		SPLoader::loadClass( 'mlo.adm.toolbar' );
+		SPLoader::loadClass( 'views.adm.toolbar' );
 		return SpAdmToolbar::getInstance();
 	}
 

@@ -212,7 +212,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		Sobi::ReturnPoint();
 
 		/* create menu */
-		$menu = SPFactory::Instance( 'helpers.adm.menu', 'extensions.manage', Sobi::Section() );
+		$menu = SPFactory::Instance( 'views.adm.menu', 'extensions.manage', Sobi::Section() );
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if ( count( $cfg ) ) {
@@ -999,7 +999,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	private function menu()
 	{
 		/* create menu */
-		$menu =& SPFactory::Instance( 'helpers.adm.menu', 'extensions.' . $this->_task );
+		$menu =& SPFactory::Instance( 'views.adm.menu', 'extensions.' . $this->_task );
 //		$cfg = SPLoader::loadIniFile( 'etc.adm.extensions_menu' );
 		$cfg = SPLoader::loadIniFile( 'etc.adm.config_menu' );
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );

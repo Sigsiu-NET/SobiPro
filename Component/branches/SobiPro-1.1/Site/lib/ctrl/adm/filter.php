@@ -162,16 +162,15 @@ class SPFilter extends SPConfigAdmCtrl
 				);
 			}
 		}
+		$menu = $this->createMenu( 'filter' );
 		/** @var $view  SPAdmView */
 		$view = SPFactory::View( 'view', true );
 		$view->assign( $this->_task, 'task' )
 				->assign( $this->createMenu(), 'menu' )
 				->assign( Sobi::Url( array( 'task' => 'filter.edit', 'out' => 'html' ), true ), 'edit_url' )
 				->assign( $Filters, 'filters' )
+				->assign( $menu, 'menu' )
 				->determineTemplate( 'field', 'filters' );
-		$menu = $view->get( 'menu' );
-		$menu->setOpen( 'GB.CFG.GLOBAL_CONFIG' );
-		$view->assign( $menu, 'menu' );
 		$view->display();
 	}
 }

@@ -78,7 +78,7 @@ class SPConfigAdmCtrl extends SPController
 		SPLoader::loadClass( 'html.input' );
 		$sid = Sobi::Reg( 'current_section' );
 		/* create menu */
-		$class = SPLoader::loadClass( 'helpers.adm.menu' );
+		$class = SPLoader::loadClass( 'views.adm.menu' );
 		$menu = new $class( $task, $sid );
 		/* load the menu definition */
 		if ( $sid ) {
@@ -324,12 +324,15 @@ class SPConfigAdmCtrl extends SPController
 		}
 	}
 
-	protected function createMenu()
+	protected function createMenu( $task = null )
 	{
+		if ( !( $task ) ) {
+			$task = 'config.' . $this->_task;
+		}
 		/* load the menu definition */
 		if ( Sobi::Section() ) {
 			/* create menu */
-			$menu =& SPFactory::Instance( 'helpers.adm.menu', 'config.' . $this->_task, Sobi::Section() );
+			$menu =& SPFactory::Instance( 'views.adm.menu', $task, Sobi::Section() );
 			$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
 			/* create new SigsiuTree */
 			$tree = SPFactory::Instance( 'mlo.tree' );
@@ -348,7 +351,7 @@ class SPConfigAdmCtrl extends SPController
 		else {
 			$cfg = SPLoader::loadIniFile( 'etc.adm.config_menu' );
 			/* create menu */
-			$menu =& SPFactory::Instance( 'helpers.adm.menu', 'config.' . $this->_task );
+			$menu =& SPFactory::Instance( 'views.adm.menu', $task );
 		}
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if ( count( $cfg ) ) {
