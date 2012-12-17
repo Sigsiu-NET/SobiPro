@@ -442,6 +442,9 @@ class SPAdmView extends SPObject implements SPView
 				case 'menu':
 					$element[ 'content' ] = $this->menu( true );
 					break;
+				case 'toolbar':
+					$element[ 'content' ] = $this->toolbar();
+					break;
 				default:
 					if ( $node->hasChildNodes() ) {
 						$this->xmlBody( $node->childNodes, $element[ 'content' ] );

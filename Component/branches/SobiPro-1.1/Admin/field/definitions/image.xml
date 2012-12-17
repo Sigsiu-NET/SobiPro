@@ -1,170 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definition>
-    <header>
-        <title value="FM.EDIT_FIELD"/>
-        <file type="script" filename="bootstrap.tabs"/>
-    </header>
-    <toolbar title="var:[site_title]" icon="SobiFieldEdit">
-        <button task="field.apply" type="apply">
-            <button type="save" task="field.save" />
-            <button type="duplicate" task="field.clone" />
-        </button>
-        <divider/>
-        <button type="exit" task="field.cancel" />
-        <divider/>
-        <button type="help" target="_blank" />
-    </toolbar>
-    <body>
-        <message id="spMessage"/>
-        <tabs>
-            <tab label="FMN.FIELD_GENERAL">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <fieldset>
-                            <field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no"/>
-                        </fieldset>
-                        <fieldset>
-                            <field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true"/>
-                            <field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
-                            <field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium"/>
-                            <field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
-                            <field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
-                        </fieldset>
+	<header>
+		<title value="FM.EDIT_FIELD" />
+		<file type="script" filename="bootstrap.tabs" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
+		<button task="field.apply" type="apply">
+			<button type="save" task="field.save" />
+			<button type="duplicate" task="field.clone" />
+		</button>
+		<divider />
+		<button type="exit" task="field.cancel" />
+		<divider />
+		<button type="help" target="_blank" />
+	</toolbar>
+	<body>
+		<div class="row-fluid">
+			<div class="span12">
+				<message id="spMessage" />
+				<tabs>
+					<tab label="FMN.FIELD_GENERAL">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no" />
+								</fieldset>
+								<fieldset>
+									<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true" />
+									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" />
+									<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
+									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
+									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
+								</fieldset>
 
-                        <fieldset label="FM.FIELD_TYPE">
-                            <field type="select" name="field.fieldType" selected="field.fieldType" size="2" multi="false" values="types" label="FMN.FIELD_TYPE" class="span2"/>
-                        </fieldset>
-                    </div>
-                </div>
-            </tab>
-            <tab label="FMN.FIELD_ENTRYINPUT">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <fieldset>
-                            <field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
-                                <add where="after">
-                                    <text>px</text>
-                                </add>
-                            </field>
-                            <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />0
-                            <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no"/>
-                            <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no"/>
-                        </fieldset>
+								<fieldset label="FM.FIELD_TYPE">
+									<field type="select" name="field.fieldType" selected="field.fieldType" size="2" multi="false" values="types" label="FMN.FIELD_TYPE" class="span2" />
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+					<tab label="FMN.FIELD_ENTRYINPUT">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
+									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
+									0
+									<field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
+									<field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+								</fieldset>
 
-                        <fieldset label="FMN.FIELD_ENTRYINPUT_IMAGE">
-                            <field type="text" name="field.maxSize" value="field.maxSize" label="FMN.IMG.MAX_FILE_SIZE" maxlength="50" class="input-medium">
-                                <add where="after">
-                                    <call function="Sobi::Txt">
-                                        <param>FMN.LENGTH_BYTES</param>
-                                    </call>
-                                </add>
-                            </field>
-                            <field type="text" name="field.savePath" value="field.savePath" label="FMN.IMG.IMAGE_SAVE_PATH" maxlength="150" class="input-splarge"/>
-                            <field type="states" name="field.keepOrg" value="field.keepOrg" label="FMN.IMG.KEEP_ORG" prefix="yes_no" />
+								<fieldset label="FMN.FIELD_ENTRYINPUT_IMAGE">
+									<field type="text" name="field.maxSize" value="field.maxSize" label="FMN.IMG.MAX_FILE_SIZE" maxlength="50" class="input-medium">
+										<add where="after">
+											<call function="Sobi::Txt">
+												<param>FMN.LENGTH_BYTES</param>
+											</call>
+										</add>
+									</field>
+									<field type="text" name="field.savePath" value="field.savePath" label="FMN.IMG.IMAGE_SAVE_PATH" maxlength="150" class="input-splarge" />
+									<field type="states" name="field.keepOrg" value="field.keepOrg" label="FMN.IMG.KEEP_ORG" prefix="yes_no" />
 
-                            <field type="text" name="field.imageName" value="field.imageName" label="FM.IMG.IMG_NAME" maxlength="100" class="input-large"/>
-                            <field type="states" name="field.resize" value="field.resize" label="FM.IMG.RESIZE_IMG" prefix="yes_no" />
-                            <field type="text" name="field.resizeWidth" value="field.resizeWidth" label="FM.IMG.RESIZEWIDTH_TO" maxlength="50" class="input-mini">
-                                <add where="after">
-                                    <text>px</text>
-                                </add>
-                            </field>
-                            <field type="text" name="field.resizeHeight" value="field.resizeHeight" label="FM.IMG.RESIZEHEIGHT_TO" maxlength="50" class="input-mini">
-                                <add where="after">
-                                    <text>px</text>
-                                </add>
-                            </field>
-                        </fieldset>
+									<field type="text" name="field.imageName" value="field.imageName" label="FM.IMG.IMG_NAME" maxlength="100" class="input-large" />
+									<field type="states" name="field.resize" value="field.resize" label="FM.IMG.RESIZE_IMG" prefix="yes_no" />
+									<field type="text" name="field.resizeWidth" value="field.resizeWidth" label="FM.IMG.RESIZEWIDTH_TO" maxlength="50" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
+									<field type="text" name="field.resizeHeight" value="field.resizeHeight" label="FM.IMG.RESIZEHEIGHT_TO" maxlength="50" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
+								</fieldset>
 
-                        <fieldset label="FMN.FIELD_ENTRYINPUT_THUMB">
-                            <field type="states" name="field.generateThumb" value="field.generateThumb" label="FM.IMG.CREATE_THUMB" prefix="yes_no" />
-                            <field type="text" name="field.thumbName" value="field.thumbName" label="FM.IMG.THUMB_NAME" maxlength="100" class="input-large"/>
-                            <field type="text" name="field.thumbWidth" value="field.thumbWidth" label="FM.IMG.RESIZEWIDTH_TO" maxlength="50" class="input-mini">
-                                <add where="after">
-                                    <text>px</text>
-                                </add>
-                            </field>
-                            <field type="text" name="field.thumbHeight" value="field.thumbHeight" label="FM.IMG.RESIZEHEIGHT_TO" maxlength="50" class="input-mini">
-                                <add where="after">
-                                    <text>px</text>
-                                </add>
-                            </field>
-                        </fieldset>
+								<fieldset label="FMN.FIELD_ENTRYINPUT_THUMB">
+									<field type="states" name="field.generateThumb" value="field.generateThumb" label="FM.IMG.CREATE_THUMB" prefix="yes_no" />
+									<field type="text" name="field.thumbName" value="field.thumbName" label="FM.IMG.THUMB_NAME" maxlength="100" class="input-large" />
+									<field type="text" name="field.thumbWidth" value="field.thumbWidth" label="FM.IMG.RESIZEWIDTH_TO" maxlength="50" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
+									<field type="text" name="field.thumbHeight" value="field.thumbHeight" label="FM.IMG.RESIZEHEIGHT_TO" maxlength="50" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
+								</fieldset>
 
-                        <fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
-                            <field type="output" value="field.version" label="VERSION" class="badge"/>
-                            <field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no"/>
-                            <field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
-                        </fieldset>
+								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
+									<field type="output" value="field.version" label="VERSION" class="badge" />
+									<field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
+									<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
+								</fieldset>
 
-                        <fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
-                            <field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no"/>
-                            <field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
-                                <add where="after">
-                                    <call function="Sobi::Cfg">
-                                        <param>payments.currency</param>
-                                        <param>EUR</param>
-                                    </call>
-                                </add>
-                            </field>
-                        </fieldset>
-                    </div>
-                </div>
-            </tab>
-            <tab label="FMN.FIELD_ENTRYVIEW">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <fieldset>
-                            <field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
-                                <values>
-                                    <option value="both" label="FM.BOTH_OPT"/>
-                                    <option value="details" label="FM.DETAILS_VIEW_OPT"/>
-                                    <option value="vcard" label="FM.V_CARD_OPT"/>
-                                    <option value="hidden" label="FMN.HIDDEN_OPT"/>
-                                </values>
-                            </field>
-                            <field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
-                            <field type="select" name="field.inVcard" selected="field.inVcard" label="FM.IMG.SHOW_IN_V_CARD" class="input-medium">
-                                <values>
-                                    <option value="thumb" label="FM.IMG.THUMBAIL_OPT"/>
-                                    <option value="image" label="FM.IMG.IMAGE_OPT"/>
-                                    <option value="original" label="FM.IMG.ORGINAL_OPT"/>
-                                </values>
-                            </field>
-                            <field type="select" name="field.inDetails" selected="field.inDetails" label="FM.IMG.SHOW_IN_DETAILS_VIEW" class="input-medium">
-                                <values>
-                                    <option value="thumb" label="FM.IMG.THUMBAIL_OPT"/>
-                                    <option value="image" label="FM.IMG.IMAGE_OPT"/>
-                                    <option value="original" label="FM.IMG.ORGINAL_OPT"/>
-                                </values>
-                            </field>
-                            <field type="select" name="field.thumbFloat" selected="field.thumbFloat" label="FM.IMG.THUMB_FLOAT" class="input-medium">
-                                <values>
-                                    <option value="" label="FM.IMG.FLOAT_NO_OPT"/>
-                                    <option value="right" label="FM.IMG.FLOAT_RIGHT_OPT"/>
-                                    <option value="left" label="FM.IMG.FLOAT_LEFT_OPT"/>
-                                </values>
-                            </field>
-                            <field type="select" name="field.imageFloat" selected="field.imageFloat" label="FM.IMG.IMG_FLOAT" class="input-medium">
-                                <values>
-                                    <option value="" label="FM.IMG.FLOAT_NO_OPT"/>
-                                    <option value="right" label="FM.IMG.FLOAT_RIGHT_OPT"/>
-                                    <option value="left" label="FM.IMG.FLOAT_LEFT_OPT"/>
-                                </values>
-                            </field>
-                        </fieldset>
-                    </div>
-                </div>
-            </tab>
-        </tabs>
-    </body>
-    <config>
-        <action value="index.php?option=com_sobipro"/>
-        <hidden>
-            <field name="option" default="com_sobipro"/>
-            <field name="task" default=""/>
-            <field name="method" default="xhr"/>
-            <field name="format" default="raw"/>
-        </hidden>
-    </config>
+								<fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
+									<field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no" />
+									<field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
+										<add where="after">
+											<call function="Sobi::Cfg">
+												<param>payments.currency</param>
+												<param>EUR</param>
+											</call>
+										</add>
+									</field>
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+					<tab label="FMN.FIELD_ENTRYVIEW">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
+										<values>
+											<option value="both" label="FM.BOTH_OPT" />
+											<option value="details" label="FM.DETAILS_VIEW_OPT" />
+											<option value="vcard" label="FM.V_CARD_OPT" />
+											<option value="hidden" label="FMN.HIDDEN_OPT" />
+										</values>
+									</field>
+									<field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
+									<field type="select" name="field.inVcard" selected="field.inVcard" label="FM.IMG.SHOW_IN_V_CARD" class="input-medium">
+										<values>
+											<option value="thumb" label="FM.IMG.THUMBAIL_OPT" />
+											<option value="image" label="FM.IMG.IMAGE_OPT" />
+											<option value="original" label="FM.IMG.ORGINAL_OPT" />
+										</values>
+									</field>
+									<field type="select" name="field.inDetails" selected="field.inDetails" label="FM.IMG.SHOW_IN_DETAILS_VIEW" class="input-medium">
+										<values>
+											<option value="thumb" label="FM.IMG.THUMBAIL_OPT" />
+											<option value="image" label="FM.IMG.IMAGE_OPT" />
+											<option value="original" label="FM.IMG.ORGINAL_OPT" />
+										</values>
+									</field>
+									<field type="select" name="field.thumbFloat" selected="field.thumbFloat" label="FM.IMG.THUMB_FLOAT" class="input-medium">
+										<values>
+											<option value="" label="FM.IMG.FLOAT_NO_OPT" />
+											<option value="right" label="FM.IMG.FLOAT_RIGHT_OPT" />
+											<option value="left" label="FM.IMG.FLOAT_LEFT_OPT" />
+										</values>
+									</field>
+									<field type="select" name="field.imageFloat" selected="field.imageFloat" label="FM.IMG.IMG_FLOAT" class="input-medium">
+										<values>
+											<option value="" label="FM.IMG.FLOAT_NO_OPT" />
+											<option value="right" label="FM.IMG.FLOAT_RIGHT_OPT" />
+											<option value="left" label="FM.IMG.FLOAT_LEFT_OPT" />
+										</values>
+									</field>
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+				</tabs>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="method" default="xhr" />
+			<field name="format" default="raw" />
+		</hidden>
+	</config>
 </definition>
