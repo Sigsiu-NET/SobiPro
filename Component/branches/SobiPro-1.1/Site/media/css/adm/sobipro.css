@@ -414,6 +414,37 @@ div.spScreenTitle h4 {
   color: inherit;
   text-decoration: underline;
 }
+.SobiPro .spStatusAlert {
+  margin-bottom: 10px;
+}
+.SobiPro .spStatusHeader {
+  font-size: 18px;
+}
+.SobiPro .spBox {
+  border: 1px solid #ccccff;
+  border-radius: 4px;
+  text-align: center;
+  width: 100px;
+  background-color: #ebebfe;
+  padding: 5px;
+  color: #4b4bcd;
+  min-height: 100px;
+}
+.SobiPro .spBox a,
+.SobiPro .spBox a:hover,
+.SobiPro .spBox a:focus {
+  color: #4b4bcd;
+  text-decoration: none;
+}
+.SobiPro li.spBox a img {
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 10px;
+}
+.SobiPro .thumbnails > li {
+  margin-left: 0px;
+  margin-right: 10px;
+}
 .SobiPro .popover {
   width: 310px;
 }

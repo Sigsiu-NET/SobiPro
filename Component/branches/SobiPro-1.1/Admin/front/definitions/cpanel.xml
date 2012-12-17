@@ -21,30 +21,31 @@
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
 			<button type="url" task="extensions" />
+            <button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
 	<body>
 		<message id="spMessage" />
-		<div class="row">
-			<div class="span10">
+        <div class="row-fluid">
+			<div class="span7">
 				<ul class="thumbnails">
-					<li class="span2">
+					<li class="spBox">
 						<url type="intern" label="CPANEL.GCONF" image="../media/sobipro/48x48/folder-configuration.png">
 							<param name="task" value="config" />
 						</url>
 					</li>
-					<li class="span2">
+					<li class="spBox">
 						<url type="intern" label="CPANEL.ACL" image="../media/sobipro/48x48/sobipro-acl-edit.png">
 							<param name="task" value="acl" />
 						</url>
 					</li>
-					<li class="span2">
+					<li class="spBox">
 						<url type="intern" label="CPANEL.SAM" image="../media/sobipro/48x48/folder-application">
 							<param name="task" value="extensions" />
 						</url>
 					</li>
-					<li class="span2">
+					<li class="spBox">
 						<url type="intern" label="CPANEL.TMPL" image="../media/sobipro/48x48/folder-templates.png">
 							<param name="task" value="template.info" />
 							<param name="template" value="default" />
@@ -173,17 +174,17 @@
 					</tab>
 				</tabs>
 			</div>
-			<div class="span6">
+			<div class="span5">
 				<div class="well">
-					<h1>
+					<p class="spStatusHeader">
 						<text value="CPANEL_SYSTEM_STATUS" />
-					</h1>
-					<message parse="system-state.accelerator" dismiss-button="false" />
-					<message parse="system-state.javascript-cache" dismiss-button="false" />
-					<message parse="system-state.css-cache" dismiss-button="false" />
-					<message parse="system-state.display-errors" dismiss-button="false" />
-					<message parse="system-state.debug-level" dismiss-button="false" />
-					<message parse="system-state.debug-xml" dismiss-button="false" />
+					</p>
+					<message parse="system-state.accelerator" dismiss-button="false" class="spStatusAlert" />
+					<message parse="system-state.javascript-cache" dismiss-button="false" class="spStatusAlert" />
+					<message parse="system-state.css-cache" dismiss-button="false" class="spStatusAlert" />
+					<message parse="system-state.display-errors" dismiss-button="false" class="spStatusAlert" />
+					<message parse="system-state.debug-level" dismiss-button="false" class="spStatusAlert" />
+					<message parse="system-state.debug-xml" dismiss-button="false" class="spStatusAlert" />
 					<p condition="system-state.messages.length">
 						<a href="#ReportedIssues" role="button" class="btn btn-warning" data-toggle="modal">
 							<text value="CPANEL_REPORTED_ISSUES">
