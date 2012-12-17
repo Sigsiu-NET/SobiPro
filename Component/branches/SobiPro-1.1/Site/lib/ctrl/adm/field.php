@@ -447,7 +447,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 
 		/* create menu */
 		$sid = Sobi::Reg( 'current_section' );
-		$menuc = SPLoader::loadClass( 'helpers.adm.menu' );
+		$menuc = SPLoader::loadClass( 'views.adm.menu' );
 		$menu = new $menuc( 'field.list', $sid );
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );

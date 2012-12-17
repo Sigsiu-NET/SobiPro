@@ -533,7 +533,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		$menu = SPFactory::Instance( 'helpers.adm.menu', SPRequest::task() );
+		$menu = SPFactory::Instance( 'views.adm.menu', SPRequest::task() );
 		$cfg = SPLoader::loadIniFile( 'etc.adm.config_menu' );
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if( count( $cfg ) ) {
