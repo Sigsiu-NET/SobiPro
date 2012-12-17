@@ -222,7 +222,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		Sobi::Trigger( 'Save', 'Acl', array( &$this ) );
 		if( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
-		}		
+		}
 		$rid = SPRequest::int( 'rid', 'null' );
 		if( $rid ) {
 			$this->remove( $rid );
@@ -353,7 +353,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 * @param bool $state
 	 * @return bool
 	 */
-	private function state( $state )
+	protected function state( $state )
 	{
 		$rid = SPRequest::int( 'rid' );
 		$where = null;
