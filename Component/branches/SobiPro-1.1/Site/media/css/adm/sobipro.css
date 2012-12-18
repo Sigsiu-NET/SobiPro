@@ -545,6 +545,9 @@ input.sp-input-micro[type="text"] {
 .spicon-48-SobiTemplate {
   background-image: url('../../../../media/sobipro/48x48/folder-templates.png');
 }
+.spicon-48-SobiConfig {
+  background-image: url('../../../../media/sobipro/48x48/folder-configuration.png');
+}
 .spUserSelector .response .btn {
   margin: 5px;
   width: 200px;

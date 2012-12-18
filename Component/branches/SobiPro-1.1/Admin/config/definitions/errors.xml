@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="ERR.SITE_TITLE" />
+	</header>
+	<toolbar title="ERR.SITE_TITLE" icon="SobiConfig">
+		<divider />
+		<buttons type="actions">
+			<button label="TB.PURGE" task="error.purge" ico="trash"/>
+			<button label="TB.DOWNLOAD_LOG" task="error.download" />
+		</buttons>
+		<divider />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="help" target="_blank" />
+		</buttons>
+	</toolbar>
+	<body>
+		<div class="row-fluid">
+			<div class="span2" id="SPRightMenu">
+				<menu />
+			</div>
+			<div class="span10">
+				<message id="spMessage" />
+				<!--<header label="ERR.SITE_TITLE" icon="SobiFieldList" />-->
+				<table>
+					<head>
+						<cell label="ERR.ERROR_DETAILS" type="text" class="center" />
+						<cell />
+						<cell label="ERR.ERROR_INFO" type="text" class="center" />
+					</head>
+					<loop subject="errors">
+						<cell type="text" value="errNum" class="center" />
+						<cell>
+							<cell type="text" value="errMsg" />
+							<cell label="ERR.ERROR_DATE" type="text" value="date" class="" />
+							<cell label="ERR.IN_FILE" type="text" value="errFile" class="" />
+							<cell label="ERR.REQUESTED_URI" type="text" value="errReq" class="" />
+						</cell>
+						<cell class="center">
+							<cell type="link" value="eid">
+								<url type="intern">
+									<param name="task" value="error.details" />
+									<param name="eid" value="eid" parse="true" />
+								</url>
+							</cell>
+						</cell>
+					</loop>
+					<foot>
+						<navigation />
+					</foot>
+				</table>
+				<pagination set="errSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
+					<param name="count" value="errors-count" parse="true" />
+					<param name="limit" value="errors-limit" parse="true" />
+					<param name="current" value="errors-site" parse="true" />
+					<param name="url">
+						<param name="option" value="com_sobipro" />
+						<param name="task" value="error" />
+					</param>
+				</pagination>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="boxchecked" default="" />
+		</hidden>
+	</config>
+</definition>

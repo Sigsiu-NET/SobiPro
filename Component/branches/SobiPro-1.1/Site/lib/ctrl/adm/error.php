@@ -1,6 +1,6 @@
 <?php
 /**
- * @version: $Id: error.php 1883 2011-09-16 17:44:53Z Radek Suski $
+ * @version: $Id: error.php 1883 2012-09-16 17:44:53Z Radek Suski $
  * @package: SobiPro Library
  * ===================================================
  * @author
@@ -50,7 +50,7 @@ class SPError extends SPConfigAdmCtrl
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
-				if( !parent::execute() ) {
+				if ( !parent::execute() ) {
 					Sobi::Error( 'error_ctrl', 'Task not found', SPC::WARNING, 404, __LINE__, __FILE__ );
 				}
 				break;
@@ -66,19 +66,19 @@ class SPError extends SPConfigAdmCtrl
 		$Date->appendChild( $Error->createTextNode( date( DATE_RFC822 ) ) );
 		$Root->appendChild( $Date );
 		$Site = $Error->createAttribute( 'site' );
-		$Site->appendChild( $Error->createTextNode(  Sobi::Cfg( 'live_site' ) ) );
+		$Site->appendChild( $Error->createTextNode( Sobi::Cfg( 'live_site' ) ) );
 		$Root->appendChild( $Site );
 		$Error->appendChild( $Root );
 		$levels = $this->levels();
 		try {
 			$errors = SPFactory::db()->select( '*', 'spdb_errors', null, 'eid.desc' )->loadAssocList();
+		} catch ( SPException $x ) {
 		}
-		catch ( SPException $x ) {}
 		$c = 0;
-		if( count( $errors ) ) {
+		if ( count( $errors ) ) {
 			foreach ( $errors as $i => $err ) {
 				$c++;
-				if( $c > Sobi::Cfg( 'err_log.limit', 50 ) ) {
+				if ( $c > Sobi::Cfg( 'err_log.limit', 50 ) ) {
 					break;
 				}
 				$err[ 'errNum' ] = $levels[ $err[ 'errNum' ] ];
@@ -110,7 +110,7 @@ class SPError extends SPConfigAdmCtrl
 				$ErrMsg = $Error->createElement( 'message', $err[ 'errMsg' ] );
 				$Err->appendChild( $ErrMsg );
 
-				$ErrMsg = $Error->createElement( 'file', $err[ 'errFile' ].':'.$err[ 'errLine' ] );
+				$ErrMsg = $Error->createElement( 'file', $err[ 'errFile' ] . ':' . $err[ 'errLine' ] );
 				$Err->appendChild( $ErrMsg );
 
 				$ErrUser = $Error->createElement( 'user' );
@@ -127,17 +127,17 @@ class SPError extends SPConfigAdmCtrl
 				$UsrReq = $Error->createElement( 'requestedUri', htmlentities( $err[ 'errReq' ] ) );
 				$ErrUser->appendChild( $UsrReq );
 
-				$UsrRef = $Error->createElement( 'referrerUri', str_replace( Sobi::Cfg( 'live_site'), null, htmlentities( $err[ 'errRef' ] ) ) );
+				$UsrRef = $Error->createElement( 'referrerUri', str_replace( Sobi::Cfg( 'live_site' ), null, htmlentities( $err[ 'errRef' ] ) ) );
 				$ErrUser->appendChild( $UsrRef );
 
 				$Err->appendChild( $ErrUser );
 
 				$ErrStack = $Error->createElement( 'callStack' );
-				$ErrStack->appendChild( $Error->createCDATASection( "\n".stripslashes( var_export( $err[ 'errCont' ], true ) )."\n" ) );
+				$ErrStack->appendChild( $Error->createCDATASection( "\n" . stripslashes( var_export( $err[ 'errCont' ], true ) ) . "\n" ) );
 				$Err->appendChild( $ErrStack );
 
 				$ErrTrace = $Error->createElement( 'callTrace' );
-				$ErrTrace->appendChild( $Error->createCDATASection( "\n".stripslashes( var_export( $err[ 'errBacktrace' ], true ) )."\n" ) );
+				$ErrTrace->appendChild( $Error->createCDATASection( "\n" . stripslashes( var_export( $err[ 'errBacktrace' ], true ) ) . "\n" ) );
 				$Err->appendChild( $ErrTrace );
 
 				$Root->appendChild( $Err );
@@ -148,11 +148,12 @@ class SPError extends SPConfigAdmCtrl
 		$fp = SPFs::read( $file );
 		SPFactory::mainframe()->cleanBuffer();
 		header( "Content-type: application/xml" );
-		header( 'Content-Disposition: attachment; filename=error.xml');
+		header( 'Content-Disposition: attachment; filename=error.xml' );
 		echo $fp;
 		flush();
 		exit;
 	}
+
 	private function levels()
 	{
 		$levels = get_defined_constants();
@@ -160,12 +161,13 @@ class SPError extends SPConfigAdmCtrl
 		//$levels = get_defined_constants( true );
 		//$levels = isset( $levels[ 'Core' ] ) ? $levels[ 'Core' ] : $levels[ 'internal' ];
 		foreach ( $levels as $level => $v ) {
-			if( !( preg_match( '/^E_/', $level ) ) ) {
+			if ( !( preg_match( '/^E_/', $level ) ) ) {
 				unset( $levels[ $level ] );
 			}
 		}
 		return array_flip( $levels );
 	}
+
 	private function details()
 	{
 		$id = SPRequest::int( 'eid' );
@@ -173,8 +175,8 @@ class SPError extends SPConfigAdmCtrl
 			$err = SPFactory::db()
 					->select( '*', 'spdb_errors', array( 'eid' => $id ) )
 					->loadObject();
+		} catch ( SPException $x ) {
 		}
-		catch ( SPException $x ) {}
 		$err->errCont = unserialize( gzuncompress( base64_decode( $err->errCont ) ) );
 		$err->errBacktrace = unserialize( gzuncompress( base64_decode( $err->errBacktrace ) ) );
 		$view =& SPFactory::View( 'error', true );
@@ -191,12 +193,11 @@ class SPError extends SPConfigAdmCtrl
 	{
 		try {
 			SPFactory::db()->truncate( 'spdb_errors' );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'ERR.ERROR_LOG_NOT_DELETED', array( 'error' => $x->getMessage() ), 'error' ) );
 		}
-		if( SPFs::exists( SOBI_PATH.DS.'var'.DS.'log'.DS.'error.log' ) ) {
-			SPFs::delete( SOBI_PATH.DS.'var'.DS.'log'.DS.'error.log' );
+		if ( SPFs::exists( SOBI_PATH . DS . 'var' . DS . 'log' . DS . 'error.log' ) ) {
+			SPFs::delete( SOBI_PATH . DS . 'var' . DS . 'log' . DS . 'error.log' );
 		}
 		Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'ERR.ERROR_LOG_DELETED' ) );
 	}
@@ -204,40 +205,33 @@ class SPError extends SPConfigAdmCtrl
 	private function screen()
 	{
 		$eLimit = Sobi::GetUserState( 'adm.errors.limit', 'elimit', Sobi::Cfg( 'adm_list.entries_limit', 25 ) );
-		$eLimStart = SPRequest::int( 'eLimStart', 0 );
-		$Limit = $eLimit > 0 ? $eLimit : 0;
-		$LimStart = $eLimStart ? ( ( $eLimStart - 1 ) * $eLimit ) : $eLimStart ;
-		$eCount	= 0;
-		$db = SPFactory::db();
+		$eLimStart = SPRequest::int( 'errSite', 1 );
+		$LimStart = $eLimStart ? ( ( $eLimStart - 1 ) * $eLimit ) : $eLimStart;
+		$eCount = 0;
 		try {
-			$eCount = $db->select( 'COUNT(eid)', 'spdb_errors' )->loadResult();
+			$eCount = SPFactory::db()
+					->select( 'COUNT(eid)', 'spdb_errors' )
+					->loadResult();
+		} catch ( SPException $x ) {
 		}
-		catch ( SPException $x ) {}
-		if( $eLimit == -1 ) {
+		if ( $eLimit == -1 ) {
 			$eLimit = $eCount;
 		}
 		try {
-			$errors = $db->select(
-				array( 'eid', 'date', 'errNum', 'errCode', 'errFile', 'errLine', 'errMsg', 'errUid', 'errSect', 'errReq' ),
-				'spdb_errors',
-				null,
-				'eid.desc',
-				$eLimit,
-				$LimStart
-			)->loadAssocList();
+			$errors = SPFactory::db()
+					->select( array( 'eid', 'date', 'errNum', 'errCode', 'errFile', 'errLine', 'errMsg', 'errUid', 'errSect', 'errReq' ), 'spdb_errors', null, 'eid.desc', $eLimit, $LimStart )
+					->loadAssocList();
+		} catch ( SPException $x ) {
 		}
-		catch ( SPException $x ) {}
-		$view =& SPFactory::View( 'error', true );
-		$view->assign( $this->_task, 'task' );
-		$view->loadConfig( 'config.errors' );
-		$view->assign( $this->createMenu(), 'menu' );
-		$view->assign( $errors, 'errors' );
-		$view->assign( $this->levels(), 'levels' );
-		$view->assign( $eLimit, '$eLimit' );
-		$view->assign( $eCount, '$eCount' );
-		$view->assign( $eLimStart, '$eLimStart' );
-		$view->setTemplate( 'config.errors' );
-		$view->display();
+		/** @var $view SPAdmView */
+		$view = SPFactory::View( 'error', true );
+		$view->assign( $this->_task, 'task' )
+				->assign( $this->createMenu( 'error' ), 'menu' )
+				->assign( $errors, 'errors' )
+				->assign( $this->levels(), 'levels' )
+				->assign( $eLimit, 'errors-limit' )
+				->assign( $eCount, 'errors-count' )
+				->assign( $eLimStart, 'errors-site' )
+				->display();
 	}
 }
-?>

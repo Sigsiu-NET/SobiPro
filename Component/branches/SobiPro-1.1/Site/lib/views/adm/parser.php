@@ -394,10 +394,13 @@ class SPTplParser
 				$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class} >";
 			/** no break here - continue */
 			case 'text':
-				if ( isset( $cell[ 'attributes' ][ 'label' ] ) && $cell[ 'attributes' ][ 'label' ] ) {
+				if ( $this->istSet( $cell[ 'attributes' ], 'label' ) ) {
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
 				}
-				elseif ( isset( $cell[ 'content' ][ 'element' ] ) && $cell[ 'content' ][ 'element' ] == 'button' ) {
+				if ( $this->istSet( $cell, 'label' ) ) {
+					$this->_out[ ] = $cell[ 'label' ];
+				}
+				if ( isset( $cell[ 'content' ][ 'element' ] ) && $cell[ 'content' ][ 'element' ] == 'button' ) {
 					$this->renderButton( $cell[ 'content' ] );
 				}
 				else {

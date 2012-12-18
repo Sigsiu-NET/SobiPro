@@ -381,6 +381,9 @@ class SPAdmView extends SPObject implements SPView
 						$element[ 'attributes' ][ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
 						$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
 					}
+					if ( $attribute->nodeName == 'class' ) {
+						$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+					}
 					else {
 						$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $attribute->nodeValue );
 					}
