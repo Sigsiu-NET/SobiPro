@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/gpl.html GNU/GPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU General Public License version 3
  * ===================================================
@@ -17,7 +17,7 @@
  * $Author: Radek Suski $
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/cms/joomla16/base/users.php $
  */
-defined( 'SOBIPRO' ) || ( trigger_error( 'Restricted access ' . __FILE__, E_USER_ERROR ) && exit( 'Restricted access' ) );
+defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 /**
  * @author Radek Suski
  * @version 1.0
@@ -53,4 +53,3 @@ class SPUsers
 		return $gids;
 	}
 }
-?>

@@ -266,7 +266,7 @@ class JElementSPSection extends JElement
                     $db->select( '*', 'spdb_object', array( 'oType' => 'section' ), 'id' )
                             ->loadObjectList();
         } catch ( SPException $x ) {
-            trigger_error( 'sobipro|admin_panel|cannot_get_section_list|500|' . $x->getMessage(), SPC::WARNING );
+	        Sobi::Error( $this->name(), $x->getMessage(), SPC::ERROR, 500, __LINE__, __FILE__ );
         }
         if ( count( $sections ) ) {
             SPLoader::loadClass( 'models.datamodel' );

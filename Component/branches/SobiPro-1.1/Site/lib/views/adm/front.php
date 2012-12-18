@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -35,30 +35,28 @@ class SPAdmPanelView extends SPAdmView
 	{
 		$sections =& $this->get( 'sections' );
 		$_sections = array();
-		if( count( $sections ) ) {
+		if ( count( $sections ) ) {
 			foreach ( $sections as $section ) {
 				$name = $section->get( 'name' );
 				$id = $section->get( 'id' );
 				$url = Sobi::Url( array( 'sid' => $id ) );
 				$_section = array();
-				$_section[ 'id' ] 					= $id;
-				$_section[ 'nid' ] 					= $section->get( 'nid' );
-				$_section[ 'name' ] 				= "<a href=\"{$url}\">{$name}</a>";
+				$_section[ 'id' ] = $id;
+				$_section[ 'nid' ] = $section->get( 'nid' );
+				$_section[ 'name' ] = "<a href=\"{$url}\">{$name}</a>";
 //				$_section[ 'entries_counter' ] 		= $section->countChilds( 'entry' );
 //				$_section[ 'categories_counter' ] 	= $section->countChilds( 'category' );
-				$_section[ 'state' ] 				= SPLists::state( $section );
-				$_section[ 'checkbox' ]				= SPLists::checkedOut( $section, 'sid' );
-				$_section[ 'createdTime' ] 			= $section->get( 'createdTime' );
-				$_section[ 'metaDesc' ] 			= $section->get( 'metaDesc' );
-				$_section[ 'metaKey' ] 				= $section->get( 'metaKey' );
-				$_section[ 'description' ] 			= $section->get( 'description' );
-				$_section[ 'url' ] 					= $url;
-				$_sections[] 						= $_section;
+				$_section[ 'state' ] = SPLists::state( $section );
+				$_section[ 'checkbox' ] = SPLists::checkedOut( $section, 'sid' );
+				$_section[ 'createdTime' ] = $section->get( 'createdTime' );
+				$_section[ 'metaDesc' ] = $section->get( 'metaDesc' );
+				$_section[ 'metaKey' ] = $section->get( 'metaKey' );
+				$_section[ 'description' ] = $section->get( 'description' );
+				$_section[ 'url' ] = $url;
+				$_sections[ ] = $_section;
 			}
 		}
 		$this->set( $_sections, 'sections' );
-		$this->assign( SPLists::tableHeader( array( 'checkbox' => SP_TBL_HEAD_SELECTION_BOX, 'id' => 1, 'name' => 1, 'state' => 1, 'categories_counter' => SP_TBL_HEAD_RAW, 'entries_counter' => SP_TBL_HEAD_RAW ), 'sections' ), 'header' );
 		parent::display();
 	}
 }
-?>

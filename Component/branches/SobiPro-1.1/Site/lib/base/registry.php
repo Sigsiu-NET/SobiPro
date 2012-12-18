@@ -17,7 +17,7 @@
  * $Author: Radek Suski $
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/base/registry.php $
  */
-defined( 'SOBIPRO' ) || ( trigger_error( 'Restricted access ' . __FILE__, E_USER_ERROR ) && exit( 'Restricted access' ) );
+defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 /**
  * @author Radek Suski
  * @version 1.0

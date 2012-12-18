@@ -291,8 +291,7 @@ final class SPAdmField extends SPField
 			$db->insert( 'spdb_field', $values );
 			$this->fid = $db->insertid();
 		} catch ( SPException $x ) {
-			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_POSITION_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
-			trigger_error( 'sobipro|db_field|cannot_insert_field|500|' . $x->getMessage(), SPC::ERROR );
+			Sobi::Error( $this->name(), $x->getMessage(), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 
 		/* save language depend properties */

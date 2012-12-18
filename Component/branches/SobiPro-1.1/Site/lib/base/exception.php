@@ -42,19 +42,22 @@ class SPException extends Exception
 	}
 
 	/**
-	 * @param int $errno
-	 * @param int $errcode
-	 * @param string $errstr
-	 * @param string $errfile
-	 * @param int $errline
-	 * @param string $errsection
-	 * @param string $errcontext
+	 * @param int $number
+	 * @param int $errCode
+	 * @param string $errStr
+	 * @param string $errFile
+	 * @param int $errLine
+	 * @param string $errSection
+	 * @param string $errContext
+	 * @param null $backtrace
+	 * @throws SPException
+	 * @return bool
 	 */
-	public static function storeError( $errno, $errcode, $errstr, $errfile, $errline, $errsection, $errcontext, $backtrace = null )
+	public static function storeError( $number, $errCode, $errStr, $errFile, $errLine, $errSection, $errContext, $backtrace = null )
 	{
-		if ( !( self::$_cs ) && ( self::$_trigger && $errno < self::$_trigger ) ) {
+		if ( !( self::$_cs ) && ( self::$_trigger && $number < self::$_trigger ) ) {
 			self::$_cs = true;
-			throw new SPException( $errstr );
+			throw new SPException( $errStr );
 			return false;
 		}
 		SPLoader::loadClass( 'base.factory' );
@@ -65,36 +68,36 @@ class SPException extends Exception
 //		unset( $backtrace[ 1 ] );
 //		unset( $backtrace[ 0 ] );
 
-		$errcontext = serialize( $errcontext );
+		$errContext = serialize( $errContext );
 		$backtrace = serialize( $backtrace );
 		if ( class_exists( 'SPUser' ) ) {
 			$uid = SPUser::getCurrent()->get( 'id' );
 		}
-		$db =& SPDb::getInstance();
+		$db = SPDb::getInstance();
 		$date = $db->now();
 		$ip = isset( $_SERVER[ 'REMOTE_ADDR' ] ) ? $_SERVER[ 'REMOTE_ADDR' ] : 'unknown';
 		$reff = isset( $_SERVER[ 'HTTP_REFERER' ] ) ? $_SERVER[ 'HTTP_REFERER' ] : 'unknown';
 		$agent = isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) ? $_SERVER[ 'HTTP_USER_AGENT' ] : 'unknown';
 		$uri = isset( $_SERVER[ 'REQUEST_URI' ] ) ? $_SERVER[ 'REQUEST_URI' ] : 'unknown';
 
-		$errstr = $db->getEscaped( $errstr );
-		$errsection = $db->getEscaped( $errsection );
-		$errcontext = $db->getEscaped( base64_encode( gzcompress( $errcontext ) ) );
-		if ( strlen( $errcontext ) > 15000 ) {
-			$errcontext = 'Stack to large - skipping';
+		$errStr = $db->getEscaped( $errStr );
+		$errSection = $db->getEscaped( $errSection );
+		$errContext = $db->getEscaped( base64_encode( gzcompress( $errContext ) ) );
+		if ( strlen( $errContext ) > 15000 ) {
+			$errContext = 'Stack to large - skipping';
 		}
 		$backtrace = $db->getEscaped( base64_encode( gzcompress( $backtrace ) ) );
 		$reff = $db->getEscaped( $reff );
 		$agent = $db->getEscaped( $agent );
 		$uri = $db->getEscaped( $uri );
-		$errno = ( int )$errno;
-		$errcode = ( int )$errcode;
-		$errline = ( int )$errline;
+		$number = ( int )$number;
+		$errCode = ( int )$errCode;
+		$errLine = ( int )$errLine;
 //		$is = ini_set( 'display_errors', 0 );
 //		@file_put_contents( SOBI_PATH.DS.'var'.DS.'log'.DS.'error.log', strip_tags( stripslashes( "\n=========\n[ {$date} ][ {$errsection}:{$errno} ][ {$errcode} ]\n{$errstr}\nIn: {$errfile}:{$errline}" ) ), SPC::FS_APP );
 //		ini_set( 'display_errors', $is );
 		try {
-			$db->exec( "INSERT INTO spdb_errors VALUES ( NULL, '{$date}', '{$errno}', '{$errcode}', '{$errstr}', '{$errfile}', '{$errline}', '{$errsection}', '{$uid}', '{$ip}', '{$reff}', '{$agent}', '{$uri}', '{$errcontext}', '{$backtrace}' );" );
+			$db->exec( "INSERT INTO spdb_errors VALUES ( NULL, '{$date}', '{$number}', '{$errCode}', '{$errStr}', '{$errFile}', '{$errLine}', '{$errSection}', '{$uid}', '{$ip}', '{$reff}', '{$agent}', '{$uri}', '{$errContext}', '{$backtrace}' );" );
 		} catch ( SPException $x ) {
 			SPLoader::loadClass( 'base.mainframe' );
 			SPLoader::loadClass( 'cms.base.mainframe' );
@@ -104,7 +107,7 @@ class SPException extends Exception
 	}
 
 	/**
-	 * This function cacth errors and throws an exception instead
+	 * This function catch errors and throws an exception instead
 	 * It is going to be used to handle errors from function which does not throws exceptions
 	 * @param $type - type of the error to catch
 	 */
@@ -117,74 +120,81 @@ class SPException extends Exception
 if ( !function_exists( 'SPExceptionHandler' ) ) {
 	/**
 	 *
-	 * @param int $errno
-	 * @param string $errstr
-	 * @param string $errfile
-	 * @param int $errline
-	 * @param string $errcontext
+	 * @param int $errNumber
+	 * @param string $errString
+	 * @param string $errFile
+	 * @param int $errLine
+	 * @param string $errContext
 	 * @return bool
 	 */
-	function SPExceptionHandler( $errno, $errstr, $errfile, $errline, $errcontext )
+	function SPExceptionHandler( $errNumber, $errString, $errFile, $errLine, $errContext )
 	{
-		if ( !( strstr( $errfile, 'sobipro' ) ) ) {
+		$error = null;
+		if ( !( strstr( $errFile, 'sobipro' ) ) ) {
 			return false;
 		}
 		static $cs = false;
-		if ( !class_exists( 'SPLoader' ) ) {
-			require_once( SOBI_PATH . DS . 'lib' . DS . 'base' . DS . 'fs' . DS . 'loader.php' );
-		}
-		if ( ini_get( 'error_reporting' ) < $errno ) {
+		if ( $cs ) {
+			echo '<h1>Error handler: Violation of critical section. Possible infinite loop. Error reporting temporary disabled. ' . $errString . '</h1>';
 			return false;
 		}
-		$err = explode( '|', $errstr );
-		$b = null;
-		if ( class_exists( 'SPConfig' ) ) {
-			$b = SPConfig::getBacktrace();
+		if ( !class_exists( 'SPLoader' ) ) {
+			/** @noinspection PhpIncludeInspection */
+			require_once( SOBI_PATH . '/lib/base/fs/loader.php' );
 		}
-		if ( isset( $err[ 0 ] ) && $err[ 0 ] == 'sobipro' ) {
-			if ( $cs ) {
-				echo '<h1>Error handler: Violation of critical section. Possible infinite loop. Error reporting temporary disabled.</h1>';
-				return false;
-			}
-			$cs = true;
-			$section = $err[ 1 ];
-			$errMsg = $err[ 2 ];
-			$retCode = $err[ 3 ];
-			$addMsg = isset( $err[ 4 ] ) && $err[ 4 ] ? $err[ 4 ] : null;
-			$errStr = $errMsg . '. ' . $addMsg;
-			SPException::storeError( $errno, $retCode, $errStr, $errfile, $errline, $section, $errcontext, $b );
-			if ( $retCode ) {
-				SPLoader::loadClass( 'base.mainframe' );
-				SPLoader::loadClass( 'cms.base.mainframe' );
-				SPMainFrame::runAway( $errMsg, $retCode, $errMsg . '. ' . $b );
-			}
-			$cs = false;
+		if ( ini_get( 'error_reporting' ) < $errNumber ) {
+			return false;
+		}
+		if ( strstr( $errString, 'json://' ) ) {
+			$error = json_decode( str_replace( 'json://', null, $errString ), true );
+		}
+		$backTrace = null;
+		if ( class_exists( 'SPConfig' ) ) {
+			$backTrace = SPConfig::getBacktrace();
+		}
+		if ( $error ) {
+			$retCode = $error[ 'code' ];
+			$errString = $error[ 'message' ];
+			$errFile = $error[ 'file' ];
+			$errLine = $error[ 'line' ];
+			$section = $error[ 'section' ];
+			$errContext = $error[ 'content' ];
 		}
 		else {
-			/* ignore strict errors which are not caused by Sobi*/
-			if ( $errno == 2048 ) {
+			$retCode = 0;
+			if( !(strstr( $errFile, 'sobi' )) ) {
 				return false;
 			}
 			/* stupid errors we already handle
 			 * and there is no other possibility to catch it
 			 * before it happens
 			 */
-			if ( strstr( $errstr, 'gzinflate' ) ) {
+			if ( strstr( $errString, 'gzinflate' ) ) {
 				return false;
 			}
-			if ( strstr( $errstr, 'compress' ) ) {
+			if ( strstr( $errString, 'compress' ) ) {
 				return false;
 			}
-			if ( strstr( $errstr, 'domdocument.loadxml' ) ) {
+			if ( strstr( $errString, 'domdocument.loadxml' ) ) {
 				return false;
 			}
 			/* output of errors / call stack causes sometimes it - it's not really important */
-			if ( strstr( $errstr, 'Property access is not allowed yet' ) ) {
+			if ( strstr( $errString, 'Property access is not allowed yet' ) ) {
 				return false;
 			}
-			if ( strstr( $errfile, 'sobi' ) ) {
-				SPException::storeError( $errno, 0, $errstr, $errfile, $errline, 'PHP', $errcontext, $b );
-			}
+			$section = 'PHP';
+		}
+		$cs = true;
+		SPException::storeError( $errNumber, $retCode, $errString, $errFile, $errLine, $section, $errContext, $backTrace );
+		if ( $retCode ) {
+			SPLoader::loadClass( 'base.mainframe' );
+			SPLoader::loadClass( 'cms.base.mainframe' );
+			SPMainFrame::runAway( $errString, $retCode, $backTrace );
+		}
+		$cs = false;
+		/** do not display our internal errors because this is an array */
+		if ( $error ) {
+			return true;
 		}
 		return false;
 	}

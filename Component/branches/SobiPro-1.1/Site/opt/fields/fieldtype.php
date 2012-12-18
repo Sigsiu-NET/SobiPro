@@ -17,7 +17,7 @@
  * $Author: Radek Suski $
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/opt/fields/fieldtype.php $
  */
-defined( 'SOBIPRO' ) || ( trigger_error( 'Restricted access ' . __FILE__, E_USER_ERROR ) && exit( 'Restricted access' ) );
+defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'models.fields.interface' );
 /**
  * @author Radek Suski
