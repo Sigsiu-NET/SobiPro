@@ -415,10 +415,44 @@ div.spScreenTitle h4 {
   text-decoration: underline;
 }
 .SobiPro .spStatusAlert {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.SobiPro .spStatusIssues {
+  float: right;
 }
 .SobiPro .spStatusHeader {
-  font-size: 18px;
+  font-size: 17px;
+  padding-top: 6px;
+}
+.SobiPro .spStatus {
+  padding-bottom: 2px;
+  padding-top: 8px;
+}
+.SobiPro .spPanelSobiPro {
+  font-size: 14px;
+}
+.SobiPro .spPanelSobiPro .spSigsiu {
+  float: right;
+  margin: 10px 0 0 10px;
+}
+.SobiPro .spPanelSobiPro .spLogo {
+  float: left;
+  margin: 0 10px 0 0;
+}
+.SobiPro .spText {
+  margin-top: 16px;
+}
+.SobiPro .spVersions {
+  font-size: 13px;
+  margin-top: 10px;
+}
+.SobiPro .spNews {
+  font-size: 13px;
+}
+.SobiPro .spNews .spNewsTitle {
+  display: block;
 }
 .SobiPro .spBox {
   border: 1px solid #ccccff;
@@ -511,6 +545,14 @@ input.sp-input-micro[type="text"] {
 }
 .spScreenSubHead {
   padding: 10px;
+}
+#SobiProPanel .accordion-heading a {
+  color: #555555;
+}
+#SobiProPanel .accordion-heading a:hover {
+  background-color: #eeeeee;
+  color: #333333;
+  text-decoration: none;
 }
 .spicon-48-SobiPro {
   background-image: url('../../../../media/sobipro/48x48/folder-sobipro.png');

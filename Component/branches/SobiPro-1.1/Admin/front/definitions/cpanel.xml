@@ -175,23 +175,25 @@
 				</tabs>
 			</div>
 			<div class="span5">
-				<div class="well">
-					<p class="spStatusHeader">
-						<text value="CPANEL_SYSTEM_STATUS" />
-					</p>
-					<message parse="system-state.accelerator" dismiss-button="false" class="spStatusAlert" />
+				<div class="well spStatus">
+                    <div>
+                        <p condition="system-state.messages.length" class="spStatusIssues">
+                            <a href="#ReportedIssues" role="button" class="btn btn-warning" data-toggle="modal">
+                                <text value="CPANEL_REPORTED_ISSUES">
+                                    <param value="system-state.messages.length" parse="true" />
+                                </text>
+                            </a>
+                        </p>
+                        <p class="spStatusHeader">
+                            <text value="CPANEL_SYSTEM_STATUS" />
+                        </p>
+                    </div>
+                    <message parse="system-state.accelerator" dismiss-button="false" class="spStatusAlert" />
 					<message parse="system-state.javascript-cache" dismiss-button="false" class="spStatusAlert" />
 					<message parse="system-state.css-cache" dismiss-button="false" class="spStatusAlert" />
 					<message parse="system-state.display-errors" dismiss-button="false" class="spStatusAlert" />
 					<message parse="system-state.debug-level" dismiss-button="false" class="spStatusAlert" />
 					<message parse="system-state.debug-xml" dismiss-button="false" class="spStatusAlert" />
-					<p condition="system-state.messages.length">
-						<a href="#ReportedIssues" role="button" class="btn btn-warning" data-toggle="modal">
-							<text value="CPANEL_REPORTED_ISSUES">
-								<param value="system-state.messages.length" parse="true" />
-							</text>
-						</a>
-					</p>
 					<div class="modal hide" id="ReportedIssues" condition="system-state.messages.length" >
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">
@@ -226,32 +228,40 @@
 						</div>
 					</div>
 				</div>
-				<div class="accordion" id="SobiProAccordion">
+				<div class="accordion" id="SobiProPanel">
 					<div class="accordion-group">
 						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProAccordion" href="#collapseOne">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#collapseOne">
 								<text value="ABOUT.ABOUT_PANE" />
 							</a>
 						</div>
 						<div id="collapseOne" class="accordion-body collapse in">
-							<div class="accordion-inner">
-								<a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
-									<img src="../media/sobipro/sobipro.png" alt="Sigsiu.NET Software Development" />
-									<a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
-										<img src="../media/sobipro/sobipro-main.png" alt="Sigsiu.NET Software Development" />
-									</a>
-								</a>
-								<text value="ABOUT.SP_DESC" />
-								<text value="ABOUT.DEVELOPED_AND_DESIGNED">
+							<div class="accordion-inner spPanelSobiPro">
+                                <div class="spSigsiu">
+                                    <a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
+                                        <img src="../media/sobipro/sobipro-main.png" alt="Sigsiu.NET Software Development" />
+                                    </a>
+                                </div>
+                                <div class="spLogo">
+                                    <a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
+                                        <img src="../media/sobipro/sobipro.png" alt="Sigsiu.NET Software Development" />
+                                    </a>
+                                </div>
+								<p class="spText"><text value="ABOUT.SP_DESC" /></p>
+								<p class="spText"><text value="ABOUT.DEVELOPED_AND_DESIGNED">
 									<param>
-										<![CDATA[<a href="http://sigrid.suski.eu" target="_blank" title="Sigrid Suski">Sigrid Suski</a>]]>
+										<![CDATA[<a href="http://sigrid.sigsiu.net" target="_blank" title="Sigrid Suski">Sigrid Suski</a>]]>
 									</param>
 									<param>
-										<![CDATA[<a href="http://sigrid.suski.eu" target="_blank" title="Sigrid Suski">Sigrid Suski</a>]]>
+										<![CDATA[<a href="http://radek.sigsiu.net" target="_blank" title="Radek Suski">Radek Suski</a>]]>
 									</param>
-								</text>
-								<text value="ABOUT.SP_CLUB" />
-								<text value="ABOUT.SP_CLUB_DESC" />
+								</text></p>
+								<h4><text value="ABOUT.SP_CLUB" /></h4>
+								<p class=""><text value="ABOUT.SP_CLUB_DESC">
+                                    <param>
+                                        <![CDATA[<a href="http://SobiPro.Sigsiu.NET" target="_blank" >SobiPro Club</a>]]>
+                                    </param>
+                                </text></p>
 								<ul>
 									<li>
 										<a href="https://forum.Sigsiu.NET" target="_blank">
@@ -274,7 +284,7 @@
 					</div>
 					<div class="accordion-group">
 						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProAccordion" href="#SobiProUpdates">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProUpdates">
 								<text value="ABOUT.UPDATES_PANE" />
 							</a>
 						</div>
@@ -283,30 +293,34 @@
 								<text value="ABOUT.UD.YOU_ARE_USING">
 									<param value="version" parse="true" />
 								</text>
-								<div id="SPVerUpd" />
+								<div id="SPVerUpd" class="spVersions" />
 							</div>
 						</div>
 					</div>
 					<div class="accordion-group">
 						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProAccordion" href="#SobiProNewsPane" id="SobiProNews">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProNewsPane" id="SobiProNews">
 								<text value="news.title" parse="true" />
 							</a>
 						</div>
 						<div id="SobiProNewsPane" class="accordion-body collapse">
 							<div class="accordion-inner">
-								<loop subject="news.feeds">
-									<cell type="link" value="title">
-										<url type="extern" host="url" />
-									</cell>
-									<cell type="text" value="content" />
-								</loop>
+                                <div class="spNews">
+                                <loop subject="news.feeds">
+                                    <div>
+                                    <cell type="link" value="title">
+                                        <url type="extern" host="url" />
+                                    </cell>
+                                    <cell type="text" value="content" />
+                                    </div>
+                                </loop>
+                                </div>
 							</div>
 						</div>
 					</div>
 					<div class="accordion-group">
 						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProAccordion" href="#SobiProCreditsPane">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProCreditsPane">
 								<text value="ABOUT.CREDITS_PANE" />
 							</a>
 						</div>
@@ -318,7 +332,7 @@
 					</div>
 					<div class="accordion-group">
 						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProAccordion" href="#SobiProLicensePane">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProLicensePane">
 								<text value="ABOUT.LICENSE_PANE" />
 							</a>
 						</div>
