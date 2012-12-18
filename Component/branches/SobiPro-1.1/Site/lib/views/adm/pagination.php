@@ -76,7 +76,7 @@ final class SPPagination extends SPObject
 				elseif ( $pages > 100 && ( $page % 100 != 0 ) ) {
 					continue;
 				}
-				elseif ( $pages > 20 && ( $page % 5 != 0 ) ) {
+				elseif ( $pages > 15 && ( $page % 5 != 0 ) ) {
 					continue;
 				}
 				$this->url[ $this->set ] = $page;

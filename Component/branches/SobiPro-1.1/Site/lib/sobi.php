@@ -48,28 +48,30 @@ abstract class Sobi
 	 * @param string $msg - main message
 	 * @param int $type - error type
 	 * @param int $code - error code
-	 * @param string $smsg - additional message
 	 * @param int $line - file line
 	 * @param string $file - file name
+	 * @param null $sMsg
+	 * @internal param string $smsg - additional message
 	 * @return void
 	 */
-	public static function Error( $section, $msg, $type = SPC::NOTICE, $code = 0, $line = null, $file = null, $smsg = null )
+	public static function Error( $section, $msg, $type = SPC::NOTICE, $code = 0, $line = null, $file = null, $sMsg = null )
 	{
 		/*
-* Mi., Jul 4, 2012
-* So now could someone explain me what was the sense of the code below and why trigger_error was commented out??!!
-*
-* Mi., Jul 4, 2012
-* Ok, it doesn't make much sense.
-* This is what actually should be removed.
-* 		if( Sobi::Cfg( 'debug.level', 0 ) < $type ) { return true; }
-* It was the problem with the ACL when error reporting was disabled.
-* But why the hell I removed the damn trigger_error from it?!!!
-* Being sloppy again?!!!!
-* Frack me - it means that since 20.07.2011 the whole error reporting went in nirvana??
-*/
+		* Mi., Jul 4, 2012
+		* So now could someone explain me what was the sense of the code below and why trigger_error was commented out??!!
+		*
+		* Mi., Jul 4, 2012
+		* Ok, it doesn't make much sense.
+		* This is what actually should be removed.
+		* 		if( Sobi::Cfg( 'debug.level', 0 ) < $type ) { return true; }
+		* It was the problem with the ACL when error reporting was disabled.
+		* But why the hell I removed the damn trigger_error from it?!!!
+		* Being sloppy again?!!!!
+		* Frack me - it means that since 20.07.2011 the whole error reporting went in nirvana??
+		*/
 		if ( $type == E_USER_ERROR ) {
 			$rType = E_ERROR;
+			$code = $code ? $code : 500;
 		}
 		elseif ( $type == E_USER_WARNING ) {
 			$rType = E_WARNING;
@@ -79,12 +81,20 @@ abstract class Sobi
 		}
 		if ( Sobi::Cfg( 'debug.level', 0 ) >= $rType ) {
 			if ( $file ) {
-				$smsg .= sprintf( 'In file %s at line %d', $file, $line );
+				$sMsg .= sprintf( 'In file %s at line %d', $file, $line );
 			}
 			if ( SPRequest::task() ) {
-				$smsg .= ' [ ' . SPRequest::task() . ' ]';
+				$sMsg .= ' [ ' . SPRequest::task() . ' ]';
 			}
-			trigger_error( "sobipro|{$section}|{$msg}|{$code}|{$smsg}", $type );
+			$error = array(
+				'section' => $section,
+				'message' => $msg,
+				'code' => $code,
+				'file' => $file,
+				'line' => $line,
+				'content' => $sMsg
+			);
+			trigger_error( 'json://'.json_encode( $error ), $type );
 		}
 		if ( $code ) {
 			SPLoader::loadClass( 'base.mainframe' );

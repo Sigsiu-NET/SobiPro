@@ -179,14 +179,13 @@ class SPError extends SPConfigAdmCtrl
 		}
 		$err->errCont = unserialize( gzuncompress( base64_decode( $err->errCont ) ) );
 		$err->errBacktrace = unserialize( gzuncompress( base64_decode( $err->errBacktrace ) ) );
-		$view =& SPFactory::View( 'error', true );
-		$view->assign( $this->_task, 'task' );
-		$view->loadConfig( 'config.error' );
-		$view->assign( $this->createMenu(), 'menu' );
-		$view->assign( $this->levels(), 'levels' );
-		$view->assign( $err, 'error' );
-		$view->setTemplate( 'config.error' );
-		$view->display();
+		/** @var $view SPAdmView */
+		SPFactory::View( 'error', true )
+				->assign( $this->_task, 'task' )
+				->assign( $this->createMenu(), 'menu' )
+				->assign( $this->levels(), 'levels' )
+				->assign( $err, 'error' )
+				->display();
 	}
 
 	private function purge()
@@ -196,8 +195,8 @@ class SPError extends SPConfigAdmCtrl
 		} catch ( SPException $x ) {
 			Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'ERR.ERROR_LOG_NOT_DELETED', array( 'error' => $x->getMessage() ), 'error' ) );
 		}
-		if ( SPFs::exists( SOBI_PATH . DS . 'var' . DS . 'log' . DS . 'error.log' ) ) {
-			SPFs::delete( SOBI_PATH . DS . 'var' . DS . 'log' . DS . 'error.log' );
+		if ( SPFs::exists( SOBI_PATH . '/var/log/error.log' ) ) {
+			SPFs::delete( SOBI_PATH . '/var/log/error.log' );
 		}
 		Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'ERR.ERROR_LOG_DELETED' ) );
 	}
@@ -224,8 +223,8 @@ class SPError extends SPConfigAdmCtrl
 		} catch ( SPException $x ) {
 		}
 		/** @var $view SPAdmView */
-		$view = SPFactory::View( 'error', true );
-		$view->assign( $this->_task, 'task' )
+		SPFactory::View( 'error', true )
+				->assign( $this->_task, 'task' )
 				->assign( $this->createMenu( 'error' ), 'menu' )
 				->assign( $errors, 'errors' )
 				->assign( $this->levels(), 'levels' )

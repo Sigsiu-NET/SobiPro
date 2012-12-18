@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -33,9 +33,9 @@ abstract class SPC
 	const ERROR = E_USER_ERROR;
 	const NO_VALUE = -90001;
 	const ERROR_MSG = 'error';
-	const WARN_MSG = 'notice';
+	const WARN_MSG = 'warning';
+	const NOTICE_MSG = 'warning';
 	const GLOBAL_SETTING = 2;
 	const SHOW = 1;
 	const NO = 0;
 }
-?>

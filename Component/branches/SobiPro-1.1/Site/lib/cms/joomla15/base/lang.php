@@ -19,7 +19,7 @@
  * $Author: Radek Suski $
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/cms/joomla15/base/lang.php $
  */
-defined( 'SOBIPRO' ) || ( trigger_error( 'Restricted access ' . __FILE__, E_USER_ERROR ) && exit( 'Restricted access' ) );
+defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 require_once dirname(__FILE__).'/../../joomla_common/base/lang.php';
 /**
  * @author Radek Suski

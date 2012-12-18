@@ -245,7 +245,7 @@ class SPAdminPanel extends SPController
 
 	protected function getState()
 	{
-		$state = SPFactory::cache()->getVar( 'system_state');
+		$state = SPFactory::cache()->getVar( 'system_state' );
 		if ( !( $state ) ) {
 			SPLang::load( 'com_sobipro.messages' );
 			$state = array();
@@ -271,8 +271,9 @@ class SPAdminPanel extends SPController
 			);
 			$state[ 'debug-xml' ] = array(
 				'type' => Sobi::Cfg( 'debug.xml_raw', false ) ? 'error' : 'success',
-				'label' => Sobi::Cfg( 'debug.xml_raw', false )  ? Sobi::Txt( 'DEBUG_XML_ENABLED' ) : Sobi::Txt( 'DEBUG_XML_DISABLED' ),
+				'label' => Sobi::Cfg( 'debug.xml_raw', false ) ? Sobi::Txt( 'DEBUG_XML_ENABLED' ) : Sobi::Txt( 'DEBUG_XML_DISABLED' ),
 			);
+//			uasort( $state, array( $this, 'sortMessages' ) );
 			$messages = SPFactory::message()->getSystemMessages();
 			$content = null;
 			if ( count( $messages ) ) {
@@ -284,8 +285,26 @@ class SPAdminPanel extends SPController
 					$state[ 'messages' ][ ] = $message;
 				}
 			}
-			SPFactory::cache()->addVar( $state, 'system_state');
+			SPFactory::cache()->addVar( $state, 'system_state' );
 		}
 		return $state;
 	}
+
+//	private function sortMessages( $first, $second )
+//	{
+//		$return = 0;
+//		if ( $first[ 'type' ] != $second[ 'type' ] ) {
+//			switch( $first[ 'type' ] ) {
+//				case 'error':
+//					$return = -1;
+//					break;
+//				case 'warning':
+//					$return = $second[ 'type' ] == 'error' ? 1 : -1;
+//					break;
+//				case 'success':
+//					$return = 1;
+//			}
+//		}
+//		return $return;
+//	}
 }

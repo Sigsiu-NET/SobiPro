@@ -37,6 +37,7 @@ class SPAdmError extends SPAdmView
 				break;
 			case 'details':
 				$this->details();
+				$this->determineTemplate( 'config','error' );
 				break;
 		}
 		parent::display();
@@ -92,6 +93,7 @@ class SPAdmError extends SPAdmView
 				$errors[ $i ] = $error;
 			}
 		}
+//		Sobi::Error( 'H', date( DATE_RFC1123 ), SPC::ERROR );
 		$this->assign( $errors, 'errors' );
 	}
 
@@ -107,6 +109,12 @@ class SPAdmError extends SPAdmView
 		}
 		if( $error->errNum ) {
 			$error->errNum = $levels[ $error->errNum ];
+		}
+		if( $error->errBacktrace ) {
+			$error->errBacktrace = '<pre>'.SPConfig::debOut( $error->errBacktrace, false, true ).'</pre>';
+		}
+		if( $error->errCont ) {
+			$error->errCont = '<pre>'.SPConfig::debOut( $error->errCont, false, true ).'</pre>';
 		}
 		$error->errMsg = str_replace( 'href=\'function.', 'target="_blank" href=\'http://php.net/manual/en/function.', $error->errMsg );
 		$this->assign( $error, 'error' );

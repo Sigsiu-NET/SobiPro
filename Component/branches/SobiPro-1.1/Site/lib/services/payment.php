@@ -17,7 +17,7 @@
  * $Author: Radek Suski $
  * File location: components/com_sobipro/lib/services/payment.php $
  */
-defined( 'SOBIPRO' ) || ( trigger_error( 'Restricted access ' . __FILE__, E_USER_ERROR ) && exit( 'Restricted access' ) );
+defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 /**
  * @author Radek Suski
  * @version 1.0
