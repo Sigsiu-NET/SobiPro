@@ -188,7 +188,11 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	private function info()
 	{
-		$dir = $this->dir( SPRequest::cmd( 'template' ) );
+		$template = SPRequest::cmd( 'template' );
+		if ( !( $template ) ) {
+			$template = 'default';
+		}
+		$dir = $this->dir( $template );
 		/** @var $view SPAdmTemplateView */
 		$view = SPFactory::View( 'template', true );
 		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == 'default' ) {
