@@ -215,17 +215,25 @@ class SPTplParser
 				$this->_out[ ] = '<tr>';
 				break;
 			case 'cell':
-				$this->proceedCell( $data, $this->thTd );
+				$this->proceedCell( $data, $this->table ? $this->thTd : 'div' );
 				break;
 			case 'header':
 				$this->_out[ ] = '<div class="SPAdmNavBar">';
 				break;
 			case 'loop':
-				$this->_out[ ] = '<tbody>';
+				$this->table = true;
+				if ( $this->istSet( $data[ 'attributes' ], 'table' ) ) {
+					$this->table = $data[ 'attributes' ][ 'table' ] == 'false' ? false : true;
+				}
+				if ( $this->table ) {
+					$this->_out[ ] = '<tbody>';
+				}
 				$this->loopOpen = true;
 				break;
 			case 'loop-row':
-				$this->_out[ ] = '<tr>';
+				if ( $this->table ) {
+					$this->_out[ ] = '<tr>';
+				}
 				break;
 			case 'message':
 				$this->message( $data );
@@ -347,11 +355,16 @@ class SPTplParser
 				$this->_out[ ] = '</div>';
 				break;
 			case 'loop':
-				$this->_out[ ] = '</tbody>';
+				if ( $this->table ) {
+					$this->_out[ ] = '</tbody>';
+				}
+				$this->table = true;
 				$this->loopOpen = false;
 				break;
 			case 'loop-row':
-				$this->_out[ ] = '</tr>';
+				if ( $this->table ) {
+					$this->_out[ ] = '</tr>';
+				}
 				break;
 			case 'link':
 				$data[ 'type' ] = 'a';
@@ -386,14 +399,16 @@ class SPTplParser
 		}
 		$type = isset( $cell[ 'attributes' ][ 'type' ] ) ? $cell[ 'attributes' ][ 'type' ] : 'text';
 		switch ( $type ) {
-			case 'link':
-				$class = null;
-				if ( isset( $cell[ 'attributes' ][ 'class' ] ) && $cell[ 'attributes' ][ 'class' ] ) {
-					$class = "class=\"{$cell[ 'attributes' ][ 'class' ]}\" ";
-				}
-				$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class} >";
 			/** no break here - continue */
 			case 'text':
+			case 'link':
+				if ( $type == 'link' ) {
+					$class = null;
+					if ( isset( $cell[ 'attributes' ][ 'class' ] ) && $cell[ 'attributes' ][ 'class' ] ) {
+						$class = "class=\"{$cell[ 'attributes' ][ 'class' ]}\" ";
+					}
+					$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class} >";
+				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'label' ) ) {
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
 				}
@@ -406,9 +421,10 @@ class SPTplParser
 				else {
 					$this->_out[ ] = $cell[ 'content' ];
 				}
-			/** no break here - continue */
-			case 'link':
-				$this->_out[ ] = "</a>";
+				/** no break here - continue */
+				if ( $type == 'link' ) {
+					$this->_out[ ] = "</a>";
+				}
 				break;
 			case 'ordering':
 				if ( isset( $cell[ 'attributes' ][ 'label' ] ) ) {
