@@ -427,19 +427,11 @@ div.spScreenTitle h4 {
   padding-top: 6px;
 }
 .SobiPro .spStatus {
-  padding-bottom: 2px;
+  padding-bottom: 5px;
   padding-top: 8px;
 }
 .SobiPro .spPanelSobiPro {
   font-size: 14px;
-}
-.SobiPro .spPanelSobiPro .spSigsiu {
-  float: right;
-  margin: 10px 0 0 10px;
-}
-.SobiPro .spPanelSobiPro .spLogo {
-  float: left;
-  margin: 0 10px 0 0;
 }
 .SobiPro .spText {
   margin-top: 16px;
@@ -458,11 +450,11 @@ div.spScreenTitle h4 {
   border: 1px solid #ccccff;
   border-radius: 4px;
   text-align: center;
-  width: 100px;
+  width: 90px;
   background-color: #ebebfe;
-  padding: 5px;
+  padding: 3px;
   color: #4b4bcd;
-  min-height: 100px;
+  min-height: 90px;
 }
 .SobiPro .spBox a,
 .SobiPro .spBox a:hover,
@@ -473,7 +465,7 @@ div.spScreenTitle h4 {
 .SobiPro li.spBox a img {
   padding-right: 15px;
   padding-left: 15px;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 .SobiPro .thumbnails > li {
   margin-left: 0px;
