@@ -347,10 +347,10 @@ class SPAdmView extends SPObject implements SPView
 		else {
 			$key = Sobi::Txt( $key );
 		}
-//		if ( strstr( $key, 'var:[' ) ) {
-//			preg_match( '/var\:\[([a-zA-Z0-9\.\_\-]*)\]/', $key, $matches );
-//			$key = str_replace( $matches[ 0 ], $this->get( $matches[ 1 ], $i ), $key );
-//		}
+		if ( strstr( $key, 'var:[' ) ) {
+			preg_match( '/var\:\[([a-zA-Z0-9\.\_\-]*)\]/', $key, $matches );
+			$key = str_replace( $matches[ 0 ], $this->get( $matches[ 1 ], $i ), $key );
+		}
 		return $key;
 	}
 

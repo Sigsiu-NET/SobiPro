@@ -35,11 +35,6 @@ class SPTplParser
 	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre' );
 	protected $internalAttributes = array( 'condition' );
 
-	public function __construct( $table = false )
-	{
-		$this->table = $table;
-	}
-
 	public function parse( $data )
 	{
 		if ( is_array( $data ) && !( is_string( $data ) ) ) {

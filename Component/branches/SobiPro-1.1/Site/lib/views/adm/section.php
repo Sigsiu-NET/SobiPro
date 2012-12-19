@@ -262,19 +262,6 @@ class SPSectionAdmView extends SPAdmView
 						$entry[ 'customFields' ][ $customField ] = $entry[ $customField ];
 					}
 				}
-				/* in case we are showing all entries in a section */
-//				if ( $this->get( 'task' ) == 'entries' ) {
-//					$ehref = Sobi::Url( array( 'task' => 'entry.edit', 'sid' => $sentry->get( 'id' ), 'pid' => Sobi::Section() ) );
-//				}
-//				else {
-//					$ehref = Sobi::Url( array( 'task' => 'entry.edit', 'sid' => $sentry->get( 'id' ) ) );
-//				}
-//				if ( $sentry->get( 'valid' ) ) {
-//					$entry[ 'name' ] = '<a href="' . $ehref . '" title="' . Sobi::Txt( 'EN.EDIT_ENTRY_NAME', array( 'name' => $sentry->get( 'name' ) ) ) . '">' . ( strlen( $sentry->get( 'name' ) ) ? $sentry->get( 'name' ) : Sobi::Txt( 'No Name' ) ) . '</a>';
-//				}
-//				else {
-//					$entry[ 'name' ] = '<del><a href="' . $ehref . '" title="' . Sobi::Txt( 'EN.EDIT_ENTRY_NAME', array( 'name' => $sentry->get( 'name' ) ) ) . '">' . ( strlen( $sentry->get( 'name' ) ) ? $sentry->get( 'name' ) : Sobi::Txt( 'No Name' ) ) . '</a></del>';
-//				}
 				$entries[ ] = $entry;
 			}
 		}

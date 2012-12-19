@@ -290,6 +290,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				->assign( $menu, 'menu' )
 				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' ), 'eorder' )
 				->assign( Sobi::GetUserState( 'categories.corder', 'corder', 'position.asc' ), 'corder' )
+				->assign( $this->_model->get( 'name' ), 'category_name' )
 				->addHidden( Sobi::Section(), 'pid' )
 				->addHidden( SPRequest::sid(), 'sid' );
 		Sobi::Trigger( 'Category', 'View', array( &$view ) );
