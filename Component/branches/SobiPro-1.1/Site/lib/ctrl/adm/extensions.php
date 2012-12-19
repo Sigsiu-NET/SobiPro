@@ -122,7 +122,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			} catch ( SPException $x ) {
 				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_GET_UPDATES', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				SPFactory::mainframe()->cleanBuffer();
-				echo json_encode( array( 'err' => SPLang::e( 'An error has occured. %s', $x->getMessage() ) ) );
+				echo json_encode( array( 'err' => SPLang::e( 'An error has occurred. %s', $x->getMessage() ) ) );
 				exit;
 			}
 
@@ -139,7 +139,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					$l = $repository->updates( $installed );
 				} catch ( SPException $x ) {
 					SPFactory::mainframe()->cleanBuffer();
-					echo json_encode( array( 'err' => SPLang::e( 'An error has occured. %s. Repository: %s', $x->getMessage(), $repository->get( 'id' ) ) ) );
+					echo json_encode( array( 'err' => SPLang::e( 'An error has occurred. %s. Repository: %s', $x->getMessage(), $repository->get( 'id' ) ) ) );
 					exit;
 				}
 				if ( is_array( $l ) ) {
@@ -284,7 +284,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 						}
 					}
 					else {
-						Sobi::Error( 'Class Load', sprintf( 'Cannot load Application file at %s. File does not exist or is not readable.', $app ), SPC::WARNING, 0 );
+						Sobi::Error( 'Class Load', sprintf( 'Cannot load application file at %s. File does not exist or is not readable.', $app ), SPC::WARNING, 0 );
 					}
 				}
 			}
@@ -315,14 +315,14 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$repository->connect( $msg );
 			sleep( 1 );
 		} catch ( SPException $x ) {
-			$msg->error( SPLang::e( 'An error has occured. %s', $x->getMessage() ) );
+			$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
 			exit;
 		}
 		try {
 			$response = $repository->request( $repository->get( 'token' ), $tid, $pid );
 //			sleep( 1 );
 		} catch ( SPException $x ) {
-			$msg->error( SPLang::e( 'An error has occured. %s', $x->getMessage() ) );
+			$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
 			exit;
 		}
 		$msg->progress( 50, Sobi::Txt( 'EX.SENDING_REQUEST_TO', array( 'repo' => $repository->get( 'name' ) ) ), 2000 );
@@ -348,7 +348,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			try {
 				$r = $this->install( $package );
 			} catch ( SPException $x ) {
-				$msg->error( SPLang::e( 'An error has occured. %s', $x->getMessage() ) );
+				$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
 				exit;
 			}
 			SPFactory::mainframe()->msg( $r );
@@ -384,7 +384,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		try {
 			$repository->connect();
 		} catch ( SPException $x ) {
-			$msg->error( SPLang::e( 'An error has occured. %s', $x->getMessage() ) );
+			$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
 			exit;
 		}
 		$callback = SPRequest::word( 'callback' );
@@ -396,7 +396,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$response = call_user_func_array( array( $repository, $callback ), $answer );
 //			sleep( 2 );
 		} catch ( SPException $x ) {
-			$msg->error( SPLang::e( 'An error has occured. %s', $x->getMessage() ) );
+			$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
 			exit;
 		}
 		$this->downloadResponse( $response, $repository, $msg );
@@ -442,7 +442,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$repository->connect( $msg );
 				sleep( 1 );
 			} catch ( SPException $x ) {
-				$msg->error( SPLang::e( 'An error has occured. %s', $x->getMessage() ) );
+				$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
 				exit;
 			}
 
@@ -452,7 +452,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$l = $repository->fetchList( $repository->get( 'token' ) );
 //				sleep( 1 );
 			} catch ( SPException $x ) {
-				$msg->error( SPLang::e( 'An error has occured. %s', $x->getMessage() ) );
+				$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
 			}
 			if ( is_array( $l ) ) {
 				if ( count( $l ) ) {
@@ -649,7 +649,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$repository->connect();
 		} catch ( SPException $x ) {
 			SPFactory::mainframe()->cleanBuffer();
-			echo json_encode( array( 'msg' => SPLang::e( 'An error has occured. %s', $x->getMessage() ), $repo ) );
+			echo json_encode( array( 'msg' => SPLang::e( 'An error has occurred. %s', $x->getMessage() ), $repo ) );
 			exit;
 		}
 		$callback = SPRequest::word( 'callback' );
@@ -677,11 +677,11 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		else {
 			SPFactory::mainframe()->cleanBuffer();
 			if ( isset( $response[ 'error' ] ) ) {
-				echo json_encode( array( 'msg' => SPLang::e( 'An error occurred. %s', $response[ 'msg' ] ) ) );
+				echo json_encode( array( 'msg' => SPLang::e( 'An error has occurred. %s', $response[ 'msg' ] ) ) );
 				exit;
 			}
 			else {
-				echo json_encode( array( 'msg' => SPLang::e( 'Unknow error occurred.' ) ) );
+				echo json_encode( array( 'msg' => SPLang::e( 'Unknown error occurred.' ) ) );
 				exit;
 			}
 		}
@@ -739,7 +739,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$cinf = $connection->info();
 		if ( isset( $cinf[ 'http_code' ] ) && $cinf[ 'http_code' ] != 200 ) {
 			SPFactory::mainframe()->cleanBuffer();
-			echo json_encode( array( 'msg' => SPLang::e( 'An error ( %d ) occurred and the repository at "%s" cannot be added.', $cinf[ 'http_code' ], "https://{$repo}" ) ) );
+			echo json_encode( array( 'msg' => SPLang::e( 'Error (%d) has occurred and the repository at "%s" could not be added.', $cinf[ 'http_code' ], "https://{$repo}" ) ) );
 			exit;
 		}
 		else {
@@ -749,7 +749,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$rdef->loadXML( $info );
 			if ( !( $rdef->schemaValidate( $this->repoSchema() ) ) ) {
 				SPFactory::mainframe()->cleanBuffer();
-				echo json_encode( array( 'msg' => SPLang::e( 'An error occurred and the repository at "%s" cannot be added. Cannot validate file repository definition against the schema definition at "%s"', "https://{$repo}/repository.xml", "https://xml.sigsiu.net/SobiPro/repository.xsd" ) ) );
+				echo json_encode( array( 'msg' => SPLang::e( 'An error has occurred and the repository at "%s" could not be added. Could not validate file repository definition against the schema definition at "%s"', "https://{$repo}/repository.xml", "https://xml.sigsiu.net/SobiPro/repository.xsd" ) ) );
 				exit;
 			}
 			$arrdef = SPFactory::Instance( 'types.array' );
@@ -777,7 +777,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$repository->connect();
 			} catch ( SPException $x ) {
 				SPFactory::mainframe()->cleanBuffer();
-				echo json_encode( array( 'msg' => SPLang::e( 'An error has occured. %s', $x->getMessage() ), $repo ) );
+				echo json_encode( array( 'msg' => SPLang::e( 'An error has occurred. %s', $x->getMessage() ), $repo ) );
 				exit;
 			}
 			$response = $repository->register();
@@ -797,11 +797,11 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			else {
 				SPFactory::mainframe()->cleanBuffer();
 				if ( isset( $response[ 'error' ] ) ) {
-					echo json_encode( array( 'msg' => SPLang::e( 'An error occurred. %s', $response[ 'msg' ] ) ) );
+					echo json_encode( array( 'msg' => SPLang::e( 'An error has occurred. %s', $response[ 'msg' ] ) ) );
 					exit;
 				}
 				else {
-					echo json_encode( array( 'msg' => SPLang::e( 'Unknow error occurred.' ) ) );
+					echo json_encode( array( 'msg' => SPLang::e( 'Unknown error occurred.' ) ) );
 					exit;
 				}
 			}
@@ -867,7 +867,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$repo = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repo' ) ) );
 		$ssl = $connection->certificate( $repo );
 		if ( isset( $ssl[ 'err' ] ) ) {
-			SPConfig::debOut( sprintf( 'An error occurred and the connection cannot be validated. Error number %s, %s', $ssl[ 'err' ], $ssl[ 'msg' ] ) );
+			SPConfig::debOut( sprintf( 'An error has occurred and the connection could not be validated. Error number %s, %s', $ssl[ 'err' ], $ssl[ 'msg' ] ) );
 		}
 		else {
 			$cert = array();

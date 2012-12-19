@@ -45,6 +45,7 @@ class SpAdmToolbar
 		'acl' => 'th-list',
 		'extensions' => 'magic',
 		'options' => 'eye-open',
+        'template.info' => 'picture'
 	);
 	private $labels = array(
 		'apply' => 'SAVE_ONLY',
@@ -66,7 +67,8 @@ class SpAdmToolbar
 		'config' => 'GLOBAL_CONFIG',
 		'acl' => 'ACL',
 		'extensions' => 'SAM',
-		'options' => 'OPTIONS'
+		'options' => 'OPTIONS',
+        'template.info' => 'TEMPLATE'
 	);
 	protected $btClass = 'btn';
 
