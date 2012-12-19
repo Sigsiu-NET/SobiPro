@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -90,8 +90,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 * @param $subject
 	 * @param $action
 	 * @param $value
-	 * @param $site
-	 * @param $publisched
+	 * @param string $site
+	 * @internal param
 	 * @return void
 	 */
 	public function removePermission( $subject, $action, $value, $site = 'front' )
@@ -312,7 +312,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	}
 
 	/**
-	 * @param int $rid
+	 * @return void
+	 * @internal param int $rid
 	 */
 	private function delete()
 	{
@@ -524,11 +525,10 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	private function listRules()
 	{
 		$order = SPFactory::user()->getUserState( 'acl.order', 'order', 'rid.asc' );
-		/* @var SPdb $db */
-		$db =& SPFactory::db();
-		$db->select( '*', 'spdb_permissions_rules', null, $order );
 		try {
-			$rules = $db->loadObjectList();
+			$rules = SPFactory::db()
+					->select( '*', 'spdb_permissions_rules', null, $order )
+					->loadObjectList();
 		}
 		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -553,4 +553,3 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		$view->display();
 	}
 }
-?>
