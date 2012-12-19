@@ -52,14 +52,14 @@ class SPHelp extends SPController
 				$repository->connect();
 			}
 			catch ( SPException $x ) {
-				$view->assign( SPLang::e( 'An error has occured. %s', $x->getMessage() ), 'message' );
+				$view->assign( SPLang::e( 'An error has occurred. %s', $x->getMessage() ), 'message' );
 			}
 			try {
 				$response = $repository->help( $repository->get( 'token' ), SPRequest::cmd( 'mid' ) );
 				$view->assign( $response, 'message' );
 			}
 			catch ( SPException $x ) {
-				$view->assign( SPLang::e( 'An error has occured. %s', $x->getMessage() ), 'message' );
+				$view->assign( SPLang::e( 'An error has occurred. %s', $x->getMessage() ), 'message' );
 			}
 		}
 		else {

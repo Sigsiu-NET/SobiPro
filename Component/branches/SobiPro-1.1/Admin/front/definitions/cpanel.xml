@@ -17,7 +17,6 @@
 		</buttons>
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">
-			<button type="url" task="panel" />
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
 			<button type="url" task="extensions" />
@@ -309,29 +308,29 @@
 								<text value="news.title" parse="true" />
 							</a>
 						</div>
-						<div id="SobiProNewsPane" class="accordion-body collapse">
-							<div class="accordion-inner">
+                        <div id="SobiProNewsPane" class="accordion-body collapse">
+                            <div class="accordion-inner">
                                 <div class="spNews">
-                                <loop subject="news.feeds">
-                                    <div>
-                                    <cell type="link" value="title">
-                                        <url type="extern" host="url" />
-                                    </cell>
-                                    <cell type="text" value="content" />
-                                    </div>
-                                </loop>
+                                    <loop subject="news.feeds" table="false">
+                                        <cell class="container">
+                                            <cell type="link" value="title" class="NewsTitle">
+                                                <url type="extern" host="url" />
+                                            </cell>
+                                            <cell type="text" value="content" class="NewsContent" />
+                                        </cell>
+                                    </loop>
                                 </div>
-							</div>
-						</div>
-					</div>
-					<div class="accordion-group">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProCreditsPane">
 								<text value="ABOUT.CREDITS_PANE" />
 							</a>
 						</div>
 						<div id="SobiProCreditsPane" class="accordion-body collapse">
-							<div class="accordion-inner">
+							<div class="accordion-inner spCredits">
 								<file filename="about.credits" type="html" translatable="true" start-path="administrator" />
 							</div>
 						</div>
@@ -343,7 +342,7 @@
 							</a>
 						</div>
 						<div id="SobiProLicensePane" class="accordion-body collapse">
-							<div class="accordion-inner">
+							<div class="accordion-inner spLicense">
 								<file filename="about.license" type="html" translatable="true" start-path="administrator" />
 							</div>
 						</div>

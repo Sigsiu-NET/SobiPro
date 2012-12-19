@@ -31,21 +31,21 @@ SobiPro.jQuery( document ).ready( function ()
 				{
 					"use strict";
 					if ( updates.err ) {
-						SobiPro.jQuery( '#SPVerUpd' ).html( '<span style="color:red;font-weight:bold;">' + updates.err + '</span>' );
+						SobiPro.jQuery( '#SPVerUpd' ).html( '<span style="color:#C60000; font-weight:bold;">' + updates.err + '</span>' );
 					}
 					else {
 						var output = '';
 						for ( var x in updates ) {
 							var name = updates[ x ].name + ' (' + updates[ x ].type + ') ';
 							if ( updates[ x ].update == 'false' ) {
-								var state = '&nbsp;<span style="color:#0000F7;">' + updates[ x ].update_txt + '</span>';
+								var state = '&nbsp;<span style="color:#008000;">' + updates[ x ].update_txt + '</span>';
 							}
 							else {
-								var state = '&nbsp;<span style="color:#F7022B;font-weight: bold">' + updates[ x ].update_txt + '</span>';
+								var state = '&nbsp;<span style="color:#C60000; font-weight: bold">' + updates[ x ].update_txt + '</span>';
 							}
-							output += '<div style="min-width:260px; float: left; padding: 1px; margin-left: 10px;">' + name + '</div><div style="padding: 1px;"> ' + state + '</div>';
+							output += '<div class="spUpdatesApp">' + name + '</div><div class="spUpdatesState"> ' + state + '</div>';
 						}
-						SobiPro.jQuery( '#SPVerUpd' ).html( output + '<div style="clear: both;"></div>' );
+						SobiPro.jQuery( '#SPVerUpd' ).html( output + '<div class="clearall"></div>' );
 					}
 				}
 			} );
