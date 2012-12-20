@@ -18,8 +18,8 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="text" name="section.name" label="SEC.ADD_SECTION_NAME" class="input-xlarge" maxlength="255" required="true" />
-							<field type="text" name="section.nid"  label="SEC.ADD_SECTION_ALIAS" class="input-xlarge" />
+							<field type="text" name="section.name" label="SECN.ADD_SECTION_NAME" class="input-xlarge" maxlength="255" required="true" />
+							<field type="text" name="section.nid"  label="SECN.ADD_SECTION_ALIAS" class="input-xlarge" />
 							<field type="textarea" name="section.description" label="SEC.ADD_DESC" editor="true" class="input-splarge" rows="2" style="" />
                         </fieldset>
 					</div>

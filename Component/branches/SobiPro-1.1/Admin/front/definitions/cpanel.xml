@@ -42,13 +42,13 @@
                             <text value="CPANEL_SYSTEM_STATUS" />
                         </p>
                     </div>
-                    <message parse="system-state.accelerator" dismiss-button="false" class="spStatusAlert" />
-                    <message parse="system-state.javascript-cache" dismiss-button="false" class="spStatusAlert" />
-                    <message parse="system-state.css-cache" dismiss-button="false" class="spStatusAlert" />
-                    <message parse="system-state.display-errors" dismiss-button="false" class="spStatusAlert" />
-                    <message parse="system-state.debug-level" dismiss-button="false" class="spStatusAlert" />
-                    <message parse="system-state.debug-xml" dismiss-button="false" class="spStatusAlert" />
-                    <div class="modal hide" id="ReportedIssues" style="width: 640px;" condition="system-state.messages.length" >
+                    <message parse="system-state.accelerator" dismiss-button="false" icon="true" class="spStatusAlert" />
+                    <message parse="system-state.javascript-cache" dismiss-button="false" icon="true" class="spStatusAlert" />
+                    <message parse="system-state.css-cache" dismiss-button="false" icon="true" class="spStatusAlert" />
+                    <message parse="system-state.display-errors" dismiss-button="false" icon="true" class="spStatusAlert" />
+                    <message parse="system-state.debug-level" dismiss-button="false" icon="true" class="spStatusAlert" />
+                    <message parse="system-state.debug-xml" dismiss-button="false" icon="true" class="spStatusAlert" />
+                    <div class="modal hide" id="ReportedIssues" style="width: 620px;" condition="system-state.messages.length" >
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">
                                 <text value="CLOSE_X" />
@@ -67,7 +67,7 @@
                                     <cell label="CPANEL_ISSUES_MESSAGE" type="text" />
                                 </head>
                                 <loop subject="system-state.messages">
-                                    <cell type="text">
+                                    <cell type="text" class="IssueMsg">
                                         <cell type="text" value="type-text" class="left label label-var:[type]" />
                                     </cell>
                                     <cell type="text" value="section.link" />
