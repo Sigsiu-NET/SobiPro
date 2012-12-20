@@ -21,6 +21,7 @@ class SPTplParser
 	protected $tabsContentOpen = false;
 	protected $activeTab = false;
 	protected $table = true;
+	protected $loopTable = true;
 	protected $thTd = 'th';
 	protected $_out = array();
 	protected $loopOpen = false;
@@ -34,6 +35,12 @@ class SPTplParser
 	static $newLine = "\n";
 	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre' );
 	protected $internalAttributes = array( 'condition' );
+
+
+	public function __construct( $table = false )
+	{
+		$this->table = $table;
+	}
 
 	public function parse( $data )
 	{
@@ -210,23 +217,23 @@ class SPTplParser
 				$this->_out[ ] = '<tr>';
 				break;
 			case 'cell':
-				$this->proceedCell( $data, $this->table ? $this->thTd : 'div' );
+				$this->proceedCell( $data, $this->loopTable ? $this->thTd : 'div' );
 				break;
 			case 'header':
 				$this->_out[ ] = '<div class="SPAdmNavBar">';
 				break;
 			case 'loop':
-				$this->table = true;
+				$this->loopTable = true;
 				if ( $this->istSet( $data[ 'attributes' ], 'table' ) ) {
-					$this->table = $data[ 'attributes' ][ 'table' ] == 'false' ? false : true;
+					$this->loopTable = $data[ 'attributes' ][ 'table' ] == 'false' ? false : true;
 				}
-				if ( $this->table ) {
+				if ( $this->loopTable ) {
 					$this->_out[ ] = '<tbody>';
 				}
 				$this->loopOpen = true;
 				break;
 			case 'loop-row':
-				if ( $this->table ) {
+				if ( $this->loopTable ) {
 					$this->_out[ ] = '<tr>';
 				}
 				break;
@@ -350,14 +357,14 @@ class SPTplParser
 				$this->_out[ ] = '</div>';
 				break;
 			case 'loop':
-				if ( $this->table ) {
+				if ( $this->loopTable ) {
 					$this->_out[ ] = '</tbody>';
 				}
-				$this->table = true;
+				$this->loopTable = true;
 				$this->loopOpen = false;
 				break;
 			case 'loop-row':
-				if ( $this->table ) {
+				if ( $this->loopTable ) {
 					$this->_out[ ] = '</tr>';
 				}
 				break;

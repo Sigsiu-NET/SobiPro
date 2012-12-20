@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -33,7 +33,6 @@ class SPAclView extends SPAdmView
 	 */
 	public function display()
 	{
-		SPLoader::loadClass( 'html.tooltip' );
 		switch ( $this->get( 'task' ) ) {
 			case 'list':
 				$this->listRules();
@@ -111,78 +110,69 @@ class SPAclView extends SPAdmView
 	 */
 	private function listRules()
 	{
-		$rules = $this->get( 'rules' );
-		$_rules = array();
-		if( count( $rules ) ) {
-			/* get icons */
-			$up 		= /*Sobi::Cfg( 'live_site' ).*/Sobi::Cfg( 'list_icons.unpublished' );
-			$pu 		= /*Sobi::Cfg( 'live_site' ).*/Sobi::Cfg( 'list_icons.published' );
-			foreach ( $rules as $rule ) {
-				$id = $rule->rid;
-				$state = $rule->state ? 1 : 0;
-				$img = $state == 1 ? $pu : $up;
-				$action = $state ? 'acl.disable' : 'acl.enable';
-				$name = strlen( $rule->name ) ? $rule->name : $rule->nid;
-
-				/* translate alternative text */
-				$s = Sobi::Txt( 'acl.state_head' );
-				$a = Sobi::Txt( 'state_'.( $state ? 'on' : 'off' ) );
-				$img = SPTooltip::toolTip( $a, $s, $img );
-
-				/* if user has permission for this action */
-				if( Sobi::Can( 'acl.manage' ) ) {
-					$surl = Sobi::Url( array( 'task' => $action, 'rid' => $id ) );
-					$img = "<a href=\"{$surl}\" title=\"{$a}\">{$img}</a>";
-				}
-
-				$url = Sobi::Url( array( 'task' => 'acl.edit', 'rid' => $id ) );
-				$_rule = array();
-				$_rule[ 'id' ] = $id;
-				$_rule[ 'nid' ] = $rule->nid;
-				$_rule[ 'name' ] = "<a href=\"{$url}\">{$name}</a>";
-				$_rule[ 'state' ] = $img;
-				$_rule[ 'checkbox' ] = "<input type=\"checkbox\" name=\"rid[]\" value=\"{$id}\" onclick=\"SPCheckListElement( this )\" />";
-				$_rule[ 'validSince' ] = $this->date( $rule->validSince );
-				$_rule[ 'validUntil' ] = $this->date( $rule->validUntil, false );
-				$_rule[ 'note' ] = $rule->note;
-				$_rule[ 'url' ] = $url;
-				$_rule[ 'perms_count' ] = '@TODO: 99';
-				$_rule[ 'group_count' ] = '@TODO: 5';
-				$_rules[] = $_rule;
-			}
-		}
-		$this->set( $_rules, 'rules' );
-		$this->assign(
-			SPLists::tableHeader(
-				array(
-							'checkbox' 		=> 2,
-							'rid' 			=> 1,
-							'name' 			=> 1,
-							'state' 		=> 1,
-							'validSince' 	=> 1,
-							'validUntil' 	=> 1,
-							'perms_count' 	=> 0,
-							'group_count' 	=> 0
-				), 'acl', 'rid'
-			),
-			'header'
-		);
+//		$rules = $this->get( 'rules' );
+//		$_rules = array();
+//		if( count( $rules ) ) {
+//			/* get icons */
+//			$up 		= /*Sobi::Cfg( 'live_site' ).*/Sobi::Cfg( 'list_icons.unpublished' );
+//			$pu 		= /*Sobi::Cfg( 'live_site' ).*/Sobi::Cfg( 'list_icons.published' );
+//			foreach ( $rules as $rule ) {
+//				$id = $rule->rid;
+//				$state = $rule->state ? 1 : 0;
+//				$img = $state == 1 ? $pu : $up;
+//				$action = $state ? 'acl.disable' : 'acl.enable';
+//				$name = strlen( $rule->name ) ? $rule->name : $rule->nid;
+//
+//				/* translate alternative text */
+//				$s = Sobi::Txt( 'acl.state_head' );
+//				$a = Sobi::Txt( 'state_'.( $state ? 'on' : 'off' ) );
+//				$img = SPTooltip::toolTip( $a, $s, $img );
+//
+//				/* if user has permission for this action */
+//				if( Sobi::Can( 'acl.manage' ) ) {
+//					$surl = Sobi::Url( array( 'task' => $action, 'rid' => $id ) );
+//					$img = "<a href=\"{$surl}\" title=\"{$a}\">{$img}</a>";
+//				}
+//
+//				$url = Sobi::Url( array( 'task' => 'acl.edit', 'rid' => $id ) );
+//				$_rule = array();
+//				$_rule[ 'id' ] = $id;
+//				$_rule[ 'nid' ] = $rule->nid;
+//				$_rule[ 'name' ] = "<a href=\"{$url}\">{$name}</a>";
+//				$_rule[ 'state' ] = $img;
+//				$_rule[ 'checkbox' ] = "<input type=\"checkbox\" name=\"rid[]\" value=\"{$id}\" onclick=\"SPCheckListElement( this )\" />";
+//				$_rule[ 'validSince' ] = $this->date( $rule->validSince );
+//				$_rule[ 'validUntil' ] = $this->date( $rule->validUntil, false );
+//				$_rule[ 'note' ] = $rule->note;
+//				$_rule[ 'url' ] = $url;
+//				$_rule[ 'perms_count' ] = '@TODO: 99';
+//				$_rule[ 'group_count' ] = '@TODO: 5';
+//				$_rules[] = $_rule;
+//			}
+//		}
+//		$this->set( $_rules, 'rules' );
 	}
 
 	/**
 	 * @param string $title
+	 * @return string
 	 */
 	public function setTitle( $title )
 	{
-		$task = $this->get( 'task' );
-		if( $task != 'list' ) {
-			$title .= '_'.$task;
-		}
 		$name = $this->get( 'rule.name' );
-		$title = Sobi::Txt( $title, array( 'rule' => $name ) );
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-		SPFactory::header()->setTitle( $title );
-		$this->set( $title, 'site_title');
+		$title = Sobi::Txt( $title, array( 'category_name' => $name ) );
+		$title = parent::setTitle( $title );
+		return $title;
+//
+//		$task = $this->get( 'task' );
+//		if( $task != 'list' ) {
+//			$title .= '_'.$task;
+//		}
+//
+//		$title = Sobi::Txt( $title, array( 'rule' => $name ) );
+//		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
+//		SPFactory::header()->setTitle( $title );
+//		$this->set( $title, 'site_title');
 	}
 }
-?>

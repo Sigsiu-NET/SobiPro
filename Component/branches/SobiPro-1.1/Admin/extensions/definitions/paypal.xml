@@ -17,17 +17,24 @@
 		</buttons>
 	</toolbar>
 	<body>
-		<message id="spMessage" />
 		<div class="row-fluid">
-			<div class="span12">
-				<fieldset label="APP.PPP_NAME">
-					<field type="textarea" name="ppexpl" label="APP.PPP_EXPL" editor="true" class="input-splarge" rows="2" />
-					<field type="text" name="ppsubject" label="APP.PPP_SUBJECT" required="true" class="input-xxlarge" />
-					<field type="text" name="ppurl" label="APP.PPP_URL" required="true" class="input-xxlarge" />
-					<field type="text" name="ppemail" label="APP.PPP_EMAIL" required="true" class="input-xlarge" />
-					<field type="text" name="pprurl" label="APP.PPP_RURL" required="true" class="input-xxlarge" />
-					<field type="text" name="ppcc" label="APP.PPP_CC" required="true" class="input-mini" />
-				</fieldset>
+			<div class="span2" id="SPRightMenu">
+				<menu />
+			</div>
+			<div class="span10">
+				<message id="spMessage" />
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset label="APP.PPP_NAME">
+							<field type="textarea" name="ppexpl" label="APP.PPP_EXPL" editor="true" class="input-splarge" rows="2" />
+							<field type="text" name="ppsubject" label="APP.PPP_SUBJECT" required="true" class="input-xxlarge" />
+							<field type="text" name="ppurl" label="APP.PPP_URL" required="true" class="input-xxlarge" />
+							<field type="text" name="ppemail" label="APP.PPP_EMAIL" required="true" class="input-xlarge" />
+							<field type="text" name="pprurl" label="APP.PPP_RURL" required="true" class="input-xxlarge" />
+							<field type="text" name="ppcc" label="APP.PPP_CC" required="true" class="input-mini" />
+						</fieldset>
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>

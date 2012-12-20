@@ -611,6 +611,9 @@ input.sp-input-micro[type="text"] {
 .spicon-48-SobiConfig {
   background-image: url('../../../../media/sobipro/48x48/folder-configuration.png');
 }
+.spicon-48-SobiUser {
+  background-image: url('../../../../media/sobipro/48x48/sobipro-acl-edit.png');
+}
 .spUserSelector .response .btn {
   margin: 5px;
   width: 200px;
