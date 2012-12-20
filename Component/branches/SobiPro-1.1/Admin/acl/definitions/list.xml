@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="MN.ACL" />
+	</header>
+	<toolbar title="MN.ACL" icon="SobiUser">
+		<divider />
+		<buttons type="actions">
+			<button type="new" task="acl.add" />
+			<button type="delete" task="acl.delete" />
+			<nav-header label="TB.PUBLISHING" />
+			<button type="publish" task="acl.enable" />
+			<button type="hide" task="acl.disable" />
+		</buttons>
+		<divider />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="help" target="_blank" />
+		</buttons>
+	</toolbar>
+	<body>
+		<div class="row-fluid">
+			<div class="span2" id="SPRightMenu">
+				<menu />
+			</div>
+			<div class="span10">
+				<message id="spMessage" />
+				<table condition="rules.length">
+					<head>
+						<cell type="checkbox" rel="rid" class="center" />
+						<cell label="ACL.HEADER_RID" type="text" class="center" />
+						<cell label="ACL.HEADER_NAME" type="text" class="left" />
+						<cell label="ACL.STATE_HEAD" type="text" class="center" />
+					</head>
+					<loop subject="rules">
+						<cell type="checkbox" name="rid" value="rid" class="center" />
+						<cell type="text" value="rid" class="center" />
+						<cell>
+							<cell type="link" value="name">
+								<url type="intern">
+									<param name="task" value="acl.edit" />
+									<param name="rid" value="rid" parse="true" />
+								</url>
+							</cell>
+							<cell type="text" value="note" class="subText" />
+						</cell>
+						<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}">
+							<url type="intern">
+								<param name="task" value="acl.toggle.enabled" />
+								<param name="rid" value="rid" parse="true" />
+							</url>
+						</cell>
+					</loop>
+				</table>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+		</hidden>
+	</config>
+</definition>

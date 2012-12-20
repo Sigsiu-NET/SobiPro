@@ -38,7 +38,6 @@ class SPFieldAdmView extends SPAdmView
 		SPLoader::loadClass( 'html.tooltip' );
 		switch ( $this->get( 'task' ) ) {
 			case 'list':
-				$this->listFields();
 				parent::display();
 				break;
 			case 'edit':
@@ -51,65 +50,10 @@ class SPFieldAdmView extends SPAdmView
 		}
 	}
 
-	/**
-	 */
-	private function listFields()
-	{
-		$this->assign( Sobi::Section( true ), 'current_path' );
-		$this->_plgSect = '_FieldsListTemplate';
-		$c = $this->get( 'fields' );
-		$fields = array();
-		$this->assign(
-			SPLists::tableHeader(
-				array(
-					'checkbox' => SP_TBL_HEAD_SELECTION_BOX,
-					'fid' => SP_TBL_HEAD_SORTABLE,
-					'name' => SP_TBL_HEAD_SORTABLE,
-					'fieldType' => SP_TBL_HEAD_SORTABLE,
-					'state' => SP_TBL_HEAD_STATE,
-					'showIn' => SP_TBL_HEAD_SORTABLE,
-					'validSince' => SP_TBL_HEAD_SORTABLE,
-					'validUntil' => SP_TBL_HEAD_SORTABLE,
-					'isFree' => SP_TBL_HEAD_SORTABLE,
-					'editable' => SP_TBL_HEAD_SORTABLE,
-					'required' => SP_TBL_HEAD_SORTABLE,
-					'order' => SP_TBL_HEAD_ORDER,
-				), 'field', 'p_fid', 'forder' ), 'header'
-		);
-		$sid = Sobi::Reg( 'current_section' );
-		SPRequest::set( 'sid', $sid );
-		if ( count( $c ) ) {
-			foreach ( $c as $f ) {
-				$attr = $f->getAttributes();
-				$field = array();
-				foreach ( $attr as $a ) {
-					$field[ $a ] = $f->get( $a );
-				}
-				if ( $f->get( '_off' ) ) {
-					$field[ 'name' ] = "<del style=\"color: red!important;font-weight: bold;\">{$field[ 'name' ]}</del>";
-					$field[ 'field_type' ] = '<del style="color: red!important;font-weight: bold;">' . Sobi::Txt( $field[ 'fieldType' ] ) . "<del>";
-				}
-				else {
-					$url = Sobi::Url( array( 'task' => 'field.edit', 'fid' => $f->get( 'fid' ), 'sid' => $sid ) );
-					$field[ 'name' ] = "<a href=\"{$url}\">{$field[ 'name' ]}</a>";
-					$field[ 'field_type' ] = Sobi::Txt( $field[ 'fieldType' ] );
-				}
-				$field[ 'checkbox' ] = SPLists::checkedOut( $f, 'p_fid' );
-				$field[ 'state' ] = SPLists::state( $f, 'fid', 'field', 'enabled' );
-				$field[ 'order' ] = SPLists::position( $f, count( $c ), 'fid', 'field', 'sid', 'fid' );
-
-				$field[ 'is_free' ] = SPLists::state( $f, 'fid', 'field', 'isFree', array( 'on' => 'setFree', 'off' => 'setFee' ) );
-				$field[ 'required' ] = SPLists::state( $f, 'fid', 'field', 'required', array( 'on' => 'setRequired', 'off' => 'setNotRequired' ) );
-				$field[ 'editable' ] = SPLists::state( $f, 'fid', 'field', 'editable', array( 'on' => 'setEditable', 'off' => 'setNotEditable' ) );
-				$field[ 'show_in' ] = Sobi::Txt( $field[ 'showIn' ] );
-				$fields[ ] = $field;
-			}
-		}
-		$this->assign( $fields, 'fields' );
-	}
 
 	/**
 	 * @param string $title
+	 * @return string|void
 	 */
 	public function setTitle( $title )
 	{

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="ERR.SITE_TITLE" />
+		<file type="script" filename="bootstrap.tabs" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiEdit">
+		<button type="exit" task="error.cancel" />
+		<divider />
+		<button type="help" target="_blank" />
+	</toolbar>
+	<body>
+		<message id="spMessage" />
+		<div class="row-fluid">
+			<div class="span2" id="SPRightMenu">
+				<menu />
+			</div>
+			<div class="span10">
+				<tabs>
+					<tab label="ERR.SITE_TITLE">
+						<fieldset>
+							<field type="output" value="error.date" label="ERR.ERROR_DATE" />
+							<field type="output" value="error.errNum" label="ERR.ERROR_LEVEL" />
+							<field type="output" value="error.errCode" label="ERR.RETURN_CODE" />
+							<field type="output" value="error.errMsg" label="ERR.ERROR_MESSAGE" />
+							<field type="output" value="error.errFile" label="ERR.IN_FILE" />
+							<field type="output" value="error.errLine" label="ERR.ERROR_LINE" />
+							<field type="output" value="error.errSect" label="ERR.SECTION_TYPE" />
+							<field type="output" value="error.errUid" label="ERR.USER_ID" />
+							<field type="output" label="ERR.USER_IP" name="category.ownerIP" class="infoText">
+								<value>
+									<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="error.errIp" target="_blank">
+										<param name="searchtext" value="error.errIp" parse="true" />
+									</url>
+								</value>
+							</field>
+							<field type="output" value="error.errUa" label="ERR.USER_AGENT" />
+							<field type="output" value="error.errReq" label="ERR.REQUESTED_URI" />
+							<field type="output" value="error.errRef" label="ERR.REFERRER" />
+						</fieldset>
+					</tab>
+					<tab label="ERR.TRACE">
+						<fieldset>
+							<field type="output" value="error.errBacktrace" stand-alone="true"/>
+						</fieldset>
+					</tab>
+					<tab label="ERR.CALL_STACK">
+						<fieldset>
+							<field type="output" value="error.errCont" stand-alone="true" />
+						</fieldset>
+					</tab>
+				</tabs>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+		</hidden>
+	</config>
+</definition>
