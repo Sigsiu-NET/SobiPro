@@ -306,12 +306,22 @@ class SPTplParser
 		}
 		$class = isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ] ? $data[ 'attributes' ][ 'class' ] : null;
 		if ( $this->istSet( $data[ 'attributes' ], 'label' ) ) {
-			$type = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? ' alert-' . $data[ 'attributes' ][ 'type' ] : null;
+			$type = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? 'alert-' . $data[ 'attributes' ][ 'type' ] : null;
+            $icon = null;
+            if (isset( $data[ 'attributes' ][ 'icon' ] ) && ($data[ 'attributes' ][ 'icon' ] == 'true')) {
+                if ($type == 'alert-success') {
+                    $icon = 'icon-thumbs-up';
+                }
+                else {
+                    $icon = 'icon-thumbs-down';
+                }
+                $icon = "<i class=\"{$icon}\"></i> ";
+            }
 			$this->_out[ ] = "<div class=\"alert {$type} {$class}\">";
 			if ( isset( $data[ 'attributes' ][ 'dismiss-button' ] ) && $data[ 'attributes' ][ 'dismiss-button' ] == 'true' ) {
 				$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
 			}
-			$this->_out[ ] = $data[ 'attributes' ][ 'label' ];
+			$this->_out[ ] = $icon . $data[ 'attributes' ][ 'label' ];
 			$this->_out[ ] = '</div>';
 		}
 		else {
