@@ -36,7 +36,6 @@
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
-
 	<body>
 		<div class="row-fluid">
 			<div class="span2" id="SPRightMenu">
@@ -176,19 +175,7 @@
 						<cell type="text" value="owner" class="center" />
 						<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="center" />
 					</loop>
-					<foot>
-						<navigation />
-					</foot>
 				</table>
-				<pagination set="eSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
-					<param name="count" value="entries-count" parse="true" />
-					<param name="limit" value="entries-limit" parse="true" />
-					<param name="current" value="entries-site" parse="true" />
-					<param name="url">
-						<param name="option" value="com_sobipro" />
-						<param name="sid" value="request.sid" parse="true" />
-					</param>
-				</pagination>
 			</div>
 		</div>
 	</body>

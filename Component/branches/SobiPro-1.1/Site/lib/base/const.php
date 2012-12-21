@@ -35,6 +35,8 @@ abstract class SPC
 	const ERROR_MSG = 'error';
 	const WARN_MSG = 'warning';
 	const NOTICE_MSG = 'warning';
+	const INFO_MSG = 'info';
+	const SUCCESS_MSG = 'success';
 	const GLOBAL_SETTING = 2;
 	const SHOW = 1;
 	const NO = 0;

@@ -77,6 +77,9 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			case 'delete':
 				$this->delete();
 				break;
+			case 'toggle.enabled':
+				$this->toggle();
+				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
 				if ( !( Sobi::Trigger( 'Execute', $this->name(), array( &$this ) ) ) ) {
@@ -84,6 +87,14 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 				}
 				break;
 		}
+	}
+
+	private function toggle()
+	{
+		$state = SPFactory::db()
+				->select( 'state', 'spdb_permissions_rules', array( 'rid' => SPRequest::int( 'rid' ) ) )
+				->loadResult();
+		return $this->state( !( $state ) );
 	}
 
 	/**
@@ -309,9 +320,14 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	{
 		$rids = SPRequest::arr( 'rid', array() );
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		if ( !count( $rids ) ) {
-			$rids = array( SPRequest::int( 'rid' ) );
+			if ( SPRequest::int( 'rid' ) ) {
+				$rids = array( SPRequest::int( 'rid' ) );
+			}
+			else {
+				$this->response( Sobi::Back(), Sobi::Txt( 'ACL_SELECT_RULE_FIRST' ), true, SPC::ERROR_MSG );
+			}
 		}
 		try {
 			$db->delete( 'spdb_permissions_groups', array( 'rid' => $rids ) );
@@ -320,7 +336,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		} catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'CANNOT_REMOVE_RULES_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		Sobi::Redirect( Sobi::Url( 'acl' ), 'ACL Rule has been deleted' );
+		$this->response( Sobi::Url( 'acl' ), Sobi::Txt( 'ACL_RULE_DELETED' ), true, SPC::SUCCESS_MSG );
 	}
 
 	/**
@@ -356,7 +372,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			$where = array( 'rid' => $rid );
 		}
 		if ( !$where ) {
-			$this->response( Sobi::Back(), Sobi::Txt( 'ACL_SELECT_RULE_FIRST' ), true );
+			$this->response( Sobi::Back(), Sobi::Txt( 'ACL_SELECT_RULE_FIRST' ), true, SPC::ERROR_MSG );
 			return false;
 		}
 		try {
@@ -364,7 +380,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		} catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
-		Sobi::Redirect( SPMainFrame::getBack(), 'ACL.MSG_STATE_CHANGED' );
+		$this->response( Sobi::Back(), Sobi::Txt( 'ACL.MSG_STATE_CHANGED' ), true, SPC::SUCCESS_MSG );
 	}
 
 	/**
@@ -372,10 +388,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	private function edit()
 	{
 		$rid = SPRequest::int( 'rid' );
-		SPLoader::loadClass( 'html.input' );
 		SPLoader::loadClass( 'cms.base.users' );
 		$db = SPFactory::db();
-
 		try {
 			$db->select( '*', 'spdb_object', array( 'oType' => 'section' ) );
 			$sections = $db->loadObjectList();
@@ -386,9 +400,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		} catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
-
-		$class = SPLoader::loadView( 'acl', true );
-		$view = new $class();
+		/** @var $view SPAclView */
+		$view = SPFactory::View( 'acl', true );
 		$view->assign( $this->_task, 'task' );
 		$view->assign( $sections, 'sections' );
 		$view->assign( $admPermissions, 'adm_permissions' );
@@ -399,7 +412,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 				$db->select( '*', 'spdb_permissions_rules', array( 'rid' => $rid ) );
 				$rule = $db->loadAssocList( 'rid' );
 				$rule = $rule[ $rid ];
-				$view->assign( $rule, 'rule' );
+				$view->assign( $rule, 'set' );
+				$view->assign( $rule[ 'name' ], 'rule' );
 				$db->select( 'gid', 'spdb_permissions_groups', array( 'rid' => $rid ) );
 				$selectedGroups = $db->loadResultArray();
 				$db->select( '*', 'spdb_permissions_map', array( 'rid' => $rid ) );
@@ -414,9 +428,6 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			$rule = array( 'validUntil' => $db->getNullDate(), 'validSince' => $db->getNullDate(), 'name' => '', 'nid' => '', 'note' => '' );
 			$view->assign( $rule, 'rule' );
 		}
-
-		$view->loadConfig( 'acl.edit' );
-		$view->setTemplate( 'acl.edit' );
 		$view->assign( $this->userGroups(), 'groups' );
 		$view->display();
 	}
@@ -510,7 +521,9 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 */
 	private function listRules()
 	{
-		$order = SPFactory::user()->getUserState( 'acl.order', 'order', 'rid.asc' );
+		Sobi::ReturnPoint();
+		$order = SPFactory::user()
+				->getUserState( 'acl.order', 'order', 'rid.asc' );
 		try {
 			$rules = SPFactory::db()
 					->select( '*', 'spdb_permissions_rules', null, $order )
