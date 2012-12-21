@@ -68,7 +68,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 				$this->listRules();
 				break;
 			case 'cancel':
-				Sobi::Redirect( Sobi::Url( 'acl' ) );
+				$this->response( Sobi::Url( 'acl' ) );
 				break;
 			case 'save':
 			case 'apply':
@@ -229,19 +229,20 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$rid = SPRequest::int( 'rid', 'null' );
+		$this->validate( 'acl.definitions.edit', array( 'task' =>  'acl.edit', 'rid' => $rid ) );
 		if ( $rid ) {
 			$this->remove( $rid );
 		}
-		$vs = SPRequest::datetime( 'rule_validSince' );
-		$vu = SPRequest::datetime( 'rule_validUntil' );
-		$name = SPRequest::string( 'rule_name' );
-		$nid = SPRequest::cmd( 'rule_nid' );
-		$note = SPRequest::string( 'rule_note' );
-		$state = SPRequest::int( 'state', 1 );
-		$gids = SPRequest::arr( 'rule_groups' );
-		$sids = SPRequest::arr( 'rule_sections' );
-		$pf = SPRequest::arr( 'rule_front_permissions', array() );
-		$pa = SPRequest::arr( 'rule_adm_permissions', array() );
+		$vs = SPRequest::int( 'set_validSince' );
+		$vu = SPRequest::int( 'set_validUntil' );
+		$name = SPRequest::string( 'set_name' );
+		$nid = SPRequest::cmd( 'set_nid' );
+		$note = SPRequest::string( 'set_note' );
+		$state = SPRequest::int( 'set_state', 1 );
+		$gids = SPRequest::arr( 'set_groups' );
+		$sids = SPRequest::arr( 'set_sections' );
+		$pf = SPRequest::arr( 'set_permissions', array() );
+		$pa = SPRequest::arr( 'set_adm_permissions', array() );
 		// if can publish any, then can see any unpublished
 		if ( in_array( 20, $pf ) ) {
 			$pf[ ] = 14;
@@ -256,7 +257,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		$perms = array_merge( $pf, $pa );
 
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		/* update or insert the rule definition */
 		try {
 			$db->insertUpdate( 'spdb_permissions_rules', array( 'rid' => $rid, 'name' => $name, 'nid' => $nid, 'validSince' => $vs, 'validUntil' => $vu, 'note' => $note, 'state' => $state ) );
@@ -304,12 +305,10 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 				Sobi::Error( 'ACL', SPLang::e( 'CANNOT_INSERT_GROUPS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
-
 		/* trigger plugins */
 		Sobi::Trigger( 'AfterSave', 'Acl', array( &$this ) );
-
 		/* set redirect */
-		Sobi::Redirect( Sobi::Url( $apply ? array( 'task' => 'acl.edit', 'rid' => $rid ) : 'acl' ), 'ACL rule has been saved' );
+		$this->response( Sobi::Url( $apply ? array( 'task' => 'acl.edit', 'rid' => $rid ) : 'acl' ), Sobi::Txt( 'ACL_RULE_SAVED' ), false, SPC::SUCCESS_MSG );
 	}
 
 	/**
@@ -405,28 +404,36 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		$view->assign( $this->_task, 'task' );
 		$view->assign( $sections, 'sections' );
 		$view->assign( $admPermissions, 'adm_permissions' );
-		$view->assign( $frontPermissions, 'front_permissions' );
+		$view->assign( $frontPermissions, 'permissions' );
 
 		if ( $rid ) {
 			try {
 				$db->select( '*', 'spdb_permissions_rules', array( 'rid' => $rid ) );
 				$rule = $db->loadAssocList( 'rid' );
 				$rule = $rule[ $rid ];
-				$view->assign( $rule, 'set' );
+				if ( $rule[ 'validSince' ] == $db->getNullDate() ) {
+					$rule[ 'validSince' ] = null;
+				}
+				if ( $rule[ 'validUntil' ] == $db->getNullDate() ) {
+					$rule[ 'validUntil' ] = null;
+				}
 				$view->assign( $rule[ 'name' ], 'rule' );
-				$db->select( 'gid', 'spdb_permissions_groups', array( 'rid' => $rid ) );
-				$selectedGroups = $db->loadResultArray();
-				$db->select( '*', 'spdb_permissions_map', array( 'rid' => $rid ) );
-				$selectedPermissions = $db->loadAssocList();
-				$view->assign( $selectedGroups, 'selected_groups' );
-				$view->assign( $selectedPermissions, 'selected_permissions' );
+
+				$rule[ 'groups' ] = $db
+						->select( 'gid', 'spdb_permissions_groups', array( 'rid' => $rid ) )
+						->loadResultArray();
+
+				$rule[ 'permissions' ] = $db
+						->select( '*', 'spdb_permissions_map', array( 'rid' => $rid ) )
+						->loadAssocList();
+				$view->assign( $rule, 'set' );
 			} catch ( SPException $x ) {
 				Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
 		else {
 			$rule = array( 'validUntil' => $db->getNullDate(), 'validSince' => $db->getNullDate(), 'name' => '', 'nid' => '', 'note' => '' );
-			$view->assign( $rule, 'rule' );
+			$view->assign( $rule, 'set' );
 		}
 		$view->assign( $this->userGroups(), 'groups' );
 		$view->display();

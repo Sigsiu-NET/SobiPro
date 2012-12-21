@@ -3,44 +3,43 @@
 	<header>
 		<title value="ACL_FORM_SITE_TITLE" />
 		<title value="{'acl.add':'ACL_FORM_SITE_TITLE_ADD','acl.edit':'ACL_FORM_SITE_TITLE_EDIT'}" />
+		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiEdit">
-		<button type="exit" task="error.cancel" />
+		<button task="acl.apply" type="apply">
+			<button type="save" task="acl.save" />
+		</button>
+		<divider />
+		<button type="exit" task="acl.cancel" />
 		<divider />
 		<button type="help" target="_blank" />
 	</toolbar>
 	<body>
 		<div class="row-fluid">
 			<message id="spMessage" />
-			<div class="span12">
-				<fieldset>
-					<field type="text" name="set.name" label="ACL.RULE_NAME" class="input-xlarge" />
-					<field type="text" name="set.nid" label="ACL.ALIAS" class="input-xlarge" />
-					<field type="textarea" name="set.note" label="ACL.NOTES" editor="false" class="input-splarge" rows="2" style="" />
-
-					<field type="datePicker" label="VALID_SINCE" name="set.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
-					<field type="datePicker" label="VALID_UNTIL" name="set.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
-
-					<field type="output" value="error.date" label="ERR.ERROR_DATE" />
-					<field type="output" value="error.errNum" label="ERR.ERROR_LEVEL" />
-					<field type="output" value="error.errCode" label="ERR.RETURN_CODE" />
-					<field type="output" value="error.errMsg" label="ERR.ERROR_MESSAGE" />
-					<field type="output" value="error.errFile" label="ERR.IN_FILE" />
-					<field type="output" value="error.errLine" label="ERR.ERROR_LINE" />
-					<field type="output" value="error.errSect" label="ERR.SECTION_TYPE" />
-					<field type="output" value="error.errUid" label="ERR.USER_ID" />
-					<field type="output" label="ERR.USER_IP" name="category.ownerIP" class="infoText">
-						<value>
-							<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="error.errIp" target="_blank">
-								<param name="searchtext" value="error.errIp" parse="true" />
-							</url>
-						</value>
-					</field>
-					<field type="output" value="error.errUa" label="ERR.USER_AGENT" />
-					<field type="output" value="error.errReq" label="ERR.REQUESTED_URI" />
-					<field type="output" value="error.errRef" label="ERR.REFERRER" />
-				</fieldset>
-			</div>
+			<tabs>
+				<tab label="ACL_PERMISSION_TAB">
+					<div class="span12">
+						<fieldset>
+							<field type="text" name="set.name" label="ACL.RULE_NAME" class="input-xlarge" required="true"/>
+							<field type="text" name="set.nid" label="ACL.ALIAS" class="input-xlarge" />
+							<field type="textarea" name="set.note" label="ACL.NOTES" editor="false" class="input-splarge" rows="2" style="" />
+							<field type="select" name="set.groups" values="groups" label="ACL.AFFECTED_USER_GROUPS" multi="true" selected="set.groups" class="input-xxlarge" size="10"  required="true"/>
+							<field type="select" name="set.sections" values="sections" label="ACL.AFFECTED_SECTIONS" multi="true" selected="set.sections" class="input-xxlarge" size="10"  required="true"/>
+							<field type="select" name="set.permissions" values="permissions" label="ACL.FRONTEND_PERMISSIONS" multi="true" selected="set.permissions" class="input-xxlarge" size="10" required="true"/>
+						</fieldset>
+					</div>
+				</tab>
+				<tab label="ACL_PUBLISHING">
+					<div class="span12">
+						<fieldset>
+							<field type="states" name="set.state" label="PUBLISHED" prefix="yes_no" />
+							<field type="datePicker" label="VALID_SINCE" name="set.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
+							<field type="datePicker" label="VALID_UNTIL" name="set.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
+						</fieldset>
+					</div>
+				</tab>
+			</tabs>
 		</div>
 	</body>
 	<config>
@@ -49,6 +48,7 @@
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
 			<field name="method" default="xhr" />
+			<field name="rid" default="" />
 		</hidden>
 	</config>
 </definition>

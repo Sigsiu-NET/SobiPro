@@ -65,41 +65,43 @@ class SPAclView extends SPAdmView
 			}
 		}
 		$this->set( $put, 'sections' );
+//		$put = array();
+//		$get = $this->get( 'adm_permissions' );
+//		if ( is_array( $get ) && count( $get ) ) {
+//			foreach ( $get as $permission ) {
+//				if ( !isset( $put[ $permission->subject ] ) ) {
+//					$put[ $permission->subject ] = array();
+//				}
+//				$k = $permission->action . '_' . $permission->value;
+//				$put[ $permission->subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
+//			}
+//		}
+//		$this->set( $put, 'adm_permissions' );
 		$put = array();
-		$get = $this->get( 'adm_permissions' );
-		if ( is_array( $get ) && count( $get ) ) {
+		$rule = $this->get( 'set' );
+		$get = $this->get( 'permissions' );
+		if ( is_array( $rule[ 'permissions' ] ) && count( $rule[ 'permissions' ] ) ) {
 			foreach ( $get as $permission ) {
-				if ( !isset( $put[ $permission->subject ] ) ) {
-					$put[ $permission->subject ] = array();
+				$subject = ucfirst( $permission->subject );
+				if ( !isset( $put[ $subject ] ) ) {
+					$put[ $subject ] = array();
 				}
 				$k = $permission->action . '_' . $permission->value;
 				$put[ $permission->subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
 			}
 		}
-		$this->set( $put, 'adm_permissions' );
-		$put = array();
-		$get = $this->get( 'front_permissions' );
-		if ( is_array( $get ) && count( $get ) ) {
-			foreach ( $get as $permission ) {
-				if ( !isset( $put[ $permission->subject ] ) ) {
-					$put[ $permission->subject ] = array();
-				}
-				$k = $permission->action . '_' . $permission->value;
-				$put[ $permission->subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
-			}
-		}
-		$this->set( $put, 'front_permissions' );
+		$this->set( $put, 'permissions' );
 		$sections = array();
 		$perms = array();
-		$get = $this->get( 'selected_permissions' );
-		if ( count( $get ) ) {
-			foreach ( $get as $map => $keys ) {
+		if ( count( $rule[ 'permissions' ] ) ) {
+			foreach ( $rule[ 'permissions' ] as $keys ) {
 				$sections[ ] = $keys[ 'sid' ];
 				$perms[ ] = $keys[ 'pid' ];
 			}
 		}
-		$this->set( array_unique( $perms ), 'selected_permissions' );
-		$this->set( array_unique( $sections ), 'selected_sections' );
+		$rule[ 'sections' ] = $sections;
+		$rule[ 'permissions' ] = $perms;
+		$this->set( $rule, 'set' );
 	}
 
 	/**
