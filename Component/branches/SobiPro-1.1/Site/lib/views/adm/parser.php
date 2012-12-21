@@ -298,12 +298,6 @@ class SPTplParser
 
 	protected function message( $data )
 	{
-		$attr = array();
-		if ( count( $data[ 'attributes' ] ) ) {
-			foreach ( $data[ 'attributes' ] as $n => $v ) {
-				$attr[ ] = "{$n}=\"{$v}\"";
-			}
-		}
 		$class = isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ] ? $data[ 'attributes' ][ 'class' ] : null;
 		if ( $this->istSet( $data[ 'attributes' ], 'label' ) ) {
 			$type = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? 'alert-' . $data[ 'attributes' ][ 'type' ] : null;
@@ -325,6 +319,12 @@ class SPTplParser
 			$this->_out[ ] = '</div>';
 		}
 		else {
+			$attr = array();
+			if ( count( $data[ 'attributes' ] ) ) {
+				foreach ( $data[ 'attributes' ] as $n => $v ) {
+					$attr[ ] = "{$n}=\"{$v}\"";
+				}
+			}
 			$attr = implode( ' ', $attr );
 			$messages = SPFactory::message()->getMessages();
 			if ( count( $messages ) ) {
@@ -339,8 +339,8 @@ class SPTplParser
 					}
 				}
 			}
+			$this->_out[ ] = "<div {$attr}></div>";
 		}
-		$this->_out[ ] = "<div {$attr}></div>";
 	}
 
 	public function closeElement( $data )
