@@ -194,7 +194,7 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		if ( $this->authorise( 'manage' ) ) {
 			$this->_model->changeState( $state );
-			$state = ( int )( $this->_task == 'publish' );
+			$state = ( int )( $this->_task == 'publish' )?true :$state;
 			$this->response( Sobi::Back(), Sobi::Txt( $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
 		}
 	}

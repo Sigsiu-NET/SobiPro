@@ -29,9 +29,9 @@
 				<!--<header label="ERR.SITE_TITLE" icon="SobiFieldList" />-->
 				<table condition="errors.length">
 					<head>
-						<cell label="ERR.ERROR_DETAILS" type="text" class="center" />
-						<cell />
 						<cell label="ERR.ERROR_INFO" type="text" class="center" />
+						<cell />
+						<cell label="ERR.ERROR_DETAILS" type="text" class="center" />
 					</head>
 					<loop subject="errors">
 						<cell type="text" value="errNum" class="center" />
@@ -43,7 +43,7 @@
 						</cell>
 						<cell class="center">
 							<cell type="link" value="eid">
-								<url type="intern">
+								<url type="intern" class="label label-info">
 									<param name="task" value="error.details" />
 									<param name="eid" value="eid" parse="true" />
 								</url>
