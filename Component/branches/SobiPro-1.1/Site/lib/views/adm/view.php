@@ -356,6 +356,7 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param DOMNodeList $xml
+	 * @param $output
 	 * @return void
 	 */
 	private function xmlBody( $xml, &$output )
