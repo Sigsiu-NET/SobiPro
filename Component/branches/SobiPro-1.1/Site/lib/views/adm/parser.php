@@ -468,7 +468,7 @@ class SPTplParser
 	{
 		$index = $cell[ 'content' ];
 		/** is expired ? */
-		if ( isset( $cell[ 'attributes' ][ 'valid-until' ] ) && $cell[ 'attributes' ][ 'valid-until' ] && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) < time() ) {
+		if ( isset( $cell[ 'attributes' ][ 'valid-until' ] ) && $cell[ 'attributes' ][ 'valid-until' ] && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) < time() && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) > 0 ) {
 			$index = -1;
 			$txt = Sobi::Txt( 'ROW_EXPIRED', $cell[ 'attributes' ][ 'valid-until' ] );
 			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="expired">';

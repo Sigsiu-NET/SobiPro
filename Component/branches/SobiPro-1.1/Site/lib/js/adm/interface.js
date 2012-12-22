@@ -59,14 +59,16 @@ SobiPro.jQuery( document ).ready( function ()
 							catch ( e ) {
 							}
 							if ( data.data.required ) {
-								SobiPro.jQuery( '[name^="' + data.data.required + '"]' )
+								SobiPro.jQuery( '[name*="' + data.data.required + '"]' )
 									.addClass( 'error' )
+									.attr( 'required', 'required' )
 									.focus()
 									.focusout( function ()
 									{
 										if ( SobiPro.jQuery( this ).val() ) {
 											SobiPro.jQuery( this )
 												.removeClass( 'error' )
+												.removeAttr( 'required' )
 												.addClass( 'success' );
 										}
 									} )

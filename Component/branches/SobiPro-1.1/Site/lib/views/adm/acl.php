@@ -87,7 +87,7 @@ class SPAclView extends SPAdmView
 					$put[ $subject ] = array();
 				}
 				$k = $permission->action . '_' . $permission->value;
-				$put[ $permission->subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
+				$put[ $subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
 			}
 		}
 		$this->set( $put, 'permissions' );
