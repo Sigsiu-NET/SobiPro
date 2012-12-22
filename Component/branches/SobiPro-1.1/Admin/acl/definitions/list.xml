@@ -2,6 +2,7 @@
 <definition>
 	<header>
 		<title value="MN.ACL" />
+		<file type="script" filename="bootstrap.tooltips" />
 	</header>
 	<toolbar title="MN.ACL" icon="SobiUser">
 		<divider />
@@ -47,7 +48,7 @@
 							</cell>
 							<cell type="text" value="note" class="subText" />
 						</cell>
-						<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}">
+						<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="acl.toggle.enabled" />
 								<param name="rid" value="rid" parse="true" />

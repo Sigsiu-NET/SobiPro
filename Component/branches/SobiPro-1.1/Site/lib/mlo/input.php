@@ -71,6 +71,9 @@ abstract class SPHtml_Input
 		self::checkArray( $params );
 		if ( $params && is_array( $params ) && count( $params ) ) {
 			foreach ( $params as $param => $v ) {
+				if ( in_array( $param, array( 'required' ) ) ) {
+					continue;
+				}
 				$v = trim( str_replace( '"', '\'', $v ) );
 				$param = str_replace( array( '\'', '"' ), null, trim( $param ) );
 				$add .= " {$param}=\"{$v}\"";

@@ -120,12 +120,12 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 * @param $action
 	 * @param $value
 	 * @param $site
-	 * @param $publisched
+	 * @param $published
 	 * @return void
 	 */
-	public function addPermission( $subject, $action, $value, $site = 'front', $publisched = 1 )
+	public function addPermission( $subject, $action, $value, $site = 'front', $published = 1 )
 	{
-		Sobi::Trigger( 'Acl', __FUNCTION__, array( &$subject, &$action, &$value, &$site, &$publisched ) );
+		Sobi::Trigger( 'Acl', __FUNCTION__, array( &$subject, &$action, &$value, &$site, &$published ) );
 		if ( !( count( $this->_perms ) ) ) {
 			$this->loadPermissions();
 		}
@@ -140,7 +140,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			$this->_perms[ $site ][ $subject ][ $action ][ ] = $value;
 			$db =& SPFactory::db();
 			try {
-				$db->insert( 'spdb_permissions', array( null, $subject, $action, $value, $site, $publisched ) );
+				$db->insert( 'spdb_permissions', array( null, $subject, $action, $value, $site, $published ) );
 			} catch ( SPException $x ) {
 				Sobi::Error( 'acl', SPLang::e( 'CANNOT_ADD_NEW_PERMS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
@@ -229,12 +229,15 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$rid = SPRequest::int( 'rid', 'null' );
-		$this->validate( 'acl.definitions.edit', array( 'task' =>  'acl.edit', 'rid' => $rid ) );
+		$this->validate( 'acl.definitions.edit', array( 'task' => 'acl.edit', 'rid' => $rid ) );
 		if ( $rid ) {
 			$this->remove( $rid );
 		}
 		$vs = SPRequest::int( 'set_validSince' );
 		$vu = SPRequest::int( 'set_validUntil' );
+		$vs = $vs ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $vs ) : null;
+		$vu = $vu ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $vu ) : null;
+
 		$name = SPRequest::string( 'set_name' );
 		$nid = SPRequest::cmd( 'set_nid' );
 		$note = SPRequest::string( 'set_note' );
