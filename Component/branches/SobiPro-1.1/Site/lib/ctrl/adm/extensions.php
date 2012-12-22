@@ -490,8 +490,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	private function browse()
 	{
-		SPLoader::loadClass( 'html.input' );
-		$view =& SPFactory::View( 'extensions', true );
+		/** @var $view SPExtensionsView */
+		$view = SPFactory::View( 'extensions', true );
 		$def = SPFactory::Instance( 'types.array' );
 		$list = null;
 		if ( SPFs::exists( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) ) ) {
@@ -539,11 +539,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				}
 			}
 		}
-		$view->assign( $this->_task, 'task' );
-		$view->loadConfig( 'extensions.' . $this->_task );
-		$view->setTemplate( 'extensions.' . $this->_task );
-		$view->assign( $this->menu(), 'menu' );
-		$view->assign( $list, 'plugins' );
+		$view->assign( $this->_task, 'task' )
+				->assign( $this->menu(), 'menu' )
+				->assign( $list, 'applications' )
+				->determineTemplate( 'extensions', $this->_task );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
 		$view->display();
 		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
