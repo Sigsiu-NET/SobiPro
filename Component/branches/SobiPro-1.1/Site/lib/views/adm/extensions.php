@@ -34,7 +34,7 @@ class SPExtensionsView extends SPAdmView
 			case 'installed':
 				$this->installed();
 				break;
-			case 'browse':
+//			case 'browse':
 			case 'manage':
 				$this->browse();
 				break;
@@ -44,9 +44,8 @@ class SPExtensionsView extends SPAdmView
 
 	private function browse()
 	{
-		SPLoader::loadClass( 'html.tooltip' );
 		/* create the header */
-		$list =& $this->get( 'plugins' );
+		$list =& $this->get( 'applications' );
 		$plugins = array();
 		if ( count( $list ) ) {
 			$c = 0;
@@ -90,7 +89,6 @@ class SPExtensionsView extends SPAdmView
 		}
 		$this->assign( $plugins, 'applications' );
 		$this->assign( Sobi::Section( true ), 'section' );
-		$this->determineTemplate( 'extensions', 'section' );
 	}
 
 	private function installed()
