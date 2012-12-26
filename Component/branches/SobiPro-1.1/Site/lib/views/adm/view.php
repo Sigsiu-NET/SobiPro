@@ -682,6 +682,7 @@ class SPAdmView extends SPObject implements SPView
 				case 'checked-out-by':
 				case 'checked-out-time':
 				case 'valid-since':
+				case 'locked':
 				case 'valid-until':
 					$element[ 'attributes' ][ $attribute->nodeName ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
 					break;

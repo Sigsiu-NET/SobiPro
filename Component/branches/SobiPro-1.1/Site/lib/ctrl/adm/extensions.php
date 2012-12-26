@@ -256,7 +256,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$view->assign( $this->_task, 'task' )
 				->assign( $menu, 'menu' )
 				->assign( Sobi::Section(), 'sid' )
-				->assign( $all, 'plugins' );
+				->assign( $all, 'applications' );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
 		$view->display();
 		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
@@ -594,14 +594,14 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	protected function toggle()
 	{
-		$plugin = SPRequest::cmd( 'plid' );
+		$plugin = SPRequest::cmd( 'eid' );
 		$plugin = explode( '.', $plugin );
 		$ptype = $plugin[ 0 ];
 		$plugin = $plugin[ 1 ];
 		$message = null;
 		$messageType = 'warning';
 
-		if ( SPRequest::sid( 'get' ) ) {
+		if ( SPRequest::sid() ) {
 			try {
 				$app = SPFactory::db()
 						->select( 'name', 'spdb_plugins', array( 'pid' => $plugin, 'type' => $ptype, ) )
@@ -609,7 +609,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$state = !( SPFactory::db()
 						->select( 'enabled', 'spdb_plugin_section', array( 'section' => SPRequest::sid( 'get' ), 'pid' => $plugin, 'type' => $ptype, ) )
 						->loadResult() );
-				SPFactory::db()->replace( 'spdb_plugin_section', array( 'section' => SPRequest::sid( 'get' ), 'pid' => $plugin, 'type' => $ptype, 'enabled' => $state, 0 ) );
+				SPFactory::db()
+						->replace( 'spdb_plugin_section', array( 'section' => SPRequest::sid( 'get' ), 'pid' => $plugin, 'type' => $ptype, 'enabled' => $state, 0 ) );
 				$message = $state ? Sobi::Txt( 'EX.APP_ENABLED', $app ) : Sobi::Txt( 'EX.APP_DISABLED', $app );
 				$messageType = $state ? 'success' : 'warning';
 			} catch ( SPException $x ) {
@@ -618,14 +619,21 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_UPDATE_PLUGIN', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
-//		else {
-//			try {
-//				SPFactory::db()->update( 'spdb_plugins', array( 'enabled' => $state ), array( 'type' => $ptype, 'pid' => $plugin ) );
-//			} catch ( SPException $x ) {
-//				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_UPDATE_PLUGIN', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-//				Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.CANNOT_CHANGE_STATE_ERR', 'error' ), true );
-//			}
-//		}
+		else {
+			try {
+				$app = SPFactory::db()
+						->select( array( 'enabled', 'name' ), 'spdb_plugins', array( 'pid' => $plugin, 'type' => $ptype, ) )
+						->loadObject();
+				SPFactory::db()
+						->update( 'spdb_plugins', array( 'enabled' => !( $app->enabled ) ), array( 'type' => $ptype, 'pid' => $plugin ) );
+				$message = !( $app->enabled ) ? Sobi::Txt( 'EX.APP_ENABLED', $app->name ) : Sobi::Txt( 'EX.APP_DISABLED', $app->name );
+				$messageType = !( $app->enabled ) ? 'success' : 'warning';
+			} catch ( SPException $x ) {
+				$message = Sobi::Txt( 'EX.CANNOT_CHANGE_STATE_ERR', 'error' );
+				$messageType = 'error';
+				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_UPDATE_PLUGIN', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			}
+		}
 		$this->response( Sobi::Back(), $message, false, $messageType );
 	}
 
@@ -914,7 +922,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	private function install( $file = null )
 	{
-		$arch =& SPFactory::Instance( 'base.fs.archive' );
+		$arch = SPFactory::Instance( 'base.fs.archive' );
 		if ( !$file ) {
 			$data = SPRequest::file( 'spextfile' );
 			$name = str_replace( array( '.' . SPFs::getExt( $data[ 'name' ] ), '.' ), null, $data[ 'name' ] );
@@ -998,8 +1006,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	private function menu()
 	{
 		/* create menu */
-		$menu =& SPFactory::Instance( 'views.adm.menu', 'extensions.' . $this->_task );
-//		$cfg = SPLoader::loadIniFile( 'etc.adm.extensions_menu' );
+		$menu = SPFactory::Instance( 'views.adm.menu', 'extensions.' . $this->_task );
 		$cfg = SPLoader::loadIniFile( 'etc.adm.config_menu' );
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if ( count( $cfg ) ) {
@@ -1014,7 +1021,6 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	private function installed()
 	{
-		SPLoader::loadClass( 'html.input' );
 		$list = array();
 		try {
 			SPFactory::db()->select( '*', 'spdb_plugins' );
@@ -1023,14 +1029,18 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 		$cl = count( $list );
 		for ( $i = 0; $i < $cl; $i++ ) {
-			$list[ $i ][ 'deletable' ] = SPLoader::path( "etc.installed.{$list[ $i ][ 'type' ]}s.{$list[ $i ][ 'pid' ]}", 'front', true, 'xml' ) ? true : false;
+			$list[ $i ][ 'locked' ] = SPLoader::path( "etc.installed.{$list[ $i ][ 'type' ]}s.{$list[ $i ][ 'pid' ]}", 'front', true, 'xml' ) ? false : true;
+			$list[ $i ][ 'eid' ] = $list[ $i ][ 'type' ] . '.' . $list[ $i ][ 'pid' ];
+			if ( ( $list[ $i ][ 'pid' ] == 'router' ) || ( in_array( $list[ $i ][ 'type' ], array( 'field', 'language', 'module', 'plugin' ) ) ) ) {
+				$list[ $i ][ 'enabled' ] = -1;
+			}
 		}
-		$view =& SPFactory::View( 'extensions', true );
-		$view->assign( $this->_task, 'task' );
-		$view->loadConfig( 'extensions.' . $this->_task );
-		$view->setTemplate( 'extensions.' . $this->_task );
-		$view->assign( $this->menu(), 'menu' );
-		$view->assign( $list, 'plugins' );
+		/** @var $view SPExtensionsView */
+		$view = SPFactory::View( 'extensions', true );
+		$view->assign( $this->_task, 'task' )
+				->assign( $this->menu(), 'menu' )
+				->assign( $list, 'applications' )
+				->determineTemplate( 'extensions', $this->_task );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
 		$view->display();
 		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
