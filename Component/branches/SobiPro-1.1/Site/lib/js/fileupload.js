@@ -40,11 +40,17 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 		if ( proxy.settings.hideProgressBar ) {
 			responseContainer.addClass( 'hide' );
 		}
-		responseMsg.removeClass( 'hide' );
-		responseMsg.addClass( 'alert-' + response.type );
-		responseMsg.find( 'div' ).html( response.text );
-		idStore.val( response.id );
-		button.attr( 'disabled', 'disabled' );
+		if ( response.callback ) {
+			var callback = window[ response.callback ];
+			callback( response, proxy )
+		}
+		else {
+			responseMsg.removeClass( 'hide' );
+			responseMsg.addClass( 'alert-' + response.type );
+			responseMsg.find( 'div' ).html( response.text );
+			idStore.val( response.id );
+			button.attr( 'disabled', 'disabled' );
+		}
 	};
 
 	this.uploadProgress = function ( event, position, total, percentComplete )

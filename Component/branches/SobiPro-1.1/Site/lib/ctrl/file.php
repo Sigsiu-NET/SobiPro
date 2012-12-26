@@ -72,7 +72,7 @@ class SPFileUploader extends SPController
 				'id' => ''
 			);
 		}
-		$field = SPRequest::cmd( 'field', null );
+//		$field = SPRequest::cmd( 'field', null );
 		$this->message( $response );
 	}
 
@@ -92,6 +92,5 @@ class SPFileUploader extends SPController
 		SPFactory::mainframe()->cleanBuffer();
 		echo json_encode( $response );
 		exit;
-
 	}
 }
