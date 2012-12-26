@@ -54,7 +54,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				Sobi::ReturnPoint();
 				break;
 			case 'install':
-				Sobi::Redirect( SPMainFrame::getBack(), $this->install() );
+				$this->install();
 				break;
 			case 'repositories':
 				$this->repos();
@@ -568,28 +568,29 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	protected function publish( $state )
 	{
-		$plugin = SPRequest::cmd( 'plid' );
-		$plugin = explode( '.', $plugin );
-		$ptype = $plugin[ 0 ];
-		$plugin = $plugin[ 1 ];
-
-		if ( SPRequest::sid( 'get' ) ) {
-			try {
-				SPFactory::db()->replace( 'spdb_plugin_section', array( 'section' => SPRequest::sid( 'get' ), 'pid' => $plugin, 'type' => $ptype, 'enabled' => $state, 0 ) );
-			} catch ( SPException $x ) {
-				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_UPDATE_PLUGIN', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-				Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.CANNOT_CHANGE_STATE_ERR', 'error' ), true );
-			}
-		}
-		else {
-			try {
-				SPFactory::db()->update( 'spdb_plugins', array( 'enabled' => $state ), array( 'type' => $ptype, 'pid' => $plugin ) );
-			} catch ( SPException $x ) {
-				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_UPDATE_PLUGIN', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-				Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.CANNOT_CHANGE_STATE_ERR', 'error' ), true );
-			}
-		}
-		Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.PLUGIN STATE_CHANGED' ) );
+		exit( 'Deprecated ' . __FILE__ . ' ' . __LINE__ );
+//		$plugin = SPRequest::cmd( 'plid' );
+//		$plugin = explode( '.', $plugin );
+//		$ptype = $plugin[ 0 ];
+//		$plugin = $plugin[ 1 ];
+//
+//		if ( SPRequest::sid( 'get' ) ) {
+//			try {
+//				SPFactory::db()->replace( 'spdb_plugin_section', array( 'section' => SPRequest::sid( 'get' ), 'pid' => $plugin, 'type' => $ptype, 'enabled' => $state, 0 ) );
+//			} catch ( SPException $x ) {
+//				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_UPDATE_PLUGIN', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+//				Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.CANNOT_CHANGE_STATE_ERR', 'error' ), true );
+//			}
+//		}
+//		else {
+//			try {
+//				SPFactory::db()->update( 'spdb_plugins', array( 'enabled' => $state ), array( 'type' => $ptype, 'pid' => $plugin ) );
+//			} catch ( SPException $x ) {
+//				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_UPDATE_PLUGIN', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+//				Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.CANNOT_CHANGE_STATE_ERR', 'error' ), true );
+//			}
+//		}
+//		Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.PLUGIN STATE_CHANGED' ) );
 	}
 
 	protected function toggle()
@@ -923,8 +924,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	private function install( $file = null )
 	{
 		$arch = SPFactory::Instance( 'base.fs.archive' );
-		if ( !$file ) {
-			$data = SPRequest::file( 'spextfile' );
+		$ajax = strlen( SPRequest::cmd( 'ident', null, 'post' ) );
+		if ( !( $file ) ) {
+			$ident = SPRequest::cmd( 'ident', null, 'post' );
+			$data = SPRequest::file( $ident );
 			$name = str_replace( array( '.' . SPFs::getExt( $data[ 'name' ] ), '.' ), null, $data[ 'name' ] );
 			$path = SPLoader::dirPath( 'tmp.install.' . $name, 'front', false );
 			$c = 0;
@@ -963,32 +966,58 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 		if ( $path ) {
 			if ( !( $arch->extract( $path ) ) ) {
-				throw new SPException( SPLang::e( 'CANNOT_EXTRACT_ARCHIVE', basename( $file ), $path ) );
+				$this->ajaxResponse( $ajax, SPLang::e( 'CANNOT_EXTRACT_ARCHIVE', basename( $file ), $path ), false, SPC::ERROR_MSG );
 			}
 			$dir =& SPFactory::Instance( 'base.fs.directory', $path );
 			$xml = array_keys( $dir->searchFile( '.xml', false, 2 ) );
 			if ( !( count( $xml ) ) ) {
-				throw new SPException( SPLang::e( 'NO_INSTALL_FILE_IN_PACKAGE' ) );
+				$this->ajaxResponse( $ajax, SPLang::e( 'NO_INSTALL_FILE_IN_PACKAGE' ), false, SPC::ERROR_MSG );
 			}
 			$definition = $this->searchInstallFile( $xml );
 			if ( !( $definition ) ) {
 				if ( SPFactory::CmsHelper()->installerFile( $xml ) ) {
-					return SPFactory::CmsHelper()->install( $xml, $path );
+					$message = SPFactory::CmsHelper()->install( $xml, $path );
+					$this->ajaxResponse( $ajax, $message[ 'msg' ], false, $message[ 'msgtype' ] );
 				}
 				else {
-					throw new SPException( SPLang::e( 'NO_INSTALL_FILE_IN_PACKAGE' ) );
+					$this->ajaxResponse( $ajax, SPLang::e( 'NO_INSTALL_FILE_IN_PACKAGE' ), false, SPC::ERROR_MSG );
 				}
 			}
+			/** @var $installer SPInstaller */
 			$installer =& SPFactory::Instance( 'services.installers.' . trim( strtolower( $definition->documentElement->tagName ) ), $xml[ 0 ], trim( $definition->documentElement->tagName ) );
-			$installer->validate();
-			$msg = $installer->install();
+			try {
+				$installer->validate();
+				$msg = $installer->install();
+				$this->ajaxResponse( $ajax, $msg, true, SPC::SUCCESS_MSG );
+			} catch ( SPException $x ) {
+				$this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );
+			}
 		}
 		else {
-			throw new SPException( SPLang::e( 'NO_FILE_HAS_BEEN_UPLOADED' ) );
+			$this->ajaxResponse( $ajax, SPLang::e( 'NO_FILE_HAS_BEEN_UPLOADED' ), false, SPC::ERROR_MSG );
 		}
-		return $msg;
 	}
 
+	protected function ajaxResponse( $ajax, $message, $redirect, $type )
+	{
+		if ( $ajax ) {
+			if( $redirect ) {
+				SPFactory::message()->setMessage( $message, false, $type );
+			}
+			$response = array(
+				'type' => $type,
+				'text' => $message,
+				'redirect' =>  $redirect ? Sobi::Url( 'extensions.installed' ) : false,
+				'callback' => $type == SPC::SUCCESS_MSG ? 'SPExtensionInstaller' : false
+			);
+			SPFactory::mainframe()->cleanBuffer();
+			echo json_encode( $response );
+			exit;
+		}
+		else {
+			return array( 'msg' => $message, 'msgtype' => $type );
+		}
+	}
 
 	private function searchInstallFile( &$xml )
 	{

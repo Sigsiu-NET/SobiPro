@@ -3,6 +3,7 @@
 	<header>
 		<title value="EX.INSTALLED" />
 		<file type="script" filename="bootstrap.tooltips" />
+		<file type="script" filename="adm.sam" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
 		<button label="TB.DELETE" task="extensions.delete" ico="trash" />
@@ -60,6 +61,7 @@
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
 			<field name="pid" value="pid" />
+			<field name="method" default="xhr" />
 		</hidden>
 	</config>
 </definition>

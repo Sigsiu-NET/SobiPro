@@ -105,27 +105,35 @@ abstract class SPHtml_Input
 	 *
 	 * @param string $name - name of the html field
 	 * @param string $accept - accepted file types
-	 * @param string $class - class name
 	 * @param string $value - possible value for the inbox
+	 * @param string $class - class name
 	 * @param string $task - task override
+	 * @param array $scripts - custom JavaScript files
+	 * @param array $request - custom request
 	 * @return string
 	 */
-	public static function fileUpload( $name, $accept = '*', $value = null, $class = 'spFileUpload', $task = 'file.upload' )
+	public static function fileUpload( $name, $accept = '*', $value = null, $class = 'spFileUpload', $task = 'file.upload', $scripts = array( 'jquery', 'jquery-form', 'fileupload' ), $request = null )
 	{
-		SPFactory::header()->addJsFile( array( 'jquery', 'jquery-form', 'fileupload' ) );
-		$request = array(
-			'option' => 'com_sobipro',
-			'task' => $task,
-			'sid' => Sobi::Section(),
-			'ident' => $name . '-file',
-			SPFactory::mainframe()->token() => 1
-		);
+		if ( is_string( $scripts ) ) {
+			$scripts = SPFactory::config()->structuralData( $scripts );
+		}
+		SPFactory::header()->addJsFile( $scripts );
+		if ( !( $request ) ) {
+			$request = array(
+				'option' => 'com_sobipro',
+				'task' => $task,
+				'sid' => Sobi::Section(),
+				'ident' => $name . '-file',
+				SPFactory::mainframe()->token() => 1,
+				'format' => 'raw'
+			);
+		}
 		$f = null;
 		$f .= "<div class=\"{$class}\">";
 		$f .= '<div class="file">';
 		$f .= self::file( $name . '-file', 0, array( 'class' => 'spFileUpload hide' ), $accept );
 		$f .= '</div>';
-		$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-xlarge selected\" value=\"{$value}\"/>";
+		$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-xlarge selected pull-left\" value=\"{$value}\"/>";
 		$f .= '<div class="btn-group">';
 		$f .= '<button class="btn select" type="button"><i class="icon-eye-open"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
 		$f .= '<button class="btn remove" disabled="disabled" type="button">' . '&nbsp;<i class="icon-remove"></i></button>';
