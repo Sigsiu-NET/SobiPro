@@ -92,43 +92,6 @@ class SPExtensionsView extends SPAdmView
 		$this->assign( Sobi::Section( true ), 'section' );
 	}
 
-	private function installed()
-	{
-		$list =& $this->get( 'plugins' );
-		$cl = count( $list );
-		for ( $i = 0; $i < $cl; $i++ ) {
-			$p = array( 'class' => 'text_area' );
-			if ( ( $list[ $i ][ 'pid' ] != 'router' ) && ( !( in_array( $list[ $i ][ 'type' ], array( 'field', 'language', 'module', 'plugin' ) ) ) ) ) {
-				$list[ $i ][ 'oType' ] = 'extension';
-				$list[ $i ][ 'id' ] = $list[ $i ][ 'type' ] . '.' . $list[ $i ][ 'pid' ];
-				$row = new SPObject();
-				$row->castArray( $list[ $i ] );
-				$list[ $i ][ 'enabled' ] = SPLists::state( $row, 'plid', 'extensions', 'enabled', array( 'on' => 'publish', 'off' => 'unpublish' ) );
-			}
-			else {
-				$list[ $i ][ 'enabled' ] = SPTooltip::toolTip(
-					Sobi::Txt( 'EX.NOT_APLICABLE' ),
-					Sobi::Txt( 'EX.NOT_APLICABLE' ),
-					Sobi::Cfg( 'list_icons.extensions_locked' )
-				);
-			}
-			if ( !( $list[ $i ][ 'deletable' ] ) ) {
-				$list[ $i ][ 'radio' ] = SPTooltip::toolTip(
-					Sobi::Txt( 'EX.CORE_PLUGIN' ),
-					Sobi::Txt( 'EX.CORE_PLUGIN' ),
-					Sobi::Cfg( 'list_icons.extensions_locked' )
-				);
-			}
-			else {
-				$list[ $i ][ 'radio' ] = SPHtml_Input::radio( 'plid', $list[ $i ][ 'type' ] . '.' . $list[ $i ][ 'pid' ], null, $list[ $i ][ 'pid' ], false, $p );
-			}
-			if ( $list[ $i ][ 'authorURL' ] ) {
-				$list[ $i ][ 'author' ] = "<a href=\"{$list[ $i ][ 'authorURL' ]}\" target=\"_blank\">{$list[ $i ][ 'author' ]}</a>";
-			}
-		}
-		$this->assign( $list, 'plugins' );
-	}
-
 	/**
 	 * @param string $title
 	 * @return string
