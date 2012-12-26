@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <definition>
 	<header>
-		<title value="AMN.APPS" />
+		<title value="EX.INSTALLED" />
+		<file type="script" filename="bootstrap.tooltips" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
+		<button label="TB.DELETE" task="extensions.delete" ico="trash" />
+		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" />
@@ -20,26 +23,29 @@
 			</div>
 			<div class="span10">
 				<message id="spMessage" />
-				<message label="EX.SECTION_EXPL" type="info" dismiss-button="false" />
+				<div class="span12">
+					<field type="fileUpload" name="SobiProExtension"  label="EX.INSTALL_NEW" accept="application/zip" task="extensions.install"/>
+				</div>
 				<table>
 					<head>
-						<cell label="EXTENSIONS.HEADER_ENABLED" type="text" class="center" />
+						<cell type="checkbox" rel="eid" class="center" />
 						<cell label="EX.HEADER_NAME" type="text" class="left" />
 						<cell label="EX.HEADER_TYPE" type="text" class="center" />
+						<cell label="EXTENSIONS.HEADER_ENABLED" type="text" class="center" />
 						<cell label="EXTENSIONS.HEADER_PID" type="text" class="center" />
 						<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="center" />
 						<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="center" />
 					</head>
 					<loop subject="applications">
-						<cell type="ticker" value="enabled" class="center" icons="{'0':'remove-sign','1':'ok'}">
-							<url type="intern">
-								<param name="task" value="extensions.toggle" />
-								<param name="eid" value="id" parse="true" />
-								<param name="sid" value="sid" parse="true" subject="skip" />
-							</url>
-						</cell>
+						<cell type="checkbox" name="eid" value="eid" class="center" locked="locked" locked-text="EX.CORE_PLUGIN" input-type="radio"/>
 						<cell type="text" value="name" class="left" />
 						<cell type="text" value="type" class="center" />
+						<cell type="ticker" value="enabled" class="center" icons="{'0':'remove-sign','1':'ok', '-1':'lock'}" status-text="{'-1':'EX.NOT_APPLICABLE'}">
+							<url type="intern">
+								<param name="task" value="extensions.toggle" />
+								<param name="eid" value="eid" parse="true" />
+							</url>
+						</cell>
 						<cell type="text" value="pid" class="center" />
 						<cell type="text" value="version" class="center" />
 						<cell type="text" value="author" class="center" />

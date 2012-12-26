@@ -421,8 +421,14 @@ class SPConfigAdmCtrl extends SPController
 	 */
 	protected function save()
 	{
-		$this->authorise( Sobi::Reg( 'current_section', 0 ) );
-		$db = SPFactory::db();
+		$sid = Sobi::Section();
+		$this->authorise( $sid );
+		if( $sid ) {
+			$this->validate( 'config.definitions.general', array( 'task' => 'config.general', 'sid' => $sid ) );
+		}
+		else {
+			$this->validate( 'config.definitions.global', array( 'task' => 'config.global' ) );
+		}
 		$fields = array();
 		$section = false;
 		$data = SPRequest::arr( 'spcfg', array() );
@@ -469,7 +475,7 @@ class SPConfigAdmCtrl extends SPController
 		}
 		Sobi::Trigger( 'SaveConfig', $this->name(), array( &$values ) );
 		try {
-			$db->insertArray( 'spdb_config', $values, true );
+			SPFactory::db()->insertArray( 'spdb_config', $values, true );
 		} catch ( SPException $x ) {
 			$this->response( Sobi::Back(), $x->getMessage(), false, SPC::ERROR_MSG );
 		}

@@ -32,11 +32,12 @@ class SPExtensionsView extends SPAdmView
 	{
 		switch ( $this->get( 'task' ) ) {
 			case 'installed':
-				$this->installed();
+//				$this->installed();
 				break;
 //			case 'browse':
 			case 'manage':
 				$this->browse();
+				$this->determineTemplate( 'extensions', 'section' );
 				break;
 		}
 		parent::display();

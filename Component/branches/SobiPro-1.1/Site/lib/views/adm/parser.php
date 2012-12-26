@@ -301,16 +301,16 @@ class SPTplParser
 		$class = isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ] ? $data[ 'attributes' ][ 'class' ] : null;
 		if ( $this->istSet( $data[ 'attributes' ], 'label' ) ) {
 			$type = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? 'alert-' . $data[ 'attributes' ][ 'type' ] : null;
-            $icon = null;
-            if (isset( $data[ 'attributes' ][ 'icon' ] ) && ($data[ 'attributes' ][ 'icon' ] == 'true')) {
-                if ($type == 'alert-success') {
-                    $icon = 'icon-thumbs-up';
-                }
-                else {
-                    $icon = 'icon-thumbs-down';
-                }
-                $icon = "<i class=\"{$icon}\"></i> ";
-            }
+			$icon = null;
+			if ( isset( $data[ 'attributes' ][ 'icon' ] ) && ( $data[ 'attributes' ][ 'icon' ] == 'true' ) ) {
+				if ( $type == 'alert-success' ) {
+					$icon = 'icon-thumbs-up';
+				}
+				else {
+					$icon = 'icon-thumbs-down';
+				}
+				$icon = "<i class=\"{$icon}\"></i> ";
+			}
 			$this->_out[ ] = "<div class=\"alert {$type} {$class}\">";
 			if ( isset( $data[ 'attributes' ][ 'dismiss-button' ] ) && $data[ 'attributes' ][ 'dismiss-button' ] == 'true' ) {
 				$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
@@ -479,6 +479,14 @@ class SPTplParser
 			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );
 			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="pending">';
 		}
+		elseif ( $index < 0 ) {
+			$txt = 'Locked';
+			if ( $this->istSet( $cell[ 'attributes' ], 'status-text' ) ) {
+				$txt = json_decode( str_replace( "'", '"', $cell[ 'attributes' ][ 'status-text' ] ), true );
+				$txt = Sobi::Txt( $txt[ $index ] );
+			}
+			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="pending">';
+		}
 		elseif ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
 			$this->_out[ ] = "<a href=\"{$cell['link']}\" >";
 		}
@@ -515,12 +523,21 @@ class SPTplParser
 			$this->_out[ ] = '</a>';
 			return $cell;
 		}
+		elseif ( $this->istSet( $cell[ 'attributes' ], 'locked', true ) ) {
+			$icon = $this->istSet( $cell[ 'attributes' ], 'locked-icon' ) ? $cell[ 'attributes' ][ 'locked-icon' ] : $this->_checkedOutIcon;
+			$text = $this->istSet( $cell[ 'attributes' ], 'locked-text' ) ? $cell[ 'attributes' ][ 'locked-text' ] : $this->_checkedOutIcon;
+			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $text . '" class="checkedout">';
+			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
+			$this->_out[ ] = '</a>';
+			return $cell;
+		}
+		$type = $this->istSet( $cell[ 'attributes' ], 'input-type' ) ? $cell[ 'attributes' ][ 'input-type' ] : 'checkbox';
 		if ( isset( $cell[ 'attributes' ][ 'rel' ] ) && $cell[ 'attributes' ][ 'rel' ] ) {
-			$this->_out[ ] = '<input type="checkbox" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
+			$this->_out[ ] = '<input type="' . $type . '" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
 			return $cell;
 		}
 		else {
-			$this->_out[ ] = '<input type="checkbox" name="' . $cell[ 'attributes' ][ 'name' ] . '[]" value="' . $cell[ 'content' ] . '">';
+			$this->_out[ ] = '<input type="' . $type . '" name="' . $cell[ 'attributes' ][ 'name' ] . '[]" value="' . $cell[ 'content' ] . '">';
 			return $cell;
 		}
 	}
