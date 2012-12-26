@@ -550,20 +550,20 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	private function delete()
 	{
-		$plugin = SPRequest::cmd( 'plid' );
-		if ( !( strlen( $plugin ) ) ) {
-			Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.SELECT_TO_DELETE_ERR', 'error' ), true );
+		$application = SPRequest::cmd( 'eid' );
+		if ( !( strlen( $application ) ) ) {
+			$this->response( Sobi::Url( 'extensions.installed' ), Sobi::Txt( 'EX.SELECT_TO_DELETE_ERR' ), true, SPC::ERROR_MSG );
 		}
-		$plugin = explode( '.', $plugin );
-		$ptype = $plugin[ 0 ];
-		$plugin = $plugin[ 1 ];
-		$def = SPLoader::path( "etc.installed.{$ptype}s.{$plugin}", 'front', true, 'xml' );
+		$application = explode( '.', $application );
+		$appType = $application[ 0 ];
+		$application = $application[ 1 ];
+		$def = SPLoader::path( "etc.installed.{$appType}s.{$application}", 'front', true, 'xml' );
 		if ( !( $def ) ) {
-			Sobi::Error( 'extensions', SPLang::e( 'CANNOT_DELETE_PLUGIN_FILE_NOT_EXISTS', SPLoader::path( "etc.installed.{$ptype}s.{$plugin}", 'front', false, 'xml' ) ), SPC::WARNING, 0, __LINE__, __FILE__ );
-			Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.CANNOT_LOAD_PLUGIN_DEF_ERR', 'error' ), true );
+			Sobi::Error( 'extensions', SPLang::e( 'CANNOT_DELETE_PLUGIN_FILE_NOT_EXISTS', SPLoader::path( "etc.installed.{$appType}s.{$application}", 'front', false, 'xml' ) ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			$this->response( Sobi::Url( 'extensions.installed' ), Sobi::Txt( 'EX.CANNOT_LOAD_PLUGIN_DEF_ERR' ), true, SPC::ERROR_MSG );
 		}
-		$installer =& SPFactory::Instance( 'services.installers.sobiproapp', $def, 'SobiProApp' );
-		Sobi::Redirect( SPMainFrame::getBack(), $installer->remove(), 'message', true );
+		$installer = SPFactory::Instance( 'services.installers.sobiproapp', $def, 'SobiProApp' );
+		$this->response( Sobi::Url( 'extensions.installed' ), $installer->remove(), true, SPC::SUCCESS_MSG );
 	}
 
 	protected function publish( $state )

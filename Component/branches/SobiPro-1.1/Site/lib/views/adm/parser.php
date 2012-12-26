@@ -537,7 +537,8 @@ class SPTplParser
 			return $cell;
 		}
 		else {
-			$this->_out[ ] = '<input type="' . $type . '" name="' . $cell[ 'attributes' ][ 'name' ] . '[]" value="' . $cell[ 'content' ] . '">';
+			$multiple = $this->istSet( $cell[ 'attributes' ], 'multiple', 'false' ) ? null : '[]';
+			$this->_out[ ] = '<input type="' . $type . '" name="' . $cell[ 'attributes' ][ 'name' ] . $multiple . '" value="' . $cell[ 'content' ] . '">';
 			return $cell;
 		}
 	}

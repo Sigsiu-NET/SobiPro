@@ -36,6 +36,9 @@ abstract class Sobi
 	 * Can be also an URL string, in this case replacing all & with &amp;
 	 * If string is not an URL - it can be single task: Sobi::Url( 'entry.add' );
 	 * Special case is Sobi::Url( 'current' ); - in this case return currently requestet URL
+	 * @param bool $js
+	 * @param bool $sef
+	 * @param bool $live
 	 * @return string
 	 */
 	public static function Url( $var = null, $js = false, $sef = true, $live = false )
