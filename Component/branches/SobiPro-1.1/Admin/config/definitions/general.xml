@@ -31,7 +31,7 @@
 							<div class="span12">
 								<fieldset>
 									<field type="states" name="section.state" value="section.state" label="ENABLED" prefix="yes_no" />
-									<field type="text" name="section.name" value="section.name" label="SECN.CFG.SECTION_NAME" class="input-xlarge" />
+									<field type="text" name="section.name" value="section.name" label="SECN.CFG.SECTION_NAME" class="input-xlarge" required="true" />
 									<field type="text" name="section.nid" value="section.nid" readonly="readonly" label="SECN.ADD_SECTION_ALIAS" class="input-xlarge" />
 									<field type="textarea" name="section.description" value="section.description" editor="true" label="SECN.CFG.SECTION_DESCRIPTION" />
 								</fieldset>

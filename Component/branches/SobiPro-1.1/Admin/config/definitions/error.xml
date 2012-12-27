@@ -39,12 +39,12 @@
 							<field type="output" value="error.errRef" label="ERR.REFERRER" />
 						</fieldset>
 					</tab>
-					<tab label="ERR.TRACE">
+					<tab label="ERR.CALLSTACK">
 						<fieldset>
 							<field type="output" value="error.errBacktrace" stand-alone="true"/>
 						</fieldset>
 					</tab>
-					<tab label="ERR.CALL_STACK">
+					<tab label="ERR.VARIABLES">
 						<fieldset>
 							<field type="output" value="error.errCont" stand-alone="true" />
 						</fieldset>
