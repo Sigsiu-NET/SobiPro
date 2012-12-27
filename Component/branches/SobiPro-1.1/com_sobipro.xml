@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6.0" method="upgrade" overwrite="true">
     <name>SobiPro</name>
-    <creationDate>05 December 2012</creationDate>
+    <creationDate>27 December 2012</creationDate>
     <author>Sigsiu.NET GmbH</author>
     <authorEmail>sobi[at]sigsiu.net</authorEmail>
     <authorUrl>http://www.Sigsiu.NET</authorUrl>
     <copyright>Copyright (C) 2006-2012 Sigsiu.NET GmbH</copyright>
     <license>GNU General Public License v3</license>
-    <version>1.1.0.D</version>
+    <version>1.1.0.E</version>
     <codename>Budgie</codename>
     <description></description>
     <version_number>1.1.0</version_number>
