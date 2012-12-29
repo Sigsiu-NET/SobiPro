@@ -46,6 +46,8 @@
    (+) Template override for specific categories and entries via Joomla! Menu Manager
    (+) Workaround to bypass Joomla! menu type bug
 
+   (-) Vehicle template removed. Will be a separate template now.
+
    (!) Administrator UI redesigned using Bootstrap library and new XML templates
    (!) SPHeader::addMeta() takes now optional list of custom parameters as an array
    (!) SPLang::nid() using JFilterOutput::stringURLSafe now
