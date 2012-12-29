@@ -117,7 +117,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$view->setTemplate( 'field.templates.' . $field->get( 'fieldType' ) . $nid );
 			}
 			else {
-				$view->setTemplate( 'field.templates.edit' );
+                $view->setTemplate( 'default' );
 			}
 		}
 		/** Legacy code */
@@ -243,7 +243,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$view->setTemplate( 'field.templates.' . $this->_fieldType . '_override' );
 			}
 			else {
-				$view->setTemplate( 'field.templates.edit' );
+                $view->setTemplate( 'default' );
 			}
 		}
 		/** legacy */

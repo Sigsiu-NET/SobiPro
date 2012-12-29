@@ -143,7 +143,7 @@ class SPFilter extends SPConfigAdmCtrl
 		$view->assign( $this->_task, 'task' );
 		$view->assign( $Filter, 'filter' );
 		$view->determineTemplate( 'field', 'filter' );
-		$view->setTemplate( 'field.templates.edit' );
+        $view->setTemplate( 'default' );
 		$view->display();
 	}
 
