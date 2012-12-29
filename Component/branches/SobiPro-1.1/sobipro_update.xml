@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>SobiPro</name>
-	<creationDate>27 December 2012</creationDate>
+	<creationDate>29 December 2012</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2012 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.1.0.E</version>
+	<version>1.1.0.F</version>
 	<codename>Budgie</codename>
 	<description></description>
 	<version_number>1.1.0</version_number>
@@ -71,6 +71,7 @@
 			<folder>template</folder>
 			<filename>sobipro.php</filename>
 			<filename>install.sql</filename>
+            <filename>default.php</filename>
 		</files>
 		<files>
 			<filename>sobipro.xml</filename>
@@ -79,6 +80,7 @@
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.js.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.about.ini</language>
+            <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.messages.ini</languages>
 		</languages>
 	</administration>
 	<!--Generated at: Tue, 19 Jul 11 11:15:19 +0200-->
