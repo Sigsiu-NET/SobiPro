@@ -273,7 +273,13 @@ class SPTplParser
 	protected function tooltip( $data )
 	{
 		if ( !( isset( $data[ 'attributes' ][ 'href' ] ) ) ) {
-			$data[ 'attributes' ][ 'href' ] = '#';
+			/** in case it get through the params */
+			if ( isset( $data[ 'href' ] ) ) {
+				$data[ 'attributes' ][ 'href' ] = $data[ 'href' ];
+			}
+			else {
+				$data[ 'attributes' ][ 'href' ] = '#';
+			}
 		}
 		$data[ 'attributes' ][ 'rel' ] = $data[ 'type' ];
 		if ( $data[ 'type' ] == 'tooltip' ) {
@@ -320,6 +326,9 @@ class SPTplParser
 		}
 		else {
 			$attr = array();
+			if ( isset( $data[ 'attributes' ][ 'type' ] ) ) {
+				unset( $data[ 'attributes' ][ 'type' ] );
+			}
 			if ( count( $data[ 'attributes' ] ) ) {
 				foreach ( $data[ 'attributes' ] as $n => $v ) {
 					$attr[ ] = "{$n}=\"{$v}\"";
@@ -416,10 +425,14 @@ class SPTplParser
 			case 'link':
 				if ( $type == 'link' ) {
 					$class = null;
-					if ( isset( $cell[ 'attributes' ][ 'class' ] ) && $cell[ 'attributes' ][ 'class' ] ) {
+					$target = null;
+					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
 						$class = "class=\"{$cell[ 'attributes' ][ 'class' ]}\" ";
 					}
-					$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class} >";
+					if ( $this->istSet( $cell[ 'attributes' ], 'target' ) ) {
+						$target = "target=\"{$cell[ 'attributes' ][ 'target' ]}\" ";
+					}
+					$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class}{$target} >";
 				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'label' ) ) {
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
@@ -585,7 +598,12 @@ class SPTplParser
 			else {
 				$icon = $button[ 'ico' ];
 			}
-			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+			if ( $icon != 'none' ) {
+				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+			}
+			else {
+				$this->_out[ ] = '&nbsp;&nbsp;' . $label;
+			}
 			$this->_out[ ] = '</a>';
 			$this->_out[ ] = '<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span>&nbsp;</button>';
 			$this->_out[ ] = '<div class="dropdown-menu" id="' . SPLang::nid( $button[ 'task' ] ) . '">';

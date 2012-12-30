@@ -145,6 +145,7 @@ class SPJoomlaCMSHelper
 	/**
 	 * Install language file
 	 * @param string $lang
+	 * @param bool $force
 	 * @return array
 	 */
 	public static function installLang( $lang, $force = true )

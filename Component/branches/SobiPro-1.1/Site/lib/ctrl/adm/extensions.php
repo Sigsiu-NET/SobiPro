@@ -297,7 +297,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		if ( SPRequest::word( 'callback' ) ) {
 			return $this->downloadRequest();
 		}
-		$pid = SPRequest::cmd( 'plid' );
+		$pid = str_replace( '-', '_', SPRequest::cmd( 'exid' ) );
 		$msg = SPFactory::Controller( 'progress' );
 		$msg->progress( 5, Sobi::Txt( 'EX.CONNECTING_TO_REPO' ) );
 		if ( !( strlen( $pid ) ) ) {
@@ -337,7 +337,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			return $this->parseSoapRequest( $response, null, SPRequest::cmd( 'plid' ) );
 		}
 		elseif ( is_array( $response ) && isset( $response[ 'message' ] ) ) {
-			$msg->message( $response[ 'message' ] );
+			$type = isset( $response[ 'message-type' ] ) ? $response[ 'message-type' ] : SPC::ERROR_MSG;
+			$msg->message( $response[ 'message' ], $type );
 			exit;
 		}
 		elseif ( $response === true || isset( $response[ 'package' ] ) ) {
@@ -351,17 +352,16 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
 				exit;
 			}
-			SPFactory::mainframe()->msg( $r );
-			$msg->progress( 95, $r );
-//			sleep( 2 );
-			$msg->progress( 100, $r );
+			$msg->progress( 95, $r[ 'msg' ] );
+			sleep( 20 );
+			$msg->progress( 100, $r[ 'msg' ], $r[ 'msgtype' ] );
 			exit;
 		}
 	}
 
 	private function downloadRequest()
 	{
-		$pid = SPRequest::cmd( 'plid' );
+		$pid = SPRequest::cmd( 'exid' );
 		$msg = SPFactory::Controller( 'progress' );
 		$msg->progress( 50, Sobi::Txt( 'EX.CONNECTING_TO_REPO' ) );
 		$pid = explode( '.', $pid );
@@ -377,7 +377,6 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$answer[ str_replace( 'sprpfield_', null, $k ) ] = $v;
 			}
 		}
-		$dir = SPLoader::dirPath( 'etc.repos.' . $repo, 'front', false );
 		$defFile = SPLoader::path( "etc.repos.{$repo}.repository", 'front', true, 'xml' );
 		$repository = SPFactory::Instance( 'services.installers.repository' );
 		$repository->loadDefinition( $defFile );
@@ -429,7 +428,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$progress = 5;
 		$msg->progress( $progress, Sobi::Txt( 'EX.FOUND_NUM_REPOS', array( 'count' => $cr ) ) );
 		$repository = SPFactory::Instance( 'services.installers.repository' );
-//		sleep( 1 );
+//		sleep( 5 );
 		$steps = 2;
 		$pstep = ( 80 / $cr ) / $steps;
 		$list = array();
@@ -484,7 +483,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$file->save();
 //			sleep( 1 );
 		}
-		$msg->progress( 100, Sobi::Txt( 'EX.EXT_LIST_UPDATED' ) );
+		$msg->progress( 100, Sobi::Txt( 'EX.EXT_LIST_UPDATED' ), SPC::SUCCESS_MSG );
+		SPFactory::message()->success( Sobi::Txt( 'EX.EXT_LIST_UPDATED' ), false );
 		exit;
 	}
 
@@ -494,54 +494,61 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$view = SPFactory::View( 'extensions', true );
 		$def = SPFactory::Instance( 'types.array' );
 		$list = null;
+		$apps = array();
 		if ( SPFs::exists( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) ) ) {
 			$list = $def->fromXML( DOMDocument::load( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) ), 'extensionslist' );
 		}
 		if ( !( count( $list ) ) ) {
-			SPMainFrame::msg(
-				array(
-					'msg' => Sobi::Txt( 'EX.MSG_UPDATE_FIRST' ),
-					'msgtype' => SPC::ERROR_MSG
-				)
-			);
-			$view->assign( Sobi::Txt( 'UNKNOWN' ), 'last_update' );
+			SPFactory::message()->warning( 'EX.MSG_UPDATE_FIRST' );
+			$status = array( 'label' => Sobi::Txt( 'EX.LAST_UPDATED', Sobi::Txt( 'UNKNOWN' ) ), 'type' => SPC::ERROR_MSG );
+			$view->assign( $status, 'last-update' );
 		}
 		else {
 			try {
-				SPFactory::db()->select( '*', 'spdb_plugins' );
-				$installed = SPFactory::db()->loadAssocList();
+				$installed = SPFactory::db()
+						->select( '*', 'spdb_plugins' )
+						->loadAssocList();
 			} catch ( SPException $x ) {
 			}
-			$view->assign( SPFactory::config()->date( $list[ 'extensionslist' ][ 'created' ] ), 'last_update' );
+			$status = array( 'label' => Sobi::Txt( 'EX.LAST_UPDATED', SPFactory::config()->date( $list[ 'extensionslist' ][ 'created' ] ) ), 'type' => SPC::INFO_MSG );
+			$view->assign( $status, 'last-update' );
 			$list = $list[ 'extensionslist' ][ 'extensions' ];
 			if ( count( $list ) ) {
 				foreach ( $list as $pid => $plugin ) {
-					$plugin[ 'installed' ] = 0;
+					$plugin[ 'installed' ] = -1;
+					$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.INSTALL_APP' ), 'class' => 'install' );
+					$eid = $pid;
+					if ( $plugin[ 'type' ] == 'language' ) {
+						$eid = explode( '-', $pid );
+						$eid[ 0 ] = strtolower( $eid[ 0 ] );
+						$eid[ 1 ] = strtoupper( $eid[ 1 ] );
+						$eid = implode( '-', $eid );
+					}
 					if ( count( $installed ) ) {
-						$eid = $pid;
-						if ( $plugin[ 'type' ] == 'language' ) {
-							$eid = explode( '_', $pid );
-							$eid[ 0 ] = strtolower( $eid[ 0 ] );
-							$eid[ 1 ] = strtoupper( $eid[ 1 ] );
-							$eid = implode( '-', $eid );
-						}
+
 						foreach ( $installed as $ex ) {
-							if ( $eid == $ex[ 'pid' ] ) {
-								$plugin[ 'installed' ] = true;
+							if ( $eid == $ex[ 'pid' ] || str_replace( '_', '-', $ex[ 'pid' ] ) == $eid ) {
+								$plugin[ 'installed' ] = -2;
+								$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.REINSTALL_APP' ), 'class' => 'reinstall' );
 								if ( version_compare( $plugin[ 'version' ], $ex[ 'version' ], '>' ) ) {
-									$plugin[ 'installed' ] = 2;
+									$plugin[ 'installed' ] = -3;
+									$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.UPDATE_APP' ), 'class' => 'update' );
 								}
 							}
 						}
 					}
-					$plugin[ 'pid' ] = $pid;
-					$list[ $pid ] = $plugin;
+					$plugin[ 'pid' ] = $eid;
+					$plugin[ 'eid' ] = $plugin[ 'repository' ] . '.' . $plugin[ 'type' ] . '.' . $plugin[ 'pid' ];
+					$list[ $eid ] = $plugin;
+					$index = in_array( $plugin[ 'type' ], array( 'application', 'field', 'update', 'template', 'language' ) ) ? $plugin[ 'type' ] . 's' : 'others';
+					$apps[ $index ][ ] = $plugin;
 				}
 			}
 		}
 		$view->assign( $this->_task, 'task' )
 				->assign( $this->menu(), 'menu' )
-				->assign( $list, 'applications' )
+				->assign( $apps, 'extensions' )
+				->assign( $list, 'full-list' )
 				->determineTemplate( 'extensions', $this->_task );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
 		$view->display();
@@ -966,21 +973,21 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 		if ( $path ) {
 			if ( !( $arch->extract( $path ) ) ) {
-				$this->ajaxResponse( $ajax, SPLang::e( 'CANNOT_EXTRACT_ARCHIVE', basename( $file ), $path ), false, SPC::ERROR_MSG );
+				return $this->ajaxResponse( $ajax, SPLang::e( 'CANNOT_EXTRACT_ARCHIVE', basename( $file ), $path ), false, SPC::ERROR_MSG );
 			}
 			$dir =& SPFactory::Instance( 'base.fs.directory', $path );
 			$xml = array_keys( $dir->searchFile( '.xml', false, 2 ) );
 			if ( !( count( $xml ) ) ) {
-				$this->ajaxResponse( $ajax, SPLang::e( 'NO_INSTALL_FILE_IN_PACKAGE' ), false, SPC::ERROR_MSG );
+				return $this->ajaxResponse( $ajax, SPLang::e( 'NO_INSTALL_FILE_IN_PACKAGE' ), false, SPC::ERROR_MSG );
 			}
 			$definition = $this->searchInstallFile( $xml );
 			if ( !( $definition ) ) {
 				if ( SPFactory::CmsHelper()->installerFile( $xml ) ) {
 					$message = SPFactory::CmsHelper()->install( $xml, $path );
-					$this->ajaxResponse( $ajax, $message[ 'msg' ], false, $message[ 'msgtype' ] );
+					return $this->ajaxResponse( $ajax, $message[ 'msg' ], true, $message[ 'msgtype' ] );
 				}
 				else {
-					$this->ajaxResponse( $ajax, SPLang::e( 'NO_INSTALL_FILE_IN_PACKAGE' ), false, SPC::ERROR_MSG );
+					return $this->ajaxResponse( $ajax, SPLang::e( 'NO_INSTALL_FILE_IN_PACKAGE' ), false, SPC::ERROR_MSG );
 				}
 			}
 			/** @var $installer SPInstaller */
@@ -988,28 +995,29 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			try {
 				$installer->validate();
 				$msg = $installer->install();
-				$this->ajaxResponse( $ajax, $msg, true, SPC::SUCCESS_MSG );
+				return $this->ajaxResponse( $ajax, $msg, true, SPC::SUCCESS_MSG );
 			} catch ( SPException $x ) {
-				$this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );
+				return $this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );
 			}
 		}
 		else {
-			$this->ajaxResponse( $ajax, SPLang::e( 'NO_FILE_HAS_BEEN_UPLOADED' ), false, SPC::ERROR_MSG );
+			return $this->ajaxResponse( $ajax, SPLang::e( 'NO_FILE_HAS_BEEN_UPLOADED' ), false, SPC::ERROR_MSG );
 		}
 	}
 
 	protected function ajaxResponse( $ajax, $message, $redirect, $type )
 	{
 		if ( $ajax ) {
-			if( $redirect ) {
+			if ( $redirect ) {
 				SPFactory::message()->setMessage( $message, false, $type );
 			}
 			$response = array(
 				'type' => $type,
 				'text' => $message,
-				'redirect' =>  $redirect ? Sobi::Url( 'extensions.installed' ) : false,
+				'redirect' => $redirect ? Sobi::Url( 'extensions.installed' ) : false,
 				'callback' => $type == SPC::SUCCESS_MSG ? 'SPExtensionInstaller' : false
 			);
+			header( 'Content-type: application/json' );
 			SPFactory::mainframe()->cleanBuffer();
 			echo json_encode( $response );
 			exit;

@@ -26,6 +26,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 class SPJoomlaInstaller
 {
 	protected $error = null;
+	protected $errorType = null;
 	protected $id = null;
 	/**
 	 * Enter description here ...
@@ -99,7 +100,7 @@ class SPJoomlaInstaller
 		}
 		if( $this->error ) {
 			Sobi::Error( 'LangInstaller', $this->error, SPC::NOTICE, 0 );
-			$msg = array( 'msg' => $this->error, 'msgtype' => SPC::ERROR_MSG );
+			$msg = array( 'msg' => $this->error, 'msgtype' => $this->errorType );
 		}
 		return $msg;
 	}
@@ -151,10 +152,12 @@ class SPJoomlaInstaller
 				$file->save();
 				$this->storeData( $type, $def );
 			}
-			return $msg;
+			return array( 'msg' => $msg, 'msgtype' => SPC::SUCCESS_MSG );
 		}
 		else {
 			$this->error = Sobi::Txt( 'CMS_EXT_NOT_INSTALLED' );
+			$this->errorType = SPC::ERROR_MSG;
+			return array( 'msg' => $this->error, 'msgtype' => SPC::ERROR_MSG );
 		}
 	}
 
@@ -213,7 +216,7 @@ class SPJoomlaInstaller
 		$this->definition->normalizeDocument();
 		$file->content( $this->definition->saveXML() );
 		$file->save();
-		return Sobi::Txt( 'LANG_INSTALLED', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue );
+		return array( 'msg' => Sobi::Txt( 'LANG_INSTALLED', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ), 'msgtype' => SPC::SUCCESS_MSG );
 	}
 
 	private function langFiles( $tag, $def, $dir, &$FilesLog )
@@ -223,6 +226,7 @@ class SPJoomlaInstaller
 			implode( DS, array( SOBI_ROOT, 'language', $this->id ) );
 		if( !( file_exists( $target ) ) ) {
 			$this->error = Sobi::Txt( 'LANG_INSTALL_NO_CORE', $this->id );
+			$this->errorType = SPC::WARN_MSG;
 			SPFs::mkdir( $target );
 		}
 		$files = $def

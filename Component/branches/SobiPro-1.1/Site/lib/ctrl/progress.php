@@ -27,9 +27,24 @@ SPLoader::loadController( 'controller' );
  */
 class SPProgressCtrl extends SPController
 {
-	public function __construct() {}
-	private $id = null;
-	private $msg = null;
+	private $file = null;
+	private $message = null;
+	private $type = null;
+	private $progress = 0;
+	private $interval = 0;
+
+	public function __construct()
+	{
+		$ident = SPRequest::cmd( 'session' ) ? SPRequest::cmd( 'ProgressMsg' . SPRequest::cmd( 'session' ), null, 'cookie' ) : SPRequest::cmd( 'ProgressMsg', null, 'cookie' );
+		$this->file = SPLoader::path( 'tmp.' . $ident, 'front', false, 'tmp' );
+		if ( SPFs::exists( $this->file ) ) {
+			$content = json_decode( SPFs::read( $this->file ), true );
+			$this->message = $content[ 'message' ];
+			$this->type = $content[ 'type' ];
+			$this->progress = $content[ 'progress' ];
+			$this->interval = $content[ 'interval' ];
+		}
+	}
 
 	/**
 	 */
@@ -37,46 +52,45 @@ class SPProgressCtrl extends SPController
 	{
 		SPFactory::mainframe()->cleanBuffer();
 		header( 'Content-type: application/json' );
-		if( SPFs::exists( SPLoader::path( 'tmp.'.SPRequest::cmd( 'sppbid', null, 'cookie' ), 'front', false, 'tmp' ) ) ) {
-			echo SPFs::read( SPLoader::path( 'tmp.'.SPRequest::cmd( 'sppbid', null, 'cookie' ), 'front', false, 'tmp' ) );
+		if ( SPFs::exists( $this->file ) ) {
+			echo SPFs::read( $this->file );
+		}
+		else {
+			echo json_encode( array( 'progress' => 0, 'message' => '', 'interval' => 100, 'type' => '' ) );
 		}
 		exit;
 	}
 
-	public function message( $message )
+	private function status( $message, $progress = 0, $interval = 0, $type = SPC::INFO_MSG )
 	{
-		$progress = "<div class=\"SPPbarMsgbox\" style=\"text-align:left;\">{$message}</div>";
-		SPFs::write( SPLoader::path( 'tmp.'.SPRequest::cmd( 'sppbid', null, 'cookie' ), 'front', false, 'tmp' ), json_encode( array( 'progress' => 0, 'msg' => $progress, 'interval' => 0 ) ) );
+		if ( !( strlen( $message ) ) ) {
+			$message = Sobi::Txt( 'PROGRESS_WORKING' );
+		}
+		$progress = $progress ? $progress : $this->progress;
+		$interval = $interval ? $interval : $this->interval;
+		$type = $type ? $type : $this->type;
+		$this->progress = $progress;
+		$this->message = $message;
+		$this->interval = $interval;
+		$this->type = $type;
+		SPFs::write( $this->file, json_encode( array( 'progress' => $progress, 'message' => $message, 'interval' => $interval, 'type' => $type ) ) );
+	}
+
+	public function message( $message, $type = SPC::INFO_MSG )
+	{
+		$this->status( $message, 0, 0, $type );
 	}
 
 	public function error( $message )
 	{
-		$bgimg = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ).'/progress/bg.gif' );
-		$progress = "<div class=\"SPPbarMsgbox\" style=\"color:red;\">{$message}</div>";
-		SPFs::write( SPLoader::path( 'tmp.'.SPRequest::cmd( 'sppbid', null, 'cookie' ), 'front', false, 'tmp' ), json_encode( array( 'progress' => 0, 'msg' => $progress ) ) );
-		sleep( 5 );
-		SPFs::write( SPLoader::path( 'tmp.'.SPRequest::cmd( 'sppbid', null, 'cookie' ), 'front', false, 'tmp' ), json_encode( array( 'progress' => 100, 'msg' => $progress,  'interval' => 0 ) ) );
+		$this->status( $message, 0, 0, SPC::ERROR_MSG );
 	}
 
-	public function progress( $percent, $message = null, $interval = 1000 )
+	public function progress( $percent, $message = null, $type = SPC::INFO_MSG, $interval = 1000 )
 	{
-		$this->id = SPRequest::cmd( 'sppbid', null, 'cookie' );
+		$this->id = SPRequest::cmd( 'ProgressMsg', null, 'cookie' );
 		$percent = ceil( $percent );
 		$this->msg = ( strlen( $message ) ) ? $message : $this->msg;
-		$bgimg = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ).'/progress/bg.gif' );
-		$stimg = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ).'/progress/single.gif' );
-		$progress  = null;
-		for( $i = 0; $i < $percent; $i++ ) {
-			if( $i > 100 ) {
-				break;
-			}
-			$progress .= "<img src=\"{$stimg}\" width=\"5\" height=\"15\">";
-		}
-		$progress = "
-			<div class=\"SPPbarMsgbox\">{$this->msg}</div>
-			<div class=\"SPPbarProgressbar\" style=\"background-image: url({$bgimg});\">
-				<div class=\"SPPbarPercentbox\">{$progress}</div>
-			</div>";
-		SPFs::write( SPLoader::path( 'tmp.'.$this->id, 'front', false, 'tmp' ), json_encode( array( 'progress' => $percent, 'msg' => $progress,  'interval' => $interval ) ) );
+		$this->status( $message, $percent, $interval, $type );
 	}
 }

@@ -23,7 +23,11 @@ SobiPro.jQuery( document ).ready( function ()
 			e.preventDefault();
 			e.stopPropagation();
 			if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
-				SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit' );
+				var handler = { continue:true };
+				SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit', [ handler, task ] )
+				if ( handler.continue == false ) {
+					return true;
+				}
 				SPTriggerFrakingWYSIWYGEditors();
 				req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
 				SobiPro.jQuery( SobiPro.jQuery( '#SPAdminForm' ).find( ':button' ) ).each( function ( i, b )
@@ -42,7 +46,11 @@ SobiPro.jQuery( document ).ready( function ()
 					success:function ( data )
 					{
 						if ( !( data.redirect.execute ) ) {
-							SobiPro.jQuery( '#SPAdminForm' ).trigger( 'AfterAjaxSubmit', [ data ] );
+							var handler = { continue:true };
+							SobiPro.jQuery( '#SPAdminForm' ).trigger( 'AfterAjaxSubmit', [ handler, data ] )
+							if ( handler.continue == false ) {
+								return true;
+							}
 							count++;
 							c = '';
 							if ( count > 1 ) {
