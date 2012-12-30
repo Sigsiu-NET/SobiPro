@@ -412,7 +412,7 @@ class SPTplParser
 			return $this->tooltip( $cell );
 		}
 		if ( isset( $cell[ 'attributes' ][ 'class' ] ) ) {
-			$c = 'SpCell' . ucfirst( $cell[ 'attributes' ][ 'class' ] );
+			$c = $cell[ 'attributes' ][ 'class' ];
 			$this->_out[ ] = "\n<{$span} class=\"{$c}\">\n";
 		}
 		else {
@@ -424,7 +424,7 @@ class SPTplParser
 			case 'text':
 			case 'link':
 				if ( $type == 'link' ) {
-					$class = null;
+                    $class = null;
 					$target = null;
 					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
 						$class = "class=\"{$cell[ 'attributes' ][ 'class' ]}\" ";
@@ -438,7 +438,11 @@ class SPTplParser
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
 				}
 				if ( $this->istSet( $cell, 'label' ) ) {
-					$this->_out[ ] = $cell[ 'label' ];
+                    $class = null; //if label in cell directly (with optional class) add a span as it could be a label/value pair
+                    if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
+                        $class = "class=\"{$cell[ 'attributes' ][ 'class' ]}Label\"";
+                    }
+					$this->_out[ ] = "<span {$class}>{$cell[ 'label' ]}</span>";
 				}
 				if ( isset( $cell[ 'content' ][ 'element' ] ) && $cell[ 'content' ][ 'element' ] == 'button' ) {
 					$this->renderButton( $cell[ 'content' ] );

@@ -29,19 +29,19 @@
 				<!--<header label="ERR.SITE_TITLE" icon="SobiFieldList" />-->
 				<table condition="errors.length">
 					<head>
-						<cell label="ERR.ERROR_INFO" type="text" class="center" />
+						<cell label="ERR.ERROR_INFO" type="text" class="SpCellCenter" />
 						<cell />
-						<cell label="ERR.ERROR_DETAILS" type="text" class="center" />
+						<cell label="ERR.ERROR_DETAILS" type="text" class="SpCellCenter" />
 					</head>
 					<loop subject="errors">
-						<cell type="text" value="errNum" class="center" />
+						<cell type="text" value="errNum" class="SpCellCenter" />
 						<cell>
 							<cell type="text" value="errMsg" />
-							<cell label="ERR.ERROR_DATE" type="text" value="date" class="" />
-							<cell label="ERR.IN_FILE" type="text" value="errFile" class="" />
-							<cell label="ERR.REQUESTED_URI" type="text" value="errReq" class="" />
+							<cell label="ERR.ERROR_DATE" type="text" value="date" />
+							<cell label="ERR.IN_FILE" type="text" value="errFile" class="colon" />
+							<cell label="ERR.REQUESTED_URI" type="text" value="errReq" class="colon" />
 						</cell>
-						<cell class="center">
+						<cell class="SpCellCenter">
 							<cell type="link" value="eid">
 								<url type="intern" class="label label-info">
 									<param name="task" value="error.details" />

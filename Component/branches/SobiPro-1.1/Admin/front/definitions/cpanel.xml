@@ -62,13 +62,13 @@
                         <div class="modal-body">
                             <table>
                                 <head>
-                                    <cell label="CPANEL_ISSUES_TYPE" type="text" class="center" />
+                                    <cell label="CPANEL_ISSUES_TYPE" type="text" class="SpCellCenter" />
                                     <cell label="CPANEL_ISSUES_SECTION" type="text" />
                                     <cell label="CPANEL_ISSUES_MESSAGE" type="text" />
                                 </head>
                                 <loop subject="system-state.messages">
                                     <cell type="text" class="IssueMsg">
-                                        <cell type="text" value="type-text" class="left label label-var:[type]" />
+                                        <cell type="text" value="type-text" class="SpCellLeft label label-var:[type]" />
                                     </cell>
                                     <cell type="text" value="section.link" />
                                     <cell type="text" value="message" />
@@ -99,14 +99,14 @@
 				</header>
 				<table>
 					<head>
-						<cell type="checkbox" rel="c_sid" class="center" />
-						<cell label="SECTIONS.HEADER_ID" type="text" class="center" />
+						<cell type="checkbox" rel="c_sid" class="SpCellCenter" />
+						<cell label="SECTIONS.HEADER_ID" type="text" class="SpCellCenter" />
 						<cell label="SECTIONS.HEADER_NAME" type="text" />
-						<cell label="SECTION.STATE_HEAD" type="text" class="center" />
+						<cell label="SECTION.STATE_HEAD" type="text" class="SpCellCenter" />
 					</head>
 					<loop subject="sections">
-						<cell type="checkbox" name="c_sid" value="id" class="center" />
-						<cell type="text" value="id" class="center" />
+						<cell type="checkbox" name="c_sid" value="id" class="SpCellCenter" />
+						<cell type="text" value="id" class="SpCellCenter" />
 						<cell>
 							<cell type="link" value="name">
 								<url type="intern">
@@ -114,7 +114,7 @@
 								</url>
 							</cell>
 						</cell>
-						<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+						<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="section.toggle.enabled" />
 								<param name="sid" value="id" parse="true" />
@@ -127,7 +127,7 @@
 						<table condition="entries.popular.length">
 							<head>
 								<cell label="ENTRY.HEADER_NAME" type="text" />
-								<cell label="ENTRY.HEADER_COUNTER" type="text" class="center" />
+								<cell label="ENTRY.HEADER_COUNTER" type="text" class="SpCellCenter" />
 								<cell label="ENTRY.HEADER_SECTION" type="text" />
 							</head>
 							<loop subject="entries.popular">
@@ -139,7 +139,7 @@
 										</url>
 									</cell>
 								</cell>
-								<cell type="text" value="counter" class="center" />
+								<cell type="text" value="counter" class="SpCellCenter" />
 								<cell>
 									<cell type="link" value="properties.section.name">
 										<url type="intern">
@@ -154,7 +154,7 @@
 						<table condition="entries.latest.length">
 							<head>
 								<cell label="ENTRY.HEADER_NAME" type="text" />
-								<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="center" />
+								<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter" />
 								<cell label="ENTRY.HEADER_SECTION" type="text" />
 							</head>
 							<loop subject="entries.latest">
@@ -166,7 +166,7 @@
 										</url>
 									</cell>
 								</cell>
-								<cell type="text" value="createdTime" class="center" />
+								<cell type="text" value="createdTime" class="SpCellCenter" />
 								<cell>
 									<cell type="link" value="properties.section.name">
 										<url type="intern">
@@ -181,7 +181,7 @@
 						<table condition="entries.unapproved.length">
 							<head>
 								<cell label="ENTRY.HEADER_NAME" type="text" />
-								<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="center" />
+								<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter" />
 								<cell label="ENTRY.HEADER_SECTION" type="text" />
 							</head>
 							<loop subject="entries.unapproved">
@@ -193,7 +193,7 @@
 										</url>
 									</cell>
 								</cell>
-								<cell type="text" value="createdTime" class="center" />
+								<cell type="text" value="createdTime" class="SpCellCenter" />
 								<cell>
 									<cell type="link" value="properties.section.name">
 										<url type="intern">

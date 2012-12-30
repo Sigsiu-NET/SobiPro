@@ -56,8 +56,7 @@
 	overflow: hidden;
 }
 
-div.sigsiuTree a,.sigsiuTree a,a.treeNode:hover,a.treeNode,a.treeNode:visited
-	{
+div.sigsiuTree a,.sigsiuTree a,a.treeNode:hover,a.treeNode,a.treeNode:visited {
 	color: #333333 !important;
 	text-decoration: none !important;
 	font-weight: normal !important;

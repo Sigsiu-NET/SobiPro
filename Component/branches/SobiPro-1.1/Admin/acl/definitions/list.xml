@@ -31,14 +31,14 @@
 				<message id="spMessage" />
 				<table condition="rules.length">
 					<head>
-						<cell type="checkbox" rel="rid" class="center" />
-						<cell label="ACL.HEADER_RID" type="text" class="center" />
-						<cell label="ACL.HEADER_NAME" type="text" class="left" />
-						<cell label="ACL.STATE_HEAD" type="text" class="center" />
+						<cell type="checkbox" rel="rid" class="SpCellCenter" />
+						<cell label="ACL.HEADER_RID" type="text" class="SpCellCenter" />
+						<cell label="ACL.HEADER_NAME" type="text" class="SpCellLeft" />
+						<cell label="ACL.STATE_HEAD" type="text" class="SpCellCenter" />
 					</head>
 					<loop subject="rules">
-						<cell type="checkbox" name="rid" value="rid" class="center" />
-						<cell type="text" value="rid" class="center" />
+						<cell type="checkbox" name="rid" value="rid" class="SpCellCenter" />
+						<cell type="text" value="rid" class="SpCellCenter" />
 						<cell>
 							<cell type="link" value="name">
 								<url type="intern">
@@ -48,7 +48,7 @@
 							</cell>
 							<cell type="text" value="note" class="subText" />
 						</cell>
-						<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+						<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="acl.toggle.enabled" />
 								<param name="rid" value="rid" parse="true" />
