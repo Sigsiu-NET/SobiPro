@@ -124,6 +124,9 @@ input[type='radio'] {
 .SobiPro .SpCellContainer {
   clear: both;
 }
+.SobiPro .SpCellPairLabel {
+  margin-right: 10px;
+}
 .submenu-box,
 div.m {
   background-color: #ffffff;
