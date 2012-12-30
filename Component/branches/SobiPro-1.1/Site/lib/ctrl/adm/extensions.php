@@ -353,7 +353,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				exit;
 			}
 			$msg->progress( 95, $r[ 'msg' ] );
-			sleep( 20 );
+//			sleep( 20 );
 			$msg->progress( 100, $r[ 'msg' ], $r[ 'msgtype' ] );
 			exit;
 		}

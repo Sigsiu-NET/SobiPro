@@ -282,6 +282,8 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param DOMNode $xml
+	 * @param string $subject
+	 * @param integer $i
 	 * @return bool
 	 */
 	private function xmlCondition( $xml, $subject = null, $i = -1 )
@@ -291,7 +293,7 @@ class SPAdmView extends SPObject implements SPView
 			return $this->get( $subject, $i );
 		}
 		elseif ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'invert-condition' ) && $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue ) {
-			$subject = $subject ? $subject.'.'.$xml->attributes->getNamedItem( 'invert-condition' )->nodeValue : $xml->attributes->getNamedItem( 'condition' )->nodeValue;
+			$subject = $subject ? $subject.'.'.$xml->attributes->getNamedItem( 'invert-condition' )->nodeValue : $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue;
 			return !( $this->get( $subject, $i ) );
 		}
 		else {
