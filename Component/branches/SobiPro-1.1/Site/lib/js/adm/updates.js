@@ -18,11 +18,10 @@
  */
 
 
-SobiPro.jQuery( document ).live( function ()
+SobiPro.jQuery().ready( function ()
 {
 	"use strict";
 	var SpMsgType = '';
-//	var
 	SobiPro.jQuery( '#SPAdminForm' ).on( 'BeforeAjaxSubmit', function ( e, handler, task )
 	{
 		if ( task == 'extensions.fetch' ) {
@@ -87,7 +86,9 @@ SobiPro.jQuery( document ).live( function ()
 				{
 					SobiPro.DebOut( response );
 					if ( response.type != 'info' && response.type != 'success' ) {
-						var modal = '<div class="modal hide" id="' + proxy.ident + 'Modal"><div class="modal-body"><p>' + response.message + '</p></div><div class="modal-footer"><a href="#" class="btn">OK</a></div></div>'
+						var labelType = response.type == 'error' ? 'important' : response.type;
+						var label = '<span class="label label-' + labelType + '">' + response.typeText + ': &nbsp;</span>';
+						var modal = '<div class="modal hide" id="' + proxy.ident + 'Modal"><div class="modal-body"><p>' + label + response.message + '</p></div><div class="modal-footer"><a href="#" class="btn">OK</a></div></div>'
 						SobiPro.jQuery( modal ).appendTo( proxy.canvas );
 						var modalMessage = SobiPro.jQuery( '#' + proxy.ident + 'Modal' ).modal();
 						SobiPro.jQuery( '#' + proxy.ident + 'Modal' ).find( '.btn' ).click( function ()
