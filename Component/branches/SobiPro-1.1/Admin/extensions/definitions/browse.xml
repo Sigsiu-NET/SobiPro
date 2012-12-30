@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="MN.AVAILABLE_EXTENSIONS" />
+		<file type="script" filename="bootstrap.tabs" />
+		<file type="script" filename="bootstrap.tooltips" />
+		<file type="script" filename="adm.updates" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
+		<button task="extensions.fetch" label="TB.FETCH_UPDATES" ico="refresh" />
+		<divider />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="url" task="template.info" />
+			<button type="help" target="_blank" />
+		</buttons>
+	</toolbar>
+	<body>
+		<div class="row-fluid">
+			<div class="span2" id="SPRightMenu">
+				<menu />
+			</div>
+			<div class="span10">
+				<message id="spMessage" />
+				<message dismiss-button="false" parse="last-update" />
+				<div class="span12 hide" id="SpProgress">
+					<div class="span4">
+						<message type="info" label=""/>
+					</div>
+					<div class="span6">
+						<div class="progress progress-striped active" id="SpProgress">
+						  <div class="bar" style="width: 0%;"></div>
+						</div>
+					</div>
+				</div>
+
+				<tabs condition="extensions.length">
+					<tab label="APPS.LIST_APPS" condition="extensions.applications.length">
+						<div class="span12">
+							<table>
+								<head>
+									<cell label="EX.HEADER_NAME" type="text" class="left" />
+									<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_ENABLED" class="center" />
+									<cell />
+									<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="left" />
+								</head>
+								<loop subject="extensions.applications">
+									<cell class="left" >
+										<cell>
+											<tooltip>
+												<attribute name="content" value="description" parse="true" />
+												<attribute name="href" value="description-url" parse="true" />
+												<attribute name="title" value="name" parse="true" />
+											</tooltip>
+										</cell>
+									</cell>
+									<cell type="text" value="version" class="center" />
+									<cell type="ticker" value="installed" class="center" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
+									<cell>
+										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall"/>
+									</cell>
+									<cell type="text" value="author" class="center" />
+									<cell type="text" value="license" class="center" />
+									<cell class="left" condition="availability-link">
+										<cell>
+											<tooltip>
+												<attribute name="content" value="availability-expl" parse="true" />
+												<attribute name="href" value="availability-link" parse="true" />
+												<attribute name="title" value="availability" parse="true" />
+											</tooltip>
+										</cell>
+									</cell>
+									<cell type="text" value="availability" class="left" invert-condition="availability-link" />
+								</loop>
+							</table>
+						</div>
+					</tab>
+					<tab label="APPS.LIST_FIELDS" condition="extensions.fields.length">
+						<div class="span12">
+							<table>
+								<head>
+									<cell label="EX.HEADER_NAME" type="text" class="left" />
+									<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_ENABLED" class="center" />
+									<cell />
+									<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="left" />
+								</head>
+								<loop subject="extensions.fields">
+									<cell class="left" >
+										<cell>
+											<tooltip>
+												<attribute name="content" value="description" parse="true" />
+												<attribute name="href" value="description-url" parse="true" />
+												<attribute name="title" value="name" parse="true" />
+											</tooltip>
+										</cell>
+									</cell>
+									<cell type="text" value="version" class="center" />
+									<cell type="ticker" value="installed" class="center" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
+									<cell>
+										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall"/>
+									</cell>
+									<cell type="text" value="author" class="center" />
+									<cell type="text" value="license" class="center" />
+									<cell class="left" condition="availability-link">
+										<cell>
+											<tooltip>
+												<attribute name="content" value="availability-expl" parse="true" />
+												<attribute name="href" value="availability-link" parse="true" />
+												<attribute name="title" value="availability" parse="true" />
+											</tooltip>
+										</cell>
+									</cell>
+									<cell type="text" value="availability" class="left" invert-condition="availability-link" />
+								</loop>
+							</table>
+						</div>
+					</tab>
+					<tab label="APPS.LIST_TEMPLATES" condition="extensions.templates.length">
+						<div class="span12">
+							<table>
+								<head>
+									<cell label="EX.HEADER_NAME" type="text" class="left" />
+									<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_ENABLED" class="center" />
+									<cell />
+									<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="left" />
+								</head>
+								<loop subject="extensions.templates">
+									<cell class="left" >
+										<cell>
+											<tooltip>
+												<attribute name="content" value="description" parse="true" />
+												<attribute name="href" value="description-url" parse="true" />
+												<attribute name="title" value="name" parse="true" />
+											</tooltip>
+										</cell>
+									</cell>
+									<cell type="text" value="version" class="center" />
+									<cell type="ticker" value="installed" class="center" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
+									<cell>
+										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall"/>
+									</cell>
+									<cell type="text" value="author" class="center" />
+									<cell type="text" value="license" class="center" />
+									<cell class="left" condition="availability-link">
+										<cell>
+											<tooltip>
+												<attribute name="content" value="availability-expl" parse="true" />
+												<attribute name="href" value="availability-link" parse="true" />
+												<attribute name="title" value="availability" parse="true" />
+											</tooltip>
+										</cell>
+									</cell>
+									<cell type="text" value="availability" class="left" invert-condition="availability-link" />
+								</loop>
+							</table>
+						</div>
+					</tab>
+					<tab label="APPS.LIST_LANGUAGES" condition="extensions.languages.length">
+						<div class="span12">
+							<table>
+								<head>
+									<cell label="EX.HEADER_NAME" type="text" class="left" />
+									<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_ENABLED" class="center" />
+									<cell />
+									<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="left" />
+								</head>
+								<loop subject="extensions.languages">
+									<cell class="left" >
+										<cell>
+											<tooltip>
+												<attribute name="content" value="description" parse="true" />
+												<attribute name="href" value="description-url" parse="true" />
+												<attribute name="title" value="name" parse="true" />
+											</tooltip>
+										</cell>
+									</cell>
+									<cell type="text" value="version" class="center" />
+									<cell type="ticker" value="installed" class="center" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
+									<cell>
+										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall"/>
+									</cell>
+									<cell type="text" value="author" class="center" />
+									<cell type="text" value="license" class="center" />
+									<cell class="left" condition="availability-link">
+										<cell>
+											<tooltip>
+												<attribute name="content" value="availability-expl" parse="true" />
+												<attribute name="href" value="availability-link" parse="true" />
+												<attribute name="title" value="availability" parse="true" />
+											</tooltip>
+										</cell>
+									</cell>
+									<cell type="text" value="availability" class="left" invert-condition="availability-link" />
+								</loop>
+							</table>
+						</div>
+					</tab>
+					<tab label="APPS.LIST_OTHERS" condition="extensions.others.length">
+						<div class="span12">
+							<table>
+								<head>
+									<cell label="EX.HEADER_NAME" type="text" class="left" />
+									<cell label="EX.HEADER_TYPE" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_ENABLED" class="center" />
+									<cell />
+									<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="center" />
+									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="left" />
+								</head>
+								<loop subject="extensions.others">
+									<cell class="left" >
+										<cell>
+											<tooltip>
+												<attribute name="content" value="description" parse="true" />
+												<attribute name="href" value="description-url" parse="true" />
+												<attribute name="title" value="name" parse="true" />
+											</tooltip>
+										</cell>
+									</cell>
+									<cell type="text" value="type" class="center" />
+									<cell type="text" value="version" class="center" />
+									<cell type="ticker" value="installed" class="center" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
+									<cell>
+										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall"/>
+									</cell>
+									<cell type="text" value="author" class="center" />
+									<cell type="text" value="license" class="center" />
+									<cell class="left" condition="availability-link">
+										<cell>
+											<tooltip>
+												<attribute name="content" value="availability-expl" parse="true" />
+												<attribute name="href" value="availability-link" parse="true" />
+												<attribute name="title" value="availability" parse="true" />
+											</tooltip>
+										</cell>
+									</cell>
+									<cell type="text" value="availability" class="left" invert-condition="availability-link" />
+								</loop>
+							</table>
+						</div>
+					</tab>
+				</tabs>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php?option=com_sobipro" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="pid" value="pid" />
+			<field name="method" default="xhr" />
+		</hidden>
+	</config>
+</definition>

@@ -284,13 +284,15 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNode $xml
 	 * @return bool
 	 */
-	private function xmlCondition( $xml )
+	private function xmlCondition( $xml, $subject = null, $i = -1 )
 	{
 		if ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'condition' ) && $xml->attributes->getNamedItem( 'condition' )->nodeValue ) {
-			return $this->get( $xml->attributes->getNamedItem( 'condition' )->nodeValue );
+			$subject = $subject ? $subject.'.'.$xml->attributes->getNamedItem( 'condition' )->nodeValue : $xml->attributes->getNamedItem( 'condition' )->nodeValue;
+			return $this->get( $subject, $i );
 		}
 		elseif ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'invert-condition' ) && $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue ) {
-			return !( $this->get( $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue ) );
+			$subject = $subject ? $subject.'.'.$xml->attributes->getNamedItem( 'invert-condition' )->nodeValue : $xml->attributes->getNamedItem( 'condition' )->nodeValue;
+			return !( $this->get( $subject, $i ) );
 		}
 		else {
 			return true;
@@ -664,33 +666,16 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	private function xmlCell( $cell, $subject, $i, &$objects )
 	{
+		if ( !( $this->xmlCondition( $cell, $subject, $i ) ) ) {
+			return;
+		}
 		$element = array(
 			'label' => null,
 			'type' => $cell->nodeName,
 			'content' => null,
 			'attributes' => null,
 		);
-
-		/** @var DOMElement $attribute */
-		foreach ( $cell->attributes as $attribute ) {
-			switch ( $attribute->nodeName ) {
-				case 'label':
-					$element[ 'label' ] = Sobi::Txt( $attribute->nodeValue );
-					break;
-				case 'value':
-					$element[ 'content' ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
-				case 'checked-out-by':
-				case 'checked-out-time':
-				case 'valid-since':
-				case 'locked':
-				case 'valid-until':
-					$element[ 'attributes' ][ $attribute->nodeName ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
-					break;
-				default:
-					$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( str_replace( 'var:[', 'var:[' . $subject . '.', $attribute->nodeValue ), $i );
-					break;
-			}
-		}
+		$this->cellAttributes( $cell, $element, $subject, $i );
 		if ( $cell->nodeName == 'cells' ) {
 			$customCells = $this->get( $subject . '.' . $cell->attributes->getNamedItem( 'value' )->nodeValue, $i );
 			if ( count( $customCells ) ) {
@@ -725,6 +710,7 @@ class SPAdmView extends SPObject implements SPView
 						break;
 					case 'tooltip':
 						$this->xmlToolTip( $child, $element, $subject, $i );
+						$element[ 'type' ] = 'tooltip';
 						break;
 					case 'button':
 						$attributes = array();
@@ -740,6 +726,30 @@ class SPAdmView extends SPObject implements SPView
 			}
 		}
 		$objects[ ] = $element;
+	}
+
+	private function cellAttributes( $cell, &$element, $subject, $i )
+	{
+		/** @var DOMElement $attribute */
+		foreach ( $cell->attributes as $attribute ) {
+			switch ( $attribute->nodeName ) {
+				case 'label':
+					$element[ 'label' ] = Sobi::Txt( $attribute->nodeValue );
+					break;
+				case 'value':
+					$element[ 'content' ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
+				case 'checked-out-by':
+				case 'checked-out-time':
+				case 'valid-since':
+				case 'locked':
+				case 'valid-until':
+					$element[ 'attributes' ][ $attribute->nodeName ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
+					break;
+				default:
+					$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( str_replace( 'var:[', 'var:[' . $subject . '.', $attribute->nodeValue ), $i );
+					break;
+			}
+		}
 	}
 
 	private function xmlUrl( $node, $subject = null, $index = -1 )

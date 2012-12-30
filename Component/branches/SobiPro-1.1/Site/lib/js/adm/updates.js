@@ -1,4 +1,4 @@
- /**
+/**
  * @version: $Id: updates.js 551 2011-01-11 14:34:26Z Radek Suski $
  * @package: SobiPro Library
  * ===================================================
@@ -16,143 +16,109 @@
  * $Author: Radek Suski $
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/js/adm/updates.js $
  */
-var SPHandler = null;
-var SPResponse = null;
-var SPCallback = null;
-var SPExt = null;
 
-var SPSemaphor = 0;
-window.addEvent( 'domready', function() {
-	  SPResponse = new Fx.Slide( 'spupdating' );
-	  SPResponse.hide(); 
-	  SPDResponse = new Fx.Slide( 'spdresponse' );
-	  SPDResponse.hide(); 
-	  var spList = $$( "#toolbar-list a" )[ 0 ];
-	  var spDownload = $$( "#toolbar-download a" )[ 0 ];
-	  spList.onclick = null;
-	  spDownload.onclick = null;
-	  spList.addEvent( "click", function() {
-		  if( SPSemaphor == 1 ) {
-			  SobiPro.Alert( 'Operation blocked. Please wait until the pending operation is finished' );
-			  return false;
-		  }
-		  SPSemaphor = 1;
-		  $( 'splist' ).style.display = 'none';
-		  $( 'spresponse' ).innerHTML = '';
-		  $( 'spupd' ).style.display = 'block';
-		  SP_SetCookie();
-		  SPResponse.slideIn();
-		  SP_RepoWait( true );
-	  	  spDownload.onclick = null;
-	  	  spList.onclick = null;
-	  	  SobiPro.Request( SobiProAdmUrl.replace( '%task%', 'extensions.fetch' ), { method: 'get' } ).request();
-		  SP_getMsg();
-		  SPHandler = SP_getMsg.periodical( 1000 );
-	  } );
-	  spDownload.addEvent( "click", function() {
-		  if( SPSemaphor == 1 ) {
-			  SobiPro.Alert( 'Operation blocked. Please wait until the pending operation is finished' );
-			  return false;
-		  }
-		  SPSemaphor = 1;
-		  $( 'splist' ).style.display = 'none';
-		  $( 'spresponse' ).innerHTML = '';
-		  $( 'spdwn' ).style.display = 'block';
-		  SP_SetCookie();
-		  SPResponse.slideIn();
-		  var requestr = new SPForm().parse( $( 'SPAdminForm' ) ).request();
-		  new SobiPro.Json( SobiProAdmUrl.replace( '%task%', 'extensions.download' ) + '&' + requestr, {
-				onRequest: function() { 
-					SP_RepoWait( true ); 
-				},
-				onComplete: function( jsonObj, jsons )
+
+SobiPro.jQuery( document ).live( function ()
+{
+	"use strict";
+	var SpMsgType = '';
+//	var
+	SobiPro.jQuery( '#SPAdminForm' ).on( 'BeforeAjaxSubmit', function ( e, handler, task )
+	{
+		if ( task == 'extensions.fetch' ) {
+			handler.continue = false;
+			SPSetCookie( '' );
+			setTimeout( SPProgressMessage, 50 );
+			SobiPro.jQuery( '#SpProgress' ).removeClass( 'hide' );
+			SobiPro.jQuery( '#SpProgress .bar' ).css( 'width', '1%' );
+			//noinspection JSUnresolvedVariable
+			var url = SobiProAdmUrl.replace( '%task%', task );
+			SobiPro.jQuery.ajax( {'type':'get', 'url':url, 'dataType':'json'} );
+		}
+	} );
+	function SPProgressMessage()
+	{
+		SobiPro.jQuery.ajax( {
+			'type':'get',
+			'url':SobiProAdmUrl.replace( '%task%', 'progress' ),
+			'dataType':'json',
+			success:function ( response )
+			{
+				if ( SpMsgType != response.type ) {
+					SobiPro.jQuery( '#SpProgress .alert' )
+						.removeClass( SpMsgType )
+						.addClass( 'alert-' + response.type );
+					SpMsgType = 'alert-' + response.type;
+				}
+				SobiPro.jQuery( '#SpProgress .alert' ).html( response.message );
+				SobiPro.jQuery( '#SpProgress .bar' ).css( 'width', response.progress + '%' );
+				if ( response.progress < 100 ) {
+					setTimeout( SPProgressMessage, response.interval );
+				}
+				else {
+					window.location.reload();
+				}
+			}
+		} );
+	}
+
+	SobiPro.jQuery( '.SpExtInstall' ).click( function ( e )
+	{
+		new SpExtInstall( SobiPro.jQuery( this ).parent(), SobiPro.jQuery( this ).attr( 'rel' ) );
+	} );
+
+	function SpExtInstall( canvas, eid )
+	{
+		this.ident = eid.replace( /\./g, '-' );
+		this.canvas = canvas;
+		canvas.html( '<div id="' + this.ident + '"><div class="progress progress-striped"><div class="bar" style="width: 1%;"></div></div></div>' );
+		SPSetCookie( this.ident );
+		var url = SobiProAdmUrl.replace( '%task%', 'extensions.download' ) + '&exid=' + eid + '&session=' + this.ident;
+		this.progressBar = SobiPro.jQuery( '#' + this.ident ).find( '.bar' );
+		var proxy = this;
+		this.msgType = '';
+		this.progress = function ()
+		{
+			SobiPro.jQuery.ajax( {
+				'type':'get',
+				'url':SobiProAdmUrl.replace( '%task%', 'progress' ) + '&session=' + proxy.ident,
+				'dataType':'json',
+				success:function ( response )
 				{
-					SP_RepoWait( false );
-					if ( jsonObj.callback == undefined ) {
-						spresponse.slideOut();
-						$( 'spresponse' ).innerHTML = '';
-						alert( jsonObj.msg.replace(/<br\/>/gi, '\n') );
-						document.location = document.location;
+					SobiPro.DebOut( response );
+					if ( response.type != 'info' && response.type != 'success' ) {
+						var modal = '<div class="modal hide" id="' + proxy.ident + 'Modal"><div class="modal-body"><p>' + response.message + '</p></div><div class="modal-footer"><a href="#" class="btn">OK</a></div></div>'
+						SobiPro.jQuery( modal ).appendTo( proxy.canvas );
+						var modalMessage = SobiPro.jQuery( '#' + proxy.ident + 'Modal' ).modal();
+						SobiPro.jQuery( '#' + proxy.ident + 'Modal' ).find( '.btn' ).click( function ()
+						{
+							modalMessage.modal( 'hide' )
+						} );
+
 					}
-					else {
-						SPCallback = jsonObj.callback;
-						SPExt = jsonObj.extension;
-						SPDResponse.slideIn();
-						$( 'spdresponse' ).innerHTML = jsonObj.msg;
+					SobiPro.jQuery( proxy.progressBar ).css( 'width', response.progress + '%' );
+					SobiPro.jQuery( proxy.progressBar ).html( response.progress + '%' );
+					if ( response.progress < 100 && response.type != 'error' ) {
+						setTimeout( function ()
+						{
+							proxy.progress();
+						}, response.interval );
 					}
 				}
-		  } ).send();		  		 
-		  SP_getMsg();
-		  SPHandler = SP_getMsg.periodical( 1000 );
-	  } );	  
-} );
-
-function SP_RepoCallback()
-{
-	var requestr = new SPForm().parse( $( 'SPAdminForm' ) ).request();
-	r = SobiProAdmUrl.replace( '%task%', 'extensions.download' ) + '&plid=' + SPExt + '&callback=' + SPCallback;
-	var request = new SobiPro.Json( r, {
-		onRequest: function() { 
-			SP_RepoWait( true ); 
-		},
-		onComplete: function( jsonObj, jsons )
-		{
-			SP_RepoWait( false );
-			if ( jsonObj.callback == undefined ) {
-				spresponse.slideOut();
-				$( 'spresponse' ).innerHTML = '';
-				alert( jsonObj.msg.replace(/<br\/>/gi, '\n') );
-				document.location = document.location;
-			}
-			else {
-				SPCallback = jsonObj.callback;
-				$( 'spresponse' ).innerHTML = jsonObj.msg;
-			}
+			} );
 		}
-	} ).send();
-}
-
-function SP_RepoWait( on )
-{
-	if( on ) {
-		$( 'sprwait' ).innerHTML = '<img src="../media/sobipro/styles/progress.gif"/>';
+		SobiPro.jQuery.ajax( {'type':'get', 'url':url, 'dataType':'json'} );
+		setTimeout( function ()
+		{
+			proxy.progress();
+		}, 500 );
 	}
-	else {
-		$( 'sprwait' ).innerHTML = '&nbsp;';
+
+	function SPSetCookie( ident )
+	{
+		var expDate = new Date();
+		expDate.setHours( expDate.getHours() + 1 );
+		var cid = expDate.getTime() + Math.floor( Math.random() * 11 ) * 100;
+		document.cookie = "SPro_ProgressMsg" + ident + "=" + cid + ";expires=" + expDate.toUTCString() + ";path=/";
 	}
-}
-
-function SP_SetCookie()
-{
-	  var exdate = new Date();
-	  exdate.setHours( exdate.getHours() + 1 );
-	  cid = exdate.getTime() + Math.floor( Math.random() * 11 ) * 100;
-	  document.cookie = "SPro_sppbid=" + cid + ";expires=" + exdate.toUTCString() + ";path=/";	
-}
-
-var SP_getMsg = function() 
-{
-	new SobiPro.Json( 
-			SobiProAdmUrl.replace( '%task%', 'progress' ), 
-			{ 
-				onComplete: function( jsonObj, jsons ) 
-				{ 
-					$( 'spresponse' ).innerHTML = jsonObj.msg; 
-					if( jsonObj.interval != undefined ) {
-						$clear( SPHandler );
-						if( jsonObj.interval != 0 ) {
-							SPHandler = SP_getMsg.periodical( jsonObj.interval );
-						}
-						else {
-							SP_RepoWait( false );
-						}
-					}
-					if( jsonObj.progress >= 99 ) {
-						SP_RepoWait( false );
-						window.location.reload();
-						$clear( SPHandler ); 
-					}
-				} 
-			} 
-	).send();
-};
+} );

@@ -94,7 +94,7 @@
 								</url>
 							</cell>
 						</cell>
-						<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','enabled':'ok'}" valid-since="validSince" valid-until="validUntil">
+						<cell type="ticker" value="state" class="center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="category.toggle.enabled" />
 								<param name="sid" value="id" parse="true" />

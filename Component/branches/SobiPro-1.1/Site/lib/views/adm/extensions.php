@@ -31,10 +31,6 @@ class SPExtensionsView extends SPAdmView
 	public function display()
 	{
 		switch ( $this->get( 'task' ) ) {
-			case 'installed':
-//				$this->installed();
-				break;
-//			case 'browse':
 			case 'manage':
 				$this->browse();
 				$this->determineTemplate( 'extensions', 'section' );
@@ -51,39 +47,6 @@ class SPExtensionsView extends SPAdmView
 		if ( count( $list ) ) {
 			$c = 0;
 			foreach ( $list as $plugin ) {
-				if ( isset( $plugin[ 'availability_expl' ] ) ) {
-					if ( isset( $plugin[ 'availability_link' ] ) ) {
-						$plugin[ 'availability' ] = SPTooltip::toolTip( $plugin[ 'availability_expl' ], $plugin[ 'availability' ], null, null, $plugin[ 'availability' ], $plugin[ 'availability_link' ] );
-					}
-					else {
-						$plugin[ 'availability' ] = SPTooltip::toolTip( $plugin[ 'availability_expl' ], $plugin[ 'availability' ], null, null, $plugin[ 'availability' ] );
-					}
-				}
-				if ( isset( $plugin[ 'installed' ] ) ) {
-					switch ( $plugin[ 'installed' ] ) {
-						case 0:
-							$plugin[ 'installed' ] = SPTooltip::toolTip(
-								Sobi::Txt( 'EX.BRWOSE_NOT_INSTALLED_EXPL' ),
-								Sobi::Txt( 'EX.BRWOSE_NOT_INSTALLED' ),
-								Sobi::Cfg( 'list_icons.category_goin' )
-							);
-							break;
-						case 1:
-							$plugin[ 'installed' ] = SPTooltip::toolTip(
-								Sobi::Txt( 'EX.BRWOSE_INSTALLED_EXPL' ),
-								Sobi::Txt( 'EX.BRWOSE_INSTALLED' ),
-								Sobi::Cfg( 'list_icons.field_editable_1' )
-							);
-							break;
-						case 2:
-							$plugin[ 'installed' ] = SPTooltip::toolTip(
-								Sobi::Txt( 'EX.BRWOSE_INSTALLED_UPD_EXPL' ),
-								Sobi::Txt( 'EX.BRWOSE_INSTALLED_UPD' ),
-								Sobi::Cfg( 'list_icons.field_editable_0' )
-							);
-							break;
-					}
-				}
 				$plugin[ 'id' ] = $plugin[ 'type' ] . '.' . $plugin[ 'pid' ];
 				$plugins[ $c++ ] = $plugin;
 			}
@@ -98,14 +61,6 @@ class SPExtensionsView extends SPAdmView
 	 */
 	public function setTitle( $title )
 	{
-//		$name = $this->get( 'section.name' );
-//		if ( $name ) {
-//			Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-//			$title = Sobi::Txt( $title, array( 'category_name' => $name ) );
-//			$this->set( $name, 'category_name' );
-//			$this->set( $name, 'section_name' );
-//			$this->set( $title, 'site_title' );
-//		}
 		$title = parent::setTitle( $title );
 		return $title;
 	}
