@@ -67,7 +67,7 @@
                                     <cell label="CPANEL_ISSUES_MESSAGE" type="text" />
                                 </head>
                                 <loop subject="system-state.messages">
-                                    <cell type="text" class="IssueMsg">
+                                    <cell type="text" class="SPCellIssueMsg">
                                         <cell type="text" value="type-text" class="SpCellLeft label label-var:[type]" />
                                     </cell>
                                     <cell type="text" value="section.link" />
@@ -312,11 +312,11 @@
                             <div class="accordion-inner">
                                 <div class="spNews">
                                     <loop subject="news.feeds" table="false">
-                                        <cell class="container">
-                                            <cell type="link" value="title" class="NewsTitle">
+                                        <cell class="SPCellContainer">
+                                            <cell type="link" value="title" class="SPCellNewsTitle">
                                                 <url type="extern" host="url" />
                                             </cell>
-                                            <cell type="text" value="content" class="NewsContent" />
+                                            <cell type="text" value="content" class="SPCellNewsContent" />
                                         </cell>
                                     </loop>
                                 </div>

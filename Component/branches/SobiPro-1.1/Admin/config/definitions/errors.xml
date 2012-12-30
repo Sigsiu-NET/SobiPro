@@ -37,9 +37,9 @@
 						<cell type="text" value="errNum" class="SpCellCenter" />
 						<cell>
 							<cell type="text" value="errMsg" />
-							<cell label="ERR.ERROR_DATE" type="text" value="date" />
-							<cell label="ERR.IN_FILE" type="text" value="errFile" class="colon" />
-							<cell label="ERR.REQUESTED_URI" type="text" value="errReq" class="colon" />
+							<cell label="ERR.ERROR_DATE" type="text" value="date" class="SpCellPair" />
+							<cell label="ERR.IN_FILE" type="text" value="errFile" class="SpCellPair" />
+							<cell label="ERR.REQUESTED_URI" type="text" value="errReq" class="SpCellPair" />
 						</cell>
 						<cell class="SpCellCenter">
 							<cell type="link" value="eid">
