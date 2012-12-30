@@ -1,12 +1,12 @@
 /*--------------------------------------------------|
 | dTree 2.05 | www.destroydrop.com/javascript/tree/ |
 |---------------------------------------------------|
-| Copyright (c) 2002-2003 Geir Landrö               |
+| Copyright (c) 2002-2003 Geir Landrï¿½               |
 |--------------------------------------------------*/
 
 .dtree {
 	font-family: Arial, Verdana, Geneva, Helvetica, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	color: #666;
 	white-space: nowrap;
 }
@@ -24,7 +24,6 @@
 }
 .dtree a.node:hover, .dtree a.nodeSel:hover {
 	color: #333;
-	text-decoration: underline;
 }
 .dtree a.nodeSel {
 	background-color: #c0d2ec;

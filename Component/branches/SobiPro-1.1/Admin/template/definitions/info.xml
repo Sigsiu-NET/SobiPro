@@ -55,8 +55,8 @@
 							<div class="span12">
 								<table>
 									<head>
-										<cell label="TP.HEAD_FILENAME" type="text" class="left" />
-										<cell label="TP.HEAD_FILE_DESC" type="text" class="left" />
+										<cell label="TP.HEAD_FILENAME" type="text" class="SpCellLeft" />
+										<cell label="TP.HEAD_FILE_DESC" type="text" class="SpCellLeft" />
 									</head>
 									<loop subject="files">
 										<cell type="link" value="file">
@@ -66,7 +66,7 @@
 												<param name="sid" value="sid" parse="true" subject="skip" />
 											</url>
 										</cell>
-										<cell type="text" value="description" class="left" />
+										<cell type="text" value="description" class="SpCellLeft" />
 									</loop>
 								</table>
 							</div>
