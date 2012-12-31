@@ -419,6 +419,11 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	private function fetch()
 	{
 		$msg = SPFactory::Controller( 'progress' );
+		if ( !( SPFactory::mainframe()->checkToken( 'get' ) ) ) {
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			$msg->error( SPLang::e( 'An error has occurred. %s', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ) ) );
+			exit;
+		}
 		$msg->progress( 0, Sobi::Txt( 'EX.GETTING_REPOS' ) );
 		$repos = SPLoader::dirPath( 'etc.repos', 'front' );
 		$repos = SPFactory::Instance( 'base.fs.directory', $repos );
@@ -545,9 +550,18 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				}
 			}
 		}
+		$repos = array();
+		$dir =& SPFactory::Instance( 'base.fs.directory', SPLoader::dirPath( 'etc.repos' ) );
+		$xml = array_keys( $dir->searchFile( 'repository.xml', false, 2 ) );
+		foreach ( $xml as $def ) {
+			$repository = SPFactory::Instance( 'services.installers.repository' );
+			$repository->loadDefinition( $def );
+			$repos[ ] = $repository->getDef();
+		}
 		$view->assign( $this->_task, 'task' )
 				->assign( $this->menu(), 'menu' )
 				->assign( $apps, 'extensions' )
+				->assign( $repos, 'repositories' )
 				->assign( $list, 'full-list' )
 				->determineTemplate( 'extensions', $this->_task );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
@@ -846,31 +860,18 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	private function delRepo()
 	{
-		$repos = SPRequest::arr( 'sprepo', array() );
-		$redirect = true;
-		if ( !count( $repos ) ) {
-			$redirect = false;
-			$repos = array( trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repo' ) ) ) );
+		if ( !( SPFactory::mainframe()->checkToken() ) ) {
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			$this->response( Sobi::Url( 'extensions.browse' ), Sobi::Txt( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), true, SPC::ERROR_MSG );
 		}
-		$k = array_keys( $repos );
-		if ( count( $repos ) && strlen( $repos[ $k[ 0 ] ] ) ) {
-			foreach ( $repos as $repo ) {
-				$repo = str_replace( '.', '_', $repo );
-				if ( $repo && SPLoader::dirPath( 'etc.repos.' . $repo ) ) {
-					SPFs::rmdir( SPLoader::dirPath( 'etc.repos.' . $repo ) );
-				}
-				elseif ( $repo ) {
-					$file = SPFactory::Instance( 'base.fs.file', SPLoader::path( 'etc.repos.' . $repo, 'front', false, 'xml' ) );
-					$file->delete();
-				}
+		$repository = SPRequest::cmd( 'repository' );
+		if ( $repository ) {
+			if ( SPFs::rmdir( SPLoader::dirPath( 'etc.repos.' . $repository ) ) ) {
+				$this->response( Sobi::Url( 'extensions.browse' ), Sobi::Txt( 'EX.REPOSITORY_DELETED' ), true, SPC::SUCCESS_MSG );
 			}
-		}
-		else {
-			Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.NO_REPOSITORY_SELECTED' ), SPC::ERROR_MSG );
-			return false;
-		}
-		if ( $redirect ) {
-			Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.REPOSITORY_DELETED' ) );
+			else {
+				$this->response( Sobi::Url( 'extensions.browse' ), Sobi::Txt( 'EX.DEL_REPO_ERROR' ), true, SPC::ERROR_MSG );
+			}
 		}
 	}
 
@@ -908,23 +909,24 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	private function repos()
 	{
-		$repos = array();
-		$dir =& SPFactory::Instance( 'base.fs.directory', SPLoader::dirPath( 'etc.repos' ) );
-		$xml = array_keys( $dir->searchFile( 'repository.xml', false, 2 ) );
-		foreach ( $xml as $rdef ) {
-			$repository = SPFactory::Instance( 'services.installers.repository' );
-			$repository->loadDefinition( $rdef );
-			$repos[ ] = $repository->getDef();
-		}
-		$view =& SPFactory::View( 'extensions', true );
-		$view->assign( $this->_task, 'task' );
-		$view->loadConfig( 'extensions.' . $this->_task );
-		$view->setTemplate( 'extensions.' . $this->_task );
-		$view->assign( $this->menu(), 'menu' );
-		$view->assign( $repos, 'repositories' );
-		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
-		$view->display();
-		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
+		Sobi::Redirect( Sobi::Url( 'extensions.browse' ), null, null, true );
+//		$repos = array();
+//		$dir =& SPFactory::Instance( 'base.fs.directory', SPLoader::dirPath( 'etc.repos' ) );
+//		$xml = array_keys( $dir->searchFile( 'repository.xml', false, 2 ) );
+//		foreach ( $xml as $rdef ) {
+//			$repository = SPFactory::Instance( 'services.installers.repository' );
+//			$repository->loadDefinition( $rdef );
+//			$repos[ ] = $repository->getDef();
+//		}
+//		$view =& SPFactory::View( 'extensions', true );
+//		$view->assign( $this->_task, 'task' );
+//		$view->loadConfig( 'extensions.' . $this->_task );
+//		$view->setTemplate( 'extensions.' . $this->_task );
+//		$view->assign( $this->menu(), 'menu' );
+//		$view->assign( $repos, 'repositories' );
+//		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
+//		$view->display();
+//		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
 
 	}
 

@@ -4,7 +4,7 @@
 		<title value="MN.AVAILABLE_EXTENSIONS" />
 		<file type="script" filename="bootstrap.tabs" />
 		<file type="script" filename="bootstrap.tooltips" />
-		<file type="script" filename="adm.updates" />
+		<file type="script" filename="adm.sam" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
 		<button task="extensions.fetch" label="TB.FETCH_UPDATES" ico="refresh" />
@@ -28,16 +28,15 @@
 				<message dismiss-button="false" parse="last-update" />
 				<div class="span12 hide" id="SpProgress">
 					<div class="span4">
-						<message type="info" label=""/>
+						<message type="info" label="" />
 					</div>
 					<div class="span6">
 						<div class="progress progress-striped active" id="SpProgress">
-						  <div class="bar" style="width: 0%;"></div>
+							<div class="bar" style="width: 0%;"></div>
 						</div>
 					</div>
 				</div>
-
-				<tabs condition="extensions.length">
+				<tabs>
 					<tab label="APPS.LIST_APPS" condition="extensions.applications.length">
 						<div class="span12">
 							<table>
@@ -51,7 +50,7 @@
 									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
 								</head>
 								<loop subject="extensions.applications">
-									<cell class="SpCellLeft" >
+									<cell class="SpCellLeft">
 										<cell>
 											<tooltip>
 												<attribute name="content" value="description" parse="true" />
@@ -63,7 +62,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell>
-										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall"/>
+										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -94,7 +93,7 @@
 									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
 								</head>
 								<loop subject="extensions.fields">
-									<cell class="SpCellLeft" >
+									<cell class="SpCellLeft">
 										<cell>
 											<tooltip>
 												<attribute name="content" value="description" parse="true" />
@@ -106,7 +105,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell>
-										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall"/>
+										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -137,7 +136,7 @@
 									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
 								</head>
 								<loop subject="extensions.templates">
-									<cell class="SpCellLeft" >
+									<cell class="SpCellLeft">
 										<cell>
 											<tooltip>
 												<attribute name="content" value="description" parse="true" />
@@ -149,7 +148,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell>
-										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall"/>
+										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -180,7 +179,7 @@
 									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
 								</head>
 								<loop subject="extensions.languages">
-									<cell class="SpCellLeft" >
+									<cell class="SpCellLeft">
 										<cell>
 											<tooltip>
 												<attribute name="content" value="description" parse="true" />
@@ -192,7 +191,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell>
-										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall"/>
+										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -224,7 +223,7 @@
 									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
 								</head>
 								<loop subject="extensions.others">
-									<cell class="SpCellLeft" >
+									<cell class="SpCellLeft">
 										<cell>
 											<tooltip>
 												<attribute name="content" value="description" parse="true" />
@@ -237,7 +236,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell>
-										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall"/>
+										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -254,6 +253,30 @@
 								</loop>
 							</table>
 						</div>
+					</tab>
+					<tab label="MN.MANAGE_REPOSITORIES">
+						<table>
+							<head>
+								<cell label="EX.REPOSITORY_NAME" type="text" class="left" />
+								<cell label="EX.REPO_DESCRIPTION" type="text" class="center" />
+								<cell label="EX.REPO_MAINTAINER" class="center" />
+								<cell label="EX.MAINT_SUPPORT" type="text" class="center" />
+								<cell />
+							</head>
+							<loop subject="repositories">
+								<cell type="text" value="repository.name" />
+								<cell type="text" value="repository.description" />
+								<cell type="link" value="repository.maintainer.name">
+									<url type="extern" host="repository.maintainer.url" />
+								</cell>
+								<cell type="link" value="repository.maintainer.supporturl">
+									<url type="extern" host="repository.maintainer.supporturl" />
+								</cell>
+								<cell>
+									<button label="TB.DELETE" rel="var:[repository.id]" ico="none" class="SpRemoveRepo" />
+								</cell>
+							</loop>
+						</table>
 					</tab>
 				</tabs>
 			</div>
