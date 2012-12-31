@@ -449,7 +449,7 @@ abstract class SPController extends SPObject implements SPControl
 		}
 	}
 
-	protected function response( $url, $message = null, $redirect = true, $type = 'message', $data = array() )
+	protected function response( $url, $message = null, $redirect = true, $type = SPC::INFO_MSG, $data = array() )
 	{
 		if ( is_array( $message ) ) {
 			$type = $message[ 'type' ];
