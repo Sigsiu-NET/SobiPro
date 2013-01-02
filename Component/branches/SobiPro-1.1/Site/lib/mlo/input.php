@@ -161,9 +161,10 @@ abstract class SPHtml_Input
 	{
 		$params = self::params( $params );
 		$value = strlen( $value ) ? str_replace( '"', '&quot;', SPLang::entities( $value, true ) ) : null;
-		$f = "\n<input type=\"text\" name=\"{$name}\" value=\"{$value}\"{$params}/>\n";
+		$f = "<input type=\"text\" name=\"{$name}\" value=\"{$value}\"{$params}/>";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- InputBox '{$name}' Output -->{$f}<!-- InputBox '{$name}' End -->\n\n";
+		return $f;
+		//"\n<!-- InputBox '{$name}' Output -->{$f}<!-- InputBox '{$name}' End -->\n\n";
 	}
 
 	/**
@@ -202,7 +203,7 @@ abstract class SPHtml_Input
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @return string
 	 */
-	public static function button( $name, $value = null, $params = null )
+	public static function button( $name, $value = null, $params = null, $class= null )
 	{
 		self::checkArray( $params );
 		$f = null;
@@ -222,6 +223,9 @@ abstract class SPHtml_Input
 //			$a = "\n<a href=\"#\" class=\"spDisabled\">";
 			$h = " onclick=\"{$name}Redirect()\"";
 			unset( $params[ 'href' ] );
+		}
+		if( $class ) {
+			$params['class'] = $class;
 		}
 		$params = self::params( $params );
 		$value = self::translate( $value );

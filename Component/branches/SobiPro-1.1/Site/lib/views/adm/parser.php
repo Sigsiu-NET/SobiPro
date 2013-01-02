@@ -116,10 +116,10 @@ class SPTplParser
 					}
 				}
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {
-					$class .= ' input-prepend';
+					$class .= 'input-prepend ';
 				}
 				if ( count( $element[ 'adds' ][ 'after' ] ) ) {
-					$class .= ' input-append';
+					$class .= 'input-append ';
 				}
 				if ( $class ) {
 					$this->_out[ ] = "<div class=\"{$class}\">\n";
@@ -136,7 +136,12 @@ class SPTplParser
 				$this->_out[ ] = $element[ 'content' ];
 				if ( count( $element[ 'adds' ][ 'after' ] ) ) {
 					foreach ( $element[ 'adds' ][ 'after' ] as $o ) {
-						$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
+						if ( $this->istSet( $o, 'element', 'button' ) ) {
+							$this->_out[ ] = "<button class=\"{$o['class']}\" type=\"button\">{$o['label']}</button>";
+						}
+						else {
+							$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
+						}
 					}
 				}
 				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
@@ -424,7 +429,7 @@ class SPTplParser
 			case 'text':
 			case 'link':
 				if ( $type == 'link' ) {
-                    $class = null;
+					$class = null;
 					$target = null;
 					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
 						$class = "class=\"{$cell[ 'attributes' ][ 'class' ]}\" ";
@@ -438,10 +443,10 @@ class SPTplParser
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
 				}
 				if ( $this->istSet( $cell, 'label' ) ) {
-                    $class = null; //if label in cell directly (with optional class) add a span as it could be a label/value pair
-                    if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
-                        $class = "class=\"{$cell[ 'attributes' ][ 'class' ]}Label\"";
-                    }
+					$class = null; //if label in cell directly (with optional class) add a span as it could be a label/value pair
+					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
+						$class = "class=\"{$cell[ 'attributes' ][ 'class' ]}Label\"";
+					}
 					$this->_out[ ] = "<span {$class}>{$cell[ 'label' ]}</span>";
 				}
 				if ( isset( $cell[ 'content' ][ 'element' ] ) && $cell[ 'content' ][ 'element' ] == 'button' ) {

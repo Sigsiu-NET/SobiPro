@@ -5,6 +5,7 @@
 		<file type="script" filename="bootstrap.tabs" />
 		<file type="script" filename="bootstrap.tooltips" />
 		<file type="script" filename="adm.sam" />
+		<style>.SpAddRepo { float: none; } </style>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
 		<button task="extensions.fetch" label="TB.FETCH_UPDATES" ico="refresh" />
@@ -255,6 +256,18 @@
 						</div>
 					</tab>
 					<tab label="MN.MANAGE_REPOSITORIES">
+						<div class="span12">
+							<fieldset>
+								<field type="text" name="RepositoryURL" value="" label="EX.ADD_NEW_REPO" class="span12">
+									<add where="before">
+										<text>https://</text>
+									</add>
+									<add where="after">
+										<button label="EX.ADD_NEW_REPO_BT" class="btn SpAddRepo"/>
+									</add>
+								</field>
+							</fieldset>
+						</div>
 						<table>
 							<head>
 								<cell label="EX.REPOSITORY_NAME" type="text" class="left" />
@@ -283,7 +296,7 @@
 		</div>
 	</body>
 	<config>
-		<action value="index.php?option=com_sobipro" />
+		<action value="index.php" />
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />

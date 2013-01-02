@@ -36,6 +36,100 @@ SobiPro.jQuery().ready( function ()
 			SobiPro.jQuery.ajax( {'type':'get', 'url':url, 'dataType':'json'} );
 		}
 	} );
+
+	SobiPro.jQuery( '.SpAddRepo' ).click( function ()
+	{
+		new SpRepositoryInstall()
+	} );
+
+	function SpRepositoryInstall()
+	{
+		this.repository = SobiPro.jQuery( '[name="RepositoryURL"]' ).val();
+		var proxy = this;
+		this.error = function ( message )
+		{
+			var alertMsg = '<div class="alert alert-' + message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + message.text + '</div>';
+			SobiPro.jQuery( '#spMessage' )
+				.removeClass( 'alert-info' )
+				.html( alertMsg );
+
+		}
+		this.request = function ( request, callback )
+		{
+			SobiPro.jQuery.ajax( {
+				'type':'post',
+				'url':'index.php',
+				'data':request,
+				'dataType':'json',
+				success:function ( data )
+				{
+					callback( data, request )
+				}
+			} );
+		}
+
+		this.addRepo = function ( data, request )
+		{
+			if ( data.message.type == 'error' ) {
+				proxy.error( data.message );
+			}
+			else {
+				SobiPro.jQuery( data.message.response ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
+				SobiPro.jQuery( '#SpRepoModal' ).find( '.modal' ).modal();
+				SobiPro.jQuery( '#SpRepoModal' ).find( '.confirm' ).click( function ()
+				{
+					SobiPro.jQuery( '#SpRepoModal' ).remove();
+					request[ 'task' ] = 'extensions.confirmRepo';
+					proxy.request( request, proxy.repoCallback );
+				} );
+			}
+		}
+
+		this.repoCallback = function ( data, request )
+		{
+			if ( data.message.type == 'error' ) {
+				proxy.error( data.message );
+			}
+			else {
+				SobiPro.jQuery( data.message.response ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
+				SobiPro.jQuery( '#SpRepoModal' ).find( '.modal' ).modal();
+				if ( data.repository != undefined ) {
+					request[ 'repository' ] = data.repository;
+				}
+				if ( data.callback ) {
+					SobiPro.jQuery( '#SpRepoModal' ).find( '.confirm' ).click( function ()
+					{
+						request[ 'task' ] = 'extensions.registerRepo';
+						request[ 'callback' ] = data.callback;
+						request = SobiPro.jQuery.extend( SobiPro.jQuery( '#SpRepoModal' ).closest( 'form' ).serialize(), request )
+						SobiPro.DebOut( request );
+						SobiPro.jQuery( '#SpRepoModal' ).remove();
+						proxy.request( request, proxy.repoCallback )
+					} );
+				}
+				else {
+					SobiPro.DebOut( data );
+				}
+			}
+		}
+
+		if ( this.repository == '' ) {
+			SobiPro.Alert( 'NO_REPO' );
+		}
+		else {
+			var def = SobiPro.jQuery( '#SP_method' ).next( 'input' );
+			var request = {
+				'option':'com_sobipro',
+				'task':'extensions.addRepo',
+				'method':'xhr',
+				'format':'raw',
+				'repository':this.repository
+			}
+			request[ def.attr( 'name' ) ] = def.val();
+			this.request( request, this.addRepo )
+		}
+	}
+
 	function SPProgressMessage()
 	{
 		SobiPro.jQuery.ajax( {
@@ -101,10 +195,10 @@ SobiPro.jQuery().ready( function ()
 		this.canvas = canvas;
 		canvas.html( '<div id="' + this.ident + '"><div class="progress progress-striped"><div class="bar" style="width: 1%;"></div></div></div>' );
 		SPSetCookie( this.ident );
-		var url = SobiProAdmUrl.replace( '%task%', 'extensions.download' ) + '&exid=' + eid + '&session=' + this.ident;
+		var def = SobiPro.jQuery( '#SP_method' ).next( 'input' );
+		var url = SobiProAdmUrl.replace( '%task%', 'extensions.download' ) + '&exid=' + eid + '&session=' + this.ident + '&' + def.attr( 'name' ) + '=' + def.val();
 		this.progressBar = SobiPro.jQuery( '#' + this.ident ).find( '.bar' );
 		var proxy = this;
-		this.msgType = '';
 		this.progress = function ()
 		{
 			SobiPro.jQuery.ajax( {
@@ -117,7 +211,7 @@ SobiPro.jQuery().ready( function ()
 					if ( response.type != 'info' && response.type != 'success' ) {
 						var labelType = response.type == 'error' ? 'important' : response.type;
 						var label = '<span class="label label-' + labelType + '">' + response.typeText + ': &nbsp;</span>';
-						var modal = '<div class="modal hide" id="' + proxy.ident + 'Modal"><div class="modal-body"><p>' + label + response.message + '</p></div><div class="modal-footer"><a href="#" class="btn">OK</a></div></div>'
+						var modal = '<div class="modal hide" id="' + proxy.ident + 'Modal"><div class="modal-body"><p>' + label + response.message + '</p></div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>'
 						SobiPro.jQuery( modal ).appendTo( proxy.canvas );
 						var modalMessage = SobiPro.jQuery( '#' + proxy.ident + 'Modal' ).modal();
 						SobiPro.jQuery( '#' + proxy.ident + 'Modal' ).find( '.btn' ).click( function ()
@@ -151,5 +245,4 @@ SobiPro.jQuery().ready( function ()
 		var cid = expDate.getTime() + Math.floor( Math.random() * 11 ) * 100;
 		document.cookie = "SPro_ProgressMsg" + ident + "=" + cid + ";expires=" + expDate.toUTCString() + ";path=/";
 	}
-} )
-;
+} );

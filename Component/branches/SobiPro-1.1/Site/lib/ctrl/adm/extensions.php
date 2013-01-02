@@ -297,8 +297,14 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		if ( SPRequest::word( 'callback' ) ) {
 			return $this->downloadRequest();
 		}
+
 		$pid = str_replace( '-', '_', SPRequest::cmd( 'exid' ) );
 		$msg = SPFactory::Controller( 'progress' );
+		if ( !( SPFactory::mainframe()->checkToken( 'get' ) ) ) {
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			$msg->error( SPLang::e( 'An error has occurred. %s', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ) ) );
+			exit;
+		}
 		$msg->progress( 5, Sobi::Txt( 'EX.CONNECTING_TO_REPO' ) );
 		if ( !( strlen( $pid ) ) ) {
 			$msg->progress( 100, Sobi::Txt( 'EX.SELECT_EXT_FROM_LIST' ) );
@@ -661,7 +667,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	private function registerRepo()
 	{
-		$repo = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repo' ) ) );
+		$repo = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repository' ) ) );
 		$data = SPRequest::search( 'sprpfield_' );
 		$answer = array();
 		if ( count( $data ) ) {
@@ -670,7 +676,6 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$answer[ str_replace( 'sprpfield_', null, $k ) ] = $v;
 			}
 		}
-		$dir = SPLoader::dirPath( 'etc.repos.' . $repo, 'front', false );
 		$defFile = SPLoader::path( "etc.repos.{$repo}.repository", 'front', true, 'xml' );
 		$repository = SPFactory::Instance( 'services.installers.repository' );
 		$repository->loadDefinition( $defFile );
@@ -716,9 +721,15 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 	}
 
-	private function parseSoapRequest( $response, $rid = null, $plid = null )
+	private function parseSoapRequest( $response, $repositoryId = null, $appId = null )
 	{
-		$view =& SPFactory::View( 'extensions', true );
+		if ( !( SPFactory::mainframe()->checkToken() ) ) {
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			$this->response( Sobi::Url( 'extensions.browse' ), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), false, SPC::ERROR_MSG );
+			exit;
+		}
+		/** @var $view SPExtensionsView */
+		$view = SPFactory::View( 'extensions', true );
 		$callback = $response[ 'callback' ];
 		unset( $response[ 'callback' ] );
 		if ( isset( $response[ 'message' ] ) ) {
@@ -726,31 +737,40 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			unset( $response[ 'message' ] );
 		}
 		$fields = array();
-		foreach ( $response as $fname => $fvalues ) {
-			$fields[ 'sprpfield_' . $fname ] = $fvalues;
+		foreach ( $response as $values ) {
+			if ( isset( $values[ 'params' ][ 'style' ] ) ) {
+				unset( $values[ 'params' ][ 'style' ] );
+			}
+			if ( isset( $values[ 'params' ][ 'class' ] ) ) {
+				unset( $values[ 'params' ][ 'class' ] );
+			}
+			$values[ 'name' ] = 'RepositoryResponse[' . $values[ 'params' ][ 'id' ] . ']';
+			$fields[ ] = $values;
 		}
-		$fields[ 'spurl' ] = array( 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'type' => 'text', 'required' => true, 'params' => array( 'id' => 'url', 'size' => 30, 'maxlength' => 255, 'disabled' => 'disabled', 'class' => 'inputbox', 'style' => 'text-align: center;' ) );
-		$view->assign( $this->_task, 'task' );
-		$view->assign( $fields, 'request' );
-		$view->setTemplate( 'extensions.soap_request' );
+		$fields[ ] = array( 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'url', 'type' => 'text', 'required' => true, 'params' => array( 'id' => 'url', 'size' => 30, 'maxlength' => 255, 'disabled' => 'disabled' ) );
+		$request = array( 'fields' => $fields );
+		$view->assign( $request, 'request' );
+		$view->determineTemplate( 'extensions', 'soap-request' );
 		ob_start();
 		$view->display();
-		$msg = ob_get_contents();
+		$response = ob_get_contents();
+		$response = str_replace( 'id="SobiPro"', 'id="SpRepoModal"', $response );
 		SPFactory::mainframe()->cleanBuffer();
-		if ( $rid ) {
-			echo json_encode( array( 'msg' => $msg, 'callback' => $callback, 'repo' => $rid ) );
+		header( 'Content-type: application/json' );
+		if ( $repositoryId ) {
+			echo json_encode( array( 'message' => array( 'type' => 'info', 'response' => $response ), 'repository' => $repositoryId, 'callback' => $callback ) );
 		}
 		else {
-			echo json_encode( array( 'msg' => $msg, 'callback' => $callback, 'extension' => $plid ) );
+			echo json_encode( array( 'message' => array( 'type' => 'info', 'response' => $response ), 'extension' => $appId, 'callback' => $callback ) );
 		}
 		exit;
 	}
 
 	private function confirmRepo()
 	{
-		$repo = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repo' ) ) );
+		$repositoryId = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repository' ) ) );
 		$connection = SPFactory::Instance( 'services.remote' );
-		$def = "https://{$repo}/repository.xml";
+		$def = "https://{$repositoryId}/repository.xml";
 		$connection->setOptions(
 			array(
 				'url' => $def,
@@ -761,76 +781,65 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				'ssl_verifyhost' => 2,
 			)
 		);
-		$path = SPLoader::path( 'etc.repos.' . str_replace( '.', '_', $repo ), 'front', false, 'xml' );
+		$path = SPLoader::path( 'etc.repos.' . str_replace( '.', '_', $repositoryId ), 'front', false, 'xml' );
 		$file = SPFactory::Instance( 'base.fs.file', $path );
-		header( 'Content-type: application/json' );
 		$info = $connection->exec();
-		$cinf = $connection->info();
-		if ( isset( $cinf[ 'http_code' ] ) && $cinf[ 'http_code' ] != 200 ) {
-			SPFactory::mainframe()->cleanBuffer();
-			echo json_encode( array( 'msg' => SPLang::e( 'Error (%d) has occurred and the repository at "%s" could not be added.', $cinf[ 'http_code' ], "https://{$repo}" ) ) );
-			exit;
+		$connectionInfo = $connection->info();
+		if ( isset( $connectionInfo[ 'http_code' ] ) && $connectionInfo[ 'http_code' ] != 200 ) {
+			$this->ajaxResponse( true, SPLang::e( 'Error (%d) has occurred and the repository at "%s" could not be added.', $connectionInfo[ 'http_code' ], "https://{$repositoryId}" ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 		}
 		else {
 			$def = new DOMDocument( '1.0' );
-			$rdef = new DOMDocument( '1.0' );
+			$rDef = new DOMDocument( '1.0' );
 			$def->load( $path );
-			$rdef->loadXML( $info );
-			if ( !( $rdef->schemaValidate( $this->repoSchema() ) ) ) {
-				SPFactory::mainframe()->cleanBuffer();
-				echo json_encode( array( 'msg' => SPLang::e( 'An error has occurred and the repository at "%s" could not be added. Could not validate file repository definition against the schema definition at "%s"', "https://{$repo}/repository.xml", "https://xml.sigsiu.net/SobiPro/repository.xsd" ) ) );
-				exit;
+			$rDef->loadXML( $info );
+			if ( !( $rDef->schemaValidate( $this->repoSchema() ) ) ) {
+				$this->ajaxResponse( true, SPLang::e( 'An error has occurred and the repository at "%s" could not be added. Could not validate file repository definition against the schema definition at "%s"', "https://{$repositoryId}/repository.xml", "https://xml.sigsiu.net/SobiPro/repository.xsd" ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 			}
-			$arrdef = SPFactory::Instance( 'types.array' );
-			$arrdef = $arrdef->fromXML( $def, 'repository' );
-			$arrrdef = SPFactory::Instance( 'types.array' );
-			$arrrdef = $arrrdef->fromXML( $rdef, 'repository' );
-			$repodef = array();
-			$repodef[ 'name' ] = $arrrdef[ 'repository' ][ 'name' ];
-			$repodef[ 'id' ] = $arrrdef[ 'repository' ][ 'id' ];
-			$repodef[ 'url' ] = $arrdef[ 'repository' ][ 'url' ] . '/' . $arrrdef[ 'repository' ][ 'repositoryLocation' ];
-			$repodef[ 'certificate' ] = $arrdef[ 'repository' ][ 'certificate' ];
-			$repodef[ 'description' ] = $arrrdef[ 'repository' ][ 'description' ];
-			$repodef[ 'maintainer' ] = $arrrdef[ 'repository' ][ 'maintainer' ];
+			$arrDef = SPFactory::Instance( 'types.array' );
+			$arrDef = $arrDef->fromXML( $def, 'repository' );
+			$remoteDefinition = SPFactory::Instance( 'types.array' );
+			$remoteDefinition = $remoteDefinition->fromXML( $rDef, 'repository' );
+			$repoDef = array();
+			$repoDef[ 'name' ] = $remoteDefinition[ 'repository' ][ 'name' ];
+			$repoDef[ 'id' ] = $remoteDefinition[ 'repository' ][ 'id' ];
+			$repoDef[ 'url' ] = $arrDef[ 'repository' ][ 'url' ] . '/' . $remoteDefinition[ 'repository' ][ 'repositoryLocation' ];
+			$repoDef[ 'certificate' ] = $arrDef[ 'repository' ][ 'certificate' ];
+			$repoDef[ 'description' ] = $remoteDefinition[ 'repository' ][ 'description' ];
+			$repoDef[ 'maintainer' ] = $remoteDefinition[ 'repository' ][ 'maintainer' ];
 			$file->delete();
-			$dir = SPLoader::dirPath( 'etc.repos.' . str_replace( '.', '_', $repodef[ 'id' ] ), 'front', false );
+			$dir = SPLoader::dirPath( 'etc.repos.' . str_replace( '.', '_', $repoDef[ 'id' ] ), 'front', false );
 			SPFs::mkdir( $dir );
 			$path = $dir . DS . 'repository.xml';
 			$file = SPFactory::Instance( 'base.fs.file', $path );
 			$def = SPFactory::Instance( 'types.array' );
-			$file->content( $def->toXML( $repodef, 'repository' ) );
+			$file->content( $def->toXML( $repoDef, 'repository' ) );
 			$file->save();
 			$repository = SPFactory::Instance( 'services.installers.repository' );
 			$repository->loadDefinition( $file->fileName() );
 			try {
 				$repository->connect();
 			} catch ( SPException $x ) {
-				SPFactory::mainframe()->cleanBuffer();
-				echo json_encode( array( 'msg' => SPLang::e( 'An error has occurred. %s', $x->getMessage() ), $repo ) );
-				exit;
+				$this->ajaxResponse( true, SPLang::e( 'An error has occurred. %s', $x->getMessage() ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 			}
 			$response = $repository->register();
 			if ( is_array( $response ) && isset( $response[ 'callback' ] ) ) {
-				return $this->parseSoapRequest( $response, $repodef[ 'id' ] );
+				return $this->parseSoapRequest( $response, $repoDef[ 'id' ] );
 			}
 			elseif ( $response === true || isset( $response[ 'welcome_msg' ] ) ) {
-				SPFactory::mainframe()->cleanBuffer();
 				if ( isset( $response[ 'welcome_msg' ] ) && $response[ 'welcome_msg' ] ) {
-					echo json_encode( array( 'msg' => Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED_WITH_MSG', array( 'location' => $repo, 'msg' => $response[ 'welcome_msg' ] ) ) ) );
+					$this->ajaxResponse( true, Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED_WITH_MSG', array( 'location' => $repositoryId, 'msg' => $response[ 'welcome_msg' ] ) ), Sobi::Url( 'extensions.browse' ), SPC::SUCCESS_MSG );
 				}
 				else {
-					echo json_encode( array( 'msg' => Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED_WITH_MSG', array( 'location' => $repo ) ) ) );
+					$this->ajaxResponse( true, Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED_WITH_MSG', array( 'location' => $repositoryId ) ), Sobi::Url( 'extensions.browse' ), SPC::SUCCESS_MSG );
 				}
-				exit;
 			}
 			else {
-				SPFactory::mainframe()->cleanBuffer();
 				if ( isset( $response[ 'error' ] ) ) {
-					echo json_encode( array( 'msg' => SPLang::e( 'An error has occurred. %s', $response[ 'msg' ] ) ) );
-					exit;
+					$this->ajaxResponse( true, SPLang::e( 'An error has occurred. %s', $response[ 'msg' ] ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 				}
 				else {
-					echo json_encode( array( 'msg' => SPLang::e( 'Unknown error occurred.' ) ) );
+					$this->ajaxResponse( true, SPLang::e( 'Unknown error occurred.' ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 					exit;
 				}
 			}
@@ -877,34 +886,44 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	private function addRepo()
 	{
-		header( 'Content-type: application/json' );
-		SPFactory::mainframe()->cleanBuffer();
+		if ( !( SPFactory::mainframe()->checkToken() ) ) {
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			$this->response( Sobi::Url( 'extensions.browse' ), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), false, SPC::ERROR_MSG );
+			exit;
+		}
 		$connection = SPFactory::Instance( 'services.remote' );
-		$repo = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repo' ) ) );
+		$repo = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repository' ) ) );
 		$ssl = $connection->certificate( $repo );
 		if ( isset( $ssl[ 'err' ] ) ) {
-			SPConfig::debOut( sprintf( 'An error has occurred and the connection could not be validated. Error number %s, %s', $ssl[ 'err' ], $ssl[ 'msg' ] ) );
+			$this->response( Sobi::Url( 'extensions.browse' ), sprintf( 'An error has occurred and the connection could not be validated. Error number %s, %s', $ssl[ 'err' ], $ssl[ 'msg' ] ), false, SPC::ERROR_MSG );
 		}
 		else {
 			$cert = array();
 			$file = SPFactory::Instance( 'base.fs.file', SPLoader::path( 'etc.repos.' . str_replace( '.', '_', $repo ), 'front', false, 'xml' ) );
 			$cert[ 'url' ] = 'https://' . $repo;
 			$cert[ 'certificate' ][ 'serialNumber' ] = $ssl[ 'serialNumber' ];
-			$cert[ 'certificate' ][ 'validFrom' ] = $ssl[ 'validFrom_time_t' ];
-			$cert[ 'certificate' ][ 'validTo' ] = $ssl[ 'validTo_time_t' ];
+			$cert[ 'certificate' ][ 'validFrom' ] = Sobi::Date( $ssl[ 'validFrom_time_t' ] );
+			$cert[ 'certificate' ][ 'validTo' ] = Sobi::Date( $ssl[ 'validTo_time_t' ] );
 			$cert[ 'certificate' ][ 'subject' ] = $ssl[ 'subject' ];
 			$cert[ 'certificate' ][ 'issuer' ] = $ssl[ 'issuer' ];
 			$cert[ 'certificate' ][ 'hash' ] = $ssl[ 'hash' ];
 			$def = SPFactory::Instance( 'types.array', $cert );
 			$file->content( $def->toXML( $cert, 'repository' ) );
 			$file->save();
-			$view =& SPFactory::View( 'extensions', true );
-			$view->assign( $this->_task, 'task' );
-			$view->assign( $ssl, 'certificate' );
-			$view->setTemplate( 'extensions.certificate' );
+			/** @var $view SPExtensionsView */
+			$view =& SPFactory::View( 'extensions', true )
+					->assign( $this->_task, 'task' )
+					->assign( $cert[ 'certificate' ], 'certificate' )
+					->determineTemplate( 'extensions', 'certificate' );
+			ob_start();
 			$view->display();
+			$response = ob_get_contents();
+			$response = str_replace( 'id="SobiPro"', 'id="SpRepoModal"', $response );
+			SPFactory::mainframe()->cleanBuffer();
+			header( 'Content-type: application/json' );
+			echo json_encode( array( 'message' => array( 'type' => 'info', 'response' => $response ) ) );
+			exit;
 		}
-		exit();
 	}
 
 	private function repos()

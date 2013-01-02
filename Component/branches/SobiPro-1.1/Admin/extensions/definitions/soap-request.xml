@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<body>
+		<div class="modal hide">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<text value="CLOSE_X" />
+				</button>
+				<h3>
+					<text value="EX.SOAP_RESP_HEAD" />
+				</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset>
+							<form>
+								<loop subject="request.fields" type="fields" />
+							</form>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn btn-primary confirm" data-dismiss="modal">
+					<text value="EX.SOAP_RESP_SEND_BT" />
+				</a>
+			</div>
+		</div>
+	</body>
+</definition>

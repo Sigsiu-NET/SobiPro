@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<body>
+		<div class="modal hide">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<text value="CLOSE_X" />
+				</button>
+				<h3>
+					<text value="EX.SSL_VERIFY" />
+				</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset label="EX.SSL_TO">
+							<field type="output" value="certificate.subject.CN" label="EX.SSL_COMMON_NAME" />
+							<field type="output" value="certificate.subject.O" label="EX.SSL_ORGANIZATION" />
+							<field type="output" value="certificate.subject.L" />
+							<field type="output" value="certificate.subject.ST" />
+							<field type="output" value="certificate.subject.C" />
+						</fieldset>
+						<fieldset label="EX.SSL_CERT_INFO">
+							<field type="output" value="certificate.serialNumber" label="EX.SSL_CERT_SN" />
+							<field type="output" value="certificate.validFrom" label="EX.SSL_CERT_SINCE" />
+							<field type="output" value="certificate.validTo" label="EX.SSL_CERT_UNTIL" />
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal">
+					<text value="EX.SSL_SKIP_BT" />
+				</a>
+				<a href="#" class="btn btn-primary confirm" data-dismiss="modal">
+					<text value="EX.SSL_CONFIRM_BT" />
+				</a>
+			</div>
+		</div>
+	</body>
+</definition>
