@@ -668,12 +668,12 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	private function registerRepo()
 	{
 		$repo = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repository' ) ) );
-		$data = SPRequest::search( 'sprpfield_' );
+		$data = SPRequest::arr( 'RepositoryResponse' );
 		$answer = array();
 		if ( count( $data ) ) {
 			foreach ( $data as $k => $v ) {
 				$v = ( strlen( $v ) && $v != '' ) ? $v : SPC::NO_VALUE;
-				$answer[ str_replace( 'sprpfield_', null, $k ) ] = $v;
+				$answer[ $k ] = $v;
 			}
 		}
 		$defFile = SPLoader::path( "etc.repos.{$repo}.repository", 'front', true, 'xml' );
@@ -682,41 +682,32 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		try {
 			$repository->connect();
 		} catch ( SPException $x ) {
-			SPFactory::mainframe()->cleanBuffer();
-			echo json_encode( array( 'msg' => SPLang::e( 'An error has occurred. %s', $x->getMessage() ), $repo ) );
-			exit;
+			$this->ajaxResponse( true, SPLang::e( 'An error has occurred. %s', $x->getMessage() ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 		}
 		$callback = SPRequest::word( 'callback' );
 		$response = call_user_func_array( array( $repository, $callback ), $answer );
-		if ( SPRequest::bool( 'dbg' ) ) {
-			exit;
-		}
-		header( 'Content-type: application/json' );
 		if ( is_array( $response ) && isset( $response[ 'callback' ] ) ) {
 			return $this->parseSoapRequest( $response, $repo );
 		}
 		elseif ( $response === true || isset( $response[ 'welcome_msg' ] ) ) {
+			header( 'Content-type: application/json' );
 			if ( isset( $response[ 'token' ] ) ) {
 				$repository->saveToken( $response[ 'token' ] );
 			}
-			SPFactory::mainframe()->cleanBuffer();
 			if ( isset( $response[ 'welcome_msg' ] ) && $response[ 'welcome_msg' ] ) {
-				echo json_encode( array( 'msg' => Sobi::Txt( $response[ 'welcome_msg' ] ) ) );
+				echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => $response[ 'welcome_msg' ] ), 'callback' => null, 'redirect' => true ) );
 			}
 			else {
-				echo json_encode( array( 'msg' => Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED', array( 'location' => $repo ) ) ) );
+				echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED', array( 'location' => $repo ) ) ), 'callback' => null, 'redirect' => true ) );
 			}
 			exit;
 		}
 		else {
-			SPFactory::mainframe()->cleanBuffer();
 			if ( isset( $response[ 'error' ] ) ) {
-				echo json_encode( array( 'msg' => SPLang::e( 'An error has occurred. %s', $response[ 'msg' ] ) ) );
-				exit;
+				$this->ajaxResponse( true, SPLang::e( 'An error has occurred. %s', $response[ 'msg' ] ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG, false );
 			}
 			else {
-				echo json_encode( array( 'msg' => SPLang::e( 'Unknown error occurred.' ) ) );
-				exit;
+				$this->ajaxResponse( true, SPLang::e( 'Unknown error occurred.' ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG, false );
 			}
 		}
 	}
@@ -747,7 +738,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$values[ 'name' ] = 'RepositoryResponse[' . $values[ 'params' ][ 'id' ] . ']';
 			$fields[ ] = $values;
 		}
-		$fields[ ] = array( 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'url', 'type' => 'text', 'required' => true, 'params' => array( 'id' => 'url', 'size' => 30, 'maxlength' => 255, 'disabled' => 'disabled' ) );
+		$fields[ ] = array( 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => array( 'id' => 'url', 'size' => 30, 'readonly' => 'readonly' ) );
 		$request = array( 'fields' => $fields );
 		$view->assign( $request, 'request' );
 		$view->determineTemplate( 'extensions', 'soap-request' );
@@ -758,10 +749,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		SPFactory::mainframe()->cleanBuffer();
 		header( 'Content-type: application/json' );
 		if ( $repositoryId ) {
-			echo json_encode( array( 'message' => array( 'type' => 'info', 'response' => $response ), 'repository' => $repositoryId, 'callback' => $callback ) );
+			echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => $response ), 'repository' => $repositoryId, 'callback' => $callback ) );
 		}
 		else {
-			echo json_encode( array( 'message' => array( 'type' => 'info', 'response' => $response ), 'extension' => $appId, 'callback' => $callback ) );
+			echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => $response ), 'extension' => $appId, 'callback' => $callback ) );
 		}
 		exit;
 	}
@@ -1026,7 +1017,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 	}
 
-	protected function ajaxResponse( $ajax, $message, $redirect, $type )
+	protected function ajaxResponse( $ajax, $message, $redirect, $type, $callback = 'SPExtensionInstaller' )
 	{
 		if ( $ajax ) {
 			if ( $redirect ) {
@@ -1036,7 +1027,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				'type' => $type,
 				'text' => $message,
 				'redirect' => $redirect ? Sobi::Url( 'extensions.installed' ) : false,
-				'callback' => $type == SPC::SUCCESS_MSG ? 'SPExtensionInstaller' : false
+				'callback' => $type == SPC::SUCCESS_MSG ? $callback : false
 			);
 			header( 'Content-type: application/json' );
 			SPFactory::mainframe()->cleanBuffer();

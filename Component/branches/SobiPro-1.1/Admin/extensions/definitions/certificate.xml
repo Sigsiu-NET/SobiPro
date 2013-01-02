@@ -38,4 +38,7 @@
 			</div>
 		</div>
 	</body>
+	<config>
+		<action value="index.php" />
+	</config>
 </definition>
