@@ -201,9 +201,10 @@ abstract class SPHtml_Input
 	 * @param string $name - name of the html field
 	 * @param string $value - selected value
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param string $class
 	 * @return string
 	 */
-	public static function button( $name, $value = null, $params = null, $class= null )
+	public static function button( $name, $value = null, $params = null, $class = null )
 	{
 		self::checkArray( $params );
 		$f = null;
@@ -224,8 +225,8 @@ abstract class SPHtml_Input
 			$h = " onclick=\"{$name}Redirect()\"";
 			unset( $params[ 'href' ] );
 		}
-		if( $class ) {
-			$params['class'] = $class;
+		if ( $class ) {
+			$params[ 'class' ] = $class;
 		}
 		$params = self::params( $params );
 		$value = self::translate( $value );

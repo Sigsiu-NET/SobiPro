@@ -17,176 +17,112 @@
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/js/adm/requirements.js $
  */
 
+var SPStartTime = 0;
+var SPErrors = 0;
 SobiPro.jQuery().ready( function ()
 {
 	"use strict";
 	new SobiProRequirements();
+	SobiPro.jQuery( '#SobiPro' ).find( '.repeat' ).click( function ()
+	{
+		SobiPro.jQuery( '#SobiPro' ).find( '.bar' ).css( 'width', '1%' )
+		setTimeout( function ()
+		{
+			new SobiProRequirements();
+		}, 1000 );
+	} );
+	SobiPro.jQuery( '#SobiPro' ).find( '.download' ).click( function ()
+	{
+		document.location = SobiProAdmUrl.replace( '%task%', 'requirements.download' ) + '&format=raw';
+	} );
+	SobiPro.jQuery( '#SobiPro' ).find( '.next' ).click( function ()
+	{
+		if ( SPErrors && (( new Date().getTime() - SPStartTime ) < 4000 ) ) {
+			alert( SobiPro.Txt( 'REQUIREMENT_READ_PLEASE' ).replace( '%d', Math.ceil( ( new Date().getTime() - SPStartTime ) / 1000 ) ) );
+			SPStartTime = 0;
+		}
+		else {
+			document.location = SobiPro.jQuery( '#SP_redirect' ).val();
+		}
+		return false;
+	} );
 } );
 
 function SobiProRequirements()
 {
 	"use strict";
-	SobiPro.jQuery( '&nbsp;<span id="SpProgress">&nbsp;<img src="' + SPLiveSite + 'media/sobipro/styles/progress.gif"/></span>' )
+	SPStartTime = new Date().getTime();
+	SobiPro.jQuery( '&nbsp;<span id="SpProgress"></span>' )
 		.appendTo( SobiPro.jQuery( '#SobiPro' ).find( '.alert' ) );
-}
-
-var StatCount = 0;
-var Retries = 0;
-var SPWarn = 0;
-var SPErr = 0;
-var SPStart = 0;
-var SPEnd = 0;
-
-window.addEvent( '--', function ()
-{
-	e = SP_class( 'statInner' );
-	$( 'StatSp' ).innerHTML = '<img src="' + SPLiveSite + 'media/sobipro/styles/spinner.gif"/>';
-	for ( var i = 0, j = e.length; i < j; i++ ) {
-		SP_Stats( e[ i ] );
+	this.elements = SobiPro.jQuery( '.spOutput' );
+	this.spinner = '<img src="' + SPLiveSite + 'media/sobipro/styles/spinner.gif"/>';
+	this.running = this.elements.length;
+	var def = SobiPro.jQuery( '#SP_method' ).next( 'input' );
+	this.request = {
+		'option':'com_sobipro',
+		'method':'xhr',
+		'format':'raw'
 	}
-} );
-
-function SP_ReqAgain()
-{
-	StatCount = 0;
-	Retries = 0;
-	SPWarn = 0;
-	SPErr = 0;
-	SPStart = 0;
-	try {
-		$( 'spReqBt' ).disabled = true;
-	}
-	catch ( e ) {
-	}
-	$( 'spRReqBt' ).disabled = true;
-	e = SP_class( 'statInner' );
-	$( 'StatSp' ).innerHTML = '<img src="' + SPLiveSite + 'media/sobipro/styles/spinner.gif"/>';
-	for ( var i = 0, j = e.length; i < j; i++ ) {
-		SP_Stats( e[ i ] );
-	}
-}
-
-function SP_Stop()
-{
-	if ( StatCount <= 0 ) {
-		$( 'StatSp' ).innerHTML = '';
-		$( 'StatMsg' ).innerHTML = SobiPro.Txt( 'Done' );
-		try {
-			$( 'spReqBt' ).disabled = false;
+	this.request[ def.attr( 'name' ) ] = def.val();
+	SobiPro.jQuery( '.buttons' ).addClass( 'hide' );
+	var proxy = this;
+	this.setMessage = function ()
+	{
+		if ( this.running ) {
+			SobiPro.jQuery( '#SpProgress' )
+				.html( SobiPro.Txt( 'REQUIREMENT_WORKING_MSG' ).replace( '%d', this.running ) );
 		}
-		catch ( e ) {
+		else {
+			SobiPro.jQuery( '.buttons' ).removeClass( 'hide' );
+			SobiPro.jQuery( '#SpProgress' ).html( SobiPro.Txt( 'Done' ) )
 		}
-		$( 'spRReqBt' ).disabled = false;
-		$( 'spReqBtCont' ).style.display = '';
-		$( 'spRDownBt' ).disabled = false;
-		$( 'spRDownBt' ).style.display = '';
-		var start = new Date().getTime();
-		for ( var i = 0; i < 1e7; i++ ) {
-			if ( ( new Date().getTime() - start ) > 1000 ) {
-				break;
-			}
-		}
-		if ( SPErr ) {
-			SobiPro.Alert( 'REQUIREMENT_ERR' );
-		}
-		else if ( SPWarn ) {
-			SobiPro.Alert( 'REQUIREMENT_WARN' );
-			SPStart = new Date().getTime();
-		}
+		SobiPro.jQuery( '#SobiPro' ).find( '.bar' ).css( 'width', 100 / this.running + '%' )
 	}
-	else {
-		$( 'StatMsg' ).innerHTML = SobiPro.Txt( 'REQUIREMENT_WORKING_MSG' ).replace( '%d', StatCount );
-	}
-}
-
-function SP_ReqEnd()
-{
-	if ( ( new Date().getTime() - SPStart ) < 4000 ) {
-		alert( SobiPro.Txt( 'REQUIREMENT_READ_PLEASE' ).replace( '%d', Math.ceil( ( new Date().getTime() - SPStart ) / 1000 ) ) );
-		SPStart = 0;
-	}
-	else {
-		document.location = spHome;
-	}
-	return false;
-}
-
-function SP_Download()
-{
-	document.location = spDownl;
-}
-
-function SP_Stats( el )
-{
-	var start = new Date().getTime();
-	for ( var i = 0; i < 1e7; i++ ) {
-		if ( ( new Date().getTime() - start ) > 10 ) {
-			break;
-		}
-	}
-	var spinner = '<img src="' + SPLiveSite + 'media/sobipro/styles/spinner.gif"/>';
-	StatCount++;
-	el.innerHTML = spinner;
-	advAJAX.get( {
-		url:spReq + "." + el.id,
-		timeout:50000,
-		onTimeout:function ()
-		{
-			StatCount--;
-			el.innerHTML = SobiPro.Txt( 'Connection timed out.' );
-			SP_Stop();
-		},
-		retry:5,
-		retryDelay:2000,
-		onRetry:function ()
-		{
-			el.innerHTML = spinner + SobiPro.Txt( 'Retry connection...' );
-		},
-		onRetryDelay:function ()
-		{
-			el.innerHTML = SobiPro.Txt( 'Awaiting retry...' );
-		},
-		onError:function ( obj )
-		{
-			el.innerHTML = SobiPro.Txt( 'Error ... ' ) + obj.status;
-			StatCount--;
-			SP_Stop();
-		},
-		onSuccess:function ( obj )
-		{
-			if ( obj.responseText.length < 1000 ) {
-				try {
-					jobj = eval( '(' + obj.responseText + ')' );
-					el.innerHTML = jobj.content;
-					$( 'i' + el.id ).innerHTML = jobj.ico;
-					if ( jobj.error ) {
-						SPErr++;
+	this.setMessage();
+	this.getResponse = function ( element, index )
+	{
+		var el = SobiPro.jQuery( element );
+		var request = proxy.request;
+		request[ 'task' ] = 'requirements.' + el.attr( 'id' );
+		el.html( this.spinner );
+		SobiPro.jQuery.ajax( {
+			'type':'post',
+			'url':'index.php',
+			'data':request,
+			'dataType':'json',
+			success:function ( response )
+			{
+				if ( response.type == 'success' ) {
+					SPErrors++
+				}
+				if ( response.type == 'error' ) {
+					response.type = 'important';
+				}
+				var icons = {
+					'important':'thumbs-down',
+					'success':'thumbs-up',
+					'warning':'hand-right'
+				};
+				el.html( '<span class="label label-' + response.type + '">&nbsp;<i class="icon-' + icons[ response.type ] + '"></i>&nbsp;&nbsp;' + response.textType + '</span>&nbsp;&nbsp;' + response.message );
+				proxy.running--;
+				proxy.setMessage();
+			},
+			error:function ( xhr, textStatus )
+			{
+				if ( textStatus == 'timeout' ) {
+					if ( index < 20 ) {
+						el.html( SobiPro.Txt( 'Too long answer' ) );
+						proxy.getResponse( element, index++ );
 					}
-					if ( jobj.warning ) {
-						SPWarn++;
+					else {
+						el.html( SobiPro.Txt( 'Too long answer. Limit expired. Skipping' ) );
 					}
-					StatCount--;
-					SP_Stop();
-				}
-				catch ( err ) {
-					el.innerHTML = obj.responseText;
-					StatCount--;
-					SP_Stats( el );
 				}
 			}
-			else {
-				Retries++;
-				if ( Retries < 25 ) {
-					el.innerHTML = SobiPro.Txt( 'Too long answer' );
-					StatCount--;
-					SP_Stats( el );
-				}
-				else {
-					el.innerHTML = SobiPro.Txt( 'Too long answer. Limit expired. Skipping' );
-					StatCount--;
-					SP_Stop();
-				}
-			}
-		}
+		} );
+	}
+	this.elements.each( function ( index, element )
+	{
+		proxy.getResponse( element, 0 );
 	} );
 }

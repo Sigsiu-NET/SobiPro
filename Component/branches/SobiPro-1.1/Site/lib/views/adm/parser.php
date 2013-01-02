@@ -82,7 +82,7 @@ class SPTplParser
 				$this->_out[ ] = '<div class="control-group">';
 				if ( isset( $element[ 'label' ] ) && strlen( $element[ 'label' ] ) ) {
 					if ( !( isset( $element[ 'id' ] ) ) ) {
-						$element[ 'id' ] = SPLang::nid( $element[ 'label' ] );
+						$element[ 'id' ] = $this->istSet( $element[ 'attributes' ], 'id' ) ? $element[ 'attributes' ][ 'id' ] : SPLang::nid( $element[ 'label' ] );
 					}
 					if ( isset( $element[ 'help-text' ] ) && $element[ 'help-text' ] ) {
 						$element[ 'label' ] = '<a href="#" rel="popover" data-title="' . htmlspecialchars( $element[ 'label' ], ENT_COMPAT ) . '" data-content="' . htmlspecialchars( $element[ 'help-text' ], ENT_COMPAT ) . '">' . $element[ 'label' ] . '</a>';
@@ -96,7 +96,7 @@ class SPTplParser
 				$class = null;
 
 				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
-					$this->_out[ ] = "<div class=\"spOutput\">";
+					$this->_out[ ] = "<div class=\"spOutput\" id=\"{$element[ 'id' ]}\">";
 					$outclass = null;
 					if ( isset( $element[ 'args' ][ 'params' ][ 'class' ] ) ) {
 						$outclass = $element[ 'args' ][ 'params' ][ 'class' ];

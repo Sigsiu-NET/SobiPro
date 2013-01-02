@@ -45,7 +45,6 @@ class SPRequirements extends SPController
 		if ( SPRequest::int( 'init' ) ) {
 			SPFactory::cache()->cleanAll();
 		}
-		SPLoader::loadClass( 'html.tooltip' );
 		switch ( $this->_task ) {
 			case 'view':
 				$this->view();
@@ -196,6 +195,11 @@ class SPRequirements extends SPController
 	{
 		$v = ini_get( 'max_execution_time' );
 		$v = preg_replace( '/[^0-9]/i', null, $v );
+		if ( $v == 0 ) {
+			$options = ini_get_all();
+			$v = $options[ 'max_execution_time' ][ 'global_value' ];
+		}
+
 		if ( $v >= 30 ) {
 			echo $this->ok( Sobi::Txt( 'REQ.MAX_EXEC_IS', array( 'limit' => $v ) ), __FUNCTION__ );
 		}
@@ -261,7 +265,7 @@ class SPRequirements extends SPController
 		}
 	}
 
-	private function filter()
+	private function filterFunctions()
 	{
 		$v = function_exists( 'filter_var' ) ? true : false;
 		if ( $v ) {
@@ -381,6 +385,7 @@ class SPRequirements extends SPController
 	private function XSL()
 	{
 		$v = class_exists( 'XSLTProcessor' ) ? true : false;
+//		$v = false;
 		if ( $v ) {
 			echo $this->ok( Sobi::Txt( 'REQ.XSL_AVAILABLE' ), __FUNCTION__ );
 		}
@@ -601,7 +606,7 @@ class SPRequirements extends SPController
 		$sections = SPFactory::db()->select( array( 'nid', 'id' ), 'spdb_object', array( 'oType' => 'section' ) )->loadAssocList( 'id' );
 		$as = array();
 		foreach ( $c as $key ) {
-			if ( $key->section == 0 ) {
+			if ( $key->section == 0 || !( isset( $sections[ $key->section ] ) ) ) {
 				continue;
 			}
 			$key->section = $sections[ $key->section ][ 'nid' ];
@@ -645,10 +650,10 @@ class SPRequirements extends SPController
 		$settings[ 'PHP_EXT' ] = $php;
 		$out = SPFactory::Instance( 'types.array' );
 		$data = $out->toXML( $settings, 'settings' );
-		SPFactory::mainframe()->cleanBuffer();
 		$data = str_replace( array( SOBI_ROOT, '></' ), array( 'REMOVED', '>0</' ), $data );
-		header( "Content-type: application/xml" );
 		$f = SPLang::nid( $settings[ 'SOBI_SETTINGS' ][ 'general' ][ 'site_name' ] );
+		SPFactory::mainframe()->cleanBuffer();
+		header( "Content-type: application/xml" );
 		header( "Content-Disposition: attachment; filename=\"sobipro_system_{$f}.xml\"" );
 		header( 'Content-Length: ' . strlen( $data ) );
 		ob_clean();
@@ -743,43 +748,30 @@ class SPRequirements extends SPController
 	private function ok( $msg, $key, $storeOnly = false )
 	{
 		$this->store( $key, __FUNCTION__, $msg );
-		if ( !( $storeOnly ) )
-			return json_encode(
-				array(
-					'error' => 0,
-					'warning' => 0,
-					'content' => '&nbsp;<span style="color:#339933; font-size: 12px;"><b>' . $msg . '</b></span>',
-					'ico' => SPTooltip::toolTip( $msg, Sobi::Txt( 'REQ.COMPLY_REQ' ), $this->icons[ 'ok' ] )
-				)
-			);
+		if ( !( $storeOnly ) ) {
+			return $this->response( $msg );
+		}
 	}
 
 	private function warning( $msg, $key, $storeOnly = false )
 	{
 		$this->store( $key, __FUNCTION__, $msg );
-		if ( !( $storeOnly ) )
-			return json_encode(
-				array(
-					'error' => 0,
-					'warning' => 1,
-					'content' => '&nbsp;<span style="color:#F16A33; font-size: 12px;"><b>' . $msg . '</b></span>',
-					'ico' => SPTooltip::toolTip( $msg, Sobi::Txt( 'REQ.NOT_RECOMMENDED' ), $this->icons[ 'warning' ] )
-				)
-			);
+		if ( !( $storeOnly ) ) {
+			return $this->response( $msg, SPC::WARN_MSG );
+		}
 	}
 
 	private function error( $msg, $key, $storeOnly = false )
 	{
 		$this->store( $key, __FUNCTION__, $msg );
-		if ( !( $storeOnly ) )
-			return json_encode(
-				array(
-					'error' => 1,
-					'warning' => 0,
-					'content' => '&nbsp;<span style="color:red; font-size: 12px;"><b>' . $msg . '</b></span>',
-					'ico' => SPTooltip::toolTip( $msg, Sobi::Txt( 'REQ.DOES_NOT_COMPLY' ), $this->icons[ 'wrong' ] )
-				)
-			);
+		if ( !( $storeOnly ) ) {
+			return $this->response( $msg, SPC::ERROR_MSG );
+		}
+	}
+
+	protected function response( $message, $type = SPC::SUCCESS_MSG )
+	{
+		return json_encode( array( 'type' => $type, 'message' => $message, 'textType' => Sobi::Txt( 'STATUS_' . $type ) ) );
 	}
 
 	protected function view()
@@ -789,8 +781,11 @@ class SPRequirements extends SPController
 		if ( SPFs::exists( $file ) ) {
 			SPFs::delete( $file );
 		}
+		$home = SPRequest::int( 'init' ) ? Sobi::Url( null, true ) : Sobi::Url( 'config', true );
 		/** @var $view SPAdmView */
 		SPFactory::View( 'view', true )
+				->assign( SPRequest::int( 'init' ), 'init' )
+				->addHidden( $home, 'redirect' )
 				->determineTemplate( 'config', 'requirements' )
 				->display();
 	}

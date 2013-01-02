@@ -916,6 +916,9 @@ class SPAdmView extends SPObject implements SPView
 					case 'value-parsed':
 						$args[ 'value' ] = $attribute->nodeValue;
 						break;
+					case 'value-text':
+						$args[ 'value' ] = Sobi::Txt( $attribute->nodeValue );
+						break;
 					case 'label':
 					case 'header':
 						$element[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );

@@ -4,54 +4,61 @@
 		<title value="Requirements" />
 		<file type="script" filename="adm.requirements" />
 	</header>
-	<toolbar title="Requirements" icon="SobiConfig">
-		<divider />
-		<button label="TB.PURGE" task="error.purge" ico="trash" />
-		<button label="TB.DOWNLOAD_LOG" task="error.download" ico="save" />
-	</toolbar>
 	<body>
 		<div class="row-fluid">
 			<div class="span12">
 				<message id="spMessage" />
-				<message label="REQ.CHECKING_REQUIREMENTS" type="info" />
+				<div class="row-fluid">
+					<div class="span12">
+						<message label="REQ.CHECKING_REQUIREMENTS" type="info" />
+					</div>
+					<div class="span10">
+						<div class="progress progress-striped">
+							<div class="bar" style="width: 2%;"></div>
+						</div>
+						<div class="pull-right hide buttons">
+							<field type="button" value-text="REQ.NEXT_BT" class="btn next" stand-alone="true"  />
+							<field type="button" value-text="REQ.CHECK_AGAIN_BT" class="btn repeat" stand-alone="true" />
+							<field type="button" value-text="REQ.DOWNLOAD_BT" class="btn download" stand-alone="true" />
+						</div>
+					</div>
+				</div>
 				<fieldset label="REQ.CMS">
-					<field type="output" value="" label="REQ.CMS_VERSION" />
-					<field type="output" value="" label="REQ.FTP_LAYER" />
-					<field type="output" value="" label="REQ.ENCODING" />
+					<field type="output" value="" label="REQ.CMS_VERSION" id="cms" />
+					<field type="output" value="" label="REQ.FTP_LAYER" id="cmsFtp" />
+					<field type="output" value="" label="REQ.ENCODING" id="cmsEncoding" />
 				</fieldset>
 				<fieldset label="REQ.WEB_SERVER">
-					<field type="output" value="" label="REQ.WEB_SERVER_VERSION_NAME" />
+					<field type="output" value="" label="REQ.WEB_SERVER_VERSION_NAME" id="webServer" />
 				</fieldset>
 				<fieldset label="REQ.PHP_SETTINGS">
-					<field type="output" value="" label="REQ.PHP_VERSION" />
-					<field type="output" value="" label="REQ.SAFE_MODE" />
-					<field type="output" value="" label="REQ.REGISTER_GLOBALS" />
-					<field type="output" value="" label="REQ.PARSE_INI" />
-					<field type="output" value="" label="REQ.GD_LIBRARY" />
-					<field type="output" value="" label="REQ.DOM" />
-					<field type="output" value="" label="REQ.XSL" />
-					<field type="output" value="" label="REQ.XPATH" />
-					<field type="output" value="" label="REQ.TIDY" />
-					<field type="output" value="" label="REQ.SPL" />
-					<field type="output" value="" label="REQ.FILTER" />
-					<field type="output" value="" label="REQ.REPC" />
-					<field type="output" value="" label="REQ.CURL" />
-					<field type="output" value="" label="REQ.SQLITE" />
-					<field type="output" value="" label="REQ.SOAP" />
-					<field type="output" value="" label="REQ.OPENSSL" />
-					<field type="output" value="" label="REQ.MAX_EXE_TIME" />
-					<field type="output" value="" label="REQ.MEMORY_LIMIT" />
-					<field type="output" value="" label="REQ.JSON" />
-					<field type="output" value="" label="REQ.ZIPARCHIVE" />
-					<field type="output" value="" label="REQ.REFLECTION" />
-					<field type="output" value="" label="REQ.SYSTEM" />
-					<field type="output" value="" label="REQ.SAFE_MODE" />
+					<field type="output" value="" label="REQ.PHP_VERSION" id="phpVersion" />
+					<field type="output" value="" label="REQ.SAFE_MODE" id="safeMode"/>
+					<field type="output" value="" label="REQ.REGISTER_GLOBALS" id="registerGlobals"/>
+					<field type="output" value="" label="REQ.PARSE_INI" id="iniParse" />
+					<field type="output" value="" label="REQ.GD_LIBRARY" id="gDlib" />
+					<field type="output" value="" label="REQ.DOM" id="DOM" />
+					<field type="output" value="" label="REQ.XSL" id="XSL" />
+					<field type="output" value="" label="REQ.XPATH" id="XPath" />
+					<field type="output" value="" label="REQ.TIDY" id="tidy" />
+					<field type="output" value="" label="REQ.SPL" id="spl" />
+					<field type="output" value="" label="REQ.FILTER" id="filterFunctions" />
+					<field type="output" value="" label="REQ.REPC" id="PCRE" />
+					<field type="output" value="" label="REQ.CURL" id="CURL" />
+					<field type="output" value="" label="REQ.SQLITE" id="SQLite" />
+					<field type="output" value="" label="REQ.SOAP" id="SOAP" />
+					<field type="output" value="" label="REQ.OPENSSL" id="OpenSSL" />
+					<field type="output" value="" label="REQ.MAX_EXE_TIME" id="maxExecutionTime" />
+					<field type="output" value="" label="REQ.MEMORY_LIMIT" id="memoryLimit" />
+					<field type="output" value="" label="REQ.ZIPARCHIVE" id="ZipArchive" />
+					<field type="output" value="" label="REQ.REFLECTION" id="reflection" />
+					<field type="output" value="" label="REQ.SYSTEM" id="exec" />
 				</fieldset>
 				<fieldset label="REQ.MYSQL_SETTINGS">
-					<field type="output" value="" label="REQ.MYSQL_VERSION" />
-					<field type="output" value="" label="REQ.MYSQL_CHARSET" />
-					<field type="output" value="" label="REQ.MYSQL_PROCEDURE" />
-					<field type="output" value="" label="REQ.MYSQL_VIEW" />
+					<field type="output" value="" label="REQ.MYSQL_VERSION" id="mySQLversion" />
+					<field type="output" value="" label="REQ.MYSQL_CHARSET" id="mySQLcharset" />
+					<field type="output" value="" label="REQ.MYSQL_PROCEDURE" id="createProcedure" />
+					<field type="output" value="" label="REQ.MYSQL_VIEW" id="createView" />
 				</fieldset>
 			</div>
 		</div>
