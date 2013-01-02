@@ -92,11 +92,11 @@ class SPAclView extends SPAdmView
 			// default ordering
 			$permissionsOrder = array(
 				'Section' => array( 3, 4 ),
-				'Category' => array( 8, 7, ),
-				'Entry' => array( 10, 9 )
+				'Category' => array( 8, 7 ),
+				'Entry' => array( 9, 11, 10, 14, 12, 16, 18, 17, 20, 21, 19, 15, 24, 25 )
 			);
 			// to show current
-//			SPConfig::debOut( $put );
+/////			SPConfig::debOut( $put );
 			$permissions = array();
 			foreach ( $permissionsOrder as $subject => $ordering ) {
 				foreach ( $ordering as $pid ) {
