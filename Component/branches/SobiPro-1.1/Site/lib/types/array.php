@@ -145,8 +145,8 @@ final class SPData_Array extends SPObject
 		$dom->formatOutput = true;
 		$node = $dom->appendChild( $dom->createElement( SPLang::nid( $root ) ) );
 		$this->_toXML( $arr, $node, $dom );
-		$conntent = $dom->saveXML();
-		return $conntent;
+		$content = $dom->saveXML();
+		return $content;
 	}
 
 	private function _toXML( $arr, &$node, &$dom )
