@@ -101,14 +101,17 @@ SobiPro.jQuery().ready( function ()
 					{
 						request[ 'task' ] = 'extensions.registerRepo';
 						request[ 'callback' ] = data.callback;
-						request = SobiPro.jQuery.extend( SobiPro.jQuery( '#SpRepoModal' ).closest( 'form' ).serialize(), request )
-						SobiPro.DebOut( request );
+						var form = SobiPro.jQuery( '#SpRepoModal' ).find( 'form' ).serializeArray();
+						for ( var i = 0; i < form.length; i++ ) {
+							request[ form[ i ][ 'name' ] ] = form[ i ][ 'value' ];
+						}
 						SobiPro.jQuery( '#SpRepoModal' ).remove();
 						proxy.request( request, proxy.repoCallback )
 					} );
 				}
-				else {
-					SobiPro.DebOut( data );
+				else if ( data.redirect ) {
+					SobiPro.Alert( data.message.response );
+					window.location.reload();
 				}
 			}
 		}

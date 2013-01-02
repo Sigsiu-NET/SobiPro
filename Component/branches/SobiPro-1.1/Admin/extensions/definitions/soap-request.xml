@@ -14,9 +14,7 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<form>
-								<loop subject="request.fields" type="fields" />
-							</form>
+							<loop subject="request.fields" type="fields" />
 						</fieldset>
 					</div>
 				</div>
@@ -28,4 +26,7 @@
 			</div>
 		</div>
 	</body>
+	<config>
+		<action value="index.php" />
+	</config>
 </definition>
