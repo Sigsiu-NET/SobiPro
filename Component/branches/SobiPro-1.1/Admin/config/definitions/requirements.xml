@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definition>
+	<header>
+		<title value="Requirements" />
+		<file type="script" filename="adm.requirements" />
+	</header>
+	<toolbar title="Requirements" icon="SobiConfig">
+		<divider />
+		<button label="TB.PURGE" task="error.purge" ico="trash" />
+		<button label="TB.DOWNLOAD_LOG" task="error.download" ico="save" />
+	</toolbar>
+	<body>
+		<div class="row-fluid">
+			<div class="span12">
+				<message id="spMessage" />
+				<message label="REQ.CHECKING_REQUIREMENTS" type="info" />
+				<fieldset label="REQ.CMS">
+					<field type="output" value="" label="REQ.CMS_VERSION" />
+					<field type="output" value="" label="REQ.FTP_LAYER" />
+					<field type="output" value="" label="REQ.ENCODING" />
+				</fieldset>
+				<fieldset label="REQ.WEB_SERVER">
+					<field type="output" value="" label="REQ.WEB_SERVER_VERSION_NAME" />
+				</fieldset>
+				<fieldset label="REQ.PHP_SETTINGS">
+					<field type="output" value="" label="REQ.PHP_VERSION" />
+					<field type="output" value="" label="REQ.SAFE_MODE" />
+					<field type="output" value="" label="REQ.REGISTER_GLOBALS" />
+					<field type="output" value="" label="REQ.PARSE_INI" />
+					<field type="output" value="" label="REQ.GD_LIBRARY" />
+					<field type="output" value="" label="REQ.DOM" />
+					<field type="output" value="" label="REQ.XSL" />
+					<field type="output" value="" label="REQ.XPATH" />
+					<field type="output" value="" label="REQ.TIDY" />
+					<field type="output" value="" label="REQ.SPL" />
+					<field type="output" value="" label="REQ.FILTER" />
+					<field type="output" value="" label="REQ.REPC" />
+					<field type="output" value="" label="REQ.CURL" />
+					<field type="output" value="" label="REQ.SQLITE" />
+					<field type="output" value="" label="REQ.SOAP" />
+					<field type="output" value="" label="REQ.OPENSSL" />
+					<field type="output" value="" label="REQ.MAX_EXE_TIME" />
+					<field type="output" value="" label="REQ.MEMORY_LIMIT" />
+					<field type="output" value="" label="REQ.JSON" />
+					<field type="output" value="" label="REQ.ZIPARCHIVE" />
+					<field type="output" value="" label="REQ.REFLECTION" />
+					<field type="output" value="" label="REQ.SYSTEM" />
+					<field type="output" value="" label="REQ.SAFE_MODE" />
+				</fieldset>
+				<fieldset label="REQ.MYSQL_SETTINGS">
+					<field type="output" value="" label="REQ.MYSQL_VERSION" />
+					<field type="output" value="" label="REQ.MYSQL_CHARSET" />
+					<field type="output" value="" label="REQ.MYSQL_PROCEDURE" />
+					<field type="output" value="" label="REQ.MYSQL_VIEW" />
+				</fieldset>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+		</hidden>
+	</config>
+</definition>

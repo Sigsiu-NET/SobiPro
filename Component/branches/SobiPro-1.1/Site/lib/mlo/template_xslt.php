@@ -54,10 +54,12 @@ class SPTemplateXSLT implements SPTemplate
     {
     }
 
-    /**
-     * @param string $out - output type
-     * @param array $functions - array with PHP function to register
-     */
+	/**
+	 * @param string $out - output type
+	 * @param array $functions - array with PHP function to register
+	 * @throws SPException
+	 * @return mixed|string
+	 */
     public function display( $out = 'html', $functions = array() )
     {
         $class = SPLoader::loadClass( 'helpers.template' );
@@ -369,5 +371,3 @@ class SPTemplateXSLT implements SPTemplate
         return call_user_func_array( array( $this->_proxy, $method ), $params );
     }
 }
-
-?>

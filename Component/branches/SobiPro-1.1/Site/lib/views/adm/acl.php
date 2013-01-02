@@ -89,8 +89,37 @@ class SPAclView extends SPAdmView
 				$k = $permission->action . '_' . $permission->value;
 				$put[ $subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
 			}
+			// default ordering
+			$permissionsOrder = array(
+				'Section' => array( 3, 4 ),
+				'Category' => array( 8, 7, ),
+				'Entry' => array( 10, 9 )
+			);
+			// to show current
+//			SPConfig::debOut( $put );
+			$permissions = array();
+			foreach ( $permissionsOrder as $subject => $ordering ) {
+				foreach ( $ordering as $pid ) {
+					$permissions[ $subject ][ $pid ] = $put[ $subject ][ $pid ];
+					unset( $put[ $subject ][ $permission->pid ] );
+				}
+				// if still something left - add this too
+				if ( count( $put[ $subject ] ) ) {
+					foreach ( $put[ $subject ] as $pid => $label ) {
+						$permissions[ $subject ][ $pid ] = $label;
+					}
+				}
+				unset( $put[ $subject ] );
+			}
+			// if still something left - add this too (subjects)
+			if ( count( $put ) ) {
+				foreach ( $put as $subject => $perms ) {
+					$permissions[ $subject ] = $perms;
+				}
+			}
+//			SPConfig::debOut( $permissions );
+			$this->set( $permissions, 'permissions' );
 		}
-		$this->set( $put, 'permissions' );
 		$sections = array();
 		$perms = array();
 		if ( count( $rule[ 'permissions' ] ) ) {
