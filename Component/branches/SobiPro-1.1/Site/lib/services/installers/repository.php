@@ -53,18 +53,18 @@ class SPRepository extends SPInstaller
 	public function saveToken( $token )
 	{
 		$arrdef = SPFactory::Instance( 'types.array' );
-		$def  = $arrdef->fromXML( $this->definition, 'repository' );
+		$def = $arrdef->fromXML( $this->definition, 'repository' );
 		$ndef = array();
 		$u = false;
 		$rid = null;
 		foreach ( $def[ 'repository' ] as $k => $v ) {
-			if( $u ) {
+			if ( $u ) {
 				$ndef[ 'token' ] = $token;
 			}
-			if( $k == 'id' ) {
+			if ( $k == 'id' ) {
 				$rid = $v;
 			}
-			if( $k == 'url' ) {
+			if ( $k == 'url' ) {
 				$u = true;
 			}
 			$ndef[ $k ] = $v;
@@ -78,7 +78,7 @@ class SPRepository extends SPInstaller
 
 	public function getDef()
 	{
-		if( empty( $this->_repoDefArr ) ) {
+		if ( empty( $this->_repoDefArr ) ) {
 			$def = SPFactory::Instance( 'types.array' );
 			$this->_repoDefArr = $def->fromXML( $this->definition, 'repository' );
 		}
@@ -90,15 +90,15 @@ class SPRepository extends SPInstaller
 		return $this->xGetString( $attr );
 	}
 
-	public function connect( $progress = null )
+	public function connect()
 	{
-		if( ( $this->definition instanceof DOMDocument ) && $this->xGetString( 'url' ) ) {
+		if ( ( $this->definition instanceof DOMDocument ) && $this->xGetString( 'url' ) ) {
 			$connection = SPFactory::Instance( 'services.remote' );
 			$ssl = $connection->certificate( $this->xGetString( 'url' ) );
-			if( isset( $ssl[ 'err' ] ) ) {
+			if ( isset( $ssl[ 'err' ] ) ) {
 				throw new SPException( $ssl[ 'msg' ] );
 			}
-			if( $ssl[ 'serialNumber' ] != $this->xGetString( 'certificate/serialnumber' ) ) {
+			if ( $ssl[ 'serialNumber' ] != $this->xGetString( 'certificate/serialnumber' ) ) {
 				throw new SPException(
 					SPLang::e(
 						'SSL validation error: stored serial number is %s but the serial number for the repository at %s has the number %s',
@@ -108,7 +108,7 @@ class SPRepository extends SPInstaller
 					)
 				);
 			}
-			if( $ssl[ 'hash' ] != $this->xGetString( 'certificate/hash' ) ) {
+			if ( $ssl[ 'hash' ] != $this->xGetString( 'certificate/hash' ) ) {
 				throw new SPException(
 					SPLang::e(
 						'SSL validation error: stored hash does not accords the hash for the repository at %s. %s != %s',
@@ -116,7 +116,7 @@ class SPRepository extends SPInstaller
 					)
 				);
 			}
-			if( $ssl[ 'validTo' ] < time() ) {
+			if ( $ssl[ 'validTo' ] < time() ) {
 				throw new SPException(
 					SPLang::e(
 						'SSL validation error: SSL certificate for %s is expired',
@@ -127,12 +127,7 @@ class SPRepository extends SPInstaller
 			$this->_server = SPFactory::Instance( 'services.soap', null, array( 'location' => $this->xGetString( 'url' ) ) );
 		}
 		else {
-			throw new SPException(
-				SPLang::e(
-					'No repository definition file at %s or the definition is invalid',
-					$this->xmlFile
-				)
-			);
+			throw new SPException( SPLang::e( 'No repository definition file at %s or the definition is invalid', $this->xmlFile ) );
 		}
 	}
 
@@ -141,15 +136,14 @@ class SPRepository extends SPInstaller
 		$return = array( 'error' => 500 );
 		array_unshift( $args, Sobi::Lang( false ) );
 		array_unshift( $args, Sobi::Cfg( 'live_site' ) );
-		if( $this->_server instanceof SPSoapClient ) {
+		if ( $this->_server instanceof SPSoapClient ) {
 			try {
 				$return = $this->_server->__soapCall( $fn, $args );
-			}
-			catch ( SoapFault $x ) {
+			} catch ( SoapFault $x ) {
 				throw new SPException( $x->getMessage() );
 			}
 			/* what the hell ???!!!!!*/
-			if( $return instanceof SoapFault ) {
+			if ( $return instanceof SoapFault ) {
 				throw new SPException( $return->getMessage() );
 			}
 		}

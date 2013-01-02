@@ -289,11 +289,11 @@ class SPAdmView extends SPObject implements SPView
 	private function xmlCondition( $xml, $subject = null, $i = -1 )
 	{
 		if ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'condition' ) && $xml->attributes->getNamedItem( 'condition' )->nodeValue ) {
-			$subject = $subject ? $subject.'.'.$xml->attributes->getNamedItem( 'condition' )->nodeValue : $xml->attributes->getNamedItem( 'condition' )->nodeValue;
+			$subject = $subject ? $subject . '.' . $xml->attributes->getNamedItem( 'condition' )->nodeValue : $xml->attributes->getNamedItem( 'condition' )->nodeValue;
 			return $this->get( $subject, $i );
 		}
 		elseif ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'invert-condition' ) && $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue ) {
-			$subject = $subject ? $subject.'.'.$xml->attributes->getNamedItem( 'invert-condition' )->nodeValue : $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue;
+			$subject = $subject ? $subject . '.' . $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue : $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue;
 			return !( $this->get( $subject, $i ) );
 		}
 		else {
@@ -604,28 +604,61 @@ class SPAdmView extends SPObject implements SPView
 		}
 		$objectsCount = $this->count( $subject );
 		$objects = array();
-		for ( $i = 0; $i < $objectsCount; $i++ ) {
-			$row = array();
-			/** @var DOMNode $cell */
-			foreach ( $node->childNodes as $cell ) {
-				if ( strstr( $cell->nodeName, '#' ) ) {
-					continue;
+		if ( $node->attributes->getNamedItem( 'type' ) && $node->attributes->getNamedItem( 'type' )->nodeValue == 'fields' ) {
+			$fields = $this->get( $subject );
+			foreach ( $fields as $field ) {
+				if ( method_exists( 'SPHtml_input', $field[ 'type' ] ) ) {
+					$method = new ReflectionMethod( 'SPHtml_input', $field[ 'type' ] );
+					$methodArgs = array();
+					$methodParams = $method->getParameters();
+					foreach ( $methodParams as $param ) {
+						if ( isset( $field[ $param->name ] ) ) {
+							$methodArgs[ ] = $field[ $param->name ];
+						}
+						elseif ( $param->isDefaultValueAvailable() ) {
+							$methodArgs[ ] = $param->getDefaultValue();
+						}
+						else {
+							$methodArgs[ ] = null;
+						}
+					}
+					$objects[ ] = array(
+						'label' => $field[ 'label' ],
+						'type' => 'field',
+						'content' => call_user_func_array( array( 'SPHtml_input', $field[ 'type' ] ), $methodArgs ),
+						'args' => array( 'type' => $field[ 'type' ] ),
+						'adds' => array(
+							'after' => array( $field[ 'required' ] ? Sobi::Txt( 'EX.SOAP_RESP_REQ' ) : Sobi::Txt( 'EX.SOAP_RESP_OPT' ) ),
+							'before' => null
+						)
+					);
 				}
-				$this->xmlCell( $cell, $subject, $i, $row );
 			}
-			$a = array();
-			if ( $node->hasAttributes() ) {
-				/** @var DOMElement $attribute */
-				foreach ( $node->attributes as $attribute ) {
-					$a[ $attribute->nodeName ] = $attribute->nodeValue;
+		}
+		else {
+			for ( $i = 0; $i < $objectsCount; $i++ ) {
+				$row = array();
+				/** @var DOMNode $cell */
+				foreach ( $node->childNodes as $cell ) {
+					if ( strstr( $cell->nodeName, '#' ) ) {
+						continue;
+					}
+					$this->xmlCell( $cell, $subject, $i, $row );
 				}
+				$a = array();
+				if ( $node->hasAttributes() ) {
+					/** @var DOMElement $attribute */
+					foreach ( $node->attributes as $attribute ) {
+						$a[ $attribute->nodeName ] = $attribute->nodeValue;
+					}
+				}
+				$objects[ ] = array(
+					'label' => null,
+					'type' => 'loop-row',
+					'content' => $row,
+					'attributes' => $a
+				);
 			}
-			$objects[ ] = array(
-				'label' => null,
-				'type' => 'loop-row',
-				'content' => $row,
-				'attributes' => $a
-			);
 		}
 		$element[ 'content' ] = $objects;
 	}
@@ -1011,6 +1044,9 @@ class SPAdmView extends SPObject implements SPView
 								}
 								elseif ( $value->nodeName == 'text' ) {
 									$v = $value->nodeValue;
+								}
+								elseif ( $value->nodeName == 'button' ) {
+									$v = $this->xmlButton( $value );
 								}
 								$adds[ $child->attributes->getNamedItem( 'where' )->nodeValue ][ ] = $v;
 							}
