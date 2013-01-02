@@ -221,7 +221,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
   KEY `copy` (`copy`)
 ) DEFAULT CHARSET=utf8;
 
-INSERT IGNORE INTO `#__sobipro_field_data` (`publishUp`, `publishDown`, `fid`, `sid`, `section`, `lang`, `enabled`, `params`, `options`, `baseData`, `approved`, `confirmed`, `createdTime`, `createdBy`, `createdIP`, `updatedTime`, `updatedBy`, `updatedIP`, `copy`) VALUES
+INSERT IGNORE INTO `#__sobipro_field_data` (`publishUp`, `publishDown`, `fid`, `sid`, `section`, `lang`, `enabled`, `params`, `options`, `baseData`, `approved`, `confirmed`, `createdTime`, `createdBy`, `createdIP`, `updatedTime`, `updatedBy`, `updatedIP`, `copy`, `editLimit`) VALUES
 ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 37, 1, 'en-GB', 1, '', '', 'Neo Electronics', 1, 0, '2013-01-02 00:00:00', 0, '88.68.227.138', '2013-01-02 16:25:51', 791, '192.168.1.32', 0, 2),
 ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 4, 37, 1, 'en-GB', 1, '', '', 'John Doe', 1, 0, '2013-01-02 00:00:00', 0, '88.68.227.138', '2013-01-02 16:25:51', 791, '192.168.1.32', 0, 2),
 ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 7, 37, 1, 'en-GB', 1, '', '', 'example@example.com', 1, 0, '2013-01-02 00:00:00', 0, '88.68.227.138', '2013-01-02 16:25:51', 791, '192.168.1.32', 0, 2),
@@ -1035,15 +1035,11 @@ INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language
 ('French Southern Territories', 'French Southern Territories', NULL, 'en-GB', 'field_option', 13, 0, NULL, NULL, NULL),
 ('Heard Island McDonald Islands', 'Heard Island and McDonald Islands', NULL, 'en-GB', 'field_option', 13, 0, NULL, NULL, NULL),
 ('South Georgia South Sandwich Islands', 'South Georgia and the South Sandwich Islands', NULL, 'en-GB', 'field_option', 13, 0, NULL, NULL, NULL),
-('description', '', NULL, 'en-GB', 'field', 36, 0, NULL, NULL, NULL),
-('suffix', '', NULL, 'en-GB', 'field', 36, 0, NULL, NULL, NULL),
 ('suffix', '', NULL, 'en-GB', 'field', 6, 0, NULL, NULL, NULL),
 ('metaKeys', 'Business, Directory', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
 ('metaDesc', 'Business Directory', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
-('metaKeys', '', NULL, 'en-GB', 'entry', 0, 37, NULL, NULL, NULL),
-('metaDesc', '', NULL, 'en-GB', 'entry', 0, 37, NULL, NULL, NULL),
-('name', 'Select category', NULL, 'en-GB', 'field', 36, 0, NULL, NULL, NULL),
 ('name', 'Street', NULL, 'en-GB', 'field', 14, 0, NULL, NULL, NULL),
+('name', 'Select category', NULL, 'en-GB', 'field', 15, 0, NULL, NULL, NULL),
 ('bankdata', '<p>Payment Subject: "Entry in the {section.name} at the {cfg:site_name}. Entry id {entry.id}"</p>\r\n<ul>\r\n<li>Account Owner: Jon Doe </li>\r\n<li>Account No.: 8274230479 </li>\r\n<li>Bank No.: 8038012380 </li>\r\n<li>IBAN: 234242343018 </li>\r\n<li>BIC: 07979079779ABCDEFGH</li>\r\n</ul>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
 ('ppexpl', '<p>Please consider that if you are going to pay via Paypal using the payment method "eCheck", the payment remains open until the money has been transferred from your bank account to our Paypal account, which usually takes 4-12 business days (depending on your country).</p>\r\n<p> </p>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
 ('ppsubject', 'Entry in the {section.name} at the {cfg:site_name}. Entry id {entry.id}', 1, 'en-GB', 'application', 0, 1, '', '', '');
