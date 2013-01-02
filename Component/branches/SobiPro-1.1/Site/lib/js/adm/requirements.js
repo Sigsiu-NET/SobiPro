@@ -1,4 +1,4 @@
- /**
+/**
  * @version: $Id: requirements.js 1377 2011-05-19 16:19:16Z Sigrid Suski $
  * @package: SobiPro Library
  * ===================================================
@@ -17,6 +17,19 @@
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/js/adm/requirements.js $
  */
 
+SobiPro.jQuery().ready( function ()
+{
+	"use strict";
+	new SobiProRequirements();
+} );
+
+function SobiProRequirements()
+{
+	"use strict";
+	SobiPro.jQuery( '&nbsp;<span id="SpProgress">&nbsp;<img src="' + SPLiveSite + 'media/sobipro/styles/progress.gif"/></span>' )
+		.appendTo( SobiPro.jQuery( '#SobiPro' ).find( '.alert' ) );
+}
+
 var StatCount = 0;
 var Retries = 0;
 var SPWarn = 0;
@@ -24,13 +37,14 @@ var SPErr = 0;
 var SPStart = 0;
 var SPEnd = 0;
 
-window.addEvent( 'domready', function() {
+window.addEvent( '--', function ()
+{
 	e = SP_class( 'statInner' );
 	$( 'StatSp' ).innerHTML = '<img src="' + SPLiveSite + 'media/sobipro/styles/spinner.gif"/>';
-	for ( var i = 0, j = e.length; i < j; i++) {
+	for ( var i = 0, j = e.length; i < j; i++ ) {
 		SP_Stats( e[ i ] );
-	}	
-});
+	}
+} );
 
 function SP_ReqAgain()
 {
@@ -39,35 +53,43 @@ function SP_ReqAgain()
 	SPWarn = 0;
 	SPErr = 0;
 	SPStart = 0;
-	try { $( 'spReqBt' ).disabled = true; } catch( e ) {}
+	try {
+		$( 'spReqBt' ).disabled = true;
+	}
+	catch ( e ) {
+	}
 	$( 'spRReqBt' ).disabled = true;
 	e = SP_class( 'statInner' );
 	$( 'StatSp' ).innerHTML = '<img src="' + SPLiveSite + 'media/sobipro/styles/spinner.gif"/>';
-	for ( var i = 0, j = e.length; i < j; i++) {
+	for ( var i = 0, j = e.length; i < j; i++ ) {
 		SP_Stats( e[ i ] );
-	}	
+	}
 }
 
 function SP_Stop()
 {
-	if( StatCount <= 0 ) {
+	if ( StatCount <= 0 ) {
 		$( 'StatSp' ).innerHTML = '';
 		$( 'StatMsg' ).innerHTML = SobiPro.Txt( 'Done' );
-		try { $( 'spReqBt' ).disabled = false; } catch( e ) {}
+		try {
+			$( 'spReqBt' ).disabled = false;
+		}
+		catch ( e ) {
+		}
 		$( 'spRReqBt' ).disabled = false;
 		$( 'spReqBtCont' ).style.display = '';
 		$( 'spRDownBt' ).disabled = false;
 		$( 'spRDownBt' ).style.display = '';
 		var start = new Date().getTime();
-		for ( var i = 0; i < 1e7; i++) {
+		for ( var i = 0; i < 1e7; i++ ) {
 			if ( ( new Date().getTime() - start ) > 1000 ) {
 				break;
 			}
-		}		
-		if( SPErr ) {
+		}
+		if ( SPErr ) {
 			SobiPro.Alert( 'REQUIREMENT_ERR' );
 		}
-		else if( SPWarn ) {
+		else if ( SPWarn ) {
 			SobiPro.Alert( 'REQUIREMENT_WARN' );
 			SPStart = new Date().getTime();
 		}
@@ -94,10 +116,10 @@ function SP_Download()
 	document.location = spDownl;
 }
 
-function SP_Stats( el ) 
+function SP_Stats( el )
 {
 	var start = new Date().getTime();
-	for ( var i = 0; i < 1e7; i++) {
+	for ( var i = 0; i < 1e7; i++ ) {
 		if ( ( new Date().getTime() - start ) > 10 ) {
 			break;
 		}
@@ -106,54 +128,59 @@ function SP_Stats( el )
 	StatCount++;
 	el.innerHTML = spinner;
 	advAJAX.get( {
-		url : spReq + "." + el.id,
-		timeout : 50000,
-		onTimeout : function() {
+		url:spReq + "." + el.id,
+		timeout:50000,
+		onTimeout:function ()
+		{
 			StatCount--;
 			el.innerHTML = SobiPro.Txt( 'Connection timed out.' );
 			SP_Stop();
 		},
-		retry : 5,
-		retryDelay : 2000,
-		onRetry : function() {
+		retry:5,
+		retryDelay:2000,
+		onRetry:function ()
+		{
 			el.innerHTML = spinner + SobiPro.Txt( 'Retry connection...' );
 		},
-		onRetryDelay : function() {
+		onRetryDelay:function ()
+		{
 			el.innerHTML = SobiPro.Txt( 'Awaiting retry...' );
 		},
-		onError : function( obj ) {
+		onError:function ( obj )
+		{
 			el.innerHTML = SobiPro.Txt( 'Error ... ' ) + obj.status;
 			StatCount--;
 			SP_Stop();
 		},
-		onSuccess : function( obj ) {
+		onSuccess:function ( obj )
+		{
 			if ( obj.responseText.length < 1000 ) {
 				try {
 					jobj = eval( '(' + obj.responseText + ')' );
 					el.innerHTML = jobj.content;
 					$( 'i' + el.id ).innerHTML = jobj.ico;
-					if( jobj.error ) {
+					if ( jobj.error ) {
 						SPErr++;
 					}
-					if( jobj.warning ) {
+					if ( jobj.warning ) {
 						SPWarn++;
 					}
 					StatCount--;
 					SP_Stop();
 				}
-				catch( err ) {
+				catch ( err ) {
 					el.innerHTML = obj.responseText;
 					StatCount--;
 					SP_Stats( el );
 				}
-			} 
+			}
 			else {
 				Retries++;
 				if ( Retries < 25 ) {
 					el.innerHTML = SobiPro.Txt( 'Too long answer' );
 					StatCount--;
 					SP_Stats( el );
-				} 
+				}
 				else {
 					el.innerHTML = SobiPro.Txt( 'Too long answer. Limit expired. Skipping' );
 					StatCount--;
