@@ -79,6 +79,15 @@ class SPMessage
 	{
 		$this->store = array();
 		$this->storeMessages();
+		$store = array(
+			'params' => array(),
+			'key' => 'queue',
+			'value' => date( DATE_RFC822 ),
+			'description' => null,
+			'options' => null
+		);
+		SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
+		return $this;
 	}
 
 	/**

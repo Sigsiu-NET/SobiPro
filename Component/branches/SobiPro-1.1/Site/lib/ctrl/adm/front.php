@@ -117,12 +117,6 @@ class SPAdminPanel extends SPController
 	{
 		switch ( $this->_task ) {
 			case 'panel':
-				$icons = array();
-				$cfg = SPLoader::loadIniFile( 'etc.adm.cpanel' );
-				foreach ( $cfg as $sec => $set ) {
-					$set[ 'name' ] = $sec;
-					$icons[ ] = $set;
-				}
 				$this->getSections();
 				/** @var $view SPAdmPanelView */
 				$view = SPFactory::View( 'front', true )
@@ -131,8 +125,7 @@ class SPAdminPanel extends SPController
 						->assign( Sobi::GetUserState( 'sections.order', 'order', 'name.asc' ), 'order' )
 						->assign( SPFactory::CmsHelper()->myVersion( true ), 'version' )
 						->assign( Sobi::Cfg( 'cpanel.show_entries', false ), 'show-entries' )
-						->assign( $this->getState(), 'system-state' )
-						->assign( $icons, 'icons' );
+						->assign( $this->getState(), 'system-state' );
 				if ( Sobi::Cfg( 'cpanel.show_entries', false ) ) {
 					$view->assign( $this->getEntries(), 'entries' );
 				}
