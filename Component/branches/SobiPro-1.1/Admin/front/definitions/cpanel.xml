@@ -313,11 +313,11 @@
                             <div class="accordion-inner">
                                 <div class="spNews">
                                     <loop subject="news.feeds" table="false">
-                                        <cell class="SPCellContainer">
-                                            <cell type="link" value="title" class="SPCellNewsTitle">
+                                        <cell class="SpCellContainer">
+                                            <cell type="link" value="title" class="SpCellNewsTitle">
                                                 <url type="extern" host="url" />
                                             </cell>
-                                            <cell type="text" value="content" class="SPCellNewsContent" />
+                                            <cell type="text" value="content" class="SpCellNewsContent" />
                                         </cell>
                                     </loop>
                                 </div>
