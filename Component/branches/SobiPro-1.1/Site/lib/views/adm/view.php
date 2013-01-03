@@ -741,6 +741,9 @@ class SPAdmView extends SPObject implements SPView
 				/** @var DOMNode $param */
 				switch ( $child->nodeName ) {
 					case 'url':
+						if( $child->attributes->getNamedItem( 'class' ) && $child->attributes->getNamedItem( 'class' )->nodeValue ) {
+							$element[ 'attributes' ][ 'link-class' ] = $child->attributes->getNamedItem( 'class' )->nodeValue;
+						}
 						$element[ 'link' ] = $this->xmlUrl( $child, $subject, $i );
 						break;
 					case 'tooltip':

@@ -434,8 +434,8 @@ class SPTplParser
 				if ( $type == 'link' ) {
 					$class = null;
 					$target = null;
-					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
-						$class = "class=\"{$cell[ 'attributes' ][ 'class' ]}\" ";
+					if ( $this->istSet( $cell[ 'attributes' ], 'link-class' ) ) {
+						$class = "class=\"{$cell[ 'attributes' ][ 'link-class' ]}\" ";
 					}
 					if ( $this->istSet( $cell[ 'attributes' ], 'target' ) ) {
 						$target = "target=\"{$cell[ 'attributes' ][ 'target' ]}\" ";
