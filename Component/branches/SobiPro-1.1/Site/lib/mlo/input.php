@@ -50,6 +50,7 @@ abstract class SPHtml_Input
 
 	/**
 	 * @param string $txt
+	 * @return string
 	 */
 	private static function translate( $txt )
 	{
@@ -63,7 +64,7 @@ abstract class SPHtml_Input
 
 	/**
 	 * @param array $params
-	 * @return strring
+	 * @return string
 	 */
 	private static function params( $params )
 	{

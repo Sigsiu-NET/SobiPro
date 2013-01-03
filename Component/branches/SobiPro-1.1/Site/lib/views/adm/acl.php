@@ -80,46 +80,49 @@ class SPAclView extends SPAdmView
 		$put = array();
 		$rule = $this->get( 'set' );
 		$get = $this->get( 'permissions' );
-		if ( is_array( $rule[ 'permissions' ] ) && count( $rule[ 'permissions' ] ) ) {
-			foreach ( $get as $permission ) {
-				$subject = ucfirst( $permission->subject );
-				if ( !isset( $put[ $subject ] ) ) {
-					$put[ $subject ] = array();
-				}
-				$k = $permission->action . '_' . $permission->value;
-				$put[ $subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
+		// WTF was that?!!
+//		if ( is_array( $rule[ 'permissions' ] ) && count( $rule[ 'permissions' ] ) ) {
+//
+//		}
+		foreach ( $get as $permission ) {
+			$subject = ucfirst( $permission->subject );
+			if ( !isset( $put[ $subject ] ) ) {
+				$put[ $subject ] = array();
 			}
-			// default ordering
-			$permissionsOrder = array(
-				'Section' => array( 3, 4 ),
-				'Category' => array( 8, 7 ),
-				'Entry' => array( 9, 11, 10, 14, 12, 16, 18, 17, 20, 21, 19, 15, 24, 25 )
-			);
-			// to show current
-/////			SPConfig::debOut( $put );
-			$permissions = array();
-			foreach ( $permissionsOrder as $subject => $ordering ) {
-				foreach ( $ordering as $pid ) {
-					$permissions[ $subject ][ $pid ] = $put[ $subject ][ $pid ];
-					unset( $put[ $subject ][ $permission->pid ] );
-				}
-				// if still something left - add this too
-				if ( count( $put[ $subject ] ) ) {
-					foreach ( $put[ $subject ] as $pid => $label ) {
-						$permissions[ $subject ][ $pid ] = $label;
-					}
-				}
-				unset( $put[ $subject ] );
-			}
-			// if still something left - add this too (subjects)
-			if ( count( $put ) ) {
-				foreach ( $put as $subject => $perms ) {
-					$permissions[ $subject ] = $perms;
-				}
-			}
-//			SPConfig::debOut( $permissions );
-			$this->set( $permissions, 'permissions' );
+			$k = $permission->action . '_' . $permission->value;
+			$put[ $subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
 		}
+
+		// default ordering
+		$permissionsOrder = array(
+			'Section' => array( 3, 4 ),
+			'Category' => array( 8, 7 ),
+			'Entry' => array( 9, 11, 10, 14, 12, 16, 18, 17, 20, 21, 19, 15, 24, 25 )
+		);
+		// to show current
+//		 SPConfig::debOut( $put );
+		$permissions = array();
+		foreach ( $permissionsOrder as $subject => $ordering ) {
+			foreach ( $ordering as $pid ) {
+				$permissions[ $subject ][ $pid ] = $put[ $subject ][ $pid ];
+				unset( $put[ $subject ][ $permission->pid ] );
+			}
+			// if still something left - add this too
+			if ( count( $put[ $subject ] ) ) {
+				foreach ( $put[ $subject ] as $pid => $label ) {
+					$permissions[ $subject ][ $pid ] = $label;
+				}
+			}
+			unset( $put[ $subject ] );
+		}
+		// if still something left - add this too (subjects)
+		if ( count( $put ) ) {
+			foreach ( $put as $subject => $perms ) {
+				$permissions[ $subject ] = $perms;
+			}
+		}
+//			SPConfig::debOut( $permissions );
+		$this->set( $permissions, 'permissions' );
 		$sections = array();
 		$perms = array();
 		if ( count( $rule[ 'permissions' ] ) ) {
