@@ -393,12 +393,15 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		SPLoader::loadClass( 'cms.base.users' );
 		$db = SPFactory::db();
 		try {
-			$db->select( '*', 'spdb_object', array( 'oType' => 'section' ) );
-			$sections = $db->loadObjectList();
-			$db->select( '*', 'spdb_permissions', array( 'site' => 'adm', 'published' => 1 ) );
-			$admPermissions = $db->loadObjectList();
-			$db->select( '*', 'spdb_permissions', array( 'site' => 'front', 'published' => 1 ) );
-			$frontPermissions = $db->loadObjectList();
+			$sections = $db
+					->select( '*', 'spdb_object', array( 'oType' => 'section' ) )
+					->loadObjectList();
+			$admPermissions = $db
+					->select( '*', 'spdb_permissions', array( 'site' => 'adm', 'published' => 1 ) )
+					->loadObjectList();
+			$frontPermissions = $db
+					->select( '*', 'spdb_permissions', array( 'site' => 'front', 'published' => 1 ) )
+					->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
@@ -411,8 +414,9 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 
 		if ( $rid ) {
 			try {
-				$db->select( '*', 'spdb_permissions_rules', array( 'rid' => $rid ) );
-				$rule = $db->loadAssocList( 'rid' );
+				$rule = $db
+						->select( '*', 'spdb_permissions_rules', array( 'rid' => $rid ) )
+						->loadAssocList( 'rid' );
 				$rule = $rule[ $rid ];
 				if ( $rule[ 'validSince' ] == $db->getNullDate() ) {
 					$rule[ 'validSince' ] = null;
@@ -421,7 +425,6 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 					$rule[ 'validUntil' ] = null;
 				}
 				$view->assign( $rule[ 'name' ], 'rule' );
-
 				$rule[ 'groups' ] = $db
 						->select( 'gid', 'spdb_permissions_groups', array( 'rid' => $rid ) )
 						->loadResultArray();
@@ -435,7 +438,14 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			}
 		}
 		else {
-			$rule = array( 'validUntil' => $db->getNullDate(), 'validSince' => $db->getNullDate(), 'name' => '', 'nid' => '', 'note' => '' );
+			$rule = array(
+				'validUntil' => $db->getNullDate(),
+				'validSince' => $db->getNullDate(),
+				'name' => '',
+				'nid' => '',
+				'note' => '',
+				'permissions' => array()
+			);
 			$view->assign( $rule, 'set' );
 		}
 		$view->assign( $this->userGroups(), 'groups' );

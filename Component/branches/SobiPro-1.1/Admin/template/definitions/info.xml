@@ -15,7 +15,7 @@
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
 			<button type="url" task="extensions" />
-            <button type="url" task="template.info" />
+			<button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
@@ -59,13 +59,14 @@
 										<cell label="TP.HEAD_FILE_DESC" type="text" class="SpCellLeft" />
 									</head>
 									<loop subject="files">
-										<cell type="link" value="file">
+										<cell type="link" value="file" condition="filepath">
 											<url type="intern">
 												<param name="task" value="template.edit" />
 												<param name="file" value="filepath" parse="true" />
 												<param name="sid" value="sid" parse="true" subject="skip" />
 											</url>
 										</cell>
+										<cell type="text" value="file" invert-condition="filepath" />
 										<cell type="text" value="description" class="SpCellLeft" />
 									</loop>
 								</table>

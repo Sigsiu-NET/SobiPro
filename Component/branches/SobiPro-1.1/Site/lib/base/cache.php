@@ -188,16 +188,16 @@ final class SPCache
 	 */
 	public function & cleanSection( $section = -1, $system = true )
 	{
-		$section = $section ? $section : $this->_section;
+		$sid = $section ? $section : $this->_section;
 		if ( $section == Sobi::Section() && $this->enabled() ) {
 			$this->Exec( "BEGIN; DELETE FROM vars; COMMIT;" );
 			$this->Exec( "BEGIN; DELETE FROM objects; COMMIT;" );
 		}
-		elseif ( SPFs::exists( $this->_store . '.htCache_' . $section . '.db' ) ) {
+		elseif ( SPFs::exists( $this->_store . '.htCache_' . $sid . '.db' ) ) {
 			// we need an exception because this files are owned by Apache probably
-			@unlink( $this->_store . '.htCache_' . $section . '.db' );
-			if ( SPFs::exists( $this->_store . '.htCache_' . $section . '.db' ) ) {
-				SPFs::delete( $this->_store . '.htCache_' . $section . '.db' );
+			@unlink( $this->_store . '.htCache_' . $sid . '.db' );
+			if ( SPFs::exists( $this->_store . '.htCache_' . $sid . '.db' ) ) {
+				SPFs::delete( $this->_store . '.htCache_' . $sid . '.db' );
 			}
 		}
 		if ( $section > 0 ) {

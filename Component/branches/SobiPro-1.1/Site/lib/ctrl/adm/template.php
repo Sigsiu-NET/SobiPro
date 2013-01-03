@@ -174,7 +174,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$xdef = new DOMXPath( $def );
 			$oldName = $xdef->query( '/template/name' )->item( 0 )->nodeValue;
 			$oldDesc = $xdef->query( '/template/description' )->item( 0 )->nodeValue;
-			$date = SPFactory::config()->date();
+			$date = SPFactory::config()->date( time() );
 			$xdef->query( '/template/name' )->item( 0 )->nodeValue = $newName;
 			$xdef->query( '/template/id' )->item( 0 )->nodeValue = $dirName;
 			$newDesc = Sobi::Txt( 'TP.CLONE_NOTE', array( 'name' => $oldName, 'date' => $date ) );
@@ -224,11 +224,22 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			}
 			if ( $xinfo->query( '/template/files/file' )->length ) {
 				$files = array();
+				$templateName = SPRequest::cmd( 'template' );
+				if ( !( strlen( $templateName ) ) ) {
+					$templateName = 'default';
+				}
 				foreach ( $xinfo->query( '/template/files/file' ) as $file ) {
+					$filePath = $dir . '/' . $file->attributes->getNamedItem( 'path' )->nodeValue;
+					if ( $filePath && is_file( $filePath ) ) {
+						$filePath = $templateName . '.' . str_replace( '/', '.', $file->attributes->getNamedItem( 'path' )->nodeValue );
+					}
+					else {
+						$filePath = null;
+					}
 					$files[ ] = array(
 						'file' => $file->attributes->getNamedItem( 'path' )->nodeValue,
 						'description' => $file->nodeValue,
-						'filepath' => SPRequest::cmd( 'template' ) . '.' . str_replace( '/', '.', $file->attributes->getNamedItem( 'path' )->nodeValue )
+						'filepath' => $filePath
 					);
 				}
 				$template[ 'files' ] = $files;
