@@ -399,7 +399,7 @@ final class SigsiuTree extends SPObject
         $params[ 'URL' ] = str_replace( '__JS2__', '" + ' . $this->_id . '_stmPid + "', $params[ 'URL' ] );
         $params[ 'FAIL_MSG' ] = Sobi::Txt( 'AJAX_FAIL' );
         $params[ 'TAG' ] = $this->_tag;
-        $params[ 'SPINNER' ] = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ) . '/styles/spinner.gif' );
+        $params[ 'SPINNER' ] = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ) . '/adm/spinner.gif' );
         Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$params ) );
         $head->addJsVarFile( 'tree', md5( count( $childs, COUNT_RECURSIVE ) . $this->_id . $this->_sid . $this->_task . serialize( $params ) ), $params );
     }

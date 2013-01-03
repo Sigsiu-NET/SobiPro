@@ -55,7 +55,7 @@ function SobiProRequirements()
 	SobiPro.jQuery( '&nbsp;<span id="SpProgress"></span>' )
 		.appendTo( SobiPro.jQuery( '#SobiPro' ).find( '.alert' ) );
 	this.elements = SobiPro.jQuery( '.spOutput' );
-	this.spinner = '<img src="' + SPLiveSite + 'media/sobipro/styles/spinner.gif"/>';
+	this.spinner = '<img src="' + SPLiveSite + 'media/sobipro/adm/spinner.gif"/>';
 	this.running = this.elements.length;
 	var def = SobiPro.jQuery( '#SP_method' ).next( 'input' );
 	this.request = {

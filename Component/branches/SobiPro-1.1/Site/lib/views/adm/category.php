@@ -83,7 +83,7 @@ class SPCategoryAdmView extends SPSectionAdmView
 			$this->assign( $i, 'category_icon' );
 		}
 		else {
-			$i = Sobi::FixPath( Sobi::Cfg( 'images.category_icons_live' ) . Sobi::Cfg( 'icons.default_selector_image', '48x48/image.png' ) );
+			$i = Sobi::FixPath( Sobi::Cfg( 'images.category_icons_live' ) . Sobi::Cfg( 'icons.default_selector_image', 'image.png' ) );
 			$this->assign( $i, 'category_icon' );
 		}
 		/* if editing - get the full path. Otherwise get the path of the parent element */

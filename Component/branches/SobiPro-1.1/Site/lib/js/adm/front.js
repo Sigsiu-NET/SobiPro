@@ -23,7 +23,7 @@ SobiPro.jQuery( document ).ready( function ()
 	{
 		if ( SPUpdSemaphor == 0 ) {
 			SPUpdSemaphor = 1;
-			SobiPro.jQuery( '#SPVerUpd' ).html( SobiPro.Txt( 'CHECKING_FOR_UPDATES' ) + '&nbsp;<img src="../media/sobipro/styles/progress.gif"/>' );
+			SobiPro.jQuery( '#SPVerUpd' ).html( SobiPro.Txt( 'CHECKING_FOR_UPDATES' ) + '&nbsp;<img src="../media/sobipro/adm/progress.gif"/>' );
 			SobiPro.jQuery.ajax( {
 				url:SobiProAdmUrl.replace( '%task%', 'extensions.updates' ),
 				dataType:'json',

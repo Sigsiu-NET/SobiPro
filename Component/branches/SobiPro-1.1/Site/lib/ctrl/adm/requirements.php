@@ -31,16 +31,10 @@ class SPRequirements extends SPController
 	 * @var string
 	 */
 	protected $_defTask = 'view';
-	private $icons = array();
 
 	public function execute()
 	{
 		$task = $this->_task = strlen( $this->_task ) ? $this->_task : $this->_defTask;
-		$this->icons = array(
-			'ok' => Sobi::Cfg( 'list_icons.ok' ),
-			'warning' => Sobi::Cfg( 'list_icons.warn' ),
-			'wrong' => Sobi::Cfg( 'list_icons.wrong' ),
-		);
 		// this is need to delete all old cache after installation
 		if ( SPRequest::int( 'init' ) ) {
 			SPFactory::cache()->cleanAll();

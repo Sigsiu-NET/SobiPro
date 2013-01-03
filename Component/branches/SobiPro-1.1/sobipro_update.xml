@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>SobiPro</name>
-	<creationDate>29 December 2012</creationDate>
+	<creationDate>04 January 2013</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
-	<copyright>Copyright (C) 2006-2012 Sigsiu.NET GmbH</copyright>
+	<copyright>Copyright (C) 2006-2013 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
 	<version>1.1.0.F</version>
 	<codename>Budgie</codename>
@@ -41,13 +41,9 @@
 	</languages>
 	<media folder="Site/media" destination="sobipro">
 		<folder>css</folder>
-		<folder>16x16</folder>
-		<folder>32x32</folder>
-		<folder>48x48</folder>
-		<folder>browser</folder>
-		<folder>icons</folder>
-		<folder>progress</folder>
-		<folder>styles</folder>
+        <folder>images</folder>
+        <folder>adm</folder>
+        <folder>browser</folder>
 		<folder>tree</folder>
 		<filename>donate.png</filename>
 		<filename>join-the-club.png</filename>
