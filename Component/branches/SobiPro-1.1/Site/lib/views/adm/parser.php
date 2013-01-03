@@ -69,6 +69,9 @@ class SPTplParser
 
 	protected function parseElement( $element )
 	{
+		if ( !( isset( $element[ 'attributes' ] ) ) ) {
+			$element[ 'attributes' ] = array();
+		}
 		switch ( $element[ 'type' ] ) {
 			case 'field':
 				if ( isset( $element[ 'attributes' ] ) && $this->istSet( $element[ 'attributes' ], 'stand-alone', 'true' ) ) {

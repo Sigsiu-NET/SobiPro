@@ -53,7 +53,6 @@ class SPSectionAdmView extends SPAdmView
 	 */
 	public function display()
 	{
-		SPLoader::loadClass( 'html.tooltip' );
 		switch ( $this->get( 'task' ) ) {
 			case 'view':
 				$this->listSection();
@@ -89,29 +88,12 @@ class SPSectionAdmView extends SPAdmView
 
 		/* handle the categories */
 		if ( count( $c ) ) {
-			$catPageNav = SPLoader::loadClass( 'helpers.adm.pagenav' );
-			$catPageNav = $catPageNav ? new $catPageNav( $this->get( '$cLimit' ), $this->get( '$cCount' ), $this->get( '$cLimStart' ), 'SPCatPageNav', 'climit', 'SPCatPageLimit' ) : null;
-			$this->assign( $catPageNav->display( true ), 'cat_page_nav' );
 			foreach ( $c as $cat ) {
 				$category = array();
 				/* data needed to display in the list */
 				$category[ 'name' ] = $cat->get( 'name' );
 				$category[ 'state' ] = $cat->get( 'state' );
 				$category[ 'approved' ] = $cat->get( 'approved' );
-
-				if ( isset( $usersData[ $cat->get( 'owner' ) ] ) ) {
-					$uName = $usersData[ $cat->get( 'owner' ) ]->name;
-					$uUrl = SPUser::userUrl( $usersData[ $cat->get( 'owner' ) ]->id );
-					$category[ 'owner' ] = "<a href=\"{$uUrl}\">{$uName}</a>";
-				}
-				else {
-					$category[ 'owner' ] = Sobi::Txt( 'GUEST' );
-				}
-				$category[ 'checkbox' ] = SPLists::checkedOut( $cat, 'c_sid' );
-				$category[ 'goin_link' ] = $this->actionIcon( 'goin', Sobi::Url( array( 'sid' => $cat->get( 'id' ) ) ), $cat );
-				$category[ 'edit_link' ] = $this->actionIcon( 'edit', Sobi::Url( array( 'task' => 'category.edit', 'sid' => $cat->get( 'id' ) ) ), $cat );
-				$category[ 'order' ] = SPLists::position( $cat, $this->get( '$cCount' ), 'cp_sid' );
-
 				/* the rest - case someone need */
 				$category[ 'position' ] = $cat->get( 'position' );
 				$category[ 'createdTime' ] = $cat->get( 'createdTime' );
@@ -191,10 +173,6 @@ class SPSectionAdmView extends SPAdmView
 			}
 			reset( $e );
 			$usersData = $this->userData( $usersData );
-
-			$entriesPageNav = SPLoader::loadClass( 'helpers.adm.pagenav' );
-			$entriesPageNav = $entriesPageNav ? new $entriesPageNav( $this->get( '$eLimit' ), $this->get( '$eCount' ), $this->get( '$eLimStart' ), 'SPEntriesPageNav', 'elimit', 'SPEntriesPageLimit' ) : null;
-			$this->assign( $entriesPageNav->display( true ), 'entries_page_nav' );
 			foreach ( $e as $sentry ) {
 				/* @var SPEntryAdm $sentry */
 				$entry = array();
@@ -209,13 +187,10 @@ class SPSectionAdmView extends SPAdmView
 				else {
 					$entry[ 'owner' ] = Sobi::Txt( 'GUEST' );
 				}
-				$entry[ 'checkbox' ] = SPLists::checkedOut( $sentry, 'e_sid' );
-				$catpos = $sentry->getCategories();
-				if ( SPRequest::sid() && isset( $catpos[ SPRequest::sid() ] ) ) {
-					$sentry->position = $catpos[ SPRequest::sid() ][ 'position' ];
+				$catPosition = $sentry->getCategories();
+				if ( SPRequest::sid() && isset( $catPosition[ SPRequest::sid() ] ) ) {
+					$sentry->position = $catPosition[ SPRequest::sid() ][ 'position' ];
 				}
-				$entry[ 'order' ] = SPLists::position( $sentry, $this->get( '$cCount' ), 'ep_sid' );
-
 				/* the rest - case someone need */
 				$entry[ 'position' ] = $sentry->get( 'position' );
 				$entry[ 'createdTime' ] = $sentry->get( 'createdTime' );
@@ -266,32 +241,5 @@ class SPSectionAdmView extends SPAdmView
 			}
 		}
 		$this->assign( $entries, 'entries' );
-	}
-
-	private function actionIcon( $action, $url, $obj )
-	{
-		if (
-			/* if the caction is 'edit' ... */
-			$action == 'edit' &&
-			/* ... but object is checked out ... */
-			$obj->get( 'cout' )
-			/* ... by an other user ... */
-			&& $obj->get( 'cout' ) != Sobi::My( 'id' )
-			/* ... and the time isn't expired */
-			&& strtotime( $obj->get( 'coutTime' ) ) > time()
-		) {
-			$user =& SPUser::getInstance( $obj->get( 'cout' ) );
-			$uname = $user->get( 'name' );
-			$img = Sobi::Cfg( 'list_icons.checked_out' );
-			$s = Sobi::Txt( $obj->get( 'oType' ) . '_checked_out' );
-			$a = Sobi::Txt( $obj->get( 'oType' ) . '_checked_out_by', array( 'user' => $uname, 'time' => $obj->get( 'coutTime' ) ) );
-			return SPTooltip::toolTip( $a, $s, $img );
-		}
-		$type = $obj->type();
-		$icon = Sobi::Cfg( "list_icons.{$type}_{$action}" );
-		$s = Sobi::Txt( "{$type}_{$action}", $obj->get( 'name' ) );
-		$a = Sobi::Txt( "{$type}_{$action}_expl", $obj->get( 'name' ) );
-		$icon = SPTooltip::toolTip( $a, $s, $icon );
-		return "<span class=\"SectionListIcons\"><a href=\"{$url}\">{$icon}</a></span>";
 	}
 }

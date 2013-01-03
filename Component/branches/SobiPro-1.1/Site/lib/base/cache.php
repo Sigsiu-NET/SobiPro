@@ -183,6 +183,7 @@ final class SPCache
 	/**
 	 * Clean cache of a section
 	 * @param $section - section id. If not given, current section will be used
+	 * @param bool $system
 	 * @return SPCache
 	 */
 	public function & cleanSection( $section = -1, $system = true )
@@ -205,6 +206,7 @@ final class SPCache
 		if( $system ) {
 			SPFactory::message()->resetSystemMessages();
 		}
+
 		return $this;
 	}
 
