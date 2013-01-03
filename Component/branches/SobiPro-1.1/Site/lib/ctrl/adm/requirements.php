@@ -597,7 +597,9 @@ class SPRequirements extends SPController
 		$settings[ 'exec' ][ 'response' ] = $this->execResp();
 		$settings[ 'SOBI_SETTINGS' ] = SPFactory::config()->getSettings();
 		$c = SPFactory::db()->select( '*', 'spdb_config' )->loadObjectList();
-		$sections = SPFactory::db()->select( array( 'nid', 'id' ), 'spdb_object', array( 'oType' => 'section' ) )->loadAssocList( 'id' );
+		$sections = SPFactory::db()
+				->select( array( 'nid', 'id' ), 'spdb_object', array( 'oType' => 'section' ) )
+				->loadAssocList( 'id' );
 		$as = array();
 		foreach ( $c as $key ) {
 			if ( $key->section == 0 || !( isset( $sections[ $key->section ] ) ) ) {
@@ -621,6 +623,9 @@ class SPRequirements extends SPController
 		foreach ( $apps as $app ) {
 			$settings[ 'Apps' ][ $app->pid ] = get_object_vars( $app );
 		}
+		$settings[ 'SOBI_SETTINGS' ][ 'mail' ][ 'smtphost' ] = $settings[ 'SOBI_SETTINGS' ][ 'mail' ][ 'smtphost' ] ? 'SET' : 0;
+		$settings[ 'SOBI_SETTINGS' ][ 'mail' ][ 'smtpuser' ] = $settings[ 'SOBI_SETTINGS' ][ 'mail' ][ 'smtpuser' ] ? 'SET' : 0;
+		$settings[ 'SOBI_SETTINGS' ][ 'mail' ][ 'smtppass' ] = $settings[ 'SOBI_SETTINGS' ][ 'mail' ][ 'smtppass' ] ? 'SET' : 0;
 		$php = ini_get_all();
 		unset( $php[ 'extension_dir' ] );
 		unset( $php[ 'include_path' ] );

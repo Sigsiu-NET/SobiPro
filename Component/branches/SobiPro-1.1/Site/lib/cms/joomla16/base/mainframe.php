@@ -106,10 +106,10 @@ final class SPMainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface
 					}
 					case 'description':
 					{
-						$metaDesc = implode( '. ', $code );
+						$metaDesc = implode( Sobi::Cfg( 'string.meta_desc_separator', ' ' ), $code );
 						if ( strlen( $metaDesc ) ) {
 							if ( Sobi::Cfg( 'meta.desc_append', true ) ) {
-								$metaDesc .= '. ' . $document->get( 'description' );
+								$metaDesc .= ' ' . $document->get( 'description' );
 							}
 							$metaDesc = explode( ' ', $metaDesc );
 							if ( count( $metaDesc ) ) {
