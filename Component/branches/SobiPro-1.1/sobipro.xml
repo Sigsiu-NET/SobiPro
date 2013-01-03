@@ -47,6 +47,10 @@
         <folder>adm</folder>
 		<folder>browser</folder>
         <folder>tree</folder>
+        <folder>styles</folder>
+        <folder>progress</folder>
+        <folder>icons</folder>
+        <folder>32x32</folder>
 		<filename>donate.png</filename>
 		<filename>join-the-club.png</filename>
 		<filename>SobiPro_16.png</filename>
