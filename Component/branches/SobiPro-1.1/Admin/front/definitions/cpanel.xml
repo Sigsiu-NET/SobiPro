@@ -211,25 +211,26 @@
 			<div class="span6">
                 <ul class="thumbnails">
                     <li class="spBox">
-                        <url type="intern" label="CPANEL.GCONF" image="../media/sobipro/48x48/folder-configuration.png">
+                        <url type="intern" label="CPANEL.GCONF" image="../media/sobipro/adm/folder-configuration.png">
                             <param name="task" value="config" />
                         </url>
                     </li>
                     <li class="spBox">
-                        <url type="intern" label="CPANEL.ACL" image="../media/sobipro/48x48/sobipro-acl-edit.png">
+                        <url type="intern" label="CPANEL.ACL" image="../media/sobipro/adm/sobipro-acl-edit.png">
                             <param name="task" value="acl" />
                         </url>
                     </li>
                     <li class="spBox">
-                        <url type="intern" label="CPANEL.SAM" image="../media/sobipro/48x48/folder-application">
+                        <url type="intern" label="CPANEL.SAM" image="../media/sobipro/adm/folder-application.png">
                             <param name="task" value="extensions" />
                         </url>
                     </li>
                     <li class="spBox">
-                        <url type="intern" label="CPANEL.TMPL" image="../media/sobipro/48x48/folder-templates.png">
+                        <url type="intern" label="CPANEL.TMPL" image="../media/sobipro/adm/folder-templates.png">
                             <param name="task" value="template.info" />
                             <param name="template" value="default" />
                         </url>
+
                     </li>
                 </ul>
 

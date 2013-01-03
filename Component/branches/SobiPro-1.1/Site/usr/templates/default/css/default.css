@@ -161,27 +161,27 @@ ul.spTopMenu li a:active {
 }
 
 div.spTopMenu div.SPb {
-	background:url("../../../../../../media/sobipro/styles/j_border.png") repeat-x scroll 0 100% transparent;
+	background:url("../../../../../../media/sobipro/images/tmpl/default/styles/j_border.png") repeat-x scroll 0 100% transparent;
 }
 
 div.spTopMenu div.SPb div.SPb {
-	background:url("../../../../../../media/sobipro/styles/j_crn_br_dark.png") no-repeat scroll 100% 0 transparent;
+	background:url("../../../../../../media/sobipro/images/tmpl/default/styles/j_crn_br_dark.png") no-repeat scroll 100% 0 transparent;
 }
 
 div.spTopMenu div.SPb div.SPb div.SPb {
-	background:url("../../../../../../media/sobipro/styles/j_crn_bl_dark.png") no-repeat scroll 0 0 transparent;
+	background:url("../../../../../../media/sobipro/images/tmpl/default/styles/j_crn_bl_dark.png") no-repeat scroll 0 0 transparent;
 }
 
 div.spTopMenu div.SPt {
-	background:url("../../../../../../media/sobipro/styles/j_border.png") repeat-x scroll 0 0 transparent;
+	background:url("../../../../../../media/sobipro/images/tmpl/default/styles/j_border.png") repeat-x scroll 0 0 transparent;
 }
 
 div.spTopMenu div.SPt div.SPt {
-	background:url("../../../../../../media/sobipro/styles/j_crn_tr_dark.png") no-repeat scroll 100% 0 transparent;
+	background:url("../../../../../../media/sobipro/images/tmpl/default/styles/j_crn_tr_dark.png") no-repeat scroll 100% 0 transparent;
 }
 
 div.spTopMenu div.SPt div.SPt div.SPt {
-	background:url("../../../../../../media/sobipro/styles/j_crn_tl_dark.png") no-repeat scroll 0 0 transparent;
+	background:url("../../../../../../media/sobipro/images/tmpl/default/styles/j_crn_tl_dark.png") no-repeat scroll 0 0 transparent;
 }
 
 /**

@@ -23,7 +23,7 @@ function SPAlphaSwitch( cid )
 		sid = '#' + cid + 'Switch';
 		jQuery( sid ).bind( 'change', function() {
 			jQuery( sid ).disabled = true;
-			jQuery( '#' + cid + 'Progress' ).html( '<img src="' + SPLiveSite + '/media/sobipro/styles/progress.gif" style="margin: 5px;" alt="loading"/>' );
+			jQuery( '#' + cid + 'Progress' ).html( '<img src="' + SPLiveSite + '/media/sobipro/images/progress.gif" style="margin: 5px;" alt="loading"/>' );
 			jQuery.ajax( { 
 				url: SobiProUrl.replace( '%task%', 'list.alpha.switch.'+ jQuery( this ).val() ),
 				data: { sid: SobiProSection, tmpl: "component", format: "raw" },
