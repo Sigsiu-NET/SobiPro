@@ -30,7 +30,7 @@ class SPField_SelectAdm extends SPField_Select
 	/**
 	 * @var string
 	 */
-	public $cssClass = "inputbox";
+	public $cssClass = '';
 
 	public function save( &$attr )
 	{
@@ -70,7 +70,7 @@ class SPField_SelectAdm extends SPField_Select
 				$labelsArr[ ] = array( 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $lang, 'oType' => 'field_option', 'fid' => $this->id );
 				$optsIds[ ] = $option[ 'id' ];
 			}
-			if( $duplicates ) {
+			if ( $duplicates ) {
 				SPMainFrame::msg( 'FIELD_WARN_DUPLICATE_OPT_ID', SPC::WARN_MSG );
 			}
 			$db = SPFactory::db();

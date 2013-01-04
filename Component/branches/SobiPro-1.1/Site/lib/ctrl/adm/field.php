@@ -48,7 +48,6 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	private function edit()
 	{
-		SPLoader::loadClass( 'html.input' );
 		$fid = SPRequest::int( 'fid' );
 
 		/* if adding new field - call #add */
@@ -117,7 +116,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$view->setTemplate( 'field.templates.' . $field->get( 'fieldType' ) . $nid );
 			}
 			else {
-                $view->setTemplate( 'default' );
+				$view->setTemplate( 'default' );
 			}
 		}
 		/** Legacy code */
@@ -189,7 +188,6 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	private function add()
 	{
-		SPLoader::loadClass( 'html.input' );
 		if ( $this->_fieldType ) {
 			$groups = $this->getFieldGroup( $this->_fieldType );
 			$field = SPFactory::Model( 'field', true );
@@ -243,7 +241,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$view->setTemplate( 'field.templates.' . $this->_fieldType . '_override' );
 			}
 			else {
-                $view->setTemplate( 'default' );
+				$view->setTemplate( 'default' );
 			}
 		}
 		/** legacy */
@@ -334,7 +332,8 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			$field = SPFactory::Model( 'field', true );
 			$field->extend( $this->loadField( $id ) );
 			$msg = $field->delete();
-			SPMainFrame::msg( $msg );
+			SPFactory::message()
+					->setMessage( $msg, false, SPC::SUCCESS_MSG);
 			$m[ ] = $msg;
 		}
 		return $m;
@@ -394,7 +393,6 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			/** give me my spaces back!!! */
 			$nid = str_replace( '-', '_', SPLang::nid( 'field_' . SPRequest::string( 'field_name' ) ) );
 			SPRequest::set( 'field_nid', $nid );
-			$sets[ 'field.nid' ] = $nid;
 		}
 		$this->getRequest();
 		$this->validate( $field );
@@ -410,9 +408,10 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			}
 		}
 		else {
-			$field->save( $this->attr );
+			$field->save( $this->attr, $sets );
 		}
 		$sets[ 'fid' ] = $field->get( 'fid' );
+		$sets[ 'field.nid' ] = $onid;
 		/* in case we are changing the sort by field */
 		if ( Sobi::Cfg( 'list.entries_ordering' ) == $onid && $field->get( 'nid' ) != $onid ) {
 			SPFactory::config()->saveCfg( 'list.entries_ordering', $field->get( 'nid' ) );
@@ -733,7 +732,8 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			case 'delete':
 				$r = true;
 				SPFactory::cache()->cleanSection();
-				SPMainFrame::setRedirect( Sobi::Back(), $this->delete() );
+				$this->response( Sobi::Url( array( 'task' => 'field.list', 'pid' => Sobi::Section() ) ), $this->delete(), true );
+//				SPMainFrame::setRedirect( Sobi::Back(), $this->delete() );
 				break;
 			case 'reorder':
 				$r = true;

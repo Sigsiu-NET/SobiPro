@@ -48,7 +48,7 @@ final class SPAdmField extends SPField
 		if ( isset( $attr[ 'cssClass' ] ) )
 			$base[ 'cssClass' ] = $db->escape( preg_replace( '/[^[:alnum:]\-\_ ]/', null, $attr[ 'cssClass' ] ) );
 		if ( isset( $attr[ 'notice' ] ) )
-			$base[ 'notice' ] = $db->escape( $attr[ 'notice' ] );
+			$base[ 'notice' ] = ( $attr[ 'notice' ] );
 		if ( isset( $attr[ 'showIn' ] ) )
 			$base[ 'showIn' ] = $db->escape( preg_replace( '/[^[:alnum:]\.\-\_]/', null, $attr[ 'showIn' ] ) );
 		if ( isset( $attr[ 'filter' ] ) )
@@ -96,7 +96,6 @@ final class SPAdmField extends SPField
 			}
 			$base[ 'allowedAttributes' ] = SPConfig::serialize( $att );
 		}
-		//if( isset( $attr[ 'allowedTags' ] ) && strpos( $attr[ 'allowedTags' ], '|' ) )
 		if ( isset( $attr[ 'allowedTags' ] ) ) {
 			$tags = SPFactory::config()->structuralData( $attr[ 'allowedTags' ], true );
 			if ( count( $tags ) ) {
@@ -183,23 +182,24 @@ final class SPAdmField extends SPField
 	{
 		$c = 1;
 		$a = 2;
-		$db = SPFactory::db();
+		$suffix = null;
 		while ( $c ) {
 			/* field alias has to be unique */
 			try {
-				$cond = array( 'nid' => $nid, 'section' => Sobi::Section() );
+				$condition = array( 'nid' => $nid . $suffix, 'section' => Sobi::Section() );
 				if ( !( $new ) ) {
-					$cond[ '!fid' ] = $this->id;
+					$condition[ '!fid' ] = $this->id;
 				}
-				$db->select( 'COUNT( nid )', 'spdb_field', $cond );
-				$c = $db->loadResult();
+				$c = SPFactory::db()
+						->select( 'COUNT( nid )', 'spdb_field', $condition )
+						->loadResult();
 				if ( $c > 0 ) {
-					$nid = $nid . '_' . $a++;
+					$suffix = '_' . $a++;
 				}
 			} catch ( SPException $x ) {
 			}
 		}
-		return $nid;
+		return $nid . $suffix;
 	}
 
 	/**
