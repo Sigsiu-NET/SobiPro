@@ -24,7 +24,7 @@
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
 			<button type="url" task="extensions" />
-            <button type="url" task="template.info" />
+			<button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
@@ -148,11 +148,12 @@
 		</div>
 	</body>
 	<config>
-		<action value="index.php?option=com_sobipro" />
+		<action value="index.php" />
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
-			<field name="boxchecked" default="" />
+			<field name="method" default="xhr" />
+			<field name="format" default="raw" />
 		</hidden>
 	</config>
 </definition>

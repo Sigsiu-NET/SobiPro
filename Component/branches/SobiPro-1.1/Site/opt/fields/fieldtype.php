@@ -349,8 +349,8 @@ class SPFieldType extends SPObject
 		if ( count( $file ) ) {
 			foreach ( $file as $key => $value ) {
 				if ( is_array( $value ) ) {
-					if ( strstr( $key, '|' ) ) {
-						$group = explode( '|', $key );
+					if ( strstr( $key, ',' ) ) {
+						$group = explode( ',', $key );
 						$gid = SPLang::nid( $group[ 0 ] );
 						$group = $group[ 1 ];
 					}
@@ -364,8 +364,7 @@ class SPFieldType extends SPObject
 							if ( is_numeric( $k ) ) {
 								$k = SPLang::nid( $v );
 							}
-							$options[ ] = array( 'id' => SPLang::nid( /*$gid . '_' .*/
-								$k ), 'name' => $v, 'parent' => $gid, 'position' => ++$p );
+							$options[ ] = array( 'id' => SPLang::nid( $k ), 'name' => $v, 'parent' => $gid, 'position' => ++$p );
 						}
 					}
 				}

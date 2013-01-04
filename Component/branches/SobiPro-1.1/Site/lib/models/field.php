@@ -178,7 +178,7 @@ class SPField extends SPObject
 	/**
 	 * @var int
 	 */
-	protected $version = 0;
+	protected $version = 1;
 	/**
 	 * @var int
 	 */
