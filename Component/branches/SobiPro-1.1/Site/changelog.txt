@@ -61,6 +61,8 @@
    (!) jQuery UI updated to version v1.9.2
    (!) Category selector for default Business Directory changed to Category Field
    (!) No fix MyISAM database type on installation
+   (!) Sendmail account information removed from system check file
+   (!) Category meta description does not longer ends with a dot
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
@@ -69,6 +71,8 @@
    (#) Suffix not shown in backend
    (#) Approved state for category has no effect
    (#) Meta author and robots not added to header (Issue #734)
+   (#) Options of select list or checkbox fields will be deleted now if the field is deleted
+   (#) Duplication of a field more than once does not increment the alias counter
 
 
 -------------------

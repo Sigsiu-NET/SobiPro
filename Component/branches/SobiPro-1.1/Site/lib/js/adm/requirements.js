@@ -37,7 +37,7 @@ SobiPro.jQuery().ready( function ()
 	} );
 	SobiPro.jQuery( '#SobiPro' ).find( '.next' ).click( function ()
 	{
-		if ( SPErrors && (( new Date().getTime() - SPStartTime ) < 4000 ) ) {
+		if ( SPErrors && (( new Date().getTime() - SPStartTime ) < 3000 ) ) {
 			alert( SobiPro.Txt( 'REQUIREMENT_READ_PLEASE' ).replace( '%d', Math.ceil( ( new Date().getTime() - SPStartTime ) / 1000 ) ) );
 			SPStartTime = 0;
 		}
