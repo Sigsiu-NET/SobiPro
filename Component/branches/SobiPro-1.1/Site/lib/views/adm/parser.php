@@ -442,6 +442,9 @@ class SPTplParser
 					}
 					$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class}{$target} >";
 				}
+				if ( $this->istSet( $cell[ 'attributes' ], 'icon' ) ) {
+					$this->_out[ ] = '<i class="icon-' . $cell[ 'attributes' ][ 'icon' ] . '"></i>';
+				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'label' ) ) {
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
 				}
@@ -452,7 +455,7 @@ class SPTplParser
 					}
 					$this->_out[ ] = "<span {$class}>{$cell[ 'label' ]}</span>";
 				}
-				if ( isset( $cell[ 'content' ][ 'element' ] ) && $cell[ 'content' ][ 'element' ] == 'button' ) {
+				if ( $this->istSet( $cell[ 'content' ], 'element', 'button' ) ) {
 					$this->renderButton( $cell[ 'content' ] );
 				}
 				else {

@@ -45,7 +45,7 @@ class SpAdmToolbar
 		'acl' => 'th-list',
 		'extensions' => 'magic',
 		'options' => 'eye-open',
-        'template.info' => 'picture'
+		'template.info' => 'picture'
 	);
 	private $labels = array(
 		'apply' => 'SAVE_ONLY',
@@ -68,7 +68,7 @@ class SpAdmToolbar
 		'acl' => 'ACL',
 		'extensions' => 'SAM',
 		'options' => 'OPTIONS',
-        'template.info' => 'TEMPLATE'
+		'template.info' => 'TEMPLATE'
 	);
 	protected $btClass = 'btn';
 
@@ -136,7 +136,7 @@ class SpAdmToolbar
 				case 'buttons':
 					$icon = ( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ? $button[ 'ico' ] : $this->getIcon( $button );
 					$label = ( isset( $button[ 'label' ] ) && $button[ 'label' ] ) ? $button[ 'label' ] : $this->getLabel( $button );
-					$class = isset( $button[ 'dropdown-class' ] ) ? ' '.$button[ 'dropdown-class' ] : null;
+					$class = isset( $button[ 'dropdown-class' ] ) ? ' ' . $button[ 'dropdown-class' ] : null;
 					$this->output[ ] = '<div class="btn-group">';
 					$this->output[ ] = '<button class="' . $this->btClass . ' dropdown-toggle" data-toggle="dropdown">';
 					$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
@@ -220,7 +220,7 @@ class SpAdmToolbar
 				$this->output[ ] = '<li class="nav-header">' . $button[ 'label' ] . '</li>';
 			}
 			else {
-				$this->output[ ] = '<li><a href="' . $href . $target . '" rel="' . $rel . '">';
+				$this->output[ ] = '<li><a href="' . $href . '"' . $target . ' rel="' . $rel . '">';
 				if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
 					$icon = $this->getIcon( $button );
 				}

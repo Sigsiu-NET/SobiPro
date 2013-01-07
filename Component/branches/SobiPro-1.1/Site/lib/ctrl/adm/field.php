@@ -439,15 +439,13 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	private function listFields()
 	{
 		/* @var SPdb $db */
-		$db = SPFactory::db();
 		$ord = $this->parseOrdering( 'forder', 'position.asc' );
 		SPLoader::loadClass( 'html.input' );
 		Sobi::ReturnPoint();
 
 		/* create menu */
 		$sid = Sobi::Reg( 'current_section' );
-		$menuc = SPLoader::loadClass( 'views.adm.menu' );
-		$menu = new $menuc( 'field.list', $sid );
+		$menu = SPFactory::Instance( 'views.adm.menu', 'field.list', $sid );
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if ( count( $cfg ) ) {
@@ -502,17 +500,16 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				);
 			}
 		}
-		/* get view class */
-		$view = SPFactory::View( 'field', true );
-		$view->addHidden( $sid, 'sid' );
-		$view->assign( $fields, 'fields' );
-		$view->assign( $subMenu, 'fieldTypes' );
-		$view->assign( Sobi::Section( true ), 'section' );
-		$view->assign( $menu, 'menu' );
-		$view->assign( Sobi::GetUserState( 'fields.order', 'forder', 'position.asc' ), 'ordering' );
-		$view->assign( $this->_task, 'task' );
-		$view->determineTemplate( 'field', 'list' );
-		$view->display();
+		SPFactory::View( 'field', true )
+				->addHidden( $sid, 'sid' )
+				->assign( $fields, 'fields' )
+				->assign( $subMenu, 'fieldTypes' )
+				->assign( Sobi::Section( true ), 'section' )
+				->assign( $menu, 'menu' )
+				->assign( Sobi::GetUserState( 'fields.order', 'forder', 'position.asc' ), 'ordering' )
+				->assign( $this->_task, 'task' )
+				->determineTemplate( 'field', 'list' )
+				->display();
 	}
 
 	/**

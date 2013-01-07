@@ -32,7 +32,7 @@
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
 			<button type="url" task="extensions" />
-            <button type="url" task="template.info" />
+			<button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
@@ -107,7 +107,24 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
-						<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellCenter" />
+						<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellCenter">
+							<cell type="text" class="SpCellCenter" condition="/corder.contains(order)">
+								<cell type="link" icon="chevron-up">
+									<url type="intern">
+										<param name="task" value="category.up" />
+										<param name="sid" value="id" parse="true" />
+										<param name="pid" value="request.sid" parse="true" subject="skip" />
+									</url>
+								</cell>
+								<cell type="link" icon="chevron-down">
+									<url type="intern">
+										<param name="task" value="category.down" />
+										<param name="sid" value="fid" parse="true" />
+										<param name="pid" value="request.sid" parse="true" subject="skip" />
+									</url>
+								</cell>
+							</cell>
+						</cell>
 					</loop>
 					<foot>
 						<navigation />
@@ -177,7 +194,24 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
-						<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellCenter" />
+						<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellCenter">
+							<cell type="text" class="SpCellCenter" condition="/eorder.contains(order)">
+								<cell type="link" icon="chevron-up">
+									<url type="intern">
+										<param name="task" value="entry.up" />
+										<param name="sid" value="id" parse="true" />
+										<param name="pid" value="request.sid" parse="true" subject="skip" />
+									</url>
+								</cell>
+								<cell type="link" icon="chevron-down">
+									<url type="intern">
+										<param name="task" value="entry.down" />
+										<param name="sid" value="fid" parse="true" />
+										<param name="pid" value="request.sid" parse="true" subject="skip" />
+									</url>
+								</cell>
+							</cell>
+						</cell>
 					</loop>
 					<foot>
 						<navigation />

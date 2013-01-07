@@ -288,13 +288,39 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	private function xmlCondition( $xml, $subject = null, $i = -1 )
 	{
+		$invert = false;
+		$condition = null;
 		if ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'condition' ) && $xml->attributes->getNamedItem( 'condition' )->nodeValue ) {
-			$subject = $subject ? $subject . '.' . $xml->attributes->getNamedItem( 'condition' )->nodeValue : $xml->attributes->getNamedItem( 'condition' )->nodeValue;
-			return $this->get( $subject, $i );
+			$condition = $subject ? $subject . '.' . $xml->attributes->getNamedItem( 'condition' )->nodeValue : $xml->attributes->getNamedItem( 'condition' )->nodeValue;
 		}
 		elseif ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'invert-condition' ) && $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue ) {
-			$subject = $subject ? $subject . '.' . $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue : $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue;
-			return !( $this->get( $subject, $i ) );
+			$condition = $subject ? $subject . '.' . $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue : $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue;
+			$invert = true;
+		}
+		if ( $condition ) {
+			// allow to have a gloabel condition within a loop like condition="/ordering = position.asc"
+			if ( strstr( $condition, './' ) ) {
+				$i = -1;
+				$condition = preg_replace( '/.*\.\//', null, $condition );
+			}
+			if ( strstr( $condition, '=' ) ) {
+				$condition = explode( '=', $condition );
+				$equal = trim( $condition[ 1 ] );
+				$condition = trim( $condition[ 0 ] );
+				$value = $this->get( $condition, $i );
+				$value = $value == $equal;
+			}
+			elseif ( strstr( $condition, '.contains(' ) ) {
+				$condition = explode( '.contains', $condition );
+				$pattern = trim( str_replace( array( '(', ')' ), null, $condition[ 1 ] ) );
+				$condition = trim( $condition[ 0 ] );
+				$value = $this->get( $condition, $i );
+				$value = strstr( $value, $pattern );
+			}
+			else {
+				$value = $this->get( $condition, $i );
+			}
+			return $invert ? !( $value ) : $value;
 		}
 		else {
 			return true;
@@ -741,7 +767,7 @@ class SPAdmView extends SPObject implements SPView
 				/** @var DOMNode $param */
 				switch ( $child->nodeName ) {
 					case 'url':
-						if( $child->attributes->getNamedItem( 'class' ) && $child->attributes->getNamedItem( 'class' )->nodeValue ) {
+						if ( $child->attributes->getNamedItem( 'class' ) && $child->attributes->getNamedItem( 'class' )->nodeValue ) {
 							$element[ 'attributes' ][ 'link-class' ] = $child->attributes->getNamedItem( 'class' )->nodeValue;
 						}
 						$element[ 'link' ] = $this->xmlUrl( $child, $subject, $i );

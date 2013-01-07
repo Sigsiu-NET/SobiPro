@@ -182,7 +182,6 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$entriesName = SPFactory::config()->nameField()->get( 'name' );
 		$entriesField = SPFactory::config()->nameField()->get( 'nid' );
 		$view = SPFactory::View( 'section', true );
-
 		$view->assign( $entriesName, 'entries_name' )
 				->assign( $entriesField, 'entries_field' )
 				->assign( $eLimit, 'entries-limit' )
@@ -199,8 +198,8 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				->assign( $entries, 'entries' )
 				->assign( SPFactory::config()->nameField()->get( 'name' ), 'entries_name' )
 				->assign( $menu, 'menu' )
-				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' ), 'ordering' )
-				->assign( Sobi::GetUserState( 'categories.corder', 'corder', 'position.asc' ), 'corder' )
+				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'order.asc' ), 'ordering' )
+				->assign( Sobi::GetUserState( 'categories.corder', 'corder', 'order.asc' ), 'corder' )
 				->assign( Sobi::Section( true ), 'category' )
 				->addHidden( Sobi::Section(), 'pid' )
 				->addHidden( SPRequest::sid(), 'sid' );

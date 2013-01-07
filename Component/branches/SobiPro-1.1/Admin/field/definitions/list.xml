@@ -129,7 +129,24 @@
 								<param name="sid" value="request.sid" parse="true" subject="skip" />
 							</url>
 						</cell>
-						<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellCenter" />
+						<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellCenter">
+							<cell type="text" class="SpCellCenter" condition="/ordering.contains(order)">
+								<cell type="link" icon="chevron-up">
+									<url type="intern">
+										<param name="task" value="field.up" />
+										<param name="fid" value="fid" parse="true" />
+										<param name="sid" value="request.sid" parse="true" subject="skip" />
+									</url>
+								</cell>
+								<cell type="link" icon="chevron-down">
+									<url type="intern">
+										<param name="task" value="field.down" />
+										<param name="fid" value="fid" parse="true" />
+										<param name="sid" value="request.sid" parse="true" subject="skip" />
+									</url>
+								</cell>
+							</cell>
+						</cell>
 					</loop>
 					<foot>
 						<navigation />
@@ -153,7 +170,6 @@
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
 			<field name="method" default="xhr" />
-			<field name="format" default="raw" />
 		</hidden>
 	</config>
 </definition>
