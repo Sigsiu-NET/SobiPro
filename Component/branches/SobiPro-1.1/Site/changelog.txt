@@ -28,7 +28,7 @@
 
 
 -------------------
-1.1.0 Beta 1 ()
+1.1.0 Beta ()
 -------------------
 
    (+) XML based template engine for administrator templates
@@ -59,6 +59,7 @@
    (!) CodeMirror upgraded to version 2.36
    (!) jQuery upgraded to version 1.8.2
    (!) jQuery UI updated to version v1.9.2
+   (!) Category selector for default Business Directory changed to Category Field
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
