@@ -12,7 +12,7 @@
 		      <xsl:apply-templates select="menu" />
 		      <xsl:apply-templates select="alphaMenu" />
 		    </div>
-			<div style="clear:both;"/>
+			<div class="clearall"/>
 
 			<xsl:call-template name="manage" />
 
@@ -68,7 +68,7 @@
 					</div>
 				</xsl:if>
 			</div>
-			<div style="clear:both;"></div>
+			<div class="clearall"/>
 		</div>
 	</xsl:template>
 </xsl:stylesheet>
