@@ -43,7 +43,7 @@
 						</cell>
 						<cell class="SpCellCenter">
 							<cell type="link" value="eid">
-								<url type="intern" class="label label-info">
+								<url type="intern" class="label label-warning">
 									<param name="task" value="error.details" />
 									<param name="eid" value="eid" parse="true" />
 								</url>

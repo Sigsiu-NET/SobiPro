@@ -4,9 +4,6 @@
 		<message id="spMessage" />
 		<div class="spFilterModal">
 			<fieldset type="vertical">
-				<div condition="filter.readonly">
-					<message label="FLR.FILTER_CORE_NE" type="info" dismiss-button="false" />
-				</div>
 				<field type="text" name="filter.id" value="filter.id" label="FLR.FILTER_ID" required="true">
 					<attribute name="readonly" value="filter.readonly" />
 				</field>
@@ -16,6 +13,9 @@
 					<attribute name="readonly" value="filter.readonly" />
 				</field>
 			</fieldset>
+            <div condition="filter.readonly">
+                <message label="FLR.FILTER_CORE_NE" type="info" dismiss-button="false" />
+            </div>
 		</div>
 	</body>
 	<config>
