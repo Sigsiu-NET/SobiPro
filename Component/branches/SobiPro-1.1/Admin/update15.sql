@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (
   `pid` int(11) NOT NULL,
   `groupName` varchar(150) NOT NULL,
   PRIMARY KEY (`gid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;
+) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;
