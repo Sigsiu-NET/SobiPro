@@ -31,8 +31,8 @@
 				<message id="spMessage" />
 				<table condition="rules.length">
 					<head>
-                        <cell label="ACL.STATE_HEAD" type="text" class="SpCellCenter" />
-                        <cell type="checkbox" rel="rid" class="SpCellCenter" />
+                        <cell label="ACL.STATE_HEAD" type="text" class="SpCellCenter SpSmallCol" />
+                        <cell type="checkbox" rel="rid" class="SpCellCenter SpSmallCol" />
 						<cell label="ACL.HEADER_NAME" type="text" class="SpCellLeft" />
 					</head>
 					<loop subject="rules">

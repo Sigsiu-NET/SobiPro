@@ -391,6 +391,9 @@ div.spScreenTitle h4 {
 .SobiPro .SpCellCenter .sp-mini-bt {
   padding: 4px 4px !important;
 }
+.SobiPro .SpSmallCol {
+  width: 5%;
+}
 .SobiPro .tooltip-inner {
   color: #ffffff;
   text-align: center;
