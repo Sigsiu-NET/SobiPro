@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_category` (
   `icon` varchar(150) DEFAULT NULL,
   `showIcon` enum('0','1','2') NOT NULL DEFAULT '2',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_config` (
   `sKey` varchar(150) NOT NULL DEFAULT '',
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_config` (
   `critical` tinyint(1) DEFAULT NULL,
   `cSection` varchar(30) NOT NULL,
   PRIMARY KEY (`sKey`,`section`,`cSection`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`, `cSection`) VALUES
 ('l3_enabled', '1', 0, 0, 'cache'),
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
   `errCont` text NOT NULL,
   `errBacktrace` text NOT NULL,
   PRIMARY KEY (`eid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
   `fid` int(11) NOT NULL AUTO_INCREMENT,
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
   KEY `enabled` (`enabled`),
   KEY `position` (`position`),
   KEY `section` (`section`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
   `publishUp` datetime DEFAULT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
   PRIMARY KEY (`fid`,`section`,`lang`,`sid`,`copy`),
   KEY `enabled` (`enabled`),
   KEY `copy` (`copy`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_option` (
   `fid` int(11) NOT NULL,
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_option` (
   `class` text NOT NULL,
   `optParent` varchar(100) NOT NULL,
   PRIMARY KEY (`fid`,`optValue`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_option_selected` (
   `fid` int(11) NOT NULL,
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_option_selected` (
   `params` text NOT NULL,
   `copy` tinyint(1) NOT NULL,
   PRIMARY KEY (`fid`,`sid`,`optValue`,`copy`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_types` (
   `tid` char(50) NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_types` (
   `fPos` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`tid`,`tGroup`),
   UNIQUE KEY `pos` (`fPos`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) VALUES
 ('inbox', 'Input Box', 'free_single_simple_data', 1),
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
   KEY `sKey` (`sKey`),
   KEY `section` (`section`),
   KEY `language` (`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES
 ('bankdata', '<p>Payment Subject: "Entry in the {section.name} at the {cfg:site_name}. Entry id {entry.id}"</p>\r\n<ul>\r\n<li>Account Owner: Jon Doe </li>\r\n<li>Account No.: 8274230479 </li>\r\n<li>Bank No.: 8038012380 </li>\r\n<li>IBAN: 234242343018 </li>\r\n<li>BIC: 07979079779ABCDEFGH</li>\r\n</ul>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
   KEY `validSince` (`validSince`),
   KEY `validUntil` (`validUntil`),
   KEY `version` (`version`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_payments` (
   `pid` int(11) NOT NULL AUTO_INCREMENT,
@@ -238,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_payments` (
   `amount` double NOT NULL,
   `params` text NOT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions` (
   `pid` int(11) NOT NULL AUTO_INCREMENT,
@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_permissions` (
   `site` varchar(50) NOT NULL,
   `published` tinyint(1) NOT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
 (1, '*', '*', '*', 'front', 0),
@@ -281,14 +281,14 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_groups` (
   `rid` int(11) NOT NULL,
   `gid` int(11) NOT NULL,
   PRIMARY KEY (`rid`,`gid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_map` (
   `rid` int(11) NOT NULL,
   `sid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   PRIMARY KEY (`rid`,`sid`,`pid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_rules` (
   `rid` int(11) NOT NULL AUTO_INCREMENT,
@@ -299,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_rules` (
   `note` varchar(250) NOT NULL,
   `state` tinyint(4) NOT NULL,
   PRIMARY KEY (`rid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
   `pid` varchar(50) NOT NULL,
@@ -313,7 +313,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
   `type` varchar(250) DEFAULT NULL,
   `depend` text NOT NULL,
   UNIQUE KEY `pid` (`pid`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES
 ('bank_transfer', 'Bank Transfer', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'payment', ''),
@@ -335,14 +335,14 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_section` (
   `enabled` tinyint(1) DEFAULT NULL,
   `position` int(11) DEFAULT NULL,
   PRIMARY KEY (`section`,`pid`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_task` (
   `pid` varchar(50) NOT NULL DEFAULT '',
   `onAction` varchar(150) DEFAULT NULL,
   `type` varchar(50) NOT NULL,
   UNIQUE KEY `pid` (`pid`,`onAction`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_plugin_task` (`pid`, `onAction`, `type`) VALUES
 ('bank_transfer', 'adm_menu', 'payment'),
@@ -361,7 +361,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_registry` (
   `params` text NOT NULL,
   `description` text NOT NULL,
   `options` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `description`, `options`) VALUES
 ('fields_filter', 'website_full', 'Website with Protocol', 'L15odHRwKHMpPzpcL1wvW1x3XC4tXStcLnsxfVthLXpBLVpdezIsNX0oXC9bXlxzXSopPyQv', 'Please enter a valid URL address in the $field field', ''),
@@ -389,7 +389,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_relations` (
   `copy` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`,`pid`),
   KEY `oType` (`oType`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_search` (
   `ssid` double NOT NULL,
@@ -401,12 +401,12 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_search` (
   `entriesResults` text NOT NULL,
   `catsResults` text NOT NULL,
   PRIMARY KEY (`ssid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_section` (
   `id` int(11) NOT NULL,
   `description` text
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_users_relation` (
   `uid` int(11) NOT NULL DEFAULT '0',
@@ -414,7 +414,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_users_relation` (
   `validSince` datetime DEFAULT NULL,
   `validUntil` datetime DEFAULT NULL,
   PRIMARY KEY  (`uid`,`gid`,`validSince`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (
   `description` text,
@@ -423,4 +423,4 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (
   `pid` int(11) NOT NULL,
   `groupName` varchar(150) NOT NULL,
   PRIMARY KEY (`gid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000;
+) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000;
