@@ -23,9 +23,9 @@ SobiPro.jQuery( document ).ready( function ()
 			e.preventDefault();
 			e.stopPropagation();
 			if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
-				var handler = { continue:true };
+				var handler = { 'takeOver':false };
 				SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit', [ handler, task ] )
-				if ( handler.continue == false ) {
+				if ( handler.takeOver == true ) {
 					return true;
 				}
 				SPTriggerFrakingWYSIWYGEditors();
@@ -46,9 +46,9 @@ SobiPro.jQuery( document ).ready( function ()
 					success:function ( data )
 					{
 						if ( !( data.redirect.execute ) ) {
-							var handler = { continue:true };
+							var handler = { 'takeOver':false };
 							SobiPro.jQuery( '#SPAdminForm' ).trigger( 'AfterAjaxSubmit', [ handler, data ] )
-							if ( handler.continue == false ) {
+							if ( handler.takeOver == true ) {
 								return true;
 							}
 							count++;
@@ -197,12 +197,13 @@ SobiPro.jQuery( document ).ready( function ()
 
 	SobiPro.jQuery( '.buttons-radio :button' ).each( function ( i, e )
 	{
+		var e = SobiPro.jQuery( e );
 		"use strict"
 		if ( !( e.hasClass( 'selected' ) ) ) {
 			e.removeClass( 'btn-success' )
 				.removeClass( 'btn-danger' );
 		}
-		SobiPro.jQuery( e ).click( function ()
+		e.click( function ()
 		{
 			SobiPro.jQuery( e )
 				.parent()

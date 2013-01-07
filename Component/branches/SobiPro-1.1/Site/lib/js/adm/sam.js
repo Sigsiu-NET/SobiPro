@@ -25,7 +25,7 @@ SobiPro.jQuery().ready( function ()
 	SobiPro.jQuery( '#SPAdminForm' ).on( 'BeforeAjaxSubmit', function ( e, handler, task )
 	{
 		if ( task == 'extensions.fetch' ) {
-			handler.continue = false;
+			handler.takeOver = true;
 			SPSetCookie( '' );
 			setTimeout( SPProgressMessage, 50 );
 			SobiPro.jQuery( '#SpProgress' ).removeClass( 'hide' );

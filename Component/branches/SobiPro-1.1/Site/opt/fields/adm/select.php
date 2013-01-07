@@ -106,4 +106,15 @@ class SPField_SelectAdm extends SPField_Select
 		}
 		$attr[ 'params' ] = $properties;
 	}
+
+	public function delete()
+	{
+		/* @var SPdb $db */
+		$db = SPFactory::db();
+		try {
+			$db->delete( 'spdb_field_option', array( 'fid' => $this->id ) );
+		} catch ( SPException $x ) {
+			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+		}
+	}
 }
