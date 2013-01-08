@@ -391,8 +391,19 @@ div.spScreenTitle h4 {
 .SobiPro .SpCellCenter a.checkedout .icon-lock {
   color: #b22222;
 }
+.SobiPro .SpApps .icon-check {
+  color: green;
+}
+.SobiPro .SpApps .icon-bell-alt {
+  color: orange;
+}
 .SobiPro .SpCellCenter .sp-mini-bt {
   padding: 4px 4px !important;
+}
+.SobiPro .invalid a {
+  color: red;
+  font-weight: normal;
+  text-decoration: line-through;
 }
 .SobiPro .SpSmallCol {
   width: 5%;
@@ -696,9 +707,4 @@ input.sp-input-micro[type="text"] {
 /* Aggregation Field */
 .SPtagsinput {
   border-radius: 3px;
-}
-a.invalid {
-  color: red !important;
-  font-weight: normal;
-  text-decoration: line-through;
 }

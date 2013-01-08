@@ -63,7 +63,6 @@
 						<field type="select" name="climit" selected="categories-limit" class="input-mini spOrdering">
 							<values>
 								<values label="LISTING_LIMIT" />
-								<option value="2" />
 								<option value="5" />
 								<option value="15" />
 								<option value="25" />

@@ -123,7 +123,7 @@ class SPJoomlaInstaller
 				SPFactory::cache()->cleanAll();
 				return Sobi::Txt( 'CMS_SOBIPRO_UPDATE_INSTALLED', $def->getElementsByTagName( 'version' )->item( 0 )->nodeValue );
 			}
-			$msg = Sobi::Txt( 'CMS_EXT_INSTALLED', $type, $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue );
+			$msg = Sobi::Txt( 'CMSEX_INSTALLED', $type, $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue );
 			$this->id = SPLang::nid( $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue );
 			$id = $xp->query( '//filename[@module|@plugin]' )->item( 0 );
 			$this->id = strlen( $id->getAttribute( 'module' ) ) ? $id->getAttribute( 'module' ) : $id->getAttribute( 'plugin' );

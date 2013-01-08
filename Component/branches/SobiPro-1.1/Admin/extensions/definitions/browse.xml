@@ -39,7 +39,7 @@
 				</div>
 				<tabs>
 					<tab label="APPS.LIST_APPS" condition="extensions.applications.length">
-						<div class="span12">
+						<div class="SpApps">
 							<table>
 								<head>
 									<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft" />
@@ -61,9 +61,9 @@
 										</cell>
 									</cell>
 									<cell type="text" value="version" class="SpCellCenter" />
-									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
+									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell>
-										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall" />
+										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -82,7 +82,7 @@
 						</div>
 					</tab>
 					<tab label="APPS.LIST_FIELDS" condition="extensions.fields.length">
-						<div class="span12">
+                        <div class="SpApps">
 							<table>
 								<head>
 									<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft" />
@@ -104,9 +104,9 @@
 										</cell>
 									</cell>
 									<cell type="text" value="version" class="SpCellCenter" />
-									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
+									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell>
-										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall" />
+										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -125,7 +125,7 @@
 						</div>
 					</tab>
 					<tab label="APPS.LIST_TEMPLATES" condition="extensions.templates.length">
-						<div class="span12">
+                        <div class="SpApps">
 							<table>
 								<head>
 									<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft" />
@@ -147,9 +147,9 @@
 										</cell>
 									</cell>
 									<cell type="text" value="version" class="SpCellCenter" />
-									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
+									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell>
-										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall" />
+										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -168,7 +168,7 @@
 						</div>
 					</tab>
 					<tab label="APPS.LIST_LANGUAGES" condition="extensions.languages.length">
-						<div class="span12">
+                        <div class="SpApps">
 							<table>
 								<head>
 									<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft" />
@@ -190,9 +190,9 @@
 										</cell>
 									</cell>
 									<cell type="text" value="version" class="SpCellCenter" />
-									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
+									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell>
-										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall" />
+										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -211,7 +211,7 @@
 						</div>
 					</tab>
 					<tab label="APPS.LIST_OTHERS" condition="extensions.others.length">
-						<div class="span12">
+                        <div class="SpApps">
 							<table>
 								<head>
 									<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft" />
@@ -237,7 +237,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell>
-										<button label="var:[action.text]" rel="var:[eid]" ico="none" class="var:[action.class] SpExtInstall" />
+										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -256,7 +256,7 @@
 						</div>
 					</tab>
 					<tab label="MN.MANAGE_REPOSITORIES">
-						<div class="span12">
+                        <div class="SpApps">
 							<fieldset>
 								<field type="text" name="RepositoryURL" value="" label="EX.ADD_NEW_REPO" class="span12">
 									<add where="before">

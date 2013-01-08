@@ -379,7 +379,7 @@ class SPRequirements extends SPController
 	private function XSL()
 	{
 		$v = class_exists( 'XSLTProcessor' ) ? true : false;
-		$v = false;
+//		$v = false;
 		if ( $v ) {
 			echo $this->ok( Sobi::Txt( 'REQ.XSL_AVAILABLE' ), __FUNCTION__ );
 		}
