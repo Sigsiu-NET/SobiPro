@@ -71,7 +71,7 @@ class SPAdminPanel extends SPController
 	 */
 	protected function parseOrdering()
 	{
-		$order = Sobi::GetUserState( 'sections.order', 'order', 'name.asc' );
+		$order = Sobi::GetUserState( 'sections.order', 'position', 'name.asc' );
 		$ord = $order;
 		$dir = 'asc';
 		if ( strstr( $order, '.' ) ) {
@@ -122,7 +122,7 @@ class SPAdminPanel extends SPController
 				$view = SPFactory::View( 'front', true )
 						->assign( $this->_sections, 'sections' )
 						->assign( $this->getNews(), 'news' )
-						->assign( Sobi::GetUserState( 'sections.order', 'order', 'name.asc' ), 'order' )
+						->assign( Sobi::GetUserState( 'sections.order', 'position', 'name.asc' ), 'order' )
 						->assign( SPFactory::CmsHelper()->myVersion( true ), 'version' )
 						->assign( Sobi::Cfg( 'cpanel.show_entries', false ), 'show-entries' )
 						->assign( $this->getState(), 'system-state' );

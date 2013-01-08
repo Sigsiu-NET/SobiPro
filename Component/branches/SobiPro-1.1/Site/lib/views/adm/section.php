@@ -140,8 +140,8 @@ class SPSectionAdmView extends SPAdmView
 			'approved.desc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_DESC' ),
 		);
 		if ( $this->get( 'task' ) == 'view' ) {
-			$entriesOrdering[ 'order.asc' ] = Sobi::Txt( 'EMN.ORDER_BY_ORDER_ASC' );
-			$entriesOrdering[ 'order.desc' ] = Sobi::Txt( 'EMN.ORDER_BY_ORDER_DESC' );
+			$entriesOrdering[ 'position.asc' ] = Sobi::Txt( 'EMN.ORDER_BY_ORDER_ASC' );
+			$entriesOrdering[ 'position.desc' ] = Sobi::Txt( 'EMN.ORDER_BY_ORDER_DESC' );
 		}
 		$customFields = array();
 		$customHeader = array();

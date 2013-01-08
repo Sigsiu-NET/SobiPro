@@ -55,8 +55,8 @@
 								<option value="state.desc" label="CATN.ORDER_BY_STATE_DESC" />
 								<option value="approved.asc" label="CATN.ORDER_BY_APPR_ASC" />
 								<option value="approved.desc" label="CATN.ORDER_BY_APPR_DESC" />
-								<option value="order.asc" label="CATN.ORDER_BY_ORDER_ASC" />
-								<option value="order.desc" label="CATN.ORDER_BY_ORDER_DESC" />
+								<option value="position.asc" label="CATN.ORDER_BY_ORDER_ASC" />
+								<option value="position.desc" label="CATN.ORDER_BY_ORDER_DESC" />
 								<option value="owner.desc" label="CATN.ORDER_BY_OWNER" />
 							</values>
 						</field>
@@ -108,7 +108,7 @@
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
 						<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellCenter">
-							<cell type="text" class="SpCellCenter" condition="/corder.contains(order)">
+							<cell type="text" class="SpCellCenter" condition="/corder.contains(position)">
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="category.up" />
@@ -195,7 +195,7 @@
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
 						<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellCenter">
-							<cell type="text" class="SpCellCenter" condition="/eorder.contains(order)">
+							<cell type="text" class="SpCellCenter" condition="/eorder.contains(position)">
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="entry.up" />
@@ -230,7 +230,7 @@
 		</div>
 	</body>
 	<config>
-		<action value="index.php?option=com_sobipro" />
+		<action value="index.php" />
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />

@@ -130,7 +130,7 @@
 							</url>
 						</cell>
 						<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellCenter">
-							<cell type="text" class="SpCellCenter" condition="/ordering.contains(order)">
+							<cell type="text" class="SpCellCenter" condition="/ordering.contains(position)">
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="field.up" />

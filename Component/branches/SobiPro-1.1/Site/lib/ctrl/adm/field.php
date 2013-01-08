@@ -529,7 +529,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			$ord = $ord[ 0 ];
 		}
 		$ord = ( $ord == 'state' ) ? 'enabled' : $ord;
-		$ord = ( $ord == 'order' ) ? 'position' : $ord;
+//		$ord = ( $ord == 'position' ) ? 'position' : $ord;
 		if ( $ord == 'name' ) {
 			/* @var SPdb $db */
 			$db =& SPFactory::db();
