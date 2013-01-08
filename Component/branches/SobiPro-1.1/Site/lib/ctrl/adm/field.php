@@ -315,26 +315,35 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	public function delete( $id = 0 )
 	{
-		$fids = array();
+		$fields = array();
 		$m = array();
 		if ( $id ) {
-			$fids[ ] = $id;
+			$fields[ ] = $id;
 		}
 		else {
 			if ( SPRequest::int( 'fid', 0 ) ) {
-				$fids[ ] = SPRequest::int( 'fid', 0 );
+				$fields[ ] = SPRequest::int( 'fid', 0 );
 			}
 			else {
-				$fids = SPRequest::arr( 'p_fid', array() );
+				$fields = SPRequest::arr( 'p_fid', array() );
 			}
 		}
-		foreach ( $fids as $id ) {
-			$field = SPFactory::Model( 'field', true );
-			$field->extend( $this->loadField( $id ) );
-			$msg = $field->delete();
+		if ( count( $fields ) ) {
+			foreach ( $fields as $id ) {
+				$field = SPFactory::Model( 'field', true );
+				$field->extend( $this->loadField( $id ) );
+				$msg = $field->delete();
+				SPFactory::message()
+						->setMessage( $msg, false, SPC::SUCCESS_MSG );
+				$m[ ] = $msg;
+			}
+		}
+		else {
+			$msg = SPLang::e( 'FMN.STATE_CHANGE_NO_ID' );
 			SPFactory::message()
-					->setMessage( $msg, false, SPC::SUCCESS_MSG);
-			$m[ ] = $msg;
+					->setMessage( $msg, false, SPC::ERROR_MSG );
+			return;
+
 		}
 		return $m;
 	}
@@ -472,6 +481,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 					->select( '*', 'spdb_field', array( 'section' => $sid ), $ord )
 					->loadObjectList();
 		} catch ( SPException $x ) {
+//			SPConfig::debOut(SPFactory::db()->getQuery());
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		$fields = array();
@@ -522,6 +532,8 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$order = Sobi::GetUserState( 'fields.order', $col, $def );
 		$ord = $order;
 		$dir = 'asc';
+		/** legacy - why the hell I called it order?! */
+		$ord = str_replace( 'order', 'position', $ord );
 
 		if ( strstr( $ord, '.' ) ) {
 			$ord = explode( '.', $ord );
@@ -532,12 +544,14 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 //		$ord = ( $ord == 'position' ) ? 'position' : $ord;
 		if ( $ord == 'name' ) {
 			/* @var SPdb $db */
-			$db =& SPFactory::db();
-			$db->select( 'fid', 'spdb_language', array( 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.' . $dir );
-			$fields = $db->loadResultArray();
+			$db = SPFactory::db();
+			$fields = $db
+					->select( 'fid', 'spdb_language', array( 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.' . $dir )
+					->loadResultArray();
 			if ( !count( $fields ) && Sobi::Lang() != Sobi::DefLang() ) {
-				$db->select( 'id', 'spdb_language', array( 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.' . $dir );
-				$fields = $db->loadResultArray();
+				$fields = $db
+						->select( 'id', 'spdb_language', array( 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.' . $dir )
+						->loadResultArray();
 			}
 			if ( count( $fields ) ) {
 				$fields = implode( ',', $fields );

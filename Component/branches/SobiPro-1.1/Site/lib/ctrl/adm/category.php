@@ -235,19 +235,19 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				$LimStart = $eLimStart ? ( ( $eLimStart - 1 ) * $eLimit ) : $eLimStart;
 				$Limit = $eLimit > 0 ? $eLimit : 0;
 				$eOrder = $this->parseOrdering( 'entries', 'eorder', 'position.asc', $Limit, $LimStart, $e );
-				$results = $db
+				$entries = $db
 						->select( '*', 'spdb_object', array( 'id' => $e, 'oType' => 'entry' ), $eOrder, $Limit, $LimStart )
 						->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
-			foreach ( $results as $i => $entry ) {
-				$entries[ $i ] = $entry; //new $eClass();
-				//$entries[ $i ]->extend( $entry );
-			}
 		}
-		$entriesName = SPFactory::config()->nameField()->get( 'name' );
-		$entriesField = SPFactory::config()->nameField()->get( 'nid' );
+		$entriesName = SPFactory::config()
+				->nameField()
+				->get( 'name' );
+		$entriesField = SPFactory::config()
+				->nameField()
+				->get( 'nid' );
 
 		/* create menu */
 		SPLoader::loadClass( 'views.adm.menu' );
