@@ -447,11 +447,11 @@ final class SigsiuTree extends SPObject
                 }
                 break;
             default:
-            case 'order':
-            case 'order.asc':
-            case 'order.desc':
+            case 'position':
+            case 'position.asc':
+            case 'position.desc':
                 $r = ( $from->get( 'position' ) > $to->get( 'position' ) ) ? 1 : -1;
-                if ( $this->_ordering == 'order.desc' ) {
+                if ( $this->_ordering == 'position.desc' ) {
                     $r = $r * -1;
                 }
                 break;

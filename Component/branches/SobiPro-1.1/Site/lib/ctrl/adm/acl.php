@@ -543,7 +543,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	{
 		Sobi::ReturnPoint();
 		$order = SPFactory::user()
-				->getUserState( 'acl.order', 'order', 'rid.asc' );
+				->getUserState( 'acl.order', 'position', 'rid.asc' );
 		try {
 			$rules = SPFactory::db()
 					->select( '*', 'spdb_permissions_rules', null, $order )

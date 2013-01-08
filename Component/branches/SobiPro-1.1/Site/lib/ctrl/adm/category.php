@@ -217,7 +217,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			try {
 				$LimStart = $cLimStart ? ( ( $cLimStart - 1 ) * $cLimit ) : $cLimStart;
 				$Limit = $cLimit > 0 ? $cLimit : 0;
-				$cOrder = $this->parseOrdering( 'categories', 'corder', 'order.asc', $Limit, $LimStart, $c );
+				$cOrder = $this->parseOrdering( 'categories', 'corder', 'position.asc', $Limit, $LimStart, $c );
 				$db->select( '*', 'spdb_object', array( 'id' => $c, 'oType' => 'category' ), $cOrder, $Limit, $LimStart );
 				$results = $db->loadResultArray();
 			} catch ( SPException $x ) {
@@ -234,9 +234,10 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			try {
 				$LimStart = $eLimStart ? ( ( $eLimStart - 1 ) * $eLimit ) : $eLimStart;
 				$Limit = $eLimit > 0 ? $eLimit : 0;
-				$eOrder = $this->parseOrdering( 'entries', 'eorder', 'order.asc', $Limit, $LimStart, $e );
-				$db->select( '*', 'spdb_object', array( 'id' => $e, 'oType' => 'entry' ), $eOrder, $Limit, $LimStart );
-				$results = $db->loadResultArray();
+				$eOrder = $this->parseOrdering( 'entries', 'eorder', 'position.asc', $Limit, $LimStart, $e );
+				$results = $db
+						->select( '*', 'spdb_object', array( 'id' => $e, 'oType' => 'entry' ), $eOrder, $Limit, $LimStart )
+						->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
@@ -288,8 +289,8 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				->assign( $entriesName, 'entries_name' )
 				->assign( $entriesField, 'entries_field' )
 				->assign( $menu, 'menu' )
-				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'order.asc' ), 'eorder' )
-				->assign( Sobi::GetUserState( 'categories.corder', 'corder', 'order.asc' ), 'corder' )
+				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' ), 'eorder' )
+				->assign( Sobi::GetUserState( 'categories.corder', 'corder', 'position.asc' ), 'corder' )
 				->assign( $this->_model->get( 'name' ), 'category_name' )
 				->addHidden( Sobi::Section(), 'pid' )
 				->addHidden( SPRequest::sid(), 'sid' );
@@ -358,11 +359,14 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 	 * @param string $def
 	 * @param int $lim
 	 * @param int $lStart
+	 * @param $sids
 	 * @return string
 	 */
 	protected function parseOrdering( $subject, $col, $def, &$lim, &$lStart, &$sids )
 	{
 		$ord = SPFactory::user()->getUserState( $subject . '.order', $col, $def );
+		/** legacy - why the hell I called it order?! */
+		$ord = str_replace( 'order', 'position', $ord );
 		$ord = str_replace( array( 'e_s', 'c_s' ), null, $ord );
 		$dir = 'asc';
 		if ( strstr( $ord, '.' ) ) {
@@ -370,7 +374,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			$dir = $ord[ 1 ];
 			$ord = $ord[ 0 ];
 		}
-		if ( $ord == 'order' ) {
+		if ( $ord == 'position' ) {
 			$subject = $subject == 'categories' ? 'category' : 'entry';
 			/* @var SPdb $db */
 			$db = SPFactory::db();
