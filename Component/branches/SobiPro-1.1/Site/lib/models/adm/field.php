@@ -108,7 +108,7 @@ final class SPAdmField extends SPField
 		if ( isset( $attr[ 'admList' ] ) )
 			$base[ 'admList' ] = ( int )$attr[ 'admList' ];
 		if ( isset( $attr[ 'description' ] ) )
-			$base[ 'description' ] = $db->escape( $attr[ 'description' ] );
+			$base[ 'description' ] = ( $attr[ 'description' ] );
 		else
 			$base[ 'description' ] = null;
 		if ( isset( $attr[ 'suffix' ] ) )
