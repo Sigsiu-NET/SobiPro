@@ -1,6 +1,5 @@
 .SobiPro {
-  /*
-    Font Awesome
+  /*  Font Awesome 3.0
     the iconic font designed for use with Twitter Bootstrap
     -------------------------------------------------------
     The full suite of pictographic icons, examples, and documentation
@@ -8,23 +7,27 @@
 
     License
     -------------------------------------------------------
-    The Font Awesome webfont, CSS, and LESS files are licensed under CC BY 3.0:
-    http://creativecommons.org/licenses/by/3.0/ A mention of
-    'Font Awesome - http://fortawesome.github.com/Font-Awesome' in human-readable
-    source code is considered acceptable attribution (most common on the web).
-    If human readable source code is not available to the end user, a mention in
-    an 'About' or 'Credits' screen is considered acceptable (most common in desktop
-    or mobile software).
+    • The Font Awesome font is licensed under the SIL Open Font License - http://scripts.sil.org/OFL
+    • Font Awesome CSS, LESS, and SASS files are licensed under the MIT License -
+      http://opensource.org/licenses/mit-license.html
+    • The Font Awesome pictograms are licensed under the CC BY 3.0 License - http://creativecommons.org/licenses/by/3.0/
+    • Attribution is no longer required in Font Awesome 3.0, but much appreciated:
+      "Font Awesome by Dave Gandy - http://fortawesome.github.com/Font-Awesome"
 
     Contact
     -------------------------------------------------------
     Email: dave@davegandy.com
     Twitter: http://twitter.com/fortaweso_me
     Work: Lead Product Designer @ http://kyruus.com
-*/
+
+    */
 
   /*  Font Awesome styles
     ------------------------------------------------------- */
+
+  /* includes sprites.less reset */
+
+  /* makes sure icons active on rollover in links */
 
   /* makes the font 33% larger relative to the icon container */
 
@@ -37,17 +40,30 @@
 @font-face {
   font-family: 'FontAwesome';
   src: url('../../css/fonts/fontawesome-webfont.eot');
-  src: url('../../css/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../../css/fonts/fontawesome-webfont.woff') format('woff'), url('../../css/fonts/fontawesome-webfont.ttf') format('truetype'), url('../../css/fonts/fontawesome-webfont.svg#FontAwesome') format('svg');
+  src: url('../../css/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../../css/fonts/fontawesome-webfont.woff') format('woff'), url('../../css/fonts/fontawesome-webfont.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
-.SobiPro [class^="icon-"]:before,
-.SobiPro [class*=" icon-"]:before {
+.SobiPro [class^="icon-"],
+.SobiPro [class*=" icon-"] {
   font-family: FontAwesome;
   font-weight: normal;
   font-style: normal;
-  display: inline-block;
   text-decoration: inherit;
+  display: inline;
+  width: auto;
+  height: auto;
+  line-height: normal;
+  vertical-align: baseline;
+  background-image: none !important;
+  background-position: 0% 0%;
+  background-repeat: repeat;
+}
+.SobiPro [class^="icon-"]:before,
+.SobiPro [class*=" icon-"]:before {
+  text-decoration: inherit;
+  display: inline-block;
+  speak: none;
 }
 .SobiPro a [class^="icon-"],
 .SobiPro a [class*=" icon-"] {
@@ -57,16 +73,23 @@
 
 }
 .SobiPro .icon-large:before {
-  vertical-align: middle;
+  vertical-align: -10%;
   font-size: 1.3333333333333333em;
 }
 .SobiPro .btn [class^="icon-"],
-.SobiPro .nav-tabs [class^="icon-"],
+.SobiPro .nav [class^="icon-"],
 .SobiPro .btn [class*=" icon-"],
-.SobiPro .nav-tabs [class*=" icon-"] {
+.SobiPro .nav [class*=" icon-"] {
+  display: inline;
   /* keeps button heights with and without icons the same */
 
-  line-height: .9em;
+  line-height: .6em;
+}
+.SobiPro .btn [class^="icon-"].icon-spin,
+.SobiPro .nav [class^="icon-"].icon-spin,
+.SobiPro .btn [class*=" icon-"].icon-spin,
+.SobiPro .nav [class*=" icon-"].icon-spin {
+  display: inline-block;
 }
 .SobiPro li [class^="icon-"],
 .SobiPro li [class*=" icon-"] {
@@ -74,26 +97,139 @@
   width: 1.25em;
   text-align: center;
 }
-.SobiPro li .icon-large:before,
-.SobiPro li .icon-large:before {
-  /* 1.5 increased font size for icon-large * 1.25 width */
+.SobiPro li [class^="icon-"].icon-large,
+.SobiPro li [class*=" icon-"].icon-large {
+  /* increased font size for icon-large */
 
-  width: 1.875em;
+  width: 1.5625em;
 }
 .SobiPro ul.icons {
   list-style-type: none;
-  margin-left: 2em;
-  text-indent: -0.8em;
+  text-indent: -0.75em;
 }
 .SobiPro ul.icons li [class^="icon-"],
 .SobiPro ul.icons li [class*=" icon-"] {
-  width: .8em;
+  width: .75em;
 }
-.SobiPro ul.icons li .icon-large:before,
-.SobiPro ul.icons li .icon-large:before {
-  /* 1.5 increased font size for icon-large * 1.25 width */
-
-  vertical-align: initial;
+.SobiPro .icon-muted {
+  color: #eeeeee;
+}
+.SobiPro .icon-border {
+  border: solid 1px #eeeeee;
+  padding: .2em .25em .15em;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.SobiPro .icon-2x {
+  font-size: 2em;
+}
+.SobiPro .icon-2x.icon-border {
+  border-width: 2px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.SobiPro .icon-3x {
+  font-size: 3em;
+}
+.SobiPro .icon-3x.icon-border {
+  border-width: 3px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.SobiPro .icon-4x {
+  font-size: 4em;
+}
+.SobiPro .icon-4x.icon-border {
+  border-width: 4px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+.SobiPro .pull-right {
+  float: right;
+}
+.SobiPro .pull-left {
+  float: left;
+}
+.SobiPro [class^="icon-"].pull-left,
+.SobiPro [class*=" icon-"].pull-left {
+  margin-right: .35em;
+}
+.SobiPro [class^="icon-"].pull-right,
+.SobiPro [class*=" icon-"].pull-right {
+  margin-left: .35em;
+}
+.SobiPro .btn [class^="icon-"].pull-left.icon-2x,
+.SobiPro .btn [class*=" icon-"].pull-left.icon-2x,
+.SobiPro .btn [class^="icon-"].pull-right.icon-2x,
+.SobiPro .btn [class*=" icon-"].pull-right.icon-2x {
+  margin-top: .35em;
+}
+.SobiPro .btn [class^="icon-"].icon-spin.icon-large,
+.SobiPro .btn [class*=" icon-"].icon-spin.icon-large {
+  height: .75em;
+}
+.SobiPro .btn.btn-small [class^="icon-"].pull-left.icon-2x,
+.SobiPro .btn.btn-small [class*=" icon-"].pull-left.icon-2x,
+.SobiPro .btn.btn-small [class^="icon-"].pull-right.icon-2x,
+.SobiPro .btn.btn-small [class*=" icon-"].pull-right.icon-2x {
+  margin-top: .45em;
+}
+.SobiPro .btn.btn-large [class^="icon-"].pull-left.icon-2x,
+.SobiPro .btn.btn-large [class*=" icon-"].pull-left.icon-2x,
+.SobiPro .btn.btn-large [class^="icon-"].pull-right.icon-2x,
+.SobiPro .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
+  margin-top: .2em;
+}
+.SobiPro .icon-spin {
+  display: inline-block;
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+@-ms-keyframes spin {
+  0% {
+    -ms-transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
 }
 .SobiPro .icon-glass:before {
   content: "\f000";
@@ -722,6 +858,123 @@
 .SobiPro .icon-paste:before {
   content: "\f0ea";
 }
+.SobiPro .icon-lightbulb:before {
+  content: "\f0eb";
+}
+.SobiPro .icon-exchange:before {
+  content: "\f0ec";
+}
+.SobiPro .icon-cloud-download:before {
+  content: "\f0ed";
+}
+.SobiPro .icon-cloud-upload:before {
+  content: "\f0ee";
+}
 .SobiPro .icon-user-md:before {
-  content: "\f200";
+  content: "\f0f0";
+}
+.SobiPro .icon-stethoscope:before {
+  content: "\f0f1";
+}
+.SobiPro .icon-suitcase:before {
+  content: "\f0f2";
+}
+.SobiPro .icon-bell-alt:before {
+  content: "\f0f3";
+}
+.SobiPro .icon-coffee:before {
+  content: "\f0f4";
+}
+.SobiPro .icon-food:before {
+  content: "\f0f5";
+}
+.SobiPro .icon-file-alt:before {
+  content: "\f0f6";
+}
+.SobiPro .icon-building:before {
+  content: "\f0f7";
+}
+.SobiPro .icon-hospital:before {
+  content: "\f0f8";
+}
+.SobiPro .icon-ambulance:before {
+  content: "\f0f9";
+}
+.SobiPro .icon-medkit:before {
+  content: "\f0fa";
+}
+.SobiPro .icon-fighter-jet:before {
+  content: "\f0fb";
+}
+.SobiPro .icon-beer:before {
+  content: "\f0fc";
+}
+.SobiPro .icon-h-sign:before {
+  content: "\f0fd";
+}
+.SobiPro .icon-plus-sign-alt:before {
+  content: "\f0fe";
+}
+.SobiPro .icon-double-angle-left:before {
+  content: "\f100";
+}
+.SobiPro .icon-double-angle-right:before {
+  content: "\f101";
+}
+.SobiPro .icon-double-angle-up:before {
+  content: "\f102";
+}
+.SobiPro .icon-double-angle-down:before {
+  content: "\f103";
+}
+.SobiPro .icon-angle-left:before {
+  content: "\f104";
+}
+.SobiPro .icon-angle-right:before {
+  content: "\f105";
+}
+.SobiPro .icon-angle-up:before {
+  content: "\f106";
+}
+.SobiPro .icon-angle-down:before {
+  content: "\f107";
+}
+.SobiPro .icon-desktop:before {
+  content: "\f108";
+}
+.SobiPro .icon-laptop:before {
+  content: "\f109";
+}
+.SobiPro .icon-tablet:before {
+  content: "\f10a";
+}
+.SobiPro .icon-mobile-phone:before {
+  content: "\f10b";
+}
+.SobiPro .icon-circle-blank:before {
+  content: "\f10c";
+}
+.SobiPro .icon-quote-left:before {
+  content: "\f10d";
+}
+.SobiPro .icon-quote-right:before {
+  content: "\f10e";
+}
+.SobiPro .icon-spinner:before {
+  content: "\f110";
+}
+.SobiPro .icon-circle:before {
+  content: "\f111";
+}
+.SobiPro .icon-reply:before {
+  content: "\f112";
+}
+.SobiPro .icon-github-alt:before {
+  content: "\f113";
+}
+.SobiPro .icon-folder-close-alt:before {
+  content: "\f114";
+}
+.SobiPro .icon-folder-open-alt:before {
+  content: "\f115";
 }
