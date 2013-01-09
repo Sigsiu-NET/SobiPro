@@ -199,7 +199,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			'type' => $category->get( 'oType' ),
 			'childs' => array(),
 		);
-		$childs = $category->getChilds( 'category', true );
+		$childs = $category->getChilds( 'category' );
 		if ( count( $childs ) ) {
 			foreach ( $childs as $id => $name ) {
 				$this->travelCats( $id, $cats[ $sid ][ 'childs' ] );

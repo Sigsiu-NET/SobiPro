@@ -45,6 +45,7 @@
    (+) Direct Entry Selection via Joomla! Menu Manager
    (+) Template override for specific categories and entries via Joomla! Menu Manager
    (+) Workaround to bypass Joomla! menu type bug
+   (+) Possibility to define exact type of custom output including header content type, exit and clear
 
    (-) Vehicle template removed. Will be a separate template now.
 
