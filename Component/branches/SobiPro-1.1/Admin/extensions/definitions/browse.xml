@@ -32,7 +32,7 @@
 						<message type="info" label="" />
 					</div>
 					<div class="span6">
-						<div class="progress progress-striped active" id="SpProgress">
+						<div class="progress active" id="SpProgress">
 							<div class="bar" style="width: 0%;"></div>
 						</div>
 					</div>
@@ -62,7 +62,7 @@
 									</cell>
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
-									<cell>
+									<cell class="SpCloudInstall">
 										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
@@ -105,7 +105,7 @@
 									</cell>
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
-									<cell>
+									<cell class="SpCloudInstall">
 										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
@@ -148,7 +148,7 @@
 									</cell>
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
-									<cell>
+									<cell class="SpCloudInstall">
 										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
@@ -191,7 +191,7 @@
 									</cell>
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
-									<cell>
+									<cell class="SpCloudInstall">
 										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
@@ -236,7 +236,7 @@
 									<cell type="text" value="type" class="SpCellCenter" />
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
-									<cell>
+									<cell class="SpCloudInstall">
 										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
