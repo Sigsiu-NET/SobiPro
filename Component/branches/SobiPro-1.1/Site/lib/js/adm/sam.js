@@ -196,7 +196,7 @@ SobiPro.jQuery().ready( function ()
 	{
 		this.ident = eid.replace( /\./g, '-' );
 		this.canvas = canvas;
-		canvas.html( '<div id="' + this.ident + '"><div class="progress progress-striped"><div class="bar" style="width: 1%;"></div></div></div>' );
+		canvas.html( '<div id="' + this.ident + '"><div class="progress"><div class="bar" style="width: 1%;"></div></div></div>' );
 		SPSetCookie( this.ident );
 		var def = SobiPro.jQuery( '#SP_method' ).next( 'input' );
 		var url = SobiProAdmUrl.replace( '%task%', 'extensions.download' ) + '&exid=' + eid + '&session=' + this.ident + '&' + def.attr( 'name' ) + '=' + def.val();
