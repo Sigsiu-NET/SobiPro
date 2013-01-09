@@ -213,7 +213,7 @@ SobiPro.jQuery().ready( function ()
 					SobiPro.DebOut( response );
 					if ( response.type != 'info' && response.type != 'success' ) {
 						var labelType = response.type == 'error' ? 'important' : response.type;
-						var label = '<span class="label label-' + labelType + '">' + response.typeText + ': &nbsp;</span>';
+						var label = '<span class="label label-' + labelType + '">' + response.typeText + '&nbsp;</span>';
 						var modal = '<div class="modal hide" id="' + proxy.ident + 'Modal"><div class="modal-body"><p>' + label + response.message + '</p></div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>'
 						SobiPro.jQuery( modal ).appendTo( proxy.canvas );
 						var modalMessage = SobiPro.jQuery( '#' + proxy.ident + 'Modal' ).modal();
