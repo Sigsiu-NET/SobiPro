@@ -117,7 +117,7 @@ class SPTemplateXSLT implements SPTemplate
                 Sobi::Error( 'template', SPLang::e( 'CANNOT_PARSE_TEMPLATE_FILE', $template ) . $x->getMessage(), SPC::ERROR, 500, __LINE__, __FILE__ );
             }
             SPException::catchErrors( 0 );
-            if ( $out != 'xml' ) {
+            if ( $out == 'html' ) {
                 $doc = $processor->transformToDoc( $this->_xml );
                 $doc->formatOutput = true;
                 return $this->cleanOut( $doc->saveXML() );
