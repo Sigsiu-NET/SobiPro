@@ -54,7 +54,7 @@
 									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
 								</head>
 								<loop subject="extensions.applications">
-									<cell class="SpCellLeft">
+									<cell class="SpCellLeft SpExtName">
 										<cell>
 											<tooltip>
 												<attribute name="content" value="description" parse="true" />
@@ -273,23 +273,23 @@
 						</div>
 						<table>
 							<head>
-								<cell label="EX.REPOSITORY_NAME" type="text" class="left" />
-								<cell label="EX.REPO_DESCRIPTION" type="text" class="center" />
-								<cell label="EX.REPO_MAINTAINER" class="center" />
-								<cell label="EX.MAINT_SUPPORT" type="text" class="center" />
+								<cell label="EX.REPOSITORY_NAME" type="text" class="SpCellLeft" />
+								<cell label="EX.REPO_DESCRIPTION" type="text" class="SpCellLeft" />
+								<cell label="EX.REPO_MAINTAINER" class="SpCellLeft" />
+								<cell label="EX.MAINT_SUPPORT" type="text" class="SpCellLeft" />
 								<cell />
 							</head>
 							<loop subject="repositories">
-								<cell type="text" value="repository.name" />
-								<cell type="text" value="repository.description" />
-								<cell type="link" value="repository.maintainer.name">
+								<cell type="text" value="repository.name" class="SpCellLeft" />
+								<cell type="text" value="repository.description" class="SpCellLeft" />
+								<cell type="link" value="repository.maintainer.name" class="SpCellLeft">
 									<url type="extern" host="repository.maintainer.url" />
 								</cell>
-								<cell type="link" value="repository.maintainer.supporturl">
+								<cell type="link" value="repository.maintainer.supporturl" class="SpCellLeft">
 									<url type="extern" host="repository.maintainer.supporturl" />
 								</cell>
 								<cell>
-									<button label="TB.DELETE" rel="var:[repository.id]" ico="none" class="SpRemoveRepo" />
+									<button label="TB.DELETE" rel="var:[repository.id]" ico="trash" class="SpRemoveRepo" />
 								</cell>
 							</loop>
 						</table>
