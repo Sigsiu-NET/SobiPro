@@ -995,8 +995,12 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$definition = $this->searchInstallFile( $xml );
 			if ( !( $definition ) ) {
 				if ( SPFactory::CmsHelper()->installerFile( $xml ) ) {
-					$message = SPFactory::CmsHelper()->install( $xml, $path );
-					return $this->ajaxResponse( $ajax, $message[ 'msg' ], true, $message[ 'msgtype' ] );
+					try {
+						$message = SPFactory::CmsHelper()->install( $xml, $path );
+						return $this->ajaxResponse( $ajax, $message[ 'msg' ], true, $message[ 'msgtype' ] );
+					} catch ( SPException $x ) {
+						return $this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );
+					}
 				}
 				else {
 					return $this->ajaxResponse( $ajax, SPLang::e( 'NO_INSTALL_FILE_IN_PACKAGE' ), false, SPC::ERROR_MSG );

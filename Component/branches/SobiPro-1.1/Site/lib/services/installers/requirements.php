@@ -26,7 +26,9 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 class SPRequirements
 {
-	public function __construct() {}
+	public function __construct()
+	{
+	}
 
 	/**
 	 * @param DOMNodeList $requirements
@@ -34,24 +36,24 @@ class SPRequirements
 	 */
 	public function check( $requirements )
 	{
-		if( $requirements && ( $requirements instanceof DOMNodeList ) ) {
-			for( $i = 0; $i < $requirements->length; $i++ ) {
+		if ( $requirements && ( $requirements instanceof DOMNodeList ) ) {
+			for ( $i = 0; $i < $requirements->length; $i++ ) {
 				$reqVersion = null;
-				if( $requirements->item( $i )->attributes->getNamedItem( 'version' ) && $requirements->item( $i )->attributes->getNamedItem( 'version' )->nodeValue ) {
+				if ( $requirements->item( $i )->attributes->getNamedItem( 'version' ) && $requirements->item( $i )->attributes->getNamedItem( 'version' )->nodeValue ) {
 					$reqVersion = $this->parseVer( $requirements->item( $i )->attributes->getNamedItem( 'version' )->nodeValue );
 				}
 				switch ( $requirements->item( $i )->nodeName ) {
 					case 'core':
-						if( !( $this->compareVersion( $reqVersion, SPFactory::CmsHelper()->myVersion() ) ) ) {
+						if ( !( $this->compareVersion( $reqVersion, SPFactory::CmsHelper()->myVersion() ) ) ) {
 							throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_CORE', implode( '.', $reqVersion ), implode( '.', SPFactory::CmsHelper()->myVersion() ) ) );
 						}
 						break;
 					case 'cms':
 						$cms = SPFactory::CmsHelper()->cmsVersion( $requirements->item( $i )->nodeValue );
-						if( !( is_array( $cms ) ) ) {
+						if ( !( is_array( $cms ) ) ) {
 							throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_REQU_CMS', $requirements->item( $i )->nodeValue, implode( '.', $reqVersion ), $cms ) );
 						}
-						if( !( $this->compareVersion( $reqVersion, $cms ) ) ) {
+						if ( !( $this->compareVersion( $reqVersion, $cms ) ) ) {
 							throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_REQ', $requirements->item( $i )->nodeValue, implode( '.', $reqVersion ), implode( '.', SPFactory::CmsHelper()->cmsVersion() ) ) );
 						}
 						break;
@@ -59,26 +61,32 @@ class SPRequirements
 					case 'plugin':
 					case 'application':
 						$version = $this->extension( $requirements->item( $i )->nodeValue, $requirements->item( $i )->nodeName );
-						if( !( $version ) ) {
-							throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_PLG', $requirements->item( $i )->nodeName, $requirements->item( $i )->nodeValue, implode( '.', $reqVersion ), $requirements->item( $i )->nodeName ) );
+						if ( !( $version ) ) {
+							// "Cannot install extension. This extension requires %s %s version >= %s, But this %s is not installed."
+							if ( $reqVersion ) {
+								throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_PLG', $requirements->item( $i )->nodeName, $requirements->item( $i )->nodeValue, implode( '.', $reqVersion ), $requirements->item( $i )->nodeName ) );
+							}
+							else {
+								throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_PLG_NO_VERSION', $requirements->item( $i )->nodeName, $requirements->item( $i )->nodeValue, $requirements->item( $i )->nodeName ) );
+							}
 						}
-						if( isset( $reqVersion ) && !( $this->compareVersion( $reqVersion, $version ) ) ) {
+						if ( isset( $reqVersion ) && !( $this->compareVersion( $reqVersion, $version ) ) ) {
 							throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_FIELD', $requirements->item( $i )->nodeName, $requirements->item( $i )->nodeValue, implode( '.', $reqVersion ), implode( '.', $version ) ) );
 						}
 						break;
 					case 'php':
 						$version = $this->phpReq( $requirements->item( $i ) );
 						$type = 'PHP';
-						if( ( $requirements->item( $i )->attributes->getNamedItem( 'type' ) ) && ( $requirements->item( $i )->attributes->getNamedItem( 'type' )->nodeValue ) ) {
+						if ( ( $requirements->item( $i )->attributes->getNamedItem( 'type' ) ) && ( $requirements->item( $i )->attributes->getNamedItem( 'type' )->nodeValue ) ) {
 							$type = $requirements->item( $i )->attributes->getNamedItem( 'type' );
 						}
-						if( strlen( $version ) && isset( $reqVersion ) ) {
-							if( isset( $reqVersion ) && !( $this->compareVersion( $reqVersion, $version ) ) ) {
-								throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_FIELD', $type, $requirements->item( $i )->nodeValue , implode( '.', $reqVersion ), implode( '.', $version ) ) );
+						if ( strlen( $version ) && isset( $reqVersion ) ) {
+							if ( isset( $reqVersion ) && !( $this->compareVersion( $reqVersion, $version ) ) ) {
+								throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_FIELD', $type, $requirements->item( $i )->nodeValue, implode( '.', $reqVersion ), implode( '.', $version ) ) );
 							}
 						}
 						elseif ( $version == false ) {
-							throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_MISSING', $type, $requirements->item( $i )->nodeValue , implode( '.', $reqVersion ), implode( '.', $version ) ) );
+							throw new SPException( SPLang::e( 'CANNOT_INSTALL_EXT_MISSING', $type, $requirements->item( $i )->nodeValue, implode( '.', $reqVersion ), implode( '.', $version ) ) );
 						}
 						break;
 				}
@@ -89,36 +97,37 @@ class SPRequirements
 	private function parseVer( $v )
 	{
 		$v = explode( '.', $v );
-		return  array( 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => ( isset( $v[ 2 ] ) ? $v[ 2 ] : 0 ), 'rev' => ( isset( $v[ 3 ] ) ? $v[ 3 ] : 0 ) );
+		return array( 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => ( isset( $v[ 2 ] ) ? $v[ 2 ] : 0 ), 'rev' => ( isset( $v[ 3 ] ) ? $v[ 3 ] : 0 ) );
 	}
+
 	/*
 	 * @todo = check disabled functions and classes
 	 */
 	private function phpReq( $node )
 	{
-		if( ( $node->attributes->getNamedItem( 'version' ) ) && ( $node->attributes->getNamedItem( 'version' )->nodeValue ) ) {
-			if( isset( $node->nodeValue ) && $node->nodeValue ) {
+		if ( ( $node->attributes->getNamedItem( 'version' ) ) && ( $node->attributes->getNamedItem( 'version' )->nodeValue ) ) {
+			if ( isset( $node->nodeValue ) && $node->nodeValue ) {
 				$v = phpversion( $node->nodeValue );
 			}
 			else {
 				$v = PHP_VERSION;
 			}
-			if( !( $v ) ) {
+			if ( !( $v ) ) {
 				return false;
 			}
 			return $this->parseVer( $v );
 		}
-		elseif( ( $node->attributes->getNamedItem( 'type' ) ) && ( $node->attributes->getNamedItem( 'type' )->nodeValue ) ) {
+		elseif ( ( $node->attributes->getNamedItem( 'type' ) ) && ( $node->attributes->getNamedItem( 'type' )->nodeValue ) ) {
 			switch ( $node->attributes->getNamedItem( 'type' )->nodeValue ) {
 				case 'function':
 					$r = function_exists( $node->nodeValue );
-				break;
+					break;
 				case 'class':
 					$r = class_exists( $node->nodeValue );
-				break;
+					break;
 				default:
 					$r = false;
-				break;
+					break;
 			}
 			return $r;
 		}
@@ -127,21 +136,20 @@ class SPRequirements
 	private function extension( $eid, $type )
 	{
 		static $extensions = null;
-		if( !( $extensions ) ) {
+		if ( !( $extensions ) ) {
 			try {
 				SPFactory::db()->select( array( 'version', 'type', 'pid' ), 'spdb_plugins' );
 				$exts = SPFactory::db()->loadObjectList();
+			} catch ( SPException $x ) {
+				Sobi::Error( 'installer', SPLang::e( 'CANNOT_GET_INSTALLED_EXTS', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
+				return false;
 			}
-	        catch ( SPException $x ) {
-	        	Sobi::Error( 'installer', SPLang::e( 'CANNOT_GET_INSTALLED_EXTS', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
-	        	return false;
-	        }
-	        if( count( $exts ) ) {
-	        	$extensions = array( 'plugin' => array(), 'field' => array(), 'payment' => array() );
-	        	foreach ( $exts as $ext ) {
-        			$extensions[ $ext->type ][ $ext->pid ] = $this->parseVer( $ext->version );
-	        	}
-	        }
+			if ( count( $exts ) ) {
+				$extensions = array( 'plugin' => array(), 'field' => array(), 'payment' => array() );
+				foreach ( $exts as $ext ) {
+					$extensions[ $ext->type ][ $ext->pid ] = $this->parseVer( $ext->version );
+				}
+			}
 		}
 		return isset( $extensions[ $type ][ $eid ] ) ? $extensions[ $type ][ $eid ] : false;
 	}
@@ -153,28 +161,28 @@ class SPRequirements
 	 */
 	private function compareVersion( $req, $to )
 	{
-		if( $req[ 'major' ] > $to[ 'major' ] ) {
+		if ( $req[ 'major' ] > $to[ 'major' ] ) {
 			return false;
 		}
-		elseif( $req[ 'major' ] < $to[ 'major' ] ) {
+		elseif ( $req[ 'major' ] < $to[ 'major' ] ) {
 			return true;
 		}
 
-		if( $req[ 'minor' ] > $to[ 'minor' ] ) {
+		if ( $req[ 'minor' ] > $to[ 'minor' ] ) {
 			return false;
 		}
-		elseif( $req[ 'minor' ] < $to[ 'minor' ] ) {
+		elseif ( $req[ 'minor' ] < $to[ 'minor' ] ) {
 			return true;
 		}
 
-		if( $req[ 'build' ] > $to[ 'build' ] ) {
+		if ( $req[ 'build' ] > $to[ 'build' ] ) {
 			return false;
 		}
-		elseif( $req[ 'build' ] < $to[ 'build' ] ) {
+		elseif ( $req[ 'build' ] < $to[ 'build' ] ) {
 			return true;
 		}
 
-		if( $req[ 'rev' ] > $to[ 'rev' ] ) {
+		if ( $req[ 'rev' ] > $to[ 'rev' ] ) {
 			return false;
 		}
 		return true;
