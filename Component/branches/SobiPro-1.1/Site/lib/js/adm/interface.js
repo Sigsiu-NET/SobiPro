@@ -290,7 +290,9 @@ SobiPro.jQuery( document ).ready( function ()
 		.tooltip( { 'html':true } )
 		.click( function ( e )
 		{
-			e.preventDefault()
+			if ( SobiPro.jQuery( this ).attr( 'href' ) == '#' ) {
+				e.preventDefault();
+			}
 		} );
 	var template = '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="pull-right close spclose">x</div><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>';
 	SobiPro.jQuery( 'a[rel=popover]' )

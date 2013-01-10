@@ -284,6 +284,7 @@ class SPTplParser
 			/** in case it get through the params */
 			if ( isset( $data[ 'href' ] ) ) {
 				$data[ 'attributes' ][ 'href' ] = $data[ 'href' ];
+				$data[ 'attributes' ][ 'target' ] = '_blank';
 			}
 			else {
 				$data[ 'attributes' ][ 'href' ] = '#';

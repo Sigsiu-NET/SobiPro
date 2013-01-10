@@ -249,3 +249,8 @@ SobiPro.jQuery().ready( function ()
 		document.cookie = "SPro_ProgressMsg" + ident + "=" + cid + ";expires=" + expDate.toUTCString() + ";path=/";
 	}
 } );
+
+function SPExtensionInstaller()
+{
+	window.location.reload();
+}
