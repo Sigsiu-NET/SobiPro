@@ -26,17 +26,20 @@
 			</div>
 			<div class="span10">
 				<message id="spMessage" />
-				<message dismiss-button="false" parse="last-update" />
-				<div class="span12 hide" id="SpProgress">
-					<div class="span4">
-						<message type="info" label="" />
-					</div>
-					<div class="span6">
-						<div class="progress active" id="SpProgress">
-							<div class="bar" style="width: 0%;"></div>
-						</div>
-					</div>
-				</div>
+                <div class="row-fluid">
+                    <div class="span8">
+                        <message dismiss-button="false" parse="last-update" />
+                    </div>
+                    <div class="span4 hide" id="SpProgress" style="float:right">
+                        <div>
+                            <message type="info" label="" class="smallmessage" />
+                        </div>
+                        <div class="progress progress-striped active" id="SpProgress">
+                            <div class="bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear:both;">
 				<tabs>
 					<tab label="APPS.LIST_APPS" condition="extensions.applications.length">
 						<div class="SpApps">
@@ -292,6 +295,7 @@
 						</table>
 					</tab>
 				</tabs>
+                </div>
 			</div>
 		</div>
 	</body>

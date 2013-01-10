@@ -11,14 +11,14 @@
 				<div class="row-fluid">
 					<div class="span6">
                         <div>
-                            <message label="REQ.CHECKING_REQUIREMENTS" type="info" />
+                            <message label="REQ.CHECKING_REQUIREMENTS" type="info" class="smallmessage" />
                         </div>
-                        <div class="progress" style="margin-top: -12px">
+                        <div class="progress progress-striped">
                             <div class="bar" style="width: 2%;"></div>
                         </div>
                     </div>
                     <div class="span6">
-						<div class="pull-left hide buttons spmiddle">
+						<div class="pull-left hide buttons" style="margin-top: 7px;">
 							<field type="button" value-text="REQ.NEXT_BT" class="btn next" stand-alone="true"  />
 							<field type="button" value-text="REQ.CHECK_AGAIN_BT" class="btn repeat" stand-alone="true" />
 							<field type="button" value-text="REQ.DOWNLOAD_BT" class="btn download" stand-alone="true" />
