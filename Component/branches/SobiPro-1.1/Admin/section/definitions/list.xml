@@ -80,7 +80,7 @@
 						<cell label="HEADER_CATS_STATE" type="text" class="SpCellCenter" />
 						<cell label="HEADER_CATS_APPROVAL" type="text" class="SpCellCenter" />
 						<cell label="HEADER_CATS_AUTHOR" type="text" class="SpCellCenter" />
-						<cell label="HEADER_CATS_POSITION" type="ordering" class="SpCellCenter" rel="category" />
+						<cell label="HEADER_CATS_POSITION" type="ordering" class="SpCellArrowCol" rel="category" />
 					</head>
 					<loop subject="categories">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -106,8 +106,8 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
-						<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellCenter">
-							<cell type="text" class="SpCellCenter" condition="/corder.contains(position)">
+						<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellArrowCol">
+							<cell type="text" class="SpCellArrow" condition="/corder.contains(position)">
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="category.up" />
@@ -165,7 +165,7 @@
 						<cell label="HEADER_ENTRIES_STATE" type="text" class="SpCellCenter" />
 						<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellCenter" rel="entry" />
+						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="entry" />
 					</head>
 					<loop subject="entries">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -193,8 +193,8 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
-						<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellCenter">
-							<cell type="text" class="SpCellCenter" condition="/eorder.contains(position)">
+						<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellArrowCol">
+							<cell type="text" class="SpCellArrow" condition="/eorder.contains(position)">
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="entry.up" />

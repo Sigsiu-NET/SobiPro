@@ -60,17 +60,6 @@
 								<option value="order.desc" label="FMN.ORDER_BY_ORDER_DESC" />
 							</values>
 						</field>
-						<!-- <field type="select" name="flimit" selected="fields-limit" class="input-mini spOrdering">
-							<values>
-								<values label="LISTING_LIMIT" />
-								<option value="2" />
-								<option value="5" />
-								<option value="15" />
-								<option value="25" />
-								<option value="50" />
-								<option value="100" />
-							</values>
-						</field> -->
 					</div>
 				</header>
 				<table>
@@ -84,7 +73,7 @@
 						<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_IS_FREE" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellCenter" rel="field" />
+						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="field" />
 					</head>
 					<loop subject="fields">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -129,8 +118,8 @@
 								<param name="sid" value="request.sid" parse="true" subject="skip" />
 							</url>
 						</cell>
-						<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellCenter">
-							<cell type="text" class="SpCellCenter" condition="/ordering.contains(position)">
+						<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellArrowCol">
+							<cell type="text" class="SpCellArrow" condition="/ordering.contains(order)">
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="field.up" />
@@ -169,6 +158,7 @@
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
+			<field name="method" default="xhr" />
 		</hidden>
 	</config>
 </definition>

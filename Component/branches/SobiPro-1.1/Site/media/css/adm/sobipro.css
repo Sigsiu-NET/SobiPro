@@ -116,10 +116,16 @@ input[type='radio'] {
   text-align: center;
   vertical-align: middle;
 }
+.SobiPro .table th.SpCellArrowCol,
+.SobiPro .table td.SpCellArrowCol,
 .SobiPro .table th.SpCellLeft,
 .SobiPro .table td.SpCellLeft {
   text-align: left;
   vertical-align: middle;
+}
+.SobiPro .table th.SpCellArrowCol,
+.SobiPro .table td.SpCellArrowCol {
+  width: 90px;
 }
 .SobiPro .SpCellContainer {
   clear: both;
@@ -375,9 +381,14 @@ div.spScreenTitle h4 {
 .SobiPro .SpCellCenter input[type="checkbox"] {
   margin-top: 0px;
 }
+.SobiPro .SpCellArrow i,
 .SobiPro .SpCellCenter i {
   color: #333333;
   font-size: 110%;
+}
+.SobiPro .SpCellArrow .icon-chevron-down,
+.SobiPro .SpCellArrow .icon-chevron-up {
+  color: #6f6f6f;
 }
 .SobiPro .SpCellCenter .icon-pause,
 .SobiPro .SpCellCenter .icon-ok {
@@ -424,6 +435,14 @@ div.spScreenTitle h4 {
 }
 .SobiPro .SpSmallCol {
   width: 5%;
+}
+.SobiPro .SpSmallCol {
+  width: 5%;
+}
+.SobiPro .SpCellArrow {
+  float: left;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 .SobiPro .smallmessage {
   padding-top: 3px;
@@ -562,10 +581,6 @@ div.spScreenTitle h4 {
 }
 #SPAdminForm .pagination ul {
   height: 28px;
-}
-#SPAdminForm .pagination i {
-  margin-bottom: -2px;
-  margin-top: 2px;
 }
 #SPAdminForm .pagination .disabled a,
 #SPAdminForm .pagination .active a,
