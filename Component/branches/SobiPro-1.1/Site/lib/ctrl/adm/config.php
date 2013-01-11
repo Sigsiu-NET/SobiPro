@@ -136,6 +136,7 @@ class SPConfigAdmCtrl extends SPController
 		/** @var $view SPAdmView  */
 		$view = $this->getView( 'config.' . $this->_task );
 		$view->setCtrl( $this );
+		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		if ( $this->_task == 'general' ) {
 			$fields = $this->getNameFields();
 			$nameFields = array();
@@ -158,6 +159,7 @@ class SPConfigAdmCtrl extends SPController
 			$view->assign( $view->namesFields( null, true ), 'entriesOrdering' );
 			$view->assign( $alphaFields, 'alphaMenuFields' );
 		}
+		$view->addHidden( $IP, 'current-ip' );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
 		$view->determineTemplate( 'config', $this->_task );
 		$view->display();

@@ -422,9 +422,10 @@ abstract class SPRequest
 	/**
 	 * Returns ip value of requested variable
 	 *
-	 * @param string $name variable name
-	 * @param string $default default value
-	 * @param string $method request method
+	 * @param null $time
+	 * @internal param string $name variable name
+	 * @internal param string $default default value
+	 * @internal param string $method request method
 	 * @return string
 	 */
 	static public function now( $time = null )
