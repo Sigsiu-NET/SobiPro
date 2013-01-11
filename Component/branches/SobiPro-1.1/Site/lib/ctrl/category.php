@@ -42,7 +42,6 @@ class SPCategoryCtrl extends SPSectionCtrl
 	 */
 	public function execute()
 	{
-		/* parent class executes the plugins */
 		$r = false;
 		switch ( $this->_task ) {
 			case 'chooser':
@@ -61,7 +60,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 				break;
 			default:
 				/* case parent didn't registered this task, it was an error */
-				if( !( parent::execute() ) && $this->name() == __CLASS__ ) {
+				if ( !( parent::execute() ) && $this->name() == __CLASS__ ) {
 					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}
 				else {
@@ -74,54 +73,55 @@ class SPCategoryCtrl extends SPSectionCtrl
 
 	protected function iconChooser()
 	{
-		if( !( Sobi::Can( 'category.edit' ) ) ) {
+		if ( !( Sobi::Can( 'category.edit' ) ) ) {
 			Sobi::Error( 'category', 'You have no permission to access this site', SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$folder = SPRequest::cmd( 'iconFolder', null );
 		$callback = SPRequest::cmd( 'callback', 'SPSelectIcon' );
-		$dir = $folder ? Sobi::Cfg( 'images.category_icons' ).str_replace( '.', '/', $folder ).'/' : Sobi::Cfg( 'images.category_icons' );
+		$dir = $folder ? Sobi::Cfg( 'images.category_icons' ) . str_replace( '.', '/', $folder ) . '/' : Sobi::Cfg( 'images.category_icons' );
 		$files = array();
 		$dirs = array();
-		if( $folder ) {
+		if ( $folder ) {
 			$up = explode( '.', $folder );
 			unset( $up[ count( $up ) - 1 ] );
-        	$dirs[] = array(
-        		'name' => Sobi::Txt( 'FOLEDR_UP' ),
-        		'count' => ( count( scandir( $dir.'..' ) ) - 2 ),
-        		'url' => Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( count( $up ) ? implode( '.', $up ) : null ) ) )
-        	);
+			$dirs[ ] = array(
+				'name' => Sobi::Txt( 'FOLEDR_UP' ),
+				'count' => ( count( scandir( $dir . '..' ) ) - 2 ),
+				'url' => Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( count( $up ) ? implode( '.', $up ) : null ) ) )
+			);
 		}
 		$ext = array( 'png', 'jpg', 'jpeg', 'gif' );
-	    if( ( is_dir( $dir ) ) && ( $dh = opendir( $dir ) ) )  {
-	        while( ( $file = readdir( $dh ) ) !== false ) {
-	        	if( ( filetype( $dir.$file ) == 'file' ) && in_array( strtolower( SPFs::getExt( $file ) ), $ext ) ) {
-	        		$files[] = array(
-	        			'name' => $folder ? str_replace( '.', '/', $folder ).'/'.$file : $file,
-	        			'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir.$file ) ) )
-	        		);
-	        	}
-	        	elseif( filetype( $dir.$file ) == 'dir' && !( $file == '.' || $file == '..' ) ) {
-	        		$dirs[] = array(
-	        			'name' => $file,
-	        			'count' => ( count( scandir( $dir.$file ) ) - 2 ),
-	        			'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir.$file ) ) ),
-	        			'url' => Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( $folder ? $folder.'.'.$file : $file ) ) )
-	        		);
-	        	}
-	        }
-	        closedir($dh);
-	    }
-	    sort( $files );
-	    sort( $dirs );
-	    $view = SPFactory::View( 'category' );
-	    $view->setTemplate( 'category.icon' );
-	    $view->assign( $this->_task, 'task' );
-	    $view->assign( $callback, 'callback' );
-	    $view->assign( $files, 'files' );
-	    $view->assign( Sobi::Cfg( 'images.folder_ico' ), 'folder' );
-	    $view->assign( $dirs, 'directories' );
-	    $view->icon();
+		if ( ( is_dir( $dir ) ) && ( $dh = opendir( $dir ) ) ) {
+			while ( ( $file = readdir( $dh ) ) !== false ) {
+				if ( ( filetype( $dir . $file ) == 'file' ) && in_array( strtolower( SPFs::getExt( $file ) ), $ext ) ) {
+					$files[ ] = array(
+						'name' => $folder ? str_replace( '.', '/', $folder ) . '/' . $file : $file,
+						'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) )
+					);
+				}
+				elseif ( filetype( $dir . $file ) == 'dir' && !( $file == '.' || $file == '..' ) ) {
+					$dirs[ ] = array(
+						'name' => $file,
+						'count' => ( count( scandir( $dir . $file ) ) - 2 ),
+						'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) ),
+						'url' => Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( $folder ? $folder . '.' . $file : $file ) ) )
+					);
+				}
+			}
+			closedir( $dh );
+		}
+		sort( $files );
+		sort( $dirs );
+		$view = SPFactory::View( 'category' );
+		$view->setTemplate( 'category.icon' );
+		$view->assign( $this->_task, 'task' );
+		$view->assign( $callback, 'callback' );
+		$view->assign( $files, 'files' );
+		$view->assign( Sobi::Cfg( 'images.folder_ico' ), 'folder' );
+		$view->assign( $dirs, 'directories' );
+		$view->icon();
 	}
+
 	/**
 	 * Show category chooser
 	 *
@@ -139,9 +139,9 @@ class SPCategoryCtrl extends SPSectionCtrl
 		$tree = new $tree( $ordering );
 
 		/* set link */
-		if( $menu ) {
+		if ( $menu ) {
 			$tree->setId( 'menuTree' );
-			if( defined( 'SOBIPRO_ADM' ) ) {
+			if ( defined( 'SOBIPRO_ADM' ) ) {
 				$link = Sobi::Url( array( 'sid' => '{sid}' ), false, false, true );
 			}
 			else {
@@ -157,8 +157,8 @@ class SPCategoryCtrl extends SPSectionCtrl
 		$tree->setTask( 'category.chooser' );
 
 		/* disable the category which is currently edited - category cannot be within it self */
-		if( !$multi ) {
-			if( SPRequest::sid() != Sobi::Section() ) {
+		if ( !$multi ) {
+			if ( SPRequest::sid() != Sobi::Section() ) {
 				$tree->disable( SPRequest::sid() );
 			}
 			$tree->setPid( SPRequest::sid() );
@@ -168,7 +168,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 		}
 
 		/* case we extending existing tree */
-		if( $out == 'xml' && $exp ) {
+		if ( $out == 'xml' && $exp ) {
 			$pid = SPRequest::int( 'pid', 0 );
 			$pid = $pid ? $pid : SPRequest::sid();
 			$tree->setPid( $pid );
@@ -181,21 +181,21 @@ class SPCategoryCtrl extends SPSectionCtrl
 			/* init the tree for the current section */
 			$tree->init( Sobi::Reg( 'current_section' ) );
 			/* load model */
-			if( !$this->_model ) {
+			if ( !$this->_model ) {
 				$this->setModel( SPLoader::loadModel( 'category' ) );
 			}
 			/* create new view */
-			$class  = SPLoader::loadView( 'category' );
-			$view   = new $class();
+			$class = SPLoader::loadView( 'category' );
+			$view = new $class();
 			/* assign the task and the tree */
 			$view->assign( $this->_task, 'task' );
 			$view->assign( $tree, 'tree' );
 			$view->assign( $this->_model, 'category' );
 			/* select template to show */
-			if( $tpl ) {
-				$view->setTemplate( 'category.'.$tpl );
+			if ( $tpl ) {
+				$view->setTemplate( 'category.' . $tpl );
 			}
-			elseif( $multi ) {
+			elseif ( $multi ) {
 				$view->setTemplate( 'category.mchooser' );
 			}
 			else {
@@ -213,23 +213,20 @@ class SPCategoryCtrl extends SPSectionCtrl
 	{
 		$sid = SPRequest::sid();
 		$out = SPRequest::cmd( 'out', 'json' );
-		$path = SPFactory::config()->getParentPath( $sid, true );
+		$path = SPFactory::config()
+				->getParentPath( $sid, true, false, true );
 		$cats = array();
-		if( count( $path ) ) {
-			foreach ( $path as $cid => $cname ) {
-				$cats[] = array( 'id' => $cid, 'name' => $cname );
+		if ( count( $path ) ) {
+			foreach ( $path as $category ) {
+				$cats[ ] = array( 'id' => $category[ 'id' ], 'name' => $category[ 'name' ] );
 			}
 		}
 		switch ( $out ) {
 			case 'json':
-				header( 'Content-type: application/json' );
 				SPFactory::mainframe()->cleanBuffer();
+				header( 'Content-type: application/json' );
 				echo json_encode( array( 'id' => $sid, 'categories' => $cats ) );
-				exit();
-				break;
-			default:
-				;
-				break;
+				exit;
 		}
 	}
 

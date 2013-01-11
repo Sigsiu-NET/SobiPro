@@ -172,7 +172,7 @@ final class SigsiuTree extends SPObject
     }
 
     /**
-     * @param string $_url
+     * @param string $href
      */
     public function setHref( $href )
     {
@@ -243,7 +243,7 @@ final class SigsiuTree extends SPObject
             $tree .= "<img id=\"{$this->_id}0\" src=\"{$this->_images['root']}\" alt=\"{$sectionName}\"/>";
         }
         if ( !( in_array( $sid, $this->_disabled ) ) ) {
-            $tree .= "<a href=\"{$sectionLink}\" class = \"treeNode\" id=\"{$this->_id}_CatUrl0\">{$sectionName}</a>";
+            $tree .= "<a href=\"{$sectionLink}\"  rel=\"{$sid}\" class=\"treeNode\" id=\"{$this->_id}_CatUrl0\">{$sectionName}</a>";
         }
         else {
             $tree .= $sectionName;
@@ -296,7 +296,7 @@ final class SigsiuTree extends SPObject
 
                 }
                 if ( !$disabled ) {
-                    $tree .= "\n\t\t\t\t\t<a href=\"{$url}\" id=\"{$this->_id}_imgFolderUrl{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'folder' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>\n\t\t\t\t\t</a>\n\t\t\t\t\t<a href=\"{$url}\" class = \"treeNode\" id=\"{$this->_id}_CatUrl{$cid}\">\n\t\t\t\t\t\t{$catName}\n\t\t\t\t\t</a>";
+                    $tree .= "\n\t\t\t\t\t<a href=\"{$url}\" id=\"{$this->_id}_imgFolderUrl{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'folder' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>\n\t\t\t\t\t</a>\n\t\t\t\t\t<a href=\"{$url}\" rel=\"{$cid}\" class=\"treeNode\" id=\"{$this->_id}_CatUrl{$cid}\">\n\t\t\t\t\t\t{$catName}\n\t\t\t\t\t</a>";
                 }
                 else {
                     $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'disabled' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>\n\t\t\t\t\t{$catName}\n\t\t\t\t\t</a>";

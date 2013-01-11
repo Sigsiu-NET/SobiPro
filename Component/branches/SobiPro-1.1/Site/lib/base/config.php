@@ -674,7 +674,7 @@ class SPConfig
 	public function getParentPath( $id, $names = false, $parents = false, $join = false )
 	{
 		/** @todo We have to implement the MySQL procedure for it */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		if ( !( is_numeric( $id ) ) ) {
 			return false;
 		}
@@ -689,8 +689,9 @@ class SPConfig
 		$path = $parents ? array() : array( $id );
 		while ( $id > 0 ) {
 			try {
-				$db->select( 'pid', 'spdb_relations', array( 'id' => $id ) );
-				$id = $db->loadResult();
+				$id = $db
+						->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
+						->loadResult();
 				if ( $id ) {
 					$path[ ] = ( int )$id;
 				}
