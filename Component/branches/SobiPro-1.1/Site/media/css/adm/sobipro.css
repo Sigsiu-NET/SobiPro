@@ -726,6 +726,23 @@ input.sp-input-micro[type="text"] {
 .SobiPro table.mceLayout {
   border-radius: 3px;
 }
+.SigsiuTree .selected {
+  float: left;
+  margin-left: 30px;
+}
+.SigsiuTree .selected select {
+  min-height: 200px;
+}
+.SigsiuTree .buttons {
+  clear: both;
+  padding: 10px;
+}
+.SigsiuTree .buttons button {
+  margin: 5px;
+}
+.SigsiuTree .tree {
+  float: left;
+}
 /* Compatibility Styles */
 /* GeoMap Field */
 .SPGeoLabel {

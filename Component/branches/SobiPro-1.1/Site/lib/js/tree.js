@@ -30,13 +30,13 @@ __IMAGES_ARR__;
 __IMAGES_MATRIX__;
 //__PARENT_ARR__
 
-function __ID___stmExpand( catid, deep, pid ) 
+function __ID___stmExpand( catid, deep, pid )
 {
-	try { SP_id( "__ID___imgFolder" + catid ).src = __ID___stmWait; } catch( e ) {}	
+	try { SP_id( "__ID___imgFolder" + catid ).src = __ID___stmWait; } catch( e ) {}
 	__ID___stmcid = catid;
 	__ID___stmPid = pid;
 	url = "__URL__";
-	__ID___stmMakeRequest( url, deep, catid );	
+	__ID___stmMakeRequest( url, deep, catid );
 }
 
 function __ID___stmCatData( node, val )
@@ -44,7 +44,7 @@ function __ID___stmCatData( node, val )
 	return node.getElementsByTagName( val ).item( 0 ).firstChild.data;
 }
 
-function __ID___stmAddSubcats( XMLDoc, deep, ccatid ) 
+function __ID___stmAddSubcats( XMLDoc, deep, ccatid )
 {
 	var categories = XMLDoc.getElementsByTagName( 'category' );
 	var subcats = "";
@@ -59,14 +59,14 @@ function __ID___stmAddSubcats( XMLDoc, deep, ccatid )
 		var childs 		= __ID___stmCatData( category, 'childs' );
 		var join 		= "<img src='" + __ID___stmImgs['join'] + "' alt=''/>";
 		var margin 		= "";
-		var childContainer = "";		
+		var childContainer = "";
 		name 			= name.replace( "\\", "" );
 		introtext 		= introtext.replace( "\\", "" );
 		url 			= url.replace( "\\\\", "" );
-		
+
 		for( j = 0; j < deep; j++ ) {
 			if( __ID___stmImgMatrix[ parentid ][ j ] ) {
-				switch( __ID___stmImgMatrix[ parentid ][ j ] ) 
+				switch( __ID___stmImgMatrix[ parentid ][ j ] )
 				{
 					case 'plus':
 					case 'minus':
@@ -108,7 +108,7 @@ function __ID___stmAddSubcats( XMLDoc, deep, ccatid )
 				__ID___stmImgMatrix[ catid ][ j ] = 'joinBottom';
 			}
 		}
-		subcats = subcats + "<div class='sigsiuTreeNode' id='__ID__stNode" + catid + "'>" + margin  + join + "<a id='__ID__" + catid + "' href=\"" + url + "\"><img src='" + __ID___stmImgs[ 'folder' ] + "' id='__ID___imgFolder" + catid + "' alt=''></a><a class = 'treeNode' id='__ID___CatUrl" + catid + "' href=\"" + url + "\">" + name + "</a></div>";
+		subcats = subcats + "<div class='sigsiuTreeNode' id='__ID__stNode" + catid + "'>" + margin  + join + "<a id='__ID__" + catid + "' href=\"" + url + "\"><img src='" + __ID___stmImgs[ 'folder' ] + "' id='__ID___imgFolder" + catid + "' alt=''></a><a class='treeNode' rel=\""+ catid + "\" id='__ID___CatUrl" + catid + "' href=\"" + url + "\">" + name + "</a></div>";
 		if( childs > 0 ) {
 			subcats = subcats + "<__TAG__ class='clip' id='__ID___childsContainer" + catid + "' style='display: block;  display:none;'></div>"
 		}
@@ -117,7 +117,7 @@ function __ID___stmAddSubcats( XMLDoc, deep, ccatid )
 	SP_id( childsCont ).innerHTML = subcats;
 }
 
-function __ID___stmMakeRequest( url, deep, catid ) 
+function __ID___stmMakeRequest( url, deep, catid )
 {
 	var __ID___stmHttpRequest;
     if ( window.XMLHttpRequest ) {
@@ -138,7 +138,7 @@ function __ID___stmMakeRequest( url, deep, catid )
     __ID___stmHttpRequest.open( 'GET', url, true );
     __ID___stmHttpRequest.send( null );
 }
-function __ID___stmGetSubcats( __ID___stmHttpRequest, deep, catid ) 
+function __ID___stmGetSubcats( __ID___stmHttpRequest, deep, catid )
 {
 	if ( __ID___stmHttpRequest.readyState == 4 ) {
 		if ( __ID___stmHttpRequest.status == 200 ) {
@@ -168,7 +168,7 @@ function __ID___stmGetSubcats( __ID___stmHttpRequest, deep, catid )
         }
     }
 }
-function __ID___stmColapse( id, deep ) 
+function __ID___stmColapse( id, deep )
 {
 	SP_id( "__ID___childsContainer" + id ).style.display = "none";
 	SP_id( "__ID___imgFolder" + id ).src = __ID___stmImgs[ 'folder' ];

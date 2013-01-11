@@ -26,21 +26,21 @@
 		<file path="common/category.xsl">
 			Template for a single category in the categories list.
 		</file>
-		<file path="common/entries.xsl">			
+		<file path="common/entries.xsl">
 			Template to display the block with all entries (entriesLoop) within a category or the search function. Build the structure of all entries and calls the "vCard" template while displaying single entry.
-		</file>				
+		</file>
 		<file path="common/manage.xsl">
 			Display the managing functions like edit entry, approve aso, within an entry.
-		</file>				
+		</file>
 		<file path="common/navigation.xsl">
 			Template for the site navigation.
-		</file>				
+		</file>
 		<file path="common/topmenu.xsl">
 			Template for the top menu.
-		</file>				
+		</file>
 		<file path="common/vcard.xsl">
 			Template to display single entry within a category or the search function.
-		</file>				
+		</file>
 		<file path="css/default.css">
 			Default CSS file.
 		</file>
@@ -58,7 +58,7 @@
 		</file>
 		<file path="feeds/rss.xsl">
 			Template for Atom/RSS feeds.
-		</file>		
+		</file>
 		<file path="js/edit.js">
 			JavaScript functions for the edit entry page.
 		</file>
@@ -67,7 +67,7 @@
 		</file>
 		<file path="js/search.js">
 			JavaScript functions for the search page.
-		</file>		
+		</file>
 		<file path="listing/alpha.xsl">
 			Alpha-Listing template.
 		</file>

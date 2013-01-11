@@ -99,7 +99,46 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 	protected function tree()
 	{
-
+		$field = null;
+		$selectedCategories = array();
+		$tree = SPFactory::Instance( 'mlo.tree', Sobi::Cfg( 'list.categories_ordering' ) );
+		$tree->setHref( '#' );
+		$tree->setTask( 'category.chooser' );
+		$tree->disable( Sobi::Section() );
+		$tree->init( Sobi::Section() );
+		$params = array();
+		$params[ 'maxcats' ] = $this->catsMaxLimit;
+		$params[ 'field' ] = $this->nid;
+		$addBtParams = array( 'class' => 'btn' );
+		$delBtParams = array( 'class' => 'btn' );
+		$selectParams = array();
+		SPFactory::header()
+				->addJsFile( 'category-edit' )
+				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { new SigsiuTreeEdit( ' . json_encode( $params ) . '); } );' );
+		$field .= '<div class="tree">' . $tree->display( true ) . '</div>';
+		if ( count( $this->_selectedCats ) ) {
+			$selected = SPLang::translateObject( $this->_selectedCats, 'name' );
+			if ( count( $selected ) ) {
+				foreach ( $selected as $category ) {
+					$selectedCategories[ $category[ 'id' ] ] = $category[ 'value' ];
+				}
+			}
+		}
+		if ( count( $selectedCategories ) >= $this->catsMaxLimit ) {
+			$addBtParams[ 'disabled' ] = 'disabled';
+			$selectParams[ 'readonly' ] = 'readonly';
+		}
+		else {
+			$delBtParams[ 'disabled' ] = 'disabled';
+		}
+		$field .= '<div class="selected">';
+		$field .= SPHtml_Input::select( $this->nid, $selectedCategories, null, true, $selectParams );
+		$field .= '</div>';
+		$field .= '<div class="buttons">';
+		$field .= SPHtml_Input::button( 'addCategory', Sobi::Txt( 'CC.ADD_BT' ), $addBtParams );
+		$field .= SPHtml_Input::button( 'removeCategory', Sobi::Txt( 'CC.DEL_BT' ), $delBtParams );
+		$field .= '</div>';
+		return '<div class="SigsiuTree" id="' . $this->nid . '_canvas">' . $field . '</div>';
 	}
 
 	protected function select()
