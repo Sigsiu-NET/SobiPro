@@ -309,4 +309,18 @@ SobiPro.jQuery( document ).ready( function ()
 	if ( SobiPro.jQuery( '.spFileUpload' ).length ) {
 		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
 	}
+
+	//P_current-ip
+	//
+	try {
+		SobiPro.jQuery( '#spcfg-debug-xml-ip' ).click( function ()
+		{
+			"use strict";
+			if ( SobiPro.jQuery( this ).val() == '' ) {
+				SobiPro.jQuery( this ).val( SobiPro.jQuery( '#SP_current-ip' ).val() );
+			}
+		} )
+	}
+	catch ( e ) {
+	}
 } );

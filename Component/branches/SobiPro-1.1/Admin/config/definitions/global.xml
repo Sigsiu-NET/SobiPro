@@ -96,9 +96,6 @@
 							<div class="span12">
 								<fieldset label="GBN.CFG.DEB_DEBUG">
 									<field type="states" name="spcfg[debug.xml_raw]" value="debug.xml_raw" label="GBN.CFG.DEB_XML_RAW" prefix="onoff" />
-									<div style="text-transform:uppercase; color:red;">
-										<text value="not yet implemented!!" />
-									</div>
 									<field type="text" name="spcfg[debug.xml_ip]" value="debug.xml_ip" label="GBN.CFG.DEB_XML_IP" class="input-medium" />
 								</fieldset>
 								<fieldset label="GBN.CFG.DEB_LOG">
