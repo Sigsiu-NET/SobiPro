@@ -94,6 +94,14 @@ class SPSectionAdmView extends SPAdmView
 				$category[ 'name' ] = $cat->get( 'name' );
 				$category[ 'state' ] = $cat->get( 'state' );
 				$category[ 'approved' ] = $cat->get( 'approved' );
+				if ( isset( $usersData[ $cat->get( 'owner' ) ] ) ) {
+					$uName = $usersData[ $cat->get( 'owner' ) ]->name;
+					$uUrl = SPUser::userUrl( $usersData[ $cat->get( 'owner' ) ]->id );
+					$category[ 'owner' ] = "<a href=\"{$uUrl}\">{$uName}</a>";
+				}
+				else {
+					$category[ 'owner' ] = Sobi::Txt( 'GUEST' );
+				}
 				/* the rest - case someone need */
 				$category[ 'position' ] = $cat->get( 'position' );
 				$category[ 'createdTime' ] = $cat->get( 'createdTime' );
@@ -148,8 +156,8 @@ class SPSectionAdmView extends SPAdmView
 		if ( count( $f ) ) {
 			/* @var SPField $fit */
 			foreach ( $f as $field ) {
-				$entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ) . '.asc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt('EMN.ORDER_BY_FIELD_ASC');
-                $entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ) . '.desc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt('EMN.ORDER_BY_FIELD_DESC');
+				$entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ) . '.asc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt( 'EMN.ORDER_BY_FIELD_ASC' );
+				$entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ) . '.desc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt( 'EMN.ORDER_BY_FIELD_DESC' );
 				$customFields[ ] = $field->get( 'nid' );
 				$customHeader[ ] = array(
 					'content' => $field->get( 'name' ),
