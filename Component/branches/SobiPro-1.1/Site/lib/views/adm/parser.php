@@ -99,7 +99,12 @@ class SPTplParser
 				$class = null;
 
 				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
-					$this->_out[ ] = "<div class=\"spOutput\" id=\"{$element[ 'id' ]}\">";
+					if ( $this->istSet( $element, 'id' ) ) {
+						$this->_out[ ] = "<div class=\"spOutput\" id=\"{$element[ 'id' ]}\">";
+					}
+					else {
+						$this->_out[ ] = "<div class=\"spOutput\">";
+					}
 					$outclass = null;
 					if ( isset( $element[ 'args' ][ 'params' ][ 'class' ] ) ) {
 						$outclass = $element[ 'args' ][ 'params' ][ 'class' ];
@@ -496,15 +501,18 @@ class SPTplParser
 	public function ticker( $cell )
 	{
 		$index = $cell[ 'content' ];
+		$aOpen = false;
 		/** is expired ? */
 		if ( isset( $cell[ 'attributes' ][ 'valid-until' ] ) && $cell[ 'attributes' ][ 'valid-until' ] && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) < time() && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) > 0 ) {
 			$index = -1;
+			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_EXPIRED', $cell[ 'attributes' ][ 'valid-until' ] );
 			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="expired">';
 		}
 		/** is pending ? */
 		elseif ( ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] ) > time() ) && $index == 1 ) {
 			$index = -2;
+			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );
 			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="pending">';
 		}
@@ -514,9 +522,11 @@ class SPTplParser
 				$txt = json_decode( str_replace( "'", '"', $cell[ 'attributes' ][ 'status-text' ] ), true );
 				$txt = Sobi::Txt( $txt[ $index ] );
 			}
+			$aOpen = true;
 			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="pending">';
 		}
 		elseif ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
+			$aOpen = true;
 			$this->_out[ ] = "<a href=\"{$cell['link']}\" >";
 		}
 		$icons = array();
@@ -528,7 +538,7 @@ class SPTplParser
 		}
 		$icon = ( isset( $icons[ $index ] ) && $icons[ $index ] ) ? $icons[ $index ] : $this->_tickerIcons[ $index ];
 		$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
-		if ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
+		if ( $aOpen ) {
 			$this->_out[ ] = "</a>";
 			return $cell;
 		}
@@ -637,7 +647,7 @@ class SPTplParser
 			}
 			else {
 				if ( isset( $button[ 'rel' ] ) ) {
-					$r = "rel=\"{$button[ 'rel' ]}\" ";
+					$r = " rel=\"{$button[ 'rel' ]}\" ";
 				}
 				$this->_out[ ] = "<div class=\"btn{$class}\"{$r}{$target}>";
 			}

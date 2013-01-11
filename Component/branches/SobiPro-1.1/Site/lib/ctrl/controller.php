@@ -90,6 +90,8 @@ abstract class SPController extends SPObject implements SPControl
 
 	/**
 	 * authorise action
+	 * @param string $action
+	 * @param string $ownership
 	 * @return bool
 	 */
 	protected function authorise( $action = 'access', $ownership = 'valid' )
@@ -192,10 +194,15 @@ abstract class SPController extends SPObject implements SPControl
 
 	protected function state( $state )
 	{
-		if ( $this->authorise( 'manage' ) ) {
-			$this->_model->changeState( $state );
-			$state = ( int )( $this->_task == 'publish' ) ? true : $state;
-			$this->response( Sobi::Back(), Sobi::Txt( $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
+		if ( $this->_model->get( 'id' ) ) {
+			if ( $this->authorise( 'manage' ) ) {
+				$this->_model->changeState( $state );
+				$state = ( int )( $this->_task == 'publish' ) ? true : $state;
+				$this->response( Sobi::Back(), Sobi::Txt( $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
+			}
+		}
+		else {
+			$this->response( Sobi::Back(), Sobi::Txt( 'CHANGE_NO_ID' ), true, SPC::ERROR_MSG );
 		}
 	}
 

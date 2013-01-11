@@ -248,6 +248,19 @@ SobiPro.jQuery().ready( function ()
 		var cid = expDate.getTime() + Math.floor( Math.random() * 11 ) * 100;
 		document.cookie = "SPro_ProgressMsg" + ident + "=" + cid + ";expires=" + expDate.toUTCString() + ";path=/";
 	}
+
+	try {
+
+		SobiPro.jQuery( '#repositoryurl' ).keydown( function ( e )
+		{
+			if ( e.keyCode == 13 ) {
+				e.preventDefault();
+				SobiPro.jQuery( '.SpAddRepo' ).click();
+			}
+		} );
+	}
+	catch ( e ) {
+	}
 } );
 
 function SPExtensionInstaller()

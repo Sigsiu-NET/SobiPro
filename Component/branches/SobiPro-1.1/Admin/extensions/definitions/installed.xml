@@ -48,7 +48,10 @@
 							</url>
 						</cell>
 						<cell type="text" value="pid" class="SpCellCenter" />
-						<cell type="text" value="author" class="SpCellCenter" />
+						<cell type="link" value="author" condition="authorURL" class="SpCellCenter" >
+							<url type="extern" host="authorURL" />
+						</cell>
+						<cell type="text" value="author" class="SpCellCenter" invert-condition="authorURL" />
 					</loop>
 				</table>
 			</div>

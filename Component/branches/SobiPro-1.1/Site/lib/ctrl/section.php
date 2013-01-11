@@ -104,12 +104,14 @@ class SPSectionCtrl extends SPController
         $view->display( $this->_type );
     }
 
-    /**
-     * @param string $eOrder
-     * @param int $eLimit
-     * @param int $eLimStart
-     * @return array
-     */
+	/**
+	 * @param $cOrder
+	 * @param int $cLim
+	 * @internal param string $eOrder
+	 * @internal param int $eLimit
+	 * @internal param int $eLimStart
+	 * @return array
+	 */
     public function getCats( $cOrder, $cLim = 0 )
     {
         $categories = array();
@@ -117,12 +119,11 @@ class SPSectionCtrl extends SPController
         $cLim = $cLim > 0 ? $cLim : 0;
         if ( $this->_model->getChilds( 'category' ) ) {
             /* var SPDb $db */
-            $db =& SPFactory::db();
+            $db = SPFactory::db();
             $oPrefix = null;
 
             /* load needed definitions */
             SPLoader::loadClass( 'models.dbobject' );
-            $cClass = SPLoader::loadModel( 'category' );
             $conditions = array();
 
             switch ( $cOrder ) {
