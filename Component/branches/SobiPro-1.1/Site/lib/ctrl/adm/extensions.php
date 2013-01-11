@@ -495,7 +495,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 //			sleep( 1 );
 		}
 		$msg->progress( 100, Sobi::Txt( 'EX.EXT_LIST_UPDATED' ), SPC::SUCCESS_MSG );
-		SPFactory::message()->success( Sobi::Txt( 'EX.EXT_LIST_UPDATED' ), false );
+//		SPFactory::message()->success( Sobi::Txt( 'EX.EXT_LIST_UPDATED' ), false );
 		exit;
 	}
 
@@ -777,7 +777,12 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$info = $connection->exec();
 		$connectionInfo = $connection->info();
 		if ( isset( $connectionInfo[ 'http_code' ] ) && $connectionInfo[ 'http_code' ] != 200 ) {
-			$this->ajaxResponse( true, SPLang::e( 'Error (%d) has occurred and the repository at "%s" could not be added.', $connectionInfo[ 'http_code' ], "https://{$repositoryId}" ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
+			SPFactory::mainframe()->cleanBuffer();
+			header( 'Content-type: application/json' );
+			$response = SPLang::e( 'Error (%d) has occurred and the repository at "%s" could not be added.', $connectionInfo[ 'http_code' ], "https://{$repositoryId}" );
+			echo json_encode( array( 'message' => array( 'type' => SPC::ERROR_MSG, 'text' => $response ) ) );
+			exit;
+//			$this->ajaxResponse( true, SPLang::e( 'Error (%d) has occurred and the repository at "%s" could not be added.', $connectionInfo[ 'http_code' ], "https://{$repositoryId}" ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 		}
 		else {
 			$def = new DOMDocument( '1.0' );
@@ -886,7 +891,11 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$repo = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repository' ) ) );
 		$ssl = $connection->certificate( $repo );
 		if ( isset( $ssl[ 'err' ] ) ) {
-			$this->response( Sobi::Url( 'extensions.browse' ), sprintf( 'An error has occurred and the connection could not be validated. Error number %s, %s', $ssl[ 'err' ], $ssl[ 'msg' ] ), false, SPC::ERROR_MSG );
+			SPFactory::mainframe()->cleanBuffer();
+			header( 'Content-type: application/json' );
+			$response = sprintf( 'An error has occurred and the connection could not be validated. Error number %s, %s', $ssl[ 'err' ], $ssl[ 'msg' ] );
+			echo json_encode( array( 'message' => array( 'type' => SPC::ERROR_MSG, 'text' => $response ) ) );
+			exit;
 		}
 		else {
 			$cert = array();
@@ -912,7 +921,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$response = str_replace( 'id="SobiPro"', 'id="SpRepoModal"', $response );
 			SPFactory::mainframe()->cleanBuffer();
 			header( 'Content-type: application/json' );
-			echo json_encode( array( 'message' => array( 'type' => 'info', 'response' => $response ) ) );
+			echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => $response ) ) );
 			exit;
 		}
 	}

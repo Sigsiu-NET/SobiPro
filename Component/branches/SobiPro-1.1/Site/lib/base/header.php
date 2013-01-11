@@ -128,6 +128,9 @@ final class SPHeader
 
 	/**
 	 * @deprecated @see SPHeader::meta
+	 * @param string $name
+	 * @param string $content
+	 * @param array $attributes
 	 * @return SPHeader
 	 */
 	public function & addMeta( $name, $content, $attributes = array() )
@@ -144,7 +147,10 @@ final class SPHeader
 
 	/**
 	 * Add JavaScript code to the site header
-	 * @param string $js
+	 * @param $content
+	 * @param string $name
+	 * @param array $attributes
+	 * @internal param string $js
 	 * @return SPHeader
 	 */
 	public function & meta( $content, $name = null, $attributes = array() )
@@ -330,6 +336,7 @@ final class SPHeader
 	 * Add CSS file to the site header
 	 * @param string $file file name
 	 * @param bool $adm
+	 * @param null $media
 	 * @param bool $force
 	 * @param string $ext
 	 * @param string $params
@@ -401,11 +408,13 @@ final class SPHeader
 	/**
 	 * Add alternate link to the site header
 	 * @param string $href
-	 * @param string $relation
+	 * @param string $type
+	 * @param string $title
+	 * @param string $rel
 	 * @param string $relType
 	 * @param array $params
+	 * @internal param string $relation
 	 * @return void
-	 * @return SPHeader
 	 */
 	public function & addHeadLink( $href, $type = null, $title = null, $rel = 'alternate', $relType = 'rel', $params = null )
 	{
