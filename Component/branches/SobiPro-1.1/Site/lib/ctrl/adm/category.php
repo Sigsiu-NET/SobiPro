@@ -93,7 +93,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		if ( $this->_model->get( 'id' ) ) {
 			$this->authorise( $this->_task );
 			$this->_model->changeState( $state );
-			$state = ( int )( $this->_task == 'publish' );
+//			$state = ( int )( $this->_task == 'publish' );
 			SPFactory::cache()
 					->purgeSectionVars()
 					->deleteObj( 'category', $this->_model->get( 'id' ) )
