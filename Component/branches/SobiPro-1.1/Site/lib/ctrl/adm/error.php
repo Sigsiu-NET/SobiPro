@@ -182,7 +182,7 @@ class SPError extends SPConfigAdmCtrl
 		/** @var $view SPAdmView */
 		SPFactory::View( 'error', true )
 				->assign( $this->_task, 'task' )
-				->assign( $this->createMenu(), 'menu' )
+				->assign( $this->createMenu( 'error' ), 'menu' )
 				->assign( $this->levels(), 'levels' )
 				->assign( $err, 'error' )
 				->display();

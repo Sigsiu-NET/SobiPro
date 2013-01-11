@@ -239,7 +239,7 @@ class SpAdmToolbar
 		if ( isset( $button[ 'type' ] ) ) {
 			switch ( $button[ 'type' ] ) {
 				case 'help':
-					$link = 'http://sobipro.sigsiu.net/help_screen/' . Sobi::Reg( 'help_task', Sobi::Reg( 'task', SPRequest::task() ) );
+					$link = 'http://sobipro.sigsiu.net/help_screen/' . Sobi::Reg( 'help_task', SPRequest::task() );
 					break;
 				case 'url':
 					$link = Sobi::Url( $button[ 'task' ] );
