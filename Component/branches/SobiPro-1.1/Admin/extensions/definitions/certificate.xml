@@ -12,7 +12,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row-fluid">
-					<div class="span12">
+					<div class="SpCertificate">
 						<fieldset label="EX.SSL_TO">
 							<field type="output" value="certificate.subject.CN" label="EX.SSL_COMMON_NAME" />
 							<field type="output" value="certificate.subject.O" label="EX.SSL_ORGANIZATION" />

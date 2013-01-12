@@ -101,7 +101,7 @@ class SPRepository extends SPInstaller
 			if ( $ssl[ 'serialNumber' ] != $this->xGetString( 'certificate/serialnumber' ) ) {
 				throw new SPException(
 					SPLang::e(
-						'SSL validation error: stored serial number is %s but the serial number for the repository at %s has the number %s',
+						'SSL validation error: stored serial number is %s but the serial number for the repository at %s has the number %s.',
 						$this->xGetString( 'certificate/serialnumber' ),
 						$this->xGetString( 'url' ),
 						$ssl[ 'serialNumber' ]
@@ -119,7 +119,7 @@ class SPRepository extends SPInstaller
 			if ( $ssl[ 'validTo' ] < time() ) {
 				throw new SPException(
 					SPLang::e(
-						'SSL validation error: SSL certificate for %s is expired',
+						'SSL validation error: SSL certificate for %s is expired.',
 						$this->xGetString( 'url' )
 					)
 				);
@@ -127,7 +127,7 @@ class SPRepository extends SPInstaller
 			$this->_server = SPFactory::Instance( 'services.soap', null, array( 'location' => $this->xGetString( 'url' ) ) );
 		}
 		else {
-			throw new SPException( SPLang::e( 'No repository definition file at %s or the definition is invalid', $this->xmlFile ) );
+			throw new SPException( SPLang::e( 'No repository definition file at %s or the definition is invalid.', $this->xmlFile ) );
 		}
 	}
 

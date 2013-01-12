@@ -12,7 +12,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row-fluid">
-					<div class="span12">
+					<div class="SpSoap">
 						<fieldset>
 							<loop subject="request.fields" type="fields" />
 						</fieldset>
