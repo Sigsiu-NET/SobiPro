@@ -909,6 +909,7 @@ abstract class SPHtml_Input
 			$style = " style=\"{$style}\"";
 		}
 		$id = strlen( $id ) ? '" id="' . $id . '"' : null;
+		$save = $saveText ? '<a href="#" id="' . $id . 'Save" class="btn btn-primary save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>' : null;
 		$html .= '<div class="' . $classes . $id . $style . '>
 					<div class="modal-header">
 						<h3>' . ( $header ) . '</h3>
@@ -918,7 +919,7 @@ abstract class SPHtml_Input
 					</div>
 					<div class="modal-footer">
 						<a href="#" class="btn" data-dismiss="modal">' . Sobi::Txt( $closeText ) . '</a>
-						<a href="#" id="' . $id . 'Save" class="btn btn-primary save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>
+						' . $save . '
 					</div>
 				</div>
 		';

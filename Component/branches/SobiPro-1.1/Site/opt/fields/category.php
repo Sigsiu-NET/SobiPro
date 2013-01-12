@@ -99,7 +99,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 	protected function tree()
 	{
-		$field = null;
+		$selector = null;
 		$selectedCategories = array();
 		$tree = SPFactory::Instance( 'mlo.tree', Sobi::Cfg( 'list.categories_ordering' ) );
 		$tree->setHref( '#' );
@@ -115,12 +115,17 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		SPFactory::header()
 				->addJsFile( 'category-edit' )
 				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { new SigsiuTreeEdit( ' . json_encode( $params ) . '); } );' );
-		$field .= '<div class="tree">' . $tree->display( true ) . '</div>';
+		$selector .= '<div class="tree">' . $tree->display( true ) . '</div>';
 		if ( count( $this->_selectedCats ) ) {
 			$selected = SPLang::translateObject( $this->_selectedCats, 'name' );
 			if ( count( $selected ) ) {
+				$count = 0;
 				foreach ( $selected as $category ) {
 					$selectedCategories[ $category[ 'id' ] ] = $category[ 'value' ];
+					$count++;
+					if ( $count == $this->catsMaxLimit ) {
+						break;
+					}
 				}
 			}
 		}
@@ -131,14 +136,23 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		else {
 			$delBtParams[ 'disabled' ] = 'disabled';
 		}
-		$field .= '<div class="selected">';
-		$field .= SPHtml_Input::select( $this->nid, $selectedCategories, null, true, $selectParams );
-		$field .= '</div>';
-		$field .= '<div class="buttons">';
-		$field .= SPHtml_Input::button( 'addCategory', Sobi::Txt( 'CC.ADD_BT' ), $addBtParams );
-		$field .= SPHtml_Input::button( 'removeCategory', Sobi::Txt( 'CC.DEL_BT' ), $delBtParams );
-		$field .= '</div>';
-		return '<div class="SigsiuTree" id="' . $this->nid . '_canvas">' . $field . '</div>';
+		$selector .= '<div class="selected">';
+		$selector .= SPHtml_Input::select( $this->nid . '_list', $selectedCategories, null, true, $selectParams );
+		$selector .= SPHtml_Input::hidden( $this->nid, 'json://' . json_encode( array_keys( $selectedCategories ) ) );
+		$selector .= '</div>';
+		$selector .= '<div class="buttons">';
+		$selector .= SPHtml_Input::button( 'addCategory', Sobi::Txt( 'CC.ADD_BT' ), $addBtParams );
+		$selector .= SPHtml_Input::button( 'removeCategory', Sobi::Txt( 'CC.DEL_BT' ), $delBtParams );
+		$selector .= '</div>';
+		$selector = '<div class="SigsiuTree" id="' . $this->nid . '_canvas">' . $selector . '</div>';
+		if ( $this->modal ) {
+			$selector = SPHtml_Input::modalWindow( Sobi::Txt( 'EN.SELECT_CAT_PATH' ), $this->nid . '_modal', $selector, 'modal hide', 'CLOSE', null );
+			$field = SPHtml_Input::button( 'select-category', Sobi::Txt( 'EN.SELECT_CAT_PATH' ), array( 'class' => 'btn btn-primary', 'href' => '#' . $this->nid . '_modal', 'data-toggle' => 'modal', 'id' => $this->nid . '_modal_fire' ) );
+			return $field . $selector;
+		}
+		else {
+			return $selector;
+		}
 	}
 
 	protected function select()
@@ -334,9 +348,15 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	{
 		$data = SPRequest::arr( $this->nid, array(), $request );
 		if ( !( $data ) ) {
-			$dataString = SPRequest::int( $this->nid, 0, $request );
-			if ( $dataString ) {
-				$data = array( $dataString );
+			$dataString = SPRequest::string( $this->nid, null, false, $request );
+			if ( strstr( $dataString, '://' ) ) {
+				$data = SPFactory::config()->structuralData( $dataString );
+			}
+			else {
+				$dataString = SPRequest::int( $this->nid, 0, $request );
+				if ( $dataString ) {
+					$data = array( $dataString );
+				}
 			}
 		}
 		else {
