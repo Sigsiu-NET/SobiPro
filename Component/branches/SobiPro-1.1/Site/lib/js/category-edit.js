@@ -23,21 +23,26 @@ function SigsiuTreeEdit( options )
 	this.settings = options;
 	this.canvas = SobiPro.jQuery( '#' + this.settings.field + '_canvas' );
 	this.category = {};
-	this.options = proxy.canvas.find( '.selected' ).find( 'select option' );
-	this.select = proxy.canvas.find( '.selected' ).find( 'select' );
+	this.options = this.canvas.find( '.selected' ).find( 'select option' );
+	this.selectField = this.canvas.find( '.selected' ).find( 'select' );
+	this.loading = false;
+	this.addBtn = '';
+
 	this.getCategoryData = function ( sid )
 	{
+		this.loading = true;
 		SobiPro.jQuery.ajax( {
-			url:'index.php',
-			data:{'option':'com_sobipro', 'task':'category.parents', 'sid':sid, 'out':'json'},
-			type:'post',
-			dataType:'json',
+			'url':'index.php',
+			'data':{'option':'com_sobipro', 'task':'category.parents', 'sid':sid, 'out':'json'},
+			'type':'post',
+			'dataType':'json',
 			success:function ( data )
 			{
 				data.categories.each( function ( category )
 				{
 					proxy.category = category;
 				} );
+				proxy.loading = false;
 			}
 		} );
 	}
@@ -58,55 +63,86 @@ function SigsiuTreeEdit( options )
 	} );
 
 	this.init();
-	this.canvas.find( '[name="addCategory"]' ).click( function ()
+
+	this.updateSelected = function ()
 	{
+		var selectedCats = [];
+		this.canvas.find( '.selected' ).find( 'select option' ).each( function ( i, e )
+		{
+			selectedCats.push( SobiPro.jQuery( e ).val() )
+		} );
+		this.canvas.find( '.selected' ).find( 'input' ).val( 'json://[' + selectedCats.join( ',' ) + ']' );
+	}
+
+	this.addCategory = function ( e )
+	{
+		var button = this.canvas.find( '[name="addCategory"]' ).attr( 'disabled', 'disabled' );
+		var error = false;
+		if ( this.addBtn.length ) {
+			button.html( this.addBtn );
+			button.removeAttr( 'disabled' );
+			this.addBtn = '';
+		}
+		if ( proxy.loading ) {
+			this.addBtn = button.html();
+			var wait = '<i class="icon-spinner icon-spin"></i>&nbsp;&nbsp;';
+			button.attr( 'disabled', 'disabled' );
+			button.html( wait + this.addBtn );
+			return setTimeout( function ()
+			{
+				proxy.addCategory()
+			}, 3000 );
+		}
 		var selector = this;
 		if ( !( proxy.category.id ) ) {
 			SobiPro.Alert( 'PLEASE_SELECT_CATEGORY_YOU_WANT_TO_ADD_IN_THE_TREE_FIRST' );
-			return false;
+			error = true;
 		}
-		proxy.canvas.find( '.selected' ).find( 'select option' ).each( function ( i, option )
+		this.canvas.find( '.selected' ).find( 'select option' ).each( function ( i, option )
 		{
 			if ( proxy.category.id == SobiPro.jQuery( option ).val() ) {
 				SobiPro.Alert( 'THIS_CATEGORY_HAS_BEEN_ALREADY_ADDED' );
-				return false;
+				error = true;
 			}
 		} );
-		proxy.select.append( new Option( SobiPro.StripSlashes( proxy.category.name ), proxy.category.id ) );
-		proxy.canvas.find( '[name="removeCategory"]' ).removeAttr( 'disabled', 'disabled' );
-		if ( proxy.canvas.find( '.selected' ).find( 'select option' ).length >= proxy.settings.maxcats ) {
-			proxy.select.attr( 'readonly', 'readonly' );
-			SobiPro.jQuery( selector ).attr( 'disabled', 'disabled' );
+		if ( !( error ) ) {
+			this.selectField.append( new Option( SobiPro.StripSlashes( this.category.name ), this.category.id ) );
+			this.canvas.find( '[name="removeCategory"]' ).removeAttr( 'disabled', 'disabled' );
+			if ( this.canvas.find( '.selected' ).find( 'select option' ).length >= this.settings.maxcats ) {
+				this.selectField.attr( 'readonly', 'readonly' );
+				button.attr( 'disabled', 'disabled' );
+			}
+			this.updateSelected();
 		}
+	}
+
+	this.canvas.find( '[name="addCategory"]' ).click( function ( e )
+	{
+		proxy.addCategory( e );
 	} );
 
 	this.canvas.find( '[name="removeCategory"]' ).click( function ()
 	{
-		var selected = proxy.select.find( 'option:selected' );
+		var selected = proxy.selectField.find( 'option:selected' );
 		if ( selected.length ) {
 			selected.each( function ( i, option )
 			{
 				SobiPro.jQuery( option ).remove()
 			} );
-			proxy.select.removeAttr( 'readonly', 'readonly' );
+			proxy.selectField.removeAttr( 'readonly', 'readonly' );
 			proxy.canvas.find( '[name="addCategory"]' ).removeAttr( 'disabled', 'disabled' );
 		}
 		if ( !( proxy.canvas.find( '.selected' ).find( 'select option' ).length ) ) {
 			SobiPro.jQuery( this ).attr( 'disabled', 'disabled' );
 		}
+		proxy.updateSelected();
 	} );
-}
 
-window.addEvent( 'domready', function ()
-{
-	$( 'spEntryForm' ).addEvent( 'submit', function ( ev )
-	{
-		if ( $( 'SP_task' ) == 'cancel' ) {
-			return true;
-		}
-		else if ( !( SPValidate( $( 'spEntryForm' ) ) ) ) {
-			new Event( ev ).stop();
-			return false;
-		}
-	} );
-} );
+	try {
+		SobiPro.jQuery( '#' + this.settings.field + '_modal' ).click(
+			function() {
+//				SobiPro.jQuery( '#' + proxy.settings.field + '_modal' ).css( 'display', '');
+			}
+		);
+	} catch ( e ) {}
+}
