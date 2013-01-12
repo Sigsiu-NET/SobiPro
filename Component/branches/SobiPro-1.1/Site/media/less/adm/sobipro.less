@@ -20,11 +20,13 @@
 @background: #ffffff;
 @font: #333;
 @font-size: 15px;
+@font-family: Arial,Helvetica,sans-serif;
 @admIcons: '../../../../media/sobipro/adm';
 
 .SobiPro {
   color: @font;
   font-size: @font-size;
+  font-family: @font-family;
 }
 
 .SobiPro .clearall {
@@ -146,6 +148,8 @@ input[type='radio']{
 .SobiPro .table td.SpCellLeft {
   text-align: left;
   vertical-align: middle;
+  padding-top: 5px;
+  padding-bottom: 2px;
 }
 
 .SobiPro .table th.SpCellArrowCol,
@@ -453,7 +457,6 @@ div.spScreenTitle h4 {
   margin-top: 0px;
 }
 
-.SobiPro .SpCellArrow i,
 .SobiPro .SpCellCenter i {
   color: #333333;
   font-size: 110%;
@@ -502,6 +505,17 @@ div.spScreenTitle h4 {
 }
 .SobiPro .SpApps .icon-cloud-download {
   color: #0480BE;
+}
+
+.SobiPro .SpCertificate .form-horizontal .control-group {
+  margin-bottom: 0px;
+}
+
+#SPAdminForm .SpSoap fieldset .control-label {
+  width: 140px;
+}
+#SPAdminForm .SpSoap fieldset .controls {
+  margin-left: 160px;
 }
 
 .SobiPro .SpCloudInstall {
