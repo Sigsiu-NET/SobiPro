@@ -35,7 +35,6 @@ class SPFieldAdmView extends SPAdmView
 	 */
 	public function display()
 	{
-		SPLoader::loadClass( 'html.tooltip' );
 		switch ( $this->get( 'task' ) ) {
 			case 'list':
 				parent::display();

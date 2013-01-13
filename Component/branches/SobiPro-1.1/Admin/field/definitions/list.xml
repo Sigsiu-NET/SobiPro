@@ -78,7 +78,7 @@
 					<loop subject="fields">
 						<cell type="text" value="id" class="SpCellCenter" />
 						<cell type="checkbox" name="p_fid" value="id" class="SpCellCenter" />
-						<cell>
+						<cell invert-condition="_off">
 							<cell type="link" value="name">
 								<url type="intern">
 									<param name="task" value="field.edit" />
@@ -88,6 +88,10 @@
 							</cell>
 							<cell type="text" value="nid" class="subText" />
 						</cell>
+						<cell condition="_off">
+							<cell type="text" value="name" class="invalid"/>
+							<cell type="text" value="nid" class="subText invalid" />
+						</cell>
 						<cell type="ticker" value="enabled" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}">
 							<url type="intern">
 								<param name="task" value="field.toggle.enabled" />
@@ -95,7 +99,8 @@
 								<param name="sid" value="request.sid" parse="true" subject="skip" />
 							</url>
 						</cell>
-						<cell type="text" value="fieldType" class="SpCellCenter" />
+						<cell type="text" value="fieldType" class="SpCellCenter" invert-condition="_off"/>
+						<cell type="text" value="fieldType" class="SpCellCenter invalid" condition="_off"/>
 						<cell type="text" value="showIn" class="SpCellCenter" />
 						<cell type="ticker" value="required" class="SpCellCenter" icons="{'0':'check-empty','1':'check'}">
 							<url type="intern">
