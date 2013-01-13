@@ -97,7 +97,7 @@
 									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
 								</head>
 								<loop subject="extensions.fields">
-									<cell class="SpCellLeft">
+									<cell class="SpCellLeft SpExtName">
 										<cell>
 											<tooltip>
 												<attribute name="content" value="description" parse="true" />
@@ -140,7 +140,7 @@
 									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
 								</head>
 								<loop subject="extensions.templates">
-									<cell class="SpCellLeft">
+									<cell class="SpCellLeft SpExtName">
 										<cell>
 											<tooltip>
 												<attribute name="content" value="description" parse="true" />
@@ -152,7 +152,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell class="SpCloudInstall">
-										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
+										<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -183,7 +183,7 @@
 									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
 								</head>
 								<loop subject="extensions.languages">
-									<cell class="SpCellLeft">
+									<cell class="SpCellLeft SpExtName">
 										<cell>
 											<tooltip>
 												<attribute name="content" value="description" parse="true" />
@@ -195,7 +195,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell class="SpCloudInstall">
-										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
+										<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -227,7 +227,7 @@
 									<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
 								</head>
 								<loop subject="extensions.others">
-									<cell class="SpCellLeft">
+									<cell class="SpCellLeft SpExtName">
 										<cell>
 											<tooltip>
 												<attribute name="content" value="description" parse="true" />
