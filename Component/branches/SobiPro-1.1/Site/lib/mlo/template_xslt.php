@@ -152,10 +152,7 @@ class SPTemplateXSLT implements SPTemplate
 
 	private function createXML()
 	{
-		$this->_xml = new DOMDocument(
-			Sobi::Cfg( 'xml.version', '1.0' ),
-			Sobi::Cfg( 'xml.encoding', 'UTF-8' )
-		);
+		$this->_xml = new DOMDocument( Sobi::Cfg( 'xml.version', '1.0' ), Sobi::Cfg( 'xml.encoding', 'UTF-8' ) );
 		$this->_xml->formatOutput = true;
 		if ( count( $this->_data ) ) {
 			$e = $this->_xml->createElement( $this->_type );

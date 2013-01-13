@@ -110,7 +110,8 @@ class SPAdmView extends SPObject implements SPView
 	public function loadDefinition( $path )
 	{
 		$path = SPLoader::translatePath( $path, 'adm', true, 'xml', false );
-		$this->_xml = DOMDocument::load( $path );
+		$this->_xml = new DOMDocument( Sobi::Cfg( 'xml.version', '1.0' ), Sobi::Cfg( 'xml.encoding', 'UTF-8' ) );
+		$this->_xml->load( $path );
 		$this->parseDefinition( $this->_xml->getElementsByTagName( 'definition' ) );
 	}
 

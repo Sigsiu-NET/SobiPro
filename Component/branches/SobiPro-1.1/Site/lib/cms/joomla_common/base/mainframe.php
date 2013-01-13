@@ -625,7 +625,7 @@ class SPJoomlaMainFrame
 	 */
 	public function setTitle( $title, $forceAdd = false )
 	{
-		$document =& JFactory::getDocument();
+		$document = JFactory::getDocument();
 		if ( !( is_array( $title ) ) && ( Sobi::Cfg( 'browser.add_title', true ) || $forceAdd ) ) {
 			$title = array( $title );
 		}

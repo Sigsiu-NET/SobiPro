@@ -59,6 +59,7 @@ class SPAdmError extends SPAdmView
 				$error[ 'errFile' ] = str_replace( SOBI_ADM_PATH, null, $error[ 'errFile' ]  );
 				$error[ 'errFile' ] = str_replace( SOBI_PATH, null, $error[ 'errFile' ]  );
 				$error[ 'errFile' ] = str_replace( SOBI_ROOT, null, $error[ 'errFile' ]  );
+				$error[ 'errFile' ] = $error[ 'errFile' ].': '.$error[ 'errLine' ];
 				if( $error[ 'errReq' ] ) {
 					$error[ 'errReq' ] = "<a href=\"{$error[ 'errReq' ]}\" target=\"_blank\">{$error[ 'errReq' ]}</a>";
 				}

@@ -154,9 +154,11 @@ class SPConfigAdmCtrl extends SPController
 					}
 				}
 			}
+			$templateList = $view->templatesList();
+			$entriesOrdering = $view->namesFields( null, true );
 			$view->assign( $nameFields, 'nameFields' );
-			$view->assign( $view->templatesList(), 'templatesList' );
-			$view->assign( $view->namesFields( null, true ), 'entriesOrdering' );
+			$view->assign( $templateList, 'templatesList' );
+			$view->assign( $entriesOrdering, 'entriesOrdering' );
 			$view->assign( $alphaFields, 'alphaMenuFields' );
 		}
 		$view->addHidden( $IP, 'current-ip' );
@@ -326,7 +328,7 @@ class SPConfigAdmCtrl extends SPController
 		}
 	}
 
-	protected function createMenu( $task = null )
+	protected function & createMenu( $task = null )
 	{
 		if ( !( $task ) ) {
 			$task = 'config.' . $this->_task;
@@ -421,11 +423,11 @@ class SPConfigAdmCtrl extends SPController
 	/**
 	 * Save the config
 	 */
-	protected function save()
+	protected function save( $apply, $clone = false )
 	{
 		$sid = Sobi::Section();
 		$this->authorise( $sid );
-		if( $sid ) {
+		if ( $sid ) {
 			$this->validate( 'config.definitions.general', array( 'task' => 'config.general', 'sid' => $sid ) );
 		}
 		else {
