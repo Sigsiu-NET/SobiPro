@@ -1,31 +1,31 @@
 .SobiPro {
-  /*  Font Awesome 3.0
-    the iconic font designed for use with Twitter Bootstrap
-    -------------------------------------------------------
-    The full suite of pictographic icons, examples, and documentation
-    can be found at: http://fortawesome.github.com/Font-Awesome/
+  /*!
+ *  Font Awesome 3.0.1
+ *  the iconic font designed for use with Twitter Bootstrap
+ *  -------------------------------------------------------
+ *  The full suite of pictographic icons, examples, and documentation
+ *  can be found at: http://fortawesome.github.com/Font-Awesome/
+ *
+ *  License
+ *  -------------------------------------------------------
+ *  - The Font Awesome font is licensed under the SIL Open Font License - http://scripts.sil.org/OFL
+ *  - Font Awesome CSS, LESS, and SASS files are licensed under the MIT License -
+ *    http://opensource.org/licenses/mit-license.html
+ *  - The Font Awesome pictograms are licensed under the CC BY 3.0 License - http://creativecommons.org/licenses/by/3.0/
+ *  - Attribution is no longer required in Font Awesome 3.0, but much appreciated:
+ *    "Font Awesome by Dave Gandy - http://fortawesome.github.com/Font-Awesome"
 
-    License
-    -------------------------------------------------------
-    • The Font Awesome font is licensed under the SIL Open Font License - http://scripts.sil.org/OFL
-    • Font Awesome CSS, LESS, and SASS files are licensed under the MIT License -
-      http://opensource.org/licenses/mit-license.html
-    • The Font Awesome pictograms are licensed under the CC BY 3.0 License - http://creativecommons.org/licenses/by/3.0/
-    • Attribution is no longer required in Font Awesome 3.0, but much appreciated:
-      "Font Awesome by Dave Gandy - http://fortawesome.github.com/Font-Awesome"
-
-    Contact
-    -------------------------------------------------------
-    Email: dave@davegandy.com
-    Twitter: http://twitter.com/fortaweso_me
-    Work: Lead Product Designer @ http://kyruus.com
-
-    */
+ *  Contact
+ *  -------------------------------------------------------
+ *  Email: dave@davegandy.com
+ *  Twitter: http://twitter.com/fortaweso_me
+ *  Work: Lead Product Designer @ http://kyruus.com
+ */
 
   /*  Font Awesome styles
     ------------------------------------------------------- */
 
-  /* includes sprites.less reset */
+  /* more sprites.less reset */
 
   /* makes sure icons active on rollover in links */
 
@@ -39,8 +39,8 @@
 }
 @font-face {
   font-family: 'FontAwesome';
-  src: url('../../css/fonts/fontawesome-webfont.eot');
-  src: url('../../css/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../../css/fonts/fontawesome-webfont.woff') format('woff'), url('../../css/fonts/fontawesome-webfont.ttf') format('truetype');
+  src: url('../../css/fonts/fontawesome-webfont.eot?v=3.0.1');
+  src: url('../../css/fonts/fontawesome-webfont.eot?#iefix&v=3.0.1') format('embedded-opentype'), url('../../css/fonts/fontawesome-webfont.woff?v=3.0.1') format('woff'), url('../../css/fonts/fontawesome-webfont.ttf?v=3.0.1') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -50,17 +50,36 @@
   font-weight: normal;
   font-style: normal;
   text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  /* sprites.less reset */
+
   display: inline;
   width: auto;
   height: auto;
   /* Sigsiu.NET
-  line-height: normal;
-  background-image: none !important;
-  background-repeat: repeat;
-  */
+line-height: normal;
+background-image: none;
+background-repeat: repeat;
+*/
 
   vertical-align: baseline;
   background-position: 0% 0%;
+  margin-top: 0;
+}
+.SobiPro .icon-white,
+.SobiPro .nav-pills > .active > a > [class^="icon-"],
+.SobiPro .nav-pills > .active > a > [class*=" icon-"],
+.SobiPro .nav-list > .active > a > [class^="icon-"],
+.SobiPro .nav-list > .active > a > [class*=" icon-"],
+.SobiPro .navbar-inverse .nav > .active > a > [class^="icon-"],
+.SobiPro .navbar-inverse .nav > .active > a > [class*=" icon-"],
+.SobiPro .dropdown-menu > li > a:hover > [class^="icon-"],
+.SobiPro .dropdown-menu > li > a:hover > [class*=" icon-"],
+.SobiPro .dropdown-menu > .active > a > [class^="icon-"],
+.SobiPro .dropdown-menu > .active > a > [class*=" icon-"],
+.SobiPro .dropdown-submenu:hover > a > [class^="icon-"],
+.SobiPro .dropdown-submenu:hover > a > [class*=" icon-"] {
+  background-image: none;
 }
 .SobiPro [class^="icon-"]:before,
 .SobiPro [class*=" icon-"]:before {
@@ -86,7 +105,12 @@
   display: inline;
   /* keeps button heights with and without icons the same */
 
-  line-height: .6em;
+}
+.SobiPro .btn [class^="icon-"].icon-large,
+.SobiPro .nav [class^="icon-"].icon-large,
+.SobiPro .btn [class*=" icon-"].icon-large,
+.SobiPro .nav [class*=" icon-"].icon-large {
+  line-height: .9em;
 }
 .SobiPro .btn [class^="icon-"].icon-spin,
 .SobiPro .nav [class^="icon-"].icon-spin,
@@ -94,14 +118,35 @@
 .SobiPro .nav [class*=" icon-"].icon-spin {
   display: inline-block;
 }
+.SobiPro .nav-tabs [class^="icon-"],
+.SobiPro .nav-pills [class^="icon-"],
+.SobiPro .nav-tabs [class*=" icon-"],
+.SobiPro .nav-pills [class*=" icon-"] {
+  /* keeps button heights with and without icons the same */
+
+}
+.SobiPro .nav-tabs [class^="icon-"],
+.SobiPro .nav-pills [class^="icon-"],
+.SobiPro .nav-tabs [class*=" icon-"],
+.SobiPro .nav-pills [class*=" icon-"],
+.SobiPro .nav-tabs [class^="icon-"].icon-large,
+.SobiPro .nav-pills [class^="icon-"].icon-large,
+.SobiPro .nav-tabs [class*=" icon-"].icon-large,
+.SobiPro .nav-pills [class*=" icon-"].icon-large {
+  line-height: .9em;
+}
 .SobiPro li [class^="icon-"],
-.SobiPro li [class*=" icon-"] {
+.SobiPro .nav li [class^="icon-"],
+.SobiPro li [class*=" icon-"],
+.SobiPro .nav li [class*=" icon-"] {
   display: inline-block;
   width: 1.25em;
   text-align: center;
 }
 .SobiPro li [class^="icon-"].icon-large,
-.SobiPro li [class*=" icon-"].icon-large {
+.SobiPro .nav li [class^="icon-"].icon-large,
+.SobiPro li [class*=" icon-"].icon-large,
+.SobiPro .nav li [class*=" icon-"].icon-large {
   /* increased font size for icon-large */
 
   width: 1.5625em;
@@ -159,33 +204,45 @@
 }
 .SobiPro [class^="icon-"].pull-left,
 .SobiPro [class*=" icon-"].pull-left {
-  margin-right: .35em;
+  margin-right: .3em;
 }
 .SobiPro [class^="icon-"].pull-right,
 .SobiPro [class*=" icon-"].pull-right {
-  margin-left: .35em;
+  margin-left: .3em;
 }
 .SobiPro .btn [class^="icon-"].pull-left.icon-2x,
 .SobiPro .btn [class*=" icon-"].pull-left.icon-2x,
 .SobiPro .btn [class^="icon-"].pull-right.icon-2x,
 .SobiPro .btn [class*=" icon-"].pull-right.icon-2x {
-  margin-top: .35em;
+  margin-top: .18em;
 }
 .SobiPro .btn [class^="icon-"].icon-spin.icon-large,
 .SobiPro .btn [class*=" icon-"].icon-spin.icon-large {
-  height: .75em;
+  line-height: .8em;
 }
 .SobiPro .btn.btn-small [class^="icon-"].pull-left.icon-2x,
 .SobiPro .btn.btn-small [class*=" icon-"].pull-left.icon-2x,
 .SobiPro .btn.btn-small [class^="icon-"].pull-right.icon-2x,
 .SobiPro .btn.btn-small [class*=" icon-"].pull-right.icon-2x {
-  margin-top: .45em;
+  margin-top: .25em;
+}
+.SobiPro .btn.btn-large [class^="icon-"],
+.SobiPro .btn.btn-large [class*=" icon-"] {
+  margin-top: 0;
 }
 .SobiPro .btn.btn-large [class^="icon-"].pull-left.icon-2x,
 .SobiPro .btn.btn-large [class*=" icon-"].pull-left.icon-2x,
 .SobiPro .btn.btn-large [class^="icon-"].pull-right.icon-2x,
 .SobiPro .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
-  margin-top: .2em;
+  margin-top: .05em;
+}
+.SobiPro .btn.btn-large [class^="icon-"].pull-left.icon-2x,
+.SobiPro .btn.btn-large [class*=" icon-"].pull-left.icon-2x {
+  margin-right: .2em;
+}
+.SobiPro .btn.btn-large [class^="icon-"].pull-right.icon-2x,
+.SobiPro .btn.btn-large [class*=" icon-"].pull-right.icon-2x {
+  margin-left: .2em;
 }
 .SobiPro .icon-spin {
   display: inline-block;
@@ -232,6 +289,20 @@
   }
   100% {
     transform: rotate(359deg);
+  }
+}
+@-moz-document url-prefix() {
+  .icon-spin {
+    height: .9em;
+  }
+  .btn .icon-spin {
+    height: auto;
+  }
+  .icon-spin.icon-large {
+    height: 1.25em;
+  }
+  .btn .icon-spin.icon-large {
+    height: .75em;
   }
 }
 .SobiPro .icon-glass:before {

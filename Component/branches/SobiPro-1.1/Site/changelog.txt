@@ -46,6 +46,7 @@
    (+) Template override for specific categories and entries via Joomla! Menu Manager
    (+) Workaround to bypass Joomla! menu type bug
    (+) Possibility to define exact type of custom output including header content type, exit and clear
+   (+) Limit XML raw data to a specific IP
 
    (-) Vehicle template removed. Will be a separate template now.
 
@@ -65,6 +66,7 @@
    (!) Sendmail account information removed from system check file
    (!) Category meta description does not longer ends with a dot
    (!) No default filter for fields title, contact and city in demo data
+   (!) CSS and Javascript cache now separate settings
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
