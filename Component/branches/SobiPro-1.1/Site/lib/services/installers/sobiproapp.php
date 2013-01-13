@@ -66,8 +66,9 @@ class SPAppInstaller extends SPInstaller
 		}
 
 		$files = $this->xGetChilds( 'files' );
+		$date = str_replace( array( ':', ' ' ), array( '-', '_' ), SPFactory::config()->date( time() ) );
 		if ( $files && ( $files instanceof DOMNodeList ) && $files->length ) {
-			$log[ 'files' ] = $this->files( $files, $id, "{$dir}/{$id}/backup" );
+			$log[ 'files' ] = $this->files( $files, $id, "{$dir}/{$id}/backup/{$date}" );
 		}
 
 		$language = $this->xGetChilds( 'language/file' );
@@ -459,6 +460,8 @@ class SPAppInstaller extends SPInstaller
 							else {
 								// if modifying file - store the current data so when we are going to restore it, we can be sure we are not overwriting some file
 								$log[ 'modified' ][ ] = array( 'file' => $t, 'size' => filesize( $t ), 'checksum' => md5_file( $t ), 'backup' => $bPath );
+								/** 1.1 changes - we don't want to restore the backed up files because it causing ,uch more problems as it is worth */
+								$log[ 'created' ][ ] = $t;
 								$this->_d( sprintf( 'File %s exist and will be backed up', $t ) );
 							}
 						}
@@ -589,16 +592,17 @@ class SPAppInstaller extends SPInstaller
 			}
 		}
 
-		$mods = $this->xGetChilds( 'installLog/modified/*' );
-		if ( $mods && ( $mods instanceof DOMNodeList ) ) {
-			$this->revert( $mods );
-		}
+		/** it doesn't make much sense that way - a backup is ok but this action is called uninstall and not revert */
+//		$mods = $this->xGetChilds( 'installLog/modified/*' );
+//		if ( $mods && ( $mods instanceof DOMNodeList ) ) {
+//			$this->revert( $mods );
+//		}
 
 		$files = $this->xGetChilds( 'installLog/files/*' );
 		if ( $files && ( $files instanceof DOMNodeList ) ) {
 			for ( $i = 0; $i < $files->length; $i++ ) {
-				if ( SPFs::exists( SOBI_ROOT . $files->item( $i )->nodeValue ) ) {
-					SPFs::delete( SOBI_ROOT . $files->item( $i )->nodeValue );
+				if ( SPFs::exists( $files->item( $i )->nodeValue ) ) {
+					SPFs::delete( $files->item( $i )->nodeValue );
 				}
 			}
 		}

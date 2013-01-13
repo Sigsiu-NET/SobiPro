@@ -56,7 +56,8 @@ class SPInstaller extends SPObject
 	{
 		$this->type = $type;
 		$this->xmlFile = $definition;
-		$this->definition = DOMDocument::load( $this->xmlFile );
+		$this->definition = new DOMDocument( Sobi::Cfg( 'xml.version', '1.0' ), Sobi::Cfg( 'xml.encoding', 'UTF-8' ) );
+		$this->definition->load( $this->xmlFile );
 		$this->xdef = new DOMXPath( $this->definition );
 		$this->root = dirname( $this->xmlFile );
 	}
@@ -64,7 +65,7 @@ class SPInstaller extends SPObject
 	protected function xGetString( $key )
 	{
 		$node = $this->xGetChilds( $key )->item( 0 );
-		return isset(  $node ) ? $node->nodeValue : null;
+		return isset( $node ) ? $node->nodeValue : null;
 	}
 
 	/**
@@ -78,9 +79,9 @@ class SPInstaller extends SPObject
 
 	public function validate()
 	{
-		$type = ( $this->type ==  'SobiProApp' ) ? 'application' : $this->type;
-		$schemaDef = SPLoader::path( 'lib.services.installers.schemas.'.$type, 'front', false, 'xsd' );
-		if( !( SPFs::exists( $schemaDef  ) ) || ( time() - filemtime( $schemaDef  ) > ( 60 * 60 * 24 * 7 ) ) ) {
+		$type = ( $this->type == 'SobiProApp' ) ? 'application' : $this->type;
+		$schemaDef = SPLoader::path( 'lib.services.installers.schemas.' . $type, 'front', false, 'xsd' );
+		if ( !( SPFs::exists( $schemaDef ) ) || ( time() - filemtime( $schemaDef ) > ( 60 * 60 * 24 * 7 ) ) ) {
 			$connection = SPFactory::Instance( 'services.remote' );
 			$def = "https://xml.sigsiu.net/SobiPro/{$type}.xsd";
 			$connection->setOptions(
@@ -93,17 +94,17 @@ class SPInstaller extends SPObject
 					'ssl_verifyhost' => 2,
 				)
 			);
-			$schema =& SPFactory::Instance( 'base.fs.file', SPLoader::path( 'lib.services.installers.schemas.'.$type, 'front', false, 'xsd' ) );
+			$schema =& SPFactory::Instance( 'base.fs.file', SPLoader::path( 'lib.services.installers.schemas.' . $type, 'front', false, 'xsd' ) );
 			$file = $connection->exec();
-			if( !( strlen( $file ) ) ) {
-				throw new SPException(  SPLang::e( 'CANNOT_ACCESS_SCHEMA_DEF', $def ) );
+			if ( !( strlen( $file ) ) ) {
+				throw new SPException( SPLang::e( 'CANNOT_ACCESS_SCHEMA_DEF', $def ) );
 			}
 			$schema->content( $file );
 			$schema->save();
 			$schemaDef = $schema->filename();
 		}
-		if( !( $this->definition->schemaValidate( $schemaDef ) ) ) {
-			throw new SPException(  SPLang::e( 'CANNOT_VALIDATE_SCHEMA_DEF_AT', str_replace( SOBI_ROOT.DS, null, $this->xmlFile ), $def ) );
+		if ( !( $this->definition->schemaValidate( $schemaDef ) ) ) {
+			throw new SPException( SPLang::e( 'CANNOT_VALIDATE_SCHEMA_DEF_AT', str_replace( SOBI_ROOT . DS, null, $this->xmlFile ), $def ) );
 		}
 	}
 }
