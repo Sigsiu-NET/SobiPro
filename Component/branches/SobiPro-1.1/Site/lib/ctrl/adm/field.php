@@ -586,6 +586,8 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 			}
 		}
+		SPFactory::cache()->cleanSection();
+		$this->response( Sobi::Url( array( 'task' => 'field.list', 'pid' => Sobi::Section() ) ), Sobi::Txt( 'NEW_FIELDS_ORDERING_HAS_BEEN_SAVED' ),  true, SPC::SUCCESS_MSG );
 	}
 
 	/**
@@ -747,13 +749,10 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$r = true;
 				SPFactory::cache()->cleanSection();
 				$this->response( Sobi::Url( array( 'task' => 'field.list', 'pid' => Sobi::Section() ) ), $this->delete(), true );
-//				SPMainFrame::setRedirect( Sobi::Back(), $this->delete() );
 				break;
 			case 'reorder':
 				$r = true;
 				$this->reorder();
-				SPFactory::cache()->cleanSection();
-				Sobi::Redirect( Sobi::Back(), "New ordering has been saved" );
 				break;
 			case 'up':
 			case 'down':
