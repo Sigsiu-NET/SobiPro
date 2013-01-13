@@ -7,7 +7,7 @@
 	<toolbar title="var:[site_title]" icon="SobiSection">
 		<divider />
 		<buttons type="actions">
-			<button type="new" task="entry.add" label="AMN.ADD_ENTRY" ico="file" />
+			<button type="new" task="entry.add" label="AMN.ADD_ENTRY" icon="file" />
 			<button type="delete" task="entry.delete" />
 			<nav-header label="TB.PUBLISHING" />
 			<button type="publish" task="entry.publish" />

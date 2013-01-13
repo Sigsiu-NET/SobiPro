@@ -618,11 +618,11 @@ class SPTplParser
 		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
 			$this->_out[ ] = '<div class="btn-group">';
 			$this->_out[ ] = "<a href=\"{$href}\" class=\"btn{$class}\"{$target} rel=\"{$rel}\">";
-			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
+			if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 				$icon = 'cog';
 			}
 			else {
-				$icon = $button[ 'ico' ];
+				$icon = $button[ 'icon' ];
 			}
 			if ( $icon != 'none' ) {
 				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
@@ -651,11 +651,11 @@ class SPTplParser
 				}
 				$this->_out[ ] = "<div class=\"btn{$class}\"{$r}{$target}>";
 			}
-			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
+			if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 				$icon = 'cog';
 			}
 			else {
-				$icon = $button[ 'ico' ];
+				$icon = $button[ 'icon' ];
 			}
 			$this->_out[ ] = '&nbsp;<i class="icon-' . $icon . '"></i>&nbsp;' . $label;
 			if ( $rel || $href ) {
@@ -671,11 +671,11 @@ class SPTplParser
 			}
 			else {
 				$this->_out[ ] = '<li><a href="' . $href . $target . '" rel="' . $rel . '">';
-				if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
+				if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 					$icon = 'cog';
 				}
 				else {
-					$icon = $button[ 'ico' ];
+					$icon = $button[ 'icon' ];
 				}
 				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
 				$this->_out[ ] = '</a></li>';

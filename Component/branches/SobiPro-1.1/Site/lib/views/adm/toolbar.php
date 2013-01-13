@@ -134,7 +134,7 @@ class SpAdmToolbar
 					$this->output[ ] = '<span class="divider"></span>';
 					break;
 				case 'buttons':
-					$icon = ( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ? $button[ 'ico' ] : $this->getIcon( $button );
+					$icon = ( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ? $button[ 'icon' ] : $this->getIcon( $button );
 					$label = ( isset( $button[ 'label' ] ) && $button[ 'label' ] ) ? $button[ 'label' ] : $this->getLabel( $button );
 					$class = isset( $button[ 'dropdown-class' ] ) ? ' ' . $button[ 'dropdown-class' ] : null;
 					$this->output[ ] = '<div class="btn-group">';
@@ -186,11 +186,11 @@ class SpAdmToolbar
 		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
 			$this->output[ ] = '<div class="btn-group">';
 			$this->output[ ] = "<a href=\"{$href}\" class=\"{$this->btClass}{$class}\"{$target} rel=\"{$rel}\">";
-			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
+			if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 				$icon = $this->getIcon( $button, true );
 			}
 			else {
-				$icon = $button[ 'ico' ];
+				$icon = $button[ 'icon' ];
 			}
 			$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
 			$this->output[ ] = '</a>';
@@ -206,11 +206,11 @@ class SpAdmToolbar
 		}
 		elseif ( !( $list ) ) {
 			$this->output[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"{$this->btClass}{$class}\"{$target}>";
-			if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
+			if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 				$icon = $this->getIcon( $button );
 			}
 			else {
-				$icon = $button[ 'ico' ];
+				$icon = $button[ 'icon' ];
 			}
 			$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
 			$this->output[ ] = '</a>';
@@ -221,11 +221,11 @@ class SpAdmToolbar
 			}
 			else {
 				$this->output[ ] = '<li><a href="' . $href . '"' . $target . ' rel="' . $rel . '">';
-				if ( !( isset( $button[ 'ico' ] ) && $button[ 'ico' ] ) ) {
+				if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 					$icon = $this->getIcon( $button );
 				}
 				else {
-					$icon = $button[ 'ico' ];
+					$icon = $button[ 'icon' ];
 				}
 				$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
 				$this->output[ ] = '</a></li>';

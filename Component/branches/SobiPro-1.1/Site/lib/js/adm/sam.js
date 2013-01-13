@@ -109,9 +109,11 @@ SobiPro.jQuery().ready( function ()
 						proxy.request( request, proxy.repoCallback )
 					} );
 				}
-				else if ( data.redirect ) {
-					SobiPro.Alert( data.message.response );
-					window.location.reload();
+				else {
+					if ( data.redirect ) {
+						SobiPro.Alert( data.message.response.replace( /<br\s*[\/]?>/gi, "\n" ) );
+						window.location.reload();
+					}
 				}
 			}
 		}

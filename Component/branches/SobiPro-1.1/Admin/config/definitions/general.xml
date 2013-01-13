@@ -7,7 +7,7 @@
 	<toolbar title="var:[site_title]" icon="SobiSectionCfg">
 		<button type="apply" task="config.save" />
 		<divider />
-		<button task="config.clean" ico="refresh" label="TB.CLEAN_CACHE" />
+		<button task="config.clean" icon="refresh" label="TB.CLEAN_CACHE" />
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
