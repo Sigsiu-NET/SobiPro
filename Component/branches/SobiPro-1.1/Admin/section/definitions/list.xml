@@ -6,7 +6,7 @@
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSection">
 		<buttons type="entry">
-			<button type="new" task="entry.add" label="AMN.ADD" ico="plus" />
+			<button type="new" task="entry.add" label="AMN.ADD" icon="plus" />
 			<button type="delete" task="entry.delete" />
 			<nav-header label="TB.PUBLISHING" />
 			<button type="publish" task="entry.publish" />
@@ -17,7 +17,7 @@
 		</buttons>
 		<divider />
 		<buttons type="category">
-			<button type="new" task="category.add" label="AMN.ADD" ico="plus" />
+			<button type="new" task="category.add" label="AMN.ADD" icon="plus" />
 			<button type="delete" task="category.delete" />
 			<nav-header label="TB.PUBLISHING" />
 			<button type="publish" task="category.publish" />
@@ -80,11 +80,11 @@
 						<cell label="HEADER_CATS_STATE" type="text" class="SpCellCenter" />
 						<cell label="HEADER_CATS_APPROVAL" type="text" class="SpCellCenter" />
 						<cell label="HEADER_CATS_AUTHOR" type="text" class="SpCellCenter" />
-						<cell label="HEADER_CATS_POSITION" type="ordering" class="SpCellArrowCol" rel="category" />
+						<cell label="HEADER_CATS_POSITION" type="ordering" class="SpCellArrowCol" rel="category" condition="corder.contains(position)"/>
 					</head>
 					<loop subject="categories">
 						<cell type="text" value="id" class="SpCellCenter" />
-						<cell type="checkbox" name="c_sid" value="id" class="SpCellCenter" checked-out-time="coutTime" checked-out-by="cout" checked-out-ico="lock" />
+						<cell type="checkbox" name="c_sid" value="id" class="SpCellCenter" checked-out-time="coutTime" checked-out-by="cout" checked-out-icon="lock" />
 						<cell class="SpCellLeft">
 							<cell type="link" value="name">
 								<url type="intern">
@@ -106,8 +106,8 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
-						<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellArrowCol">
-							<cell type="text" class="SpCellArrow" condition="/corder.contains(position)">
+						<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellArrowCol" condition="/corder.contains(position)">
+							<cell type="text" class="SpCellArrow" >
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="category.up" />
@@ -118,7 +118,7 @@
 								<cell type="link" icon="chevron-down">
 									<url type="intern">
 										<param name="task" value="category.down" />
-										<param name="sid" value="fid" parse="true" />
+										<param name="sid" value="id" parse="true" />
 										<param name="pid" value="request.sid" parse="true" subject="skip" />
 									</url>
 								</cell>
@@ -165,7 +165,7 @@
 						<cell label="HEADER_ENTRIES_STATE" type="text" class="SpCellCenter" />
 						<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="entry" />
+						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="entry" condition="eorder.contains(position)"/>
 					</head>
 					<loop subject="entries">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -193,8 +193,8 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
-						<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellArrowCol">
-							<cell type="text" class="SpCellArrow" condition="/eorder.contains(position)">
+						<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellArrowCol" condition="/eorder.contains(position)">
+							<cell type="text" class="SpCellArrow">
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="entry.up" />
@@ -205,7 +205,7 @@
 								<cell type="link" icon="chevron-down">
 									<url type="intern">
 										<param name="task" value="entry.down" />
-										<param name="sid" value="fid" parse="true" />
+										<param name="sid" value="id" parse="true" />
 										<param name="pid" value="request.sid" parse="true" subject="skip" />
 									</url>
 								</cell>

@@ -105,7 +105,7 @@ class SPAclView extends SPAdmView
 		foreach ( $permissionsOrder as $subject => $ordering ) {
 			foreach ( $ordering as $pid ) {
 				$permissions[ $subject ][ $pid ] = $put[ $subject ][ $pid ];
-				unset( $put[ $subject ][ $permission->pid ] );
+				unset( $put[ $subject ][ $pid ] );
 			}
 			// if still something left - add this too
 			if ( count( $put[ $subject ] ) ) {

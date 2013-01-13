@@ -6,8 +6,8 @@
 	<toolbar title="ERR.SITE_TITLE" icon="SobiConfig">
 		<divider />
 		<buttons type="actions">
-			<button label="TB.PURGE" task="error.purge" ico="trash" />
-			<button label="TB.DOWNLOAD_LOG" task="error.download" ico="save" />
+			<button label="TB.PURGE" task="error.purge" icon="trash" />
+			<button label="TB.DOWNLOAD_LOG" task="error.download" icon="save" />
 		</buttons>
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">

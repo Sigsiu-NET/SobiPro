@@ -193,12 +193,12 @@ class SPError extends SPConfigAdmCtrl
 		try {
 			SPFactory::db()->truncate( 'spdb_errors' );
 		} catch ( SPException $x ) {
-			Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'ERR.ERROR_LOG_NOT_DELETED', array( 'error' => $x->getMessage() ), 'error' ) );
+			$this->response( Sobi::Url( 'error' ), Sobi::Txt( 'ERR.ERROR_LOG_NOT_DELETED', array( 'error' => $x->getMessage() ) ), false, SPC::ERROR_MSG );
 		}
 		if ( SPFs::exists( SOBI_PATH . '/var/log/error.log' ) ) {
 			SPFs::delete( SOBI_PATH . '/var/log/error.log' );
 		}
-		Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'ERR.ERROR_LOG_DELETED' ) );
+		$this->response( Sobi::Url( 'error' ), Sobi::Txt( 'ERR.ERROR_LOG_DELETED' ), false, SPC::SUCCESS_MSG );
 	}
 
 	private function screen()

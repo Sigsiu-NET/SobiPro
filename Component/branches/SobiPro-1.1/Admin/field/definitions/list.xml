@@ -12,11 +12,11 @@
 			<button type="enable" task="field.publish" />
 			<button type="disable" task="field.hide" />
 			<!--<nav-header label="TB.REQUIRED"/>-->
-			<!--<button type="custom" task="field.setRequired" label="TB.SET_REQ" ico="asterisk"/>-->
-			<!--<button type="custom" task="field.setNotRequired" label="TB.SET_NOT_REQ" ico="remove-sign"/>-->
+			<!--<button type="custom" task="field.setRequired" label="TB.SET_REQ" icon="asterisk"/>-->
+			<!--<button type="custom" task="field.setNotRequired" label="TB.SET_NOT_REQ" icon="remove-sign"/>-->
 			<!--<nav-header label="TB.EDITABLE_FIELD"/>-->
-			<!--<button type="custom" task="field.setEditable" label="TB.SET_EDITABLE" ico="pencil"/>-->
-			<!--<button type="custom" task="field.setNotEditable" label="TB.SET_NOT_EDITABLE" ico="remove-sign"/>-->
+			<!--<button type="custom" task="field.setEditable" label="TB.SET_EDITABLE" icon="pencil"/>-->
+			<!--<button type="custom" task="field.setNotEditable" label="TB.SET_NOT_EDITABLE" icon="remove-sign"/>-->
 		</buttons>
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">
@@ -73,7 +73,7 @@
 						<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_IS_FREE" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="field" />
+						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="field" condition="ordering.contains(order)"/>
 					</head>
 					<loop subject="fields">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -118,8 +118,8 @@
 								<param name="sid" value="request.sid" parse="true" subject="skip" />
 							</url>
 						</cell>
-						<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellArrowCol">
-							<cell type="text" class="SpCellArrow" condition="/ordering.contains(order)">
+						<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellArrowCol" condition="/ordering.contains(order)">
+							<cell type="text" class="SpCellArrow" >
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="field.up" />

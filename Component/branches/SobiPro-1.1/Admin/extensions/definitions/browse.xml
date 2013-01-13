@@ -8,7 +8,7 @@
 		<style>.SpAddRepo { float: none; } </style>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
-		<button task="extensions.fetch" label="TB.FETCH_UPDATES" ico="refresh" />
+		<button task="extensions.fetch" label="TB.FETCH_UPDATES" icon="refresh" />
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
@@ -66,7 +66,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell class="SpCloudInstall">
-										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
+										<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -109,7 +109,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell class="SpCloudInstall">
-										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
+										<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />

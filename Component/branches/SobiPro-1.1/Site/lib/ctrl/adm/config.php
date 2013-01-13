@@ -55,7 +55,7 @@ class SPConfigAdmCtrl extends SPController
 		switch ( $this->_task ) {
 			case 'clean':
 				SPFactory::cache()->cleanSection();
-				$this->response( Sobi::Back(), Sobi::Txt( 'MSG.CACHE_CLEANED' ), false, 'success' );
+				$this->response( Sobi::Back(), Sobi::Txt( 'MSG.CACHE_CLEANED' ), false, SPC::SUCCESS_MSG );
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */

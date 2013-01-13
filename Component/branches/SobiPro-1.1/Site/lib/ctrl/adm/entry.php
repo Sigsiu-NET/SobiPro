@@ -223,7 +223,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
-		Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'EMN.REORDERED' ) );
+		$this->response( Sobi::Back(), Sobi::Txt( 'EMN.REORDERED' ), true, SPC::SUCCESS_MSG );
 	}
 
 	/**
@@ -250,7 +250,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
-		Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), "[MSG]Entry Position Changed" );
+		$this->response( Sobi::Back(), Sobi::Txt( 'ENTRY_POSITION_CHANGED' ), true, SPC::SUCCESS_MSG );
 	}
 
 	/**

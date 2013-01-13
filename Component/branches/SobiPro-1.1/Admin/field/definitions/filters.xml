@@ -33,7 +33,7 @@
 					<loop subject="filters">
 						<cell type="text" value="id" class="SpCellLeft filterId" />
 						<cell type="text" class="SpCellCenter">
-							<button type="new" class="filter-edit" ico="edit" rel="var:[id]" />
+							<button type="new" class="filter-edit" icon="edit" rel="var:[id]" />
 						</cell>
 						<cell type="text" value="name" class="SpCellLeft" />
 						<cell type="text" value="message" class="SpCellLeft" />

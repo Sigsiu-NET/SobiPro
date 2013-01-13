@@ -9,7 +9,7 @@
 	<toolbar title="var:[site_title]" icon="SobiPro">
 		<divider />
 		<buttons type="actions">
-			<button type="new" task="section.add" label="TB.ADD_NEW" ico="file" />
+			<button type="new" task="section.add" label="TB.ADD_NEW" icon="file" />
 			<button type="delete" task="section.delete" />
 			<nav-header label="TB.PUBLISHING" />
 			<button type="publish" task="section.publish" />

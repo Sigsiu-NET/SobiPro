@@ -6,7 +6,7 @@
 		<file type="script" filename="adm.sam" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
-		<button label="TB.REMOVE" task="extensions.delete" ico="trash" />
+		<button label="TB.REMOVE" task="extensions.delete" icon="trash" />
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />

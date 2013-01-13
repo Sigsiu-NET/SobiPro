@@ -236,8 +236,12 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$cSec->init( Sobi::Section() );
 
 		$db = SPFactory::db();
-		$all = $db->select( '*', 'spdb_plugins', array( '!type' => Sobi::Cfg( 'apps.global_types_array' ), 'enabled' => 1 ) )->loadAssocList( 'pid' );
-		$list = $db->select( '*', 'spdb_plugin_section', array( 'section' => Sobi::Section() ) )->loadAssocList( 'pid' );
+		$all = $db
+				->select( '*', 'spdb_plugins', array( '!type' => Sobi::Cfg( 'apps.global_types_array' ), 'enabled' => 1 ) )
+				->loadAssocList( 'pid' );
+		$list = $db
+				->select( '*', 'spdb_plugin_section', array( 'section' => Sobi::Section() ) )
+				->loadAssocList( 'pid' );
 		if ( count( $all ) ) {
 			foreach ( $all as $id => $app ) {
 				if ( isset( $list[ $id ] ) ) {
@@ -695,10 +699,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$repository->saveToken( $response[ 'token' ] );
 			}
 			if ( isset( $response[ 'welcome_msg' ] ) && $response[ 'welcome_msg' ] ) {
-				echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => $response[ 'welcome_msg' ] ), 'callback' => null, 'redirect' => true ) );
+				echo json_encode( array( 'message' => array( 'type' => SPC::SUCCESS_MSG, 'response' => $response[ 'welcome_msg' ] ), 'callback' => null, 'redirect' => true ) );
 			}
 			else {
-				echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED', array( 'location' => $repo ) ) ), 'callback' => null, 'redirect' => true ) );
+				echo json_encode( array( 'message' => array( 'type' => SPC::SUCCESS_MSG, 'response' => Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED', array( 'location' => $repo ) ) ), 'callback' => null, 'redirect' => true ) );
 			}
 			exit;
 		}

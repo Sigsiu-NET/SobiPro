@@ -111,13 +111,6 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery( '#SP_task' ).val( SobiPro.jQuery( this ).attr( 'rel' ) + '.reorder' );
 		SobiPro.jQuery( '#SPAdminForm' ).submit();
 	} );
-	try {
-		if ( SobiPro.jQuery( '.spOrdering' ).val().indexOf( 'order' ) == -1 ) {
-			SobiPro.jQuery( '[name="spReorder"]' ).attr( 'disabled', 'disabled' );
-		}
-	}
-	catch ( e ) {
-	}
 
 	try {
 		SobiPro.jQuery( '.counter-reset' ).each( function ( i, e )

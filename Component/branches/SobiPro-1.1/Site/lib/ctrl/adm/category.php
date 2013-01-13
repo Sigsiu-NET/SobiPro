@@ -173,7 +173,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
-		Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), 'Categories are re-ordered now' );
+		$this->response( Sobi::Back(), Sobi::Txt( 'CATEGORIES_ARE_RE_ORDERED' ), true, SPC::SUCCESS_MSG );
 	}
 
 	/**
@@ -467,8 +467,9 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$dir = $up ? 'position.desc' : 'position.asc';
 		$current = $this->_model->get( 'position' );
 		try {
-			$db->select( 'position, id', 'spdb_relations', array( 'position' . $eq => $current, 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ) ), $dir, 1 );
-			$interchange = $db->loadAssocList();
+			$interchange = $db
+					->select( 'position, id', 'spdb_relations', array( 'position' . $eq => $current, 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ) ), $dir, 1 )
+					->loadAssocList();
 			if ( $interchange && count( $interchange ) ) {
 				$db->update( 'spdb_relations', array( 'position' => $interchange[ 0 ][ 'position' ] ), array( 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ), 'id' => $this->_model->get( 'id' ) ), 1 );
 				$db->update( 'spdb_relations', array( 'position' => $current ), array( 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ), 'id' => $interchange[ 0 ][ 'id' ] ), 1 );
@@ -480,6 +481,6 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), 'Category Position Changed' );
+		$this->response( Sobi::Back(), Sobi::Txt( 'CATEGORY_POSITION_CHANGED' ), true, SPC::SUCCESS_MSG );
 	}
 }
