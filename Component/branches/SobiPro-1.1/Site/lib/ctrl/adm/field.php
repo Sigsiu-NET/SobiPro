@@ -574,12 +574,12 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
-		$fids = SPRequest::arr( 'fid', array() );
-		asort( $fids );
+		$fIds = SPRequest::arr( 'fid', array() );
+		asort( $fIds );
 		$c = 0;
-		foreach ( $fids as $fid => $pos ) {
+		foreach ( $fIds as $fid => $pos ) {
 			$c++;
-			$pos++;
+//			$pos++;
 			try {
 				$db->update( 'spdb_field', array( 'position' => $c ), array( 'fid' => $fid ) );
 			} catch ( SPException $x ) {
@@ -595,7 +595,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 		$up = ( bool )$up;
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		$fid = SPRequest::int( 'fid' );
 		$fClass = SPLoader::loadModel( 'field', true );
 		$fdata = $this->loadField( $fid );
@@ -605,8 +605,9 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$dir = $up ? 'position.desc' : 'position.asc';
 		$current = $field->get( 'position' );
 		try {
-			$db->select( 'position, fid', 'spdb_field', array( 'position' . $eq => $current, 'section' => SPRequest::int( 'sid' ) ), $dir, 1 );
-			$interchange = $db->loadAssocList();
+			$interchange = $db
+					->select( 'position, fid', 'spdb_field', array( 'position' . $eq => $current, 'section' => SPRequest::int( 'sid' ) ), $dir, 1 )
+					->loadAssocList();
 			if ( $interchange && count( $interchange ) ) {
 				$db->update( 'spdb_field', array( 'position' => $interchange[ 0 ][ 'position' ] ), array( 'section' => SPRequest::int( 'sid' ), 'fid' => $field->get( 'fid' ) ), 1 );
 				$db->update( 'spdb_field', array( 'position' => $current ), array( 'section' => SPRequest::int( 'sid' ), 'fid' => $interchange[ 0 ][ 'fid' ] ), 1 );
@@ -618,6 +619,8 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
+		SPFactory::cache()->cleanSection();
+		$this->response( Sobi::Url( array( 'task' => 'field.list', 'pid' => Sobi::Section() ) ), Sobi::Txt( 'NEW_FIELDS_ORDERING_HAS_BEEN_SAVED' ), true, SPC::SUCCESS_MSG );
 	}
 
 	/**
@@ -756,8 +759,6 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			case 'down':
 				$r = true;
 				$this->singleReorder( $this->_task == 'up' );
-				SPFactory::cache()->cleanSection();
-				Sobi::Redirect( Sobi::Back(), 'New ordering has been saved' );
 				break;
 			case 'hide':
 			case 'publish':

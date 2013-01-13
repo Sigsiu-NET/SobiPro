@@ -179,11 +179,12 @@ class SPError extends SPConfigAdmCtrl
 		}
 		$err->errCont = unserialize( gzuncompress( base64_decode( $err->errCont ) ) );
 		$err->errBacktrace = unserialize( gzuncompress( base64_decode( $err->errBacktrace ) ) );
+		$l = $this->levels();
 		/** @var $view SPAdmView */
 		SPFactory::View( 'error', true )
 				->assign( $this->_task, 'task' )
 				->assign( $this->createMenu( 'error' ), 'menu' )
-				->assign( $this->levels(), 'levels' )
+				->assign( $l, 'levels' )
 				->assign( $err, 'error' )
 				->display();
 	}
@@ -222,12 +223,14 @@ class SPError extends SPConfigAdmCtrl
 					->loadAssocList();
 		} catch ( SPException $x ) {
 		}
+		$l = $this->levels();
+		$menu = $this->createMenu( 'error' );
 		/** @var $view SPAdmView */
 		SPFactory::View( 'error', true )
 				->assign( $this->_task, 'task' )
-				->assign( $this->createMenu( 'error' ), 'menu' )
+				->assign( $menu, 'menu' )
 				->assign( $errors, 'errors' )
-				->assign( $this->levels(), 'levels' )
+				->assign( $l, 'levels' )
 				->assign( $eLimit, 'errors-limit' )
 				->assign( $eCount, 'errors-count' )
 				->assign( $eLimStart, 'errors-site' )

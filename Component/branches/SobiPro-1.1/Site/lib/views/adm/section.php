@@ -70,7 +70,8 @@ class SPSectionAdmView extends SPAdmView
 	 */
 	protected function listSection()
 	{
-		$this->assign( $this->parentPath( SPRequest::sid() ), 'current_path' );
+		$parentPath = $this->parentPath( SPRequest::sid() );
+		$this->assign( $parentPath, 'current_path' );
 		$this->_plgSect = '_SectionListTemplate';
 		$c = $this->get( 'categories' );
 		$categories = array();

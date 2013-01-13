@@ -134,7 +134,7 @@ abstract class Sobi
 	 * @param string $format - section and key in the config
 	 * @return string
 	 */
-	public function Date( $time = null, $format = 'date.publishing_format' )
+	public static function Date( $time = null, $format = 'date.publishing_format' )
 	{
 		return SPFactory::config()->date( $time, $format );
 	}

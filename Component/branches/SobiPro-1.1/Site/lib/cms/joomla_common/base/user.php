@@ -23,7 +23,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  * @version 1.0
  * @created 10-Jan-2009 5:51:03 PM
  */
-class SPJomlaUser extends JUser
+class SPJoomlaUser extends JUser
 {
 	/**
 	 * @var array

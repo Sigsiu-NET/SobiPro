@@ -448,7 +448,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			);
 			$view->assign( $rule, 'set' );
 		}
-		$view->assign( $this->userGroups(), 'groups' );
+		$userGroups = $this->userGroups();
+		$view->assign( $userGroups, 'groups' );
 		$view->display();
 	}
 
@@ -551,11 +552,12 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		} catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
+		$menu = $this->createMenu( 'acl' );
 		/** @var $view SPAclView */
 		SPFactory::View( 'acl', true )
 				->assign( $this->_task, 'task' )
 				->assign( $rules, 'rules' )
-				->assign( $this->createMenu( 'acl' ), 'menu' )
+				->assign( $menu, 'menu' )
 				->determineTemplate( 'acl', 'list' )
 				->display();
 	}

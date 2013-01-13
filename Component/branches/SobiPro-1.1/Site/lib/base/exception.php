@@ -129,6 +129,9 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 	 */
 	function SPExceptionHandler( $errNumber, $errString, $errFile, $errLine, $errContext )
 	{
+		if ( $errNumber == E_STRICT && !( defined( 'SOBI_TESTS' ) ) ) {
+			return true;
+		}
 		$error = null;
 		if ( !( strstr( $errFile, 'sobipro' ) ) ) {
 			return false;
@@ -162,7 +165,7 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 		}
 		else {
 			$retCode = 0;
-			if( !(strstr( $errFile, 'sobi' )) ) {
+			if ( !( strstr( $errFile, 'sobi' ) ) ) {
 				return false;
 			}
 			/* stupid errors we already handle
@@ -176,6 +179,11 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 				return false;
 			}
 			if ( strstr( $errString, 'domdocument.loadxml' ) ) {
+				return false;
+			}
+			/** This really sucks - why do I have the possibility to override a method when I cannot change its parameters :(
+			 * A small design flaw - has to be changed later */
+			if ( strstr( $errString, 'should be compatible with' ) ) {
 				return false;
 			}
 			/* output of errors / call stack causes sometimes it - it's not really important */
