@@ -20,16 +20,16 @@
 defined( '_JEXEC' ) || exit( 'Restricted access' );
 define( 'SOBI_TESTS', false );
 defined( 'DS' ) || define( 'DS', DIRECTORY_SEPARATOR );
-if( version_compare( JVERSION,'1.6.0','ge') ) {
-	define( 'SOBI_CMS', 'joomla16' );
-}
-else {
-	define( 'SOBI_CMS', 'joomla15' );
-}
+define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15'  ) );
 define( 'SOBIPRO', true );
 define( 'SOBIPRO_ADM', true );
 define( 'SOBI_TASK', 'task' );
-define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', JFactory::getConfig()->getValue( 'config.language' ) ) );
+if( JVERSION == 'joomla15') {
+	define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', JFactory::getConfig()->getValue( 'config.language' ) ) );
+}
+else {
+	define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', JFactory::getConfig()->get( 'config.language' ) ) );
+}
 define( 'SOBI_ACL', 'adm' );
 define( 'SOBI_ROOT', JPATH_ROOT );
 define( 'SOBI_MEDIA', implode( DS, array( JPATH_ROOT, 'media', 'sobipro' ) ) );
