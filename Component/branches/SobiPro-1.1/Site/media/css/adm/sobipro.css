@@ -439,6 +439,7 @@ div.spScreenTitle h4 {
 .SobiPro .SpCellCenter .sp-mini-bt {
   padding: 4px 4px !important;
 }
+.SobiPro .invalid,
 .SobiPro .invalid a {
   color: red;
   font-weight: normal;
