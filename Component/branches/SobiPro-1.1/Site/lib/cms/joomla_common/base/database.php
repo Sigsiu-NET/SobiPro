@@ -32,18 +32,18 @@ class SPJoomlaDb
 	 *
 	 * @var JDatabaseMySQLi
 	 */
-	private $db = null;
+	protected $db = null;
 	/**
 	 * @var string
 	 */
-	private $prefix = '#__';
+	protected $prefix = '#__';
 	/**
 	 * @var int
 	 */
-	private $count = 0;
+	protected $count = 0;
 
 	/**
-	 * @return SPDatabase
+	 * @return \SPJoomlaDb
 	 */
 	public function __construct()
 	{
@@ -87,6 +87,8 @@ class SPJoomlaDb
 	 *
 	 * @param string $method
 	 * @param array $args
+	 * @throws SPException
+	 * @return mixed
 	 */
 	public function __call( $method, $args )
 	{
@@ -465,8 +467,8 @@ class SPJoomlaDb
 			if ( is_array( $state ) || is_object( $state ) ) {
 				$state = SPConfig::serialize( $state );
 			}
-			$var = $this->getEscaped( $var );
-			$state = $this->getEscaped( $state );
+			$var = $this->escape( $var );
+			$state = $this->escape( $state );
 			if ( strstr( $state, 'FUNCTION:' ) ) {
 				$state = str_replace( 'FUNCTION:', null, $state );
 			}
@@ -496,7 +498,7 @@ class SPJoomlaDb
 			if ( is_array( $val ) || is_object( $val ) ) {
 				$val = SPConfig::serialize( $val );
 			}
-			$val = $this->getEscaped( $val );
+			$val = $this->escape( $val );
 			if ( strstr( $val, 'FUNCTION:' ) ) {
 				$v[ ] = str_replace( 'FUNCTION:', null, $val );
 			}
@@ -533,7 +535,7 @@ class SPJoomlaDb
 			if ( is_array( $val ) || is_object( $val ) ) {
 				$val = SPConfig::serialize( $val );
 			}
-			$val = $this->getEscaped( $val );
+			$val = $this->escape( $val );
 			if ( strstr( $val, 'FUNCTION:' ) ) {
 				$v[ ] = str_replace( 'FUNCTION:', null, $val );
 			}
@@ -588,7 +590,7 @@ class SPJoomlaDb
 				}
 				$vars[ ] = "{$var} = VALUES( {$var} )";
 				$k[ ] = $var;
-				$val = $this->getEscaped( $val );
+				$val = $this->escape( $val );
 				if ( strstr( $val, 'FUNCTION:' ) ) {
 					$v[ ] = str_replace( 'FUNCTION:', null, $val );
 				}
@@ -627,7 +629,7 @@ class SPJoomlaDb
 			if ( is_array( $val ) || is_object( $val ) ) {
 				$val = SPConfig::serialize( $val );
 			}
-			$val = $this->getEscaped( $val );
+			$val = $this->escape( $val );
 			if ( strstr( $val, 'FUNCTION:' ) ) {
 				$v[ ] = str_replace( 'FUNCTION:', null, $val );
 			}

@@ -25,5 +25,4 @@ require_once dirname(__FILE__).'/../../joomla_common/base/database.php';
  * @version 1.0
  * @created 08-Jul-2008 9:43:25 AM
  */
-final class SPDb extends SPJoomlaDb implements SPDatabase {}
-?>
+class SPDb extends SPJoomlaDb implements SPDatabase {}
