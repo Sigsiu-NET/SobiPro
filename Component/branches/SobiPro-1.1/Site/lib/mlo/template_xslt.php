@@ -85,7 +85,7 @@ class SPTemplateXSLT implements SPTemplate
 		Sobi::Trigger( 'TemplateEngine', 'RegisterFunctions', array( &$functions ) );
 		$this->createXML();
 		if ( SPRequest::cmd( 'xml' ) && Sobi::Cfg( 'debug.xml_raw', false ) && ( !( Sobi::Cfg( 'debug.xml_ip', null ) ) || ( Sobi::Cfg( 'debug.xml_ip' ) == SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) ) ) ) {
-			SPMainFrame::cleanBuffer();
+			SPFactory::mainframe()->cleanBuffer();
 			echo $this->_xml->saveXML();
 			exit();
 		}

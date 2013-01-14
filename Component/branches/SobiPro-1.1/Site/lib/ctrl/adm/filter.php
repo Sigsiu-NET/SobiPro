@@ -70,7 +70,7 @@ class SPFilter extends SPConfigAdmCtrl
 			unset( $filters[ $id ] );
 		}
 		SPFactory::registry()->saveDBSection( $filters, 'fields_filter' );
-		SPMainFrame::msg( array( 'msg' => Sobi::Txt( 'FLR.MSG_FILTER_DELETED' ), 'msgtype' => SPC::ERROR_MSG ) );
+		SPFactory::message()->warning( Sobi::Txt( 'FLR.MSG_FILTER_DELETED' ), false );
 		echo '<script>parent.location.reload();</script>';
 	}
 
@@ -143,7 +143,7 @@ class SPFilter extends SPConfigAdmCtrl
 		$view->assign( $this->_task, 'task' );
 		$view->assign( $Filter, 'filter' );
 		$view->determineTemplate( 'field', 'filter' );
-        $view->setTemplate( 'default' );
+		$view->setTemplate( 'default' );
 		$view->display();
 	}
 

@@ -36,14 +36,16 @@ abstract class SPLoader
      */
     private static $loaded = array();
 
-    /**
-     * @author Radek Suski
-     * @param string $name
-     * @param string $type
-     * @param bool $adm
-     * @param bool $redirect
-     * @return string
-     */
+	/**
+	 * @author Radek Suski
+	 * @param string $name
+	 * @param bool $adm
+	 * @param string $type
+	 * @param bool $raiseErr
+	 * @throws SPException
+	 * @internal param bool $redirect
+	 * @return string
+	 */
     public static function loadClass( $name, $adm = false, $type = null, $raiseErr = true )
     {
         static $types = array( 'base' => 'base', 'controller' => 'ctrl', 'controls' => 'ctrl', 'ctrl' => 'ctrl', 'model' => 'models', 'plugin' => 'plugins', 'application' => 'plugins', 'view' => 'views' );
@@ -83,9 +85,8 @@ abstract class SPLoader
         $name = str_replace( '.', DS, $name );
         $path .= $name . '.php';
         $path = self::clean( $path );
-
         /* to prevent double loading of the same class */
-        /* class exxists don't works with interfaces */
+        /* class exists don't works with interfaces */
         if ( isset( self::$loaded[ $path ] ) ) {
             return self::$loaded[ $path ];
         }
@@ -94,7 +95,7 @@ abstract class SPLoader
         //		}
         if ( !file_exists( $path ) || !is_readable( $path ) ) {
             if ( $raiseErr ) {
-                /* We had to chonge it to notice because all these script kiddies are trying to call some not existent file which causes this error here
+                /* We had to change it to notice because all these script kiddies are trying to call some not existent file which causes this error here
                      * As a result we have the error log file full of USER_ERRORs and it looks badly but it's not really an error.
                      * So we result wit the 500 response code but we log a notice for the logfile
                      * */

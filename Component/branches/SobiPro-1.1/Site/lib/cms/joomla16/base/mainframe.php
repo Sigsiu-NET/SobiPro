@@ -25,7 +25,7 @@ require_once dirname( __FILE__ ) . '/../../joomla_common/base/mainframe.php';
  * @version 1.0
  * @created 10-Jan-2009 5:50:43 PM
  */
-final class SPMainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface
+class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 {
 	/**
 	 * Gets basic data from the CMS (e.g Joomla) and stores in the #SPConfig instance
@@ -43,6 +43,16 @@ final class SPMainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface
 		}
 	}
 
+	/**
+	 * @param string $title
+	 */
+	public function setTitle( $title, $forceAdd = false )
+	{
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			JToolbarHelper::title( 'SobiPro: ' . $title );
+		}
+		parent::setTitle( $title, $forceAdd );
+	}
 
 	/**
 	 * @param array $head
@@ -138,4 +148,46 @@ final class SPMainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface
 			$document->addCustomTag( "\n\t<!--  SobiPro ({$c}) Head Tags Output -->\n" );
 		}
 	}
+
+	protected function JConfigValue( $value )
+	{
+		return JFactory::getConfig()->get( $value );
+	}
+
+	/**
+	 * @return SPJoomlaMainFrame
+	 */
+	public static function & getInstance()
+	{
+		static $mf = false;
+		if ( !( $mf ) || !( $mf instanceof self ) ) {
+			$mf = new self();
+		}
+		return $mf;
+	}
+
+	/**
+	 * Method to determine a hash for anti-spoofing variable names
+	 * @return string
+	 */
+	public function token()
+	{
+		return JSession::getFormToken();
+	}
+
+	/**
+	 * Checks for a form token in the request.
+	 * @param string $method
+	 * @return boolean
+	 */
+	public function checkToken( $method = 'post' )
+	{
+		if ( Sobi::Cfg( 'security.token', true ) ) {
+			return JSession::checkToken( $method );
+		}
+		else {
+			return true;
+		}
+	}
+
 }

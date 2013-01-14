@@ -451,9 +451,9 @@ final class SobiProAdmCtrl
 		}
 		/* send header data etc ...*/
 		SPFactory::header()->send();
-		SPMainFrame::endOut();
+		SPFactory::mainframe()->endOut();
 		/* redirect if any redirect has been set */
-		SPMainFrame::redirect();
+		SPFactory::mainframe()->redirect();
 		error_reporting( $this->_deb );
 		restore_error_handler();
 	}

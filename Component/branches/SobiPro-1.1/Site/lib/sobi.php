@@ -102,7 +102,7 @@ abstract class Sobi
 		if ( $code ) {
 			SPLoader::loadClass( 'base.mainframe' );
 			SPLoader::loadClass( 'cms.base.mainframe' );
-			SPMainFrame::runAway( $msg, $code, SPConfig::getBacktrace() );
+			SPFactory::mainframe()->runAway( $msg, $code, SPConfig::getBacktrace() );
 		}
 	}
 
@@ -149,9 +149,9 @@ abstract class Sobi
 	 */
 	public static function Redirect( $address, $msg = null, $msgtype = 'message', $now = false )
 	{
-		SPMainFrame::setRedirect( $address, $msg, $msgtype );
+		SPFactory::mainframe()->setRedirect( $address, $msg, $msgtype );
 		if ( $now ) {
-			SPMainFrame::redirect();
+			SPFactory::mainframe()->redirect();
 		}
 	}
 
@@ -294,7 +294,7 @@ abstract class Sobi
 
 	public static function Back()
 	{
-		return SPMainFrame::getBack();
+		return SPFactory::mainframe()->getBack();
 	}
 
 	/**

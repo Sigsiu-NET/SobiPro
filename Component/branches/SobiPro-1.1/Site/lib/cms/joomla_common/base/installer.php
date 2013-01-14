@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -239,16 +239,15 @@ class SPJoomlaInstaller
 		foreach ( $files->getElementsByTagName( 'filename' ) as $file ) {
 			if( ( file_exists( $folder.$file->nodeValue ) ) ) {
 				if( !( SPFs::copy( $folder.$file->nodeValue, $target.DS.$file->nodeValue ) ) ) {
-					SPMainFrame::msg( Sobi::Txt( 'Cannot copy %s to %s', $folder.$file->nodeValue, $target.DS.$file->nodeValue ), 'error' );
+					SPFactory::message()->error( Sobi::Txt( 'Cannot copy %s to %s', $folder.$file->nodeValue, $target.DS.$file->nodeValue ), false );
 				}
 				else {
 					$FilesLog[] = str_replace( array( DS.DS, SOBI_ROOT ), array( DS, null ), $target.DS.$file->nodeValue );
 				}
 			}
 			else {
-				SPMainFrame::msg( Sobi::Txt( 'File %s does not exists', $folder.$file->nodeValue ), 'error' );
+				SPFactory::message()->error( Sobi::Txt( 'File %s does not exists', $folder.$file->nodeValue ), false );
 			}
 		}
 	}
 }
-?>

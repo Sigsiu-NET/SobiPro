@@ -134,7 +134,6 @@ class SPAdminPanel extends SPController
 				Sobi::Trigger( 'Panel', 'View', array( &$view ) );
 				$view->display();
 				break;
-
 			default:
 				/* case plugin didn't registered this task, it was an error */
 				if ( !parent::execute() ) {

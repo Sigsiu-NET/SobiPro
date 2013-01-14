@@ -26,7 +26,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 class SPJoomlaCMSHelper
 {
 	/**
-	 * @return SPMainFrame
+	 * @return SPJoomlaCMSHelper
 	 */
 	public static function & getInstance()
 	{
@@ -46,7 +46,7 @@ class SPJoomlaCMSHelper
 	{
 		static $ver = array();
 		if( !isset( $ver[ $str ] ) ) {
-			$def = SOBI_CMS == 'joomla16' ? 'com_sobipro.xml' : 'sobipro.xml';
+			$def = SOBI_CMS == 'joomla15' ? 'sobipro.xml' : 'com_sobipro.xml';
 			$doc = DOMDocument::load( Sobi::FixPath( SOBI_ADM_PATH.DS.$def ) );
 			if( $str ) {
 				$ver[ $str ] = $doc->getElementsByTagName( 'version' )->item( 0 )->nodeValue;

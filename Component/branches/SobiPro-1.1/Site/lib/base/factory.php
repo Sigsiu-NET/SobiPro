@@ -33,8 +33,8 @@ abstract class SPFactory
 	public static function & mainframe()
 	{
 		SPLoader::loadClass( 'base.mainframe' );
-		SPLoader::loadClass( 'cms.base.mainframe' );
-		return SPMainFrame::getInstance();
+		$class = SPLoader::loadClass( 'cms.base.mainframe' );
+		return $class::getInstance();
 	}
 
 	/**

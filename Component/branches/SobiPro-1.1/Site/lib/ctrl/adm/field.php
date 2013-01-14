@@ -56,7 +56,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 
 		if ( $this->isCheckedOut() ) {
-			SPMainFrame::msg( Sobi::Txt( 'FM.IS_CHECKED_OUT' ), SPC::ERROR_MSG );
+			SPFactory::message()->error( Sobi::Txt( 'FM.IS_CHECKED_OUT' ), false );
 		}
 		else {
 			/* check it out */
@@ -587,7 +587,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			}
 		}
 		SPFactory::cache()->cleanSection();
-		$this->response( Sobi::Url( array( 'task' => 'field.list', 'pid' => Sobi::Section() ) ), Sobi::Txt( 'NEW_FIELDS_ORDERING_HAS_BEEN_SAVED' ),  true, SPC::SUCCESS_MSG );
+		$this->response( Sobi::Url( array( 'task' => 'field.list', 'pid' => Sobi::Section() ) ), Sobi::Txt( 'NEW_FIELDS_ORDERING_HAS_BEEN_SAVED' ), true, SPC::SUCCESS_MSG );
 	}
 
 	/**
