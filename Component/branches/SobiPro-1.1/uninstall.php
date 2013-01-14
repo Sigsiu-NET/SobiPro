@@ -71,9 +71,6 @@ else {
             $db->setQuery( "DROP TABLE {$table};" );
             $db->query();
         }
-        $db->setQuery( "DELETE FROM `#__modules` WHERE `module` = 'mod_spmenu'" );
-        $db->query();
-        JFolder::delete( implode( DS, array( JPATH_ROOT, 'administrator', 'modules', 'mod_spmenu' ) ) );
     }
     if( JRequest::getVar( 'sptpl', 0 ) ) {
         JFolder::move(
