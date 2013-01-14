@@ -18,10 +18,10 @@
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/cms/joomla16/base/database.php $
  */
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-require_once dirname(__FILE__).'/../../joomla_common/base/database.php';
+require_once dirname(__FILE__).'/../../joomla16/base/database.php';
 /**
  * @author Radek Suski
  * @version 1.0
  * @created 08-Jul-2008 9:43:25 AM
  */
-final class SPDb extends SPJoomlaDb implements SPDatabase {}
+final class SPDbJ30 extends SPDb implements SPDatabase {}

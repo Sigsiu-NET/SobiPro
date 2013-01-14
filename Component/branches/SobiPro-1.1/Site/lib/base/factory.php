@@ -70,8 +70,8 @@ abstract class SPFactory
 	public static function & db()
 	{
 		SPLoader::loadClass( 'base.database' );
-		SPLoader::loadClass( 'cms.base.database' );
-		return SPDb::getInstance();
+		$class = SPLoader::loadClass( 'cms.base.database' );
+		return $class::getInstance();
 	}
 
 	/**
