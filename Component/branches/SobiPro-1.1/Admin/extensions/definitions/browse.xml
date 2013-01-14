@@ -240,7 +240,7 @@
 									<cell type="text" value="version" class="SpCellCenter" />
 									<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 									<cell class="SpCloudInstall">
-										<button label="var:[action.text]" rel="var:[eid]" ico="cloud-download" class="var:[action.class] SpExtInstall" />
+										<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall" />
 									</cell>
 									<cell type="text" value="author" class="SpCellCenter" />
 									<cell type="text" value="license" class="SpCellCenter" />
@@ -289,7 +289,7 @@
 									<url type="extern" host="repository.maintainer.supporturl" />
 								</cell>
 								<cell>
-									<button label="TB.DELETE" rel="var:[repository.id]" ico="trash" class="SpRemoveRepo" />
+									<button label="TB.DELETE" rel="var:[repository.id]" icon="trash" class="SpRemoveRepo" />
 								</cell>
 							</loop>
 						</table>
