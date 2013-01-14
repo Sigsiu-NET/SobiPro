@@ -200,6 +200,10 @@ final class SPHeader
 			}
 		}
 		else {
+			if ( SOBI_CMS == 'joomla3' && $script == 'jquery' ) {
+				JHtml::_( 'jquery.framework' );
+				return $this;
+			}
 			$jsFile = SPLoader::JsFile( $script, $adm, true, false, $ext );
 			if ( $jsFile ) {
 				$override = false;
