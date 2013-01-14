@@ -18,7 +18,7 @@
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/cms/joomla16/base/database.php $
  */
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-require_once dirname(__FILE__).'/../../joomla_common/base/database.php';
+require_once dirname( __FILE__ ) . '/../../joomla_common/base/database.php';
 /**
  * @author Radek Suski
  * @version 1.0
@@ -50,4 +50,38 @@ class SPDb extends SPJoomlaDb implements SPDatabase
 		return $this->db->escape( $text, $esc );
 	}
 
+	/**
+	 * Load an array of single field results into an array
+	 *
+	 * @throws SPException
+	 * @return array
+	 */
+	public function loadResultArray()
+	{
+		try {
+			$r = $this->db->loadColumn();
+			$this->count++;
+		} catch ( JException $e ) {
+			throw new SPException( $e->getMessage() );
+		}
+		return $r;
+	}
+
+	/**
+	 * Load a assoc list of database rows
+	 *
+	 * @param string $key field name of a primary key
+	 * @throws SPException
+	 * @return array If <var>key</var> is empty as sequential list of returned records.
+	 */
+	public function loadAssocList( $key = null )
+	{
+		try {
+			$r = $this->db->loadAssocList( $key );
+			$this->count++;
+		} catch ( JException $e ) {
+			throw new SPException( $e->getMessage() );
+		}
+		return $r;
+	}
 }

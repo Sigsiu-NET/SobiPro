@@ -1,8 +1,16 @@
 #ns {
   .SobiPro() {
-    @import "icons.org.less";
+  @import "icons.org.less";
   }
 }
+
+/** For Joomla! 3.0 default template */
+.SobiPro [class^="icon-"]::before, [class*=" icon-"]::before {
+  font-family: 'FontAwesome';
+  font-style: normal;
+  speak: none;
+}
+
 .SobiPro {
   #ns > .SobiPro;
 }

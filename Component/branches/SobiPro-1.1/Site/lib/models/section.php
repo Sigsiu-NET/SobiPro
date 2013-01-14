@@ -177,14 +177,7 @@ final class SPSection extends SPDBObject implements SPDataModel
 					->saveCfg( 'entry.name_field', $fid )
 					->saveCfg( 'list.entries_ordering', 'field_name' );
 
-			SPFactory::Controller( 'acl', true )
-					->addNewRule(
-				$this->get( 'name' ),
-				array( $this->id ),
-				array( 'section.access.valid', 'category.access.valid', 'entry.access.valid', 'entry.add.own' ),
-				array( 'visitor', 'registered' ),
-					'Default permissions for the section "' . $this->get( 'name' ) . '"'
-			);
+			SPFactory::Controller( 'acl', true )->addNewRule( $this->get( 'name' ), array( $this->id ), array( 'section.access.valid', 'category.access.valid', 'entry.access.valid', 'entry.add.own' ), array( 'visitor', 'registered' ), 'Default permissions for the section "' . $this->get( 'name' ) . '"' );
 		}
 		/* insert relation */
 		try {

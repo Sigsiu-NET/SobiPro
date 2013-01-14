@@ -80,16 +80,16 @@ class SPException extends Exception
 		$agent = isset( $_SERVER[ 'HTTP_USER_AGENT' ] ) ? $_SERVER[ 'HTTP_USER_AGENT' ] : 'unknown';
 		$uri = isset( $_SERVER[ 'REQUEST_URI' ] ) ? $_SERVER[ 'REQUEST_URI' ] : 'unknown';
 
-		$errStr = $db->getEscaped( $errStr );
-		$errSection = $db->getEscaped( $errSection );
-		$errContext = $db->getEscaped( base64_encode( gzcompress( $errContext ) ) );
+		$errStr = $db->escape( $errStr );
+		$errSection = $db->escape( $errSection );
+		$errContext = $db->escape( base64_encode( gzcompress( $errContext ) ) );
 		if ( strlen( $errContext ) > 15000 ) {
 			$errContext = 'Stack to large - skipping';
 		}
-		$backtrace = $db->getEscaped( base64_encode( gzcompress( $backtrace ) ) );
-		$reff = $db->getEscaped( $reff );
-		$agent = $db->getEscaped( $agent );
-		$uri = $db->getEscaped( $uri );
+		$backtrace = $db->escape( base64_encode( gzcompress( $backtrace ) ) );
+		$reff = $db->escape( $reff );
+		$agent = $db->escape( $agent );
+		$uri = $db->escape( $uri );
 		$number = ( int )$number;
 		$errCode = ( int )$errCode;
 		$errLine = ( int )$errLine;

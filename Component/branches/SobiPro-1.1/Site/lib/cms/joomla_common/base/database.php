@@ -709,6 +709,7 @@ class SPJoomlaDb
 	/**
 	 * Load an array of single field results into an array
 	 *
+	 * @throws SPException
 	 * @return array
 	 */
 	public function loadResultArray()
@@ -731,6 +732,7 @@ class SPJoomlaDb
 	 * Load a assoc list of database rows
 	 *
 	 * @param string $key field name of a primary key
+	 * @throws SPException
 	 * @return array If <var>key</var> is empty as sequential list of returned records.
 	 */
 	public function loadAssocList( $key = null )
@@ -859,6 +861,7 @@ class SPJoomlaDb
 	 * executing query (update/insert etc)
 	 *
 	 * @param string $query - query to execute
+	 * @throws SPException
 	 * @return mixed
 	 */
 	public function exec( $query )
@@ -879,6 +882,7 @@ class SPJoomlaDb
 	/**
 	 * Returns all rows of given table
 	 * @param string $table
+	 * @throws SPException
 	 * @return array
 	 */
 	public function getColumns( $table )
