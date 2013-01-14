@@ -18,14 +18,23 @@
  * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/cms/joomla16/base/helper.php $
  */
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-require_once dirname(__FILE__).'/../../joomla_common/base/helper.php';
+require_once dirname( __FILE__ ) . '/../../joomla16/base/helper.php';
 /**
  * @author Radek Suski
  * @version 1.0
- * @created 08-Jul-2008 9:43:25 AM
+ * @created Mon, Jan 14, 2013 13:25:51
  */
-final class SPCMSHelper extends SPJoomlaCMSHelper
+class SPCMSHelper3 extends SPCMSHelper
 {
+	public static function & getInstance()
+	{
+		static $SPCMSHelper = false;
+		if ( !$SPCMSHelper || !( $SPCMSHelper instanceof self ) ) {
+			$SPCMSHelper = new self();
+		}
+		return $SPCMSHelper;
+	}
+
 	/**
 	 * Return min or recommend Joomla! version
 	 * @param $recommended
@@ -43,8 +52,8 @@ final class SPCMSHelper extends SPJoomlaCMSHelper
 	 */
 	public static function cmsVersion( $version = null )
 	{
-		if( ( $version ) && !( in_array( $version, array( 'Joomla 1.6', 'Joomla 1.7' ) ) ) ) {
-			return 'Joomla 1.6+';
+		if ( ( $version ) && !( in_array( $version, array( 'Joomla 1.6', 'Joomla 1.7' ) ) ) ) {
+			return 'Joomla 3.0+';
 		}
 		$version = new JVersion();
 		$v = explode( '.', $version->RELEASE );
@@ -59,7 +68,7 @@ final class SPCMSHelper extends SPJoomlaCMSHelper
 	public static function cmsSetting( $setting )
 	{
 		static $cfg;
-		if( !$cfg ) {
+		if ( !$cfg ) {
 			$cfg = new JConfig(); // was ein Unsinn der da macht
 		}
 		switch ( $setting ) {

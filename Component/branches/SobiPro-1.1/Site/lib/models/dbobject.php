@@ -534,8 +534,6 @@ abstract class SPDBObject extends SPObject
 			/* if update */
 			else {
 				$db->update( 'spdb_object', $values, array( 'id' => $this->id ) );
-				SPConfig::debOut($this->id);
-				exit;
 			}
 		} catch ( SPException $x ) {
 			$db->rollback();
