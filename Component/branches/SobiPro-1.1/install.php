@@ -29,12 +29,6 @@ if( file_exists( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 't
 		implode( DS, array( JPATH_ROOT, 'images', 'sobipro', 'entries' ) )
 	);
 }
-if( file_exists( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) ) ) {
-	JFolder::move(
-		implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'install', 'mod_spmenu' ) ),
-		implode( DS, array( JPATH_ROOT, 'administrator', 'modules', 'mod_spmenu' ) )
-	);
-}
 if( file_exists( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ) ) ) ) {
 	JFolder::delete( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ) ) );
 }

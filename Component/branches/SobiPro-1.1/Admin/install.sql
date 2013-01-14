@@ -1410,6 +1410,3 @@ CREATE TABLE `#__sobipro_user_group` (
   `groupName` varchar(150) NOT NULL,
   PRIMARY KEY (`gid`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;
-
-REPLACE INTO `#__modules` (`id`, `title`, `content`, `ordering`, `position`, `checked_out`, `checked_out_time`, `published`, `module`, `numnews`, `access`, `showtitle`, `params`, `iscore`, `client_id`, `control`) VALUES
-(NULL, 'SobiPro Admin Menu', '', 3, 'menu', 0, '0000-00-00 00:00:00', 1, 'mod_spmenu', 0, 2, 1, '', 0, 1, '');

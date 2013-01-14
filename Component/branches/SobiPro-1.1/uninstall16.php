@@ -29,10 +29,5 @@ function com_uninstall()
             $db->setQuery( "DROP TABLE {$table};" );
             $db->query();
         }
-        $db->setQuery( "DELETE FROM `#__modules` WHERE `module` = 'mod_spmenu'" );
-        $db->query();
-        $db->setQuery( "DELETE FROM `#__extensions` WHERE `element` = 'mod_spmenu'" );
-        $db->query();
-        JFolder::delete( implode( DS, array( JPATH_ROOT, 'administrator', 'modules', 'mod_spmenu' ) ) );
         JFolder::delete( implode( DS, array( JPATH_ROOT, 'images', 'sobipro' ) ) );
 }
