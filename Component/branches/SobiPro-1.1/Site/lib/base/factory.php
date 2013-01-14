@@ -51,8 +51,8 @@ abstract class SPFactory
 	 */
 	public static function CmsHelper()
 	{
-		SPLoader::loadClass( 'cms.base.helper' );
-		return SPCMSHelper::getInstance();
+		$class = SPLoader::loadClass( 'cms.base.helper' );
+		return $class::getInstance();
 	}
 
 	/**

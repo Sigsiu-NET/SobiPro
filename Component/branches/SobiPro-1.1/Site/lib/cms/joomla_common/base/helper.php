@@ -31,8 +31,8 @@ class SPJoomlaCMSHelper
 	public static function & getInstance()
 	{
 		static $SPCMSHelper = false;
-		if ( !$SPCMSHelper || !( $SPCMSHelper instanceof SPCMSHelper ) ) {
-			$SPCMSHelper = new SPCMSHelper();
+		if ( !$SPCMSHelper || !( $SPCMSHelper instanceof self ) ) {
+			$SPCMSHelper = new self();
 		}
 		return $SPCMSHelper;
 	}

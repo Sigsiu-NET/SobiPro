@@ -24,8 +24,16 @@ require_once dirname(__FILE__).'/../../joomla_common/base/helper.php';
  * @version 1.0
  * @created 08-Jul-2008 9:43:25 AM
  */
-final class SPCMSHelper extends SPJoomlaCMSHelper
+class SPCMSHelper extends SPJoomlaCMSHelper
 {
+	public static function & getInstance()
+	{
+		static $SPCMSHelper = false;
+		if ( !$SPCMSHelper || !( $SPCMSHelper instanceof self ) ) {
+			$SPCMSHelper = new self();
+		}
+		return $SPCMSHelper;
+	}
 	/**
 	 * Return min or recommend Joomla! version
 	 * @param $recommended
