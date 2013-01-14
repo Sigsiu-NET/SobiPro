@@ -273,7 +273,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$this->_model->formatDatesToEdit();
 
 		if ( $this->_model->isCheckedOut() ) {
-			SPMainFrame::msg( Sobi::Txt( 'EN.IS_CHECKED_OUT' ), SPC::ERROR_MSG );
+			SPFactory::message()->error( Sobi::Txt( 'EN.IS_CHECKED_OUT' ), false );
 		}
 		else {
 			/* check out the model */

@@ -101,7 +101,7 @@ class SPException extends Exception
 		} catch ( SPException $x ) {
 			SPLoader::loadClass( 'base.mainframe' );
 			SPLoader::loadClass( 'cms.base.mainframe' );
-			SPMainFrame::runAway( 'Fatal error while inserting error message. ' . $x->getMessage(), 500 );
+			SPFactory::mainframe()->runAway( 'Fatal error while inserting error message. ' . $x->getMessage(), 500 );
 		}
 		self::$_cs = false;
 	}
@@ -197,7 +197,7 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 		if ( $retCode ) {
 			SPLoader::loadClass( 'base.mainframe' );
 			SPLoader::loadClass( 'cms.base.mainframe' );
-			SPMainFrame::runAway( $errString, $retCode, $backTrace );
+			SPFactory::mainframe()->runAway( $errString, $retCode, $backTrace );
 		}
 		$cs = false;
 		/** do not display our internal errors because this is an array */

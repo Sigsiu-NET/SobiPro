@@ -71,7 +71,7 @@ class SPField_SelectAdm extends SPField_Select
 				$optsIds[ ] = $option[ 'id' ];
 			}
 			if ( $duplicates ) {
-				SPMainFrame::msg( 'FIELD_WARN_DUPLICATE_OPT_ID', SPC::WARN_MSG );
+				SPFactory::message()->warning( 'FIELD_WARN_DUPLICATE_OPT_ID' );
 			}
 			$db = SPFactory::db();
 			/* try to delete the existing labels */

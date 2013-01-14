@@ -66,27 +66,25 @@ class SPJoomlaMainFrame
 	 */
 	public function getBasicCfg()
 	{
-		$cfg =& SPFactory::config();
-		$jconfig = JFactory::getConfig();
+		$cfg = SPFactory::config();
 		$cfg->set( 'live_site', JURI::root() );
-		$cfg->set( 'tmp_path', $jconfig->getValue( 'config.tmp_path' ) );
+		$cfg->set( 'tmp_path',	$this->JConfigValue( 'config.tmp_path' ) );
+		$cfg->set( 'from', $this->JConfigValue( 'config.mailfrom' ), 'mail' );
+		$cfg->set( 'mailer', $this->JConfigValue( 'config.mailer' ), 'mail' );
+		$cfg->set( 'fromname', $this->JConfigValue( 'config.fromname' ), 'mail' );
+		$cfg->set( 'smtpauth', $this->JConfigValue( 'config.smtpauth' ), 'mail' );
+		$cfg->set( 'smtphost', $this->JConfigValue( 'config.smtphost' ), 'mail' );
+		$cfg->set( 'smtpuser', $this->JConfigValue( 'config.smtpuser' ), 'mail' );
+		$cfg->set( 'smtppass', $this->JConfigValue( 'config.smtppass' ), 'mail' );
+		$cfg->set( 'smtpsecure', $this->JConfigValue( 'config.smtpsecure' ), 'mail' );
+		$cfg->set( 'smtpport', $this->JConfigValue( 'config.smtpport' ), 'mail' );
 
-		$cfg->set( 'from', $jconfig->getValue( 'config.mailfrom' ), 'mail' );
-		$cfg->set( 'mailer', $jconfig->getValue( 'config.mailer' ), 'mail' );
-		$cfg->set( 'fromname', $jconfig->getValue( 'config.fromname' ), 'mail' );
-		$cfg->set( 'smtpauth', $jconfig->getValue( 'config.smtpauth' ), 'mail' );
-		$cfg->set( 'smtphost', $jconfig->getValue( 'config.smtphost' ), 'mail' );
-		$cfg->set( 'smtpuser', $jconfig->getValue( 'config.smtpuser' ), 'mail' );
-		$cfg->set( 'smtppass', $jconfig->getValue( 'config.smtppass' ), 'mail' );
-		$cfg->set( 'smtpsecure', $jconfig->getValue( 'config.smtpsecure' ), 'mail' );
-		$cfg->set( 'smtpport', $jconfig->getValue( 'config.smtpport' ), 'mail' );
-
-		$cfg->set( 'language', $jconfig->getValue( 'language' ) );
-		$cfg->set( 'secret', $jconfig->getValue( 'secret' ) );
-		$cfg->set( 'site_name', $jconfig->getValue( 'config.sitename' ) );
+		$cfg->set( 'language', $this->JConfigValue( 'language' ) );
+		$cfg->set( 'secret', $this->JConfigValue( 'secret' ) );
+		$cfg->set( 'site_name', $this->JConfigValue( 'config.sitename' ) );
 		$cfg->set( 'images_folder', SOBI_ROOT . DS . 'media/sobipro/' );
 		$cfg->set( 'img_folder_live', JURI::root() . '/media/sobipro' );
-		$cfg->set( 'ftp_mode', $jconfig->getValue( 'config.ftp_enable' ) );
+		$cfg->set( 'ftp_mode', $this->JConfigValue( 'config.ftp_enable' ) );
 
 		$cfg->set( 'root_path', SOBI_PATH );
 		$cfg->set( 'cms_root_path', SOBI_ROOT );
@@ -96,51 +94,57 @@ class SPJoomlaMainFrame
 		}
 		$cfg->set( 'img_folder_path', SOBI_ROOT . DS . 'media' . DS . 'sobipro' );
 
-		if ( $jconfig->getValue( 'config.ftp_enable' ) ) {
-			if ( !( file_exists( $jconfig->getValue( 'config.tmp_path' ) . DS . 'SobiPro' ) ) ) {
-				if ( !( @mkdir( $jconfig->getValue( 'config.tmp_path' ) . DS . 'SobiPro' ) ) ) {
-					JFolder::create( $jconfig->getValue( 'config.tmp_path' ) . DS . 'SobiPro', 0775 );
+		if ( $this->JConfigValue( 'config.ftp_enable' ) ) {
+			if ( !( file_exists( $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro' ) ) ) {
+				if ( !( @mkdir( $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro' ) ) ) {
+					JFolder::create( $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro', 0775 );
 				}
 			}
-			$cfg->set( 'temp', $jconfig->getValue( 'config.tmp_path' ) . DS . 'SobiPro', 'fs' );
+			$cfg->set( 'temp', $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro', 'fs' );
 		}
 		else {
 			$cfg->set( 'temp', SOBI_PATH . DS . 'tmp', 'fs' );
 		}
 		// try mkdir because it's always used by apache
 		if ( !( Sobi::Cfg( 'cache.store', false ) ) ) {
-			if ( $jconfig->getValue( 'config.ftp_enable' ) ) {
-				if ( !( file_exists( $jconfig->getValue( 'config.tmp_path' ) . DS . 'SobiPro' . DS . 'Cache' ) ) ) {
-					if ( !( mkdir( $jconfig->getValue( 'config.tmp_path' ) . DS . 'SobiPro' . DS . 'Cache' ) ) ) {
+			if ( $this->JConfigValue( 'config.ftp_enable' ) ) {
+				if ( !( file_exists( $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro/Cache' ) ) ) {
+					if ( !( mkdir( $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro/Cache' ) ) ) {
 						// really ;)
-						JFolder::create( $jconfig->getValue( 'config.tmp_path' ) . DS . 'SobiPro' . DS . 'Cache', 0775 );
+						JFolder::create( $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro' . DS . 'Cache', 0775 );
 					}
 				}
-				$cfg->set( 'store', $jconfig->getValue( 'config.tmp_path' ) . DS . 'SobiPro' . DS . 'Cache' . DS, 'cache' );
+				$cfg->set( 'store', $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro' . DS . 'Cache' . DS, 'cache' );
 			}
 		}
 	}
 
+	protected function JConfigValue( $value )
+	{
+		return JFactory::getConfig()->getValue( $value );
+	}
+
 	/**
-	 * @return SPMainFrame
+	 * @return SPJoomlaMainFrame
 	 */
 	public static function & getInstance()
 	{
 		static $mf = false;
-		if ( !$mf || !( $mf instanceof SPMainFrame ) ) {
-			$mf = new SPMainFrame();
+		if ( !$mf || !( $mf instanceof self ) ) {
+			$mf = new self();
 		}
 		return $mf;
 	}
 
 	/**
 	 * @static
-	 * @param    string    $code    The application-internal error code for this error
-	 * @param    string    $msg    The error message, which may also be shown the user if need be.
-	 * @param    mixed    $info    Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database DSN).
-	 * @return    object    $error    The configured JError object
+	 * @param string    $msg    The error message, which may also be shown the user if need be.
+	 * @param int $code The application-internal error code for this error
+	 * @param mixed    $info    Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database DSN).
+	 * @param bool $translate
+	 * @return object    $error    The configured JError object
 	 */
-	public static function runAway( $msg, $code = 500, $info = null, $translate = false )
+	public function runAway( $msg, $code = 500, $info = null, $translate = false )
 	{
 		$msg = $translate ? JText::_( $msg ) : $msg;
 		$msg = str_replace( SOBI_PATH, null, $msg );
@@ -151,7 +155,7 @@ class SPJoomlaMainFrame
 	/**
 	 * @return string
 	 */
-	public static function getBack()
+	public function getBack()
 	{
 		$r = Sobi::GetUserState( 'back_url', Sobi::Url() );
 		if ( !( $r ) ) {
@@ -164,7 +168,7 @@ class SPJoomlaMainFrame
 	 * @static
 	 * @param string $msg - The message, which may also be shown the user if need be.
 	 */
-	public static function setRedirect( $add, $msg = null, $msgtype = 'message', $now = false )
+	public function setRedirect( $add, $msg = null, $msgtype = 'message', $now = false )
 	{
 		if ( is_array( $msg ) && !( is_string( $msg ) ) ) {
 			$msgtype = isset( $msg[ 'msgtype' ] ) ? $msg[ 'msgtype' ] : null;
@@ -180,8 +184,9 @@ class SPJoomlaMainFrame
 	/**
 	 * @static
 	 * @param string $msg The message, which may also be shown the user if need be.
+	 * @param null $type
 	 */
-	public static function msg( $msg, $type = null )
+	public function msg( $msg, $type = null )
 	{
 		if ( is_array( $msg ) ) {
 			$type = isset( $msg[ 'msgtype' ] ) && strlen( $msg[ 'msgtype' ] ) ? ( $msg[ 'msgtype' ] ) : null;
@@ -199,7 +204,7 @@ class SPJoomlaMainFrame
 	/**
 	 * @static
 	 */
-	public static function redirect()
+	public function redirect()
 	{
 		$r = SPFactory::registry()->get( 'redirect' );
 		if ( $r && isset( $r[ 'address' ] ) ) {
@@ -405,10 +410,10 @@ class SPJoomlaMainFrame
 
 	/**
 	 * Creating array of additional variables depend on the CMS
-	 * @param array $var
+	 * @internal param array $var
 	 * @return string
 	 */
-	public static function form()
+	public function form()
 	{
 		return array( 'option' => 'com_sobipro', 'Itemid' => SPRequest::int( 'Itemid' ) );
 	}
@@ -559,7 +564,7 @@ class SPJoomlaMainFrame
 		}
 	}
 
-	public static function endOut()
+	public function endOut()
 	{
 		if ( SPRequest::cmd( 'format' ) != 'raw' ) {
 			/* something like 'onDomReady' but it should be bit faster */
@@ -607,7 +612,7 @@ class SPJoomlaMainFrame
 
 	/**
 	 * Checks for a form token in the request.
-	 * @param unknown_type $method
+	 * @param string $method
 	 * @return boolean
 	 */
 	public function checkToken( $method = 'post' )

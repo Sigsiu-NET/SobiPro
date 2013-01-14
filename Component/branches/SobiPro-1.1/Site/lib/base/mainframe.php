@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -25,7 +25,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  * @version 1.0
  * @created 10-Jan-2009 17:09:58
  */
-interface SPMainfrmaInterface
+interface SPMainframeInterface
 {
 	public function __construct();
 
@@ -43,34 +43,35 @@ interface SPMainfrmaInterface
 
 	/**
 	 * @static
-	 * @param	string	$code	The application-internal error code for this error
-	 * @param	string	$msg	The error message, which may also be shown the user if need be.
-	 * @param	mixed	$info	Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database DSN);.
-	 * @return	object	$error	The configured JError object
+	 * @param    string    $msg    The error message, which may also be shown the user if need be.
+	 * @param int|string $code The application-internal error code for this error
+	 * @param    mixed    $info    Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database DSN);.
+	 * @param bool $translate
+	 * @return    object    $error    The configured JError object
 	 */
-	public static function runAway( $msg, $code = 500, $info = null, $translate = false );
+	public function runAway( $msg, $code = 500, $info = null, $translate = false );
 
 	/**
 	 * @return string
 	 */
-	public static function getBack();
+	public function getBack();
 
 	/**
 	 * @static
 	 * @param	string	$msg	The message, which may also be shown the user if need be.
 	 */
-	public static function setRedirect( $add, $msg = null, $msgtype = 'message', $now = false );
+	public function setRedirect( $add, $msg = null, $msgtype = 'message', $now = false );
 
 	/**
 	 * @static
 	 * @param string $msg The message, which may also be shown the user if need be.
 	 */
-	public static function msg( $msg, $type = null );
+	public function msg( $msg, $type = null );
 
 	/**
 	 * @static
 	 */
-	public static function redirect();
+	public function redirect();
 
 	/**
 	 * @param SPDBObject $obj
@@ -85,19 +86,20 @@ interface SPMainfrmaInterface
 
 	/**
 	 * Creating array of additional variables depend on the CMS
-	 * @param array $var
+	 * @internal param array $var
 	 * @return string
 	 */
-	public static function form();
+	public function form();
 
 	/**
 	 * Creating URL from a array for the current CMS
 	 * @param array $var
+	 * @param bool $js
 	 * @return string
 	 */
 	public static function url( $var = null, $js = false );
 
-	public static function endOut();
+	public function endOut();
 
 	/**
 	 * @param id
@@ -116,4 +118,3 @@ interface SPMainfrmaInterface
 	 */
 	public function setTitle( $title );
 }
-?>

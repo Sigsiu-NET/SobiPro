@@ -63,7 +63,7 @@ class SPField_RadioAdm extends SPField_Radio
 					}
 					if( $option[ 'id' ] == $opt[ 'id' ] ) {
 						$option[ 'id' ] = $option[ 'id' ].'_'.substr( ( string ) microtime(), 2, 8 ).rand( 1, 100 );
-						SPMainFrame::msg( 'FIELD_WARN_DUPLICATE_OPT_ID', SPC::WARN_MSG );
+						SPFactory::message()->warning( 'FIELD_WARN_DUPLICATE_OPT_ID' );
 					}
 				}
 				$optionsArr[] = array( 'fid' => $this->id, 'optValue' => $option[ 'id' ], 'optPos'  => $option[ 'position' ], 'optParent' =>  $option[ 'parent' ] );

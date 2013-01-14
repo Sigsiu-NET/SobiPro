@@ -176,7 +176,7 @@ class SPEntryCtrl extends SPController
 
 		if ( !( SPRequest::int( 'entry_parent', 0 ) ) ) {
 			$error = Sobi::Txt( 'CAT.SELECT_ONE' );
-			SPMainFrame::msg( array( 'msgtype' => SPC::ERROR_MSG, 'msg' => $error ) );
+			SPFactory::message()->error( $error, false );
 		}
 		$this->_model->loadFields( Sobi::Reg( 'current_section' ) );
 		$fields = $this->_model->get( 'fields' );

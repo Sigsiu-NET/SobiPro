@@ -260,7 +260,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		$o = $o ? $o : strtolower( $this->key( 'output', $this->key( 'output', 'html' ), $this->tTask ) );
 		$action = $this->key( 'form.action' );
 		if ( $action ) {
-			$opt = SPMainFrame::form();
+			$opt = SPFactory::mainframe()->form();
 			if ( is_array( $opt ) && count( $opt ) ) {
 				foreach ( $opt as $l => $v ) {
 					$this->addHidden( $v, $l );

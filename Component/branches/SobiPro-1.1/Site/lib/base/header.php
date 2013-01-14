@@ -106,6 +106,10 @@ final class SPHeader
 			$this->addCssFile( array( 'bootstrap.bootstrap', 'adm.icons' ) )
 					->addJsFile( array( 'jquery', 'bootstrap' ) );
 		}
+		else {
+			$this->addCssFile( array( 'bootstrap.bootstrap', 'adm.icons' ) )
+					->addJsFile( 'jqnc' );
+		}
 		if ( $adm ) {
 			$this->addCssFile( 'adm.sobipro' );
 		}
@@ -156,7 +160,7 @@ final class SPHeader
 	public function & meta( $content, $name = null, $attributes = array() )
 	{
 		$custom = null;
-		if( strlen( $name ) ) {
+		if ( strlen( $name ) ) {
 			$name = "name=\"{$name}\" ";
 		}
 		if ( count( $attributes ) ) {

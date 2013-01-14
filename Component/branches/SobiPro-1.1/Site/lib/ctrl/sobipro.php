@@ -465,10 +465,10 @@ final class SobiProCtrl
 		}
 		/* send header data etc ...*/
 		SPFactory::header()->send();
-		SPMainFrame::endOut();
+		SPFactory::mainframe()->endOut();
 		Sobi::Trigger( 'End' );
-		/* redirect if any redyriect has been set */
-		SPMainFrame::redirect();
+		/* redirect if any redirect has been set */
+		SPFactory::mainframe()->redirect();
 		ini_set( 'display_errors', $this->_err );
 		error_reporting( $this->_deb );
 		restore_error_handler();

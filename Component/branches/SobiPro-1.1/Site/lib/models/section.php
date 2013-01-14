@@ -133,7 +133,6 @@ final class SPSection extends SPDBObject implements SPDataModel
 		SPFactory::registry()->set( 'current_section', $this->id );
 		$db->transaction();
 		parent::save();
-
 		/* case adding new section, define the default title field */
 		if ( !$update && $init ) {
 			$field = SPFactory::Model( 'field', true );
