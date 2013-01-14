@@ -21,6 +21,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 jimport( 'joomla.filesystem.file' );
+jimport( 'joomla.filesystem.folder' );
 
 /**
  * Interface to Joomla! files system
@@ -207,7 +208,12 @@ abstract class SPJoomlaFs
 	 */
 	public static function mkdir( $path, $mode = 0755 )
 	{
-		return JFolder::create( $path, $mode );
+		if ( !( JFolder::create( $path, $mode ) ) ) {
+			throw new SPException( SPLang::e( 'CANNOT_CREATE_DIR' ) );
+		}
+		else {
+			return true;
+		}
 	}
 
 	/**

@@ -809,7 +809,17 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$repoDef[ 'maintainer' ] = $remoteDefinition[ 'repository' ][ 'maintainer' ];
 			$file->delete();
 			$dir = SPLoader::dirPath( 'etc.repos.' . str_replace( '.', '_', $repoDef[ 'id' ] ), 'front', false );
-			SPFs::mkdir( $dir );
+			try {
+				if ( Sobi::Cfg( 'ftp_mode' ) ) {
+					SPFs::mkdir( $dir, 0777 );
+				}
+				else {
+					SPFs::mkdir( $dir );
+				}
+			} catch ( SPException $x ) {
+				return $this->ajaxResponse( true, $x->getMessage(), false, SPC::ERROR_MSG );
+			}
+
 			$path = $dir . DS . 'repository.xml';
 			$file = SPFactory::Instance( 'base.fs.file', $path );
 			$def = SPFactory::Instance( 'types.array' );
@@ -969,11 +979,15 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			/*
 			 * temp directory - will be removed later but it needs to be writable for apache and Joomla! fs (FTP mode)
 			 */
-			if ( Sobi::Cfg( 'ftp_mode' ) ) {
-				SPFs::mkdir( $path, 0777 );
-			}
-			else {
-				SPFs::mkdir( $path );
+			try {
+				if ( Sobi::Cfg( 'ftp_mode' ) ) {
+					SPFs::mkdir( $path, 0777 );
+				}
+				else {
+					SPFs::mkdir( $path );
+				}
+			} catch ( SPException $x ) {
+				return $this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );
 			}
 			$file = $path . DS . $data[ 'name' ];
 			$arch->upload( $data[ 'tmp_name' ], $file );
@@ -989,12 +1003,17 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			/*
 			 * temp directory - will be removed later but it needs to  writable for apache and Joomla! fs (FTP mode)
 			 */
-			if ( Sobi::Cfg( 'ftp_mode' ) ) {
-				SPFs::mkdir( $path, 0777 );
+			try {
+				if ( Sobi::Cfg( 'ftp_mode' ) ) {
+					SPFs::mkdir( $path, 0777 );
+				}
+				else {
+					SPFs::mkdir( $path );
+				}
+			} catch ( SPException $x ) {
+				return $this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );
 			}
-			else {
-				SPFs::mkdir( $path );
-			}
+
 		}
 		if ( $path ) {
 			if ( !( $arch->extract( $path ) ) ) {
