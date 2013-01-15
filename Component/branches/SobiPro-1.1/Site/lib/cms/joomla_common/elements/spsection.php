@@ -373,7 +373,7 @@ class JElementSPSection /*extends JElement*/
 			$this->oTypeName = Sobi::Txt( 'TASK_' . strtoupper( $this->task ) );
 			$this->oType = $this->task;
 		}
-		else {
+		elseif ( $this->oType ) {
 			$this->oType = SPFactory::db()
 					->select( 'oType', 'spdb_object', array( 'id' => $sid ) )
 					->loadResult();
