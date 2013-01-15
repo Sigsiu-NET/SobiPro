@@ -1,22 +1,26 @@
 <?php
 /**
- * @version: $Id: about.php 2334 2012-03-28 09:39:05Z Sigrid Suski $
- * @package: SobiPro
- * ===================================================
+ * @version: $Id$
+ * @package: SobiPro Library
+
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
- * ===================================================
- * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
- * @license see http://www.gnu.org/licenses/gpl.html GNU/GPL Version 3.
- * You can use, redistribute this file and/or modify it under the terms of the GNU General Public License version 3
- * ===================================================
- * $Date: 2012-03-28 11:39:05 +0200 (Wed, 28 Mar 2012) $
- * $Revision: 2334 $
- * $Author: Sigrid Suski $
- * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/cms/joomla_common/html/about.php $
+
+ * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license GNU/LGPL Version 3
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
+
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+ * $Date$
+ * $Revision$
+ * $Author$
+ * $HeadURL$
  */
+
 jimport( 'joomla.html.pane' );
 /**
  * @author neo
@@ -31,7 +35,7 @@ class SPJoomlaCredits
 		/*
 		 * This function should only check whether the "copyright" notice from the administrator's area has been removed,
 		 * which would be a clear violation of the GPL license.
-		 * It is, I think it clear that we do not want that this functionality is easy to find using a plain text search.
+		 * It is, I think clear that we do not want that this functionality is easy to find using a plain text search.
 		 * Unfortunately some people piss them off because of that. Especially people who apparently are not even using SobiPro.
 		 * Greetings to Ken at this point (Is that some kind of sick revenge?).
 		 * What bugs me in the whole story is the fact that it is not even illegal according to ToS of JED
