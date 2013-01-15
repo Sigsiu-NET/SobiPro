@@ -245,7 +245,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$this->validate( $this->_type . '.definitions.edit', $this->_type );
+		$this->validate( $this->_type . '.edit', $this->_type );
 		$apply = ( int )$apply;
 		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );

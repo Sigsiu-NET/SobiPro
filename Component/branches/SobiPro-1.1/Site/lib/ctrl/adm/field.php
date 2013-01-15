@@ -95,19 +95,19 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		/*
 		 * 1.1 native - config and view in xml
 		 */
-		$nid = '-' . Sobi::Section( 'nid' );
-		if ( SPLoader::translatePath( 'field.definitions.' . $field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
+		$nid = '/' . Sobi::Section( 'nid' ) . '/';
+		if ( SPLoader::translatePath( 'field.' . $field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
 			/** Case we have also override  */
 			/** section override */
-			if ( SPLoader::translatePath( 'field.definitions.' . $field->get( 'fieldType' ) . $nid, 'adm', true, 'xml' ) ) {
-				$view->loadDefinition( 'field.definitions.' . $field->get( 'fieldType' ) . $nid );
+			if ( SPLoader::translatePath( 'field.' .$nid. $field->get( 'fieldType' ) , 'adm', true, 'xml' ) ) {
+				$view->loadDefinition( 'field.' . $field->get( 'fieldType' ) . $nid );
 			}
 			/** std override */
-			elseif ( SPLoader::translatePath( 'field.definitions.' . $field->get( 'fieldType' ) . '_override', 'adm', true, 'xml' ) ) {
-				$view->loadDefinition( 'field.definitions.' . $field->get( 'fieldType' ) . '_override' );
+			elseif ( SPLoader::translatePath( 'field.' . $field->get( 'fieldType' ) . '_override', 'adm', true, 'xml' ) ) {
+				$view->loadDefinition( 'field.' . $field->get( 'fieldType' ) . '_override' );
 			}
 			else {
-				$view->loadDefinition( 'field.definitions.' . $field->get( 'fieldType' ) );
+				$view->loadDefinition( 'field.' . $field->get( 'fieldType' ) );
 			}
 			if ( SPLoader::translatePath( 'field.templates.' . $field->get( 'fieldType' ) . '_override', 'adm' ) ) {
 				$view->setTemplate( 'field.templates.' . $field->get( 'fieldType' ) . '_override' );
@@ -229,13 +229,13 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			$field->onFieldEdit( $view );
 		}
 
-		if ( SPLoader::translatePath( 'field.definitions.' . $this->_fieldType, 'adm', true, 'xml' ) ) {
+		if ( SPLoader::translatePath( 'field.' . $this->_fieldType, 'adm', true, 'xml' ) ) {
 			/** Cae we have also override  */
-			if ( SPLoader::translatePath( 'field.definitions.' . $this->_fieldType . '_override', 'adm', true, 'xml' ) ) {
-				$view->loadDefinition( 'field.definitions.' . $this->_fieldType . '_override' );
+			if ( SPLoader::translatePath( 'field.' . $this->_fieldType . '_override', 'adm', true, 'xml' ) ) {
+				$view->loadDefinition( 'field.' . $this->_fieldType . '_override' );
 			}
 			else {
-				$view->loadDefinition( 'field.definitions.' . $this->_fieldType );
+				$view->loadDefinition( 'field.' . $this->_fieldType );
 			}
 			if ( SPLoader::translatePath( 'field.templates.' . $this->_fieldType . '_override', 'adm' ) ) {
 				$view->setTemplate( 'field.templates.' . $this->_fieldType . '_override' );
@@ -363,7 +363,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	protected function validate( $field )
 	{
 		$type = SPRequest::cmd( 'field_fieldType' );
-		$definition = SPLoader::path( 'field.definitions.' . $type, 'adm', true, 'xml' );
+		$definition = SPLoader::path( 'field.' . $type, 'adm', true, 'xml' );
 		if ( $definition ) {
 			$xdef = new DOMXPath( DOMdocument::load( $definition ) );
 			$required = $xdef->query( '//field[@required="true"]' );

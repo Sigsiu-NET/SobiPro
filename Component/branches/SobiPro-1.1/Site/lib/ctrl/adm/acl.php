@@ -229,7 +229,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$rid = SPRequest::int( 'rid', 'null' );
-		$this->validate( 'acl.definitions.edit', array( 'task' => 'acl.edit', 'rid' => $rid ) );
+		$this->validate( 'acl.edit', array( 'task' => 'acl.edit', 'rid' => $rid ) );
 		if ( $rid ) {
 			$this->remove( $rid );
 		}

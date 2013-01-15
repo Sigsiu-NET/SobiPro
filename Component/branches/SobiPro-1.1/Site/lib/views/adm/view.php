@@ -117,26 +117,17 @@ class SPAdmView extends SPObject implements SPView
 
 	public function & determineTemplate( $type, $template )
 	{
-		if ( SPLoader::translatePath( $type . '.definitions.' . $template, 'adm', true, 'xml' ) ) {
-			$nid = '-' . Sobi::Section( 'nid' );
+		if ( SPLoader::translatePath( "{$type}.{$template}", 'adm', true, 'xml' ) ) {
+			$nid = Sobi::Section( 'nid' );
 			/** Case we have also override  */
-			if ( SPLoader::translatePath( $type . '.definitions.' . $template . $nid, 'adm', true, 'xml' ) ) {
-				$this->loadDefinition( $type . '.definitions.' . $template . $nid );
-			}
-			elseif ( SPLoader::translatePath( $type . '.definitions.' . $template . '_override', 'adm', true, 'xml' ) ) {
-				$this->loadDefinition( $type . '.definitions.' . $template . '_override' );
+			if ( SPLoader::translatePath( "{$type}.{$nid}.{$template}", 'adm', true, 'xml' ) ) {
+				$this->loadDefinition( "{$type}.{$nid}.{$template}" );
 			}
 			else {
-				$this->loadDefinition( $type . '.definitions.' . $template );
+				$this->loadDefinition( "{$type}.{$template}" );
 			}
-			if ( SPLoader::translatePath( $type . '.templates.' . $template . $nid, 'adm' ) ) {
-				$this->setTemplate( $type . '.templates.' . $template . $nid );
-			}
-			elseif ( SPLoader::translatePath( $type . '.templates.' . $template . '_override', 'adm' ) ) {
-				$this->setTemplate( $type . '.templates.' . $template . '_override' );
-			}
-			elseif ( SPLoader::translatePath( $type . '.templates.' . $template, 'adm' ) ) {
-				$this->setTemplate( $type . '.templates.' . $template );
+			if ( SPLoader::translatePath( "{$type}.{$nid}.{$template}", 'adm' ) ) {
+				$this->setTemplate( "{$type}.{$nid}.{$template}" );
 			}
 			else {
 				$this->setTemplate( 'default' );

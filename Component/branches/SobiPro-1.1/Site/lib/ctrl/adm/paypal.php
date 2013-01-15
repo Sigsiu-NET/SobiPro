@@ -53,7 +53,7 @@ class SPPaymentPP extends SPConfigAdmCtrl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$this->validate( 'extensions.definitions.paypal', array( 'task' => 'paypal', 'pid' => Sobi::Section() ) );
+		$this->validate( 'extensions.paypal', array( 'task' => 'paypal', 'pid' => Sobi::Section() ) );
 		SPFactory::registry()->saveDBSection(
 			array(
 				array( 'key' => 'ppurl', 'value' => SPRequest::string( 'ppurl' ) ),
