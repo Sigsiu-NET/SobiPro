@@ -3,7 +3,7 @@
  * http://www.ericmmartin.com/projects/simplemodal/
  * Copyright (c) 2010 Eric Martin (http://twitter.com/EricMMartin)
  * Dual licensed under the MIT and GPL licenses
- * Revision: $Id: simplemodal.js 806 2011-02-15 18:38:19Z Radek Suski $
+ * Revision: $Id$
  */
 
 /**

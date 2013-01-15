@@ -1,20 +1,23 @@
 /**
- * @version: $Id: edit.js 992 2011-03-17 16:31:33Z Radek Suski $
+ * @version: $Id$
  * @package: SobiPro Library
- * ===================================================
+
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
- * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
- * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
- * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
- * ===================================================
- * $Date: 2011-03-17 17:31:33 +0100 (Thu, 17 Mar 2011) $
- * $Revision: 992 $
- * $Author: Radek Suski $
- * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/js/edit.js $
+
+ * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license GNU/LGPL Version 3
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
+
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+ * $Date$
+ * $Revision$
+ * $Author$
+ * $HeadURL$
  */
 
 function SigsiuTreeEdit( options )

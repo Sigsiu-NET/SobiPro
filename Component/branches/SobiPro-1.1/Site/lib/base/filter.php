@@ -20,12 +20,12 @@
  */
 
 /**
- * @version $Id: filter.php 184 2010-09-27 17:25:47Z Sigrid Suski $
- * @package: SobiPro
- * @subpackage base
- * ===================================================
- * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/lib/base/filter.php $
+ * @version: $Id$
+ * @package: SobiPro Library
+ * $HeadURL$
  */
+
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 /**
