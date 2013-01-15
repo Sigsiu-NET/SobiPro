@@ -33,13 +33,8 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 	public function getBasicCfg()
 	{
 		parent::getBasicCfg();
-		$cfg =& SPFactory::config();
 		if ( defined( 'SOBIPRO_ADM' ) ) {
-			$cfg->change( 'adm_img_folder_live',
-				Sobi::FixPath(
-					JURI::root() . DS . SOBI_ADM_FOLDER . DS . 'templates' . DS . JFactory::getApplication()->getTemplate() . '/images/admin'
-				), 'general'
-			);
+			SPFactory::config()->change( 'adm_img_folder_live', Sobi::FixPath( JURI::root() . DS . SOBI_ADM_FOLDER . DS . 'templates' . DS . JFactory::getApplication()->getTemplate() . '/images/admin' ), 'general' );
 		}
 	}
 
@@ -119,7 +114,7 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 						$metaDesc = implode( Sobi::Cfg( 'string.meta_desc_separator', ' ' ), $code );
 						if ( strlen( $metaDesc ) ) {
 							if ( Sobi::Cfg( 'meta.desc_append', true ) ) {
-								$metaDesc .= ' ' . $document->get( 'description' );
+								$metaDesc = $this->getMetaDescription( $document );
 							}
 							$metaDesc = explode( ' ', $metaDesc );
 							if ( count( $metaDesc ) ) {
@@ -147,6 +142,11 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 			$c++;
 			$document->addCustomTag( "\n\t<!--  SobiPro ({$c}) Head Tags Output -->\n" );
 		}
+	}
+
+	protected function getMetaDescription( $document )
+	{
+		return $document->get( 'description' );
 	}
 
 	protected function JConfigValue( $value )
