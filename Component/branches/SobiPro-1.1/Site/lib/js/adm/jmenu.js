@@ -26,10 +26,19 @@ function SPJmenuFixTask( value )
 {
 	SobiPro.jQuery( document ).ready( function ()
 	{
-		SobiPro.jQuery(
-			SobiPro.jQuery( '#jform_type-lbl' )
-				.siblings()[ 0 ]
-		).val( value );
+		try {
+			SobiPro.jQuery( SobiPro.jQuery( '#jform_type-lbl' ).siblings()[ 0 ] ).val( value );
+		}
+		catch ( e ) {
+		}
+		try {
+			var lType = SobiPro.jQuery( '[name*="jform[type]"]' ).parent().find( 'input[type=text]' );
+			lType.val( value );
+			lType.css( 'min-width', '200px' );
+			SobiPro.jQuery( '#jform_link' ).css( 'min-width', '500px' );
+		}
+		catch ( e ) {
+		}
 	} );
 }
 
@@ -37,35 +46,41 @@ function SPJoomlaMenu()
 {
 	var spApply = SobiPro.jQuery( "#toolbar-apply a" )[ 0 ];
 	var spSave = SobiPro.jQuery( "#toolbar-save a" )[ 0 ];
-	spApplyFn = spApply.onclick;
-	spApply.onclick = null;
-	spSaveFn = spSave.onclick;
-	spSave.onclick = null;
+//	spApplyFn = spApply.onclick;
+//	spApply.onclick = null;
+//	spSaveFn = spSave.onclick;
+//	spSave.onclick = null;
 	try {
 		var spSaveNew = SobiPro.jQuery( "#toolbar-save-new a" )[ 0 ];
-		spSaveNewFn = spSaveNew.onclick;
-		spSaveNew.onclick = null;
+//		spSaveNewFn = spSaveNew.onclick;
+//		spSaveNew.onclick = null;
 		spSaveNew.bind( "click", function ()
 		{
-			if ( SPValidate() ) {
-				spSaveNewFn();
+			if ( !(SPValidate() ) ) {
+//				spSaveNewFn();
+				e.preventDefault()
+				e.stopImmediatePropagation();
 			}
 		} );
 	}
 	catch ( e ) {
 	}
 
-	SobiPro.jQuery( spApply ).bind( "click", function ()
+	SobiPro.jQuery( spApply ).bind( "click", function ( e )
 	{
-		if ( SPValidate() ) {
-			spApplyFn();
+		if ( !( SPValidate() ) ) {
+//			spApplyFn();
+			e.preventDefault()
+			e.stopImmediatePropagation();
 		}
 	} );
 
 	SobiPro.jQuery( spSave ).bind( "click", function ()
 	{
-		if ( SPValidate() ) {
-			spSaveFn();
+		if ( !(SPValidate() ) ) {
+//			spSaveFn();
+			e.preventDefault()
+			e.stopImmediatePropagation();
 		}
 	} );
 
@@ -195,9 +210,7 @@ function SPJoomlaMenu()
 		}
 		else {
 			SobiPro.jQuery( this ).attr( 'name', SobiPro.jQuery( this ).attr( 'name' ).replace( 'sptpl', '-sptpl-' ) );
-			SobiPro.jQuery( '#jform_link' ).val(
-				SobiPro.jQuery( '#jform_link' ).val().replace( /\&sptpl\=[a-zA-Z0-9\-\_\.]*/gi, "" )
-			)
+			SobiPro.jQuery( '#jform_link' ).val( SobiPro.jQuery( '#jform_link' ).val().replace( /\&sptpl\=[a-zA-Z0-9\-\_\.]*/gi, '' ) )
 		}
 	} );
 }
