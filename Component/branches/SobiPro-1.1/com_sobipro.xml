@@ -11,7 +11,7 @@
     <codename>Budgie</codename>
     <description></description>
     <version_number>1.1.0</version_number>
-    <svn>$Revision: 2615 $</svn>
+    <svn>$Revision$</svn>
     <SobiPro>
 	  <requirements>
 	    <core version="1.0.0.1900"/>
