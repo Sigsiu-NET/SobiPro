@@ -764,10 +764,7 @@ input.sp-input-micro[type="text"] {
   margin-top: 6px;
   color: #666666;
 }
-.GeoMap {
-  margin-right: 10px !important;
-}
-.GeoMap img {
+.controls img {
   max-width: inherit;
 }
 /* Aggregation Field */

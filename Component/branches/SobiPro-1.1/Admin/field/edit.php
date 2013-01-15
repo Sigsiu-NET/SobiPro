@@ -1,6 +1,6 @@
 <?php
 /**
- * @version: $Id: edit.php 2155 2012-01-13 18:28:57Z Radek Suski $
+ * @version: $Id$
  * @package: SobiPro Template
  * ===================================================
  * @author
@@ -12,10 +12,10 @@
  * @license see http://www.gnu.org/licenses/gpl.html GNU/GPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU General Public License version 3
  * ===================================================
- * $Date: 2012-01-13 19:28:57 +0100 (Fri, 13 Jan 2012) $
- * $Revision: 2155 $
- * $Author: Radek Suski $
- * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Admin/field/edit.php $
+ * $Date$
+ * $Revision$
+ * $Author$
+ * $HeadURL$
  */
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPRequest::set( 'hidemainmenu', 1 );
