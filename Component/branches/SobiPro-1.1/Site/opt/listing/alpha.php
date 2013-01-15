@@ -160,6 +160,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
         /* determine template package */
         $tplPckg = Sobi::Cfg( 'section.template', 'default' );
         Sobi::ReturnPoint();
+	    $this->_task = 'alpha';
 
         if ( !( $this->_model ) ) {
             $this->setModel( 'section' );
