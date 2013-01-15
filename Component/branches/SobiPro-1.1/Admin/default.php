@@ -1,6 +1,6 @@
 <?php
 /**
- * @version: $Id: list.php 1979 2011-11-08 18:25:45Z Radek Suski $
+ * @version: $Id$
  * @package: SobiPro Template
  * ===================================================
  * @author
@@ -12,10 +12,10 @@
  * @license see http://www.gnu.org/licenses/gpl.html GNU/GPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU General Public License version 3
  * ===================================================
- * $Date: 2011-11-08 19:25:45 +0100 (Tue, 08 Nov 2011) $
- * $Revision: 1979 $
- * $Author: Radek Suski $
- * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Admin/field/list.php $
+ * $Date$
+ * $Revision$
+ * $Author$
+ * $HeadURL$
  */
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 $data = $this->getData();

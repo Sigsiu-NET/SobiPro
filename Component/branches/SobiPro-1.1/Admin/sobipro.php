@@ -1,6 +1,6 @@
 <?php
 /**
- * @version: $Id: sobipro.php 1776 2011-08-08 11:16:09Z Radek Suski $
+ * @version: $Id$
  * @package: SobiPro Component for Joomla!
  * ===================================================
  * @author
@@ -12,10 +12,10 @@
  * @license see http://www.gnu.org/licenses/gpl.html GNU/GPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU General Public License version 3
  * ===================================================
- * $Date: 2011-08-08 13:16:09 +0200 (Mon, 08 Aug 2011) $
- * $Revision: 1776 $
- * $Author: Radek Suski $
- * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Admin/sobipro.php $
+ * $Date$
+ * $Revision$
+ * $Author$
+ * $HeadURL$
  */
 defined( '_JEXEC' ) || exit( 'Restricted access' );
 define( 'SOBI_TESTS', false );
