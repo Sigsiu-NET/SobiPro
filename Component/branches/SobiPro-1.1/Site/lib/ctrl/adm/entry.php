@@ -177,21 +177,23 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		if ( !( count( $sids ) ) ) {
 			$this->response( Sobi::Back(), Sobi::Txt( 'CHANGE_NO_ID' ), false, SPC::ERROR_MSG );
 		}
-		foreach ( $sids as $sid ) {
-			try {
-				SPFactory::db()->update( 'spdb_object', array( 'approved' => $approve ? 1 : 0 ), array( 'id' => $sid, 'oType' => 'entry' ) );
-				if ( $approve ) {
-					SPFactory::Entry( $sid )->approveFields( $approve );
+		else {
+			foreach ( $sids as $sid ) {
+				try {
+					SPFactory::db()->update( 'spdb_object', array( 'approved' => $approve ? 1 : 0 ), array( 'id' => $sid, 'oType' => 'entry' ) );
+					if ( $approve ) {
+						SPFactory::Entry( $sid )->approveFields( $approve );
+					}
+					else {
+						SPFactory::cache()->deleteObj( 'entry', $sid );
+					}
+				} catch ( SPException $x ) {
+					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
-				else {
-					SPFactory::cache()->deleteObj( 'entry', $sid );
-				}
-			} catch ( SPException $x ) {
-				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+				SPFactory::cache()->purgeSectionVars();
 			}
-			SPFactory::cache()->purgeSectionVars();
+			$this->response( Sobi::Back(), Sobi::Txt( $approve ? 'EMN.APPROVED' : 'EMN.UNAPPROVED' ), false );
 		}
-		$this->response( Sobi::Back(), Sobi::Txt( $approve ? 'EMN.APPROVED' : 'EMN.UNAPPROVED' ), false );
 	}
 
 	/**
