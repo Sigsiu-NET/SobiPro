@@ -425,6 +425,12 @@ abstract class Sobi
 
 	public static function Init( $root, $lang, $sid = 0 )
 	{
+		/** compatibility */
+//		$args = func_get_args();
+//		if ( isset( $args[ 0 ] ) && !( is_numeric( $args[ 0 ] ) ) && isset( $args[ 2 ] ) ) {
+//			$sid = $args[ 2 ];
+//		}
+
 		if ( !( defined( 'SOBI_CMS' ) ) ) {
 			define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
 		}
