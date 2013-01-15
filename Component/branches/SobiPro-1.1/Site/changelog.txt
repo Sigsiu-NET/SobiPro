@@ -66,6 +66,7 @@ Legend:
    (!) Category meta description does not longer ends with a dot
    (!) No default filter for fields title, contact and city in demo data
    (!) CSS and Javascript cache now separate settings
+   (!) .htaccess files removed
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
