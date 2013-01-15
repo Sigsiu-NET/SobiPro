@@ -428,10 +428,10 @@ class SPConfigAdmCtrl extends SPController
 		$sid = Sobi::Section();
 		$this->authorise( $sid );
 		if ( $sid ) {
-			$this->validate( 'config.definitions.general', array( 'task' => 'config.general', 'sid' => $sid ) );
+			$this->validate( 'config.general', array( 'task' => 'config.general', 'sid' => $sid ) );
 		}
 		else {
-			$this->validate( 'config.definitions.global', array( 'task' => 'config.global' ) );
+			$this->validate( 'config.global', array( 'task' => 'config.global' ) );
 		}
 		$fields = array();
 		$section = false;

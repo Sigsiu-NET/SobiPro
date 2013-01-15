@@ -79,7 +79,7 @@ class SPFilter extends SPConfigAdmCtrl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$this->validate( 'field.definitions.filter', 'filter' );
+		$this->validate( 'field.filter', 'filter' );
 		$filters = $this->getFilters();
 		$id = SPRequest::cmd( 'filter_id' );
 		$name = SPRequest::string( 'filter_name', 'Filter Name' );

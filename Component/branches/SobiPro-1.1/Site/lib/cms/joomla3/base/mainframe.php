@@ -43,5 +43,4 @@ class SPJ3MainFrame extends SPJ16MainFrame implements SPMainframeInterface
 	{
 		return $document->getDescription();
 	}
-
 }
