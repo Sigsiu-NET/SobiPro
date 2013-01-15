@@ -71,7 +71,7 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="states" name="section.state" label="PUBLISHED" prefix="yes_no" />
+							<field type="toggle" name="section.state" label="PUBLISHED" prefix="yes_no" />
                             <field type="datePicker" label="VALID_SINCE" name="section.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
                             <field type="datePicker" label="VALID_UNTIL" name="section.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
 						</fieldset>

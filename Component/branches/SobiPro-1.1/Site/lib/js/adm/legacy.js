@@ -22,7 +22,11 @@
 
 SobiPro.jQuery( document ).ready( function ()
 {
-	"use strict";
-	SobiPro.jQuery( '#SPAdminForm >:first-child' ).removeAttr( 'style' ).addClass( 'span2' );
-	SobiPro.jQuery( '#SPAdminForm >:nth-child(2)' ).removeAttr( 'style' ).addClass( 'span10' );
+	if ( SobiPro.jQuery( '#SP_task' ).val().indexOf( 'field.' ) == -1 ) {
+		SobiPro.jQuery( '#SPAdminForm >:first-child' ).removeAttr( 'style' ).addClass( 'span2' );
+		SobiPro.jQuery( '#SPAdminForm >:nth-child(2)' ).removeAttr( 'style' ).addClass( 'span10' );
+	}
+	else {
+		SobiPro.jQuery( '[class*="width-"]' ).removeAttr( 'style' );
+	}
 } );

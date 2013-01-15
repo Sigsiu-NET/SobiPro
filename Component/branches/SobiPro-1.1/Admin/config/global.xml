@@ -49,14 +49,14 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset label="GB.CFG.LANG">
-									<field type="states" name="spcfg[lang.multimode]" value="lang.multimode" label="GB.CFG.MULTILANG" prefix="onoff" />
+									<field type="toggle" name="spcfg[lang.multimode]" value="lang.multimode" label="GB.CFG.MULTILANG" prefix="onoff" />
 								</fieldset>
 								<fieldset label="GBN.CFG.HTML_INPUT">
 									<field type="textarea" name="spcfg[html.allowed_tags_array]" value="html.allowed_tags_array" label="GB.CFG.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />
 									<field type="textarea" name="spcfg[html.allowed_attributes_array]" value="html.allowed_attributes_array" label="GB.CFG.ALLOWED_ATTRIBUTES" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 								<fieldset label="GBN.CFG.PBY_SUPPORT">
-									<field type="states" name="spcfg[general.show_pb]" value="general.show_pb" label="GB.CFG.PBY_HEAD" prefix="show" />
+									<field type="toggle" name="spcfg[general.show_pb]" value="general.show_pb" label="GB.CFG.PBY_HEAD" prefix="show" />
 									<message label="GBN.CFG.PBY_EXPL" class="spConfigAlert" type="warning" dismiss-button="false" />
 								</fieldset>
 							</div>
@@ -84,8 +84,8 @@
 											<text>%</text>
 										</add>
 									</field>
-									<field type="states" name="spcfg[payments.vat_brutto]" value="payments.vat_brutto" label="GB.CFG.PMN_PRICE_BRUTTO" prefix="yes_no" />
-									<field type="states" name="spcfg[payments.discount_to_netto]" value="payments.discount_to_netto" label="GB.CFG.DISCOUNT_TO_NETTO" prefix="yes_no" />
+									<field type="toggle" name="spcfg[payments.vat_brutto]" value="payments.vat_brutto" label="GB.CFG.PMN_PRICE_BRUTTO" prefix="yes_no" />
+									<field type="toggle" name="spcfg[payments.discount_to_netto]" value="payments.discount_to_netto" label="GB.CFG.DISCOUNT_TO_NETTO" prefix="yes_no" />
 									<field type="select" label="GB.CFG.PMN_PRC_FORMAT" name="spcfg[payments.percent_format]" selected="payments.percent_format" class="input-xlarge">
 										<values>
 											<option value="%number%sign" label="GB.CFG.PMN_PRC_FORMAT_NS" />
@@ -101,14 +101,14 @@
 							<div class="span12">
 								<fieldset>
 									<message label="GBN.CFG.ACCEL" type="error" dismiss-button="false" class="spConfigAlert" />
-									<field type="states" name="spcfg[cache.l3_enabled]" value="cache.l3_enabled" label="GB.CFG.DATA_ACCELERATOR" prefix="onoff" />
+									<field type="toggle" name="spcfg[cache.l3_enabled]" value="cache.l3_enabled" label="GB.CFG.DATA_ACCELERATOR" prefix="onoff" />
 								</fieldset>
 								<fieldset label="GB.CFG.CACHE">
-									<field type="states" name="spcfg[cache.include_js_files]" value="cache.include_js_files" label="GBN.CFG.INCLUDE_JS_FILES_CACHE" prefix="onoff" />
-									<field type="states" name="spcfg[cache.include_css_files]" value="cache.include_css_files" label="GBN.CFG.INCLUDE_CSS_FILES_CACHE" prefix="onoff" />
+									<field type="toggle" name="spcfg[cache.include_js_files]" value="cache.include_js_files" label="GBN.CFG.INCLUDE_JS_FILES_CACHE" prefix="onoff" />
+									<field type="toggle" name="spcfg[cache.include_css_files]" value="cache.include_css_files" label="GBN.CFG.INCLUDE_CSS_FILES_CACHE" prefix="onoff" />
 								</fieldset>
 								<fieldset label="GBN.CFG.COMPRESS_FILES">
-									<field type="states" name="spcfg[cache.compress_js]" value="cache.compress_js" label="GBN.CFG.COMPRESS_JS_FILES" prefix="onoff" />
+									<field type="toggle" name="spcfg[cache.compress_js]" value="cache.compress_js" label="GBN.CFG.COMPRESS_JS_FILES" prefix="onoff" />
 								</fieldset>
 							</div>
 						</div>
@@ -117,11 +117,11 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset label="GBN.CFG.DEB_DEBUG">
-									<field type="states" name="spcfg[debug.xml_raw]" value="debug.xml_raw" label="GBN.CFG.DEB_XML_RAW" prefix="onoff" />
+									<field type="toggle" name="spcfg[debug.xml_raw]" value="debug.xml_raw" label="GBN.CFG.DEB_XML_RAW" prefix="onoff" />
 									<field type="text" name="spcfg[debug.xml_ip]" value="debug.xml_ip" label="GBN.CFG.DEB_XML_IP" class="input-medium" />
 								</fieldset>
 								<fieldset label="GBN.CFG.DEB_LOG">
-									<field type="states" name="spcfg[debug.display_errors]" value="debug.display_errors" label="GBN.CFG.DEB_DISPLAY_ERRORS" prefix="yes_no" />
+									<field type="toggle" name="spcfg[debug.display_errors]" value="debug.display_errors" label="GBN.CFG.DEB_DISPLAY_ERRORS" prefix="yes_no" />
 									<field type="select" label="GBN.CFG.DEB_LEVEL" name="spcfg[debug.level]" selected="debug.level" class="input-xlarge">
 										<values>
 											<option value="0" label="GB.CFG.DEB_LEVEL_NONE" />

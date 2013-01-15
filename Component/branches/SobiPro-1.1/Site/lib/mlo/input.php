@@ -627,9 +627,27 @@ abstract class SPHtml_Input
 	 * @param string $id - id prefix of the field
 	 * @param string $label - label prefix to display beside the fields
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param string $side - on which site from the field the label should be displayed
+	 * @return string
+	 * @deprecated
+	 */
+	public static function states( $name, $value, $id, $label, $params = null, $side = 'right' )
+	{
+		return self::radioList( $name, array( '0' => "translate:[{$label}_no]", '1' => "translate:[{$label}_yes]" ), $id, ( int ) $value, $params, $side );
+	}
+
+	/**
+	 * Special function to create enabled/disabled states radio list
+	 *
+	 * @param string $name - name of the html field
+	 * @param array $value - selected value
+	 * @param string $id - id prefix of the field
+	 * @param $prefix
+	 * @internal param string $label - label prefix to display beside the fields
+	 * @internal param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @return string
 	 */
-	public static function states( $name, $value, $id, $prefix /*, $params = null*/ )
+	public static function toggle( $name, $value, $id, $prefix /*, $params = null*/ )
 	{
 		$value = (int)$value;
 		$field = null;

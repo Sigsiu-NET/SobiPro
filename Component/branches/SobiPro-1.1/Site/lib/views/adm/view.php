@@ -1377,7 +1377,10 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 *
-	 * @param path
+	 * @param $path
+	 * @param bool $adm
+	 * @return void
+	 * @internal param $path
 	 */
 	public function loadCSSFile( $path, $adm = true )
 	{
@@ -1392,7 +1395,10 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 *
-	 * @param path
+	 * @param $path
+	 * @param bool $adm
+	 * @return void
+	 * @internal param $path
 	 */
 	public function loadJsFile( $path, $adm = true )
 	{
@@ -1439,9 +1445,10 @@ class SPAdmView extends SPObject implements SPView
 	/**
 	 * Returns copy of stored key
 	 *
-	 * @param string $label
+	 * @param $key
 	 * @param mixed $def
 	 * @param string $section
+	 * @internal param string $label
 	 * @return mixed
 	 */
 	protected function key( $key, $def = null, $section = 'general' )
@@ -1469,7 +1476,10 @@ class SPAdmView extends SPObject implements SPView
 	}
 
 	/**
-	 * @param mixed $attr
+	 * @param $date
+	 * @param bool $start
+	 * @return string
+	 * @internal param mixed $attr
 	 */
 	protected function date( $date, $start = true )
 	{
@@ -1482,7 +1492,7 @@ class SPAdmView extends SPObject implements SPView
 	}
 
 	/**
-	 * @param mixed $attr
+	 * @internal param mixed $attr
 	 * @return string
 	 */
 	protected function field()
@@ -1545,7 +1555,8 @@ class SPAdmView extends SPObject implements SPView
 	/**
 	 *
 	 * @param mixed $attr
-	 * @param int $index
+	 * @param mixed $name
+	 * @internal param int $index
 	 * @return mixed
 	 */
 	public function set( $attr, $name )
@@ -1673,7 +1684,8 @@ class SPAdmView extends SPObject implements SPView
 	}
 
 	/**
-	 * @param int $id
+	 * @param $ids
+	 * @internal param int $id
 	 * @return SPUser
 	 */
 	protected function userData( $ids )
@@ -1690,6 +1702,9 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param int $id
+	 * @param bool $parents
+	 * @param bool $last
+	 * @param int $offset
 	 * @return array
 	 */
 	protected function parentPath( $id, $parents = false, $last = false, $offset = 2 )

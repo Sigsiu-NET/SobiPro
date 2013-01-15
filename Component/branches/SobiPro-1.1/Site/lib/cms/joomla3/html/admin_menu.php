@@ -37,6 +37,7 @@ abstract class SPAdmMenu extends SPJoomlaAdmMenu
 	 */
 	public static function help( $alt )
 	{
+		return null;
 		$bar =& JToolBar::getInstance( 'toolbar' );
 		$bar->appendButton( 'link', 'help', $alt, 'http://sobipro.sigsiu.net/help_screen/'.Sobi::Reg( 'help_task', Sobi::Reg( 'task', SPRequest::task() ) ) );
 		SPFactory::header()->addJsCode( '
@@ -49,4 +50,3 @@ abstract class SPAdmMenu extends SPJoomlaAdmMenu
 		);
 	}
 }
-?>
