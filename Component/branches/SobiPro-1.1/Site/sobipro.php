@@ -47,7 +47,6 @@ SPLoader::loadClass( 'base.request' );
 if( preg_match( '/\.php$/', SPRequest::task() ) || strlen( SPRequest::task() ) > 50 ) {
 	JError::raiseError( 403, 'Unauthorized Access' );
 }
-//JHtml::_( 'behavior.tooltip' );
 $class = SPLoader::loadController( 'sobipro' );
 $sobi = new $class( SPRequest::task() );
 $sobi->execute();

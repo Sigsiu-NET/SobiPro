@@ -8,7 +8,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
  * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
  * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
  * ===================================================
@@ -30,10 +30,17 @@ class SPListingCtrl extends SPSectionCtrl
 {
 	public function execute()
 	{
-        SPRequest::set( 'task', $this->_type.'.'.$this->_task );
-		if( $class = SPLoader::loadClass( 'opt.listing.'.$this->_task, false, null, true ) ) {
+		SPRequest::set( 'task', $this->_type . '.' . $this->_task );
+		if ( strstr( $this->_task, '.' ) ) {
+			$task = explode( '.', $this->_task );
+			$class = SPLoader::loadClass( 'opt.listing.' . $task[ 0 ], false, null, true );
+		}
+		else {
+			$class = SPLoader::loadClass( 'opt.listing.' . $this->_task, false, null, true );
+		}
+		if ( $class ) {
 			$imp = class_implements( $class );
-			if( is_array( $imp ) && in_array( 'SPListing', $imp ) ) {
+			if ( is_array( $imp ) && in_array( 'SPListing', $imp ) ) {
 				$listing = new $class();
 				$listing->setTask( $this->_task );
 				return $listing->execute();
@@ -44,14 +51,14 @@ class SPListingCtrl extends SPSectionCtrl
 		}
 		else {
 			/* case parent didn't registered this task, it was an error */
-			if( !( parent::execute() ) && $this->name() == __CLASS__ ) {
+			if ( !( parent::execute() ) && $this->name() == __CLASS__ ) {
 				Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 			}
 		}
 	}
+
 	public function entries( $eOrder, $eLimit = null, $eLimStart = null, $count = false, $conditions = array(), $entriesRecursive = false, $pid = -1 )
 	{
 		return $this->getEntries( $eOrder, $eLimit, $eLimStart, $count, $conditions, $entriesRecursive, $pid );
 	}
 }
-?>
