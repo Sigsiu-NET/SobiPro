@@ -42,8 +42,10 @@ abstract class SPAdmMenu extends SPJoomlaAdmMenu
 		SPFactory::header()->addJsCode( '
 			window.addEvent( "domready",
 				function() {
-					var spHelpLink = $$( "#toolbar-help a" )[ 0 ];
-					spHelpLink.target = "_blank";
+					try {
+						var spHelpLink = $$( "#toolbar-help a" )[ 0 ];
+						spHelpLink.target = "_blank";
+					} catch (e) {}
 				}
 			);'
 		);

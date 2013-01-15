@@ -46,7 +46,7 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no" />
+									<field type="toggle" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no" />
 								</fieldset>
 								<fieldset>
 									<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true" />
@@ -66,8 +66,8 @@
 							<div class="span12">
 								<fieldset>
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
-                                    <field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
-                                    <field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+                                    <field type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
+                                    <field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 									<field type="select" name="field.method" selected="field.method" label="FMN.CC_METHOD" class="input-large">
 										<values>
 											<option value="tree" label="FMN.CC_TREE" />
@@ -78,7 +78,7 @@
 									</field>
 									<div class="hide spCcMethod" id="spCc-tree">
 										<fieldset label="FMN.CC_TREE">
-											<field type="states" name="field.modal" value="field.modal" label="FMN.CC_TREE_MODAL" prefix="fmn.cc_modal" />
+											<field type="toggle" name="field.modal" value="field.modal" label="FMN.CC_TREE_MODAL" prefix="fmn.cc_modal" />
 											<field type="text" name="field.catsMaxLimit" value="field.catsMaxLimit" label="FMN.CC_CATS_LIMIT" class="input-mini">
 												<add where="after">
 													<call function="Sobi::Txt">
@@ -86,7 +86,7 @@
 													</call>
 												</add>
 											</field>
-											<field type="states" name="field.childs" value="field.childs" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
+											<field type="toggle" name="field.childs" value="field.childs" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
 										</fieldset>
 									</div>
 									<div class="hide spCcMethod" id="spCc-select">
@@ -96,8 +96,8 @@
 													<text>px</text>
 												</add>
 											</field>
-											<field type="states" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
-											<field type="states" name="field.isPrimary" value="field.isPrimary" label="FMN.CC_IS_PRIMARY" prefix="yes_no" />
+											<field type="toggle" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
+											<field type="toggle" name="field.isPrimary" value="field.isPrimary" label="FMN.CC_IS_PRIMARY" prefix="yes_no" />
 										</fieldset>
 									</div>
 									<div class="hide spCcMethod" id="spCc-mselect">
@@ -119,7 +119,7 @@
 													</call>
 												</add>
 											</field>
-											<field type="states" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
+											<field type="toggle" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
 										</fieldset>
 									</div>
 									<div class="hide spCcMethod" id="spCc-fixed">
@@ -130,11 +130,11 @@
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
 									<field type="output" value="field.version" label="VERSION" class="badge" />
-									<field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
+									<field type="toggle" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
 									<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
-									<field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no" />
+									<field type="toggle" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no" />
 									<field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
 										<add where="after">
 											<call function="Sobi::Cfg">
@@ -159,11 +159,11 @@
 					<!--<option value="hidden" label="FMN.HIDDEN_OPT" />-->
 					<!--</values>-->
 					<!--</field>-->
-					<!--<field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />-->
+					<!--<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />-->
 					<!--</fieldset>-->
 					<!--<fieldset label="FMN.FIELD_ENTRYVIEW_META">-->
-					<!--<field type="states" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />-->
-					<!--<field type="states" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />-->
+					<!--<field type="toggle" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />-->
+					<!--<field type="toggle" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />-->
 					<!--</fieldset>-->
 					<!--</div>-->
 					<!--</div>-->
@@ -172,7 +172,7 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="states" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
+									<field type="toggle" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
 									<field type="select" name="field.searchMethod" selected="field.searchMethod" label="FMN.CC_SEARCH_METHOD" class="input-large">
 										<values>
 											<option value="select" label="FMN.SELECT_LIST_OPT" />

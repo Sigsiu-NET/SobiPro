@@ -56,7 +56,7 @@
 				<tab label="ACL_PUBLISHING">
 					<div class="span12">
 						<fieldset>
-							<field type="states" name="set.state" label="ACL_ENABLED" prefix="yes_no" />
+							<field type="toggle" name="set.state" label="ACL_ENABLED" prefix="yes_no" />
 							<field type="datePicker" label="VALID_SINCE" name="set.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
 							<field type="datePicker" label="VALID_UNTIL" name="set.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
 						</fieldset>

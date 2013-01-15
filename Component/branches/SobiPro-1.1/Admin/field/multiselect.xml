@@ -45,7 +45,7 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="states" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no" />
+									<field type="toggle" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no" />
 								</fieldset>
 								<fieldset>
 									<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true" />
@@ -85,17 +85,17 @@
 										</add>
 									</field>
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
-									<field type="states" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
-									<field type="states" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+									<field type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
+									<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
 									<field type="output" value="field.version" label="VERSION" class="badge" />
-									<field type="states" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
+									<field type="toggle" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
 									<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
 								</fieldset>
 
 								<fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
-									<field type="states" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no" />
+									<field type="toggle" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no" />
 									<field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
 										<add where="after">
 											<call function="Sobi::Cfg">
@@ -120,11 +120,11 @@
 											<option value="hidden" label="FMN.HIDDEN_OPT" />
 										</values>
 									</field>
-									<field type="states" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
+									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYVIEW_META">
-									<field type="states" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
-									<field type="states" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
+									<field type="toggle" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
+									<field type="toggle" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
 								</fieldset>
 							</div>
 						</div>
@@ -133,7 +133,7 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="states" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
+									<field type="toggle" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
 									<field type="select" name="field.priority" value="field.priority" label="FM.SEARCH_PRIORITY" multi="false" class="span1">
 										<values>
 											<option value="1" label="1" />

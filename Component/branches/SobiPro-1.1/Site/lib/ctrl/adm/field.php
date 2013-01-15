@@ -417,7 +417,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$fid = $field->saveNew( $this->attr );
 				$field->save( $this->attr );
 			} catch ( SPException $x ) {
-//				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $msg, false, 'success' );
+				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $msg, false, 'success' );
 			}
 		}
 		else {
