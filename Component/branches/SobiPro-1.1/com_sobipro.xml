@@ -36,6 +36,7 @@
 			<filename>sobipro.php</filename>
 			<filename>changelog.txt</filename>
 			<filename>metadata.xml</filename>
+            <filename>gplv3.txt</filename>
 	</files>
 	<languages>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.ini</language>

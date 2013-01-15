@@ -764,6 +764,9 @@ input.sp-input-micro[type="text"] {
   margin-top: 6px;
   color: #666666;
 }
+.GeoMap {
+  margin-right: 10px !important;
+}
 .controls img {
   max-width: inherit;
 }
