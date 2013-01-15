@@ -1,22 +1,26 @@
 <?php
 /**
- * @version: $Id: mchooser.php 992 2011-03-17 16:31:33Z Radek Suski $
- * @package: SobiPro Library
- * ===================================================
+ * @version: $Id$
+ * @package: SobiPro Component for Joomla!
+
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
- * ===================================================
- * @copyright Copyright (C) 2006 - 2011 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
- * @license see http://www.gnu.org/licenses/lgpl.html GNU/LGPL Version 3.
- * You can use, redistribute this file and/or modify it under the terms of the GNU Lesser General Public License version 3
- * ===================================================
- * $Date: 2011-03-17 17:31:33 +0100 (Thu, 17 Mar 2011) $
- * $Revision: 992 $
- * $Author: Radek Suski $
- * $HeadURL: https://svn.suski.eu/SobiPro/Component/trunk/Site/views/tpl/mchooser.php $
+
+ * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license GNU/GPL Version 3
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+ * $Date$
+ * $Revision$
+ * $Author$
+ * $HeadURL$
  */
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPFactory::header()->addCSSCode( 'legend { color: #0b55c4; font-size: 12px!important; font-weight: bold;}' );
 SPFactory::header()->addCSSCode( '.sigsiuTree {height: 330px;}');
