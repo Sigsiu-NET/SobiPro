@@ -42,6 +42,11 @@ SobiPro.jQuery().ready( function ()
 			SPStartTime = 0;
 		}
 		else {
+			try {
+				window.top.location.href = SobiPro.jQuery( '#SP_redirect' ).val();
+			}
+			catch ( e ) {
+			}
 			document.location = SobiPro.jQuery( '#SP_redirect' ).val();
 		}
 		return false;

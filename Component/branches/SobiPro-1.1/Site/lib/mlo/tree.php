@@ -321,7 +321,6 @@ final class SigsiuTree extends SPObject
      */
     public function extend( $sid )
     {
-        $childs = array();
         $childs = $this->getChilds( $sid );
         Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$childs ) );
         SPFactory::mainframe()->cleanBuffer();
@@ -441,7 +440,7 @@ final class SigsiuTree extends SPObject
             case 'name':
             case 'name.asc':
             case 'name.desc':
-                $r = strcmp( $from->get( 'name' ), $to->get( 'name' ) );
+                $r = strcasecmp( $from->get( 'name' ), $to->get( 'name' ) );
                 if ( $this->_ordering == 'name.desc' ) {
                     $r = $r * -1;
                 }
@@ -506,5 +505,3 @@ final class SigsiuTree extends SPObject
         return $string;
     }
 }
-
-?>

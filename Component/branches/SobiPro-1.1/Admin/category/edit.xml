@@ -181,7 +181,7 @@
 		</div>
 	</body>
 	<config>
-		<action value="index.php?option=com_sobipro" />
+		<action value="index.php" />
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
@@ -190,6 +190,7 @@
 			<field name="selectedCatPath" default="" />
 			<field name="categoryIconHolder" value="category_icon" />
 			<field name="category.icon" value="category.icon" />
+			<field name="category.id" value="category.id" />
 			<field name="category.parent" value="category.parent" />
 			<field name="method" default="xhr" />
 		</hidden>

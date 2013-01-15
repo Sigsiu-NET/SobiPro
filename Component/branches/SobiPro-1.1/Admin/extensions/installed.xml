@@ -80,7 +80,7 @@
 		</div>
 	</body>
 	<config>
-		<action value="index.php?option=com_sobipro" />
+		<action value="index.php" />
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
