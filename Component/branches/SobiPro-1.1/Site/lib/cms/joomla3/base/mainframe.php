@@ -27,4 +27,21 @@ require_once dirname( __FILE__ ) . '/../../joomla16/base/mainframe.php';
  */
 class SPJ3MainFrame extends SPJ16MainFrame implements SPMainframeInterface
 {
+	/**
+	 * @return SPJoomlaMainFrame
+	 */
+	public static function & getInstance()
+	{
+		static $mf = false;
+		if ( !( $mf ) || !( $mf instanceof self ) ) {
+			$mf = new self();
+		}
+		return $mf;
+	}
+
+	protected function getMetaDescription( $document )
+	{
+		return $document->getDescription();
+	}
+
 }
