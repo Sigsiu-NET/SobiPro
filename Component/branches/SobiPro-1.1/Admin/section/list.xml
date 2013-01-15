@@ -28,7 +28,7 @@
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSection">
 		<buttons type="entry">
-			<button type="new" task="entry.add" label="AMN.ADD" icon="plus" />
+			<button type="url" sid="true" task="entry.add" label="AMN.ADD" icon="plus" />
 			<button type="delete" task="entry.delete" />
 			<nav-header label="TB.PUBLISHING" />
 			<button type="publish" task="entry.publish" />
@@ -39,7 +39,7 @@
 		</buttons>
 		<divider />
 		<buttons type="category">
-			<button type="new" task="category.add" label="AMN.ADD" icon="plus" />
+			<button type="url" sid="true" task="category.add" label="AMN.ADD" icon="plus" />
 			<button type="delete" task="category.delete" />
 			<nav-header label="TB.PUBLISHING" />
 			<button type="publish" task="category.publish" />

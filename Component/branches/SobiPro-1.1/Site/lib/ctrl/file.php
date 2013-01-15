@@ -78,7 +78,7 @@ class SPFileUploader extends SPController
 
 	protected function check( $file )
 	{
-		$allowed = SPLoader::loadIniFile( 'etc.download' );
+		$allowed = SPLoader::loadIniFile( 'etc.files' );
 		$mType = SPFactory::Instance( 'services.fileinfo', $file )->mimeType();
 		if ( strlen( $mType ) && !( in_array( $mType, $allowed ) ) ) {
 			SPFs::delete( $file );

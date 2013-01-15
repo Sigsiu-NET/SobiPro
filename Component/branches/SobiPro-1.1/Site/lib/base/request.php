@@ -196,11 +196,12 @@ abstract class SPRequest
 	 * Returns integer value of the 'sid' variable
 	 *
 	 * @param string $method request method
+	 * @param int $default
 	 * @return int
 	 */
-	static public function sid( $method = 'REQUEST' )
+	static public function sid( $method = 'REQUEST', $default = 0 )
 	{
-		return self::int( 'sid', 0, $method );
+		return self::int( 'sid', $default, $method );
 	}
 
 	/**

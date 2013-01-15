@@ -242,7 +242,12 @@ class SpAdmToolbar
 					$link = 'http://sobipro.sigsiu.net/help_screen/' . Sobi::Reg( 'help_task', SPRequest::task() );
 					break;
 				case 'url':
-					$link = Sobi::Url( $button[ 'task' ] );
+					if ( isset( $button[ 'sid' ] ) && $button[ 'sid' ] == 'true' ) {
+						$link = Sobi::Url( array( 'task' => $button[ 'task' ], 'sid' => SPRequest::sid( 'request', SPRequest::int( 'pid' ) ) ) );
+					}
+					else {
+						$link = Sobi::Url( $button[ 'task' ] );
+					}
 					break;
 			}
 		}
