@@ -8,7 +8,7 @@
  * Licensed under the MIT license:
  *   http://www.opensource.org/licenses/mit-license.php
  *
- * Revision: $Id: osx.js 1199 2011-04-15 18:44:16Z Radek Suski $
+ * Revision: $Id$
  */
 
 jQuery( function() {
