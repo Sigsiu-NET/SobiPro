@@ -1,0 +1,21 @@
+SobiPro is released under the GNU General Public License V3
+Additional Terms according section 7 of GNU/GPL V3
+
+These additional terms refer to SobiPro and its applications (hereinafter referred to as Software) and any updates to Software.
+
+"Sobi" and "SobiPro" are trademarks of Sigsiu.NET GmbH. The licensing of the Software under the GPL does not imply a trademark license. Therefore any rights, title and interest in our trademarks remain entirely with Sigsiu.NET GmbH.
+
+Except as expressly provided herein, no trademark rights are granted to any trademarks of Sigsiu.NET GmbH. Licensees are granted a limited, non-exclusive right to use the marks "Sobi", "SobiPro" and the SobiPro and Sigsiu.NET logos in connection with unmodified copies of the Software.
+
+If the licensee distributes modified copies of the Software, he has to:
+
+    Replace/remove all terms, images and files containing the marks "Sobi", "SobiPro" and the SobiPro and Sigsiu.NET logos.
+    Remove any code which causes connection to or any kind of load of servers managed by Sigsiu.NET GmbH
+    The terms "Sigsiu", "Sigsiu.NET", "Sobi" and "SobiPro" have to be removed from all visual outputs (front-end and back-end).
+    The copyright notices within the source code files must not be removed and have to be left fully intact.
+    This agreement does not limit user's rights under, or grant user rights that supersede, the license terms of any particular component of the Software.
+
+In addition, licensees that modify the Software must give the modified Software a new name that is not confusingly similar to "Sobi" or "SobiPro" and may not distribute it under the names "Sobi" and "SobiPro".
+The names "Sobi", "SobiPro" and "Sigsiu" must not be used to endorse or promote products derived from this Software without prior written permission of Sigsiu.NET GmbH.
+
+If any provision of this agreement is held to be unenforceable, it does not excuse you from the conditions of this License. If the licensee cannot distribute so as to satisfy simultaneously his obligations under this License and any other pertinent obligations, then as a consequence he may not distribute the Software at all.
