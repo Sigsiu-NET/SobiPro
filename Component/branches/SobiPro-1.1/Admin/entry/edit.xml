@@ -38,7 +38,7 @@
 		<divider />
 		<button type="help" target="_blank" />
 	</toolbar>
-	<body>
+	<body disable-menu="true">
 		<div class="row-fluid">
 			<div class="span12">
 				<message id="spMessage" />
