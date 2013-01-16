@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -52,7 +48,7 @@ class SPFile
 	public function __construct( $filename = null )
 	{
 		$this->_filename = $filename;
-		if( $this->_filename ) {
+		if ( $this->_filename ) {
 			$this->_pathinfo = pathinfo( $this->_filename );
 		}
 	}
@@ -129,17 +125,19 @@ class SPFile
 	/**
 	 * Get file from the request and upload to the given path
 	 * @param string $name - file name from the request
-	 * @param string $dest - destination path
+	 * @param string $destination - destination path
+	 * @throws SPException
 	 * @return bool
 	 */
-	public function upload( $name, $dest )
+	public function upload( $name, $destination )
 	{
-		if( SPFs::upload( $name, $dest ) ) {
-			$this->_filename = $dest;
+		$destination = Sobi::FixPath( $destination );
+		if ( SPFs::upload( $name, $destination ) ) {
+			$this->_filename = $destination;
 			return $this->_filename;
 		}
 		else {
-			return false;
+			throw new SPException( SPLang::e( 'CANNOT_UPLOAD_FILE_TO', str_replace( SOBI_ROOT, null, $destination ) ) );
 		}
 	}
 
@@ -161,10 +159,10 @@ class SPFile
 	{
 		$f = explode( DS, $target );
 		$path = str_replace( $f[ count( $f ) - 1 ], null, $target );
-		if( !( SPFs::exists( $path ) ) ) {
+		if ( !( SPFs::exists( $path ) ) ) {
 			SPFs::mkdir( $path );
 		}
-		if( SPFs::move( $this->_filename, $target ) ) {
+		if ( SPFs::move( $this->_filename, $target ) ) {
 			$this->_filename = $target;
 		}
 		return $this;
@@ -246,7 +244,7 @@ class SPFile
 	{
 		$filename = SPFs::getFileName( $this->_filename );
 		$new = str_replace( $filename, $name, $this->_filename );
-		if( SPFs::move( $this->_filename , $new ) ) {
+		if ( SPFs::move( $this->_filename, $new ) ) {
 			$this->_filename = $new;
 			return true;
 		}

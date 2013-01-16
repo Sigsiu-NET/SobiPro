@@ -42,7 +42,6 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			case 'edit':
 			case 'add':
 				$r = true;
-				SPLoader::loadClass( 'html.input' );
 				$this->editForm();
 				break;
 			case 'approve':

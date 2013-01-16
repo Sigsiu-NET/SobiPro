@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -183,16 +179,19 @@ abstract class SPJoomlaFs
 
 	/**
 	 * @param string $name
-	 * @param string $dest
+	 * @param string $destination
 	 * @return bool
 	 */
-	public static function upload( $name, $dest )
+	public static function upload( $name, $destination )
 	{
+		if ( !( file_exists( dirname( $destination ) ) ) ) {
+			self::mkdir( dirname( $destination ) );
+		}
 		/** Ajax uploader exception */
 		if ( strstr( $name, SOBI_PATH ) ) {
-			return self::move( $name, $dest );
+			return self::move( $name, $destination );
 		}
-		return Jfile::upload( $name, $dest );
+		return Jfile::upload( $name, $destination );
 	}
 
 	/**
@@ -207,6 +206,8 @@ abstract class SPJoomlaFs
 
 	/**
 	 * @param string $path
+	 * @param int $mode
+	 * @throws SPException
 	 * @return bool
 	 */
 	public static function mkdir( $path, $mode = 0755 )
