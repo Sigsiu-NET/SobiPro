@@ -21,8 +21,9 @@
  */
 .SobiPro {
   color: #333333;
-  font-size: 15px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 18px;
 }
 .SobiPro .clearall {
   clear: both;
@@ -237,12 +238,14 @@ div.spScreenTitle h4 {
   width: 500px;
 }
 #SPAdminForm table .control-label {
-  padding-top: 5px;
+  padding-top: 4px;
   color: #0000b3;
 }
 #SPAdminForm fieldset .control-label {
-  padding-top: 0px;
   width: 200px;
+}
+fieldset label {
+  margin: 0;
 }
 #SPAdminForm fieldset .controls {
   margin-left: 220px;
@@ -709,6 +712,8 @@ input.sp-input-micro[type="text"] {
 .spFieldUrlLabel label {
   padding-right: 5px;
   color: #666666;
+  margin-top: 5px;
+  float: left;
 }
 .spFieldUrl {
   display: block;
@@ -716,29 +721,32 @@ input.sp-input-micro[type="text"] {
 .spFieldUrl select {
   width: 100px;
 }
+.spFileUpload input,
+.spFieldRadio,
 .spFieldCheckbox {
   float: left;
 }
 .spFieldCheckbox label {
   color: #666666;
   float: left;
+  margin-top: 5px;
 }
 .spFieldCheckbox input {
   margin-top: 6px !important;
   margin-left: 5px !important;
   margin-right: 5px !important;
-}
-.spFieldRadio {
   float: left;
 }
 .spFieldRadio label {
   color: #666666;
   float: left;
+  margin-top: 5px;
 }
 .spFieldRadio input {
   margin-top: 8px !important;
   margin-left: 5px !important;
   margin-right: 5px !important;
+  float: left;
 }
 .SobiPro table.mceLayout {
   border-radius: 3px;
@@ -761,6 +769,10 @@ input.sp-input-micro[type="text"] {
   float: left;
 }
 /* Compatibility Styles */
+/* Editor in J!3.0 */
+.toggle-editor {
+  float: none !important;
+}
 /* GeoMap Field */
 .SPGeoLabel {
   display: block;
