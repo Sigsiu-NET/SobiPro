@@ -705,9 +705,10 @@ class SPAdmView extends SPObject implements SPView
 				'adds' => array( 'before' => null, 'after' => $adds ),
 				'help-text' => $field->get( 'description' )
 			);
-			if ( !( $field->get( 'showLabel' ) ) ) {
-				$objects[ $i ][ 'label' ] = null;
-			}
+			// show label is for details view only. Right?
+//			if ( !( $field->get( 'showLabel' ) ) ) {
+//				$objects[ $i ][ 'label' ] = null;
+//			}
 		}
 		$element[ 'content' ] = $objects;
 	}

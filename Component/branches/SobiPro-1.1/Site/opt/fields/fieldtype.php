@@ -103,6 +103,8 @@ class SPFieldType extends SPObject
 	 * Proxy pattern
 	 * @param string $method
 	 * @param array $args
+	 * @throws SPException
+	 * @return mixed
 	 */
 	public function __call( $method, $args )
 	{
@@ -269,7 +271,7 @@ class SPFieldType extends SPObject
 					 * we can change it
 					 * for the moment if an entry is entered in i.e. de_DE
 					 * but the admin approves the entry in en_GB and the multilang mode is enabled
-					 * in case it was a new entry - emty data is being displayed
+					 * in case it was a new entry - empty data is being displayed
 					 */
 					if ( !( Sobi::Cfg( 'entry.approve_all_langs', true ) ) ) {
 						$params[ 'lang' ] = array( $lang, SPC::NO_VALUE );
