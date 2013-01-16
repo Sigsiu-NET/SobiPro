@@ -30,23 +30,14 @@ require_once dirname(__FILE__).'/../../joomla_common/html/admin_menu.php';
  */
 abstract class SPAdmMenu extends SPJoomlaAdmMenu
 {
-	/**
-	 * Writes a cancel button and invokes a cancel operation (eg a checkin)
-	 * @param string An override for the task
-	 * @param string An override for the alt text
-	 */
 	public static function help( $alt )
 	{
 		return null;
-		$bar =& JToolBar::getInstance( 'toolbar' );
-		$bar->appendButton( 'link', 'help', $alt, 'http://sobipro.sigsiu.net/help_screen/'.Sobi::Reg( 'help_task', Sobi::Reg( 'task', SPRequest::task() ) ) );
-		SPFactory::header()->addJsCode( '
-			window.addEvent( "domready",
-				function() {
-					var spHelpLink = $$( "#toolbar-help a" )[ 0 ];
-					spHelpLink.target = "_blank";
-				}
-			);'
-		);
 	}
+
+	public static function addSubMenuEntry( $name, $link = null, $active = false )
+	{
+		return null;
+	}
+
 }

@@ -33,7 +33,7 @@
 		<divider />
 		<button type="help" target="_blank" />
 	</toolbar>
-	<body>
+	<body disable-menu="true">
 		<message id="spMessage" />
 		<tabs>
 			<tab label="CAT.CATEGORY_GENERAL_DATA">
