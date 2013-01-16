@@ -28,6 +28,11 @@
 .SobiPro .clearall {
   clear: both;
 }
+.SobiPro td,
+.SobiPro th {
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 /* to override Joomla styles in IE (especially checkboxes) */
 input.required {
   background-color: inherit;
@@ -235,7 +240,7 @@ div.spScreenTitle h4 {
   color: #ffffff !important;
 }
 .SobiPro .modal {
-  width: 500px;
+  width: 520px;
 }
 #SPAdminForm table .control-label {
   padding-top: 4px;
@@ -767,6 +772,20 @@ input.sp-input-micro[type="text"] {
 }
 .SigsiuTree .tree {
   float: left;
+}
+/* Modale Fenster */
+.modal-backdrop,
+.modal-backdrop.fade.in {
+  opacity: 0.2;
+}
+.modal-backdrop {
+  background-color: #000000;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1040;
 }
 /* Compatibility Styles */
 /* Editor in J!3.0 */
