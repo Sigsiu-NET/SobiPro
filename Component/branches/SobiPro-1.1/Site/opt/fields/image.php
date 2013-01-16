@@ -176,17 +176,18 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * Gets the data for a field, verify it and pre-save it.
 	 * @param SPEntry $entry
+	 * @param string $tsId
 	 * @param string $request
 	 * @return void
 	 */
-	public function submit( &$entry, $tsid = null, $request = 'POST' )
+	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{
 		$save = array();
 		if ( $this->verify( $entry, $request ) ) {
 			/* save the file to temporary folder */
 			$data = SPRequest::file( $this->nid, 'tmp_name' );
 			if ( $data ) {
-				$path = SPLoader::dirPath( "tmp.edit.{$tsid}.images", 'front', false );
+				$path = SPLoader::dirPath( "tmp.edit.{$tsId}.images", 'front', false );
 				$path .= DS . SPRequest::file( $this->nid, 'name' );
 				$fileClass = SPLoader::loadClass( 'base.fs.file' );
 				$file = new $fileClass();
@@ -201,6 +202,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * @param SPEntry $entry
 	 * @param string $request
+	 * @throws SPException
 	 * @return bool
 	 */
 	private function verify( $entry, $request )
@@ -255,7 +257,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$del = SPRequest::bool( $this->nid . '_delete', false, $request );
+			$del = SPRequest::bool( $this->nid . '_delete', false, $request );
 		static $store = null;
 		$cache = false;
 		if ( $store == null ) {
@@ -305,6 +307,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 					$image->delete();
+					throw new SPException( SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ) );
 				}
 			}
 			if ( $this->generateThumb ) {
@@ -317,6 +320,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 					$thumb->delete();
+					throw new SPException( SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ) );
 				}
 			}
 			$ico = clone $orgImage;
@@ -328,6 +332,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				$ico->delete();
+				throw new SPException( SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ) );
 			}
 			if ( !$this->keepOrg ) {
 				$orgImage->delete();

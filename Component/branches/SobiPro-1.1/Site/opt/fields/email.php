@@ -154,11 +154,11 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
     /**
      * Gets the data for a field, verify it and pre-save it.
      * @param SPEntry $entry
-     * @param string $tsid
+     * @param string $tsId
      * @param string $request
      * @return array
      */
-    public function submit( &$entry, $tsid = null, $request = 'POST' )
+    public function submit( &$entry, $tsId = null, $request = 'POST' )
     {
         if ( count( $this->verify( $entry, SPFactory::db(), $request ) ) ) {
             return SPRequest::search( $this->nid, $request );

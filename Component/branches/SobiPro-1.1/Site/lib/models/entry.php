@@ -575,6 +575,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 					 *  - what if the user breaks the submission
 					 **/
 					$db->rollback();
+					throw new SPException( SPLang::e( 'CANNOT_SAVE_FIELS_DATA', $x->getMessage() ) );
 					// @todo: it should goes to the controller
 					Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_FIELS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 					Sobi::Redirect(

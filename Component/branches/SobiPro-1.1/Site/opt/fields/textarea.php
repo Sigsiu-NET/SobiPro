@@ -170,11 +170,11 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * Gets the data for a field, verify it and pre-save it.
 	 * @param SPEntry $entry
-	 * @param string $tsid
+	 * @param string $tsId
 	 * @param string $request
 	 * @return void
 	 */
-	public function submit( &$entry, $tsid = null, $request = 'POST' )
+	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{
 		$data = $this->verify( $entry, $request );
 		if( strlen( $data ) ) {
