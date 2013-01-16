@@ -18,13 +18,13 @@
  */ /* Styles for SigsiuTree */
 	/* -------------------------------------------------------- */
 .sigsiuTree {
-	font-family: Arial, Verdana, Geneva, Helvetica, sans-serif;
 	font-size: 13px;
 	color: #666;
 	white-space: nowrap;
 	overflow: auto;
     margin-left: -4px;
     margin-right: -7px;
+    line-height: 17px;
 }
 
 .sigsiuTree img {

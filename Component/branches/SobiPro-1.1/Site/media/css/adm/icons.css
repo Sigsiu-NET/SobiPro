@@ -1,3 +1,9 @@
+a [class^="icon-"],
+a [class*=" icon-"] {
+  text-decoration: none;
+  /* Sigsiu.NET */
+
+}
 /** For Joomla! 3.0 default template */
 .SobiPro [class^="icon-"]::before,
 [class*=" icon-"]::before {
@@ -6,8 +12,11 @@
   speak: none;
   color: inherit;
 }
+.icon-eye:before {
+  content: "\f06e";
+}
 .SobiPro {
-/*!
+  /*!
  *  Font Awesome 3.0.1
  *  the iconic font designed for use with Twitter Bootstrap
  *  -------------------------------------------------------
@@ -98,9 +107,6 @@ background-repeat: repeat;
 .SobiPro a [class^="icon-"],
 .SobiPro a [class*=" icon-"] {
   display: inline-block;
-  text-decoration: none;
-  /* Sigsiu.NET */
-
 }
 .SobiPro .icon-large:before {
   vertical-align: -10%;
