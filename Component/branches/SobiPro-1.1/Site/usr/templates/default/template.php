@@ -27,10 +27,6 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 abstract class TplFunctions
 {
-	public static function Txt( $txt )
-	{
-		return Sobi::Txt( $txt );
-	}
 
 	public static function Tooltip( $tooltip, $title = null )
 	{
@@ -42,4 +38,3 @@ abstract class TplFunctions
 		return Sobi::Cfg( $key, $def, $section );
 	}
 }
-?>
