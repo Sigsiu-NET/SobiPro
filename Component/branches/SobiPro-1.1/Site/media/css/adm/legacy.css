@@ -9,10 +9,12 @@
 
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
  * $Date$
  * $Revision$
@@ -32,6 +34,18 @@ div.SPFListAlias {
 fieldset label {
 	clear: none !important;
 	float: none !important;
+}
+fieldset {
+    text-align: left;
+}
+fieldset.adminform legend {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+fieldset.adminform table {
+    border-spacing: 1px;
+    border-collapse: separate;
 }
 
 element.style {
@@ -99,14 +113,41 @@ table.admintable td.key {
     vertical-align: middle;
 }
 
+.row0 label,
+.row1 label {
+    display: inline;
+}
+
+table.adminlist tbody tr.row1 td {
+    background: none repeat scroll 0 0 #F0F0F0;
+    border-top: 1px solid #FFFFFF;
+}
+table.adminlist tbody tr td {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+table.adminlist tbody tr {
+    background-color: #FFFFFF;
+    text-align: left;
+}
+table.adminlist {
+    border-spacing: 1px;
+    color: #666666;
+    border-collapse: separate;
+}
+
 div.width-70 {
-	width: 55% !important;
+/*    width: 55% !important; */
 	float: left;
+    margin-top: 20px;
+}
+div.width-70 fieldset {
+    padding: 5px 0;
 }
 
 div.width-30 {
 	float: left;
-	width: 40%;
+/*	width: 40%; */
 }
 
 div.SPCpTabs {
@@ -130,6 +171,10 @@ div.SPCpTabNews h1 {
 div.SPCpTabs p,
 div.SPCpTabNews p {
 	margin: 0 0 4px 10px;
+}
+
+h2.tab {
+    line-height: 25px;
 }
 
 span.SPCPCurrentVer {
@@ -167,7 +212,7 @@ table.adminlist {
 table.adminlist td {
 	padding: 0px !important;
 	padding-left: 4px !important;
-	height: 24px !important;
+	height: 34px !important;
 }
 
 table.adminlist td a {
@@ -447,4 +492,10 @@ div.SPCpanelIcon {
 
 div.SPCpanelIcon a {
 	text-decoration: none;
+}
+
+/* R&R */
+td.span2,
+td.span10 {
+    vertical-align: top;
 }

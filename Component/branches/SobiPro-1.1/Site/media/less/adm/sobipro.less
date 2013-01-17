@@ -9,10 +9,12 @@
 
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
  * $Date$
  * $Revision$
@@ -327,11 +329,16 @@ fieldset label {
   width: 180px;
 }
 
-#SPAdminForm fieldset.form-horizontal div.spEditImage label {
+.spEditImage label {
   margin: 5px;
   float: none;
   display: inline;
   color: #808080;
+}
+
+.spEditImage img {
+  border: 1px solid #909090;
+  border-radius: 5px 5px 5px 5px;
 }
 
 #SPAdminForm fieldset.form-horizontal label {
@@ -908,8 +915,10 @@ input.sp-input-micro[type="text"] {
   float: left;
 }
 
-.SobiPro table.mceLayout {
-  border-radius: 3px;
+.spFileUpload .alert {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 0;
 }
 
 .SigsiuTree .selected {
@@ -947,7 +956,13 @@ input.sp-input-micro[type="text"] {
   top: 0;
   z-index: 1040;
 }
+
+
 /* Compatibility Styles */
+
+.SobiPro table.mceLayout {
+  border-radius: 3px;
+}
 
 /* Editor in J!3.0 */
 .toggle-editor {
