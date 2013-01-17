@@ -21,25 +21,25 @@
 
 defined( '_JEXEC' ) || exit( 'Restricted access' );
 
-if ( !( file_exists( implode( DS, array( JPATH_ROOT, 'images', 'sobipro' ) ) ) ) ) {
-	JFolder::create( implode( DS, array( JPATH_ROOT, 'images', 'sobipro' ) ) );
+if ( !( file_exists( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) ) ) ) {
+	JFolder::create( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) );
 }
-if ( file_exists( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ) ) ) ) {
+if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ) ) ) ) {
 	JFolder::move(
-		implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ) ),
-		implode( DS, array( JPATH_ROOT, 'images', 'sobipro', 'entries' ) )
+		implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ) ),
+		implode( '/', array( JPATH_ROOT, 'images', 'sobipro', 'entries' ) )
 	);
 }
-if ( file_exists( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) ) ) {
-	JFolder::delete( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) );
+if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) ) ) {
+	JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) );
 }
-if ( file_exists( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ) ) ) ) {
-	JFolder::delete( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ) ) );
+if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ) ) ) ) {
+	JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ) ) );
 }
-if ( file_exists( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) ) ) {
-	JFolder::delete( implode( DS, array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
+if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) ) ) {
+	JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
 }
-$db =& JFactory::getDBO();
+$db = JFactory::getDBO();
 $db->setQuery( 'SHOW COLUMNS FROM #__sobipro_field_data' );
 $cols = $db->loadAssocList( 'Field' );
 if ( !( isset( $cols[ 'editLimit' ] ) ) ) {
