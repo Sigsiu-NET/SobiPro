@@ -32,7 +32,7 @@ if( JVERSION == 'joomla15') {
 	define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', JFactory::getConfig()->getValue( 'config.language' ) ) );
 }
 else {
-	define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', JFactory::getConfig()->get( 'config.language' ) ) );
+	define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', JFactory::getConfig()->get( 'language', JFactory::getConfig()->get( 'config.language' ) ) ) );
 }
 define( 'SOBI_ACL', 'adm' );
 define( 'SOBI_ROOT', JPATH_ROOT );

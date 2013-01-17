@@ -2,38 +2,29 @@
 /**
  * @version: $Id$
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
  * $HeadURL$
  */
-
 defined( '_JEXEC' ) || exit( 'Restricted access' );
-
-function com_uninstall()
-{
-        $db =& JFactory::getDBO();
-        $query = "show tables like '".$db->getPrefix()."sobipro_%'";
-        $db->setQuery( $query );
-        $tables = $db->loadResultArray();
-        foreach( $tables as $table ) {
-            $db->setQuery( "DROP TABLE {$table};" );
-            $db->query();
-        }
-        JFolder::delete( implode( DS, array( JPATH_ROOT, 'images', 'sobipro' ) ) );
+$db =& JFactory::getDBO();
+$query = "show tables like '" . $db->getPrefix() . "sobipro_%'";
+$db->setQuery( $query );
+$tables = $db->loadResultArray();
+foreach ( $tables as $table ) {
+	$db->setQuery( "DROP TABLE {$table};" );
+	$db->query();
 }
+JFolder::delete( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) );

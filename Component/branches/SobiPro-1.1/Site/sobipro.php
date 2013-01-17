@@ -33,7 +33,7 @@ if( JVERSION == 'joomla15') {
 	define( 'SOBI_DEFLANG', JFactory::getConfig()->getValue( 'config.language' ) );
 }
 else {
-	define( 'SOBI_DEFLANG', JFactory::getConfig()->get( 'config.language' ) );
+	define( 'SOBI_DEFLANG', JFactory::getConfig()->get( 'language', JFactory::getConfig()->get( 'config.language' ) ) );
 }
 define( 'SOBI_ACL', 'front' );
 define( 'SOBI_ROOT', JPATH_ROOT );
