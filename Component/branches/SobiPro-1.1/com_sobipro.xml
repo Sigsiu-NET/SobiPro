@@ -22,8 +22,7 @@
 			<file charset="utf8" driver="mysql">install16.sql</file>
 		</sql>
 	</install>
-	<installfile>install16.php</installfile>
-	<uninstallfile>uninstall16.php</uninstallfile>
+    <scriptfile>spinstall.php</scriptfile>
 	<files folder="Site">
 			<folder>etc</folder>
 			<folder>lib</folder>
@@ -78,11 +77,6 @@
 			<filename>sobipro.php</filename>
 			<filename>install16.sql</filename>
             <filename>default.php</filename>
-		</files>
-		<files>
-			<filename>sobipro16.xml</filename>
-            <filename>install16.php</filename>
-            <filename>uninstall16.php</filename>
 		</files>
 		<languages>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.ini</language>
