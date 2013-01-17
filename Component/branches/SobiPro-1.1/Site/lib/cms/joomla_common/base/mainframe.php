@@ -453,13 +453,10 @@ class SPJoomlaMainFrame
 		if ( $var == 'current' ) {
 			return SPRequest::raw( 'REQUEST_URI', self::baseUrl, 'SERVER' );
 		}
-		$sef = Sobi::Cfg( 'disable_sef_globally', false ) ? false : $sef;
+		$sef = Sobi::Cfg( 'disable_sef_globally', false ) ? false : ( defined( 'SOBIPRO_ADM' ) && !( $forceItemId ) ? false : $sef );
 		Sobi::Trigger( 'Create', 'Url', array( &$var, $js ) );
 		if ( is_array( $var ) && !empty( $var ) ) {
-			if (
-				( isset( $var[ 'sid' ] ) && !( defined( 'SOBIPRO_ADM' ) || $forceItemId ) ) ||
-				( defined( 'SOBIPRO_ADM' ) && $sef && $live )
-			) {
+			if ( ( isset( $var[ 'sid' ] ) && !( defined( 'SOBIPRO_ADM' ) || $forceItemId ) ) || ( defined( 'SOBIPRO_ADM' ) && $sef && $live ) ) {
 				SPFactory::mainframe()->getItemid( $var );
 			}
 			if ( isset( $var[ 'title' ] ) ) {
