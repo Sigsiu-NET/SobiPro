@@ -1,6 +1,6 @@
 <?php
 /**
- * @version: $Id: sobipro.php 3005 2013-01-17 14:50:57Z Radek Suski $
+ * @version: $Id$
  * @package: SobiPro Component for Joomla!
 
  * @author
@@ -15,10 +15,10 @@
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
- * $Date: 2013-01-17 15:50:57 +0100 (Do, 17 Jan 2013) $
- * $Revision: 3005 $
- * $Author: Radek Suski $
- * $HeadURL: https://svn.suski.eu/SobiPro/Component/branches/SobiPro-1.1/Admin/sobipro.php $
+ * $Date$
+ * $Revision$
+ * $Author$
+ * $HeadURL$
  */
 
 defined( '_JEXEC' ) || exit( 'Restricted access' );
@@ -59,7 +59,7 @@ class com_sobiproInstallerScript
             $db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD  `editLimit` INT( 11 );' );
             $db->query();
         }
-        echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border-style:none;height:900px; width: 100%;"></iframe>';
+        echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 100%; margin-bottom: 50px; padding-left: 10px;"></iframe>';
     }
 
     /**
