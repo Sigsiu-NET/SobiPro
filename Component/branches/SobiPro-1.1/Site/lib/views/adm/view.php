@@ -1647,6 +1647,7 @@ class SPAdmView extends SPObject implements SPView
 		}
 		Sobi::Trigger( 'Display', $this->name(), array( &$this ) );
 		$action = $this->key( 'action' );
+		echo "\n<!-- SobiPro output -->\n";
 		echo '<div class="SobiPro" id="SobiPro">' . "\n";
 		if ( $this->_compatibility ) {
 			echo '<div class="row-fluid">' . "\n";
@@ -1656,15 +1657,20 @@ class SPAdmView extends SPObject implements SPView
 		if ( count( $this->_hidden ) ) {
 			$this->_hidden[ SPFactory::mainframe()->token() ] = 1;
 			foreach ( $this->_hidden as $name => $value ) {
-				echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"SP_{$name}\" value=\"{$value}\"/>";
+				if ( $this->_compatibility ) {
+					echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$name}\" value=\"{$value}\"/>";
+				}
+				else {
+					echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"SP_{$name}\" value=\"{$value}\"/>";
+				}
 			}
 		}
-		echo '</div>' . "\n";
 		echo $action ? "\n</form>\n" : null;
 		if ( $this->_compatibility ) {
 			echo '</div>' . "\n";
 		}
-		echo '</div>';
+		echo '</div>' . "\n";
+		echo "\n<!-- SobiPro output end -->\n";
 		Sobi::Trigger( 'AfterDisplay', $this->name() );
 	}
 

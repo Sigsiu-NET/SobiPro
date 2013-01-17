@@ -577,12 +577,12 @@ class SPTplParser
 		}
 		$type = $this->istSet( $cell[ 'attributes' ], 'input-type' ) ? $cell[ 'attributes' ][ 'input-type' ] : 'checkbox';
 		if ( isset( $cell[ 'attributes' ][ 'rel' ] ) && $cell[ 'attributes' ][ 'rel' ] ) {
-			$this->_out[ ] = '<input type="' . $type . '" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
+			$this->_out[ ] = '<input type="' . $type . '" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '"/>';
 			return $cell;
 		}
 		else {
 			$multiple = $this->istSet( $cell[ 'attributes' ], 'multiple', 'false' ) ? null : '[]';
-			$this->_out[ ] = '<input type="' . $type . '" name="' . $cell[ 'attributes' ][ 'name' ] . $multiple . '" value="' . $cell[ 'content' ] . '">';
+			$this->_out[ ] = '<input type="' . $type . '" name="' . $cell[ 'attributes' ][ 'name' ] . $multiple . '" value="' . $cell[ 'content' ] . '"/>';
 			return $cell;
 		}
 	}

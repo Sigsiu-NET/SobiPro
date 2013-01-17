@@ -29,4 +29,4 @@ require_once dirname(__FILE__).'/../../joomla_common/base/mainframe.php';
  * @version 1.0
  * @created 10-Jan-2009 5:50:43 PM
  */
-final class SPMainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface {}
+final class SPJ15MainFrame extends SPJoomlaMainFrame implements SPMainfrmaInterface {}

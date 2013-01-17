@@ -22,9 +22,21 @@
 
 SobiPro.jQuery( document ).ready( function ()
 {
-	if ( SobiPro.jQuery( '#SP_task' ).val().indexOf( 'field.' ) == -1 ) {
-		SobiPro.jQuery( '#SPAdminForm >:first-child' ).removeAttr( 'style' ).addClass( 'span2' );
-		SobiPro.jQuery( '#SPAdminForm >:nth-child(2)' ).removeAttr( 'style' ).addClass( 'span10' );
+	if ( SobiPro.jQuery( '#task' ).val().indexOf( 'field.' ) == -1 ) {
+		if ( SobiPro.jQuery( '#SPAdminForm >:first-child' ).prop( 'tagName' ).toLocaleLowerCase() == 'div' ) {
+			SobiPro.jQuery( '#SPAdminForm >:first-child' ).removeAttr( 'style' ).addClass( 'span2' );
+			SobiPro.jQuery( '#SPAdminForm >:nth-child(2)' ).removeAttr( 'style' ).addClass( 'span10' );
+		}
+		else {
+			SobiPro.jQuery( '#SPAdminForm' ).children().each( function ( i, e )
+			{
+				if ( SobiPro.jQuery( e ).prop( 'tagName' ).toLowerCase() == 'table' ) {
+					var row = SobiPro.jQuery( e ).find( '>:first-child>:first-child' );
+					SobiPro.jQuery( row ).find( '>:first-child' ).removeAttr( 'style' ).addClass( 'span2' );
+					SobiPro.jQuery( row ).find( '>:nth-child(2)' ).removeAttr( 'style' ).addClass( 'span10' );
+				}
+			} );
+		}
 	}
 	else {
 		SobiPro.jQuery( '[class*="width-"]' ).removeAttr( 'style' );

@@ -233,11 +233,11 @@ class SPConfigAdmCtrl extends SPController
 						nlMinus : '{$ls}/nolines_minus.gif'
 			};
 			var spTpl = new dTree( 'spTpl', icons );	\n
-			window.addEvent( 'domready', function() {
+			SobiPro.jQuery( document ).ready( function ()
+			{
 				spTpl.add(0, -1, '{$t}' );\n
-				{$nodes}
-				$( 'spTpl' ).innerHTML = spTpl;
-			 });
+				SobiPro.jQuery( '#spTpl' ).html( spTpl );
+			} );
 		" );
 		return "<div id=\"spTpl\"></div>";
 	}

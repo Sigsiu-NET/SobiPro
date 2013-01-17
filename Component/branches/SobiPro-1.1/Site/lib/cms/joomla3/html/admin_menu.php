@@ -34,10 +34,4 @@ abstract class SPAdmMenu extends SPJoomlaAdmMenu
 	{
 		return null;
 	}
-
-	public static function addSubMenuEntry( $name, $link = null, $active = false )
-	{
-		return null;
-	}
-
 }
