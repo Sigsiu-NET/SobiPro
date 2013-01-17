@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -180,11 +176,11 @@ class SPConfigAdmCtrl extends SPController
 		$ls = Sobi::Cfg( 'live_site' ) . 'media/sobipro/tree';
 		$nodes = null;
 		$count = 0;
-		$tpl = $tpl ? $tpl : SPLoader::dirPath( 'usr.templates' );
+		$tpl = Sobi::FixPath( $tpl ? $tpl : SPLoader::dirPath( 'usr.templates' ) );
 		if ( Sobi::Section() ) {
-			$rname = Sobi::Txt( 'TP.INFO' );
-			$itask = Sobi::Url( array( 'task' => 'template.info', 'template' => basename( $tpl ), 'sid' => Sobi::Section() ) );
-			$nodes .= "spTpl.add( -123, 0,'{$rname}','{$itask}', '', '', '{$ls}/info.png' );\n";
+			$realName = Sobi::Txt( 'TP.INFO' );
+			$iTask = Sobi::Url( array( 'task' => 'template.info', 'template' => basename( $tpl ), 'sid' => Sobi::Section() ) );
+			$nodes .= "spTpl.add( -123, 0,'{$realName}','{$iTask}', '', '', '{$ls}/info.png' );\n";
 		}
 		$this->traveTpl( new SPDirectoryIterator( $tpl ), $nodes, 0, $count );
 		if ( $cmsOv ) {
@@ -236,6 +232,7 @@ class SPConfigAdmCtrl extends SPController
 			SobiPro.jQuery( document ).ready( function ()
 			{
 				spTpl.add(0, -1, '{$t}' );\n
+				{$nodes}
 				SobiPro.jQuery( '#spTpl' ).html( spTpl );
 			} );
 		" );
