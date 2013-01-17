@@ -81,11 +81,9 @@
 		</files>
 		<files>
 			<filename>sobipro16.xml</filename>
-		</files>
-        <files folder="Site">
             <filename>install16.php</filename>
             <filename>uninstall16.php</filename>
-        </files>
+		</files>
 		<languages>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.js.ini</language>
