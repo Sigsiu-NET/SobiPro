@@ -232,10 +232,11 @@ class SPConfigAdmCtrl extends SPController
 			SobiPro.jQuery( document ).ready( function ()
 			{
 				spTpl.add(0, -1, '{$t}' );\n
-				{$nodes}
-				SobiPro.jQuery( '#spTpl' ).html( spTpl );
+				{$nodes} \n
+				try { document.getElementById( 'spTpl' ).innerHTML = spTpl } catch( e ) {}
 			} );
 		" );
+		/** for some reason jQuery is not able to add the tree  */
 		return "<div id=\"spTpl\"></div>";
 	}
 

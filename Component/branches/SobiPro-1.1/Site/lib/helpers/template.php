@@ -43,10 +43,9 @@ abstract class SobiPro
 
     /**
      * Translates given string into the current language
-     * @param string $txt
      * @return string
      */
-    public static function Txt( $term )
+    public static function Txt()
     {
         $args = func_get_args();
         return call_user_func_array( array( 'Sobi', 'Txt' ), $args );

@@ -41,11 +41,11 @@ class SPSearchView extends SPSectionView implements SPView
 			$type = 'php';
 		}
 		if( $type == 'xslt' ) {
-			$sdata = array();
+			$searchData = array();
 			$fields = $this->get( 'fields' );
 			$visitor = $this->get( 'visitor' );
 			$entries = $this->get( 'entries' );
-			$sdata[ 'section' ] = array(
+			$searchData[ 'section' ] = array(
 					'_complex' => 1,
 					'_data' => Sobi::Section( true ),
 					'_attributes' => array( 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) )
@@ -55,13 +55,13 @@ class SPSearchView extends SPSectionView implements SPView
 			$searchPhrase = strlen( $searchPhrase ) ? $searchPhrase : Sobi::Txt( 'SH.SEARCH_FOR_BOX' );
 			SPFactory::header()->addJsCode( 'var spSearchDefStr = "'.Sobi::Txt( 'SH.SEARCH_FOR_BOX' ).'"' );
 			if( $this->get( '$eInLine' ) ) {
-				$sdata[ 'entries_in_line' ] = $this->get( '$eInLine' );
+				$searchData[ 'entries_in_line' ] = $this->get( '$eInLine' );
 			}
 			if( $this->get( '$eCount' ) >= 0 ) {
-				$sdata[ 'message' ] = Sobi::Txt( 'SH.SEARCH_FOUND_RESULTS', array( 'count' => $this->get( '$eCount' ) ) );
+				$searchData[ 'message' ] = Sobi::Txt( 'SH.SEARCH_FOUND_RESULTS', array( 'count' => $this->get( '$eCount' ) ) );
 			}
-			$this->menu( $sdata );
-			$this->alphaMenu( $sdata );
+			$this->menu( $searchData );
+			$this->alphaMenu( $searchData );
 			$fData = array();
 			if( Sobi::Cfg( 'search.show_searchbox', true ) ) {
 				$fData[ 'searchbox' ] = array(
@@ -170,22 +170,22 @@ class SPSearchView extends SPSectionView implements SPView
 					'_attributes' => array( 'position' => 1, 'css_class' => 'SPSearchButton' )
 				);
 			}
-			$sdata[ 'fields' ] = $fData;
+			$searchData[ 'fields' ] = $fData;
 			if( count( $entries ) ) {
 				$this->loadNonStaticData( $entries );
 				$manager = Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ? true : false;
 				foreach ( $entries as $entry ) {
 					$en = $this->entry( $entry, $manager );
-					$sdata[ 'entries' ][] = array(
+					$searchData[ 'entries' ][] = array(
 						'_complex' => 1,
 						'_attributes' => array( 'id' => $en[ 'id' ] ),
 						'_data' => $en
 					);
 				}
-				$this->navigation( $sdata );
+				$this->navigation( $searchData );
 			}
-			$sdata[ 'visitor' ] = $this->visitorArray( $visitor );
-			$this->_attr = $sdata;
+			$searchData[ 'visitor' ] = $this->visitorArray( $visitor );
+			$this->_attr = $searchData;
 		}
 		Sobi::Trigger( $this->_type, ucfirst( __FUNCTION__ ), array( &$this->_attr ) );
 		parent::display( $this->_type );
