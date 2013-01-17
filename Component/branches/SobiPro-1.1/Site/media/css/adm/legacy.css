@@ -353,7 +353,7 @@ div#SPMenuCtrl {
 [class*=" icon-"] {
     background-repeat: no-repeat;
     font-family: Arial,Helvetica,sans-serif!important;
-    display: block!important;
+    /*display: block!important;*/
 }
 
 .icon-48-SobiPro {
@@ -427,6 +427,11 @@ div#SPMenuCtrl {
 }
 .icon-32-help {
 	background-image: url(../../../../media/sobipro/adm/legacy/sobipro-help.png) !important;
+}
+
+.icon-document-save-all:before {
+    color: #51A351;
+    content: "\e018";
 }
 
 div#spTpl {
