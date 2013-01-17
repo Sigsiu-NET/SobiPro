@@ -212,8 +212,9 @@ abstract class SPJoomlaFs
 	 */
 	public static function mkdir( $path, $mode = 0755 )
 	{
+		$path = Sobi::FixPath( $path );
 		if ( !( JFolder::create( $path, $mode ) ) ) {
-			throw new SPException( SPLang::e( 'CANNOT_CREATE_DIR' ) );
+			throw new SPException( SPLang::e( 'CANNOT_CREATE_DIR', str_replace( SOBI_ROOT, null, $path ) ) );
 		}
 		else {
 			return true;

@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -39,6 +35,9 @@ class SPJoomlaMainFrame
 	 */
 	const baseUrl = "index.php?option=com_sobipro";
 
+	/**
+	 *
+	 */
 	public function __construct()
 	{
 		if ( self::$cs ) {
@@ -50,6 +49,10 @@ class SPJoomlaMainFrame
 		}
 	}
 
+	/**
+	 * @param $path
+	 * @return array|string
+	 */
 	public function path( $path )
 	{
 		$path = explode( '.', $path );
@@ -72,7 +75,7 @@ class SPJoomlaMainFrame
 	{
 		$cfg = SPFactory::config();
 		$cfg->set( 'live_site', JURI::root() );
-		$cfg->set( 'tmp_path',	$this->JConfigValue( 'config.tmp_path' ) );
+		$cfg->set( 'tmp_path', $this->JConfigValue( 'config.tmp_path' ) );
 		$cfg->set( 'from', $this->JConfigValue( 'config.mailfrom' ), 'mail' );
 		$cfg->set( 'mailer', $this->JConfigValue( 'config.mailer' ), 'mail' );
 		$cfg->set( 'fromname', $this->JConfigValue( 'config.fromname' ), 'mail' );
@@ -123,6 +126,10 @@ class SPJoomlaMainFrame
 		}
 	}
 
+	/**
+	 * @param $value
+	 * @return mixed
+	 */
 	protected function JConfigValue( $value )
 	{
 		return JFactory::getConfig()->getValue( $value );
@@ -196,9 +203,13 @@ class SPJoomlaMainFrame
 			$type = isset( $msg[ 'msgtype' ] ) && strlen( $msg[ 'msgtype' ] ) ? ( $msg[ 'msgtype' ] ) : null;
 			$msg = isset( $msg[ 'msg' ] ) && strlen( $msg[ 'msg' ] ) ? ( $msg[ 'msg' ] ) : null;
 		}
-		JFactory::getApplication()->enqueueMessage( Sobi::Txt( $msg ), $type );
+//		JFactory::getApplication()->enqueueMessage( Sobi::Txt( $msg ), $type );
+		SPFactory::message()->setMessage( $msg, true, $type );
 	}
 
+	/**
+	 *
+	 */
 	public function proceedMessageQueue()
 	{
 		JFactory::getSession()
@@ -225,6 +236,11 @@ class SPJoomlaMainFrame
 		}
 	}
 
+	/**
+	 * @param $name
+	 * @param $url
+	 * @return bool
+	 */
 	public function addToPathway( $name, $url )
 	{
 		if ( defined( 'SOBI_ADM_PATH' ) ) {
@@ -239,6 +255,10 @@ class SPJoomlaMainFrame
 		}
 	}
 
+	/**
+	 * @param $action
+	 * @param $params
+	 */
 	public function trigger( $action, &$params )
 	{
 		switch ( $action ) {
@@ -536,6 +556,10 @@ class SPJoomlaMainFrame
 		return $js ? str_replace( 'amp;', null, $url ) : $url;
 	}
 
+	/**
+	 * @param $url
+	 * @return bool
+	 */
 	protected function getItemid( &$url )
 	{
 		$sid = isset( $url[ 'pid' ] ) && $url[ 'pid' ] ? $url[ 'pid' ] : $url[ 'sid' ];
@@ -568,6 +592,9 @@ class SPJoomlaMainFrame
 		}
 	}
 
+	/**
+	 *
+	 */
 	public function endOut()
 	{
 		if ( SPRequest::cmd( 'format' ) != 'raw' ) {
@@ -576,6 +603,9 @@ class SPJoomlaMainFrame
 		}
 	}
 
+	/**
+	 * @return SPDb
+	 */
 	public function getDb()
 	{
 		return SPFactory::db();
@@ -663,3 +693,90 @@ class SPJoomlaMainFrame
 	}
 }
 
+/** Legacy class - @deprecated */
+class SPMainFrame
+{
+	/**
+	 * @deprecated
+	 * @param $msg
+	 * @param int $code
+	 * @param null $info
+	 * @param bool $translate
+	 * @return object
+	 */
+	public static function runAway( $msg, $code = 500, $info = null, $translate = false )
+	{
+		return SPFactory::mainframe()->runAway( $msg, $code, $info, $translate );
+	}
+
+	/**
+	 * @deprecated
+	 * @return string
+	 */
+	public static function getBack()
+	{
+		return SPFactory::mainframe()->getBack();
+	}
+
+	/**
+	 * @deprecated
+	 * @param $add
+	 * @param null $msg
+	 * @param string $msgtype
+	 * @param bool $now
+	 */
+	public static function setRedirect( $add, $msg = null, $msgtype = 'message', $now = false )
+	{
+		return SPFactory::mainframe()->setRedirect( $add, $msg, $msgtype, $now );
+	}
+
+	/**
+	 * @deprecated
+	 * @param $msg
+	 * @param null $type
+	 * @return string
+	 */
+	public static function msg( $msg, $type = null )
+	{
+		return SPFactory::mainframe()->getBack( $msg, $type );
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public static function redirect()
+	{
+		return SPFactory::mainframe()->redirect();
+	}
+
+	/**
+	 * @deprecated
+	 * @return string
+	 */
+	public static function form()
+	{
+		return SPFactory::mainframe()->form();
+	}
+
+	/**
+	 * @deprecated
+	 * @param null $var
+	 * @param bool $js
+	 * @param bool $sef
+	 * @param bool $live
+	 * @param bool $forceItemId
+	 * @return string
+	 */
+	public static function url( $var = null, $js = false, $sef = true, $live = false, $forceItemId = false )
+	{
+		return SPFactory::mainframe()->url( $var, $js, $sef, $live, $forceItemId );
+	}
+
+	/**
+	 * @deprecated
+	 */
+	public static function endOut()
+	{
+		return SPFactory::mainframe()->endOut();
+	}
+}

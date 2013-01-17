@@ -31,7 +31,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 abstract class SPFactory
 {
 	/**
-	 * @return SPMainFrame
+	 * @return SPJoomlaMainFrame
 	 */
 	public static function & mainframe()
 	{

@@ -36,15 +36,16 @@ abstract class SPJoomlaAdmMenu
 	 */
 	public static function addSubMenuEntry( $name, $link = null, $active = false )
 	{
-		preg_match( '/task\=([a-zA-Z0-9\.\_\-]*).*/', $link, $matches );
-		if( isset( $matches[ 1 ] ) ) {
-			if( SPFactory::user()->can( $matches[ 1 ] ) ) {
-				JSubMenuHelper::addEntry( $name, $link, false /*( SPRequest::task() == $matches[ 1 ] )*/ );
-			}
-		}
-		else {
-			JSubMenuHelper::addEntry( $name, $link, $active );
-		}
+		return null;
+//		preg_match( '/task\=([a-zA-Z0-9\.\_\-]*).*/', $link, $matches );
+//		if( isset( $matches[ 1 ] ) ) {
+//			if( SPFactory::user()->can( $matches[ 1 ] ) ) {
+//				JSubMenuHelper::addEntry( $name, $link, false /*( SPRequest::task() == $matches[ 1 ] )*/ );
+//			}
+//		}
+//		else {
+//			JSubMenuHelper::addEntry( $name, $link, $active );
+//		}
 	}
 
 	/**
