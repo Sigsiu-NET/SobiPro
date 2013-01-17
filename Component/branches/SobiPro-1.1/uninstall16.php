@@ -22,7 +22,7 @@ defined( '_JEXEC' ) || exit( 'Restricted access' );
 $db =& JFactory::getDBO();
 $query = "show tables like '" . $db->getPrefix() . "sobipro_%'";
 $db->setQuery( $query );
-$tables = $db->loadResultArray();
+$tables = $db->loadColumn();
 foreach ( $tables as $table ) {
 	$db->setQuery( "DROP TABLE {$table};" );
 	$db->query();
