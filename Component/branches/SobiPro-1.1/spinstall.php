@@ -26,33 +26,6 @@ defined( '_JEXEC' ) || exit( 'Restricted access' );
 class com_sobiproInstallerScript
 {
     /**
-     * Constructor
-     *
-     * @param   JAdapterInstance  $adapter  The object responsible for running this script
-     */
-    public function __constructor(JAdapterInstance $adapter);
-
-    /**
-     * Called before any type of action
-     *
-     * @param   string  $route  Which action is happening (install|uninstall|discover_install)
-     * @param   JAdapterInstance  $adapter  The object responsible for running this script
-     *
-     * @return  boolean  True on success
-     */
-    public function preflight($route, JAdapterInstance $adapter);
-
-    /**
-     * Called after any type of action
-     *
-     * @param   string  $route  Which action is happening (install|uninstall|discover_install)
-     * @param   JAdapterInstance  $adapter  The object responsible for running this script
-     *
-     * @return  boolean  True on success
-     */
-    public function postflight($route, JAdapterInstance $adapter);
-
-    /**
      * Called on installation
      *
      * @param   JAdapterInstance  $adapter  The object responsible for running this script
@@ -88,15 +61,6 @@ class com_sobiproInstallerScript
         }
         echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border-style:none;height:900px; width: 100%;"></iframe>';
     }
-
-    /**
-     * Called on update
-     *
-     * @param   JAdapterInstance  $adapter  The object responsible for running this script
-     *
-     * @return  boolean  True on success
-     */
-    public function update(JAdapterInstance $adapter);
 
     /**
      * Called on uninstallation
