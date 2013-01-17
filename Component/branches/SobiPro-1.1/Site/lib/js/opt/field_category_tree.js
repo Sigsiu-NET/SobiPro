@@ -79,7 +79,7 @@ function SigsiuTreeEdit( options )
 
 	this.addCategory = function ( e )
 	{
-		var button = this.canvas.find( '[name="addCategory"]' ).attr( 'disabled', 'disabled' );
+		var button = this.canvas.find( '[name="addCategory"]' );
 		var error = false;
 		if ( this.addBtn.length ) {
 			button.html( this.addBtn );
