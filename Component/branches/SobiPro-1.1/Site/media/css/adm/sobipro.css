@@ -182,7 +182,7 @@ div.m {
 div.spScreenTitle,
 div.spScreenSubHead {
   background-repeat: no-repeat;
-  height: 45px;
+  height: 48px;
 }
 div.spScreenSubHead {
   font-weight: bold;
@@ -277,7 +277,6 @@ fieldset label {
   color: #808080;
 }
 .spEditImage img {
-  border: 1px solid #909090;
   border-radius: 5px 5px 5px 5px;
 }
 #SPAdminForm fieldset.form-horizontal label {
@@ -606,29 +605,15 @@ fieldset label {
   padding-top: 5px;
   font-size: 15px;
 }
-#SPAdminForm .pagination-toolbar a {
-  line-height: 28px;
+.SobiPro .pagination ul {
+  -webkit-box-shadow: 0 0 0 0;
+  -moz-box-shadow: 0 0 0 0;
+  box-shadow: 0 0 0 0;
+}
+.SobiPro .pagination-toolbar a {
   color: #1337d1;
 }
-#SPAdminForm .pagination ul {
-  height: 28px;
-}
-#SPAdminForm .pagination .disabled a,
-#SPAdminForm .pagination .active a,
-#SPAdminForm .pagination .active span {
-  color: #999999;
-  cursor: default;
-  font-weight: normal;
-}
-#SPAdminForm .pagination a:hover,
-#SPAdminForm .pagination .active a,
-#SPAdminForm .pagination .active span {
-  background-color: #F5F5F5;
-}
-#SPAdminForm .pagination .disabled a:hover {
-  background-color: transparent;
-}
-#SPAdminForm .pagination-page input {
+.SobiPro .pagination-page input {
   width: 60px;
   text-align: right;
 }
