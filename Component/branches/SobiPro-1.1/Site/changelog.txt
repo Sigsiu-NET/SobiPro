@@ -28,7 +28,7 @@ Legend:
 
 
 -------------------
-1.1.0 Beta ()
+1.1.0 (Alpha H)
 -------------------
 
    (+) XML based template engine for administrator templates
@@ -47,6 +47,7 @@ Legend:
    (+) Workaround to bypass Joomla! menu type bug
    (+) Possibility to define exact type of custom output including header content type, exit and clear
    (+) Limit XML raw data to a specific IP
+   (+) Joomla! 3.0 compatibility (needs at least Joomla! 3.0.2)
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; will be a separate app now
