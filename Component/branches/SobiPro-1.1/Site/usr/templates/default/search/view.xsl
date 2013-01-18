@@ -32,7 +32,9 @@
 	<xsl:template match="/search">
 		<div class="SPSearch">
 			<div>
-				<xsl:apply-templates select="menu" />
+				<xsl:call-template name="topMenu">
+					<xsl:with-param name="searchbox">false</xsl:with-param>
+				</xsl:call-template>
 				<xsl:apply-templates select="alphaMenu" />
 			</div>
 			<div id="SPSearchForm" class="form-horizontal">

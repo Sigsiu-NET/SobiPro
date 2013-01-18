@@ -24,35 +24,32 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
-	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
-	<xsl:template name="topMenu">
-		<xsl:param name="searchbox"/>
-		<div class="navbar">
-			<div class="navbar-inner">
-				<ul class="nav">
-					<xsl:if test="//menu/front">
-						<li>
-							<a href="{//menu/front/@url}">
-								<xsl:value-of select="//menu/front" />
-							</a>
-						</li>
-					</xsl:if>
-					<xsl:if test="//menu/add">
-						<li>
-							<a href="{//menu/add/@url}">
-								<xsl:value-of select="//menu/add" />
-							</a>
-						</li>
-					</xsl:if>
-				</ul>
-				<xsl:if test="//menu/search and $searchbox = 'true'">
-					<form class="navbar-search pull-right">
-						<input type="text" name="sp_search_for" class="search-query" placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}" />
-						<input type="hidden" name="task" value="search.search"/>
-						<input type="hidden" name="option" value="com_sobipro"/>
-					</form>
+<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
+	<xsl:include href="category.xsl" />
+	<xsl:template name="categoriesLoop">
+
+		<xsl:variable name="catsInLine">
+			<xsl:value-of select="categories_in_line" />
+		</xsl:variable>
+
+		<xsl:variable name="cellClass">
+			<xsl:value-of select="floor( 9 div $catsInLine )" />
+		</xsl:variable>
+
+		<div class="span12">
+			<xsl:for-each select="categories/category">
+				<xsl:if test="$catsInLine > 1 and ( position() = 1 or ( position() mod $catsInLine ) = 1 )">
+					<!-- opening the "table" row -->
+					<xsl:text disable-output-escaping="yes">&lt;div class="row" &gt;</xsl:text>
 				</xsl:if>
-			</div>
+				<div class="span{$cellClass} thumbnail" style="border-style:solid">
+					<xsl:call-template name="category" />
+				</div>
+				<xsl:if test="$catsInLine > 1 and ( ( position() mod $catsInLine ) = 0 or position() = $catsInLine )">
+					<!-- closing the "table" row -->
+					<xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
+				</xsl:if>
+			</xsl:for-each>
 		</div>
 	</xsl:template>
 </xsl:stylesheet>

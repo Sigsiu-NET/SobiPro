@@ -26,42 +26,35 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:template name="category">
-		<xsl:variable name="url">
-			<xsl:value-of select="url" />
+		<xsl:variable name="subcatsNumber">
+			<xsl:value-of select="/section/number_of_subcats" />
 		</xsl:variable>
-		<div class="spCatListIcon">
-			<xsl:if test="string-length( icon )">
-				<a href="{$url}">
-					<img alt="icon" class="spCatListIcon">
-						<xsl:attribute name="src">
-							<xsl:value-of select="icon" />
-						</xsl:attribute>
-					</img>
-				</a>
-			</xsl:if>
+		<div class="row-fluid">
+			<div class="span2 offset1">
+				<xsl:if test="string-length( icon )">
+					<a href="{url}">
+						<img alt="{name}" src="{icon}" />
+					</a>
+				</xsl:if>
+			</div>
+			<div class="span9">
+				<p>
+					<a href="{url}">
+						<xsl:value-of select="name" />
+					</a>
+				</p>
+				<xsl:value-of select="introtext" disable-output-escaping="yes" />
+				<xsl:for-each select="subcategories/subcategory">
+					<xsl:if test="position() &lt; ( $subcatsNumber + 1 )">
+						<a href="{@url}">
+							<small><xsl:value-of select="." /></small>
+						</a>
+						<xsl:if test="position() != last() and position() &lt; $subcatsNumber">
+							<xsl:text>, </xsl:text>
+						</xsl:if>
+					</xsl:if>
+				</xsl:for-each>
+			</div>
 		</div>
-		<div class="spCatsListTitle">
-			<a href="{$url}">
-				<xsl:value-of select="name" />
-			</a>
-		</div>
-		<div class="spCatsListIntrotext">
-			<xsl:value-of select="introtext" disable-output-escaping="yes" />
-		</div>
-		<xsl:for-each select="subcategories/subcategory">
-            <xsl:if test="position() &lt; ( $subcatsNumber + 1 )">
-                <span class="spCatListSubCats">
-                    <a>
-                    	<xsl:attribute name="href">
-                    		<xsl:value-of select="@url" />
-                    	</xsl:attribute>
-                    	<xsl:value-of select="." />
-                    </a>
-                    <xsl:if test="position() != last() and position() &lt; $subcatsNumber">
-                    	<xsl:text>, </xsl:text>
-                    </xsl:if>
-                </span>
-            </xsl:if>
-		</xsl:for-each>
 	</xsl:template>
 </xsl:stylesheet>
