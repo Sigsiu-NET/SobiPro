@@ -40,17 +40,18 @@
 					<xsl:if test="( name() != 'save_button' ) and ( name() != 'cancel_button' )">
 						<xsl:variable name="fieldId" select="name(.)" />
 						<xsl:if test="string-length( fee )">
-							<input name="{$fieldId}Payment" id="{$fieldId}Payment" value="" type="checkbox" class="SPPaymentBox" />
-							<label class="control-label" for="{$fieldId}Payment">
-								<xsl:value-of select="fee_msg" />
-							</label>
-							<div>
-								<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )" />
+							<div class="control-group">
+								<div class="control-label">
+									<input name="{$fieldId}Payment" id="{$fieldId}-payment" value="" type="checkbox" class="payment-box" />
+								</div>
+								<div class="alert controls">
+									<xsl:value-of select="fee_msg" /><xsl:text> </xsl:text>
+									<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )" />
+								</div>
 							</div>
 						</xsl:if>
-
-						<div class="control-group" id="{$fieldId}Container">
-							<label class="control-label" for="inputEmail">
+						<div class="control-group" id="{$fieldId}-container">
+							<label class="control-label" for="{$fieldId}-input-container">
 								<xsl:choose>
 									<xsl:when test="string-length( description )">
 										<a href="#" rel="popover" data-placement="right" data-content="{description}" data-original-title="{label}">
@@ -62,91 +63,39 @@
 									</xsl:otherwise>
 								</xsl:choose>
 							</label>
-							<div class="controls" id="{$fieldId}">
-								<xsl:choose>
-									<xsl:when test="data/@escaped">
-										<xsl:value-of select="data" disable-output-escaping="yes" />
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:copy-of select="data/*" />
-									</xsl:otherwise>
-								</xsl:choose>
-							</div>
-						</div>
-					</xsl:if>
-				</xsl:for-each>
-			</div>
-
-			<div>
-				<xsl:for-each select="entry/fields/*">
-					<xsl:if test="( name() != 'save_button' ) and ( name() != 'cancel_button' )">
-						<xsl:variable name="fieldId">
-							<xsl:value-of select="name(.)" />
-						</xsl:variable>
-						<div id="{$fieldId}Container">
-							<xsl:attribute name="class">
-								<xsl:choose>
-									<xsl:when test="position() mod 2">spFormRowEven</xsl:when>
-									<xsl:otherwise>spFormRowOdd</xsl:otherwise>
-								</xsl:choose>
-							</xsl:attribute>
-							<xsl:if test="string-length( fee )">
-								<div class="spFormPaymentInfo">
-									<input name="{$fieldId}Payment" id="{$fieldId}Payment" value="" type="checkbox" class="SPPaymentBox" onclick="SP_ActivatePayment( this )" />
-									<label for="{$fieldId}Payment">
-										<xsl:value-of select="fee_msg"></xsl:value-of>
-										<br />
-									</label>
-									<div style="margin-left:20px;">
-										<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )" />
-									</div>
-								</div>
-							</xsl:if>
-							<div class="spFormRowLeft">
-								<label for="{$fieldId}">
+							<div class="controls" id="{$fieldId}-input-container">
+								<div>
+									<xsl:if test="string-length( @suffix )">
+										<xsl:attribute name="class">input-append</xsl:attribute>
+									</xsl:if>
 									<xsl:choose>
-										<xsl:when test="string-length( description )">
-											<xsl:variable name="desc">
-												<xsl:value-of select="description" />
-											</xsl:variable>
-											<xsl:variable name="label">
-												<xsl:value-of select="label" />
-											</xsl:variable>
-											<xsl:value-of select="php:function( 'SobiPro::Tooltip', $desc, $label )" disable-output-escaping="yes" />
+										<xsl:when test="data/@escaped">
+											<xsl:value-of select="data" disable-output-escaping="yes" />
 										</xsl:when>
 										<xsl:otherwise>
-											<xsl:value-of select="label" />
+											<xsl:copy-of select="data/*" />
 										</xsl:otherwise>
 									</xsl:choose>
-								</label>
-							</div>
-							<div class="spFormRowRight">
-								<xsl:choose>
-									<xsl:when test="data/@escaped">
-										<xsl:value-of select="data" disable-output-escaping="yes" />
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:copy-of select="data/*" />
-									</xsl:otherwise>
-								</xsl:choose>
-								<xsl:text> </xsl:text><xsl:value-of select="@suffix" />
+									<xsl:if test="string-length( @suffix )">
+										<span class="add-on">
+											<xsl:value-of select="@suffix" />
+										</span>
+									</xsl:if>
+								</div>
 							</div>
 						</div>
 					</xsl:if>
 				</xsl:for-each>
 			</div>
-			<div class="spFormRowFooter">
-				<div>
-					<xsl:copy-of select="entry/fields/cancel_button/data/*" />
-					<xsl:copy-of select="entry/fields/save_button/data/*" />
-				</div>
+			<div class="pull-right">
+		        <button class="btn" type="button">
+			        <xsl:value-of select="entry/fields/cancel_button/data/button"/>
+		        </button>
+				<button class="btn btn-primary" type="button">
+					<xsl:value-of select="entry/fields/save_button/data/input/@value"/>
+				</button>
 			</div>
-			<br />
-			<div class="clearall" />
+			<div class="clearfix"/>
 		</div>
-	</xsl:template>
-
-	<xsl:template name="fieldOutput">
-
 	</xsl:template>
 </xsl:stylesheet>

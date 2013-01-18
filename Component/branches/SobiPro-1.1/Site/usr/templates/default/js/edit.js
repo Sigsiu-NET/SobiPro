@@ -29,12 +29,40 @@ SobiPro.jQuery( document ).ready( function ()
 		{
 			e.preventDefault();
 			var proxy = SobiPro.jQuery( this );
-			SobiPro.DebOut(proxy)
+			SobiPro.DebOut( proxy )
 			proxy.parent().find( '.close' ).click( function ()
 			{
 				proxy.popover( 'hide' );
 			} )
 		} );
+	if ( SobiPro.jQuery( '.spFileUpload' ).length ) {
+		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
+	}
+
+	new SobiProEntryEdit();
+
+	function SobiProEntryEdit()
+	{
+		"use strict";
+		this.boxes = SobiPro.jQuery( '.payment-box' );
+		var proxy = this;
+
+		this.boxes.each( function ( i, element )
+		{
+			element = SobiPro.jQuery( element );
+			element.toggleTarget = SobiPro.jQuery( '#' + element.attr( 'id' ).replace( '-payment', '-container' ) ).find( '*' );
+			element.toggleTarget.attr( 'disabled', 'disabled' );
+			element.change( function ()
+			{
+				if ( SobiPro.jQuery( this ).is( ':checked' ) ) {
+					element.toggleTarget.removeAttr( 'disabled' );
+				}
+				else {
+					element.toggleTarget.attr( 'disabled', 'disabled' );
+				}
+			} );
+		} );
+	}
 } );
 //
 //

@@ -41,8 +41,7 @@ function SigsiuTreeEdit( options )
 			'dataType':'json',
 			success:function ( data )
 			{
-				data.categories.each( function ( category )
-				{
+				SobiPro.jQuery.each( data.categories, function( i, category ) {
 					proxy.category = category;
 				} );
 				proxy.loading = false;

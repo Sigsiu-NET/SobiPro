@@ -22,6 +22,10 @@
 
 function SobiPro()
 {
+	this.fns = new Array();
+	this.jQuery = null;
+	this.lang = null;
+
 	this.DebOut = function( object )
 	{
 		try {
@@ -67,13 +71,13 @@ function SobiPro()
 
 	this.onReady = function ( f )
 	{
-		this.functions.include( f );
+		this.fns.push( f );
 	};
 
 	this.Ready = function ()
 	{
-		for ( var i = 0, j = this.functions.length; i < j; i++ ) {
-			f = this.functions[ i ];
+		for ( var i = 0, j = this.fns.length; i < j; i++ ) {
+			f = this.fns[ i ];
 			f();
 		}
 	};
@@ -124,9 +128,6 @@ function SobiPro()
 		alert( this.Txt( text ) );
 	};
 
-	this.functions = new Array();
-	this.jQuery = null;
-	this.lang = null;
 
 }
 
