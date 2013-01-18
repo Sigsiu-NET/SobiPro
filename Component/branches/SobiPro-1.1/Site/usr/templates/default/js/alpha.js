@@ -19,24 +19,20 @@
  * $Author$
  * $HeadURL$
  */
-
-try{ jQuery.noConflict(); } catch( e ) {}
-function SPAlphaSwitch( cid )
+SobiPro.jQuery( document ).ready( function ()
 {
-	jQuery( document ).ready( function() {
-		sid = '#' + cid + 'Switch';
-		jQuery( sid ).bind( 'change', function() {
-			jQuery( sid ).disabled = true;
-			jQuery( '#' + cid + 'Progress' ).html( '<img src="' + SPLiveSite + '/media/sobipro/adm/progress.gif" style="margin: 5px;" alt="loading"/>' );
-			jQuery.ajax( { 
-				url: SobiProUrl.replace( '%task%', 'list.alpha.switch.'+ jQuery( this ).val() ),
-				data: { sid: SobiProSection, tmpl: "component", format: "raw" },
-		          success: function( jsonObj ) {
-		        	  jQuery( sid ).disabled = false;
-		        	  jQuery( '#' + cid + 'Progress' ).html( '' );
-		        	  jQuery( '#' + cid ).html( jsonObj.index );
-		          }				
-			} );
+	SobiPro.jQuery( '.alpha-switch' ).bind( 'click', function ( e )
+	{
+		e.preventDefault()
+		SobiPro.jQuery.ajax( {
+			url:SobiProUrl.replace( '%task%', 'list.alpha.switch.' + SobiPro.jQuery( this ).attr( 'rel' ) ),
+			data:{ sid:SobiProSection, tmpl:"component", format:"raw" },
+			success:function ( jsonObj )
+			{
+				SobiPro.jQuery( '#alpha-index' ).html( jsonObj.index );
+			}
 		} );
 	} );
-}
+	SobiPro.jQuery( '.dropdown-toggle' ).dropdown();
+} );
+

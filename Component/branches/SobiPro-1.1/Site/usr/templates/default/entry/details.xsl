@@ -24,7 +24,7 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
-<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
+	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 
 	<xsl:include href="../common/topmenu.xsl" />
 	<xsl:include href="../common/manage.xsl" />
@@ -32,16 +32,21 @@
 
 	<xsl:template match="/entry_details">
 		<div class="SPDetails">
-		    <div>
-		      <xsl:apply-templates select="menu" />
-		      <xsl:apply-templates select="alphaMenu" />
-		    </div>
-			<div class="clearall"/>
+			<div>
+				<xsl:call-template name="topMenu">
+					<xsl:with-param name="searchbox">false</xsl:with-param>
+				</xsl:call-template>
+
+				<xsl:apply-templates select="alphaMenu" />
+			</div>
+			<div class="clearall" />
 
 			<xsl:call-template name="manage" />
 
 			<div class="SPDetailEntry">
-				<h1 class="SPTitle"><xsl:value-of select="entry/name" /></h1>
+				<h1 class="SPTitle">
+					<xsl:value-of select="entry/name" />
+				</h1>
 
 				<xsl:for-each select="entry/fields/*">
 					<div>
@@ -51,13 +56,15 @@
 
 						<xsl:if test="count(data/*) or string-length(data)">
 							<xsl:if test="label/@show = 1">
-								<strong><xsl:value-of select="label" /><xsl:text>: </xsl:text></strong>
+								<strong>
+									<xsl:value-of select="label" /><xsl:text>: </xsl:text>
+								</strong>
 							</xsl:if>
 						</xsl:if>
 
 						<xsl:choose>
 							<xsl:when test="count(data/*)">
-								<xsl:copy-of select="data/*"/>
+								<xsl:copy-of select="data/*" />
 							</xsl:when>
 							<xsl:otherwise>
 								<xsl:if test="string-length(data)">
@@ -69,7 +76,7 @@
 						<xsl:if test="count(data/*) or string-length(data)">
 							<xsl:if test="string-length(@suffix)">
 								<xsl:text> </xsl:text>
-								<xsl:value-of select="@suffix"/>
+								<xsl:value-of select="@suffix" />
 							</xsl:if>
 						</xsl:if>
 					</div>
@@ -86,13 +93,13 @@
 								<xsl:value-of select="." />
 							</a>
 							<xsl:if test="position() != last()">
-							<xsl:text> | </xsl:text>
+								<xsl:text> | </xsl:text>
 							</xsl:if>
 						</xsl:for-each>
 					</div>
 				</xsl:if>
 			</div>
-			<div class="clearall"/>
+			<div class="clearall" />
 		</div>
 	</xsl:template>
 </xsl:stylesheet>

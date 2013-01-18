@@ -20,48 +20,66 @@
  * $HeadURL$
  */
 
-try{ jQuery.noConflict(); } catch( e ) {}
-// it has to be MT :( because of the tiny
-window.addEvent( 'load', function() {
-	var els = SP_class( 'SPPaymentBox' );
-	for( var i = 0; i < els.length; i++ ) {
-		SP_ActivatePayment( SP_id( els[ i ].id ) );
-	}	
-	$( 'spEntryForm' ).addEvent( 'submit', function( ev ) {
-		var els = SP_class( 'mce_editable' );
-		for( var i = 0; i < els.length; i++ ) {
-			if( tinyMCE.get( els[ i ].id ).getContent().length ) {
-				els[ i ].value = tinyMCE.get( els[ i ].id ).getContent();
-				els[ i ].disabled = false;
-			}
-		}	
-	} );
-} );
-
-function SP_ActivatePayment( e )
+SobiPro.jQuery( document ).ready( function ()
 {
-	var cid = e.id.replace( 'Payment', 'Container' );
-	if( e.checked ) {
-		jQuery( "#" + cid + " input" ).each( function( i, el ){ this.disabled = false; } ); 
-		jQuery( "#" + cid + " select" ).each( function( i, el ){ this.disabled = false; } );
-		jQuery( "#" + cid + " textarea" ).each( function( i, el ){
-			if( el.className == 'mce_editable' ) {
-				tinyMCE.execCommand( 'mceToggleEditor', true, el.id );
-			}
-			else {
-				this.disabled = false;
-			}
+	var template = '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="pull-right close spclose">x</div><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>';
+	SobiPro.jQuery( 'a[rel=popover]' )
+		.popover( { 'html':true, 'trigger':'click', 'template':template } )
+		.click( function ( e )
+		{
+			e.preventDefault();
+			var proxy = SobiPro.jQuery( this );
+			SobiPro.DebOut(proxy)
+			proxy.parent().find( '.close' ).click( function ()
+			{
+				proxy.popover( 'hide' );
+			} )
 		} );
-	}
-	else {
-		jQuery( "#" + cid + " input" ).each( function( i, el ){ this.disabled = true; } ); 
-		jQuery( "#" + cid + " select" ).each( function( i, el ){ this.disabled = true; } );
-		jQuery( "#" + cid + " textarea" ).each( function( i, el ){ 
-			if( el.className == 'mce_editable' ) {
-				tinyMCE.execCommand( 'mceToggleEditor', false, el.id );
-			}
-			this.disabled = true;
-		} );
-	}
-	e.disabled = false;
-}
+} );
+//
+//
+//try{ jQuery.noConflict(); } catch( e ) {}
+//// it has to be MT :( because of the tiny
+//window.addEvent( 'load', function() {
+//	var els = SP_class( 'SPPaymentBox' );
+//	for( var i = 0; i < els.length; i++ ) {
+//		SP_ActivatePayment( SP_id( els[ i ].id ) );
+//	}
+//	$( 'spEntryForm' ).addEvent( 'submit', function( ev ) {
+//		var els = SP_class( 'mce_editable' );
+//		for( var i = 0; i < els.length; i++ ) {
+//			if( tinyMCE.get( els[ i ].id ).getContent().length ) {
+//				els[ i ].value = tinyMCE.get( els[ i ].id ).getContent();
+//				els[ i ].disabled = false;
+//			}
+//		}
+//	} );
+//} );
+//
+//function SP_ActivatePayment( e )
+//{
+//	var cid = e.id.replace( 'Payment', 'Container' );
+//	if( e.checked ) {
+//		jQuery( "#" + cid + " input" ).each( function( i, el ){ this.disabled = false; } );
+//		jQuery( "#" + cid + " select" ).each( function( i, el ){ this.disabled = false; } );
+//		jQuery( "#" + cid + " textarea" ).each( function( i, el ){
+//			if( el.className == 'mce_editable' ) {
+//				tinyMCE.execCommand( 'mceToggleEditor', true, el.id );
+//			}
+//			else {
+//				this.disabled = false;
+//			}
+//		} );
+//	}
+//	else {
+//		jQuery( "#" + cid + " input" ).each( function( i, el ){ this.disabled = true; } );
+//		jQuery( "#" + cid + " select" ).each( function( i, el ){ this.disabled = true; } );
+//		jQuery( "#" + cid + " textarea" ).each( function( i, el ){
+//			if( el.className == 'mce_editable' ) {
+//				tinyMCE.execCommand( 'mceToggleEditor', false, el.id );
+//			}
+//			this.disabled = true;
+//		} );
+//	}
+//	e.disabled = false;
+//}
