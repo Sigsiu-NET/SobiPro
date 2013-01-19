@@ -96,11 +96,11 @@ final class SPPayment
 		$vatsub = Sobi::Cfg( 'payments.vat_brutto', true );
 		$sumnetto = 0;
 		$sumbrutto = 0;
-		$sumvat = 0;
+//		$sumvat = 0;
 		$pos = array();
-		$out = array();
+//		$out = array();
 		$dis = array();
-		$sum = array();
+//		$sum = array();
 		if( isset( $this->payments[ $id ] ) && count( $this->payments[ $id ] ) ) {
 			foreach ( $this->payments[ $id ] as $payment ) {
 				if( $vat ) {

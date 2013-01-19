@@ -105,7 +105,7 @@
 				</table>
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="btn">
+				<a href="#" class="btn" data-dismiss="modal">
 					<xsl:value-of select="php:function( 'SobiPro::Txt', 'EN.PAYMENT_BACK_BT' )" />
 				</a>
 				<a href="{/payment_details/save_url}" class="btn btn-primary">

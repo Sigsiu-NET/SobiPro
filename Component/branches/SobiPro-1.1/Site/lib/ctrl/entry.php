@@ -136,8 +136,6 @@ class SPEntryCtrl extends SPController
 
 	/**
 	 * pre-save an entry
-	 *
-	 * @param bool $apply
 	 */
 	protected function submit()
 	{
@@ -257,15 +255,15 @@ class SPEntryCtrl extends SPController
 	private function payment()
 	{
 		$sid = SPRequest::sid();
-		$data = SPFactory::cache()->getObj( 'payment', $sid, 0, true );
-		if ( !$data ) {
+		$data = SPFactory::cache()->getObj( 'payment', $sid, Sobi::Section(), true );
+		if ( !( $data ) ) {
 			$tsid = SPRequest::base64( 'tsid' );
 			$tfile = SPLoader::path( 'tmp.edit.' . $tsid . '.payment', 'front', false, 'var' );
 			if ( SPFs::exists( $tfile ) ) {
 				$data = SPConfig::unserialize( SPFs::read( $tfile ) );
 			}
 		}
-		if ( !$data ) {
+		if ( !( $data ) ) {
 			Sobi::Error( 'payment', SPLang::e( 'Session expired' ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 		/*
@@ -359,7 +357,7 @@ class SPEntryCtrl extends SPController
 		/* if there is something pay */
 		$pCount = SPFactory::payment()->count( $this->_model->get( 'id' ) );
 		if ( $pCount && !( Sobi::Can( 'entry.payment.free' ) ) ) {
-			$this->paymentView( $tsid );
+//			$this->paymentView( $tsid );
 			SPFactory::payment()->store( $this->_model->get( 'id' ) );
 		}
 		/* delete cache files on after */
@@ -403,7 +401,7 @@ class SPEntryCtrl extends SPController
 			$data = array( 'data' => SPFactory::payment()->summary( $sid ), 'ident' => $ident );
 			$url = Sobi::Url( array( 'sid' => $sid, 'task' => 'entry.payment' ), false, false );
 			if ( Sobi::Cfg( 'cache.l3_enabled', true ) ) {
-				SPFactory::cache()->addObj( $data, 'payment', $sid, 0, true );
+				SPFactory::cache()->addObj( $data, 'payment', $sid, Sobi::Section(), true );
 			}
 			else {
 				SPFs::write( SPLoader::path( 'tmp.edit.' . $ident . '.payment', 'front', false, 'var' ), SPConfig::serialize( $data ) );
