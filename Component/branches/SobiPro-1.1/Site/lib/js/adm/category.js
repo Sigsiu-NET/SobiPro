@@ -45,7 +45,7 @@ SobiPro.jQuery( document ).ready( function ()
 	SobiPro.jQuery( '#catIcoChooser' ).click( function ()
 	{
 		var requestUrl = SobiPro.jQuery( this ).attr( 'rel' );
-		SobiPro.jQuery( "#spIcoChooser" ).html( '<iframe id="spIcoSelectFrame" src="' + requestUrl + '" style="width: 500px; height: 400px; border: none;"> </iframe>' );
+		SobiPro.jQuery( "#spIcoChooser" ).html( '<iframe id="spIcoSelectFrame" src="' + requestUrl + '" style="height: 400px; border: none;"> </iframe>' );
 		SobiPro.jQuery( '#spIco' ).modal();
 	} );
 } );

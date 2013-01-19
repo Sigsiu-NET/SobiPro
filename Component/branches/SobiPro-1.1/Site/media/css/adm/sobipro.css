@@ -35,6 +35,39 @@
   font-size: 14px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+/* Modale Fenster */
+body.contentpane {
+  color: #333333;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 0 0 0 20px;
+  margin: 10px 10px 0 0;
+  background-color: #ffffff;
+}
+body.contentpane a {
+  color: #0000b3;
+}
+.modal-backdrop,
+.modal-backdrop.fade.in {
+  opacity: 0.2;
+}
+.modal-backdrop {
+  background-color: #000000;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1040;
+}
+.SobiPro .modal-body {
+  max-height: 420px;
+  padding: 0;
+}
+.SobiPro iframe {
+  width: 520px;
+  min-height: 300px;
+}
 /* to override Joomla styles in IE (especially checkboxes) */
 input.required {
   background-color: inherit;
@@ -450,6 +483,9 @@ fieldset label {
 #SPAdminForm .SpSoap fieldset .controls {
   margin-left: 160px;
 }
+.SobiPro .SpSoap {
+  margin-top: 15px;
+}
 .SobiPro .SpCloudInstall {
   width: 13%;
 }
@@ -767,20 +803,6 @@ input.sp-input-micro[type="text"] {
 }
 .SigsiuTree .tree {
   float: left;
-}
-/* Modale Fenster */
-.modal-backdrop,
-.modal-backdrop.fade.in {
-  opacity: 0.2;
-}
-.modal-backdrop {
-  background-color: #000000;
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 1040;
 }
 /* Compatibility Styles */
 .SobiPro table.mceLayout {
