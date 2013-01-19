@@ -29,22 +29,21 @@
 	<xsl:include href="../common/topmenu.xsl" />
 	<xsl:include href="../common/manage.xsl" />
 	<xsl:include href="../common/alphamenu.xsl" />
+	<xsl:include href="../common/messages.xsl" />
 
 	<xsl:template match="/entry_details">
 		<div class="SPDetails">
 			<div>
 				<xsl:call-template name="topMenu">
-					<xsl:with-param name="searchbox">false</xsl:with-param>
+					<xsl:with-param name="searchbox">true</xsl:with-param>
 				</xsl:call-template>
-
 				<xsl:apply-templates select="alphaMenu" />
 			</div>
+			<xsl:apply-templates select="messages"/>
 			<div class="clearall" />
-
-			<xsl:call-template name="manage" />
-
 			<div class="SPDetailEntry">
-				<h1 class="SPTitle">
+				<xsl:call-template name="manage" />
+				<h1>
 					<xsl:value-of select="entry/name" />
 				</h1>
 

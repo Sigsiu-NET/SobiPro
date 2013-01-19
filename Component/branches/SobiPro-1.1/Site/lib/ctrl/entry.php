@@ -317,25 +317,18 @@ class SPEntryCtrl extends SPController
 	 */
 	protected function save( $apply )
 	{
-		// @todo need to get special handling for it
-		//		if( !( SPFactory::mainframe()->checkToken() ) ) {
-		//			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
-		//		}
 		$new = true;
 		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
 		}
 		if ( $this->_model->get( 'oType' ) != 'entry' ) {
-			Sobi::Error( 'Entry',
-				sprintf(
-					'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), SPRequest::task()
-				), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Entry', sprintf( 'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			exit;
 		}
 
 		/* check if we have stored last edit in cache */
-		$tsid = SPRequest::string( 'editentry', null, false, 'cookie' );
-		$request = $this->getCache( $tsid );
+		$tsId = SPRequest::string( 'editentry', null, false, 'cookie' );
+		$request = $this->getCache( $tsId );
 		$this->_model->init( SPRequest::sid( $request ) );
 		$this->_model->getRequest( $this->_type, $request );
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_model ) );
@@ -361,14 +354,14 @@ class SPEntryCtrl extends SPController
 			SPFactory::payment()->store( $this->_model->get( 'id' ) );
 		}
 		/* delete cache files on after */
-		if ( SPLoader::dirPath( 'tmp.edit.' . $tsid ) ) {
-			SPFs::delete( SPLoader::dirPath( 'tmp.edit.' . $tsid ) );
+		if ( SPLoader::dirPath( 'tmp.edit.' . $tsId ) ) {
+			SPFs::delete( SPLoader::dirPath( 'tmp.edit.' . $tsId ) );
 		}
 		else {
-			SPFactory::cache()->deleteVar( 'request_cache_' . $tsid );
+			SPFactory::cache()->deleteVar( 'request_cache_' . $tsId );
 		}
 		SPLoader::loadClass( 'env.cookie' );
-		SPCookie::delete( $tsid );
+		SPCookie::delete( $tsId );
 
 		$sid = $this->_model->get( 'id' );
 		$pid = SPRequest::int( 'pid' ) ? SPRequest::int( 'pid' ) : Sobi::Section();
@@ -397,7 +390,7 @@ class SPEntryCtrl extends SPController
 			$url = Sobi::Url( array( 'sid' => $sid, 'pid' => $pid ) );
 		}
 		if ( $pCount && !( Sobi::Can( 'entry.payment.free' ) ) ) {
-			$ident = md5( microtime() . $tsid . $sid . time() );
+			$ident = md5( microtime() . $tsId . $sid . time() );
 			$data = array( 'data' => SPFactory::payment()->summary( $sid ), 'ident' => $ident );
 			$url = Sobi::Url( array( 'sid' => $sid, 'task' => 'entry.payment' ), false, false );
 			if ( Sobi::Cfg( 'cache.l3_enabled', true ) ) {
@@ -410,7 +403,7 @@ class SPEntryCtrl extends SPController
 			SPLoader::loadClass( 'env.cookie' );
 			SPCookie::set( 'payment_' . $sid, $ident, SPCookie::days( 1 ) );
 		}
-		Sobi::Redirect( $url, $msg );
+		$this->response( $url, $msg, true, SPC::SUCCESS_MSG );
 	}
 
 	/**
@@ -546,16 +539,9 @@ class SPEntryCtrl extends SPController
 		$this->tplCfg( $tplPckg );
 
 		if ( $this->_model->get( 'oType' ) != 'entry' ) {
-			Sobi::Error( 'Entry',
-				sprintf(
-					'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), SPRequest::task()
-				), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Entry', sprintf( 'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			exit;
 		}
-
-		/* handle meta data */
-		SPFactory::header()->objMeta( $this->_model );
-
 		/* add pathway */
 		SPFactory::mainframe()->addObjToPathway( $this->_model );
 		$this->_model->countVisit();
@@ -570,6 +556,11 @@ class SPEntryCtrl extends SPController
 		$view->setConfig( $this->_tCfg, $this->template );
 		$view->setTemplate( $tplPckg . '.' . $this->templateType . '.' . $this->template );
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$view ) );
+		SPFactory::header()->objMeta( $this->_model );
+//		SPFactory::message()
+//				->error(Sobi::Txt( 'EN.ENTRY_SAVED' ), false)
+//				->warning(Sobi::Txt( 'EN.ENTRY_SAVED' ), false)
+//				->success(Sobi::Txt( 'EN.ENTRY_SAVED' ), false)->error(( 'kupa' ), false);
 		$view->display();
 		SPFactory::cache()->addObj( $this->_model, 'entry', $this->_model->get( 'id' ) );
 	}

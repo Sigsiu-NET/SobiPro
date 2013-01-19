@@ -101,14 +101,16 @@ SobiPro.jQuery( document ).ready( function ()
 						proxy.errorHandler( response );
 					}
 					else {
-						if ( response.message.type == 'info' ) {
+						if( response.redirect.execute == true ) {
+							window.location.replace( response.redirect.url );
+						}
+						else if ( response.message.type == 'info' ) {
 							SobiPro.jQuery( response.message.text ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
 							var modal = SobiPro.jQuery( '#SpPaymentModal' ).find( '.modal' ).modal();
 							modal.on( 'hidden', function ()
 							{
 								SobiPro.jQuery( '#SpPaymentModal' ).remove();
 							} );
-
 						}
 					}
 				}

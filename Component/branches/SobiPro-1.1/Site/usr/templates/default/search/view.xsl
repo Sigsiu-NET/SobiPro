@@ -29,6 +29,7 @@
 	<xsl:include href="../common/topmenu.xsl" />
 	<xsl:include href="../common/navigation.xsl" />
 	<xsl:include href="../common/entries.xsl" />
+	<xsl:include href="../common/messages.xsl"/>
 	<xsl:template match="/search">
 		<div class="SPSearch">
 			<div>
@@ -37,6 +38,7 @@
 				</xsl:call-template>
 				<xsl:apply-templates select="alphaMenu" />
 			</div>
+			<xsl:apply-templates select="messages"/>
 			<div id="SPSearchForm" class="form-horizontal">
 				<xsl:if test="/search/fields/searchbox">
 					<label class="control-label" for="SPSearchBox">

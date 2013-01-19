@@ -31,6 +31,7 @@
 	<xsl:include href="../common/categories.xsl" />
 	<xsl:include href="../common/entries.xsl" />
 	<xsl:include href="../common/navigation.xsl" />
+	<xsl:include href="../common/messages.xsl"/>
 
 	<xsl:template match="/section">
 		<xsl:variable name="rssUrl">{"sid":"<xsl:value-of select="id" />","sptpl":"feeds.rss","out":"raw"}
@@ -44,6 +45,8 @@
 			<xsl:with-param name="searchbox">true</xsl:with-param>
 		</xsl:call-template>
 		<xsl:apply-templates select="alphaMenu" />
+		<xsl:apply-templates select="messages"/>
+
 		<div class="spSectionDesc">
 			<xsl:value-of select="description" disable-output-escaping="yes" />
 		</div>
