@@ -27,6 +27,7 @@
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 
 	<xsl:include href="../common/topmenu.xsl" />
+	<xsl:include href="../common/messages.xsl"/>
 	<xsl:include href="list.xsl" />
 	<xsl:template match="/payment_details">
 		<div class="SPPayment">
@@ -35,6 +36,7 @@
 					<xsl:with-param name="searchbox">true</xsl:with-param>
 				</xsl:call-template>
 			</div>
+			<xsl:apply-templates select="messages"/>
 			<xsl:call-template name="paymentTable" />
 			<p class="text-info">
 				<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_SELECT_PAYMENT' )" />:

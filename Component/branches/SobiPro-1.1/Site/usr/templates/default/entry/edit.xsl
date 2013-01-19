@@ -26,6 +26,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:include href="../common/topmenu.xsl" />
+	<xsl:include href="../common/messages.xsl"/>
 
 	<xsl:template match="/entry_form">
 		<div class="SPEntryEdit">
@@ -34,6 +35,7 @@
 					<xsl:with-param name="searchbox">false</xsl:with-param>
 				</xsl:call-template>
 			</div>
+			<xsl:apply-templates select="messages"/>
 			<div class="form-horizontal">
 				<xsl:for-each select="entry/fields/*">
 					<xsl:if test="( name() != 'save_button' ) and ( name() != 'cancel_button' )">

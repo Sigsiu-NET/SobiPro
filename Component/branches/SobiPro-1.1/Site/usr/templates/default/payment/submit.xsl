@@ -24,6 +24,7 @@
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
+	<xsl:include href="list.xsl" />
 	<xsl:template match="/payment_details">
 		<div class="modal hide">
 			<div class="modal-header">
@@ -33,76 +34,7 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<td>#</td>
-							<td>
-								<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_NAME' )" />
-							</td>
-							<td>
-								<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_NET' )" />
-							</td>
-							<td>
-								<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_GROSS' )" />
-							</td>
-						</tr>
-					</thead>
-					<tbody>
-						<xsl:for-each select="positions/position">
-							<tr>
-								<td>
-									<xsl:value-of select="position()" />
-								</td>
-								<td>
-									<xsl:value-of select="." />
-								</td>
-								<td>
-									<xsl:value-of select="@netto" />
-								</td>
-								<td>
-									<xsl:value-of select="@brutto" />
-								</td>
-							</tr>
-						</xsl:for-each>
-						<tr class="info">
-							<td colspan="4">
-								<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_SUMMARY' )" />:
-							</td>
-						</tr>
-						<tr>
-							<td colspan="3">
-								<div class="pull-right">
-									<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_NET' )" />
-								</div>
-							</td>
-							<td>
-								<xsl:value-of select="summary/@sum_netto" />
-							</td>
-						</tr>
-						<tr>
-							<td colspan="3">
-								<div class="pull-right">
-									<xsl:value-of select="php:function( 'SobiPro::Txt', 'VAT' )" />
-									(<xsl:value-of select="summary/@vat" />)
-								</div>
-							</td>
-							<td>
-								<xsl:value-of select="summary/@sum_vat" />
-							</td>
-						</tr>
-						<tr class="success">
-							<td colspan="3">
-								<div class="pull-right">
-									<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_GROSS' )" />
-								</div>
-							</td>
-							<td>
-								<xsl:value-of select="summary/@sum_brutto" />
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<xsl:call-template name="paymentTable" />
 			</div>
 			<div class="modal-footer">
 				<a href="#" class="btn" data-dismiss="modal">

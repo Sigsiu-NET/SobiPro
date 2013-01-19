@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- @version: $Id$
+ @version: $Id: details.xsl 3013 2013-01-18 07:49:27Z Radek Suski $
  @package: SobiPro Component for Joomla!
 
  @author
@@ -17,30 +17,26 @@
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
- $Date$
- $Revision$
- $Author$
- $HeadURL$
+ $Date: 2013-01-18 08:49:27 +0100 (Fri, 18 Jan 2013) $
+ $Revision: 3013 $
+ $Author: Radek Suski $
+ $HeadURL: https://svn.suski.eu/SobiPro/Component/branches/SobiPro-1.1/Site/usr/templates/default/entry/details.xsl $
 -->
-
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
-
-	<xsl:include href="../common/topmenu.xsl" />
-	<xsl:include href="../common/alphamenu.xsl" />
-	<xsl:include href="../common/entries.xsl" />
-	<xsl:include href="../common/navigation.xsl" />
-	<xsl:include href="../common/messages.xsl" />
-	<xsl:template match="/listing">
-		<div class="SPListing">
-			<div>
-				<xsl:apply-templates select="menu" />
-				<xsl:apply-templates select="alphaMenu" />
+	<xsl:template match="messages">
+		<div class="clearfix" />
+		<xsl:for-each select="./*">
+			<div class="alert alert-{name()}">
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				<xsl:for-each select="./*">
+					<xsl:value-of select="." />
+					<div class="clearfix" />
+				</xsl:for-each>
 			</div>
-			<xsl:apply-templates select="messages" />
-			<div style="clear:both;" />
-			<xsl:call-template name="entriesLoop" />
-			<xsl:apply-templates select="navigation" />
+		</xsl:for-each>
+		<div class="alert hide" id="sobipro-message">
+			<button type="button" class="close" data-dismiss="alert">×</button>
 		</div>
 	</xsl:template>
 </xsl:stylesheet>
