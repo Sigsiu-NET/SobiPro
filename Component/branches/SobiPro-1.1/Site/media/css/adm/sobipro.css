@@ -241,8 +241,10 @@ div.spScreenTitle h4 {
 .modal-footer .btn-success:hover {
   color: #ffffff !important;
 }
-.SobiPro .modal {
+.SobiPro div.modal {
   width: 520px;
+  margin: -250px 0 0 -280px;
+  top: 50%;
 }
 #SPAdminForm table .control-label {
   padding-top: 4px;
