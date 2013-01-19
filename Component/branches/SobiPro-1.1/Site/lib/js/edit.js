@@ -1,6 +1,6 @@
 /**
- * @version: $Id$
- * @package: SobiPro Library
+ * @version: $Id: edit.js 3021 2013-01-19 13:14:46Z Radek Suski $
+ * @package: SobiPro Component for Joomla!
 
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
@@ -8,129 +8,151 @@
  * Url: http://www.Sigsiu.NET
 
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
- * @license GNU/LGPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
+ * @license GNU/GPL Version 3
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
+ * $Date: 2013-01-19 14:14:46 +0100 (Sat, 19 Jan 2013) $
+ * $Revision: 3021 $
+ * $Author: Radek Suski $
+ * $HeadURL: https://svn.suski.eu/SobiPro/Component/branches/SobiPro-1.1/Site/usr/templates/default/js/edit.js $
+ *
+ * This is the default JavaScript for the edit screen. It requires a default or default based frontend template
+ *
  */
 
-var selectedCat = 0;
-var selectedCatName = '';
-var selectedCats = new Array();
-var selectedCatNames = new Array();
-var selectedPath = '';
-var selCid = 0;
-var SPObjType = 'entry';
-var maxCat = '__MAXCATS__';
-
-SobiPro.onReady( function () {
-	var Cinit = new String( SP_id( 'entry.parent' ).value );
-	if( Cinit != '' ) {
-		var cats = Cinit.split( ',' );
-		for( var i = 0; i < cats.length; i++ ) {
-			if( cats[ i ] > 0 ) {
-				SP_selectCat( cats[ i ], 1 );
-			}
-		}
-	}
-} );
-
-function SP_selectCat( sid, add )
+SobiPro.jQuery( document ).ready( function ()
 {
-	var separator = "__SEPARATOR__";
-	var node = SP_id( 'sobiCatsstNode' + sid );
-	var cats = new Array();
-	// fix for chrome
-	try {
-		SP_id( 'sobiCats_CatUrl' + sid ).focus();
-	} catch( e ) {}
-
-	var request = new SobiPro.Json(
-		"__URL__" + '&sid=' + sid,
+	var template = '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="pull-right close spclose">x</div><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>';
+	SobiPro.jQuery( 'a[rel=popover]' )
+		.popover( { 'html':true, 'trigger':'click', 'template':template } )
+		.click( function ( e )
 		{
-			onComplete: function( jsonObj, jsons )
+			e.preventDefault();
+			var proxy = SobiPro.jQuery( this );
+			SobiPro.DebOut( proxy )
+			proxy.parent().find( '.close' ).click( function ()
 			{
-				selectedCat = sid;
-		        jsonObj.categories.each(
-	        		function( cat )
-	        		{
-	        			cats[ cat.id ] = cat.name;
-	        			selectedCatName = cat.name;
-	        		}
-		        );
-		        selectedPath = cats.join( separator );
-		        if( add == 1 ) {
-		        	SP_addCat();
-			    }
+				proxy.popover( 'hide' );
+			} )
+		} );
+	if ( SobiPro.jQuery( '.spFileUpload' ).length ) {
+		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
+	}
+
+	setTimeout( function ()
+	{
+		new SobiProEntryEdit();
+	}, 1000 );
+
+	function SobiProEntryEdit()
+	{
+		"use strict";
+		this.boxes = SobiPro.jQuery( '.payment-box' );
+		var proxy = this;
+
+		this.boxes.each( function ( i, element )
+		{
+			element = SobiPro.jQuery( element );
+			element.targetContainer = SobiPro.jQuery( '#' + element.attr( 'id' ).replace( '-payment', '-input-container' ) );
+			element.toggleTarget = element.targetContainer.find( '*' );
+			element.targetIframes = element.targetContainer.find( 'iframe' ).parent();
+			element.disableTargets = function ()
+			{
+				this.toggleTarget.attr( 'disabled', 'disabled' );
+				this.targetContainer.children().css( 'opacity', '0.3' );
+				this.targetIframes.css( 'display', 'none' );
+			}
+			element.disableTargets();
+			element.change( function ()
+			{
+				if ( SobiPro.jQuery( this ).is( ':checked' ) ) {
+					element.toggleTarget.removeAttr( 'disabled' );
+					element.targetContainer.children().css( 'opacity', '1' );
+					element.targetIframes.css( 'display', '' );
+				}
+				else {
+					element.disableTargets();
+				}
+			} );
+		} );
+
+		this.sendRequest = function ()
+		{
+			var request = SobiPro.jQuery( '#spEntryForm' ).serialize();
+			SobiPro.jQuery( SobiPro.jQuery( '#spEntryForm' ).find( ':button' ) ).each( function ( i, b )
+			{
+				var bt = SobiPro.jQuery( b );
+				if ( bt.hasClass( 'active' ) ) {
+					request += '&' + bt.attr( 'name' ) + '=' + bt.val();
+				}
+			} );
+			SobiPro.jQuery.ajax( {
+				'url':'index.php',
+				'data':request,
+				'type':'post',
+				'dataType':'json',
+				success:function ( response )
+				{
+					SobiPro.DebOut( response );
+					if ( response.message.type == 'error' ) {
+						proxy.errorHandler( response );
+					}
+					else {
+						if ( response.message.type == 'info' ) {
+							SobiPro.jQuery( response.message.text ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
+							var modal = SobiPro.jQuery( '#SpPaymentModal' ).find( '.modal' ).modal();
+							modal.on( 'hidden', function ()
+							{
+								SobiPro.jQuery( '#SpPaymentModal' ).remove();
+							} );
+
+						}
+					}
+				}
+			} );
+		}
+
+		this.errorHandler = function ( response )
+		{
+			var input = SobiPro.jQuery( '#' + response.data.error );
+			var container = SobiPro.jQuery( '#' + response.data.error + '-container' );
+			container.addClass( 'error' );
+			var placement = 'right'
+			if ( !( input.length ) ) {
+				input = container.find( 'label' );
+				placement = 'top';
+			}
+			if ( input.length ) {
+				var popover = SobiPro.jQuery( '<a class="sobipro-input-note" data-placement="' + placement + '" data-content="' + response.message.text + '">&nbsp;</a>' );
+				popover.insertAfter( input );
+				popover.popover( 'show' );
+				input.ScrollTo();
+				input.focus( function ()
+				{
+					popover.popover( 'hide' );
+					popover.remove();
+					container.removeClass( 'error' );
+				} );
+				if ( placement == 'top' ) {
+					container.find( ':input' ).focus( function ()
+					{
+						popover.popover( 'hide' );
+						popover.remove();
+						container.removeClass( 'error' );
+					} )
+				}
+			}
+			else {
+				alert( response.message.text );
 			}
 		}
-	).send();
-}
 
-function SP_Save()
-{
-	SP_id( 'entry.path' ).value = SobiPro.StripSlashes( selectedCatNames.join( '\n' ) );
-	SP_id( 'entry.parent' ).value = selectedCats.join( ', ' );
-}
-
-function SP_addCat()
-{
-	if( selectedCat == 0 || selectedPath == '' ) {
-		SobiPro.Alert( "PLEASE_SELECT_CATEGORY_YOU_WANT_TO_ADD_IN_THE_TREE_FIRST" );
-		return false;
+		SobiPro.jQuery( '.sobipro-submit' ).click( function ( e )
+		{
+			proxy.sendRequest();
+		} );
 	}
-	for( var i = 0; i <= selectedCats.length; ++i ) {
-		if( selectedCats[ i ] == selectedCat ) {
-			SobiPro.Alert( "THIS_CATEGORY_HAS_BEEN_ALREADY_ADDED" );
-			return false;
-		}
-	}
-	var selCats = SP_id( 'selectedCats' );
-	var newOpt = document.createElement( 'option' );
-	newOpt.text = SobiPro.StripSlashes( selectedCatName );
-	newOpt.value = selectedCat;
-	newOpt.title = SobiPro.StripSlashes( selectedPath );
-    try { selCats.add( newOpt, null ); } catch( x ) { selCats.add( newOpt ); }
-    selectedCatNames[ selectedCats.length ] = selectedPath;
-    selectedCats[ selectedCats.length ] = selectedCat;
-    for ( var i = 0; i <= selCats.options.length; ++i ) {
-	    if( i >=  maxCat ) {
-	    	SP_id( 'SpTreeAddButton' ).disabled = true;
-	    	break;
-		}
-    }
-}
-
-function SP_delCat()
-{
-	var selCats = SP_id( 'selectedCats' );
-	var selOpt = selCats.options[ selCats.selectedIndex ];
-	cid = selOpt.value;
-	cp =  selOpt.title;
-	selCats.options[ selCats.selectedIndex ] = null;
-	for( var i = 0; i <= selectedCats.length; ++i ) {
-		if( selectedCats[ i ] == cid ) {
-			selectedCatNames.splice( i, 1 );
-			selectedCats.splice( i, 1 );
-		}
-	}
-	SP_id( 'SpTreeAddButton' ).disabled = false;
-}
-
-window.addEvent( 'domready', function() {
-	$( 'spEntryForm' ).addEvent( 'submit', function( ev ) {
-		if( $( 'SP_task' ) == 'cancel' ) {
-			return true;
-		}
-		else if( !( SPValidate( $( 'spEntryForm' ) ) ) ) {
-			new Event( ev ).stop();
-			return false;
-		}
-	} );
 } );
