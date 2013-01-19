@@ -90,7 +90,7 @@ class SPPaymentView extends SPFrontView implements SPView
 	{
 		$data = $this->get( 'pdata' );
 		if( !( $data ) ) {
-			$data = SPFactory::payment()->summary( $id );
+			$data = SPFactory::payment()->summary();
 		}
 		$methods = SPFactory::payment()->getMethods( $this->get( 'entry' ), $data );
 		$visitor = $this->get( 'visitor' );
@@ -177,9 +177,9 @@ class SPPaymentView extends SPFrontView implements SPView
 				),
 			)
 		);
+		$xml[ 'save_url' ] = $saveUrl;
 		$xml[ 'visitor' ] = $this->visitorArray( $visitor );
 		$this->_attr = $xml;
 		Sobi::Trigger( 'PaymentView', ucfirst( __FUNCTION__ ), array( &$this->_attr ) );
 	}
 }
-?>

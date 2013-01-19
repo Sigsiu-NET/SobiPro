@@ -446,6 +446,8 @@ abstract class SPController extends SPObject implements SPControl
 
 	/**
 	 * @param int $sid
+	 * @param bool $redirect
+	 * @return void
 	 */
 	protected function checkIn( $sid, $redirect = true )
 	{

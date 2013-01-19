@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -192,9 +188,10 @@ abstract class SPFrontView extends SPObject implements SPView
 	/**
 	 * Returns copy of stored key
 	 *
-	 * @param string $label
+	 * @param $key
 	 * @param mixed $def
 	 * @param string $section
+	 * @internal param string $label
 	 * @return mixed
 	 */
 	public function key( $key, $def = null, $section = 'general' )
@@ -221,7 +218,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	private function pb()
 	{
 		$p = "YToxOntpOjA7czoxODI6IjxkaXYgaWQ9InNvYmlQcm9Gb290ZXIiPlBvd2VyZWQgYnkgPGEgdGl0bGU9IlNvYmlQcm8gLSBKb29tbGEgRGlyZWN0b3J5IENvbXBvbmVudCB3aXRoIGNvbnRlbnQgY29uc3RydWN0aW9uIHN1cHBvcnQiIGhyZWY9Imh0dHA6Ly93d3cuc2lnc2l1Lm5ldCIgdGFyZ2V0PSJfYmxhbmsiPlNpZ3NpdS5ORVQ8L2E+PC9kaXY+Ijt9";
-		if ( !( Sobi::Cfg( 'show_pb', true ) ) ) {
+		if ( !( Sobi::Cfg( 'show_pb', true ) ) || SPRequest::cmd( 'method', null, 'post' ) == 'xhr' ) {
 			return;
 		}
 		try {
