@@ -504,3 +504,13 @@ td.span2,
 td.span10 {
     vertical-align: top;
 }
+.sheader {
+    background-repeat: no-repeat;
+    color: #0B55C4;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 42px;
+    min-height: 50px;
+    padding-left: 55px;
+    display: block!important;
+}
