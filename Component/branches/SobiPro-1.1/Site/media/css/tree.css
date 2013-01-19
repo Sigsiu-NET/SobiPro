@@ -20,12 +20,11 @@
  * $HeadURL$
  */
 
-
-/* Styles for SigsiuTree */
-/* --------------------- */
+/* Styles for SigsiuTree on Frontend */
+/* --------------------------------- */
 .sigsiuTree {
-	font-family: Arial, Verdana, Geneva, Helvetica, sans-serif;
-	font-size: 11px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 13px;
 	color: #666;
 	white-space: nowrap;
 	overflow: auto;
