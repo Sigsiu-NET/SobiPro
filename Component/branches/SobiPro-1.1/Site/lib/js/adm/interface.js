@@ -43,7 +43,7 @@ SobiPro.jQuery( document ).ready( function ()
 					return true;
 				}
 				SPTriggerFrakingWYSIWYGEditors();
-				req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
+				var req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
 				SobiPro.jQuery( SobiPro.jQuery( '#SPAdminForm' ).find( ':button' ) ).each( function ( i, b )
 				{
 					bt = SobiPro.jQuery( b );
@@ -250,13 +250,13 @@ SobiPro.jQuery( document ).ready( function ()
 				.find( '.modal-body' )
 				.html( '<iframe src="' + requestUrl + '" id="filter-edit-window-frame" style="width: 570px; height: 300px; border: none; overflow-y: hidden;"> </iframe>' );
 			SobiPro.jQuery( '#filter-edit-window' ).modal();
-//			SobiPro.jQuery( "#filter-edit-window" )
-//				.find( '.save' )
-//				.click( function ( e )
-//				{
-//					"use strict";
-//					window.location.replace( window.location );
-//				} );
+			SobiPro.jQuery( "#filter-edit-window" )
+				.find( '.save' )
+				.click( function ( e )
+				{
+					"use strict";
+					window.location.replace( window.location );
+				} );
 			SobiPro.jQuery( "#filter-edit-window" )
 				.find( '.save' )
 				.click( function ( e )

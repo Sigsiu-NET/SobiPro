@@ -71,7 +71,12 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$this->_selectedCats = array_keys( $entry->get( 'categories' ) );
 		}
 		else {
-			$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
+			if ( is_string( $this->_selectedCats ) && strstr( $this->_selectedCats, '://' ) ) {
+				$this->_selectedCats = SPFactory::config()->structuralData( $this->_selectedCats );
+			}
+			else {
+				$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
+			}
 		}
 		$this->showLabel = true;
 		switch ( $this->method ) {

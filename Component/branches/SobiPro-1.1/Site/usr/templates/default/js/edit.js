@@ -39,7 +39,10 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
 	}
 
-	new SobiProEntryEdit();
+	setTimeout( function ()
+	{
+		new SobiProEntryEdit();
+	}, 1000 );
 
 	function SobiProEntryEdit()
 	{
@@ -50,64 +53,111 @@ SobiPro.jQuery( document ).ready( function ()
 		this.boxes.each( function ( i, element )
 		{
 			element = SobiPro.jQuery( element );
-			element.toggleTarget = SobiPro.jQuery( '#' + element.attr( 'id' ).replace( '-payment', '-container' ) ).find( '*' );
-			element.toggleTarget.attr( 'disabled', 'disabled' );
+			element.targetContainer = SobiPro.jQuery( '#' + element.attr( 'id' ).replace( '-payment', '-input-container' ) );
+			element.toggleTarget = element.targetContainer.find( '*' );
+			element.targetIframes = element.targetContainer.find( 'iframe' ).parent();
+			element.disableTargets = function ()
+			{
+				this.toggleTarget.attr( 'disabled', 'disabled' );
+				this.targetContainer.children().css( 'opacity', '0.3' );
+				this.targetIframes.css( 'display', 'none' );
+			}
+			element.disableTargets();
 			element.change( function ()
 			{
 				if ( SobiPro.jQuery( this ).is( ':checked' ) ) {
 					element.toggleTarget.removeAttr( 'disabled' );
+					element.targetContainer.children().css( 'opacity', '1' );
+					element.targetIframes.css( 'display', '' );
 				}
 				else {
-					element.toggleTarget.attr( 'disabled', 'disabled' );
+					element.disableTargets();
 				}
 			} );
 		} );
+
+		this.sendRequest = function ()
+		{
+			var request = SobiPro.jQuery( '#spEntryForm' ).serialize();
+			SobiPro.jQuery( SobiPro.jQuery( '#spEntryForm' ).find( ':button' ) ).each( function ( i, b )
+			{
+				var bt = SobiPro.jQuery( b );
+				if ( bt.hasClass( 'active' ) ) {
+					request += '&' + bt.attr( 'name' ) + '=' + bt.val();
+				}
+			} );
+			SobiPro.jQuery.ajax( {
+				'url':'index.php',
+				'data':request,
+				'type':'post',
+				'dataType':'json',
+				success:function ( response )
+				{
+					SobiPro.DebOut( response );
+					if ( response.message.type == 'error' ) {
+						proxy.errorHandler( response );
+					}
+					else {
+						if ( response.message.type == 'info' ) {
+							SobiPro.jQuery( response.message.text ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
+							var modal = SobiPro.jQuery( '#SpPaymentModal' ).find( '.modal' ).modal();
+							modal.find( '.confirm' ).click( function ()
+							{
+//								modal.remove();
+							} );
+							modal.on( 'hidden', function ()
+							{
+								SobiPro.jQuery( '#SpPaymentModal' ).remove();
+							} );
+
+						}
+					}
+				}
+			} );
+		}
+
+		this.errorHandler = function ( response )
+		{
+			var input = SobiPro.jQuery( '#' + response.data.error );
+			var container = SobiPro.jQuery( '#' + response.data.error + '-container' );
+			container.addClass( 'error' );
+			var placement = 'right'
+			if ( !( input.length ) ) {
+				input = container.find( 'label' );
+				placement = 'top';
+			}
+			if ( input.length ) {
+				var popover = SobiPro.jQuery( '<a class="sobipro-input-note" data-placement="' + placement + '" data-content="' + response.message.text + '">&nbsp;</a>' );
+				popover.insertAfter( input );
+				popover.popover( 'show' );
+				input.ScrollTo();
+				input.focus( function ()
+				{
+					popover.popover( 'hide' );
+					popover.remove();
+					container.removeClass( 'error' );
+				} );
+				if ( placement == 'top' ) {
+					container.find( ':input' ).focus( function ()
+					{
+						popover.popover( 'hide' );
+						popover.remove();
+						container.removeClass( 'error' );
+					} )
+				}
+			}
+			else {
+				alert( response.message.text );
+			}
+		}
+
+		this.submitButton = SobiPro.jQuery( '.sobipro-submit' ).click( function ( e )
+		{
+			proxy.sendRequest();
+		} );
+		this.cancelButton = SobiPro.jQuery( '.sobipro-cancel' ).click( function ( e )
+		{
+
+		} );
 	}
 } );
-//
-//
-//try{ jQuery.noConflict(); } catch( e ) {}
-//// it has to be MT :( because of the tiny
-//window.addEvent( 'load', function() {
-//	var els = SP_class( 'SPPaymentBox' );
-//	for( var i = 0; i < els.length; i++ ) {
-//		SP_ActivatePayment( SP_id( els[ i ].id ) );
-//	}
-//	$( 'spEntryForm' ).addEvent( 'submit', function( ev ) {
-//		var els = SP_class( 'mce_editable' );
-//		for( var i = 0; i < els.length; i++ ) {
-//			if( tinyMCE.get( els[ i ].id ).getContent().length ) {
-//				els[ i ].value = tinyMCE.get( els[ i ].id ).getContent();
-//				els[ i ].disabled = false;
-//			}
-//		}
-//	} );
-//} );
-//
-//function SP_ActivatePayment( e )
-//{
-//	var cid = e.id.replace( 'Payment', 'Container' );
-//	if( e.checked ) {
-//		jQuery( "#" + cid + " input" ).each( function( i, el ){ this.disabled = false; } );
-//		jQuery( "#" + cid + " select" ).each( function( i, el ){ this.disabled = false; } );
-//		jQuery( "#" + cid + " textarea" ).each( function( i, el ){
-//			if( el.className == 'mce_editable' ) {
-//				tinyMCE.execCommand( 'mceToggleEditor', true, el.id );
-//			}
-//			else {
-//				this.disabled = false;
-//			}
-//		} );
-//	}
-//	else {
-//		jQuery( "#" + cid + " input" ).each( function( i, el ){ this.disabled = true; } );
-//		jQuery( "#" + cid + " select" ).each( function( i, el ){ this.disabled = true; } );
-//		jQuery( "#" + cid + " textarea" ).each( function( i, el ){
-//			if( el.className == 'mce_editable' ) {
-//				tinyMCE.execCommand( 'mceToggleEditor', false, el.id );
-//			}
-//			this.disabled = true;
-//		} );
-//	}
-//	e.disabled = false;
-//}

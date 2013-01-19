@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -153,14 +149,10 @@ class SPEntryCtrl extends SPController
 		}
 		else {
 			if ( $this->_model->get( 'oType' ) != 'entry' ) {
-				Sobi::Error( 'Entry',
-					sprintf(
-						'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), SPRequest::task()
-					), SPC::ERROR, 403, __LINE__, __FILE__ );
+				Sobi::Error( 'Entry', sprintf( 'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 				exit;
 			}
 		}
-		$error = false;
 		$sid = $this->_model->get( 'id' );
 		$this->_model->init( SPRequest::sid() );
 		$this->_model->getRequest( $this->_type );
@@ -177,60 +169,56 @@ class SPEntryCtrl extends SPController
 			$this->authorise( 'add', 'own' );
 		}
 
-		if ( !( SPRequest::int( 'entry_parent', 0 ) ) ) {
-			$error = Sobi::Txt( 'CAT.SELECT_ONE' );
-			SPFactory::message()->error( $error, false );
+		if ( Sobi::Cfg( 'legacy.sigsiutree', false ) && !( SPRequest::int( 'entry_parent', 0 ) ) ) {
+			$this->response( Sobi::Back(), Sobi::Txt( 'CAT.SELECT_ONE' ), true, SPC::ERROR_MSG );
 		}
 		$this->_model->loadFields( Sobi::Reg( 'current_section' ) );
 		$fields = $this->_model->get( 'fields' );
-		$tsid = SPRequest::string( 'editentry', null, false, 'cookie' );
+		$tsId = SPRequest::string( 'editentry', null, false, 'cookie' );
 
-		if ( !strlen( $tsid ) ) {
+		if ( !strlen( $tsId ) ) {
 			/** Cannot write to file \tmp\edit\2011-04-27_05-04-00_::1\post.var
 			 * ^^^^ how the hell it's possible to have IP like ::1 ???!!! ^^^ */
-			$tsid = date( 'Y-m-d_H-m-s_' ) . str_replace( array( '.', ':' ), array( '-', null ), SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
+			$tsId = date( 'Y-m-d_H-m-s_' ) . str_replace( array( '.', ':' ), array( '-', null ), SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
 			SPLoader::loadClass( 'env.cookie' );
-			SPCookie::set( 'editentry', $tsid, SPCookie::hours( 2 ) );
+			SPCookie::set( 'editentry', $tsId, SPCookie::hours( 2 ) );
 		}
 		$store = array();
 		if ( count( $fields ) ) {
 			foreach ( $fields as $field ) {
 				$field->enabled( 'form' );
 				try {
-					$request = $field->submit( $this->_model, $tsid );
+					$request = $field->submit( $this->_model, $tsId );
 					if ( is_array( $request ) && count( $request ) ) {
 						$store = array_merge( $store, $request );
 					}
 				} catch ( SPException $x ) {
-					$error = $x->getMessage();
+					$this->response( Sobi::Back(), $x->getMessage(), false, SPC::ERROR_MSG, array( 'error' => $field->get( 'nid' ) ) );
 				}
 			}
 		}
 		/* try in Sobi Cache first */
 		if ( Sobi::Cfg( 'cache.l3_enabled', true ) ) {
-			SPFactory::cache()->addVar( array( 'post' => $_POST, 'files' => $_FILES, 'store' => $store ), 'request_cache_' . $tsid );
+			SPFactory::cache()->addVar( array( 'post' => $_POST, 'files' => $_FILES, 'store' => $store ), 'request_cache_' . $tsId );
 		}
 		else {
-			SPFs::write( SPLoader::path( 'tmp.edit.' . $tsid . '.post', 'front', false, 'var' ), SPConfig::serialize( $_POST ) );
-			SPFs::write( SPLoader::path( 'tmp.edit.' . $tsid . '.files', 'front', false, 'var' ), SPConfig::serialize( $_FILES ) );
-			SPFs::write( SPLoader::path( 'tmp.edit.' . $tsid . '.store', 'front', false, 'var' ), SPConfig::serialize( $store ) );
+			SPFs::write( SPLoader::path( 'tmp.edit.' . $tsId . '.post', 'front', false, 'var' ), SPConfig::serialize( $_POST ) );
+			SPFs::write( SPLoader::path( 'tmp.edit.' . $tsId . '.files', 'front', false, 'var' ), SPConfig::serialize( $_FILES ) );
+			SPFs::write( SPLoader::path( 'tmp.edit.' . $tsId . '.store', 'front', false, 'var' ), SPConfig::serialize( $store ) );
 
 		}
-		if ( $error ) {
-			Sobi::Redirect( Sobi::Back(), $error, 'error', true );
-			exit();
-		}
-		elseif ( !( Sobi::Can( 'entry.payment.free' ) ) && SPFactory::payment()->count( $this->_model->get( 'id' ) ) ) {
-			$this->paymentView( $tsid );
+
+		if ( !( Sobi::Can( 'entry.payment.free' ) ) && SPFactory::payment()->count( $this->_model->get( 'id' ) ) ) {
+			$this->paymentView( $tsId );
 		}
 		else {
 			Sobi::Redirect( Sobi::Url( array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $sid ) ) );
 		}
 	}
 
-	private function getCache( $tsid, $cache = 'requestcache' )
+	private function getCache( $tsId, $cache = 'requestcache' )
 	{
-		$store = SPFactory::cache()->getVar( 'request_cache_' . $tsid );
+		$store = SPFactory::cache()->getVar( 'request_cache_' . $tsId );
 		/* try from Sobi Cache first */
 		if ( $store && isset( $store[ 'post' ] ) && isset( $store[ 'store' ] ) && isset( $store[ 'files' ] ) ) {
 			$post = $store[ 'post' ];
@@ -244,14 +232,14 @@ class SPEntryCtrl extends SPController
 			$request = $cache;
 		}
 		else {
-			$tdir = SPLoader::dirPath( 'tmp.edit.' . $tsid );
-			if ( strlen( $tsid ) && $tdir ) {
-				$tfile = SPLoader::path( 'tmp.edit.' . $tsid . '.post', 'front', true, 'var' );
-				$ffile = SPLoader::path( 'tmp.edit.' . $tsid . '.files', 'front', true, 'var' );
-				$sfile = SPLoader::path( 'tmp.edit.' . $tsid . '.store', 'front', true, 'var' );
-				$post = SPConfig::unserialize( SPFs::read( $tfile ) );
-				$files = SPConfig::unserialize( SPFs::read( $ffile ) );
-				$store = SPConfig::unserialize( SPFs::read( $sfile ) );
+			$tempDir = SPLoader::dirPath( 'tmp.edit.' . $tsId );
+			if ( strlen( $tsId ) && $tempDir ) {
+				$tempFile = SPLoader::path( 'tmp.edit.' . $tsId . '.post', 'front', true, 'var' );
+				$filesFile = SPLoader::path( 'tmp.edit.' . $tsId . '.files', 'front', true, 'var' );
+				$storeFile = SPLoader::path( 'tmp.edit.' . $tsId . '.store', 'front', true, 'var' );
+				$post = SPConfig::unserialize( SPFs::read( $tempFile ) );
+				$files = SPConfig::unserialize( SPFs::read( $filesFile ) );
+				$store = SPConfig::unserialize( SPFs::read( $storeFile ) );
 				if ( is_array( $files ) ) {
 					$post = array_merge( $post, $files );
 				}
@@ -296,27 +284,32 @@ class SPEntryCtrl extends SPController
 		$this->paymentView( null, $data[ 'data' ] );
 	}
 
-	private function paymentView( $tsid = null, $data = null )
+	private function paymentView( $tsId = null, $data = null )
 	{
 		/* determine template package */
-		$tplPckg = Sobi::Cfg( 'section.template', 'default' );
-
+		$tplPackage = Sobi::Cfg( 'section.template', 'default' );
 		/* load template config */
-		$this->tplCfg( $tplPckg );
-
-		/* @TODO add pathway */
+		$this->tplCfg( $tplPackage );
 		SPFactory::mainframe()->addObjToPathway( $this->_model );
-		$class = SPLoader::loadView( 'payment' );
-		$view = new $class( $this->template );
+		$view = SPFactory::View( 'payment', $this->template );
 		$view->assign( $this->_model, 'entry' );
 		$view->assign( $data, 'pdata' );
 		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
 		$view->assign( $this->_task, 'task' );
-		$view->addHidden( $tsid, 'speditentry' );
+		$view->addHidden( $tsId, 'speditentry' );
 		$view->setConfig( $this->_tCfg, $this->_task );
-		$view->setTemplate( $tplPckg . '.payment.' . $this->_task );
+		$view->setTemplate( $tplPackage . '.payment.' . $this->_task );
 		Sobi::Trigger( ucfirst( $this->_task ), $this->name(), array( &$view, &$this->_model ) );
-		$view->display();
+		if ( SPRequest::cmd( 'method', null, 'post' ) == 'xhr' ) {
+			$view->display();
+			$response = ob_get_contents();
+			$response = str_replace( 'id="SobiPro"', 'id="SpPaymentModal"', $response );
+			$this->response( Sobi::Back(), $response, false, SPC::INFO_MSG );
+		}
+		else {
+			$view->display();
+		}
+//		$this->response( Sobi::Back(), $x->getMessage(), false, SPC::ERROR_MSG, array( 'error' => $field->get( 'nid' ) ) );
 	}
 
 	/**
@@ -330,7 +323,6 @@ class SPEntryCtrl extends SPController
 		//		if( !( SPFactory::mainframe()->checkToken() ) ) {
 		//			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		//		}
-		$apply = ( int )$apply;
 		$new = true;
 		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );

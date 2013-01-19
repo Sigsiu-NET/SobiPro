@@ -34,7 +34,6 @@
 					<xsl:with-param name="searchbox">false</xsl:with-param>
 				</xsl:call-template>
 			</div>
-
 			<div class="form-horizontal">
 				<xsl:for-each select="entry/fields/*">
 					<xsl:if test="( name() != 'save_button' ) and ( name() != 'cancel_button' )">
@@ -88,14 +87,16 @@
 				</xsl:for-each>
 			</div>
 			<div class="pull-right">
-		        <button class="btn" type="button">
+		        <button class="btn sobipro-cancel" type="button">
 			        <xsl:value-of select="entry/fields/cancel_button/data/button"/>
 		        </button>
-				<button class="btn btn-primary" type="button">
+				<button class="btn btn-primary sobipro-submit" type="button" data-loading-text="Loading...">
 					<xsl:value-of select="entry/fields/save_button/data/input/@value"/>
 				</button>
 			</div>
 			<div class="clearfix"/>
 		</div>
+		<input type="hidden" name="method" value="xhr"/>
+		<input type="hidden" name="format" value="raw"/>
 	</xsl:template>
 </xsl:stylesheet>

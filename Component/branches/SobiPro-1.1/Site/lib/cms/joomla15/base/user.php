@@ -29,7 +29,7 @@ require_once dirname(__FILE__).'/../../joomla_common/base/user.php';
  * @version 1.0
  * @created 10-Jan-2009 5:51:03 PM
  */
-class SPUser extends SPJomlaUser
+class SPUser extends SPJoomlaUser
 {
 	public function __construct( $id = 0 )
 	{
@@ -44,4 +44,3 @@ class SPUser extends SPJomlaUser
 		Sobi::Trigger( 'UserGroup', 'Appoint', array( $id, &$this->gid ) );
 	}
 }
-?>

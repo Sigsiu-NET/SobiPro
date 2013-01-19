@@ -21,3 +21,8 @@
  */
 
 SobiPro.setJq( jQuery.noConflict() );
+SobiPro.jQuery.fn.ScrollTo = function () {
+	SobiPro.jQuery( this ).show();
+	SobiPro.jQuery( 'html, body' ).animate( { scrollTop:( SobiPro.jQuery( this ).offset().top - 50 ) + 'px' }, 'fast' );
+    return this;
+};

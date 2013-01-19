@@ -41,7 +41,10 @@
 		<xsl:variable name="categoryName"><xsl:value-of select="name" /></xsl:variable>
 		<xsl:value-of select="php:function( 'SobiPro::AlternateLink', $rssUrl, 'application/atom+xml', $categoryName )" />
 
-		<xsl:apply-templates select="menu" />
+		<xsl:call-template name="topMenu">
+			<xsl:with-param name="searchbox">true</xsl:with-param>
+		</xsl:call-template>
+
 		<xsl:apply-templates select="alphaMenu" />
 
 		<xsl:value-of select="description" disable-output-escaping="yes" />

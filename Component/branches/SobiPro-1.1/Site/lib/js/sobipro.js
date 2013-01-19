@@ -19,7 +19,6 @@
  * $Author$
  * $HeadURL$
  */
-
 function SobiPro()
 {
 	this.fns = new Array();
