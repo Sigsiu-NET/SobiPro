@@ -33,7 +33,7 @@ $fc = $this->count( 'files' );
 	}
 </script>
 <?php if( $dc ) { ?>
-	<div style="padding-left: 10px; min-width: 450px; display: inline-block">
+	<div style="min-width: 480px; display: inline-block">
 	<?php for ( $i = 0; $i < $dc ; ++$i ) { ?>
 		<div style="float: left; width: 100px; height: 90px; padding: 5px; text-align:center">
 			<a href="<?php $this->show( 'directories.url', $i ); ?>" >
@@ -48,11 +48,11 @@ $fc = $this->count( 'files' );
 			<div style="clear:both"></div>
 		<?php } ?>
 	<?php } ?>
-</div>
+    </div>
 <?php } ?>
-<div style="padding-top:10px; padding-left: 10px; display: inline-block;">
+<div style="min-width: 480px; padding-top:10px; display: inline-block;">
 <?php for ( $i = 0; $i < $fc ; ++$i ) { ?>
-	<div style="float: left; width: 65px; height: 65px; cursor:pointer">
+	<div style="float: left; text-align: center; width: 65px; height: 65px; cursor:pointer">
 		<img alt="<?php $this->show( 'files.name', $i ); ?>" title="<?php $this->show( 'files.name', $i ); ?>" src="<?php $this->show( 'files.path', $i ); ?>" style="max-width: 60px; max-height: 60px;" onclick="spSelect( this )">
 	</div>
 	<?php if( ( $i+1 ) % 7 == 0 ) { ?>

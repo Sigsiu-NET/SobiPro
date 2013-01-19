@@ -25,6 +25,8 @@
 
 @background: #ffffff;
 @font: #333;
+@font-a: #0000B3;
+@font-sobipro: #993333;
 @font-size: 14px;
 @font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 @admIcons: '../../../../media/sobipro/adm';
@@ -43,6 +45,39 @@
 .SobiPro td, .SobiPro th {
   font-size: @font-size;
   font-family: @font-family;
+}
+
+/* Modale Fenster */
+body.contentpane {
+  color: @font;
+  font-size: @font-size;
+  font-family: @font-family;
+  padding: 0 0 0 20px;
+  margin: 10px 10px 0 0;
+  background-color: @background;
+}
+body.contentpane a {
+  color: @font-a;
+}
+.modal-backdrop, .modal-backdrop.fade.in {
+  opacity: 0.2;
+}
+.modal-backdrop {
+  background-color: #000000;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1040;
+}
+.SobiPro .modal-body {
+  max-height: 420px;
+  padding: 0;
+}
+.SobiPro iframe {
+  width: 520px;
+  min-height: 300px;
 }
 
 /* to override Joomla styles in IE (especially checkboxes) */
@@ -113,12 +148,12 @@ input[type='radio']{
 }
 
 #SPAdminForm #SPAdmToolbar .dropdown-toggle {
-  color: #333333;
+  color: @font;
 }
 
 #SPAdminForm #SPAdmToolbar .dropdown-toggle .caret {
-  border-bottom-color: #993333;
-  border-top-color: #993333;
+  border-bottom-color: @font-sobipro;
+  border-top-color: @font-sobipro;
   margin-top: 6px;
 }
 
@@ -137,7 +172,7 @@ input[type='radio']{
 }
 
 .SobiPro .breadcrumb .active a {
-  color: #333333;
+  color: @font;
 }
 
 .SobiPro .breadcrumb li {
@@ -187,11 +222,11 @@ input[type='radio']{
 
 #SPAdminForm #SPAdmToolbar a:hover,
 #SPAdminForm #SPAdmToolbar a {
-  color: #333333;
+  color: @font;
 }
 
 #SPAdmToolbar .nav {
-  margin-bottom: 0px
+  margin-bottom: 0px;
 }
 
 #SPAdmToolbar h3 {
@@ -273,7 +308,7 @@ div.spScreenTitle h4 {
 }
 
 .SobiPro a {
-  color: #0000b3;
+  color: @font-a;
 }
 
 .SobiPro a:hover {
@@ -282,7 +317,7 @@ div.spScreenTitle h4 {
 
 .modal-footer .btn,
 .modal-footer .btn:hover {
-  color: #333333 !important;
+  color: @font !important;
 }
 
 .modal-footer .btn-primary,
@@ -302,7 +337,7 @@ div.spScreenTitle h4 {
 
 #SPAdminForm table .control-label {
   padding-top: 4px;
-  color: #0000b3;
+  color: @font-a;
 }
 #SPAdminForm fieldset .control-label {
   width: 200px;
@@ -325,7 +360,7 @@ fieldset label {
 }
 
 #SPAdminForm .spFieldGroup label {
-  color: #993333;
+  color: @font-sobipro;
   border-bottom: 1px solid #CC9999;
   margin-left: 20px;
   width: 180px;
@@ -357,7 +392,7 @@ fieldset label {
 }
 
 #SPAdminForm .nav-tabs a {
-  color: #0000b3; /*#0088cc;*/
+  color: @font-a; /*#0088cc;*/
   text-decoration: none;
 }
 
@@ -423,7 +458,7 @@ fieldset label {
 }
 
 .SobiPro .btn-group.open .btn-sobipro.dropdown-toggle {
-  background-color: #993333;
+  background-color: @font-sobipro;
 }
 
 .SobiPro .btn-sobipro .caret {
@@ -436,7 +471,7 @@ fieldset label {
 .SobiPro .btn-danger.active,
 .SobiPro .btn-danger.disabled,
 .SobiPro .btn-danger[disabled] {
-  background-color: #993333;
+  background-color: @font-sobipro;
 }
 
 .SobiPro .spCcMethod .form-horizontal {
@@ -481,7 +516,7 @@ fieldset label {
 }
 
 .SobiPro .SpCellCenter i {
-  color: #333333;
+  color: @font;
   font-size: 110%;
 }
 
@@ -496,7 +531,7 @@ fieldset label {
 }
 
 .SobiPro .SpCellCenter .icon-remove-sign {
-  color: #993333;
+  color: @font-sobipro;
   font-size: 124%;
 }
 
@@ -539,6 +574,9 @@ fieldset label {
 }
 #SPAdminForm .SpSoap fieldset .controls {
   margin-left: 160px;
+}
+.SobiPro .SpSoap {
+  margin-top: 15px;
 }
 
 .SobiPro .SpCloudInstall {
@@ -778,7 +816,7 @@ input.sp-input-micro[type="text"] {
 }
 #SobiProPanel .accordion-heading a:hover {
   background-color: #eeeeee;
-  color: #333333;
+  color: @font;
   text-decoration: none;
 }
 
@@ -927,21 +965,6 @@ input.sp-input-micro[type="text"] {
 .SigsiuTree .tree {
   float: left;
 }
-
-/* Modale Fenster */
-.modal-backdrop, .modal-backdrop.fade.in {
-  opacity: 0.2;
-}
-.modal-backdrop {
-  background-color: #000000;
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 1040;
-}
-
 
 /* Compatibility Styles */
 
