@@ -42,7 +42,7 @@
 					<!-- opening the "table" row -->
 					<xsl:text disable-output-escaping="yes">&lt;div class="row" &gt;</xsl:text>
 				</xsl:if>
-				<div class="span{$cellClass} thumbnail" style="border-style:solid">
+				<div class="span{$cellClass} thumbnail">
 					<xsl:call-template name="category" />
 				</div>
 				<xsl:if test="$catsInLine > 1 and ( ( position() mod $catsInLine ) = 0 or position() = $catsInLine )">
