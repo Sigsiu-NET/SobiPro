@@ -83,7 +83,7 @@
 
 				<xsl:if test="count(entry/categories)">
 					<div class="spEntryCats">
-						<xsl:value-of select="php:function( 'SobiPro::Txt' , 'Located in:' )" /><xsl:text> </xsl:text>
+						<xsl:value-of select="php:function( 'SobiPro::Txt' , 'ENTRY_LOCATED_IN' )" /><xsl:text> </xsl:text>
 						<xsl:for-each select="entry/categories/category">
 							<a>
 								<xsl:attribute name="href">
