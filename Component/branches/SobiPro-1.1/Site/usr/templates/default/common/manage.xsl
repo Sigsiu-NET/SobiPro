@@ -37,10 +37,10 @@
 							<a href="{entry/publish_url}">
 								<xsl:choose>
 									<xsl:when test="entry/state = 'published'">
-										<xsl:value-of select="php:function( 'SobiPro::Txt', 'Disable Entry' )" />
+										<xsl:value-of select="php:function( 'SobiPro::Txt', 'ENTRY_MANAGE_DISABLE' )" />
 									</xsl:when>
 									<xsl:otherwise>
-										<xsl:value-of select="php:function( 'SobiPro::Txt', 'Enable Entry' )" />
+										<xsl:value-of select="php:function( 'SobiPro::Txt', 'ENTRY_MANAGE_ENABLE' )" />
 									</xsl:otherwise>
 								</xsl:choose>
 							</a>
@@ -49,14 +49,14 @@
 					<xsl:if test="entry/approve_url and entry/approved = 0">
 						<li>
 							<a href="{entry/approve_url}">
-								<xsl:value-of select="php:function( 'SobiPro::Txt', 'Approve Entry' )" />
+								<xsl:value-of select="php:function( 'SobiPro::Txt', 'ENTRY_MANAGE_APPROVE' )" />
 							</a>
 						</li>
 					</xsl:if>
 					<xsl:if test="entry/edit_url">
 						<li>
 							<a href="{entry/edit_url}">
-								<xsl:value-of select="php:function( 'SobiPro::Txt', 'Edit Entry' )" />
+								<xsl:value-of select="php:function( 'SobiPro::Txt', 'ENTRY_MANAGE_EDIT' )" />
 							</a>
 						</li>
 					</xsl:if>

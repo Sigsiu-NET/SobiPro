@@ -38,7 +38,6 @@
 				<xsl:apply-templates select="alphaMenu" />
 			</div>
 			<xsl:apply-templates select="messages" />
-			<div style="clear:both;" />
 			<xsl:call-template name="entriesLoop" />
 			<xsl:apply-templates select="navigation" />
 		</div>
