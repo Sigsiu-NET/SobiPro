@@ -43,6 +43,7 @@ body.contentpane {
   padding: 0 0 0 20px;
   margin: 10px 10px 0 0;
   background-color: #ffffff;
+  height: 95%;
 }
 body.contentpane a {
   color: #0000b3;
@@ -62,6 +63,8 @@ body.contentpane a {
 }
 .SobiPro .modal-body {
   max-height: 420px;
+}
+#spIco .modal-body {
   padding: 0;
 }
 .SobiPro iframe {

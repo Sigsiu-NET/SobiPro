@@ -135,6 +135,23 @@ table.adminlist {
     color: #666666;
     border-collapse: separate;
 }
+table.adminlist tfoot td,
+table.adminlist tfoot th {
+    background-color: #F7F7F7;
+    border-top: 1px solid #999999;
+    text-align: center;
+}
+table.adminlist thead th {
+    background: none repeat scroll 0 0 #F7F7F7;
+    border-bottom: 1px solid #CCCCCC;
+    border-left: 1px solid #FFFFFF;
+    color: #666666;
+    text-align: center;
+}
+table.adminlist td,
+table.adminlist th {
+    padding: 4px;
+}
 
 div.width-70 {
 /*    width: 55% !important; */
@@ -432,6 +449,9 @@ div#SPMenuCtrl {
 .icon-document-save-all:before {
     color: #51A351;
     content: "\e018";
+}
+.icon-new:before {
+    content: "\f055";
 }
 
 div#spTpl {
