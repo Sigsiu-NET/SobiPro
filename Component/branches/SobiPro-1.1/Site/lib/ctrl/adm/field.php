@@ -213,6 +213,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				'version' => 1,
 				'editable' => 1,
 				'required' => 0,
+				'priority' => 5,
 				'showIn' => 'details',
 				'editLimit' => '',
 				'version' => 1,

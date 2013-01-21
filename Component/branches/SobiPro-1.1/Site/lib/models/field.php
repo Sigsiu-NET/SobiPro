@@ -101,7 +101,7 @@ class SPField extends SPObject
 	/**
 	 * @var int
 	 */
-	protected $editLimit = null;
+	protected $editLimit = -1;
 	/**
 	 * @var bool
 	 */
@@ -109,7 +109,7 @@ class SPField extends SPObject
 	/**
 	 * @var bool
 	 */
-	protected $enabled = null;
+	protected $enabled = true;
 	/**
 	 * @var double
 	 */
@@ -153,7 +153,7 @@ class SPField extends SPObject
 	/**
 	 * @var bool
 	 */
-	protected $required = null;
+	protected $required = false;
 	/**
 	 * @var int
 	 */
@@ -161,7 +161,7 @@ class SPField extends SPObject
 	/**
 	 * @var string
 	 */
-	protected $showIn = null;
+	protected $showIn = 'details';
 	/**
 	 * @var bool
 	 */
@@ -197,7 +197,7 @@ class SPField extends SPObject
 	/**
 	 * @var bool
 	 */
-	protected $editable = null;
+	protected $editable = true;
 	/**
 	 * @var string
 	 */
@@ -205,7 +205,7 @@ class SPField extends SPObject
 	/**
 	 * @var string
 	 */
-	protected $inSearch = null;
+	protected $inSearch = true;
 	/**
 	 * @var array
 	 */
