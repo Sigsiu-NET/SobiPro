@@ -158,7 +158,7 @@ class SPAdmView extends SPObject implements SPView
 					'type' => 'url',
 					'task' => '',
 					'url' => array( 'sid' => $section[ 'id' ] ),
-					'label' => strlen( $section[ 'value' ] ) < $sectionLength ? $section[ 'value' ] : substr( $section[ 'value' ], 0, $sectionLength - 3 ) .' ...',
+					'label' => strlen( $section[ 'value' ] ) < $sectionLength ? $section[ 'value' ] : substr( $section[ 'value' ], 0, $sectionLength - 3 ) . ' ...',
 					'icon' => 'file',
 					'element' => 'button'
 				);
@@ -389,18 +389,26 @@ class SPAdmView extends SPObject implements SPView
 		return $button;
 	}
 
+	protected function replaceValue( $key, $i = -1 )
+	{
+		preg_match( '/var\:\[([a-zA-Z0-9\.\_\-]*)\]/', $key, $matches );
+		$value = $this->get( $matches[ 1 ], $i );
+		if ( is_string( $value ) ) {
+			$key = str_replace( $matches[ 0 ], $this->get( $matches[ 1 ], $i ), $key );
+		}
+		return $key;
+	}
+
 	protected function parseValue( $key, $i = -1 )
 	{
 		if ( strstr( $key, 'var:[' ) ) {
-			preg_match( '/var\:\[([a-zA-Z0-9\.\_\-]*)\]/', $key, $matches );
-			$key = str_replace( $matches[ 0 ], $this->get( $matches[ 1 ], $i ), $key );
+			$key = $this->replaceValue( $key, $i );
 		}
 		else {
 			$key = Sobi::Txt( $key );
 		}
 		if ( strstr( $key, 'var:[' ) ) {
-			preg_match( '/var\:\[([a-zA-Z0-9\.\_\-]*)\]/', $key, $matches );
-			$key = str_replace( $matches[ 0 ], $this->get( $matches[ 1 ], $i ), $key );
+			$key = $this->replaceValue( $key, $i );
 		}
 		return $key;
 	}
