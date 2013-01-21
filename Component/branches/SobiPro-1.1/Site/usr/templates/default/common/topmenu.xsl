@@ -33,6 +33,7 @@
 					<xsl:if test="//menu/front">
 						<li>
 							<a href="{//menu/front/@url}">
+                                <i class="icon-th-list"></i><xsl:text> </xsl:text>
 								<xsl:value-of select="//menu/front" />
 							</a>
 						</li>
@@ -40,6 +41,7 @@
 					<xsl:if test="//menu/add">
 						<li>
 							<a href="{//menu/add/@url}">
+                                <i class="icon-plus-sign"></i><xsl:text> </xsl:text>
 								<xsl:value-of select="//menu/add" />
 							</a>
 						</li>

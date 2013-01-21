@@ -33,7 +33,7 @@
 		</xsl:variable>
 
 		<xsl:variable name="cellClass">
-			<xsl:value-of select="floor( 9 div $entriesInLine )" />
+			<xsl:value-of select="floor( 12 div $entriesInLine )" />
 		</xsl:variable>
 
 		<xsl:variable name="entriesCount">
@@ -41,21 +41,23 @@
 		</xsl:variable>
 
 		<xsl:comment>entries loop - start</xsl:comment>
-		<div class="span12">
-			<xsl:for-each select="entries/entry">
-				<xsl:if test="$entriesInLine > 1 and ( position() = 1 or ( position() mod $entriesInLine ) = 1 )">
-					<!-- opening the "table" row -->
-					<xsl:text disable-output-escaping="yes">&lt;div class="row" &gt;</xsl:text>
-				</xsl:if>
-				<div class="span{$cellClass} thumbnail">
-					<xsl:call-template name="vcard" />
-				</div>
-				<xsl:if test="$entriesInLine > 1 and ( ( position() mod $entriesInLine ) = 0 or position() = $entriesCount )">
-					<!-- closing the "table" row -->
-					<xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
-				</xsl:if>
-			</xsl:for-each>
-		</div>
+        <div class="row-fluid entry-container">
+            <div class="span12">
+                <xsl:for-each select="entries/entry">
+                    <xsl:if test="$entriesInLine > 1 and ( position() = 1 or ( position() mod $entriesInLine ) = 1 )">
+                        <!-- opening the "table" row -->
+                        <xsl:text disable-output-escaping="yes">&lt;div class="row-fluid" &gt;</xsl:text>
+                    </xsl:if>
+                    <div class="span{$cellClass} thumbnail">
+                        <xsl:call-template name="vcard" />
+                    </div>
+                    <xsl:if test="$entriesInLine > 1 and ( ( position() mod $entriesInLine ) = 0 or position() = $entriesCount )">
+                        <!-- closing the "table" row -->
+                        <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
+                    </xsl:if>
+                </xsl:for-each>
+            </div>
+        </div>
 		<xsl:comment>entries loop - end</xsl:comment>
 
 	</xsl:template>

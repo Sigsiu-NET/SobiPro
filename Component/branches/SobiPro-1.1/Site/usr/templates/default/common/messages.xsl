@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- @version: $Id: details.xsl 3013 2013-01-18 07:49:27Z Radek Suski $
+ @version: $Id$
  @package: SobiPro Component for Joomla!
 
  @author
@@ -17,21 +17,21 @@
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
- $Date: 2013-01-18 08:49:27 +0100 (Fri, 18 Jan 2013) $
- $Revision: 3013 $
- $Author: Radek Suski $
- $HeadURL: https://svn.suski.eu/SobiPro/Component/branches/SobiPro-1.1/Site/usr/templates/default/entry/details.xsl $
+ $Date$
+ $Revision$
+ $Author$
+ $HeadURL$
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:template match="messages">
-		<div class="clearfix" />
+		<div class="clearall" />
 		<xsl:for-each select="./*">
 			<div class="alert alert-{name()}">
 				<button type="button" class="close" data-dismiss="alert">×</button>
 				<xsl:for-each select="./*">
 					<xsl:value-of select="." />
-					<div class="clearfix" />
+					<div class="clearall" />
 				</xsl:for-each>
 			</div>
 		</xsl:for-each>

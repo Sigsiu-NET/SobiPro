@@ -27,7 +27,7 @@
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:template match="navigation" name="navigation">
 		<xsl:if test="count( sites/* ) &gt; 0">
-			<div class="clearfix" />
+			<div class="clearall" />
 			<div class="pagination pagination-centered">
 				<ul>
 					<xsl:for-each select="sites/site">
@@ -76,7 +76,7 @@
 					</xsl:for-each>
 				</ul>
 			</div>
-			<div class="clearfix" />
+			<div class="clearall" />
 		</xsl:if>
 	</xsl:template>
 </xsl:stylesheet>

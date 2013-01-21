@@ -33,7 +33,7 @@
 		</xsl:variable>
 
 		<xsl:variable name="cellClass">
-			<xsl:value-of select="floor( 9 div $catsInLine )" />
+			<xsl:value-of select="floor( 12 div $catsInLine )" />
 		</xsl:variable>
 
 		<xsl:variable name="catsCount">
@@ -41,21 +41,24 @@
 		</xsl:variable>
 
 		<xsl:comment> categories loop - start </xsl:comment>
-		<div class="span12">
-			<xsl:for-each select="categories/category">
-				<xsl:if test="$catsInLine > 1 and ( position() = 1 or ( position() mod $catsInLine ) = 1 )">
-					<!-- opening the "table" row -->
-					<xsl:text disable-output-escaping="yes">&lt;div class="row" &gt;</xsl:text>
-				</xsl:if>
-				<div class="span{$cellClass} thumbnail">
-					<xsl:call-template name="category" />
-				</div>
-				<xsl:if test="$catsInLine > 1 and ( ( position() mod $catsInLine ) = 0 or position() = $catsCount )">
-					<!-- closing the "table" row -->
-					<xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
-				</xsl:if>
-			</xsl:for-each>
-		</div>
+        <div class="row-fluid category-container">
+            <div class="span12">
+                <xsl:for-each select="categories/category">
+                    <xsl:if test="$catsInLine > 1 and ( position() = 1 or ( position() mod $catsInLine ) = 1 )">
+                        <!-- opening the "table" row -->
+                        <xsl:text disable-output-escaping="yes">&lt;div class="row-fluid" &gt;</xsl:text>
+                    </xsl:if>
+                    <div class="span{$cellClass} thumbcat">
+                        <xsl:call-template name="category" />
+                    </div>
+                    <xsl:if test="$catsInLine > 1 and ( ( position() mod $catsInLine ) = 0 or position() = $catsCount )">
+                        <!-- closing the "table" row -->
+                        <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
+                    </xsl:if>
+
+                </xsl:for-each>
+            </div>
+        </div>
 		<xsl:comment> categories loop - end </xsl:comment>
 	</xsl:template>
 </xsl:stylesheet>
