@@ -30,15 +30,15 @@
 			<xsl:value-of select="/section/number_of_subcats" />
 		</xsl:variable>
 		<div class="row-fluid">
-			<div class="span2 offset1">
+			<div class="span2">
 				<xsl:if test="string-length( icon )">
 					<a href="{url}">
 						<img alt="{name}" src="{icon}" />
 					</a>
 				</xsl:if>
 			</div>
-			<div class="span9">
-				<p>
+			<div class="span10">
+				<p class="thumbcat">
 					<a href="{url}">
 						<xsl:value-of select="name" />
 					</a>

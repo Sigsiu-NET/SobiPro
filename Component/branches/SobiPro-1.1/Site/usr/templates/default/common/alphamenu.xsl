@@ -27,9 +27,10 @@
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:include href="alphaindex.xsl" />
 	<xsl:template match="alphaMenu">
+        <div class="row-fluid">
 		<div class="navbar">
 			<xsl:if test="count( fields/* )">
-				<div class="span1">
+				<div class="span1 alphalist">
 					<div class="btn-group">
 						<a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
 							<span class="caret"></span>
@@ -46,10 +47,11 @@
 					</div>
 				</div>
 			</xsl:if>
-			<div id="alpha-index" class="span8">
+			<div id="alpha-index" class="span11">
 				<xsl:apply-templates select="letters" />
 			</div>
 		</div>
-		<div class="clearfix"/>
+        </div>
+		<div class="clearall"/>
 	</xsl:template>
 </xsl:stylesheet>

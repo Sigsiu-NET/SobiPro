@@ -34,7 +34,9 @@
 	<xsl:template match="/listing">
 		<div class="SPListing">
 			<div>
-				<xsl:apply-templates select="menu" />
+                <xsl:call-template name="topMenu">
+                    <xsl:with-param name="searchbox">true</xsl:with-param>
+                </xsl:call-template>
 				<xsl:apply-templates select="alphaMenu" />
 			</div>
 			<xsl:apply-templates select="messages" />

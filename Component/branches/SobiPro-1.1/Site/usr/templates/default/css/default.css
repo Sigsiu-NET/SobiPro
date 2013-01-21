@@ -3,3 +3,17 @@
     margin: 0;
     padding: 0;
 }
+.SPDetailEntry h1 {
+    font-size: 28px;
+}
+.SPDetailEntry {
+    padding: 10px;
+}
+
+/* Individual styling, please adapt if you change field names */
+.field_country,
+.field_fax,
+.field_website,
+.field_business_days {
+    padding-bottom: 10px;
+}
