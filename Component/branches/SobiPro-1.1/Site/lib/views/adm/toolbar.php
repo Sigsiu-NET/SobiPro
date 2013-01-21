@@ -117,10 +117,10 @@ class SpAdmToolbar
 		$this->output[ ] = '</div>';
 		//$this->output[ ] = '<div class="container-fluid">';
 		$this->output[ ] = '<div class="row-fluid">';
-		$this->output[ ] = '<div class="spicon-48-' . $this->icon . ' spScreenTitle span6">';
+		$this->output[ ] = '<div class="spicon-48-' . $this->icon . ' spScreenTitle span5">';
 		$this->output[ ] = "<h4>{$this->title}</h4>";
 		$this->output[ ] = '</div>';
-		$this->output[ ] = '<div class="spIconBar span6">';
+		$this->output[ ] = '<div class="spIconBar span7">';
 		$this->output[ ] = '<div class="nav nav-pills pull-right">';
 		$this->output[ ] = '<div class="">';
 		foreach ( $this->buttons as $button ) {
