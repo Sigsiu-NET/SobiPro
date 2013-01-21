@@ -41,6 +41,8 @@
 			<!--<button type="custom" task="field.setNotEditable" label="TB.SET_NOT_EDITABLE" icon="remove-sign"/>-->
 		</buttons>
 		<divider />
+        <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
+        <divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" />
@@ -49,8 +51,6 @@
 			<button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
-        <divider />
-        <buttons icon="share" buttons="sections-list" label="TB.SECTIONS" />
 	</toolbar>
 	<body>
 		<div class="row-fluid">
