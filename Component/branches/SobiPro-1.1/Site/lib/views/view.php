@@ -105,9 +105,10 @@ abstract class SPFrontView extends SPObject implements SPView
 	 * @param var
 	 * @param label
 	 */
-	public function assign( &$var, $label )
+	public function & assign( &$var, $label )
 	{
 		$this->_attr[ $label ] =& $var;
+		return $this;
 	}
 
 	/**

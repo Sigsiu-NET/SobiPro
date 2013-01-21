@@ -33,7 +33,7 @@ interface SPView
 	public function __construct();
 	public function display();
 	public function parseTemplate();
-	public function assign( &$var, $label );
+	public function & assign( &$var, $label );
 	public function setTemplate( $template );
 	public function setTitle( $title );
 }

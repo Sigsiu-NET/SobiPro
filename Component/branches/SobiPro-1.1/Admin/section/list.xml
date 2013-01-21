@@ -23,7 +23,7 @@
 
 <definition>
 	<header>
-		<title value="CATEGORY_LIST_TITLE" />
+		<title value="CATEGORY_LIST_HEADER" />
 		<file type="script" filename="bootstrap.tooltips" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSection">
@@ -66,7 +66,7 @@
 			</div>
 			<div class="span10">
 				<message id="spMessage" />
-				<header label="CAT.CATEGORY_LIST_HEAD" icon="SobiCatList">
+				<header label="CATEGORIES_IN_LIST_HEAD" icon="SobiCatList">
 					<div class="btn-group pull-right" id="spCategoriesFilterHead">
 						<field type="select" name="corder" selected="corder" class="input-large spOrdering">
 							<values>
