@@ -38,8 +38,6 @@
 			<button type="hide" task="section.hide" />
 		</buttons>
 		<divider />
-		<buttons icon="book" buttons="sections-list" label="TB.SECTIONS" />
-		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
