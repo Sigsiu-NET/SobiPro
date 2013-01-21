@@ -1,4 +1,4 @@
-Font Awesome 3.0.1
+Font Awesome 3.0.2
 the iconic font designed for use with Twitter Bootstrap
 -------------------------------------------------------
 The full suite of pictographic icons, examples, and documentation
