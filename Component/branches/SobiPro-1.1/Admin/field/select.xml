@@ -135,7 +135,7 @@
 							<div class="span12">
 								<fieldset>
 									<field type="toggle" name="field.inSearch" value="field.inSearch" label="FMN.IS_SEARCHABLE" prefix="yes_no" />
-									<field type="select" name="field.priority" value="field.priority" label="FM.SEARCH_PRIORITY" multi="false" class="span1">
+									<field type="select" name="field.priority" selected="field.priority" label="FM.SEARCH_PRIORITY" multi="false" class="span1">
 										<values>
 											<option value="1" label="1" />
 											<option value="2" label="2" />
