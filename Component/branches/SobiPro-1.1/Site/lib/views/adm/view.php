@@ -119,6 +119,7 @@ class SPAdmView extends SPObject implements SPView
 		if ( SPLoader::translatePath( "{$type}.{$template}", 'adm', true, 'xml' ) ) {
 			$nid = Sobi::Section( 'nid' );
 			/** Case we have also override  */
+			$this->assign( $this->sections(), 'sections-list' );
 			if ( SPLoader::translatePath( "{$type}.{$nid}.{$template}", 'adm', true, 'xml' ) ) {
 				$this->loadDefinition( "{$type}.{$nid}.{$template}" );
 			}
@@ -139,6 +140,32 @@ class SPAdmView extends SPObject implements SPView
 		return $this;
 	}
 
+	private function & sections()
+	{
+		try {
+			$sections = SPFactory::db()
+					->select( 'id', 'spdb_object', array( 'oType' => 'section' ), 'id' )
+					->loadResultArray();
+		} catch ( SPException $x ) {
+			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
+		}
+		$sectionLength = 30;
+		if ( count( $sections ) ) {
+			$sections = SPLang::translateObject( $sections, 'name' );
+			$subMenu = array();
+			foreach ( $sections as $section ) {
+				$subMenu[ ] = array(
+					'type' => 'url',
+					'task' => '',
+					'url' => array( 'sid' => $section[ 'id' ] ),
+					'label' => strlen( $section[ 'value' ] ) < $sectionLength ? $section[ 'value' ] : substr( $section[ 'value' ], 0, $sectionLength - 3 ) .' ...',
+					'icon' => 'file',
+					'element' => 'button'
+				);
+			}
+		}
+		return $subMenu;
+	}
 
 	/**
 	 * @param DOMNodeList $xml

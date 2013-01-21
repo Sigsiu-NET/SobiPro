@@ -251,7 +251,7 @@ class SpAdmToolbar
 						$link = Sobi::Url( array( 'task' => $button[ 'task' ], 'sid' => SPRequest::sid( 'request', SPRequest::int( 'pid' ) ) ) );
 					}
 					else {
-						$link = Sobi::Url( $button[ 'task' ] );
+						$link = Sobi::Url( $button[ 'task' ] ? $button[ 'task' ] : $button[ 'url' ] );
 					}
 					break;
 			}
