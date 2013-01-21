@@ -672,6 +672,8 @@ class SPConfig
 	 *
 	 * @param int $id - the id of object
 	 * @param bool $names - names or ids only
+	 * @param bool $parents
+	 * @param bool $join
 	 * @return array
 	 */
 	public function getParentPath( $id, $names = false, $parents = false, $join = false )

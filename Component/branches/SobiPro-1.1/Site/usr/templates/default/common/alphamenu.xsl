@@ -28,25 +28,28 @@
 	<xsl:include href="alphaindex.xsl" />
 	<xsl:template match="alphaMenu">
 		<div class="navbar">
-			<div class="span1">
-				<div class="btn-group">
-					<a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<xsl:for-each select="fields/*">
-							<li>
-								<a href="#" rel="{name()}" class="alpha-switch">
-									<xsl:value-of select="." />
-								</a>
-							</li>
-						</xsl:for-each>
-					</ul>
+			<xsl:if test="count( fields/* )">
+				<div class="span1">
+					<div class="btn-group">
+						<a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<xsl:for-each select="fields/*">
+								<li>
+									<a href="#" rel="{name()}" class="alpha-switch">
+										<xsl:value-of select="." />
+									</a>
+								</li>
+							</xsl:for-each>
+						</ul>
+					</div>
 				</div>
-			</div>
+			</xsl:if>
 			<div id="alpha-index" class="span8">
 				<xsl:apply-templates select="letters" />
 			</div>
 		</div>
+		<div class="clearfix"/>
 	</xsl:template>
 </xsl:stylesheet>
