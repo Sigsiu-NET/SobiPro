@@ -50,7 +50,7 @@ Legend:
    (+) Joomla! 3.0 compatibility (needs at least Joomla! 3.0.2)
 
    (-) Vehicles template removed; will be a separate template now
-   (-) SobiPro Admin Menu Module removed; will be a separate app now
+   (-) SobiPro Admin Menu Module removed; sections available now on a menu list
 
    (!) Administrator UI redesigned using Bootstrap library and new XML templates
    (!) SPHeader::addMeta() takes now optional list of custom parameters as an array
