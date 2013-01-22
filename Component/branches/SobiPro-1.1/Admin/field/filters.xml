@@ -24,6 +24,7 @@
 <definition>
 	<header>
 		<title value="FLR.SITE_TITLE" />
+		<file type="script" filename="adm.filters" />
 	</header>
 	<toolbar title="FLR.SITE_TITLE" icon="SobiFields">
 		<button type="new" class="filter-edit" />
@@ -64,7 +65,7 @@
 						<cell type="text" value="regex" class="SpCellLeft" />
 					</loop>
 				</table>
-				<field type="modalWindow" id="filter-edit-window" header="FLR.EDIT_FILTER" style="100px" />
+				<field type="modalWindow" id="filter-edit-window" header="FLR.EDIT_FILTER" />
 			</div>
 		</div>
 	</body>

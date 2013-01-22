@@ -58,6 +58,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_config` (
 
 INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`, `cSection`) VALUES
 ('l3_enabled', '1', 0, 0, 'cache'),
+('include_js_files', '1', 0, 0, 'cache'),
+('include_css_files', '1', 0, 0, 'cache'),
 ('dec_point', ',', 0, 0, 'payments'),
 ('currency', '€', 0, 0, 'payments'),
 ('format', '%value %currency', 0, 0, 'payments'),
@@ -81,7 +83,7 @@ INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`,
 ('top_menu', '1', 1, 0, 'general'),
 ('show', '1', 1, 0, 'alphamenu'),
 ('letters', 'A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,0-9', 1, 0, 'alphamenu'),
-('verify', '0', 1, 0, 'alphamenu'),
+('verify', '1', 1, 0, 'alphamenu'),
 ('categories_in_line', '2', 1, 0, 'list'),
 ('categories_ordering', 'name.asc', 1, 0, 'list'),
 ('cat_desc', '0', 1, 0, 'list'),
