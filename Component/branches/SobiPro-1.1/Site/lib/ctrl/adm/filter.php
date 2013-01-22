@@ -66,11 +66,14 @@ class SPFilter extends SPConfigAdmCtrl
 	{
 		$filters = $this->getFilters();
 		$id = SPRequest::cmd( 'filter_id' );
-		if ( isset( $filters[ $id ] ) && ( strlen( $filters[ $id ][ 'options' ] ) ) ) {
+		if ( $id && isset( $filters[ $id ] ) && ( strlen( $filters[ $id ][ 'options' ] ) ) ) {
 			unset( $filters[ $id ] );
+			SPFactory::registry()->saveDBSection( $filters, 'fields_filter' );
+			$this->response( Sobi::Url( 'filter' ), Sobi::Txt( 'FLR.MSG_FILTER_DELETED' ), true, SPC::SUCCESS_MSG );
 		}
-		SPFactory::registry()->saveDBSection( $filters, 'fields_filter' );
-		$this->response( Sobi::Url( 'filter' ), Sobi::Txt( 'FLR.MSG_FILTER_DELETED' ), true, SPC::SUCCESS_MSG );
+		else {
+			$this->response( Sobi::Url( 'filter' ), SPLang::e( 'FILTER_NOT_FOUND' ), true, SPC::SUCCESS_MSG );
+		}
 	}
 
 	protected function save()
@@ -78,28 +81,33 @@ class SPFilter extends SPConfigAdmCtrl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$this->validate( 'field.filter', 'filter' );
-		$filters = $this->getFilters();
 		$id = SPRequest::cmd( 'filter_id' );
-		$name = SPRequest::string( 'filter_name', 'Filter Name' );
-		$msg = str_replace( array( "\n", "\t", "\r" ), null, SPLang::clean( SPRequest::string( 'filter_message', 'The data entered in the $field field contains not allowed characters' ) ) );
-		$regex = SPLang::clean( SPRequest::raw( 'filter_regex', '/^[\.*]+$/' ) );
-		$regex = str_replace( '[:apostrophes:]', '\"' . "\'", $regex );
-		$regex = base64_encode( str_replace( array( "\n", "\t", "\r" ), null, $regex ) );
-		$custom = 'custom';
-		if ( isset( $filters[ $id ] ) && !( strlen( $filters[ $id ][ 'options' ] ) ) ) {
-			$regex = $filters[ $id ][ 'params' ];
-			$custom = null;
+		if ( $id ) {
+			$this->validate( 'field.filter', 'filter' );
+			$filters = $this->getFilters();
+			$name = SPRequest::string( 'filter_name', 'Filter Name' );
+			$msg = str_replace( array( "\n", "\t", "\r" ), null, SPLang::clean( SPRequest::string( 'filter_message', 'The data entered in the $field field contains not allowed characters' ) ) );
+			$regex = SPLang::clean( SPRequest::raw( 'filter_regex', '/^[\.*]+$/' ) );
+			$regex = str_replace( '[:apostrophes:]', '\"' . "\'", $regex );
+			$regex = base64_encode( str_replace( array( "\n", "\t", "\r" ), null, $regex ) );
+			$custom = 'custom';
+			if ( isset( $filters[ $id ] ) && !( strlen( $filters[ $id ][ 'options' ] ) ) ) {
+				$regex = $filters[ $id ][ 'params' ];
+				$custom = null;
+			}
+			$filters[ $id ] = array(
+				'params' => $regex,
+				'key' => $id,
+				'value' => $name,
+				'description' => $msg,
+				'options' => $custom
+			);
+			SPFactory::registry()->saveDBSection( $filters, 'fields_filter' );
+			$this->response( Sobi::Back(), Sobi::Txt( 'FLR.MSG_FILTER_SAVED' ), false, 'success' );
 		}
-		$filters[ $id ] = array(
-			'params' => $regex,
-			'key' => $id,
-			'value' => $name,
-			'description' => $msg,
-			'options' => $custom
-		);
-		SPFactory::registry()->saveDBSection( $filters, 'fields_filter' );
-		$this->response( Sobi::Back(), Sobi::Txt( 'FLR.MSG_FILTER_SAVED' ), false, 'success' );
+		else {
+			$this->response( Sobi::Url( 'filter' ), SPLang::e( 'FILTER_NOT_FOUND' ), true, SPC::SUCCESS_MSG );
+		}
 	}
 
 	private function getFilters()
