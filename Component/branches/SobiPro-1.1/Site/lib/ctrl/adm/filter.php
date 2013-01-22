@@ -103,10 +103,10 @@ class SPFilter extends SPConfigAdmCtrl
 				'options' => $custom
 			);
 			SPFactory::registry()->saveDBSection( $filters, 'fields_filter' );
-			$this->response( Sobi::Back(), Sobi::Txt( 'FLR.MSG_FILTER_SAVED' ), false, 'success' );
+			$this->response( Sobi::Url( 'filter' ), Sobi::Txt( 'FLR.MSG_FILTER_SAVED' ), false, 'success' );
 		}
 		else {
-			$this->response( Sobi::Url( 'filter' ), SPLang::e( 'FILTER_NOT_FOUND' ), true, SPC::SUCCESS_MSG );
+			$this->response( Sobi::Url( 'filter' ), SPLang::e( 'FILTER_NOT_FOUND' ), true, SPC::ERROR_MSG );
 		}
 	}
 

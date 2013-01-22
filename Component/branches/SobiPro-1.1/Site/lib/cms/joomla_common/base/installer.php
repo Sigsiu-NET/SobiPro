@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -39,13 +35,15 @@ class SPJoomlaInstaller
 	protected $definition = null;
 	private $c = 0;
 
-	public function __construct() {}
+	public function __construct()
+	{
+	}
 
 	public function remove( $def )
 	{
 		$name = $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue;
 		$type = $def->getElementsByTagName( 'type' )->item( 0 )->nodeValue;
-        $eid = $def->getElementsByTagName( 'id' )->item( 0 )->nodeValue;
+		$eid = $def->getElementsByTagName( 'id' )->item( 0 )->nodeValue;
 		switch ( $type ) {
 			case 'module':
 				$result = $this->removeModule( $def->getElementsByTagName( 'id' )->item( 0 )->nodeValue );
@@ -54,8 +52,8 @@ class SPJoomlaInstaller
 				$result = $this->removePlugin( $def->getElementsByTagName( 'id' )->item( 0 )->nodeValue );
 				break;
 		}
-		if( $result ) {
-            SPFactory::db()->delete( 'spdb_plugins', array( 'pid' => $eid, 'type' => $type ), 1 );
+		if ( $result ) {
+			SPFactory::db()->delete( 'spdb_plugins', array( 'pid' => $eid, 'type' => $type ), 1 );
 			return Sobi::Txt( 'CMS_EXT_REMOVED', $name );
 		}
 		return array( 'msg' => Sobi::Txt( 'CMS_EXT_NOT_REMOVED', $name ), 'msgtype' => 'error' );
@@ -64,8 +62,8 @@ class SPJoomlaInstaller
 	public function removeModule( $module )
 	{
 		$id = SPFactory::db()->select( 'id', '#__modules', array( 'module' => $module ) )->loadResult();
-		if( $id ) {
-			if( $this->removeExt( 'module', $id ) ) {
+		if ( $id ) {
+			if ( $this->removeExt( 'module', $id ) ) {
 				SPFactory::db()->delete( 'spdb_plugins', array( 'pid' => $module ) );
 				return true;
 			}
@@ -77,8 +75,8 @@ class SPJoomlaInstaller
 	{
 		$pluginArr = explode( '_', $plugin, 2 );
 		$id = SPFactory::db()->select( 'id', '#__plugins', array( 'folder' => $pluginArr[ 0 ], 'element' => $pluginArr[ 1 ] ) )->loadResult();
-		if( $id ) {
-			if( $this->removeExt( 'plugin', $id ) ) {
+		if ( $id ) {
+			if ( $this->removeExt( 'plugin', $id ) ) {
 				SPFactory::db()->delete( 'spdb_plugins', array( 'pid' => $plugin ) );
 				return true;
 			}
@@ -102,54 +100,59 @@ class SPJoomlaInstaller
 				$msg = $this->installExt( $def, $dir );
 				break;
 		}
-		if( $this->error ) {
+		if ( $this->error ) {
 			Sobi::Error( 'LangInstaller', $this->error, SPC::NOTICE, 0 );
 			$msg = array( 'msg' => $this->error, 'msgtype' => $this->errorType );
 		}
 		return $msg;
 	}
 
+	/**
+	 * @param DOMDocument $def
+	 * @param string $dir
+	 * @return array | string
+	 */
 	protected function installExt( $def, $dir )
 	{
 		$xp = new DOMXPath( $def );
 		$requirements = $xp->query( '//SobiPro/requirements/*' );
-		if( $requirements && ( $requirements instanceof DOMNodeList ) ) {
+		if ( $requirements && ( $requirements instanceof DOMNodeList ) ) {
 			$reqCheck =& SPFactory::Instance( 'services.installers.requirements' );
 			$reqCheck->check( $requirements );
 		}
 		jimport( 'joomla.installer.installer' );
 		jimport( 'joomla.installer.helper' );
-		$installer =& JInstaller::getInstance();
+		$installer = JInstaller::getInstance();
 		$type = JInstallerHelper::detectType( $dir );
-		if( $installer->install( $dir ) ) {
+		if ( $installer->install( $dir ) ) {
 			// it was core update - break now
-			if( $type == 'component' ) {
+			if ( $type == 'component' ) {
 				SPFactory::cache()->cleanAll();
-				return Sobi::Txt( 'CMS_SOBIPRO_UPDATE_INSTALLED', $def->getElementsByTagName( 'version' )->item( 0 )->nodeValue );
+				return array( 'msg' => Sobi::Txt( 'CMS_SOBIPRO_UPDATE_INSTALLED', $def->getElementsByTagName( 'version' )->item( 0 )->nodeValue ), 'msgtype' => SPC::SUCCESS_MSG );
 			}
 			$msg = Sobi::Txt( 'CMSEX_INSTALLED', $type, $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue );
 			$this->id = SPLang::nid( $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue );
 			$id = $xp->query( '//filename[@module|@plugin]' )->item( 0 );
 			$this->id = strlen( $id->getAttribute( 'module' ) ) ? $id->getAttribute( 'module' ) : $id->getAttribute( 'plugin' );
-			if( strlen( $def->documentElement->getAttribute( 'group' ) ) ) {
-				$this->id = $def->documentElement->getAttribute( 'group' ).'_'.$this->id;
+			if ( strlen( $def->documentElement->getAttribute( 'group' ) ) ) {
+				$this->id = $def->documentElement->getAttribute( 'group' ) . '_' . $this->id;
 			}
-			if( $this->id ) {
+			if ( $this->id ) {
 				$this->definition = new DOMDocument();
-		  		$this->definition->formatOutput = true;
+				$this->definition->formatOutput = true;
 				$this->definition->preserveWhiteSpace = false;
 				$this->definition->appendChild( $this->definition->createElement( 'SobiProApp' ) );
 				$root = $this->definition->getElementsByTagName( 'SobiProApp' )->item( 0 );
-				$root->appendChild( $this->definition->createElement(  'id', $this->id ) );
-				$root->appendChild( $this->definition->createElement(  'type', $type )  );
-				$root->appendChild( $this->definition->createElement(  'name', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue )  );
+				$root->appendChild( $this->definition->createElement( 'id', $this->id ) );
+				$root->appendChild( $this->definition->createElement( 'type', $type ) );
+				$root->appendChild( $this->definition->createElement( 'name', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ) );
 				$root->appendChild( $this->definition->createElement( 'uninstall', 'cms.base.installer:remove' ) );
 				$this->definition->appendChild( $root );
-				$dir = SPLoader::dirPath( 'etc.installed.'.$type.'s', 'front', false );
-				if( !( SPFs::exists( $dir ) ) ) {
+				$dir = SPLoader::dirPath( 'etc.installed.' . $type . 's', 'front', false );
+				if ( !( SPFs::exists( $dir ) ) ) {
 					SPFs::mkdir( $dir );
 				}
-				$path = $dir.DS.$this->id.'.xml';
+				$path = $dir . DS . $this->id . '.xml';
 				$file = SPFactory::Instance( 'base.fs.file', $path );
 				$this->definition->normalizeDocument();
 				$file->content( $this->definition->saveXML() );
@@ -185,7 +188,7 @@ class SPJoomlaInstaller
 	protected function installLanguage( $def, $dir )
 	{
 		$this->definition = new DOMDocument();
-  		$this->definition->formatOutput = true;
+		$this->definition->formatOutput = true;
 		$this->definition->preserveWhiteSpace = false;
 		$this->definition->appendChild( $this->definition->createElement( 'SobiProApp' ) );
 		$Install = $this->definition->createElement( 'installLog' );
@@ -193,29 +196,29 @@ class SPJoomlaInstaller
 		$filesLog = array();
 		$this->id = $def->getElementsByTagName( 'tag' )->item( 0 )->nodeValue;
 
-		if( $def->getElementsByTagName( 'administration' )->length ) {
+		if ( $def->getElementsByTagName( 'administration' )->length ) {
 			$this->langFiles( 'administration', $def, $dir, $filesLog );
 		}
-		if( $def->getElementsByTagName( 'site' )->length ) {
+		if ( $def->getElementsByTagName( 'site' )->length ) {
 			$this->langFiles( 'site', $def, $dir, $filesLog );
 		}
 		$this->storeData( 'language', $def );
 		$dir = SPLoader::dirPath( 'etc.installed.languages', 'front', false );
-		if( !( SPFs::exists( $dir ) ) ) {
+		if ( !( SPFs::exists( $dir ) ) ) {
 			SPFs::mkdir( $dir );
 		}
 		foreach ( $filesLog as $file ) {
-			$Files->appendChild( $this->definition->createElement(  'file', $file )  );
+			$Files->appendChild( $this->definition->createElement( 'file', $file ) );
 		}
 
 		$Install->appendChild( $Files );
 		$root = $this->definition->getElementsByTagName( 'SobiProApp' )->item( 0 );
-		$root->appendChild( $this->definition->createElement(  'id', $this->id )  );
-		$root->appendChild( $this->definition->createElement(  'type', 'language' )  );
-		$root->appendChild( $this->definition->createElement(  'name', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue )  );
+		$root->appendChild( $this->definition->createElement( 'id', $this->id ) );
+		$root->appendChild( $this->definition->createElement( 'type', 'language' ) );
+		$root->appendChild( $this->definition->createElement( 'name', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ) );
 		$root->appendChild( $Install );
 		$this->definition->appendChild( $root );
-		$path = $dir.DS.$this->id.'.xml';
+		$path = $dir . DS . $this->id . '.xml';
 		$file = SPFactory::Instance( 'base.fs.file', $path );
 		$this->definition->normalizeDocument();
 		$file->content( $this->definition->saveXML() );
@@ -226,31 +229,31 @@ class SPJoomlaInstaller
 	private function langFiles( $tag, $def, $dir, &$FilesLog )
 	{
 		$target = ( $tag == 'administration' ) ?
-			implode( DS, array( SOBI_ROOT, 'administrator', 'language', $this->id ) ) :
-			implode( DS, array( SOBI_ROOT, 'language', $this->id ) );
-		if( !( file_exists( $target ) ) ) {
+				implode( DS, array( SOBI_ROOT, 'administrator', 'language', $this->id ) ) :
+				implode( DS, array( SOBI_ROOT, 'language', $this->id ) );
+		if ( !( file_exists( $target ) ) ) {
 			$this->error = Sobi::Txt( 'LANG_INSTALL_NO_CORE', $this->id );
 			$this->errorType = SPC::WARN_MSG;
 			SPFs::mkdir( $target );
 		}
 		$files = $def
-			->getElementsByTagName( $tag )
+				->getElementsByTagName( $tag )
 				->item( 0 )
-					->getElementsByTagName( 'files' )
-						->item( 0 );
+				->getElementsByTagName( 'files' )
+				->item( 0 );
 		$folder = $files->getAttribute( 'folder' );
-		$folder = $dir.$folder.DS;
+		$folder = $dir . $folder . DS;
 		foreach ( $files->getElementsByTagName( 'filename' ) as $file ) {
-			if( ( file_exists( $folder.$file->nodeValue ) ) ) {
-				if( !( SPFs::copy( $folder.$file->nodeValue, $target.DS.$file->nodeValue ) ) ) {
-					SPFactory::message()->error( Sobi::Txt( 'Cannot copy %s to %s', $folder.$file->nodeValue, $target.DS.$file->nodeValue ), false );
+			if ( ( file_exists( $folder . $file->nodeValue ) ) ) {
+				if ( !( SPFs::copy( $folder . $file->nodeValue, $target . DS . $file->nodeValue ) ) ) {
+					SPFactory::message()->error( Sobi::Txt( 'Cannot copy %s to %s', $folder . $file->nodeValue, $target . DS . $file->nodeValue ), false );
 				}
 				else {
-					$FilesLog[] = str_replace( array( DS.DS, SOBI_ROOT ), array( DS, null ), $target.DS.$file->nodeValue );
+					$FilesLog[ ] = str_replace( array( DS . DS, SOBI_ROOT ), array( DS, null ), $target . DS . $file->nodeValue );
 				}
 			}
 			else {
-				SPFactory::message()->error( Sobi::Txt( 'File %s does not exists', $folder.$file->nodeValue ), false );
+				SPFactory::message()->error( Sobi::Txt( 'File %s does not exists', $folder . $file->nodeValue ), false );
 			}
 		}
 	}

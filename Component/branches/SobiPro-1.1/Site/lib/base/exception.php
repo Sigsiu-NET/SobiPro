@@ -128,7 +128,7 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 	 */
 	function SPExceptionHandler( $errNumber, $errString, $errFile, $errLine, $errContext )
 	{
-		if ( $errNumber == E_STRICT && !( ( defined( 'SOBI_TESTS' ) ) || !( SOBI_TESTS ) ) ) {
+		if ( $errNumber == E_STRICT && ( !( defined( 'SOBI_TESTS' ) ) || !( SOBI_TESTS ) ) ) {
 			return true;
 		}
 		$error = null;
