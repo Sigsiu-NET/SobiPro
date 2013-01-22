@@ -45,4 +45,22 @@ class SPCmsInstaller extends SPJoomlaInstaller
         }
         return array( 'msg' => Sobi::Txt( 'CMS_EXT_NOT_REMOVED', $name ), 'msgtype' => 'error' );
     }
+
+	/**
+	 * @param DOMDocument $def
+	 * @param string $dir
+	 * @return array | string
+	 */
+	protected function installExt( $def, $dir )
+	{
+		if ( $def->firstChild->nodeName == 'install' ) {
+			$content = $def->saveXML();
+			// I know, I know ....
+			$content = str_replace( array( '<install', '</install>' ), array( '<extension', '</extension>' ), $content );
+			SPFs::write( $dir . '/temp.xml', $content );
+			$def = new DOMDocument();
+			$def->load( $dir . '/temp.xml' );
+		}
+		parent::installExt( $def, $dir );
+	}
 }
