@@ -22,14 +22,35 @@
  * $HeadURL$
  */
 
-/* to override dominant Joomla template styles (e.g. Beez) for SobiPro */
+/* to override dominant Joomla template styles (e.g. Beez) for SobiPro in Joomla 2.5
+  can be removed if a template is used that does not interfere in SobiPro styling using CSS id */
 #SobiPro ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
+#SobiPro a:hover,
+#SobiPro a:active,
+#SobiPro a:focus {
+  background: inherit;
+  color: inherit;
+}
+#SobiPro .pagination li {
+  padding: inherit;
+  margin: inherit;
+}
+#SobiPro .pagination {
+  border: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+
 .SPDetailEntry h1 {
   font-size: 28px;
+}
+.SPDetailEntry {
+  padding: 10px;
 }
 
 /* Individual styling, please adapt if you change field names */
