@@ -11,11 +11,11 @@
 	<creationDate>2013-01-01</creationDate>
 	<version>2.0</version>
 	<description>
-		Default SobiPro Template
-	</description>
+		Default SobiPro Template for SobiPro 1.1
+    </description>
 	<files>
 		<file path="category/view.xsl">
-			Default category view template inclusive top menu, navigation, entries and categories.
+			Default category view template with top menu, navigation, entries and categories.
 		</file>
 		<file path="common/alphamenu.xsl">
 			Template for the alpha menu.
