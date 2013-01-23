@@ -29,6 +29,8 @@
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
 		<button label="TB.REMOVE" task="extensions.delete" icon="trash" />
+        <divider />
+        <buttons icon="share" buttons="sections-list" label="TB.SECTIONS" />
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
@@ -37,8 +39,6 @@
             <button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
-        <divider />
-        <buttons icon="share" buttons="sections-list" label="TB.SECTIONS" />
 	</toolbar>
 	<body>
 		<div class="row-fluid">

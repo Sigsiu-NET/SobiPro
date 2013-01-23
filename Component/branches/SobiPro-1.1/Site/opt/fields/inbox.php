@@ -273,7 +273,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 				}
 			}
 		}
-		return SPHtml_Input::select( $this->nid, $fdata, $this->_selected, false, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1' ) );
+		return SPHtml_Input::select( $this->nid, $fdata, $this->_selected, false, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1', 'id' => $this->nid ) );
 	}
 
 	/**

@@ -27,7 +27,7 @@
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:template name="topMenu">
 		<xsl:param name="searchbox"/>
-		<div class="navbar">
+		<div class="navbar topmenu">
 			<div class="navbar-inner">
 				<ul class="nav">
 					<xsl:if test="//menu/front">

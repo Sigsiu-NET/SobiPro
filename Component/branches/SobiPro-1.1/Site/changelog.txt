@@ -82,6 +82,7 @@ Legend:
    (#) Meta author and robots not added to header (Issue #734)
    (#) Options of select list or checkbox fields will be deleted now if the field is deleted
    (#) Duplication of a field more than once does not increment the alias counter
+   (#) Missing id for inbox fields in search form
 
 
 -------------------
