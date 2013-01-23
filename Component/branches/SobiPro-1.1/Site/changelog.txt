@@ -36,6 +36,7 @@ Legend:
    (+) Definition file for Radio Button field
    (+) Field controller implements now a proxy pattern to the field type
    (+) Category Chooser Field with different category selection methods implemented
+   (+) Possibility to define a primary category
    (+) Prohibition of assigning an entry to parent category added to new Category Chooser Field
    (+) Frontend Category Search to filter the search results by one or more category
    (+) IP search query link added to category and entry publishing IP (admin interface)
@@ -46,7 +47,7 @@ Legend:
    (+) Template override for specific categories and entries via Joomla! Menu Manager
    (+) Workaround to bypass Joomla! menu type bug
    (+) Possibility to define exact type of custom output including header content type, exit and clear
-   (+) Limit XML raw data to a specific IP
+   (+) Possibility to limit XML raw data to a specific IP
    (+) Joomla! 3.0 compatibility (needs at least Joomla! 3.0.2)
 
    (-) Vehicles template removed; will be a separate template now
@@ -69,7 +70,8 @@ Legend:
    (!) Category meta description does not longer ends with a dot
    (!) No default filter for fields title, contact and city in demo data
    (!) CSS and Javascript cache now separate settings
-   (!) .htaccess files removed
+   (!) single .htaccess files removed, global file added
+   (!) Default Template now using Bootstrap; several improvements
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
