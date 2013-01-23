@@ -254,7 +254,6 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				$fData = $data->sValue;
 			}
 		} catch ( SPException $x ) {
-			SPConfig::debOut( $x->getMessage() );
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_SELECTED_OPTIONS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 	}

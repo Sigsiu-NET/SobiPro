@@ -47,7 +47,7 @@ SobiPro.jQuery( document ).ready( function ()
 				SobiPro.jQuery( SobiPro.jQuery( '#SPAdminForm' ).find( ':button' ) ).each( function ( i, b )
 				{
 					bt = SobiPro.jQuery( b );
-					if ( bt.hasClass( 'active' ) ) {
+					if ( bt.attr( 'disabled' ) != 'disabled' && bt.hasClass( 'active' ) ) {
 						req += '&' + bt.attr( 'name' ) + '=' + bt.val();
 					}
 				} );
