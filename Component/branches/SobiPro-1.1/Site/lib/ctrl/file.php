@@ -61,7 +61,7 @@ class SPFileUploader extends SPController
 			$path = $file->getPathname();
 			$type = $this->check( $path );
 			$properties[ 'tmp_name' ] = $path;
-			SPFs::write( $path . '.txt', SPConfig::serialize( $properties ) );
+			SPFs::write( $path . '.var', SPConfig::serialize( $properties ) );
 			$response = array(
 				'type' => 'success',
 				'text' => Sobi::Txt( 'FILE_UPLOADED', $properties[ 'name' ], $type ),
