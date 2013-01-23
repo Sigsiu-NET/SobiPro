@@ -28,6 +28,9 @@
 		<filename>sobipro.php</filename>
 		<filename>changelog.txt</filename>
 		<filename>metadata.xml</filename>
+        <filename>gplv3.txt</filename>
+        <filename>gplv3addterms.txt</filename>
+        <filename>.htaccess</filename>
 	</files>
 	<installfile>install.php</installfile>
 	<uninstallfile>uninstall.php</uninstallfile>

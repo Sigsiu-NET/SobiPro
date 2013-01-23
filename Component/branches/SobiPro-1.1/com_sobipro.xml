@@ -24,18 +24,20 @@
 	</install>
     <scriptfile>spinstall.php</scriptfile>
 	<files folder="Site">
-			<folder>etc</folder>
-			<folder>lib</folder>
-			<folder>media</folder>
-			<folder>opt</folder>
-			<folder>tmp</folder>
-			<folder>usr</folder>
-			<folder>var</folder>
-			<folder>views</folder>
-			<filename>sobipro.php</filename>
-			<filename>changelog.txt</filename>
-			<filename>metadata.xml</filename>
-            <filename>gplv3.txt</filename>
+        <folder>etc</folder>
+        <folder>lib</folder>
+        <folder>media</folder>
+        <folder>opt</folder>
+        <folder>tmp</folder>
+        <folder>usr</folder>
+        <folder>var</folder>
+        <folder>views</folder>
+        <filename>sobipro.php</filename>
+        <filename>changelog.txt</filename>
+        <filename>metadata.xml</filename>
+        <filename>gplv3.txt</filename>
+        <filename>gplv3addterms.txt</filename>
+        <filename>.htaccess</filename>
 	</files>
 	<languages>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.ini</language>
