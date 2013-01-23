@@ -536,6 +536,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		/* @var SPdb $db */
 		$db = SPFactory::db();
 		$db->transaction();
+
 		if ( !$this->nid ) {
 			$this->nid = SPRequest::string( $this->nameField, null, false, $request );
 			$this->name = $this->nid;

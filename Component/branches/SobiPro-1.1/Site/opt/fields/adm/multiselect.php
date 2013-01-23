@@ -46,8 +46,14 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 			$defLang = Sobi::DefLang();
 		}
 		$file = SPRequest::file( 'spfieldsopts', 'tmp_name' );
-		if( $file ) {
-			$options = $this->parseOptsFile( $file );
+		if ( $file ) {
+			$options = $this->parseOptsFile( parse_ini_file( $file, true ) );
+		}
+		else {
+			$options = $this->parseOptsFile( parse_ini_string( $attr[ 'options' ], true ) );
+		}
+		if ( count( $options ) ) {
+			unset( $attr[ 'options' ] );
 		}
 		if( !( count( $options ) ) && count( $attr[ 'options' ] ) ) {
 			$p = 0;
