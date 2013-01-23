@@ -259,7 +259,6 @@ abstract class SPRequest
 				}
 			}
 		}
-		SPConfig::debOut(self::$val); exit;
 		return self::$val;
 	}
 

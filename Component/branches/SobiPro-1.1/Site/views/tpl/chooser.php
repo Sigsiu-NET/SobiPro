@@ -30,7 +30,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
     function SP_selectCat( sid )
     {
         parent.document.getElementById( 'SP_selectedCid' ).value = sid;
-        var separator = '<?php echo Sobi::Cfg( 'string.path_separator', ' > ' ); ?>'
+        var separator = '<?php echo Sobi::Cfg( 'string.path_separator', ' > ' ); ?>';
         var cats = new Array();
         try {
             SP_id( 'sobiCats_CatUrl' + sid ).focus();
@@ -45,7 +45,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
                         catName = '';
                         jsonObj.categories.each( function ( cat )
                         {
-                            cats[ cat.id ] = cat.name;
+                            cats[ cats.length ] = cat.name;
                             catName = cat.name;
                         } );
                         selectedPath = cats.join( separator );

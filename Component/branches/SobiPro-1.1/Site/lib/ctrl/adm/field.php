@@ -233,7 +233,18 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		if ( $this->_fieldType ) {
 			$field->onFieldEdit( $view );
 		}
-
+		$registry = SPFactory::registry();
+		$registry->loadDBSection( 'fields_filter' );
+		$helpTask = 'field.' . $field->get( 'fieldType' );
+		$registry->set( 'help_task', $helpTask );
+		$filters = $registry->get( 'fields_filter' );
+		$f = array( 0 => Sobi::Txt( 'FM.NO_FILTER' ) );
+		if ( count( $filters ) ) {
+			foreach ( $filters as $filter => $data ) {
+				$f[ $filter ] = Sobi::Txt( $data[ 'value' ] );
+			}
+		}
+		$view->assign( $f, 'filters' );
 		if ( SPLoader::translatePath( 'field.' . $this->_fieldType, 'adm', true, 'xml' ) ) {
 			/** Cae we have also override  */
 			if ( SPLoader::translatePath( 'field.' . $this->_fieldType . '_override', 'adm', true, 'xml' ) ) {
