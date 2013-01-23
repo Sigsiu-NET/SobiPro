@@ -96,7 +96,6 @@ SobiPro.jQuery( document ).ready( function ()
 				'dataType':'json',
 				success:function ( response )
 				{
-					SobiPro.DebOut( response );
 					if ( response.message.type == 'error' ) {
 						proxy.errorHandler( response );
 					}
