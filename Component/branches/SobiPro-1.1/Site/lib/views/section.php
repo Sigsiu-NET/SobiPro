@@ -42,6 +42,7 @@ class SPSectionView extends SPFrontView implements SPView
                 $category = SPFactory::Category( $category );
             }
             $cat[ 'id' ] = $category->get( 'id' );
+	        $cat[ 'counter' ] = $this->getNonStaticData( $category->get( 'id' ), 'counter' );//$category->get( 'counter' );
             $cat[ 'nid' ] = $category->get( 'nid' );
             $cat[ 'name' ] = array(
                 '_complex' => 1,
@@ -342,6 +343,7 @@ class SPSectionView extends SPFrontView implements SPView
             SPFactory::header()->addCanonical( Sobi::Url( $cUrl, true, true, true ) );
             $data = array();
             $data[ 'id' ] = $current->get( 'id' );
+	        $data[ 'counter' ] = $current->get( 'counter' );
             $data[ 'section' ] = array(
                 '_complex' => 1,
                 '_data' => Sobi::Section( true ),
@@ -386,6 +388,7 @@ class SPSectionView extends SPFrontView implements SPView
             $this->alphaMenu( $data );
             $data[ 'visitor' ] = $this->visitorArray( $visitor );
             if ( count( $categories ) ) {
+	            $this->loadNonStaticData( $categories );
                 foreach ( $categories as $category ) {
                     $cat = $this->category( $category );
                     $data[ 'categories' ][ ] = array(
