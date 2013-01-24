@@ -297,6 +297,9 @@ fieldset label {
 #SPAdminForm fieldset .controls {
   margin-left: 220px;
 }
+#SPAdminForm fieldset img {
+  float: left;
+}
 .SPAdmNavBar .control-group {
   float: left;
   padding-left: 12px;
@@ -741,11 +744,14 @@ input.sp-input-micro[type="text"] {
   min-height: 300px;
   margin-left: 20px;
 }
-.spFieldUrlLabel {
+.spFieldUrlLabel,
+.spFieldEmailLabel {
   display: block;
   height: 40px;
 }
-.spFieldUrlLabel label {
+.spFieldUrlLabel label,
+.spFieldEmailLabel label,
+.spFieldEmail label {
   padding-right: 5px;
   color: #666666;
   margin-top: 5px;

@@ -66,3 +66,8 @@
 .SobiPro .alphalist .dropdown-menu {
   text-align: left;
 }
+.SPSearchSelectRangeTo,
+.SPSearchSelectRangeFrom {
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
