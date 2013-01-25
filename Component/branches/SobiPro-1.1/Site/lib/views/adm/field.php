@@ -99,8 +99,12 @@ class SPFieldAdmView extends SPAdmView
 
 		if ( count( $this->_hidden ) ) {
 			$this->_hidden[ SPFactory::mainframe()->token() ] = 1;
+			$prefix = null;
+			if ( !( $this->get( '_compatibility' ) ) ) {
+				$prefix = 'SP_';
+			}
 			foreach ( $this->_hidden as $name => $value ) {
-				echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"SP_{$name}\" value=\"{$value}\"/>";
+				echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$prefix}{$name}\" value=\"{$value}\"/>";
 			}
 		}
 		echo $action ? "\n</form>\n" : null;

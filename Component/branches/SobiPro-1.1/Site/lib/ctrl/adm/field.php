@@ -125,6 +125,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 		/** Legacy code */
 		else {
+			$view->assign( $helpTask, '_compatibility' );
 			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm', true, 'ini' ) ) {
 				$view->loadConfig( 'field.edit.' . $field->get( 'fieldType' ) );
 			}
@@ -262,6 +263,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 		/** legacy */
 		elseif ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm' ) ) {
+			$view->assign( $helpTask, '_compatibility' );
 			if ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm', true, 'ini' ) ) {
 				$view->loadConfig( 'field.edit.' . $this->_fieldType );
 			}
