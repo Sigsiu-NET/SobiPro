@@ -153,7 +153,34 @@ SobiPro.jQuery( document ).ready( function ()
 
 		SobiPro.jQuery( '.sobipro-submit' ).click( function ( e )
 		{
+			SPTriggerFrakingWYSIWYGEditors();
 			proxy.sendRequest();
 		} );
 	}
 } );
+function SPTriggerFrakingWYSIWYGEditors()
+{
+	var events = [ 'unload', 'onbeforeunload', 'onunload' ];
+	for ( var i = 0; i < events.length; i++ ) {
+		try {
+			window.dispatchEvent( events[ i ] );
+		}
+		catch ( e ) {
+		}
+		try {
+			window.fireEvent( events[ i ] );
+		}
+		catch ( e ) {
+		}
+		try {
+			SobiPro.jQuery( document ).triggerHandler( events[ i ] );
+		}
+		catch ( e ) {
+		}
+	}
+	try {
+		tinyMCE.triggerSave();
+	}
+	catch ( e ) {
+	}
+}
