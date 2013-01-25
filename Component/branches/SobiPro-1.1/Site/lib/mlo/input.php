@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -503,8 +499,11 @@ abstract class SPHtml_Input
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @param string $title - language section for the title tags. If given, the options/optgroup will get a title tag. The title will be search in the language file under the given section
 	 */
-	public static function select( $name, $values, $selected = null, $multi = false, $params = null, $title = false )
+	public static function select( $name, $values, $selected = null, $multi = false, $params = null )
 	{
+		if ( is_array( $params ) && ( isset( $params[ 'size' ] ) && $params[ 'size' ] == 1 ) ) {
+			unset( $params[ 'size' ] );
+		}
 		$params = self::params( $params );
 		self::checkArray( $values );
 		if ( $selected !== null && !( is_array( $selected ) ) ) {
@@ -633,7 +632,7 @@ abstract class SPHtml_Input
 	 */
 	public static function states( $name, $value, $id, $label, $params = null, $side = 'right' )
 	{
-		return self::radioList( $name, array( '0' => "translate:[{$label}_no]", '1' => "translate:[{$label}_yes]" ), $id, ( int ) $value, $params, $side );
+		return self::radioList( $name, array( '0' => "translate:[{$label}_no]", '1' => "translate:[{$label}_yes]" ), $id, ( int )$value, $params, $side );
 	}
 
 	/**
