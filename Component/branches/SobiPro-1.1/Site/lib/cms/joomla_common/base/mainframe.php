@@ -342,9 +342,10 @@ class SPJoomlaMainFrame
 	 */
 	public function addHead( $head )
 	{
-		if ( SPRequest::cmd( 'format' ) == 'raw' ) {
+		if ( strlen( SPRequest::cmd( 'format' ) ) ) {
 			return true;
 		}
+
 		$document = JFactory::getDocument();
 		$c = 0;
 		if ( count( $head ) ) {
@@ -594,7 +595,7 @@ class SPJoomlaMainFrame
 	 */
 	public function endOut()
 	{
-		if ( SPRequest::cmd( 'format' ) != 'raw' ) {
+		if ( !( strlen( SPRequest::cmd( 'format' ) ) ) ) {
 			/* something like 'onDomReady' but it should be bit faster */
 			echo '<script type="text/javascript">SobiPro.Ready();</script>';
 		}

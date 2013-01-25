@@ -230,11 +230,19 @@ abstract class SPFrontView extends SPObject implements SPView
 		return $p[ 0 ];
 	}
 
+	protected function jsonDisplay()
+	{
+		echo json_encode( $this->_attr );
+	}
+
 	/**
 	 *
 	 */
 	public function display( $o = null )
 	{
+		if ( SPRequest::cmd( 'format' ) == 'json' && Sobi::Cfg( 'output.json_enabled', false ) ) {
+			return $this->jsonDisplay();
+		}
 		$type = $this->key( 'template_type', 'xslt' );
 		$f = null;
 		$task = SPRequest::task();
@@ -303,7 +311,8 @@ abstract class SPFrontView extends SPObject implements SPView
 				Sobi::Trigger( 'Parse', 'Content', array( &$out ) );
 			}
 		}
-		if ( $o == 'html' ) {
+
+		if ( $o == 'html' && !( strlen( SPRequest::cmd( 'format' ) ) ) ) {
 			$out .= $this->pb();
 			if ( SPRequest::cmd( 'dbg' ) && Sobi::My( 'id' ) ) {
 				$start = Sobi::Reg( 'start' );
