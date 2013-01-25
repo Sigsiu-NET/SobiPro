@@ -21,9 +21,8 @@
  * $Author$
  * $HeadURL$
  */
-/* Joomla! 2.5 template compatibility
-   to override dominant Joomla template styles (in e.g. Beez) for SobiPro in Joomla 2.5
-   can be removed if a template is used that does not interfere in SobiPro styling using CSS id or in Joomla 3.0 */
+/* to override dominant Joomla template styles (e.g. Beez) for SobiPro in Joomla 2.5
+  can be removed if a template is used that does not interfere in SobiPro styling using CSS id */
 #SobiPro ul {
   list-style-type: none;
   margin: 0;
@@ -40,15 +39,14 @@
   margin: inherit;
 }
 #SobiPro .pagination {
-    border: none;
-    padding: 0;
-    margin-bottom: 20px;
+  border: none;
+  padding: 0;
+  margin-bottom: 20px;
 }
 #SobiPro .btn.dropdown-toggle {
-    background-color: #E6E6E6;
+  background-color: #E6E6E6;
 }
 /* end Joomla! 2.5 template compatibility */
-
 /* General Styling */
 .SPDetailEntry h1 {
   font-size: 28px;
@@ -56,7 +54,6 @@
 .SPDetailEntry {
   padding: 10px;
 }
-
 /* Individual Styling, please adapt if you change field names */
 .field_country,
 .field_fax,

@@ -84,6 +84,8 @@ Legend:
    (#) Options of select list or checkbox fields will be deleted now if the field is deleted
    (#) Duplication of a field more than once does not increment the alias counter
    (#) Missing id for inbox fields in search form
+   (#) Not closed string (url) in CSS cache while converting file path
+   (#) Not possible to transform url paths if more than one url in one line in CSS cache
 
 
 -------------------
