@@ -303,6 +303,7 @@ class SPTplParser
 		$data[ 'attributes' ][ 'rel' ] = $data[ 'type' ];
 		if ( $data[ 'type' ] == 'tooltip' ) {
 			$data[ 'attributes' ][ 'title' ] = htmlspecialchars( $data[ 'content' ], ENT_COMPAT );
+			$data[ 'attributes' ][ 'rel' ] = 'sp-tooltip';
 		}
 		elseif ( $data[ 'type' ] == 'popover' ) {
 			$data[ 'attributes' ][ 'data-title' ] = htmlspecialchars( $data[ 'title' ], ENT_COMPAT );
@@ -512,14 +513,14 @@ class SPTplParser
 			$index = -1;
 			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_EXPIRED', $cell[ 'attributes' ][ 'valid-until' ] );
-			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="expired">';
+			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="expired">';
 		}
 		/** is pending ? */
 		elseif ( ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] ) > time() ) && $index == 1 ) {
 			$index = -2;
 			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );
-			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="pending">';
+			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending">';
 		}
 		elseif ( $index < 0 ) {
 			$txt = 'Locked';
@@ -528,7 +529,7 @@ class SPTplParser
 				$txt = Sobi::Txt( $txt[ $index ] );
 			}
 			$aOpen = true;
-			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="pending">';
+			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending">';
 		}
 		elseif ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
 			$aOpen = true;
@@ -562,7 +563,7 @@ class SPTplParser
 			}
 			$user = SPUser::getInstance( $cell[ 'attributes' ][ 'checked-out-by' ] );
 			$txt = Sobi::Txt( 'CHECKED_OUT', $user->get( 'name' ), $cell[ 'attributes' ][ 'checked-out-time' ] );
-			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $txt . '" class="checkedout">';
+			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="checkedout">';
 			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
 			$this->_out[ ] = '</a>';
 			return $cell;
@@ -570,7 +571,7 @@ class SPTplParser
 		elseif ( $this->istSet( $cell[ 'attributes' ], 'locked', true ) ) {
 			$icon = $this->istSet( $cell[ 'attributes' ], 'locked-icon' ) ? $cell[ 'attributes' ][ 'locked-icon' ] : $this->_checkedOutIcon;
 			$text = $this->istSet( $cell[ 'attributes' ], 'locked-text' ) ? $cell[ 'attributes' ][ 'locked-text' ] : $this->_checkedOutIcon;
-			$this->_out[ ] = '<a href="#" rel="tooltip" data-original-title="' . $text . '" class="checkedout">';
+			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $text . '" class="checkedout">';
 			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
 			$this->_out[ ] = '</a>';
 			return $cell;

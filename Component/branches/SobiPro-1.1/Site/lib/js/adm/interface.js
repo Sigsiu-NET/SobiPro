@@ -237,7 +237,7 @@ SobiPro.jQuery( document ).ready( function ()
 	}
 	catch ( e ) {
 	}
-	SobiPro.jQuery( 'a[rel=tooltip]' )
+	SobiPro.jQuery( 'a[rel=sp-tooltip]' )
 		.tooltip( { 'html':true } )
 		.click( function ( e )
 		{
