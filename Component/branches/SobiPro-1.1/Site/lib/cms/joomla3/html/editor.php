@@ -39,8 +39,8 @@ class SPCMSEditor
 	public function display( $name, $html, $width, $height, $buttons = true, $params = array() )
 	{
 		if( SPRequest::cmd( 'format' ) != 'raw' ) {
+//			JEditor::
 			return JFactory::getEditor()->display( $name, $html, $width, $height, '75', '20', $buttons, $params );
 		}
 	}
 }
-?>
