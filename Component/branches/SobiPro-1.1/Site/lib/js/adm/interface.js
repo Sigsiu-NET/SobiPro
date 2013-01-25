@@ -164,7 +164,6 @@ SobiPro.jQuery( document ).ready( function ()
 	} )
 	function SPTriggerFrakingWYSIWYGEditors()
 	{
-		"use strict";
 		var events = [ 'unload', 'onbeforeunload', 'onunload' ];
 		for ( var i = 0; i < events.length; i++ ) {
 			try {

@@ -67,26 +67,26 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			return false;
 		}
 		$class =  $this->required ? $this->cssClass.' required' : $this->cssClass;
-
-		if( $this->maxLength ) {
-			if( !( $this->editor ) ) {
-				SPFactory::header()->addJsCode( "SobiPro.onReady( function ()
-				{
-					function SPtxtLimit()
-					{
-						if( SP_id( '{$this->nid}' ).value.length > {$this->maxLength} ) {
-							alert( SobiPro.Txt( 'FD_TEXTAREA_LIMIT' ).replace( 'var:[max_length]', '{$this->maxLength}' ) );
-							SP_id( '{$this->nid}' ).value = SP_id( '{$this->nid}' ).value.substr( 0, $this->maxLength );
-						}
-					}
-					try {
-						SP_id( '{$this->nid}' ).addEventListener( 'keypress', SPtxtLimit, false ); }
-					catch ( e ) {
-						SP_id( '{$this->nid}' ).attachEvent( 'keypress', SPtxtLimit );
-					}
-				});" );
-			}
-		}
+// Switched to Ajax validation
+//		if( $this->maxLength ) {
+//			if( !( $this->editor ) ) {
+//				SPFactory::header()->addJsCode( "SobiPro.onReady( function ()
+//				{
+//					function SPtxtLimit()
+//					{
+//						if( SP_id( '{$this->nid}' ).value.length > {$this->maxLength} ) {
+//							alert( SobiPro.Txt( 'FD_TEXTAREA_LIMIT' ).replace( 'var:[max_length]', '{$this->maxLength}' ) );
+//							SP_id( '{$this->nid}' ).value = SP_id( '{$this->nid}' ).value.substr( 0, $this->maxLength );
+//						}
+//					}
+//					try {
+//						SP_id( '{$this->nid}' ).addEventListener( 'keypress', SPtxtLimit, false ); }
+//					catch ( e ) {
+//						SP_id( '{$this->nid}' ).attachEvent( 'keypress', SPtxtLimit );
+//					}
+//				});" );
+//			}
+//		}
 		$params = array( 'id' => $this->nid, 'class' => $class );
 		if( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
@@ -132,6 +132,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * @param SPEntry $entry
 	 * @param string $request
+	 * @throws SPException
 	 * @return string
 	 */
 	private function verify( $entry, $request )
@@ -160,6 +161,9 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			/* check if it was editable */
 			if( !( $this->editable ) && !( Sobi::Can( 'entry.adm_fields.edit' ) ) && $entry->get( 'version' ) > 1 ) {
 				throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_NOT_ED', $this->name ) );
+			}
+			if( $this->maxLength && $dexs > $this->maxLength ) {
+				throw new SPException( SPLang::e( 'FIELD_TEXTAREA_LIMIT', $this->maxLength, $this->name, $dexs ) );
 			}
 		}
 		$data = SPRequest::string( $this->nid, null, true, $request );
@@ -197,6 +201,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * Gets the data for a field and save it in the database
 	 * @param SPEntry $entry
+	 * @param string $request
 	 * @return bool
 	 */
 	public function saveData( &$entry, $request = 'POST' )
