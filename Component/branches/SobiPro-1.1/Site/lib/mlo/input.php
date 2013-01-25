@@ -263,7 +263,7 @@ abstract class SPHtml_Input
 			$c = SPLoader::loadClass( $e );
 			if ( $c ) {
 				$e = new $c();
-				$area = $e->display( $name, $value, $width, $height, ( boolean )Sobi::Cfg( 'html.editor_buttons', true ), $params = array() );
+				$area = $e->display( $name, $value, $width, $height, ( boolean )Sobi::Cfg( 'html.editor_buttons', false ), $params = array() );
 			}
 		}
 		else {

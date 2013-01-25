@@ -33,13 +33,13 @@ class SPCMSEditor
 	 * @param    array    Associative array of editor parameters
 	 * @return string
 	 */
-	public function display( $name, $html, $width, $height )
+	public function display( $name, $html, $width, $height, $buttons )
 	{
 		if ( SPRequest::cmd( 'format' ) != 'raw' ) {
 			// public function display($name, $html, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $params = array())
 			$editor = JEditor::getInstance( JFactory::getConfig()->get( 'editor' ) );
 //			JFactory::getEditor()->display( $name, $html, $width, $height, '75', '20', $buttons, $params );
-			return $editor->display( $name, $html, $width, $height, 75, 20, false );
+			return $editor->display( $name, $html, $width, $height, 75, 20, $buttons );
 		}
 	}
 }
