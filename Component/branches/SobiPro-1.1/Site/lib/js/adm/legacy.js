@@ -41,4 +41,9 @@ SobiPro.jQuery( document ).ready( function ()
 	else {
 		SobiPro.jQuery( '[class*="width-"]' ).removeAttr( 'style' );
 	}
+	Joomla.submitform = function ( task )
+	{
+		SobiPro.jQuery( '#task' ).val( task );
+		SobiPro.jQuery( '#SPAdminForm' ).submit();
+	}
 } );

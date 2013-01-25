@@ -79,6 +79,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			}
 		}
 		$this->showLabel = true;
+		if( !( ( int ) $this->catsMaxLimit ) ) {
+			$this->catsMaxLimit = 1;
+		}
 		switch ( $this->method ) {
 			case 'fixed':
 				$this->showLabel = false;

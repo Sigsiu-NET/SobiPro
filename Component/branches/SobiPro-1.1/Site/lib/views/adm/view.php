@@ -1688,16 +1688,18 @@ class SPAdmView extends SPObject implements SPView
 			echo '<div class="row-fluid">' . "\n";
 		}
 		echo $action ? "\n<form action=\"{$action}\" method=\"post\" name=\"adminForm\" id=\"SPAdminForm\" enctype=\"multipart/form-data\" accept-charset=\"utf-8\" >\n" : null;
+		$prefix = null;
+		if ( !( $this->_compatibility ) ) {
+			$prefix = 'SP_';
+		}
+		else {
+			SPFactory::message()->warning( 'COMPAT_MODE_WARNING' );
+		}
 		include( $tpl );
 		if ( count( $this->_hidden ) ) {
 			$this->_hidden[ SPFactory::mainframe()->token() ] = 1;
 			foreach ( $this->_hidden as $name => $value ) {
-				if ( $this->_compatibility ) {
-					echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$name}\" value=\"{$value}\"/>";
-				}
-				else {
-					echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"SP_{$name}\" value=\"{$value}\"/>";
-				}
+				echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$prefix}{$name}\" value=\"{$value}\"/>";
 			}
 		}
 		echo $action ? "\n</form>\n" : null;
