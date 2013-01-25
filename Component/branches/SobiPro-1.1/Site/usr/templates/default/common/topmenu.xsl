@@ -49,7 +49,7 @@
 				</ul>
 				<xsl:if test="//menu/search and $searchbox = 'true'">
 					<form class="navbar-search pull-right">
-						<input type="text" name="sp_search_for" class="search-query" placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}" />
+						<input type="text" name="sp_search_for" autocomplete="off" class="search-query" placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}" />
 						<input type="hidden" name="task" value="search.search"/>
 						<input type="hidden" name="option" value="com_sobipro"/>
 					</form>

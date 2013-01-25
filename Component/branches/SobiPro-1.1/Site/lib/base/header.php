@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -393,7 +389,7 @@ final class SPHeader
 					if ( !( $override ) ) {
 						$cssFile = SPLoader::CssFile( $file, $adm, true, false, $ext );
 					}
-					if ( !in_array( $file, $this->_cache[ 'css' ] ) || $force ) {
+					if ( !in_array( $cssFile, $this->_cache[ 'css' ] ) || $force ) {
 						$this->_cache[ 'css' ][ $index ] = $cssFile;
 						ksort( $this->_cache[ 'css' ] );
 					}
@@ -565,14 +561,14 @@ final class SPHeader
 						$fName = str_replace( Sobi::FixPath( SOBI_ROOT ), null, $file );
 						$cssContent .= "\n/**  \n========\nFile: {$fName}\n========\n*/\n";
 						$fc = SPFs::read( $file );
-						preg_match_all( '/.*url\(.*/', $fc, $matches );
-
+//						preg_match_all( '/.*url\(.*/', $fc, $matches );
+						preg_match_all( '/[^\(]*url\(([^\)]*)/', $fc, $matches );
 						// we have to replace url relative path
-						$fPath = str_replace( Sobi::FixPath( SOBI_ROOT . DS ), SPFactory::config()->get( 'live_site' ), $file );
+						$fPath = str_replace( Sobi::FixPath( SOBI_ROOT . '/' ), SPFactory::config()->get( 'live_site' ), $file );
 						$fPath = str_replace( '\\', '/', $fPath );
 						$fPath = explode( '/', $fPath );
-						if ( count( $matches[ 0 ] ) ) {
-							foreach ( $matches[ 0 ] as $url ) {
+						if ( count( $matches[ 1 ] ) ) {
+							foreach ( $matches[ 1 ] as $url ) {
 								// if it is already absolute - skip or from root
 								if ( preg_match( '|http(s)?://|', $url ) || preg_match( '|url\(["\s]*/|', $url ) ) {
 									continue;
@@ -583,7 +579,8 @@ final class SPHeader
 									unset( $tempFile[ $i ] );
 								}
 								$rPath = Sobi::FixPath( implode( '/', array_reverse( $tempFile ) ) );
-								$rurl = preg_replace( '|(url\(["\s]*)([^a-zA-Z0-9]*)|', '\1' . $rPath . '/', $url );
+//								$rurl = preg_replace( '|(url\(["\s\']*)([^a-zA-Z0-9"\']*)|', '\1' . $rPath . '/', $url );
+								$rurl = Sobi::FixPath( str_replace( '..', $rPath, $url ) );
 								$fc = str_replace( $url, $rurl, $fc );
 							}
 						}
