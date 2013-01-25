@@ -79,7 +79,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			}
 		}
 		$this->showLabel = true;
-		if( !( ( int ) $this->catsMaxLimit ) ) {
+		if ( !( ( int )$this->catsMaxLimit ) ) {
 			$this->catsMaxLimit = 1;
 		}
 		switch ( $this->method ) {
@@ -503,15 +503,16 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 	/**
 	 * @param string $data
-	 * @param int $section
+	 * @param $results
+	 * @internal param int $section
 	 * @return array
 	 */
 	public function searchNarrowResults( $data, &$results )
 	{
-		if ( count( $data ) && count( $results ) ) {
-			if ( is_numeric( $data ) ) {
-				$data = array( $data );
-			}
+		if ( is_numeric( $data ) ) {
+			$data = array( $data );
+		}
+		if ( count( $data ) ) {
 			$this->loadCategories();
 			if ( count( $this->_cats ) ) {
 				$categories = array();
@@ -520,14 +521,22 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				}
 			}
 			if ( count( $categories ) ) {
-				$db = SPFactory::db();
-				foreach ( $results as $index => $sid ) {
-					$relation = $db
-							->select( 'id', 'spdb_relations', array( 'id' => $sid, 'oType' => 'entry', 'pid' => $categories ) )
-							->loadResultArray();
-					if ( !( count( $relation ) ) ) {
-						unset( $results[ $index ] );
+				// narrowing down - it's a special method instead the regular search because we would have to handle too much data in the search
+				if ( count( $results ) ) {
+					foreach ( $results as $index => $sid ) {
+						$relation = SPFactory::db()
+								->select( 'id', 'spdb_relations', array( 'id' => $sid, 'oType' => 'entry', 'pid' => $categories ) )
+								->loadResultArray();
+						if ( !( count( $relation ) ) ) {
+							unset( $results[ $index ] );
+						}
 					}
+
+				} // it's a real search now - in case we hadn't nothing to filter out
+				else {
+					$results = SPFactory::db()
+							->select( 'id', 'spdb_relations', array( 'oType' => 'entry', 'pid' => $categories ) )
+							->loadResultArray();
 				}
 			}
 		}
