@@ -31,4 +31,3 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 class SPHtml_Editor
 {
 }
-?>
