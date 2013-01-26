@@ -36,7 +36,46 @@ SobiPro.jQuery( document ).ready( function ()
 		this.doneCounter = 0;
 		this.progressBar = SobiPro.jQuery( '#SpProgress' ).find( '.bar' );
 		this.progressMessage = SobiPro.jQuery( '#SpProgress .alert' );
-		this.messages = [];
+		this.messages = { 'warning':[], 'error':[], 'info':[], 'success':[] };
+		this.finish = function( url )
+		{
+			var request = {'option':'com_sobipro', 'task':'txt.messages', 'format':'raw', 'method':'xhr', 'spsid':SobiPro.jQuery( '#SP_spsid' ).val() }
+			SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json',
+				success:function ( response )
+				{
+					if ( response && response.data.messages.length ) {
+						for ( var i = 0; i < response.data.messages.length; i++ ) {
+							proxy.messages[ response.data.messages[ i ].type ].push( response.data.messages[ i ].text );
+						}
+					}
+					var counter = 0;
+					var output = []
+					SobiPro.jQuery.each( proxy.messages, function ( type, reports )
+					{
+						var container = [];
+						for ( var i = 0; i < reports.length; i++ ) {
+							counter++;
+							container.push( '<div><strong> ' + counter + ')&nbsp;</strong>' + reports[ i ] + '</div>' );
+						}
+						if ( container.length ) {
+							output.push( '<div class="smallmessage alert-' + type + ' alert">' + container.join( "\n" ) + '</div>' );
+						}
+					} );
+					if ( counter > 0 ) {
+						var modal = '<div class="modal hide"><div class="modal-body">' + output.join( "\n" ) + '</div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>'
+						SobiPro.jQuery( modal ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
+						var modalMessage = SobiPro.jQuery( modal ).modal();
+						modalMessage.on( 'hidden', function ()
+						{
+							proxy.refresh( url );
+						} );
+					}
+					else {
+						proxy.refresh( url );
+					}
+				}
+			} );
+		}
 		this.progress = function ( response )
 		{
 			this.doneCounter++;
@@ -45,46 +84,18 @@ SobiPro.jQuery( document ).ready( function ()
 			this.progressMessage.html( response.message.text );
 			var url = response.redirect.url;
 			if ( response.message.type != 'success' ) {
-				this.messages.push( response.message );
+				this.messages[ response.message.type ].push( response.message.text );
 			}
 			if ( this.doneCounter == this.counter ) {
-				var request = {'option':'com_sobipro', 'task':'txt.messages', 'format':'raw', 'method':'xhr', 'spsid':SobiPro.jQuery( '#SP_spsid' ).val() }
-				SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json',
-					success:function ( response )
-					{
-						if ( response && response.data.messages.length ) {
-							for ( var i = 0; i < response.data.messages.length; i++ ) {
-								this.messages.push( response.data.messages[ i ] );
-							}
-						}
-					}
-				} );
-				if ( this.messages.length ) {
-					var alerts = [];
-					for ( var i = 0; i < this.messages.length; i++ ) {
-						alerts.push( '<div class="smallmessage alert-' + this.messages[i].type + ' alert">' + this.messages[i].text + '</div>' );
-					}
-					var modal = '<div class="modal hide"><div class="modal-body">' + alerts.join( "\n" ) + '</div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>'
-					SobiPro.jQuery( modal ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
-					var modalMessage = SobiPro.jQuery( modal ).modal();
-					modalMessage.on( 'hidden', function ()
-					{
-						proxy.refresh( url );
-					} );
-				}
-				else {
-					this.refresh( url );
-				}
+				this.finish( url );
 			}
 		}
-
 		this.refresh = function ( url )
 		{
 			this.messageType( 'info' );
 			this.progressMessage.html( SobiPro.Txt( 'PROGRESS_DONE_REDIRECTING' ) )
 			window.location.replace( url );
 		}
-
 		this.messageType = function ( type )
 		{
 			this.progressMessage
@@ -107,12 +118,7 @@ SobiPro.jQuery( document ).ready( function ()
 			var request = {'option':'com_sobipro', 'task':task, 'format':'raw', 'method':'xhr', 'spsid':SobiPro.jQuery( '#SP_spsid' ).val()}
 			for ( var i = 0; i < entries.length; i++ ) {
 				request[ 'sid' ] = entries[ i ].val();
-				SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json',
-					success:function ( response )
-					{
-						proxy.progress( response );
-					}
-				} );
+				SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json', success:function ( response ) { proxy.progress( response ); } } );
 			}
 		}
 	}

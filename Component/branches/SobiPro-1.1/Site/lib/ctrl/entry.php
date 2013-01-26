@@ -124,12 +124,15 @@ class SPEntryCtrl extends SPController
 			if ( ( ( $this->_model->get( 'owner' ) == Sobi::My( 'id' ) ) && Sobi::Can( 'entry.publish.own' ) ) || Sobi::Can( 'entry.publish.*' ) ) {
 				$this->_model->changeState( $state );
 //				if ( time() % 2 ) {
+//					SPFactory::message()->setReport( 'Send an email to someone for it', SPRequest::cmd( 'spsid' ) );
 //					$this->response( Sobi::Back(), Sobi::Txt( 'EN.IS_CHECKED_OUT', $this->_model->get( 'name' ) ), false, SPC::WARN_MSG );
 //				}
 //				elseif ( time() % 3 ) {
+//					SPFactory::message()->setReport( 'here is an error', SPRequest::cmd( 'spsid' ), SPC::WARN_MSG );
 //					$this->response( Sobi::Back(), Sobi::Txt( 'CHANGE_NO_ID' ), false, SPC::ERROR_MSG );
 //				}
 //				else {
+//					SPFactory::message()->setReport( 'I sent this email', SPRequest::cmd( 'spsid' ), SPC::SUCCESS_MSG );
 					$this->response( Sobi::Back(), Sobi::Txt( $state ? 'EN.PUBLISHED' : 'EN.UNPUBLISHED', $this->_model->get( 'name' ) ), false, SPC::SUCCESS_MSG );
 //				}
 			}

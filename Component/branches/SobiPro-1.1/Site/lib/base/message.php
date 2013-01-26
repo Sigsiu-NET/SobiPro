@@ -28,7 +28,7 @@ class SPMessage
 	/** @var array */
 	private $store = array();
 	/** @var array */
-	private $communication = array();
+	private $reports = array();
 	/** @var array */
 	private $current = array();
 
@@ -44,14 +44,12 @@ class SPMessage
 		if ( $registry ) {
 			$this->store = SPConfig::unserialize( $registry );
 		}
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getSystemMessages( $id = null )
-	{
-		return $id ? ( isset( $this->communication[ $id ] ) ? $this->communication[ $id ] : array() ) : $this->store;
+		$reports = SPFactory::registry()
+				->loadDBSection( 'reports' )
+				->get( 'reports.queue.params' );
+		if ( $reports ) {
+			$this->reports = SPConfig::unserialize( $reports );
+		}
 	}
 
 	/**
@@ -164,6 +162,61 @@ class SPMessage
 			SPFactory::cache()->cleanSection( -1, false );
 		}
 		return $this;
+	}
+
+	/**
+	 * @param $message
+	 * @param $spsid string
+	 * @param string $type
+	 * @return SPMessage
+	 */
+	public function & setReport( $message, $spsid, $type = SPC::INFO_MSG )
+	{
+		$this->reports[ $spsid ][ $type ][ ] = $message;
+		if ( count( $this->reports ) ) {
+			$messages = SPConfig::serialize( $this->reports );
+			$store = array(
+				'params' => $messages,
+				'key' => 'queue',
+				'value' => date( DATE_RFC822 ),
+				'description' => null,
+				'options' => null
+			);
+			SPFactory::registry()->saveDBSection( array( 'reports' => $store ), 'reports' );
+		}
+		return $this;
+	}
+
+	/**
+	 * @param null $spsid
+	 * @return array
+	 */
+	public function getReports( $spsid )
+	{
+		$reports = array();
+		if ( $this->reports[ $spsid ] ) {
+			$messages = SPConfig::serialize( $this->reports );
+			$reports = $this->reports[ $spsid ];
+			unset( $this->reports[ $spsid ] );
+			$store = array(
+				'params' => $messages,
+				'key' => 'queue',
+				'value' => date( DATE_RFC822 ),
+				'description' => null,
+				'options' => null
+			);
+			SPFactory::registry()->saveDBSection( array( 'reports' => $store ), 'reports' );
+		}
+		return $reports;
+	}
+
+	/**
+	 * @param null $spsid
+	 * @return array
+	 */
+	public function getSystemMessages( $spsid = null )
+	{
+		return $spsid ? ( isset( $this->reports[ $spsid ] ) ? $this->reports[ $spsid ] : array() ) : $this->store;
 	}
 
 //	/**
