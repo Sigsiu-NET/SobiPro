@@ -57,6 +57,16 @@
 			</div>
 			<div class="span10">
 				<message id="spMessage" />
+				<div class="row-fluid">
+					<div class="hide" id="SpProgress">
+						<div>
+							<message type="info" label="" class="smallmessage" />
+						</div>
+						<div class="progress progress-striped active" id="SpProgress">
+							<div class="bar" style="width: 0%;"></div>
+						</div>
+					</div>
+				</div>
 				<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 					<div class="btn-group pull-right" id="spEntriesFilterHead">
 						<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large spSubmit" />

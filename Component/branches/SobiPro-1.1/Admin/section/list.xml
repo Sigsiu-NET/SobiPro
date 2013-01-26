@@ -49,8 +49,8 @@
 			<button type="revoke" task="category.unapprove" />
 		</buttons>
 		<divider />
-        <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-        <divider />
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
+		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" />
@@ -68,6 +68,16 @@
 			</div>
 			<div class="span10">
 				<message id="spMessage" />
+				<div class="row-fluid">
+					<div class="hide" id="SpProgress">
+						<div>
+							<message type="info" label="" class="smallmessage" />
+						</div>
+						<div class="progress progress-striped active" id="SpProgress">
+							<div class="bar" style="width: 0%;"></div>
+						</div>
+					</div>
+				</div>
 				<header label="CATEGORIES_IN_LIST_HEAD" icon="SobiCatList">
 					<div class="btn-group pull-right" id="spCategoriesFilterHead">
 						<field type="select" name="corder" selected="corder" class="input-large spOrdering">
@@ -104,7 +114,7 @@
 						<cell label="HEADER_CATS_STATE" type="text" class="SpCellCenter" />
 						<cell label="HEADER_CATS_APPROVAL" type="text" class="SpCellCenter" />
 						<cell label="HEADER_CATS_AUTHOR" type="text" class="SpCellCenter" />
-						<cell label="HEADER_CATS_POSITION" type="ordering" class="SpCellArrowCol" rel="category" condition="corder.contains(position)"/>
+						<cell label="HEADER_CATS_POSITION" type="ordering" class="SpCellArrowCol" rel="category" condition="corder.contains(position)" />
 					</head>
 					<loop subject="categories">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -131,7 +141,7 @@
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
 						<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellArrowCol" condition="/corder.contains(position)">
-							<cell type="text" class="SpCellArrow" >
+							<cell type="text" class="SpCellArrow">
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="category.up" />
@@ -189,7 +199,7 @@
 						<cell label="HEADER_ENTRIES_STATE" type="text" class="SpCellCenter" />
 						<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="entry" condition="eorder.contains(position)"/>
+						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="entry" condition="eorder.contains(position)" />
 					</head>
 					<loop subject="entries">
 						<cell type="text" value="id" class="SpCellCenter" />

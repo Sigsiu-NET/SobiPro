@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -31,6 +27,8 @@ class SPMessage
 	private $langLoaded = false;
 	/** @var array */
 	private $store = array();
+	/** @var array */
+	private $communication = array();
 	/** @var array */
 	private $current = array();
 
@@ -51,9 +49,9 @@ class SPMessage
 	/**
 	 * @return array
 	 */
-	public function getSystemMessages()
+	public function getSystemMessages( $id = null )
 	{
-		return $this->store;
+		return $id ? ( isset( $this->communication[ $id ] ) ? $this->communication[ $id ] : array() ) : $this->store;
 	}
 
 	/**
@@ -167,6 +165,30 @@ class SPMessage
 		}
 		return $this;
 	}
+
+//	/**
+//	 * @param $id string
+//	 * @return SPMessage
+//	 */
+//	public function & addSystemMessage( $id )
+//	{
+//		$change = count( $this->store );
+//		$this->current[ 'issue-type' ] = $id;
+//		$this->store[ md5( serialize( $this->current ) ) ] = $this->current;
+//		if ( count( $this->store ) > $change ) {
+//			$messages = SPConfig::serialize( $this->store );
+//			$store = array(
+//				'params' => $messages,
+//				'key' => 'queue',
+//				'value' => date( DATE_RFC822 ),
+//				'description' => null,
+//				'options' => null
+//			);
+//			SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
+//			SPFactory::cache()->cleanSection( -1, false );
+//		}
+//		return $this;
+//	}
 
 	/**
 	 * @param string $message
