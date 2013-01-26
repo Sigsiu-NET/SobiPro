@@ -46,6 +46,9 @@
 #SobiPro .btn.dropdown-toggle {
   background-color: #E6E6E6;
 }
+#SobiPro h3 {
+    margin: inherit;
+}
 /* end Joomla! 2.5 template compatibility */
 /* General Styling */
 .SPDetailEntry h1 {
