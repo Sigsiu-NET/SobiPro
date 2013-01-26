@@ -179,8 +179,8 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			foreach ( $sids as $sid ) {
 				try {
 					SPFactory::db()->update( 'spdb_object', array( 'approved' => $approve ? 1 : 0 ), array( 'id' => $sid, 'oType' => 'entry' ) );
+					$entry = SPFactory::Entry( $sid );
 					if ( $approve ) {
-						$entry = SPFactory::Entry( $sid );
 						$entry->approveFields( $approve );
 					}
 					else {
