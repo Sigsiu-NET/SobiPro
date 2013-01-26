@@ -56,10 +56,9 @@ Legend:
 
    (!) Administrator UI redesigned using Bootstrap library and new XML templates
    (!) SPHeader::addMeta() takes now optional list of custom parameters as an array
-   (!) SPLang::nid() using JFilterOutput::stringURLSafe now
+   (!) SPLang::nid() uses JFilterOutput::stringURLSafe now
    (!) Category and entry Meta Robots parameter selection improved (admin interface)
    (!) Category and entry publishing information extended (admin interface)
-   (!) Message type for 'Use of Default Template' set to warning (admin interface)
    (!) Field description now allows HTML code
    (!) Default settings while creating a new section changed
    (!) CodeMirror upgraded to version 2.36
@@ -84,8 +83,8 @@ Legend:
    (#) Options of select list or checkbox fields will be deleted now if the field is deleted
    (#) Duplication of a field more than once does not increment the alias counter
    (#) Missing id for inbox fields in search form
-   (#) Not closed string (url) in CSS cache while converting file path
-   (#) Not possible to transform url paths if more than one url in one line in CSS cache
+   (#) Non-closed string (url) in CSS cache while converting file path
+   (#) Not possible to transform url paths in CSS cache if more than one url per line
 
 
 -------------------
