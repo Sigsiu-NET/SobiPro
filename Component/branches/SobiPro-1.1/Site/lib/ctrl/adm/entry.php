@@ -189,8 +189,8 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
-				SPFactory::cache()->purgeSectionVars();
 			}
+			SPFactory::cache()->purgeSectionVars();
 			$this->response( Sobi::Back(), Sobi::Txt( $approve ? 'EMN.APPROVED' : 'EMN.UNAPPROVED', $entry->get( 'name' ) ), false, SPC::SUCCESS_MSG );
 		}
 	}

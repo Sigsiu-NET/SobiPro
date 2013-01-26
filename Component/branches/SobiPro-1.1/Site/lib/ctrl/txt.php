@@ -53,8 +53,18 @@ class SPJsTxt extends SPController
 
 	protected function messages()
 	{
-		$messages = SPFactory::message()->getSystemMessages( SPRequest::cmd( 'spsid' ) );
-		$this->response( null, null, false, SPC::INFO_MSG, array( 'messages' => $messages ) );
+		$messages = SPFactory::message()->getReports( SPRequest::cmd( 'spsid' ) );
+		$response = array();
+		if ( count( $messages ) ) {
+			foreach ( $messages as $type => $content ) {
+				if ( count( $content ) ) {
+					foreach ( $content as $message ) {
+						$response[ ] = array( 'type' => $type, 'text' => $message );
+					}
+				}
+			}
+		}
+		$this->response( null, null, false, SPC::INFO_MSG, array( 'messages' => $response ) );
 	}
 
 	protected function js()
