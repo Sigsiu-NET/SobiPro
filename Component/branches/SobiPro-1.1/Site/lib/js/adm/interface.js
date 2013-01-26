@@ -28,7 +28,97 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( '#SP_method' ).val( 'html' );
 		}
 	} );
+	function SpSerialAction( task )
+	{
+		var entries = [];
+		var proxy = this;
+		this.counter = 0;
+		this.doneCounter = 0;
+		this.progressBar = SobiPro.jQuery( '#SpProgress' ).find( '.bar' );
+		this.progressMessage = SobiPro.jQuery( '#SpProgress .alert' );
+		this.messages = [];
+		this.progress = function ( response )
+		{
+			this.doneCounter++;
+			this.progressBar.css( 'width', 100 / ( this.counter - this.doneCounter + 1 ) + '%' );
+			this.messageType( response.message.type );
+			this.progressMessage.html( response.message.text );
+			var url = response.redirect.url;
+			if ( response.message.type != 'success' ) {
+				this.messages.push( response.message );
+			}
+			if ( this.doneCounter == this.counter ) {
+				var request = {'option':'com_sobipro', 'task':'txt.messages', 'format':'raw', 'method':'xhr', 'spsid':SobiPro.jQuery( '#SP_spsid' ).val() }
+				SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json',
+					success:function ( response )
+					{
+						if ( response && response.data.messages.length ) {
+							for ( var i = 0; i < response.data.messages.length; i++ ) {
+								this.messages.push( response.data.messages[ i ] );
+							}
+						}
+					}
+				} );
+				if ( this.messages.length ) {
+					var alerts = [];
+					for ( var i = 0; i < this.messages.length; i++ ) {
+						alerts.push( '<div class="smallmessage alert-' + this.messages[i].type + ' alert">' + this.messages[i].text + '</div>' );
+					}
+					var modal = '<div class="modal hide"><div class="modal-body">' + alerts.join( "\n" ) + '</div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>'
+					SobiPro.jQuery( modal ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
+					var modalMessage = SobiPro.jQuery( modal ).modal();
+					modalMessage.on( 'hidden', function ()
+					{
+						proxy.refresh( url );
+					} );
+				}
+				else {
+					this.refresh( url );
+				}
+			}
+		}
+
+		this.refresh = function ( url )
+		{
+			this.messageType( 'info' );
+			this.progressMessage.html( SobiPro.Txt( 'PROGRESS_DONE_REDIRECTING' ) )
+//			window.location.replace( url );
+		}
+
+		this.messageType = function ( type )
+		{
+			this.progressMessage
+				.removeClass( 'alert alert-info alert-success alert-error' )
+				.addClass( 'alert alert-' + type );
+
+		}
+		SobiPro.jQuery( '[name="e_sid[]"]' ).each( function ( i, e )
+		{
+			var element = SobiPro.jQuery( e );
+			if ( element.attr( 'checked' ) == 'checked' ) {
+				entries.push( element );
+			}
+		} );
+		if ( entries.length ) {
+			this.counter = entries.length;
+			this.progressMessage.html( SobiPro.Txt( 'PROGRESS_WORKING' ) );
+			SobiPro.jQuery( '#SpProgress' ).removeClass( 'hide' );
+			this.progressBar.css( 'width', '0%' );
+			var request = {'option':'com_sobipro', 'task':task, 'format':'raw', 'method':'xhr', 'spsid':SobiPro.jQuery( '#SP_spsid' ).val()}
+			for ( var i = 0; i < entries.length; i++ ) {
+				request[ 'sid' ] = entries[ i ].val();
+				SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json',
+					success:function ( response )
+					{
+						proxy.progress( response );
+					}
+				} );
+			}
+		}
+	}
+
 	var count = 0;
+	var serialActions = [ 'entry.publish', 'entry.hide', 'entry.approve', 'entry.unapprove' ];
 	SobiPro.jQuery( '#SPAdmToolbar a' ).click( function ( e )
 	{
 		var task = SobiPro.jQuery( this ).attr( 'rel' );
@@ -36,7 +126,11 @@ SobiPro.jQuery( document ).ready( function ()
 		if ( task.length ) {
 			e.preventDefault();
 			e.stopPropagation();
-			if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
+			if ( SobiPro.jQuery.inArray( task, serialActions ) != -1 ) {
+				SobiPro.jQuery( this ).parent().parent().parent().parent().removeClass( 'open' );
+				return new SpSerialAction( task );
+			}
+			else if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
 				var handler = { 'takeOver':false };
 				SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit', [ handler, task ] )
 				if ( handler.takeOver == true ) {
@@ -53,10 +147,10 @@ SobiPro.jQuery( document ).ready( function ()
 				} );
 				SobiPro.jQuery( '#SP_task' ).val( task );
 				SobiPro.jQuery.ajax( {
-					url:'index.php',
-					data:req,
-					type:'post',
-					dataType:'json',
+					'url':'index.php',
+					'data':req,
+					'type':'post',
+					'dataType':'json',
 					success:function ( data )
 					{
 						if ( !( data.redirect.execute ) ) {

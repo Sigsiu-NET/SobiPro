@@ -1698,6 +1698,7 @@ class SPAdmView extends SPObject implements SPView
 		include( $tpl );
 		if ( count( $this->_hidden ) ) {
 			$this->_hidden[ SPFactory::mainframe()->token() ] = 1;
+			$this->_hidden[ 'spsid' ] = microtime( true ) + ( ( Sobi::My( 'id' ) * mt_rand( 5, 15 ) ) / mt_rand( 5, 15 ) );
 			foreach ( $this->_hidden as $name => $value ) {
 				echo "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$prefix}{$name}\" value=\"{$value}\"/>";
 			}

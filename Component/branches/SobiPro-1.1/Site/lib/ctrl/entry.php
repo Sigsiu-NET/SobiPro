@@ -119,11 +119,19 @@ class SPEntryCtrl extends SPController
 	{
 		if ( $this->_model->get( 'id' ) ) {
 			if ( $this->_model->isCheckedOut() ) {
-				$this->response( Sobi::Back(), Sobi::Txt( 'EN.IS_CHECKED_OUT' ), false, SPC::WARN_MSG );
+				$this->response( Sobi::Back(), Sobi::Txt( 'EN.IS_CHECKED_OUT', $this->_model->get( 'name' ) ), false, SPC::WARN_MSG );
 			}
 			if ( ( ( $this->_model->get( 'owner' ) == Sobi::My( 'id' ) ) && Sobi::Can( 'entry.publish.own' ) ) || Sobi::Can( 'entry.publish.*' ) ) {
 				$this->_model->changeState( $state );
-				$this->response( Sobi::Back(), Sobi::Txt( $state ? 'EN.PUBLISHED' : 'EN.UNPUBLISHED' ), false );
+//				if ( time() % 2 ) {
+//					$this->response( Sobi::Back(), Sobi::Txt( 'EN.IS_CHECKED_OUT', $this->_model->get( 'name' ) ), false, SPC::WARN_MSG );
+//				}
+//				elseif ( time() % 3 ) {
+//					$this->response( Sobi::Back(), Sobi::Txt( 'CHANGE_NO_ID' ), false, SPC::ERROR_MSG );
+//				}
+//				else {
+					$this->response( Sobi::Back(), Sobi::Txt( $state ? 'EN.PUBLISHED' : 'EN.UNPUBLISHED', $this->_model->get( 'name' ) ), false, SPC::SUCCESS_MSG );
+//				}
 			}
 			else {
 				Sobi::Error( 'entry', SPLang::e( 'UNAUTHORIZED_ACCESS' ), SPC::ERROR, 403, __LINE__, __FILE__ );
