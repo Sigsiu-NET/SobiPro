@@ -82,7 +82,7 @@ SobiPro.jQuery( document ).ready( function ()
 		{
 			this.messageType( 'info' );
 			this.progressMessage.html( SobiPro.Txt( 'PROGRESS_DONE_REDIRECTING' ) )
-//			window.location.replace( url );
+			window.location.replace( url );
 		}
 
 		this.messageType = function ( type )
