@@ -20,12 +20,9 @@
 		<file path="common/alphamenu.xsl">
 			Template for the alpha menu. Fields chooser and calls the alpha index (letters) template.
 		</file>
-        <file path="common/alphindex.xsl">
+        <file path="common/alphaindex.xsl">
             Template for the alpha index (letters) only.
         </file>
-		<file path="common/catchooser.xsl">
-			Sub-Template for the category chooser for the edit entry form.
-		</file>
         <file path="common/categories.xsl">
             Template for the categories list (categoriesLoop). Calls the template for a single category.
         </file>
