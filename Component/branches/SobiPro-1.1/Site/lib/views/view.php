@@ -85,7 +85,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	protected function tplPath()
 	{
 		if ( !$this->_templatePath ) {
-			$tpl = Sobi::Cfg( 'section.template', 'default' );
+			$tpl = Sobi::Cfg( 'section.template', 'default2' );
 			$file = explode( '.', $tpl );
 			if ( strstr( $file[ 0 ], 'cms:' ) ) {
 				$file[ 0 ] = str_replace( 'cms:', null, $file[ 0 ] );
@@ -127,7 +127,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	public function loadCSSFile( $path )
 	{
-		$tplPckg = Sobi::Cfg( 'section.template', 'default' );
+		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
 		Sobi::Trigger( 'loadCSSFile', $this->name(), array( &$path ) );
 		if ( SPFs::exists( $this->tplPath() . DS . 'css' . DS . $path . '.css' ) ) {
 			$path = 'absolute.' . $this->tplPath() . '.css.' . $path;
@@ -144,7 +144,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	public function loadJsFile( $path )
 	{
-		$tplPckg = Sobi::Cfg( 'section.template', 'default' );
+		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
 		Sobi::Trigger( 'loadJsFile', $this->name(), array( &$path ) );
 		if ( SPFs::exists( $this->tplPath() . DS . 'js' . DS . $path . '.js' ) ) {
 			$path = 'absolute.' . $this->tplPath() . '.js.' . $path;

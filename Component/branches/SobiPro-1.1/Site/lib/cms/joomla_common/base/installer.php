@@ -124,7 +124,8 @@ class SPJoomlaInstaller
 		jimport( 'joomla.installer.helper' );
 		$installer = JInstaller::getInstance();
 		$type = JInstallerHelper::detectType( $dir );
-		if ( $installer->install( $dir ) ) {
+		try {
+			$installer->install( $dir );
 			// it was core update - break now
 			if ( $type == 'component' ) {
 				SPFactory::cache()->cleanAll();
@@ -161,8 +162,8 @@ class SPJoomlaInstaller
 			}
 			return array( 'msg' => $msg, 'msgtype' => SPC::SUCCESS_MSG );
 		}
-		else {
-			$this->error = Sobi::Txt( 'CMS_EXT_NOT_INSTALLED' );
+		catch( Exception $x ) {
+			$this->error = Sobi::Txt( 'CMS_EXT_NOT_INSTALLED' ).' '.$x->getMessage();
 			$this->errorType = SPC::ERROR_MSG;
 			return array( 'msg' => $this->error, 'msgtype' => SPC::ERROR_MSG );
 		}
