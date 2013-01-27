@@ -88,4 +88,7 @@
             <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.messages.ini</language>
         </languages>
 	</administration>
+	<updateservers>
+		<server type="extension" priority="1" name="SobiPro Updates"><![CDATA[https://xml.sigsiu.net/SobiPro/SobiPro.xml]]></server>
+	</updateservers>
 </extension>

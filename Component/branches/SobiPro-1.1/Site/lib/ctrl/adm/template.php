@@ -144,7 +144,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	private function delete()
 	{
 		$dir = $this->dir( SPRequest::cmd( 'templateName' ) );
-		if ( SPRequest::cmd( 'templateName' ) == 'default' ) {
+		if ( SPRequest::cmd( 'templateName' ) == 'default2' ) {
 			$this->response( Sobi::Back(), Sobi::Txt( 'TP.DO_NOT_REMOVE' ), false, 'error' );
 		}
 		if ( SPFs::delete( $dir ) ) {
@@ -193,12 +193,12 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	{
 		$template = SPRequest::cmd( 'template' );
 		if ( !( $template ) ) {
-			$template = 'default';
+			$template = 'default2';
 		}
 		$dir = $this->dir( $template );
 		/** @var $view SPAdmTemplateView */
 		$view = SPFactory::View( 'template', true );
-		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == 'default' ) {
+		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == 'default2' ) {
 			SPFactory::message()
 					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false )
 					->setSystemMessage();
@@ -229,7 +229,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				$files = array();
 				$templateName = SPRequest::cmd( 'template' );
 				if ( !( strlen( $templateName ) ) ) {
-					$templateName = 'default';
+					$templateName = 'default2';
 				}
 				foreach ( $xinfo->query( '/template/files/file' ) as $file ) {
 					$filePath = $dir . '/' . $file->attributes->getNamedItem( 'path' )->nodeValue;
@@ -341,7 +341,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	private function editFile()
 	{
-		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == 'default' ) {
+		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == 'default2' ) {
 			SPFactory::message()
 					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false )
 					->setSystemMessage();

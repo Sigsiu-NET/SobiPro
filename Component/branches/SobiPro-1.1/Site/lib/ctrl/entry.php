@@ -296,7 +296,7 @@ class SPEntryCtrl extends SPController
 	private function paymentView( $tsId = null, $data = null )
 	{
 		/* determine template package */
-		$tplPackage = Sobi::Cfg( 'section.template', 'default' );
+		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
 		/* load template config */
 		$this->tplCfg( $tplPackage );
 		SPFactory::mainframe()->addObjToPathway( $this->_model );
@@ -436,7 +436,7 @@ class SPEntryCtrl extends SPController
 		}
 
 		/* determine template package */
-		$tplPckg = Sobi::Cfg( 'section.template', 'default' );
+		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
 
 		/* load template config */
 		$this->template();
@@ -543,7 +543,7 @@ class SPEntryCtrl extends SPController
 	private function details()
 	{
 		/* determine template package */
-		$tplPckg = Sobi::Cfg( 'section.template', 'default' );
+		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
 
 		/* load template config */
 		$this->template();

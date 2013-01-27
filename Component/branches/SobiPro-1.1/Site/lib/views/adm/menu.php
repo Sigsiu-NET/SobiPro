@@ -58,9 +58,9 @@ final class SPAdmSiteMenu
 				$section = array_merge( $section, $links );
 			}
 		}
-		elseif ( $name == 'AMN.APPS_SECTION_TPL' && Sobi::Section() && Sobi::Cfg( 'section.template', 'default' ) ) {
+		elseif ( $name == 'AMN.APPS_SECTION_TPL' && Sobi::Section() && Sobi::Cfg( 'section.template', 'default2' ) ) {
 			$p = SPFactory::Controller( 'template', true );
-			$this->_custom[ $name ][ 'after' ][ ] = $p->getTemplateTree( Sobi::Cfg( 'section.template', 'default' ) );
+			$this->_custom[ $name ][ 'after' ][ ] = $p->getTemplateTree( Sobi::Cfg( 'section.template', 'default2' ) );
 		}
 		$this->_sections[ $name ] =& $section;
 	}

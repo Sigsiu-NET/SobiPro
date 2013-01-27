@@ -81,7 +81,7 @@ class SPFront extends SPController
 				/* load template config */
 //				$this->tplCfg( 'front' );
 //				$view->setConfig( $this->_tCfg, 'general' );
-				$view->determineTemplate( 'front', 'default' );
+				$view->determineTemplate( 'front', 'default2' );
 				$view->assign( $this->_sections, 'sections' );
 				$view->display();
 				break;
