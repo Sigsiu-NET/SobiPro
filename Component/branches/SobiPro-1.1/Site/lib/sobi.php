@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -100,7 +96,7 @@ abstract class Sobi
 				'line' => $line,
 				'content' => $sMsg
 			);
-			trigger_error( 'json://'.json_encode( $error ), $type );
+			trigger_error( 'json://' . json_encode( $error ), $type );
 		}
 		if ( $code ) {
 			SPLoader::loadClass( 'base.mainframe' );
@@ -346,11 +342,15 @@ abstract class Sobi
 	 */
 	public static function Section( $name = false )
 	{
+		static $section = null;
 		if ( !( $name ) ) {
 			return SPFactory::registry()->get( 'current_section' );
 		}
 		elseif ( ( string )$name == 'nid' ) {
-			return SPLang::nid( SPFactory::registry()->get( 'current_section_name' ) );
+			if ( !( $section ) ) {
+				$section = SPFactory::Section( SPFactory::registry()->get( 'current_section' ) );
+			}
+			return $section->get( 'nid' );
 		}
 		else {
 			return SPFactory::registry()->get( 'current_section_name' );

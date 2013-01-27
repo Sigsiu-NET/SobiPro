@@ -49,7 +49,8 @@ Legend:
    (+) Possibility to define exact type of custom output including header content type, exit and clear
    (+) Possibility to limit XML raw data to a specific IP
    (+) Joomla! 3.0 compatibility (needs at least Joomla! 3.0.2)
-   (+) Auto-suggest feature for search and add/edit entry function
+   (+) Auto-suggest feature for search function
+   (+) Excluding particular user groups for administrator templates override
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list

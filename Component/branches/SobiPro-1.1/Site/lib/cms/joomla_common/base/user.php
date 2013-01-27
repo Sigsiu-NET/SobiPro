@@ -168,13 +168,15 @@ class SPJoomlaUser extends JUser
 
 	/**
 	 * check permission for an action
+	 * @param $subject
 	 * @param string $action - e.g. edit
-	 * @param string $ownership - e.g. own, all or global
+	 * @param string $value
+	 * @param null $section
+	 * @internal param string $ownership - e.g. own, all or global
 	 * @return bool - true if authorized
 	 */
 	public function can( $subject, $action = 'access', $value = 'valid', $section = null )
 	{
-		$can = false;
 		if ( strstr( $subject, '.' ) ) {
 			$subject = explode( '.', $subject );
 			$action = $subject[ 1 ];
