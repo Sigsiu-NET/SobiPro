@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -50,7 +46,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 * While editing an field
 	 * When adding new field - second step
 	 */
-	private function edit()
+	protected function edit()
 	{
 		$fid = SPRequest::int( 'fid' );
 
@@ -99,32 +95,9 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		/*
 		 * 1.1 native - config and view in xml
 		 */
-		$nid = '/' . Sobi::Section( 'nid' ) . '/';
-		if ( SPLoader::translatePath( 'field.' . $field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
-			/** Case we have also override  */
-			/** section override */
-			if ( SPLoader::translatePath( 'field.' .$nid. $field->get( 'fieldType' ) , 'adm', true, 'xml' ) ) {
-				$view->loadDefinition( 'field.' . $field->get( 'fieldType' ) . $nid );
-			}
-			/** std override */
-			elseif ( SPLoader::translatePath( 'field.' . $field->get( 'fieldType' ) . '_override', 'adm', true, 'xml' ) ) {
-				$view->loadDefinition( 'field.' . $field->get( 'fieldType' ) . '_override' );
-			}
-			else {
-				$view->loadDefinition( 'field.' . $field->get( 'fieldType' ) );
-			}
-			if ( SPLoader::translatePath( 'field.templates.' . $field->get( 'fieldType' ) . '_override', 'adm' ) ) {
-				$view->setTemplate( 'field.templates.' . $field->get( 'fieldType' ) . '_override' );
-			}
-			elseif ( SPLoader::translatePath( 'field.templates.' . $field->get( 'fieldType' ) . $nid, 'adm' ) ) {
-				$view->setTemplate( 'field.templates.' . $field->get( 'fieldType' ) . $nid );
-			}
-			else {
-				$view->setTemplate( 'default' );
-			}
-		}
+
 		/** Legacy code */
-		else {
+		if ( !( $this->loadTemplate( $field, $view ) ) ) {
 			$view->assign( $helpTask, '_compatibility' );
 			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm', true, 'ini' ) ) {
 				$view->loadConfig( 'field.edit.' . $field->get( 'fieldType' ) );
@@ -136,6 +109,37 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			SPFactory::header()->addCssFile( 'adm.legacy' );
 		}
 		$view->display();
+	}
+
+	protected function loadTemplate( $field, $view )
+	{
+		$nid = '/' . Sobi::Section( 'nid' ) . '/';
+		$disableOverrides = array_intersect( Sobi::My( 'groups' ), Sobi::Cfg( 'templates.disable-overrides', array() ) );
+		if ( SPLoader::translatePath( 'field.' . $field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
+			/** Case we have also override  */
+			/** section override */
+			if ( !( $disableOverrides ) && SPLoader::translatePath( 'field.' . $nid . $field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
+				$view->loadDefinition( 'field.' . $nid . $field->get( 'fieldType' ) );
+			}
+			/** std override */
+			elseif ( SPLoader::translatePath( 'field.' . $field->get( 'fieldType' ) . '_override', 'adm', true, 'xml' ) ) {
+				$view->loadDefinition( 'field.' . $field->get( 'fieldType' ) . '_override' );
+			}
+			else {
+				$view->loadDefinition( 'field.' . $field->get( 'fieldType' ) );
+			}
+			if ( SPLoader::translatePath( 'field.templates.' . $field->get( 'fieldType' ) . '_override', 'adm' ) ) {
+				$view->setTemplate( 'field.templates.' . $field->get( 'fieldType' ) . '_override' );
+			}
+			elseif ( SPLoader::translatePath( 'field.templates.' . $nid . $field->get( 'fieldType' ), 'adm' ) ) {
+				$view->setTemplate( 'field.templates.' . $nid . $field->get( 'fieldType' ) );
+			}
+			else {
+				$view->setTemplate( 'default' );
+			}
+			return true;
+		}
+		return false;
 	}
 
 	private function getFieldGroup( $fType, $group = null )
@@ -246,20 +250,9 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			}
 		}
 		$view->assign( $f, 'filters' );
-		if ( SPLoader::translatePath( 'field.' . $this->_fieldType, 'adm', true, 'xml' ) ) {
-			/** Cae we have also override  */
-			if ( SPLoader::translatePath( 'field.' . $this->_fieldType . '_override', 'adm', true, 'xml' ) ) {
-				$view->loadDefinition( 'field.' . $this->_fieldType . '_override' );
-			}
-			else {
-				$view->loadDefinition( 'field.' . $this->_fieldType );
-			}
-			if ( SPLoader::translatePath( 'field.templates.' . $this->_fieldType . '_override', 'adm' ) ) {
-				$view->setTemplate( 'field.templates.' . $this->_fieldType . '_override' );
-			}
-			else {
-				$view->setTemplate( 'default' );
-			}
+
+		if ( $this->loadTemplate( $field, $view ) ) {
+			$view->display();
 		}
 		/** legacy */
 		elseif ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm' ) ) {
@@ -272,11 +265,12 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$view->setTemplate( 'field.edit.' . $this->_fieldType );
 			}
 			SPFactory::header()->addCSSCode( '#toolbar-box { display: block }' );
+			$view->display();
 		}
 		else {
 			Sobi::Error( $this->name(), SPLang::e( 'NO_FIELD_DEF' ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
-		$view->display();
+
 	}
 
 	protected function getFieldTypes()
