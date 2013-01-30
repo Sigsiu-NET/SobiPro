@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="https://xml.sigsiu.net/SobiPro/template.xsd">
-	<name>Default SobiPro Template</name>
+	<name>Default SobiPro Template V2</name>
 	<id>default_template</id>
 	<authorName>Sigrid Suski and Radek Suski</authorName>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
