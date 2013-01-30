@@ -72,7 +72,7 @@ Legend:
    (!) No default filter for fields title, contact and city in demo data
    (!) CSS and Javascript cache now separate settings
    (!) single .htaccess files removed, global file added
-   (!) Default Template now using Bootstrap; several improvements
+   (!) Default Template now using Bootstrap; several improvements; new name
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
