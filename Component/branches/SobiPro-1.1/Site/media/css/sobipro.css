@@ -24,6 +24,11 @@
 .SobiPro .clearall {
   clear: both;
 }
+.SobiPro div.modal {
+  width: 520px;
+  margin: -250px 0 0 -280px;
+  top: 50%;
+}
 .SobiPro .popover-inner .spclose {
   padding-right: 8px;
   padding-top: 5px;
