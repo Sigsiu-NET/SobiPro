@@ -61,6 +61,6 @@ class SPCmsInstaller extends SPJoomlaInstaller
 			$def = new DOMDocument();
 			$def->load( $dir . '/temp.xml' );
 		}
-		parent::installExt( $def, $dir );
+		return parent::installExt( $def, $dir );
 	}
 }
