@@ -26,7 +26,7 @@
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:include href="list.xsl" />
 	<xsl:template match="/payment_details">
-		<div class="modal hide">
+		<div class="modal">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
 				<h4>
