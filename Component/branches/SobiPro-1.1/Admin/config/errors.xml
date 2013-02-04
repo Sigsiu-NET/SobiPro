@@ -53,12 +53,12 @@
 				<!--<header label="ERR.SITE_TITLE" icon="SobiFieldList" />-->
 				<table condition="errors.length">
 					<head>
-						<cell label="ERR.ERROR_INFO" type="text" class="SpCellCenter" />
+						<cell label="ERR.ERROR_INFO" type="text" class="SpCellCenterSmall" />
 						<cell />
 						<cell label="ERR.ERROR_DETAILS" type="text" class="SpCellCenter" />
 					</head>
 					<loop subject="errors">
-						<cell type="text" value="errNum" class="SpCellCenter" />
+						<cell type="text" value="errNum" class="SpCellCenterSmall" />
 						<cell>
 							<cell type="text" value="errMsg" />
 							<cell label="ERR.ERROR_DATE" type="text" value="date" class="SpCellPair" />
