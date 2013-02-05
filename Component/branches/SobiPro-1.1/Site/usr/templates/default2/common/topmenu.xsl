@@ -46,6 +46,14 @@
 							</a>
 						</li>
 					</xsl:if>
+                    <xsl:if test="//menu/search">
+                        <li>
+                            <a href="{//menu/search/@url}">
+                                <i class="icon-search"></i><xsl:text> </xsl:text>
+                                <xsl:value-of select="//menu/search" />
+                            </a>
+                        </li>
+                    </xsl:if>
 				</ul>
 				<xsl:if test="//menu/search and $searchbox = 'true'">
 					<form class="navbar-search pull-right">
