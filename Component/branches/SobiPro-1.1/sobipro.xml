@@ -41,6 +41,7 @@
 	</install>
 	<languages>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.ini</language>
+		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.sys.ini</language>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.js.ini</language>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.err.ini</language>
 	</languages>

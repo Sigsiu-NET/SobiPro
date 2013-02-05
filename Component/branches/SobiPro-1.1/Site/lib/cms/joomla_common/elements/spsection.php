@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -22,10 +18,118 @@
  */
 
 defined( '_JEXEC' ) or die();
+
+if ( !( class_exists( 'JElement' ) ) ) {
+	/**
+	 * @version        $Id$
+	 * @package        Joomla.Framework
+	 * @subpackage    Parameter
+	 * @copyright    Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.
+	 * @license        GNU/GPL, see LICENSE.php
+	 * Joomla! is free software. This version may have been modified pursuant
+	 * to the GNU General Public License, and as distributed it includes or
+	 * is derivative of works licensed under the GNU General Public License or
+	 * other free or open source software licenses.
+	 * See COPYRIGHT.php for copyright notices and details.
+	 */
+
+// Check to ensure this file is within the rest of the framework
+	defined( 'JPATH_BASE' ) or die();
+
+	/**
+	 * Parameter base class
+	 *
+	 * The JElement is the base class for all JElement types
+	 *
+	 * @abstract
+	 * @package     Joomla.Framework
+	 * @subpackage        Parameter
+	 * @since        1.5
+	 */
+	class JElement extends JObject
+	{
+		/**
+		 * element name
+		 *
+		 * This has to be set in the final
+		 * renderer classes.
+		 *
+		 * @access    protected
+		 * @var        string
+		 */
+		var $_name = null;
+
+		/**
+		 * reference to the object that instantiated the element
+		 *
+		 * @access    protected
+		 * @var        object
+		 */
+		var $_parent = null;
+
+		/**
+		 * Constructor
+		 *
+		 * @access protected
+		 */
+		function __construct( $parent = null )
+		{
+			$this->_parent = $parent;
+		}
+
+		/**
+		 * get the element name
+		 *
+		 * @access    public
+		 * @return    string    type of the parameter
+		 */
+		function getName()
+		{
+			return $this->_name;
+		}
+
+		function render( &$xmlElement, $value, $control_name = 'params' )
+		{
+			$name = $xmlElement->attributes( 'name' );
+			$label = $xmlElement->attributes( 'label' );
+			$descr = $xmlElement->attributes( 'description' );
+			//make sure we have a valid label
+			$label = $label ? $label : $name;
+			$result[ 0 ] = $this->fetchTooltip( $label, $descr, $xmlElement, $control_name, $name );
+			$result[ 1 ] = $this->fetchElement( $name, $value, $xmlElement, $control_name );
+			$result[ 2 ] = $descr;
+			$result[ 3 ] = $label;
+			$result[ 4 ] = $value;
+			$result[ 5 ] = $name;
+
+			return $result;
+		}
+
+		function fetchTooltip( $label, $description, &$xmlElement, $control_name = '', $name = '' )
+		{
+			$output = '<label id="' . $control_name . $name . '-lbl" for="' . $control_name . $name . '"';
+			if ( $description ) {
+				$output .= ' class="hasTip" title="' . JText::_( $label ) . '::' . JText::_( $description ) . '">';
+			}
+			else {
+				$output .= '>';
+			}
+			$output .= JText::_( $label ) . '</label>';
+
+			return $output;
+		}
+
+		function fetchElement( $name, $value, &$xmlElement, $control_name )
+		{
+			return;
+		}
+	}
+}
+
 if ( !( defined( 'SOBI_CMS' ) ) ) {
 	define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
 }
-class JElementSPSection /*extends JElement*/
+class JElementSPSection extends JElement
 {
 	protected $task = null;
 	protected $taskName = null;
@@ -69,6 +173,7 @@ class JElementSPSection /*extends JElement*/
 		$adm = str_replace( JPATH_ROOT, null, JPATH_ADMINISTRATOR );
 		define( 'SOBI_ADM_FOLDER', $adm );
 		define( 'SOBI_ADM_LIVE_PATH', $adm . '/components/com_sobipro' );
+		SPLang::load( 'com_sobipro.sys' );
 
 		$head = SPFactory::header();
 		if ( SOBI_CMS == 'joomla3' ) {
@@ -108,7 +213,7 @@ class JElementSPSection /*extends JElement*/
 				->addJsFile( 'bootstrap.typeahead' )
 				->addJsCode( "var SPJmenuStrings = {$strings}" );
 		$head->send();
-//		parent::__construct();
+		parent::__construct();
 		$loaded = true;
 	}
 
@@ -133,18 +238,18 @@ class JElementSPSection /*extends JElement*/
 
 	protected function getLink()
 	{
+		$link = null;
 		if ( SOBI_CMS == 'joomla3' ) {
 			$model = JModelLegacy::getInstance( 'MenusModelItem' )
 					->getItem();
 			$link = $model->link;
-			return $link;
 		}
 		else {
 			$link = JModel::getInstance( 'MenusModelItem' )
 					->getItem()
 					->get( 'link' );
-			return $link;
 		}
+		return str_replace( 'amp;', null, $link );
 	}
 
 	public function fetchTooltip( $label, $description, &$node, $control_name, $name )
@@ -377,7 +482,7 @@ class JElementSPSection /*extends JElement*/
 			$this->oTypeName = Sobi::Txt( 'TASK_' . strtoupper( $this->task ) );
 			$this->oType = $this->task;
 		}
-		elseif ( $this->oType ) {
+		else {
 			$this->oType = SPFactory::db()
 					->select( 'oType', 'spdb_object', array( 'id' => $sid ) )
 					->loadResult();
