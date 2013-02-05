@@ -52,7 +52,7 @@
 									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" />
 									<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
 									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
-									<field type="texxtarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 								<fieldset label="FM.SEL.LIST_OPTIONS">
 									<field type="fileUpload" name="spfieldsopts" label="FM.UPLOAD_OPT_FILE" />

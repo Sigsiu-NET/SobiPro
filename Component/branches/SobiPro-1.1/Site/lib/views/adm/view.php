@@ -1163,7 +1163,7 @@ class SPAdmView extends SPObject implements SPView
 					$element[ 'content' ] = call_user_func_array( array( 'SPHtml_input', $args[ 'type' ] ), $methodArgs );
 				}
 				else {
-					Sobi::Error( $this->name(), SPLang::e( 'METHOD_DOES_NOT_EXISTS', $params[ 0 ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
+					Sobi::Error( $this->name(), SPLang::e( 'METHOD_DOES_NOT_EXISTS', $args[ 'type' ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
 				break;
 		}
