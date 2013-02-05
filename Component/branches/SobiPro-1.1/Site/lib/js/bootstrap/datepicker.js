@@ -349,8 +349,12 @@
 				}
 				/** no questions here */
 //				if ( prevMonth.getDay() == currentDate ) {
-				if ( ( prevMonth.getDay() == this.date.getDay() ) && ( prevMonth.getWeek() == this.date.getWeek() ) ) {
-					clsName += ' active';
+				try {
+					if ( ( prevMonth.getDay() == this.date.getDay() ) && ( prevMonth.getWeek() == this.date.getWeek() ) ) {
+						clsName += ' active';
+					}
+				}
+				catch ( e ) {
 				}
 				if ( prevMonth.valueOf() < this.startDate || prevMonth.valueOf() > this.endDate ) {
 					clsName += ' disabled';
