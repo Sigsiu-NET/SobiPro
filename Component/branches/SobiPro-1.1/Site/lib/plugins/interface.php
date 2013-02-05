@@ -180,6 +180,7 @@ final class SPPlugins
                 }
             }
         }
+//	    SPConfig::debOut( $action, true, false, true );
         unset( $actions[ $count ] );
         $count--;
         return true;

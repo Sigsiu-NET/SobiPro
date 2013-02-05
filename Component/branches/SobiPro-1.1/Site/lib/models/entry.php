@@ -533,8 +533,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		$db = SPFactory::db();
 		$db->transaction();
 
-		if ( !$this->nid || SPRequest::task() == 'entry.clone' ) {
-//			$this->nid = SPRequest::string( $this->nameField, null, false, $request );
+		if ( !( $this->nid ) || SPRequest::task() == 'entry.clone' ) {
 			$this->nid = $this->createAlias();
 			$this->name = $this->nid;
 		}
@@ -566,23 +565,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 				}
 			} catch ( SPException $x ) {
 				if ( SPRequest::task() != 'entry.clone' ) {
-					/**
-					 * @todo
-					 *  - need to save these data in cache and relocate user back to the edit form
-					 *  - what do we do with the already saved data if it was new entry ??
-					 *  - what if the user breaks the submission
-					 **/
 					$db->rollback();
 					throw new SPException( SPLang::e( 'CANNOT_SAVE_FIELS_DATA', $x->getMessage() ) );
-					// @todo: it should goes to the controller
-					Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_FIELS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-					Sobi::Redirect(
-						Sobi::GetUserState( 'back_url', Sobi::Url( array( 'task' => 'entry.add', 'sid' => Sobi::Section() ) ) ),
-						SPLang::e( 'CANNOT_SAVE_FIELS_DATA', $x->getMessage() ),
-						SPC::ERROR_MSG,
-						true
-					);
-					exit();
 				}
 				else {
 					Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_FIELS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );

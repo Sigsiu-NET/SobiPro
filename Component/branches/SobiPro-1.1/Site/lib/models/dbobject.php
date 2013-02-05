@@ -502,18 +502,23 @@ abstract class SPDBObject extends SPObject
 
 		/* if new object */
 		if ( !$this->id ) {
-			$this->createdTime = $this->createdTime ? $this->createdTime : $this->updatedTime;
+			/** @var the notification App is using it to recognise if it is a new entry or an update */
+			$this->createdTime = /*$this->createdTime ? $this->createdTime :*/ $this->updatedTime;
 			$this->owner = $this->owner ? $this->owner : $this->updater;
 			$this->ownerIP = $this->updaterIP;
 		}
+
 		/* just a security check to avoid mistakes */
 		else {
+			$this->createdTime = $this->createdTime ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->createdTime ) : null;
 			$obj = SPFactory::object( $this->id );
 			if ( $obj->oType != $this->oType ) {
 				Sobi::Error( 'Object Save', sprintf( 'Serious security violation. Trying to save an object which claims to be an %s but it is a %s. Task was %s', $this->oType, $obj->oType, SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 				exit;
 			}
 		}
+		$this->validUntil = $this->validUntil ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validUntil ) : null;
+		$this->validSince = $this->validSince ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validSince ) : null;
 
 		/* @var SPdb $db */
 		$db = SPFactory::db();
@@ -532,10 +537,6 @@ abstract class SPDBObject extends SPObject
 		if ( !( $this->state ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			$this->state = Sobi::Can( $this->type(), 'publish', 'own' );
 		}
-
-		$this->validSince = $this->validSince ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validSince ) : null;
-		$this->createdTime = $this->createdTime ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->createdTime ) : null;
-		$this->validUntil = $this->validUntil ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validUntil ) : null;
 
 		/* and sort the properties in the same order */
 		foreach ( $cols as $col ) {
