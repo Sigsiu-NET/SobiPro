@@ -44,14 +44,14 @@
         <div class="row-fluid entry-container">
             <div class="span12">
                 <xsl:for-each select="entries/entry">
-                    <xsl:if test="$entriesInLine > 1 and ( position() = 1 or ( position() mod $entriesInLine ) = 1 )">
+                    <xsl:if test="($entriesInLine > 1 and (position() = 1 or (position() mod $entriesInLine) = 1 )) or $entriesInLine = 1">
                         <!-- opening the "table" row -->
                         <xsl:text disable-output-escaping="yes">&lt;div class="row-fluid" &gt;</xsl:text>
                     </xsl:if>
                     <div class="span{$cellClass} thumbnail">
                         <xsl:call-template name="vcard" />
                     </div>
-                    <xsl:if test="$entriesInLine > 1 and ( ( position() mod $entriesInLine ) = 0 or position() = $entriesCount )">
+                    <xsl:if test="($entriesInLine > 1 and ((position() mod $entriesInLine) = 0 or position() = $entriesCount)) or $entriesInLine = 1">
                         <!-- closing the "table" row -->
                         <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                     </xsl:if>

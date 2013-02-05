@@ -28,8 +28,8 @@
 	<xsl:template name="manage">
 		<xsl:if test="entry/approve_url or entry/edit_url or entry/publish_url">
 			<div class="btn-group pull-left">
-				<a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
-					<i class="icon-cog"></i>
+				<a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
+					<i class="icon-edit"></i>
 				</a>
 				<ul class="dropdown-menu">
 					<xsl:if test="entry/publish_url">

@@ -44,14 +44,14 @@
         <div class="row-fluid category-container">
             <div class="span12">
                 <xsl:for-each select="categories/category">
-                    <xsl:if test="$catsInLine > 1 and ( position() = 1 or ( position() mod $catsInLine ) = 1 )">
+                    <xsl:if test="($catsInLine > 1 and (position() = 1 or (position() mod $catsInLine) = 1)) or $catsInLine = 1">
                         <!-- opening the "table" row -->
                         <xsl:text disable-output-escaping="yes">&lt;div class="row-fluid" &gt;</xsl:text>
                     </xsl:if>
                     <div class="span{$cellClass} thumbcat">
                         <xsl:call-template name="category" />
                     </div>
-                    <xsl:if test="$catsInLine > 1 and ( ( position() mod $catsInLine ) = 0 or position() = $catsCount )">
+                    <xsl:if test="($catsInLine > 1 and ((position() mod $catsInLine) = 0 or position() = $catsCount))  or $catsInLine = 1">
                         <!-- closing the "table" row -->
                         <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                     </xsl:if>
