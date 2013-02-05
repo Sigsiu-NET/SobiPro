@@ -98,25 +98,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 		/* initial org settings */
 		/* @var SPdb $db */
 		$db	= SPFactory::db();
-		/* check nid */
-		$c = 1;
-		while ( $c ) {
-			/* category name id in section has to be unique */
-			try {
-				$cond = array( 'oType' => 'category', 'nid' => $this->nid, 'parent' => $this->parent );
-				if( $this->id ) {
-					$cond[ '!id' ] = $this->id;
-				}
-				$db->select( 'COUNT( nid )', 'spdb_object', $cond );
-				$c = $db->loadResult();
-				if( $c > 0 ) {
-					$this->nid = $this->nid.'_'.rand( 0, 1000 );
-				}
-			}
-			catch ( SPException $x ) {
-				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_CATEGORY_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
-			}
-		}
+		$this->nid = $this->createAlias();
 
 		$db->transaction();
 		parent::save();

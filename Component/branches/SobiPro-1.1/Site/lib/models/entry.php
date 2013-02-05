@@ -534,7 +534,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 		$db->transaction();
 
 		if ( !$this->nid || SPRequest::task() == 'entry.clone' ) {
-			$this->nid = SPRequest::string( $this->nameField, null, false, $request );
+//			$this->nid = SPRequest::string( $this->nameField, null, false, $request );
+			$this->nid = $this->createAlias();
 			$this->name = $this->nid;
 		}
 		if ( Sobi::Cfg( 'entry.publish_limit', 0 ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
