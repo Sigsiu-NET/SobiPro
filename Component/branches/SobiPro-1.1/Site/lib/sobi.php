@@ -211,7 +211,7 @@ abstract class Sobi
 	}
 
 	/**
-	 * Trigger plugn action: Sobi::Trigger( 'LoadField', 'Search', array( &$fields ) );
+	 * Trigger plugin action: Sobi::Trigger( 'LoadField', 'Search', array( &$fields ) );
 	 * @param string $action - action to trigger
 	 * @param string $subject - subject of this action: e.g. entry, category, search etc
 	 * @param array $params - parameters to pass to the plugin
