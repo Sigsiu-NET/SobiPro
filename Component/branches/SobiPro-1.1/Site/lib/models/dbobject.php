@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -204,7 +200,7 @@ abstract class SPDBObject extends SPObject
 	private static $translatable = array( 'name', 'metaKeys', 'metaDesc' );
 
 	/**
-	 * @return bool
+	 * @return \SPDBObject
 	 */
 	public function __construct()
 	{
@@ -304,6 +300,8 @@ abstract class SPDBObject extends SPObject
 	/**
 	 * @param string $type
 	 * @param bool $recursive
+	 * @param int $state
+	 * @param bool $name
 	 * @return array
 	 */
 	public function getChilds( $type = 'entry', $recursive = false, $state = 0, $name = false )
@@ -399,8 +397,27 @@ abstract class SPDBObject extends SPObject
 
 	/**
 	 */
-	protected function getFullPath()
+	protected function createAlias()
 	{
+		/* check nid */
+		$c = 1;
+		static $add = 0;
+		$suffix = null;
+		while ( $c ) {
+			try {
+				$condition = array( 'oType' => $this->oType, 'nid' => $this->nid . $suffix );
+				if ( $this->id ) {
+					$condition[ '!id' ] = $this->id;
+				}
+				$c = SPFactory::db()
+						->select( 'COUNT( nid )', 'spdb_object', $condition )
+						->loadResult();
+				if ( $c > 0 ) {
+					$suffix = '_' . ++ $add;
+				}
+			} catch ( SPException $x ) {}
+		}
+		return $this->nid . $suffix;
 	}
 
 	/**
