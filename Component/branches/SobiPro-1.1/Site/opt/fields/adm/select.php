@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -31,11 +27,6 @@ SPLoader::loadClass( 'opt.fields.select' );
  */
 class SPField_SelectAdm extends SPField_Select
 {
-	/**
-	 * @var string
-	 */
-	public $cssClass = '';
-
 	public function save( &$attr )
 	{
 		static $lang = null;
@@ -46,11 +37,12 @@ class SPField_SelectAdm extends SPField_Select
 		}
 		$file = SPRequest::file( 'spfieldsopts', 'tmp_name' );
 		if ( $file ) {
-			$options = $this->parseOptsFile( parse_ini_file( $file, true ) );
+			$data = parse_ini_file( $file, true );
 		}
 		else {
-			$options = $this->parseOptsFile( parse_ini_string( $attr[ 'options' ], true ) );
+			$data = parse_ini_string( $attr[ 'options' ], true );
 		}
+		$options = $this->parseOptsFile( $data );
 		if ( count( $options ) ) {
 			unset( $attr[ 'options' ] );
 			$optionsArr = array();
@@ -109,6 +101,8 @@ class SPField_SelectAdm extends SPField_Select
 			}
 		}
 		$attr[ 'params' ] = $properties;
+		$this->sets[ 'field.options' ] = SPFactory::Instance( 'types.array' )
+				->toINIString( $data );
 	}
 
 	public function delete()

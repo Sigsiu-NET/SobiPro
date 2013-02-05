@@ -88,7 +88,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			$e = $this->_model->getChilds();
 			$c = $this->_model->getChilds( 'category' );
 		}
-		/** yes - this is needed. In case we have entries withou data in the name field */
+		/** yes - this is needed. In case we have entries without data in the name field */
 		elseif ( !( $term && $allEntries ) ) {
 			$c = $this->_model->getChilds( 'category', true );
 			$c[ ] = Sobi::Section();

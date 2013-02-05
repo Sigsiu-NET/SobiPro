@@ -38,7 +38,6 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 
 	public function save( &$attr )
 	{
-		$options = array();
 		static $lang = null;
 		static $defLang = null;
 		if( !( $lang ) ) {
@@ -47,11 +46,13 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 		}
 		$file = SPRequest::file( 'spfieldsopts', 'tmp_name' );
 		if ( $file ) {
-			$options = $this->parseOptsFile( parse_ini_file( $file, true ) );
+			$data = parse_ini_file( $file, true );
 		}
 		else {
-			$options = $this->parseOptsFile( parse_ini_string( $attr[ 'options' ], true ) );
+			$data = parse_ini_string( $attr[ 'options' ], true );
 		}
+		$options = $this->parseOptsFile( $data );
+
 		if ( count( $options ) ) {
 			unset( $attr[ 'options' ] );
 		}
@@ -104,7 +105,7 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 				$optsIds[] = $option[ 'id' ];
 			}
 			/* @var SPdb $db */
-			$db =& SPFactory::db();
+			$db = SPFactory::db();
 
 			/* try to delete the existing labels */
 			try {
@@ -137,5 +138,7 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 			}
 		}
 		$attr[ 'params' ] = $properties;
+		$this->sets[ 'field.options' ] = SPFactory::Instance( 'types.array' )
+				->toINIString( $data );
 	}
 }

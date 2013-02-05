@@ -56,7 +56,7 @@
 								</fieldset>
 
 								<fieldset label="FM.SEL.LIST_OPTIONS">
-									<field type="file" name="spfieldsopts" label="FM.UPLOAD_OPT_FILE" />
+									<field type="fileUpload" name="spfieldsopts" label="FM.UPLOAD_OPT_FILE" />
 									<!-- Upload INI File -->
 									<field type="textarea" name="field.options" value="options" label="FMN.OPTIONS" editor="false" class="input-splarge" rows="20" style="" />
 									<!-- List Options -->

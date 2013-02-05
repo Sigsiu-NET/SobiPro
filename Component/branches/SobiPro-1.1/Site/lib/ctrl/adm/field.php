@@ -418,7 +418,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$this->getRequest();
 		$this->validate( $field );
 		/* in case we are changing the sort by field */
-		$onid = $field->get( 'nid' );
+		$alias = $field->get( 'nid' );
 
 		if ( $clone || !( $fid ) ) {
 			try {
@@ -429,12 +429,16 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			}
 		}
 		else {
-			$field->save( $this->attr, $sets );
+			$field->save( $this->attr );
+		}
+		$fieldSets = $field->get( 'sets' );
+		if ( is_array( $fieldSets ) && count( $fieldSets ) ) {
+			$sets = array_merge( $fieldSets, $sets );
 		}
 		$sets[ 'fid' ] = $field->get( 'fid' );
-		$sets[ 'field.nid' ] = $onid;
+		$sets[ 'field.nid' ] = $alias;
 		/* in case we are changing the sort by field */
-		if ( Sobi::Cfg( 'list.entries_ordering' ) == $onid && $field->get( 'nid' ) != $onid ) {
+		if ( Sobi::Cfg( 'list.entries_ordering' ) == $alias && $field->get( 'nid' ) != $alias ) {
 			SPFactory::config()->saveCfg( 'list.entries_ordering', $field->get( 'nid' ) );
 		}
 

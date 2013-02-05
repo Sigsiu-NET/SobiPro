@@ -56,6 +56,8 @@ class SPFieldType extends SPObject
 	protected $cssClass = "inputbox";
 	/** @var bool */
 	protected $showLabel = true;
+	/** @var array */
+	protected $sets = array();
 
 
 	public function __construct( &$field )

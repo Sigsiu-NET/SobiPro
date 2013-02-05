@@ -42,11 +42,13 @@ class SPField_RadioAdm extends SPField_Radio
 		}
 		$file = SPRequest::file( 'spfieldsopts', 'tmp_name' );
 		if ( $file ) {
-			$options = $this->parseOptsFile( parse_ini_file( $file, true ) );
+			$data = parse_ini_file( $file, true );
 		}
 		else {
-			$options = $this->parseOptsFile( parse_ini_string( $attr[ 'options' ], true ) );
+			$data = parse_ini_string( $attr[ 'options' ], true );
 		}
+		$options = $this->parseOptsFile( $data );
+
 		if ( count( $options ) ) {
 			unset( $attr[ 'options' ] );
 		}
@@ -112,5 +114,7 @@ class SPField_RadioAdm extends SPField_Radio
 			}
 		}
 		$attr[ 'params' ] = $properties;
+		$this->sets[ 'field.options' ] = SPFactory::Instance( 'types.array' )
+				->toINIString( $data );
 	}
 }
