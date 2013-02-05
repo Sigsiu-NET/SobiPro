@@ -55,6 +55,9 @@
 .SobiPro .btn .caret {
   margin-bottom: 9px;
 }
+.SobiPro .SPEntryEdit .required {
+  border-color: #7ac6ff;
+}
 .SobiPro div#sobiProFooter,
 .SobiPro div#sobiProFooter a {
   color: #999999;
@@ -70,6 +73,16 @@
 }
 .SobiPro .alphalist .dropdown-menu {
   text-align: left;
+}
+.SobiPro table.payment td {
+  line-height: 10px;
+}
+.SobiPro table tr.summary td {
+  background-color: #ffffff;
+  padding-top: 25px;
+}
+.SobiPro table tr.sum td {
+  font-weight: bold;
 }
 .SPSearchSelectRangeTo,
 .SPSearchSelectRangeFrom {

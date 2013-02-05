@@ -1042,7 +1042,7 @@ INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language
 ('name', 'Street', NULL, 'en-GB', 'field', 14, 0, NULL, NULL, NULL),
 ('name', 'Category', NULL, 'en-GB', 'field', 15, 0, NULL, NULL, NULL),
 ('bankdata', '<p>Payment Subject: "Entry in the {section.name} at the {cfg:site_name}. Entry id {entry.id}"</p>\r\n<ul>\r\n<li>Account Owner: Jon Doe </li>\r\n<li>Account No.: 8274230479 </li>\r\n<li>Bank No.: 8038012380 </li>\r\n<li>IBAN: 234242343018 </li>\r\n<li>BIC: 07979079779ABCDEFGH</li>\r\n</ul>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
-('ppexpl', '<p>Please consider that if you are going to pay via Paypal using the payment method "eCheck", the payment remains open until the money has been transferred from your bank account to our Paypal account, which usually takes 4-12 business days (depending on your country).</p>\r\n<p> </p>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
+('ppexpl', '<p>Please click on the button below to pay via Paypal.</p>\r\n<p> </p>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
 ('ppsubject', 'Entry in the {section.name} at the {cfg:site_name}. Entry id {entry.id}', 1, 'en-GB', 'application', 0, 1, '', '', '');
 
 

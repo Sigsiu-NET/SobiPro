@@ -25,7 +25,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:template name="paymentTable">
-		<table class="table table-striped">
+		<table class="table table-striped payment">
 			<thead>
 				<tr>
 					<td>#</td>
@@ -65,13 +65,13 @@
 						</td>
 					</tr>
 				</xsl:for-each>
-				<tr class="info">
+				<tr class="summary">
 					<td colspan="4">
 						<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_SUMMARY' )" />:
 					</td>
 				</tr>
-				<tr>
-					<td colspan="2">
+				<tr class="info">
+					<td colspan="3">
 						<div class="pull-right">
 							<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_NET' )" />
 						</div>
@@ -81,10 +81,9 @@
 							<xsl:value-of select="summary/@sum_netto" />
 						</div>
 					</td>
-					<td/>
 				</tr>
 				<tr>
-					<td colspan="2">
+					<td colspan="3">
 						<div class="pull-right">
 							<xsl:value-of select="php:function( 'SobiPro::Txt', 'VAT' )" />
 							(<xsl:value-of select="summary/@vat" />)
@@ -95,10 +94,9 @@
 							<xsl:value-of select="summary/@sum_vat" />
 						</div>
 					</td>
-					<td/>
 				</tr>
-				<tr class="success">
-					<td colspan="2">
+				<tr class="success sum">
+					<td colspan="3">
 						<div class="pull-right">
 							<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_GROSS' )" />
 						</div>
@@ -108,7 +106,6 @@
 							<xsl:value-of select="summary/@sum_brutto" />
 						</div>
 					</td>
-					<td/>
 				</tr>
 			</tbody>
 		</table>
