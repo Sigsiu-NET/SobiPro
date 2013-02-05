@@ -26,23 +26,24 @@
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:include href="list.xsl" />
 	<xsl:template match="/payment_details">
-		<div class="modal">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-				<h4>
-					<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_CHOSEN_FOLLOWING_OPTIONS' )" />
-				</h4>
-			</div>
-			<div class="modal-body">
-				<xsl:call-template name="paymentTable" />
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal">
-					<xsl:value-of select="php:function( 'SobiPro::Txt', 'EN.PAYMENT_BACK_BT' )" />
-				</a>
-				<a href="{/payment_details/save_url}" class="btn btn-primary">
-					<xsl:value-of select="php:function( 'SobiPro::Txt', 'EN.PAYMENT_SAVE_ENTRY_BT' )" />
-				</a>
+		<div id="SpPaymentModal">
+			<div class="modal hide">
+				<div class="modal-header">
+					<h4>
+						<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_CHOSEN_FOLLOWING_OPTIONS' )" />
+					</h4>
+				</div>
+				<div class="modal-body">
+					<xsl:call-template name="paymentTable" />
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn back" data-dismiss="modal">
+						<xsl:value-of select="php:function( 'SobiPro::Txt', 'EN.PAYMENT_BACK_BT' )" />
+					</a>
+					<a href="{/payment_details/save_url}" class="btn btn-primary">
+						<xsl:value-of select="php:function( 'SobiPro::Txt', 'EN.PAYMENT_SAVE_ENTRY_BT' )" />
+					</a>
+				</div>
 			</div>
 		</div>
 	</xsl:template>

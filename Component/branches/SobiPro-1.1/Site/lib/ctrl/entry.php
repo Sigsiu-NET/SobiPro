@@ -312,7 +312,7 @@ class SPEntryCtrl extends SPController
 		if ( SPRequest::cmd( 'method', null, 'post' ) == 'xhr' ) {
 			$view->display();
 			$response = ob_get_contents();
-			$response = str_replace( 'id="SobiPro"', 'id="SpPaymentModal"', $response );
+//			$response = str_replace( 'id="SobiPro"', 'id="SpPaymentModal"', $response );
 			$this->response( Sobi::Back(), $response, false, SPC::INFO_MSG );
 		}
 		else {

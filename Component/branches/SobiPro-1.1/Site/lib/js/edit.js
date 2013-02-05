@@ -106,6 +106,11 @@ SobiPro.jQuery( document ).ready( function ()
 						else if ( response.message.type == 'info' ) {
 							SobiPro.jQuery( response.message.text ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
 							var modal = SobiPro.jQuery( '#SpPaymentModal' ).find( '.modal' ).modal();
+//							SobiPro.DebOut(SobiPro.jQuery( '#SpPaymentModal' ).find( '.back' ));
+//							SobiPro.jQuery( '#SpPaymentModal' ).find( '.back' ).click( function() {
+//								alert( 'here')
+//								modal.modal( 'hide' );
+//							} );
 							modal.on( 'hidden', function ()
 							{
 								SobiPro.jQuery( '#SpPaymentModal' ).remove();
