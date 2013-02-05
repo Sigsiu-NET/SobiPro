@@ -158,7 +158,7 @@ final class SPAdmField extends SPField
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 
-		/* save language dependend properties */
+		/* save language dependent properties */
 		$labels = array();
 		$defLabels = array();
 		$labels[ ] = array( 'sKey' => 'name', 'sValue' => $base[ 'name' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );

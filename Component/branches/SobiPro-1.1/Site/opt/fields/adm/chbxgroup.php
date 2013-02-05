@@ -44,11 +44,13 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 		}
 		$file = SPRequest::file( 'spfieldsopts', 'tmp_name' );
 		if ( $file ) {
-			$options = $this->parseOptsFile( parse_ini_file( $file, false ) );
+			$data = parse_ini_file( $file, true );
 		}
 		else {
-			$options = $this->parseOptsFile( parse_ini_string( $attr[ 'options' ], false ) );
+			$data = parse_ini_string( $attr[ 'options' ], true );
 		}
+		$options = $this->parseOptsFile( $data );
+
 		if ( count( $options ) ) {
 			unset( $attr[ 'options' ] );
 			$optionsArr = array();
@@ -103,5 +105,7 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 			}
 		}
 		$attr[ 'params' ] = $properties;
+		$this->sets[ 'field.options' ] = SPFactory::Instance( 'types.array' )
+				->toINIString( $data );
 	}
 }
