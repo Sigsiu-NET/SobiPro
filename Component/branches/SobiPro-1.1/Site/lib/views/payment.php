@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -54,25 +50,25 @@ class SPPaymentView extends SPFrontView implements SPView
 		$this->_type = 'payment_details';
 		$id = $this->get( 'entry' )->get( 'id' );
 		$data = $this->get( 'pdata' );
-		if( !( $data ) ) {
+		if ( !( $data ) ) {
 			$data = SPFactory::payment()->summary( $id );
 		}
 		$positions = array();
 		$xml = array();
 		$this->menu( $xml );
-		if( count( $data[ 'positions' ] ) ) {
+		if ( count( $data[ 'positions' ] ) ) {
 			foreach ( $data[ 'positions' ] as $position ) {
 				$ref = $position[ 'reference' ];
 				unset( $position[ 'reference' ] );
-				$positions[] = array(
-						'_complex' => 1,
-						'_data' => $ref,
-						'_attributes' => $position
+				$positions[ ] = array(
+					'_complex' => 1,
+					'_data' => $ref,
+					'_attributes' => $position
 				);
 			}
 			$xml[ 'positions' ] = $positions;
 		}
-		if( isset( $data[ 'discount' ] ) && count( $data[ 'discount' ] ) ) {
+		if ( isset( $data[ 'discount' ] ) && count( $data[ 'discount' ] ) ) {
 			$xml[ 'discount' ] = array(
 				'_complex' => 1,
 				'_attributes' => $data[ 'discount' ]
@@ -89,26 +85,26 @@ class SPPaymentView extends SPFrontView implements SPView
 	private function save()
 	{
 		$data = $this->get( 'pdata' );
-		if( !( $data ) ) {
+		if ( !( $data ) ) {
 			$data = SPFactory::payment()->summary();
 		}
 		$methods = SPFactory::payment()->getMethods( $this->get( 'entry' ), $data );
 		$visitor = $this->get( 'visitor' );
 		$xml = $this->payment();
-		if( count( $methods ) ) {
+		if ( count( $methods ) ) {
 			$xml[ 'payment_methods' ] = array();
-			foreach( $methods as $mid => $mout ) {
+			foreach ( $methods as $mid => $mout ) {
 				$params = array();
-				if( is_array( $mout ) ) {
+				if ( is_array( $mout ) ) {
 					$params = $mout;
 					$mout = $mout[ 'content' ];
 					unset( $params[ 'content' ] );
 				}
 				$xml[ 'payment_methods' ][ $mid ] = array(
-						'_complex' => 1,
-						'_xml' => 1,
-						'_data' => $mout,
-						'_attributes' => $params
+					'_complex' => 1,
+					'_xml' => 1,
+					'_data' => $mout,
+					'_attributes' => $params
 				);
 			}
 		}
@@ -122,58 +118,58 @@ class SPPaymentView extends SPFrontView implements SPView
 		$xml = $this->payment();
 		$visitor = $this->get( 'visitor' );
 		$id = $this->get( 'entry' )->get( 'id' );
-		SPLoader::loadClass( 'mlo.input');
-		if( $id ) {
-			$saveUrl = Sobi::Url( array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $id ) );
+		SPLoader::loadClass( 'mlo.input' );
+		if ( $id ) {
+			$saveUrl = Sobi::Url( array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $id ), false, false );
 			$backUrl = Sobi::Url( array( 'task' => 'entry.edit', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $id ) );
 		}
 		else {
-			$saveUrl = Sobi::Url( array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ) ) );
+			$saveUrl = Sobi::Url( array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ) ), false, false );
 			$backUrl = Sobi::Url( array( 'task' => 'entry.add', 'pid' => Sobi::Reg( 'current_section' ) ) );
 		}
 		$xml[ 'buttons' ][ 'save_button' ] = array(
 			'_complex' => 1,
 			'_data' => array(
-					'data' => array(
-						'_complex' => 1,
-						'_xml' => 1,
-						'_data' =>
-							SPHtml_Input::button(
-								'save',
-								Sobi::Txt( 'EN.PAYMENT_SAVE_ENTRY_BT' ),
-								array( 'href' =>  $saveUrl )
-							)
-					),
+				'data' => array(
+					'_complex' => 1,
+					'_xml' => 1,
+					'_data' =>
+					SPHtml_Input::button(
+						'save',
+						Sobi::Txt( 'EN.PAYMENT_SAVE_ENTRY_BT' ),
+						array( 'href' => $saveUrl )
+					)
+				),
 			)
 		);
 		$xml[ 'buttons' ][ 'back_button' ] = array(
 			'_complex' => 1,
 			'_data' => array(
-					'data' => array(
-						'_complex' => 1,
-						'_xml' => 1,
-						'_data' =>
-							SPHtml_Input::button(
-								'back',
-								Sobi::Txt( 'EN.PAYMENT_BACK_BT' ),
-								array( 'href' => $backUrl )
-						)
-					),
-				)
+				'data' => array(
+					'_complex' => 1,
+					'_xml' => 1,
+					'_data' =>
+					SPHtml_Input::button(
+						'back',
+						Sobi::Txt( 'EN.PAYMENT_BACK_BT' ),
+						array( 'href' => $backUrl )
+					)
+				),
+			)
 		);
 		$xml[ 'buttons' ][ 'cancel_button' ] = array(
 			'_complex' => 1,
 			'_data' => array(
-					'data' => array(
-						'_complex' => 1,
-						'_xml' => 1,
-						'_data' =>  SPHtml_Input::submit( 'save', Sobi::Txt( 'EN.CANCEL_BT' ) ),
-						'_data' =>
-							SPHtml_Input::button(
-								'cancel',
-								Sobi::Txt( 'EN.CANCEL_BT' ),
-								array( 'href' => Sobi::Url( array( 'task' => 'entry.cancel', 'pid' => Sobi::Reg( 'current_section' ) ) ) )
-						)
+				'data' => array(
+					'_complex' => 1,
+					'_xml' => 1,
+					'_data' => SPHtml_Input::submit( 'save', Sobi::Txt( 'EN.CANCEL_BT' ) ),
+					'_data' =>
+					SPHtml_Input::button(
+						'cancel',
+						Sobi::Txt( 'EN.CANCEL_BT' ),
+						array( 'href' => Sobi::Url( array( 'task' => 'entry.cancel', 'pid' => Sobi::Reg( 'current_section' ) ) ) )
+					)
 				),
 			)
 		);

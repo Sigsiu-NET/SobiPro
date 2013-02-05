@@ -461,13 +461,13 @@ abstract class SPController extends SPObject implements SPControl
 		}
 	}
 
-	protected function response( $url, $message = null, $redirect = true, $type = SPC::INFO_MSG, $data = array() )
+	protected function response( $url, $message = null, $redirect = true, $type = SPC::INFO_MSG, $data = array(), $request = 'post' )
 	{
 		if ( is_array( $message ) ) {
 			$type = $message[ 'type' ];
 			$message = $message[ 'text' ];
 		}
-		if ( SPRequest::cmd( 'method', null ) == 'xhr' ) {
+		if ( SPRequest::cmd( 'method', null, $request ) == 'xhr' ) {
 			if ( $redirect && $message ) {
 				SPFactory::message()->setMessage( $message, false, $type );
 			}
