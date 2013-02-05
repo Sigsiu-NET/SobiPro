@@ -47,7 +47,6 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				break;
 			case 'view':
 			case 'entries':
-				SPLoader::loadClass( 'html.input' );
 				Sobi::ReturnPoint();
 				$this->view( $this->_task == 'entries', Sobi::GetUserState( 'entries_filter', 'sp_entries_filter', null ) );
 				break;
@@ -89,18 +88,20 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			$e = $this->_model->getChilds();
 			$c = $this->_model->getChilds( 'category' );
 		}
-//		elseif ( !( $term && $allEntries ) ) {
-//			$c = $this->_model->getChilds( 'category', true );
-//			$c[ ] = Sobi::Section();
-//			if ( count( $c ) ) {
-//				try {
-//					$db->select( 'id', 'spdb_relations', array( 'pid' => $c, 'oType' => 'entry' ) );
-//					$e = $db->loadResultArray();
-//				} catch ( SPException $x ) {
-//					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-//				}
-//			}
-//		}
+		/** yes - this is needed. In case we have entries withou data in the name field */
+		elseif ( !( $term && $allEntries ) ) {
+			$c = $this->_model->getChilds( 'category', true );
+			$c[ ] = Sobi::Section();
+			if ( count( $c ) ) {
+				try {
+					$e = $db
+							->select( 'id', 'spdb_relations', array( 'pid' => $c, 'oType' => 'entry' ) )
+							->loadResultArray();
+				} catch ( SPException $x ) {
+					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+				}
+			}
+		}
 		else {
 			try {
 				$e = $db
