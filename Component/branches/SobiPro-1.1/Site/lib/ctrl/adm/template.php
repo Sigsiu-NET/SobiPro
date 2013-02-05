@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -145,9 +141,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	{
 		$dir = $this->dir( SPRequest::cmd( 'templateName' ) );
 		if ( SPRequest::cmd( 'templateName' ) == 'default2' ) {
-			$this->response( Sobi::Back(), Sobi::Txt( 'TP.DO_NOT_REMOVE' ), false, 'error' );
+			$this->response( Sobi::Url( 'template.info' ), Sobi::Txt( 'TP.DO_NOT_REMOVE' ), true, 'error' );
 		}
-		if ( SPFs::delete( $dir ) ) {
+		if ( $dir && SPFs::delete( $dir ) ) {
 			$this->response( Sobi::Url( array( 'task' => 'config.general' ) ), Sobi::Txt( 'TP.REMOVED' ), false, 'success' );
 		}
 		else {
@@ -191,11 +187,12 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	private function info()
 	{
-		$template = SPRequest::cmd( 'template' );
-		if ( !( $template ) ) {
-			$template = 'default2';
+		$templateName = SPRequest::cmd( 'template' );
+		if ( !( strlen( $templateName ) ) ) {
+			$templateName = 'default2';
 		}
-		$dir = $this->dir( $template );
+
+		$dir = $this->dir( $templateName );
 		/** @var $view SPAdmTemplateView */
 		$view = SPFactory::View( 'template', true );
 		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == 'default2' ) {
@@ -227,10 +224,6 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			}
 			if ( $xinfo->query( '/template/files/file' )->length ) {
 				$files = array();
-				$templateName = SPRequest::cmd( 'template' );
-				if ( !( strlen( $templateName ) ) ) {
-					$templateName = 'default2';
-				}
 				foreach ( $xinfo->query( '/template/files/file' ) as $file ) {
 					$filePath = $dir . '/' . $file->attributes->getNamedItem( 'path' )->nodeValue;
 					if ( $filePath && is_file( $filePath ) ) {
@@ -265,7 +258,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$view->assign( $menu, 'menu' )
 				->assign( $this->_task, 'task' )
 				->assign( Sobi::Section(), 'sid' )
-				->addHidden( SPRequest::cmd( 'template' ), 'templateName' )
+				->addHidden( $templateName, 'templateName' )
 				->determineTemplate( 'template', 'info' );
 		Sobi::Trigger( 'Info', $this->name(), array( &$file, &$view ) );
 		$view->display();

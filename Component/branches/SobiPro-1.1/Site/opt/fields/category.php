@@ -337,7 +337,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{
 		$data = $this->verify( $entry, $request );
-		if ( strlen( $data ) ) {
+		if ( is_string( $data ) && strlen( $data ) ) {
 			return SPRequest::search( $this->nid, $request );
 		}
 		else {
