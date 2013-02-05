@@ -118,11 +118,6 @@ if ( !( class_exists( 'JElement' ) ) ) {
 
 			return $output;
 		}
-
-		function fetchElement( $name, $value, &$xmlElement, $control_name )
-		{
-			return;
-		}
 	}
 }
 

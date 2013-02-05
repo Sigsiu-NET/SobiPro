@@ -350,7 +350,8 @@ class SPJoomlaMainFrame
 		$c = 0;
 		if ( count( $head ) ) {
 			$document->addCustomTag( "\n\t<!--  SobiPro Head Tags Output  -->\n" );
-			$document->addCustomTag( "\n\t<script type=\"text/javascript\">\n/*<![CDATA[*/ \n\tvar SobiProUrl = '" . Sobi::FixPath( Sobi::Cfg( 'live_site' ) . self::Url( array( 'task' => '%task%' ), true, false ) ) . "'; \n\tvar SobiProSection = " . ( Sobi::Section() ? Sobi::Section() : 0 ) . "; \n\tvar SPLiveSite = '" . Sobi::Cfg( 'live_site' ) . "'; \n/*]]>*/\n</script>\n" );
+			$document->addCustomTag( "\n\t<script type=\"text/javascript\">/*\n<![CDATA[*/ \n\tvar SobiProUrl = '" . Sobi::FixPath( self::Url( array( 'task' => '%task%' ), true, false, true ) ) . "'; \n\tvar SobiProSection = " . ( Sobi::Section() ? Sobi::Section() : 0 ) . "; \n\tvar SPLiveSite = '" . Sobi::Cfg( 'live_site' ) . "'; \n/*]]>*/\n</script>\n" );
+//			$document->addCustomTag( "\n\t<script type=\"text/javascript\">\n/*<![CDATA[*/ \n\tvar SobiProUrl = '" . Sobi::FixPath( Sobi::Cfg( 'live_site' ) . self::Url( array( 'task' => '%task%' ), true, false ) ) . "'; \n\tvar SobiProSection = " . ( Sobi::Section() ? Sobi::Section() : 0 ) . "; \n\tvar SPLiveSite = '" . Sobi::Cfg( 'live_site' ) . "'; \n/*]]>*/\n</script>\n" );
 			if ( defined( 'SOBI_ADM_PATH' ) ) {
 				$document->addCustomTag( "\n\t<script type=\"text/javascript\">/* <![CDATA[ */ \n\tvar SobiProAdmUrl = '" . Sobi::FixPath( Sobi::Cfg( 'live_site' ) . SOBI_ADM_FOLDER . '/' . self::Url( array( 'task' => '%task%' ), true, false ) ) . "'; \n/* ]]> */</script>\n" );
 			}
