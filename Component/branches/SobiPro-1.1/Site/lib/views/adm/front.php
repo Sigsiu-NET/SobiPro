@@ -49,8 +49,8 @@ class SPAdmPanelView extends SPAdmView
 				$_section[ 'name' ] = "<a href=\"{$url}\">{$name}</a>";
 //				$_section[ 'entries_counter' ] 		= $section->countChilds( 'entry' );
 //				$_section[ 'categories_counter' ] 	= $section->countChilds( 'category' );
-				$_section[ 'state' ] = SPLists::state( $section );
-				$_section[ 'checkbox' ] = SPLists::checkedOut( $section, 'sid' );
+//				$_section[ 'state' ] = SPLists::state( $section );
+//				$_section[ 'checkbox' ] = SPLists::checkedOut( $section, 'sid' );
 				$_section[ 'createdTime' ] = $section->get( 'createdTime' );
 				$_section[ 'metaDesc' ] = $section->get( 'metaDesc' );
 				$_section[ 'metaKey' ] = $section->get( 'metaKey' );

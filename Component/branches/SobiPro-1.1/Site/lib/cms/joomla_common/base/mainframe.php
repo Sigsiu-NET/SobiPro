@@ -447,6 +447,10 @@ class SPJoomlaMainFrame
 	/**
 	 * Creating URL from a array for the current CMS
 	 * @param array $var
+	 * @param bool $js
+	 * @param bool $sef
+	 * @param bool $live
+	 * @param bool $forceItemId
 	 * @return string
 	 */
 	public static function url( $var = null, $js = false, $sef = true, $live = false, $forceItemId = false )
@@ -455,7 +459,10 @@ class SPJoomlaMainFrame
 		if ( $var == 'current' ) {
 			return SPRequest::raw( 'REQUEST_URI', self::baseUrl, 'SERVER' );
 		}
-		$sef = Sobi::Cfg( 'disable_sef_globally', false ) ? false : ( defined( 'SOBIPRO_ADM' ) && !( $forceItemId ) ? false : $sef );
+		// don't remember why :(
+		// Nevertheless it is generating &amp; in URL fro ImEx
+//		$sef = Sobi::Cfg( 'disable_sef_globally', false ) ? false : ( defined( 'SOBIPRO_ADM' ) && !( $forceItemId ) ? false : $sef );
+		$sef = Sobi::Cfg( 'disable_sef_globally', false ) ? false : $sef;
 		Sobi::Trigger( 'Create', 'Url', array( &$var, $js ) );
 		if ( is_array( $var ) && !empty( $var ) ) {
 			if ( ( isset( $var[ 'sid' ] ) && !( defined( 'SOBIPRO_ADM' ) || $forceItemId ) ) || ( defined( 'SOBIPRO_ADM' ) && $sef && $live ) ) {

@@ -73,8 +73,10 @@ abstract class SPJoomlaAdmMenu
 	}
 
 	/**
-	 * @param string The $task to perform (picked up by the switch($task) blocks
-	 * @param string The $txt text for the icon image
+	 * @param $task
+	 * @param $txt
+	 * @internal param \The $string $task to perform (picked up by the switch($task) blocks
+	 * @internal param \The $string $txt text for the icon image
 	 */
 	public static function back( $task, $txt )
 	{

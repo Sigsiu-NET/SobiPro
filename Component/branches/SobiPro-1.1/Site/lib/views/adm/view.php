@@ -66,15 +66,15 @@ class SPAdmView extends SPObject implements SPView
 	/**
 	 * @var bool
 	 */
-	protected $_compatibility = false;
+	protected $_legacy = false;
 
 	/**
 	 */
 	public function __construct()
 	{
-		SPLoader::loadClass( 'helpers.adm.lists' );
-		SPLoader::loadClass( 'mlo.input' );
-		SPFactory::header()->addJsFile( 'adm.interface' );
+//		SPLoader::loadClass( 'helpers.adm.lists' );
+//		SPLoader::loadClass( 'mlo.input' );
+//		SPFactory::header()->addJsFile( 'adm.interface' );
 		Sobi::Trigger( 'Create', $this->name(), array( &$this ) );
 	}
 
@@ -1294,7 +1294,7 @@ class SPAdmView extends SPObject implements SPView
 		SPFactory::header()
 				->addCssFile( 'adm.legacy' )
 				->addJsFile( 'adm.legacy' );
-		$this->_compatibility = true;
+		$this->_legacy = true;
 		if ( strlen( $path ) ) {
 			$this->_config = SPLoader::loadIniFile( $path, true, true, true );
 		}
@@ -1335,13 +1335,13 @@ class SPAdmView extends SPObject implements SPView
 					}
 				}
 			}
-			SPLoader::loadClass( 'cms.html.admin_menu' );
+			$menu = array();
 			foreach ( $this->_config[ 'toolbar' ] as $type => $settings ) {
 				$type = preg_replace( '/\_{1}[a-zA-Z0-9]$/', null, $type );
 				$cfg = $this->parseMenu( explode( '|', $settings ) );
-
-				call_user_func_array( array( 'SPAdmMenu', $type ), $cfg );
+				$menu[ ] = array( 'type' => $type, 'settings' => $cfg );
 			}
+			$this->legacyToolbar( $menu );
 			unset( $this->_config[ 'toolbar' ] );
 		}
 		if ( !( isset( $this->_config[ 'submenu' ] ) ) ) {
@@ -1350,7 +1350,7 @@ class SPAdmView extends SPObject implements SPView
 		if ( isset( $this->_config[ 'submenu' ] ) ) {
 			SPLoader::loadClass( 'cms.html.admin_menu' );
 			foreach ( $this->_config[ 'submenu' ] as $type => $settings ) {
-				$type = preg_replace( '/\_{1}[a-zA-Z0-9]$/', null, $type );
+//				$type = preg_replace( '/\_{1}[a-zA-Z0-9]$/', null, $type );
 				$cfg = $this->parseMenu( explode( '|', $settings ) );
 				call_user_func_array( array( 'SPAdmMenu', 'addSubMenuEntry' ), $cfg );
 			}
@@ -1362,6 +1362,46 @@ class SPAdmView extends SPObject implements SPView
 			}
 		}
 		Sobi::Trigger( 'afterLoadConfig', $this->name(), array( &$this->_config ) );
+	}
+
+	protected function legacyToolbar( $settings )
+	{
+		$buttons = array();
+		foreach ( $settings as $row ) {
+			$button = array(
+				'type' => null,
+				'task' => null,
+				'label' => null,
+				'icon' => null,
+				'target' => null,
+				'buttons' => null,
+				'element' => 'button-legacy'
+			);
+			switch ( $row[ 'type' ] ) {
+				case 'title':
+					SPFactory::AdmToolbar()->setTitle( array( 'title' => $row[ 'settings' ][ 0 ], 'icon' => $row[ 'settings' ][ 1 ] ) );
+					break;
+				case 'delete':
+				case 'save':
+					$button[ 'task' ] = $row[ 'settings' ][ 0 ];
+					$button[ 'label' ] = $row[ 'settings' ][ 1 ];
+					$button[ 'type' ] = $row[ 'type' ];
+					$buttons[ ] = $button;
+					break;
+				case 'divider':
+					$buttons[ ] = array( 'element' => 'divider' );
+					break;
+				case 'custom':
+					$button[ 'task' ] = $row[ 'settings' ][ 0 ];
+					$button[ 'icon' ] = $row[ 'settings' ][ 1 ];
+					$button[ 'label' ] = $row[ 'settings' ][ 3 ];
+					$button[ 'type' ] = $row[ 'settings' ][ 2 ];
+					$buttons[ ] = $button;
+					break;
+			}
+		}
+		SPFactory::AdmToolbar()->addButtons( $buttons );
+		SPFactory::message()->warning( 'COMPAT_MODE_WARNING' );
 	}
 
 	/**
@@ -1685,16 +1725,14 @@ class SPAdmView extends SPObject implements SPView
 		$action = $this->key( 'action' );
 		echo "\n<!-- SobiPro output -->\n";
 		echo '<div class="SobiPro" id="SobiPro">' . "\n";
-		if ( $this->_compatibility ) {
+		if ( $this->_legacy ) {
+			echo SPFactory::AdmToolbar()->render();
 			echo '<div class="row-fluid">' . "\n";
 		}
 		echo $action ? "\n<form action=\"{$action}\" method=\"post\" name=\"adminForm\" id=\"SPAdminForm\" enctype=\"multipart/form-data\" accept-charset=\"utf-8\" >\n" : null;
 		$prefix = null;
-		if ( !( $this->_compatibility ) ) {
+		if ( !( $this->_legacy ) ) {
 			$prefix = 'SP_';
-		}
-		else {
-			SPFactory::message()->warning( 'COMPAT_MODE_WARNING' );
 		}
 		include( $tpl );
 		if ( count( $this->_hidden ) ) {
@@ -1705,7 +1743,7 @@ class SPAdmView extends SPObject implements SPView
 			}
 		}
 		echo $action ? "\n</form>\n" : null;
-		if ( $this->_compatibility ) {
+		if ( $this->_legacy ) {
 			echo '</div>' . "\n";
 		}
 		echo '</div>' . "\n";
