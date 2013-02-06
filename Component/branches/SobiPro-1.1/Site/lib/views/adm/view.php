@@ -73,6 +73,8 @@ class SPAdmView extends SPObject implements SPView
 	public function __construct()
 	{
 		SPLoader::loadClass( 'mlo.input' );
+		// @todo: legacy - has to be removed later
+		SPLoader::loadClass( 'helpers.adm.lists' );
 		Sobi::Trigger( 'Create', $this->name(), array( &$this ) );
 	}
 
