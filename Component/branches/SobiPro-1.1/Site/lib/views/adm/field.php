@@ -85,6 +85,10 @@ class SPFieldAdmView extends SPAdmView
 		$action = $this->key( 'action' );
 
 		echo '<div class="SobiPro" id="SobiPro">' . "\n";
+		if ( $this->get( '_compatibility' ) ) {
+			echo SPFactory::AdmToolbar()->render();
+			echo $this->legacyMessages();
+		}
 		echo $action ? "\n<form action=\"{$action}\" method=\"post\" name=\"adminForm\" id=\"SPAdminForm\" enctype=\"multipart/form-data\" accept-charset=\"utf-8\" >\n" : null;
 		foreach ( $this->_templates as $tpl ) {
 			$template = SPLoader::path( $tpl, 'adm.template' );
