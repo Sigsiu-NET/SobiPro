@@ -94,7 +94,7 @@ class SPConfigAdmCtrl extends SPController
 		}
 		Sobi::Trigger( 'AfterCreate', 'AdmMenu', array( &$menu ) );
 		if ( $sid ) {
-			if ( Sobi::Cfg( 'section.template' ) == 'default2' ) {
+			if ( Sobi::Cfg( 'section.template' ) == 'default2' && strstr( SPRequest::task(), 'config' ) ) {
 				SPFactory::message()
 						->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false )
 						->setSystemMessage();

@@ -1346,12 +1346,12 @@ class SPAdmView extends SPObject implements SPView
 			$this->_config[ 'submenu' ] = SPLoader::loadIniFile( 'etc.adm.submenu', false );
 		}
 		if ( isset( $this->_config[ 'submenu' ] ) ) {
-			SPLoader::loadClass( 'cms.html.admin_menu' );
-			foreach ( $this->_config[ 'submenu' ] as $type => $settings ) {
-//				$type = preg_replace( '/\_{1}[a-zA-Z0-9]$/', null, $type );
-				$cfg = $this->parseMenu( explode( '|', $settings ) );
-				call_user_func_array( array( 'SPAdmMenu', 'addSubMenuEntry' ), $cfg );
-			}
+////			SPLoader::loadClass( 'cms.html.admin_menu' );
+//			foreach ( $this->_config[ 'submenu' ] as $type => $settings ) {
+////				$type = preg_replace( '/\_{1}[a-zA-Z0-9]$/', null, $type );
+//				$cfg = $this->parseMenu( explode( '|', $settings ) );
+//				call_user_func_array( array( 'SPAdmMenu', 'addSubMenuEntry' ), $cfg );
+//			}
 			unset( $this->_config[ 'submenu' ] );
 		}
 		if ( isset( $this->_config[ 'hidden' ] ) ) {
