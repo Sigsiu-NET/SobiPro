@@ -72,9 +72,7 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	public function __construct()
 	{
-//		SPLoader::loadClass( 'helpers.adm.lists' );
-//		SPLoader::loadClass( 'mlo.input' );
-//		SPFactory::header()->addJsFile( 'adm.interface' );
+		SPLoader::loadClass( 'mlo.input' );
 		Sobi::Trigger( 'Create', $this->name(), array( &$this ) );
 	}
 
@@ -1383,6 +1381,9 @@ class SPAdmView extends SPObject implements SPView
 					break;
 				case 'delete':
 				case 'save':
+				case 'cancel':
+				case 'duplicate':
+				case 'apply':
 					$button[ 'task' ] = $row[ 'settings' ][ 0 ];
 					$button[ 'label' ] = $row[ 'settings' ][ 1 ];
 					$button[ 'type' ] = $row[ 'type' ];
@@ -1402,6 +1403,25 @@ class SPAdmView extends SPObject implements SPView
 		}
 		SPFactory::AdmToolbar()->addButtons( $buttons );
 		SPFactory::message()->warning( 'COMPAT_MODE_WARNING' );
+	}
+
+	protected function legacyMessages()
+	{
+		$messages = SPFactory::message()->getMessages();
+		$out = array();
+		if ( count( $messages ) ) {
+			foreach ( $messages as $type => $texts ) {
+				if ( count( $texts ) ) {
+					$out[ ] = "<div class=\"alert alert-{$type} spSystemAlert\">";
+					$out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
+					foreach ( $texts as $text ) {
+						$out[ ] = "<div>{$text}</div>";
+					}
+					$out[ ] = '</div>';
+				}
+			}
+		}
+		return implode( '', $out );
 	}
 
 	/**
@@ -1727,6 +1747,7 @@ class SPAdmView extends SPObject implements SPView
 		echo '<div class="SobiPro" id="SobiPro">' . "\n";
 		if ( $this->_legacy ) {
 			echo SPFactory::AdmToolbar()->render();
+			echo $this->legacyMessages();
 			echo '<div class="row-fluid">' . "\n";
 		}
 		echo $action ? "\n<form action=\"{$action}\" method=\"post\" name=\"adminForm\" id=\"SPAdminForm\" enctype=\"multipart/form-data\" accept-charset=\"utf-8\" >\n" : null;
