@@ -49,7 +49,7 @@ SobiPro.jQuery( document ).ready( function ()
 							}
 							output += '<div class="spUpdatesApp">' + name + '</div><div class="spUpdatesState"> ' + state + '</div>';
 						}
-						SobiPro.jQuery( '#SPVerUpd' ).html( output + '<div class="clearall"></div>' );
+						SobiPro.jQuery( '#SPVerUpd' ).html( output + '<div class="clearfix"></div>' );
 					}
 				}
 			} );

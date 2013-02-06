@@ -40,7 +40,7 @@
 				<xsl:apply-templates select="alphaMenu" />
 			</div>
 			<xsl:apply-templates select="messages"/>
-			<div class="clearall" />
+			<div class="clearfix" />
 			<div class="SPDetailEntry">
 				<xsl:call-template name="manage" />
 				<h1>
@@ -98,7 +98,7 @@
 					</div>
 				</xsl:if>
 			</div>
-			<div class="clearall" />
+			<div class="clearfix" />
 		</div>
 	</xsl:template>
 </xsl:stylesheet>

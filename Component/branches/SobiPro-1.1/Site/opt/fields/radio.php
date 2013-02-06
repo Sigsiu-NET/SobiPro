@@ -103,7 +103,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 				//$field .= "\n".$radio;
                 if ($this->optInLine) {
                     if( !( ( ++$c ) % $this->optInLine ) ) {
-                        $field .= "\n<div class=\"clearall\"></div>\n";
+                        $field .= "\n<div class=\"clearfix\"></div>\n";
                     }
                 }
 			}
@@ -145,16 +145,16 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 						$box = '<div class="spFieldCheckbox" style="width:'.$this->optWidth.'px;">'.$box.'</div>';
 						$field .= "\n".$box;
 						if( !( ( ++$c ) % $this->optInLine ) ) {
-							$field .= "\n<div class=\"clearall\"></div>\n";
+							$field .= "\n<div class=\"clearfix\"></div>\n";
 						}
 					}
 					$field = "<div id=\"{$this->nid}\" >{$field}</div>";
-					$field .= "\n<div class=\"clearall\"></div>\n";
+					$field .= "\n<div class=\"clearfix\"></div>\n";
 				}
 				break;
 			case 'radio':
 				$field = $this->getField( $this->cssClass.' '.Sobi::Cfg( 'search.form_radio_def_css', 'SPSearchRadio' ), $this->_selected );
-				$field .= "\n<div class=\"clearall\"></div>\n";
+				$field .= "\n<div class=\"clearfix\"></div>\n";
 				break;
 			case 'select':
 			case 'mselect':

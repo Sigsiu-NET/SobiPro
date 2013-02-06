@@ -25,13 +25,13 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:template match="messages">
-		<div class="clearall" />
+		<div class="clearfix" />
 		<xsl:for-each select="./*">
 			<div class="alert alert-{name()}">
 				<button type="button" class="close" data-dismiss="alert">×</button>
 				<xsl:for-each select="./*">
 					<xsl:value-of select="." />
-					<div class="clearall" />
+					<div class="clearfix" />
 				</xsl:for-each>
 			</div>
 		</xsl:for-each>

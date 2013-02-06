@@ -52,6 +52,6 @@
 			</div>
 		</div>
         </div>
-		<div class="clearall"/>
+		<div class="clearfix"/>
 	</xsl:template>
 </xsl:stylesheet>
