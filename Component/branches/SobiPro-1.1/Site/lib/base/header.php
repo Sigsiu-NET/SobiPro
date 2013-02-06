@@ -94,8 +94,7 @@ final class SPHeader
 	public function & initBase( $adm = false )
 	{
 		if ( $adm ) {
-			$this->addJsFile( array( 'sobipro', 'adm.sobipro' ) );
-
+			$this->addJsFile( array( 'sobipro', 'adm.sobipro', 'jqnc', 'adm.interface' ) );
 		}
 		else {
 			$this->addCssFile( 'sobipro' )

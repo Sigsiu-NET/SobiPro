@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -135,6 +131,11 @@ class SpAdmToolbar
 				case 'button':
 					$this->renderButton( $button );
 					break;
+				case 'button-legacy':
+					$this->output[ ] = '<span id="toolbar-' . $button[ 'type' ] . '">';
+					$this->renderButton( $button );
+					$this->output[ ] = '</span>';
+					break;
 				case 'divider':
 					$this->output[ ] = '<span class="divider"></span>';
 					break;
@@ -169,6 +170,7 @@ class SpAdmToolbar
 	private function renderButton( $button, $list = false )
 	{
 		$rel = null;
+		$onclick = null;
 		$class = isset( $button[ 'class' ] ) ? ' ' . $button[ 'class' ] : null;
 		if ( isset( $button[ 'type' ] ) && $button[ 'type' ] == 'url' ) {
 			$rel = null;
@@ -187,6 +189,11 @@ class SpAdmToolbar
 		else {
 			$label = $button[ 'label' ];
 		}
+		if ( $button[ 'element' ] == 'button-legacy' ) {
+			$class .= ' legacy';
+			$onclick = 'onclick="Joomla.submitform(\'' . $rel . '\');"';
+		}
+
 		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button[ 'target' ]}\"" : null;
 		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
 			$this->output[ ] = '<div class="btn-group">';
@@ -210,7 +217,7 @@ class SpAdmToolbar
 			$this->output[ ] = '</div>';
 		}
 		elseif ( !( $list ) ) {
-			$this->output[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"{$this->btClass}{$class}\"{$target}>";
+			$this->output[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"{$this->btClass}{$class}\"{$target}{$onclick}>";
 			if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 				$icon = $this->getIcon( $button );
 			}

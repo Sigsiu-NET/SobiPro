@@ -37,7 +37,7 @@ SobiPro.jQuery( document ).ready( function ()
 		this.progressBar = SobiPro.jQuery( '#SpProgress' ).find( '.bar' );
 		this.progressMessage = SobiPro.jQuery( '#SpProgress .alert' );
 		this.messages = { 'warning':[], 'error':[], 'info':[], 'success':[] };
-		this.finish = function( url )
+		this.finish = function ( url )
 		{
 			var request = {'option':'com_sobipro', 'task':'txt.messages', 'format':'raw', 'method':'xhr', 'spsid':SobiPro.jQuery( '#SP_spsid' ).val() }
 			SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json',
@@ -118,7 +118,10 @@ SobiPro.jQuery( document ).ready( function ()
 			var request = {'option':'com_sobipro', 'task':task, 'format':'raw', 'method':'xhr', 'spsid':SobiPro.jQuery( '#SP_spsid' ).val()}
 			for ( var i = 0; i < entries.length; i++ ) {
 				request[ 'sid' ] = entries[ i ].val();
-				SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json', success:function ( response ) { proxy.progress( response ); } } );
+				SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json', success:function ( response )
+				{
+					proxy.progress( response );
+				} } );
 			}
 		}
 	}
@@ -127,6 +130,9 @@ SobiPro.jQuery( document ).ready( function ()
 	var serialActions = [ 'entry.publish', 'entry.hide', 'entry.approve', 'entry.unapprove' ];
 	SobiPro.jQuery( '#SPAdmToolbar a' ).click( function ( e )
 	{
+		if ( SobiPro.jQuery( this ).hasClass( 'legacy' ) ) {
+			return false;
+		}
 		var task = SobiPro.jQuery( this ).attr( 'rel' );
 		SobiPro.jQuery( '#SP_task' ).val( task );
 		if ( task.length ) {
