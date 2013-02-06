@@ -133,7 +133,7 @@ class SPEntryCtrl extends SPController
 //				}
 //				else {
 //					SPFactory::message()->setReport( 'I sent this email', SPRequest::cmd( 'spsid' ), SPC::SUCCESS_MSG );
-					$this->response( Sobi::Back(), Sobi::Txt( $state ? 'EN.PUBLISHED' : 'EN.UNPUBLISHED', $this->_model->get( 'name' ) ), false, SPC::SUCCESS_MSG );
+				$this->response( Sobi::Back(), Sobi::Txt( $state ? 'EN.PUBLISHED' : 'EN.UNPUBLISHED', $this->_model->get( 'name' ) ), false, SPC::SUCCESS_MSG );
 //				}
 			}
 			else {
@@ -221,7 +221,7 @@ class SPEntryCtrl extends SPController
 			$this->paymentView( $tsId );
 		}
 		else {
-			Sobi::Redirect( Sobi::Url( array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $sid ) ) );
+			$this->response( Sobi::Url( array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $sid ) ) );
 		}
 	}
 
