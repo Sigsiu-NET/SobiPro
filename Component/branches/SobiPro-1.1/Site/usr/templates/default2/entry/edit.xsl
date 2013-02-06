@@ -96,7 +96,7 @@
 					<xsl:value-of select="entry/fields/save_button/data/input/@value"/>
 				</button>
 			</div>
-			<div class="clearall"/>
+			<div class="clearfix"/>
 		</div>
 		<input type="hidden" name="method" value="xhr"/>
 		<input type="hidden" name="format" value="raw"/>

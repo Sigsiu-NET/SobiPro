@@ -79,11 +79,11 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 
                 if ($this->optInLine) {
                     if ( !( ( ++$c ) % $this->optInLine ) ) {
-                        $field .= "\n<div class=\"clearall\"></div>\n";
+                        $field .= "\n<div class=\"clearfix\"></div>\n";
                     }
                 }
             }
-            $field = "<div id=\"{$this->nid}\" class=\"{$class}\">{$field}\n<div class=\"clearall\"></div>\n</div>";
+            $field = "<div id=\"{$this->nid}\" class=\"{$class}\">{$field}\n<div class=\"clearfix\"></div>\n</div>";
         }
 		if ( !$return ) {
 			echo $field;
