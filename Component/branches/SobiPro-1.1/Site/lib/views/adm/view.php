@@ -1384,6 +1384,9 @@ class SPAdmView extends SPObject implements SPView
 				case 'cancel':
 				case 'duplicate':
 				case 'apply':
+				case 'addNew':
+				case 'back':
+				case 'forward':
 					$button[ 'task' ] = $row[ 'settings' ][ 0 ];
 					$button[ 'label' ] = $row[ 'settings' ][ 1 ];
 					$button[ 'type' ] = $row[ 'type' ];
