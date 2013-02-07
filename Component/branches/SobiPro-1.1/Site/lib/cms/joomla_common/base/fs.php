@@ -125,7 +125,11 @@ abstract class SPJoomlaFs
 	 */
 	public static function delete( $file )
 	{
+		$file = self::fixPath( $file );
 		if ( is_dir( $file ) ) {
+			if( $file == SOBI_ROOT || dirname( $file ) == SOBI_ROOT ) {
+				throw new SPException( SPLang::e( 'Fatal error. Trying to delete not allowed path "%s"', $file ) );
+			}
 			return Jfolder::delete( $file );
 		}
 		else {
