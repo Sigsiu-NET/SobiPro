@@ -21,7 +21,6 @@
  * $Author$
  * $HeadURL$
  */
-
 /* to override dominant Joomla template styles (e.g. Beez) for SobiPro in Joomla 2.5
   can be removed if a template is used that does not interfere in SobiPro styling using CSS id */
 #SobiPro ul {
@@ -48,21 +47,20 @@
   background-color: #E6E6E6;
 }
 #SobiPro h1 {
-    border-bottom: none;
-    color: inherit;
-    font-family: inherit;
-    font-size: 28px;
-    font-weight: inherit;
-    line-height: 40px;
-    margin: inherit;
-    padding: inherit;
+  border-bottom: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: 28px;
+  font-weight: inherit;
+  line-height: 40px;
+  margin: inherit;
+  padding: inherit;
+  padding-left: 0px;
 }
 #SobiPro h3 {
-    margin: inherit;
+  margin: inherit;
 }
 /* end Joomla! 2.5 template compatibility */
-
-
 /* General Styling */
 .SPDetailEntry h1 {
   font-size: 28px;
