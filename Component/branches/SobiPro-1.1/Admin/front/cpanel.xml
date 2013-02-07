@@ -250,7 +250,6 @@
                     <li class="spBox">
                         <url type="intern" label="CPANEL.TMPL" image="../media/sobipro/adm/folder-templates.png">
                             <param name="task" value="template.info" />
-                            <param name="template" value="default" />
                         </url>
 
                     </li>

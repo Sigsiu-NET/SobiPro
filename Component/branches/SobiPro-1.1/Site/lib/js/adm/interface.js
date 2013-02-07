@@ -343,30 +343,6 @@ SobiPro.jQuery( document ).ready( function ()
 	}
 	catch ( e ) {
 	}
-	SobiPro.jQuery( 'a[rel=sp-tooltip]' )
-		.tooltip( { 'html':true } )
-		.click( function ( e )
-		{
-			if ( SobiPro.jQuery( this ).attr( 'href' ) == '#' ) {
-				e.preventDefault();
-			}
-		} );
-	var template = '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="pull-right close spclose">x</div><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>';
-	SobiPro.jQuery( 'a[rel=popover]' )
-		.popover( { 'html':true, 'trigger':'click', 'placement':'top', 'template':template } )
-		.click( function ( e )
-		{
-			e.preventDefault();
-			var proxy = SobiPro.jQuery( this );
-			SobiPro.jQuery( this ).parent().find( '.popover' ).find( '.close' ).click( function ()
-			{
-				proxy.popover( 'hide' );
-			} )
-		} );
-	if ( SobiPro.jQuery( '.spFileUpload' ).length ) {
-		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
-	}
-
 	//P_current-ip
 	//
 	try {
@@ -379,5 +355,8 @@ SobiPro.jQuery( document ).ready( function ()
 		} )
 	}
 	catch ( e ) {
+	}
+	if ( SobiPro.jQuery( '.spFileUpload' ).length ) {
+		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
 	}
 } );
