@@ -94,25 +94,25 @@ final class SPHeader
 	public function & initBase( $adm = false )
 	{
 		if ( $adm ) {
-			$this->addJsFile( array( 'sobipro', 'adm.sobipro', 'jquery', 'adm.interface' ) );
+			$this->addCssFile( 'adm.sobipro' );
+			if ( SOBI_CMS != 'joomla3' ) {
+				$this->addJsFile( array( 'sobipro', 'adm.sobipro', 'jquery', 'adm.interface' ) );
+			}
+			else {
+				$this->addJsFile( array( 'sobipro', 'adm.sobipro', 'jqnc', 'adm.interface' ) );
+			}
 		}
 		else {
 			$this->addCssFile( 'sobipro' )
 					->addJsFile( 'sobipro' );
-		}
-		if ( SOBI_CMS != 'joomla3' ) {
-			$this->addCssFile( array( 'bootstrap.bootstrap', 'icons' ) )
-					->addJsFile( array( 'jquery', 'bootstrap' ) );
-		}
-		else {
-			$this->addCssFile( array( 'bootstrap.bootstrap', 'icons' ) )
-					->addJsFile( 'jqnc' );
-		}
-		if ( $adm ) {
-			$this->addCssFile( 'adm.sobipro' );
-		}
-		else {
-			$this->addCssFile( 'sobipro' );
+			if ( SOBI_CMS != 'joomla3' ) {
+				$this->addCssFile( array( 'bootstrap.bootstrap', 'icons' ) )
+						->addJsFile( array( 'jquery', 'bootstrap' ) );
+			}
+			else {
+				$this->addCssFile( array( 'bootstrap.bootstrap', 'icons' ) )
+						->addJsFile( 'jqnc' );
+			}
 		}
 		return $this;
 	}
