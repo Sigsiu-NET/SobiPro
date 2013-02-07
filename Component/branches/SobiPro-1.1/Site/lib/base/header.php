@@ -118,7 +118,7 @@ final class SPHeader
 
 		if ( $adm ) {
 			$this->addCssFile( array( 'bootstrap.bootstrap', 'icons', 'adm.sobipro' ) );
-			$this->addJsFile( array( 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'adm.interface' ) );
+			$this->addJsFile( array( 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface' ) );
 		}
 		else {
 			$this->addCssFile( array( 'sobipro' ) )
