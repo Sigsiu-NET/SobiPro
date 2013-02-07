@@ -122,7 +122,7 @@ final class SPHeader
 		}
 		else {
 			$this->addCssFile( array( 'sobipro' ) )
-					->addJsFile( array( 'sobipro', 'jquery', 'jqnc', 'adm.interface' ) );
+					->addJsFile( array( 'sobipro', 'jquery', 'jqnc' ) );
 		}
 		return $this;
 	}
@@ -193,11 +193,12 @@ final class SPHeader
 
 	/**
 	 * Add JavaScript file to the site header
-	 * @param string $file
+	 * @param $script
 	 * @param bool $adm
+	 * @param string $params
 	 * @param bool $force
 	 * @param string $ext
-	 * @param string $params
+	 * @internal param string $file
 	 * @return SPHeader
 	 */
 	public function & addJsFile( $script, $adm = false, $params = null, $force = false, $ext = 'js' )
