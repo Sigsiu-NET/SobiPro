@@ -93,8 +93,31 @@ final class SPHeader
 
 	public function & initBase( $adm = false )
 	{
+//		if ( $adm ) {
+//			$this->addJsFile( array( 'sobipro', 'adm.sobipro', 'jquery', 'adm.interface' ) );
+//		}
+//		else {
+//			$this->addCssFile( 'sobipro' )
+//					->addJsFile( 'sobipro' );
+//		}
+//		if ( SOBI_CMS != 'joomla3' ) {
+//			$this->addCssFile( array( 'bootstrap.bootstrap', 'icons' ) )
+//					->addJsFile( array( 'jquery', 'bootstrap' ) );
+//		}
+//		else {
+//			$this->addCssFile( array( 'bootstrap.bootstrap', 'icons' ) )
+//					->addJsFile( 'jqnc' );
+//		}
+//		if ( $adm ) {
+//			$this->addCssFile( 'adm.sobipro' );
+//		}
+//		else {
+//			$this->addCssFile( 'sobipro' );
+//		}
+//		return $this;
+
 		if ( $adm ) {
-			$this->addCssFile( array( 'adm.sobipro', 'bootstrap.bootstrap', 'icons' ) );
+			$this->addCssFile( array( 'bootstrap.bootstrap', 'icons', 'adm.sobipro' ) );
 			$this->addJsFile( array( 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'adm.interface' ) );
 		}
 		else {
