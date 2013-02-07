@@ -214,7 +214,6 @@ final class SPHeader
 					return $this;
 				}
 				if ( $script == 'bootstrap' ) {
-					JHtml::_( 'jquery.framework' );
 					return $this;
 				}
 			}
