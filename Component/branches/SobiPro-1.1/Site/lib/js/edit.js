@@ -127,7 +127,7 @@ SobiPro.jQuery( document ).ready( function ()
 				placement = 'top';
 			}
 			if ( input.length ) {
-				var popover = SobiPro.jQuery( '<a class="sobipro-input-note" data-placement="' + placement + '" rel="popover" data-content="' + response.message.text + '" data-original-title="' + SobiPro.Txt('ATTENTION') + '">&nbsp;</a>' );
+				var popover = SobiPro.jQuery( '<a class="sobipro-input-note" data-placement="' + placement + '" data-content="' + response.message.text + '" data-original-title="' + SobiPro.Txt('ATTENTION') + '">&nbsp;</a>' );
 
 				popover.insertAfter( input );
 				popover.popover( 'show' );
