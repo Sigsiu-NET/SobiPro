@@ -208,9 +208,15 @@ final class SPHeader
 			}
 		}
 		else {
-			if ( SOBI_CMS == 'joomla3' && $script == 'jquery' ) {
-				JHtml::_( 'jquery.framework' );
-				return $this;
+			if ( SOBI_CMS == 'joomla3' ) {
+				if ( $script == 'jquery' ) {
+					JHtml::_( 'jquery.framework' );
+					return $this;
+				}
+				if ( $script == 'bootstrap' ) {
+					JHtml::_( 'jquery.framework' );
+					return $this;
+				}
 			}
 			$jsFile = SPLoader::JsFile( $script, $adm, true, false, $ext );
 			if ( $jsFile ) {
