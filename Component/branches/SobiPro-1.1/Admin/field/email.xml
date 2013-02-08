@@ -102,7 +102,7 @@
 											</call>
 										</add>
 									</field>
-									<field type="select" name="field.filter" value="filters" label="FMN.EMAIL.TITLE_FILTER" multi="false" selected="field.filter" class="input-large" />
+									<field type="select" name="field.filter" values="filters" label="FMN.EMAIL.TITLE_FILTER" multi="false" selected="field.filter" class="input-large" />
 								</fieldset>
 
 								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
