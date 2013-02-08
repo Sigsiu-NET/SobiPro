@@ -28,7 +28,7 @@ Legend:
 
 
 -------------------
-1.1.0 (Alpha J)
+1.1.0 (Alpha K)
 -------------------
 
    (+) XML based template engine for administrator templates
@@ -73,6 +73,7 @@ Legend:
    (!) CSS and Javascript cache now separate settings
    (!) single .htaccess files removed, global file added
    (!) Default Template now using Bootstrap; several improvements; new name
+   (!) JavaScript translation method speed improvement
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager
