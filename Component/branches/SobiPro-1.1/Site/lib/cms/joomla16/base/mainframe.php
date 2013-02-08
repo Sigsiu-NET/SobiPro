@@ -140,7 +140,7 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 					}
 				}
 			}
-			$jsUrl = Sobi::FixPath( self::Url( array( 'task' => 'txt.js', 'tmpl' => 'component' ), true, false, false ) );
+			$jsUrl = Sobi::FixPath( self::Url( array( 'task' => 'txt.js', 'format' => 'json' ), true, false, false ) );
 			$document->addCustomTag( "\n\t<script type=\"text/javascript\" src=\"" . str_replace( '&', '&amp;', $jsUrl ) . "\"></script>\n" );
 			$c++;
 			$document->addCustomTag( "\n\t<!--  SobiPro ({$c}) Head Tags Output -->\n" );

@@ -427,7 +427,7 @@ class SPJoomlaMainFrame
 					}
 				}
 			}
-			$jsUrl = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . ( defined( 'SOBI_ADM_FOLDER' ) ? SOBI_ADM_FOLDER . '/' : '' ) . self::Url( array( 'task' => 'txt.js', 'tmpl' => 'component' ), true, false ) );
+			$jsUrl = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . ( defined( 'SOBI_ADM_FOLDER' ) ? SOBI_ADM_FOLDER . '/' : '' ) . self::Url( array( 'task' => 'txt.js', 'format' => 'json' ), true, false ) );
 			$document->addCustomTag( "\n\t<script type=\"text/javascript\" src=\"" . str_replace( '&', '&amp;', $jsUrl ) . "\"></script>\n" );
 			$c++;
 			$document->addCustomTag( "\n\t<!--  SobiPro ({$c}) Head Tags Output -->\n" );
