@@ -34,7 +34,7 @@ SobiPro.jQuery( document ).ready( function ()
 			var proxy = SobiPro.jQuery( this );
 			SobiPro.DebOut( proxy )
 			proxy.parent().find( '.close' ).click( function ()
-            {
+			{
 				proxy.popover( 'hide' );
 			} )
 		} );
@@ -100,7 +100,7 @@ SobiPro.jQuery( document ).ready( function ()
 						proxy.errorHandler( response );
 					}
 					else {
-						if( response.redirect.execute == true ) {
+						if ( response.redirect.execute == true ) {
 							window.location.replace( response.redirect.url );
 						}
 						else if ( response.message.type == 'info' ) {
@@ -127,7 +127,7 @@ SobiPro.jQuery( document ).ready( function ()
 				placement = 'top';
 			}
 			if ( input.length ) {
-				var popover = SobiPro.jQuery( '<a class="sobipro-input-note" data-placement="' + placement + '" data-content="' + response.message.text + '" data-original-title="' + SobiPro.Txt('ATTENTION') + '">&nbsp;</a>' );
+				var popover = SobiPro.jQuery( '<a class="sobipro-input-note" data-placement="' + placement + '" rel="popover" data-content="' + response.message.text + '" data-original-title="' + SobiPro.Txt( 'ATTENTION' ) + '">&nbsp;</a>' );
 
 				popover.insertAfter( input );
 				popover.popover( 'show' );
@@ -155,6 +155,11 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery( '.sobipro-submit' ).click( function ( e )
 		{
 			SPTriggerFrakingWYSIWYGEditors();
+			proxy.sendRequest();
+		} );
+		SobiPro.jQuery( '.sobipro-cancel' ).click( function ( e )
+		{
+			SobiPro.jQuery( '#SP_task' ).val( 'entry.cancel' );
 			proxy.sendRequest();
 		} );
 	}
