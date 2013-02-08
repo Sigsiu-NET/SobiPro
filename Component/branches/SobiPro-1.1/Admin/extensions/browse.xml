@@ -157,7 +157,6 @@
 									<head>
 										<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft" />
 										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter" />
-										<cell label="EXTENSIONS.HEADER_ENABLED" class="SpCellCenter" />
 										<cell />
 										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter" />
 										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="SpCellCenter" />
@@ -174,7 +173,6 @@
 											</cell>
 										</cell>
 										<cell type="text" value="version" class="SpCellCenter" />
-										<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
 										<cell class="SpCloudInstall">
 											<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall" />
 										</cell>
