@@ -23,5 +23,5 @@
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} -f
-RewriteCond %{REQUEST_URI} \.php|\.ini|\.xml|\.xsl|\.db|\.tmp|\.var|\.jpg|\.png|\.bmp|\.gif
+RewriteCond %{REQUEST_URI} \.php|\.ini|\.xml|\.xsl|\.db|\.tmp|\.var
 RewriteRule ^(.*)$ index.php [R=403,L]
