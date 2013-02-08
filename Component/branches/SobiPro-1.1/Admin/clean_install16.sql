@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_config` (
 
 INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`, `cSection`) VALUES
 ('l3_enabled', '1', 0, 0, 'cache'),
+('include_js_files', '1', 0, 0, 'cache'),
+('include_css_files', '1', 0, 0, 'cache'),
 ('dec_point', ',', 0, 0, 'payments'),
 ('currency', '€', 0, 0, 'payments'),
 ('format', '%value %currency', 0, 0, 'payments'),
@@ -33,7 +35,12 @@ INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`,
 ('show_pb', '1', 0, 0, 'general'),
 ('xml_raw', '0', 0, 0, 'debug'),
 ('display_errors', '0', 0, 0, 'debug'),
-('level', '2', 0, 0, 'debug');
+('level', '2', 0, 0, 'debug'),
+('xml_ip', '', 0, 0, 'debug'),
+('multimode', '0', 0, 0, 'lang'),
+('compress_js', '0', 0, 0, 'cache'),
+('alphamenu_extra_fields_array', '', 0, 0, 'alphamenu_extra_fields_array');
+
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
   `eid` int(25) NOT NULL AUTO_INCREMENT,
@@ -326,7 +333,8 @@ INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`
 ('radio', 'Radio Buttons', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
 ('select', 'Single Select List', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
 ('textarea', 'Text Area', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
-('url', 'URL', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');
+('url', 'URL', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
+('category', 'Category', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_section` (
   `section` int(11) NOT NULL DEFAULT '0',

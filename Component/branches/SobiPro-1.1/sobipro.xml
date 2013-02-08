@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="component" version="1.5.0">
+<install type="component" version="1.5.0" method="upgrade">
 	<name>SobiPro</name>
 	<creationDate>10 February 2013</creationDate>
 	<author>Sigsiu.NET GmbH</author>
@@ -7,7 +7,7 @@
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2013 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.1.0.J</version>
+	<version>1.1.0.K</version>
 	<codename>Budgie</codename>
 	<description></description>
 	<version_number>1.1.0</version_number>
@@ -41,7 +41,6 @@
 	</install>
 	<languages>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.ini</language>
-		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.sys.ini</language>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.js.ini</language>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.err.ini</language>
 	</languages>
@@ -86,6 +85,7 @@
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.js.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.about.ini</language>
+            <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.sys.ini</language>
             <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.messages.ini</language>
 		</languages>
 	</administration>
