@@ -55,7 +55,7 @@
 							<label class="control-label" for="{$fieldId}-input-container">
 								<xsl:choose>
 									<xsl:when test="string-length( description )">
-										<a href="#" rel="popover" data-placement="right" data-content="{description}" data-original-title="{label}">
+										<a href="#" rel="popover" data-placement="top" data-content="{description}" data-original-title="{label}">
 											<xsl:value-of select="label" />
 										</a>
 									</xsl:when>
