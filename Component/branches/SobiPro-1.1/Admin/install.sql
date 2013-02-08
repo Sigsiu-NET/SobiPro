@@ -72,7 +72,7 @@ INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`,
 ('name_field', '1', 1, 0, 'entry'),
 ('entries_ordering', 'position.asc', 1, 0, 'list'),
 ('maxCats', '5', 1, 0, 'entry'),
-('publish_limit', '0', 1, 0, 'entry'),
+('publish_limit', '', 1, 0, 'entry'),
 ('show_icon', '1', 1, 0, 'category'),
 ('show_intro', '1', 1, 0, 'category'),
 ('show_desc', '1', 1, 0, 'category'),
@@ -116,8 +116,11 @@ INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`,
 ('alphamenu_extra_fields_array', '', 1, 0, 'alphamenu_extra_fields_array'),
 ('always_add_search', '0', 1, 0, 'meta'),
 ('always_add_entryinput', '0', 1, 0, 'meta'),
-('parse_template_content', '0', 1, 0, 'general');
-
+('parse_template_content', '0', 1, 0, 'general'),
+('xml_ip', '', 0, 0, 'debug'),
+('multimode', '0', 0, 0, 'lang'),
+('compress_js', '0', 0, 0, 'cache'),
+('alphamenu_extra_fields_array', '', 0, 0, 'alphamenu_extra_fields_array');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
   `eid` int(25) NOT NULL AUTO_INCREMENT,
@@ -1255,7 +1258,8 @@ INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`
 ('radio', 'Radio Buttons', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
 ('select', 'Single Select List', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
 ('textarea', 'Text Area', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
-('url', 'URL', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');
+('url', 'URL', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
+('category', 'Category', '1.0', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_section` (
   `section` int(11) NOT NULL DEFAULT '0',
