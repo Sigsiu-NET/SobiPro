@@ -417,8 +417,6 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 		$this->getRequest();
 		$this->validate( $field );
-		/* in case we are changing the sort by field */
-		$alias = $field->get( 'nid' );
 
 		if ( $clone || !( $fid ) ) {
 			try {
@@ -431,6 +429,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		else {
 			$field->save( $this->attr );
 		}
+		$alias = $field->get( 'nid' );
 		$fieldSets = $field->get( 'sets' );
 		if ( is_array( $fieldSets ) && count( $fieldSets ) ) {
 			$sets = array_merge( $fieldSets, $sets );
