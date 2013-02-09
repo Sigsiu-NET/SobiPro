@@ -52,6 +52,7 @@ Legend:
    (+) Auto-suggest feature for search function
    (+) Excluding particular user groups for administrator templates override
    (+) Second ordering for entries in the search function
+   (+) Possibility to delete an entry in frontend
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list

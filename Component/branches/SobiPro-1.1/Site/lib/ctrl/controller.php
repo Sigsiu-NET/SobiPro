@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -166,11 +162,22 @@ abstract class SPController extends SPObject implements SPControl
 				$this->response( $url );
 				break;
 			case 'delete':
-				if ( $this->authorise( 'delete', '*' ) ) {
+				if ( ( $this->_model->get( 'owner' ) == Sobi::My( 'id' ) && $this->authorise( 'delete', 'own' ) ) || $this->authorise( 'delete', '*' ) ) {
 					$r = true;
 					if ( $this->_model->get( 'id' ) ) {
 						$this->_model->delete();
-						$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_DELETED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
+						if ( $this->_type == 'entry' && !( defined( 'SOBIPRO_ADM' ) ) ) {
+							if ( SPRequest::int( 'pid' ) ) {
+								$url = Sobi::Url( array( 'sid' => SPRequest::int( 'pid' ) ) );
+							}
+							else {
+								$url = Sobi::Url( array( 'sid' => Sobi::Section() ) );
+							}
+						}
+						else {
+							$url = Sobi::Back();
+						}
+						$this->response( $url, Sobi::Txt( 'MSG.OBJ_DELETED', array( 'type' => Sobi::Txt( $this->_type ) ) ), false );
 					}
 					else {
 						$this->response( Sobi::Back(), Sobi::Txt( 'CHANGE_NO_ID' ), false, SPC::ERROR_MSG );
