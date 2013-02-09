@@ -62,7 +62,7 @@
 					</xsl:if>
 					<xsl:if test="entry/delete_url">
 						<li>
-							<a href="{entry/delete_url}">
+							<a href="{entry/delete_url}" id="spDeleteEntry">
 								<xsl:value-of select="php:function( 'SobiPro::Txt', 'ENTRY_MANAGE_DELETE' )" />
 							</a>
 						</li>
