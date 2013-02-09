@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -233,7 +229,9 @@ class SPEntryView extends SPFrontView implements SPView
 		if ( Sobi::Can( 'entry', 'manage', '*' ) ) {
 			$en[ 'approve_url' ] = Sobi::Url( array( 'task' => ( $entry->get( 'approved' ) ? 'entry.unapprove' : 'entry.approve' ), 'sid' => $entry->get( 'id' ) ) );
 		}
-
+		if ( ( $entry->get( 'owner' ) == Sobi::My( 'id' ) && Sobi::Cfg( 'entry', 'delete', 'own' ) ) || Sobi::Can( 'entry', 'delete', '*' ) ) {
+			$en[ 'delete_url' ] = Sobi::Url( array( 'task' => 'entry.delete', 'sid' => $entry->get( 'id' ) ) );
+		}
 		if ( Sobi::Can( 'entry', 'publish', '*' ) || ( ( Sobi::My( 'id' ) == $entry->get( 'owner' ) && Sobi::Can( 'entry', 'publish', 'own' ) ) ) ) {
 			$en[ 'publish_url' ] = Sobi::Url( array( 'task' => ( $entry->get( 'state' ) ? 'entry.unpublish' : 'entry.publish' ), 'sid' => $entry->get( 'id' ) ) );
 		}

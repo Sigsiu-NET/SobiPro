@@ -26,7 +26,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:template name="manage">
-		<xsl:if test="entry/approve_url or entry/edit_url or entry/publish_url">
+		<xsl:if test="entry/approve_url or entry/edit_url or entry/publish_url or entry/delete_url">
 			<div class="btn-group pull-left">
 				<a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
 					<i class="icon-edit"></i>
@@ -57,6 +57,13 @@
 						<li>
 							<a href="{entry/edit_url}">
 								<xsl:value-of select="php:function( 'SobiPro::Txt', 'ENTRY_MANAGE_EDIT' )" />
+							</a>
+						</li>
+					</xsl:if>
+					<xsl:if test="entry/delete_url">
+						<li>
+							<a href="{entry/delete_url}">
+								<xsl:value-of select="php:function( 'SobiPro::Txt', 'ENTRY_MANAGE_DELETE' )" />
 							</a>
 						</li>
 					</xsl:if>
