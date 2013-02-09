@@ -37,5 +37,16 @@ SobiPro.jQuery( document ).ready( function ()
 		} );
 	} );
 	SobiPro.jQuery( '.dropdown-toggle' ).dropdown();
+	try {
+		SobiPro.jQuery( '#spDeleteEntry' ).click( function ( e )
+		{
+			"use strict";
+			if ( !( confirm( SobiPro.Txt( 'CONFIRM_DELETE_ENTRY' ) ) ) ) {
+				e.preventDefault();
+			}
+		} );
+	}
+	catch ( e ) {
+	}
 } );
 
