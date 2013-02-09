@@ -521,7 +521,8 @@ final class SPHeader
 
 	/**
 	 * Add a keywords to the site header
-	 * @param string $key
+	 * @param $keys
+	 * @internal param string $key
 	 * @return SPHeader
 	 */
 	public function & addKeyword( $keys )

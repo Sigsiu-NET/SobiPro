@@ -286,10 +286,10 @@ class SPJoomlaMainFrame
 		}
 		$menu =& JSite::getMenu()->getActive()->query;
 		$sid = isset( $menu[ 'sid' ] ) ? $menu[ 'sid' ] : 0;
-		$pathway = & JFactory::getApplication()->getPathway();
+		$pathway = JFactory::getApplication()->getPathway();
 		if ( $obj->get( 'oType' ) == 'entry' ) {
 			$id = SPRequest::int( 'pid' );
-			/* if we didn't enetered this entry via category */
+			/* if we didn't entered this entry via category */
 			if ( !$id || $id == Sobi::Section() || Sobi::Cfg( 'entry.primary_path_always' ) ) {
 				$id = $obj->get( 'parent' );
 			}
@@ -324,14 +324,15 @@ class SPJoomlaMainFrame
 		 */
 		if ( count( $path ) ) {
 			foreach ( $path as $data ) {
+				if ( !( isset( $data[ 'name' ] ) || isset( $data[ 'id' ] ) ) || !( $data[ 'id' ] ) ) {
+					continue;
+				}
 				$title[ ] = $data[ 'name' ];
-				$pathway->addItem( $data[ 'name' ], /*htmlentities*/
-					( self::url( array( 'title' => $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
+				$pathway->addItem( $data[ 'name' ], ( self::url( array( 'title' => $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
 			}
 		}
 		if ( $obj->get( 'oType' ) == 'entry' ) {
-			$pathway->addItem( $obj->get( 'name' ), /*htmlentities*/
-				( self::url( array( 'task' => 'entry.details', 'title' => $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
+			$pathway->addItem( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
 			$title[ ] = $obj->get( 'name' );
 		}
 		$this->setTitle( $title );
