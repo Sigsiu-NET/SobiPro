@@ -51,6 +51,7 @@ Legend:
    (+) Joomla! 3.0 compatibility (needs at least Joomla! 3.0.2)
    (+) Auto-suggest feature for search function
    (+) Excluding particular user groups for administrator templates override
+   (+) Second ordering for entries in the search function
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list

@@ -183,6 +183,25 @@
 											<field type="toggle" name="spcfg[list.entry_cats]" value="list.entry_cats" label="SECN.CFG.PASS_SEL_CATS_OF_ENTRY_TO_TEMPLATE" prefix="yes_no" />
 										</fieldset>
 									</tab>
+									<tab label="SEC.CFG.SEARCH_SETTINGS">
+										<fieldset>
+											<field type="select" label="SECN.CFG.SEARCH_SETTINGS_ORDER" name="spcfg[search.entries_ordering]" selected="search.entries_ordering" class="input-xlarge">
+												<values>
+													<option value="disabled" label="SECOND_ORDER_DISABLED" />
+													<option value="counter.asc" label="ORDER_BY_POPULARITY_ASCENDING" />
+													<option value="counter.desc" label="ORDER_BY_POPULARITY_DESCENDING" />
+													<option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC" />
+													<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC" />
+													<option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC" />
+													<option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC" />
+													<option value="validUntil.asc" label="ORDER_BY_EXPIRATION_DATE_ASC" />
+													<option value="validUntil.desc" label="ORDER_BY_EXPIRATION_DATE_DESC" />
+												</values>
+											</field>
+
+										</fieldset>
+									</tab>
+
 									<tab label="SEC.CFG.ALPHAMENU_SETTINGS">
 										<fieldset>
 											<field type="toggle" name="spcfg[alphamenu.show]" value="alphamenu.show" label="SECN.CFG.SHOW_ALPHA_MENU" prefix="show" />
