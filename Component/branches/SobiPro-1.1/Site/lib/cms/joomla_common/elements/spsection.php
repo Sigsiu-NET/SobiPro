@@ -440,7 +440,7 @@ class JElementSPSection extends JElement
 			$template = SPLoader::path( $file, 'root', false, null );
 		}
 		else {
-			$template = SOBI_PATH . 'usr/templates/' . str_replace( '.', '/', $tpl );
+			$template = SOBI_PATH . '/usr/templates/' . str_replace( '.', '/', $tpl );
 		}
 		return $template;
 	}
