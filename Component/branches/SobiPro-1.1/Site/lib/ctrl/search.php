@@ -495,7 +495,6 @@ final class SPSearchCtrl extends SPSectionCtrl
 			$r = $this->_db->loadAssocList();
 			if ( strlen( $r[ 0 ][ 'entriesResults' ] ) ) {
 				$store = SPConfig::unserialize( $r[ 0 ][ 'entriesResults' ] );
-				SPConfig::debOut( $store );
 				$this->_results = explode( ',', $store[ 'results' ] );
 				$this->_resultsCount = count( $this->_results );
 			}
