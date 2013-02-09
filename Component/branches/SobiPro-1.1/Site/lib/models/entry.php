@@ -534,6 +534,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		$db->transaction();
 
 		if ( !( $this->nid ) || SPRequest::task() == 'entry.clone' ) {
+			$this->nid = SPRequest::string( $this->nameField, null, false, $request );
 			$this->nid = $this->createAlias();
 			$this->name = $this->nid;
 		}

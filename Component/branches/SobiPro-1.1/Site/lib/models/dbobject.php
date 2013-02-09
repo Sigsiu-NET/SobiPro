@@ -403,6 +403,9 @@ abstract class SPDBObject extends SPObject
 		$c = 1;
 		static $add = 0;
 		$suffix = null;
+		if ( !( strlen( $this->nid ) ) ) {
+			$this->nid = SPLang::nid( $this->name );
+		}
 		while ( $c ) {
 			try {
 				$condition = array( 'oType' => $this->oType, 'nid' => $this->nid . $suffix );
@@ -413,9 +416,10 @@ abstract class SPDBObject extends SPObject
 						->select( 'COUNT( nid )', 'spdb_object', $condition )
 						->loadResult();
 				if ( $c > 0 ) {
-					$suffix = '_' . ++ $add;
+					$suffix = '_' . ++$add;
 				}
-			} catch ( SPException $x ) {}
+			} catch ( SPException $x ) {
+			}
 		}
 		return $this->nid . $suffix;
 	}
@@ -503,7 +507,8 @@ abstract class SPDBObject extends SPObject
 		/* if new object */
 		if ( !$this->id ) {
 			/** @var the notification App is using it to recognise if it is a new entry or an update */
-			$this->createdTime = /*$this->createdTime ? $this->createdTime :*/ $this->updatedTime;
+			$this->createdTime = /*$this->createdTime ? $this->createdTime :*/
+					$this->updatedTime;
 			$this->owner = $this->owner ? $this->owner : $this->updater;
 			$this->ownerIP = $this->updaterIP;
 		}
