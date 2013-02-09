@@ -41,6 +41,12 @@ SobiPro.jQuery( document ).ready( function ()
 	else {
 		SobiPro.jQuery( '[class*="width-"]' ).removeAttr( 'style' );
 	}
+	try {
+		if( Joomla == undefined ) {}
+	} catch( e ) {
+		function JLegacy() {}
+		Joomla = new JLegacy();
+	}
 	Joomla.submitform = function ( task )
 	{
 		SobiPro.jQuery( '#task' ).val( task );

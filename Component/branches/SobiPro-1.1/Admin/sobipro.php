@@ -30,7 +30,7 @@ define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( v
 define( 'SOBIPRO', true );
 define( 'SOBIPRO_ADM', true );
 define( 'SOBI_TASK', 'task' );
-if( JVERSION == 'joomla15') {
+if( SOBI_CMS == 'joomla15') {
 	define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', JFactory::getConfig()->getValue( 'config.language' ) ) );
 }
 else {

@@ -128,7 +128,7 @@ class SPAdmView extends SPObject implements SPView
 			else {
 				$this->loadDefinition( "{$type}.{$template}" );
 			}
-			if ( SPLoader::translatePath( "{$type}.{$nid}.{$template}", 'adm' ) ) {
+			if ( Sobi::Section() && SPLoader::translatePath( "{$type}.{$nid}.{$template}", 'adm' ) ) {
 				$this->setTemplate( "{$type}.{$nid}.{$template}" );
 			}
 			else {

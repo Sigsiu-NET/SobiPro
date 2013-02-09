@@ -8,3 +8,9 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (
   `groupName` varchar(150) NOT NULL,
   PRIMARY KEY (`gid`)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;
+
+DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;
+ALTER TABLE `#__sobipro_permissions` ADD UNIQUE  `uniquePermission` (  `subject` ,  `action` ,  `value` ,  `site` );
+INSERT INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
+(NULL, 'entry', 'delete', 'own', 'front', 1),
+(NULL, 'entry', 'delete', '*', 'front', 1);

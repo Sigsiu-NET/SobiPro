@@ -1170,7 +1170,6 @@ INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`
 (2, 'section', '*', '*', 'front', 0),
 (3, 'section', 'access', '*', 'front', 1),
 (4, 'section', 'access', 'valid', 'front', 1),
-(5, 'section', 'access', '*', 'front', 0),
 (6, 'category', '*', '*', 'front', 0),
 (7, 'category', 'access', 'valid', 'front', 1),
 (8, 'category', 'access', '*', 'front', 1),
@@ -1191,6 +1190,12 @@ INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`
 (23, 'entry', 'adm_fields', 'see', 'front', 0),
 (24, 'entry', 'adm_fields', 'edit', 'front', 1),
 (25, 'entry', 'payment', 'free', 'front', 1);
+
+DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;
+ALTER TABLE `#__sobipro_permissions` ADD UNIQUE  `uniquePermission` (  `subject` ,  `action` ,  `value` ,  `site` );
+INSERT INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
+(NULL, 'entry', 'delete', 'own', 'front', 1),
+(NULL, 'entry', 'delete', '*', 'front', 1);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_groups` (
   `rid` int(11) NOT NULL,
