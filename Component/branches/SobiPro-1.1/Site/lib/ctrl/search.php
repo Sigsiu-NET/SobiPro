@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -53,13 +49,17 @@ final class SPSearchCtrl extends SPSectionCtrl
 	 */
 	protected $_results = array();
 	/**
+	 * @var array
+	 */
+	protected $_resultsByPriority = array();
+	/**
 	 * @var int
 	 */
 	protected $_resultsCount = 0;
 	/**
 	 * @var array
 	 */
-	protected $_cresults = array();
+	protected $_categoriesResults = array();
 	/**
 	 * @var SPDb
 	 */
@@ -152,7 +152,9 @@ final class SPSearchCtrl extends SPSectionCtrl
 		$this->_fields = $this->loadFields();
 		$searchForString = false;
 		Sobi::Trigger( 'OnRequest', 'Search', array( &$this->_request ) );
-
+		for ( $i = 1; $i < 11; $i++ ) {
+			$this->_resultsByPriority[ $i ] = array();
+		}
 		// if the visitor wasn't on the search page first
 		if ( !( $ssid ) || SPRequest::int( 'reset', 0 ) ) {
 			$this->session( $ssid );
@@ -186,10 +188,8 @@ final class SPSearchCtrl extends SPSectionCtrl
 					$this->searchWords( ( $this->_request[ 'phrase' ] == 'all' ) );
 					break;
 				case 'exact':
-				{
 					$this->searchPhrase();
 					break;
-				}
 			}
 			$this->_results = array_unique( $this->_results );
 		}
@@ -201,6 +201,10 @@ final class SPSearchCtrl extends SPSectionCtrl
 			foreach ( $this->_fields as $field ) {
 				if ( isset( $this->_request[ $field->get( 'nid' ) ] ) && ( $this->_request[ $field->get( 'nid' ) ] != null ) ) {
 					$fr = $field->searchData( $this->_request[ $field->get( 'nid' ) ], Sobi::Section() );
+					$priority = $field->get( 'priority' );
+					if ( is_array( $fr ) ) {
+						$this->_resultsByPriority[ $priority ] = array_merge( $this->_resultsByPriority[ $priority ], $fr );
+					}
 					/* if we didn't got any results before this array contains the results */
 					if ( !( is_array( $results ) ) ) {
 						$results = $fr;
@@ -234,12 +238,13 @@ final class SPSearchCtrl extends SPSectionCtrl
 		}
 		$this->_request[ 'search_for' ] = str_replace( '%', '*', $this->_request[ 'search_for' ] );
 		Sobi::Trigger( 'AfterExtended', 'Search', array( &$this->_results ) );
+		$this->sortPriority();
 		$req = ( is_array( $this->_request ) && count( $this->_request ) ) ? SPConfig::serialize( $this->_request ) : null;
 		$res = ( is_array( $this->_results ) && count( $this->_results ) ) ? implode( ', ', $this->_results ) : null;
-		$cre = ( is_array( $this->_cresults ) && count( $this->_cresults ) ) ? implode( ', ', $this->_cresults ) : null;
+		$cre = ( is_array( $this->_categoriesResults ) && count( $this->_categoriesResults ) ) ? implode( ', ', $this->_categoriesResults ) : null;
 		/* determine the search parameters */
 		$attr = array(
-			'entriesResults' => $res,
+			'entriesResults' => array( 'results' => $res, 'resultsByPriority' => $this->_resultsByPriority ),
 			'catsResults' => $cre,
 			'uid' => Sobi::My( 'id' ),
 			'browserData' => SPConfig::serialize( SPBrowser::getInstance() )
@@ -263,7 +268,44 @@ final class SPSearchCtrl extends SPSectionCtrl
 		Sobi::Redirect( Sobi::Url( $url ) );
 	}
 
-	private function verify()
+	protected function sortPriority()
+	{
+		foreach ( $this->_resultsByPriority as $prio => $ids ) {
+			$this->_resultsByPriority[ $prio ] = array_unique( $ids );
+			foreach ( $ids as $i => $sid ) {
+				if ( !( in_array( $sid, $this->_results ) ) ) {
+					unset( $this->_resultsByPriority[ $prio ][ $i ] );
+				}
+			}
+		}
+		foreach ( $this->_resultsByPriority as $prio => $ids ) {
+			foreach ( $ids as $id ) {
+				foreach ( $this->_resultsByPriority as $p => $sids ) {
+					if ( $p <= $prio ) {
+						continue;
+					}
+					foreach ( $sids as $i => $sid ) {
+						if ( $sid == $id ) {
+							unset( $this->_resultsByPriority[ $p ][ $i ] );
+						}
+					}
+				}
+			}
+		}
+		if ( Sobi::Cfg( 'search.entries_ordering', 'disabled' ) != 'disabled' ) {
+			$this->_results = array();
+			foreach ( $this->_resultsByPriority as $prio => $ids ) {
+				if ( count( $ids ) ) {
+					$this->_resultsByPriority[ $prio ] = SPFactory::db()
+							->select( 'id', 'spdb_object', array( 'id' => $ids ), Sobi::Cfg( 'search.entries_ordering', 'disabled' ) )
+							->loadResultArray();
+					$this->_results = array_merge( $this->_results, $this->_resultsByPriority[ $prio ] );
+				}
+			}
+		}
+	}
+
+	protected function verify()
 	{
 		if ( $this->_results ) {
 			$conditions = array();
@@ -340,9 +382,11 @@ final class SPSearchCtrl extends SPSectionCtrl
 		$results = array();
 		if ( count( $this->_fields ) ) {
 			foreach ( $this->_fields as $field ) {
+				$priority = $field->get( 'priority' );
 				$fr = $field->searchString( $word, Sobi::Section(), $regex );
 				if ( is_array( $fr ) && count( $fr ) ) {
 					$results = array_merge( $results, $fr );
+					$this->_resultsByPriority[ $priority ] = array_merge( $this->_resultsByPriority[ $priority ], $fr );
 				}
 			}
 		}
@@ -379,9 +423,9 @@ final class SPSearchCtrl extends SPSectionCtrl
 
 
 		Sobi::Trigger( 'OnFormStart', 'Search' );
-		$class = SPLoader::loadView( 'search' );
 		SPLoader::loadClass( 'mlo.input' );
-		$view = new $class( $this->template );
+		$view = SPFactory::View( 'search' );
+
 		/* if we cannot transfer the search id in cookie */
 		if ( !( $this->session( $ssid ) ) ) {
 			$view->addHidden( $ssid, 'ssid' );
@@ -432,7 +476,6 @@ final class SPSearchCtrl extends SPSectionCtrl
 
 	private function getResults( $ssid, $template )
 	{
-		$eClass = SPLoader::loadModel( 'entry' );
 		$results = array();
 		/* case some plugin overwrites this method */
 		Sobi::Trigger( 'GetResults', 'Search', array( &$results, &$ssid, &$template ) );
@@ -451,7 +494,9 @@ final class SPSearchCtrl extends SPSectionCtrl
 			$this->_db->select( array( 'entriesResults', 'requestData' ), 'spdb_search', array( 'ssid' => $ssid ) );
 			$r = $this->_db->loadAssocList();
 			if ( strlen( $r[ 0 ][ 'entriesResults' ] ) ) {
-				$this->_results = explode( ',', $r[ 0 ][ 'entriesResults' ] );
+				$store = SPConfig::unserialize( $r[ 0 ][ 'entriesResults' ] );
+				SPConfig::debOut( $store );
+				$this->_results = explode( ',', $store[ 'results' ] );
 				$this->_resultsCount = count( $this->_results );
 			}
 			$this->_request = SPConfig::unserialize( $r[ 0 ][ 'requestData' ] );
