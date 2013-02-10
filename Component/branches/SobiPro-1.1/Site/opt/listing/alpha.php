@@ -215,8 +215,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		}
 
 		/* get view class */
-		$class = SPLoader::loadView( 'listing' );
-		$view = new $class( $this->template );
+		$view = SPFactory::View( 'listing' );
 		$view->assign( $eLimit, '$eLimit' );
 		$view->assign( $eLimStart, '$eLimStart' );
 		$view->assign( $eCount, '$eCount' );
@@ -258,10 +257,10 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		$db = SPFactory::db();
 		/*
 		 * Don't know exactly why but on Windows servers there seems to be some problem with unicode chars
-		 *     - strtolower/strtoupper is destroying these chars completelly
+		 *     - strtolower/strtoupper is destroying these chars completely
 		 *     - MySQL seems to be suddenly case sensitive with non-latin chars so we need to ask both
 		 *
-		 * Wed, Apr 4, 2012: Apparently it's not only Windows releated
+		 * Wed, Apr 4, 2012: Apparently it's not only Windows related
 		 */
 		if ( !( preg_match( '/^[\x20-\x7f]*$/D', $this->_letter ) ) && function_exists( 'mb_strtolower' ) ) {
 			// if we have multibyte string support - ask both cases ...

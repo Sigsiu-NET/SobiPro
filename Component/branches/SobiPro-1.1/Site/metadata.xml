@@ -29,6 +29,7 @@
             <default name="SOBI_SECTION" msg="SOBI_SECTION_EXPL"/>
             <option value="search" name="SOBI_SEARCH" msg="SOBI_SEARCH_EXPL"/>
             <option value="entry.add" name="SOBI_ADD_FORM" msg="SOBI_ADD_FORM_EXPL"/>
+	        <option value="list.user" name="SOBI_USER_LISTING" msg="SOBI_USER_LISTING_EXPL"/>
         </options>
         <fields name="request">
             <fieldset name="request" label="COM_MENUS_BASIC_FIELDSET_LABEL"

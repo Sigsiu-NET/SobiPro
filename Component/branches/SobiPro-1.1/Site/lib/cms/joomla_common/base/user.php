@@ -352,7 +352,7 @@ class SPJoomlaUser extends JUser
 
 	/**
 	 * Getting base data from Joomla! users table.
-	 * Offten there are only a few informations needed so it does not make
+	 * Often there are only a few information needed so it does not make
 	 * sense to instance the big object just to get these data
 	 * @param array $id
 	 * @return array

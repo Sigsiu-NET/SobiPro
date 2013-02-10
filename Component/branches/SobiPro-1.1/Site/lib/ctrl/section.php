@@ -237,17 +237,20 @@ class SPSectionCtrl extends SPController
         return $conditions;
     }
 
-    /**
-     * @param string $eOrder
-     * @param int $eLimit
-     * @param int $eLimStart
-     * @return array
-     */
+	/**
+	 * @param string $eOrder
+	 * @param int $eLimit
+	 * @param int $eLimStart
+	 * @param bool $count
+	 * @param array $conditions
+	 * @param bool $entriesRecursive
+	 * @param int $pid
+	 * @return array
+	 */
     public function getEntries( $eOrder, $eLimit = null, $eLimStart = null, $count = false, $conditions = array(), $entriesRecursive = false, $pid = 0 )
     {
         /* var SPDb $db */
         $db =& SPFactory::db();
-        $eClass = SPLoader::loadModel( 'entry' );
         $entries = array();
         $eDir = 'asc';
         $oPrefix = null;
