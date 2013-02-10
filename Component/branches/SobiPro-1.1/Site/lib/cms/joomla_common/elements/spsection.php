@@ -350,6 +350,7 @@ class JElementSPSection extends JElement
 				$section = SPFactory::object( $sid );
 				if ( $section->oType == 'section' ) {
 					$selected = $section->id;
+					$this->section = $selected;
 				}
 				else {
 					$path = array();
@@ -454,6 +455,9 @@ class JElementSPSection extends JElement
 			case 'category':
 			case 'search':
 				$path = Sobi::FixPath( $path . '/' . $this->oType );
+				break;
+			case 'list.user':
+				$path = Sobi::FixPath( $path . '/listing'  );
 				break;
 			default:
 				break;
