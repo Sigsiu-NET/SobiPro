@@ -28,7 +28,7 @@ Legend:
 
 
 -------------------
-1.1.0 (Alpha K)
+1.1.0 (Alpha L)
 -------------------
 
    (+) XML based template engine for administrator templates
@@ -52,8 +52,9 @@ Legend:
    (+) Auto-suggest feature for search function
    (+) Excluding particular user groups for administrator templates override
    (+) Second ordering for entries in search function
-   (+) Possibility to delete an entry from frontend
-   (+) Menu link to own entries
+   (+) Possibility to delete (instead of unpublish) an entry from frontend
+   (+) View and menu link for own entries
+   (+) View for all entries of an specific user
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list
