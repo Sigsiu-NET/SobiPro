@@ -296,9 +296,14 @@ final class SPSearchCtrl extends SPSectionCtrl
 			$this->_results = array();
 			foreach ( $this->_resultsByPriority as $prio => $ids ) {
 				if ( count( $ids ) ) {
-					$this->_resultsByPriority[ $prio ] = SPFactory::db()
-							->select( 'id', 'spdb_object', array( 'id' => $ids ), Sobi::Cfg( 'search.entries_ordering', 'disabled' ) )
-							->loadResultArray();
+					if ( Sobi::Cfg( 'search.entries_ordering', 'disabled' ) == 'random' ) {
+						shuffle( $this->_resultsByPriority[ $prio ] );
+					}
+					else {
+						$this->_resultsByPriority[ $prio ] = SPFactory::db()
+								->select( 'id', 'spdb_object', array( 'id' => $ids ), Sobi::Cfg( 'search.entries_ordering', 'disabled' ) )
+								->loadResultArray();
+					}
 					$this->_results = array_merge( $this->_results, $this->_resultsByPriority[ $prio ] );
 				}
 			}
