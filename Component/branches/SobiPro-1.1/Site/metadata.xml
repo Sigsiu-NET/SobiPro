@@ -30,11 +30,13 @@
             <option value="search" name="SOBI_SEARCH" msg="SOBI_SEARCH_EXPL"/>
             <option value="entry.add" name="SOBI_ADD_FORM" msg="SOBI_ADD_FORM_EXPL"/>
 	        <option value="list.user" name="SOBI_USER_LISTING" msg="SOBI_USER_LISTING_EXPL"/>
+	        <option value="list.date" name="SOBI_DATE_LISTING" msg="SOBI_DATE_LISTING_EXPL"/>
         </options>
         <fields name="request">
             <fieldset name="request" label="COM_MENUS_BASIC_FIELDSET_LABEL"
                       addfieldpath="/components/com_sobipro/lib/cms/joomla16/elements">
                 <field name="SOBI_SELECT_SECTION" type="spsection" description="SOBI_SELECT_SECTION_EXPL"/>
+	            <field name="date" type="spdid" label="SOBI_SELECTED_DATE"/>
                 <field name="cid" type="spcid" label="SOBI_SELECT_CATEGORY" description="SOBI_SELECT_CATEGORY_EXPL"/>
                 <field name="eid" type="speid" label="SOBI_SELECT_ENTRY" description="SOBI_SELECT_ENTRY_EXPL"/>
                 <field name="sid" type="spsid" label="SOBI_SELECTED_OBJECT"/>

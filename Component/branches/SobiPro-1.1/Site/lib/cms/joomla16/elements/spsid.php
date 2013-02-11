@@ -27,4 +27,3 @@ class JFormFieldSPSid extends JFormFieldSPSection
 {
 	protected $type = 'spsid';
 }
-?>

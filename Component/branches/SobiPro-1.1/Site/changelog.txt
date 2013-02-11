@@ -55,6 +55,8 @@ Legend:
    (+) Possibility to delete (instead of unpublish) an entry from frontend
    (+) View and menu link for own entries
    (+) View for all entries of an specific user
+   (+) View for all entries added within a particular date (year/month/or exact day)
+   (+) View and menu link for entries added in a particular date period
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list

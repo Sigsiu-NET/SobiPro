@@ -21,7 +21,7 @@
  * $HeadURL$
  */
 
-JLoader::import( 'joomla.html.parameter.element' );
+//JLoader::import( 'joomla.html.parameter.element' );
 require_once dirname( __FILE__ ) . '/../../joomla_common/elements/spsection.php';
 
 class JFormFieldSPSection extends JFormField
