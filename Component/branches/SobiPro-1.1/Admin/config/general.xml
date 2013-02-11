@@ -188,6 +188,7 @@
 											<field type="select" label="SECN.CFG.SEARCH_SETTINGS_ORDER" name="spcfg[search.entries_ordering]" selected="search.entries_ordering" class="input-xlarge">
 												<values>
 													<option value="disabled" label="SECOND_ORDER_DISABLED" />
+													<option value="random" label="ORDER_BY_RANDOM" />
 													<option value="counter.asc" label="ORDER_BY_POPULARITY_ASCENDING" />
 													<option value="counter.desc" label="ORDER_BY_POPULARITY_DESCENDING" />
 													<option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC" />
