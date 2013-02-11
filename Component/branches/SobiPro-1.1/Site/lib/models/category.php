@@ -86,7 +86,8 @@ class SPCategory extends SPDBObject implements SPDataModel
 	/**
 	 * @var array
 	 */
-	private static $translatable = array( 'description', 'introtext' );
+	private static $translatable = array( 'description', 'introtext', 'name', 'metaKeys', 'metaDesc' );
+
 	/**
 	 */
 	protected $_dbTable = 'spdb_category';

@@ -216,6 +216,19 @@ function SPJoomlaMenu()
 			SobiPro.jQuery( '#jform_link' ).val( SobiPro.jQuery( '#jform_link' ).val().replace( /\&sptpl\=[a-zA-Z0-9\-\_\.]*/gi, '' ) )
 		}
 	} );
+	SobiPro.jQuery( '.SobiProCalendar' ).find( 'select' ).change( function ()
+		{
+			"use strict";
+			var date = [];
+			SobiPro.jQuery( '.SobiProCalendar' ).find( 'select' ).each( function ( i, e )
+			{
+				if( SobiPro.jQuery( this ).val() ) {
+					date.push( SobiPro.jQuery( this ).val() );
+				}
+			} );
+			SobiPro.jQuery( '#selectedDate' ).val( date.join( '.' ) );
+		}
+	);
 }
 
 function SPSetObjectType( type )

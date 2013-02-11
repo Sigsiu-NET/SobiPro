@@ -207,6 +207,12 @@ class JElementSPSection extends JElement
 		$head->addJsCode( "SPJmenuFixTask( '{$this->taskName}' );" )
 				->addJsFile( 'bootstrap.typeahead' )
 				->addJsCode( "var SPJmenuStrings = {$strings}" );
+		if ( $this->task != 'list.date' ) {
+			$head->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( "#spCalendar" ).parent().parent().css( "display", "none" ); } );' );
+		}
+		else {
+			$head->addCSSCode( '.SobiProCalendar .chzn-container { width: 100px!important; } ' );
+		}
 		$head->send();
 		parent::__construct();
 		$loaded = true;
@@ -233,16 +239,18 @@ class JElementSPSection extends JElement
 
 	protected function getLink()
 	{
-		$link = null;
-		if ( SOBI_CMS == 'joomla3' ) {
-			$model = JModelLegacy::getInstance( 'MenusModelItem' )
-					->getItem();
-			$link = $model->link;
-		}
-		else {
-			$link = JModel::getInstance( 'MenusModelItem' )
-					->getItem()
-					->get( 'link' );
+		static $link = null;
+		if ( !( $link ) ) {
+			if ( SOBI_CMS == 'joomla3' ) {
+				$model = JModelLegacy::getInstance( 'MenusModelItem' )
+						->getItem();
+				$link = $model->link;
+			}
+			else {
+				$link = JModel::getInstance( 'MenusModelItem' )
+						->getItem()
+						->get( 'link' );
+			}
 		}
 		return str_replace( 'amp;', null, $link );
 	}
@@ -386,15 +394,17 @@ class JElementSPSection extends JElement
 		if ( $name == 'eid' ) {
 			return $this->getEntry();
 		}
+		if ( $name == 'did' ) {
+			return $this->getCalendar();
+		}
 		if ( $name == 'tpl' ) {
 			return $this->getTemplates();
 		}
 		$sections = array();
 		$sout = array();
 		try {
-			$sections =
-					$db->select( '*', 'spdb_object', array( 'oType' => 'section' ), 'id' )
-							->loadObjectList();
+			$sections = $db->select( '*', 'spdb_object', array( 'oType' => 'section' ), 'id' )
+					->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), $x->getMessage(), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
@@ -414,6 +424,54 @@ class JElementSPSection extends JElement
 		$params = array( 'id' => 'spsection', 'class' => 'required' );
 		$field = SPHtml_Input::select( 'sid', $sout, $selected, false, $params );
 		return "<div class=\"SobiPro\" style=\"margin-top: 2px;\">{$field}</div>";
+	}
+
+	protected function getCalendar()
+	{
+		if ( $this->task == 'list.date' ) {
+			$link = $this->getLink();
+			$query = array();
+			parse_str( $link, $query );
+			$selected = array( 'year' => null, 'month' => null, 'day' => null );
+			if ( isset( $query[ 'date' ] ) ) {
+				$date = explode( '.', $query[ 'date' ] );
+				$selected[ 'year' ] = isset( $date[ 0 ] ) && $date[ 0 ] ? $date[ 0 ] : null;
+				$selected[ 'month' ] = isset( $date[ 1 ] ) && $date[ 1 ] ? $date[ 1 ] : null;
+				$selected[ 'day' ] = isset( $date[ 2 ] ) && $date[ 2 ] ? $date[ 2 ] : null;
+			}
+			$months = array( null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) );
+			$monthsNames = Sobi::Txt( 'JS_CALENDAR_MONTHS' );
+			$monthsNames = explode( ',', $monthsNames );
+			$years = array( null => Sobi::Txt( 'FD.SEARCH_SELECT_LABEL' ) );
+			for ( $i = 1; $i < 12; $i++ ) {
+				$months[ $i ] = $monthsNames[ $i - 1 ];
+			}
+			$days = array( null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) );
+
+			for ( $i = 1; $i < 31; $i++ ) {
+				$days[ $i ] = $i;
+			}
+			$exYears = SPFactory::db()
+					->dselect( 'EXTRACT( YEAR FROM createdTime )', 'spdb_object' )
+					->loadResultArray();
+			if ( count( $exYears ) ) {
+				foreach ( $exYears as $year ) {
+					$years[ $year ] = $year;
+				}
+			}
+			return
+					'<div class="SobiPro SobiProCalendar">' .
+					SPHtml_Input::select( 'sp_year', $years, $selected[ 'year' ] ) .
+					SPHtml_Input::select( 'sp_month', $months, $selected[ 'month' ] ) .
+					SPHtml_Input::select( 'sp_day', $days, $selected[ 'day' ] ) .
+					'<input type="hidden" name="urlparams[date]" id="selectedDate" value=""/>
+	                 </div>';
+
+		}
+		else {
+			SPFactory::header()->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( "#spCalendar" ).parent().css( "display", "none" ); } );' );
+			return '<span id="spCalendar"></span>';
+		}
 	}
 
 	protected function getTemplates()
@@ -457,7 +515,8 @@ class JElementSPSection extends JElement
 				$path = Sobi::FixPath( $path . '/' . $this->oType );
 				break;
 			case 'list.user':
-				$path = Sobi::FixPath( $path . '/listing'  );
+			case 'list.date':
+				$path = Sobi::FixPath( $path . '/listing' );
 				break;
 			default:
 				break;

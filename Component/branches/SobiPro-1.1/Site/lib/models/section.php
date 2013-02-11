@@ -62,7 +62,7 @@ final class SPSection extends SPDBObject implements SPDataModel
 	/**
 	 * @var array
 	 */
-	private static $translatable = array( 'description' );
+	private static $translatable = array( 'description', 'name', 'metaKeys', 'metaDesc' );
 
 	/**
 	 */
