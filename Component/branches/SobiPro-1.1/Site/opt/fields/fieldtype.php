@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -129,32 +125,39 @@ class SPFieldType extends SPObject
 		}
 	}
 
-	protected function rangeSearch( $values )
+	protected function rangeSearch( $values, $freeInput = false )
 	{
-		$request[ 'from' ] = isset( $this->_selected[ 'from' ] ) ? $this->_selected[ 'from' ] : '';
-		$request[ 'to' ] = isset( $this->_selected[ 'to' ] ) ? $this->_selected[ 'to' ] : '';
-		$values = str_replace( array( "\n", "\r", "\t" ), null, $values );
-		$values = explode( ',', $values );
-		$data = array();
-		$data2 = array();
-		if ( count( $values ) ) {
-			foreach ( $values as $k => $v ) {
-				$data[ '' ] = Sobi::Txt( 'SH.SEARCH_SELECT_RANGE_FROM', array( 'name' => $this->name ) );
-				$data2[ '' ] = Sobi::Txt( 'SH.SEARCH_SELECT_RANGE_TO', array( 'name' => $this->name ) );
-				$data[ preg_replace( '/[^\d\.\-]/', null, trim( $v ) ) ] = $v;
-				$data2[ preg_replace( '/[^\d\.\-]/', null, trim( $v ) ) ] = $v;
+		$request[ 'from' ] = isset( $this->_selected[ 'from' ] ) ? (int) $this->_selected[ 'from' ] : '';
+		$request[ 'to' ] = isset( $this->_selected[ 'to' ] ) ? (int) $this->_selected[ 'to' ] : '';
+		if ( !( $freeInput ) ) {
+			$values = str_replace( array( "\n", "\r", "\t" ), null, $values );
+			$values = explode( ',', $values );
+			$data = array();
+			$data2 = array();
+			if ( count( $values ) ) {
+				foreach ( $values as $k => $v ) {
+					$data[ '' ] = Sobi::Txt( 'SH.SEARCH_SELECT_RANGE_FROM', array( 'name' => $this->name ) );
+					$data2[ '' ] = Sobi::Txt( 'SH.SEARCH_SELECT_RANGE_TO', array( 'name' => $this->name ) );
+					$data[ preg_replace( '/[^\d\.\-]/', null, trim( $v ) ) ] = $v;
+					$data2[ preg_replace( '/[^\d\.\-]/', null, trim( $v ) ) ] = $v;
+				}
 			}
+			$from = SPHtml_Input::select( $this->nid . '[from]', $data, $request[ 'from' ], false, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1' ) );
+			$to = SPHtml_Input::select( $this->nid . '[to]', $data2, $request[ 'to' ], false, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1' ) );
+			return '<div class="SPSearchSelectRangeFrom"><span>' . Sobi::Txt( 'SH.RANGE_FROM' ) . '</span> ' . $from . ' ' . $this->suffix . '</div><div class="SPSearchSelectRangeTo"><span>' . Sobi::Txt( 'SH.RANGE_TO' ) . ' ' . $to . ' ' . $this->suffix . '</span></div>';
 		}
-		$from = SPHtml_Input::select( $this->nid . '[from]', $data, $request[ 'from' ], false, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1' ) );
-		$to = SPHtml_Input::select( $this->nid . '[to]', $data2, $request[ 'to' ], false, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1' ) );
-		return '<div class="SPSearchSelectRangeFrom"><span>' . Sobi::Txt( 'SH.RANGE_FROM' ) . '</span> ' . $from . ' ' . $this->suffix . '</div><div class="SPSearchSelectRangeTo"><span>' . Sobi::Txt( 'SH.RANGE_TO' ) . ' ' . $to . ' ' . $this->suffix . '</span></div>';
+		else {
+			$from = SPHtml_Input::text( $this->nid . '[from]', $request[ 'from' ], array( 'class' => $this->cssClass . ' input-mini', 'size' => '1' ) );
+			$to = SPHtml_Input::text( $this->nid . '[to]', $request[ 'to' ], array( 'class' => $this->cssClass . ' input-mini', 'size' => '1' ) );
+			return '<div class="SPSearchInputRangeFrom"><span>' . Sobi::Txt( 'SH.RANGE_FROM' ) . '</span> ' . $from . ' ' . $this->suffix . '</div><div class="SPSearchSelectRangeTo"><span>' . Sobi::Txt( 'SH.RANGE_TO' ) . ' ' . $to . ' ' . $this->suffix . '</span></div>';
+		}
 	}
 
 	protected function searchForRange( $request, $section )
 	{
 		$sids = array();
-		$request[ 'from' ] = isset( $request[ 'from' ] ) ? $request[ 'from' ] : SPC::NO_VALUE;
-		$request[ 'to' ] = isset( $request[ 'to' ] ) ? $request[ 'to' ] : SPC::NO_VALUE;
+		$request[ 'from' ] = isset( $request[ 'from' ] ) ? (int)$request[ 'from' ] : SPC::NO_VALUE;
+		$request[ 'to' ] = isset( $request[ 'to' ] ) ? (int)$request[ 'to' ] : SPC::NO_VALUE;
 		try {
 			SPFactory::db()
 					->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $request, 'section' => $section ) );
@@ -383,6 +386,7 @@ class SPFieldType extends SPObject
 		}
 		return $options;
 	}
+
 	/**
 	 * @param SPEntry $entry
 	 * @param string $request
