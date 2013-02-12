@@ -620,7 +620,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (
   `osData` text NOT NULL,
   `humanity` int(3) NOT NULL,
   PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`)
-)
+);
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
