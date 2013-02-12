@@ -186,6 +186,20 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
   KEY `language` (`language`)
 ) DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (
+  `date` datetime NOT NULL,
+  `uid` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `fid` varchar(50) NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `section` int(11) NOT NULL,
+  `browserData` text NOT NULL,
+  `osData` text NOT NULL,
+  `humanity` int(3) NOT NULL,
+  PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`)
+)
+
 INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES
 ('bankdata', '<p>Payment Subject: "Entry in the {section.name} at the {cfg:site_name}. Entry id {entry.id}"</p>\r\n<ul>\r\n<li>Account Owner: Jon Doe </li>\r\n<li>Account No.: 8274230479 </li>\r\n<li>Bank No.: 8038012380 </li>\r\n<li>IBAN: 234242343018 </li>\r\n<li>BIC: 07979079779ABCDEFGH</li>\r\n</ul>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
 ('ppexpl', '<p>Please click on the button below to pay via Paypal.</p>\r\n<p> </p>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
