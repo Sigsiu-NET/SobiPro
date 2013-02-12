@@ -497,7 +497,8 @@ abstract class SPHtml_Input
 	 * @param array $selected - one-dimensional array with selected values
 	 * @param bool $multi - multiple select is allowed or not
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
-	 * @param string $title - language section for the title tags. If given, the options/optgroup will get a title tag. The title will be search in the language file under the given section
+	 * @return string
+	 * @internal param string $title - language section for the title tags. If given, the options/optgroup will get a title tag. The title will be search in the language file under the given section
 	 */
 	public static function select( $name, $values, $selected = null, $multi = false, $params = null )
 	{
