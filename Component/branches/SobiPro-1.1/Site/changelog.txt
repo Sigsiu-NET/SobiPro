@@ -57,6 +57,7 @@ Legend:
    (+) View for all entries of an specific user
    (+) View for all entries added within a particular date (year/month/or exact day)
    (+) View and menu link for entries added in a particular date period
+   (+) Range search for inputbox with a free input
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list
@@ -93,6 +94,7 @@ Legend:
    (#) Missing id for inbox fields in search form
    (#) Non-closed string (url) in CSS cache while converting file path
    (#) Not possible to transform url paths in CSS cache if more than one url per line
+   (#) Column count doesn't match value while installing a new payment App
 
 
 -------------------

@@ -347,7 +347,7 @@ class SPAppInstaller extends SPInstaller
 			try {
 				SPFactory::db()->insert( 'spdb_plugins', array( $id, $this->xGetString( 'name' ), $this->xGetString( 'version' ), $this->xGetString( 'description' ), $this->xGetString( 'authorName' ), $this->xGetString( 'authorUrl' ), $this->xGetString( 'authorEmail' ), 1, $type, null ) );
 				if ( $this->xGetString( 'type' ) == 'payment' ) {
-					SPFactory::db()->insert( 'spdb_plugin_task', array( $id, 'PaymentMethodView' ) );
+					SPFactory::db()->insert( 'spdb_plugin_task', array( $id, 'PaymentMethodView', 'payment' ) );
 				}
 			} catch ( SPException $x ) {
 				throw new SPException( SPLang::e( 'CANNOT_INSTALL_PLUGIN_DB_ERR', $x->getMessage() ) );

@@ -46,6 +46,8 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 * @var string
 	 */
 	protected $searchRangeValues = "";
+	/** @var bool */
+	protected $freeRange = false;
 	/**
 	 * @var string
 	 */
@@ -84,7 +86,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues' );
+		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange' );
 	}
 
 	/**
@@ -250,12 +252,10 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		if ( $this->searchMethod == 'general' ) {
 			return false;
 		}
-
 		if ( $this->searchMethod == 'range' ) {
-			return $this->rangeSearch( $this->searchRangeValues );
+			return $this->rangeSearch( $this->searchRangeValues, $this->freeRange );
 		}
-
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		$fdata = array();
 		try {
 			$db->dselect( array( 'baseData' ), 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1 ), 'field( lang, \'' . Sobi::Lang() . '\'), baseData', 0, 0, 'baseData' );

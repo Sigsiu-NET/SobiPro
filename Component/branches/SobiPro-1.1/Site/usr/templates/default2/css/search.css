@@ -67,3 +67,7 @@
 .SobiPro table.mceLayout {
   border-radius: 3px;
 }
+.SPSearchInputRangeFrom {
+  float: left;
+	margin: 3px;
+}
