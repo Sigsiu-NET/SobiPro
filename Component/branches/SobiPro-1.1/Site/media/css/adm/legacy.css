@@ -424,6 +424,9 @@ div#SPMenuCtrl {
 .icon-48-SobiLevels {
 	background-image: url(../../../../media/sobipro/adm/sobipro-acl.png);
 }
+.icon-48-SobiApplication {
+    background-image: url(../../../../media/sobipro/adm/folder-application.png);
+}
 .icon-32-delete {
 	background-image: url(../../../../media/sobipro/adm/legacy/delete.png) !important;
 }
@@ -533,4 +536,14 @@ td.span10 {
     min-height: 50px;
     padding-left: 55px;
     display: block!important;
+}
+
+/* especially Notifications, R&R*/
+div.width-30 {
+    margin-left: 0!important;
+    width: 30%;
+}
+div.width-70 {
+    min-width: 20%;
+    width: 70%;
 }
