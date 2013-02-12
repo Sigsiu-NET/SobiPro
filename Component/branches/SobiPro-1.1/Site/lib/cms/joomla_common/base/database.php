@@ -194,6 +194,7 @@ class SPJoomlaDb
 	 * @param string $toSelect - table rows to select
 	 * @param string $tables - from which table(s)
 	 * @param string $where - SQL select condition
+	 * @param null $order
 	 * @param int $limit - maximal number of rows
 	 * @param int $limitStart - start position
 	 * @param bool $distinct - clear??
@@ -526,6 +527,8 @@ class SPJoomlaDb
 	 * @param array $values - two-dimensional array with table row name => value
 	 * @param bool $ignore - adds "IGNORE" after "INSERT" command
 	 * @param bool $normalize - if the $values is a two-dimm, array and it's not complete - fit to the columns
+	 * @throws SPException
+	 * @return \SPJoomlaDb
 	 */
 	public function insert( $table, $values, $ignore = false, $normalize = false )
 	{
@@ -558,7 +561,7 @@ class SPJoomlaDb
 	}
 
 	/**
-	 * Fits a two dimmensional array to the necessary columns of the given table
+	 * Fits a two dimensional array to the necessary columns of the given table
 	 * @param string $table - table name
 	 * @param array $values
 	 */
@@ -578,6 +581,8 @@ class SPJoomlaDb
 	 * @param array $values - one-dimensional array with two-dimensional array with table row name => value
 	 * @param bool $update - update existing row if cannot insert it because of duplicate primary key
 	 * @param bool $ignore - adds "IGNORE" after "INSERT" command
+	 * @throws SPException
+	 * @return \SPJoomlaDb
 	 */
 	public function insertArray( $table, $values, $update = false, $ignore = false )
 	{
