@@ -651,7 +651,8 @@ class SPJoomlaLang
 	 */
 	public static function nid( $txt )
 	{
-		return JFilterOutput::stringURLSafe( $txt );
+		// need the replacement for Joomla! 1.5 :(
+		return JFilterOutput::stringURLSafe( str_replace( '.', '-', $txt ) );
 //        return trim( strtolower( str_replace( '__', '_', preg_replace( '/[^a-z0-9\_]/i', '_', preg_replace( '/\W/', '_', $txt ) ) ) ) );
 	}
 
@@ -668,7 +669,7 @@ class SPJoomlaLang
 	{
 		/** @todo multiple attr does not work because the id is the object id  */
 		/* @var Spdb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		$fields = is_array( $fields ) ? $fields : ( strlen( $fields ) ? array( $fields ) : null );
 		$lang = $lang ? $lang : Sobi::Lang( false );
 		$params = array( 'id' => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );

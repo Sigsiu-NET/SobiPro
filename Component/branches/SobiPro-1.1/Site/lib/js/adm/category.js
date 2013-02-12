@@ -37,8 +37,6 @@ SobiPro.jQuery( document ).ready( function ()
 		}
 		SobiPro.jQuery( '#selectedCatPath' ).html( SobiPro.jQuery( '#SP_selectedCatPath' ).val() );
 		SobiPro.jQuery( '[name^="category.parent"]' ).val( SobiPro.jQuery( '#SP_selectedCid' ).val() );
-		SobiPro.DebOut(SobiPro.jQuery( '[name^="category.parent"]' ));
-		SobiPro.DebOut(SobiPro.jQuery( '[name^="category.parent"]' ).val());
 		SobiPro.jQuery( '#categoryParentName' ).html( SobiPro.jQuery( '#SP_selectedCatName' ).val() );
 	} );
 	if ( SobiPro.jQuery( '#SP_categoryIconHolder' ).val() ) {
