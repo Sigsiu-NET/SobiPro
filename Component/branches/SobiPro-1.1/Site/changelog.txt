@@ -58,6 +58,7 @@ Legend:
    (+) View for all entries added within a particular date (year/month/or exact day)
    (+) View and menu link for entries added in a particular date period
    (+) Range search for inputbox with a free input
+   (+) URL field - ability to count and display number of visits/clicks on the particular link
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list
