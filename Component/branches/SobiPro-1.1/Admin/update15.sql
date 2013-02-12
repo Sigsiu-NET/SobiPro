@@ -14,3 +14,16 @@ ALTER TABLE `#__sobipro_permissions` ADD UNIQUE  `uniquePermission` (  `subject`
 INSERT INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
 (NULL, 'entry', 'delete', 'own', 'front', 1),
 (NULL, 'entry', 'delete', '*', 'front', 1);
+
+CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (
+  `date` datetime NOT NULL,
+  `uid` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `fid` varchar(50) NOT NULL,
+  `ip` varchar(15) NOT NULL,
+  `section` int(11) NOT NULL,
+  `browserData` text NOT NULL,
+  `osData` text NOT NULL,
+  `humanity` int(3) NOT NULL,
+  PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`)
+)

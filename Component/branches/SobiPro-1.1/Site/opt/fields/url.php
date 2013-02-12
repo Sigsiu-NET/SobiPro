@@ -181,7 +181,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			}
 			$this->cleanCss();
 			if ( strlen( $url ) ) {
-				$attributes = array( 'href' => $url, 'class' => $this->cssClass, 'counter' => $counter );
+				$attributes = array( 'href' => $url, 'class' => $this->cssClass );
 				if ( $this->newWindow ) {
 					$attributes[ 'target' ] = '_blank';
 				}
@@ -193,7 +193,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 				return array(
 					'_complex' => 1,
 					'_data' => array( 'a' => $data ),
-					'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass )
+					'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass, 'counter' => $counter )
 				);
 			}
 		}
