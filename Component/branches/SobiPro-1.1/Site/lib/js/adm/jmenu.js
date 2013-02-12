@@ -114,7 +114,7 @@ function SPJoomlaMenu()
 			}
 			else {
 				var requestUrl = SobiProUrl.replace( '%task%', 'category.chooser' ) + '&treetpl=rchooser&multiple=1&tmpl=component&sid=' + SobiPro.jQuery( "#sid" ).val();
-				jQuery( "#spCatsChooser" ).html( '<iframe id="spCatSelectFrame" src="' + requestUrl + '" style="width: 400px; height: 600px; border: none;"> </iframe>' );
+				jQuery( "#spCatsChooser" ).html( '<iframe id="spCatSelectFrame" src="' + requestUrl + '" style="width: 500px; height: 400px; border: none;"> </iframe>' );
 				SobiPro.jQuery( '#spCat' ).modal();
 				semaphore = 0;
 			}

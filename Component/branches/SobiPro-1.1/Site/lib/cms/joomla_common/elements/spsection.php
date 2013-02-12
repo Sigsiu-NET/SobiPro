@@ -299,7 +299,7 @@ class JElementSPSection extends JElement
 	{
 		$params = array(
 			'id' => 'sp_entry',
-			'class' => $this->oType == 'entry' ? 'btn input-medium btn-primary' : 'btn input-medium',
+			'class' => $this->oType == 'entry' ? 'btn input-large btn-primary' : 'btn input-medium',
 			'style' => 'margin-top: 10px; width: 300px'
 		);
 		if ( $this->task ) {
@@ -319,7 +319,7 @@ class JElementSPSection extends JElement
               </div>
               <div class="modal-body">
                 <p>
-                    <label>' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE_TITLE' ) . '</label><input type="text" data-provide="typeahead" autocomplete="off" id="spEntryChooser" class="span3" placeholder="' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE' ) . '">
+                    <label>' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE_TITLE' ) . '</label><input type="text" data-provide="typeahead" autocomplete="off" id="spEntryChooser" class="span6" placeholder="' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE' ) . '">
                 </p>
               </div>
               <div class="modal-footer">

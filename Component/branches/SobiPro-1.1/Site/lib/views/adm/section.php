@@ -148,6 +148,10 @@ class SPSectionAdmView extends SPAdmView
 			$this->get( 'entries_field' ) . '.desc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_DESC' ),
 			'state.asc' => Sobi::Txt( 'EMN.ORDER_BY_STATE_ASC' ),
 			'state.desc' => Sobi::Txt( 'EMN.ORDER_BY_STATE_DESC' ),
+            'createdTime.asc' => Sobi::Txt( 'EMN_ORDER_BY_CREATION_DATE_ASC' ),
+            'createdTime.desc' => Sobi::Txt( 'EMN_ORDER_BY_CREATION_DATE_DESC' ),
+            'updatedTime.asc' => Sobi::Txt( 'EMN_ORDER_BY_UPDATE_DATE_ASC' ),
+            'updatedTime.desc' => Sobi::Txt( 'EMN_ORDER_BY_UPDATE_DATE_DESC' ),
 			'approved.asc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_ASC' ),
 			'approved.desc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_DESC' ),
 		);
