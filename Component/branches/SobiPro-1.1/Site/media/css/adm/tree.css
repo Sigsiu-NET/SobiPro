@@ -37,7 +37,7 @@
 .sigsiuTree img {
 	border: 0px;
 	vertical-align: middle;
-	float: none;
+	float: none!important;
 	margin: 0;	
 }
 
