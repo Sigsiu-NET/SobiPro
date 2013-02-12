@@ -727,6 +727,9 @@ input.sp-input-micro[type="text"] {
 .spicon-48-SobiApplicationSection {
   background-image: url('../../../../media/sobipro/adm/folder-application-section.png');
 }
+.spicon-48-SobiApplication {
+  background-image: url('../../../../media/sobipro/adm/folder-application.png');
+}
 .spicon-48-SobiTemplate {
   background-image: url('../../../../media/sobipro/adm/folder-templates.png');
 }
