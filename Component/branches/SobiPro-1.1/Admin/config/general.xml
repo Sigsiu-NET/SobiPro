@@ -237,40 +237,12 @@
 									</field>
 								</fieldset>
 								<fieldset label="SECN.CFG.META_DATA_INPUT">
-									<div style="text-transform:uppercase; color:red;">
-										<text value="not yet implemented!!" />
-									</div>
-									<field type="toggle" name="spcfg[meta.always_add_entryinput]" value="meta.always_add_entryinput" label="SECN.CFG.META_DATA_ADD" prefix="yes_no" />
-									<field type="textarea" name="entryinput.metaDesc" value="entryinput.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="textarea" name="entryinput.metaKeys" value="entryinput.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="text" name="entryinput.metaAuthor" value="entryinput.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
-									<field type="select" label="ROBOTS" name="entryinput.metaRobots" selected="entryinput.metaRobots" class="input-large">
-										<values>
-											<option value="" label="ROBOTS_NONE" />
-											<option value="index, follow" label="index, follow" />
-											<option value="index, nofollow" label="index, nofollow" />
-											<option value="noindex, follow" label="noindex, follow" />
-											<option value="noindex, nofollow" label="noindex, nofollow" />
-										</values>
-									</field>
+									<field type="textarea" name="section.efMetaDesc" value="section.efMetaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="textarea" name="section.efMetaKeys" value="section.efMetaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 								<fieldset label="SECN.CFG.META_DATA_SEARCH">
-									<div style="text-transform:uppercase; color:red;">
-										<text value="not yet implemented!!" />
-									</div>
-									<field type="toggle" name="spcfg[meta.always_add_search]" value="meta.always_add_search" label="SECN.CFG.META_DATA_ADD" prefix="yes_no" />
-									<field type="textarea" name="search.metaDesc" value="search.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="textarea" name="search.metaKeys" value="search.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="text" name="search.metaAuthor" value="search.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
-									<field type="select" label="ROBOTS" name="search.metaRobots" selected="search.metaRobots" class="input-large">
-										<values>
-											<option value="" label="ROBOTS_NONE" />
-											<option value="index, follow" label="index, follow" />
-											<option value="index, nofollow" label="index, nofollow" />
-											<option value="noindex, follow" label="noindex, follow" />
-											<option value="noindex, nofollow" label="noindex, nofollow" />
-										</values>
-									</field>
+									<field type="textarea" name="section.sfMetaDesc" value="section.sfMetaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="textarea" name="section.sfMetaKeys" value="section.sfMetaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 							</div>
 						</div>

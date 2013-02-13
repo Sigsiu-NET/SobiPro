@@ -429,6 +429,10 @@ class SPEntryCtrl extends SPController
 			$this->authorise( $this->_task, 'own' );
 			$this->_model = null;
 			$sid = SPRequest::int( 'pid' );
+			$section = SPFactory::Section( Sobi::Section() );
+			SPFactory::header()
+					->addKeyword( $section->get( 'efMetaKeys' ) )
+					->addDescription( $section->get( 'efMetaDesc' ) );
 		}
 
 		if ( $this->_model && $this->_model->isCheckedOut() ) {

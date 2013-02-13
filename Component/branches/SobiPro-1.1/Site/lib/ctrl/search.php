@@ -422,6 +422,11 @@ final class SPSearchCtrl extends SPSectionCtrl
 
 		/* handle meta data */
 		SPFactory::header()->objMeta( $this->_model );
+		$section = SPFactory::Section( Sobi::Section() );
+		SPFactory::header()
+				->addKeyword( $section->get( 'sfMetaKeys' ) )
+				->addDescription( $section->get( 'sfMetaDesc' ) );
+
 		/* add pathway */
 		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'SH.PATH_TITLE' ), Sobi::Url( 'current' ) );
 		SPFactory::mainframe()->setTitle( Sobi::Txt( 'SH.TITLE', array( 'section' => $this->_model->get( 'name' ) ) ) );

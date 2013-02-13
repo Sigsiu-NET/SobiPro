@@ -117,7 +117,7 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 						$metaDesc = implode( Sobi::Cfg( 'string.meta_desc_separator', ' ' ), $code );
 						if ( strlen( $metaDesc ) ) {
 							if ( Sobi::Cfg( 'meta.desc_append', true ) ) {
-								$metaDesc = $this->getMetaDescription( $document );
+								$metaDesc .= $this->getMetaDescription( $document );
 							}
 							$metaDesc = explode( ' ', $metaDesc );
 							if ( count( $metaDesc ) ) {

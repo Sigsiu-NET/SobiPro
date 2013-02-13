@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -53,16 +49,29 @@ final class SPSection extends SPDBObject implements SPDataModel
 	 */
 	protected $description = null;
 	/**
+	 * @var string
 	 */
-//	protected $_dbTable = 'spdb_section';
+	protected $sfMetaDesc = null;
+	/**
+	 * @var string
+	 */
+	protected $sfMetaKeys = null;
+	/**
+	 * @var string
+	 */
+	protected $efMetaDesc = null;
+	/**
+	 * @var string
+	 */
+	protected $efMetaKeys = null;
 	/**
 	 * @var array
 	 */
-	private static $types = array( 'description' => 'html' );
+	private static $types = array( 'description' => 'html', 'sfMetaKeys' => 'string', 'sfMetaDesc' => 'string', 'efMetaKeys' => 'string', 'efMetaDesc' => 'string' );
 	/**
 	 * @var array
 	 */
-	private static $translatable = array( 'description', 'name', 'metaKeys', 'metaDesc' );
+	private static $translatable = array( 'description', 'name', 'metaKeys', 'metaDesc', 'sfMetaKeys', 'sfMetaDesc', 'efMetaKeys', 'efMetaDesc' );
 
 	/**
 	 */
@@ -75,8 +84,7 @@ final class SPSection extends SPDBObject implements SPDataModel
 		}
 		else {
 			Sobi::Trigger( 'delete', $this->name(), array( &$this ) );
-			/* @var SPdb $db */
-			$db =& SPFactory::db();
+			$db = SPFactory::db();
 			try {
 				$db->delete( 'spdb_relations', "id = {$this->id} OR pid = {$this->id}" );
 			} catch ( SPException $x ) {

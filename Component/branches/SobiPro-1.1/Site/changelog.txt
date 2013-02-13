@@ -60,6 +60,7 @@ Legend:
    (+) Range search for inputbox with a free input
    (+) URL field - ability to count and display number of visits/clicks on the particular link
    (+) Category and Entry Alias for URL
+   (+) Meta data for specific add entry and search view
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list
