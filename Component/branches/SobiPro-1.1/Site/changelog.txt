@@ -59,6 +59,7 @@ Legend:
    (+) View and menu link for entries added in a particular date period
    (+) Range search for inputbox with a free input
    (+) URL field - ability to count and display number of visits/clicks on the particular link
+   (+) Category and Entry Alias for URL
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list
@@ -82,6 +83,7 @@ Legend:
    (!) single .htaccess files removed, global file added
    (!) Default Template now using Bootstrap; several improvements; new name
    (!) JavaScript translation method speed improvement
+   (!) IMPORTANT!! The url contains now the nid/alias instead of the title. That way the generated URL can be better controlled but it would also change all existing URLS
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager

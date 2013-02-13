@@ -352,10 +352,11 @@ abstract class SPDBObject extends SPObject
 			}
 		}
 		if ( $name && count( $childs ) ) {
-			$names = SPLang::translateObject( $childs, 'name', $type );
+			$names = SPLang::translateObject( $childs, array( 'name', 'alias' ), $type );
 			if ( is_array( $names ) && !empty( $names ) ) {
 				foreach ( $childs as $i => $id ) {
-					$childs[ $i ] = $names[ $id ][ 'value' ];
+					$childs[ $i ][ 'name' ] = $names[ $id ][ 'value' ];
+					$childs[ $i ][ 'alias' ] = $names[ $id ][ 'alias' ];
 				}
 			}
 		}

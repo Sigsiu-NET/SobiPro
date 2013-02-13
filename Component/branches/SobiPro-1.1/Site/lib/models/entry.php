@@ -121,7 +121,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				}
 			}
 			$this->primary =& $this->parent;
-			$this->url = Sobi::Url( array( 'title' => $this->get( 'name' ), 'pid' => $this->get( 'primary' ), 'sid' => $this->id ) );
+			$this->url = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->get( 'nid' ) : $this->get( 'name' ), 'pid' => $this->get( 'primary' ), 'sid' => $this->id ) );
 			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fieldsIds, &$this->fieldsNids ) );
 		}
 		if ( !( strlen( $this->name ) ) ) {
@@ -280,7 +280,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		if ( $this->id ) {
 			if ( !( count( $this->categories ) ) ) {
 				/* @var SPdb $db */
-				$db =& SPFactory::db();
+				$db = SPFactory::db();
 				/* get fields */
 				try {
 					$c = array( 'id' => $this->id, 'oType' => 'entry' );
@@ -311,9 +311,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 						$this->categories[ $cid ] = $cat;
 					}
 					if ( $this->categories ) {
-						$labels = SPLang::translateObject( array_keys( $this->categories ), 'name', 'category' );
+						$labels = SPLang::translateObject( array_keys( $this->categories ), array( 'name', 'alias' ), 'category' );
 						foreach ( $labels as $t ) {
 							$this->categories[ $t[ 'id' ] ][ 'name' ] = $t[ 'value' ];
+							$this->categories[ $t[ 'id' ] ][ 'alias' ] = $t[ 'alias' ];
 						}
 					}
 					Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->categories ) );

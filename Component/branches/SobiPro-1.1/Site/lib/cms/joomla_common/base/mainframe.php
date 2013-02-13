@@ -328,11 +328,11 @@ class SPJoomlaMainFrame
 					continue;
 				}
 				$title[ ] = $data[ 'name' ];
-				$pathway->addItem( $data[ 'name' ], ( self::url( array( 'title' => $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
+				$pathway->addItem( $data[ 'name' ], ( self::url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
 			}
 		}
 		if ( $obj->get( 'oType' ) == 'entry' ) {
-			$pathway->addItem( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
+			$pathway->addItem( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
 			$title[ ] = $obj->get( 'name' );
 		}
 		$this->setTitle( $title );
