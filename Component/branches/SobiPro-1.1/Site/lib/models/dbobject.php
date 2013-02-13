@@ -355,8 +355,7 @@ abstract class SPDBObject extends SPObject
 			$names = SPLang::translateObject( $childs, array( 'name', 'alias' ), $type );
 			if ( is_array( $names ) && !empty( $names ) ) {
 				foreach ( $childs as $i => $id ) {
-					$childs[ $i ][ 'name' ] = $names[ $id ][ 'value' ];
-					$childs[ $i ][ 'alias' ] = $names[ $id ][ 'alias' ];
+					$childs[ $i ] = array( 'name' => $names[ $id ][ 'value' ], 'alias' => $names[ $id ][ 'alias' ] );
 				}
 			}
 		}
