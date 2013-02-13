@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -537,7 +533,7 @@ class SPConfig
 				SPFactory::message()->warning( 'NO_NAME_FIELD_SELECTED' );
 			}
 		}
-		return isset( self::$fields[ Sobi::Section() ][ Sobi::Cfg( 'entry.name_field' ) ] ) ? self::$fields[ Sobi::Section() ][ Sobi::Cfg( 'entry.name_field' ) ] : SPFactory::Model( 'field', true ) ;
+		return isset( self::$fields[ Sobi::Section() ][ Sobi::Cfg( 'entry.name_field' ) ] ) ? self::$fields[ Sobi::Section() ][ Sobi::Cfg( 'entry.name_field' ) ] : SPFactory::Model( 'field', true );
 	}
 
 //	/**
@@ -678,7 +674,6 @@ class SPConfig
 	 */
 	public function getParentPath( $id, $names = false, $parents = false, $join = false )
 	{
-		/** @todo We have to implement the MySQL procedure for it */
 		$db = SPFactory::db();
 		if ( !( is_numeric( $id ) ) ) {
 			return false;
@@ -705,11 +700,11 @@ class SPConfig
 			}
 		}
 		if ( $names && count( $path ) ) {
-			$names = SPLang::translateObject( $path, 'name', array( 'section', 'category', 'entry' ) );
+			$names = SPLang::translateObject( $path, array( 'name', 'alias' ), array( 'section', 'category', 'entry' ) );
 			if ( is_array( $names ) && !empty( $names ) ) {
 				foreach ( $path as $i => $id ) {
 					if ( $join ) {
-						$path[ $i ] = array( 'id' => $id, 'name' => $names[ $id ][ 'value' ] );
+						$path[ $i ] = array( 'id' => $id, 'name' => $names[ $id ][ 'value' ], 'alias' => $names[ $id ][ 'alias' ] );
 					}
 					else {
 						$path[ $i ] = $names[ $id ][ 'value' ];

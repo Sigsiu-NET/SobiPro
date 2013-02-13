@@ -345,13 +345,7 @@ class SPJoomlaLang
 				}
 				/** For the placeholder we need for sure the full URL */
 				elseif ( ( $property == 'url' ) && ( $var instanceof SPEntry ) ) {
-					$var = Sobi::Url(
-						array(
-							'title' => $var->get( 'name' ),
-							'pid' => $var->get( 'primary' ),
-							'sid' => $var->get( 'id' )
-						), false, true, true
-					);
+					$var = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $var->get( 'nid' ) : $var->get( 'name' ), 'pid' => $var->get( 'primary' ), 'sid' => $var->get( 'id' ) ), false, true, true );
 				}
 				else {
 					$var = $var->get( $property );
@@ -668,8 +662,6 @@ class SPJoomlaLang
 	public static function translateObject( $sids, $fields = null, $type = null, $lang = null )
 	{
 		/** @todo multiple attr does not work because the id is the object id  */
-		/* @var Spdb $db */
-		$db = SPFactory::db();
 		$fields = is_array( $fields ) ? $fields : ( strlen( $fields ) ? array( $fields ) : null );
 		$lang = $lang ? $lang : Sobi::Lang( false );
 		$params = array( 'id' => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );
@@ -681,12 +673,22 @@ class SPJoomlaLang
 			$params[ 'sKey' ] = $fields;
 		}
 		try {
-			$db->select( 'id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" );
-			$labels = $db->loadAssocList();
+			$labels = SPFactory::db()
+					->select( 'id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
+					->loadAssocList();
 			if ( count( $labels ) ) {
+				$aliases = array();
+				if ( in_array( 'alias', $fields ) ) {
+					$aliases = SPFactory::db()
+							->select( array( 'nid', 'id' ), 'spdb_object', array( 'id' => $sids ) )
+							->loadAssocList( 'id' );
+				}
 				foreach ( $labels as $label ) {
 					if ( !( isset( $result[ $label[ 'id' ] ] ) ) || $label[ 'language' ] == Sobi::Lang() ) {
 						$result[ $label[ 'id' ] ] = $label;
+					}
+					if ( in_array( 'alias', $fields ) ) {
+						$result[ $label[ 'id' ] ][ 'alias' ] = isset( $aliases[ $label[ 'id' ] ] ) ? $aliases[ $label[ 'id' ] ][ 'nid' ] : null;
 					}
 				}
 			}

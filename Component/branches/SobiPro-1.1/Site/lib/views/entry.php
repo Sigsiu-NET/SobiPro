@@ -221,7 +221,7 @@ class SPEntryView extends SPFrontView implements SPView
 		}
 
 //		$en[ 'confirmed' ] = $entry->get( 'confirmed' );
-		$en[ 'url' ] = Sobi::Url( array( 'pid' => $entry->get( 'parent' ), 'sid' => $entry->get( 'id' ), 'title' => $entry->get( 'name' ) ), true, true, true );
+		$en[ 'url' ] = Sobi::Url( array( 'pid' => $entry->get( 'parent' ), 'sid' => $entry->get( 'id' ), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ) ), true, true, true );
 
 		if ( Sobi::Can( 'entry', 'edit', '*' ) || ( ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) && Sobi::Can( 'entry', 'edit', 'own' ) ) ) {
 			$en[ 'edit_url' ] = Sobi::Url( array( 'task' => 'entry.edit', 'sid' => $entry->get( 'id' ) ) );
@@ -239,11 +239,11 @@ class SPEntryView extends SPFrontView implements SPView
 		$cats = $entry->get( 'categories' );
 		$categories = array();
 		if ( count( $cats ) ) {
-			$cn = SPLang::translateObject( array_keys( $cats ), 'name', 'category' );
+			$cn = SPLang::translateObject( array_keys( $cats ), array( 'name', 'alias' ), 'category' );
 		}
 		$primaryCat = $entry->get( 'parent' );
 		foreach ( $cats as $cid => $cat ) {
-			$cAttr = array( 'lang' => Sobi::Lang( false ), 'id' => $cat[ 'pid' ], 'position' => $cat[ 'position' ], 'url' => Sobi::Url( array( 'sid' => $cat[ 'pid' ], 'title' => $cat[ 'name' ] ) ) );
+			$cAttr = array( 'lang' => Sobi::Lang( false ), 'id' => $cat[ 'pid' ], 'position' => $cat[ 'position' ], 'url' => Sobi::Url( array( 'sid' => $cat[ 'pid' ], 'title' => Sobi::Cfg( 'sef.alias', true ) ? $cat[ 'alias' ] : $cat[ 'name' ] ) ) );
 			if ( $cat[ 'pid' ] == $primaryCat ) {
 				$cAttr[ 'primary' ] = 'true';
 			}
