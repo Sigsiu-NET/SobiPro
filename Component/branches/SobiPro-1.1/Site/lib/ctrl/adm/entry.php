@@ -145,18 +145,6 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		else {
 			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) ) );
 		}
-//		if ( $apply || $clone ) {
-//			if ( $clone ) {
-//				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
-//			}
-//			else {
-//				$msg = Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
-//			}
-//			Sobi::Redirect( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg );
-//		}
-//		else {
-//			Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) ) );
-//		}
 	}
 
 	/**
@@ -262,7 +250,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$sid = $sid ? $sid : SPRequest::sid();
 
 		/* if adding new */
-		if ( !$this->_model ) {
+		if ( !( $this->_model ) ) {
 			$this->setModel( SPLoader::loadModel( 'entry' ) );
 		}
 		$this->_model->formatDatesToEdit();

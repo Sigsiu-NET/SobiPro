@@ -340,13 +340,13 @@ class SPJoomlaMainFrame
 
 	/**
 	 * @param array $head
+	 * @return bool
 	 */
 	public function addHead( $head )
 	{
 		if ( strlen( SPRequest::cmd( 'format' ) ) ) {
 			return true;
 		}
-
 		$document = JFactory::getDocument();
 		$c = 0;
 		if ( count( $head ) ) {
