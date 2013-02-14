@@ -107,6 +107,8 @@ class SPEntryCtrl extends SPController
 
 	/**
 	 * @param int $sid
+	 * @param bool $redirect
+	 * @return void
 	 */
 	protected function checkIn( $sid, $redirect = true )
 	{
@@ -312,13 +314,11 @@ class SPEntryCtrl extends SPController
 		if ( SPRequest::cmd( 'method', null, 'post' ) == 'xhr' ) {
 			$view->display();
 			$response = ob_get_contents();
-//			$response = str_replace( 'id="SobiPro"', 'id="SpPaymentModal"', $response );
 			$this->response( Sobi::Back(), $response, false, SPC::INFO_MSG );
 		}
 		else {
 			$view->display();
 		}
-//		$this->response( Sobi::Back(), $x->getMessage(), false, SPC::ERROR_MSG, array( 'error' => $field->get( 'nid' ) ) );
 	}
 
 	/**
@@ -382,8 +382,18 @@ class SPEntryCtrl extends SPController
 				$url = Sobi::Url( array( 'sid' => $sid, 'pid' => $pid ) );
 			}
 			else {
-				$msg = Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
-				$url = Sobi::Url( array( 'sid' => $pid ) );
+				// determine if there is a custom redirect
+				if ( Sobi::Cfg( 'redirects.entry_save_enabled' ) && !( $pCount && !( Sobi::Can( 'entry.payment.free' ) ) ) ) {
+					$redirect = Sobi::Cfg( 'redirects.entry_save_url', null );
+					if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
+						$redirect = Sobi::Url( $redirect );
+					}
+					$this->response( $redirect, Sobi::Cfg( 'redirects.entry_save_msg', Sobi::Txt( 'EN.ENTRY_SAVED_NP' ) ), true, Sobi::Cfg( 'redirects.entry_save_msgtype', SPC::SUCCESS_MSG ) );
+				}
+				else {
+					$msg = Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
+					$url = Sobi::Url( array( 'sid' => $pid ) );
+				}
 			}
 		}
 		/* I know, it could be in one statement but it is more readable like this */
@@ -415,6 +425,30 @@ class SPEntryCtrl extends SPController
 			SPCookie::set( 'payment_' . $sid, $ident, SPCookie::days( 1 ) );
 		}
 		$this->response( $url, $msg, true, SPC::SUCCESS_MSG );
+	}
+
+
+	/**
+	 * authorise action
+	 * @param string $action
+	 * @param string $ownership
+	 * @return bool
+	 */
+	protected function authorise( $action = 'access', $ownership = 'valid' )
+	{
+		if ( !( Sobi::Can( $this->_type, $action, $ownership, Sobi::Section() ) ) ) {
+			switch ( $action ) {
+				case 'add':
+					if ( Sobi::Cfg( 'redirects.entry_add_enabled', false ) && strlen( Sobi::Cfg( 'redirects.entry_add_url', null ) ) ) {
+						$this->escape( Sobi::Cfg( 'redirects.entry_add_url', null ), Sobi::Cfg( 'redirects.entry_add_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) ), Sobi::Cfg( 'redirects.entry_add_msgtype', 'message' ) );
+					}
+					else {
+						Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+					}
+					break;
+			}
+		}
+		return true;
 	}
 
 	/**

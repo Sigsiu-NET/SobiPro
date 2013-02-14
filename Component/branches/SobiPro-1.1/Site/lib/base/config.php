@@ -201,23 +201,23 @@ class SPConfig
 	public function structuralData( $data, $force = false )
 	{
 		if ( is_string( $data ) && strstr( $data, '://' ) ) {
-			$data = explode( '://', $data );
-			switch ( $data[ 0 ] ) {
+			$struct = explode( '://', $data );
+			switch ( $struct[ 0 ] ) {
 				case 'json':
-					if ( strstr( $data[ 1 ], "':" ) || strstr( $data[ 1 ], "{'" ) || strstr( $data[ 1 ], "['" ) ) {
-						$data[ 1 ] = str_replace( "'", '"', $data[ 1 ] );
+					if ( strstr( $struct[ 1 ], "':" ) || strstr( $struct[ 1 ], "{'" ) || strstr( $struct[ 1 ], "['" ) ) {
+						$struct[ 1 ] = str_replace( "'", '"', $struct[ 1 ] );
 					}
-					$data = json_decode( $data[ 1 ] );
+					$data = json_decode( $struct[ 1 ] );
 					break;
 				case 'serialized':
-					if ( strstr( $data[ 1 ], "':" ) || strstr( $data[ 1 ], ":'" ) || strstr( $data[ 1 ], "['" ) ) {
-						$data[ 1 ] = str_replace( "'", '"', $data[ 1 ] );
+					if ( strstr( $struct[ 1 ], "':" ) || strstr( $struct[ 1 ], ":'" ) || strstr( $struct[ 1 ], "['" ) ) {
+						$struct[ 1 ] = str_replace( "'", '"', $struct[ 1 ] );
 					}
-					$data = unserialize( $data[ 1 ] );
+					$data = unserialize( $struct[ 1 ] );
 					break;
 				case 'csv':
 					if ( function_exists( 'str_getcsv' ) ) {
-						$data = str_getcsv( $data[ 1 ] );
+						$data = str_getcsv( $struct[ 1 ] );
 					}
 					else {
 						Sobi::Error( 'config', 'Function "str_getcsv" does not exists' );

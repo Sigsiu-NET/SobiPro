@@ -31,14 +31,14 @@
 		<divider />
 		<button task="config.clean" icon="refresh" label="TB.CLEAN_CACHE" />
 		<divider />
-        <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-        <divider />
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
+		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
 			<button type="url" task="extensions" />
-            <button type="url" task="template.info" />
+			<button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
@@ -311,63 +311,60 @@
 											<field type="text" name="spcfg[redirects.category_msg]" value="redirects.category_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
 										</fieldset>
 									</tab>
+
 									<tab label="SECN.CFG.REDIRECT_ENTRY">
 										<fieldset label="SECN.CFG.REDIRECTS_ENTRY_SPACER">
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_enabled]" selected="redirects.entry_enabled" class="input-xlarge">
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_access_enabled]" selected="redirects.entry_access_enabled" class="input-xlarge">
 												<values>
 													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
 													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.entry_url]" value="redirects.entry_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_msgtype]" selected="redirects.entry_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.entry_access_url]" value="redirects.entry_access_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_access_msgtype]" selected="redirects.entry_access_msgtype" class="input-large">
 												<values>
 													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
 													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
 													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.entry_msg]" value="redirects.entry_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+											<field type="text" name="spcfg[redirects.entry_access_msg]" value="redirects.entry_access_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
 										</fieldset>
+
 										<fieldset label="SECN.CFG.REDIRECTS_INPUT">
-											<div style="text-transform:uppercase; color:red;">
-												<text value="not yet implemented!!" />
-											</div>
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_enabled]" selected="redirects.section_enabled" class="input-xlarge">
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_add_enabled]" selected="redirects.entry_add_enabled" class="input-xlarge">
 												<values>
 													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
 													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.section_url]" value="redirects.section_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_msgtype]" selected="redirects.section_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.entry_add_url]" value="redirects.entry_add_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_add_msgtype]" selected="redirects.entry_add_msgtype" class="input-large">
 												<values>
 													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
 													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
 													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+											<field type="text" name="spcfg[redirects.entry_add_msg]" value="redirects.entry_add_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
 										</fieldset>
 										<fieldset label="SECN.CFG.REDIRECTS_SAVE">
-											<div style="text-transform:uppercase; color:red;">
-												<text value="not yet implemented!!" />
-											</div>
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_enabled]" selected="redirects.section_enabled" class="input-xlarge">
+											<message label="SECN.CFG.REDIRECT_ENTRY_INFO" type="info" dismiss-button="false" class="spConfigAlert" />
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_save_enabled]" selected="redirects.entry_save_enabled" class="input-xlarge">
 												<values>
-													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
+													<option value="0" label="SEC.CFG.REDIRECTS_TO_PARENT_CATEGORY" />
 													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.section_url]" value="redirects.section_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_msgtype]" selected="redirects.section_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.entry_save_url]" value="redirects.entry_save_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_save_msgtype]" selected="redirects.entry_save_msgtype" class="input-large">
 												<values>
 													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
 													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
 													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+											<field type="text" name="spcfg[redirects.entry_save_msg]" value="redirects.entry_save_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
 										</fieldset>
 									</tab>
 								</tabs>
