@@ -75,6 +75,19 @@ final class SPSearchCtrl extends SPSectionCtrl
 	 */
 	public function execute()
 	{
+		if ( !( Sobi::Can( 'section.search' ) ) ) {
+			if ( $this->_task != 'suggest' ) {
+				if ( Sobi::Cfg( 'redirects.section_search_enabled' ) && strlen( Sobi::Cfg( 'redirects.section_search_url', null ) ) ) {
+					$this->escape( Sobi::Cfg( 'redirects.section_search_url', null ), SPLang::e( Sobi::Cfg( 'redirects.section_search_msg', 'UNAUTHORIZED_ACCESS' ) ), Sobi::Cfg( 'redirects.section_search_msgtype', SPC::ERROR_MSG ) );
+				}
+				else {
+					Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+				}
+			}
+			else {
+				exit;
+			}
+		}
 		$r = false;
 		SPLoader::loadClass( 'env.cookie' );
 		SPLoader::loadClass( 'env.browser' );
