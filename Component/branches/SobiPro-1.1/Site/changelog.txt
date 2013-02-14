@@ -61,10 +61,12 @@ Legend:
    (+) URL field - ability to count and display number of visits/clicks on the particular link
    (+) Category and Entry Alias for URL
    (+) Meta data for specific add entry and search view
-   (+) Possibility to update/override a template
+   (+) Possibility to update/override a template package
    (+) Custom redirect for accessing add entry form without permission
    (+) Custom redirect for accessing entry details view without permission
    (+) Custom redirect after a new entry has been added
+   (+) Possibility to define new permission to allow or disallow search function usage
+   (+) Custom redirect for accessing search function without permission
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list

@@ -298,7 +298,8 @@ INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`
 
 DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;
 ALTER TABLE `#__sobipro_permissions` ADD UNIQUE  `uniquePermission` (  `subject` ,  `action` ,  `value` ,  `site` );
-INSERT INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
+INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
+(NULL, 'section', 'search', '*', 'front', 1),
 (NULL, 'entry', 'delete', 'own', 'front', 1),
 (NULL, 'entry', 'delete', '*', 'front', 1);
 

@@ -388,7 +388,7 @@ class SPEntryCtrl extends SPController
 					if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
 						$redirect = Sobi::Url( $redirect );
 					}
-					$this->response( $redirect, Sobi::Cfg( 'redirects.entry_save_msg', Sobi::Txt( 'EN.ENTRY_SAVED_NP' ) ), true, Sobi::Cfg( 'redirects.entry_save_msgtype', SPC::SUCCESS_MSG ) );
+					$this->response( $redirect, Sobi::Txt( Sobi::Cfg( 'redirects.entry_save_msg', 'EN.ENTRY_SAVED_NP' ) ), true, Sobi::Cfg( 'redirects.entry_save_msgtype', SPC::SUCCESS_MSG ) );
 				}
 				else {
 					$msg = Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
@@ -440,7 +440,7 @@ class SPEntryCtrl extends SPController
 			switch ( $action ) {
 				case 'add':
 					if ( Sobi::Cfg( 'redirects.entry_add_enabled', false ) && strlen( Sobi::Cfg( 'redirects.entry_add_url', null ) ) ) {
-						$this->escape( Sobi::Cfg( 'redirects.entry_add_url', null ), Sobi::Cfg( 'redirects.entry_add_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) ), Sobi::Cfg( 'redirects.entry_add_msgtype', 'message' ) );
+						$this->escape( Sobi::Cfg( 'redirects.entry_add_url', null ), SPLang::e( Sobi::Cfg( 'redirects.entry_add_msg', 'UNAUTHORIZED_ACCESS' ) ), Sobi::Cfg( 'redirects.entry_add_msgtype', 'message' ) );
 					}
 					else {
 						Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );

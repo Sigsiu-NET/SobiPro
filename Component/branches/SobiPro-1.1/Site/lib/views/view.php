@@ -708,6 +708,7 @@ abstract class SPFrontView extends SPObject implements SPView
 
 	/**
 	 * @param int $id
+	 * @param bool $parents
 	 * @return array
 	 */
 	protected function parentPath( $id, $parents = false )
@@ -747,15 +748,17 @@ abstract class SPFrontView extends SPObject implements SPView
 					'_attributes' => array(
 						'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'sid' => Sobi::Section() ) )
 					)
-				),
-				'search' => array(
+				)
+			);
+			if ( Sobi::Can( 'section.search' ) ) {
+				$data[ 'menu' ][ 'search' ] = array(
 					'_complex' => 1,
 					'_data' => Sobi::Txt( 'MN.SEARCH' ),
 					'_attributes' => array(
 						'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'task' => 'search', 'sid' => Sobi::Section() ) )
 					)
-				),
-			);
+				);
+			}
 			if ( Sobi::Can( 'entry', 'add', 'own', Sobi::Section() ) ) {
 				$data[ 'menu' ][ 'add' ] = array(
 					'_complex' => 1,
