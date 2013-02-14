@@ -62,6 +62,9 @@ Legend:
    (+) Category and Entry Alias for URL
    (+) Meta data for specific add entry and search view
    (+) Possibility to update/override a template
+   (+) Custom redirect for accessing add entry form without permission
+   (+) Custom redirect for accessing entry details view without permission
+   (+) Custom redirect after a new entry has been added
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list

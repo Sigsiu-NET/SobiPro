@@ -96,21 +96,19 @@ abstract class SPController extends SPObject implements SPControl
 	protected function authorise( $action = 'access', $ownership = 'valid' )
 	{
 		if ( !( Sobi::Can( $this->_type, $action, $ownership, Sobi::Section() ) ) ) {
-			if ( $action == 'add' && $this->_type == 'entry' && Sobi::Cfg( 'redirects.entry_enabled', false ) && strlen( Sobi::Cfg( 'redirects.entry_url', null ) ) ) {
-				$redirect = Sobi::Cfg( 'redirects.entry_url', null );
-				$msg = Sobi::Cfg( 'redirects.entry_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) );
-				$msgtype = Sobi::Cfg( 'redirects.entry_msgtype', 'message' );
-				if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
-					$redirect = Sobi::Url( $redirect );
-				}
-				Sobi::Redirect( $redirect, Sobi::Txt( $msg ), $msgtype, true );
-			}
-			else {
-				Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
-			}
+			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			exit;
 		}
 		return true;
+	}
+
+	protected function escape( $redirect, $msg, $msgType )
+	{
+		if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
+			$redirect = Sobi::Url( $redirect );
+		}
+		Sobi::Redirect( $redirect, Sobi::Txt( $msg ), $msgType, true );
+		exit;
 	}
 
 	/**
@@ -369,14 +367,9 @@ abstract class SPController extends SPObject implements SPControl
 			}
 		}
 		if ( $error ) {
-			$redirect = Sobi::Cfg( 'redirects.' . $type . '_url', null );
-			if ( Sobi::Cfg( 'redirects.' . $type . '_enabled', false ) && strlen( $redirect ) ) {
-				$msg = Sobi::Cfg( 'redirects.' . $type . '_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) );
-				$msgtype = Sobi::Cfg( 'redirects.' . $type . '_msgtype', 'message' );
-				if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
-					$redirect = Sobi::Url( $redirect );
-				}
-				Sobi::Redirect( $redirect, Sobi::Txt( $msg ), $msgtype, true );
+			$redirect = Sobi::Cfg( 'redirects.' . $type . '_access_url', null );
+			if ( Sobi::Cfg( 'redirects.' . $type . '_access_enabled', false ) && strlen( $redirect ) ) {
+				$this->escape( $redirect, Sobi::Cfg( 'redirects.' . $type . '_access_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) ), Sobi::Cfg( 'redirects.' . $type . '_access_msgtype', 'message' ) );
 				exit;
 			}
 			else {
