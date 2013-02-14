@@ -61,6 +61,7 @@ Legend:
    (+) URL field - ability to count and display number of visits/clicks on the particular link
    (+) Category and Entry Alias for URL
    (+) Meta data for specific add entry and search view
+   (+) Possibility to update/override a template
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list

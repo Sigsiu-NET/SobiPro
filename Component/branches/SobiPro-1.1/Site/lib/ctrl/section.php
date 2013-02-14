@@ -45,12 +45,12 @@ class SPSectionCtrl extends SPController
     protected function view()
     {
         /* determine template package */
-        $tplPckg = Sobi::Cfg( 'section.template', 'default2' );
+        $tplPackage = Sobi::Cfg( 'section.template', 'default2' );
         Sobi::ReturnPoint();
 
         /* load template config */
         $this->template();
-        $this->tplCfg( $tplPckg );
+        $this->tplCfg( $tplPackage );
 
         /* get limits - if defined in template config - otherwise from the section config */
         $eLimit = $this->tKey( $this->template, 'entries_limit', Sobi::Cfg( 'list.entries_limit', 2 ) );
@@ -98,7 +98,7 @@ class SPSectionCtrl extends SPController
         $view->assign( $this->_task, 'task' );
         $view->assign( $this->_model, $this->_type );
         $view->setConfig( $this->_tCfg, $this->template );
-        $view->setTemplate( $tplPckg . '.' . $this->templateType . '.' . $this->template );
+        $view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );
         $view->assign( $categories, 'categories' );
         $view->assign( $pn->get(), 'navigation' );
         $view->assign( SPFactory::user()->getCurrent(), 'visitor' );

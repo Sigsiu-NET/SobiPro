@@ -440,11 +440,11 @@ class SPEntryCtrl extends SPController
 		}
 
 		/* determine template package */
-		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
 
 		/* load template config */
 		$this->template();
-		$this->tplCfg( $tplPckg );
+		$this->tplCfg( $tplPackage );
 
 		/* check if we have stored last edit in cache */
 		$this->getCache( SPRequest::string( 'editentry', null, false, 'cookie' ), 'editcache' );
@@ -531,7 +531,7 @@ class SPEntryCtrl extends SPController
 		$view->assign( $id, 'sid' );
 		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
 		$view->setConfig( $this->_tCfg, $this->template );
-		$view->setTemplate( $tplPckg . '.' . $this->templateType . '.' . ( $this->template == 'add' ? 'edit' : $this->template ) );
+		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . ( $this->template == 'add' ? 'edit' : $this->template ) );
 		$view->addHidden( ( $sid ? $sid : SPRequest::sid() ), 'pid' );
 		$view->addHidden( $id, 'sid' );
 		$view->addHidden( ( SPRequest::int( 'pid' ) && SPRequest::int( 'pid' ) != $id ) ? SPRequest::int( 'pid' ) : Sobi::Section(), 'pid' );
@@ -547,11 +547,11 @@ class SPEntryCtrl extends SPController
 	private function details()
 	{
 		/* determine template package */
-		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
 
 		/* load template config */
 		$this->template();
-		$this->tplCfg( $tplPckg );
+		$this->tplCfg( $tplPackage );
 
 		if ( $this->_model->get( 'oType' ) != 'entry' ) {
 			Sobi::Error( 'Entry', sprintf( 'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
@@ -569,13 +569,9 @@ class SPEntryCtrl extends SPController
 		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
 		$view->assign( $this->_task, 'task' );
 		$view->setConfig( $this->_tCfg, $this->template );
-		$view->setTemplate( $tplPckg . '.' . $this->templateType . '.' . $this->template );
+		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$view ) );
 		SPFactory::header()->objMeta( $this->_model );
-//		SPFactory::message()
-//				->error(Sobi::Txt( 'EN.ENTRY_SAVED' ), false)
-//				->warning(Sobi::Txt( 'EN.ENTRY_SAVED' ), false)
-//				->success(Sobi::Txt( 'EN.ENTRY_SAVED' ), false)->error(( 'kupa' ), false);
 		$view->display();
 		SPFactory::cache()->addObj( $this->_model, 'entry', $this->_model->get( 'id' ) );
 	}
