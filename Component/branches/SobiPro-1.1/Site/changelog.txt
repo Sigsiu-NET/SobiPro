@@ -57,8 +57,8 @@ Legend:
    (+) View for all entries of an specific user
    (+) View for all entries added within a particular date (year/month/or exact day)
    (+) View and menu link for entries added in a particular date period
-   (+) Range search for inputbox with a free input
-   (+) URL field - ability to count and display number of visits/clicks on the particular link
+   (+) Range search for inputbox with free defined value input
+   (+) URL field - ability to count and display number of visits/clicks for the particular link
    (+) Category and Entry Alias for URL
    (+) Meta data for specific add entry and search view
    (+) Possibility to update/override a template package
