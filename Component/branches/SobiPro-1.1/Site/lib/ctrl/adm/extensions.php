@@ -966,6 +966,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	{
 		$arch = SPFactory::Instance( 'base.fs.archive' );
 		$ajax = strlen( SPRequest::cmd( 'ident', null, 'post' ) );
+		if ( !( $file ) && SPRequest::string( 'root' ) ) {
+			$file = str_replace( '.xml', null, SPRequest::string( 'root' ) );
+			$file = SPLoader::path( 'tmp.install.' . $file, 'front', true, 'xml' );
+		}
 		if ( !( $file ) ) {
 			$ident = SPRequest::cmd( 'ident', null, 'post' );
 			$data = SPRequest::file( $ident );
@@ -995,6 +999,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				return $this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );
 			}
 		}
+		// force update
+		elseif ( SPRequest::string( 'root' ) && $file ) {
+			$path = dirname( $file );
+		}
 		else {
 			$arch->setFile( $file );
 			$name = str_replace( array( '.' . SPFs::getExt( $file ), '.' ), null, basename( $file ) );
@@ -1019,8 +1027,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 		}
 		if ( $path ) {
-			if ( !( $arch->extract( $path ) ) ) {
-				return $this->ajaxResponse( $ajax, SPLang::e( 'CANNOT_EXTRACT_ARCHIVE', basename( $file ), $path ), false, SPC::ERROR_MSG );
+			if ( !( SPRequest::string( 'root' ) ) ) {
+				if ( !( $arch->extract( $path ) ) ) {
+					return $this->ajaxResponse( $ajax, SPLang::e( 'CANNOT_EXTRACT_ARCHIVE', basename( $file ), $path ), false, SPC::ERROR_MSG );
+				}
 			}
 			$dir =& SPFactory::Instance( 'base.fs.directory', $path );
 			$xml = array_keys( $dir->searchFile( '.xml', false, 2 ) );
@@ -1072,6 +1082,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			SPFactory::mainframe()->cleanBuffer();
 			echo json_encode( $response );
 			exit;
+		}
+		elseif ( $redirect ) {
+			SPFactory::message()->setMessage( $message, false, $type );
+			Sobi::Redirect( Sobi::Url( 'extensions.installed' ) );
 		}
 		else {
 			return array( 'msg' => $message, 'msgtype' => $type );

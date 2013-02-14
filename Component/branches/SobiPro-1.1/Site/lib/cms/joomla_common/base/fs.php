@@ -121,6 +121,7 @@ abstract class SPJoomlaFs
 	/**
 	 *     *
 	 * @param string $file
+	 * @throws SPException
 	 * @return bool
 	 */
 	public static function delete( $file )
