@@ -120,7 +120,24 @@ INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`,
 ('xml_ip', '', 0, 0, 'debug'),
 ('multimode', '0', 0, 0, 'lang'),
 ('compress_js', '0', 0, 0, 'cache'),
-('alphamenu_extra_fields_array', '', 0, 0, 'alphamenu_extra_fields_array');
+('alphamenu_extra_fields_array', '', 0, 0, 'alphamenu_extra_fields_array'),
+('entries_ordering', 'disabled', 1, 0, 'search'),
+('section_search_enabled', '1', 1, 0, 'redirects'),
+('section_search_url', 'index.php', 1, 0, 'redirects'),
+('section_search_msgtype', 'info', 1, 0, 'redirects'),
+('section_search_msg', 'UNAUTHORIZED_ACCESS', 1, 0, 'redirects'),
+('entry_access_enabled', '1', 1, 0, 'redirects'),
+('entry_access_url', 'index.php', 1, 0, 'redirects'),
+('entry_access_msgtype', 'info', 1, 0, 'redirects'),
+('entry_access_msg', 'UNAUTHORIZED_ACCESS', 1, 0, 'redirects'),
+('entry_add_enabled', '1', 1, 0, 'redirects'),
+('entry_add_url', 'index.php', 1, 0, 'redirects'),
+('entry_add_msgtype', 'info', 1, 0, 'redirects'),
+('entry_add_msg', 'UNAUTHORIZED_ACCESS', 1, 0, 'redirects'),
+('entry_save_enabled', '0', 1, 0, 'redirects'),
+('entry_save_url', 'index.php', 1, 0, 'redirects'),
+('entry_save_msgtype', 'info', 1, 0, 'redirects'),
+('entry_save_msg', 'EN.ENTRY_SAVED_NA', 1, 0, 'redirects');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
   `eid` int(25) NOT NULL AUTO_INCREMENT,
@@ -1059,8 +1076,11 @@ INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language
 ('name', 'Category', NULL, 'en-GB', 'field', 15, 0, NULL, NULL, NULL),
 ('bankdata', '<p>Payment Subject: "Entry in the {section.name} at the {cfg:site_name}. Entry id {entry.id}"</p>\r\n<ul>\r\n<li>Account Owner: Jon Doe </li>\r\n<li>Account No.: 8274230479 </li>\r\n<li>Bank No.: 8038012380 </li>\r\n<li>IBAN: 234242343018 </li>\r\n<li>BIC: 07979079779ABCDEFGH</li>\r\n</ul>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
 ('ppexpl', '<p>Please click on the button below to pay via Paypal.</p>\r\n<p> </p>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
-('ppsubject', 'Entry in the {section.name} at the {cfg:site_name}. Entry id {entry.id}', 1, 'en-GB', 'application', 0, 1, '', '', '');
-
+('ppsubject', 'Entry in the {section.name} at the {cfg:site_name}. Entry id {entry.id}', 1, 'en-GB', 'application', 0, 1, '', '', ''),
+('sfMetaKeys', 'search', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
+('sfMetaDesc', 'Search Business', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
+('efMetaKeys', 'add, edit', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
+('efMetaDesc', 'Add/Edit Business', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
