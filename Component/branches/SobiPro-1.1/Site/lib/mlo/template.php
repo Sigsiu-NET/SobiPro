@@ -38,9 +38,9 @@ interface SPTemplate
 	public function setData( $data );
 
 	/**
-	 * @var string $tmpl
+	 * @var string $template
 	 */
-	public function setTemplate( $tmpl );
+	public function setTemplate( $template );
 
 	/**
 	 * @var SPFrontView $proxy
@@ -52,4 +52,3 @@ interface SPTemplate
 	 */
 	public function setType( $type );
 }
-?>

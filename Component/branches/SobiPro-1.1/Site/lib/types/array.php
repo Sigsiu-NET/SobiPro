@@ -141,13 +141,16 @@ final class SPData_Array extends SPObject
 		return str_replace( array( '?{}|&~![()^"' ), null, $txt );
 	}
 
-	public function toXML( $arr, $root = 'root' )
+	public function toXML( $arr, $root = 'root', $returnDOM = false )
 	{
 		$content = null;
 		$dom = new DOMDocument( '1.0', 'UTF-8' );
 		$dom->formatOutput = true;
 		$node = $dom->appendChild( $dom->createElement( SPLang::nid( $root ) ) );
 		$this->_toXML( $arr, $node, $dom );
+		if( $returnDOM ) {
+			return $dom;
+		}
 		$content = $dom->saveXML();
 		return $content;
 	}
@@ -156,14 +159,14 @@ final class SPData_Array extends SPObject
 	{
 		if ( is_array( $arr ) && count( $arr ) ) {
 			foreach ( $arr as $name => $value ) {
+				if ( is_numeric( $name ) ) {
+					$name = 'value';
+				}
 				if ( is_array( $value ) ) {
 					$nn = $node->appendChild( $dom->createElement( SPLang::nid( $name ) ) );
 					$this->_toXML( $value, $nn, $dom );
 				}
 				else {
-					if ( is_numeric( $name ) ) {
-						$name = 'value';
-					}
 					$node->appendChild( $dom->createElement( SPLang::nid( $name ), preg_replace( '/&(?![#]?[a-z0-9]+;)/i', '&amp;', $value ) ) );
 				}
 			}
@@ -172,6 +175,7 @@ final class SPData_Array extends SPObject
 
 	/**
 	 * @param DOMDocument $dom
+	 * @param $root
 	 * @return array
 	 */
 	public function fromXML( $dom, $root )

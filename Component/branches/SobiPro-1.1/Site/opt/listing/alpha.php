@@ -76,7 +76,12 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			if ( !( $this->_letter ) || !( Sobi::Section() ) ) {
 				Sobi::Error( $this->name(), SPLang::e( 'SITE_NOT_FOUND_MISSING_PARAMS' ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 			}
-			$this->_letter = strtoupper( $this->_letter );
+			if ( !( preg_match( '/^[\x20-\x7f]*$/D', $this->_letter ) ) && function_exists( 'mb_strtolower' ) ) {
+				$this->_letter = mb_strtoupper( $this->_letter );
+			}
+			else {
+				$this->_letter = strtoupper( $this->_letter );
+			}
 			$this->view();
 		}
 	}

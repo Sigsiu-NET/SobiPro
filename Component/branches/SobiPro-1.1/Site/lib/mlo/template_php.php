@@ -91,12 +91,12 @@ class SPTemplatePHP implements SPTemplate
 	}
 
 	/** (non-PHPdoc)
-	 * @var string $tmpl
+	 * @var string $template
 	 * @see Site/lib/mlo/SPTemplate#setTemplate()
 	 */
-	public function setTemplate( $tmpl )
+	public function setTemplate( $template )
 	{
-		$this->_tpl = $tmpl;
+		$this->_tpl = $template;
 	}
 
 	/**
@@ -109,4 +109,3 @@ class SPTemplatePHP implements SPTemplate
 		return call_user_func_array( array( $this->_proxy, $method ), $params );
 	}
 }
-?>

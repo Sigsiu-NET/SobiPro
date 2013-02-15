@@ -35,7 +35,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	/**
 	 * @var array
 	 */
-	private $_config = array();
+	protected $_config = array();
 	/**
 	 * @var string
 	 */
@@ -56,6 +56,10 @@ abstract class SPFrontView extends SPObject implements SPView
 	 * @var string
 	 */
 	protected $_type = 'root';
+	/**
+	 * @var DOMDocument
+	 */
+	protected $_xml = null;
 	/**
 	 * @var string
 	 */
@@ -104,6 +108,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 *
 	 * @param var
 	 * @param label
+	 * @return \SPFrontView
 	 */
 	public function & assign( &$var, $label )
 	{
@@ -127,7 +132,6 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	public function loadCSSFile( $path )
 	{
-		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
 		Sobi::Trigger( 'loadCSSFile', $this->name(), array( &$path ) );
 		if ( SPFs::exists( $this->tplPath() . DS . 'css' . DS . $path . '.css' ) ) {
 			$path = 'absolute.' . $this->tplPath() . '.css.' . $path;
@@ -255,6 +259,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 		$parserClass = SPLoader::loadClass( 'mlo.template_' . $type );
 		if ( $parserClass ) {
+			/** @var $parser SPTemplateXSLT */
 			$parser = new $parserClass();
 		}
 		else {
@@ -269,6 +274,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 		$parser->setProxy( $this );
 		$parser->setData( $this->_attr );
+		$parser->setXML( $this->_xml );
 		$parser->setType( $this->_type );
 		$parser->setTemplate( $this->_template );
 		Sobi::Trigger( 'Display', $this->name(), array( $type, &$this->_attr ) );
@@ -314,7 +320,7 @@ abstract class SPFrontView extends SPObject implements SPView
 
 		if ( $o == 'html' && !( strlen( SPRequest::cmd( 'format' ) ) ) ) {
 			$out .= $this->pb();
-			if ( SPRequest::cmd( 'dbg' ) && Sobi::My( 'id' ) ) {
+			if ( ( SPRequest::cmd( 'dbg' ) || Sobi::Cfg( 'debug' ) ) && Sobi::My( 'id' ) ) {
 				$start = Sobi::Reg( 'start' );
 				$mem = $start[ 0 ];
 				$time = $start[ 1 ];
@@ -355,9 +361,9 @@ abstract class SPFrontView extends SPObject implements SPView
 	private function registerFunctions()
 	{
 		$functions = array();
-		$pckg = Sobi::Reg( 'current_template' );
-		if ( SPFs::exists( $pckg . $this->key( 'functions' ) ) ) {
-			$path = $pckg . $this->key( 'functions' );
+		$package = Sobi::Reg( 'current_template' );
+		if ( SPFs::exists( $package . $this->key( 'functions' ) ) ) {
+			$path = $package . $this->key( 'functions' );
 			ob_start();
 			$content = file_get_contents( $path );
 			$class = array();
@@ -404,7 +410,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	}
 
 	/**
-	 * @param mixed $attr
+	 * @internal param mixed $attr
 	 * @return string
 	 */
 	public function field()
@@ -503,7 +509,8 @@ abstract class SPFrontView extends SPObject implements SPView
 	/**
 	 *
 	 * @param mixed $attr
-	 * @param int $index
+	 * @param mixed $name
+	 * @internal param int $index
 	 * @return mixed
 	 */
 	public function set( $attr, $name )

@@ -605,7 +605,7 @@ abstract class SPDBObject extends SPObject
 	/**
 	 * @param stdClass $obj
 	 */
-	public function extend( $obj )
+	public function extend( $obj, $cache = false )
 	{
 		if ( !empty( $obj ) ) {
 			foreach ( $obj as $k => $v ) {
@@ -613,7 +613,7 @@ abstract class SPDBObject extends SPObject
 			}
 		}
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$obj ) );
-		$this->loadTable();
+		$this->loadTable( $cache );
 		$this->validUntil = SPFactory::config()->date( $this->validUntil, 'Y-m-d H:i:s' );
 	}
 

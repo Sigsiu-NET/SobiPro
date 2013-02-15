@@ -100,9 +100,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 	/**
 	 * Full init
 	 */
-	public function loadTable()
+	public function loadTable( $cache = false )
 	{
-		if ( $this->id ) {
+		if ( $this->id && !( $cache ) ) {
 			$cats = $this->getCategories( true );
 			$this->section = Sobi::Section();
 			if ( isset( $cats[ 0 ] ) ) {

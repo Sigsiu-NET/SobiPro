@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -82,10 +78,14 @@ final class SobiProCtrl
 	 * @var int
 	 */
 	private $_deb = 0;
+	/**
+	 * @var array
+	 */
+	private $_cache = array();
 
 	/**
 	 * @param string $task
-	 * @return SobiPro
+	 * @return \SobiProCtrl
 	 */
 	function __construct( $task )
 	{
@@ -113,7 +113,7 @@ final class SobiProCtrl
 		$access = $this->getSection();
 
 		/* initialise mainframe interface to CMS */
-		$this->_mainframe = & SPFactory::mainframe();
+		$this->_mainframe = SPFactory::mainframe();
 
 		/* initialise config */
 		$this->createConfig();
@@ -256,25 +256,94 @@ final class SobiProCtrl
 	 *     - If we have a task - parse task
 	 *  - If we don't have a task, but sid, we are going via default object task
 	 *  - Otherwise it could be only the frontpage
+	 * @throws SPException
 	 * @return void
 	 */
 	private function route()
 	{
-		/* if we have a task */
-		if ( $this->_task && $this->_task != 'panel' ) {
-			if ( !( $this->routeTask() ) ) {
-				throw new SPException( SPLang::e( 'Cannot interpret task "%s"', $this->_task ) );
+		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
+			$this->_cache = SPFactory::cache()->view();
+		}
+		if ( !( $this->_cache ) ) {
+			/* if we have a task */
+			if ( $this->_task && $this->_task != 'panel' ) {
+				if ( !( $this->routeTask() ) ) {
+					throw new SPException( SPLang::e( 'Cannot interpret task "%s"', $this->_task ) );
+				}
+			}
+			/* if there is no task - execute default task for object */
+			elseif ( $this->_sid ) {
+				if ( !( $this->routeObj() ) ) {
+					throw new SPException( SPLang::e( 'Cannot route object with id "%d"', $this->_sid ) );
+				}
+			}
+			/* otherwise show the frontpage */
+			else {
+				$this->frontpage();
 			}
 		}
-		/* if there is no task - execute default task for object */
-		elseif ( $this->_sid ) {
-			if ( !( $this->routeObj() ) ) {
-				throw new SPException( SPLang::e( 'Cannot route object with id "%d"', $this->_sid ) );
-			}
-		}
-		/* otherwise show the frontpage */
 		else {
-			$this->frontpage();
+			$task = null;
+			if ( !( $this->_task ) && $this->_sid ) {
+				$ctrl = SPFactory::Controller( $this->_model->oType );
+				$this->setController( $ctrl );
+				$this->_model = SPFactory::object( $this->_sid );
+				$model = SPLoader::loadModel( $this->_model->oType, false, false );
+				if ( $model ) {
+					$this->_ctrl->setModel( $model );
+					if ( ( $this->_model instanceof stdClass ) ) {
+						$this->_ctrl->extend( $this->_model, true );
+					}
+				}
+			}
+			$this->_ctrl->setTask( $task );
+			$this->_ctrl->visible();
+//			$task = null;
+//			if ( strstr( $this->_task, '.' ) ) {
+//				/* task consist of the real task and the object type */
+//				$task = explode( '.', $this->_task );
+//				$obj = trim( array_shift( $task ) );
+//				$task = trim( implode( '.', $task ) );
+//				$ctrl = SPLoader::loadController( $obj );
+//				$ctrl = new $ctrl();
+//				$this->setController( $ctrl );
+//			}
+//			elseif( $this->_task ) {
+//				/** Special controllers not inherited from object and without model */
+//				$task = $this->_task;
+//				try {
+//					$ctrl = SPLoader::loadController( $task );
+//				} catch ( SPException $x ) {
+//					Sobi::Error( 'CoreCtrl', SPLang::e( 'PAGE_NOT_FOUND' ), 0, 404 );
+//				}
+//				try {
+//					$this->setController( new $ctrl() );
+//					$this->_ctrl->setTask( null );
+//				} catch ( SPException $x ) {
+//					Sobi::Error( 'CoreCtrl', SPLang::e( 'Cannot set controller. %s.', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
+//				}
+//			}
+//			else {
+//				$ctrl = SPFactory::Controller( $this->_model->oType );
+//				$obj = $this->_model->oType;
+//			}
+//			if ( $ctrl instanceof SPController ) {
+//				$this->setController( new $ctrl() );
+//				$model = SPLoader::loadModel( $obj, false, false );
+//				if ( $model ) {
+//					$this->_ctrl->setModel( $model );
+//				}
+//				if ( $this->_sid ) {
+//					$this->_model = SPFactory::object( $this->_sid );
+//				}
+//				if ( ( $this->_model instanceof stdClass ) && ( $this->_model->oType == $obj ) ) {
+//					/*... extend the empty model of these data we've already got */
+//					$this->_ctrl->extend( $this->_model );
+//				}
+//				/* ... and so on... */
+//				$this->_ctrl->setTask( $task );
+//			}
+//			$this->_ctrl->visible();
 		}
 	}
 
@@ -449,22 +518,30 @@ final class SobiProCtrl
 	 */
 	public function execute()
 	{
-		try {
-			if ( is_array( $this->_ctrl ) ) {
-				foreach ( $this->_ctrl as &$c ) {
-					$c->execute();
-				}
-			}
-			else {
-				if ( $this->_ctrl instanceof SPControl ) {
-					$this->_ctrl->execute();
+		if ( !( $this->_cache ) ) {
+			try {
+				if ( is_array( $this->_ctrl ) ) {
+					foreach ( $this->_ctrl as &$c ) {
+						$c->execute();
+					}
 				}
 				else {
-					Sobi::Error( 'CoreCtrl', SPLang::e( 'No controller to execute' ), SPC::ERROR, 500, __LINE__, __FILE__ );
+					if ( $this->_ctrl instanceof SPControl ) {
+						$this->_ctrl->execute();
+					}
+					else {
+						Sobi::Error( 'CoreCtrl', SPLang::e( 'No controller to execute' ), SPC::ERROR, 500, __LINE__, __FILE__ );
+					}
 				}
+			} catch ( SPException $x ) {
+				Sobi::Error( 'CoreCtrl', SPLang::e( '%s', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
-		} catch ( SPException $x ) {
-			Sobi::Error( 'CoreCtrl', SPLang::e( '%s', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
+		}
+		else {
+			/** @var $view SPFrontView */
+			$view = SPFactory::View( 'cache' );
+			$view->cachedView( $this->_cache[ 'xml' ], $this->_cache[ 'template' ], $this->_cache[ 'cid' ], $this->_cache[ 'config' ] );
+			$view->display();
 		}
 		/* send header data etc ...*/
 		SPFactory::header()->send();
@@ -478,6 +555,7 @@ final class SobiProCtrl
 	}
 
 	/**
+	 * @param $ctrl
 	 * @return void
 	 */
 	public function setController( &$ctrl )

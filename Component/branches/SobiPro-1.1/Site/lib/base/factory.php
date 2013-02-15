@@ -151,6 +151,7 @@ abstract class SPFactory
 	}
 
 	/**
+	 * @param int $id
 	 * @return stdClass
 	 */
 	public static function & object( $id )
@@ -170,7 +171,9 @@ abstract class SPFactory
 	}
 
 	/**
-	 * @param string $classPath - class path
+	 * @param $class
+	 * @throws SPException
+	 * @internal param string $classPath - class path
 	 * @return stdClass
 	 */
 	public static function & Instance( $class )
@@ -195,6 +198,7 @@ abstract class SPFactory
 
 	/**
 	 * @param string $name
+	 * @param bool $adm
 	 * @return SPView
 	 */
 	public static function & View( $name, $adm = false )
@@ -204,6 +208,7 @@ abstract class SPFactory
 
 	/**
 	 * @param string $name
+	 * @param bool $adm
 	 * @return SPDBObject
 	 */
 	public static function & Model( $name, $adm = false )
@@ -281,6 +286,7 @@ abstract class SPFactory
 
 	/**
 	 * @param string $name
+	 * @param bool $adm
 	 * @return SPController
 	 */
 	public static function & Controller( $name, $adm = false )
@@ -311,5 +317,3 @@ abstract class SPFactory
 		return $plugins;
 	}
 }
-
-?>

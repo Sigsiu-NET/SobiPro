@@ -165,9 +165,9 @@ abstract class SPJoomlaFs
 	}
 
 	/**
-	 *     *
 	 * @param string $file
 	 * @param string $buffer
+	 * @throws SPException
 	 * @return bool
 	 */
 	public static function write( $file, &$buffer )

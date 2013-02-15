@@ -86,7 +86,6 @@ class SPSectionCtrl extends SPController
         /* add pathway */
         SPFactory::mainframe()->addObjToPathway( $this->_model );
         $this->_model->countVisit();
-
         /* get view class */
         $class = SPLoader::loadView( $this->_type );
         $view = new $class( $this->template );

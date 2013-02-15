@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -99,6 +95,9 @@ class SPTemplateXSLT implements SPTemplate
 		if ( !( $template ) ) {
 			$template = SPLoader::loadTemplate( $this->_tpl, 'xslt' );
 		}
+		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
+			SPFactory::cache()->addView( $this->_xml, $template );
+		}
 		if ( $template ) {
 			try {
 				if ( !( $style = DOMDocument::load( $template ) ) ) {
@@ -153,16 +152,26 @@ class SPTemplateXSLT implements SPTemplate
 		$this->_type = $type;
 	}
 
+	/**
+	 * @param DOMDocument $XML the listing type to set
+	 */
+	public function setXML( $XML )
+	{
+		$this->_xml = $XML;
+	}
+
 	private function createXML()
 	{
-		$this->_xml = new DOMDocument( Sobi::Cfg( 'xml.version', '1.0' ), Sobi::Cfg( 'xml.encoding', 'UTF-8' ) );
-		$this->_xml->formatOutput = true;
-		if ( count( $this->_data ) ) {
-			$e = $this->_xml->createElement( $this->_type );
-			foreach ( $this->_data as $root => $data ) {
-				$this->createNode( $data, $e, $root );
+		if ( !( $this->_xml ) ) {
+			$this->_xml = new DOMDocument( Sobi::Cfg( 'xml.version', '1.0' ), Sobi::Cfg( 'xml.encoding', 'UTF-8' ) );
+			$this->_xml->formatOutput = true;
+			if ( count( $this->_data ) ) {
+				$e = $this->_xml->createElement( $this->_type );
+				foreach ( $this->_data as $root => $data ) {
+					$this->createNode( $data, $e, $root );
+				}
+				$this->_xml->appendChild( $e );
 			}
-			$this->_xml->appendChild( $e );
 		}
 		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), array( &$this->_xml ) );
 	}
@@ -348,13 +357,13 @@ class SPTemplateXSLT implements SPTemplate
 	}
 
 	/** (non-PHPdoc)
-	 * @var string $tmpl
+	 * @var string $template
 	 * @see Site/lib/mlo/SPTemplate#setTemplate()
 	 */
-	public function setTemplate( $tmpl )
+	public function setTemplate( $template )
 	{
-		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), array( &$tmpl ) );
-		$this->_tpl = $tmpl;
+		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), array( &$template ) );
+		$this->_tpl = $template;
 	}
 
 	/**

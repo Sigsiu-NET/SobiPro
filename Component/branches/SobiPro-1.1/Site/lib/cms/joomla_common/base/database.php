@@ -537,7 +537,7 @@ class SPJoomlaDb
 		if ( $normalize ) {
 			$this->normalize( $table, $values );
 		}
-		foreach ( $values as $var => $val ) {
+		foreach ( $values as $val ) {
 			if ( is_array( $val ) || is_object( $val ) ) {
 				$val = SPConfig::serialize( $val );
 			}
@@ -567,11 +567,13 @@ class SPJoomlaDb
 	 */
 	public function normalize( $table, &$values )
 	{
+		$normalised = array();
 		$cols = $this->getColumns( $table );
 		/* sort the properties in the same order */
 		foreach ( $cols as $col ) {
-			$values[ $col ] = isset( $values[ $col ] ) ? $values[ $col ] : '';
+			$normalised[ $col ] = isset( $values[ $col ] ) ? $values[ $col ] : '';
 		}
+		$values = $normalised;
 	}
 
 	/**
