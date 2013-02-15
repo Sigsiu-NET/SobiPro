@@ -594,8 +594,6 @@ class SPEntryCtrl extends SPController
 		/* add pathway */
 		SPFactory::mainframe()->addObjToPathway( $this->_model );
 		$this->_model->countVisit();
-
-		//        $this->_model->loadFields( $this->_model->get( 'id' ) );
 		$this->_model->loadFields( Sobi::Reg( 'current_section' ) );
 		$class = SPLoader::loadView( 'entry' );
 		$view = new $class( $this->template );

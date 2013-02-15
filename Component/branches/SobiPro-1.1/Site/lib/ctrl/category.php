@@ -237,6 +237,8 @@ class SPCategoryCtrl extends SPSectionCtrl
 
 	/**
 	 * @param int $sid
+	 * @param bool $redirect
+	 * @return void
 	 */
 	protected function checkIn( $sid, $redirect = true )
 	{

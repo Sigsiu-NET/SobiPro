@@ -105,6 +105,7 @@ Legend:
    (#) Non-closed string (url) in CSS cache while converting file path
    (#) Not possible to transform url paths in CSS cache if more than one url per line
    (#) Column count doesn't match value while installing a new payment App
+   (#) Workaround for non-latin characters in alpha index for problems in strtoupper
 
 
 -------------------

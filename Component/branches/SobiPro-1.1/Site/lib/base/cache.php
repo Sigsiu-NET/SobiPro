@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -40,7 +36,11 @@ final class SPCache
 	private $_store = null;
 	private $_check = null;
 	private $_section = -1;
-	private $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', 'publish' );
+	private $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', '.publish' );
+	private $requestStore = array();
+	private $view = array( 'xml' => null, 'template' => null );
+	private $_disableViewCache = array( 'entry.edit', 'entry.add', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
+	private $_cachedView = false;
 
 	/**
 	 * Singleton - returns instance of the config object
@@ -74,6 +74,7 @@ final class SPCache
 	private function __construct()
 	{
 		$this->_enabled = Sobi::Cfg( 'cache.l3_enabled', true );
+		$this->requestStore = $_GET;
 		if ( $this->_enabled ) {
 			$sid = Sobi::Section();
 			$this->_section = $sid ? $sid : $this->_section;
@@ -206,7 +207,7 @@ final class SPCache
 		if ( $section > 0 ) {
 			$this->cleanSection( 0 );
 		}
-		if( $system ) {
+		if ( $system ) {
 			SPFactory::message()->resetSystemMessages();
 		}
 
@@ -234,7 +235,7 @@ final class SPCache
 	 * @param string $id - identifier
 	 * @param int $sid - id of an object
 	 * @param string $lang - language
-	 * @param id $section - section id
+	 * @param \id|int $section - section id
 	 * @return SPCache
 	 */
 	public function & addVar( $var, $id, $sid = 0, $lang = null, $section = 0 )
@@ -244,6 +245,7 @@ final class SPCache
 				$var = SPC::NO_VALUE;
 			}
 			$section = $section ? $section : $this->_section;
+			$sid = $sid ? $sid : $this->_section;
 			$lang = $lang ? $lang : Sobi::Lang();
 			$checksum = null; //md5( serialize( $var ) );
 			$var = SPConfig::serialize( $var );
@@ -258,7 +260,7 @@ final class SPCache
 	 * @param string $id - identifier
 	 * @param int $sid - id of an object
 	 * @param string $lang - language
-	 * @param id $section - section id
+	 * @param \id|int $section - section id
 	 * @return mixed - variable on success or false if not found
 	 */
 	public function getVar( $id, $sid = 0, $lang = null, $section = 0 )
@@ -266,6 +268,7 @@ final class SPCache
 		if ( $this->enabled() ) {
 			$section = $section ? $section : $this->_section;
 			$lang = $lang ? $lang : Sobi::Lang( false );
+			$sid = $sid ? $sid : $this->_section;
 			$result = $this->Query( "SELECT * FROM vars WHERE( name = '{$id}' AND lang = '{$lang}' AND section = '{$section}' AND sid = {$sid} )" );
 			if ( !( is_array( $result ) ) || !( count( $result ) ) || !( strlen( $result[ 'data' ] ) ) ) {
 				return false;
@@ -312,6 +315,7 @@ final class SPCache
 	 * @param string $type - type of object entry/category/section
 	 * @param int $id - id of the object
 	 * @param int $sid
+	 * @param bool $force
 	 * @return SPCache
 	 */
 	public function & addObj( $obj, $type, $id, $sid = 0, $force = false )
@@ -368,8 +372,8 @@ final class SPCache
 	/**
 	 * Removes stored variable from the cache
 	 * @param string $id - identifier
-	 * @param string $lang - language
-	 * @param id $section - section id
+	 * @param \id|int $section - section id
+	 * @internal param string $lang - language
 	 * @return SPCache
 	 */
 	public function & deleteVar( $id, $section = 0 )
@@ -384,12 +388,14 @@ final class SPCache
 	/**
 	 * @param $type
 	 * @param $id
-	 * @param $sid
+	 * @param int $sid
+	 * @param bool $force
 	 * @return bool
 	 */
 	public function getObj( $type, $id, $sid = 0, $force = false )
 	{
 		if ( $this->enabled( !( $force ) ) ) {
+			$sid = $sid ? $sid : $this->_section;
 			$id = ( int )$id;
 			$sid = ( int )$sid;
 			$lang = Sobi::Lang( false );
@@ -516,6 +522,151 @@ final class SPCache
 		$updatesDef = SPLoader::path( 'etc.updates', 'front', false, 'xml' );
 		if ( SPFs::exists( $updatesDef ) ) {
 			SPFs::delete( $updatesDef );
+		}
+	}
+
+	public function view()
+	{
+		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) ) {
+			return false;
+		}
+		if ( !( in_array( SPRequest::task( 'get' ), $this->_disableViewCache ) ) ) {
+			foreach ( $this->_disableObjectCache as $task ) {
+				if ( strstr( SPRequest::task( 'get' ), $task ) ) {
+					return false;
+				}
+			}
+			$query = $this->viewRequest();
+			$file = SPFactory::db()
+					->select( array( 'fileName', 'template', 'configFile', 'cid' ), 'spdb_view_cache', $query )
+					->loadRow();
+			$cacheFile = SPLoader::path( 'var.xml.' . $file[ 0 ], 'front', true, 'xml' );
+			if ( !( $cacheFile ) ) {
+				return false;
+			}
+			$ini = array();
+			if ( $file[ 2 ] ) {
+				$configs = json_decode( str_replace( "'", '"', $file[ 2 ] ) );
+				if ( count( $configs ) ) {
+					$template = SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' );
+					foreach ( $configs as $config ) {
+						$configFile = $template . $config->file;
+						if ( file_exists( $configFile ) ) {
+							if ( md5_file( $configFile ) != $config->checksum ) {
+								return false;
+							}
+							$ini[ ] = $configFile;
+						}
+						else {
+							return false;
+						}
+					}
+				}
+			}
+			$xml = new DOMDocument();
+			if ( !( $xml->load( $cacheFile ) ) ) {
+				return false;
+			}
+			$this->_cachedView = true;
+			return array( 'xml' => $xml, 'template' => $file[ 1 ], 'config' => $ini, 'cid' => $file[ 3 ] );
+		}
+		else {
+			return false;
+		}
+	}
+
+	protected function viewRequest()
+	{
+		$request = array();
+		if ( count( $this->requestStore ) ) {
+			$keys = array_keys( $this->requestStore );
+			foreach ( $keys as $k ) {
+				$request[ $k ] = SPRequest::string( $k );
+			}
+		}
+		$reserved = array( 'site', 'task', 'pid', 'sid', 'sptpl', 'dbg' );
+		foreach ( $reserved as $var ) {
+			if ( isset( $request[ $var ] ) ) {
+				unset( $request[ $var ] );
+			}
+		}
+		$query = array(
+			'section' => Sobi::Section(),
+			'sid' => SPRequest::sid( 'get' ),
+			'task' => SPRequest::task( 'get' ),
+			'site' => SPRequest::int( 'site', 0, 'get' ),
+			'request' => str_replace( '"', null, json_encode( $request ) ),
+			'language' => Sobi::Lang(),
+		);
+		return $query;
+	}
+
+	/**
+	 * @param $xml DOMDocument
+	 * @param $template string
+	 * @return bool
+	 */
+	public function addView( $xml, $template )
+	{
+		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) ) {
+			return false;
+		}
+		if ( !( in_array( SPRequest::task( 'get' ), $this->_disableViewCache ) ) ) {
+			foreach ( $this->_disableObjectCache as $task ) {
+				if ( strstr( SPRequest::task( 'get' ), $task ) ) {
+					return false;
+				}
+			}
+			$this->view[ 'xml' ] = $xml;
+			$this->view[ 'template' ] = $template;
+		}
+	}
+
+	/**
+	 */
+	public function storeView( $head )
+	{
+		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || $this->_cachedView ) {
+			return false;
+		}
+		if ( $this->view[ 'xml' ] ) {
+			$xml = $this->view[ 'xml' ];
+			$template = $this->view[ 'template' ];
+			$template = str_replace( SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' ), null, $template );
+			$root = $xml->documentElement;
+			$root->removeChild( $root->getElementsByTagName( 'visitor' )->item( 0 ) );
+			/** @var $header DOMDocument */
+			$header = SPFactory::Instance( 'types.array' )->toXML( $head, 'header', true );
+			$root->appendChild( $xml->importNode( $header->documentElement, true ) );
+			$request = $this->viewRequest();
+			$request[ 'template' ] = $template;
+			$configFiles = SPFactory::registry()->get( 'template_config' );
+			$request[ 'configFile' ] = str_replace( '"', "'", json_encode( $configFiles ) );
+			$request[ 'cid' ] = 'NULL';
+			$request[ 'created' ] = 'FUNCTION:NOW()';
+			$fileName = md5( serialize( $request ) );
+			$request[ 'fileName' ] = $fileName;
+			$filePath = SPLoader::path( 'var.xml.' . $fileName, 'front', false, 'xml' );
+			$content = $xml->saveXML();
+			$matches = array();
+			preg_match_all( '/<(category|entry|subcategory)[^>]*id="(\d{1,})"/', $content, $matches );
+			try {
+				$cid = SPFactory::db()
+						->insert( 'spdb_view_cache', $request, false, true )
+						->insertid();
+				$relations = array( SPRequest::sid() => array( 'cid' => $cid, 'sid' => SPRequest::sid() ) );
+				if ( isset( $matches[ 2 ] ) ) {
+					$ids = array_unique( $matches[ 2 ] );
+					foreach ( $ids as $sid ) {
+						$relations[ $sid ] = array( 'cid' => $cid, 'sid' => $sid );
+					}
+				}
+				SPFactory::db()
+						->insertArray( 'spdb_view_cache_relation', $relations );
+				SPFs::write( $filePath, $content );
+			} catch ( SPException $x ) {
+				Sobi::Error( 'XML-Cache', $x->getMessage() );
+			}
 		}
 	}
 }

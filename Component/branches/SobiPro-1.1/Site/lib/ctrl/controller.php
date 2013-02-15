@@ -58,6 +58,8 @@ abstract class SPController extends SPObject implements SPControl
 
 	/**
 	 * @param string $model
+	 * @throws SPException
+	 * @return void
 	 */
 	public function setModel( $model )
 	{
@@ -75,11 +77,13 @@ abstract class SPController extends SPObject implements SPControl
 
 	/**
 	 * @param stdClass $obj
+	 * @param bool $cache
+	 * @return void
 	 */
-	public function extend( $obj )
+	public function extend( $obj, $cache = false )
 	{
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$obj ) );
-		$this->_model->extend( $obj );
+		$this->_model->extend( $obj, $cache );
 	}
 
 	public function __construct()
@@ -308,7 +312,7 @@ abstract class SPController extends SPObject implements SPControl
 
 	/**
 	 */
-	protected function visible()
+	public function visible()
 	{
 		$type = $this->_model->get( 'oType' );
 		if ( Sobi::Can( $type, 'access', '*' ) ) {
@@ -398,14 +402,17 @@ abstract class SPController extends SPObject implements SPControl
 	protected function tplCfg( $path, $task = null )
 	{
 		$file = explode( '.', $path );
+		$files = array();
 		if ( strstr( $file[ 0 ], 'cms:' ) ) {
 			$file[ 0 ] = str_replace( 'cms:', null, $file[ 0 ] );
 			$file = SPFactory::mainframe()->path( implode( '.', $file ) );
 			$path = SPLoader::dirPath( $file, 'root', true );
 			$this->_tCfg = SPLoader::loadIniFile( "{$path}.config", true, false, false, true );
+			$files[ ] = SPLoader::iniStorage();
 		}
 		else {
 			$this->_tCfg = SPLoader::loadIniFile( "usr.templates.{$path}.config" );
+			$files[ ] = SPLoader::iniStorage();
 			$path = SPLoader::dirPath( 'usr.templates.' . $path, 'front', true );
 		}
 		if ( !$task ) {
@@ -413,6 +420,7 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'ini' ) ) {
 			$taskCfg = SPLoader::loadIniFile( "{$path}.{$this->templateType}.{$task}", true, false, false, true );
+			$files[ ] = SPLoader::iniStorage();
 			foreach ( $taskCfg as $section => $keys ) {
 				if ( isset( $this->_tCfg[ $section ] ) ) {
 					$this->_tCfg[ $section ] = array_merge( $this->_tCfg[ $section ], $keys );
@@ -421,6 +429,12 @@ abstract class SPController extends SPObject implements SPControl
 					$this->_tCfg[ $section ] = $keys;
 				}
 			}
+		}
+		if ( count( $files ) ) {
+			foreach ( $files as $i => $file ) {
+				$files[ $i ] = array( 'file' => str_replace( SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' ), null, $file ), 'checksum' => md5_file( $file ) );
+			}
+			SPFactory::registry()->set( 'template_config', $files );
 		}
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_tCfg ) );
 		SPFactory::registry()->set( 'current_template', $path );
