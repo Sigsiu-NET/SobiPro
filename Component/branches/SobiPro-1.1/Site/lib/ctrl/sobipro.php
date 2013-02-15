@@ -49,7 +49,7 @@ final class SobiProCtrl
 	/**
 	 * @var string
 	 */
-	private $_task = 0;
+	private $_task = null;
 	/**
 	 * @var int
 	 */
@@ -66,10 +66,6 @@ final class SobiProCtrl
 	 * @var mixed
 	 */
 	private $_model = null;
-	/**
-	 * @var string
-	 */
-	private $_type = 'component';
 	/**
 	 * @var int
 	 */
@@ -283,67 +279,59 @@ final class SobiProCtrl
 			}
 		}
 		else {
-			$task = null;
-			if ( !( $this->_task ) && $this->_sid ) {
-				$ctrl = SPFactory::Controller( $this->_model->oType );
-				$this->setController( $ctrl );
-				$this->_model = SPFactory::object( $this->_sid );
-				$model = SPLoader::loadModel( $this->_model->oType, false, false );
-				if ( $model ) {
-					$this->_ctrl->setModel( $model );
+			try {
+				$task = $this->_task;
+				if ( !( $task ) && $this->_sid ) {
+					$ctrl = SPFactory::Controller( $this->_model->oType );
+					$this->setController( $ctrl );
+					$this->_model = SPFactory::object( $this->_sid );
+					$model = SPLoader::loadModel( $this->_model->oType, false, false );
+					if ( $model ) {
+						$this->_ctrl->setModel( $model );
+						if ( ( $this->_model instanceof stdClass ) ) {
+							$this->_ctrl->extend( $this->_model, true );
+						}
+					}
+				}
+				if ( strstr( $task, '.' ) ) {
+					$task = explode( '.', $task );
+					$obj = trim( array_shift( $task ) );
+					if ( $obj == 'list' || $obj == 'ls' ) {
+						$obj = 'listing';
+					}
+					$task = trim( implode( '.', $task ) );
+					$ctrl = SPFactory::Controller( $obj );
+					$this->setController( $ctrl );
+					$model = SPLoader::loadModel( $obj, false, false );
+					if ( $model ) {
+						$this->_ctrl->setModel( $model );
+						if ( ( $this->_model instanceof stdClass ) ) {
+							$this->_ctrl->extend( $this->_model, true );
+						}
+					}
+					else {
+						$this->_ctrl->setModel( SPFactory::Section( $this->_section ) );
+						if ( ( $this->_model instanceof stdClass ) ) {
+							$this->_ctrl->extend( $this->_model, true );
+						}
+					}
+				}
+				elseif ( $task ) {
+					/** Special controllers not inherited from object and without model */
+					$ctrl = SPFactory::Controller( $task );
+					$this->setController( $ctrl );
+					$this->_ctrl->setModel( SPFactory::Section( $this->_section ) );
 					if ( ( $this->_model instanceof stdClass ) ) {
 						$this->_ctrl->extend( $this->_model, true );
 					}
 				}
+				$this->_ctrl->setTask( $task );
+				$this->_ctrl->visible();
+			} catch ( SPException $x ) {
+				Sobi::Error( 'CachedView', $x->getMessage() );
+				$this->_cache = null;
+				$this->route();
 			}
-			$this->_ctrl->setTask( $task );
-			$this->_ctrl->visible();
-//			$task = null;
-//			if ( strstr( $this->_task, '.' ) ) {
-//				/* task consist of the real task and the object type */
-//				$task = explode( '.', $this->_task );
-//				$obj = trim( array_shift( $task ) );
-//				$task = trim( implode( '.', $task ) );
-//				$ctrl = SPLoader::loadController( $obj );
-//				$ctrl = new $ctrl();
-//				$this->setController( $ctrl );
-//			}
-//			elseif( $this->_task ) {
-//				/** Special controllers not inherited from object and without model */
-//				$task = $this->_task;
-//				try {
-//					$ctrl = SPLoader::loadController( $task );
-//				} catch ( SPException $x ) {
-//					Sobi::Error( 'CoreCtrl', SPLang::e( 'PAGE_NOT_FOUND' ), 0, 404 );
-//				}
-//				try {
-//					$this->setController( new $ctrl() );
-//					$this->_ctrl->setTask( null );
-//				} catch ( SPException $x ) {
-//					Sobi::Error( 'CoreCtrl', SPLang::e( 'Cannot set controller. %s.', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
-//				}
-//			}
-//			else {
-//				$ctrl = SPFactory::Controller( $this->_model->oType );
-//				$obj = $this->_model->oType;
-//			}
-//			if ( $ctrl instanceof SPController ) {
-//				$this->setController( new $ctrl() );
-//				$model = SPLoader::loadModel( $obj, false, false );
-//				if ( $model ) {
-//					$this->_ctrl->setModel( $model );
-//				}
-//				if ( $this->_sid ) {
-//					$this->_model = SPFactory::object( $this->_sid );
-//				}
-//				if ( ( $this->_model instanceof stdClass ) && ( $this->_model->oType == $obj ) ) {
-//					/*... extend the empty model of these data we've already got */
-//					$this->_ctrl->extend( $this->_model );
-//				}
-//				/* ... and so on... */
-//				$this->_ctrl->setTask( $task );
-//			}
-//			$this->_ctrl->visible();
 		}
 	}
 

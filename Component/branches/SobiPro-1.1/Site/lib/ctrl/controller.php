@@ -84,6 +84,9 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$obj ) );
 		$this->_model->extend( $obj, $cache );
+		if( $cache ) {
+			$this->_model->countVisit();
+		}
 	}
 
 	public function __construct()

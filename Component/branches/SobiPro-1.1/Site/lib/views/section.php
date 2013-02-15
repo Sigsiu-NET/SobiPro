@@ -38,7 +38,6 @@ class SPSectionView extends SPFrontView implements SPView
 				$category = SPFactory::Category( $category );
 			}
 			$cat[ 'id' ] = $category->get( 'id' );
-			$cat[ 'counter' ] = $this->getNonStaticData( $category->get( 'id' ), 'counter' ); //$category->get( 'counter' );
 			$cat[ 'nid' ] = $category->get( 'nid' );
 			$cat[ 'name' ] = array(
 				'_complex' => 1,
@@ -117,6 +116,7 @@ class SPSectionView extends SPFrontView implements SPView
 			SPFactory::cache()->addObj( $cat, 'category_struct', $category->get( 'id' ) );
 			unset( $category );
 		}
+		$cat[ 'counter' ] = $this->getNonStaticData( $cat[ 'id' ], 'counter' );
 		Sobi::Trigger( 'List', ucfirst( __FUNCTION__ ), array( &$cat ) );
 		return $cat;
 	}
@@ -301,6 +301,7 @@ class SPSectionView extends SPFrontView implements SPView
 			unset( $en[ 'edit_url_array' ] );
 			unset( $entry );
 		}
+		$en[ 'counter' ] = $this->getNonStaticData( $en[ 'id' ], 'counter' );
 		/*
 		   * this is te special case:
 		   * no matter what task we currently have - if someone called this we need the data for the V-Card

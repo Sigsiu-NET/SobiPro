@@ -51,6 +51,36 @@ class SPCachedView extends SPFrontView implements SPView
 			}
 		}
 		$this->setConfig( $ini, SPRequest::task( 'get' ) );
+		$this->validateData( $cacheId );
+	}
+
+	protected function validateData( $cacheId )
+	{
+		$sids = SPFactory::db()
+				->select( 'sid', 'spdb_view_cache_relation', array( 'cid' => $cacheId ) )
+				->loadResultArray();
+		if ( $sids && count( $sids ) ) {
+			$this->loadNonStaticData( $sids );
+			$this->validateNodes();
+		}
+	}
+
+	protected function validateNodes()
+	{
+		$nodes = $this->_xml->getElementsByTagName( 'counter' );
+		if ( $nodes->length ) {
+			/** $node DOMNode */
+			foreach ( $nodes as $node ) {
+				/** $parent DOMNode */
+				$parent = $node->parentNode;
+				if ( $parent->attributes->getNamedItem( 'id' ) && $parent->attributes->getNamedItem( 'id' )->nodeValue ) {
+					$counter = $this->getNonStaticData( $parent->attributes->getNamedItem( 'id' )->nodeValue, 'counter' );
+					if ( $counter ) {
+						$node->nodeValue = $counter;
+					}
+				}
+			}
+		}
 	}
 
 	protected function parseXml()
@@ -62,6 +92,20 @@ class SPCachedView extends SPFrontView implements SPView
 					$params = array();
 					$this->parseParams( $node, $params );
 					$this->callHeader( $node->nodeName, $params[ $node->nodeName ] );
+				}
+			}
+		}
+		$data = $this->_xml->getElementsByTagName( 'cache-data' )->item( 0 );
+		if ( $data && $data->hasChildNodes() ) {
+			foreach ( $data->childNodes as $node ) {
+				if ( !( strstr( $node->nodeName, '#' ) ) ) {
+					$params = array();
+					$this->parseParams( $node, $params );
+					if ( isset( $params[ 'hidden' ] ) && is_array( $params[ 'hidden' ] ) && count( $params[ 'hidden' ] ) ) {
+						foreach ( $params[ 'hidden' ] as $k => $v ) {
+							$this->addHidden( $v, $k );
+						}
+					}
 				}
 			}
 		}

@@ -604,9 +604,10 @@ final class SPCache
 	/**
 	 * @param $xml DOMDocument
 	 * @param $template string
+	 * @param array $data
 	 * @return bool
 	 */
-	public function addView( $xml, $template )
+	public function addView( $xml, $template, $data = array() )
 	{
 		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) ) {
 			return false;
@@ -619,6 +620,7 @@ final class SPCache
 			}
 			$this->view[ 'xml' ] = $xml;
 			$this->view[ 'template' ] = $template;
+			$this->view[ 'data' ] = $data;
 		}
 	}
 
@@ -638,6 +640,10 @@ final class SPCache
 			/** @var $header DOMDocument */
 			$header = SPFactory::Instance( 'types.array' )->toXML( $head, 'header', true );
 			$root->appendChild( $xml->importNode( $header->documentElement, true ) );
+			if ( $this->view[ 'data' ] && count( $this->view[ 'data' ] ) ) {
+				$data = SPFactory::Instance( 'types.array' )->toXML( $this->view[ 'data' ], 'cache-data', true );
+				$root->appendChild( $xml->importNode( $data->documentElement, true ) );
+			}
 			$request = $this->viewRequest();
 			$request[ 'template' ] = $template;
 			$configFiles = SPFactory::registry()->get( 'template_config' );
