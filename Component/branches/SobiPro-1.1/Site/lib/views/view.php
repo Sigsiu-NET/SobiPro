@@ -275,6 +275,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		$parser->setProxy( $this );
 		$parser->setData( $this->_attr );
 		$parser->setXML( $this->_xml );
+		$parser->setCacheData( array( 'hidden' => $this->_hidden  ) );
 		$parser->setType( $this->_type );
 		$parser->setTemplate( $this->_template );
 		Sobi::Trigger( 'Display', $this->name(), array( $type, &$this->_attr ) );
@@ -329,13 +330,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				$time = microtime( true ) - $time;
 				SPConfig::debOut( "Memory: {$mem}<br/>Time: {$time}<br/> Q:{$queries}" );
 			}
-			echo "  \n<!-- Start of SobiPro component-->
-                    \n<div id=\"SobiPro\" class=\"SobiPro\">
-                        \n{$out}
-                    \n</div>
-                    \n<!-- End of SobiPro component Copyright (C) 2012 Sigsiu.NET GmbH -->
-                    \n
-                    ";
+			echo "\n<!-- Start of SobiPro component-->\n<div id=\"SobiPro\" class=\"SobiPro\">\n{$out}\n</div>\n<!-- End of SobiPro component Copyright (C) 2012 Sigsiu.NET GmbH -->\n";
 		}
 		else {
 			$this->customOutput( $out );
@@ -736,8 +731,6 @@ abstract class SPFrontView extends SPObject implements SPView
 				= SPFactory::db()
 				->select( Sobi::Cfg( 'cache.non_static', 'counter, id' ), 'spdb_object', array( 'id' => $objects ) )
 				->loadAssocList( 'id' );
-
-
 	}
 
 	protected function getNonStaticData( $id, $att )

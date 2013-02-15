@@ -35,7 +35,7 @@ class SPTemplateXSLT implements SPTemplate
 	/**
 	 * @var array
 	 */
-	private $_data = null;
+	private $_data = array();
 	/**
 	 * @var string
 	 */
@@ -48,6 +48,18 @@ class SPTemplateXSLT implements SPTemplate
 	 * @var DOMDocument
 	 */
 	private $_xml = null;
+	/**
+	 * @var array
+	 */
+	private $_cacheData = array();
+
+	/**
+	 * @param array $cacheData
+	 */
+	public function setCacheData( $cacheData )
+	{
+		$this->_cacheData = $cacheData;
+	}
 
 	public function __construct()
 	{
@@ -96,7 +108,7 @@ class SPTemplateXSLT implements SPTemplate
 			$template = SPLoader::loadTemplate( $this->_tpl, 'xslt' );
 		}
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
-			SPFactory::cache()->addView( $this->_xml, $template );
+			SPFactory::cache()->addView( $this->_xml, $template, $this->_cacheData );
 		}
 		if ( $template ) {
 			try {
