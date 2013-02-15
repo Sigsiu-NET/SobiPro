@@ -346,7 +346,6 @@
 											<field type="text" name="spcfg[redirects.entry_add_msg]" value="redirects.entry_add_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
 										</fieldset>
 										<fieldset label="SECN.CFG.REDIRECTS_SAVE">
-											<message label="SECN.CFG.REDIRECT_ENTRY_INFO" type="info" dismiss-button="false" class="spConfigAlert" />
 											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_save_enabled]" selected="redirects.entry_save_enabled" class="input-xlarge">
 												<values>
 													<option value="0" label="SEC.CFG.REDIRECTS_TO_PARENT_CATEGORY" />
@@ -362,6 +361,7 @@
 												</values>
 											</field>
 											<field type="text" name="spcfg[redirects.entry_save_msg]" value="redirects.entry_save_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+                                            <message label="SECN.CFG.REDIRECT_ENTRY_INFO" type="warning" dismiss-button="false" class="spConfigAlert" />
 										</fieldset>
 									</tab>
 								</tabs>

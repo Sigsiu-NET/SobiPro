@@ -139,6 +139,9 @@
 									</field>
 									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
 									<field type="toggle" name="field.newWindow" value="field.newWindow" label="FM.URL.NEW_WINDOW" prefix="yes_no" />
+                                </fieldset>
+
+                                <fieldset label="FMN.FIELD_ENTRYINPUT_URLCOUNTER">
 									<field type="toggle" name="field.countClicks" value="field.countClicks" label="FM.URL.COUNT_CLICKS" prefix="yes_no" />
 									<field type="toggle" name="field.counterToLabel" value="field.counterToLabel" label="FM.URL.COUNTER_TO_LABEL" prefix="yes_no" />
 								</fieldset>
