@@ -257,7 +257,15 @@ final class SobiProCtrl
 	 */
 	private function route()
 	{
+		$cache = true;
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
+			if ( !( ( $this->_model instanceof stdClass ) && $this->_model->owner == Sobi::My( 'id' ) ) ) {
+				if ( in_array( $this->_model->owner, array( 'entry' ) ) ) {
+					$cache = false;
+				}
+			}
+		}
+		if ( $cache && Sobi::Cfg( 'cache.xml_enabled' ) ) {
 			$this->_cache = SPFactory::cache()->view();
 		}
 		if ( !( $this->_cache ) ) {
