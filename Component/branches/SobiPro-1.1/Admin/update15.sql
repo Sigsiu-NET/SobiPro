@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
   `language` varchar(15) NOT NULL,
   `template` varchar(150) NOT NULL,
   `configFile` text NOT NULL,
+  `userGroups` varchar(200) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`cid`),
   KEY `sid` (`sid`),
@@ -16,7 +17,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
   KEY `language` (`language`),
   KEY `task` (`task`),
   KEY `request` (`request`),
-  KEY `site` (`site`)
+  KEY `site` (`site`),
+  KEY `userGroups` (`userGroups`)
 );
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (
