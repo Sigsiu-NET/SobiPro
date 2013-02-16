@@ -278,11 +278,12 @@ class SPJoomlaMainFrame
 	}
 
 	/**
-	 * Adds objectto the pathway
+	 * Adds object to the pathway
 	 * @param SPDBObject $obj
+	 * @param array $site
 	 * @return void
 	 */
-	public function addObjToPathway( $obj )
+	public function addObjToPathway( $obj, $site = array() )
 	{
 		if ( defined( 'SOBI_ADM_PATH' ) ) {
 			return true;
@@ -338,7 +339,10 @@ class SPJoomlaMainFrame
 			$pathway->addItem( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
 			$title[ ] = $obj->get( 'name' );
 		}
-		$this->setTitle( $title );
+		if ( count( $site ) && $site[ 0 ] ) {
+			$title[ ] = Sobi::Txt( 'SITES_COUNTER', $site[ 1 ], $site[ 0 ] );
+		}
+		SPFactory::header()->addTitle( $title );
 	}
 
 	/**
@@ -623,7 +627,9 @@ class SPJoomlaMainFrame
 
 	/**
 	 *
-	 * @param id
+	 * @param int $id
+	 * @return \JUser
+	 * @internal param $id
 	 */
 	public function & getUser( $id = 0 )
 	{
@@ -631,7 +637,7 @@ class SPJoomlaMainFrame
 	}
 
 	/**
-	 * Switchin error reporting and displaying of errors compl. off
+	 * Switching error reporting and displaying of errors compl. off
 	 * For e.g JavaScript, or XML output where the document structure is very sensible
 	 *
 	 */
@@ -671,6 +677,7 @@ class SPJoomlaMainFrame
 
 	/**
 	 * @param string $title
+	 * @param bool $forceAdd
 	 */
 	public function setTitle( $title, $forceAdd = false )
 	{
@@ -682,7 +689,7 @@ class SPJoomlaMainFrame
 			if ( Sobi::Cfg( 'browser.add_title', true ) || $forceAdd ) {
 				array_unshift( $title, $document->getTitle() );
 			}
-			if ( Sobi::Cfg( 'browser.full_title', true ) ) {
+			if ( Sobi::Cfg( 'browser.full_title', true ) || true ) {
 				if ( Sobi::Cfg( 'browser.reverse_title', false ) ) {
 					$title = array_reverse( $title );
 				}

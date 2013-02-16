@@ -328,7 +328,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				$queries = SPFactory::db()->getCount();
 				$mem = number_format( memory_get_usage() - $mem );
 				$time = microtime( true ) - $time;
-				SPConfig::debOut( "Memory: {$mem}<br/>Time: {$time}<br/> Q:{$queries}" );
+				SPConfig::debOut( "Memory: {$mem}<br/>Time: {$time}<br/> Queries: {$queries}" );
 			}
 			echo "\n<!-- Start of SobiPro component-->\n<div id=\"SobiPro\" class=\"SobiPro\">\n{$out}\n</div>\n<!-- End of SobiPro component Copyright (C) 2012 Sigsiu.NET GmbH -->\n";
 		}

@@ -99,8 +99,7 @@ class SPDateListing extends SPSectionCtrl implements SPListing
 		$monthsNames = explode( ',', Sobi::Txt( 'JS_CALENDAR_MONTHS' ) );
 		$date[ 'month' ] = isset( $monthsNames[ $date[ 'month' ] - 1 ]) ? trim( $monthsNames[ $date[ 'month' ] - 1 ] ) : null;
 		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'DL.PATH_TITLE_' . strtoupper( $listing ), $date ), Sobi::Url( 'current' ) );
-		SPFactory::mainframe()->setTitle( Sobi::Txt( 'DL.TITLE_' . strtoupper( $listing ), $date ) );
-		/* add pathway */
+		SPFactory::header()->addTitle( Sobi::Txt( 'DL.TITLE_' . strtoupper( $listing ), $date ), array( $eCount, $site ) );
 
 		/* get view class */
 		$view = SPFactory::View( 'listing' );
