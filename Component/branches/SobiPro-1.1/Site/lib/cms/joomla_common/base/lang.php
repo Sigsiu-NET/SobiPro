@@ -57,8 +57,8 @@ class SPJoomlaLang
 	/**
 	 * Translate given string
 	 *
-	 * @param string $message
-	 * @param array $params
+	 * @internal param string $message
+	 * @internal param array $params
 	 * @return string
 	 */
 	public static function _()
@@ -69,8 +69,8 @@ class SPJoomlaLang
 	/**
 	 * Translate given string
 	 *
-	 * @param string $message
-	 * @param array $params
+	 * @internal param string $message
+	 * @internal param array $params
 	 * @return string
 	 */
 	protected function _txt()
@@ -180,7 +180,7 @@ class SPJoomlaLang
 	}
 
 	/**
-	 * Create JS freindly script
+	 * Create JS friendly script
 	 * @param string $txt
 	 * @return string
 	 */
@@ -192,7 +192,7 @@ class SPJoomlaLang
 	/**
 	 * Error messages
 	 *
-	 * @param string $msg
+	 * @internal param string $msg
 	 * @return string
 	 */
 	public static function e()
@@ -208,7 +208,7 @@ class SPJoomlaLang
 	protected function _eload()
 	{
 		JFactory::getLanguage()->load( 'com_sobipro.err', JPATH_SITE, 'en-GB' );
-		if ( $this->_lang != 'en-GB' ) {
+		if ( $this->_lang != 'en-GB' && Sobi::Cfg( 'lang.engb_preload', true ) ) {
 			JFactory::getLanguage()->load( 'com_sobipro.err', JPATH_SITE );
 		}
 	}
@@ -216,7 +216,7 @@ class SPJoomlaLang
 	protected function _load()
 	{
 		/* load default language file */
-		if ( $this->_lang != 'en-GB' ) {
+		if ( $this->_lang != 'en-GB' && Sobi::Cfg( 'lang.engb_preload', true ) ) {
 			JFactory::getLanguage()->load( 'com_sobipro', JPATH_SITE, 'en-GB' );
 			JFactory::getLanguage()->load( 'com_sobipro', JPATH_BASE, 'en-GB' );
 		}
@@ -235,7 +235,7 @@ class SPJoomlaLang
 	public static function load( $file, $lang = null )
 	{
 		// at first always load the default language file
-		if ( $lang != 'en-GB' ) {
+		if ( $lang != 'en-GB' && Sobi::Cfg( 'lang.engb_preload', true ) ) {
 			self::load( $file, 'en-GB' );
 		}
 		// to load the lang files we are always need the current user language (multilang mode switch ignored here)
@@ -250,6 +250,7 @@ class SPJoomlaLang
 	 * @param $values - values array
 	 * @param $lang - language
 	 * @param $section - section
+	 * @throws SPException
 	 * @return void
 	 */
 	public static function saveValues( $values, $lang = null, $section = null )
@@ -365,8 +366,9 @@ class SPJoomlaLang
 	 * Gets a translatable values from the language DB
 	 * @param $key - key to get
 	 * @param $type - type of object/field/plugin etc
-	 * @param $sid - section id
-	 * @param $select - what is to select, key, descritpion, params
+	 * @param int $sid - section id
+	 * @param string $select - what is to select, key, descritpion, params
+	 * @param null $lang
 	 * @return string
 	 */
 	public static function getValue( $key, $type, $sid = 0, $select = 'sValue', $lang = null )
@@ -428,6 +430,7 @@ class SPJoomlaLang
 	/**
 	 * Returns correctly formatted currency amount
 	 * @param double $value - amount
+	 * @param bool $currency
 	 * @return string
 	 */
 	public static function currency( $value, $currency = true )
@@ -454,7 +457,7 @@ class SPJoomlaLang
 	{
 		$path = $adm ? implode( DS, array( JPATH_ADMINISTRATOR, 'language', 'en-GB', 'en-GB.com_sobipro.js' ) ) : implode( DS, array( SOBI_ROOT, 'language', 'en-GB', 'en-GB.com_sobipro.js' ) );
 		$def = SPLoader::loadIniFile( $path, false, false, true, true, true );
-		if ( $this->_lang != 'en-GB' ) {
+		if ( $this->_lang != 'en-GB' && Sobi::Cfg( 'lang.engb_preload', true ) ) {
 			$strings = SPLoader::loadIniFile( str_replace( 'en-GB', str_replace( '_', '-', $this->_lang ), $path ), false, false, true, true, true );
 			if ( is_array( $strings ) && count( $strings ) ) {
 				$def = array_merge( $def, $strings );
@@ -529,7 +532,7 @@ class SPJoomlaLang
 
 	/**
 	 * Used for XML nodes creation
-	 * Cretes singular form from plural
+	 * Creates singular form from plural
 	 * @param string $txt
 	 * @return string
 	 */

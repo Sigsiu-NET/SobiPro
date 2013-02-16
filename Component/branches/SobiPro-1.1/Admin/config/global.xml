@@ -52,6 +52,7 @@
 							<div class="span12">
 								<fieldset label="GB.CFG.LANG">
 									<field type="toggle" name="spcfg[lang.multimode]" value="lang.multimode" label="GB.CFG.MULTILANG" prefix="onoff" />
+									<field type="toggle" name="spcfg[lang.engb_preload]" value="lang.engb_preload" label="GB.CFG.ENGB_PRELOAD" prefix="onoff" />
 								</fieldset>
 								<fieldset label="GBN.CFG.HTML_INPUT">
 									<field type="textarea" name="spcfg[html.allowed_tags_array]" value="html.allowed_tags_array" label="GB.CFG.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />
