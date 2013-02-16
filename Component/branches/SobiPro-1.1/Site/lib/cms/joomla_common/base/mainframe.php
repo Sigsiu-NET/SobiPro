@@ -177,7 +177,10 @@ class SPJoomlaMainFrame
 
 	/**
 	 * @static
+	 * @param $add
 	 * @param string $msg - The message, which may also be shown the user if need be.
+	 * @param string $msgtype
+	 * @param bool $now
 	 */
 	public function setRedirect( $add, $msg = null, $msgtype = 'message', $now = false )
 	{
