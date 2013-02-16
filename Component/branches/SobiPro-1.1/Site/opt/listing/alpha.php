@@ -210,13 +210,13 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		/* add pathway */
 		if ( !( $this->_fieldType ) ) {
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $letter ) ), Sobi::Url( 'current' ) );
-			SPFactory::mainframe()->setTitle( Sobi::Txt( 'AL.TITLE', array( 'letter' => $letter, 'section' => $this->_model->get( 'name' ) ) ) );
+			SPFactory::header()->addTitle( Sobi::Txt( 'AL.TITLE', array( 'letter' => $letter, 'section' => $this->_model->get( 'name' ) ) ), array( $eCount, $site ) );
 		}
 		else {
-			$field =& SPFactory::Model( 'field' );
+			$field = SPFactory::Model( 'field' );
 			$field->init( $this->_field );
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'AL.PATH_TITLE_FIELD', array( 'letter' => $letter, 'field' => $field->get( 'name' ) ) ), Sobi::Url( 'current' ) );
-			SPFactory::mainframe()->setTitle( Sobi::Txt( 'AL.TITLE_FIELD', array( 'letter' => $letter, 'section' => $this->_model->get( 'name' ), 'field' => $field->get( 'name' ) ) ) );
+			SPFactory::header()->addTitle( Sobi::Txt( 'AL.TITLE_FIELD', array( 'letter' => $letter, 'section' => $this->_model->get( 'name' ), 'field' => $field->get( 'name' ) ) ), array( $eCount, $site ) );
 		}
 
 		/* get view class */

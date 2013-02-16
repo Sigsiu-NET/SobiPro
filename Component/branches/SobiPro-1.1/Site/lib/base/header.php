@@ -57,6 +57,10 @@ final class SPHeader
 	/**
 	 * @var array
 	 */
+	private $title = array();
+	/**
+	 * @var array
+	 */
 	private $robots = array();
 	/**
 	 * @var array
@@ -529,21 +533,37 @@ final class SPHeader
 	/**
 	 * Set Site title
 	 * @param string $title
+	 * @param array $site
 	 * @return SPHeader
 	 */
-	public function & setTitle( $title )
+	public function & addTitle( $title, $site = array() )
 	{
-		$checksum = md5( $title );
-		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
-			$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
-			$this->store( get_defined_vars(), __FUNCTION__ );
-			SPFactory::mainframe()->setTitle( SPLang::clean( $title ) );
+		if ( count( $site ) && $site[ 0 ] ) {
+			if ( !( is_array( $title ) ) ) {
+				$title = array( $title );
+			}
+			$title[ ] = Sobi::Txt( 'SITES_COUNTER', $site[ 1 ], $site[ 0 ] );
+		}
+		if ( is_array( $title ) ) {
+			foreach ( $title as $segment ) {
+				$this->addTitle( $segment );
+			}
+		}
+		else {
+			$checksum = md5( $title );
+			if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
+				$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
+				$args = get_defined_vars();
+				unset( $args[ 'site' ] );
+				$this->store( $args, __FUNCTION__ );
+				$this->title[ ] = $title;
+			}
 		}
 		return $this;
 	}
 
 	/**
-	 * Add meta dscription to the site header
+	 * Add meta description to the site header
 	 * @param string $desc
 	 * @return SPHeader
 	 */
@@ -780,6 +800,9 @@ final class SPHeader
 		$this->head[ 'raw' ] = $this->raw;
 		Sobi::Trigger( 'Header', 'Send', array( &$this->head ) );
 		SPFactory::mainframe()->addHead( $this->head );
+		if ( count( $this->title ) ) {
+			SPFactory::mainframe()->setTitle( $this->title );
+		}
 		SPFactory::cache()->storeView( $this->_store );
 		$this->reset();
 	}

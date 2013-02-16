@@ -63,10 +63,10 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 
 		if ( SPRequest::int( 'uid' ) ) {
 			$url[ 'uid' ] = SPRequest::int( 'uid' );
-			$this->uid = (int) SPRequest::int( 'uid' );
+			$this->uid = (int)SPRequest::int( 'uid' );
 		}
 		else {
-			$this->uid = (int) Sobi::My( 'id' );
+			$this->uid = (int)Sobi::My( 'id' );
 		}
 		$this->user = SPJoomlaUser::getBaseData( (int)$this->uid );
 		if ( !( $this->user ) ) {
@@ -92,7 +92,7 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 		/* handle meta data */
 		SPFactory::header()->objMeta( $this->_model );
 		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'UL.PATH_TITLE', array( 'username' => $this->user->username, 'user' => $this->user->name ) ), Sobi::Url( 'current' ) );
-		SPFactory::mainframe()->setTitle( Sobi::Txt( 'UL.TITLE', array( 'username' => $this->user->username, 'user' => $this->user->name, 'section' => $this->_model->get( 'name' ) ) ) );
+		SPFactory::header()->addTitle( Sobi::Txt( 'UL.TITLE', array( 'username' => $this->user->username, 'user' => $this->user->name, 'section' => $this->_model->get( 'name' ) ) ), array( $eCount, $site ) );
 		/* add pathway */
 
 		/* get view class */
