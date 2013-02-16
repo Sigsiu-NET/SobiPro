@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -22,7 +18,7 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-require_once dirname(__FILE__).'/../../joomla_common/base/user.php';
+require_once dirname( __FILE__ ) . '/../../joomla_common/base/user.php';
 /**
  * @author Radek Suski
  * @version 1.0
@@ -33,15 +29,15 @@ class SPUser extends SPJoomlaUser
 	public function __construct( $id = 0 )
 	{
 		parent::__construct( $id );
-		$this->gid[] = 0;
+		$this->gid[ ] = 0;
 		// this array is really a bad joke :(
-		foreach( $this->groups as $index => $value ) {
-			if( is_string( $index ) && !( is_numeric( $index ) ) ) {
-				$this->gid[] = $value;
+		foreach ( $this->groups as $index => $value ) {
+			if ( is_string( $index ) && !( is_numeric( $index ) ) ) {
+				$this->gid[ ] = $value;
 				$this->usertype = $index;
 			}
 			else {
-				$this->gid[] = $index;
+				$this->gid[ ] = $index;
 				$this->usertype = $value;
 			}
 		}
@@ -57,42 +53,41 @@ class SPUser extends SPJoomlaUser
 	 */
 	public static function userUrl( $id )
 	{
-		return 'index.php?option=com_users&amp;task=user.edit&amp;id='.$id;
+		return 'index.php?option=com_users&amp;task=user.edit&amp;id=' . $id;
 	}
 
 	/* get all parent groups */
 	protected function parentGids()
 	{
-		if( count( $this->gid ) ) {
-			foreach ( $this->gid  as $gid ) {
-				if( $gid >= 5000 ) {
+		if ( count( $this->gid ) ) {
+			foreach ( $this->gid as $gid ) {
+				if ( $gid >= 5000 ) {
 					$gids = array();
 					while ( $gid > 5000 ) {
 						try {
 							$gid = SPFactory::db()->select( 'pid', 'spdb_user_group', array( 'gid' => $gid, 'enabled' => 1 ) )->loadResult();
-							$gids[] = $gid;
-						}
-						catch ( SPException $x ) {
+							$gids[ ] = $gid;
+						} catch ( SPException $x ) {
 							Sobi::Error( 'permissions', SPLang::e( 'Cannot load additional gids. %s', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
 						}
 					}
 					$cgids = SAccess::parentGroups( $gid );
-					$cgids[] = $gid;
+					$cgids[ ] = $gid;
 					$gids = array_merge( $gids, $cgids );
 				}
 				else {
 					$gids = SAccess::parentGroups( $gid );
-					$gids[] = $gid;
+					$gids[ ] = $gid;
 				}
-				if( is_array( $gids ) && count( $gids ) ) {
+				if ( is_array( $gids ) && count( $gids ) ) {
 					foreach ( $gids as $gid ) {
-						$this->gid[] = $gid;
+						$this->gid[ ] = $gid;
 					}
 				}
 			}
 		}
 		// PHP 5.2.9 bug work-around
-		if( defined( 'PHP_VERSION_ID' ) && version_compare( PHP_VERSION, '5.2.9' ) == 0 ) {
+		if ( defined( 'PHP_VERSION_ID' ) && version_compare( PHP_VERSION, '5.2.9' ) == 0 ) {
 			$this->gid = array_unique( $this->gid, SORT_STRING );
 		}
 		else {
@@ -103,24 +98,24 @@ class SPUser extends SPJoomlaUser
 	public static function groups( $gids )
 	{
 		$groups = array();
-		if( $gids instanceof self ) {
+		if ( $gids instanceof self ) {
 			$gids = $gids->get( 'gid' );
 		}
-		if( count( $gids ) ) {
+		if ( count( $gids ) ) {
 			$groups = array_flip( $gids );
 			$r = SPFactory::db()->select( array( 'groupName', 'gid' ), 'spdb_user_group', array( 'gid' => $gids ) )->loadAssocList( 'gid' );
-			if( count( $r ) ) {
+			if ( count( $r ) ) {
 				foreach ( $r as $gid => $data ) {
-					if( isset( $groups[ $gid ] ) ) {
+					if ( isset( $groups[ $gid ] ) ) {
 						$groups[ $gid ] = $data[ 'groupName' ];
 					}
 				}
 			}
-			if( count( $r ) < count( $groups ) ) {
+			if ( count( $r ) < count( $groups ) ) {
 				$r = SPFactory::db()->select( array( 'title', 'id' ), '#__usergroups', array( 'id' => $gids ) )->loadAssocList( 'id' );
-				if( count( $r ) ) {
+				if ( count( $r ) ) {
 					foreach ( $r as $gid => $data ) {
-						if( isset( $groups[ $gid ] ) ) {
+						if ( isset( $groups[ $gid ] ) ) {
 							$groups[ $gid ] = $data[ 'title' ];
 						}
 					}
@@ -134,13 +129,13 @@ class SPUser extends SPJoomlaUser
 	{
 		$groups = array( 0 => 'visitor' );
 		$r = SPFactory::db()->select( array( 'groupName', 'gid' ), 'spdb_user_group' )->loadAssocList( 'gid' );
-		if( count( $r ) ) {
+		if ( count( $r ) ) {
 			foreach ( $r as $gid => $data ) {
 				$groups[ $gid ] = $data[ 'groupName' ];
 			}
 		}
 		$r = SPFactory::db()->select( array( 'title', 'id' ), '#__usergroups' )->loadAssocList( 'id' );
-		if( count( $r ) ) {
+		if ( count( $r ) ) {
 			foreach ( $r as $gid => $data ) {
 				$groups[ $gid ] = $data[ 'title' ];
 			}
@@ -164,11 +159,11 @@ class SPUser extends SPJoomlaUser
 	protected function getPermissions( $sid = null )
 	{
 		$sid = $sid ? $sid : Sobi::Section();
-		if( isset( $this->_permissions[ $sid ] ) ) {
+		if ( isset( $this->_permissions[ $sid ] ) ) {
 			return true;
 		}
 		/* if it is for super admin - always true */
-		if( $this->isAdmin() ) {
+		if ( $this->isAdmin() ) {
 			return true;
 		}
 		/* @var SPdb $db */
@@ -185,17 +180,15 @@ class SPUser extends SPJoomlaUser
 		$db->dselect( 'sprl.rid', $db->join( $join ), array( '@VALID' => $valid ) );
 		try {
 			$this->_prules = $db->loadResultArray();
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( 'permissions', SPLang::e( 'CANNOT_GET_PERMISSIONS', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __CLASS__ );
 		}
 		/* if we have the rules ids we need to get permission for this section and global permsion */
-		if( count( $this->_prules ) ) {
+		if ( count( $this->_prules ) ) {
 			try {
 				$db->select( 'pid', 'spdb_permissions_map', array( 'sid' => $sid, 'rid' => $this->_prules ) );
 				$permissions = $db->loadResultArray();
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( 'permissions', SPLang::e( 'CANNOT_GET_USERS_DATA', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __CLASS__ );
 			}
 		}
@@ -203,16 +196,15 @@ class SPUser extends SPJoomlaUser
 		try {
 			$db->select( '*', 'spdb_permissions', array( 'site' => SOBI_ACL, 'published' => 1 ) );
 			$this->_availablePerm = $db->loadAssocList( 'pid' );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( 'permissions', SPLang::e( 'CANNOT_GET_PERMISSIONS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
 		}
 		$this->_permissions[ $sid ] = array();
 		/* create permissions array */
-		if( count( $permissions ) ) {
+		if ( count( $permissions ) ) {
 			foreach ( $permissions as $perm ) {
-				if( isset( $this->_availablePerm[ $perm ] ) ) {
-					if( !( isset( $this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ] ) ) ) {
+				if ( isset( $this->_availablePerm[ $perm ] ) ) {
+					if ( !( isset( $this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ] ) ) ) {
 						$this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ] = array();
 					}
 					$this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ][ $this->_availablePerm[ $perm ][ 'action' ] ][ $this->_availablePerm[ $perm ][ 'value' ] ] = true;
@@ -221,6 +213,7 @@ class SPUser extends SPJoomlaUser
 		}
 	}
 }
+
 class SAccess extends JAccess
 {
 	public static function parentGroups( $gid )

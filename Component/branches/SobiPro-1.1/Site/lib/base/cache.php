@@ -261,7 +261,7 @@ final class SPCache
 					->loadResultArray();
 			if ( count( $xml ) ) {
 				$files = SPFactory::db()
-						->select( 'fileName', 'spdb_view_cache', array('cid' => $xml ) )
+						->select( 'fileName', 'spdb_view_cache', array( 'cid' => $xml ) )
 						->loadResultArray();
 				foreach ( $files as $file ) {
 					$file = SPLoader::path( 'var.xml.' . $file, 'front', false, 'xml' );
@@ -559,7 +559,7 @@ final class SPCache
 
 	public function view()
 	{
-		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) ) {
+		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || Sobi::Reg( 'break_cache_view' ) ) {
 			return false;
 		}
 		if ( !( in_array( SPRequest::task( 'get' ), $this->_disableViewCache ) ) ) {
@@ -629,6 +629,7 @@ final class SPCache
 			'site' => SPRequest::int( 'site', 0, 'get' ),
 			'request' => str_replace( '"', null, json_encode( $request ) ),
 			'language' => Sobi::Lang(),
+			'userGroups' => str_replace( '"', null, json_encode( Sobi::My( 'groups' ) ) ),
 		);
 		return $query;
 	}
@@ -641,7 +642,7 @@ final class SPCache
 	 */
 	public function addView( $xml, $template, $data = array() )
 	{
-		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) ) {
+		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || Sobi::Reg( 'break_cache_view' ) ) {
 			return false;
 		}
 		if ( !( in_array( SPRequest::task( 'get' ), $this->_disableViewCache ) ) ) {
