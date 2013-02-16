@@ -698,6 +698,7 @@ class SPJoomlaDb
 	/**
 	 * Loads the first field of the first row returned by the query.
 	 *
+	 * @throws SPException
 	 * @return string
 	 */
 	public function loadResult()

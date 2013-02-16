@@ -60,6 +60,22 @@ class SPRequirements extends SPController
 		}
 	}
 
+	private function mySQLCache()
+	{
+		try {
+			SPFactory::db()->exec( 'SHOW VARIABLES LIKE "have_query_cache"' );
+			$cache = SPFactory::db()->loadRow();
+			if ( $cache[ 1 ] == 'YES' ) {
+				echo $this->ok( Sobi::Txt( 'REQ.MYSQL_CACHE_AVAILABLE' ), __FUNCTION__ );
+			}
+			else {
+				echo $this->warning( Sobi::Txt( 'REQ.MYSQL_CACHE_NOT_AVAILABLE' ), __FUNCTION__ );
+			}
+		} catch ( SPException $x ) {
+			echo $this->warning( Sobi::Txt( 'REQ.MYSQL_CACHE_CANNOT_CHECK' ), __FUNCTION__ );
+		}
+	}
+
 	private function createView()
 	{
 		$db =& SPFactory::db();
