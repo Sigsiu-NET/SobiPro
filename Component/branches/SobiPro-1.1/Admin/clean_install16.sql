@@ -1,3 +1,30 @@
+CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
+  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `section` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  `fileName` varchar(100) NOT NULL,
+  `task` varchar(100) NOT NULL,
+  `site` int(11) NOT NULL,
+  `request` varchar(255) NOT NULL,
+  `language` varchar(15) NOT NULL,
+  `template` varchar(150) NOT NULL,
+  `configFile` text NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`cid`),
+  KEY `sid` (`sid`),
+  KEY `section` (`section`),
+  KEY `language` (`language`),
+  KEY `task` (`task`),
+  KEY `request` (`request`),
+  KEY `site` (`site`)
+);
+
+CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (
+  `cid` int(11) NOT NULL,
+  `sid` int(11) NOT NULL,
+  PRIMARY KEY (`cid`,`sid`)
+);
+
 CREATE TABLE IF NOT EXISTS `#__sobipro_category` (
   `id` int(11) NOT NULL,
   `position` int(11) DEFAULT NULL,
