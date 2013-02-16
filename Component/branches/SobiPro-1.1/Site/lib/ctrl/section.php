@@ -80,7 +80,7 @@ class SPSectionCtrl extends SPController
 		SPFactory::header()->objMeta( $this->_model );
 
 		/* add pathway */
-		SPFactory::mainframe()->addObjToPathway( $this->_model, array( $eCount, $site ) );
+		SPFactory::mainframe()->addObjToPathway( $this->_model, array( ceil( $eCount / $eLimit ), $site ) );
 
 		$this->_model->countVisit();
 		/* get view class */

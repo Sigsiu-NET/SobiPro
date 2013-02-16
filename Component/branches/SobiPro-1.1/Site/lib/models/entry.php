@@ -150,6 +150,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 
 	/**
 	 * After an entry has been approved, all fields cp
+	 * @param $approve
 	 * @return void
 	 */
 	public function approveFields( $approve )

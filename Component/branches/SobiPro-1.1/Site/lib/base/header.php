@@ -581,6 +581,17 @@ final class SPHeader
 	}
 
 	/**
+	 * Set Site title
+	 * @param string $title
+	 * @return SPHeader
+	 */
+	public function & setTitle( $title )
+	{
+		SPFactory::mainframe()->setTitle( SPLang::clean( $title ) );
+		return $this;
+	}
+
+	/**
 	 * Gets meta keys and met description from the given object
 	 *  and adds to the site header
 	 * @param SPDBObject $obj
