@@ -205,12 +205,12 @@ final class SPCache
 			}
 		}
 		if ( $section > 0 ) {
+			$this->cleanSectionXML( $section );
 			$this->cleanSection( 0 );
 		}
 		if ( $system ) {
 			SPFactory::message()->resetSystemMessages();
 		}
-
 		return $this;
 	}
 
@@ -226,7 +226,51 @@ final class SPCache
 			$section = $section ? $section : $this->_section;
 			$this->Exec( "BEGIN; DELETE FROM vars WHERE( section = '{$section}' ); COMMIT;" );
 		}
+		$this->cleanSectionXML( $section );
 		return $this;
+	}
+
+	protected function cleanSectionXML( $section )
+	{
+		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
+			$xml = SPFactory::db()
+					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'section' => $section ) )
+					->loadResultArray();
+			if ( count( $xml ) ) {
+				$relations = array();
+				foreach ( $xml as $cache ) {
+					$file = SPLoader::path( 'var.xml.' . $cache[ 'fileName' ], 'front', false, 'xml' );
+					if ( $file ) {
+						SPFs::delete( $file );
+					}
+					$relations[ ] = $xml[ 'cid' ];
+				}
+				if ( count( $relations ) ) {
+					SPFactory::db()->delete( 'spdb_view_cache_relation', array( 'cid' => $relations ) );
+				}
+			}
+		}
+	}
+
+	protected function cleanXMLRelations( $sid )
+	{
+		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
+			$xml = SPFactory::db()
+					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'sid' => $sid ) )
+					->loadResultArray();
+			if ( count( $xml ) ) {
+				foreach ( $xml as $cache ) {
+					$file = SPLoader::path( 'var.xml.' . $cache[ 'fileName' ], 'front', false, 'xml' );
+					if ( $file ) {
+						SPFs::delete( $file );
+					}
+					$relations[ ] = $xml[ 'cid' ];
+				}
+				SPFactory::db()
+						->delete( 'spdb_view_cache_relation', array( 'cid' => $relations ) )
+						->delete( 'spdb_view_cache', array( 'cid' => $relations ) );
+			}
+		}
 	}
 
 	/**
@@ -285,29 +329,6 @@ final class SPCache
 		}
 	}
 
-	/**
-	 * @param $var
-	 * @param $id
-	 * @param $lang
-	 * @param $section
-	 * @return unknown_type
-	 */
-	public function addContent( $var, $id, $lang = null, $section = 0 )
-	{
-
-	}
-
-	/**
-	 * @param $var
-	 * @param $id
-	 * @param $lang
-	 * @param $section
-	 * @return unknown_type
-	 */
-	public function getContent( $var, $id, $lang = null, $section = 0 )
-	{
-
-	}
 
 	/**
 	 * Store object in to the cache
@@ -348,6 +369,7 @@ final class SPCache
 			$this->deleteObj( $type, $id, $sid );
 			$this->Exec( "BEGIN; REPLACE INTO objects ( type, validtime, id, sid, lang, params, checksum, schecksum, data, classes ) VALUES( '{$type}', '0', '{$id}', '{$sid}', '{$lang}', NULL, '{$checksum}', '{$schecksum}', '{$obj}', '{$loaded}' ); COMMIT;" );
 		}
+		$this->cleanXMLRelations( $id );
 		return $this;
 	}
 
@@ -366,6 +388,7 @@ final class SPCache
 				$this->Exec( "BEGIN; DELETE FROM objects WHERE( type = 'field_data' AND sid = '{$id}' ); COMMIT;" );
 			}
 		}
+		$this->cleanXMLRelations( $id );
 		return $this;
 	}
 
@@ -482,6 +505,12 @@ final class SPCache
 					}
 				}
 			}
+		}
+		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
+			SPFactory::db()
+					->truncate( 'spdb_view_cache_relation' )
+					->truncate( 'spdb_view_cache' );
+			$this->cleanDir( SPLoader::dirPath( 'var.xml', 'front' ), 'xml', true );
 		}
 		$this->cleanTemp( true );
 		return $this;

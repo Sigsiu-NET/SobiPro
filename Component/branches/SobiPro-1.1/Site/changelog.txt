@@ -67,6 +67,7 @@ Legend:
    (+) Custom redirect after a new entry has been added
    (+) Possibility to define new permission to allow or disallow search function usage
    (+) Custom redirect for accessing search function without permission
+   (+) Implemented XML optimisation method. Created XML output is stored into a XML file and if there was no changes reused in next request
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list
