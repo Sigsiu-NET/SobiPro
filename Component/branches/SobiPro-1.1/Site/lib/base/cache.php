@@ -386,6 +386,7 @@ final class SPCache
 	public function & deleteObj( $type, $id, $sid = 0 )
 	{
 		if ( $this->enabled() ) {
+			$sid = $sid ? $sid : $this->_section;
 			$this->Exec( "BEGIN; DELETE FROM objects WHERE( type LIKE '{$type}%' AND id = '{$id}' AND sid = '{$sid}' ); COMMIT;" );
 			if ( $type == 'entry' ) {
 				$this->Exec( "BEGIN; DELETE FROM objects WHERE( type = 'field_data' AND sid = '{$id}' ); COMMIT;" );
@@ -626,7 +627,7 @@ final class SPCache
 			'section' => Sobi::Section(),
 			'sid' => SPRequest::sid( 'get' ),
 			'task' => SPRequest::task( 'get' ),
-			'site' => SPRequest::int( 'site', 0, 'get' ),
+			'site' => SPRequest::int( 'site', 1, 'get' ),
 			'request' => str_replace( '"', null, json_encode( $request ) ),
 			'language' => Sobi::Lang(),
 			'userGroups' => str_replace( '"', null, json_encode( Sobi::My( 'groups' ) ) ),

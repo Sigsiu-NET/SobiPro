@@ -92,7 +92,7 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 		/* handle meta data */
 		SPFactory::header()->objMeta( $this->_model );
 		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'UL.PATH_TITLE', array( 'username' => $this->user->username, 'user' => $this->user->name ) ), Sobi::Url( 'current' ) );
-		SPFactory::header()->addTitle( Sobi::Txt( 'UL.TITLE', array( 'username' => $this->user->username, 'user' => $this->user->name, 'section' => $this->_model->get( 'name' ) ) ), array( $eCount, $site ) );
+		SPFactory::header()->addTitle( Sobi::Txt( 'UL.TITLE', array( 'username' => $this->user->username, 'user' => $this->user->name, 'section' => $this->_model->get( 'name' ) ) ), array( ceil( $eCount / $eLimit ), $site ) );
 		/* add pathway */
 
 		/* get view class */
