@@ -205,12 +205,12 @@ final class SPCache
 			}
 		}
 		if ( $section > 0 ) {
-			$this->cleanSectionXML( $section );
 			$this->cleanSection( 0 );
 		}
 		if ( $system ) {
 			SPFactory::message()->resetSystemMessages();
 		}
+		$this->cleanSectionXML( $this->_section );
 		return $this;
 	}
 
@@ -226,7 +226,6 @@ final class SPCache
 			$section = $section ? $section : $this->_section;
 			$this->Exec( "BEGIN; DELETE FROM vars WHERE( section = '{$section}' ); COMMIT;" );
 		}
-		$this->cleanSectionXML( $section );
 		return $this;
 	}
 
@@ -235,7 +234,7 @@ final class SPCache
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
 			$xml = SPFactory::db()
 					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'section' => $section ) )
-					->loadResultArray();
+					->loadAssocList();
 			if ( count( $xml ) ) {
 				$relations = array();
 				foreach ( $xml as $cache ) {
@@ -243,10 +242,12 @@ final class SPCache
 					if ( $file ) {
 						SPFs::delete( $file );
 					}
-					$relations[ ] = $xml[ 'cid' ];
+					$relations[ ] = $cache[ 'cid' ];
 				}
 				if ( count( $relations ) ) {
-					SPFactory::db()->delete( 'spdb_view_cache_relation', array( 'cid' => $relations ) );
+					SPFactory::db()
+							->delete( 'spdb_view_cache_relation', array( 'cid' => $relations ) )
+							->delete( 'spdb_view_cache', array( 'cid' => $relations ) );
 				}
 			}
 		}
@@ -256,19 +257,21 @@ final class SPCache
 	{
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
 			$xml = SPFactory::db()
-					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'sid' => $sid ) )
+					->select( 'cid', 'spdb_view_cache_relation', array( 'sid' => $sid ) )
 					->loadResultArray();
 			if ( count( $xml ) ) {
-				foreach ( $xml as $cache ) {
-					$file = SPLoader::path( 'var.xml.' . $cache[ 'fileName' ], 'front', false, 'xml' );
+				$files = SPFactory::db()
+						->select( 'fileName', 'spdb_view_cache', array('cid' => $xml ) )
+						->loadResultArray();
+				foreach ( $files as $file ) {
+					$file = SPLoader::path( 'var.xml.' . $file, 'front', false, 'xml' );
 					if ( $file ) {
 						SPFs::delete( $file );
 					}
-					$relations[ ] = $xml[ 'cid' ];
 				}
 				SPFactory::db()
-						->delete( 'spdb_view_cache_relation', array( 'cid' => $relations ) )
-						->delete( 'spdb_view_cache', array( 'cid' => $relations ) );
+						->delete( 'spdb_view_cache_relation', array( 'cid' => $xml ) )
+						->delete( 'spdb_view_cache', array( 'cid' => $xml ) );
 			}
 		}
 	}
