@@ -83,6 +83,7 @@
 					<field type="output" value="" label="REQ.MYSQL_CHARSET" id="mySQLcharset" />
 					<field type="output" value="" label="REQ.MYSQL_PROCEDURE" id="createProcedure" />
 					<field type="output" value="" label="REQ.MYSQL_VIEW" id="createView" />
+					<field type="output" value="" label="REQ.MYSQL_CACHE" id="mySQLCache" />
 				</fieldset>
 			</div>
 		</div>
