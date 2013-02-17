@@ -120,17 +120,20 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 		var request = SobiPro.jQuery.parseJSON( SobiPro.jQuery( this ).attr( 'rel' ) );
 		proxy.trigger( 'createRequest', [ request ] );
 		var container = proxy.find( '.file' );
-		var form = '<form action="index.php" method="post" enctype="multipart/form-data">';
+		var file = proxy.find( 'input:file' );
+		var id = file.attr( 'name' ) + '-form'
+		var form = '<form action="'+'index.php" method="post" enctype="multipart/form-data" id="' + id + '">';
 		for ( var field in request ) {
 			form += '<input type="hidden" value="' + request[ field ] + '" name="' + field + '"/>';
 		}
 		form += '</form>';
 		form = SobiPro.jQuery( form );
-		var file = proxy.find( 'input:file' );
 		file.appendTo( form );
 		var c = file.clone( file );
 		c.appendTo( container );
-		form.ajaxForm( {
+		// frak you damn IE
+		form.appendTo( SobiPro.jQuery( '#SobiPro' ) );
+		SobiPro.jQuery( '#' + id ).ajaxForm( {
 			'dataType':'json',
 			beforeSend:function ()
 			{

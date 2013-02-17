@@ -67,8 +67,8 @@ class SPJoomlaCMSHelper
 
 	/**
 	 * Return min or recommend Joomla! version
-	 * @param $recommened
-	 * @return unknown_type
+	 * @param bool $recommended
+	 * @return array
 	 */
 	public static function minCmsVersion( $recommended = false )
 	{
@@ -88,9 +88,7 @@ class SPJoomlaCMSHelper
 		}
 		switch ( $setting ) {
 			case 'charset':
-				$r = JFactory::getDocument()->getMetaData( 'content-type', true );
-				$r = explode( '=', $r );
-				$r = $r[ 1 ];
+				$r = JFactory::getDocument()->getCharset();
 				break;
 			default:
 				$r = isset( $cfg->$setting ) ? $cfg->$setting : false;

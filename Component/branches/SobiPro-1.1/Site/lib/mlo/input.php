@@ -128,14 +128,26 @@ abstract class SPHtml_Input
 				'format' => 'raw'
 			);
 		}
+		$classes = array( 'class' => 'spFileUpload hide' );
+		SPLoader::loadClass( 'env.browser' );
+		$browser = SPBrowser::getInstance()->get( 'browser' );
+		$stupidInternetExplorer = false;
+		if ( strstr( strtolower( $browser ), 'internet explorer' ) ) {
+			$classes = array( 'class' => 'spFileUpload' );
+			$stupidInternetExplorer = true;
+		}
 		$f = null;
 		$f .= "<div class=\"{$class}\">";
 		$f .= '<div class="file">';
-		$f .= self::file( $name . '-file', 0, array( 'class' => 'spFileUpload hide' ), $accept );
+		$f .= self::file( $name . '-file', 0, $classes, $accept );
 		$f .= '</div>';
-		$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-xlarge selected pull-left\" value=\"{$value}\"/>";
+		if ( !( $stupidInternetExplorer ) ) {
+			$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-xlarge selected pull-left\" value=\"{$value}\"/>";
+		}
 		$f .= '<div class="btn-group">';
-		$f .= '<button class="btn select" type="button"><i class="icon-eye-open"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
+		if ( !( $stupidInternetExplorer ) ) {
+			$f .= '<button class="btn select" type="button"><i class="icon-eye-open"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
+		}
 		$f .= '<button class="btn remove" disabled="disabled" type="button">' . '&nbsp;<i class="icon-remove"></i></button>';
 		$f .= '<button class="btn upload" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
 		$f .= '</div>';
