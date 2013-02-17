@@ -146,6 +146,8 @@ final class SPSearchCtrl extends SPSectionCtrl
 		usort( $results, array( 'self', 'sortByLen' ) );
 		Sobi::Trigger( 'AfterSuggest', 'Search', array( &$results ) );
 		header( 'Content-type: application/json' );
+		header( 'Cache-Control: no-cache, must-revalidate' );
+		header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
 		SPFactory::mainframe()->cleanBuffer();
 		echo json_encode( $results );
 		exit();

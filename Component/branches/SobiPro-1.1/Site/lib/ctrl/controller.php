@@ -491,6 +491,8 @@ abstract class SPController extends SPObject implements SPControl
 			SPFactory::mainframe()->cleanBuffer();
 			$url = str_replace( '&amp;', '&', $url );
 			header( 'Content-type: application/json' );
+			header( 'Cache-Control: no-cache, must-revalidate' );
+			header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
 			echo json_encode(
 				array(
 					'message' => array( 'text' => $message, 'type' => $type ),
