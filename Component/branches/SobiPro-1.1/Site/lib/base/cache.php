@@ -560,7 +560,7 @@ final class SPCache
 
 	public function view()
 	{
-		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || Sobi::Reg( 'break_cache_view' ) ) {
+		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || Sobi::Reg( 'break_cache_view' ) || ( Sobi::My( 'id' ) && Sobi::Cfg( 'cache.xml_no_reg' ) ) ) {
 			return false;
 		}
 		if ( !( in_array( SPRequest::task( 'get' ), $this->_disableViewCache ) ) ) {
@@ -643,7 +643,7 @@ final class SPCache
 	 */
 	public function addView( $xml, $template, $data = array() )
 	{
-		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || Sobi::Reg( 'break_cache_view' ) ) {
+		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || Sobi::Reg( 'break_cache_view' ) || ( Sobi::My( 'id' ) && Sobi::Cfg( 'cache.xml_no_reg' ) ) ) {
 			return false;
 		}
 		if ( !( in_array( SPRequest::task( 'get' ), $this->_disableViewCache ) ) ) {
@@ -662,7 +662,7 @@ final class SPCache
 	 */
 	public function storeView( $head )
 	{
-		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || $this->_cachedView ) {
+		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || $this->_cachedView || ( Sobi::My( 'id' ) && Sobi::Cfg( 'cache.xml_no_reg' ) ) ) {
 			return false;
 		}
 		if ( $this->view[ 'xml' ] ) {
