@@ -106,6 +106,7 @@
 									<message label="GBN.CFG.ACCEL" type="error" dismiss-button="false" class="spConfigAlert" />
 									<field type="toggle" name="spcfg[cache.l3_enabled]" value="cache.l3_enabled" label="GB.CFG.DATA_ACCELERATOR" prefix="onoff" />
 									<field type="toggle" name="spcfg[cache.xml_enabled]" value="cache.xml_enabled" label="GB.CFG.XML_ACCELERATOR" prefix="onoff" />
+									<field type="toggle" name="spcfg[cache.xml_no_reg]" value="cache.xml_no_reg" label="GB.CFG.XML_ACCELERATOR_NO_REG" prefix="onoff" />
 								</fieldset>
 								<fieldset label="GB.CFG.CACHE">
 									<field type="toggle" name="spcfg[cache.include_js_files]" value="cache.include_js_files" label="GBN.CFG.INCLUDE_JS_FILES_CACHE" prefix="onoff" />
