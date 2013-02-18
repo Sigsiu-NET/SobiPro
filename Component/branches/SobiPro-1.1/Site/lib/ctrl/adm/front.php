@@ -258,7 +258,7 @@ class SPAdminPanel extends SPController
 			);
 			$state[ 'display-errors' ] = array(
 				'type' => Sobi::Cfg( 'debug.display_errors', false ) ? 'error' : 'success',
-				'label' => Sobi::Cfg( 'debug.display_errors', false ) ? Sobi::Txt( 'DISPLAY_ERRORS_DISABLED' ) : Sobi::Txt( 'DISPLAY_ERRORS_ENABLED' ),
+				'label' => Sobi::Cfg( 'debug.display_errors', false ) ? Sobi::Txt( 'DISPLAY_ERRORS_ENABLED' ) : Sobi::Txt( 'DISPLAY_ERRORS_DISABLED' ),
 			);
 			$state[ 'debug-level' ] = array(
 				'type' => Sobi::Cfg( 'debug.level', 0 ) > 2 ? 'warning' : 'success',
