@@ -175,9 +175,12 @@ class SPJoomlaDb
 	 * @param string $toSelect
 	 * @param string $tables
 	 * @param string $where
+	 * @param null $order
 	 * @param int $limit
 	 * @param int $limitStart
-	 * @param string $groupBy - column to group by
+	 * @param null $group
+	 * @return \SPDb
+	 * @internal param string $groupBy - column to group by
 	 */
 	public function dselect( $toSelect, $tables, $where = null, $order = null, $limit = 0, $limitStart = 0, $group = null )
 	{
@@ -259,6 +262,8 @@ class SPJoomlaDb
 	 * @param string $table - in which table
 	 * @param string $where - SQL delete condition
 	 * @param int $limit - maximal number of rows to delete
+	 * @throws SPException
+	 * @return \SPJoomlaDb
 	 */
 	public function delete( $table, $where, $limit = 0 )
 	{
@@ -278,7 +283,9 @@ class SPJoomlaDb
 	 * Creates a "drop table" SQL query
 	 *
 	 * @param string $table - in which table
-	 * @param string $ifExists
+	 * @param bool|string $ifExists
+	 * @throws SPException
+	 * @return \SPJoomlaDb
 	 */
 	public function drop( $table, $ifExists = true )
 	{
@@ -458,6 +465,7 @@ class SPJoomlaDb
 	 * @param string $table - table to update
 	 * @param array $set  - two-dimensional array with table row name to update => new value
 	 * @param string $where  - SQL update condition
+	 * @param int $limit
 	 */
 	public function update( $table, $set, $where, $limit = 0 )
 	{
@@ -490,6 +498,7 @@ class SPJoomlaDb
 	 *
 	 * @param string $table - table name
 	 * @param array $values - two-dimensional array with table row name => value
+	 * @throws SPException
 	 */
 	public function replace( $table, $values )
 	{
@@ -625,6 +634,8 @@ class SPJoomlaDb
 	 *
 	 * @param string $table - table name
 	 * @param array $values - two-dimensional array with table row name => value
+	 * @throws SPException
+	 * @return \SPJoomlaDb
 	 */
 	public function insertUpdate( $table, $values )
 	{

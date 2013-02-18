@@ -77,6 +77,9 @@ class SpAdmToolbar
 
 	private function __construct()
 	{
+		$db = JFactory::getDBO();
+		SPConfig::debOut( $cols );
+
 	}
 
 	/**
