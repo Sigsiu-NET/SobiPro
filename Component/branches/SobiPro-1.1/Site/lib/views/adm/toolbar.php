@@ -132,7 +132,8 @@ class SpAdmToolbar
 					$this->renderButton( $button );
 					break;
 				case 'button-legacy':
-					$this->output[ ] = '<span id="toolbar-' . $button[ 'type' ] . '">';
+					$type = $button[ 'type' ] == 'addNew' ? 'new' : $button[ 'type' ];
+					$this->output[ ] = '<span id="toolbar-' . strtolower( $type ) . '">';
 					$this->renderButton( $button );
 					$this->output[ ] = '</span>';
 					break;

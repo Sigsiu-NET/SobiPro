@@ -40,8 +40,7 @@ abstract class SPHtml_Input
 		$p = array();
 		if ( is_array( $params ) ) {
 			foreach ( $params as $i => $k ) {
-				$p[ trim( $i ) ] = /*trim*/
-						( $k );
+				$p[ trim( $i ) ] = ( $k );
 			}
 		}
 		$params = is_array( $p ) ? $p : array();

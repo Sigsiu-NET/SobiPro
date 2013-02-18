@@ -1294,7 +1294,7 @@ class SPAdmView extends SPObject implements SPView
 	{
 		SPFactory::header()
 				->addCssFile( 'adm.legacy' )
-				->addJsFile( 'adm.legacy' );
+				->addJsFile( array( 'adm.legacy', 'menu' ) );
 		$this->_legacy = true;
 		if ( strlen( $path ) ) {
 			$this->_config = SPLoader::loadIniFile( $path, true, true, true );
@@ -1367,47 +1367,49 @@ class SPAdmView extends SPObject implements SPView
 
 	protected function legacyToolbar( $settings )
 	{
-		$buttons = array();
-		foreach ( $settings as $row ) {
-			$button = array(
-				'type' => null,
-				'task' => null,
-				'label' => null,
-				'icon' => null,
-				'target' => null,
-				'buttons' => null,
-				'element' => 'button-legacy'
-			);
-			switch ( $row[ 'type' ] ) {
-				case 'title':
-					SPFactory::AdmToolbar()->setTitle( array( 'title' => $row[ 'settings' ][ 0 ], 'icon' => $row[ 'settings' ][ 1 ] ) );
-					break;
-				case 'delete':
-				case 'save':
-				case 'cancel':
-				case 'duplicate':
-				case 'apply':
-				case 'addNew':
-				case 'back':
-				case 'forward':
-					$button[ 'task' ] = $row[ 'settings' ][ 0 ];
-					$button[ 'label' ] = $row[ 'settings' ][ 1 ];
-					$button[ 'type' ] = $row[ 'type' ];
-					$buttons[ ] = $button;
-					break;
-				case 'divider':
-					$buttons[ ] = array( 'element' => 'divider' );
-					break;
-				case 'custom':
-					$button[ 'task' ] = $row[ 'settings' ][ 0 ];
-					$button[ 'icon' ] = $row[ 'settings' ][ 1 ];
-					$button[ 'label' ] = $row[ 'settings' ][ 3 ];
-					$button[ 'type' ] = $row[ 'settings' ][ 2 ];
-					$buttons[ ] = $button;
-					break;
+		if ( !( SPRequest::cmd( 'tmpl' ) == 'component' ) ) {
+			$buttons = array();
+			foreach ( $settings as $row ) {
+				$button = array(
+					'type' => null,
+					'task' => null,
+					'label' => null,
+					'icon' => null,
+					'target' => null,
+					'buttons' => null,
+					'element' => 'button-legacy'
+				);
+				switch ( $row[ 'type' ] ) {
+					case 'title':
+						SPFactory::AdmToolbar()->setTitle( array( 'title' => $row[ 'settings' ][ 0 ], 'icon' => $row[ 'settings' ][ 1 ] ) );
+						break;
+					case 'delete':
+					case 'save':
+					case 'cancel':
+					case 'duplicate':
+					case 'apply':
+					case 'addNew':
+					case 'back':
+					case 'forward':
+						$button[ 'task' ] = $row[ 'settings' ][ 0 ];
+						$button[ 'label' ] = $row[ 'settings' ][ 1 ];
+						$button[ 'type' ] = $row[ 'type' ];
+						$buttons[ ] = $button;
+						break;
+					case 'divider':
+						$buttons[ ] = array( 'element' => 'divider' );
+						break;
+					case 'custom':
+						$button[ 'task' ] = $row[ 'settings' ][ 0 ];
+						$button[ 'icon' ] = $row[ 'settings' ][ 1 ];
+						$button[ 'label' ] = $row[ 'settings' ][ 3 ];
+						$button[ 'type' ] = $row[ 'settings' ][ 2 ];
+						$buttons[ ] = $button;
+						break;
+				}
 			}
+			SPFactory::AdmToolbar()->addButtons( $buttons );
 		}
-		SPFactory::AdmToolbar()->addButtons( $buttons );
 		SPFactory::message()->warning( 'COMPAT_MODE_WARNING' );
 	}
 
