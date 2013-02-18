@@ -37,7 +37,7 @@ class com_sobiproInstallerScript
 		$this->release = $adapter->get( "manifest" )->version;
 
 		// Show the essential information at the install/update back-end
-		echo '<p>Installing SobiPro version ' . $this->release . ' ...</p>';
+		echo '<h3>Installing SobiPro version ' . $this->release . ' ...</h3>';
 
 	}
 

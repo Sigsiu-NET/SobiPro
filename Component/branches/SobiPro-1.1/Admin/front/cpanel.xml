@@ -10,10 +10,12 @@
 
  @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
- This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
 
- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
  $Date$
  $Revision$
@@ -266,12 +268,12 @@
 							<div class="accordion-inner spPanelSobiPro">
                                 <div style="  float: right; margin: 10px 0 0 10px;">
                                     <a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
-                                        <img src="../media/sobipro/sobipro-main.png" alt="Sigsiu.NET Software Development" />
+                                        <img src="../media/sobipro/sigsiu.png" alt="Sigsiu.NET Software Development" />
                                     </a>
                                 </div>
                                 <div style="float: left; margin: 0 10px 0 0;">
                                     <a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
-                                        <img src="../media/sobipro/sobipro.png" alt="Sigsiu.NET Software Development" />
+                                        <img src="../media/sobipro/logo.png" alt="Sigsiu.NET Software Development" />
                                     </a>
                                 </div>
 								<p class="spText"><text value="ABOUT.SP_DESC" /></p>
@@ -304,7 +306,7 @@
 									</li>
 								</ul>
 								<a href="http://SobiPro.Sigsiu.NET" target="_blank" title="The SobiPro Club - Support, Documentation, Applications and much more .... ">
-									<img src="../media/sobipro/join-the-club.png" alt="The SobiPro Club - Support, Documentation, Applications and much more .... " />
+									<img src="../media/sobipro/jointheclub.png" alt="The SobiPro Club - Support, Documentation, Applications and much more .... " />
 								</a>
 							</div>
 						</div>

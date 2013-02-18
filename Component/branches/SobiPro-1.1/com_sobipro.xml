@@ -56,15 +56,15 @@
         <folder>icons</folder>
         <folder>32x32</folder>
 		<filename>donate.png</filename>
-		<filename>join-the-club.png</filename>
-		<filename>SobiPro_16.png</filename>
-		<filename>sobipro-main.png</filename>
-		<filename>sobipro-menu.png</filename>
-		<filename>sobipro.png</filename>
+		<filename>jointheclub.png</filename>
+		<filename>sp_16.png</filename>
+		<filename>sigsiu.png</filename>
+		<filename>sp.png</filename>
+		<filename>logo.png</filename>
 	</media>
 
 	<administration>
-		<menu img="../media/sobipro/SobiPro_16.png" view="cpanel">COM_SOBIPRO</menu>
+		<menu img="../media/sobipro/sp_16.png" view="cpanel">COM_SOBIPRO</menu>
 		<files folder="Admin">
 			<folder>about</folder>
 			<folder>acl</folder>
