@@ -21,20 +21,29 @@
  */
 
 function SPinitMenu( el )
- {
- 	SobiPro.onReady( function () { SPcloseMenu(); SP_id( el ).style.display = 'block'; } );
- }
+{
+	SobiPro.onReady( function ()
+	{
+		"use strict";
+		try {
+			SPcloseMenu();
+			SP_id( el ).style.display = 'block';
+		}
+		catch ( e ) {
+		}
+	} );
+}
 
- function SPopenMenu( el )
- {
+function SPopenMenu( el )
+{
 	SPcloseMenu();
- 	SP_id( el ).style.display = 'block';
- }
+	SP_id( el ).style.display = 'block';
+}
 
- function SPcloseMenu()
- {
- 	var tabs = SP_class( 'SPcontentTabHeader', SP_id( 'SPaccordionTabs' ) );
-	for( var i = 0, j = tabs.length; i < j; i++ ) {
+function SPcloseMenu()
+{
+	var tabs = SP_class( 'SPcontentTabHeader', SP_id( 'SPaccordionTabs' ) );
+	for ( var i = 0, j = tabs.length; i < j; i++ ) {
 		tabs[ i ].style.display = 'none';
 	}
- }
+}
