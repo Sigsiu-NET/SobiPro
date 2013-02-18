@@ -83,7 +83,7 @@ final class SPAdmSiteMenu
 		$this->_view[ ] = ' <button class="btn btn-mini btn-sobipro" id="SPMenuCtrlBt" type="button">-</button>';
 		$this->_view[ ] = '</div>';
 		$media = Sobi::Cfg( 'img_folder_live' );
-		$this->_view[ ] = "\n<div class='well well-small'><a href=\"http://www.Sigsiu.NET\" target=\"_blank\" title=\"Sigsiu.NET Software Development\"><img src=\"{$media}sp.png\" alt=\"Sigsiu.NET Software Development\" style=\"border-style:none;\" /></a></div>\n";
+		$this->_view[ ] = "\n<div class='well well-small'><a href=\"http://www.Sigsiu.NET\" target=\"_blank\" title=\"Sigsiu.NET Software Development\"><img src=\"{$media}/sp.png\" alt=\"Sigsiu.NET Software Development\" style=\"border-style:none;\" /></a></div>\n";
 		$fs = null;
 		if ( count( $this->_sections ) ) {
 			if ( $this->_task == 'section.view' ) {
