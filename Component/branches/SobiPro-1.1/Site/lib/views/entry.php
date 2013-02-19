@@ -44,7 +44,7 @@ class SPEntryView extends SPFrontView implements SPView
 		parent::display();
 	}
 
-	private function edit()
+	protected function edit()
 	{
 		SPLoader::loadClass( 'html.tooltip' );
 		$this->_type = 'entry_form';
@@ -96,16 +96,8 @@ class SPEntryView extends SPFrontView implements SPView
 									'_data' => $field->get( 'name' ),
 									'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
 								),
-								'data' => array(
-									'_complex' => 1,
-									'_xml' => 1,
-									'_data' => $field->field( true ),
-								),
-								'description' => array(
-									'_complex' => 1,
-									'_xml' => 1,
-									'_data' => $field->get( 'description' ),
-								),
+								'data' => array( '_complex' => 1, '_xml' => 1, '_data' => $field->field( true ) ),
+								'description' => array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ), ),
 								'fee' => $pf,
 								'fee_msg' => $pfm
 							),
@@ -166,7 +158,7 @@ class SPEntryView extends SPFrontView implements SPView
 		}
 	}
 
-	private function details()
+	protected function details()
 	{
 		$this->_type = 'entry_details';
 		$type = $this->key( 'template_type', 'xslt' );
@@ -180,7 +172,7 @@ class SPEntryView extends SPFrontView implements SPView
 		}
 	}
 
-	private function entryData( $getFields = true )
+	protected function entryData( $getFields = true )
 	{
 		$entry = $this->get( 'entry' );
 		$visitor = $this->get( 'visitor' );
@@ -262,41 +254,8 @@ class SPEntryView extends SPFrontView implements SPView
 		);
 		if ( $getFields ) {
 			$fields = $entry->getFields();
-			$f = array();
 			if ( count( $fields ) ) {
-				foreach ( $fields as $field ) {
-					if ( $field->enabled( 'details' ) && $field->get( 'id' ) != Sobi::Cfg( 'entry.name_field' ) ) {
-						$struct = $field->struct();
-						$options = null;
-						if ( isset( $struct[ '_options' ] ) ) {
-							$options = $struct[ '_options' ];
-							unset( $struct[ '_options' ] );
-						}
-						$f[ $field->get( 'nid' ) ] = array(
-							'_complex' => 1,
-							'_data' => array(
-								'label' => array(
-									'_complex' => 1,
-									'_data' => $field->get( 'name' ),
-									'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
-								),
-								'data' => $struct,
-							),
-							'_attributes' => array( 'id' => $field->get( 'id' ), 'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
-						);
-						if ( Sobi::Cfg( 'entry.field_description', false ) ) {
-							$f[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
-						}
-						if ( $options ) {
-							$f[ $field->get( 'nid' ) ][ '_data' ][ 'options' ] = $options;
-						}
-						if ( isset( $struct[ '_xml_out' ] ) && count( $struct[ '_xml_out' ] ) ) {
-							foreach ( $struct[ '_xml_out' ] as $k => $v )
-								$f[ $field->get( 'nid' ) ][ '_data' ][ $k ] = $v;
-						}
-					}
-				}
-				$en[ 'fields' ] = $f;
+				$en[ 'fields' ] = $this->fieldStruct( $fields, 'details' );
 			}
 		}
 		$this->menu( $data );

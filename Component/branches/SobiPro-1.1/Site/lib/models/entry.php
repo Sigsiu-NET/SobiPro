@@ -362,6 +362,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 
 	/**
 	 * @param int $sid
+	 * @param bool $enabled
 	 * @return void
 	 */
 	public function loadFields( $sid = 0, $enabled = false )

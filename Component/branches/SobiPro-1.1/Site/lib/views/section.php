@@ -171,6 +171,9 @@ class SPSectionView extends SPFrontView implements SPView
 			foreach ( $nonStatic as $v ) {
 				$en[ $v ] = $this->getNonStaticData( $entry, $v );
 			}
+			if ( count( $en[ 'fields' ] ) ) {
+				$this->validateFields( $en[ 'fields' ] );
+			}
 			return $en;
 		}
 		else {
@@ -258,41 +261,40 @@ class SPSectionView extends SPFrontView implements SPView
 				$en[ 'categories' ] = $categories;
 			}
 			$fields = $entry->getFields();
-			$f = array();
 			if ( count( $fields ) ) {
-				foreach ( $fields as $field ) {
-					if ( $field->enabled( 'vcard' ) && $field->get( 'id' ) != Sobi::Cfg( 'entry.name_field' ) ) {
-						$struct = $field->struct();
-						$options = null;
-						if ( isset( $struct[ '_options' ] ) ) {
-							$options = $struct[ '_options' ];
-							unset( $struct[ '_options' ] );
-						}
-						$f[ $field->get( 'nid' ) ] = array(
-							'_complex' => 1,
-							'_data' => array(
-								'label' => array(
-									'_complex' => 1,
-									'_data' => $field->get( 'name' ),
-									'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
-								),
-								'data' => $struct,
-							),
-							'_attributes' => array( 'id' => $field->get( 'id' ), 'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
-						);
-						if ( Sobi::Cfg( 'list.field_description', false ) ) {
-							$f[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
-						}
-						if ( $options ) {
-							$f[ $field->get( 'nid' ) ][ '_data' ][ 'options' ] = $options;
-						}
-						if ( isset( $struct[ '_xml_out' ] ) && count( $struct[ '_xml_out' ] ) ) {
-							foreach ( $struct[ '_xml_out' ] as $k => $v )
-								$f[ $field->get( 'nid' ) ][ '_data' ][ $k ] = $v;
-						}
-					}
-				}
-				$en[ 'fields' ] = $f;
+//				foreach ( $fields as $field ) {
+//					if ( $field->enabled( 'vcard' ) && $field->get( 'id' ) != Sobi::Cfg( 'entry.name_field' ) ) {
+//						$struct = $field->struct();
+//						$options = null;
+//						if ( isset( $struct[ '_options' ] ) ) {
+//							$options = $struct[ '_options' ];
+//							unset( $struct[ '_options' ] );
+//						}
+//						$f[ $field->get( 'nid' ) ] = array(
+//							'_complex' => 1,
+//							'_data' => array(
+//								'label' => array(
+//									'_complex' => 1,
+//									'_data' => $field->get( 'name' ),
+//									'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
+//								),
+//								'data' => $struct,
+//							),
+//							'_attributes' => array( 'id' => $field->get( 'id' ), 'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
+//						);
+//						if ( Sobi::Cfg( 'list.field_description', false ) ) {
+//							$f[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
+//						}
+//						if ( $options ) {
+//							$f[ $field->get( 'nid' ) ][ '_data' ][ 'options' ] = $options;
+//						}
+//						if ( isset( $struct[ '_xml_out' ] ) && count( $struct[ '_xml_out' ] ) ) {
+//							foreach ( $struct[ '_xml_out' ] as $k => $v )
+//								$f[ $field->get( 'nid' ) ][ '_data' ][ $k ] = $v;
+//						}
+//					}
+//				}
+				$en[ 'fields' ] = $this->fieldStruct( $fields, 'vcard' );
 			}
 			SPFactory::cache()
 					->addObj( $entry, 'entry', $entry->get( 'id' ) )
