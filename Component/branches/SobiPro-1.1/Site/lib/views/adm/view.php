@@ -296,7 +296,9 @@ class SPAdmView extends SPObject implements SPView
 					else {
 						$group[ 'buttons' ] = $this->get( $node->attributes->getNamedItem( 'buttons' )->nodeValue );
 					}
-					$buttons[ ] = $group;
+					if ( count( $group[ 'buttons' ] ) ) {
+						$buttons[ ] = $group;
+					}
 					break;
 			}
 		}
@@ -740,7 +742,8 @@ class SPAdmView extends SPObject implements SPView
 				'content' => $output,
 				'args' => array( 'type' => $field->get( 'type' ) ),
 				'adds' => array( 'before' => null, 'after' => $adds ),
-				'help-text' => $field->get( 'description' )
+				'help-text' => $field->get( 'description' ),
+				'id' => $field->get( 'nid' ),
 			);
 			// show label is for details view only. Right?
 //			if ( !( $field->get( 'showLabel' ) ) ) {

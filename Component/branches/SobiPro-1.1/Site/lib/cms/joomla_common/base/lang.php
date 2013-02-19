@@ -580,47 +580,48 @@ class SPJoomlaLang
 	 */
 	public static function urlSafe( $str )
 	{
-		$str = str_replace( '&', Sobi::Txt( 'URL_AND' ), $str );
-		static $from = null;
-		static $to = null;
-		if ( !( $from ) && !( $to ) ) {
-			$from = array();
-			$to = array();
-			if ( strlen( Sobi::Cfg( 'browser.url_replace_from' ) ) && strlen( Sobi::Cfg( 'browser.url_replace_with' ) ) ) {
-				$t = explode( ',', Sobi::Cfg( 'browser.url_replace_with' ) );
-				if ( count( $t ) ) {
-					foreach ( $t as $s ) {
-						$to[ ] = $s;
-						if ( function_exists( 'mb_convert_case' ) ) {
-							$to[ ] = mb_convert_case( $s, MB_CASE_UPPER, 'UTF-8' );
-						}
-					}
-					$f = explode( ',', Sobi::Cfg( 'browser.url_replace_from' ) );
-					if ( count( $f ) ) {
-						foreach ( $f as $s ) {
-							$ex = preg_split( '//u', $s, -1, PREG_SPLIT_NO_EMPTY );
-							if ( count( $ex ) ) {
-								$si = implode( '|', $ex );
-							}
-							$from[ ] = "/{$si}/u";
-							if ( function_exists( 'mb_convert_case' ) ) {
-								$s = mb_convert_case( $s, MB_CASE_UPPER, 'UTF-8' );
-								$ex = preg_split( '//u', $s, -1, PREG_SPLIT_NO_EMPTY );
-								if ( count( $ex ) ) {
-									$si = implode( '|', $ex );
-								}
-								$from[ ] = "/{$si}/u";
-							}
-						}
-					}
-				}
-			}
-		}
-		if ( count( $from ) && count( $to ) ) {
-			$str = preg_replace( $from, $to, $str );
-		}
-		$str = preg_replace( array( '/\s+/', Sobi::Cfg( 'browser.url_filter', '/[^A-Za-z0-9\p{L}\-\_]/iu' ) ), array( '-', null ), $str );
-		return str_replace( '--', '-', str_replace( '--', '-', $str ) );
+		return self::nid( $str );
+//		$str = str_replace( '&', Sobi::Txt( 'URL_AND' ), $str );
+//		static $from = null;
+//		static $to = null;
+//		if ( !( $from ) && !( $to ) ) {
+//			$from = array();
+//			$to = array();
+//			if ( strlen( Sobi::Cfg( 'browser.url_replace_from' ) ) && strlen( Sobi::Cfg( 'browser.url_replace_with' ) ) ) {
+//				$t = explode( ',', Sobi::Cfg( 'browser.url_replace_with' ) );
+//				if ( count( $t ) ) {
+//					foreach ( $t as $s ) {
+//						$to[ ] = $s;
+//						if ( function_exists( 'mb_convert_case' ) ) {
+//							$to[ ] = mb_convert_case( $s, MB_CASE_UPPER, 'UTF-8' );
+//						}
+//					}
+//					$f = explode( ',', Sobi::Cfg( 'browser.url_replace_from' ) );
+//					if ( count( $f ) ) {
+//						foreach ( $f as $s ) {
+//							$ex = preg_split( '//u', $s, -1, PREG_SPLIT_NO_EMPTY );
+//							if ( count( $ex ) ) {
+//								$si = implode( '|', $ex );
+//							}
+//							$from[ ] = "/{$si}/u";
+//							if ( function_exists( 'mb_convert_case' ) ) {
+//								$s = mb_convert_case( $s, MB_CASE_UPPER, 'UTF-8' );
+//								$ex = preg_split( '//u', $s, -1, PREG_SPLIT_NO_EMPTY );
+//								if ( count( $ex ) ) {
+//									$si = implode( '|', $ex );
+//								}
+//								$from[ ] = "/{$si}/u";
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
+//		if ( count( $from ) && count( $to ) ) {
+//			$str = preg_replace( $from, $to, $str );
+//		}
+//		$str = preg_replace( array( '/\s+/', Sobi::Cfg( 'browser.url_filter', '/[^A-Za-z0-9\p{L}\-\_]/iu' ) ), array( '-', null ), $str );
+//		return str_replace( '--', '-', str_replace( '--', '-', $str ) );
 	}
 
 	/**
@@ -649,7 +650,7 @@ class SPJoomlaLang
 	public static function nid( $txt )
 	{
 		// need the replacement for Joomla! 1.5 :(
-		return JFilterOutput::stringURLSafe( str_replace( '.', '-', $txt ) );
+		return Sobi::Cfg( 'sef.unicode' ) ? JFilterOutput::stringURLUnicodeSlug( str_replace( '.', '-', $txt ) ) : JFilterOutput::stringURLSafe( str_replace( '.', '-', $txt ) );
 //        return trim( strtolower( str_replace( '__', '_', preg_replace( '/[^a-z0-9\_]/i', '_', preg_replace( '/\W/', '_', $txt ) ) ) ) );
 	}
 

@@ -144,11 +144,11 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 			/** @noinspection PhpIncludeInspection */
 			require_once( SOBI_PATH . '/lib/base/fs/loader.php' );
 		}
-		if ( ini_get( 'error_reporting' ) < $errNumber ) {
-			return false;
-		}
 		if ( strstr( $errString, 'json://' ) ) {
 			$error = json_decode( str_replace( 'json://', null, $errString ), true );
+		}
+		if ( ini_get( 'error_reporting' ) < $errNumber && !( isset( $error[ 'code' ] ) && $error[ 'code' ] ) ) {
+			return false;
 		}
 		$backTrace = null;
 		if ( class_exists( 'SPConfig' ) ) {

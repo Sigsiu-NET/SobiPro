@@ -95,7 +95,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			if ( count( $c ) ) {
 				try {
 					$e = $db
-							->select( 'id', 'spdb_relations', array( 'pid' => $c, 'oType' => 'entry' ) )
+							->dselect( 'id', 'spdb_relations', array( 'pid' => $c, 'oType' => 'entry' ) )
 							->loadResultArray();
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );

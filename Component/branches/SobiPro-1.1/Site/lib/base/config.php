@@ -317,10 +317,10 @@ class SPConfig
 
 	/**
 	 * Returns copy of stored key
-	 *
-	 * @param string $label
+	 * @param $key
 	 * @param mixed $def
 	 * @param string $section
+	 * @internal param string $label
 	 * @return mixed
 	 */
 	public function key( $key, $def = null, $section = 'general' )
