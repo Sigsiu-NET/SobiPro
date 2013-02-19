@@ -338,6 +338,7 @@ abstract class Sobi
 	/**
 	 * Returns current section id
 	 *
+	 * @param bool $name
 	 * @return int
 	 */
 	public static function Section( $name = false )
@@ -360,6 +361,7 @@ abstract class Sobi
 	/**
 	 * Returns currently used language
 	 *
+	 * @param $path
 	 * @return string
 	 */
 	public static function FixPath( $path )

@@ -54,7 +54,7 @@ class SPPBankTransfer extends SPPlugin
 	/**
 	 * This function have to add own string into the given array
 	 * Basically: $methods[ $this->id ] = "Some String To Output";
-	 * Optionaly the value can be also SobiPro Arr2XML array.
+	 * Optionally the value can be also SobiPro Arr2XML array.
 	 * Check the documentation for more information
 	 * @param array $methods
 	 * @param SPEntry $entry
@@ -71,4 +71,3 @@ class SPPBankTransfer extends SPPlugin
 		);
 	}
 }
-?>
