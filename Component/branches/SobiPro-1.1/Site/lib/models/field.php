@@ -750,6 +750,8 @@ class SPField extends SPObject
 	 *
 	 * @param string $method
 	 * @param array $args
+	 * @throws SPException
+	 * @return mixed|null
 	 */
 	public function __call( $method, $args )
 	{

@@ -209,7 +209,7 @@
 											<field type="text" name="spcfg[alphamenu.letters]" value="alphamenu.letters" label="SECN.CFG.ALPHA_LETTERS" class="input-splarge" />
 											<field type="toggle" name="spcfg[alphamenu.verify]" value="alphamenu.verify" label="SECN.CFG.SHOW_ALPHA_VERIFY" prefix="yes_no" />
 											<field type="select" label="SECN.CFG.ALPHA_FIELD" name="spcfg[alphamenu.primary_field]" selected="alphamenu.primary_field" values="alphaMenuFields" class="input-large" />
-											<field type="select" label="SECN.CFG.ALPHA_FIELDS" multiple="true" size="12" name="spcfg[alphamenu.extra_fields_array]" selected="alphamenu.extra_fields_array" values="alphaMenuFields" class="input-large" />
+											<field type="select" label="SECN.CFG.ALPHA_FIELDS" multi="true" size="12" name="spcfg[alphamenu.extra_fields_array]" selected="alphamenu.extra_fields_array" values="alphaMenuFields" class="input-large" />
 										</fieldset>
 									</tab>
 								</tabs>

@@ -148,7 +148,6 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	public function loadJsFile( $path )
 	{
-		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
 		Sobi::Trigger( 'loadJsFile', $this->name(), array( &$path ) );
 		if ( SPFs::exists( $this->tplPath() . DS . 'js' . DS . $path . '.js' ) ) {
 			$path = 'absolute.' . $this->tplPath() . '.js.' . $path;
@@ -774,7 +773,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				}
 			}
 		}
-		$this->validateFields( $fields );
+		$this->validateFields( $data );
 		return $data;
 	}
 
