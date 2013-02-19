@@ -40,14 +40,13 @@ SPFactory::header()
 	                submitform( task );
 	            }
 	        }
-	        try {
-	            Joomla.submitbutton = function ( task )
+	        SobiPro.jQuery( document ).ready( function ()
+	        {
+	        	Joomla.submitform = function ( task )
 	            {
 	                submitbutton( task );
 	            }
-	        }
-	        catch ( e ) {
-	        }
+	         } );
         " );
 $row = 0;
 ?>

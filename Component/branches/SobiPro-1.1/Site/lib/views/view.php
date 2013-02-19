@@ -275,7 +275,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		$parser->setProxy( $this );
 		$parser->setData( $this->_attr );
 		$parser->setXML( $this->_xml );
-		$parser->setCacheData( array( 'hidden' => $this->_hidden  ) );
+		$parser->setCacheData( array( 'hidden' => $this->_hidden ) );
 		$parser->setType( $this->_type );
 		$parser->setTemplate( $this->_template );
 		Sobi::Trigger( 'Display', $this->name(), array( $type, &$this->_attr ) );
@@ -736,6 +736,60 @@ abstract class SPFrontView extends SPObject implements SPView
 	protected function getNonStaticData( $id, $att )
 	{
 		return isset( $this->nonStaticData[ $id ][ $att ] ) ? $this->nonStaticData[ $id ][ $att ] : null;
+	}
+
+
+	protected function fieldStruct( $fields, $view )
+	{
+		$data = array();
+		foreach ( $fields as $field ) {
+			if ( $field->enabled( $view ) && $field->get( 'id' ) != Sobi::Cfg( 'entry.name_field' ) ) {
+				$struct = $field->struct();
+				$options = null;
+				if ( isset( $struct[ '_options' ] ) ) {
+					$options = $struct[ '_options' ];
+					unset( $struct[ '_options' ] );
+				}
+				$data[ $field->get( 'nid' ) ] = array(
+					'_complex' => 1,
+					'_data' => array(
+						'label' => array(
+							'_complex' => 1,
+							'_data' => $field->get( 'name' ),
+							'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
+						),
+						'data' => $struct,
+					),
+					'_attributes' => array( 'id' => $field->get( 'id' ), 'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
+				);
+				if ( Sobi::Cfg( 'entry.field_description', false ) ) {
+					$data[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
+				}
+				if ( $options ) {
+					$data[ $field->get( 'nid' ) ][ '_data' ][ 'options' ] = $options;
+				}
+				if ( isset( $struct[ '_xml_out' ] ) && count( $struct[ '_xml_out' ] ) ) {
+					foreach ( $struct[ '_xml_out' ] as $k => $v )
+						$data[ $field->get( 'nid' ) ][ '_data' ][ $k ] = $v;
+				}
+			}
+		}
+		$this->validateFields( $fields );
+		return $data;
+	}
+
+	protected function validateFields( $fields )
+	{
+		foreach ( $fields as $data ) {
+			if ( isset( $data[ '_data' ][ 'data' ][ '_validate' ] ) && count( $data[ '_data' ][ 'data' ][ '_validate' ] ) ) {
+				$class = str_replace( array( '/', '.php' ), array( '.', null ), $data[ '_data' ][ 'data' ][ '_validate' ][ 'class' ] );
+				if ( $class ) {
+					$method = $data[ '_data' ][ 'data' ][ '_validate' ][ 'method' ];
+					$class = SPLoader::loadClass( $class );
+					$class::$method( $data[ '_data' ][ 'data' ] );
+				}
+			}
+		}
 	}
 
 	protected function menu( &$data )

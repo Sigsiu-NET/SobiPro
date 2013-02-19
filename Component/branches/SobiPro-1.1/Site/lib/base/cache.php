@@ -355,12 +355,18 @@ final class SPCache
 				return $this;
 			}
 
-			if ( $type == 'entry' ) {
-				// entry has to report if it should be re-validate
-				if ( !( isset( $this->_check[ $type ][ $id ] ) ) || !( $this->_check[ $type ][ $id ] ) ) {
-					return $this;
-				}
-			}
+			// it was the idea that if entry has been taken from cache, and do not reports any changes - it doesn't have to be stored again
+			// but I'm not so sure if this is a good idea any longer
+			// so let's skip it and see what's going to happen
+			// poor guys from the testing team :P
+			// Tue, Feb 19, 2013 14:09:52
+//			if ( $type == 'entry' ) {
+//				// entry has to report if it should be re-validate
+//				if ( !( isset( $this->_check[ $type ][ $id ] ) ) || !( $this->_check[ $type ][ $id ] ) ) {
+//					return $this;
+//				}
+//			}
+
 			$id = ( int )$id;
 			$sid = ( int )$sid;
 			$sid = $sid ? $sid : $this->_section;
