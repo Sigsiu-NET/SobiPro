@@ -101,7 +101,7 @@ class SPJoomlaMainFrame
 		if ( defined( 'SOBIPRO_ADM' ) ) {
 			$cfg->set( 'adm_img_folder_live', Sobi::FixPath( JURI::root() . '/' . SOBI_ADM_FOLDER . '/images' ) );
 		}
-		$cfg->set( 'img_folder_path', SOBI_ROOT . DS . 'media' . DS . 'sobipro' );
+		$cfg->set( 'img_folder_path', SOBI_ROOT . '/media/sobipro' );
 
 		if ( $this->JConfigValue( 'config.ftp_enable' ) ) {
 			if ( !( file_exists( $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro' ) ) ) {

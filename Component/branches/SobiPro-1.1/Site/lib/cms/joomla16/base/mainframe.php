@@ -154,6 +154,7 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 
 	protected function JConfigValue( $value )
 	{
+		$value = str_replace( 'config.', null, $value );
 		return JFactory::getConfig()->get( $value );
 	}
 

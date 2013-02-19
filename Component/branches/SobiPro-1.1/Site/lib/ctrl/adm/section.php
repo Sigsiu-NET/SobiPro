@@ -119,6 +119,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			$cLimStart = $cPages;
 			SPRequest::set( 'cSite', $cPages );
 		}
+		SPConfig::debOut(SPLang::replacePlaceHolders( 'Here {cfg:site_name}' ));
 		$eCount = count( $e );
 		$ePages = ceil( $eCount / $eLimit );
 		if ( $eLimStart > $ePages ) {

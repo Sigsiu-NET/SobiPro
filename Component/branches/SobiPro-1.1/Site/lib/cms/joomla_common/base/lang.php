@@ -286,6 +286,7 @@ class SPJoomlaLang
 	 * Parse text and replaces placeholders
 	 * @param string $text
 	 * @param SPDBObject $obj
+	 * @param bool $html
 	 * @return string
 	 */
 	public static function replacePlaceHolders( $text, $obj = null, $html = false )
