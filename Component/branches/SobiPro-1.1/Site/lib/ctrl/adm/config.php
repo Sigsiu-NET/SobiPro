@@ -484,7 +484,13 @@ class SPConfigAdmCtrl extends SPController
 		} catch ( SPException $x ) {
 			$this->response( Sobi::Back(), $x->getMessage(), false, SPC::ERROR_MSG );
 		}
-		SPFactory::cache()->cleanSection();
+		if ( !( $section && !( Sobi::Section() ) ) ) {
+			SPFactory::cache()->cleanAll();
+		}
+		else {
+			SPFactory::cache()->cleanSection();
+		}
+
 		Sobi::Trigger( 'After', 'SaveConfig', array( &$values ) );
 		$this->response( Sobi::Back(), Sobi::Txt( 'MSG.CONFIG_SAVED' ), false, 'success' );
 	}

@@ -253,7 +253,7 @@ SobiPro.jQuery( document ).ready( function ()
 				'type':'post',
 				'url':SobiProAdmUrl.replace( '%task%', button.attr( 'rel' ) + '.resetCounter' ),
 				'data':{
-					'sid':SobiPro.jQuery( '[name^="' + button.attr( 'rel' ) + '.id"]' ).val(),
+					'sid':SobiPro.jQuery( '#SP_sid' ).val(),
 					'format':'raw'
 				},
 				'dataType':'json',

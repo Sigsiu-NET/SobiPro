@@ -86,6 +86,8 @@ class SPJoomlaMainFrame
 		$cfg->set( 'smtpsecure', $this->JConfigValue( 'config.smtpsecure' ), 'mail' );
 		$cfg->set( 'smtpport', $this->JConfigValue( 'config.smtpport' ), 'mail' );
 
+		$cfg->set( 'unicode', $this->JConfigValue( 'unicodeslugs' ), 'sef' );
+
 		$cfg->set( 'language', $this->JConfigValue( 'language' ) );
 		$cfg->set( 'secret', $this->JConfigValue( 'secret' ) );
 		$cfg->set( 'site_name', $this->JConfigValue( 'config.sitename' ) );
