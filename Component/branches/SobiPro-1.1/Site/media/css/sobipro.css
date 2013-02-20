@@ -21,6 +21,9 @@
  * $Author$
  * $HeadURL$
  */
+.ui-icon { width: 16px; height: 16px; background-image: url(images/ui-icons_f3be5e_256x240.png); }
+
+
 .SobiPro div.modal {
   width: 520px;
   margin: -250px 0 0 -280px;

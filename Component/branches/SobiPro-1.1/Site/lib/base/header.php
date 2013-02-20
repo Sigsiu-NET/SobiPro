@@ -710,7 +710,6 @@ final class SPHeader
 						$fName = str_replace( Sobi::FixPath( SOBI_ROOT ), null, $file );
 						$cssContent .= "\n/**  \n========\nFile: {$fName}\n========\n*/\n";
 						$fc = SPFs::read( $file );
-//						preg_match_all( '/.*url\(.*/', $fc, $matches );
 						preg_match_all( '/[^\(]*url\(([^\)]*)/', $fc, $matches );
 						// we have to replace url relative path
 						$fPath = str_replace( Sobi::FixPath( SOBI_ROOT . '/' ), SPFactory::config()->get( 'live_site' ), $file );
@@ -728,9 +727,13 @@ final class SPHeader
 									unset( $tempFile[ $i ] );
 								}
 								$rPath = Sobi::FixPath( implode( '/', array_reverse( $tempFile ) ) );
-//								$rurl = preg_replace( '|(url\(["\s\']*)([^a-zA-Z0-9"\']*)|', '\1' . $rPath . '/', $url );
-								$rurl = Sobi::FixPath( str_replace( '..', $rPath, $url ) );
-								$fc = str_replace( $url, $rurl, $fc );
+								if ( $c > 1 ) {
+									$realUrl = Sobi::FixPath( str_replace( '..', $rPath, $url ) );
+								}
+								else {
+									$realUrl = Sobi::FixPath( $rPath . '/' . $url );
+								}
+								$fc = str_replace( $url, $realUrl, $fc );
 							}
 						}
 						// and add to content
