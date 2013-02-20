@@ -463,6 +463,7 @@ final class SobiProAdmCtrl
 	}
 
 	/**
+	 * @param $ctrl
 	 * @return void
 	 */
 	public function setController( &$ctrl )

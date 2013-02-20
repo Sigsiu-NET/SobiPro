@@ -244,6 +244,8 @@ class SPConfigAdmCtrl extends SPController
 	 * @param $dir SPDirectoryIterator
 	 * @param $nodes string
 	 * @param $current int
+	 * @param $count
+	 * @param bool $package
 	 * @return void
 	 */
 	private function traveTpl( $dir, &$nodes, $current, &$count, $package = false )
@@ -373,7 +375,8 @@ class SPConfigAdmCtrl extends SPController
 
 	/**
 	 * Returns an array with field object of field type which is possible to use it as entry name field
-	 *
+	 * @param bool $pos
+	 * @param array $types
 	 * @return array
 	 */
 	public function getNameFields( $pos = false, $types = array() )

@@ -50,5 +50,6 @@ class SPFieldCtrl extends SPController
 		$this->field = SPFactory::Model( 'field' );
 		$this->field->init( $this->fid );
 		$this->field->$method();
+		return true;
 	}
 }

@@ -265,6 +265,8 @@ class SPField extends SPObject
 	}
 
 	/**
+	 * @param bool $html
+	 * @param bool $raw
 	 * @return string
 	 */
 	public function data( $html = false, $raw = false )
