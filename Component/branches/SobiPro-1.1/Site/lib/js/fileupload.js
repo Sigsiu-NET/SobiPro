@@ -20,7 +20,7 @@
  * $HeadURL$
  */
 
-SobiPro.jQuery.fn.SPFileUploader = function ( options )
+SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 {
 	"use strict";
 	var proxy = this;
@@ -44,7 +44,6 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 	var responseMsg = proxy.find( '.alert' );
 	var idStore = proxy.find( '.idStore' );
 	var button = proxy.find( '.upload' );
-
 	this.complete = function ( xhr )
 	{
 		proxy.trigger( 'uploadComplete', [xhr] );
@@ -122,7 +121,7 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 		var container = proxy.find( '.file' );
 		var file = proxy.find( 'input:file' );
 		var id = file.attr( 'name' ) + '-form'
-		var form = '<form action="'+'index.php" method="post" enctype="multipart/form-data" id="' + id + '">';
+		var form = '<form action="' + 'index.php" method="post" enctype="multipart/form-data" id="' + id + '">';
 		for ( var field in request ) {
 			form += '<input type="hidden" value="' + request[ field ] + '" name="' + field + '"/>';
 		}
@@ -150,4 +149,9 @@ SobiPro.jQuery.fn.SPFileUploader = function ( options )
 		} ).submit();
 	} );
 	return this;
+}
+
+SobiPro.jQuery.fn.SPFileUploader = function ( options )
+{
+	return this.each( function () { SobiPro.jQuery( this ).SobiProFileUploader( options ); } );
 }

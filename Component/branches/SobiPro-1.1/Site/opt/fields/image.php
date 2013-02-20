@@ -119,18 +119,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 		$show = null;
 		$field = null;
+		static $js = false;
 		$params = array( 'id' => $this->nid, 'class' => $class );
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
-		}
-
-		// what the hell is this?
-		$fdata = Sobi::Reg( 'editcache' );
-		if ( $fdata && is_array( $fdata ) ) {
-			$raw = $this->fromCache( $fdata );
-		}
-		else {
-			$raw = SPConfig::unserialize( $this->getRaw() );
 		}
 
 		$files = SPConfig::unserialize( $this->getRaw() );
@@ -148,6 +140,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\"/>";
 			$field .= SPHtml_Input::checkbox( $this->nid . '_delete', 1, Sobi::Txt( 'FD.IMG_DELETE_CURRENT_IMAGE' ), $this->nid . '_delete', false, array( 'class' => $this->cssClass ) );
 			$field .= "\n</div>\n";
+		}
+		if( !( $js ) ) {
+			SPFactory::header()->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( ".spFileUpload" ).SPFileUploader(); } );');
+			$js = true;
 		}
 		$field .= SPHtml_Input::fileUpload( $this->nid, 'image/*' );
 		if ( !$return ) {

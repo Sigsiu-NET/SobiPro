@@ -127,12 +127,12 @@ abstract class SPHtml_Input
 				'format' => 'raw'
 			);
 		}
-		$classes = array( 'class' => 'spFileUpload hide' );
+		$classes = array( 'class' => 'hide' );
 		SPLoader::loadClass( 'env.browser' );
 		$browser = SPBrowser::getInstance()->get( 'browser' );
 		$stupidInternetExplorer = false;
 		if ( strstr( strtolower( $browser ), 'internet explorer' ) ) {
-			$classes = array( 'class' => 'spFileUpload' );
+			$classes = array( 'class' => '' );
 			$stupidInternetExplorer = true;
 		}
 		$f = null;
