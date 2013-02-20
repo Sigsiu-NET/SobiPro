@@ -507,8 +507,7 @@ abstract class SPDBObject extends SPObject
 		/* if new object */
 		if ( !$this->id ) {
 			/** @var the notification App is using it to recognise if it is a new entry or an update */
-			$this->createdTime = /*$this->createdTime ? $this->createdTime :*/
-					$this->updatedTime;
+			$this->createdTime = $this->updatedTime;
 			$this->owner = $this->owner ? $this->owner : $this->updater;
 			$this->ownerIP = $this->updaterIP;
 		}
@@ -618,7 +617,9 @@ abstract class SPDBObject extends SPObject
 	}
 
 	/**
-	 * @param stdClass $obj
+	 * @param int $id
+	 * @return \SPDBObject
+	 * @internal param \stdClass $obj
 	 */
 	public function & init( $id = 0 )
 	{
