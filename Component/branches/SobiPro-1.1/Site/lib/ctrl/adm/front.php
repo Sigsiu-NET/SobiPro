@@ -248,6 +248,10 @@ class SPAdminPanel extends SPController
 				'type' => Sobi::Cfg( 'cache.l3_enabled', true ) ? 'success' : 'error',
 				'label' => Sobi::Cfg( 'cache.l3_enabled', true ) ? Sobi::Txt( 'ACCELERATOR_ENABLED' ) : Sobi::Txt( 'ACCELERATOR_DISABLED' ),
 			);
+			$state[ 'xml-optimiser' ] = array(
+				'type' => Sobi::Cfg( 'cache.xml_enabled', true ) ? 'success' : 'error',
+				'label' => Sobi::Cfg( 'cache.xml_enabled', true ) ? Sobi::Txt( 'XML_CACHE_ENABLED' ) : Sobi::Txt( 'XML_CACHE_DISABLED' ),
+			);
 			$state[ 'javascript-cache' ] = array(
 				'type' => Sobi::Cfg( 'cache.include_js_files', false ) ? 'success' : 'warning',
 				'label' => Sobi::Cfg( 'cache.include_js_files', false ) ? Sobi::Txt( 'JS_CACHE_ENABLED' ) : Sobi::Txt( 'JS_CACHE_DISABLED' ),

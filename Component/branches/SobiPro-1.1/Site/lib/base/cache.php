@@ -649,13 +649,19 @@ final class SPCache
 	 */
 	public function addView( $xml, $template, $data = array() )
 	{
-		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || Sobi::Reg( 'break_cache_view' ) || ( Sobi::My( 'id' ) && Sobi::Cfg( 'cache.xml_no_reg' ) ) ) {
+		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) )|| $this->_cachedView || Sobi::Reg( 'break_cache_view' ) || ( Sobi::My( 'id' ) && Sobi::Cfg( 'cache.xml_no_reg' ) ) ) {
 			return false;
 		}
 		if ( !( in_array( SPRequest::task( 'get' ), $this->_disableViewCache ) ) ) {
 			foreach ( $this->_disableObjectCache as $task ) {
 				if ( strstr( SPRequest::task( 'get' ), $task ) ) {
 					return false;
+				}
+			}
+			$request = array_diff( $_GET, $this->requestStore );
+			if ( count( $request ) ) {
+				foreach( $request as $k => $v ) {
+					$data[ 'request' ][ $k ] = SPRequest::string( $k );
 				}
 			}
 			$this->view[ 'xml' ] = $xml;

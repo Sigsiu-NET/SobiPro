@@ -106,6 +106,11 @@ class SPCachedView extends SPFrontView implements SPView
 							$this->addHidden( $v, $k );
 						}
 					}
+					if ( isset( $params[ 'request' ] ) && is_array( $params[ 'request' ] ) && count( $params[ 'request' ] ) ) {
+						foreach ( $params[ 'request' ] as $k => $v ) {
+							SPRequest::set( $k, $v, 'get' );
+						}
+					}
 				}
 			}
 		}
