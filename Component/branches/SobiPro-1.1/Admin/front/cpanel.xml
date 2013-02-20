@@ -67,6 +67,7 @@
                         </p>
                     </div>
                     <message parse="system-state.accelerator" dismiss-button="false" icon="true" class="spStatusAlert" />
+	                <message parse="system-state.xml-optimiser" dismiss-button="false" icon="true" class="spStatusAlert" />
                     <message parse="system-state.javascript-cache" dismiss-button="false" icon="true" class="spStatusAlert" />
                     <message parse="system-state.css-cache" dismiss-button="false" icon="true" class="spStatusAlert" />
                     <message parse="system-state.display-errors" dismiss-button="false" icon="true" class="spStatusAlert" />
