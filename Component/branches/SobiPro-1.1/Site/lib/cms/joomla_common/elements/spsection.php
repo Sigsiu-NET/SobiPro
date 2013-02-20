@@ -382,7 +382,7 @@ class JElementSPSection extends JElement
 		$this->sid = $sid;
 		$this->determineObjectType( $sid );
 		if ( $name == 'sid' ) {
-			$params = array( 'id' => 'sid', 'class' => 'input-mini ', 'style' => 'text-align: center; margin-top: 10px; margin-left: 10px;', 'readonly' => 'readonly' );
+			$params = array( 'id' => 'sid', 'class' => 'input-mini', 'style' => 'text-align: center; margin-top: 10px; margin-left: 10px;', 'readonly' => 'readonly' );
 			return '<div class="SobiPro" id="jform_request_sid">'
 					. SPHtml_Input::text( 'type', $this->oTypeName, array( 'id' => 'otype', 'class' => 'input-small', 'style' => 'text-align: center; margin-top: 10px; ', 'readonly' => 'readonly' ) )
 					. SPHtml_Input::text( 'urlparams[sid]', $sid, $params )
@@ -540,7 +540,7 @@ class JElementSPSection extends JElement
 			$this->oTypeName = Sobi::Txt( 'TASK_' . strtoupper( $this->task ) );
 			$this->oType = $this->task;
 		}
-		else {
+		elseif ( $sid ) {
 			$this->oType = SPFactory::db()
 					->select( 'oType', 'spdb_object', array( 'id' => $sid ) )
 					->loadResult();
@@ -558,6 +558,9 @@ class JElementSPSection extends JElement
 			case 'category':
 				$this->oName = SPFactory::Category( $sid )
 						->get( 'name' );
+				break;
+			default:
+				$this->oName = null;
 				break;
 		}
 	}

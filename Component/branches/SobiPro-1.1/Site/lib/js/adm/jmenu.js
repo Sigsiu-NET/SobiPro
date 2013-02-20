@@ -47,47 +47,14 @@ function SPJmenuFixTask( value )
 
 function SPJoomlaMenu()
 {
-	var spApply = SobiPro.jQuery( "#toolbar-apply a" )[ 0 ];
-	var spSave = SobiPro.jQuery( "#toolbar-save a" )[ 0 ];
-//	spApplyFn = spApply.onclick;
-//	spApply.onclick = null;
-//	spSaveFn = spSave.onclick;
-//	spSave.onclick = null;
-	try {
-		var spSaveNew = SobiPro.jQuery( "#toolbar-save-new a" )[ 0 ];
-//		spSaveNewFn = spSaveNew.onclick;
-//		spSaveNew.onclick = null;
-		spSaveNew.bind( "click", function ()
-		{
-			if ( !(SPValidate() ) ) {
-//				spSaveNewFn();
-				e.preventDefault()
-				e.stopImmediatePropagation();
-			}
-		} );
-	}
-	catch ( e ) {
-	}
-
-	SobiPro.jQuery( spApply ).bind( "click", function ( e )
+	var JSubmit = Joomla.submitbutton;
+	Joomla.submitbutton = function( pressbutton )
 	{
-		if ( !( SPValidate() ) ) {
-//			spApplyFn();
-			e.preventDefault()
-			e.stopImmediatePropagation();
+		if( pressbutton.indexOf( 'save' ).indexOf == -1 || pressbutton.indexOf( 'apply' ) == -1   || SPValidate()  ) {
+			JSubmit( pressbutton );
 		}
-	} );
-
-	SobiPro.jQuery( spSave ).bind( "click", function ()
-	{
-		if ( !(SPValidate() ) ) {
-//			spSaveFn();
-			e.preventDefault()
-			e.stopImmediatePropagation();
-		}
-	} );
-
-	SobiPro.jQuery( "#spsection" ).bind( "change", function ( event )
+	}
+	SobiPro.jQuery( "#spsection" ).bind( "change", function ()
 	{
 		if ( !( SobiPro.jQuery( "#spsection option:selected" ).val() ) ) {
 			return;
@@ -222,7 +189,7 @@ function SPJoomlaMenu()
 			var date = [];
 			SobiPro.jQuery( '.SobiProCalendar' ).find( 'select' ).each( function ( i, e )
 			{
-				if( SobiPro.jQuery( this ).val() ) {
+				if ( SobiPro.jQuery( this ).val() ) {
 					date.push( SobiPro.jQuery( this ).val() );
 				}
 			} );
