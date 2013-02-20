@@ -81,6 +81,11 @@
 									<div class="hide spCcMethod" id="spCc-tree">
 										<fieldset label="FMN.CC_TREE">
 											<field type="toggle" name="field.modal" value="field.modal" label="FMN.CC_TREE_MODAL" prefix="fmn.cc_modal" />
+                                            <field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
+                                                <add where="after">
+                                                    <text>px</text>
+                                                </add>
+                                            </field>
 											<field type="text" name="field.catsMaxLimit" value="field.catsMaxLimit" label="FMN.CC_CATS_LIMIT" class="input-mini">
 												<add where="after">
 													<call function="Sobi::Txt">

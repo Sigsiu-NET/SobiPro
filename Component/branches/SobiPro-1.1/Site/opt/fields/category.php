@@ -117,13 +117,17 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params = array();
 		$params[ 'maxcats' ] = $this->catsMaxLimit;
 		$params[ 'field' ] = $this->nid;
+        $setheight = '';
+        if ($this->height > 0) {
+            $setheight = " style=\"height: {$this->height}px;\"";
+        }
 		$addBtParams = array( 'class' => 'btn' );
 		$delBtParams = array( 'class' => 'btn' );
 		$selectParams = array();
 		SPFactory::header()
 				->addJsFile( 'opt.field_category_tree' )
 				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { new SigsiuTreeEdit( ' . json_encode( $params ) . '); } );' );
-		$selector .= '<div class="tree">' . $tree->display( true ) . '</div>';
+		$selector = $selector . '<div class="tree"' . $setheight . '>' . $tree->display( true ) . '</div>';
 		if ( count( $this->_selectedCats ) ) {
 			$selected = SPLang::translateObject( $this->_selectedCats, 'name' );
 			if ( count( $selected ) ) {
@@ -154,7 +158,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$selector .= '</div>';
 		$selector = '<div class="SigsiuTree" id="' . $this->nid . '_canvas">' . $selector . '</div>';
 		if ( $this->modal ) {
-			$selector = SPHtml_Input::modalWindow( Sobi::Txt( 'EN.SELECT_CAT_PATH' ), $this->nid . '_modal', $selector, 'modal hide', 'CLOSE', null );
+			$selector = SPHtml_Input::modalWindow( Sobi::Txt( 'EN.SELECT_CAT_PATH' ), $this->nid . '_modal', $selector, 'modaltree modal hide', 'CLOSE', null );
 			$field = SPHtml_Input::button( 'select-category', Sobi::Txt( 'EN.SELECT_CAT_PATH' ), array( 'class' => 'btn btn-primary', 'href' => '#' . $this->nid . '_modal', 'data-toggle' => 'modal', 'id' => $this->nid . '_modal_fire' ) );
 			return $field . $selector;
 		}
