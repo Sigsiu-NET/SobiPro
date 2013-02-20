@@ -458,7 +458,7 @@ class SPJoomlaLang
 	{
 		$path = $adm ? implode( DS, array( JPATH_ADMINISTRATOR, 'language', 'en-GB', 'en-GB.com_sobipro.js' ) ) : implode( DS, array( SOBI_ROOT, 'language', 'en-GB', 'en-GB.com_sobipro.js' ) );
 		$front = array();
-		if( $adm ) {
+		if ( $adm ) {
 			$front = $this->_jsLang( false );
 		}
 		$def = SPLoader::loadIniFile( $path, false, false, true, true, true );
@@ -650,12 +650,13 @@ class SPJoomlaLang
 
 	/**
 	 * @param string $txt
+	 * @param bool $unicode
 	 * @return string
 	 */
-	public static function nid( $txt )
+	public static function nid( $txt, $unicode = true )
 	{
 		// need the replacement for Joomla! 1.5 :(
-		return Sobi::Cfg( 'sef.unicode' ) ? JFilterOutput::stringURLUnicodeSlug( str_replace( '.', '-', $txt ) ) : JFilterOutput::stringURLSafe( str_replace( '.', '-', $txt ) );
+		return Sobi::Cfg( 'sef.unicode' ) && $unicode ? JFilterOutput::stringURLUnicodeSlug( str_replace( array( '.', '_' ), '-', $txt ) ) : JFilterOutput::stringURLSafe( str_replace( '.', '-', $txt ) );
 //        return trim( strtolower( str_replace( '__', '_', preg_replace( '/[^a-z0-9\_]/i', '_', preg_replace( '/\W/', '_', $txt ) ) ) ) );
 	}
 

@@ -146,7 +146,7 @@ final class SPData_Array extends SPObject
 		$content = null;
 		$dom = new DOMDocument( '1.0', 'UTF-8' );
 		$dom->formatOutput = true;
-		$node = $dom->appendChild( $dom->createElement( SPLang::nid( $root ) ) );
+		$node = $dom->appendChild( $dom->createElement( SPLang::nid( $root, false ) ) );
 		$this->_toXML( $arr, $node, $dom );
 		if( $returnDOM ) {
 			return $dom;
@@ -163,11 +163,11 @@ final class SPData_Array extends SPObject
 					$name = 'value';
 				}
 				if ( is_array( $value ) ) {
-					$nn = $node->appendChild( $dom->createElement( SPLang::nid( $name ) ) );
+					$nn = $node->appendChild( $dom->createElement( SPLang::nid( $name, false ) ) );
 					$this->_toXML( $value, $nn, $dom );
 				}
 				else {
-					$node->appendChild( $dom->createElement( SPLang::nid( $name ), preg_replace( '/&(?![#]?[a-z0-9]+;)/i', '&amp;', $value ) ) );
+					$node->appendChild( $dom->createElement( SPLang::nid( $name, false ), preg_replace( '/&(?![#]?[a-z0-9]+;)/i', '&amp;', $value ) ) );
 				}
 			}
 		}

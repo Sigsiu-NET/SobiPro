@@ -31,4 +31,3 @@ require_once dirname(__FILE__).'/../../joomla_common/base/installer.php';
 class SPCmsInstaller extends SPJoomlaInstaller
 {
 }
-?>
