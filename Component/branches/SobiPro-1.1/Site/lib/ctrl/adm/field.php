@@ -728,11 +728,11 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		/* parent class executes the plugins */
 		$r = false;
 		if ( strstr( $this->_task, '.' ) ) {
-			$this->_task = explode( '.', $this->_task );
-			$this->_fieldType = $this->_task[ 1 ];
-			$this->_task = $this->_task[ 0 ];
+			$task = explode( '.', $this->_task );
+			$this->_fieldType = $task[ 1 ];
+			$task = $task[ 0 ];
 		}
-		switch ( $this->_task ) {
+		switch ( $task ) {
 			case 'list':
 				$r = true;
 				$this->listFields();
@@ -790,7 +790,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
-				if ( !Sobi::Trigger( 'Execute', $this->name(), array( &$this ) ) ) {
+				if ( !( Sobi::Trigger( 'Execute', $this->name(), array( &$this ) ) ) ) {
 					$fid = SPRequest::int( 'fid' );
 					$method = $this->_task;
 					if ( $fid ) {
@@ -804,7 +804,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 							Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 						}
 					}
-					else {
+					elseif ( !( parent::execute() ) ) {
 						Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 					}
 				}

@@ -74,8 +74,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		}
 		if ( $this->ownLabel ) {
 			$fieldTitle = null;
-			$params = array( 'id' => $this->nid, /*'size' => $this->labelWidth, */
-				'class' => $this->cssClass . 'Title' );
+			$params = array( 'id' => $this->nid, 'class' => $this->cssClass . 'Title' );
 			if ( $this->labelMaxLength ) {
 				$params[ 'maxlength' ] = $this->labelMaxLength;
 			}
@@ -101,22 +100,32 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		$field .= SPHtml_Input::select( $this->nid . '_protocol', $protocols, ( ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : 'http' ), false, $params );
 		//$field .= '<span class="spFieldUrlProtocol">://</span>';
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
-		$this->nid .= '_url';
-		$params = array( 'id' => $this->nid, /*'size' => $this->width, */
-			'class' => $class );
+		$params = array( 'id' => $this->nid . '_url', 'class' => $class );
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
-		$field .= SPHtml_Input::text( $this->nid, ( ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null ), $params );
+		$field .= SPHtml_Input::text( $this->nid . '_url', ( ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null ), $params );
 
 		if ( $this->ownLabel ) {
 			$field = "\n<div class=\"spFieldUrlLabel\">{$fieldTitle}</div>\n<div class=\"spFieldUrl\">{$field}</div>";
 		}
 		else {
 			$field = "\n<div class=\"spFieldUrl\">{$field}</div>";
+		}
+		if ( $this->countClicks && $this->sid ) {
+			$counter = $this->getCounter();
+			if ( $counter ) {
+				SPFactory::header()->addJsFile( 'opt.field_url_edit' );
+			}
+			$classes = 'btn spCountableReset';
+			$attr = array();
+			if ( !( $counter ) ) {
+				$attr[ 'disabled' ] = 'disabled';
+			}
+			$field .= SPHtml_Input::button( $this->nid . '_reset', Sobi::Txt( 'FM.URL.EDIT_CLICKS', $counter ), null, $classes );
 		}
 		if ( !$return ) {
 			echo $field;
@@ -172,9 +181,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			if ( $this->countClicks ) {
 				SPFactory::header()->addJsFile( 'opt.field_url' );
 				$this->cssClass = $this->cssClass . ' spCountable sid-' . $this->sid;
-				$counter = SPFactory::db()
-						->select( 'count(*)', 'spdb_field_url_clicks', array( 'sid' => $this->sid, 'fid' => $this->nid, 'section' => Sobi::Section(), 'humanity>' => Sobi::Cfg( 'field_website.humanity', 90 ) ) )
-						->loadResult();
+				$counter = $this->getCounter();
 				if ( $this->counterToLabel ) {
 					$data[ 'label' ] = Sobi::Txt( 'FM.URL.COUNTER_WITH_LABEL', array( 'label' => $data[ 'label' ], 'counter' => $counter ) );
 				}
@@ -197,6 +204,18 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 				);
 			}
 		}
+	}
+
+	protected function getCounter( $real = true )
+	{
+		$query = array( 'sid' => $this->sid, 'fid' => $this->nid, 'section' => Sobi::Section() );
+		if ( $real ) {
+			$query[ 'humanity>' ] = Sobi::Cfg( 'field_website.humanity', 90 );
+		}
+		$counter = SPFactory::db()
+				->select( 'count(*)', 'spdb_field_url_clicks', $query )
+				->loadResult();
+		return $counter;
 	}
 
 	public function cleanData( $html )
@@ -404,6 +423,19 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 				Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
+	}
+
+	public function ProxyReset()
+	{
+		$eid = SPRequest::int( 'eid' );
+		// let's allow it for admins only right now
+		// later we can extend it a bit
+//		$entry = SPFactory::Entry( $eid );
+		if ( Sobi::Can( 'entry.manage.any' ) ) {
+			SPFactory::db()
+					->delete( 'spdb_field_url_clicks', array( 'section' => Sobi::Section(), 'sid' => $eid, 'fid' => $this->nid ) );
+		}
+		echo 1;
 	}
 
 	public function ProxyCount()
