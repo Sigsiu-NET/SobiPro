@@ -57,3 +57,6 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (
   `humanity` int(3) NOT NULL,
   PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`)
 );
+
+INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES
+('category', 'Category', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');

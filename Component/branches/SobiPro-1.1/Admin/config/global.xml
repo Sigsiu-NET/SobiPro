@@ -52,7 +52,7 @@
 							<div class="span12">
 								<fieldset label="GB.CFG.LANG">
 									<field type="toggle" name="spcfg[lang.multimode]" value="lang.multimode" label="GB.CFG.MULTILANG" prefix="onoff" />
-									<field type="toggle" name="spcfg[lang.engb_preload]" value="lang.engb_preload" label="GB.CFG.ENGB_PRELOAD" prefix="onoff" />
+									<field type="toggle" name="spcfg[lang.engb_preload]" value="lang.engb_preload" label="GB.CFG.ENGB_PRELOAD" prefix="yes_no" />
 								</fieldset>
 								<fieldset label="GBN.CFG.HTML_INPUT">
 									<field type="textarea" name="spcfg[html.allowed_tags_array]" value="html.allowed_tags_array" label="GB.CFG.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />
@@ -105,9 +105,11 @@
 								<fieldset>
 									<message label="GBN.CFG.ACCEL" type="error" dismiss-button="false" class="spConfigAlert" />
 									<field type="toggle" name="spcfg[cache.l3_enabled]" value="cache.l3_enabled" label="GB.CFG.DATA_ACCELERATOR" prefix="onoff" />
-									<field type="toggle" name="spcfg[cache.xml_enabled]" value="cache.xml_enabled" label="GB.CFG.XML_ACCELERATOR" prefix="onoff" />
-									<field type="toggle" name="spcfg[cache.xml_no_reg]" value="cache.xml_no_reg" label="GB.CFG.XML_ACCELERATOR_NO_REG" prefix="onoff" />
 								</fieldset>
+                                <fieldset label="GB.CFG.XML_ACCELERATOR">
+                                    <field type="toggle" name="spcfg[cache.xml_enabled]" value="cache.xml_enabled" label="GB.CFG.XML_ACCELERATOR_YES" prefix="yes_no" />
+                                    <field type="toggle" name="spcfg[cache.xml_no_reg]" value="cache.xml_no_reg" label="GB.CFG.XML_ACCELERATOR_NO_REG" prefix="yes_no" />
+                                </fieldset>
 								<fieldset label="GB.CFG.CACHE">
 									<field type="toggle" name="spcfg[cache.include_js_files]" value="cache.include_js_files" label="GBN.CFG.INCLUDE_JS_FILES_CACHE" prefix="onoff" />
 									<field type="toggle" name="spcfg[cache.include_css_files]" value="cache.include_css_files" label="GBN.CFG.INCLUDE_CSS_FILES_CACHE" prefix="onoff" />
