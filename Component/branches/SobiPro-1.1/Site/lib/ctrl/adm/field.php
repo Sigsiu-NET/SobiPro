@@ -727,6 +727,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 		/* parent class executes the plugins */
 		$r = false;
+		$task = $this->_task;
 		if ( strstr( $this->_task, '.' ) ) {
 			$task = explode( '.', $this->_task );
 			$this->_fieldType = $task[ 1 ];
