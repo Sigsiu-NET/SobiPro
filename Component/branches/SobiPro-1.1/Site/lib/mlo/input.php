@@ -869,7 +869,7 @@ abstract class SPHtml_Input
 			}
 		}
 		$modal = '<div class="response btn-group" data-toggle="buttons-radio"></div><br/><button class="btn btn-block hide more" type="button">' . Sobi::Txt( 'LOAD_MORE' ) . '</button>';
-		$filter = '<input type="text" placeholder="' . Sobi::Txt( 'FILTER' ) . '" class="search pull-right" name="q">';
+		$filter = '<input type="text" placeholder="' . Sobi::Txt( 'FILTER' ) . '" class="search pull-right spDisableEnter" name="q">';
 		$id = $params[ 'id' ];
 		$params = self::params( $params );
 		$f = "\n";
