@@ -28,7 +28,7 @@ Legend:
 
 
 -------------------
-1.1.0 (Alpha L)
+1.1.0 (Alpha M)
 -------------------
 
    (+) XML based template engine for administrator templates
@@ -38,7 +38,7 @@ Legend:
    (+) Category Chooser Field with different category selection methods implemented
    (+) Possibility to define a primary category
    (+) Prohibition of assigning an entry to parent category added to new Category Chooser Field
-   (+) Frontend Category Search to filter the search results by one or more category
+   (+) Frontend Category Search to filter the search results by one or more categories
    (+) IP search query link added to category and entry publishing IP (admin interface)
    (+) Button to hide left menu in order to stretch the content screen (admin interface)
    (+) Field description shown in backend 'Edit Entry' as popover
@@ -67,9 +67,9 @@ Legend:
    (+) Custom redirect after a new entry has been added
    (+) Possibility to define new permission to allow or disallow search function usage
    (+) Custom redirect for accessing search function without permission
-   (+) Implemented XML optimisation method. Created XML output is stored into a XML file and if there was no changes reused in next request
+   (+) XML cache view method implemented; XML output is stored into a XML file and reused in next request if there were no changes
    (+) Possibility to disable pre-load of "en-GB" language files
-   (+) Current site number to the browser title
+   (+) Current page number of pagination to the browser title
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list
