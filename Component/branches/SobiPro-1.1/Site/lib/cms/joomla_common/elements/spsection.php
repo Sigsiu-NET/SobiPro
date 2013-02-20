@@ -381,24 +381,28 @@ class JElementSPSection extends JElement
 		}
 		$this->sid = $sid;
 		$this->determineObjectType( $sid );
-		if ( $name == 'sid' ) {
-			$params = array( 'id' => 'sid', 'class' => 'input-mini', 'style' => 'text-align: center; margin-top: 10px; margin-left: 10px;', 'readonly' => 'readonly' );
-			return '<div class="SobiPro" id="jform_request_sid">'
-					. SPHtml_Input::text( 'type', $this->oTypeName, array( 'id' => 'otype', 'class' => 'input-small', 'style' => 'text-align: center; margin-top: 10px; ', 'readonly' => 'readonly' ) )
-					. SPHtml_Input::text( 'urlparams[sid]', $sid, $params )
-					. '</div>';
-		}
-		if ( $name == 'cid' ) {
-			return $this->getCat();
-		}
-		if ( $name == 'eid' ) {
-			return $this->getEntry();
-		}
-		if ( $name == 'did' ) {
-			return $this->getCalendar();
-		}
-		if ( $name == 'tpl' ) {
-			return $this->getTemplates();
+		switch( $name  ) {
+			case 'sid':
+				$params = array( 'id' => 'sid', 'class' => 'input-mini', 'style' => 'text-align: center; margin-top: 10px; margin-left: 10px;', 'readonly' => 'readonly' );
+				return '<div class="SobiPro" id="jform_request_sid">'
+						. SPHtml_Input::text( 'type', $this->oTypeName, array( 'id' => 'otype', 'class' => 'input-small', 'style' => 'text-align: center; margin-top: 10px; ', 'readonly' => 'readonly' ) )
+						. SPHtml_Input::text( 'urlparams[sid]', $sid, $params )
+						. '</div>';
+				break;
+			case 'cid':
+				return $this->getCat();
+				break;
+			case 'eid':
+				return $this->getEntry();
+				break;
+			case 'did':
+//			case 'date':
+				return $this->getCalendar();
+				break;
+			case 'tpl':
+			case 'sptpl':
+				return $this->getTemplates();
+				break;
 		}
 		$sections = array();
 		$sout = array();
