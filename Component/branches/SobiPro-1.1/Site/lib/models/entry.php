@@ -636,7 +636,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			}
 		}
 		else {
-			throw new SPException( SPLang::e( 'MISSING_CATEGORY' ) );
+			throw new SPException( SPLang::e( 'MISSING_CAT' ) );
 		}
 		/* trigger possible state changes */
 		if ( $preState[ 'approved' ] != $this->approved ) {

@@ -287,6 +287,9 @@ div.spScreenTitle h4 {
   margin: -250px 0 0 -280px;
   top: 50%;
 }
+.SobiPro div.modaltree {
+  width: 650px;
+}
 #SPAdminForm table .control-label {
   padding-top: 4px;
   color: #0000b3;
@@ -817,6 +820,14 @@ input.sp-input-micro[type="text"] {
 }
 .SigsiuTree .tree {
   float: left;
+  overflow: auto;
+  width: 350px;
+}
+.sobiCatsSigsiuTree,
+.SobiPro .sobiCatsSigsiuTree {
+  margin-left: 0px;
+  margin-right: 0px;
+  overflow: visible!important;
 }
 /* Compatibility Styles */
 .SobiPro table.mceLayout {
