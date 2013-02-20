@@ -161,9 +161,8 @@ class SPJoomlaInstaller
 				$this->storeData( $type, $def );
 			}
 			return array( 'msg' => $msg, 'msgtype' => SPC::SUCCESS_MSG );
-		}
-		catch( Exception $x ) {
-			$this->error = Sobi::Txt( 'CMS_EXT_NOT_INSTALLED' ).' '.$x->getMessage();
+		} catch ( Exception $x ) {
+			$this->error = Sobi::Txt( 'CMS_EXT_NOT_INSTALLED' ) . ' ' . $x->getMessage();
 			$this->errorType = SPC::ERROR_MSG;
 			return array( 'msg' => $this->error, 'msgtype' => SPC::ERROR_MSG );
 		}
@@ -224,7 +223,12 @@ class SPJoomlaInstaller
 		$this->definition->normalizeDocument();
 		$file->content( $this->definition->saveXML() );
 		$file->save();
-		return array( 'msg' => Sobi::Txt( 'LANG_INSTALLED', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ), 'msgtype' => SPC::SUCCESS_MSG );
+		if ( !( $this->error ) ) {
+			return array( 'msg' => Sobi::Txt( 'LANG_INSTALLED', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ), 'msgtype' => SPC::SUCCESS_MSG );
+		}
+		else {
+			return array( 'msg' => Sobi::Txt( 'LANG_INSTALLED', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ) . "\n" . $this->error, 'msgtype' => $this->errorType );
+		}
 	}
 
 	private function langFiles( $tag, $def, $dir, &$FilesLog )

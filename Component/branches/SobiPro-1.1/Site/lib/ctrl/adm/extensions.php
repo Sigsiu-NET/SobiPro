@@ -116,7 +116,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$list = array();
 			$repository = SPFactory::Instance( 'services.installers.repository' );
 			try {
-				$installed = SPFactory::db()->select( array( 'name', 'type', 'pid', 'version' ), 'spdb_plugins' )->loadAssocList();
+				$installed = SPFactory::db()
+						->select( array( 'name', 'type', 'pid', 'version' ), 'spdb_plugins' )
+						->loadAssocList();
 				array_unshift( $installed, array( 'name' => 'SobiPro', 'type' => 'core', 'pid' => 'SobiPro', 'version' => implode( '.', SPFactory::CmsHelper()->myVersion() ) ) );
 			} catch ( SPException $x ) {
 				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_GET_UPDATES', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -356,16 +358,18 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$progress = isset( $response[ 'progress' ] ) ? $response[ 'progress' ] : 60;
 			$msg->progress( $progress, Sobi::Txt( 'EX.REC_PACKAGE_WITH_TYPE_NAME', array( 'type' => Sobi::Txt( $response[ 'type' ] ), 'name' => $response[ 'name' ] ) ) );
 //			sleep( 1 );
+			if ( !( $response[ 'package' ] ) ) {
+				$msg->error( SPLang::e( 'An error has occurred. No package name received' ) );
+			}
 			$package = $this->packageToFile( $response[ 'package' ], $response[ 'checksum' ], $response[ 'filename' ], $msg );
 			try {
 				$r = $this->install( $package );
+				$msg->progress( 95, $r[ 'msg' ] );
+				$msg->progress( 100, $r[ 'msg' ], $r[ 'msgtype' ] );
 			} catch ( SPException $x ) {
 				$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
 				exit;
 			}
-			$msg->progress( 95, $r[ 'msg' ] );
-//			sleep( 20 );
-			$msg->progress( 100, $r[ 'msg' ], $r[ 'msgtype' ] );
 			exit;
 		}
 	}
@@ -417,7 +421,12 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$path = SPLoader::dirPath( 'tmp.install', 'front', false );
 		$stream = base64_decode( $stream );
 		$msg->progress( 65, Sobi::Txt( 'EX.EXAMINING_CHECKSUM' ), 1000 );
-		SPFs::write( $path . DS . $name, $stream );
+		try {
+			SPFs::write( $path . DS . $name, $stream );
+		} catch ( SPException $x ) {
+			$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
+			exit;
+		}
 		if ( md5_file( $path . DS . $name ) != $checksum ) {
 			$msg->error( SPLang::e( 'EX.CHECKSUM_NOK' ) );
 			exit;
@@ -473,6 +482,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				if ( count( $l ) ) {
 					$pid = $repository->get( 'id' );
 					foreach ( $l as $eid => $values ) {
+						$eid = str_replace( array( '.', '_' ), '-', $eid );
 						$values[ 'repository' ] = $pid;
 						$l[ $eid ] = $values;
 					}
@@ -1054,9 +1064,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				if ( SPFactory::CmsHelper()->installerFile( $xml ) ) {
 					try {
 						$message = SPFactory::CmsHelper()->install( $xml, $path );
-						return $this->ajaxResponse( $ajax, $message[ 'msg' ], true, $message[ 'msgtype' ] );
+						return $this->ajaxResponse( $ajax, $message[ 'msg' ], $ajax, $message[ 'msgtype' ] );
 					} catch ( SPException $x ) {
-						return $this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );
+						return $this->ajaxResponse( $ajax, $x->getMessage(), $ajax, SPC::ERROR_MSG );
 					}
 				}
 				else {
