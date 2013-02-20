@@ -27,7 +27,7 @@ SPLoader::loadClass( 'opt.fields.fieldtype' );
 class SPField_Category extends SPFieldType implements SPFieldInterface
 {
 	/** @var string */
-	protected $method = 'select';
+	protected $method = 'mselect';
 	/** @var bool */
 	protected $modal = false;
 	/** @var int */

@@ -171,7 +171,7 @@ class SPSectionView extends SPFrontView implements SPView
 			foreach ( $nonStatic as $v ) {
 				$en[ $v ] = $this->getNonStaticData( $entry, $v );
 			}
-			if ( count( $en[ 'fields' ] ) ) {
+			if ( isset( $en[ 'fields' ] ) && count( $en[ 'fields' ] ) ) {
 				$this->validateFields( $en[ 'fields' ] );
 			}
 			return $en;
