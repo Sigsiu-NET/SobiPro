@@ -259,7 +259,7 @@ SobiPro.jQuery().ready( function ()
 		{
 			if ( e.keyCode == 13 ) {
 				e.preventDefault();
-				SobiPro.jQuery( '.SpAddRepo' ).click();
+				setTimeout( function() { SobiPro.jQuery( '.SpAddRepo' ).click(); }, 100 )
 			}
 		} );
 	}
