@@ -109,6 +109,37 @@ class SPCachedView extends SPFrontView implements SPView
 				}
 			}
 		}
+		$visitor = $this->visitorArray( SPFactory::user()->getCurrent() );
+		if ( is_array( $visitor ) && ( isset( $visitor[ '_data' ] ) ) ) {
+			$this->importData( $this->_xml->documentElement, $visitor, 'visitor' );
+		}
+	}
+
+	protected function importData( $node, $data, $name )
+	{
+		$root = $this->_xml->createElement( $name );
+		if ( is_array( $data[ '_data' ] ) ) {
+			foreach ( $data[ '_data' ] as $index => $value ) {
+				if ( is_array( $value ) ) {
+					$this->importData( $root, $value, $index );
+				}
+				else {
+					$child = $this->_xml->createElement( $index, $value );
+					$root->appendChild( $child );
+				}
+			}
+		}
+		else {
+			$root->nodeValue = $data[ '_data' ];
+		}
+		if ( isset( $data[ '_attributes' ] ) && $data[ '_attributes' ] ) {
+			foreach ( $data[ '_attributes' ] as $i => $v ) {
+				$a = $this->_xml->createAttribute( SPLang::varName( $i ) );
+				$a->appendChild( $this->_xml->createTextNode( $v ) );
+				$root->appendChild( $a );
+			}
+		}
+		$node->appendChild( $root );
 	}
 
 	protected function callHeader( $method, $calls )
