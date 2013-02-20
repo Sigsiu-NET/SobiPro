@@ -177,7 +177,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$xdef->query( '/template/name' )->item( 0 )->nodeValue = $newName;
 			$xdef->query( '/template/id' )->item( 0 )->nodeValue = $dirName;
 			$newDesc = Sobi::Txt( 'TP.CLONE_NOTE', array( 'name' => $oldName, 'date' => $date ) );
-			$xdef->query( '/template/description' )->item( 0 )->nodeValue = "{$newDesc}\n<br/>\n{$oldDesc}";
+			$xdef->query( '/template/description' )->item( 0 )->nodeValue = "{$newDesc}\n{$oldDesc}";
 			$file = new $fc( $defFile );
 			$file->content( $def->saveXML() );
 			$file->save();

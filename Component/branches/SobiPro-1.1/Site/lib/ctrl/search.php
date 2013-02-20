@@ -232,7 +232,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 					}
 				}
 			}
-			if ( is_array( $results ) ) {
+			if ( is_array( $results ) && count( $results ) ) {
 				/* if we had also a string to search we have to get the intersection */
 				if ( $searchForString ) {
 					$this->_results = array_intersect( $this->_results, $results );
@@ -248,7 +248,9 @@ final class SPSearchCtrl extends SPSectionCtrl
 		if ( count( $this->_fields ) ) {
 			foreach ( $this->_fields as &$field ) {
 				$request = isset( $this->_request[ $field->get( 'nid' ) ] ) ? $this->_request[ $field->get( 'nid' ) ] : null;
-				$field->searchNarrowResults( $request, $this->_results );
+				if ( $request ) {
+					$field->searchNarrowResults( $request, $this->_results );
+				}
 			}
 		}
 		$this->_request[ 'search_for' ] = str_replace( '%', '*', $this->_request[ 'search_for' ] );
@@ -422,11 +424,11 @@ final class SPSearchCtrl extends SPSectionCtrl
 	{
 		$ssid = 0;
 		/* determine template package */
-		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
 
 		/* load template config */
 		$this->template();
-		$this->tplCfg( $tplPckg, 'search' );
+		$this->tplCfg( $tplPackage, 'search' );
 		if ( $this->template == 'results' ) {
 			$this->template = 'view';
 		}
@@ -494,7 +496,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 		$view->addHidden( Sobi::Section(), 'sid' );
 		$view->addHidden( 'search.search', 'task' );
 		$view->setConfig( $this->_tCfg, $this->template );
-		$view->setTemplate( $tplPckg . '.' . $this->templateType . '.' . $this->template );
+		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );
 		Sobi::Trigger( 'OnCreateView', 'Search', array( &$view ) );
 		$view->display();
 	}
@@ -520,7 +522,9 @@ final class SPSearchCtrl extends SPSectionCtrl
 			$r = $this->_db->loadAssocList();
 			if ( strlen( $r[ 0 ][ 'entriesResults' ] ) ) {
 				$store = SPConfig::unserialize( $r[ 0 ][ 'entriesResults' ] );
-				$this->_results = explode( ',', $store[ 'results' ] );
+				if ( $store[ 'results' ] ) {
+					$this->_results = explode( ',', $store[ 'results' ] );
+				}
 				$this->_resultsCount = count( $this->_results );
 			}
 			$this->_request = SPConfig::unserialize( $r[ 0 ][ 'requestData' ] );
