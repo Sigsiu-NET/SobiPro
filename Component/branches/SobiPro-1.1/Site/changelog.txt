@@ -51,6 +51,7 @@ Legend:
    (+) Joomla! 3.0 compatibility (needs at least Joomla! 3.0.2)
    (+) Auto-suggest feature for search function
    (+) Excluding particular user groups for administrator templates override
+   (+) Found issues and state of important settings on Control Panel
    (+) Second ordering for entries in search function
    (+) Possibility to delete (instead of unpublish) an entry from frontend
    (+) View and menu link for own entries
@@ -67,7 +68,7 @@ Legend:
    (+) Custom redirect after a new entry has been added
    (+) Possibility to define new permission to allow or disallow search function usage
    (+) Custom redirect for accessing search function without permission
-   (+) XML cache view method implemented; XML output is stored into a XML file and reused in next request if there were no changes
+   (+) XML cache view implemented; XML output is stored into a XML file and reused in next request if there were no changes
    (+) Possibility to disable pre-load of "en-GB" language files
    (+) Current page number of pagination to the browser title
 
