@@ -33,8 +33,7 @@
 	        <option value="list.date" name="SOBI_DATE_LISTING" msg="SOBI_DATE_LISTING_EXPL"/>
         </options>
         <fields name="request">
-            <fieldset name="request" label="COM_MENUS_BASIC_FIELDSET_LABEL"
-                      addfieldpath="/components/com_sobipro/lib/cms/joomla16/elements">
+            <fieldset name="request" label="COM_MENUS_BASIC_FIELDSET_LABEL" addfieldpath="/components/com_sobipro/lib/cms/joomla16/elements">
                 <field name="SOBI_SELECT_SECTION" type="spsection" description="SOBI_SELECT_SECTION_EXPL"/>
 	            <field name="date" type="spdid" label="SOBI_SELECTED_DATE"/>
                 <field name="cid" type="spcid" label="SOBI_SELECT_CATEGORY" description="SOBI_SELECT_CATEGORY_EXPL"/>
@@ -47,9 +46,11 @@
     <state>
         <url addpath="/components/com_sobipro/lib/cms/joomla_common/elements">
             <param name="SOBI_SELECT_SECTION" type="spsection" msg="SOBI_SELECT_SECTION_EXPL"/>
+	        <param name="date" type="spsection" label="SOBI_SELECTED_DATE"/>
             <param name="cid" type="spsection" msg="SOBI_SELECT_CATEGORY_EXPL"/>
             <param name="eid" type="spsection" msg="SOBI_SELECT_ENTRY"/>
             <param name="sid" type="spsection"/>
+	        <param name="sptpl" type="spsection" label="SOBI_TPL_OVERRIDE" description="SOBI_TPL_OVERRIDE_EXPL"/>
         </url>
     </state>
 </metadata>
