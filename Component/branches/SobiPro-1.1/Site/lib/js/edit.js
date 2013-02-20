@@ -38,9 +38,6 @@ SobiPro.jQuery( document ).ready( function ()
 				proxy.popover( 'hide' );
 			} )
 		} );
-	if ( SobiPro.jQuery( '.spFileUpload' ).length ) {
-		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
-	}
 
 	setTimeout( function ()
 	{
