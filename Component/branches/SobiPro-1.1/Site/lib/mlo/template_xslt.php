@@ -259,7 +259,7 @@ class SPTemplateXSLT implements SPTemplate
 				/* html entities to compatible XML within textareas */
 				$data[ '_data' ] = preg_replace_callback( '/(<textarea.*>)(.*)(<\/textarea>)/s', 'SPTemplateXSLT::entities', $data[ '_data' ] );
 				try {
-					/* im trying to cacth this damn error already :( */
+					/* im trying to catch this damn error already :( */
 					/* assuming the XML-Structure was ok */
 					if ( @$_t->loadXML( '<span>' . $data[ '_data' ] . '</span>' ) ) {
 						$nodes = $_t->firstChild->childNodes;
@@ -304,8 +304,7 @@ class SPTemplateXSLT implements SPTemplate
 			}
 			elseif ( isset( $data[ '_data' ] ) ) {
 				//$data[ '_attributes' ][ 'escaped' ] = 'true';
-				$e->appendChild( $this->_xml->createTextNode( /*htmlentities*/
-					( $data[ '_data' ] ) ) );
+				$e->appendChild( $this->_xml->createTextNode( ( $data[ '_data' ] ) ) );
 			}
 			if ( isset( $data[ '_attributes' ] ) && is_array( $data[ '_attributes' ] ) && count( $data[ '_attributes' ] ) ) {
 				foreach ( $data[ '_attributes' ] as $an => $av ) {
