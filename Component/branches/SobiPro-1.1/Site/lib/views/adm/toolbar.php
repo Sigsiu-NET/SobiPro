@@ -193,6 +193,8 @@ class SpAdmToolbar
 		if ( $button[ 'element' ] == 'button-legacy' ) {
 			$class .= ' legacy';
 			$onclick = 'onclick="Joomla.submitform(\'' . $rel . '\');"';
+			// damn SqueezeBox - download field license window
+			$rel = null;
 		}
 
 		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button[ 'target' ]}\"" : null;
