@@ -174,7 +174,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			$this->_template = SPLoader::path( $file, 'root', false, null );
 		}
 		else {
-			$this->_template = SOBI_PATH . DS . 'usr' . DS . 'templates' . DS . str_replace( '.', DS, $template );
+			$this->_template = SOBI_PATH . '/usr/templates/' . str_replace( '.', '/', $template );
 		}
 		Sobi::Trigger( 'setTemplate', $this->name(), array( &$this->_template ) );
 	}
@@ -356,8 +356,8 @@ abstract class SPFrontView extends SPObject implements SPView
 	{
 		$functions = array();
 		$package = Sobi::Reg( 'current_template' );
-		if ( SPFs::exists( $package . $this->key( 'functions' ) ) ) {
-			$path = $package . $this->key( 'functions' );
+		if ( SPFs::exists( Sobi::FixPath( $package . '/' . $this->key( 'functions' ) ) ) ) {
+			$path = Sobi::FixPath( $package . '/' . $this->key( 'functions' ) );
 			ob_start();
 			$content = file_get_contents( $path );
 			$class = array();

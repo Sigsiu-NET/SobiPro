@@ -259,7 +259,7 @@ final class SobiProCtrl
 	{
 		$cache = true;
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
-			if ( !( ( $this->_model instanceof stdClass ) && $this->_model->owner == Sobi::My( 'id' ) ) ) {
+			if ( ( $this->_model instanceof stdClass ) && !( ( $this->_model instanceof stdClass ) && $this->_model->owner == Sobi::My( 'id' ) ) ) {
 				if ( in_array( $this->_model->owner, array( 'entry' ) ) ) {
 					$cache = false;
 				}
