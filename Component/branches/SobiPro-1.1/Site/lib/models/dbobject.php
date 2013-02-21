@@ -404,7 +404,7 @@ abstract class SPDBObject extends SPObject
 		static $add = 0;
 		$suffix = null;
 		if ( !( strlen( $this->nid ) ) ) {
-			$this->nid = SPLang::nid( $this->name );
+			$this->nid = SPLang::nid( $this->name, true );
 		}
 		while ( $c ) {
 			try {
@@ -497,9 +497,9 @@ abstract class SPDBObject extends SPObject
 		$this->updatedTime = SPRequest::now();
 		$this->updaterIP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		$this->updater = Sobi::My( 'id' );
-		$this->nid = SPLang::nid( $this->nid );
+		$this->nid = SPLang::nid( $this->nid, true );
 		if ( !( $this->nid ) ) {
-			$this->nid = SPLang::nid( $this->name );
+			$this->nid = SPLang::nid( $this->name, true );
 		}
 		/* get THIS class properties */
 		$properties = get_class_vars( __CLASS__ );
