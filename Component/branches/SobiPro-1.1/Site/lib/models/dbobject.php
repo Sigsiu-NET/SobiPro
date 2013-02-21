@@ -757,6 +757,7 @@ abstract class SPDBObject extends SPObject
 	/**
 	 * @param string $var
 	 * @param mixed $val
+	 * @return \SPObject|void
 	 */
 	public function set( $var, $val )
 	{
