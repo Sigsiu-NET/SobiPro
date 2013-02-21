@@ -639,7 +639,8 @@ class SPJoomlaLang
 		$pieces = explode( ' ', $txt );
 		$txt = null;
 		for ( $i = 0; $i < count( $pieces ); $i++ ) {
-			$pieces[ $i ] = preg_replace( '/[^a-z0-9_]/', null, strtolower( $pieces[ $i ] ) );
+			$pieces[ $i ] = SPLang::nid( $pieces[ $i ], false );
+			// preg_replace( '/[^a-z0-9_]/', null, strtolower( $pieces[ $i ] ) );
 			if ( $i > 0 ) {
 				$pieces[ $i ] = ucfirst( $pieces[ $i ] );
 			}
@@ -657,7 +658,6 @@ class SPJoomlaLang
 	{
 		// need the replacement for Joomla! 1.5 :(
 		return Sobi::Cfg( 'sef.unicode' ) && $unicode ? JFilterOutput::stringURLUnicodeSlug( str_replace( array( '.', '_' ), '-', $txt ) ) : JFilterOutput::stringURLSafe( str_replace( '.', '-', $txt ) );
-//        return trim( strtolower( str_replace( '__', '_', preg_replace( '/[^a-z0-9\_]/i', '_', preg_replace( '/\W/', '_', $txt ) ) ) ) );
 	}
 
 	/**

@@ -72,6 +72,7 @@ Legend:
    (+) Possibility to disable pre-load of "en-GB" language files
    (+) Current page number of pagination to the browser title
    (+) Added full text indexes to fields' data and language table
+   (+) Search priority to XML results
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list
