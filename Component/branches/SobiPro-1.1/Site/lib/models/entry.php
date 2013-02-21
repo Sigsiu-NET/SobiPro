@@ -545,7 +545,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			SPRequest::set( 'entry_createdTime', 0, $request );
 			SPRequest::set( 'entry_validSince', 0, $request );
 			SPRequest::set( 'entry_validUntil', 0, $request );
-			$this->validUntil = gmdate( 'Y-m-d H:i:s', time() + ( Sobi::Cfg( 'entry.publish_limit', 0 ) * 24 * 3600 ) );
+			$this->validUntil = date( 'Y-m-d H:i:s', time() + ( Sobi::Cfg( 'entry.publish_limit', 0 ) * 24 * 3600 ) );
 		}
 		$preState = array(
 			'approved' => $this->approved,

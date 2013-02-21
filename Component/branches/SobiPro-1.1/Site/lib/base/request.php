@@ -425,16 +425,11 @@ abstract class SPRequest
 
 	/**
 	 * Returns ip value of requested variable
-	 *
-	 * @param null $time
-	 * @internal param string $name variable name
-	 * @internal param string $default default value
-	 * @internal param string $method request method
 	 * @return string
 	 */
-	static public function now( $time = null )
+	static public function now()
 	{
-		self::$val = gmdate( 'Y-m-d H:i:s' );
+		self::$val = date( 'Y-m-d H:i:s' );
 		return self::$val;
 	}
 
