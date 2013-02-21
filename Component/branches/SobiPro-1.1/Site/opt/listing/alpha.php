@@ -73,7 +73,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 					$this->determineFid( Sobi::Cfg( 'alphamenu.primary_field' ) );
 				}
 			}
-			if ( !( $this->_letter ) || !( Sobi::Section() ) ) {
+			if ( !( strlen( $this->_letter ) ) || !( Sobi::Section() ) ) {
 				Sobi::Error( $this->name(), SPLang::e( 'SITE_NOT_FOUND_MISSING_PARAMS' ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 			}
 			if ( !( preg_match( '/^[\x20-\x7f]*$/D', $this->_letter ) ) && function_exists( 'mb_strtolower' ) ) {
