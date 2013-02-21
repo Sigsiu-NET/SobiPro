@@ -43,7 +43,7 @@ class com_sobiproInstallerScript
 
 	/**
 	 * method to update the component
-	 *
+	 * @param JAdapterInstance $adapter
 	 * @return void
 	 */
 	function update( JAdapterInstance $adapter )
@@ -58,46 +58,16 @@ class com_sobiproInstallerScript
 			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
 		}
 		$db = JFactory::getDBO();
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
-  `cid` int(11) NOT NULL AUTO_INCREMENT,
-  `section` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `fileName` varchar(100) NOT NULL,
-  `task` varchar(100) NOT NULL,
-  `site` int(11) NOT NULL,
-  `request` varchar(255) NOT NULL,
-  `language` varchar(15) NOT NULL,
-  `template` varchar(150) NOT NULL,
-  `configFile` text NOT NULL,
-  `userGroups` varchar(200) NOT NULL,
-  `created` datetime NOT NULL,
-  PRIMARY KEY (`cid`),
-  KEY `sid` (`sid`),
-  KEY `section` (`section`),
-  KEY `language` (`language`),
-  KEY `task` (`task`),
-  KEY `request` (`request`),
-  KEY `site` (`site`),
-  KEY `userGroups` (`userGroups`));' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (  `cid` int(11) NOT NULL AUTO_INCREMENT,  `section` int(11) NOT NULL,  `sid` int(11) NOT NULL,  `fileName` varchar(100) NOT NULL,  `task` varchar(100) NOT NULL,  `site` int(11) NOT NULL,  `request` varchar(255) NOT NULL,  `language` varchar(15) NOT NULL,  `template` varchar(150) NOT NULL,  `configFile` text NOT NULL,  `userGroups` varchar(200) NOT NULL,  `created` datetime NOT NULL,PRIMARY KEY (`cid`),KEY `sid` (`sid`),KEY `section` (`section`),KEY `language` (`language`),KEY `task` (`task`),KEY `request` (`request`),KEY `site` (`site`),KEY `userGroups` (`userGroups`));' );
 		$db->query();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (
-        `cid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  PRIMARY KEY (`cid`,`sid`));' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (`cid` int(11) NOT NULL,`sid` int(11) NOT NULL,PRIMARY KEY (`cid`,`sid`));' );
 		$db->query();
 
 		$db->setQuery( "UPDATE #__sobipro_permissions SET value =  '*' WHERE  pid = 18;" );
 		$db->query();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (
-  `description` text,
-  `gid` int(11) NOT NULL AUTO_INCREMENT,
-  `enabled` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `groupName` varchar(150) NOT NULL,
-  PRIMARY KEY (`gid`)
-) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (`description` text,`gid` int(11) NOT NULL AUTO_INCREMENT,`enabled` int(11) NOT NULL,`pid` int(11) NOT NULL,`groupName` varchar(150) NOT NULL,PRIMARY KEY (`gid`) ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;' );
 		$db->query();
 
 		$db->setQuery( 'DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;' );
@@ -117,27 +87,41 @@ class com_sobiproInstallerScript
 			$db->query();
 		}
 
-		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
-(NULL, 'section', 'search', '*', 'front', 1),
-(NULL, 'entry', 'delete', 'own', 'front', 1),
-(NULL, 'entry', 'delete', '*', 'front', 1);" );
+		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_field_data' );
+		$cols = $db->loadAssocList();
+		$skip = false;
+		foreach ( $cols as $col ) {
+			if ( $col[ 'Key_name' ] == 'baseData' ) {
+				$skip = true;
+				continue;
+			}
+		}
+		if ( !( $skip ) ) {
+			$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD FULLTEXT  `baseData` (`baseData`);' );
+			$db->query();
+		}
+
+		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_language' );
+		$cols = $db->loadAssocList();
+		$skip = false;
+		foreach ( $cols as $col ) {
+			if ( $col[ 'Key_name' ] == 'sValue' ) {
+				$skip = true;
+				continue;
+			}
+		}
+		if ( !( $skip ) ) {
+			$db->setQuery( 'ALTER TABLE  `#__sobipro_language` ADD FULLTEXT  `sValue` (`sValue`);' );
+			$db->query();
+		}
+
+		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES (NULL, 'section', 'search', '*', 'front', 1), (NULL, 'entry', 'delete', 'own', 'front', 1),(NULL, 'entry', 'delete', '*', 'front', 1);" );
 		$db->query();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (
-  `date` datetime NOT NULL,
-  `uid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `fid` varchar(50) NOT NULL,
-  `ip` varchar(15) NOT NULL,
-  `section` int(11) NOT NULL,
-  `browserData` text NOT NULL,
-  `osData` text NOT NULL,
-  `humanity` int(3) NOT NULL,
-  PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`));' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (  `date` datetime NOT NULL,  `uid` int(11) NOT NULL,  `sid` int(11) NOT NULL,  `fid` varchar(50) NOT NULL,  `ip` varchar(15) NOT NULL,  `section` int(11) NOT NULL,  `browserData` text NOT NULL,  `osData` text NOT NULL,  `humanity` int(3) NOT NULL,  PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`) );' );
 		$db->query();
 
-        $db->setQuery( "INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES
-    ('category', 'Category', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');" );
+        $db->setQuery( "INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES ('category', 'Category', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');" );
         $db->query();
 
 

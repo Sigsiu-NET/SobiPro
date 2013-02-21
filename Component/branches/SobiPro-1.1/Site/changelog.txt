@@ -71,6 +71,7 @@ Legend:
    (+) XML cache view implemented; XML output is stored into a XML file and reused in next request if there were no changes
    (+) Possibility to disable pre-load of "en-GB" language files
    (+) Current page number of pagination to the browser title
+   (+) Added full text indexes to fields' data and language table
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list
