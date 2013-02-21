@@ -631,7 +631,10 @@ class SPJoomlaLang
 	public static function nid( $txt, $unicode = false )
 	{
 		$txt = str_replace( array( '.', '_' ), '-', $txt );
-		return Sobi::Cfg( 'sef.unicode' ) && $unicode ? self::urlSafe( $txt ) : JFilterOutput::stringURLSafe( $txt );
+		return Sobi::Cfg( 'sef.unicode' ) && $unicode ?
+				self::urlSafe( $txt ) :
+				preg_replace( '/(\s|[^A-Za-z0-9\-])+/', '-', $txt );
+		//JFilterOutput::stringURLSafe( $txt );
 	}
 
 	/**
