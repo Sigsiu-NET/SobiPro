@@ -538,7 +538,7 @@ final class SPHeader
 	 */
 	public function & addTitle( $title, $site = array() )
 	{
-		if ( count( $site ) && $site[ 0 ] ) {
+		if ( count( $site ) && $site[ 0 ] > 1 ) {
 			if ( !( is_array( $title ) ) ) {
 				$title = array( $title );
 			}

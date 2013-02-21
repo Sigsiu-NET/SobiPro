@@ -580,6 +580,7 @@ final class SPCache
 			$file = SPFactory::db()
 					->select( array( 'fileName', 'template', 'configFile', 'cid' ), 'spdb_view_cache', $query )
 					->loadRow();
+//			SPConfig::debOut(SPFactory::db()->getQuery());
 			$cacheFile = SPLoader::path( 'var.xml.' . $file[ 0 ], 'front', true, 'xml' );
 			if ( !( $cacheFile ) ) {
 				return false;
