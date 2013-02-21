@@ -41,6 +41,7 @@ final class SPCache
 	private $view = array( 'xml' => null, 'template' => null );
 	private $_disableViewCache = array( 'entry.edit', 'entry.add', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
 	private $_cachedView = false;
+	private $cacheViewQuery = array();
 
 	/**
 	 * Singleton - returns instance of the config object
@@ -74,7 +75,7 @@ final class SPCache
 	private function __construct()
 	{
 		$this->_enabled = Sobi::Cfg( 'cache.l3_enabled', true );
-		$this->requestStore = $_GET;
+		$this->requestStore = $_REQUEST;
 		if ( $this->_enabled ) {
 			$sid = Sobi::Section();
 			$this->_section = $sid ? $sid : $this->_section;
@@ -616,29 +617,31 @@ final class SPCache
 
 	protected function viewRequest()
 	{
-		$request = array();
-		if ( count( $this->requestStore ) ) {
-			$keys = array_keys( $this->requestStore );
-			foreach ( $keys as $k ) {
-				$request[ $k ] = SPRequest::string( $k );
+		if ( !( count( $this->cacheViewQuery ) ) ) {
+			$request = array();
+			if ( count( $this->requestStore ) ) {
+				$keys = array_keys( $this->requestStore );
+				foreach ( $keys as $k ) {
+					$request[ $k ] = SPRequest::string( $k );
+				}
 			}
-		}
-		$reserved = array( 'site', 'task', 'pid', 'sid', 'sptpl', 'dbg' );
-		foreach ( $reserved as $var ) {
-			if ( isset( $request[ $var ] ) ) {
-				unset( $request[ $var ] );
+			$reserved = array( 'site', 'task', 'pid', 'sid', 'sptpl', 'dbg', 'Itemid', 'option' );
+			foreach ( $reserved as $var ) {
+				if ( isset( $request[ $var ] ) ) {
+					unset( $request[ $var ] );
+				}
 			}
+			$this->cacheViewQuery = array(
+				'section' => Sobi::Section(),
+				'sid' => SPRequest::sid(),
+				'task' => SPRequest::task(),
+				'site' => SPRequest::int( 'site', 1 ),
+				'request' => str_replace( '"', null, json_encode( $request ) ),
+				'language' => Sobi::Lang(),
+				'userGroups' => str_replace( '"', null, json_encode( Sobi::My( 'groups' ) ) ),
+			);
 		}
-		$query = array(
-			'section' => Sobi::Section(),
-			'sid' => SPRequest::sid( 'get' ),
-			'task' => SPRequest::task( 'get' ),
-			'site' => SPRequest::int( 'site', 1, 'get' ),
-			'request' => str_replace( '"', null, json_encode( $request ) ),
-			'language' => Sobi::Lang(),
-			'userGroups' => str_replace( '"', null, json_encode( Sobi::My( 'groups' ) ) ),
-		);
-		return $query;
+		return $this->cacheViewQuery;
 	}
 
 	/**
@@ -649,18 +652,18 @@ final class SPCache
 	 */
 	public function addView( $xml, $template, $data = array() )
 	{
-		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) )|| $this->_cachedView || Sobi::Reg( 'break_cache_view' ) || ( Sobi::My( 'id' ) && Sobi::Cfg( 'cache.xml_no_reg' ) ) ) {
+		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || $this->_cachedView || Sobi::Reg( 'break_cache_view' ) || ( Sobi::My( 'id' ) && Sobi::Cfg( 'cache.xml_no_reg' ) ) ) {
 			return false;
 		}
 		if ( !( in_array( SPRequest::task( 'get' ), $this->_disableViewCache ) ) ) {
 			foreach ( $this->_disableObjectCache as $task ) {
-				if ( strstr( SPRequest::task( 'get' ), $task ) ) {
+				if ( strstr( SPRequest::task(), $task ) ) {
 					return false;
 				}
 			}
 			$request = array_diff( $_GET, $this->requestStore );
 			if ( count( $request ) ) {
-				foreach( $request as $k => $v ) {
+				foreach ( $request as $k => $v ) {
 					$data[ 'request' ][ $k ] = SPRequest::string( $k );
 				}
 			}
