@@ -585,48 +585,22 @@ class SPJoomlaLang
 	 */
 	public static function urlSafe( $str )
 	{
-		return self::nid( $str );
-//		$str = str_replace( '&', Sobi::Txt( 'URL_AND' ), $str );
-//		static $from = null;
-//		static $to = null;
-//		if ( !( $from ) && !( $to ) ) {
-//			$from = array();
-//			$to = array();
-//			if ( strlen( Sobi::Cfg( 'browser.url_replace_from' ) ) && strlen( Sobi::Cfg( 'browser.url_replace_with' ) ) ) {
-//				$t = explode( ',', Sobi::Cfg( 'browser.url_replace_with' ) );
-//				if ( count( $t ) ) {
-//					foreach ( $t as $s ) {
-//						$to[ ] = $s;
-//						if ( function_exists( 'mb_convert_case' ) ) {
-//							$to[ ] = mb_convert_case( $s, MB_CASE_UPPER, 'UTF-8' );
-//						}
-//					}
-//					$f = explode( ',', Sobi::Cfg( 'browser.url_replace_from' ) );
-//					if ( count( $f ) ) {
-//						foreach ( $f as $s ) {
-//							$ex = preg_split( '//u', $s, -1, PREG_SPLIT_NO_EMPTY );
-//							if ( count( $ex ) ) {
-//								$si = implode( '|', $ex );
-//							}
-//							$from[ ] = "/{$si}/u";
-//							if ( function_exists( 'mb_convert_case' ) ) {
-//								$s = mb_convert_case( $s, MB_CASE_UPPER, 'UTF-8' );
-//								$ex = preg_split( '//u', $s, -1, PREG_SPLIT_NO_EMPTY );
-//								if ( count( $ex ) ) {
-//									$si = implode( '|', $ex );
-//								}
-//								$from[ ] = "/{$si}/u";
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
-//		if ( count( $from ) && count( $to ) ) {
-//			$str = preg_replace( $from, $to, $str );
-//		}
-//		$str = preg_replace( array( '/\s+/', Sobi::Cfg( 'browser.url_filter', '/[^A-Za-z0-9\p{L}\-\_]/iu' ) ), array( '-', null ), $str );
-//		return str_replace( '--', '-', str_replace( '--', '-', $str ) );
+		// copy of Joomla! stringURLUnicodeSlug
+		// we don't want to have it lowercased
+		// @copyright   Copyright (C) 2005 - 2012 Open Source Matters, Inc. All rights reserved.
+		// Replace double byte whitespaces by single byte (East Asian languages)
+		$str = preg_replace( '/\xE3\x80\x80/', ' ', $str );
+		// Remove any '-' from the string as they will be used as concatenator.
+		// Would be great to let the spaces in but only Firefox is friendly with this
+		$str = str_replace( '-', ' ', $str );
+		// Replace forbidden characters by whitespaces
+		$str = preg_replace( '/[:\#\*"@+=;!><&\.%()\]\/\'\\\\|\[]/', "\x20", $str );
+		// Delete all '?'
+		$str = str_replace( '?', '', $str );
+		// Remove any duplicate whitespace and replace whitespaces by hyphens
+		$str = preg_replace( '/\x20+/', '-', $str );
+		$str = preg_replace( array( '/\s+/', Sobi::Cfg( 'browser.url_filter', '/[^A-Za-z0-9\p{L}\-\_]/iu' ) ), array( '-', null ), $str );
+		return $str;
 	}
 
 	/**
@@ -639,7 +613,7 @@ class SPJoomlaLang
 		$pieces = explode( ' ', $txt );
 		$txt = null;
 		for ( $i = 0; $i < count( $pieces ); $i++ ) {
-			$pieces[ $i ] = SPLang::nid( $pieces[ $i ], false );
+			$pieces[ $i ] = SPLang::nid( $pieces[ $i ] );
 			// preg_replace( '/[^a-z0-9_]/', null, strtolower( $pieces[ $i ] ) );
 			if ( $i > 0 ) {
 				$pieces[ $i ] = ucfirst( $pieces[ $i ] );
@@ -654,10 +628,10 @@ class SPJoomlaLang
 	 * @param bool $unicode
 	 * @return string
 	 */
-	public static function nid( $txt, $unicode = true )
+	public static function nid( $txt, $unicode = false )
 	{
-		// need the replacement for Joomla! 1.5 :(
-		return Sobi::Cfg( 'sef.unicode' ) && $unicode ? JFilterOutput::stringURLUnicodeSlug( str_replace( array( '.', '_' ), '-', $txt ) ) : JFilterOutput::stringURLSafe( str_replace( '.', '-', $txt ) );
+		$txt = str_replace( array( '.', '_' ), '-', $txt );
+		return Sobi::Cfg( 'sef.unicode' ) && $unicode ? self::urlSafe( $txt ) : JFilterOutput::stringURLSafe( $txt );
 	}
 
 	/**
