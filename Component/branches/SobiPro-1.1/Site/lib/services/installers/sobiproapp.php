@@ -72,7 +72,7 @@ class SPAppInstaller extends SPInstaller
 		}
 
 		$language = $this->xGetChilds( 'language/file' );
-		$folder = $this->xGetChilds( 'language/@folder' )->item( 0 )->nodeValue;
+		$folder = @$this->xGetChilds( 'language/@folder' )->item( 0 )->nodeValue;
 		if ( $language && ( $language instanceof DOMNodeList ) && $language->length ) {
 			$langFiles = array();
 			foreach ( $language as $file ) {

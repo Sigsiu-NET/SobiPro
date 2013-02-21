@@ -306,10 +306,10 @@ final class SPHeader
 						$this->addJsFile( 'jqnc' );
 					}
 				}
-			}
-			else {
-				$file = SPLoader::JsFile( $script, $adm, false, true, $ext );
-				Sobi::Error( 'add_js_file', SPLang::e( 'FILE_DOES_NOT_EXIST', $file ), SPC::NOTICE, 0, __LINE__, __CLASS__ );
+				else {
+					$file = SPLoader::JsFile( $script, $adm, false, true, $ext );
+					Sobi::Error( 'add_js_file', SPLang::e( 'FILE_DOES_NOT_EXIST', $file ), SPC::NOTICE, 0, __LINE__, __CLASS__ );
+				}
 			}
 		}
 		return $this;
@@ -477,10 +477,10 @@ final class SPHeader
 						}
 					}
 				}
-			}
-			else {
-				$file = SPLoader::CssFile( $file, $adm, false, false, $ext );
-				Sobi::Error( 'add_css_file', SPLang::e( 'FILE_DOES_NOT_EXIST', $file ), SPC::NOTICE, 0, __LINE__, __CLASS__ );
+				else {
+					$file = SPLoader::CssFile( $file, $adm, false, false, $ext );
+					Sobi::Error( 'add_css_file', SPLang::e( 'FILE_DOES_NOT_EXIST', $file ), SPC::NOTICE, 0, __LINE__, __CLASS__ );
+				}
 			}
 		}
 		return $this;

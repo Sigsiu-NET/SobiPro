@@ -34,7 +34,8 @@ class SPCachedView extends SPFrontView implements SPView
 		$this->parseXml();
 		$templatePackage = SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' );
 		$template = Sobi::FixPath( $templatePackage . '/' . $template );
-		$this->_templatePath = $template;
+		SPFactory::registry()->set( 'current_template', $templatePackage );
+		$this->_templatePath = $templatePackage;
 		$this->_template = str_replace( '.xsl', null, $template );
 		$ini = array();
 		if ( count( $config ) ) {
