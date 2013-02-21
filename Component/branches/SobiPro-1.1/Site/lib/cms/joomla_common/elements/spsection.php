@@ -208,7 +208,12 @@ class JElementSPSection extends JElement
 				->addJsFile( 'bootstrap.typeahead' )
 				->addJsCode( "var SPJmenuStrings = {$strings}" );
 		if ( $this->task != 'list.date' ) {
-			$head->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( "#spCalendar" ).parent().parent().css( "display", "none" ); } );' );
+			if( SOBI_CMS == 'joomla3' ) {
+				$head->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( "#spCalendar" ).parent().parent().css( "display", "none" ); } );' );
+			}
+			else {
+				$head->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( "#spCalendar" ).parent().css( "display", "none" ); } );' );
+			}
 		}
 		else {
 			$head->addCSSCode( '.SobiProCalendar .chzn-container { width: 100px!important; } ' );
@@ -257,11 +262,20 @@ class JElementSPSection extends JElement
 
 	public function fetchTooltip( $label, $description, &$node, $control_name, $name )
 	{
-		if ( $label == 'cid' ) {
-			if ( $this->task ) {
-				return null;
-			}
-			$label = JText::_( 'SOBI_SELECT_CATEGORY' );
+		switch( $label ) {
+			case 'cid':
+				if ( $this->task ) {
+					return '&nbsp;';
+				}
+				$label = JText::_( 'SOBI_SELECT_CATEGORY' );
+				break;
+			case 'SOBI_SELECTED_DATE':
+				if ( $this->task != 'list.date' ) {
+					return null;
+				}
+				$label = JText::_( 'SOBI_SELECT_ENTRY' );
+				break;
+
 		}
 		return parent::fetchTooltip( $label, $node->attributes( 'msg' ), $node, $control_name, $name );
 	}
@@ -396,7 +410,7 @@ class JElementSPSection extends JElement
 				return $this->getEntry();
 				break;
 			case 'did':
-//			case 'date':
+			case 'date':
 				return $this->getCalendar();
 				break;
 			case 'tpl':

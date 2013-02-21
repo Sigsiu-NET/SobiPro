@@ -48,7 +48,7 @@
             <param name="SOBI_SELECT_SECTION" type="spsection" msg="SOBI_SELECT_SECTION_EXPL"/>
 	        <param name="date" type="spsection" label="SOBI_SELECTED_DATE"/>
             <param name="cid" type="spsection" msg="SOBI_SELECT_CATEGORY_EXPL"/>
-            <param name="eid" type="spsection" msg="SOBI_SELECT_ENTRY"/>
+            <param name="eid" type="spsection" label="SOBI_SELECT_ENTRY"/>
             <param name="sid" type="spsection"/>
 	        <param name="sptpl" type="spsection" label="SOBI_TPL_OVERRIDE" description="SOBI_TPL_OVERRIDE_EXPL"/>
         </url>
