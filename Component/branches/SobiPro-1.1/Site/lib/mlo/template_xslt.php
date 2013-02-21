@@ -339,7 +339,7 @@ class SPTemplateXSLT implements SPTemplate
 			//			SPConfig::debOut( $tidy->errorBuffer );
 			return $node;
 		}
-		return "Error - connot repair";
+		return "Error - cannot repair";
 	}
 
 	private function elName( $str )

@@ -469,6 +469,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 			$view->assign( $eInLine, '$eInLine' );
 			$entries = $this->getResults( $ssid, $this->template );
 			$view->assign( count( $this->_results ), '$eCount' );
+			$view->assign( $this->_resultsByPriority, 'priorities' );
 			$view->assign( $entries, 'entries' );
 			/* create page navigation */
 			$pnc = SPLoader::loadClass( 'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ) );
@@ -524,6 +525,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 				$store = SPConfig::unserialize( $r[ 0 ][ 'entriesResults' ] );
 				if ( $store[ 'results' ] ) {
 					$this->_results = explode( ',', $store[ 'results' ] );
+					$this->_resultsByPriority = $store[ 'resultsByPriority' ];
 				}
 				$this->_resultsCount = count( $this->_results );
 			}
