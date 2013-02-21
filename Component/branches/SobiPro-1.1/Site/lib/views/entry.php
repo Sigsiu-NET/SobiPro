@@ -192,7 +192,6 @@ class SPEntryView extends SPFrontView implements SPView
 		$en[ 'updated_time' ] = $entry->get( 'updatedTime' );
 		$en[ 'valid_since' ] = $entry->get( 'validSince' );
 		$en[ 'valid_until' ] = $entry->get( 'validUntil' );
-		$en[ 'valid_until' ] = $entry->get( 'validUntil' );
 		$en[ 'author' ] = $entry->get( 'owner' );
 		$en[ 'counter' ] = $entry->get( 'counter' );
 		$en[ 'approved' ] = $entry->get( 'approved' );
