@@ -284,6 +284,8 @@ abstract class SPLoader
 	 * @version 1.0
 	 * @param string $name
 	 * @param bool $adm
+	 * @param bool $redirect
+	 * @return string
 	 */
 	public static function loadView( $name, $adm = false, $redirect = true )
 	{
@@ -295,8 +297,10 @@ abstract class SPLoader
 	 * @version 1.0
 	 * @param string $path
 	 * @param string $root
-	 * @param bool $existCheck
+	 * @param bool $checkExist
 	 * @param string $ext
+	 * @param bool $count
+	 * @internal param bool $existCheck
 	 * @return string
 	 */
 	public static function path( $path, $root = 'front', $checkExist = true, $ext = 'php', $count = true )
@@ -308,6 +312,8 @@ abstract class SPLoader
 	 * @author Radek Suski
 	 * @version 1.0
 	 * @param string $domain
+	 * @param bool $checkExist
+	 * @param bool $count
 	 * @return string
 	 */
 	public static function langFile( $domain, $checkExist = true, $count = true )
@@ -320,8 +326,11 @@ abstract class SPLoader
 	 * @version 1.0
 	 * @param string $path
 	 * @param bool $adm
-	 * @param bool $existCheck
+	 * @param bool $checkExist
+	 * @param bool $toLive
 	 * @param string $ext
+	 * @param bool $count
+	 * @internal param bool $existCheck
 	 * @return string
 	 */
 	public static function JsFile( $path, $adm = false, $checkExist = false, $toLive = true, $ext = 'js', $count = false )
@@ -340,7 +349,7 @@ abstract class SPLoader
 			$file = self::translatePath( $root . $path, 'js', $checkExist, $ext, $count );
 		}
 		if ( $toLive ) {
-			$file = str_replace( SOBI_ROOT . DS, SPFactory::config()->get( 'live_site' ), $file );
+			$file = str_replace( SOBI_ROOT , SPFactory::config()->get( 'live_site' ), $file );
 			$file = str_replace( '\\', '/', $file );
 		}
 		return Sobi::FixPath( $file );
@@ -350,9 +359,13 @@ abstract class SPLoader
 	 * @author Radek Suski
 	 * @version 1.0
 	 * @param string $path
-	 * @param string $root
-	 * @param bool $existCheck
+	 * @param bool $adm
+	 * @param bool $checkExist
+	 * @param bool $toLive
 	 * @param string $ext
+	 * @param bool $count
+	 * @internal param string $root
+	 * @internal param bool $existCheck
 	 * @return string
 	 */
 	public static function CssFile( $path, $adm = false, $checkExist = true, $toLive = true, $ext = 'css', $count = false )
@@ -371,7 +384,7 @@ abstract class SPLoader
 			$file = self::translatePath( $root . $path, 'css', $checkExist, $ext, $count );
 		}
 		if ( $toLive ) {
-			$file = str_replace( SOBI_ROOT . DS, SPFactory::config()->get( 'live_site' ), $file );
+			$file = str_replace( SOBI_ROOT , SPFactory::config()->get( 'live_site' ), $file );
 			$file = str_replace( '\\', '/', $file );
 		}
 		return Sobi::FixPath( $file );
@@ -384,6 +397,7 @@ abstract class SPLoader
 	 * @param string $start
 	 * @param bool $existCheck
 	 * @param string $ext
+	 * @param bool $count
 	 * @return string
 	 */
 	public static function translatePath( $path, $start = 'front', $existCheck = true, $ext = 'php', $count = false )
@@ -576,5 +590,3 @@ abstract class SPLoader
 		return self::translatePath( $path, $root, false, null, false );
 	}
 }
-
-?>
