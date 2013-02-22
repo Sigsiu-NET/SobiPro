@@ -97,6 +97,11 @@ class com_sobiproInstallerScript
 			}
 		}
 		if ( !( $skip ) ) {
+			try {
+				$db->setQuery( 'ALTER TABLE #__sobipro_field_data ENGINE = MYISAM;;' );
+				$db->query();
+			}
+			catch( Exception $x ) {}
 			$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD FULLTEXT  `baseData` (`baseData`);' );
 			$db->query();
 		}
@@ -111,6 +116,11 @@ class com_sobiproInstallerScript
 			}
 		}
 		if ( !( $skip ) ) {
+			try {
+				$db->setQuery( 'ALTER TABLE #__sobipro_language ENGINE = MYISAM;;' );
+				$db->query();
+			}
+			catch( Exception $x ) {}
 			$db->setQuery( 'ALTER TABLE  `#__sobipro_language` ADD FULLTEXT  `sValue` (`sValue`);' );
 			$db->query();
 		}

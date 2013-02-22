@@ -475,8 +475,8 @@ class SPJoomlaLang
 	 * Translate given string
 	 * This function is used mostly from the admin templates and the config ini-files interpreter
 	 *
-	 * @param string $message
-	 * @param array $params
+	 * @internal param string $message
+	 * @internal param array $params
 	 * @return string
 	 */
 	public static function txt()
@@ -488,7 +488,7 @@ class SPJoomlaLang
 	 * Register new language domain.
 	 *
 	 * @param string $domain
-	 * @param string $path
+	 * @internal param string $path
 	 * @return string
 	 */
 	protected function _registerDomain( $domain )
