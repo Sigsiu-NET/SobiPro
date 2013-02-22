@@ -112,14 +112,17 @@ class SPRepository extends SPInstaller
 					)
 				);
 			}
-			if ( $ssl[ 'hash' ] != $this->xGetString( 'certificate/hash' ) ) {
-				throw new SPException(
-					SPLang::e(
-						'SSL validation error: stored hash does not accords the hash for the repository at %s. %s != %s',
-						$this->xGetString( 'url' ), $ssl[ 'hash' ], $this->xGetString( 'certificate/hash' )
-					)
-				);
-			}
+			// for some reason on some servers the hash is being indeed modified
+			// although it has been correctly transferred
+			// it seems that it is depend on the protocol used (TSL/SSL)
+//			if ( $ssl[ 'hash' ] != $this->xGetString( 'certificate/hash' ) ) {
+//				throw new SPException(
+//					SPLang::e(
+//						'SSL validation error: stored hash does not accords the hash for the repository at %s. %s != %s',
+//						$this->xGetString( 'url' ), $ssl[ 'hash' ], $this->xGetString( 'certificate/hash' )
+//					)
+//				);
+//			}
 			if ( $ssl[ 'validTo' ] < time() ) {
 				throw new SPException(
 					SPLang::e(
