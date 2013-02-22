@@ -67,13 +67,14 @@
                             <div class="controls">
                                 <div class="btn-group" data-toggle="buttons-radio">
                                     <xsl:for-each select="/search/fields/phrase/data/*">
-                                        <button type="button" class="btn" name="{./input/@name}" value="{./input/@value}" checked="checked">
+                                        <button type="button" class="btn spsearchphrase" name="{./input/@name}" value="{./input/@value}" checked="checked">
                                             <xsl:if test="./input/@checked = 'checked'">
                                                 <xsl:attribute name="class">btn active</xsl:attribute>
                                             </xsl:if>
                                             <xsl:value-of select="./label" />
                                         </button>
                                     </xsl:for-each>
+	                                <input type="hidden" name="spsearchphrase" id="spsearchphrase" value=""/>
                                 </div>
                             </div>
                         </div>
