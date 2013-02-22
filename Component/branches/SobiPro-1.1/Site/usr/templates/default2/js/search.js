@@ -22,23 +22,34 @@
  * $HeadURL$
  */
 
-try{ jQuery.noConflict(); } catch( e ) {}
-jQuery( document ).ready( function() {
-	spSearchDefStr = jQuery( '#SPSearchBox' ).val();
-	jQuery( '#SPSearchBox' ).bind( 'click', function() {
-		if( jQuery( '#SPSearchBox' ).val() == spSearchDefStr ) {
-			jQuery( '#SPSearchBox' ).val( '' );
-		};
+SobiPro.jQuery( document ).ready( function ()
+{
+	spSearchDefStr = SobiPro.jQuery( '#SPSearchBox' ).val();
+	SobiPro.jQuery( '#SPSearchBox' ).bind( 'click', function ()
+	{
+		if ( SobiPro.jQuery( '#SPSearchBox' ).val() == spSearchDefStr ) {
+			SobiPro.jQuery( '#SPSearchBox' ).val( '' );
+		}
+		;
 	} );
-	jQuery( '#SPSearchBox' ).bind( 'blur', function() {
-		if( jQuery( '#SPSearchBox' ).val() == '' ) {
-			jQuery( '#SPSearchBox' ).val( spSearchDefStr );
-		};
+	SobiPro.jQuery( '#SPSearchBox' ).bind( 'blur', function ()
+	{
+		if ( SobiPro.jQuery( '#SPSearchBox' ).val() == '' ) {
+			SobiPro.jQuery( '#SPSearchBox' ).val( spSearchDefStr );
+		}
+		;
+	} );
+	SobiPro.jQuery( '.spsearchphrase' ).click( function ()
+	{
+		SobiPro.jQuery( '#spsearchphrase' ).val( SobiPro.jQuery( this ).val() )
 	} );
 	try {
-		jQuery( '#SPExtSearch' ).slideToggle( 'fast' );
-		jQuery( '#SPExOptBt' ).bind( 'click', function() {
-			jQuery( '#SPExtSearch' ).slideToggle( 'fast' );
+		SobiPro.jQuery( '#SPExtSearch' ).slideToggle( 'fast' );
+		SobiPro.jQuery( '#SPExOptBt' ).bind( 'click', function ()
+		{
+			SobiPro.jQuery( '#SPExtSearch' ).slideToggle( 'fast' );
 		} );
-	} catch( e ) {}
+	}
+	catch ( e ) {
+	}
 } );
