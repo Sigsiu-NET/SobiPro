@@ -226,8 +226,9 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
   PRIMARY KEY (`fid`),
   KEY `enabled` (`enabled`),
   KEY `position` (`position`),
-  KEY `section` (`section`)
-)  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
+  KEY `section` (`section`),
+  FULLTEXT KEY `baseDate` (`baseData`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_field` (`fid`, `nid`, `adminField`, `admList`, `dataType`, `enabled`, `fee`, `fieldType`, `filter`, `isFree`, `position`, `priority`, `required`, `section`, `multiLang`, `uniqueData`, `validate`, `addToMetaDesc`, `addToMetaKeys`, `editLimit`, `editable`, `showIn`, `allowedAttributes`, `allowedTags`, `editor`, `inSearch`, `withLabel`, `cssClass`, `parse`, `template`, `notice`, `params`, `defaultValue`, `version`) VALUES
 (1, 'field_name', 0, 0, 0, 1, 0, 'inbox', '', 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, -1, 1, 'both', '', '', '', 1, 0, '', 0, '', '', 'YTozOntzOjk6Im1heExlbmd0aCI7czozOiIxNTAiO3M6NToid2lkdGgiO3M6MzoiMzUwIjtzOjEyOiJzZWFyY2hNZXRob2QiO3M6NzoiZ2VuZXJhbCI7fQ==', '', 1),
@@ -683,8 +684,9 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
   PRIMARY KEY (`sKey`,`language`,`id`,`fid`),
   KEY `sKey` (`sKey`),
   KEY `section` (`section`),
-  KEY `language` (`language`)
-) DEFAULT CHARSET=utf8;
+  KEY `language` (`language`),
+  FULLTEXT KEY `sValue` (`sValue`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES
 ('description', '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque laoreet rhoncus tempor. Suspendisse dapibus vulputate dolor ut tincidunt. Suspendisse tristique laoreet dui, ut tempor orci dictum ut. Quisque aliquam urna ac justo tristique interdum. Aliquam in dui eget lectus elementum lacinia eget eu sem. Nam eu felis tellus, ac cursus velit. Etiam magna libero, condimentum at facilisis a, fermentum eget leo. Nulla gravida imperdiet neque, accumsan auctor magna viverra a. Aliquam eget augue a ante malesuada convallis a nec mi. Phasellus mollis, urna et interdum congue, lacus ante lacinia ipsum, vitae fringilla quam mi id ipsum.</p>', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
