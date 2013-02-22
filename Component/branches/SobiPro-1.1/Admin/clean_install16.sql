@@ -154,8 +154,9 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
   `editLimit` INT( 11 ),
   PRIMARY KEY (`fid`,`section`,`lang`,`sid`,`copy`),
   KEY `enabled` (`enabled`),
-  KEY `copy` (`copy`)
-) DEFAULT CHARSET=utf8;
+  KEY `copy` (`copy`),
+  FULLTEXT KEY `baseDate` (`baseData`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_option` (
   `fid` int(11) NOT NULL,
@@ -226,8 +227,9 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
   PRIMARY KEY (`sKey`,`language`,`id`,`fid`),
   KEY `sKey` (`sKey`),
   KEY `section` (`section`),
-  KEY `language` (`language`)
-) DEFAULT CHARSET=utf8;
+  KEY `language` (`language`),
+  FULLTEXT KEY `sValue` (`sValue`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES
 ('bankdata', '<p>Payment Subject: "Entry in the {section.name} at the {cfg:site_name}. Entry id {entry.id}"</p>\r\n<ul>\r\n<li>Account Owner: Jon Doe </li>\r\n<li>Account No.: 8274230479 </li>\r\n<li>Bank No.: 8038012380 </li>\r\n<li>IBAN: 234242343018 </li>\r\n<li>BIC: 07979079779ABCDEFGH</li>\r\n</ul>', 1, 'en-GB', 'application', 0, 1, '', '', ''),

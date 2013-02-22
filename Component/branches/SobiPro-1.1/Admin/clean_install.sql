@@ -19,13 +19,13 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
   KEY `request` (`request`),
   KEY `site` (`site`),
   KEY `userGroups` (`userGroups`)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (
   `cid` int(11) NOT NULL,
   `sid` int(11) NOT NULL,
   PRIMARY KEY (`cid`,`sid`)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_category` (
   `id` int(11) NOT NULL,
@@ -153,7 +153,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
   `editLimit` INT( 11 ),
   PRIMARY KEY (`fid`,`section`,`lang`,`sid`,`copy`),
   KEY `enabled` (`enabled`),
-  KEY `copy` (`copy`)
+  KEY `copy` (`copy`),
+  FULLTEXT KEY `baseDate` (`baseData`)
 ) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_option` (
@@ -226,8 +227,9 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
   PRIMARY KEY (`sKey`,`language`,`id`,`fid`),
   KEY `sKey` (`sKey`),
   KEY `section` (`section`),
-  KEY `language` (`language`)
-) DEFAULT CHARSET=utf8;
+  KEY `language` (`language`),
+  FULLTEXT KEY `sValue` (`sValue`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES
