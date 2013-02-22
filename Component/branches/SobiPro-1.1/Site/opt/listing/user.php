@@ -61,6 +61,7 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 		$eLimit = $this->tKey( $this->template, 'entries_limit', Sobi::Cfg( 'list.entries_limit', 2 ) );
 		$eInLine = $this->tKey( $this->template, 'entries_in_line', Sobi::Cfg( 'list.entries_in_line', 2 ) );
 
+		$url = array( 'sid' => SPRequest::sid(), 'task' => 'list.user' );
 		if ( SPRequest::int( 'uid' ) ) {
 			$url[ 'uid' ] = SPRequest::int( 'uid' );
 			$this->uid = (int)SPRequest::int( 'uid' );
@@ -83,7 +84,6 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 //		$eCount = count( $this->_getEntries( 0, 0, true ) );
 //		$entries = $this->_getEntries( $eLimit, $site );
 
-		$url = array( 'sid' => SPRequest::sid(), 'task' => 'list.user' );
 		$pn = SPFactory::Instance( 'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ), $eLimit, $eCount, $site, $url );
 		if ( SPRequest::int( 'site', 0 ) ) {
 			$url[ 'site' ] = SPRequest::int( 'site', 0 );
