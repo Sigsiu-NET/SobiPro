@@ -162,7 +162,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 	{
 		$this->_request = SPRequest::search( 'field_' );
 		$this->_request[ 'search_for' ] = str_replace( '*', '%', SPRequest::string( 'sp_search_for', null ) );
-		$this->_request[ 'phrase' ] = SPRequest::string( 'spsearchphrase', Sobi::Cfg( 'search.searchphrase', 'any' ) );
+		$this->_request[ 'phrase' ] = SPRequest::string( 'spsearchphrase', Sobi::Cfg( 'search.searchphrase', 'exact' ) );
 		$ssid = SPRequest::cmd( 'ssid', SPRequest::cmd( 'ssid', null, 'cookie' ) );
 		$this->_fields = $this->loadFields();
 		$searchForString = false;
