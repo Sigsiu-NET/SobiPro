@@ -570,9 +570,9 @@ final class SPCache
 		if ( !( Sobi::Cfg( 'cache.xml_enabled' ) ) || Sobi::Reg( 'break_cache_view' ) || ( Sobi::My( 'id' ) && Sobi::Cfg( 'cache.xml_no_reg' ) ) ) {
 			return false;
 		}
-		if ( !( in_array( SPRequest::task( 'get' ), $this->_disableViewCache ) ) ) {
+		if ( !( in_array( SPRequest::task(), $this->_disableViewCache ) ) ) {
 			foreach ( $this->_disableObjectCache as $task ) {
-				if ( strstr( SPRequest::task( 'get' ), $task ) ) {
+				if ( strstr( SPRequest::task(), $task ) ) {
 					return false;
 				}
 			}
@@ -623,7 +623,9 @@ final class SPCache
 			if ( count( $this->requestStore ) ) {
 				$keys = array_keys( $this->requestStore );
 				foreach ( $keys as $k ) {
-					$request[ $k ] = SPRequest::string( $k );
+					if ( !( is_array( $_REQUEST[ $k ] ) ) ) {
+						$request[ $k ] = SPRequest::string( $k );
+					}
 				}
 			}
 			$reserved = array( 'site', 'task', 'pid', 'sid', 'sptpl', 'dbg', 'Itemid', 'option' );

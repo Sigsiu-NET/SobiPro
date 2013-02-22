@@ -291,6 +291,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 * @param string $data
 	 * @param int $section
 	 * @param bool $startWith
+	 * @param bool $ids
 	 * @return array
 	 */
 	public function searchSuggest( $data, $section, $startWith = true, $ids = false )

@@ -558,15 +558,17 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	/**
 	 * @param string $data
 	 * @param int $section
+	 * @param bool $regex
 	 * @return array
 	 */
-	public function searchString( $data, $section )
+	public function searchString( $data, $section, $regex = false )
 	{
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		$sids = array();
 		try {
-			$db->select( 'sKey', 'spdb_language', array( 'oType' => 'field_option', 'fid' => $this->fid, 'sValue' => "%{$data}%" ) );
+			$query = array( 'oType' => 'field_option', 'fid' => $this->fid, 'sValue' => $regex ? $data : "%{$data}%" );
+			$db->select( 'sKey', 'spdb_language', $query );
 			$fids = $db->loadResultArray();
 			if ( count( $fids ) ) {
 				foreach ( $fids as $opt ) {
