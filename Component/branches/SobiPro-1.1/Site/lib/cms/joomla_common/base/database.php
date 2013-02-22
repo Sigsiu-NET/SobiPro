@@ -967,7 +967,7 @@ class SPJoomlaDb
 	 */
 	public function now()
 	{
-		return gmdate( SPFactory::config()->key( 'date.db_format', 'Y-m-d H:i:s' ) );
+		return date( SPFactory::config()->key( 'date.db_format', 'Y-m-d H:i:s' ) );
 	}
 
 	/**
@@ -1026,7 +1026,7 @@ class SPJoomlaDb
 		$now = $this->now();
 		$null = $this->getNullDate();
 		$pub = $pub ? " AND {$pub} = 1 " : null;
-		$stamp = gmdate( SPFactory::config()->key( 'date.db_format', 'Y-m-d H:i:s' ), 0 );
+		$stamp = date( SPFactory::config()->key( 'date.db_format', 'Y-m-d H:i:s' ), 0 );
 		if ( $since ) {
 			//			$since = "AND ( {$since} < '{$now}' OR {$since} IN( '{$null}', '{$stamp}' ) ) ";
 			$since = "AND ( {$since} < NOW() OR {$since} IN( '{$null}', '{$stamp}' ) ) ";

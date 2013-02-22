@@ -113,9 +113,9 @@ Legend:
    (#) Column count doesn't match value while installing a new payment App
    (#) Workaround for non-latin characters in alpha index for problems in strtoupper
    (#) Missing the section/category title in the page navigation URL
-   (#) Wrong date used while submitting new entry for the createdTime (GMT instead of server time)
-   (#) Wrong date used while saving an entry for the updatedTime (GMT instead of server time)
-   (#) Wrong date used while saving an entry for the validUntil (GMT instead of server time)
+   (#) Wrong date used for createdTime while submitting new entry (GMT instead of server time)
+   (#) Wrong date used for updatedTime while saving an entry (GMT instead of server time)
+   (#) Wrong date used for validUntil while saving an entry from frontend (GMT instead of server time)
 
 
 -------------------

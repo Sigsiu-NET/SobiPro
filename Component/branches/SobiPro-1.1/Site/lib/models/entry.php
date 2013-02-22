@@ -93,7 +93,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	{
 		parent::__construct();
 		if ( Sobi::Cfg( 'entry.publish_limit', 0 ) ) {
-			$this->validUntil = gmdate( 'Y-m-d H:i:s', time() + ( Sobi::Cfg( 'entry.publish_limit', 0 ) * 24 * 3600 ) );
+			$this->validUntil = date( 'Y-m-d H:i:s', time() + ( Sobi::Cfg( 'entry.publish_limit', 0 ) * 24 * 3600 ) );
 		}
 	}
 
