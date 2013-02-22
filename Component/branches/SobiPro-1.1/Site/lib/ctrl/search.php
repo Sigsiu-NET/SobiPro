@@ -608,5 +608,3 @@ final class SPSearchCtrl extends SPSectionCtrl
 		return $fields;
 	}
 }
-
-?>
