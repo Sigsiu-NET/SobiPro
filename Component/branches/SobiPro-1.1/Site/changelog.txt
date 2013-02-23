@@ -116,6 +116,7 @@ Legend:
    (#) Wrong date used for createdTime while submitting new entry (GMT instead of server time)
    (#) Wrong date used for updatedTime while saving an entry (GMT instead of server time)
    (#) Wrong date used for validUntil while saving an entry from frontend (GMT instead of server time)
+   (#) Session id passed to URL in case the cookie cannot be set for some reason (Time zone problems in Chrome) while adding/editing an entry
 
 
 -------------------
