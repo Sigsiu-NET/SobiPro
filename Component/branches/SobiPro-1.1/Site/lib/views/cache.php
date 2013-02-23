@@ -127,7 +127,6 @@ class SPCachedView extends SPFrontView implements SPView
 			}
 		}
 		if ( is_array( $info ) ) {
-			SPConfig::debOut( $info );
 			$this->importData( $this->_xml->documentElement, $info, 'messages' );
 		}
 		$this->_xml->preserveWhiteSpace = false;
@@ -143,7 +142,6 @@ class SPCachedView extends SPFrontView implements SPView
 					$this->importData( $root, $value, $index );
 				}
 				else {
-					SPConfig::debOut("Creating: $index ".__LINE__ );
 					$child = $this->_xml->createElement( $index, $value );
 					$root->appendChild( $child );
 				}
@@ -162,7 +160,7 @@ class SPCachedView extends SPFrontView implements SPView
 				}
 			}
 		}
-		else {
+		elseif ( isset( $data[ '_data' ] ) ) {
 			$root->nodeValue = $data[ '_data' ];
 		}
 		if ( isset( $data[ '_attributes' ] ) && $data[ '_attributes' ] ) {

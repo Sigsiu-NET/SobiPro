@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -50,6 +46,25 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 			$data = parse_ini_string( $attr[ 'options' ], true );
 		}
 		$options = $this->parseOptsFile( $data );
+
+		if ( !( count( $options ) ) && count( $attr[ 'options' ] ) ) {
+			$p = 0;
+			$hold = array();
+			foreach ( $attr[ 'options' ] as $o ) {
+				if ( is_numeric( $o[ 'id' ] ) ) {
+					$o[ 'id' ] = $this->nid . '_' . $o[ 'id' ];
+				}
+				if ( isset( $o[ 'id' ] ) ) {
+					$i = 0;
+					$oid = $o[ 'id' ];
+					while ( isset( $hold[ $oid ] ) ) {
+						$oid = $o[ 'id' ] . '_' . ++$i;
+					}
+					$options[ ] = array( 'id' => $oid, 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p );
+					$hold[ $oid ] = $oid;
+				}
+			}
+		}
 
 		if ( count( $options ) ) {
 			unset( $attr[ 'options' ] );

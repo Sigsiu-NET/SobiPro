@@ -43,6 +43,24 @@ class SPField_SelectAdm extends SPField_Select
 			$data = parse_ini_string( $attr[ 'options' ], true );
 		}
 		$options = $this->parseOptsFile( $data );
+		if ( !( count( $options ) ) && count( $attr[ 'options' ] ) ) {
+			$p = 0;
+			$hold = array();
+			foreach ( $attr[ 'options' ] as $o ) {
+				if ( is_numeric( $o[ 'id' ] ) ) {
+					$o[ 'id' ] = $this->nid . '_' . $o[ 'id' ];
+				}
+				if ( isset( $o[ 'id' ] ) ) {
+					$i = 0;
+					$oid = $o[ 'id' ];
+					while ( isset( $hold[ $oid ] ) ) {
+						$oid = $o[ 'id' ] . '_' . ++$i;
+					}
+					$options[ ] = array( 'id' => $oid, 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p );
+					$hold[ $oid ] = $oid;
+				}
+			}
+		}
 		if ( count( $options ) ) {
 			unset( $attr[ 'options' ] );
 			$optionsArr = array();
