@@ -117,6 +117,8 @@ Legend:
    (#) Wrong date used for updatedTime while saving an entry (GMT instead of server time)
    (#) Wrong date used for validUntil while saving an entry from frontend (GMT instead of server time)
    (#) Session id passed to URL in case the cookie cannot be set for some reason (Time zone problems in Chrome) while adding/editing an entry
+   (#) Select list returns no results when searching for "exact phase" (Issue #801)
+   (#) URL field - data invisible when SobiPro Accelerator is enabled and data has been cached by a bot
 
 
 -------------------

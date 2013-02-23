@@ -689,6 +689,9 @@ final class SPCache
 			$template = str_replace( SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' ), null, $template );
 			$root = $xml->documentElement;
 			$root->removeChild( $root->getElementsByTagName( 'visitor' )->item( 0 ) );
+			if ( $root->getElementsByTagName( 'messages' )->length ) {
+				$root->removeChild( $root->getElementsByTagName( 'messages' )->item( 0 ) );
+			}
 			/** @var $header DOMDocument */
 			$header = SPFactory::Instance( 'types.array' )->toXML( $head, 'header', true );
 			$root->appendChild( $xml->importNode( $header->documentElement, true ) );
