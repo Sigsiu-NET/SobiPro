@@ -192,7 +192,7 @@ class SPEntryCtrl extends SPController
 //			$tsId = date( 'Y-m-d_H-m-s_' ) . str_replace( array( '.', ':' ), array( '-', null ), SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
 			$tsId = ( microtime( true ) * 100 ) . '.' . rand( 0, 99 ) . '.' . str_replace( array( ':', '.' ), null, SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
 			SPLoader::loadClass( 'env.cookie' );
-			if ( !( SPCookie::set( 'editentry', $tsId, SPCookie::hours( 2 ) ) ) ) {
+			if ( !( SPCookie::set( 'editentry', $tsId, SPCookie::hours( 12 ) ) ) ) {
 				$tsIdToRequest = true;
 			}
 		}
@@ -219,9 +219,7 @@ class SPEntryCtrl extends SPController
 			SPFs::write( SPLoader::path( 'tmp.edit.' . $file . '.post', 'front', false, 'var' ), SPConfig::serialize( $_POST ) );
 			SPFs::write( SPLoader::path( 'tmp.edit.' . $file . '.files', 'front', false, 'var' ), SPConfig::serialize( $_FILES ) );
 			SPFs::write( SPLoader::path( 'tmp.edit.' . $file . '.store', 'front', false, 'var' ), SPConfig::serialize( $store ) );
-
 		}
-
 		if ( !( Sobi::Can( 'entry.payment.free' ) ) && SPFactory::payment()->count( $this->_model->get( 'id' ) ) ) {
 			$this->paymentView( $tsId );
 		}
@@ -316,6 +314,7 @@ class SPEntryCtrl extends SPController
 		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
 		$view->assign( $this->_task, 'task' );
 		$view->addHidden( $tsId, 'speditentry' );
+		$view->addHidden( $tsId, 'ssid' );
 		$view->setConfig( $this->_tCfg, $this->_task );
 		$view->setTemplate( $tplPackage . '.payment.' . $this->_task );
 		Sobi::Trigger( ucfirst( $this->_task ), $this->name(), array( &$view, &$this->_model ) );
