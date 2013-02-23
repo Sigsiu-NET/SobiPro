@@ -91,4 +91,3 @@ abstract class SPCookie
 		return self::hours( $time ) * 24;
 	}
 }
-?>

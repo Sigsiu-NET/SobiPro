@@ -187,12 +187,14 @@ class SPEntryCtrl extends SPController
 		$fields = $this->_model->get( 'fields' );
 		$tsId = SPRequest::string( 'editentry', null, false, 'cookie' );
 
+		$tsIdToRequest = false;
 		if ( !strlen( $tsId ) ) {
-			/** Cannot write to file \tmp\edit\2011-04-27_05-04-00_::1\post.var
-			 * ^^^^ how the hell it's possible to have IP like ::1 ???!!! ^^^ */
-			$tsId = date( 'Y-m-d_H-m-s_' ) . str_replace( array( '.', ':' ), array( '-', null ), SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
+//			$tsId = date( 'Y-m-d_H-m-s_' ) . str_replace( array( '.', ':' ), array( '-', null ), SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
+			$tsId = ( microtime( true ) * 100 ) . '.' . rand( 0, 99 ) . '.' . str_replace( array( ':', '.' ), null, SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
 			SPLoader::loadClass( 'env.cookie' );
-			SPCookie::set( 'editentry', $tsId, SPCookie::hours( 2 ) );
+			if ( !( SPCookie::set( 'editentry', $tsId, SPCookie::hours( 2 ) ) ) ) {
+				$tsIdToRequest = true;
+			}
 		}
 		$store = array();
 		if ( count( $fields ) ) {
@@ -213,9 +215,10 @@ class SPEntryCtrl extends SPController
 			SPFactory::cache()->addVar( array( 'post' => $_POST, 'files' => $_FILES, 'store' => $store ), 'request_cache_' . $tsId );
 		}
 		else {
-			SPFs::write( SPLoader::path( 'tmp.edit.' . $tsId . '.post', 'front', false, 'var' ), SPConfig::serialize( $_POST ) );
-			SPFs::write( SPLoader::path( 'tmp.edit.' . $tsId . '.files', 'front', false, 'var' ), SPConfig::serialize( $_FILES ) );
-			SPFs::write( SPLoader::path( 'tmp.edit.' . $tsId . '.store', 'front', false, 'var' ), SPConfig::serialize( $store ) );
+			$file = str_replace( '.', '-', $tsId );
+			SPFs::write( SPLoader::path( 'tmp.edit.' . $file . '.post', 'front', false, 'var' ), SPConfig::serialize( $_POST ) );
+			SPFs::write( SPLoader::path( 'tmp.edit.' . $file . '.files', 'front', false, 'var' ), SPConfig::serialize( $_FILES ) );
+			SPFs::write( SPLoader::path( 'tmp.edit.' . $file . '.store', 'front', false, 'var' ), SPConfig::serialize( $store ) );
 
 		}
 
@@ -223,7 +226,11 @@ class SPEntryCtrl extends SPController
 			$this->paymentView( $tsId );
 		}
 		else {
-			$this->response( Sobi::Url( array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $sid ) ) );
+			$url = array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $sid );
+			if ( $tsIdToRequest ) {
+				$url[ 'ssid' ] = $tsId;
+			}
+			$this->response( Sobi::Url( $url ) );
 		}
 	}
 
@@ -243,11 +250,12 @@ class SPEntryCtrl extends SPController
 			$request = $cache;
 		}
 		else {
-			$tempDir = SPLoader::dirPath( 'tmp.edit.' . $tsId );
-			if ( strlen( $tsId ) && $tempDir ) {
-				$tempFile = SPLoader::path( 'tmp.edit.' . $tsId . '.post', 'front', true, 'var' );
-				$filesFile = SPLoader::path( 'tmp.edit.' . $tsId . '.files', 'front', true, 'var' );
-				$storeFile = SPLoader::path( 'tmp.edit.' . $tsId . '.store', 'front', true, 'var' );
+			$file = str_replace( '.', '-', $tsId );
+			$tempDir = SPLoader::dirPath( 'tmp.edit.' . $file );
+			if ( strlen( $file ) && $tempDir ) {
+				$tempFile = SPLoader::path( 'tmp.edit.' . $file . '.post', 'front', true, 'var' );
+				$filesFile = SPLoader::path( 'tmp.edit.' . $file . '.files', 'front', true, 'var' );
+				$storeFile = SPLoader::path( 'tmp.edit.' . $file . '.store', 'front', true, 'var' );
 				$post = SPConfig::unserialize( SPFs::read( $tempFile ) );
 				$files = SPConfig::unserialize( SPFs::read( $filesFile ) );
 				$store = SPConfig::unserialize( SPFs::read( $storeFile ) );
@@ -270,8 +278,8 @@ class SPEntryCtrl extends SPController
 		$sid = SPRequest::sid();
 		$data = SPFactory::cache()->getObj( 'payment', $sid, Sobi::Section(), true );
 		if ( !( $data ) ) {
-			$tsid = SPRequest::base64( 'tsid' );
-			$tfile = SPLoader::path( 'tmp.edit.' . $tsid . '.payment', 'front', false, 'var' );
+			$tsId = SPRequest::string( 'tsid' );
+			$tfile = SPLoader::path( 'tmp.edit.' . $tsId . '.payment', 'front', false, 'var' );
 			if ( SPFs::exists( $tfile ) ) {
 				$data = SPConfig::unserialize( SPFs::read( $tfile ) );
 			}
@@ -339,6 +347,9 @@ class SPEntryCtrl extends SPController
 
 		/* check if we have stored last edit in cache */
 		$tsId = SPRequest::string( 'editentry', null, false, 'cookie' );
+		if( !( $tsId ) ) {
+			$tsId = SPRequest::cmd( 'ssid' );
+		}
 		$request = $this->getCache( $tsId );
 		$this->_model->init( SPRequest::sid( $request ) );
 		$this->_model->getRequest( $this->_type, $request );
@@ -365,14 +376,15 @@ class SPEntryCtrl extends SPController
 			SPFactory::payment()->store( $this->_model->get( 'id' ) );
 		}
 		/* delete cache files on after */
-		if ( SPLoader::dirPath( 'tmp.edit.' . $tsId ) ) {
-			SPFs::delete( SPLoader::dirPath( 'tmp.edit.' . $tsId ) );
+		$file = str_replace( '.', '-', $tsId );
+		if ( SPLoader::dirPath( 'tmp.edit.' . $file ) ) {
+			SPFs::delete( SPLoader::dirPath( 'tmp.edit.' . $file ) );
 		}
 		else {
 			SPFactory::cache()->deleteVar( 'request_cache_' . $tsId );
 		}
 		SPLoader::loadClass( 'env.cookie' );
-		SPCookie::delete( $tsId );
+		SPCookie::delete( 'editentry' );
 
 		$sid = $this->_model->get( 'id' );
 		$pid = SPRequest::int( 'pid' ) ? SPRequest::int( 'pid' ) : Sobi::Section();
