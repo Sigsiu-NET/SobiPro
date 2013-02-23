@@ -119,19 +119,46 @@ class SPCachedView extends SPFrontView implements SPView
 		if ( is_array( $visitor ) && ( isset( $visitor[ '_data' ] ) ) ) {
 			$this->importData( $this->_xml->documentElement, $visitor, 'visitor' );
 		}
+		$messages = SPFactory::message()->getMessages();
+		$info = array();
+		if ( count( $messages ) ) {
+			foreach ( $messages as $type => $content ) {
+				$info[ $type ] = array_values( $content );
+			}
+		}
+		if ( is_array( $info ) ) {
+			SPConfig::debOut( $info );
+			$this->importData( $this->_xml->documentElement, $info, 'messages' );
+		}
+		$this->_xml->preserveWhiteSpace = false;
+		$this->_xml->formatOutput = true;
 	}
 
 	protected function importData( $node, $data, $name )
 	{
 		$root = $this->_xml->createElement( $name );
-		if ( is_array( $data[ '_data' ] ) ) {
+		if ( isset( $data[ '_data' ] ) && is_array( $data[ '_data' ] ) ) {
 			foreach ( $data[ '_data' ] as $index => $value ) {
 				if ( is_array( $value ) ) {
 					$this->importData( $root, $value, $index );
 				}
 				else {
+					SPConfig::debOut("Creating: $index ".__LINE__ );
 					$child = $this->_xml->createElement( $index, $value );
 					$root->appendChild( $child );
+				}
+			}
+		}
+		elseif ( !( isset( $data[ '_data' ] ) ) && is_array( $data ) && count( $data ) ) {
+			foreach ( $data as $i => $v ) {
+				if ( is_numeric( $i ) ) {
+					$i = SPLang::singular( $name );
+				}
+				if ( is_array( $v ) ) {
+					$this->importData( $root, $v, $i );
+				}
+				else {
+					$root->appendChild( $this->_xml->createElement( $i, $v ) );
 				}
 			}
 		}
