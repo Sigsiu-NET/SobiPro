@@ -205,7 +205,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 	}
 
 	/**
-	 * @param mixed $sid
+	 * @param $ident
+	 * @throws SPException
 	 * @return SPField
 	 */
 	public function & getField( $ident )
@@ -253,6 +254,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	}
 
 	/**
+	 * @param $cid
 	 * @return int
 	 */
 	public function getPosition( $cid )
@@ -278,6 +280,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	}
 
 	/**
+	 * @param bool $arr
 	 * @return array
 	 */
 	public function getCategories( $arr = false )
@@ -507,8 +510,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 	}
 
 	/**
-	 * @param SPEntry $entry
 	 * @param string $request
+	 * @throws SPException
+	 * @return void
 	 */
 	public function validate( $request = 'post' )
 	{
