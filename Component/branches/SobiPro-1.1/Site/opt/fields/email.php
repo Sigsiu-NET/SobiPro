@@ -168,7 +168,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	 */
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{
-		if ( count( $this->verify( $entry, SPFactory::db(), $request ) ) ) {
+		if ( count( $this->verify( $entry, $request ) ) ) {
 			return SPRequest::search( $this->nid, $request );
 		}
 		else {
@@ -202,6 +202,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	/**
 	 * Gets the data for a field and save it in the database
 	 * @param SPEntry $entry
+	 * @param string $request
 	 * @return bool
 	 */
 	public function saveData( &$entry, $request = 'POST' )
@@ -210,8 +211,8 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			return false;
 		}
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
-		$save = $this->verify( $entry, $db, $request );
+		$db = SPFactory::db();
+		$save = $this->verify( $entry, $request );
 		$time = SPRequest::now();
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		$uid = Sobi::My( 'id' );
@@ -270,8 +271,8 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 
 	/**
 	 * @param SPEntry $entry
-	 * @param SPdb $db
 	 * @param string $request
+	 * @throws SPException
 	 * @return array
 	 */
 	protected function verify( $entry, $request )

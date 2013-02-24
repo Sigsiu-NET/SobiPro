@@ -63,9 +63,13 @@ abstract class SPRequest
 	 *
 	 * @param string $name
 	 * @param string $method
+	 * @throws SPException
 	 */
 	private static function init( $name, $method )
 	{
+		if( !( is_string( $method ) ) ) {
+			throw new SPException( 'Wrong method given: '.get_class( $method ) );
+		}
 		self::$method = strtoupper( $method );
 		$name = ( self::$method == 'COOKIE' ) ? 'SPro_' . $name : $name;
 		self::$name = $name;

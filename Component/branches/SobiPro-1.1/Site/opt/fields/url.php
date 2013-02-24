@@ -210,7 +210,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	{
 		$query = array( 'sid' => $this->sid, 'fid' => $this->nid, 'section' => Sobi::Section() );
 		if ( $real ) {
-			$query[ 'humanity>' ] = Sobi::Cfg( 'field_website.humanity', 90 );
+			$query[ 'humanity>' ] = Sobi::Cfg( 'field_url.humanity', 90 );
 		}
 		$counter = SPFactory::db()
 				->select( 'count(*)', 'spdb_field_url_clicks', $query )
