@@ -26,7 +26,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:include href="../common/topmenu.xsl" />
-	<xsl:include href="../common/messages.xsl"/>
+	<xsl:include href="../common/messages.xsl" />
 
 	<xsl:template match="/entry_form">
 		<div class="SPEntryEdit">
@@ -35,7 +35,7 @@
 					<xsl:with-param name="searchbox">false</xsl:with-param>
 				</xsl:call-template>
 			</div>
-			<xsl:apply-templates select="messages"/>
+			<xsl:apply-templates select="messages" />
 			<div class="form-horizontal">
 				<xsl:for-each select="entry/fields/*">
 					<xsl:if test="( name() != 'save_button' ) and ( name() != 'cancel_button' )">
@@ -77,28 +77,40 @@
 											<xsl:copy-of select="data/*" />
 										</xsl:otherwise>
 									</xsl:choose>
-									<xsl:if test="string-length( @suffix )">
-										<span class="add-on">
-											<xsl:value-of select="@suffix" />
-										</span>
-									</xsl:if>
+									<xsl:choose>
+										<xsl:when test="string-length( @suffix )">
+											<span class="add-on">
+												<xsl:value-of select="@suffix" />
+											</span>
+										</xsl:when>
+										<xsl:otherwise>
+											<span id="{$fieldId}-message" class="hide message-lightbulb">
+												<i class="icon-lightbulb" />
+											</span>
+										</xsl:otherwise>
+									</xsl:choose>
 								</div>
+								<xsl:if test="string-length( @suffix )">
+									<span id="{$fieldId}-message" class="hide message-lightbulb">
+										<i class="icon-lightbulb" />
+									</span>
+								</xsl:if>
 							</div>
 						</div>
 					</xsl:if>
 				</xsl:for-each>
 			</div>
 			<div class="pull-right">
-		        <button class="btn sobipro-cancel" type="button">
-			        <xsl:value-of select="entry/fields/cancel_button/data/button"/>
-		        </button>
+				<button class="btn sobipro-cancel" type="button">
+					<xsl:value-of select="entry/fields/cancel_button/data/button" />
+				</button>
 				<button class="btn btn-primary sobipro-submit" type="button" data-loading-text="Loading...">
-					<xsl:value-of select="entry/fields/save_button/data/input/@value"/>
+					<xsl:value-of select="entry/fields/save_button/data/input/@value" />
 				</button>
 			</div>
-			<div class="clearfix"/>
+			<div class="clearfix" />
 		</div>
-		<input type="hidden" name="method" value="xhr"/>
-		<input type="hidden" name="format" value="raw"/>
+		<input type="hidden" name="method" value="xhr" />
+		<input type="hidden" name="format" value="raw" />
 	</xsl:template>
 </xsl:stylesheet>
