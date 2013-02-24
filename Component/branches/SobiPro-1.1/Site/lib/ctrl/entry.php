@@ -382,7 +382,7 @@ class SPEntryCtrl extends SPController
 		if ( isset( $this->_tCfg[ 'general' ][ 'functions' ] ) && $this->_tCfg[ 'general' ][ 'functions' ] ) {
 			$customClass = SPLoader::loadClass( '/' . str_replace( '.php', null, $this->_tCfg[ 'general' ][ 'functions' ] ), false, 'templates' );
 			if ( method_exists( $customClass, 'BeforeStoreEntry' ) ) {
-				$customClass::BeforeStoreEntry( $this->_model );
+				$customClass::BeforeStoreEntry( $this->_model, $request );
 			}
 		}
 
