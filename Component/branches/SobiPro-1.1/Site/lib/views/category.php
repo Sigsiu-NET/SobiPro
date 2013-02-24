@@ -50,7 +50,6 @@ class SPCategoryView extends SPSectionView implements SPView
 		/* @TODO  */
 		$tpl = str_replace( implode( DS, array( 'usr', 'templates', 'category' ) ), DS.'views'.DS .'tpl'.DS, $this->_template.'.php' );
 		Sobi::Trigger( 'Display', $this->name(), array( &$this ) );
-		$action = $this->key( 'action' );
 		include( $tpl );
 		Sobi::Trigger( 'AfterDisplay', $this->name() );
 	}
@@ -59,7 +58,6 @@ class SPCategoryView extends SPSectionView implements SPView
 	{
 		/* @TODO  */
 		$tpl = str_replace( implode( DS, array( 'usr', 'templates', 'category' ) ), DS.'views'.DS .'tpl'.DS, $this->_template.'.php' );
-		$action = $this->key( 'action' );
 		include( $tpl );
 	}
 }
