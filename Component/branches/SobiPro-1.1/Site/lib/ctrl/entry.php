@@ -164,6 +164,18 @@ class SPEntryCtrl extends SPController
 				exit;
 			}
 		}
+
+		/** let's create a simple plug-in method from the template to allow to modify the request */
+		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
+		$this->tplCfg( $tplPackage );
+		$customClass = null;
+		if ( isset( $this->_tCfg[ 'general' ][ 'functions' ] ) && $this->_tCfg[ 'general' ][ 'functions' ] ) {
+			$customClass = SPLoader::loadClass( '/' . str_replace( '.php', null, $this->_tCfg[ 'general' ][ 'functions' ] ), false, 'templates' );
+			if ( method_exists( $customClass, 'BeforeSubmitEntry' ) ) {
+				$customClass::BeforeSubmitEntry( $this->_model );
+			}
+		}
+
 		$sid = $this->_model->get( 'id' );
 		$this->_model->init( SPRequest::sid() );
 		$this->_model->getRequest( $this->_type );
@@ -224,6 +236,9 @@ class SPEntryCtrl extends SPController
 			$this->paymentView( $tsId );
 		}
 		else {
+			if ( $customClass && method_exists( $customClass, 'AfterSubmitEntry' ) ) {
+				$customClass::AfterSubmitEntry( $this->_model );
+			}
 			$url = array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $sid );
 			if ( $tsIdToRequest ) {
 				$url[ 'ssid' ] = $tsId;
@@ -307,6 +322,12 @@ class SPEntryCtrl extends SPController
 		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
 		/* load template config */
 		$this->tplCfg( $tplPackage );
+		if ( isset( $this->_tCfg[ 'general' ][ 'functions' ] ) && $this->_tCfg[ 'general' ][ 'functions' ] ) {
+			$customClass = SPLoader::loadClass( '/' . str_replace( '.php', null, $this->_tCfg[ 'general' ][ 'functions' ] ), false, 'templates' );
+			if ( method_exists( $customClass, 'BeforePaymentView' ) ) {
+				$customClass::BeforePaymentView( $data );
+			}
+		}
 		SPFactory::mainframe()->addObjToPathway( $this->_model );
 		$view = SPFactory::View( 'payment', $this->template );
 		$view->assign( $this->_model, 'entry' );
@@ -325,6 +346,9 @@ class SPEntryCtrl extends SPController
 		}
 		else {
 			$view->display();
+		}
+		if ( $customClass && method_exists( $customClass, 'AfterPaymentView' ) ) {
+			$customClass::AfterPaymentView();
 		}
 	}
 
@@ -346,11 +370,22 @@ class SPEntryCtrl extends SPController
 
 		/* check if we have stored last edit in cache */
 		$tsId = SPRequest::string( 'editentry', null, false, 'cookie' );
-		if( !( $tsId ) ) {
+		if ( !( $tsId ) ) {
 			$tsId = SPRequest::cmd( 'ssid' );
 		}
 		$request = $this->getCache( $tsId );
 		$this->_model->init( SPRequest::sid( $request ) );
+
+		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
+		$this->tplCfg( $tplPackage );
+		$customClass = null;
+		if ( isset( $this->_tCfg[ 'general' ][ 'functions' ] ) && $this->_tCfg[ 'general' ][ 'functions' ] ) {
+			$customClass = SPLoader::loadClass( '/' . str_replace( '.php', null, $this->_tCfg[ 'general' ][ 'functions' ] ), false, 'templates' );
+			if ( method_exists( $customClass, 'BeforeStoreEntry' ) ) {
+				$customClass::BeforeStoreEntry( $this->_model );
+			}
+		}
+
 		$this->_model->getRequest( $this->_type, $request );
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_model ) );
 
@@ -372,6 +407,9 @@ class SPEntryCtrl extends SPController
 		$pCount = SPFactory::payment()->count( $this->_model->get( 'id' ) );
 		if ( $pCount && !( Sobi::Can( 'entry.payment.free' ) ) ) {
 //			$this->paymentView( $tsid );
+			if ( $customClass && method_exists( $customClass, 'BeforeStoreEntryPayment' ) ) {
+				$customClass::BeforeStoreEntryPayment( $this->_model->get( 'id' ) );
+			}
 			SPFactory::payment()->store( $this->_model->get( 'id' ) );
 		}
 		/* delete cache files on after */
@@ -434,6 +472,9 @@ class SPEntryCtrl extends SPController
 			}
 			SPLoader::loadClass( 'env.cookie' );
 			SPCookie::set( 'payment_' . $sid, $ident, SPCookie::days( 1 ) );
+		}
+		if ( $customClass && method_exists( $customClass, 'AfterStoreEntry' ) ) {
+			$customClass::AfterStoreEntry( $this->_model );
 		}
 		$this->response( $url, $msg, true, SPC::SUCCESS_MSG );
 	}
