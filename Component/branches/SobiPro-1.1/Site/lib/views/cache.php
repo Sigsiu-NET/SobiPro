@@ -31,6 +31,7 @@ class SPCachedView extends SPFrontView implements SPView
 	public function cachedView( $xml, $template, $cacheId, $config = array() )
 	{
 		$this->_xml = $xml;
+		Sobi::Trigger( 'Start', ucfirst( __FUNCTION__ ), array( &$this->_xml ) );
 		$this->parseXml();
 		$templatePackage = SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' );
 		$template = Sobi::FixPath( $templatePackage . '/' . $template );
@@ -53,6 +54,7 @@ class SPCachedView extends SPFrontView implements SPView
 		}
 		$this->setConfig( $ini, SPRequest::task( 'get' ) );
 		$this->validateData( $cacheId );
+		Sobi::Trigger( 'After', ucfirst( __FUNCTION__ ), array( &$this->_xml ) );
 	}
 
 	protected function validateData( $cacheId )
