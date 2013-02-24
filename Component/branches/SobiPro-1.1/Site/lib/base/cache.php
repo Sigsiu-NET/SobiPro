@@ -39,7 +39,7 @@ final class SPCache
 	private $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', '.publish' );
 	private $requestStore = array();
 	private $view = array( 'xml' => null, 'template' => null );
-	private $_disableViewCache = array( 'entry.edit', 'entry.add', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
+	private $_disableViewCache = array( 'entry.edit', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
 	private $_cachedView = false;
 	private $cacheViewQuery = array();
 
