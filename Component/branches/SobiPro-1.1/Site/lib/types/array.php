@@ -114,7 +114,7 @@ final class SPData_Array extends SPObject
 	{
 		$this->_arr = $arr;
 		$out = array();
-		if ( count( $this->_arr ) ) {
+		if ( is_array( $this->_arr ) && count( $this->_arr ) ) {
 			foreach ( $this->_arr as $key => $value ) {
 				if ( is_array( $value ) && !( is_string( $value ) ) ) {
 					$out[ ] = "[{$key}]";

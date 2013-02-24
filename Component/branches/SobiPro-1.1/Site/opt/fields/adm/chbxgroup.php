@@ -42,8 +42,11 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 		if ( $file ) {
 			$data = parse_ini_file( $file, true );
 		}
-		else {
+		elseif ( is_string( $attr[ 'options' ] ) ) {
 			$data = parse_ini_string( $attr[ 'options' ], true );
+		}
+		else {
+			$data = null;
 		}
 		$options = $this->parseOptsFile( $data );
 

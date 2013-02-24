@@ -127,8 +127,8 @@ class SPFieldType extends SPObject
 
 	protected function rangeSearch( $values, $freeInput = false )
 	{
-		$request[ 'from' ] = isset( $this->_selected[ 'from' ] ) ? (int) $this->_selected[ 'from' ] : '';
-		$request[ 'to' ] = isset( $this->_selected[ 'to' ] ) ? (int) $this->_selected[ 'to' ] : '';
+		$request[ 'from' ] = isset( $this->_selected[ 'from' ] ) ? (int)$this->_selected[ 'from' ] : '';
+		$request[ 'to' ] = isset( $this->_selected[ 'to' ] ) ? (int)$this->_selected[ 'to' ] : '';
 		if ( !( $freeInput ) ) {
 			$values = str_replace( array( "\n", "\r", "\t" ), null, $values );
 			$values = explode( ',', $values );
@@ -355,7 +355,7 @@ class SPFieldType extends SPObject
 		$group = null;
 		$gid = null;
 		$options = array();
-		if ( count( $file ) ) {
+		if ( is_array( $file ) && count( $file ) ) {
 			foreach ( $file as $key => $value ) {
 				if ( is_array( $value ) ) {
 					if ( strstr( $key, ',' ) ) {

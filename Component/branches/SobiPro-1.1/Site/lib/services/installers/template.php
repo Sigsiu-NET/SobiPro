@@ -36,15 +36,6 @@ class SPTemplateInstaller extends SPInstaller
 			throw new SPException( SPLang::e( 'TEMPLATE_INST_DUPLICATE', $name ) . ' ' . Sobi::Txt( 'FORCE_TPL_UPDATE', Sobi::Url( array( 'task' => 'extensions.install', 'force' => 1, 'root' => basename( $this->root ) . '/' . basename( $this->xmlFile ) ) ) ) );
 		}
 		$path = SPLoader::dirPath( 'usr.templates.' . $id, 'front', false );
-		/** @var $dir SPDirectory */
-		$dir =& SPFactory::Instance( 'base.fs.directory', $path );
-		$zip = array_keys( $dir->searchFile( '.zip', false ) );
-		if ( count( $zip ) ) {
-			foreach ( $zip as $file ) {
-				SPFs::delete( $file );
-			}
-		}
-
 		if ( SPRequest::bool( 'force' ) ) {
 			/** @var $from SPDirectory */
 			$from = SPFactory::Instance( 'base.fs.directory', $this->root );
@@ -71,6 +62,14 @@ class SPTemplateInstaller extends SPInstaller
 		$exec = $this->xGetString( 'exec' );
 		if ( $exec && SPFs::exists( $this->root . DS . $exec ) ) {
 			include_once $this->root . DS . $exec;
+		}
+		/** @var $dir SPDirectory */
+		$dir =& SPFactory::Instance( 'base.fs.directory', $path );
+		$zip = array_keys( $dir->searchFile( '.zip', false ) );
+		if ( count( $zip ) ) {
+			foreach ( $zip as $file ) {
+				SPFs::delete( $file );
+			}
 		}
 
 		Sobi::Trigger( 'After', 'InstallTemplate', array( $id ) );
