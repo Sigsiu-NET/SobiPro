@@ -39,8 +39,11 @@ class SPField_SelectAdm extends SPField_Select
 		if ( $file ) {
 			$data = parse_ini_file( $file, true );
 		}
-		else {
+		elseif ( is_string( $attr[ 'options' ] ) ) {
 			$data = parse_ini_string( $attr[ 'options' ], true );
+		}
+		else {
+			$data = null;
 		}
 		$options = $this->parseOptsFile( $data );
 		if ( !( count( $options ) ) && count( $attr[ 'options' ] ) ) {
