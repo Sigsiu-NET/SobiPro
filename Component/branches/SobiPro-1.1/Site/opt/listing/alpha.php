@@ -54,7 +54,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 
 	public function execute()
 	{
-		$task = str_replace( ':', '-', SPRequest::task( 'get' ) );
+		$task = str_replace( ':', '-', SPRequest::task() );
 		$task = explode( '.', $task );
 		if ( isset( $task[ 2 ] ) && $task[ 2 ] == 'switch' && isset( $task[ 3 ] ) ) {
 			return $this->switchIndex( $task[ 3 ] );
@@ -65,7 +65,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			}
 			else {
 				$this->_letter = urldecode( $task[ 2 ] );
-				SPRequest::set( 'letter', strtoupper( $this->_letter ), 'get' );
+				SPRequest::set( 'letter', strtoupper( $this->_letter ) );
 				if ( isset( $task[ 3 ] ) ) {
 					$this->determineFid( $task[ 3 ] );
 				}
@@ -159,7 +159,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		$this->_field = $field->fid;
 		$this->_nid = $field->nid;
 		$this->_fieldType = $field->fieldType;
-		SPRequest::set( 'alpha_field', strtolower( $this->_nid ), 'get' );
+		SPRequest::set( 'alpha_field', strtolower( $this->_nid ) );
 	}
 
 	protected function view()

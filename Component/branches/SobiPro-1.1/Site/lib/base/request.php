@@ -63,7 +63,6 @@ abstract class SPRequest
 	 *
 	 * @param string $name
 	 * @param string $method
-	 * @param mixed $default
 	 */
 	private static function init( $name, $method )
 	{
@@ -73,7 +72,10 @@ abstract class SPRequest
 
 		switch ( self::$method ) {
 			case 'GET':
-				self::$request =& $_GET;
+				// it's seems that Joomla! is storing the decoded variables from a SEF
+				// into $_REQUEST instead of $_GET
+				self::$request =& $_REQUEST;
+//				self::$request =& $_GET;
 				break;
 			case 'POST':
 				self::$request =& $_POST;
