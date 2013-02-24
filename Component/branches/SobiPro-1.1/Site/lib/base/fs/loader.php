@@ -47,7 +47,7 @@ abstract class SPLoader
 	 */
 	public static function loadClass( $name, $adm = false, $type = null, $raiseErr = true )
 	{
-		static $types = array( 'base' => 'base', 'controller' => 'ctrl', 'controls' => 'ctrl', 'ctrl' => 'ctrl', 'model' => 'models', 'plugin' => 'plugins', 'application' => 'plugins', 'view' => 'views' );
+		static $types = array( 'base' => 'base', 'controller' => 'ctrl', 'controls' => 'ctrl', 'ctrl' => 'ctrl', 'model' => 'models', 'plugin' => 'plugins', 'application' => 'plugins', 'view' => 'views', 'templates' => 'templates' );
 		$type = strtolower( trim( $type ) );
 		$name = strtolower( trim( $name ) );
 		if ( isset( $types[ $type ] ) ) {
@@ -75,13 +75,16 @@ abstract class SPLoader
 		elseif ( strstr( $type, 'plugin' ) ) {
 			$path = SOBI_PATH . DS . 'opt' . DS . $type;
 		}
+		elseif ( strstr( $type, 'template' ) ) {
+			$path = SOBI_PATH . '/usr/templates/' . Sobi::Cfg( 'section.template', 'default2' );
+		}
 		elseif ( !strstr( $name, 'opt.' ) ) {
 			$path = SOBI_PATH . DS . 'lib' . DS . $type;
 		}
 		else {
 			$path = SOBI_PATH . DS . $type;
 		}
-		$name = str_replace( '.', DS, $name );
+		$name = str_replace( '.', '/', $name );
 		$path .= $name . '.php';
 		$path = self::clean( $path );
 		/* to prevent double loading of the same class */
@@ -226,7 +229,7 @@ abstract class SPLoader
 	public static function iniStorage( $file = null )
 	{
 		static $name = null;
-		if( $file ) {
+		if ( $file ) {
 			$name = $file;
 		}
 		else {
@@ -349,7 +352,7 @@ abstract class SPLoader
 			$file = self::translatePath( $root . $path, 'js', $checkExist, $ext, $count );
 		}
 		if ( $toLive ) {
-			$file = str_replace( SOBI_ROOT , SPFactory::config()->get( 'live_site' ), $file );
+			$file = str_replace( SOBI_ROOT, SPFactory::config()->get( 'live_site' ), $file );
 			$file = str_replace( '\\', '/', $file );
 		}
 		return Sobi::FixPath( $file );
@@ -384,7 +387,7 @@ abstract class SPLoader
 			$file = self::translatePath( $root . $path, 'css', $checkExist, $ext, $count );
 		}
 		if ( $toLive ) {
-			$file = str_replace( SOBI_ROOT , SPFactory::config()->get( 'live_site' ), $file );
+			$file = str_replace( SOBI_ROOT, SPFactory::config()->get( 'live_site' ), $file );
 			$file = str_replace( '\\', '/', $file );
 		}
 		return Sobi::FixPath( $file );

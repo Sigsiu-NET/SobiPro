@@ -213,7 +213,7 @@ abstract class SPRequest
 	 * Returns float value of requested variable
 	 *
 	 * @param string $name variable name
-	 * @param float $default default value
+	 * @param float|int $default default value
 	 * @param string $method request method
 	 * @return float
 	 */
@@ -230,7 +230,7 @@ abstract class SPRequest
 	 * Returns double value of requested variable
 	 *
 	 * @param string $name variable name
-	 * @param double $default default value
+	 * @param \double|int $default default value
 	 * @param string $method request method
 	 * @return double
 	 */
@@ -501,8 +501,6 @@ abstract class SPRequest
 	/**
 	 * Returns task value
 	 *
-	 * @param string $name variable name
-	 * @param bool $default default value
 	 * @param string $method request method
 	 * @return bool
 	 */
@@ -527,6 +525,7 @@ abstract class SPRequest
 	 * Clean array
 	 *
 	 * @param array $arr array to clean
+	 * @param bool $delEmpty
 	 * @return array
 	 */
 	static public function cleanArray( $arr, $delEmpty = false )
