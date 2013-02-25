@@ -73,7 +73,7 @@ Legend:
    (+) Current page number of pagination to the browser title
    (+) Added full text indexes to fields' data and language table
    (+) Search priority to XML results
-   (+) Possibility to define different template methods (see default template) to plug-in an action between (and whilst) the submit and save entry actions
+   (+) Possibility to define different template methods (see default template) to plug-in an action between (and whilst) submit and save entry actions
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list
@@ -119,8 +119,8 @@ Legend:
    (#) Wrong date used for validUntil while saving an entry from frontend (GMT instead of server time)
    (#) Session id passed to URL in case the cookie cannot be set for some reason (Time zone problems in Chrome) while adding/editing an entry
    (#) Select list returns no results when searching for "exact phase" (Issue #801)
-   (#) URL field - data invisible when SobiPro Accelerator is enabled and data has been cached by a bot
-   (#) Template installer: complex fields' options are incorect while installing new section (e.g. selected views in SP-GeoMap field)
+   (#) Email field data invisible when Data Accelerator is enabled and data has been cached by a bot
+   (#) Template installer: complex fields' options are incorrect while installing new section (e.g. selected views in SP-GeoMap field)
 
 
 -------------------
