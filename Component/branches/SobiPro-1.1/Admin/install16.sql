@@ -684,7 +684,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
   PRIMARY KEY (`sKey`,`language`,`id`,`fid`),
   KEY `sKey` (`sKey`),
   KEY `section` (`section`),
-  KEY `language` (`language`)
+  KEY `language` (`language`),
   FULLTEXT KEY `sValue` (`sValue`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
