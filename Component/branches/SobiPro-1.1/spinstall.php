@@ -50,8 +50,6 @@ class com_sobiproInstallerScript
 	 */
 	function update( JAdapterInstance $adapter )
 	{
-		var_dump( debug_backtrace() );
-		exit;
 		if ( $this->new ) {
 			return true;
 		}
