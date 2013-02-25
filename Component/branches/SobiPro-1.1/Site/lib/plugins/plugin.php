@@ -44,7 +44,7 @@ abstract class SPApplication extends SPObject
 
 	/**
 	 * @param string $id - unique id string of the plugin
-	 * @return void
+	 * @return \SPApplication
 	 */
 	public function __construct( $id )
 	{
@@ -53,4 +53,3 @@ abstract class SPApplication extends SPObject
 }
 // well, ... hmmm - shit happens
 abstract class SPPlugin extends SPApplication {}
-?>

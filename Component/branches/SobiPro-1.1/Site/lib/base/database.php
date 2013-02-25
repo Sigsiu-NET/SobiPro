@@ -308,4 +308,3 @@ interface SPDatabase
 	 */
 	public function valid( $until, $since = null, $pub = null );
 }
-?>

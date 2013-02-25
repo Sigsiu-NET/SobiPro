@@ -36,4 +36,3 @@ class SPField_InboxAdm extends SPField_Inbox
 	 */
 	public $cssClass = "inputbox";
 }
-?>

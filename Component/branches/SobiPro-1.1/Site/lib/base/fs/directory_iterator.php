@@ -94,4 +94,3 @@ class SPDirectoryIterator extends ArrayObject
     	}
     }
 }
-?>

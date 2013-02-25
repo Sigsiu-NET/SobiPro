@@ -27,6 +27,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  * @author Radek Suski
  * @version 1.0
  * @created 28-Jan-2009 9:35:15 AM
+ * @deprecated
  */
 final class SPHtml_Tabs
 {
@@ -45,6 +46,7 @@ final class SPHtml_Tabs
 
 	/**
 	 * Set/add CSS class
+	 * @deprecated
 	 * @param string $class
 	 */
 	public function setClass ( $class )
@@ -54,6 +56,7 @@ final class SPHtml_Tabs
 
 	/**
 	 * Set the ID prefix
+	 * @deprecated
 	 * @param string $prefix
 	 */
 	public function setPrefix ( $prefix )
@@ -66,6 +69,7 @@ final class SPHtml_Tabs
 	 * @param string $cssFile - separate CSS file
 	 * @param string $prefix
 	 * @return sobiTabs
+	 * @deprecated
 	 */
 	public function __construct( $useCookies = true, $cssFile = 'tabs', $prefix = null )
 	{
@@ -80,6 +84,7 @@ final class SPHtml_Tabs
 	/**
 	 * creates a tab pane and creates JS obj
 	 * @param string The Tab Pane Name
+	 * @deprecated
 	 */
 	public function startPane( $id, $return = false )
 	{
@@ -94,6 +99,7 @@ final class SPHtml_Tabs
 
 	/**
 	 * Ends Tab Pane
+	 * @deprecated
 	 */
 	public function endPane( $return = false )
 	{
@@ -105,6 +111,7 @@ final class SPHtml_Tabs
 	 * Creates a tab with title text and starts that tabs page
 	 * @param tabText - This is what is displayed on the tab
 	 * @param paneid - This is the parent pane to build this tab on
+	 * @deprecated
 	 */
 	public function startTab( $tabText, $paneid, $return = false )
 	{
@@ -120,6 +127,7 @@ final class SPHtml_Tabs
 
 	/*
 	 * Ends a tab page
+	 * @deprecated
 	 */
 	public function endTab( $return = false )
 	{
@@ -130,6 +138,7 @@ final class SPHtml_Tabs
 	/**
 	 * @param bool $return
 	 * @return string
+	 * @deprecated
 	 */
 	private function out( $r, $return )
 	{
@@ -141,4 +150,3 @@ final class SPHtml_Tabs
 		}
 	}
 }
-?>
