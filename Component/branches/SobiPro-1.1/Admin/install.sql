@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
   PRIMARY KEY (`fid`),
   KEY `enabled` (`enabled`),
   KEY `position` (`position`),
-  KEY `section` (`section`),
+  KEY `section` (`section`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_field` (`fid`, `nid`, `adminField`, `admList`, `dataType`, `enabled`, `fee`, `fieldType`, `filter`, `isFree`, `position`, `priority`, `required`, `section`, `multiLang`, `uniqueData`, `validate`, `addToMetaDesc`, `addToMetaKeys`, `editLimit`, `editable`, `showIn`, `allowedAttributes`, `allowedTags`, `editor`, `inSearch`, `withLabel`, `cssClass`, `parse`, `template`, `notice`, `params`, `defaultValue`, `version`) VALUES
