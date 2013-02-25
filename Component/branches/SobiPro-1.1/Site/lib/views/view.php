@@ -221,6 +221,15 @@ abstract class SPFrontView extends SPObject implements SPView
 
 	private function pb()
 	{
+		/** WARNING!!!
+		 * This part is "encoded" not to complicate or hide anything.
+		 * The "Powered By" footer can be easily disabled in the SobiPro configuration.
+		 * We are not forcing anyone to display it nor violate anyone's freedom!!
+		 * But for some reason it happens from time to time that some very clever people instead of disable it the right way
+		 * prefer to tinker in the core code which of course lead to the famous situation "no I cannot update because I modified the code"
+		 *
+		 * So this actually encoded here just to protect some people from their own, well, "intelligence" ....
+		 * */
 		$p = "YToxOntpOjA7czoxODI6IjxkaXYgaWQ9InNvYmlQcm9Gb290ZXIiPlBvd2VyZWQgYnkgPGEgdGl0bGU9IlNvYmlQcm8gLSBKb29tbGEgRGlyZWN0b3J5IENvbXBvbmVudCB3aXRoIGNvbnRlbnQgY29uc3RydWN0aW9uIHN1cHBvcnQiIGhyZWY9Imh0dHA6Ly93d3cuc2lnc2l1Lm5ldCIgdGFyZ2V0PSJfYmxhbmsiPlNpZ3NpdS5ORVQ8L2E+PC9kaXY+Ijt9";
 		if ( !( Sobi::Cfg( 'show_pb', true ) ) || SPRequest::cmd( 'method', null, 'post' ) == 'xhr' ) {
 			return;
