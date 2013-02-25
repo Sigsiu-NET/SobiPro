@@ -327,10 +327,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="accordion-group">
+
+					<div class="accordion-group" condition="news.length">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProNewsPane" id="SobiProNews">
-								<text value="news.title" parse="true" />
+                                <text value="news.title" parse="true"></text>
 							</a>
 						</div>
                         <div id="SobiProNewsPane" class="accordion-body collapse">
@@ -348,6 +349,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="accordion-group">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProCreditsPane">
