@@ -47,4 +47,3 @@ class SPField_EmailAdm extends SPField_Email {
 		$attr[ 'params' ] = $properties;
 	}
 }
-?>

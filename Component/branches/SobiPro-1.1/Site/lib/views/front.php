@@ -92,4 +92,3 @@ class SPSectionsView extends SPFrontView implements SPView
 		parent::display();
 	}
 }
-?>

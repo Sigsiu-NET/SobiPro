@@ -46,4 +46,3 @@ class SPSoapClient extends SoapClient
 		parent::SoapClient( $wdsl, $options );
 	}
 }
-?>

@@ -29,4 +29,3 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  */
 require_once dirname(__FILE__).'/../../joomla_common/base/mail.php';
 class SPMailInterface extends SPJoomlaMail {}
-?>

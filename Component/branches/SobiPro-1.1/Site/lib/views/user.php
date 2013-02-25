@@ -50,4 +50,3 @@ class SPUserView implements SPView
 	}
 
 }
-?>

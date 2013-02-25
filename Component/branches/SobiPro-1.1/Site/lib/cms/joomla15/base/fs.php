@@ -31,4 +31,3 @@ require_once dirname(__FILE__).'/../../joomla_common/base/fs.php';
  * @created 10-Jan-2009 5:02:55 PM
  */
 abstract class SPFs extends SPJoomlaFs {}
-?>

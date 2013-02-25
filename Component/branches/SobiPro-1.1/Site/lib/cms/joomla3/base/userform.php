@@ -36,4 +36,3 @@ class SPFormFieldUser extends JFormFieldUser
 		}
 	}
 }
-?>

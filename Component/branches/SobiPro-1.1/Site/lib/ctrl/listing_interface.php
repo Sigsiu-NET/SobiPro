@@ -35,4 +35,3 @@ interface SPListing
 	public function setTask( $task );
 	public function setParams( $request );
 }
-?>

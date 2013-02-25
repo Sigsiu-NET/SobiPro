@@ -41,4 +41,3 @@ class SPUsers
 		return $gids;
 	}
 }
-?>

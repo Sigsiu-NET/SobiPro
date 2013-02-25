@@ -72,4 +72,3 @@ class SPHelp extends SPController
 		$view->display();
 	}
 }
-?>

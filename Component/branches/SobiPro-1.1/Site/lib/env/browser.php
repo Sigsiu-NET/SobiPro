@@ -1432,4 +1432,3 @@ final class SPBrowser
 	    return $client_data;
 	}
 }
-?>

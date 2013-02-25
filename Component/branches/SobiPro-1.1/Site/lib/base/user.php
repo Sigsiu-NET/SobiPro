@@ -67,4 +67,3 @@ interface SPUserInterface
 	 */
 	public function & getInstance( $id = 0 );
 }
-?>

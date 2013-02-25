@@ -36,13 +36,13 @@ class SPMail extends SPMailInterface
 	 * @param string $subject E-mail subject
 	 * @param string $body Message body
 	 * @param bool $html - HTML mail or plain text
+	 * @param array $replyto Reply to email address
 	 * @param array $cc CC e-mail address
 	 * @param array $bcc BCC e-mail address
 	 * @param string $attachment Attachment file name
 	 * @param array $cert - pem certificate
-	 * @param array $replyto Reply to email address
-	 * @param array $replytoname Reply to name
 	 * @param array $from - array( from, fromname )
+	 * @internal param array $replytoname Reply to name
 	 * @return boolean True on success
 	 */
 	public static function SpSendMail( $recipient, $subject, $body, $html = false, $replyto = null, $cc = null, $bcc = null, $attachment = null, $cert = null, $from = null )
@@ -66,4 +66,3 @@ class SPMail extends SPMailInterface
 		return $mail->Send();
 	}
 }
-?>

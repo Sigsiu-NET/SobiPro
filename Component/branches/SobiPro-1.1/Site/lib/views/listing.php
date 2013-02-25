@@ -124,4 +124,3 @@ class SPListingView extends SPSectionView implements SPView
 		parent::display( $type, $out );
 	}
 }
-?>

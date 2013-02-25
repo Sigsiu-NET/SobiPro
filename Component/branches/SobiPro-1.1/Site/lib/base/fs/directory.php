@@ -38,7 +38,7 @@ class SPDirectory extends SPFile
 	private $_dirIterator = null;
 	private $_files = array();
 	private $_struct = array();
-	
+
 	 /**
      * @param string $string - part or full name of the file to search for
      * @param bool $exact - search for exact string or the file nam can contain this string
@@ -62,11 +62,11 @@ class SPDirectory extends SPFile
 //	{
 //		foreach ( $this->_dirIterator as $child ) {
 //			if( !( $child->isDot() ) ) {
-//				
+//
 //			}
-//		}		
+//		}
 //	}
-	
+
 	/**
 	 * @return SPDirectoryIterator
 	 */
@@ -136,4 +136,3 @@ class SPDirectory extends SPFile
 		}
 	}
 }
-?>

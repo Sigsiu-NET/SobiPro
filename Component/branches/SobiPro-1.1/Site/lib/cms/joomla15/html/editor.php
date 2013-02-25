@@ -35,6 +35,7 @@ class SPCMSEditor
 	 * @param	string	The height of the text area (px or %)
 	 * @param	boolean	True and the editor buttons will be displayed
 	 * @param	array	Associative array of editor parameters
+	 * @return string
 	 */
 	public function display( $name, $html, $width, $height, $buttons = false, $params = array() )
 	{
@@ -43,4 +44,3 @@ class SPCMSEditor
 		}
 	}
 }
-?>

@@ -78,4 +78,3 @@ abstract class SPTooltip
 		return self::toolTip( $tooltip, $title, $img, null, $title );
 	}
 }
-?>
