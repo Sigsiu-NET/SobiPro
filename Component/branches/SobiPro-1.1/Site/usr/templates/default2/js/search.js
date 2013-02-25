@@ -39,9 +39,15 @@ SobiPro.jQuery( document ).ready( function ()
 		}
 		;
 	} );
+	SobiPro.jQuery( '.spsearchphrase' ).each( function ()
+	{
+		if ( SobiPro.jQuery( this ).hasClass( 'active' ) ) {
+			SobiPro.jQuery( '#spsearchphrase' ).val( SobiPro.jQuery( this ).val() );
+		}
+	} );
 	SobiPro.jQuery( '.spsearchphrase' ).click( function ()
 	{
-		SobiPro.jQuery( '#spsearchphrase' ).val( SobiPro.jQuery( this ).val() )
+		SobiPro.jQuery( '#spsearchphrase' ).val( SobiPro.jQuery( this ).val() );
 	} );
 	try {
 		SobiPro.jQuery( '#SPExtSearch' ).slideToggle( 'fast' );
