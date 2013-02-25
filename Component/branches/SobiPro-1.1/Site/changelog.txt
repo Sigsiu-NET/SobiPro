@@ -120,6 +120,7 @@ Legend:
    (#) Session id passed to URL in case the cookie cannot be set for some reason (Time zone problems in Chrome) while adding/editing an entry
    (#) Select list returns no results when searching for "exact phase" (Issue #801)
    (#) URL field - data invisible when SobiPro Accelerator is enabled and data has been cached by a bot
+   (#) Template installer: complex fields' options are incorect while installing new section (e.g. selected views in SP-GeoMap field)
 
 
 -------------------

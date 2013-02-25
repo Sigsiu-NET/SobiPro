@@ -161,7 +161,8 @@ class SPTemplateInstaller extends SPInstaller
 	}
 
 	/**
-	 * @param DOMNodeList $fields
+	 * @param $categories
+	 * @param $sid
 	 * @return void
 	 */
 	private function categories( $categories, $sid )
@@ -232,9 +233,11 @@ class SPTemplateInstaller extends SPInstaller
 						$attr[ $option->getAttribute( 'attribute' ) ] = $v;
 					}
 				}
+				/** @var $options DOMNodeList */
 				$options = $field->getElementsByTagName( 'value' );
+				// handles std options in select/checkbox group etc
 				$addOptions = array();
-				if ( ( $options instanceof DOMNodeList ) && $options->length ) {
+				if ( ( $options instanceof DOMNodeList ) && $options->length && $options->item( 0 )->parentNode->getAttribute( 'attribute' ) == 'fieldOptions' ) {
 					$values = array();
 					foreach ( $options as $option ) {
 						$id = strlen( $option->getAttribute( 'name' ) ) ? $option->getAttribute( 'name' ) : 0;
@@ -263,6 +266,18 @@ class SPTemplateInstaller extends SPInstaller
 						}
 					}
 				}
+				// handles multiple selected options in field parameters
+				elseif ( ( $options instanceof DOMNodeList ) && $options->length ) {
+					foreach ( $options as $option ) {
+						if ( strlen( $option->getAttribute( 'name' ) ) ) {
+							$attr[ $option->parentNode->getAttribute( 'attribute' ) ][ $option->getAttribute( 'name' ) ] = $option->nodeValue;
+						}
+						else {
+							$attr[ $option->parentNode->getAttribute( 'attribute' ) ][ ] = $option->nodeValue;
+						}
+					}
+				}
+
 				$attr[ 'nid' ] = $this->txt( $field, 'name' );
 				$attr[ 'name' ] = $this->txt( $field, 'label' );
 				$attr[ 'required' ] = $this->txt( $field, 'required' ) == 'true' ? true : false;
