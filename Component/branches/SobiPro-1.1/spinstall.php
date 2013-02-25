@@ -23,6 +23,8 @@ defined( '_JEXEC' ) || exit( 'Restricted access' );
 
 class com_sobiproInstallerScript
 {
+	private $new = false;
+
 	/**
 	 * Called before any type of action
 	 *
@@ -48,6 +50,11 @@ class com_sobiproInstallerScript
 	 */
 	function update( JAdapterInstance $adapter )
 	{
+		var_dump( debug_backtrace() );
+		exit;
+		if ( $this->new ) {
+			return true;
+		}
 		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) ) ) {
 			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) );
 		}
@@ -70,8 +77,11 @@ class com_sobiproInstallerScript
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (`description` text,`gid` int(11) NOT NULL AUTO_INCREMENT,`enabled` int(11) NOT NULL,`pid` int(11) NOT NULL,`groupName` varchar(150) NOT NULL,PRIMARY KEY (`gid`) ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;' );
 		$db->query();
 
-		$db->setQuery( 'DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;' );
-		$db->query();
+		try {
+			$db->setQuery( 'DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;' );
+			$db->query();
+		} catch ( Exception $x ) {
+		}
 
 		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_permissions' );
 		$cols = $db->loadAssocList();
@@ -87,23 +97,26 @@ class com_sobiproInstallerScript
 			$db->query();
 		}
 
-		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_field_data' );
-		$cols = $db->loadAssocList();
-		$skip = false;
-		foreach ( $cols as $col ) {
-			if ( $col[ 'Key_name' ] == 'baseData' ) {
-				$skip = true;
-				continue;
+		try {
+			$db->setQuery( 'SHOW INDEX FROM  #__sobipro_field_data' );
+			$cols = $db->loadAssocList();
+			$skip = false;
+			foreach ( $cols as $col ) {
+				if ( $col[ 'Key_name' ] == 'baseData' ) {
+					$skip = true;
+					continue;
+				}
 			}
-		}
-		if ( !( $skip ) ) {
-			try {
-				$db->setQuery( 'ALTER TABLE #__sobipro_field_data ENGINE = MYISAM;;' );
+			if ( !( $skip ) ) {
+				try {
+					$db->setQuery( 'ALTER TABLE #__sobipro_field_data ENGINE = MYISAM;;' );
+					$db->query();
+				} catch ( Exception $x ) {
+				}
+				$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD FULLTEXT  `baseData` (`baseData`);' );
 				$db->query();
 			}
-			catch( Exception $x ) {}
-			$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD FULLTEXT  `baseData` (`baseData`);' );
-			$db->query();
+		} catch ( Exception $x ) {
 		}
 
 		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_language' );
@@ -119,8 +132,8 @@ class com_sobiproInstallerScript
 			try {
 				$db->setQuery( 'ALTER TABLE #__sobipro_language ENGINE = MYISAM;;' );
 				$db->query();
+			} catch ( Exception $x ) {
 			}
-			catch( Exception $x ) {}
 			$db->setQuery( 'ALTER TABLE  `#__sobipro_language` ADD FULLTEXT  `sValue` (`sValue`);' );
 			$db->query();
 		}
@@ -128,14 +141,14 @@ class com_sobiproInstallerScript
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES (NULL, 'section', 'search', '*', 'front', 1), (NULL, 'entry', 'delete', 'own', 'front', 1),(NULL, 'entry', 'delete', '*', 'front', 1);" );
 		$db->query();
 
-        $db->setQuery( "INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) VALUES ('category', 'Category', 'special', 11);" );
-        $db->query();
+		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) VALUES ('category', 'Category', 'special', 11);" );
+		$db->query();
 
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (  `date` datetime NOT NULL,  `uid` int(11) NOT NULL,  `sid` int(11) NOT NULL,  `fid` varchar(50) NOT NULL,  `ip` varchar(15) NOT NULL,  `section` int(11) NOT NULL,  `browserData` text NOT NULL,  `osData` text NOT NULL,  `humanity` int(3) NOT NULL,  PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`) );' );
 		$db->query();
 
-        $db->setQuery( "INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES ('category', 'Category', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');" );
-        $db->query();
+		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES ('category', 'Category', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');" );
+		$db->query();
 
 
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px;"></iframe>';
@@ -150,6 +163,7 @@ class com_sobiproInstallerScript
 	 */
 	public function install( JAdapterInstance $adapter )
 	{
+		$this->new = true;
 		if ( !( file_exists( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) ) ) ) {
 			JFolder::create( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) );
 		}
@@ -185,7 +199,7 @@ class com_sobiproInstallerScript
 	 */
 	public function uninstall( JAdapterInstance $adapter )
 	{
-		$db =& JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = "show tables like '" . $db->getPrefix() . "sobipro_%'";
 		$db->setQuery( $query );
 		$tables = $db->loadColumn();

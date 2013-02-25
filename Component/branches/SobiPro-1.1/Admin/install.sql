@@ -227,7 +227,6 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
   KEY `enabled` (`enabled`),
   KEY `position` (`position`),
   KEY `section` (`section`),
-  FULLTEXT KEY `baseDate` (`baseData`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_field` (`fid`, `nid`, `adminField`, `admList`, `dataType`, `enabled`, `fee`, `fieldType`, `filter`, `isFree`, `position`, `priority`, `required`, `section`, `multiLang`, `uniqueData`, `validate`, `addToMetaDesc`, `addToMetaKeys`, `editLimit`, `editable`, `showIn`, `allowedAttributes`, `allowedTags`, `editor`, `inSearch`, `withLabel`, `cssClass`, `parse`, `template`, `notice`, `params`, `defaultValue`, `version`) VALUES
@@ -271,7 +270,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
   `editLimit` INT( 11 ),
   PRIMARY KEY (`fid`,`section`,`lang`,`sid`,`copy`),
   KEY `enabled` (`enabled`),
-  KEY `copy` (`copy`)
+  KEY `copy` (`copy`),
+  FULLTEXT KEY `baseData` (`baseData`)
 ) DEFAULT CHARSET=utf8;
 
 INSERT IGNORE INTO `#__sobipro_field_data` (`publishUp`, `publishDown`, `fid`, `sid`, `section`, `lang`, `enabled`, `params`, `options`, `baseData`, `approved`, `confirmed`, `createdTime`, `createdBy`, `createdIP`, `updatedTime`, `updatedBy`, `updatedIP`, `copy`, `editLimit`) VALUES

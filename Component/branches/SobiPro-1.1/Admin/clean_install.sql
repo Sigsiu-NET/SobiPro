@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
   PRIMARY KEY (`fid`,`section`,`lang`,`sid`,`copy`),
   KEY `enabled` (`enabled`),
   KEY `copy` (`copy`),
-  FULLTEXT KEY `baseDate` (`baseData`)
+  FULLTEXT KEY `baseData` (`baseData`)
 ) DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_option` (
