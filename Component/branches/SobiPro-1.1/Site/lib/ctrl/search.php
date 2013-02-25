@@ -198,12 +198,13 @@ final class SPSearchCtrl extends SPSectionCtrl
 		if ( strlen( $this->_request[ 'search_for' ] ) && $this->_request[ 'search_for' ] != Sobi::Txt( 'SH.SEARCH_FOR_BOX' ) ) {
 			$searchForString = true;
 			switch ( $this->_request[ 'phrase' ] ) {
+				case 'exact':
+					$this->searchPhrase();
+					break;
+				default:
 				case 'all':
 				case 'any':
 					$this->searchWords( ( $this->_request[ 'phrase' ] == 'all' ) );
-					break;
-				case 'exact':
-					$this->searchPhrase();
 					break;
 			}
 			$this->_results = array_unique( $this->_results );
