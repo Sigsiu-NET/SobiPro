@@ -227,29 +227,46 @@ final class SPCache
 			$section = $section ? $section : $this->_section;
 			$this->Exec( "BEGIN; DELETE FROM vars WHERE( section = '{$section}' ); COMMIT;" );
 		}
+
 		return $this;
+	}
+
+	protected function cleanXMLLists( $section )
+	{
+		$section = $section ? $section : $this->_section;
+		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
+			$xml = SPFactory::db()
+					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'section' => $section ) )
+					->loadAssocList();
+			$this->cleanXML( $xml );
+		}
 	}
 
 	protected function cleanSectionXML( $section )
 	{
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
 			$xml = SPFactory::db()
-					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'section' => $section ) )
+					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'section' => $section, 'task' => '%list%' ) )
 					->loadAssocList();
-			if ( count( $xml ) ) {
-				$relations = array();
-				foreach ( $xml as $cache ) {
-					$file = SPLoader::path( 'var.xml.' . $cache[ 'fileName' ], 'front', false, 'xml' );
-					if ( $file ) {
-						SPFs::delete( $file );
-					}
-					$relations[ ] = $cache[ 'cid' ];
+			$this->cleanXML( $xml );
+		}
+	}
+
+	protected function cleanXML( $xml )
+	{
+		if ( count( $xml ) ) {
+			$relations = array();
+			foreach ( $xml as $cache ) {
+				$file = SPLoader::path( 'var.xml.' . $cache[ 'fileName' ], 'front', false, 'xml' );
+				if ( $file ) {
+					SPFs::delete( $file );
 				}
-				if ( count( $relations ) ) {
-					SPFactory::db()
-							->delete( 'spdb_view_cache_relation', array( 'cid' => $relations ) )
-							->delete( 'spdb_view_cache', array( 'cid' => $relations ) );
-				}
+				$relations[ ] = $cache[ 'cid' ];
+			}
+			if ( count( $relations ) ) {
+				SPFactory::db()
+						->delete( 'spdb_view_cache_relation', array( 'cid' => $relations ) )
+						->delete( 'spdb_view_cache', array( 'cid' => $relations ) );
 			}
 		}
 	}
