@@ -222,12 +222,13 @@ final class SPCache
 	 */
 	public function & purgeSectionVars( $section = 0 )
 	{
+		$sid = $section ? $section : $this->_section;
 		$this->cleanTemp();
 		if ( $this->enabled() ) {
 			$section = $section ? $section : $this->_section;
 			$this->Exec( "BEGIN; DELETE FROM vars WHERE( section = '{$section}' ); COMMIT;" );
 		}
-
+		$this->cleanXMLLists( $section );
 		return $this;
 	}
 
@@ -236,7 +237,7 @@ final class SPCache
 		$section = $section ? $section : $this->_section;
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
 			$xml = SPFactory::db()
-					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'section' => $section ) )
+					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'section' => $section, 'task' => '%list.%' ) )
 					->loadAssocList();
 			$this->cleanXML( $xml );
 		}
@@ -246,7 +247,7 @@ final class SPCache
 	{
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
 			$xml = SPFactory::db()
-					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'section' => $section, 'task' => '%list%' ) )
+					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'section' => $section ) )
 					->loadAssocList();
 			$this->cleanXML( $xml );
 		}
