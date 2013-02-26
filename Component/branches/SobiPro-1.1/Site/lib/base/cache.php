@@ -222,7 +222,7 @@ final class SPCache
 	 */
 	public function & purgeSectionVars( $section = 0 )
 	{
-		$sid = $section ? $section : $this->_section;
+		$section = $section ? $section : $this->_section;
 		$this->cleanTemp();
 		if ( $this->enabled() ) {
 			$section = $section ? $section : $this->_section;
