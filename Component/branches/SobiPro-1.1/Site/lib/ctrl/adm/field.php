@@ -230,11 +230,12 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 
 		/* get view class */
 		$view = SPFactory::View( 'field', true );
+		$task = 'add';
 		$view->addHidden( SPRequest::sid(), 'sid' );
 		$view->addHidden( 0, 'fid' );
 		$view->assign( $groups, 'types' );
 		$view->assign( $field, 'field' );
-		$view->assign( $this->_task, 'task' );
+		$view->assign( $task, 'task' );
 		if ( $this->_fieldType ) {
 			$field->onFieldEdit( $view );
 		}
