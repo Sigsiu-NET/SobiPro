@@ -434,7 +434,7 @@ class SPEntryCtrl extends SPController
 				// determine if there is a custom redirect
 				if ( Sobi::Cfg( 'redirects.entry_save_enabled' ) && !( $pCount && !( Sobi::Can( 'entry.payment.free' ) ) ) ) {
 					$redirect = Sobi::Cfg( 'redirects.entry_save_url', null );
-					if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && !( strstr( $redirect, 'index.php' ) ) ) {
+					if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
 						$redirect = Sobi::Url( $redirect );
 					}
 					$this->response( $redirect, Sobi::Txt( Sobi::Cfg( 'redirects.entry_save_msg', 'EN.ENTRY_SAVED_NP' ) ), true, Sobi::Cfg( 'redirects.entry_save_msgtype', SPC::SUCCESS_MSG ) );
