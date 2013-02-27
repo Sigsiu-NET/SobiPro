@@ -191,7 +191,7 @@ final class SPCache
 	 * @param bool $system
 	 * @return SPCache
 	 */
-	public function & cleanSection( $section = -1, $system = true )
+	public function & cleanSection( $section = 0, $system = true )
 	{
 		$sid = $section ? $section : $this->_section;
 		if ( $section == Sobi::Section() && $this->enabled() ) {
@@ -205,8 +205,8 @@ final class SPCache
 				SPFs::delete( $this->_store . '.htCache_' . $sid . '.db' );
 			}
 		}
-		if ( $section > 0 ) {
-			$this->cleanSection( 0 );
+		if ( $sid > 0 ) {
+			$this->cleanSection( -1 );
 		}
 		if ( $system ) {
 			SPFactory::message()->resetSystemMessages();
@@ -379,12 +379,14 @@ final class SPCache
 			// so let's skip it and see what's going to happen
 			// poor guys from the testing team :P
 			// Tue, Feb 19, 2013 14:09:52
-//			if ( $type == 'entry' ) {
-//				// entry has to report if it should be re-validate
-//				if ( !( isset( $this->_check[ $type ][ $id ] ) ) || !( $this->_check[ $type ][ $id ] ) ) {
-//					return $this;
-//				}
-//			}
+			// it makes sense - otherwise the cache is being invalidated again and again
+			// anyway stupid solution -  i have to reconsider it therefore @todo
+			if ( $type == 'entry' ) {
+				// entry has to report if it should be re-validate
+				if ( !( isset( $this->_check[ $type ][ $id ] ) ) || !( $this->_check[ $type ][ $id ] ) ) {
+					return $this;
+				}
+			}
 
 			$id = ( int )$id;
 			$sid = ( int )$sid;
@@ -727,6 +729,7 @@ final class SPCache
 			$request[ 'fileName' ] = $fileName;
 			$filePath = SPLoader::path( 'var.xml.' . $fileName, 'front', false, 'xml' );
 			$content = $xml->saveXML();
+			$content = str_replace( '&nbsp;', '&#160;', $content );
 			$matches = array();
 			preg_match_all( '/<(category|entry|subcategory)[^>]*id="(\d{1,})"/', $content, $matches );
 			try {

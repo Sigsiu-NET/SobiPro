@@ -600,6 +600,7 @@ class SPJoomlaLang
 		// Remove any duplicate whitespace and replace whitespaces by hyphens
 		$str = preg_replace( '/\x20+/', '-', $str );
 		$str = preg_replace( array( '/\s+/', Sobi::Cfg( 'browser.url_filter', '/[^A-Za-z0-9\p{L}\-\_]/iu' ) ), array( '-', null ), $str );
+		$str = trim( $str, '_-' );
 		return $str;
 	}
 
