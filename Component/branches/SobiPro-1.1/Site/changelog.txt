@@ -121,6 +121,8 @@ Legend:
    (#) Select list returns no results when searching for "exact phase" (Issue #801)
    (#) Email field data invisible when Data Accelerator is enabled and data has been cached by a bot
    (#) Template installer: complex fields' options are incorrect while installing new section (e.g. selected views in SP-GeoMap field)
+   (#) Cache not cleaned after an ACL rule has been saved
+   (#) Empty values for range search passed to the search method ( Issue #806 )
 
 
 -------------------

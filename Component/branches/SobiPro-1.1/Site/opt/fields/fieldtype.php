@@ -117,6 +117,7 @@ class SPFieldType extends SPObject
 	/**
 	 * @param string $var
 	 * @param mixed $val
+	 * @return \SPObject|void
 	 */
 	public function set( $var, $val )
 	{
@@ -156,14 +157,16 @@ class SPFieldType extends SPObject
 	protected function searchForRange( $request, $section )
 	{
 		$sids = array();
-		$request[ 'from' ] = isset( $request[ 'from' ] ) ? (int)$request[ 'from' ] : SPC::NO_VALUE;
-		$request[ 'to' ] = isset( $request[ 'to' ] ) ? (int)$request[ 'to' ] : SPC::NO_VALUE;
-		try {
-			SPFactory::db()
-					->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $request, 'section' => $section ) );
-			$sids = SPFactory::db()->loadResultArray();
-		} catch ( SPException $x ) {
-			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SEARCH_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+		if ( $request[ 'from' ] || $request[ 'to' ] ) {
+			$request[ 'from' ] = isset( $request[ 'from' ] ) ? (int)$request[ 'from' ] : SPC::NO_VALUE;
+			$request[ 'to' ] = isset( $request[ 'to' ] ) ? (int)$request[ 'to' ] : SPC::NO_VALUE;
+			try {
+				$sids = SPFactory::db()
+						->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $request, 'section' => $section ) )
+						->loadResultArray();
+			} catch ( SPException $x ) {
+				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SEARCH_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			}
 		}
 		return $sids;
 	}
@@ -195,6 +198,7 @@ class SPFieldType extends SPObject
 	/**
 	 * Proxy pattern
 	 * @param string $property
+	 * @return mixed
 	 */
 	public function __get( $property )
 	{

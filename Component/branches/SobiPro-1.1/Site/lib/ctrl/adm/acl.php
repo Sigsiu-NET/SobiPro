@@ -291,7 +291,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			Sobi::Error( 'ACL', SPLang::e( 'CANNOT_GET_PERMISSIONS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
-		/* create permisssion and section map */
+		/* create permission and section map */
 		if ( count( $sids ) && count( $perms ) ) {
 			$map = array();
 			/* travel the sections */
@@ -311,6 +311,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 				Sobi::Error( 'ACL', SPLang::e( 'CANNOT_INSERT_GROUPS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
+		SPFactory::cache()->cleanAll();
 		/* trigger plugins */
 		Sobi::Trigger( 'AfterSave', 'Acl', array( &$this ) );
 		/* set redirect */
