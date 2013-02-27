@@ -131,7 +131,6 @@ class SPCachedView extends SPFrontView implements SPView
 		if ( is_array( $info ) ) {
 			$this->importData( $this->_xml->documentElement, $info, 'messages' );
 		}
-		$this->_xml->preserveWhiteSpace = false;
 		$this->_xml->formatOutput = true;
 	}
 
