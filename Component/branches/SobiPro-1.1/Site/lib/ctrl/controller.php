@@ -84,7 +84,7 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$obj ) );
 		$this->_model->extend( $obj, $cache );
-		if( $cache ) {
+		if ( $cache ) {
 			$this->_model->countVisit();
 		}
 	}
@@ -111,7 +111,7 @@ abstract class SPController extends SPObject implements SPControl
 
 	protected function escape( $redirect, $msg, $msgType )
 	{
-		if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
+		if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && !( strstr( $redirect, 'index.php' ) ) ) {
 			$redirect = Sobi::Url( $redirect );
 		}
 		Sobi::Redirect( $redirect, Sobi::Txt( $msg ), $msgType, true );
