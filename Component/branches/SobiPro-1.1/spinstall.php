@@ -58,22 +58,21 @@ class com_sobiproInstallerScript
 			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
 		}
 
+
         $srcpath = JPATH_ROOT . '/media/sobipro/icons';
 
         if (file_exists ($srcpath)) {
             $files = scandir($srcpath);
-            if (count($files)) {
-                foreach ($files as $file) {
-                    if ($file != '.' && $file != '..') {
-                        if (is_dir($srcpath.'/'.$file)) {
-                            JFolder::move(
-                                $srcpath.'/'.$file, implode( '/', array( JPATH_ROOT, 'media', 'sobipro', 'images' ) )
-                            );
+
+            $dest = JPATH_ROOT . '/media/sobipro/images';
+            if ( count( $files ) ) {
+                foreach ( $files as $file ) {
+                    if ( $file != '.' && $file != '..' ) {
+                        if ( is_dir( $srcpath . '/' . $file ) ) {
+                            JFolder::move( $srcpath . '/' . $file, $dest . '/' . $file );
                         }
-                        else {
-                            JFile::move(
-                                $srcpath.'/'.$file, implode( '/', array( JPATH_ROOT, 'media', 'sobipro', 'images' ) )
-                            );
+                        elseif ( !( file_exists( $dest . '/' . $file ) ) ) {
+                            JFile::move( $srcpath . '/' . $file, $dest . '/' . $file );
                         }
                     }
                 }
