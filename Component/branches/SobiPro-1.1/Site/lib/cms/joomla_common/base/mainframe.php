@@ -665,10 +665,8 @@ class SPJoomlaMainFrame
 	}
 
 	/**
-	 * Switching error reporting and displaying of errors compl. off
-	 * For e.g JavaScript, or XML output where the document structure is very sensible
 	 */
-	public function customHeader( $type = 'application/json' )
+	public function & customHeader( $type = 'application/json' )
 	{
 		header( 'Content-type: ' . $type );
 		header( 'Cache-Control: no-cache, must-revalidate' );
