@@ -355,11 +355,9 @@ SobiPro.jQuery( document ).ready( function ()
 	catch ( e ) {
 	}
 	//P_current-ip
-	//
 	try {
 		SobiPro.jQuery( '#spcfg-debug-xml-ip' ).click( function ()
 		{
-			"use strict";
 			if ( SobiPro.jQuery( this ).val() == '' ) {
 				SobiPro.jQuery( this ).val( SobiPro.jQuery( '#SP_current-ip' ).val() );
 			}

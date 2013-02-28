@@ -114,6 +114,11 @@ class SPCachedView extends SPFrontView implements SPView
 							SPRequest::set( $k, $v, 'get' );
 						}
 					}
+					if ( isset( $params[ 'pathway' ] ) && is_array( $params[ 'pathway' ] ) && count( $params[ 'pathway' ] ) ) {
+						foreach ( $params[ 'pathway' ] as $v ) {
+							SPFactory::mainframe()->addToPathway( $v[ 'name' ], $v[ 'url' ] );
+						}
+					}
 				}
 			}
 		}

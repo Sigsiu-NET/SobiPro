@@ -308,7 +308,14 @@ class SPTemplateXSLT implements SPTemplate
 			}
 			if ( isset( $data[ '_attributes' ] ) && is_array( $data[ '_attributes' ] ) && count( $data[ '_attributes' ] ) ) {
 				foreach ( $data[ '_attributes' ] as $an => $av ) {
-					$a = $this->_xml->createAttribute( SPLang::varName( $an ) );
+					$an = SPLang::varName( $an );
+					// legacy for 1.0
+					if ( strstr( $an, '-' ) ) {
+						$a = $this->_xml->createAttribute( str_replace( '-', '_', $an ) );
+						$a->appendChild( $this->_xml->createTextNode( $av ) );
+						$e->appendChild( $a );
+					}
+					$a = $this->_xml->createAttribute( $an );
 					$a->appendChild( $this->_xml->createTextNode( $av ) );
 					$e->appendChild( $a );
 				}
