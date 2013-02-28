@@ -49,9 +49,7 @@
 
 				<xsl:for-each select="entry/fields/*">
 					<div>
-						<xsl:attribute name="class">
-							<xsl:value-of select="@css_class" />
-						</xsl:attribute>
+						<xsl:attribute name="class"><xsl:value-of select="@css_class" /></xsl:attribute>
 
 						<xsl:if test="count(data/*) or string-length(data)">
 							<xsl:if test="label/@show = 1">
@@ -85,10 +83,7 @@
 					<div class="spEntryCats">
 						<xsl:value-of select="php:function( 'SobiPro::Txt' , 'ENTRY_LOCATED_IN' )" /><xsl:text> </xsl:text>
 						<xsl:for-each select="entry/categories/category">
-							<a>
-								<xsl:attribute name="href">
-									<xsl:value-of select="@url" />
-								</xsl:attribute>
+							<a href="{@url}">
 								<xsl:value-of select="." />
 							</a>
 							<xsl:if test="position() != last()">

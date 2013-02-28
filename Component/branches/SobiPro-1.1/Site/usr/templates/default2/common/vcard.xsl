@@ -33,9 +33,7 @@
 		</span>
 		<xsl:for-each select="fields/*">
 			<div>
-				<xsl:attribute name="class">
-					<xsl:value-of select="@css_class" />
-				</xsl:attribute>
+				<xsl:attribute name="class"><xsl:value-of select="@css_class" /></xsl:attribute>
 
 				<xsl:if test="count(data/*) or string-length(data)">
 					<xsl:if test="label/@show = 1">
