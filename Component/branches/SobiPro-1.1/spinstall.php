@@ -62,7 +62,15 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) ) ) {
 			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
 		}
-		$db = JFactory::getDBO();
+
+        if ( file_exists( implode( '/', array( JPATH_ROOT, 'media', 'sobipro', 'icons' ) ) ) ) {
+            JFolder::move(
+                implode( '/', array( JPATH_ROOT, 'media', 'sobipro', 'icons') ),
+                implode( '/', array( JPATH_ROOT, 'media', 'sobipro', 'images' ) )
+            );
+        }
+
+        $db = JFactory::getDBO();
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (  `cid` int(11) NOT NULL AUTO_INCREMENT,  `section` int(11) NOT NULL,  `sid` int(11) NOT NULL,  `fileName` varchar(100) NOT NULL,  `task` varchar(100) NOT NULL,  `site` int(11) NOT NULL,  `request` varchar(255) NOT NULL,  `language` varchar(15) NOT NULL,  `template` varchar(150) NOT NULL,  `configFile` text NOT NULL,  `userGroups` varchar(200) NOT NULL,  `created` datetime NOT NULL,PRIMARY KEY (`cid`),KEY `sid` (`sid`),KEY `section` (`section`),KEY `language` (`language`),KEY `task` (`task`),KEY `request` (`request`),KEY `site` (`site`),KEY `userGroups` (`userGroups`));' );
 		$db->query();
 
