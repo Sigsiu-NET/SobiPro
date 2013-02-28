@@ -50,10 +50,9 @@ class SPProgressCtrl extends SPController
 	 */
 	public function execute()
 	{
-		SPFactory::mainframe()->cleanBuffer();
-		header( 'Content-type: application/json' );
-		header( 'Cache-Control: no-cache, must-revalidate' );
-		header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+		SPFactory::mainframe()
+				->cleanBuffer()
+				->customHeader();
 		if ( SPFs::exists( $this->file ) ) {
 			echo SPFs::read( $this->file );
 		}
