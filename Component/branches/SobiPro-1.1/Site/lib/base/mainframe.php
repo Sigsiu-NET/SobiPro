@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -61,13 +57,19 @@ interface SPMainframeInterface
 
 	/**
 	 * @static
-	 * @param	string	$msg	The message, which may also be shown the user if need be.
+	 * @param $add
+	 * @param    string    $msg    The message, which may also be shown the user if need be.
+	 * @param string $msgtype
+	 * @param bool $now
+	 * @return
 	 */
 	public function setRedirect( $add, $msg = null, $msgtype = 'message', $now = false );
 
 	/**
 	 * @static
 	 * @param string $msg The message, which may also be shown the user if need be.
+	 * @param null $type
+	 * @return
 	 */
 	public function msg( $msg, $type = null );
 
@@ -78,9 +80,10 @@ interface SPMainframeInterface
 
 	/**
 	 * @param SPDBObject $obj
+	 * @param array $site
 	 * @return void
 	 */
-	public function addObjToPathway( $obj );
+	public function addObjToPathway( $obj, $site = array() );
 
 	/**
 	 * @param array $head
@@ -105,16 +108,18 @@ interface SPMainframeInterface
 	public function endOut();
 
 	/**
-	 * @param id
+	 * @param int $id
+	 * @return
+	 * @internal param $id
 	 */
 	public function & getUser( $id = 0 );
 
 	/**
-	 * Switchin error reporting and displaying of errors compl. off
+	 * Switching error reporting and displaying of errors compl. off
 	 * For e.g JavaScript, or XML output where the document structure is very sensible
 	 *
 	 */
-	public function cleanBuffer();
+	public function & cleanBuffer();
 
 	/**
 	 * @param string $title

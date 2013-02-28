@@ -25,7 +25,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  * @version 1.0
  * @created 10-Jan-2009 5:50:43 PM
  */
-class SPJoomlaMainFrame
+class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 {
 	/** @var bool */
 	static $cs = false;
@@ -243,9 +243,9 @@ class SPJoomlaMainFrame
 	/**
 	 * @param $name
 	 * @param $url
-	 * @return bool
+	 * @return SPJoomlaMainFrame
 	 */
-	public function addToPathway( $name, $url )
+	public function & addToPathway( $name, $url )
 	{
 		if ( defined( 'SOBI_ADM_PATH' ) ) {
 			return true;
@@ -258,6 +258,7 @@ class SPJoomlaMainFrame
 					->addItem( $name, $url );
 			$this->pathway[ ] = array( 'name' => $name, 'url' => $url );
 		}
+		return $this;
 	}
 
 	/**
@@ -293,7 +294,7 @@ class SPJoomlaMainFrame
 	 * @param array $site
 	 * @return void
 	 */
-	public function addObjToPathway( $obj, $site = array() )
+	public function & addObjToPathway( $obj, $site = array() )
 	{
 		if ( defined( 'SOBI_ADM_PATH' ) ) {
 			return true;
@@ -355,6 +356,7 @@ class SPJoomlaMainFrame
 			$title[ ] = Sobi::Txt( 'SITES_COUNTER', $site[ 1 ], $site[ 0 ] );
 		}
 		SPFactory::header()->addTitle( $title );
+		return $this;
 	}
 
 	/**
