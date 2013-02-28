@@ -653,7 +653,7 @@ class SPJoomlaMainFrame
 	 * For e.g JavaScript, or XML output where the document structure is very sensible
 	 *
 	 */
-	public function cleanBuffer()
+	public function & cleanBuffer()
 	{
 		error_reporting( 0 );
 		ini_set( 'display_errors', 'off' );
@@ -661,6 +661,19 @@ class SPJoomlaMainFrame
 		JResponse::setBody( null );
 		while ( ob_get_length() )
 			ob_end_clean();
+		return $this;
+	}
+
+	/**
+	 * Switching error reporting and displaying of errors compl. off
+	 * For e.g JavaScript, or XML output where the document structure is very sensible
+	 */
+	public function customHeader( $type = 'application/json' )
+	{
+		header( 'Content-type: ' . $type );
+		header( 'Cache-Control: no-cache, must-revalidate' );
+		header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+		return $this;
 	}
 
 	/**

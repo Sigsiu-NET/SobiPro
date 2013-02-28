@@ -130,10 +130,9 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		ob_start();
 		$view->display( 'menu', 'raw' );
 		$out = ob_get_contents();
-		SPFactory::mainframe()->cleanBuffer();
-		header( 'Content-type: application/json' );
-		header( 'Cache-Control: no-cache, must-revalidate' );
-		header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+		SPFactory::mainframe()
+				->cleanBuffer()
+				->customHeader();
 		echo json_encode( array( 'index' => $out ) );
 		exit;
 	}

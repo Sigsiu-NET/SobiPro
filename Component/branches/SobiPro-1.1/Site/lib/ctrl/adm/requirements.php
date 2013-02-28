@@ -48,10 +48,9 @@ class SPRequirements extends SPController
 				break;
 			default:
 				if ( method_exists( $this, $this->_task ) ) {
-					header( 'Content-type: application/json' );
-					header( 'Cache-Control: no-cache, must-revalidate' );
-					header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
-					SPFactory::mainframe()->cleanBuffer();
+					SPFactory::mainframe()
+							->cleanBuffer()
+							->customHeader();
 					$this->$task();
 					exit;
 				}

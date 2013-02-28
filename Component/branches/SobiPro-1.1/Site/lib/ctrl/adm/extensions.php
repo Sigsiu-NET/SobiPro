@@ -201,10 +201,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					}
 				}
 			}
-			SPFactory::mainframe()->cleanBuffer();
-			header( 'Content-type: application/json' );
-			header( 'Cache-Control: no-cache, must-revalidate' );
-			header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+			SPFactory::mainframe()
+					->cleanBuffer()
+					->customHeader();
 			echo json_encode( $list[ 'updateslist' ][ 'updates' ] );
 			exit;
 		}
@@ -705,9 +704,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			return $this->parseSoapRequest( $response, $repo );
 		}
 		elseif ( $response === true || isset( $response[ 'welcome_msg' ] ) ) {
-			header( 'Content-type: application/json' );
-			header( 'Cache-Control: no-cache, must-revalidate' );
-			header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+			SPFactory::mainframe()
+					->cleanBuffer()
+					->customHeader();
 			if ( isset( $response[ 'token' ] ) ) {
 				$repository->saveToken( $response[ 'token' ] );
 			}
@@ -763,10 +762,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$view->display();
 		$response = ob_get_contents();
 		$response = str_replace( 'id="SobiPro"', 'id="SpRepoModal"', $response );
-		SPFactory::mainframe()->cleanBuffer();
-		header( 'Content-type: application/json' );
-		header( 'Cache-Control: no-cache, must-revalidate' );
-		header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+		SPFactory::mainframe()
+				->cleanBuffer()
+				->customHeader();
 		if ( $repositoryId ) {
 			echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => $response ), 'repository' => $repositoryId, 'callback' => $callback ) );
 		}
@@ -796,10 +794,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$info = $connection->exec();
 		$connectionInfo = $connection->info();
 		if ( isset( $connectionInfo[ 'http_code' ] ) && $connectionInfo[ 'http_code' ] != 200 ) {
-			SPFactory::mainframe()->cleanBuffer();
-			header( 'Content-type: application/json' );
-			header( 'Cache-Control: no-cache, must-revalidate' );
-			header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+			SPFactory::mainframe()
+					->cleanBuffer()
+					->customHeader();
 			$response = SPLang::e( 'Error (%d) has occurred and the repository at "%s" could not be added.', $connectionInfo[ 'http_code' ], "https://{$repositoryId}" );
 			echo json_encode( array( 'message' => array( 'type' => SPC::ERROR_MSG, 'text' => $response ) ) );
 			exit;
@@ -922,10 +919,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$repo = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repository' ) ) );
 		$ssl = $connection->certificate( $repo );
 		if ( isset( $ssl[ 'err' ] ) ) {
-			SPFactory::mainframe()->cleanBuffer();
-			header( 'Content-type: application/json' );
-			header( 'Cache-Control: no-cache, must-revalidate' );
-			header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+			SPFactory::mainframe()
+					->cleanBuffer()
+					->customHeader();
 			$response = sprintf( 'An error has occurred and the connection could not be validated. Error number %s, %s', $ssl[ 'err' ], $ssl[ 'msg' ] );
 			echo json_encode( array( 'message' => array( 'type' => SPC::ERROR_MSG, 'text' => $response ) ) );
 			exit;
@@ -952,10 +948,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$view->display();
 			$response = ob_get_contents();
 			$response = str_replace( 'id="SobiPro"', 'id="SpRepoModal"', $response );
-			SPFactory::mainframe()->cleanBuffer();
-			header( 'Content-type: application/json' );
-			header( 'Cache-Control: no-cache, must-revalidate' );
-			header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+			SPFactory::mainframe()
+					->cleanBuffer()
+					->customHeader();
 			echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => $response ) ) );
 			exit;
 		}
@@ -1100,10 +1095,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				'redirect' => $redirect ? Sobi::Url( 'extensions.installed' ) : false,
 				'callback' => $type == SPC::SUCCESS_MSG ? $callback : false
 			);
-			header( 'Content-type: application/json' );
-			header( 'Cache-Control: no-cache, must-revalidate' );
-			header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
-			SPFactory::mainframe()->cleanBuffer();
+			SPFactory::mainframe()
+					->cleanBuffer()
+					->customHeader();
 			echo json_encode( $response );
 			exit;
 		}
