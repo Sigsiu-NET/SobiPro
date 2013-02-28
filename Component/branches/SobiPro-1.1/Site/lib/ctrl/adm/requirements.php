@@ -30,6 +30,7 @@ class SPRequirements extends SPController
 	 * @var string
 	 */
 	protected $_defTask = 'view';
+	const langFile = '/language/en-GB/en-GB.com_sobipro.ini';
 
 	public function execute()
 	{
@@ -62,19 +63,24 @@ class SPRequirements extends SPController
 		}
 	}
 
+	private function txt( $text, $params = array() )
+	{
+		return array( 'current' => Sobi::Txt( $text, $params ), 'org' => array( 'label' => $text, 'params' => $params ) );
+	}
+
 	private function mySQLCache()
 	{
 		try {
 			SPFactory::db()->exec( 'SHOW VARIABLES LIKE "have_query_cache"' );
 			$cache = SPFactory::db()->loadRow();
 			if ( $cache[ 1 ] == 'YES' ) {
-				echo $this->ok( Sobi::Txt( 'REQ.MYSQL_CACHE_AVAILABLE' ), __FUNCTION__ );
+				echo $this->ok( $this->txt( 'REQ.MYSQL_CACHE_AVAILABLE' ), __FUNCTION__ );
 			}
 			else {
-				echo $this->warning( Sobi::Txt( 'REQ.MYSQL_CACHE_NOT_AVAILABLE' ), __FUNCTION__ );
+				echo $this->warning( $this->txt( 'REQ.MYSQL_CACHE_NOT_AVAILABLE' ), __FUNCTION__ );
 			}
 		} catch ( SPException $x ) {
-			echo $this->warning( Sobi::Txt( 'REQ.MYSQL_CACHE_CANNOT_CHECK' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.MYSQL_CACHE_CANNOT_CHECK' ), __FUNCTION__ );
 		}
 	}
 
@@ -88,14 +94,14 @@ class SPRequirements extends SPController
 		try {
 			$db->exec( 'CREATE VIEW spView AS SELECT * FROM spdb_category' );
 		} catch ( SPException $x ) {
-			echo $this->warning( Sobi::Txt( 'REQ.MYSQL_VIEWS_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.MYSQL_VIEWS_NOT_AVAILABLE' ), __FUNCTION__ );
 			exit;
 		}
 		try {
 			$db->exec( 'DROP VIEW IF EXISTS spView' );
 		} catch ( SPException $x ) {
 		}
-		echo $this->ok( Sobi::Txt( 'REQ.MYSQL_VIEWS_AVAILABLE' ), __FUNCTION__ );
+		echo $this->ok( $this->txt( 'REQ.MYSQL_VIEWS_AVAILABLE' ), __FUNCTION__ );
 	}
 
 	private function createFunction()
@@ -114,11 +120,11 @@ class SPRequirements extends SPController
 				END
 			' );
 		} catch ( SPException $x ) {
-			echo $this->warning( Sobi::Txt( 'REQ.MYSQL_FUNCTIONS_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.MYSQL_FUNCTIONS_NOT_AVAILABLE' ), __FUNCTION__ );
 			exit;
 		}
 		$db->exec( 'DROP FUNCTION IF EXISTS SpStatFunc' );
-		echo $this->ok( Sobi::Txt( 'REQ.MYSQL_FUNCTIONS_AVAILABLE' ), __FUNCTION__ );
+		echo $this->ok( $this->txt( 'REQ.MYSQL_FUNCTIONS_AVAILABLE' ), __FUNCTION__ );
 	}
 
 	private function createProcedure()
@@ -137,11 +143,11 @@ class SPRequirements extends SPController
 				END
 			' );
 		} catch ( SPException $x ) {
-			echo $this->warning( Sobi::Txt( 'REQ.MYSQL_PROCEDURES_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.MYSQL_PROCEDURES_NOT_AVAILABLE' ), __FUNCTION__ );
 			exit;
 		}
 		$db->exec( 'DROP PROCEDURE IF EXISTS SpStatProc' );
-		echo $this->ok( Sobi::Txt( 'REQ.MYSQL_PROCEDURES_AVAILABLE' ), __FUNCTION__ );
+		echo $this->ok( $this->txt( 'REQ.MYSQL_PROCEDURES_AVAILABLE' ), __FUNCTION__ );
 	}
 
 	private function mySQLcharset()
@@ -149,10 +155,10 @@ class SPRequirements extends SPController
 		SPFactory::db()->exec( 'SELECT collation( "spdb_object" )' );
 		$col = SPFactory::db()->loadResult();
 		if ( !( strstr( $col, 'utf8' ) ) ) {
-			echo $this->error( Sobi::Txt( 'REQ.MYSQL_WRONG_COLL', array( 'collation' => $col ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.MYSQL_WRONG_COLL', array( 'collation' => $col ) ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( Sobi::Txt( 'REQ.MYSQL_COLL_OK', array( 'collation' => $col ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.MYSQL_COLL_OK', array( 'collation' => $col ) ), __FUNCTION__ );
 		}
 	}
 
@@ -165,13 +171,13 @@ class SPRequirements extends SPController
 		$minVer = array( 'major' => 5, 'minor' => 0, 'build' => 0 );
 		$rVer = array( 'major' => 5, 'minor' => 1, 'build' => 0 );
 		if ( !( $this->compareVersion( $minVer, $ver ) ) ) {
-			echo $this->error( Sobi::Txt( 'REQ.MYSQL_WRONG_VER', array( 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.MYSQL_WRONG_VER', array( 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
 		}
 		elseif ( !( $this->compareVersion( $rVer, $ver ) ) ) {
-			echo $this->warning( Sobi::Txt( 'REQ.MYSQL_NOT_REC_VER', array( 'recommended' => implode( '.', $rVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.MYSQL_NOT_REC_VER', array( 'recommended' => implode( '.', $rVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( Sobi::Txt( 'REQ.MYSQL_VERSION_OK', array( 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.MYSQL_VERSION_OK', array( 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
 		}
 	}
 
@@ -180,10 +186,10 @@ class SPRequirements extends SPController
 		@include_once ( 'PEAR.php' );
 		$v = class_exists( 'PEAR' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'PEAR_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'PEAR_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( Sobi::Txt( 'REQ.PEAR_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.PEAR_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -192,13 +198,13 @@ class SPRequirements extends SPController
 		$v = ini_get( 'memory_limit' );
 		$v = preg_replace( '/[^0-9]/i', null, $v );
 		if ( $v >= 48 ) {
-			echo $this->ok( Sobi::Txt( 'REQ.MEM_LIM_IS', array( 'memory' => $v ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.MEM_LIM_IS', array( 'memory' => $v ) ), __FUNCTION__ );
 		}
 		elseif ( $v >= 32 ) {
-			echo $this->warning( Sobi::Txt( 'REQ.MEM_LIM_IS_LOW', array( 'memory' => $v ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.MEM_LIM_IS_LOW', array( 'memory' => $v ) ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.MEM_LIM_IS_TOO_LOW', array( 'memory' => $v ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.MEM_LIM_IS_TOO_LOW', array( 'memory' => $v ) ), __FUNCTION__ );
 		}
 	}
 
@@ -212,10 +218,10 @@ class SPRequirements extends SPController
 		}
 
 		if ( $v >= 30 ) {
-			echo $this->ok( Sobi::Txt( 'REQ.MAX_EXEC_IS', array( 'limit' => $v ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.MAX_EXEC_IS', array( 'limit' => $v ) ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( Sobi::Txt( 'REQ.MAX_EXEC_IS_LOW', array( 'limit' => $v ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.MAX_EXEC_IS_LOW', array( 'limit' => $v ) ), __FUNCTION__ );
 		}
 	}
 
@@ -223,10 +229,10 @@ class SPRequirements extends SPController
 	{
 		$v = function_exists( 'parse_ini_file' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.PARSE_INI_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.PARSE_INI_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.PARSE_INI_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.PARSE_INI_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -236,10 +242,10 @@ class SPRequirements extends SPController
 		$disabled = explode( ', ', ini_get( 'disable_functions' ) );
 		if ( $v && ( !( in_array( 'exec', $disabled ) ) ) ) {
 			$ver = gd_info();
-			echo $this->ok( Sobi::Txt( 'REQ.EXEC_ENABLED' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.EXEC_ENABLED' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( Sobi::Txt( 'REQ.EXEC_NOT_ENABLED' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.EXEC_NOT_ENABLED' ), __FUNCTION__ );
 		}
 	}
 
@@ -247,10 +253,10 @@ class SPRequirements extends SPController
 	{
 		$v = function_exists( 'pspell_check' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.PSPELL_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.PSPELL_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( Sobi::Txt( 'REQ.PSPELL_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.PSPELL_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -258,10 +264,10 @@ class SPRequirements extends SPController
 	{
 		$v = function_exists( 'cal_days_in_month' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.CALENDAR_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.CALENDAR_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( Sobi::Txt( 'REQ.CALENDAR_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.CALENDAR_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -269,10 +275,10 @@ class SPRequirements extends SPController
 	{
 		$v = class_exists( 'ReflectionClass' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.REFLECTION_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.REFLECTION_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.REFLECTION_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.REFLECTION_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -280,10 +286,10 @@ class SPRequirements extends SPController
 	{
 		$v = function_exists( 'filter_var' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.FILTER_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.FILTER_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.FILTER_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.FILTER_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -291,10 +297,10 @@ class SPRequirements extends SPController
 	{
 		$v = class_exists( 'tidy' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.TIDY_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.TIDY_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( Sobi::Txt( 'REQ.TIDY_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.TIDY_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -302,10 +308,10 @@ class SPRequirements extends SPController
 	{
 		$v = class_exists( 'ZipArchive' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.ZIP_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.ZIP_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.ZIP_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.ZIP_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -314,10 +320,10 @@ class SPRequirements extends SPController
 	{
 		$v = function_exists( 'json_encode' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.JSON_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.JSON_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.JSON_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.JSON_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -325,10 +331,10 @@ class SPRequirements extends SPController
 	{
 		$v = function_exists( 'openssl_x509_parse' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.OPENSSL_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.OPENSSL_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.OPENSSL_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.OPENSSL_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -336,10 +342,10 @@ class SPRequirements extends SPController
 	{
 		$v = class_exists( 'SoapClient' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.SOAP_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.SOAP_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.SOAP_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.SOAP_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -349,14 +355,14 @@ class SPRequirements extends SPController
 		if ( $v ) {
 			$cfg = $this->curlFull();
 			if ( $cfg[ 'available' ] && $cfg[ 'response' ][ 'http_code' ] == 200 ) {
-				echo $this->ok( Sobi::Txt( 'REQ.CURL_INSTALLED' ), __FUNCTION__ );
+				echo $this->ok( $this->txt( 'REQ.CURL_INSTALLED' ), __FUNCTION__ );
 			}
 			else {
-				echo $this->warning( Sobi::Txt( 'REQ.CURL_NOT_USABLE' ), __FUNCTION__ );
+				echo $this->warning( $this->txt( 'REQ.CURL_NOT_USABLE' ), __FUNCTION__ );
 			}
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.CURL_NOT_INSTALLED' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.CURL_NOT_INSTALLED' ), __FUNCTION__ );
 		}
 	}
 
@@ -364,10 +370,10 @@ class SPRequirements extends SPController
 	{
 		$v = function_exists( 'preg_grep' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.REPC_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.REPC_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.REPC_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.REPC_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -375,10 +381,10 @@ class SPRequirements extends SPController
 	{
 		$v = class_exists( 'DirectoryIterator' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.SPL_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.SPL_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.SPL_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.SPL_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -386,10 +392,10 @@ class SPRequirements extends SPController
 	{
 		$v = class_exists( 'DOMXPath' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.DOMXPATH_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.DOMXPATH_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.DOMXPATH_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.DOMXPATH_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -398,10 +404,10 @@ class SPRequirements extends SPController
 		$v = class_exists( 'XSLTProcessor' ) ? true : false;
 //		$v = false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.XSL_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.XSL_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.XSL_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.XSL_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -409,10 +415,10 @@ class SPRequirements extends SPController
 	{
 		$v = class_exists( 'DOMDocument' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.DOM_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.DOM_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.DOM_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.DOM_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -421,10 +427,10 @@ class SPRequirements extends SPController
 		$v = function_exists( 'exif' ) ? true : false;
 		if ( $v ) {
 			$ver = gd_info();
-			echo $this->ok( Sobi::Txt( 'REQ.EXIF_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.EXIF_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( Sobi::Txt( 'REQ.EXIF_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.EXIF_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -444,10 +450,10 @@ class SPRequirements extends SPController
 			}
 		}
 		if ( $v ) {
-			echo $this->ok( Sobi::Txt( 'REQ.SQLITE_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.SQLITE_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( Sobi::Txt( 'REQ.SQLITE_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.SQLITE_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -456,10 +462,10 @@ class SPRequirements extends SPController
 		$v = function_exists( 'gd_info' ) ? true : false;
 		if ( $v ) {
 			$ver = gd_info();
-			echo $this->ok( Sobi::Txt( 'REQ.GD_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.GD_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( Sobi::Txt( 'REQ.GD_NOT_AVAILABLE' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.GD_NOT_AVAILABLE' ), __FUNCTION__ );
 		}
 	}
 
@@ -467,10 +473,10 @@ class SPRequirements extends SPController
 	{
 		$v = ini_get( 'register_globals' );
 		if ( !( $v ) || strtolower( $v ) == 'off' ) {
-			echo $this->ok( Sobi::Txt( 'REQ.RG_DISABLED' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.RG_DISABLED' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( Sobi::Txt( 'REQ.RG_ENABLED' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.RG_ENABLED' ), __FUNCTION__ );
 		}
 	}
 
@@ -478,10 +484,10 @@ class SPRequirements extends SPController
 	{
 		$v = ini_get( 'safe_mode' );
 		if ( !( $v ) || strtolower( $v ) == 'off' ) {
-			echo $this->ok( Sobi::Txt( 'REQ.PHP_SAFE_MODE_DISABLED' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.PHP_SAFE_MODE_DISABLED' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( Sobi::Txt( 'REQ.PHP_SAFE_MODE_ENABLED' ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.PHP_SAFE_MODE_ENABLED' ), __FUNCTION__ );
 		}
 	}
 
@@ -493,13 +499,13 @@ class SPRequirements extends SPController
 		$minVer = array( 'major' => 5, 'minor' => 2, 'build' => 0 );
 		$rVer = array( 'major' => 5, 'minor' => 3, 'build' => 0 );
 		if ( !( $this->compareVersion( $minVer, $ver ) ) ) {
-			echo $this->error( Sobi::Txt( 'REQ.PHP_WRONG_VER', array( 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.PHP_WRONG_VER', array( 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
 		}
 		elseif ( !( $this->compareVersion( $minVer, $ver ) ) ) {
-			echo $this->warning( Sobi::Txt( 'REQ.PHP_NOT_REC_VER', array( 'recommended' => implode( '.', $rVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.PHP_NOT_REC_VER', array( 'recommended' => implode( '.', $rVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( Sobi::Txt( 'REQ.PHP_VERSION_OK', array( 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.PHP_VERSION_OK', array( 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
 		}
 	}
 
@@ -513,24 +519,24 @@ class SPRequirements extends SPController
 		$ver = explode( '.', $ver );
 		$sapi = function_exists( 'php_sapi_name' ) ? php_sapi_name() : 'Unknown';
 		if ( strtolower( $soft ) != 'apache' ) {
-			echo $this->warning( Sobi::Txt( 'REQ.WS_WRONG_SOFTWARE', array( 'webserver' => SPRequest::string( 'SERVER_SOFTWARE', getenv( 'SERVER_SOFTWARE' ), null, 'server' ) ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.WS_WRONG_SOFTWARE', array( 'webserver' => SPRequest::string( 'SERVER_SOFTWARE', getenv( 'SERVER_SOFTWARE' ), null, 'server' ) ) ), __FUNCTION__ );
 		}
 		else {
 			$minVer = array( 'major' => 2, 'minor' => 0, 'build' => 0 );
 			$rVer = array( 'major' => 2, 'minor' => 2, 'build' => 0 );
 			if ( !( isset( $ver[ 0 ] ) && isset( $ver[ 1 ] ) && isset( $ver[ 2 ] ) ) || !( $ver[ 0 ] && $ver[ 1 ] ) ) {
-				echo $this->warning( Sobi::Txt( 'REQ.WS_NO_APACHE_VER', array( 'required' => implode( '.', $minVer ), 'sapi' => $sapi ) ), __FUNCTION__ );
+				echo $this->warning( $this->txt( 'REQ.WS_NO_APACHE_VER', array( 'required' => implode( '.', $minVer ), 'sapi' => $sapi ) ), __FUNCTION__ );
 				exit;
 			}
 			$ver = array( 'major' => $ver[ 0 ], 'minor' => $ver[ 1 ], 'build' => ( isset( $ver[ 2 ] ) ? $ver[ 2 ] : 0 ) );
 			if ( !( $this->compareVersion( $minVer, $ver ) ) ) {
-				echo $this->error( Sobi::Txt( 'REQ.WS_WRONG_VER', array( 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ), 'sapi' => $sapi ) ), __FUNCTION__ );
+				echo $this->error( $this->txt( 'REQ.WS_WRONG_VER', array( 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ), 'sapi' => $sapi ) ), __FUNCTION__ );
 			}
-			elseif ( !( $this->compareVersion( $rVer, $ver ) ) ) {
-				echo $this->warning( Sobi::Txt( 'REQ.WS_NOT_REC_VER', array( 'recommended' => implode( '.', $rminVer ), 'installed' => implode( '.', $ver ), 'sapi' => $sapi ) ), __FUNCTION__ );
-			}
+//			elseif ( !( $this->compareVersion( $rVer, $ver ) ) ) {
+//				echo $this->warning( $this->txt( 'REQ.WS_NOT_REC_VER', array( 'recommended' => implode( '.', $rminVer ), 'installed' => implode( '.', $ver ), 'sapi' => $sapi ) ), __FUNCTION__ );
+//			}
 			else {
-				echo $this->ok( Sobi::Txt( 'REQ.WS_VERSION_OK', array( 'installed' => implode( '.', $ver ), 'sapi' => $sapi ) ), __FUNCTION__ );
+				echo $this->ok( $this->txt( 'REQ.WS_VERSION_OK', array( 'installed' => implode( '.', $ver ), 'sapi' => $sapi ) ), __FUNCTION__ );
 			}
 		}
 	}
@@ -539,10 +545,10 @@ class SPRequirements extends SPController
 	{
 		$e = strtolower( SPFactory::CmsHelper()->cmsSetting( 'charset' ) );
 		if ( $e != 'utf-8' ) {
-			echo $this->error( Sobi::Txt( 'REQ.CMS_ENCODING_NOK', array( 'encoding' => $e ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.CMS_ENCODING_NOK', array( 'encoding' => $e ) ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( Sobi::Txt( 'REQ.CMS_ENCODING_OK', array( 'encoding' => $e ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.CMS_ENCODING_OK', array( 'encoding' => $e ) ), __FUNCTION__ );
 		}
 	}
 
@@ -550,10 +556,10 @@ class SPRequirements extends SPController
 	{
 		$e = SPFactory::CmsHelper()->cmsSetting( 'ftp_enable' );
 		if ( $e && $e != 'disabled' ) {
-			echo $this->warning( Sobi::Txt( 'REQ.CMS_FTP_NOK' ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.CMS_FTP_NOK' ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( Sobi::Txt( 'REQ.CMS_FTP_OK' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.CMS_FTP_OK' ), __FUNCTION__ );
 		}
 	}
 
@@ -567,25 +573,53 @@ class SPRequirements extends SPController
 		unset( $minVer[ 'rev' ] );
 
 		if ( !( $this->compareVersion( $minVer, $cmsVer ) ) ) {
-			echo $this->error( Sobi::Txt( 'REQ.CMS_WRONG_VER', array( 'cms' => $cmsName, 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $cmsVer ) ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.CMS_WRONG_VER', array( 'cms' => $cmsName, 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $cmsVer ) ) ), __FUNCTION__ );
 		}
 		elseif ( !( $this->compareVersion( $rminVer, $cmsVer ) ) ) {
-			echo $this->warning( Sobi::Txt( 'REQ.CMS_NOT_REC_VER', array( 'cms' => $cmsName, 'recommended' => implode( '.', $rminVer ), 'installed' => implode( '.', $cmsVer ) ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.CMS_NOT_REC_VER', array( 'cms' => $cmsName, 'recommended' => implode( '.', $rminVer ), 'installed' => implode( '.', $cmsVer ) ) ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( Sobi::Txt( 'REQ.CMS_VERSION_OK', array( 'cms' => $cmsName, 'installed' => implode( '.', $cmsVer ), 'cms' => $cmsName, ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.CMS_VERSION_OK', array( 'cms' => $cmsName, 'installed' => implode( '.', $cmsVer ), 'cms' => $cmsName, ) ), __FUNCTION__ );
 		}
 	}
 
 	private function store( $key, $value, $msg = null )
 	{
-		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
-		$cont = null;
-		if ( SPFs::exists( $file ) ) {
-			$cont = SPFs::read( $file );
+		$store = Sobi::GetUserData( 'requirements', array() );
+		$store[ $key ] = array( 'value' => $value, 'message' => $msg );
+		Sobi::SetUserData( 'requirements', $store );
+//		$msg = $msg ? $msg[ 'org' ][ 'label' ] : null;
+//		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
+//		$cont = null;
+//		if ( SPFs::exists( $file ) ) {
+//			$cont = SPFs::read( $file );
+//		}
+//		$txt = "{$cont}\n{$key}={$msg};{$value}";
+//		SPFs::write( $file, $txt );
+	}
+
+	private function prepareStoredData( &$settings )
+	{
+		$store = Sobi::GetUserData( 'requirements', array() );
+		if ( Sobi::Lang() != 'en-GB' && file_exists( JPATH_ADMINISTRATOR . self::langFile ) ) {
+			$file = parse_ini_file( JPATH_ADMINISTRATOR . self::langFile );
 		}
-		$txt = "{$cont}\n{$key}={$msg};{$value}";
-		SPFs::write( $file, $txt );
+		if ( count( $store ) ) {
+			foreach ( $store as $key => $data ) {
+				if ( Sobi::Lang() != 'en-GB' ) {
+					$translate = $file[ 'SP.' . $data[ 'message' ][ 'org' ][ 'label' ] ];
+					if ( count( $data[ 'message' ][ 'org' ][ 'params' ] ) ) {
+						foreach ( $data[ 'message' ][ 'org' ][ 'params' ] as $param => $value ) {
+							$translate = str_replace( "var:[$param]", $value, $translate );
+						}
+					}
+					$settings[ $key ] = array( 'key' => $key, 'response' => array( 'en-GB' => $translate, Sobi::Lang() => $data[ 'message' ][ 'current' ] ), 'status' => $data[ 'value' ] );
+				}
+				else {
+					$settings[ $key ] = array( 'key' => $key, 'response' => array( 'en-GB' => $data[ 'message' ][ 'current' ] ), 'status' => $data[ 'value' ] );
+				}
+			}
+		}
 	}
 
 	private function download()
@@ -607,6 +641,7 @@ class SPRequirements extends SPController
 				}
 			}
 		}
+		$this->prepareStoredData( $settings );
 		$settings[ 'env' ] = array(
 			'PHP_OS' => PHP_OS,
 			'php_uname' => php_uname(),
@@ -710,11 +745,10 @@ class SPRequirements extends SPController
 			set_time_limit( 15 );
 			if ( ( $ftp = ftp_connect( $address ) ) !== false ) {
 				$cfg[ 'connected' ] = 'created';
-				if ( ( $login = @ftp_login( $ftp, 'ftp' ) ) !== false ) {
+				if ( ( $login = @ftp_login( $ftp, 'ftp', '' ) ) !== false ) {
 				}
 				else {
 					$cfg[ 'available' ] = 'available but seems to be not usable';
-					$c = 'no';
 				}
 			}
 			else {
@@ -790,7 +824,7 @@ class SPRequirements extends SPController
 
 	protected function response( $message, $type = SPC::SUCCESS_MSG )
 	{
-		return json_encode( array( 'type' => $type, 'message' => $message, 'textType' => Sobi::Txt( 'STATUS_' . $type ) ) );
+		return json_encode( array( 'type' => $type, 'message' => $message[ 'current' ], 'textType' => Sobi::Txt( 'STATUS_' . $type ) ) );
 	}
 
 	protected function view()
