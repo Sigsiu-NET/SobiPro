@@ -39,9 +39,7 @@
                         <xsl:value-of select="name"/>
                     </title>
                     <link rel="alternate">
-                        <xsl:attribute name="href">
-                            <xsl:value-of select="php:function( 'Sobi::FixPath', $url )"/>
-                        </xsl:attribute>
+                        <xsl:attribute name="href"><xsl:value-of select="php:function( 'Sobi::FixPath', $url )"/></xsl:attribute>
                     </link>
                     <id>
                         <xsl:value-of select="@id"/>
