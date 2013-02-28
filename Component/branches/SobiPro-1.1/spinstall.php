@@ -23,8 +23,6 @@ defined( '_JEXEC' ) || exit( 'Restricted access' );
 
 class com_sobiproInstallerScript
 {
-	private $new = false;
-
 	/**
 	 * Called before any type of action
 	 *
@@ -50,9 +48,6 @@ class com_sobiproInstallerScript
 	 */
 	function update( JAdapterInstance $adapter )
 	{
-		if ( $this->new ) {
-			return true;
-		}
 		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) ) ) {
 			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) );
 		}
@@ -63,11 +58,26 @@ class com_sobiproInstallerScript
 			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
 		}
 
-        if ( file_exists( implode( '/', array( JPATH_ROOT, 'media', 'sobipro', 'icons' ) ) ) ) {
-            JFolder::move(
-                implode( '/', array( JPATH_ROOT, 'media', 'sobipro', 'icons') ),
-                implode( '/', array( JPATH_ROOT, 'media', 'sobipro', 'images' ) )
-            );
+        $srcpath = JPATH_ROOT . '/media/sobipro/icons';
+
+        if (file_exists ($srcpath)) {
+            $files = scandir($srcpath);
+            if (count($files)) {
+                foreach ($files as $file) {
+                    if ($file != '.' && $file != '..') {
+                        if (is_dir($srcpath.'/'.$file)) {
+                            JFolder::move(
+                                $srcpath.'/'.$file, implode( '/', array( JPATH_ROOT, 'media', 'sobipro', 'images' ) )
+                            );
+                        }
+                        else {
+                            JFile::move(
+                                $srcpath.'/'.$file, implode( '/', array( JPATH_ROOT, 'media', 'sobipro', 'images' ) )
+                            );
+                        }
+                    }
+                }
+            }
         }
 
         $db = JFactory::getDBO();
@@ -169,7 +179,6 @@ class com_sobiproInstallerScript
 	 */
 	public function install( JAdapterInstance $adapter )
 	{
-		$this->new = true;
 		if ( !( file_exists( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) ) ) ) {
 			JFolder::create( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) );
 		}
