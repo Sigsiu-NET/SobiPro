@@ -600,7 +600,7 @@ class SPJoomlaLang
 		// Remove any duplicate whitespace and replace whitespaces by hyphens
 		$str = preg_replace( '/\x20+/', '-', $str );
 		$str = preg_replace( array( '/\s+/', Sobi::Cfg( 'browser.url_filter', '/[^A-Za-z0-9\p{L}\-\_]/iu' ) ), array( '-', null ), $str );
-		$str = trim( $str, '_-' );
+		$str = trim( $str, '_-\[\]\(\)' );
 		return $str;
 	}
 
@@ -631,11 +631,10 @@ class SPJoomlaLang
 	 */
 	public static function nid( $txt, $unicode = false )
 	{
-		$txt = str_replace( array( '.', '_' ), '-', $txt );
+		$txt = trim( str_replace( array( '.', '_' ), '-', $txt ) );
 		return Sobi::Cfg( 'sef.unicode' ) && $unicode ?
 				self::urlSafe( $txt ) :
-				preg_replace( '/(\s|[^A-Za-z0-9\-])+/', '-', $txt );
-		//JFilterOutput::stringURLSafe( $txt );
+				trim( preg_replace( '/(\s|[^A-Za-z0-9\-])+/', '-', $txt ), '_-\[\]\(\)' );
 	}
 
 	/**

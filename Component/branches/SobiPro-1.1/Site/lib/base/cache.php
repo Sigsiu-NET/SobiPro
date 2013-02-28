@@ -690,6 +690,7 @@ final class SPCache
 					$data[ 'request' ][ $k ] = SPRequest::string( $k );
 				}
 			}
+			$data[ 'pathway' ] = SPFactory::mainframe()->getPathway();
 			$this->view[ 'xml' ] = $xml;
 			$this->view[ 'template' ] = $template;
 			$this->view[ 'data' ] = $data;

@@ -27,13 +27,12 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  */
 class SPJoomlaMainFrame
 {
-	/**
-	 * @var bool
-	 */
+	/** @var bool */
 	static $cs = false;
-	/**
-	 */
+	/** @var string */
 	const baseUrl = "index.php?option=com_sobipro";
+	/** @var array */
+	protected $pathway = array();
 
 	/**
 	 *
@@ -257,7 +256,16 @@ class SPJoomlaMainFrame
 			JFactory::getApplication()
 					->getPathway()
 					->addItem( $name, $url );
+			$this->pathway[ ] = array( 'name' => $name, 'url' => $url );
 		}
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getPathway()
+	{
+		return $this->pathway;
 	}
 
 	/**
@@ -292,7 +300,7 @@ class SPJoomlaMainFrame
 		}
 		$menu =& JSite::getMenu()->getActive()->query;
 		$sid = isset( $menu[ 'sid' ] ) ? $menu[ 'sid' ] : 0;
-		$pathway = JFactory::getApplication()->getPathway();
+//		$pathway = JFactory::getApplication()->getPathway();
 		if ( $obj->get( 'oType' ) == 'entry' ) {
 			$id = SPRequest::int( 'pid' );
 			/* if we didn't entered this entry via category */
@@ -334,11 +342,13 @@ class SPJoomlaMainFrame
 					continue;
 				}
 				$title[ ] = $data[ 'name' ];
-				$pathway->addItem( $data[ 'name' ], ( self::url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
+//				$pathway->addItem( $data[ 'name' ], ( self::url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
+				$this->addToPathway( $data[ 'name' ], ( self::url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
 			}
 		}
 		if ( $obj->get( 'oType' ) == 'entry' ) {
-			$pathway->addItem( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
+//			$pathway->addItem( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
+			$this->addToPathway( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
 			$title[ ] = $obj->get( 'name' );
 		}
 		if ( count( $site ) && $site[ 0 ] ) {

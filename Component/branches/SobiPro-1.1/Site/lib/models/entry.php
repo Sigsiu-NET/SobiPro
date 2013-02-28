@@ -127,7 +127,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		if ( !( strlen( $this->name ) ) ) {
 			$this->name = Sobi::Txt( 'ENTRY_NO_NAME' );
 		}
-		if ( $this->owner == Sobi::My( 'id' ) ) {
+		if ( $this->owner && $this->owner == Sobi::My( 'id' ) ) {
 			$stop = true;
 			SPFactory::registry()->set( 'break_cache_view', $stop );
 		}
