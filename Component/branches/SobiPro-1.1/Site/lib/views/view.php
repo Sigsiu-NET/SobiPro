@@ -355,6 +355,9 @@ abstract class SPFrontView extends SPObject implements SPView
 		if ( strlen( $header ) ) {
 			header( $header );
 		}
+		if ( SPRequest::int( 'crawl' ) ) {
+			header( 'SobiPro: ' . Sobi::Section() );
+		}
 		echo $output;
 		if ( $this->key( 'output.close', false ) ) {
 			exit;
