@@ -36,8 +36,9 @@ function SobiProCrawler( task )
 	var proxy = this;
 	this.message = SobiPro.jQuery( '#progressMessage' );
 	this.spinner = '<i class="icon-refresh icon-spin"></i>&nbsp;';
+	SobiPro.jQuery( '#crawlerResponse' ).find( '.invalidate' ).remove();
 	this.row = SobiPro.jQuery( '#crawlerResponse' ).find( 'tbody' ).find( 'tr' );
-	SobiPro.jQuery( '#crawlerResponse' ).find( 'tbody' ).find( 'tr' ).addClass( 'hide' )
+	SobiPro.jQuery( '#crawlerResponse' ).find( 'tbody' ).find( 'tr' ).addClass( 'hide' );
 	this.request = {
 		'option':'com_sobipro',
 		'format':'raw',
@@ -60,11 +61,19 @@ function SobiProCrawler( task )
 	{
 		SobiPro.jQuery.each( data, function ( i, element )
 		{
-			if ( element.code == 200 ) {
-				code = '<span class="label label-success">' + element.code + '</span>'
-			}
-			else {
-				code = '<span class="label label-warning">' + element.code + '</span>'
+			switch ( element.code ) {
+				case 200:
+					code = '<span class="label label-success">' + element.code + '</span>';
+					break
+				case 412:
+					code = '<span class="label label-inverse">' + element.code + '</span>';
+					break
+				case 501:
+					code = '<span class="label label-important">' + element.code + '</span>';
+					break
+				default:
+					code = '<span class="label label-warning">' + element.code + '</span>';
+					break;
 			}
 			var row = proxy.row.clone();
 			row.find( '.url' ).html( element.url );
@@ -72,6 +81,7 @@ function SobiProCrawler( task )
 			row.find( '.links' ).html( element.count );
 			row.find( '.time' ).html( element.time );
 			row.removeClass( 'hide' );
+			row.addClass( 'invalidate' );
 			SobiPro.jQuery( '#crawlerResponse' ).find( 'tbody' ).prepend( row );
 		} );
 	}

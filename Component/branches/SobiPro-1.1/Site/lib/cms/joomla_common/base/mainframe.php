@@ -252,9 +252,10 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			return true;
 		}
 		$query = parse_url( $url );
-		if ( is_array( $query ) && count( $query ) && isset( $query[ 'query' ] ) && strstr( $query[ 'query' ], 'format' ) ) {
+		if ( is_array( $query ) && count( $query ) && isset( $query[ 'query' ] ) && strstr( $query[ 'query' ], 'crawl' ) ) {
 			parse_str( $query[ 'query' ], $vars );
 			unset( $vars[ 'format' ] );
+			unset( $vars[ 'crawl' ] );
 			$query[ 'query' ] = count( $vars ) ? http_build_query( $vars ) : null;
 			if ( $query[ 'query' ] ) {
 				$url = $query[ 'path' ] . '?' . $query[ 'query' ];

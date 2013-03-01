@@ -85,17 +85,29 @@ class SPCrawler extends SPController
 		else {
 			$request .= '&';
 		}
-		$request .= 'format=raw';
+		$request .= 'format=raw&crawl=1';
 		/** @var $connection SPRemote */
 		$connection = SPFactory::Instance( 'services.remote' );
-		$connection->setOptions( array( 'url' => $request, 'connecttimeout' => 10, 'returntransfer' => true, 'useragent' => self::USER_AGENT ) );
+		$connection->setOptions(
+			array(
+				'url' => $request,
+				'connecttimeout' => 10,
+				'returntransfer' => true,
+				'useragent' => self::USER_AGENT,
+				'header' => true,
+				'verbose' => true
+			)
+		);
 		$content = $connection->exec();
 		$response = $connection->info();
 		if ( $response[ 'http_code' ] == 200 ) {
 			$urls = $this->parseResponse( $content );
 			$this->removeUrl( $url );
+			if ( !( is_array( $urls ) ) && is_numeric( $urls ) ) {
+				$response[ 'http_code' ] = $urls;
+			}
 		}
-		if ( count( $urls ) ) {
+		if ( count( $urls ) && $response[ 'http_code' ] == 200 ) {
 			$this->insertUrls( $urls );
 		}
 		return array(
@@ -130,24 +142,40 @@ class SPCrawler extends SPController
 	protected function parseResponse( $response )
 	{
 		$links = array();
-		preg_match_all( '/href=[\'"]?([^\'" >]+)/', $response, $links, PREG_PATTERN_ORDER );
-		if ( isset( $links[ 1 ] ) && $links[ 1 ] ) {
-			$liveSite = Sobi::Cfg( 'live_site' );
-			$host = Sobi::Cfg( 'live_site_root' );
-			$links = array_unique( $links[ 1 ] );
-			foreach ( $links as $index => $link ) {
-				$http = preg_match( '/http[s]?:\/\/.*/i', $link );
-				if ( strstr( $link, '#' ) ) {
-					unset( $links[ $index ] );
-				}
-				elseif ( $http && !( strstr( $link, $liveSite ) ) ) {
-					unset( $links[ $index ] );
-				}
-				elseif ( !( $http ) ) {
-					$links[ $index ] = Sobi::FixPath( $host . '/' . $link );
+		if ( strlen( $response ) && strstr( $response, 'SobiPro' ) ) {
+			list( $header, $response ) = explode( "\r\n\r\n", $response );
+			$header = explode( "\n", $header );
+			foreach ( $header as $line ) {
+				if ( strstr( $line, 'SobiPro' ) ) {
+					$line = explode( ':', $line );
+					$sid = trim( $line[ 1 ] );
+					if ( $sid != Sobi::Section() ) {
+						return 412;
+					}
 				}
 			}
+			preg_match_all( '/href=[\'"]?([^\'" >]+)/', $response, $links, PREG_PATTERN_ORDER );
+			if ( isset( $links[ 1 ] ) && $links[ 1 ] ) {
+				$liveSite = Sobi::Cfg( 'live_site' );
+				$host = Sobi::Cfg( 'live_site_root' );
+				$links = array_unique( $links[ 1 ] );
+				foreach ( $links as $index => $link ) {
+					$http = preg_match( '/http[s]?:\/\/.*/i', $link );
+					if ( strstr( $link, '#' ) ) {
+						unset( $links[ $index ] );
+					}
+					elseif ( $http && !( strstr( $link, $liveSite ) ) ) {
+						unset( $links[ $index ] );
+					}
+					elseif ( !( $http ) ) {
+						$links[ $index ] = Sobi::FixPath( $host . '/' . $link );
+					}
+				}
+			}
+			return $links;
 		}
-		return $links;
+		else {
+			return 501;
+		}
 	}
 }
