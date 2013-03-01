@@ -75,6 +75,7 @@ Legend:
    (+) Search priority to XML results
    (+) Possibility to define different template methods (see default template) to plug-in an action between (and whilst) submit and save entry actions
    (+) System checker added all status messages in en-GB
+   (+) Section crawler - possibility to trigger complete cache creation
 
    (-) Vehicles template removed; will be a separate template now
    (-) SobiPro Admin Menu Module removed; sections available now on a menu list

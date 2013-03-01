@@ -74,6 +74,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	{
 		$cfg = SPFactory::config();
 		$cfg->set( 'live_site', JURI::root() );
+		$cfg->set( 'live_site_root', JURI::getInstance()->toString( array( 'scheme', 'host', 'port' ) ) );
 		$cfg->set( 'tmp_path', $this->JConfigValue( 'config.tmp_path' ) );
 		$cfg->set( 'from', $this->JConfigValue( 'config.mailfrom' ), 'mail' );
 		$cfg->set( 'mailer', $this->JConfigValue( 'config.mailer' ), 'mail' );
@@ -249,6 +250,18 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	{
 		if ( defined( 'SOBI_ADM_PATH' ) ) {
 			return true;
+		}
+		$query = parse_url( $url );
+		if ( is_array( $query ) && count( $query ) && isset( $query[ 'query' ] ) && strstr( $query[ 'query' ], 'format' ) ) {
+			parse_str( $query[ 'query' ], $vars );
+			unset( $vars[ 'format' ] );
+			$query[ 'query' ] = count( $vars ) ? http_build_query( $vars ) : null;
+			if ( $query[ 'query' ] ) {
+				$url = $query[ 'path' ] . '?' . $query[ 'query' ];
+			}
+			else {
+				$url = $query[ 'path' ];
+			}
 		}
 		$menu = isset( JSite::getMenu()->getActive()->link ) ? JSite::getMenu()->getActive()->link : null;
 		$a = preg_replace( '/&Itemid=\d+/', null, str_replace( '/', null, $url ) );
@@ -496,6 +509,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 					$var[ 'sid' ] = $var[ 'sid' ] . ':' . $var[ 'title' ];
 				}
 				unset( $var[ 'title' ] );
+			}
+			if ( isset( $var[ 'format' ] ) && $var[ 'format' ] == 'raw' && $sef ) {
+				unset( $var[ 'format' ] );
 			}
 			foreach ( $var as $k => $v ) {
 				if ( $k == 'out' ) {

@@ -56,6 +56,9 @@ class SPConfigAdmCtrl extends SPController
 				SPFactory::cache()->cleanSection();
 				$this->response( Sobi::Back(), Sobi::Txt( 'MSG.CACHE_CLEANED' ), false, SPC::SUCCESS_MSG );
 				break;
+			case 'crawler':
+				$this->crawler();
+				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
 				if ( !( parent::execute() ) && !( $this->view() ) ) {
@@ -66,6 +69,20 @@ class SPConfigAdmCtrl extends SPController
 				}
 				break;
 		}
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function crawler()
+	{
+		/** @var $view SPAdmView  */
+		$view = $this->getView( 'config.' . $this->_task );
+		$view->setCtrl( $this );
+		$view->determineTemplate( 'config', $this->_task );
+		$view->display();
+		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
+		return true;
 	}
 
 	/**

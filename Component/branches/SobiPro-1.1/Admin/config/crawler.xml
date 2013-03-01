@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ @version: $Id$
+ @package: SobiPro Component for Joomla!
+
+ @author
+ Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ Email: sobi[at]sigsiu.net
+ Url: http://www.Sigsiu.NET
+
+ @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ @license GNU/GPL Version 3
+ This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+ $Date$
+ $Revision$
+ $Author$
+ $HeadURL$
+-->
+
+<definition>
+	<header>
+		<title value="Directory Crawler" />
+		<file type="script" filename="adm.crawler" />
+	</header>
+	<toolbar title="CRAWLER.SITE_TITLE" icon="SobiConfig">
+		<divider />
+		<button label="TB.START_CRAWL" task="crawler.init" icon="fighter-jet">
+			<button label="TB.RESTART_CRAWL" task="crawler.restart" icon="refresh" />
+		</button>
+		<divider />
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
+		<divider />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions" />
+			<button type="url" task="template.info" />
+			<button type="help" target="_blank" />
+		</buttons>
+	</toolbar>
+	<body>
+		<div class="row-fluid">
+			<div class="span2" id="SPRightMenu">
+				<menu />
+			</div>
+			<div class="span10">
+				<message id="spMessage" />
+				<div id="crawlerResponse" class="hide">
+					<div class="alert alert-info" id="progressMessage" />
+					<table>
+						<head>
+							<cell label="CRAWL_ULR" type="text" class="" />
+							<cell label="CRAWL_CODE" type="text" class="SpCellCenter" />
+							<cell label="CRAWL_LINKS" type="text" class="SpCellCenter" />
+							<cell label="CRAWL_TIME" type="text" class="SpCellCenter" />
+						</head>
+						<tbody id="response-container">
+							<cell class="url" />
+							<cell class="code SpCellCenter" />
+							<cell class="links SpCellCenter" />
+							<cell class="time SpCellCenter" />
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="method" default="xhr" />
+		</hidden>
+	</config>
+</definition>
