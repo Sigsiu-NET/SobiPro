@@ -91,6 +91,9 @@ final class SPPageNavXSLT
 				if ( $page == $this->current ) {
 					$_attributes[ 'selected' ] = 1;
 				}
+				elseif( $page > 1 ) {
+					$_attributes[ 'url' ] =  Sobi::Url( array_merge( $this->url, array( 'site' => $page ) ) );
+				}
 				else {
 					$_attributes[ 'url' ] =  Sobi::Url( array_merge( $this->url, array( 'site' => $page ) ) );
 				}

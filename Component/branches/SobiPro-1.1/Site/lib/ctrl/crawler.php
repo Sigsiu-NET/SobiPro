@@ -56,6 +56,9 @@ class SPCrawler extends SPController
 		if ( count( $sites ) ) {
 			$i = 0;
 			foreach ( $sites as $site ) {
+				if ( !( strlen( $site ) ) ) {
+					continue;
+				}
 				$responses[ ] = $this->getResponse( $site );
 				$i++;
 				if ( microtime( true ) - $this->start > self::TIME_LIMIT ) {
@@ -100,6 +103,7 @@ class SPCrawler extends SPController
 		);
 		$content = $connection->exec();
 		$response = $connection->info();
+		$urls = array();
 		if ( $response[ 'http_code' ] == 200 ) {
 			$urls = $this->parseResponse( $content );
 			$this->removeUrl( $url );
@@ -120,6 +124,10 @@ class SPCrawler extends SPController
 
 	protected function removeUrl( $url )
 	{
+		if ( !( $url ) ) {
+			print_r( $url );
+			exit;
+		}
 		SPFactory::db()->update( self::DB_TABLE, array( 'state' => 1 ), array( 'url' => $url ) );
 	}
 
@@ -127,9 +135,14 @@ class SPCrawler extends SPController
 	{
 		$rows = array();
 		foreach ( $urls as $url ) {
+			if ( !( strlen( $url ) ) ) {
+				continue;
+			}
 			$rows[ ] = array( 'crid' => 'NULL', 'url' => $url, 'state' => 0 );
 		}
-		SPFactory::db()->insertArray( self::DB_TABLE, $rows, false, true );
+		if ( count( $rows ) ) {
+			SPFactory::db()->insertArray( self::DB_TABLE, $rows, false, true );
+		}
 	}
 
 	protected function getSites()
@@ -141,6 +154,9 @@ class SPCrawler extends SPController
 
 	protected function parseResponse( $response )
 	{
+		if ( !( strlen( $response ) ) ) {
+			return 204;
+		}
 		$links = array();
 		if ( strlen( $response ) && strstr( $response, 'SobiPro' ) ) {
 			list( $header, $response ) = explode( "\r\n\r\n", $response );
@@ -160,8 +176,12 @@ class SPCrawler extends SPController
 				$host = Sobi::Cfg( 'live_site_root' );
 				$links = array_unique( $links[ 1 ] );
 				foreach ( $links as $index => $link ) {
+					$link = trim( $link );
 					$http = preg_match( '/http[s]?:\/\/.*/i', $link );
-					if ( strstr( $link, '#' ) ) {
+					if ( !( strlen( $link ) ) ) {
+						unset( $links[ $index ] );
+					}
+					elseif ( strstr( $link, '#' ) ) {
 						unset( $links[ $index ] );
 					}
 					elseif ( $http && !( strstr( $link, $liveSite ) ) ) {
