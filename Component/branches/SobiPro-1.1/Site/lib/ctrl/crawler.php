@@ -45,7 +45,7 @@ class SPCrawler extends SPController
 				SPFactory::cache()->cleanSection( Sobi::Section() );
 			}
 			SPFactory::db()->truncate( self::DB_TABLE );
-			$responses[ ] = $this->getResponse( Sobi::Cfg( 'live_site' ) . '/index.php?option=com_sobipro&sid=' . Sobi::Section() );
+			$responses[ ] = $this->getResponse( Sobi::Cfg( 'live_site' ) . 'index.php?option=com_sobipro&sid=' . Sobi::Section() );
 			$sites = $this->getSites();
 		}
 		if ( !( count( $sites ) ) && !( in_array( $task, array( 'crawler.init', 'crawler.restart' ) ) ) ) {
