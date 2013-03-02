@@ -597,7 +597,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		if ( !( in_array( $o, array( 'raw', 'xml' ) ) ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
 			$url = html_entity_decode( $url );
 		}
-		$url = urldecode( $url );
+		$url = str_replace( ' ', '%20', urldecode( $url ) );
 		return $js ? str_replace( 'amp;', null, $url ) : $url;
 	}
 
