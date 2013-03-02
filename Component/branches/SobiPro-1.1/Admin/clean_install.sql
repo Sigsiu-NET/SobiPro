@@ -27,6 +27,14 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (
   PRIMARY KEY (`cid`,`sid`)
 ) DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` (
+  `url` varchar(255) NOT NULL,
+  `crid` int(11) NOT NULL AUTO_INCREMENT,
+  `state` tinyint(1) NOT NULL,
+  PRIMARY KEY (`crid`),
+  UNIQUE KEY `url` (`url`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
+
 CREATE TABLE IF NOT EXISTS `#__sobipro_category` (
   `id` int(11) NOT NULL,
   `position` int(11) DEFAULT NULL,
