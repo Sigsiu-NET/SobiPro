@@ -106,13 +106,17 @@ class SPCrawler extends SPController
 		$urls = array();
 		if ( $response[ 'http_code' ] == 200 ) {
 			$urls = $this->parseResponse( $content );
-			$this->removeUrl( $url );
 			if ( !( is_array( $urls ) ) && is_numeric( $urls ) ) {
 				$response[ 'http_code' ] = $urls;
 			}
 		}
-		if ( count( $urls ) && $response[ 'http_code' ] == 200 ) {
+		if ( $response[ 'http_code' ] == 303 ) {
+			preg_match( '/Location: (http.*)/', $content, $newUrl );
+			$urls[ ] = str_replace( array( '?format=raw&crawl=1', '&format=raw&crawl=1' ), null, trim( $newUrl[ 1 ] ) );
+		}
+		if ( count( $urls ) ) {
 			$this->insertUrls( $urls );
+			$this->removeUrl( $url );
 		}
 		return array(
 			'url' => "<a href=\"{$url}\" target=\"_blank\">{$url}</a>",

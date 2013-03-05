@@ -279,8 +279,9 @@ final class SPCache
 					->select( 'cid', 'spdb_view_cache_relation', array( 'sid' => $sid ) )
 					->loadResultArray();
 			if ( count( $xml ) ) {
+				$lang = Sobi::Lang( false );
 				$files = SPFactory::db()
-						->select( 'fileName', 'spdb_view_cache', array( 'cid' => $xml ) )
+						->select( 'fileName', 'spdb_view_cache', array( 'cid' => $xml, 'language' => $lang ) )
 						->loadResultArray();
 				foreach ( $files as $file ) {
 					$file = SPLoader::path( 'var.xml.' . $file, 'front', false, 'xml' );
@@ -396,10 +397,11 @@ final class SPCache
 			$checksum = null; //md5( serialize( $obj ) );
 			$obj = SPConfig::serialize( $obj );
 			$schecksum = md5( $obj );
-			$this->deleteObj( $type, $id, $sid );
+			// the command is a "REPLACE" so there is actually no reason for deleting it anyway
+			// the "deleteObj" causing however a chain reaction which would delete lot of other things so it doesn't make any sense here
+//			$this->deleteObj( $type, $id, $sid );
 			$this->Exec( "BEGIN; REPLACE INTO objects ( type, validtime, id, sid, lang, params, checksum, schecksum, data, classes ) VALUES( '{$type}', '0', '{$id}', '{$sid}', '{$lang}', NULL, '{$checksum}', '{$schecksum}', '{$obj}', '{$loaded}' ); COMMIT;" );
 		}
-		$this->cleanXMLRelations( $id );
 		return $this;
 	}
 
@@ -408,15 +410,17 @@ final class SPCache
 	 * @param string $type - type of object entry/category/section
 	 * @param int $id - id of the object
 	 * @param int $sid - section id
+	 * @param string $lang
 	 * @return SPCache
 	 */
-	public function & deleteObj( $type, $id, $sid = 0 )
+	public function & deleteObj( $type, $id, $sid = 0, $lang = null )
 	{
 		if ( $this->enabled() ) {
+ 			$lang = $lang ? $lang : Sobi::Lang( false );
 			$sid = $sid ? $sid : $this->_section;
-			$this->Exec( "BEGIN; DELETE FROM objects WHERE( type LIKE '{$type}%' AND id = '{$id}' AND sid = '{$sid}' ); COMMIT;" );
+			$this->Exec( "BEGIN; DELETE FROM objects WHERE( type LIKE '{$type}%' AND id = '{$id}' AND sid = '{$sid}' AND lang = '{$lang}' ); COMMIT;" );
 			if ( $type == 'entry' ) {
-				$this->Exec( "BEGIN; DELETE FROM objects WHERE( type = 'field_data' AND sid = '{$id}' ); COMMIT;" );
+				$this->Exec( "BEGIN; DELETE FROM objects WHERE( type = 'field_data' AND sid = '{$id}' AND lang = '{$lang}' ); COMMIT;" );
 			}
 		}
 		$this->cleanXMLRelations( $id );
@@ -427,14 +431,16 @@ final class SPCache
 	 * Removes stored variable from the cache
 	 * @param string $id - identifier
 	 * @param \id|int $section - section id
+	 * @param string $lang
 	 * @internal param string $lang - language
 	 * @return SPCache
 	 */
-	public function & deleteVar( $id, $section = 0 )
+	public function & deleteVar( $id, $section = 0, $lang = null  )
 	{
 		if ( $this->enabled() ) {
+			$lang = $lang ? $lang : Sobi::Lang( false );
 			$section = $section ? $section : $this->_section;
-			$this->Exec( "BEGIN; DELETE FROM vars WHERE( name = '{$id}' AND section = '{$section}' ); COMMIT;" );
+			$this->Exec( "BEGIN; DELETE FROM vars WHERE( name = '{$id}' AND section = '{$section}' AND lang = '{$lang}' ); COMMIT;" );
 		}
 		return $this;
 	}
@@ -503,11 +509,11 @@ final class SPCache
 		$this->Exec(
 			"
 			BEGIN;
-			CREATE TABLE vars ( name CHAR(150), validtime int(11), section int(11) default NULL, sid int(11) default NULL, lang CHAR(50) default NULL, params text, checksum CHAR(150) default NULL, schecksum CHAR(150) default NULL, data blob, PRIMARY KEY( name, section, sid ) );
+			CREATE TABLE vars ( name CHAR(150), validtime int(11), section int(11) default NULL, sid int(11) default NULL, lang CHAR(50) default NULL, params text, checksum CHAR(150) default NULL, schecksum CHAR(150) default NULL, data blob, PRIMARY KEY( name, section, sid, lang ) );
 			CREATE INDEX vars_name on vars( name );
 			CREATE INDEX vars_section on vars( section );
 			CREATE INDEX vars_sid on vars( sid );
-			CREATE TABLE objects ( type CHAR(150), validtime int(11), id int(11) default NULL, sid int(11) default NULL, lang CHAR(50) default NULL, params text, checksum CHAR(150) default NULL, schecksum CHAR(150) default NULL, data blob, classes text );
+			CREATE TABLE objects ( type CHAR(150), validtime int(11), id int(11) default NULL, sid int(11) default NULL, lang CHAR(50) default NULL, params text, checksum CHAR(150) default NULL, schecksum CHAR(150) default NULL, data blob, classes text, PRIMARY KEY( id, sid, lang ) );
 			CREATE INDEX objects_name on objects( type );
 			CREATE INDEX objects_section on objects( id );
 			CREATE INDEX objects_sid on objects( sid );

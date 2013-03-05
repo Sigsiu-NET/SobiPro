@@ -57,6 +57,13 @@
 							<div class="span12">
 								<fieldset>
 									<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
+									<field type="select" label="LANG" name="sp-language" class="input-large">
+										<values>
+											<option value="" label="no change"/>
+											<option value="en-GB" label="English" />
+											<option value="de-DE" label="German" />
+										</values>
+									</field>
 								</fieldset>
 							</div>
 						</div>
