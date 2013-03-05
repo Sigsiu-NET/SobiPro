@@ -654,7 +654,7 @@ final class SPCache
 					}
 				}
 			}
-			$reserved = array( 'site', 'task', 'pid', 'sid', 'sptpl', 'dbg', 'Itemid', 'option', 'tmpl', 'format', 'crawl' );
+			$reserved = array( 'site', 'task', 'pid', 'sid', 'sptpl', 'dbg', 'Itemid', 'option', 'tmpl', 'format', 'crawl', 'language', 'lang' );
 			foreach ( $reserved as $var ) {
 				if ( isset( $request[ $var ] ) ) {
 					unset( $request[ $var ] );

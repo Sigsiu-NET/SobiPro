@@ -222,4 +222,10 @@ class SPJoomlaCMSHelper
 		}
 		return array( 'name' => Sobi::Txt( 'TP.TEMPLATES_OVERRIDE' ), 'icon' => Sobi::Cfg( 'live_site' ).'media/sobipro/tree/joomla.gif', 'data' => $tr );
 	}
+
+
+	public function getLanguages()
+	{
+		return null;
+	}
 }
