@@ -58,6 +58,9 @@ abstract class Sobi
 	 */
 	public static function Error( $section, $msg, $type = SPC::NOTICE, $code = 0, $line = null, $file = null, $sMsg = null )
 	{
+		if( $type == 0 ) {
+			$type = SPC::NOTICE;
+		}
 		/*
 		* Mi., Jul 4, 2012
 		* So now could someone explain me what was the sense of the code below and why trigger_error was commented out??!!

@@ -211,7 +211,7 @@ final class SobiProCtrl
 					$state = $section->state;
 				}
 				else {
-					Sobi::Error( 'CoreCtrl', SPLang::e( 'PAGE_NOT_FOUND' ), 0, 404 );
+					Sobi::Error( 'CoreCtrl', SPLang::e( 'PAGE_NOT_FOUND' ), SPC::NOTICE, 404 );
 					exit;
 				}
 			}
@@ -421,7 +421,7 @@ final class SobiProCtrl
 			try {
 				$ctrl = SPLoader::loadController( $task );
 			} catch ( SPException $x ) {
-				Sobi::Error( 'CoreCtrl', SPLang::e( 'PAGE_NOT_FOUND' ), 0, 404 );
+				Sobi::Error( 'CoreCtrl', SPLang::e( 'PAGE_NOT_FOUND' ), SPC::NOTICE, 404 );
 			}
 			try {
 				$this->setController( new $ctrl() );
