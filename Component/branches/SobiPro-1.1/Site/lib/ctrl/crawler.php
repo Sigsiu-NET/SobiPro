@@ -116,8 +116,8 @@ class SPCrawler extends SPController
 		}
 		if ( count( $urls ) ) {
 			$this->insertUrls( $urls );
-			$this->removeUrl( $url );
 		}
+		$this->removeUrl( $url );
 		return array(
 			'url' => "<a href=\"{$url}\" target=\"_blank\">{$url}</a>",
 			'count' => count( $urls ),
@@ -128,21 +128,28 @@ class SPCrawler extends SPController
 
 	protected function removeUrl( $url )
 	{
-		if ( !( $url ) ) {
-			print_r( $url );
-			exit;
-		}
 		SPFactory::db()->update( self::DB_TABLE, array( 'state' => 1 ), array( 'url' => $url ) );
 	}
 
 	protected function insertUrls( $urls )
 	{
 		$rows = array();
+		$multiLang = Sobi::Cfg( 'lang.multimode', false );
+		$langs = SPFactory::CmsHelper()->getLanguages();
+		$language = Sobi::Lang();
 		foreach ( $urls as $url ) {
 			if ( !( strlen( $url ) ) ) {
 				continue;
 			}
 			$rows[ ] = array( 'crid' => 'NULL', 'url' => $url, 'state' => 0 );
+			if ( $multiLang && $langs ) {
+				foreach ( $langs as $lang ) {
+					if ( $lang != $language ) {
+						$url = str_replace( array( '/' . $langs[ $language ], 'lang=' . $langs[ $language ] ), array( '/' . $lang, 'lang=' . $lang ), $url );
+						$rows[ ] = array( 'crid' => 'NULL', 'url' => $url, 'state' => 0 );
+					}
+				}
+			}
 		}
 		if ( count( $rows ) ) {
 			SPFactory::db()->insertArray( self::DB_TABLE, $rows, false, true );
