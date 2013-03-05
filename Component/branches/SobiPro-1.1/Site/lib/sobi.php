@@ -58,7 +58,7 @@ abstract class Sobi
 	 */
 	public static function Error( $section, $msg, $type = SPC::NOTICE, $code = 0, $line = null, $file = null, $sMsg = null )
 	{
-		if( $type == 0 ) {
+		if ( $type == 0 ) {
 			$type = SPC::NOTICE;
 		}
 		/*
@@ -385,15 +385,15 @@ abstract class Sobi
 		static $langPost = -1;
 		static $langGet = -1;
 		if ( $langPost == -1 || $langGet == -1 ) {
-			$langPost = SPRequest::cmd( 'sp_language', false, 'post' );
-			$langGet = SPRequest::cmd( 'sp_language', false, 'get' );
+			$langPost = SPRequest::cmd( 'sp-language', false, 'post' );
+			$langGet = SPRequest::cmd( 'sp-language', false, 'get' );
 		}
 		if ( $storage && $langPost ) {
-			$lang = SPRequest::cmd( 'sp_language', false, 'post' );
+			$lang = SPRequest::cmd( 'sp-language', false, 'post' );
 		}
 		/* Otherwise we maybe translating now */
 		elseif ( $langGet && self::Cfg( 'lang.multimode', false ) ) {
-			$lang = SPRequest::cmd( 'sp_language', false, 'get' );
+			$lang = SPRequest::cmd( 'sp-language', false, 'get' );
 		}
 		else {
 			static $lang = null;
@@ -407,7 +407,7 @@ abstract class Sobi
 				self::Trigger( 'Language', 'Determine', array( &$lang ) );
 			}
 		}
-		return $lang;
+		return strlen( $lang ) ? $lang : self::Lang( false );
 	}
 
 	public static function DefLang()
