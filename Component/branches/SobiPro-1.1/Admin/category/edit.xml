@@ -30,13 +30,13 @@
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiEdit">
+        <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
+        <divider />
 		<button task="category.apply" type="apply">
 			<button type="save" task="category.save" />
 			<button type="duplicate" task="category.clone" />
 		</button>
-		<divider />
-		<buttons icon="flag" buttons="languages-list" label="TB.LANGUAGES" />
-		<divider />
+        <divider />
 		<button type="exit" task="category.cancel" />
 		<divider />
 		<button type="help" target="_blank" />

@@ -27,13 +27,13 @@
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
+        <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
+        <divider />
 		<button task="field.apply" type="apply">
 			<button type="save" task="field.save" />
 			<button type="duplicate" task="field.clone" />
 		</button>
-		<divider />
-		<buttons icon="flag" buttons="languages-list" label="TB.LANGUAGES" />
-		<divider />
+        <divider />
 		<button type="exit" task="field.cancel" />
 		<divider />
 		<button type="help" target="_blank" />
