@@ -84,7 +84,7 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$obj ) );
 		$this->_model->extend( $obj, $cache );
-		if( $cache ) {
+		if ( $cache ) {
 			$this->_model->countVisit();
 		}
 	}
@@ -205,6 +205,16 @@ abstract class SPController extends SPObject implements SPControl
 				break;
 		}
 		return $r;
+	}
+
+	protected function checkTranslation()
+	{
+		$lang = SPRequest::cmd( 'sp-language', false, 'get' );
+		if ( $lang && $lang != Sobi::DefLang() ) {
+			$languages = SPFactory::CmsHelper()->availableLanguages();
+			SPFactory::message()
+					->info( Sobi::Txt( 'INFO_DIFFERENT_LANGUAGE', $this->_type, $languages[ $lang ][ 'name' ] ), false );
+		}
 	}
 
 	protected function state( $state )

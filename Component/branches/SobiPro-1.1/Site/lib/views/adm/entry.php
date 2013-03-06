@@ -33,6 +33,7 @@ class SPEntryAdmView extends SPAdmView
 {
 	/**
 	 * @param string $title
+	 * @return string
 	 */
 	public function setTitle( $title )
 	{
@@ -42,7 +43,6 @@ class SPEntryAdmView extends SPAdmView
 		$this->set( $name, 'entry_name' );
 		$title = parent::setTitle( $title );
 		return $title;
-
 	}
 
 	/**
@@ -53,6 +53,7 @@ class SPEntryAdmView extends SPAdmView
 		SPLoader::loadClass( 'html.tooltip' );
 		switch ( $this->get( 'task' ) ) {
 			case 'edit':
+				$this->assign( $this->languages(), 'languages-list' );
 			case 'add':
 				$this->edit();
 				break;
