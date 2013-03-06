@@ -197,7 +197,7 @@ abstract class SPDBObject extends SPObject
 	/**
 	 * @var array
 	 */
-	private static $translatable = array();
+	private static $translatable = array( 'nid' );
 
 	/**
 	 * @return \SPDBObject
