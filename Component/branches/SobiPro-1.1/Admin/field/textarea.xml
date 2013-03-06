@@ -32,6 +32,8 @@
 			<button type="duplicate" task="field.clone" />
 		</button>
 		<divider />
+		<buttons icon="flag" buttons="languages-list" label="TB.LANGUAGES" />
+		<divider />
 		<button type="exit" task="field.cancel" />
 		<divider />
 		<button type="help" target="_blank" />
@@ -174,6 +176,7 @@
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
+			<field name="sp-language" default="" />
 			<field name="method" default="xhr" />
 			<field name="format" default="raw" />
 		</hidden>

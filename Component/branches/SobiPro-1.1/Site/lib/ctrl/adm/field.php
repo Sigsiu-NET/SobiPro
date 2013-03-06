@@ -49,7 +49,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	protected function edit()
 	{
 		$fid = SPRequest::int( 'fid' );
-
+		$this->checkTranslation();
 		/* if adding new field - call #add */
 		if ( !$fid ) {
 			return $this->add();
@@ -91,6 +91,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$view->assign( $f, 'filters' );
 		$view->assign( $field, 'field' );
 		$view->assign( $this->_task, 'task' );
+		$view->assign( $view->languages(), 'languages-list' );
 		$field->onFieldEdit( $view );
 		/*
 		 * 1.1 native - config and view in xml
