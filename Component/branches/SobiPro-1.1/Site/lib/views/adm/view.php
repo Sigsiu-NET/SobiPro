@@ -169,19 +169,29 @@ class SPAdmView extends SPObject implements SPView
 		return $subMenu;
 	}
 
-	protected function languages()
+	public function languages()
 	{
 		$subMenu = array();
 		if ( Sobi::Cfg( 'lang.multimode', false ) ) {
 			$availableLanguages = SPFactory::CmsHelper()->availableLanguages();
 			$sectionLength = 30;
 			if ( count( $availableLanguages ) ) {
+				$sid = SPRequest::sid();
+				if ( !( $sid ) ) {
+					$sid = Sobi::Section();
+				}
 				$subMenu = array();
+				$task = SPRequest::task();
+				$url = array( 'sid' => $sid, 'task' => $task, 'sp-language' => null );
+				if ( $task == 'field.edit' ) {
+					$url = array( 'sid' => $sid, 'task' => $task, 'fid' => SPRequest::int( 'fid' ), 'sp-language' => null );
+				}
 				foreach ( $availableLanguages as $language ) {
+					$url[ 'sp-language' ] = $language[ 'tag' ];
 					$subMenu[ ] = array(
 						'type' => 'url',
 						'task' => '',
-						'url' => array( 'sid' => SPRequest::sid(), 'task' => SPRequest::task(), 'sp-language' => $language[ 'tag' ] ),
+						'url' => $url,
 						'label' => strlen( $language[ 'name' ] ) < $sectionLength ? $language[ 'name' ] : substr( $language[ 'name' ], 0, $sectionLength - 3 ) . ' ...',
 						'icon' => 'file',
 						'element' => 'button'

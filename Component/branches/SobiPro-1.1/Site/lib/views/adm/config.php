@@ -47,6 +47,7 @@ class SPConfigAdmView extends SPAdmView implements SPView
 
 	/**
 	 * @param string $title
+	 * @return string|void
 	 */
 	public function setTitle( $title )
 	{
