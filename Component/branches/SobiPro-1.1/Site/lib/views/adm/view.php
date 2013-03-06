@@ -142,7 +142,7 @@ class SPAdmView extends SPObject implements SPView
 		return $this;
 	}
 
-	private function & sections()
+	protected function sections()
 	{
 		try {
 			$sections = SPFactory::db()
@@ -169,11 +169,34 @@ class SPAdmView extends SPObject implements SPView
 		return $subMenu;
 	}
 
+	protected function languages()
+	{
+		$subMenu = array();
+		if ( Sobi::Cfg( 'lang.multimode', false ) ) {
+			$availableLanguages = SPFactory::CmsHelper()->availableLanguages();
+			$sectionLength = 30;
+			if ( count( $availableLanguages ) ) {
+				$subMenu = array();
+				foreach ( $availableLanguages as $language ) {
+					$subMenu[ ] = array(
+						'type' => 'url',
+						'task' => '',
+						'url' => array( 'sid' => SPRequest::sid(), 'task' => SPRequest::task(), 'sp-language' => $language[ 'tag' ] ),
+						'label' => strlen( $language[ 'name' ] ) < $sectionLength ? $language[ 'name' ] : substr( $language[ 'name' ], 0, $sectionLength - 3 ) . ' ...',
+						'icon' => 'file',
+						'element' => 'button'
+					);
+				}
+			}
+		}
+		return $subMenu;
+	}
+
 	/**
 	 * @param DOMNodeList $xml
 	 * @return void
 	 */
-	private function parseDefinition( DOMNodeList $xml )
+	protected function parseDefinition( DOMNodeList $xml )
 	{
 		/** @var DOMNode $node */
 		foreach ( $xml as $node ) {
@@ -229,7 +252,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNode $xml
 	 * @return void
 	 */
-	private function xmlToolbar( $xml )
+	protected function xmlToolbar( $xml )
 	{
 		$title = $xml
 				->attributes
@@ -311,7 +334,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param integer $i
 	 * @return bool
 	 */
-	private function xmlCondition( $xml, $subject = null, $i = -1 )
+	protected function xmlCondition( $xml, $subject = null, $i = -1 )
 	{
 		$invert = false;
 		$condition = null;
@@ -357,7 +380,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param $attributes
 	 * @return void
 	 */
-	private function xmlButton( $xml, $attributes = array() )
+	protected function xmlButton( $xml, $attributes = array() )
 	{
 		$button = array(
 			'type' => null,
@@ -422,7 +445,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param $output
 	 * @return void
 	 */
-	private function xmlBody( $xml, &$output )
+	protected function xmlBody( $xml, &$output )
 	{
 		foreach ( $xml as $node ) {
 			if ( strstr( $node->nodeName, '#' ) ) {
@@ -541,7 +564,7 @@ class SPAdmView extends SPObject implements SPView
 		}
 	}
 
-	private function xmlFile( $node, &$element )
+	protected function xmlFile( $node, &$element )
 	{
 		$type = $node->attributes->getNamedItem( 'type' )->nodeValue;
 		$translatable = $node->attributes->getNamedItem( 'translatable' ) ? $node->attributes->getNamedItem( 'translatable' )->nodeValue : false;
@@ -566,7 +589,7 @@ class SPAdmView extends SPObject implements SPView
 	}
 
 
-	private function xmlToolTip( $node, &$element, $subject = null, $index = -1 )
+	protected function xmlToolTip( $node, &$element, $subject = null, $index = -1 )
 	{
 		foreach ( $node->attributes as $attribute ) {
 			$element[ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
@@ -585,7 +608,7 @@ class SPAdmView extends SPObject implements SPView
 		}
 	}
 
-	private function xmlPagination( $node, &$element )
+	protected function xmlPagination( $node, &$element )
 	{
 		$args = array();
 		/** @var DOMElement $attribute */
@@ -611,7 +634,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNode $node
 	 * @return string
 	 */
-	private function xmlText( $node )
+	protected function xmlText( $node )
 	{
 		$value = null;
 		if ( $node->attributes->getNamedItem( 'value' ) ) {
@@ -649,7 +672,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param array $element
 	 * @return void
 	 */
-	private function xmlLoop( $node, &$element )
+	protected function xmlLoop( $node, &$element )
 	{
 		$subject = $node->attributes->getNamedItem( 'subject' )->nodeValue;
 		static $count = 0;
@@ -722,7 +745,7 @@ class SPAdmView extends SPObject implements SPView
 		$element[ 'content' ] = $objects;
 	}
 
-	private function xmlFields( &$element )
+	protected function xmlFields( &$element )
 	{
 		$fields = $this->get( 'fields' );
 		$objects = array();
@@ -760,7 +783,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param array $objects
 	 * @return void
 	 */
-	private function xmlCell( $cell, $subject, $i, &$objects )
+	protected function xmlCell( $cell, $subject, $i, &$objects )
 	{
 		if ( !( $this->xmlCondition( $cell, $subject, $i ) ) ) {
 			return;
@@ -827,7 +850,7 @@ class SPAdmView extends SPObject implements SPView
 		$objects[ ] = $element;
 	}
 
-	private function cellAttributes( $cell, &$element, $subject, $i )
+	protected function cellAttributes( $cell, &$element, $subject, $i )
 	{
 		/** @var DOMElement $attribute */
 		foreach ( $cell->attributes as $attribute ) {
@@ -851,7 +874,7 @@ class SPAdmView extends SPObject implements SPView
 		}
 	}
 
-	private function xmlUrl( $node, $subject = null, $index = -1 )
+	protected function xmlUrl( $node, $subject = null, $index = -1 )
 	{
 		$url = array();
 		$link = null;
@@ -887,7 +910,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param integer $index
 	 * @return mixed
 	 */
-	private function xmlParams( $param, $subject = null, $index = -1 )
+	protected function xmlParams( $param, $subject = null, $index = -1 )
 	{
 		$value = null;
 		if ( !( $param->hasChildNodes() ) ) {
@@ -937,7 +960,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param mixed $value
 	 * @return void
 	 */
-	private function xmlField( $node, &$element, $value = null )
+	protected function xmlField( $node, &$element, $value = null )
 	{
 		if ( !( $this->xmlCondition( $node ) ) ) {
 			return;
@@ -1173,7 +1196,7 @@ class SPAdmView extends SPObject implements SPView
 		}
 	}
 
-	private function xmlCall( $value )
+	protected function xmlCall( $value )
 	{
 		$function = $value->attributes->getNamedItem( 'function' )->nodeValue;
 		$r = false;
@@ -1221,7 +1244,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNodeList $xml
 	 * @return void
 	 */
-	private function xmlConfig( $xml )
+	protected function xmlConfig( $xml )
 	{
 		foreach ( $xml as $node ) {
 			/** @var DOMNode $node */
@@ -1261,7 +1284,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNodeList $xml
 	 * @return void
 	 */
-	private function xmlHeader( $xml )
+	protected function xmlHeader( $xml )
 	{
 		foreach ( $xml as $node ) {
 			/** @var DOMNode $node */

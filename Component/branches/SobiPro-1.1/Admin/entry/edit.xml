@@ -34,6 +34,8 @@
 			<button type="duplicate" task="entry.clone" />
 		</button>
 		<divider />
+		<buttons icon="flag" buttons="languages-list" label="TB.LANGUAGES" />
+		<divider />
 		<button type="exit" task="entry.cancel" />
 		<divider />
 		<button type="help" target="_blank" />
@@ -57,13 +59,6 @@
 							<div class="span12">
 								<fieldset>
 									<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
-									<!--<field type="select" label="LANG" name="sp-language" class="input-large">-->
-										<!--<values>-->
-											<!--<option value="" label="no change"/>-->
-											<!--<option value="en-GB" label="English" />-->
-											<!--<option value="de-DE" label="German" />-->
-										<!--</values>-->
-									<!--</field>-->
 								</fieldset>
 							</div>
 						</div>
@@ -134,6 +129,7 @@
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
 			<field name="method" default="xhr" />
+			<field name="sp-language" default="" />
 			<field name="sid" value="entry.sid" />
 		</hidden>
 	</config>

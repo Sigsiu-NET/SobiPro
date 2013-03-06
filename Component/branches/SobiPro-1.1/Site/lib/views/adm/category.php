@@ -34,6 +34,7 @@ class SPCategoryAdmView extends SPSectionAdmView
 
 	/**
 	 * @param string $title
+	 * @return string
 	 */
 	public function setTitle( $title )
 	{
@@ -56,6 +57,7 @@ class SPCategoryAdmView extends SPSectionAdmView
 //				$this->listSection();
 //				break;
 			case 'edit':
+				$this->assign( $this->languages(), 'languages-list' );
 			case 'add':
 				$this->edit();
 				$this->determineTemplate( 'category', 'edit' );

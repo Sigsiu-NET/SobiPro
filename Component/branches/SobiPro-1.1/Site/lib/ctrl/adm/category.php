@@ -335,6 +335,8 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		if ( !$this->_model || $this->_task == 'add' ) {
 			$this->setModel( SPLoader::loadModel( 'category' ) );
 		}
+		$this->checkTranslation();
+
 		$this->_model->formatDatesToEdit();
 		$id = $this->_model->get( 'id' );
 		if ( !$id ) {

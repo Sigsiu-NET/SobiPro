@@ -35,6 +35,8 @@
 			<button type="duplicate" task="category.clone" />
 		</button>
 		<divider />
+		<buttons icon="flag" buttons="languages-list" label="TB.LANGUAGES" />
+		<divider />
 		<button type="exit" task="category.cancel" />
 		<divider />
 		<button type="help" target="_blank" />
@@ -50,13 +52,6 @@
 								<fieldset>
 									<field type="text" name="category.name" value="category.name" label="CATN.CATEGORY_NAME" class="input-xlarge" maxlength="255" required="true" />
 									<field type="text" name="category.nid" value="category.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
-									<!--<field type="select" label="LANG" name="sp-language" class="input-large">-->
-										<!--<values>-->
-											<!--<option value="" label="no change"/>-->
-											<!--<option value="en-GB" label="English" />-->
-											<!--<option value="de-DE" label="German" />-->
-										<!--</values>-->
-									<!--</field>-->
 								</fieldset>
 
 								<fieldset label="CATN.CATEGORY_LOCATION">
@@ -194,6 +189,7 @@
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="task" default="" />
+			<field name="sp-language" default="" />
 			<field name="selectedCid" default="" />
 			<field name="selectedCatName" default="" />
 			<field name="selectedCatPath" default="" />
