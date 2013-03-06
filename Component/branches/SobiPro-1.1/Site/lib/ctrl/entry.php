@@ -204,6 +204,7 @@ class SPEntryCtrl extends SPController
 //			$tsId = date( 'Y-m-d_H-m-s_' ) . str_replace( array( '.', ':' ), array( '-', null ), SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
 			$tsId = ( microtime( true ) * 100 ) . '.' . rand( 0, 99 ) . '.' . str_replace( array( ':', '.' ), null, SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
 			SPLoader::loadClass( 'env.cookie' );
+			// in case we wre not able for some reason to set the cookie - we are going to pass this id into the URL
 			if ( !( SPCookie::set( 'editentry', $tsId, SPCookie::hours( 12 ) ) ) ) {
 				$tsIdToRequest = true;
 			}
