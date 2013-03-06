@@ -252,6 +252,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			SPFactory::message()
 					->info( 'DIFFERENT_LANGUAGE' );
 		}
+		$view = SPFactory::View( 'entry', true );
 		$this->checkTranslation();
 		/* if adding new */
 		if ( !( $this->_model ) ) {
@@ -261,6 +262,9 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$id = $this->_model->get( 'id' );
 		if ( !$id ) {
 			$this->_model->set( 'state', 1 );
+		}
+		else {
+			$view->assign( $view->languages(), 'languages-list' );
 		}
 		$this->_model->loadFields( Sobi::Reg( 'current_section' ), true );
 		$this->_model->formatDatesToEdit();
@@ -287,7 +291,6 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		}
 		/* create the validation script to check if required fields are filled in and the filters, if any, match */
 		$this->createValidationScript( $fields );
-		$view = SPFactory::View( 'entry', true );
 		$view->assign( $this->_model, 'entry' );
 
 		/* get the categories */
