@@ -377,9 +377,10 @@ abstract class Sobi
 	 * @param bool $storage - force lang for storage.
 	 * If the $_POST array contain "sp_language" index and the $storage param is set, this language will be returned.
 	 * In other cases it is recommended to call this function with $storage = false. However because this happen only while recieving data from POST ///
+	 * @param bool $allowEmpty
 	 * @return string
 	 */
-	public static function Lang( $storage = true )
+	public static function Lang( $storage = true, $allowEmpty = false )
 	{
 		/* when storing lang depend values and there was lang in request */
 		static $langPost = -1;
@@ -407,7 +408,7 @@ abstract class Sobi
 				self::Trigger( 'Language', 'Determine', array( &$lang ) );
 			}
 		}
-		return strlen( $lang ) ? $lang : self::Lang( false );
+		return strlen( $lang ) ? $lang : $allowEmpty ? self::DefLang() : self::Lang( false, true );
 	}
 
 	public static function DefLang()
