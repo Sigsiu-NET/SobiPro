@@ -29,7 +29,7 @@
 	<toolbar title="var:[site_title]" icon="SobiSectionCfg">
 		<button type="apply" task="config.save" />
 		<divider />
-		<buttons icon="flag" buttons="languages-list" label="TB.LANGUAGES" />
+		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
 		<divider />
 		<button task="config.clean" icon="refresh" label="TB.CLEAN_CACHE" />
 		<divider />

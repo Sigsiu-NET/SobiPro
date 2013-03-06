@@ -29,13 +29,13 @@
 		<file type="script" filename="bootstrap.popover" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiEdit">
+        <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
+        <divider />
 		<button task="entry.apply" type="apply">
 			<button type="save" task="entry.save" />
 			<button type="duplicate" task="entry.clone" />
 		</button>
-		<divider />
-		<buttons icon="flag" buttons="languages-list" label="TB.LANGUAGES" />
-		<divider />
+        <divider />
 		<button type="exit" task="entry.cancel" />
 		<divider />
 		<button type="help" target="_blank" />
