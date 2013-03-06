@@ -408,7 +408,8 @@ abstract class Sobi
 				self::Trigger( 'Language', 'Determine', array( &$lang ) );
 			}
 		}
-		return strlen( $lang ) ? $lang : $allowEmpty ? self::DefLang() : self::Lang( false, true );
+		$lang = strlen( $lang ) ? $lang : ( $allowEmpty ? self::DefLang() : self::Lang( false, true ) );
+		return $lang;
 	}
 
 	public static function DefLang()

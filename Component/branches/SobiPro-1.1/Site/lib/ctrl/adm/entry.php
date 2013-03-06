@@ -248,10 +248,6 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 	{
 		$sid = SPRequest::int( 'pid' );
 		$sid = $sid ? $sid : SPRequest::sid();
-		if ( SPRequest::cmd( 'sp-language', false, 'get' ) && SPRequest::cmd( 'sp-language', false, 'get' ) != Sobi::Lang( false ) ) {
-			SPFactory::message()
-					->info( 'DIFFERENT_LANGUAGE' );
-		}
 		$view = SPFactory::View( 'entry', true );
 		$this->checkTranslation();
 		/* if adding new */
