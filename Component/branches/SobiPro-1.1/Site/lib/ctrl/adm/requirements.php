@@ -30,7 +30,7 @@ class SPRequirements extends SPController
 	 * @var string
 	 */
 	protected $_defTask = 'view';
-	const langFile = '/language/en-GB/en-GB.com_sobipro.ini';
+	const langFile = '/language/en-GB/en-GB.com_sobipro.check.ini';
 
 	public function execute()
 	{

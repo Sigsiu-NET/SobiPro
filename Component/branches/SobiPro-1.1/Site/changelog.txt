@@ -28,7 +28,7 @@ Legend:
 
 
 -------------------
-1.1.0 (Alpha R)
+1.1.0 (Alpha S)
 -------------------
 
    (+) XML based template engine for administrator templates
