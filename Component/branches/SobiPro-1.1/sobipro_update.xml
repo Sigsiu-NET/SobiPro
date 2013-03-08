@@ -84,6 +84,7 @@
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.js.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.about.ini</language>
             <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.messages.ini</language>
+            <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.check.ini</language>
 		</languages>
 	</administration>
 </install>
