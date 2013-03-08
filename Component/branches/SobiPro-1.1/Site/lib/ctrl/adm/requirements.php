@@ -34,6 +34,7 @@ class SPRequirements extends SPController
 
 	public function execute()
 	{
+        SPLang::load('com_sobipro.check');
 		$task = $this->_task = strlen( $this->_task ) ? $this->_task : $this->_defTask;
 		// this is need to delete all old cache after installation
 		if ( SPRequest::int( 'init' ) ) {
