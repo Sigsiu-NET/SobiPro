@@ -34,7 +34,7 @@ class SPRequirements extends SPController
 
 	public function execute()
 	{
-        SPLang::load('com_sobipro.check');
+		SPLang::load( 'com_sobipro.check' );
 		$task = $this->_task = strlen( $this->_task ) ? $this->_task : $this->_defTask;
 		// this is need to delete all old cache after installation
 		if ( SPRequest::int( 'init' ) ) {
@@ -631,16 +631,16 @@ class SPRequirements extends SPController
 		if ( SPFs::exists( $file ) ) {
 			$cont = SPFs::read( $file );
 		}
-		$cont = explode( "\n", $cont );
-		if ( count( $cont ) ) {
-			foreach ( $cont as $line ) {
-				if ( strstr( $line, '=' ) ) {
-					$line = explode( "=", $line );
-					$line[ 1 ] = explode( ';', $line[ 1 ] );
-					$settings[ $line[ 0 ] ] = array( 'key' => $line[ 0 ], 'response' => $line[ 1 ][ 0 ], 'status' => $line[ 1 ][ 1 ] );
-				}
-			}
-		}
+//		$cont = explode( "\n", $cont );
+//		if ( count( $cont ) ) {
+//			foreach ( $cont as $line ) {
+//				if ( strstr( $line, '=' ) ) {
+//					$line = explode( "=", $line );
+//					$line[ 1 ] = explode( ';', $line[ 1 ] );
+//					$settings[ $line[ 0 ] ] = array( 'key' => $line[ 0 ], 'response' => $line[ 1 ][ 0 ], 'status' => $line[ 1 ][ 1 ] );
+//				}
+//			}
+//		}
 		$this->prepareStoredData( $settings );
 		$settings[ 'env' ] = array(
 			'PHP_OS' => PHP_OS,
@@ -830,10 +830,8 @@ class SPRequirements extends SPController
 	protected function view()
 	{
 		$msg = null;
-		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
-		if ( SPFs::exists( $file ) ) {
-			SPFs::delete( $file );
-		}
+		$store = array();
+		Sobi::SetUserData( 'requirements', $store );
 		$home = SPRequest::int( 'init' ) ? Sobi::Url( null, true ) : Sobi::Url( 'config', true );
 		/** @var $view SPAdmView */
 		SPFactory::View( 'view', true )
