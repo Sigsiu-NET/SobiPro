@@ -82,7 +82,7 @@
 					<div class="btn-group pull-right" id="spCategoriesFilterHead">
 						<field type="select" name="corder" selected="corder" class="input-large spOrdering">
 							<values>
-								<values label="EMN_ORDER_BY" />
+								<values label="ORDER_BY" />
 								<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
 								<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
 								<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC" />

@@ -113,7 +113,7 @@
 					<div class="btn-group pull-right" id="SectionFilterHead">
 						<field type="select" name="order" selected="order" class="input-large spOrdering">
 							<values>
-								<values label="EMN_ORDER_BY" />
+								<values label="ORDER_BY" />
 								<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
 								<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
 								<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC" />
@@ -202,7 +202,7 @@
 							</loop>
 						</table>
 					</tab>
-					<tab label="CPANEL_AWAITING_APPROVAL">
+                    <tab label="CPANEL_AWAITING_APPROVAL">
 						<table condition="entries.unapproved.length">
 							<head>
 								<cell label="ENTRY.HEADER_NAME" type="text" />
@@ -267,7 +267,7 @@
 						</div>
 						<div id="collapseOne" class="accordion-body collapse in">
 							<div class="accordion-inner spPanelSobiPro">
-                                <div style="  float: right; margin: 10px 0 0 10px;">
+                                <div style="float: right; margin: 10px 0 0 10px;">
                                     <a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
                                         <img src="../media/sobipro/sigsiu.png" alt="Sigsiu.NET Software Development" />
                                     </a>
@@ -278,34 +278,19 @@
                                     </a>
                                 </div>
 								<p class="spText"><text value="ABOUT.SP_DESC" /></p>
-								<p class="spText"><text value="ABOUT.DEVELOPED_AND_DESIGNED">
-									<param>
-										<![CDATA[<a href="http://sigrid.sigsiu.net" target="_blank" title="Sigrid Suski">Sigrid Suski</a>]]>
-									</param>
-									<param>
-										<![CDATA[<a href="http://radek.sigsiu.net" target="_blank" title="Radek Suski">Radek Suski</a>]]>
-									</param>
-								</text></p>
+								<p class="spText">
+                                    <text value="ABOUT.DEVELOPED_AND_DESIGNED">
+                                        <param><![CDATA[<a href="http://sigrid.sigsiu.net" target="_blank" title="Sigrid Suski">Sigrid Suski</a>]]></param>
+                                        <param><![CDATA[<a href="http://radek.sigsiu.net" target="_blank" title="Radek Suski">Radek Suski</a>]]></param>
+                                    </text>
+                                </p>
 								<h4 style="clear: both; margin-top: 25px;"><text value="ABOUT.SP_CLUB" /></h4>
-								<p class=""><text value="ABOUT.SP_CLUB_DESC">
-                                    <param>
-                                        <![CDATA[<a href="http://SobiPro.Sigsiu.NET" target="_blank" >SobiPro Club</a>]]>
-                                    </param>
-                                </text></p>
-								<ul>
-									<li>
-										<a href="https://forum.Sigsiu.NET" target="_blank">
-											<text value="Sigsiu.NET Forum" />
-										</a>
-									</li>
-									<li>
-										<text value="ABOUT.SP_CLUB_WEB">
-											<param>
-												<![CDATA[<a href="http://SobiPro.Sigsiu.NET" target="_blank" >SobiPro Club</a>]]>
-											</param>
-										</text>
-									</li>
-								</ul>
+								<p class="spText">
+                                    <text value="ABOUT.SP_CLUBDESC">
+                                        <param><![CDATA[<a href="http://SobiPro.Sigsiu.NET" target="_blank" >SobiPro Club</a>]]></param>
+                                        <param><![CDATA[<a href="https://forum.Sigsiu.NET" target="_blank">SobiPro Forum</a>]]></param>
+                                    </text>
+                                </p>
 								<a href="http://SobiPro.Sigsiu.NET" target="_blank" title="The SobiPro Club - Support, Documentation, Applications and much more .... ">
 									<img src="../media/sobipro/jointheclub.png" alt="The SobiPro Club - Support, Documentation, Applications and much more .... " />
 								</a>

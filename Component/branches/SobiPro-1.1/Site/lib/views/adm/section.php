@@ -141,7 +141,7 @@ class SPSectionAdmView extends SPAdmView
 		$f = $this->get( 'fields' );
 
 		$entriesOrdering = array(
-			Sobi::Txt( 'EMN_ORDER_BY' ) => array(),
+			Sobi::Txt( 'ORDER_BY' ) => array(),
 			'e_sid.asc' => Sobi::Txt( 'EMN.ORDER_BY_ID_ASC' ),
 			'e_sid.desc' => Sobi::Txt( 'EMN.ORDER_BY_ID_DESC' ),
 			$this->get( 'entries_field' ) . '.asc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_ASC' ),
