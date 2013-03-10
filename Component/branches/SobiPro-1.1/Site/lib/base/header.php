@@ -14,7 +14,7 @@
  * $Date$
  * $Revision$
  * $Author$
- * $HeadURL$
+ * File location: components/com_sobipro/lib/base/header.php $
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -721,6 +721,9 @@ final class SPHeader
 								if ( preg_match( '|http(s)?://|', $url ) || preg_match( '|url\(["\s]*/|', $url ) ) {
 									continue;
 								}
+								elseif( strpos( $url, '/' ) === 0 ) {
+									continue;
+								}
 								$c = preg_match_all( '|\.\./|', $url, $c ) + 1;
 								$tempFile = array_reverse( $fPath );
 								for ( $i = 0; $i < $c; $i++ ) {
@@ -733,7 +736,7 @@ final class SPHeader
 								else {
 									$realUrl = Sobi::FixPath( $rPath . '/' . $url );
 								}
-								$fc = str_replace( $url, $realUrl, $fc );
+								$fc = str_replace( array( '"', "'" ), null, str_replace( $url, $realUrl, $fc ) );
 							}
 						}
 						// and add to content
