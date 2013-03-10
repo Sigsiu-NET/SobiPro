@@ -186,7 +186,7 @@ class SPRequirements extends SPController
 		@include_once ( 'PEAR.php' );
 		$v = class_exists( 'PEAR' ) ? true : false;
 		if ( $v ) {
-			echo $this->ok( $this->txt( 'PEAR_AVAILABLE' ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.PEAR_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
 			echo $this->warning( $this->txt( 'REQ.PEAR_NOT_AVAILABLE' ), __FUNCTION__ );
