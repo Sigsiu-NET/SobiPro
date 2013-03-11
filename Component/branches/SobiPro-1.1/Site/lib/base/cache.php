@@ -240,6 +240,10 @@ final class SPCache
 					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'section' => $section, 'task' => '%list.%' ) )
 					->loadAssocList();
 			$this->cleanXML( $xml );
+			$xml = SPFactory::db()
+					->select( array( 'cid', 'fileName' ), 'spdb_view_cache', array( 'sid' => $section ) )
+					->loadAssocList();
+			$this->cleanXML( $xml );
 		}
 	}
 

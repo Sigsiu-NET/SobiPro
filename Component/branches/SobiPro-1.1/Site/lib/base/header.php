@@ -736,7 +736,8 @@ final class SPHeader
 								else {
 									$realUrl = Sobi::FixPath( $rPath . '/' . $url );
 								}
-								$fc = str_replace( array( '"', "'" ), null, str_replace( $url, $realUrl, $fc ) );
+								$realUrl = str_replace( array( '"', "'", ), null, $realUrl );
+								$fc = str_replace( $url, $realUrl, $fc );
 							}
 						}
 						// and add to content

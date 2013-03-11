@@ -53,6 +53,14 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	/** @var int */
 	protected $searchHeight = 100;
 
+	public function __construct( &$field )
+	{
+		parent::__construct( $field );
+		if (  $this->method == 'fixed' && in_array( SPRequest::task(), array( 'entry.add', 'entry.edit' ) ) ) {
+			$this->isOutputOnly = true;
+		}
+	}
+
 	/**
 	 * Shows the field in the edit entry or add entry form
 	 * @param bool $return return or display directly
@@ -85,6 +93,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		switch ( $this->method ) {
 			case 'fixed':
 				$this->showLabel = false;
+				$this->isOutputOnly = true;
 				return null;
 				break;
 			case 'tree':
@@ -117,10 +126,10 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params = array();
 		$params[ 'maxcats' ] = $this->catsMaxLimit;
 		$params[ 'field' ] = $this->nid;
-        $setheight = '';
-        if ($this->height > 0) {
-            $setheight = " style=\"height: {$this->height}px;\"";
-        }
+		$setheight = '';
+		if ( $this->height > 0 ) {
+			$setheight = " style=\"height: {$this->height}px;\"";
+		}
 		$addBtParams = array( 'class' => 'btn' );
 		$delBtParams = array( 'class' => 'btn' );
 		$selectParams = array();
