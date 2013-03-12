@@ -39,7 +39,7 @@ final class SPCache
 	private $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', '.publish' );
 	private $requestStore = array();
 	private $view = array( 'xml' => null, 'template' => null );
-	private $_disableViewCache = array( 'entry.edit', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
+	private $_disableViewCache = array( 'entry.add', 'entry.edit', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
 	private $_cachedView = false;
 	private $cacheViewQuery = array();
 
@@ -81,11 +81,12 @@ final class SPCache
 			$this->_section = $sid ? $sid : $this->_section;
 			$this->_store = Sobi::Cfg( 'cache.store', SOBI_PATH . '/var/cache/' );
 			if ( !( strlen( $this->_store ) ) ) {
-				$this->_store = SOBI_PATH . DS . 'var' . DS . 'cache' . DS;
+				$this->_store = SOBI_PATH . '/var/cache/';
 			}
 			if ( SPFs::exists( SOBI_PATH . '/var/reset' ) ) {
 				$this->cleanAll();
 				SPFs::delete( SOBI_PATH . '/var/reset' );
+				SPFs::delete( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) );
 			}
 			$init = SPFs::exists( $this->_store . '.htCache_' . $this->_section . '.db' ) ? false : true;
 			if ( class_exists( 'SQLiteDatabase' ) ) {
@@ -420,7 +421,7 @@ final class SPCache
 	public function & deleteObj( $type, $id, $sid = 0, $lang = null )
 	{
 		if ( $this->enabled() ) {
- 			$lang = $lang ? $lang : Sobi::Lang( false );
+			$lang = $lang ? $lang : Sobi::Lang( false );
 			$sid = $sid ? $sid : $this->_section;
 			$this->Exec( "BEGIN; DELETE FROM objects WHERE( type LIKE '{$type}%' AND id = '{$id}' AND sid = '{$sid}' AND lang = '{$lang}' ); COMMIT;" );
 			if ( $type == 'entry' ) {
@@ -439,7 +440,7 @@ final class SPCache
 	 * @internal param string $lang - language
 	 * @return SPCache
 	 */
-	public function & deleteVar( $id, $section = 0, $lang = null  )
+	public function & deleteVar( $id, $section = 0, $lang = null )
 	{
 		if ( $this->enabled() ) {
 			$lang = $lang ? $lang : Sobi::Lang( false );
@@ -537,7 +538,7 @@ final class SPCache
 			if ( count( $cache ) ) {
 				foreach ( $cache as $file ) {
 					if ( SPFs::getExt( $file ) == 'db' ) {
-						$c = Sobi::FixPath( $this->_store . DS . $file );
+						$c = Sobi::FixPath( "{$this->_store}/{$file}" );
 						// we need an exception because this files are owned by Apache probably
 						@unlink( $c );
 						if ( SPFs::exists( $c ) ) {
@@ -566,11 +567,11 @@ final class SPCache
 					if (
 						$file != '.' &&
 						$file != '..' &&
-						is_file( Sobi::FixPath( $dir . DS . $file ) ) &&
+						is_file( Sobi::FixPath( "{$dir}/{$file}" ) ) &&
 						( SPFs::getExt( $file ) == $ext || $ext == -1 ) &&
-						( $force || ( time() - filemtime( Sobi::FixPath( $dir . DS . $file ) ) > ( 60 * 60 * 24 * 7 ) ) )
+						( $force || ( time() - filemtime( Sobi::FixPath( "{$dir}/{$file}" ) ) > ( 60 * 60 * 24 * 7 ) ) )
 					) {
-						SPFs::delete( Sobi::FixPath( $dir . DS . $file ) );
+						SPFs::delete( Sobi::FixPath( "{$dir}/{$file}" ) );
 					}
 				}
 			}

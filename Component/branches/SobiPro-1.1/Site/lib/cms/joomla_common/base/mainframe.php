@@ -14,7 +14,7 @@
  * $Date$
  * $Revision$
  * $Author$
- * $HeadURL$
+ * File location: components/com_sobipro/lib/cms/joomla_common/base/mainframe.php $
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -313,9 +313,8 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		if ( defined( 'SOBI_ADM_PATH' ) ) {
 			return true;
 		}
-		$menu =& JSite::getMenu()->getActive()->query;
+		$menu = JSite::getMenu()->getActive()->query;
 		$sid = isset( $menu[ 'sid' ] ) ? $menu[ 'sid' ] : 0;
-//		$pathway = JFactory::getApplication()->getPathway();
 		if ( $obj->get( 'oType' ) == 'entry' ) {
 			$id = SPRequest::int( 'pid' );
 			/* if we didn't entered this entry via category */
@@ -345,6 +344,10 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			/* ^^ skip everything above the linked sid */
 		}
 		$title = array();
+		// if there was an active menu - add its title to the browser title as well
+		if( $sid ) {
+			$title[] = JFactory::getDocument()->getTitle();
+		}
 		/**
 		 * Mon, Jul 16, 2012
 		 * I would relay like to know why I've added the "htmlentities" call here.
