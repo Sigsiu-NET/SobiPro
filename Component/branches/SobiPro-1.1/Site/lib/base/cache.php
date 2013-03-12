@@ -564,13 +564,7 @@ final class SPCache
 			$js = scandir( $dir );
 			if ( count( $js ) ) {
 				foreach ( $js as $file ) {
-					if (
-						$file != '.' &&
-						$file != '..' &&
-						is_file( Sobi::FixPath( "{$dir}/{$file}" ) ) &&
-						( SPFs::getExt( $file ) == $ext || $ext == -1 ) &&
-						( $force || ( time() - filemtime( Sobi::FixPath( "{$dir}/{$file}" ) ) > ( 60 * 60 * 24 * 7 ) ) )
-					) {
+					if ( $file != '.' && $file != '..' && is_file( Sobi::FixPath( "{$dir}/{$file}" ) ) && ( SPFs::getExt( $file ) == $ext || $ext == -1 ) && ( $force || ( time() - filemtime( Sobi::FixPath( "{$dir}/{$file}" ) ) > ( 60 * 60 * 24 * 7 ) ) ) ) {
 						SPFs::delete( Sobi::FixPath( "{$dir}/{$file}" ) );
 					}
 				}
