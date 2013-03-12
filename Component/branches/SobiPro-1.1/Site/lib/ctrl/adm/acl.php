@@ -315,7 +315,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		/* trigger plugins */
 		Sobi::Trigger( 'AfterSave', 'Acl', array( &$this ) );
 		/* set redirect */
-		$this->response( Sobi::Url( $apply ? array( 'task' => 'acl.edit', 'rid' => $rid ) : 'acl' ), Sobi::Txt( 'ACL_RULE_SAVED' ), !( $apply ), SPC::SUCCESS_MSG );
+		$this->response( Sobi::Url( $apply ? array( 'task' => 'acl.edit', 'rid' => $rid ) : 'acl' ), Sobi::Txt( 'ACL_RULE_SAVED' ), !( $apply ), SPC::SUCCESS_MSG, array( 'sets' => array( 'rid' => $rid ) ) );
 	}
 
 	/**
