@@ -88,7 +88,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 
 	private function switchIndex( $field )
 	{
-		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPckg = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		$letters = explode( ',', Sobi::Cfg( 'alphamenu.letters' ) );
 		if ( Sobi::Cfg( 'alphamenu.verify' ) ) {
 			$entries = SPFactory::cache()->getVar( 'alpha_entries_' . $field );
@@ -164,7 +164,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 	protected function view()
 	{
 		/* determine template package */
-		$tplPckg = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPckg = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		Sobi::ReturnPoint();
 		$this->_task = 'alpha';
 

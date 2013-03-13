@@ -424,7 +424,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 	{
 		$ssid = 0;
 		/* determine template package */
-		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 
 		/* load template config */
 		$this->template();

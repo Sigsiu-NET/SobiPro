@@ -44,7 +44,7 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 	protected function view()
 	{
 		/* determine template package */
-		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		Sobi::ReturnPoint();
 		$this->_task = 'user';
 

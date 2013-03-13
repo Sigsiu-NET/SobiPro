@@ -76,7 +76,7 @@ abstract class SPLoader
 			$path = SOBI_PATH . DS . 'opt' . DS . $type;
 		}
 		elseif ( strstr( $type, 'template' ) ) {
-			$path = SOBI_PATH . '/usr/templates/' . Sobi::Cfg( 'section.template', 'default2' );
+			$path = SOBI_PATH . '/usr/templates/' . Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		}
 		elseif ( !strstr( $name, 'opt.' ) ) {
 			$path = SOBI_PATH . DS . 'lib' . DS . $type;

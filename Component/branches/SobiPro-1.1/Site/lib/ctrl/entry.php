@@ -166,7 +166,7 @@ class SPEntryCtrl extends SPController
 		}
 
 		/** let's create a simple plug-in method from the template to allow to modify the request */
-		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		$this->tplCfg( $tplPackage );
 		$customClass = null;
 		if ( isset( $this->_tCfg[ 'general' ][ 'functions' ] ) && $this->_tCfg[ 'general' ][ 'functions' ] ) {
@@ -320,7 +320,7 @@ class SPEntryCtrl extends SPController
 	private function paymentView( $tsId = null, $data = null )
 	{
 		/* determine template package */
-		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		/* load template config */
 		$this->tplCfg( $tplPackage );
 		if ( isset( $this->_tCfg[ 'general' ][ 'functions' ] ) && $this->_tCfg[ 'general' ][ 'functions' ] ) {
@@ -377,7 +377,7 @@ class SPEntryCtrl extends SPController
 		$request = $this->getCache( $tsId );
 		$this->_model->init( SPRequest::sid( $request ) );
 
-		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		$this->tplCfg( $tplPackage );
 		$customClass = null;
 		if ( isset( $this->_tCfg[ 'general' ][ 'functions' ] ) && $this->_tCfg[ 'general' ][ 'functions' ] ) {
@@ -530,7 +530,7 @@ class SPEntryCtrl extends SPController
 		}
 
 		/* determine template package */
-		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 
 		/* load template config */
 		$this->template();
@@ -637,7 +637,7 @@ class SPEntryCtrl extends SPController
 	private function details()
 	{
 		/* determine template package */
-		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 
 		/* load template config */
 		$this->template();

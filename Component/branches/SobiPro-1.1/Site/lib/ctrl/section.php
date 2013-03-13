@@ -41,7 +41,7 @@ class SPSectionCtrl extends SPController
 	protected function view()
 	{
 		/* determine template package */
-		$tplPackage = Sobi::Cfg( 'section.template', 'default2' );
+		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		Sobi::ReturnPoint();
 
 		/* load template config */

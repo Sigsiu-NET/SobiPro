@@ -89,7 +89,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	protected function tplPath()
 	{
 		if ( !$this->_templatePath ) {
-			$tpl = Sobi::Cfg( 'section.template', 'default2' );
+			$tpl = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 			$file = explode( '.', $tpl );
 			if ( strstr( $file[ 0 ], 'cms:' ) ) {
 				$file[ 0 ] = str_replace( 'cms:', null, $file[ 0 ] );
