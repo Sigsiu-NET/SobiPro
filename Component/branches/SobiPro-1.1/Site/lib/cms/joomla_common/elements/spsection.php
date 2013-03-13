@@ -187,7 +187,7 @@ class JElementSPSection extends JElement
 							#jform_request_SOBI_SELECT_SECTION-lbl { margin-top: 8px; }
                             #jform_request_cid-lbl { margin-top: 8px; }
                             #jform_request_eid-lbl { margin-top: 18px; }
-                            #jform_request_sid-lbl { margin-top: 22px; }
+                            #jform_request_sid-lbl { margin-top: 20px; }
                             #jform_request_sptpl-lbl { margin-top: 8px; }
 					' );
 		}
@@ -218,7 +218,8 @@ class JElementSPSection extends JElement
 			}
 		}
 		else {
-			$head->addCSSCode( '.SobiProCalendar .chzn-container { width: 100px!important; } ' );
+			$head->addCSSCode( '.SobiProCalendar .chzn-container {width: 100px!important; } ');
+            $head->addCSSCode( '.SobiProCalendar select {width: inherit;} ' );
 		}
 		$head->send();
 		parent::__construct();
@@ -271,7 +272,7 @@ class JElementSPSection extends JElement
 				}
 				$label = JText::_( 'SP.SOBI_SELECT_CATEGORY' );
 				break;
-			case 'SOBI_SELECTED_DATE':
+			case 'SOBI_SELECT_DATE':
 				if ( $this->task != 'list.date' ) {
 					return null;
 				}
@@ -333,7 +334,7 @@ class JElementSPSection extends JElement
                 <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
                     <h3>' . Sobi::Txt( 'SOBI_SELECT_ENTRY' ) . '</h3>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="height:100px;">
                 <p>
                     <label>' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE_TITLE' ) . '</label><input type="text" data-provide="typeahead" autocomplete="off" id="spEntryChooser" class="span6" placeholder="' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE' ) . '">
                 </p>
@@ -401,7 +402,7 @@ class JElementSPSection extends JElement
 			case 'sid':
 				$params = array( 'id' => 'sid', 'class' => 'input-mini', 'style' => 'text-align: center; margin-top: 10px; margin-left: 10px;', 'readonly' => 'readonly' );
 				return '<div class="SobiPro" id="jform_request_sid">'
-						. SPHtml_Input::text( 'type', $this->oTypeName, array( 'id' => 'otype', 'class' => 'input-small', 'style' => 'text-align: center; margin-top: 10px; ', 'readonly' => 'readonly' ) )
+						. SPHtml_Input::text( 'type', $this->oTypeName, array( 'id' => 'otype', 'class' => 'input-medium', 'style' => 'text-align: center; margin-top: 10px;', 'readonly' => 'readonly' ) )
 						. SPHtml_Input::text( 'urlparams[sid]', $sid, $params )
 						. '</div>';
 				break;
