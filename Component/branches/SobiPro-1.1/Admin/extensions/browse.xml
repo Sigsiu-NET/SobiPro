@@ -71,6 +71,7 @@
 									<head>
 										<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft" />
 										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter" />
+										<cell label="EXTENSIONS.HEADER_ENABLED" class="SpCellCenter" />
 										<cell />
 										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter" />
 										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="SpCellCenter" />
