@@ -22,6 +22,7 @@
 
 var SPStartTime = 0;
 var SPErrors = 0;
+var SPWarnings = 0;
 SobiPro.jQuery().ready( function ()
 {
 	"use strict";
@@ -40,7 +41,7 @@ SobiPro.jQuery().ready( function ()
 	} );
 	SobiPro.jQuery( '#SobiPro' ).find( '.next' ).click( function ()
 	{
-		if ( SPErrors && (( new Date().getTime() - SPStartTime ) < 3000 ) ) {
+		if ( (SPWarnings || SPErrors) && (( new Date().getTime() - SPStartTime ) < 3000 ) ) {
 			alert( SobiPro.Txt( 'REQUIREMENT_READ_PLEASE' ).replace( '%d', Math.ceil( ( new Date().getTime() - SPStartTime ) / 1000 ) ) );
 			SPStartTime = 0;
 		}
@@ -67,9 +68,9 @@ function SobiProRequirements()
 	this.running = this.elements.length;
 	var def = SobiPro.jQuery( '#SP_method' ).next( 'input' );
 	this.request = {
-		'option':'com_sobipro',
-		'method':'xhr',
-		'format':'raw'
+		'option': 'com_sobipro',
+		'method': 'xhr',
+		'format': 'raw'
 	}
 	this.request[ def.attr( 'name' ) ] = def.val();
 	SobiPro.jQuery( '.buttons' ).addClass( 'hide' );
@@ -82,7 +83,14 @@ function SobiProRequirements()
 		}
 		else {
 			SobiPro.jQuery( '.buttons' ).removeClass( 'hide' );
-			SobiPro.jQuery( '#SpProgress' ).html( SobiPro.Txt( 'Done' ) )
+			SobiPro.jQuery( '#SpProgress' ).html( SobiPro.Txt( 'Done' ) );
+			if ( SPErrors ) {
+				SobiPro.Alert( 'REQUIREMENT_ERR' );
+			}
+			else if ( SPWarnings ) {
+				SobiPro.Alert( 'REQUIREMENT_WARN' );
+				SPStartTime = new Date().getTime();
+			}
 		}
 		SobiPro.jQuery( '#SobiPro' ).find( '.bar' ).css( 'width', 100 / this.running + '%' )
 	}
@@ -94,28 +102,29 @@ function SobiProRequirements()
 		request[ 'task' ] = 'requirements.' + el.attr( 'id' );
 		el.html( this.spinner );
 		SobiPro.jQuery.ajax( {
-			'type':'post',
-			'url':'index.php',
-			'data':request,
-			'dataType':'json',
-			success:function ( response )
+			'type': 'post',
+			'url': 'index.php',
+			'data': request,
+			'dataType': 'json',
+			success: function ( response )
 			{
-				if ( response.type == 'success' ) {
-					SPErrors++
+				if ( response.type == 'warning' ) {
+					SPWarnings++
 				}
 				if ( response.type == 'error' ) {
 					response.type = 'important';
+					SPErrors++
 				}
 				var icons = {
-					'important':'thumbs-down',
-					'success':'thumbs-up',
-					'warning':'hand-right'
+					'important': 'thumbs-down',
+					'success': 'thumbs-up',
+					'warning': 'hand-right'
 				};
 				el.html( '<span class="label label-' + response.type + '">&nbsp;<i class="icon-' + icons[ response.type ] + '"></i>&nbsp;&nbsp;' + response.textType + '</span>&nbsp;&nbsp;' + response.message );
 				proxy.running--;
 				proxy.setMessage();
 			},
-			error:function ( xhr, textStatus )
+			error: function ( xhr, textStatus )
 			{
 				if ( textStatus == 'timeout' ) {
 					if ( index < 20 ) {
