@@ -120,9 +120,9 @@ function SPJoomlaMenu()
 										}
 										typeahead.process( responseData );
 										SobiPro.jQuery( '.typeahead' )
-											.addClass( 'span3' )
-											.css( 'top', '89px' )
-											.css( 'left', '145px' )
+											.addClass( 'span4' )
+											.css( 'top', '70px' )
+											.css( 'left', '60px' )
 										;
 										SobiPro.jQuery( '#spEntryChooser' ).after( SobiPro.jQuery( '.typeahead' ) );
 									}
