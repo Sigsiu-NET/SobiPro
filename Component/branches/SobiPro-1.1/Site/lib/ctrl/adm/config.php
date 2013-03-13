@@ -111,7 +111,7 @@ class SPConfigAdmCtrl extends SPController
 		}
 		Sobi::Trigger( 'AfterCreate', 'AdmMenu', array( &$menu ) );
 		if ( $sid ) {
-			if ( Sobi::Cfg( 'section.template' ) == 'default2' && strstr( SPRequest::task(), 'config' ) ) {
+			if ( Sobi::Cfg( 'section.template' ) == SPC::DEFAULT_TEMPLATE && strstr( SPRequest::task(), 'config' ) ) {
 				SPFactory::message()
 						->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false )
 						->setSystemMessage();
@@ -221,7 +221,7 @@ class SPConfigAdmCtrl extends SPController
 			}
 		}
 		if ( Sobi::Section() ) {
-			$file = SPLoader::path( 'usr.templates.' . Sobi::Cfg( 'section.template', 'default2' ) . '.template', 'front', true, 'xml' );
+			$file = SPLoader::path( 'usr.templates.' . Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE ) . '.template', 'front', true, 'xml' );
 			$def = new DOMDocument();
 			$def->load( $file );
 			$xdef = new DOMXPath( $def );

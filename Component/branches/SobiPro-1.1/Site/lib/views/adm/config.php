@@ -243,7 +243,7 @@ class SPConfigAdmView extends SPAdmView implements SPView
 			}
 		}
 		if ( $params ) {
-			$p = array( 'select', 'spcfg_' . $params[ 1 ], $templates, Sobi::Cfg( 'section.template', 'default2' ), false, $params[ 3 ] );
+			$p = array( 'select', 'spcfg_' . $params[ 1 ], $templates, Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE ), false, $params[ 3 ] );
 		}
 		else {
 			$p = $templates;

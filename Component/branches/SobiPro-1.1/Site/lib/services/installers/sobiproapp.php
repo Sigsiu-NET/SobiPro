@@ -377,7 +377,7 @@ class SPAppInstaller extends SPInstaller
 		foreach ( $folders as $folder ) {
 			$target = $folder->attributes->getNamedItem( 'path' )->nodeValue;
 			if ( strstr( $target, 'templates:default' ) ) {
-				$target = str_replace( 'templates:default', 'templates:default2', $target );
+				$target = str_replace( 'templates:default', 'templates:' . SPC::DEFAULT_TEMPLATE, $target );
 			}
 			$basePath = explode( ':', $target );
 			$basePath = $basePath[ 0 ];
