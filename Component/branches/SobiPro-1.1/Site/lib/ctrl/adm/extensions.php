@@ -550,7 +550,6 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 						$eid = implode( '-', $eid );
 					}
 					if ( count( $installed ) ) {
-
 						foreach ( $installed as $ex ) {
 							if ( $eid == $ex[ 'pid' ] || str_replace( '_', '-', $ex[ 'pid' ] ) == $eid ) {
 								$plugin[ 'installed' ] = -2;
@@ -562,11 +561,27 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 							}
 						}
 					}
+					if ( $plugin[ 'type' ] == 'update' ) {
+						$compare = version_compare( $plugin[ 'version' ], implode( '.', SPFactory::CmsHelper()->myVersion() ) ) ;
+						if ( $compare <= 0 ) {
+							$plugin[ 'installed' ] = -1;
+							$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.APP_UPDATE_DISABLED' ), 'class' => 'disabled' );
+						}
+						else {
+							$plugin[ 'installed' ] = -3;
+							$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.UPDATE_CORE' ), 'class' => 'update' );
+						}
+					}
 					$plugin[ 'pid' ] = $eid;
 					$plugin[ 'eid' ] = $plugin[ 'repository' ] . '.' . $plugin[ 'type' ] . '.' . $plugin[ 'pid' ];
 					$list[ $eid ] = $plugin;
 					$index = in_array( $plugin[ 'type' ], array( 'application', 'field', 'update', 'template', 'language' ) ) ? $plugin[ 'type' ] . 's' : 'others';
 					$apps[ $index ][ ] = $plugin;
+				}
+				if ( isset( $apps[ 'updates' ] ) ) {
+					usort( $apps[ 'updates' ], function ( $from, $to ) {
+						return version_compare( $to[ 'version' ], $from[ 'version' ] ) > 0;
+					} );
 				}
 			}
 		}
