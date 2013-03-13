@@ -80,6 +80,9 @@ input[type='radio'] {
 .SobiPro .collapse {
   overflow: hidden \9;
 }
+.SobiPro .controls .required {
+  border-color: #7AC6FF;
+}
 .SobiPro .breadcrumb {
   padding: 7px 14px;
   margin: 0 0 18px;

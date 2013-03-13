@@ -8,9 +8,11 @@
  * Url: http://www.Sigsiu.NET
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * $Date$
  * $Revision$
  * $Author$
@@ -238,7 +240,7 @@ class JElementSPSection extends JElement
 			}
 		}
 		else {
-			$this->taskName = JText::_( 'SOBI_SECTION' );
+			$this->taskName = JText::_( 'SP.SOBI_SECTION' );
 		}
 	}
 
@@ -267,13 +269,13 @@ class JElementSPSection extends JElement
 				if ( $this->task ) {
 					return '&nbsp;';
 				}
-				$label = JText::_( 'SOBI_SELECT_CATEGORY' );
+				$label = JText::_( 'SP.SOBI_SELECT_CATEGORY' );
 				break;
 			case 'SOBI_SELECTED_DATE':
 				if ( $this->task != 'list.date' ) {
 					return null;
 				}
-				$label = JText::_( 'SOBI_SELECT_ENTRY' );
+				$label = JText::_( 'SP.SOBI_SELECT_ENTRY' );
 				break;
 
 		}
@@ -291,18 +293,19 @@ class JElementSPSection extends JElement
 			$params[ 'disabled' ] = 'disabled';
 		}
 		return
-				'<div class="SobiPro">' .
-				SPHtml_Input::button( 'sp_category', $this->oType == 'category' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_CATEGORY' ), $params ) .
-				'<div class="modal hide" id="spCat" style="width:500px;"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>' . Sobi::Txt( 'SOBI_SELECT_CATEGORY' ) . '</h3>
-              </div>
-              <div class="modal-body">
-                <div id="spCatsChooser"></div>
-              </div>
-              <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal">' . Sobi::Txt( 'SOBI_CLOSE_WINDOW' ) . '</a>
-                <a href="#" id="spCatSelect" class="btn btn-primary" data-dismiss="modal">' . Sobi::Txt( 'CC.JMENU_SAVE' ) . '</a>
-              </div>
+        '<div class="SobiPro">' .
+            SPHtml_Input::button( 'sp_category', $this->oType == 'category' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_CATEGORY' ), $params ) .
+            '<div class="modal hide" id="spCat" style="width:500px;">
+                <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>' . Sobi::Txt( 'SOBI_SELECT_CATEGORY' ) . '</h3>
+                </div>
+                <div class="modal-body">
+                    <div id="spCatsChooser"></div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">' . Sobi::Txt( 'SOBI_CLOSE_WINDOW' ) . '</a>
+                    <a href="#" id="spCatSelect" class="btn btn-primary" data-dismiss="modal">' . Sobi::Txt( 'SOBI.JMENU_SAVE' ) . '</a>
+                </div>
             </div>
             <input type="hidden" name="selectedCat" id="selectedCat" value=""/>
             <input type="hidden" name="selectedCatName" id="selectedCatName" value=""/>
@@ -320,26 +323,25 @@ class JElementSPSection extends JElement
 			$params[ 'disabled' ] = 'disabled';
 		}
 		return
-				'<div class="SobiPro">' .
-				SPHtml_Input::button(
-					'sp_entry',
-					$this->oType == 'entry' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_ENTRY' ),
-					$params
-				) .
-				'<div class="modal hide" id="spEntry" style="width:500px;">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3>' . Sobi::Txt( 'SOBI_SELECT_ENTRY' ) . '</h3>
-              </div>
-              <div class="modal-body">
+		'<div class="SobiPro">' .
+			SPHtml_Input::button(
+			'sp_entry',
+			$this->oType == 'entry' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_ENTRY' ),
+			$params
+			) .
+			'<div class="modal hide" id="spEntry" style="width:500px;">
+                <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3>' . Sobi::Txt( 'SOBI_SELECT_ENTRY' ) . '</h3>
+                </div>
+                <div class="modal-body">
                 <p>
                     <label>' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE_TITLE' ) . '</label><input type="text" data-provide="typeahead" autocomplete="off" id="spEntryChooser" class="span6" placeholder="' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE' ) . '">
                 </p>
-              </div>
-              <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal">' . Sobi::Txt( 'SOBI_CLOSE_WINDOW' ) . '</a>
-                <a href="#" id="spEntrySelect" class="btn btn-primary" data-dismiss="modal">' . Sobi::Txt( 'CC.JMENU_SAVE' ) . '</a>
-              </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn" data-dismiss="modal">' . Sobi::Txt( 'SOBI_CLOSE_WINDOW' ) . '</a>
+                    <a href="#" id="spEntrySelect" class="btn btn-primary" data-dismiss="modal">' . Sobi::Txt( 'SOBI.JMENU_SAVE' ) . '</a>
+                </div>
             </div>
             <input type="hidden" name="selectedEntry" id="selectedEntry" value=""/>
             <input type="hidden" name="selectedEntryName" id="selectedEntryName" value=""/>
@@ -430,7 +432,7 @@ class JElementSPSection extends JElement
 			SPLoader::loadClass( 'models.datamodel' );
 			SPLoader::loadClass( 'models.dbobject' );
 			SPLoader::loadModel( 'section' );
-			$sout[ ] = Sobi::Txt( 'SELECT_SECTION' );
+			$sout[ ] = Sobi::Txt( 'SOBI_SELECT_SECTION' );
 			foreach ( $sections as $section ) {
 				if ( Sobi::Can( 'section', 'access', 'valid', $section->id ) ) {
 					$s = new SPSection();
@@ -478,12 +480,12 @@ class JElementSPSection extends JElement
 				}
 			}
 			return
-					'<div class="SobiPro SobiProCalendar">' .
-					SPHtml_Input::select( 'sp_year', $years, $selected[ 'year' ] ) .
-					SPHtml_Input::select( 'sp_month', $months, $selected[ 'month' ] ) .
-					SPHtml_Input::select( 'sp_day', $days, $selected[ 'day' ] ) .
-					'<input type="hidden" name="urlparams[date]" id="selectedDate" value=""/>
-	                 </div>';
+            '<div class="SobiPro SobiProCalendar">' .
+                SPHtml_Input::select( 'sp_year', $years, $selected[ 'year' ] ) .
+                SPHtml_Input::select( 'sp_month', $months, $selected[ 'month' ] ) .
+                SPHtml_Input::select( 'sp_day', $days, $selected[ 'day' ] ) .
+                '<input type="hidden" name="urlparams[date]" id="selectedDate" value=""/>
+             </div>';
 
 		}
 		else {
