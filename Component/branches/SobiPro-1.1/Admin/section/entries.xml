@@ -30,7 +30,7 @@
 		<divider />
 		<buttons type="actions">
 			<button type="url" sid="true" task="entry.add" label="AMN.ADD_ENTRY" icon="file" />
-			<button type="delete" task="entry.delete" />
+			<button type="delete" task="entry.delete" confirm="TB.JS_DELETE_ENTRIES_WARN"/>
 			<nav-header label="TB.PUBLISHING" />
 			<button type="publish" task="entry.publish" />
 			<button type="hide" task="entry.hide" />

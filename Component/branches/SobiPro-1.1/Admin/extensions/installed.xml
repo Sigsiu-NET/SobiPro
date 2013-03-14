@@ -28,15 +28,15 @@
 		<file type="script" filename="adm.sam" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
-		<button label="TB.REMOVE" task="extensions.delete" icon="trash" />
-        <divider />
-        <buttons icon="share" buttons="sections-list" label="TB.SECTIONS" />
+		<button label="TB.REMOVE" task="extensions.delete" icon="trash" confirm="TB.JS_DELETE_EXT" />
+		<divider />
+		<buttons icon="share" buttons="sections-list" label="TB.SECTIONS" />
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
-            <button type="url" task="template.info" />
+			<button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
@@ -48,22 +48,22 @@
 			<div class="span10">
 				<message id="spMessage" />
 				<div>
-					<field type="fileUpload" name="SobiProExtension"  label="EX.INSTALL" accept="application/zip" task="extensions.install"/>
+					<field type="fileUpload" name="SobiProExtension" label="EX.INSTALL" accept="application/zip" task="extensions.install" />
 				</div>
 				<table>
 					<head>
 						<cell />
 						<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft" />
-                        <cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter" />
+						<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter" />
 						<cell label="EX.HEADER_TYPE" type="text" class="SpCellCenter" />
 						<cell label="EXTENSIONS.HEADER_ENABLED" type="text" class="SpCellCenter" />
 						<cell label="EXTENSIONS.HEADER_PID" type="text" class="SpCellCenter" />
 						<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter" />
 					</head>
 					<loop subject="applications">
-						<cell type="checkbox" name="eid" value="eid" class="SpCellCenter" locked="locked" locked-text="EX.CORE_PLUGIN" input-type="radio" multiple="false"/>
+						<cell type="checkbox" name="eid" value="eid" class="SpCellCenter" locked="locked" locked-text="EX.CORE_PLUGIN" input-type="radio" multiple="false" />
 						<cell type="text" value="name" class="SpCellLeft" />
-                        <cell type="text" value="version" class="SpCellCenter" />
+						<cell type="text" value="version" class="SpCellCenter" />
 						<cell type="text" value="type" class="SpCellCenter" />
 						<cell type="ticker" value="enabled" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok', '-1':'lock'}" status-text="{'-1':'EX.NOT_APPLICABLE'}">
 							<url type="intern">
@@ -72,7 +72,7 @@
 							</url>
 						</cell>
 						<cell type="text" value="pid" class="SpCellCenter" />
-						<cell type="link" value="author" condition="authorURL" class="SpCellCenter" >
+						<cell type="link" value="author" condition="authorURL" class="SpCellCenter">
 							<url type="extern" host="authorURL" />
 						</cell>
 						<cell type="text" value="author" class="SpCellCenter" invert-condition="authorURL" />

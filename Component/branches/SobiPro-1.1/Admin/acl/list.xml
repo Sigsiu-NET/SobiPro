@@ -32,7 +32,7 @@
 		<divider />
 		<buttons type="actions">
 			<button type="new" task="acl.add" />
-			<button type="delete" task="acl.delete" />
+			<button type="delete" task="acl.delete" confirm="ACL.JS_MSG_DELETE_ACL_RULE"/>
 			<nav-header label="TB.PUBLISHING" />
 			<button type="enable" task="acl.enable" />
 			<button type="disable" task="acl.disable" />

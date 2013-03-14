@@ -29,7 +29,7 @@
 		<buttons type="new" buttons="fieldTypes" />
 		<divider />
 		<buttons type="actions">
-			<button type="delete" task="field.delete" />
+			<button type="delete" task="field.delete" confirm="TB.JS_DELETE_FIELD_WARN" />
 			<nav-header label="TB.ENABLED" />
 			<button type="enable" task="field.publish" />
 			<button type="disable" task="field.hide" />
@@ -41,8 +41,8 @@
 			<!--<button type="custom" task="field.setNotEditable" label="TB.SET_NOT_EDITABLE" icon="remove-sign"/>-->
 		</buttons>
 		<divider />
-        <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-        <divider />
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
+		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" />
@@ -97,7 +97,7 @@
 						<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_IS_FREE" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="field" condition="ordering.contains(order)"/>
+						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="field" condition="ordering.contains(order)" />
 					</head>
 					<loop subject="fields">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -113,7 +113,7 @@
 							<cell type="text" value="nid" class="subText" />
 						</cell>
 						<cell condition="_off">
-							<cell type="text" value="name" class="invalid"/>
+							<cell type="text" value="name" class="invalid" />
 							<cell type="text" value="nid" class="subText invalid" />
 						</cell>
 						<cell type="ticker" value="enabled" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}">
@@ -123,8 +123,8 @@
 								<param name="sid" value="request.sid" parse="true" subject="skip" />
 							</url>
 						</cell>
-						<cell type="text" value="fieldType" class="SpCellCenter" invert-condition="_off"/>
-						<cell type="text" value="fieldType" class="SpCellCenter invalid" condition="_off"/>
+						<cell type="text" value="fieldType" class="SpCellCenter" invert-condition="_off" />
+						<cell type="text" value="fieldType" class="SpCellCenter invalid" condition="_off" />
 						<cell type="text" value="showIn" class="SpCellCenter" />
 						<cell type="ticker" value="required" class="SpCellCenter" icons="{'0':'check-empty','1':'check'}">
 							<url type="intern">
@@ -148,7 +148,7 @@
 							</url>
 						</cell>
 						<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellArrowCol" condition="/ordering.contains(order)">
-							<cell type="text" class="SpCellArrow" >
+							<cell type="text" class="SpCellArrow">
 								<cell type="link" icon="chevron-up">
 									<url type="intern">
 										<param name="task" value="field.up" />
