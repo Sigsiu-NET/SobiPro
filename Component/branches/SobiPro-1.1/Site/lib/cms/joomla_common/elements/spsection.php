@@ -189,8 +189,14 @@ class JElementSPSection extends JElement
                             #jform_request_eid-lbl { margin-top: 18px; }
                             #jform_request_sid-lbl { margin-top: 20px; }
                             #jform_request_sptpl-lbl { margin-top: 8px; }
+                            .typeahead-width { width: 320px; }
 					' );
 		}
+        else {
+            $head->addCSSCode('
+                .typeahead-width { width: 70%; }
+            ');
+        }
 		$this->determineTask();
 		$strings = array(
 			'objects' => array(
@@ -330,14 +336,14 @@ class JElementSPSection extends JElement
 			$this->oType == 'entry' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_ENTRY' ),
 			$params
 			) .
-			'<div class="modal hide" id="spEntry" style="width:500px;">
+			'<div class="modal hide" id="spEntry" style="width:500px; overflow: visible;">
                 <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
                     <h3>' . Sobi::Txt( 'SOBI_SELECT_ENTRY' ) . '</h3>
                 </div>
-                <div class="modal-body" style="height:100px;">
-                <p>
-                    <label>' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE_TITLE' ) . '</label><input type="text" data-provide="typeahead" autocomplete="off" id="spEntryChooser" class="span6" placeholder="' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE' ) . '">
-                </p>
+                <div class="modal-body" style="overflow-y: visible;">
+
+                    <label>' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE_TITLE' ) . '</label><input type="text" data-provide="typeahead" autocomplete="off" id="spEntryChooser" class="span6" style="width: 95%" placeholder="' . Sobi::Txt( 'SOBI_SELECT_ENTRY_TYPE' ) . '">
+
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn" data-dismiss="modal">' . Sobi::Txt( 'SOBI_CLOSE_WINDOW' ) . '</a>
@@ -469,7 +475,7 @@ class JElementSPSection extends JElement
 			}
 			$days = array( null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) );
 
-			for ( $i = 1; $i < 31; $i++ ) {
+			for ( $i = 1; $i < 32; $i++ ) {
 				$days[ $i ] = $i;
 			}
 			$exYears = SPFactory::db()

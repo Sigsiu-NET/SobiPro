@@ -35,7 +35,7 @@
         <fields name="request">
             <fieldset name="request" label="COM_MENUS_BASIC_FIELDSET_LABEL" addfieldpath="/components/com_sobipro/lib/cms/joomla16/elements">
                 <field name="SP.SOBI_SELECT_SECTION" type="spsection" description="SP.SOBI_SELECT_SECTION_EXPL"/>
-	            <field name="date" type="spdid" label="SP.SOBI_SELECTED_DATE"/>
+	            <field name="date" type="spdid" label="SP.SOBI_SELECT_DATE"/>
                 <field name="cid" type="spcid" label="SP.SOBI_SELECT_CATEGORY" description="SP.SOBI_SELECT_CATEGORY_EXPL"/>
                 <field name="eid" type="speid" label="SP.SOBI_SELECT_ENTRY" description="SP.SOBI_SELECT_ENTRY_EXPL"/>
                 <field name="sid" type="spsid" label="SP.SOBI_SELECTED_OBJECT"/>
