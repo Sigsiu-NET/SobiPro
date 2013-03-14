@@ -81,7 +81,7 @@ function SPJoomlaMenu()
 			}
 			else {
 				var requestUrl = SobiProUrl.replace( '%task%', 'category.chooser' ) + '&treetpl=rchooser&multiple=1&tmpl=component&sid=' + SobiPro.jQuery( "#sid" ).val();
-				jQuery( "#spCatsChooser" ).html( '<iframe id="spCatSelectFrame" src="' + requestUrl + '" style="width: 500px; height: 400px; border: none;"> </iframe>' );
+				jQuery( "#spCatsChooser" ).html( '<iframe id="spCatSelectFrame" src="' + requestUrl + '" style="width: 480px; height: 400px; border: none;"> </iframe>' );
 				SobiPro.jQuery( '#spCat' ).modal();
 				semaphore = 0;
 			}
@@ -120,9 +120,8 @@ function SPJoomlaMenu()
 										}
 										typeahead.process( responseData );
 										SobiPro.jQuery( '.typeahead' )
-											.addClass( 'span4' )
-											.css( 'top', '70px' )
-											.css( 'left', '60px' )
+											.addClass( 'typeahead-width' )
+                                            .css('font-size', '13px')
 										;
 										SobiPro.jQuery( '#spEntryChooser' ).after( SobiPro.jQuery( '.typeahead' ) );
 									}
