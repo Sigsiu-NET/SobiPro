@@ -43,7 +43,7 @@
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
-			<button type="url" task="extensions" />
+			<button type="url" task="extensions.installed" />
 			<button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
@@ -247,7 +247,7 @@
 					</li>
 					<li class="spBox">
 						<url type="intern" label="CPANEL.SAM" image="../media/sobipro/adm/folder-application.png">
-							<param name="task" value="extensions" />
+							<param name="task" value="extensions.installed" />
 						</url>
 					</li>
 					<li class="spBox">

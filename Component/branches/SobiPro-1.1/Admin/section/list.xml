@@ -55,7 +55,7 @@
 			<button type="url" task="panel" />
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
-			<button type="url" task="extensions" />
+			<button type="url" task="extensions.installed" />
 			<button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
