@@ -44,7 +44,7 @@ class SpAdmToolbar
 		'panel' => 'home',
 		'config' => 'cogs',
 		'acl' => 'th-list',
-		'extensions' => 'magic',
+		'extensions.installed' => 'magic',
 		'options' => 'eye-open',
 		'template.info' => 'picture'
 	);
@@ -67,7 +67,7 @@ class SpAdmToolbar
 		'panel' => 'CONTROL_PANEL',
 		'config' => 'GLOBAL_CONFIG',
 		'acl' => 'ACL',
-		'extensions' => 'SAM',
+		'extensions.installed' => 'SAM',
 		'options' => 'OPTIONS',
 		'template.info' => 'TEMPLATE'
 	);

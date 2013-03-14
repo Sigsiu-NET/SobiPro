@@ -56,7 +56,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	public function __construct( &$field )
 	{
 		parent::__construct( $field );
-		if (  $this->method == 'fixed' && in_array( SPRequest::task(), array( 'entry.add', 'entry.edit' ) ) ) {
+		if ( $this->method == 'fixed' && in_array( SPRequest::task(), array( 'entry.add', 'entry.edit' ) ) ) {
 			$this->isOutputOnly = true;
 		}
 	}
@@ -84,6 +84,12 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			}
 			else {
 				$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
+			}
+		}
+		if ( !( $this->_selectedCats ) || !( count( $this->_selectedCats ) ) ) {
+			$sid = SPRequest::sid();
+			if ( $sid != Sobi::Section() ) {
+				$this->_selectedCats = array( SPRequest::sid() );
 			}
 		}
 		$this->showLabel = true;
