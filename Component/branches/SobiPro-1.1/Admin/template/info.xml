@@ -30,10 +30,10 @@
 	<toolbar title="var:[site_title]" icon="SobiTemplate">
 		<button type="duplicate" task="template.clone" label="TB.CLONE" />
 		<divider />
-		<button type="delete" task="template.delete" />
+		<button type="delete" task="template.delete" confirm="TB.JS_DELETE_TEMPLATE_WARN" />
 		<divider />
-        <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-        <divider />
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
+		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" />

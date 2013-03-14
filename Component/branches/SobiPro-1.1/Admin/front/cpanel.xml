@@ -34,7 +34,7 @@
 		<divider />
 		<buttons type="actions">
 			<button type="new" task="section.add" label="TB.ADD_NEW" icon="file" />
-			<button type="delete" task="section.delete" />
+			<button type="delete" task="section.delete" confirm="TB.JS_DELETE_SECTION_WARN" />
 			<nav-header label="TB.PUBLISHING" />
 			<button type="publish" task="section.publish" />
 			<button type="hide" task="section.hide" />
@@ -44,69 +44,69 @@
 			<button type="url" task="config" />
 			<button type="url" task="acl" />
 			<button type="url" task="extensions" />
-            <button type="url" task="template.info" />
+			<button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
 	<body>
 		<message id="spMessage" />
-        <div class="row-fluid">
+		<div class="row-fluid">
 			<div class="span6">
 
-                <div class="well spStatus">
-                    <div>
-                        <p condition="system-state.messages.length" class="spStatusIssues">
-                            <a href="#ReportedIssues" role="button" class="btn btn-warning" data-toggle="modal">
-                                <text value="CPANEL_REPORTED_ISSUES">
-                                    <param value="system-state.messages.length" parse="true" />
-                                </text>
-                            </a>
-                        </p>
-                        <p class="spStatusHeader">
-                            <text value="CPANEL_SYSTEM_STATUS" />
-                        </p>
-                    </div>
-                    <message parse="system-state.accelerator" dismiss-button="false" icon="true" class="spStatusAlert" />
-	                <message parse="system-state.xml-optimiser" dismiss-button="false" icon="true" class="spStatusAlert" />
-                    <message parse="system-state.javascript-cache" dismiss-button="false" icon="true" class="spStatusAlert" />
-                    <message parse="system-state.css-cache" dismiss-button="false" icon="true" class="spStatusAlert" />
-                    <message parse="system-state.display-errors" dismiss-button="false" icon="true" class="spStatusAlert" />
-                    <message parse="system-state.debug-level" dismiss-button="false" icon="true" class="spStatusAlert" />
-                    <message parse="system-state.debug-xml" dismiss-button="false" icon="true" class="spStatusAlert" />
-                    <div class="modal hide" id="ReportedIssues" style="width: 620px;" condition="system-state.messages.length" >
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">
-                                <text value="CLOSE_X" />
-                            </button>
-                            <h4>
-                                <text value="CPANEL_REPORTED_ISSUES">
-                                    <param value="system-state.messages.length" parse="true" />
-                                </text>
-                            </h4>
-                        </div>
-                        <div class="modal-body">
-                            <table>
-                                <head>
-                                    <cell label="CPANEL_ISSUES_TYPE" type="text" class="SpCellCenter" />
-                                    <cell label="CPANEL_ISSUES_SECTION" type="text" />
-                                    <cell label="CPANEL_ISSUES_MESSAGE" type="text" />
-                                </head>
-                                <loop subject="system-state.messages">
-                                    <cell type="text" class="SPCellIssueMsg">
-                                        <cell type="text" value="type-text" class="SpCellLeft label label-var:[type]" />
-                                    </cell>
-                                    <cell type="text" value="section.link" />
-                                    <cell type="text" value="message" />
-                                </loop>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <a href="#" class="btn" data-dismiss="modal">
-                                <text value="CLOSE" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
+				<div class="well spStatus">
+					<div>
+						<p condition="system-state.messages.length" class="spStatusIssues">
+							<a href="#ReportedIssues" role="button" class="btn btn-warning" data-toggle="modal">
+								<text value="CPANEL_REPORTED_ISSUES">
+									<param value="system-state.messages.length" parse="true" />
+								</text>
+							</a>
+						</p>
+						<p class="spStatusHeader">
+							<text value="CPANEL_SYSTEM_STATUS" />
+						</p>
+					</div>
+					<message parse="system-state.accelerator" dismiss-button="false" icon="true" class="spStatusAlert" />
+					<message parse="system-state.xml-optimiser" dismiss-button="false" icon="true" class="spStatusAlert" />
+					<message parse="system-state.javascript-cache" dismiss-button="false" icon="true" class="spStatusAlert" />
+					<message parse="system-state.css-cache" dismiss-button="false" icon="true" class="spStatusAlert" />
+					<message parse="system-state.display-errors" dismiss-button="false" icon="true" class="spStatusAlert" />
+					<message parse="system-state.debug-level" dismiss-button="false" icon="true" class="spStatusAlert" />
+					<message parse="system-state.debug-xml" dismiss-button="false" icon="true" class="spStatusAlert" />
+					<div class="modal hide" id="ReportedIssues" style="width: 620px;" condition="system-state.messages.length">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<text value="CLOSE_X" />
+							</button>
+							<h4>
+								<text value="CPANEL_REPORTED_ISSUES">
+									<param value="system-state.messages.length" parse="true" />
+								</text>
+							</h4>
+						</div>
+						<div class="modal-body">
+							<table>
+								<head>
+									<cell label="CPANEL_ISSUES_TYPE" type="text" class="SpCellCenter" />
+									<cell label="CPANEL_ISSUES_SECTION" type="text" />
+									<cell label="CPANEL_ISSUES_MESSAGE" type="text" />
+								</head>
+								<loop subject="system-state.messages">
+									<cell type="text" class="SPCellIssueMsg">
+										<cell type="text" value="type-text" class="SpCellLeft label label-var:[type]" />
+									</cell>
+									<cell type="text" value="section.link" />
+									<cell type="text" value="message" />
+								</loop>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<a href="#" class="btn" data-dismiss="modal">
+								<text value="CLOSE" />
+							</a>
+						</div>
+					</div>
+				</div>
 
 
 				<header label="SECTIONS" icon="SobiCatList">
@@ -202,7 +202,7 @@
 							</loop>
 						</table>
 					</tab>
-                    <tab label="CPANEL_AWAITING_APPROVAL">
+					<tab label="CPANEL_AWAITING_APPROVAL">
 						<table condition="entries.unapproved.length">
 							<head>
 								<cell label="ENTRY.HEADER_NAME" type="text" />
@@ -234,29 +234,29 @@
 
 
 			<div class="span6">
-                <ul class="thumbnails">
-                    <li class="spBox">
-                        <url type="intern" label="CPANEL.GCONF" image="../media/sobipro/adm/folder-configuration.png">
-                            <param name="task" value="config" />
-                        </url>
-                    </li>
-                    <li class="spBox">
-                        <url type="intern" label="CPANEL.ACL" image="../media/sobipro/adm/sobipro-acl-edit.png">
-                            <param name="task" value="acl" />
-                        </url>
-                    </li>
-                    <li class="spBox">
-                        <url type="intern" label="CPANEL.SAM" image="../media/sobipro/adm/folder-application.png">
-                            <param name="task" value="extensions" />
-                        </url>
-                    </li>
-                    <li class="spBox">
-                        <url type="intern" label="CPANEL.TMPL" image="../media/sobipro/adm/folder-templates.png">
-                            <param name="task" value="template.info" />
-                        </url>
+				<ul class="thumbnails">
+					<li class="spBox">
+						<url type="intern" label="CPANEL.GCONF" image="../media/sobipro/adm/folder-configuration.png">
+							<param name="task" value="config" />
+						</url>
+					</li>
+					<li class="spBox">
+						<url type="intern" label="CPANEL.ACL" image="../media/sobipro/adm/sobipro-acl-edit.png">
+							<param name="task" value="acl" />
+						</url>
+					</li>
+					<li class="spBox">
+						<url type="intern" label="CPANEL.SAM" image="../media/sobipro/adm/folder-application.png">
+							<param name="task" value="extensions" />
+						</url>
+					</li>
+					<li class="spBox">
+						<url type="intern" label="CPANEL.TMPL" image="../media/sobipro/adm/folder-templates.png">
+							<param name="task" value="template.info" />
+						</url>
 
-                    </li>
-                </ul>
+					</li>
+				</ul>
 
 				<div class="accordion" id="SobiProPanel">
 					<div class="accordion-group">
@@ -267,30 +267,38 @@
 						</div>
 						<div id="collapseOne" class="accordion-body collapse in">
 							<div class="accordion-inner spPanelSobiPro">
-                                <div style="float: right; margin: 10px 0 0 10px;">
-                                    <a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
-                                        <img src="../media/sobipro/sigsiu.png" alt="Sigsiu.NET Software Development" />
-                                    </a>
-                                </div>
-                                <div style="float: left; margin: 0 10px 0 0;">
-                                    <a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
-                                        <img src="../media/sobipro/logo.png" alt="Sigsiu.NET Software Development" />
-                                    </a>
-                                </div>
-								<p class="spText"><text value="ABOUT.SP_DESC" /></p>
+								<div style="float: right; margin: 10px 0 0 10px;">
+									<a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
+										<img src="../media/sobipro/sigsiu.png" alt="Sigsiu.NET Software Development" />
+									</a>
+								</div>
+								<div style="float: left; margin: 0 10px 0 0;">
+									<a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
+										<img src="../media/sobipro/logo.png" alt="Sigsiu.NET Software Development" />
+									</a>
+								</div>
 								<p class="spText">
-                                    <text value="ABOUT.DEVELOPED_AND_DESIGNED">
-                                        <param><![CDATA[<a href="http://sigrid.sigsiu.net" target="_blank" title="Sigrid Suski">Sigrid Suski</a>]]></param>
-                                        <param><![CDATA[<a href="http://radek.sigsiu.net" target="_blank" title="Radek Suski">Radek Suski</a>]]></param>
-                                    </text>
-                                </p>
-								<h4 style="clear: both; margin-top: 25px;"><text value="ABOUT.SP_CLUB" /></h4>
+									<text value="ABOUT.SP_DESC" />
+								</p>
 								<p class="spText">
-                                    <text value="ABOUT.SP_CLUBDESC">
-                                        <param><![CDATA[<a href="http://SobiPro.Sigsiu.NET" target="_blank" >SobiPro Club</a>]]></param>
-                                        <param><![CDATA[<a href="https://forum.Sigsiu.NET" target="_blank">SobiPro Forum</a>]]></param>
-                                    </text>
-                                </p>
+									<text value="ABOUT.DEVELOPED_AND_DESIGNED">
+										<param>
+											<![CDATA[<a href="http://sigrid.sigsiu.net" target="_blank" title="Sigrid Suski">Sigrid Suski</a>]]></param>
+										<param>
+											<![CDATA[<a href="http://radek.sigsiu.net" target="_blank" title="Radek Suski">Radek Suski</a>]]></param>
+									</text>
+								</p>
+								<h4 style="clear: both; margin-top: 25px;">
+									<text value="ABOUT.SP_CLUB" />
+								</h4>
+								<p class="spText">
+									<text value="ABOUT.SP_CLUBDESC">
+										<param>
+											<![CDATA[<a href="http://SobiPro.Sigsiu.NET" target="_blank" >SobiPro Club</a>]]></param>
+										<param>
+											<![CDATA[<a href="https://forum.Sigsiu.NET" target="_blank">SobiPro Forum</a>]]></param>
+									</text>
+								</p>
 								<a href="http://SobiPro.Sigsiu.NET" target="_blank" title="The SobiPro Club - Support, Documentation, Applications and much more .... ">
 									<img src="../media/sobipro/jointheclub.png" alt="The SobiPro Club - Support, Documentation, Applications and much more .... " />
 								</a>
@@ -316,28 +324,28 @@
 					<div class="accordion-group" condition="news.length">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProNewsPane" id="SobiProNews">
-                                <text value="ABOUT.NEWS_PANE">
-                                    <param value="news.title" parse="true" />
-                                </text>
+								<text value="ABOUT.NEWS_PANE">
+									<param value="news.title" parse="true" />
+								</text>
 							</a>
 						</div>
-                        <div id="SobiProNewsPane" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                <div class="spNews">
-                                    <loop subject="news.feeds" table="false">
-                                        <cell class="SpCellContainer">
-                                            <cell type="link" value="title" class="SpCellNewsTitle">
-                                                <url type="extern" host="url" />
-                                            </cell>
-                                            <cell type="text" value="content" class="SpCellNewsContent" />
-                                        </cell>
-                                    </loop>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+						<div id="SobiProNewsPane" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<div class="spNews">
+									<loop subject="news.feeds" table="false">
+										<cell class="SpCellContainer">
+											<cell type="link" value="title" class="SpCellNewsTitle">
+												<url type="extern" host="url" />
+											</cell>
+											<cell type="text" value="content" class="SpCellNewsContent" />
+										</cell>
+									</loop>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                    <div class="accordion-group">
+					<div class="accordion-group">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProCreditsPane">
 								<text value="ABOUT.CREDITS_PANE" />

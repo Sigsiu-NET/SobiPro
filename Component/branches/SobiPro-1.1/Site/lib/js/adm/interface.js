@@ -36,12 +36,12 @@ SobiPro.jQuery( document ).ready( function ()
 		this.doneCounter = 0;
 		this.progressBar = SobiPro.jQuery( '#SpProgress' ).find( '.bar' );
 		this.progressMessage = SobiPro.jQuery( '#SpProgress .alert' );
-		this.messages = { 'warning':[], 'error':[], 'info':[], 'success':[] };
+		this.messages = { 'warning': [], 'error': [], 'info': [], 'success': [] };
 		this.finish = function ( url )
 		{
-			var request = {'option':'com_sobipro', 'task':'txt.messages', 'format':'raw', 'method':'xhr', 'spsid':SobiPro.jQuery( '#SP_spsid' ).val() }
-			SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json',
-				success:function ( response )
+			var request = {'option': 'com_sobipro', 'task': 'txt.messages', 'format': 'raw', 'method': 'xhr', 'spsid': SobiPro.jQuery( '#SP_spsid' ).val() }
+			SobiPro.jQuery.ajax( { 'url': 'index.php', 'data': request, 'type': 'post', 'dataType': 'json',
+				success: function ( response )
 				{
 					if ( response && response.data.messages.length ) {
 						for ( var i = 0; i < response.data.messages.length; i++ ) {
@@ -115,10 +115,10 @@ SobiPro.jQuery( document ).ready( function ()
 			this.progressMessage.html( SobiPro.Txt( 'PROGRESS_WORKING' ) );
 			SobiPro.jQuery( '#SpProgress' ).removeClass( 'hide' );
 			this.progressBar.css( 'width', '0%' );
-			var request = {'option':'com_sobipro', 'task':task, 'format':'raw', 'method':'xhr', 'spsid':SobiPro.jQuery( '#SP_spsid' ).val()}
+			var request = {'option': 'com_sobipro', 'task': task, 'format': 'raw', 'method': 'xhr', 'spsid': SobiPro.jQuery( '#SP_spsid' ).val()}
 			for ( var i = 0; i < entries.length; i++ ) {
 				request[ 'sid' ] = entries[ i ].val();
-				SobiPro.jQuery.ajax( { 'url':'index.php', 'data':request, 'type':'post', 'dataType':'json', success:function ( response )
+				SobiPro.jQuery.ajax( { 'url': 'index.php', 'data': request, 'type': 'post', 'dataType': 'json', success: function ( response )
 				{
 					proxy.progress( response );
 				} } );
@@ -130,6 +130,13 @@ SobiPro.jQuery( document ).ready( function ()
 	var serialActions = [ 'entry.publish', 'entry.hide', 'entry.approve', 'entry.unapprove' ];
 	SobiPro.jQuery( '#SPAdmToolbar a' ).click( function ( e )
 	{
+		if ( SobiPro.jQuery( this ).attr( 'title' ) ) {
+			if ( !( confirm( SobiPro.jQuery( this ).attr( 'title' ) ) ) ) {
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
+		}
 		if ( SobiPro.jQuery( this ).hasClass( 'legacy' ) ) {
 			return false;
 		}
@@ -143,7 +150,7 @@ SobiPro.jQuery( document ).ready( function ()
 				return new SpSerialAction( task );
 			}
 			else if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
-				var handler = { 'takeOver':false };
+				var handler = { 'takeOver': false };
 				SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit', [ handler, task ] )
 				if ( handler.takeOver == true ) {
 					return true;
@@ -159,14 +166,14 @@ SobiPro.jQuery( document ).ready( function ()
 				} );
 				SobiPro.jQuery( '#SP_task' ).val( task );
 				SobiPro.jQuery.ajax( {
-					'url':'index.php',
-					'data':req,
-					'type':'post',
-					'dataType':'json',
-					success:function ( data )
+					'url': 'index.php',
+					'data': req,
+					'type': 'post',
+					'dataType': 'json',
+					success: function ( data )
 					{
 						if ( !( data.redirect.execute ) ) {
-							var handler = { 'takeOver':false };
+							var handler = { 'takeOver': false };
 							SobiPro.jQuery( '#SPAdminForm' ).trigger( 'AfterAjaxSubmit', [ handler, data ] )
 							if ( handler.takeOver == true ) {
 								return true;
@@ -250,14 +257,14 @@ SobiPro.jQuery( document ).ready( function ()
 		var button = SobiPro.jQuery( this );
 		if ( button.html() ) {
 			SobiPro.jQuery.ajax( {
-				'type':'post',
-				'url':SobiProAdmUrl.replace( '%task%', button.attr( 'rel' ) + '.resetCounter' ),
-				'data':{
-					'sid':SobiPro.jQuery( '#SP_sid' ).val(),
-					'format':'raw'
+				'type': 'post',
+				'url': SobiProAdmUrl.replace( '%task%', button.attr( 'rel' ) + '.resetCounter' ),
+				'data': {
+					'sid': SobiPro.jQuery( '#SP_sid' ).val(),
+					'format': 'raw'
 				},
-				'dataType':'json',
-				success:function ()
+				'dataType': 'json',
+				success: function ()
 				{
 					button.html( 0 );
 					button.attr( 'disabled', 'disabled' );

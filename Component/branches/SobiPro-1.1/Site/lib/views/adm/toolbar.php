@@ -172,6 +172,7 @@ class SpAdmToolbar
 	{
 		$rel = null;
 		$onclick = null;
+		$title = '';
 		$class = isset( $button[ 'class' ] ) ? ' ' . $button[ 'class' ] : null;
 		if ( isset( $button[ 'type' ] ) && $button[ 'type' ] == 'url' ) {
 			$rel = null;
@@ -190,6 +191,10 @@ class SpAdmToolbar
 		else {
 			$label = $button[ 'label' ];
 		}
+		if ( isset( $button[ 'confirm' ] ) ) {
+			$title = ' title="' . Sobi::Txt( $button[ 'confirm' ] ) . '" ';
+		}
+
 		if ( $button[ 'element' ] == 'button-legacy' ) {
 			$class .= ' legacy';
 			$onclick = 'onclick="Joomla.submitform(\'' . $rel . '\');"';
@@ -220,7 +225,7 @@ class SpAdmToolbar
 			$this->output[ ] = '</div>';
 		}
 		elseif ( !( $list ) ) {
-			$this->output[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"{$this->btClass}{$class}\"{$target}{$onclick}>";
+			$this->output[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"{$this->btClass}{$class}\"{$target}{$onclick}{$title}>";
 			if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 				$icon = $this->getIcon( $button );
 			}
@@ -235,7 +240,7 @@ class SpAdmToolbar
 				$this->output[ ] = '<li class="nav-header">' . $button[ 'label' ] . '</li>';
 			}
 			else {
-				$this->output[ ] = '<li><a href="' . $href . '"' . $target . ' rel="' . $rel . '">';
+				$this->output[ ] = '<li><a href="' . $href . '"' . $target . $title . ' rel="' . $rel . '">';
 				if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 					$icon = $this->getIcon( $button );
 				}
