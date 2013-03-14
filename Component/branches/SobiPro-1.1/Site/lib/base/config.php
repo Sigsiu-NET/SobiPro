@@ -585,6 +585,8 @@ class SPConfig
 
 	/**
 	 * @param string $var
+	 * @param null $name
+	 * @throws SPException
 	 * @return mixed
 	 */
 	public static function unserialize( $var, $name = null )

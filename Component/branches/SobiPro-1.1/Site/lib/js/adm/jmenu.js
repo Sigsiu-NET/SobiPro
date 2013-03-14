@@ -48,10 +48,10 @@ function SPJmenuFixTask( value )
 function SPJoomlaMenu()
 {
 	var JSubmit = Joomla.submitbutton;
-	Joomla.submitbutton = function( pressbutton )
+	Joomla.submitbutton = function ( pressbutton, type )
 	{
-		if( pressbutton.indexOf( 'save' ).indexOf == -1 || pressbutton.indexOf( 'apply' ) == -1   || SPValidate()  ) {
-			JSubmit( pressbutton );
+		if ( pressbutton.indexOf( 'save' ).indexOf == -1 || pressbutton.indexOf( 'apply' ) == -1 || SPValidate() ) {
+			JSubmit( pressbutton, type );
 		}
 	}
 	SobiPro.jQuery( "#spsection" ).bind( "change", function ()
@@ -97,26 +97,26 @@ function SPJoomlaMenu()
 				else {
 					//var requestUrl = SobiProUrl.replace( '%task%', 'entry.search' ) + '&sid=' + ;
 					SobiPro.jQuery( '#spEntryChooser' ).typeahead( {
-						source:function ( typeahead, query )
+						source: function ( typeahead, query )
 						{
 							var request = {
-								'option':'com_sobipro',
-								'task':'entry.search',
-								'sid':SobiPro.jQuery( "#sid" ).val(),
-								'search':query,
-								'format':'raw'
+								'option': 'com_sobipro',
+								'task': 'entry.search',
+								'sid': SobiPro.jQuery( "#sid" ).val(),
+								'search': query,
+								'format': 'raw'
 							}
 							return SobiPro.jQuery.ajax( {
-								'type':'post',
-								'url':'index.php',
-								'data':request,
-								'dataType':'json',
-								success:function ( response )
+								'type': 'post',
+								'url': 'index.php',
+								'data': request,
+								'dataType': 'json',
+								success: function ( response )
 								{
 									responseData = [];
 									if ( response.length ) {
 										for ( var i = 0; i < response.length; i++ ) {
-											responseData[ i ] = { 'name':response[ i ].name + ' ( ' + response[ i ].id + ' )', 'id':response[ i ].id, 'title':response[ i ].name  };
+											responseData[ i ] = { 'name': response[ i ].name + ' ( ' + response[ i ].id + ' )', 'id': response[ i ].id, 'title': response[ i ].name  };
 										}
 										typeahead.process( responseData );
 										SobiPro.jQuery( '.typeahead' )
@@ -128,12 +128,12 @@ function SPJoomlaMenu()
 								}
 							} );
 						},
-						onselect:function ( obj )
+						onselect: function ( obj )
 						{
 							SobiPro.jQuery( '#selectedEntry' ).val( obj.id );
 							SobiPro.jQuery( '#selectedEntryName' ).val( obj.title )
 						},
-						property:"name"
+						property: "name"
 					} );
 					SobiPro.jQuery( '#spEntry' ).modal();
 				}
@@ -210,18 +210,18 @@ function SPReloadTemplates( type )
 	}
 	sid = SobiPro.jQuery( "#spsection option:selected" ).val();
 	var request = {
-		'option':'com_sobipro',
-		'task':'template.list',
-		'sid':sid,
-		'type':type,
-		'format':'raw'
+		'option': 'com_sobipro',
+		'task': 'template.list',
+		'sid': sid,
+		'type': type,
+		'format': 'raw'
 	}
 	SobiPro.jQuery.ajax( {
-		'type':'post',
-		'url':'index.php',
-		'data':request,
-		'dataType':'json',
-		success:function ( response )
+		'type': 'post',
+		'url': 'index.php',
+		'data': request,
+		'dataType': 'json',
+		success: function ( response )
 		{
 			responseData = [];
 			SobiPro.jQuery( "#sptpl option" ).each( function ()
