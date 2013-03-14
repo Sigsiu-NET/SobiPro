@@ -57,7 +57,7 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 	 */
 	public function addHead( $head )
 	{
-		if ( strlen( SPRequest::cmd( 'format' ) ) ) {
+		if ( strlen( SPRequest::cmd( 'format' ) ) && SPRequest::cmd( 'format' ) != 'html' ) {
 			return true;
 		}
 		/** @var JDocument $document */

@@ -151,9 +151,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 	/**
 	 * @static
-	 * @param string    $msg    The error message, which may also be shown the user if need be.
+	 * @param string $msg    The error message, which may also be shown the user if need be.
 	 * @param int $code The application-internal error code for this error
-	 * @param mixed    $info    Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database DSN).
+	 * @param mixed $info    Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database DSN).
 	 * @param bool $translate
 	 * @return object    $error    The configured JError object
 	 */
@@ -345,8 +345,8 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		}
 		$title = array();
 		// if there was an active menu - add its title to the browser title as well
-		if( $sid ) {
-			$title[] = JFactory::getDocument()->getTitle();
+		if ( $sid ) {
+			$title[ ] = JFactory::getDocument()->getTitle();
 		}
 		/**
 		 * Mon, Jul 16, 2012
@@ -382,7 +382,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	 */
 	public function addHead( $head )
 	{
-		if ( strlen( SPRequest::cmd( 'format' ) ) ) {
+		if ( strlen( SPRequest::cmd( 'format' ) ) && SPRequest::cmd( 'format' ) != 'html' ) {
 			return true;
 		}
 		$document = JFactory::getDocument();
@@ -645,7 +645,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	 */
 	public function endOut()
 	{
-		if ( !( strlen( SPRequest::cmd( 'format' ) ) ) ) {
+		if ( !( strlen( SPRequest::cmd( 'format' ) ) ) && SPRequest::cmd( 'format' ) != 'html' ) {
 			/* something like 'onDomReady' but it should be bit faster */
 			echo '<script type="text/javascript">SobiPro.Ready();</script>';
 		}
