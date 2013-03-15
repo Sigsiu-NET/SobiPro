@@ -100,7 +100,7 @@ Legend:
    (!) single .htaccess files removed, global file added
    (!) Default Template now using Bootstrap; several improvements; new name
    (!) JavaScript translation method speed improvement
-   (!) IMPORTANT!! The url contains now the nid/alias instead of the title. That way the generated URL can be better controlled but it would also change all existing URLS
+   (!) IMPORTANT!! The URL contains now the nid/alias instead of the title; that way the generated URL can be better controlled but it also changes all existing URLs
    (!) Alias/nid (beside fields) is now translatable
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
