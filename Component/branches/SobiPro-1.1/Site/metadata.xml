@@ -46,7 +46,7 @@
     <state>
         <url addpath="/components/com_sobipro/lib/cms/joomla_common/elements">
             <param name="SP.SOBI_SELECT_SECTION" type="spsection" msg="SP.SOBI_SELECT_SECTION_EXPL"/>
-	        <param name="date" type="spsection" label="SP.SOBI_SELECTED_DATE"/>
+	        <param name="date" type="spsection" label="SP.SOBI_SELECT_DATE"/>
             <param name="cid" type="spsection" msg="SP.SOBI_SELECT_CATEGORY_EXPL"/>
             <param name="eid" type="spsection" label="SP.SOBI_SELECT_ENTRY"/>
             <param name="sid" type="spsection"/>

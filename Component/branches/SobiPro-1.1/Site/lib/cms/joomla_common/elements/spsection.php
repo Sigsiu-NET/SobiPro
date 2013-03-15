@@ -498,12 +498,12 @@ class JElementSPSection extends JElement
 				}
 			}
 			return
-					'<div class="SobiPro SobiProCalendar">' .
+				'<div class="SobiPro SobiProCalendar">' .
 					SPHtml_Input::select( 'sp_year', $years, $selected[ 'year' ] ) .
 					SPHtml_Input::select( 'sp_month', $months, $selected[ 'month' ] ) .
 					SPHtml_Input::select( 'sp_day', $days, $selected[ 'day' ] ) .
 					'<input type="hidden" name="urlparams[date]" id="selectedDate" value="' . trim( $query[ 'date' ] ) . '"/>
-				 </div>';
+				</div>';
 
 		}
 		else {
