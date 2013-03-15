@@ -75,6 +75,7 @@ INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`,
 ('level', '2', 0, 0, 'debug'),
 ('xml_ip', '', 0, 0, 'debug'),
 ('multimode', '0', 0, 0, 'lang'),
+('engb_preload', '1', 0, 0, 'lang'),
 ('compress_js', '0', 0, 0, 'cache'),
 ('alphamenu_extra_fields_array', '', 0, 0, 'alphamenu_extra_fields_array');
 
