@@ -23,6 +23,14 @@
  * $HeadURL$
  */
 
+/* Warning:
+ * If you have added here your own functions accessing the database and you experience that SobiPro is slow,
+ * it is HIGHLY recommended to remove these functions.
+ * The more you add your own code, especially if accessing the database, the more you slow down SobiPro!
+ * The functions here are not cached by SobiPro caching mechanisms.
+ * Keep in mind that you bypass SobiPro speed acceleration measures!
+ */
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 abstract class TplFunctions
