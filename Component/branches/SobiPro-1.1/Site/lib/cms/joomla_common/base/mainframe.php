@@ -732,7 +732,10 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		}
 		if ( is_array( $title ) ) {
 			if ( Sobi::Cfg( 'browser.add_title', true ) || $forceAdd ) {
-				array_unshift( $title, $document->getTitle() );
+				$jTitle = $document->getTitle();
+				if ( $title[ 0 ] != $jTitle ) {
+					array_unshift( $title, $document->getTitle() );
+				}
 			}
 			if ( Sobi::Cfg( 'browser.full_title', true ) || true ) {
 				if ( Sobi::Cfg( 'browser.reverse_title', false ) ) {

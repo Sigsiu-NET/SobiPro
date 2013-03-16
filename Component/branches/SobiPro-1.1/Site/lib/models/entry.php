@@ -152,6 +152,28 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 	}
 
+
+	/**
+	 * External method to publish and approve an entry
+	 */
+	public function publish()
+	{
+		$this->changeState( true );
+		$this->approveFields( true );
+		SPFactory::db()
+				->update( 'spdb_object', array( 'approved' => 1 ), array( 'id' => $this->id, 'oType' => 'entry' ) );
+	}
+
+	/**
+	 * External method to unpublish and revoke approval of an entry
+	 */
+	public function unpublish()
+	{
+		$this->changeState( false );
+		SPFactory::db()
+				->update( 'spdb_object', array( 'approved' => 0 ), array( 'id' => $this->id, 'oType' => 'entry' ) );
+	}
+
 	/**
 	 * After an entry has been approved, all fields cp
 	 * @param $approve
@@ -167,7 +189,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			$field->approve( $this->id );
 		}
 		if ( $approve ) {
-			$db =& SPFactory::db();
+			$db = SPFactory::db();
 			try {
 				$count = $db->select( 'COUNT(id)', 'spdb_relations', array( 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ) )->loadResult();
 				if ( $count ) {
