@@ -274,8 +274,8 @@ abstract class Sobi
 
 	/**
 	 * Sets the value of a user data.
-	 * @param    string    $key     - The path of the state.
-	 * @param    string    $value     - The value of the variable.
+	 * @param    string $key     - The path of the state.
+	 * @param    string $value     - The value of the variable.
 	 * @return    mixed    The previous state, if one existed.
 	 */
 	public static function SetUserData( $key, $value )
@@ -433,14 +433,33 @@ abstract class Sobi
 		return $user->get( $property );
 	}
 
-	public static function Init( $root, $lang, $sid = 0 )
+	/**
+	 * Method to initialise SobiPro from outside
+	 * @param int $sid - section id
+	 * @param null $root - root of Joomla!
+	 * @param null $lang - language
+	 * @return null
+	 */
+	public static function Initialise( $sid = 0, $root = null, $lang = null )
 	{
-		/** compatibility */
-//		$args = func_get_args();
-//		if ( isset( $args[ 0 ] ) && !( is_numeric( $args[ 0 ] ) ) && isset( $args[ 2 ] ) ) {
-//			$sid = $args[ 2 ];
-//		}
+		if ( !( $root ) ) {
+			$root = JPATH_ROOT;
+		}
+		if ( !( $lang ) ) {
+			$lang = JFactory::getLanguage()->getDefault();
+		}
+		self::Init( $root, $lang, $sid );
+	}
 
+	/**
+	 * @deprecated since 1.1 replaced by {@link #Initialise()}
+	 * @param int $sid - section id
+	 * @param null $root - root of Joomla!
+	 * @param null $lang - language
+	 * @return null
+	 */
+	public static function Init( $root = null, $lang = null, $sid = 0 )
+	{
 		if ( !( defined( 'SOBI_CMS' ) ) ) {
 			define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
 		}
@@ -467,31 +486,24 @@ abstract class Sobi
 		SPLoader::loadClass( 'cms.base.fs' );
 		SPFactory::config()->set( 'live_site', JURI::root() );
 		if ( $sid ) {
-			$db =& SPFactory::db();
 			$section = null;
 			if ( $sid ) {
-				$section = & SPFactory::object( $sid );
-				if ( $section->oType == 'section' ) {
-					$state = $section->state;
-				}
-				else {
-					$path = array();
-					$id = $sid;
-					while ( $id > 0 ) {
-						try {
-							$db->select( 'pid', 'spdb_relations', array( 'id' => $id ) );
-							$id = $db->loadResult();
-							if ( $id ) {
-								$path[ ] = ( int )$id;
-							}
-						} catch ( SPException $x ) {
-							Sobi::Error( 'ExtCoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
+				$path = array();
+				$id = $sid;
+				while ( $id > 0 ) {
+					try {
+						$id = SPFactory::db()
+								->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
+								->loadResult();
+						if ( $id ) {
+							$path[ ] = ( int )$id;
 						}
+					} catch ( SPException $x ) {
+						Sobi::Error( 'ExtCoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 					}
-					$path = array_reverse( $path );
-					$section = & SPFactory::object( $path[ 0 ] );
-					$state = $section->state;
 				}
+				$path = array_reverse( $path );
+				$section = SPFactory::object( $path[ 0 ] );
 			}
 			/* set current section in the registry */
 			SPFactory::registry()->set( 'current_section', $section->id );
