@@ -426,6 +426,7 @@ final class SPCache
 			$this->Exec( "BEGIN; DELETE FROM objects WHERE( type LIKE '{$type}%' AND id = '{$id}' AND sid = '{$sid}' AND lang = '{$lang}' ); COMMIT;" );
 			if ( $type == 'entry' ) {
 				$this->Exec( "BEGIN; DELETE FROM objects WHERE( type = 'field_data' AND sid = '{$id}' AND lang = '{$lang}' ); COMMIT;" );
+				$this->Exec( "BEGIN; DELETE FROM objects WHERE( type = 'entry_row' AND sid = '{$id}' ); COMMIT;" );
 			}
 		}
 		$this->cleanXMLRelations( $id );
