@@ -158,10 +158,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 */
 	public function publish()
 	{
-		$this->changeState( true );
-		$this->approveFields( true );
 		SPFactory::db()
 				->update( 'spdb_object', array( 'approved' => 1 ), array( 'id' => $this->id, 'oType' => 'entry' ) );
+		$this->changeState( true );
+		$this->approveFields( true );
 	}
 
 	/**
@@ -169,9 +169,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 */
 	public function unpublish()
 	{
-		$this->changeState( false );
 		SPFactory::db()
 				->update( 'spdb_object', array( 'approved' => 0 ), array( 'id' => $this->id, 'oType' => 'entry' ) );
+		$this->changeState( false );
 	}
 
 	/**
