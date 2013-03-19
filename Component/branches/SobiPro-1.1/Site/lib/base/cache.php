@@ -76,6 +76,11 @@ final class SPCache
 	{
 		$this->_enabled = Sobi::Cfg( 'cache.l3_enabled', true );
 		$this->requestStore = $_REQUEST;
+		$this->initialise();
+	}
+
+	private function initialise()
+	{
 		if ( $this->_enabled ) {
 			$sid = Sobi::Section();
 			$this->_section = $sid ? $sid : $this->_section;
@@ -421,15 +426,31 @@ final class SPCache
 	public function & deleteObj( $type, $id, $sid = 0, $lang = null )
 	{
 		if ( $this->enabled() ) {
+			$reinit = false;
+			if ( $id && $this->_section == -1 ) {
+				$section = SPFactory::config()->getParentPath( $id );
+				$this->_section = $section[ 0 ];
+				$this->initialise();
+				$reinit = true;
+			}
 			$lang = $lang ? $lang : Sobi::Lang( false );
 			$sid = $sid ? $sid : $this->_section;
 			$this->Exec( "BEGIN; DELETE FROM objects WHERE( type LIKE '{$type}%' AND id = '{$id}' AND sid = '{$sid}' AND lang = '{$lang}' ); COMMIT;" );
 			if ( $type == 'entry' ) {
-				$this->Exec( "BEGIN; DELETE FROM objects WHERE( type = 'field_data' AND sid = '{$id}' AND lang = '{$lang}' ); COMMIT;" );
-				$this->Exec( "BEGIN; DELETE FROM objects WHERE( type = 'entry_row' AND sid = '{$id}' ); COMMIT;" );
+				$this->Exec( "
+					BEGIN;
+						DELETE FROM objects WHERE( type = 'field_data' AND id = '{$id}' AND lang = '{$lang}' );
+						DELETE FROM objects WHERE( type = 'entry_row' AND id = '{$id}' );
+					COMMIT;
+				" );
+//				$a = "BEGIN; DELETE FROM objects WHERE( type = 'entry_row' AND id = '{$id}' ); COMMIT;";
 			}
 		}
 		$this->cleanXMLRelations( $id );
+		if ( $reinit ) {
+			$this->_section = -1;
+			$this->initialise();
+		}
 		return $this;
 	}
 
