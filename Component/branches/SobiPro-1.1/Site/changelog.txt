@@ -28,7 +28,7 @@ Legend:
 
 
 -------------------
-1.1.0 (Alpha S)
+1.1.0 (Alpha V)
 -------------------
 
    (+) XML based template engine for administrator templates
@@ -131,7 +131,7 @@ Legend:
 
 
 -------------------
-1.0.8 (28 April 2012)
+1.0.8 (6 August 2012)
 -------------------
 
    (!) Added "token" to placeholders in SPlang::replacePlaceHolders method
