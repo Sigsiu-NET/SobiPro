@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -154,24 +150,28 @@ class SPAdminPanel extends SPController
 			$content = SPFs::read( SPLoader::path( 'etc.news', 'front', false, 'xml' ) );
 		}
 		else {
-			$connection = SPFactory::Instance( 'services.remote' );
-			$news = 'http://www.sigsiu.net/news.rss';
-			$connection->setOptions(
-				array(
-					'url' => $news,
-					'connecttimeout' => 10,
-					'header' => false,
-					'returntransfer' => true,
-				)
-			);
-			$file = SPFactory::Instance( 'base.fs.file', $path );
-			$content = $connection->exec();
-			$cinf = $connection->info();
-			if ( isset( $cinf[ 'http_code' ] ) && $cinf[ 'http_code' ] != 200 ) {
-				return Sobi::Error( 'about', sprintf( 'CANNOT_GET_NEWS', $news, $cinf[ 'http_code' ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			try {
+				$connection = SPFactory::Instance( 'services.remote' );
+				$news = 'http://www.sigsiu.net/news.rss';
+				$connection->setOptions(
+					array(
+						'url' => $news,
+						'connecttimeout' => 10,
+						'header' => false,
+						'returntransfer' => true,
+					)
+				);
+				$file = SPFactory::Instance( 'base.fs.file', $path );
+				$content = $connection->exec();
+				$cinf = $connection->info();
+				if ( isset( $cinf[ 'http_code' ] ) && $cinf[ 'http_code' ] != 200 ) {
+					return Sobi::Error( 'about', sprintf( 'CANNOT_GET_NEWS', $news, $cinf[ 'http_code' ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
+				}
+				$file->content( $content );
+				$file->save();
+			} catch ( SPException $x ) {
+				return Sobi::Error( 'about', SPLang::e( 'CANNOT_LOAD_NEWS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
-			$file->content( $content );
-			$file->save();
 		}
 		try {
 			$news = new DOMXPath( DOMDocument::loadXML( $content ) );
@@ -198,7 +198,7 @@ class SPAdminPanel extends SPController
 				SPFactory::header()->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( \'#SobiProNews\' ).trigger(\'click\'); } );' );
 			}
 		} catch ( DOMException $x ) {
-			return Sobi::Error( 'about', sprintf( 'CANNOT_LOAD_NEWS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			return Sobi::Error( 'about', SPLang::e( 'CANNOT_LOAD_NEWS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		return $out;
 	}

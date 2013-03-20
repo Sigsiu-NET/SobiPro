@@ -54,7 +54,7 @@ abstract class Sobi
 	 * @param string $file - file name
 	 * @param null $sMsg
 	 * @internal param string $smsg - additional message
-	 * @return void
+	 * @return null
 	 */
 	public static function Error( $section, $msg, $type = SPC::NOTICE, $code = 0, $line = null, $file = null, $sMsg = null )
 	{
@@ -106,6 +106,7 @@ abstract class Sobi
 			SPLoader::loadClass( 'cms.base.mainframe' );
 			SPFactory::mainframe()->runAway( $msg, $code, SPConfig::getBacktrace() );
 		}
+		return null;
 	}
 
 	/**
