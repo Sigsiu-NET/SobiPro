@@ -1,52 +1,62 @@
+CREATE TABLE IF NOT EXISTS `#__sobipro_counter` (
+	`sid`        INT(11)  NOT NULL,
+	`counter`    INT(11)  NOT NULL,
+	`lastUpdate` DATETIME NOT NULL,
+	PRIMARY KEY (`sid`)
+);
+
 CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
-  `cid` int(11) NOT NULL AUTO_INCREMENT,
-  `section` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `fileName` varchar(100) NOT NULL,
-  `task` varchar(100) NOT NULL,
-  `site` int(11) NOT NULL,
-  `request` varchar(255) NOT NULL,
-  `language` varchar(15) NOT NULL,
-  `template` varchar(150) NOT NULL,
-  `configFile` text NOT NULL,
-  `userGroups` varchar(200) NOT NULL,
-  `created` datetime NOT NULL,
-  PRIMARY KEY (`cid`),
-  KEY `sid` (`sid`),
-  KEY `section` (`section`),
-  KEY `language` (`language`),
-  KEY `task` (`task`),
-  KEY `request` (`request`),
-  KEY `site` (`site`),
-  KEY `userGroups` (`userGroups`)
+	`cid`        INT(11)      NOT NULL AUTO_INCREMENT,
+	`section`    INT(11)      NOT NULL,
+	`sid`        INT(11)      NOT NULL,
+	`fileName`   VARCHAR(100) NOT NULL,
+	`task`       VARCHAR(100) NOT NULL,
+	`site`       INT(11)      NOT NULL,
+	`request`    VARCHAR(255) NOT NULL,
+	`language`   VARCHAR(15)  NOT NULL,
+	`template`   VARCHAR(150) NOT NULL,
+	`configFile` TEXT         NOT NULL,
+	`userGroups` VARCHAR(200) NOT NULL,
+	`created`    DATETIME     NOT NULL,
+	PRIMARY KEY (`cid`),
+	KEY `sid` (`sid`),
+	KEY `section` (`section`),
+	KEY `language` (`language`),
+	KEY `task` (`task`),
+	KEY `request` (`request`),
+	KEY `site` (`site`),
+	KEY `userGroups` (`userGroups`)
 );
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (
-  `cid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  PRIMARY KEY (`cid`,`sid`)
+	`cid` INT(11) NOT NULL,
+	`sid` INT(11) NOT NULL,
+	PRIMARY KEY (`cid`, `sid`)
 );
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` (
-  `url` varchar(255) NOT NULL,
-  `crid` int(11) NOT NULL AUTO_INCREMENT,
-  `state` tinyint(1) NOT NULL,
-  PRIMARY KEY (`crid`),
-  UNIQUE KEY `url` (`url`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
+	`url`   VARCHAR(255) NOT NULL,
+	`crid`  INT(11)      NOT NULL AUTO_INCREMENT,
+	`state` TINYINT(1)   NOT NULL,
+	PRIMARY KEY (`crid`),
+	UNIQUE KEY `url` (`url`)
+)
+	ENGINE = MyISAM
+	DEFAULT CHARSET = utf8;
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_category` (
-  `id` int(11) NOT NULL,
-  `position` int(11) DEFAULT NULL,
-  `description` text,
-  `parseDesc` enum('0','1','2') NOT NULL DEFAULT '2',
-  `introtext` varchar(255) NOT NULL,
-  `showIntrotext` enum('0','1','2') NOT NULL DEFAULT '2',
-  `icon` varchar(150) DEFAULT NULL,
-  `showIcon` enum('0','1','2') NOT NULL DEFAULT '2',
-  PRIMARY KEY (`id`)
-) DEFAULT CHARSET=utf8;
+	`id`            INT(11)             NOT NULL,
+	`position`      INT(11) DEFAULT NULL,
+	`description`   TEXT,
+	`parseDesc`     ENUM('0', '1', '2') NOT NULL DEFAULT '2',
+	`introtext`     VARCHAR(255)        NOT NULL,
+	`showIntrotext` ENUM('0', '1', '2') NOT NULL DEFAULT '2',
+	`icon`          VARCHAR(150) DEFAULT NULL,
+	`showIcon`      ENUM('0', '1', '2') NOT NULL DEFAULT '2',
+	PRIMARY KEY (`id`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_category` (`id`, `position`, `description`, `parseDesc`, `introtext`, `showIntrotext`, `icon`, `showIcon`) VALUES
 (2, 1, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque  laoreet rhoncus tempor. Suspendisse dapibus vulputate dolor ut  tincidunt. Suspendisse tristique laoreet dui, ut tempor orci dictum ut.  Quisque aliquam urna ac justo tristique interdum. Aliquam in dui eget  lectus elementum lacinia eget eu sem. Nam eu felis tellus, ac cursus  velit. Etiam magna libero, condimentum at facilisis a, fermentum eget  leo.</p>', '2', '', '2', 'tmpl/default/laptop.png', '2'),
@@ -86,13 +96,14 @@ INSERT IGNORE INTO `#__sobipro_category` (`id`, `position`, `description`, `pars
 (36, 1, '', '2', '', '2', 'tmpl/default/ktron.png', '2');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_config` (
-  `sKey` varchar(150) NOT NULL DEFAULT '',
-  `sValue` text,
-  `section` int(11) NOT NULL DEFAULT '0',
-  `critical` tinyint(1) DEFAULT NULL,
-  `cSection` varchar(30) NOT NULL,
-  PRIMARY KEY (`sKey`,`section`,`cSection`)
-) DEFAULT CHARSET=utf8;
+	`sKey`     VARCHAR(150) NOT NULL DEFAULT '',
+	`sValue`   TEXT,
+	`section`  INT(11)      NOT NULL DEFAULT '0',
+	`critical` TINYINT(1) DEFAULT NULL,
+	`cSection` VARCHAR(30)  NOT NULL,
+	PRIMARY KEY (`sKey`, `section`, `cSection`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`, `cSection`) VALUES
 ('l3_enabled', '1', 0, 0, 'cache'),
@@ -175,65 +186,69 @@ INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`,
 ('entry_save_msg', 'EN.ENTRY_SAVED_NA', 1, 0, 'redirects');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
-  `eid` int(25) NOT NULL AUTO_INCREMENT,
-  `date` datetime NOT NULL,
-  `errNum` int(5) NOT NULL,
-  `errCode` int(5) NOT NULL,
-  `errMsg` text NOT NULL,
-  `errFile` varchar(255) NOT NULL,
-  `errLine` int(10) NOT NULL,
-  `errSect` varchar(50) NOT NULL,
-  `errUid` int(11) NOT NULL,
-  `errIp` varchar(15) NOT NULL,
-  `errRef` varchar(255) NOT NULL,
-  `errUa` varchar(255) NOT NULL,
-  `errReq` varchar(255) NOT NULL,
-  `errCont` text NOT NULL,
-  `errBacktrace` text NOT NULL,
-  PRIMARY KEY (`eid`)
-) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+	`eid`          INT(25)      NOT NULL AUTO_INCREMENT,
+	`date`         DATETIME     NOT NULL,
+	`errNum`       INT(5)       NOT NULL,
+	`errCode`      INT(5)       NOT NULL,
+	`errMsg`       TEXT         NOT NULL,
+	`errFile`      VARCHAR(255) NOT NULL,
+	`errLine`      INT(10)      NOT NULL,
+	`errSect`      VARCHAR(50)  NOT NULL,
+	`errUid`       INT(11)      NOT NULL,
+	`errIp`        VARCHAR(15)  NOT NULL,
+	`errRef`       VARCHAR(255) NOT NULL,
+	`errUa`        VARCHAR(255) NOT NULL,
+	`errReq`       VARCHAR(255) NOT NULL,
+	`errCont`      TEXT         NOT NULL,
+	`errBacktrace` TEXT         NOT NULL,
+	PRIMARY KEY (`eid`)
+)
+	DEFAULT CHARSET = utf8
+	AUTO_INCREMENT = 1;
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
-  `fid` int(11) NOT NULL AUTO_INCREMENT,
-  `nid` varchar(150) NOT NULL,
-  `adminField` tinyint(1) DEFAULT NULL,
-  `admList` int(10) NOT NULL,
-  `dataType` int(11) DEFAULT NULL,
-  `enabled` tinyint(1) DEFAULT NULL,
-  `fee` double DEFAULT NULL,
-  `fieldType` varchar(50) DEFAULT NULL,
-  `filter` varchar(150) DEFAULT NULL,
-  `isFree` tinyint(1) DEFAULT NULL,
-  `position` int(11) DEFAULT NULL,
-  `priority` int(11) NOT NULL,
-  `required` tinyint(1) DEFAULT NULL,
-  `section` int(11) DEFAULT NULL,
-  `multiLang` tinyint(4) DEFAULT NULL,
-  `uniqueData` tinyint(1) DEFAULT NULL,
-  `validate` tinyint(1) DEFAULT NULL,
-  `addToMetaDesc` tinyint(1) DEFAULT NULL,
-  `addToMetaKeys` tinyint(1) DEFAULT '0',
-  `editLimit` int(11) NOT NULL DEFAULT '0',
-  `editable` tinyint(4) NOT NULL,
-  `showIn` enum('both','details','vcard','hidden') NOT NULL DEFAULT 'both',
-  `allowedAttributes` text NOT NULL,
-  `allowedTags` text NOT NULL,
-  `editor` varchar(255) NOT NULL,
-  `inSearch` tinyint(4) NOT NULL DEFAULT '1',
-  `withLabel` tinyint(4) NOT NULL,
-  `cssClass` varchar(50) NOT NULL,
-  `parse` tinyint(4) NOT NULL,
-  `template` varchar(255) NOT NULL,
-  `notice` varchar(150) NOT NULL,
-  `params` text NOT NULL,
-  `defaultValue` text NOT NULL,
-  `version` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`fid`),
-  KEY `enabled` (`enabled`),
-  KEY `position` (`position`),
-  KEY `section` (`section`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+	`fid`               INT(11)                                    NOT NULL AUTO_INCREMENT,
+	`nid`               VARCHAR(150)                               NOT NULL,
+	`adminField`        TINYINT(1) DEFAULT NULL,
+	`admList`           INT(10)                                    NOT NULL,
+	`dataType`          INT(11) DEFAULT NULL,
+	`enabled`           TINYINT(1) DEFAULT NULL,
+	`fee`               DOUBLE DEFAULT NULL,
+	`fieldType`         VARCHAR(50) DEFAULT NULL,
+	`filter`            VARCHAR(150) DEFAULT NULL,
+	`isFree`            TINYINT(1) DEFAULT NULL,
+	`position`          INT(11) DEFAULT NULL,
+	`priority`          INT(11)                                    NOT NULL,
+	`required`          TINYINT(1) DEFAULT NULL,
+	`section`           INT(11) DEFAULT NULL,
+	`multiLang`         TINYINT(4) DEFAULT NULL,
+	`uniqueData`        TINYINT(1) DEFAULT NULL,
+	`validate`          TINYINT(1) DEFAULT NULL,
+	`addToMetaDesc`     TINYINT(1) DEFAULT NULL,
+	`addToMetaKeys`     TINYINT(1) DEFAULT '0',
+	`editLimit`         INT(11)                                    NOT NULL DEFAULT '0',
+	`editable`          TINYINT(4)                                 NOT NULL,
+	`showIn`            ENUM('both', 'details', 'vcard', 'hidden') NOT NULL DEFAULT 'both',
+	`allowedAttributes` TEXT                                       NOT NULL,
+	`allowedTags`       TEXT                                       NOT NULL,
+	`editor`            VARCHAR(255)                               NOT NULL,
+	`inSearch`          TINYINT(4)                                 NOT NULL DEFAULT '1',
+	`withLabel`         TINYINT(4)                                 NOT NULL,
+	`cssClass`          VARCHAR(50)                                NOT NULL,
+	`parse`             TINYINT(4)                                 NOT NULL,
+	`template`          VARCHAR(255)                               NOT NULL,
+	`notice`            VARCHAR(150)                               NOT NULL,
+	`params`            TEXT                                       NOT NULL,
+	`defaultValue`      TEXT                                       NOT NULL,
+	`version`           INT(11)                                    NOT NULL DEFAULT '0',
+	PRIMARY KEY (`fid`),
+	KEY `enabled` (`enabled`),
+	KEY `position` (`position`),
+	KEY `section` (`section`)
+)
+	ENGINE = MyISAM
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_field` (`fid`, `nid`, `adminField`, `admList`, `dataType`, `enabled`, `fee`, `fieldType`, `filter`, `isFree`, `position`, `priority`, `required`, `section`, `multiLang`, `uniqueData`, `validate`, `addToMetaDesc`, `addToMetaKeys`, `editLimit`, `editable`, `showIn`, `allowedAttributes`, `allowedTags`, `editor`, `inSearch`, `withLabel`, `cssClass`, `parse`, `template`, `notice`, `params`, `defaultValue`, `version`) VALUES
 (1, 'field_name', 0, 0, 0, 1, 0, 'inbox', '', 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, -1, 1, 'both', '', '', '', 1, 0, '', 0, '', '', 'YTozOntzOjk6Im1heExlbmd0aCI7czozOiIxNTAiO3M6NToid2lkdGgiO3M6MzoiMzUwIjtzOjEyOiJzZWFyY2hNZXRob2QiO3M6NzoiZ2VuZXJhbCI7fQ==', '', 1),
@@ -253,31 +268,32 @@ INSERT IGNORE INTO `#__sobipro_field` (`fid`, `nid`, `adminField`, `admList`, `d
 (15, 'field_select_category', 0, 0, 0, 1, 0, 'category', '', 1, 2, 10, 1, 1, 0, 0, 0, 0, 0, -1, 1, 'hidden', '', '', '', 1, 0, '', 0, '', '', 'YToxOTp7czo2OiJtZXRob2QiO3M6NzoibXNlbGVjdCI7czo1OiJtb2RhbCI7czoxOiIwIjtzOjEyOiJjYXRzTWF4TGltaXQiO3M6MjoiMTAiO3M6MTQ6ImNhdHNXaXRoQ2hpbGRzIjtzOjE6IjEiO3M6NToid2lkdGgiO3M6MzoiMjIwIjtzOjY6ImhlaWdodCI7czozOiIyNTAiO3M6ODoiZml4ZWRDaWQiO047czoxMzoiX3NlbGVjdGVkQ2F0cyI7TjtzOjU6Il9jYXRzIjtOO3M6OToiaXNQcmltYXJ5IjtOO3M6MTI6InNlYXJjaE1ldGhvZCI7czo2OiJzZWxlY3QiO3M6MTE6InNlYXJjaFdpZHRoIjtzOjM6IjIyMCI7czoxMjoic2VhcmNoSGVpZ2h0IjtzOjE6IjAiO3M6NToiX2F0dHIiO047czo5OiJfc2VsZWN0ZWQiO047czo1OiJkVHlwZSI7TjtzOjY6Il9yZGF0YSI7TjtzOjg6ImNzc0NsYXNzIjtzOjA6IiI7czo5OiJzaG93TGFiZWwiO047fQ==', '', 1);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
-  `publishUp` datetime DEFAULT NULL,
-  `publishDown` datetime DEFAULT NULL,
-  `fid` int(11) NOT NULL DEFAULT '0',
-  `sid` int(11) NOT NULL DEFAULT '0',
-  `section` int(11) NOT NULL DEFAULT '0',
-  `lang` varchar(50) NOT NULL DEFAULT '',
-  `enabled` tinyint(1) NOT NULL,
-  `params` text,
-  `options` text,
-  `baseData` text,
-  `approved` tinyint(1) DEFAULT NULL,
-  `confirmed` tinyint(1) DEFAULT NULL,
-  `createdTime` datetime DEFAULT NULL,
-  `createdBy` int(11) DEFAULT NULL,
-  `createdIP` varchar(15) DEFAULT NULL,
-  `updatedTime` datetime DEFAULT NULL,
-  `updatedBy` int(11) DEFAULT NULL,
-  `updatedIP` varchar(15) DEFAULT NULL,
-  `copy` tinyint(1) NOT NULL DEFAULT '0',
-  `editLimit` INT( 11 ),
-  PRIMARY KEY (`fid`,`section`,`lang`,`sid`,`copy`),
-  KEY `enabled` (`enabled`),
-  KEY `copy` (`copy`),
-  FULLTEXT KEY `baseData` (`baseData`)
-) DEFAULT CHARSET=utf8;
+	`publishUp`   DATETIME DEFAULT NULL,
+	`publishDown` DATETIME DEFAULT NULL,
+	`fid`         INT(11)     NOT NULL DEFAULT '0',
+	`sid`         INT(11)     NOT NULL DEFAULT '0',
+	`section`     INT(11)     NOT NULL DEFAULT '0',
+	`lang`        VARCHAR(50) NOT NULL DEFAULT '',
+	`enabled`     TINYINT(1)  NOT NULL,
+	`params`      TEXT,
+	`options`     TEXT,
+	`baseData`    TEXT,
+	`approved`    TINYINT(1) DEFAULT NULL,
+	`confirmed`   TINYINT(1) DEFAULT NULL,
+	`createdTime` DATETIME DEFAULT NULL,
+	`createdBy`   INT(11) DEFAULT NULL,
+	`createdIP`   VARCHAR(15) DEFAULT NULL,
+	`updatedTime` DATETIME DEFAULT NULL,
+	`updatedBy`   INT(11) DEFAULT NULL,
+	`updatedIP`   VARCHAR(15) DEFAULT NULL,
+	`copy`        TINYINT(1)  NOT NULL DEFAULT '0',
+	`editLimit`   INT(11),
+	PRIMARY KEY (`fid`, `section`, `lang`, `sid`, `copy`),
+	KEY `enabled` (`enabled`),
+	KEY `copy` (`copy`),
+	FULLTEXT KEY `baseData` (`baseData`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_field_data` (`publishUp`, `publishDown`, `fid`, `sid`, `section`, `lang`, `enabled`, `params`, `options`, `baseData`, `approved`, `confirmed`, `createdTime`, `createdBy`, `createdIP`, `updatedTime`, `updatedBy`, `updatedIP`, `copy`, `editLimit`) VALUES
 ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 37, 1, 'en-GB', 1, '', '', 'Neo Electronics', 1, 0, '2013-01-02 00:00:00', 0, '88.68.227.138', '2013-01-02 16:25:51', 791, '192.168.1.32', 0, 2),
@@ -323,16 +339,17 @@ INSERT IGNORE INTO `#__sobipro_field_data` (`publishUp`, `publishDown`, `fid`, `
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_option` (
-  `fid` int(11) NOT NULL,
-  `optValue` varchar(100) NOT NULL,
-  `optPos` int(11) NOT NULL,
-  `img` varchar(150) NOT NULL,
-  `optClass` varchar(50) NOT NULL,
-  `actions` text NOT NULL,
-  `class` text NOT NULL,
-  `optParent` varchar(100) NOT NULL,
-  PRIMARY KEY (`fid`,`optValue`)
-) DEFAULT CHARSET=utf8;
+	`fid`       INT(11)      NOT NULL,
+	`optValue`  VARCHAR(100) NOT NULL,
+	`optPos`    INT(11)      NOT NULL,
+	`img`       VARCHAR(150) NOT NULL,
+	`optClass`  VARCHAR(50)  NOT NULL,
+	`actions`   TEXT         NOT NULL,
+	`class`     TEXT         NOT NULL,
+	`optParent` VARCHAR(100) NOT NULL,
+	PRIMARY KEY (`fid`, `optValue`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_field_option` (`fid`, `optValue`, `optPos`, `img`, `optClass`, `actions`, `class`, `optParent`) VALUES
 (12, 'Monday', 1, '', '', '', '', ''),
@@ -612,13 +629,14 @@ INSERT IGNORE INTO `#__sobipro_field_option` (`fid`, `optValue`, `optPos`, `img`
 (13, 'south-georgia-south-sandwich-islands', 268, '', '', '', '', 'antarctica');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_option_selected` (
-  `fid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `optValue` varchar(100) NOT NULL,
-  `params` text NOT NULL,
-  `copy` tinyint(1) NOT NULL,
-  PRIMARY KEY (`fid`,`sid`,`optValue`,`copy`)
-) DEFAULT CHARSET=utf8;
+	`fid`      INT(11)      NOT NULL,
+	`sid`      INT(11)      NOT NULL,
+	`optValue` VARCHAR(100) NOT NULL,
+	`params`   TEXT         NOT NULL,
+	`copy`     TINYINT(1)   NOT NULL,
+	PRIMARY KEY (`fid`, `sid`, `optValue`, `copy`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_field_option_selected` (`fid`, `sid`, `optValue`, `params`, `copy`) VALUES
 (12, 37, 'Thursday', '', 0),
@@ -642,13 +660,15 @@ INSERT IGNORE INTO `#__sobipro_field_option_selected` (`fid`, `sid`, `optValue`,
 (13, 38, 'germany', '', 0);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_types` (
-  `tid` char(50) NOT NULL,
-  `fType` varchar(50) NOT NULL,
-  `tGroup` varchar(100) NOT NULL,
-  `fPos` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`tid`,`tGroup`),
-  UNIQUE KEY `pos` (`fPos`)
-)  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+	`tid`    CHAR(50)     NOT NULL,
+	`fType`  VARCHAR(50)  NOT NULL,
+	`tGroup` VARCHAR(100) NOT NULL,
+	`fPos`   INT(11)      NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`tid`, `tGroup`),
+	UNIQUE KEY `pos` (`fPos`)
+)
+	DEFAULT CHARSET = utf8
+	AUTO_INCREMENT = 13;
 
 INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) VALUES
 ('inbox', 'Input Box', 'free_single_simple_data', 1),
@@ -663,36 +683,38 @@ INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) V
 ('email', 'Email', 'special', 12);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (
-  `date` datetime NOT NULL,
-  `uid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `fid` varchar(50) NOT NULL,
-  `ip` varchar(15) NOT NULL,
-  `section` int(11) NOT NULL,
-  `browserData` text NOT NULL,
-  `osData` text NOT NULL,
-  `humanity` int(3) NOT NULL,
-  PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`)
+	`date`        DATETIME    NOT NULL,
+	`uid`         INT(11)     NOT NULL,
+	`sid`         INT(11)     NOT NULL,
+	`fid`         VARCHAR(50) NOT NULL,
+	`ip`          VARCHAR(15) NOT NULL,
+	`section`     INT(11)     NOT NULL,
+	`browserData` TEXT        NOT NULL,
+	`osData`      TEXT        NOT NULL,
+	`humanity`    INT(3)      NOT NULL,
+	PRIMARY KEY (`date`, `sid`, `fid`, `ip`, `section`)
 );
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
-  `sKey` varchar(150) NOT NULL DEFAULT '',
-  `sValue` text,
-  `section` int(11) DEFAULT NULL,
-  `language` varchar(50) NOT NULL DEFAULT '',
-  `oType` varchar(150) NOT NULL,
-  `fid` int(11) NOT NULL,
-  `id` int(11) NOT NULL DEFAULT '0',
-  `params` text,
-  `options` text,
-  `explanation` text,
-  PRIMARY KEY (`sKey`,`language`,`id`,`fid`),
-  KEY `sKey` (`sKey`),
-  KEY `section` (`section`),
-  KEY `language` (`language`),
-  FULLTEXT KEY `sValue` (`sValue`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+	`sKey`        VARCHAR(150) NOT NULL DEFAULT '',
+	`sValue`      TEXT,
+	`section`     INT(11) DEFAULT NULL,
+	`language`    VARCHAR(50)  NOT NULL DEFAULT '',
+	`oType`       VARCHAR(150) NOT NULL,
+	`fid`         INT(11)      NOT NULL,
+	`id`          INT(11)      NOT NULL DEFAULT '0',
+	`params`      TEXT,
+	`options`     TEXT,
+	`explanation` TEXT,
+	PRIMARY KEY (`sKey`, `language`, `id`, `fid`),
+	KEY `sKey` (`sKey`),
+	KEY `section` (`section`),
+	KEY `language` (`language`),
+	FULLTEXT KEY `sValue` (`sValue`)
+)
+	ENGINE = MyISAM
+	DEFAULT CHARSET = utf8;
 
 
 INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES
@@ -1122,44 +1144,46 @@ INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nid` varchar(255) NOT NULL,
-  `name` varchar(250) DEFAULT NULL,
-  `approved` tinyint(1) DEFAULT NULL,
-  `confirmed` tinyint(1) DEFAULT NULL,
-  `counter` int(11) NOT NULL DEFAULT '0',
-  `cout` int(11) DEFAULT NULL,
-  `coutTime` datetime DEFAULT NULL,
-  `createdTime` datetime DEFAULT NULL,
-  `defURL` varchar(250) DEFAULT NULL,
-  `metaDesc` text,
-  `metaKeys` text,
-  `metaAuthor` varchar(150) NOT NULL,
-  `metaRobots` varchar(150) NOT NULL,
-  `options` text,
-  `oType` varchar(50) DEFAULT NULL,
-  `owner` int(11) DEFAULT NULL,
-  `ownerIP` varchar(15) DEFAULT NULL,
-  `params` text,
-  `parent` int(11) DEFAULT NULL,
-  `state` tinyint(4) DEFAULT NULL,
-  `stateExpl` varchar(250) DEFAULT NULL,
-  `updatedTime` datetime DEFAULT NULL,
-  `updater` int(11) DEFAULT NULL,
-  `updaterIP` varchar(15) DEFAULT NULL,
-  `validSince` datetime DEFAULT NULL,
-  `validUntil` datetime DEFAULT NULL,
-  `version` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `name` (`name`),
-  KEY `oType` (`oType`),
-  KEY `owner` (`owner`),
-  KEY `parent` (`parent`),
-  KEY `state` (`state`),
-  KEY `validSince` (`validSince`),
-  KEY `validUntil` (`validUntil`),
-  KEY `version` (`version`)
-)  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
+	`id`          INT(11)      NOT NULL AUTO_INCREMENT,
+	`nid`         VARCHAR(255) NOT NULL,
+	`name`        VARCHAR(250) DEFAULT NULL,
+	`approved`    TINYINT(1) DEFAULT NULL,
+	`confirmed`   TINYINT(1) DEFAULT NULL,
+	`counter`     INT(11)      NOT NULL DEFAULT '0',
+	`cout`        INT(11) DEFAULT NULL,
+	`coutTime`    DATETIME DEFAULT NULL,
+	`createdTime` DATETIME DEFAULT NULL,
+	`defURL`      VARCHAR(250) DEFAULT NULL,
+	`metaDesc`    TEXT,
+	`metaKeys`    TEXT,
+	`metaAuthor`  VARCHAR(150) NOT NULL,
+	`metaRobots`  VARCHAR(150) NOT NULL,
+	`options`     TEXT,
+	`oType`       VARCHAR(50) DEFAULT NULL,
+	`owner`       INT(11) DEFAULT NULL,
+	`ownerIP`     VARCHAR(15) DEFAULT NULL,
+	`params`      TEXT,
+	`parent`      INT(11) DEFAULT NULL,
+	`state`       TINYINT(4) DEFAULT NULL,
+	`stateExpl`   VARCHAR(250) DEFAULT NULL,
+	`updatedTime` DATETIME DEFAULT NULL,
+	`updater`     INT(11) DEFAULT NULL,
+	`updaterIP`   VARCHAR(15) DEFAULT NULL,
+	`validSince`  DATETIME DEFAULT NULL,
+	`validUntil`  DATETIME DEFAULT NULL,
+	`version`     INT(11)      NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`),
+	KEY `name` (`name`),
+	KEY `oType` (`oType`),
+	KEY `owner` (`owner`),
+	KEY `parent` (`parent`),
+	KEY `state` (`state`),
+	KEY `validSince` (`validSince`),
+	KEY `validUntil` (`validUntil`),
+	KEY `version` (`version`)
+)
+	DEFAULT CHARSET = utf8
+	AUTO_INCREMENT = 54;
 
 INSERT IGNORE INTO `#__sobipro_object` (`id`, `nid`, `name`, `approved`, `confirmed`, `counter`, `cout`, `coutTime`, `createdTime`, `defURL`, `metaDesc`, `metaKeys`, `metaAuthor`, `metaRobots`, `options`, `oType`, `owner`, `ownerIP`, `params`, `parent`, `state`, `stateExpl`, `updatedTime`, `updater`, `updaterIP`, `validSince`, `validUntil`, `version`) VALUES
 (1, 'business-directory', 'Business Directory', 1, 1, 674, 0, '0000-00-00 00:00:00', '2013-01-02 00:00:00', '', 'Business Directory', 'Business, Directory', 'Radek Suski', '', '', 'section', 63, '84.59.167.50', '', 0, 1, '', '2013-01-02 16:24:47', 791, '192.168.1.32', '2013-01-02 00:00:00', '0000-00-00 00:00:00', 2),
@@ -1203,19 +1227,21 @@ INSERT IGNORE INTO `#__sobipro_object` (`id`, `nid`, `name`, `approved`, `confir
 (39, 'sun-bookstore', '', 1, 0, 68, 0, '0000-00-00 00:00:00', '2013-01-02 00:00:00', '', '', '', '', '', '', 'entry', 0, '88.68.227.138', '', 32, 1, '', '2013-01-02 00:00:00', 63, '88.69.191.86', '2013-01-02 00:00:00', '0000-00-00 00:00:00', 6);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_payments` (
-  `pid` int(11) NOT NULL AUTO_INCREMENT,
-  `refNum` varchar(50) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `fid` int(11) NOT NULL,
-  `subject` varchar(150) NOT NULL,
-  `dateAdded` datetime NOT NULL,
-  `datePaid` datetime NOT NULL,
-  `validUntil` datetime NOT NULL,
-  `paid` tinyint(4) NOT NULL,
-  `amount` double NOT NULL,
-  `params` text NOT NULL,
-  PRIMARY KEY (`pid`)
-)  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+	`pid`        INT(11)      NOT NULL AUTO_INCREMENT,
+	`refNum`     VARCHAR(50)  NOT NULL,
+	`sid`        INT(11)      NOT NULL,
+	`fid`        INT(11)      NOT NULL,
+	`subject`    VARCHAR(150) NOT NULL,
+	`dateAdded`  DATETIME     NOT NULL,
+	`datePaid`   DATETIME     NOT NULL,
+	`validUntil` DATETIME     NOT NULL,
+	`paid`       TINYINT(4)   NOT NULL,
+	`amount`     DOUBLE       NOT NULL,
+	`params`     TEXT         NOT NULL,
+	PRIMARY KEY (`pid`)
+)
+	DEFAULT CHARSET = utf8
+	AUTO_INCREMENT = 16;
 
 INSERT IGNORE INTO `#__sobipro_payments` (`pid`, `refNum`, `sid`, `fid`, `subject`, `dateAdded`, `datePaid`, `validUntil`, `paid`, `amount`, `params`) VALUES
 (1, '1282745518.37', 37, 9, 'Full Description', '2013-01-02 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 20, ''),
@@ -1229,14 +1255,16 @@ INSERT IGNORE INTO `#__sobipro_payments` (`pid`, `refNum`, `sid`, `fid`, `subjec
 (9, '1282750744.39', 39, 9, 'Full Description', '2013-01-02 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 20, '');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions` (
-  `pid` int(11) NOT NULL AUTO_INCREMENT,
-  `subject` varchar(150) DEFAULT NULL,
-  `action` varchar(50) DEFAULT NULL,
-  `value` varchar(50) NOT NULL,
-  `site` varchar(50) NOT NULL,
-  `published` tinyint(1) NOT NULL,
-  PRIMARY KEY (`pid`)
-)  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+	`pid`       INT(11)     NOT NULL AUTO_INCREMENT,
+	`subject`   VARCHAR(150) DEFAULT NULL,
+	`action`    VARCHAR(50) DEFAULT NULL,
+	`value`     VARCHAR(50) NOT NULL,
+	`site`      VARCHAR(50) NOT NULL,
+	`published` TINYINT(1)  NOT NULL,
+	PRIMARY KEY (`pid`)
+)
+	DEFAULT CHARSET = utf8
+	AUTO_INCREMENT = 26;
 
 INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
 (1, '*', '*', '*', 'front', 0),
@@ -1264,18 +1292,20 @@ INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`
 (24, 'entry', 'adm_fields', 'edit', 'front', 1),
 (25, 'entry', 'payment', 'free', 'front', 1);
 
-DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;
-ALTER TABLE `#__sobipro_permissions` ADD UNIQUE  `uniquePermission` (  `subject` ,  `action` ,  `value` ,  `site` );
+DELETE FROM `#__sobipro_permissions`
+WHERE `pid` = 5;
+ALTER TABLE `#__sobipro_permissions` ADD UNIQUE `uniquePermission` (`subject`, `action`, `value`, `site`);
 INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
 (NULL, 'section', 'search', '*', 'front', 1),
 (NULL, 'entry', 'delete', 'own', 'front', 1),
 (NULL, 'entry', 'delete', '*', 'front', 1);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_groups` (
-  `rid` int(11) NOT NULL,
-  `gid` int(11) NOT NULL,
-  PRIMARY KEY (`rid`,`gid`)
-) DEFAULT CHARSET=utf8;
+	`rid` INT(11) NOT NULL,
+	`gid` INT(11) NOT NULL,
+	PRIMARY KEY (`rid`, `gid`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_permissions_groups` (`rid`, `gid`) VALUES
 (1, 0),
@@ -1283,11 +1313,12 @@ INSERT IGNORE INTO `#__sobipro_permissions_groups` (`rid`, `gid`) VALUES
 (2, 29);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_map` (
-  `rid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  PRIMARY KEY (`rid`,`sid`,`pid`)
-) DEFAULT CHARSET=utf8;
+	`rid` INT(11) NOT NULL,
+	`sid` INT(11) NOT NULL,
+	`pid` INT(11) NOT NULL,
+	PRIMARY KEY (`rid`, `sid`, `pid`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_permissions_map` (`rid`, `sid`, `pid`) VALUES
 (1, 1, 4),
@@ -1298,33 +1329,36 @@ INSERT IGNORE INTO `#__sobipro_permissions_map` (`rid`, `sid`, `pid`) VALUES
 (2, 1, 17);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_rules` (
-  `rid` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(250) NOT NULL,
-  `nid` varchar(50) NOT NULL,
-  `validSince` datetime NOT NULL,
-  `validUntil` datetime NOT NULL,
-  `note` varchar(250) NOT NULL,
-  `state` tinyint(4) NOT NULL,
-  PRIMARY KEY (`rid`)
-)  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+	`rid`        INT(11)      NOT NULL AUTO_INCREMENT,
+	`name`       VARCHAR(250) NOT NULL,
+	`nid`        VARCHAR(50)  NOT NULL,
+	`validSince` DATETIME     NOT NULL,
+	`validUntil` DATETIME     NOT NULL,
+	`note`       VARCHAR(250) NOT NULL,
+	`state`      TINYINT(4)   NOT NULL,
+	PRIMARY KEY (`rid`)
+)
+	DEFAULT CHARSET = utf8
+	AUTO_INCREMENT = 3;
 
 INSERT IGNORE INTO `#__sobipro_permissions_rules` (`rid`, `name`, `nid`, `validSince`, `validUntil`, `note`, `state`) VALUES
 (1, 'Visitor', 'visitor', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1),
 (2, 'Registered', 'registered', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', 1);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
-  `pid` varchar(50) NOT NULL,
-  `name` varchar(150) DEFAULT NULL,
-  `version` varchar(50) NOT NULL,
-  `description` text,
-  `author` varchar(150) DEFAULT NULL,
-  `authorURL` varchar(250) DEFAULT NULL,
-  `authorMail` varchar(150) DEFAULT NULL,
-  `enabled` tinyint(1) DEFAULT NULL,
-  `type` varchar(250) DEFAULT NULL,
-  `depend` text NOT NULL,
-  UNIQUE KEY `pid` (`pid`,`type`)
-) DEFAULT CHARSET=utf8;
+	`pid`         VARCHAR(50) NOT NULL,
+	`name`        VARCHAR(150) DEFAULT NULL,
+	`version`     VARCHAR(50) NOT NULL,
+	`description` TEXT,
+	`author`      VARCHAR(150) DEFAULT NULL,
+	`authorURL`   VARCHAR(250) DEFAULT NULL,
+	`authorMail`  VARCHAR(150) DEFAULT NULL,
+	`enabled`     TINYINT(1) DEFAULT NULL,
+	`type`        VARCHAR(250) DEFAULT NULL,
+	`depend`      TEXT        NOT NULL,
+	UNIQUE KEY `pid` (`pid`, `type`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES
 ('bank_transfer', 'Bank Transfer', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'payment', ''),
@@ -1341,13 +1375,14 @@ INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`
 ('category', 'Category', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_section` (
-  `section` int(11) NOT NULL DEFAULT '0',
-  `pid` varchar(50) NOT NULL DEFAULT '',
-  `type` varchar(50) NOT NULL,
-  `enabled` tinyint(1) DEFAULT NULL,
-  `position` int(11) DEFAULT NULL,
-  PRIMARY KEY (`section`,`pid`,`type`)
-) DEFAULT CHARSET=utf8;
+	`section`  INT(11)     NOT NULL DEFAULT '0',
+	`pid`      VARCHAR(50) NOT NULL DEFAULT '',
+	`type`     VARCHAR(50) NOT NULL,
+	`enabled`  TINYINT(1) DEFAULT NULL,
+	`position` INT(11) DEFAULT NULL,
+	PRIMARY KEY (`section`, `pid`, `type`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_plugin_section` (`section`, `pid`, `type`, `enabled`, `position`) VALUES
 (71, 'bank_transfer', 'payment', 1, 1),
@@ -1356,11 +1391,12 @@ INSERT IGNORE INTO `#__sobipro_plugin_section` (`section`, `pid`, `type`, `enabl
 (1, 'paypal', 'payment', 1, 0);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_task` (
-  `pid` varchar(50) NOT NULL DEFAULT '',
-  `onAction` varchar(150) DEFAULT NULL,
-  `type` varchar(50) NOT NULL,
-  UNIQUE KEY `pid` (`pid`,`onAction`,`type`)
-) DEFAULT CHARSET=utf8;
+	`pid`      VARCHAR(50) NOT NULL DEFAULT '',
+	`onAction` VARCHAR(150) DEFAULT NULL,
+	`type`     VARCHAR(50) NOT NULL,
+	UNIQUE KEY `pid` (`pid`, `onAction`, `type`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_plugin_task` (`pid`, `onAction`, `type`) VALUES
 ('bank_transfer', 'adm_menu', 'payment'),
@@ -1373,18 +1409,19 @@ INSERT IGNORE INTO `#__sobipro_plugin_task` (`pid`, `onAction`, `type`) VALUES
 ('paypal', 'entry.submit', 'payment');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_registry` (
-  `section` varchar(150) NOT NULL,
-  `key` varchar(150) NOT NULL,
-  `value` text NOT NULL,
-  `params` text NOT NULL,
-  `description` text NOT NULL,
-  `options` text NOT NULL
-) DEFAULT CHARSET=utf8;
+	`section`     VARCHAR(150) NOT NULL,
+	`key`         VARCHAR(150) NOT NULL,
+	`value`       TEXT         NOT NULL,
+	`params`      TEXT         NOT NULL,
+	`description` TEXT         NOT NULL,
+	`options`     TEXT         NOT NULL
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `description`, `options`) VALUES
 ('fields_filter', 'website_full', 'Website with Protocol', 'L15odHRwKHMpPzpcL1wvW1x3XC4tXStcLnsxfVthLXpBLVpdezIsNX0oXC9bXlxzXSopPyQv', 'Please enter a valid URL address in the $field field', ''),
 ('fields_filter', 'website', 'Website w/o Protocol', 'L15bXHdcLi1dK1wuezF9W2EtekEtWl17Miw1fShcL1teXHNdKik/JC8=', 'Please enter a valid website address without the protocol in the $field field', ''),
-('fields_filter', 'title', 'Valid Title', 'L15bXHdcZF0rW1x3XGRccyFAXCRcJVwmXCpcIlwnXC1cK19dKiQv', 'The data entered in the $field field contains not allowed characters', 'custom' ),
+('fields_filter', 'title', 'Valid Title', 'L15bXHdcZF0rW1x3XGRccyFAXCRcJVwmXCpcIlwnXC1cK19dKiQv', 'The data entered in the $field field contains not allowed characters', 'custom'),
 ('fields_filter', 'single_letter', 'Single Letter', 'L15bYS16QS1aXSQv', 'This $field field accept only one letter value', ''),
 ('fields_filter', 'phone', 'Telephone Number', 'L14oXCtcZHsxLDN9XHM/KT8oXHM/XChbXGRdXClccz8pP1tcZFwtXHNcLl0rJC8=', 'Please enter a valid telephone number into $field field.', ''),
 ('fields_filter', 'integer', 'Decimal Value', 'L15cZCskLw==', 'Please enter a numeric value in the $field field', ''),
@@ -1398,16 +1435,17 @@ INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `
 ('paypal', 'ppemail', 'change@me.com', '', '', '');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_relations` (
-  `id` int(11) NOT NULL DEFAULT '0',
-  `pid` int(11) NOT NULL DEFAULT '0',
-  `oType` varchar(50) NOT NULL,
-  `position` int(11) DEFAULT NULL,
-  `validSince` datetime DEFAULT NULL,
-  `validUntil` datetime DEFAULT NULL,
-  `copy` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`,`pid`),
-  KEY `oType` (`oType`)
-) DEFAULT CHARSET=utf8;
+	`id`         INT(11)     NOT NULL DEFAULT '0',
+	`pid`        INT(11)     NOT NULL DEFAULT '0',
+	`oType`      VARCHAR(50) NOT NULL,
+	`position`   INT(11) DEFAULT NULL,
+	`validSince` DATETIME DEFAULT NULL,
+	`validUntil` DATETIME DEFAULT NULL,
+	`copy`       TINYINT(1)  NOT NULL,
+	PRIMARY KEY (`id`, `pid`),
+	KEY `oType` (`oType`)
+)
+	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_relations` (`id`, `pid`, `oType`, `position`, `validSince`, `validUntil`, `copy`) VALUES
 (1, 0, 'section', 1, '2013-01-02 00:00:00', '0000-00-00 00:00:00', 0),
@@ -1461,36 +1499,41 @@ INSERT IGNORE INTO `#__sobipro_relations` (`id`, `pid`, `oType`, `position`, `va
 (39, 7, 'entry', 6, '2013-01-02 00:00:00', '0000-00-00 00:00:00', 0);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_search` (
-  `ssid` double NOT NULL,
-  `lastActive` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `searchCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `requestData` text NOT NULL,
-  `uid` int(11) NOT NULL,
-  `browserData` text NOT NULL,
-  `entriesResults` text NOT NULL,
-  `catsResults` text NOT NULL,
-  PRIMARY KEY (`ssid`)
-) DEFAULT CHARSET=utf8;
+	`ssid`           DOUBLE    NOT NULL,
+	`lastActive`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`searchCreated`  TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`requestData`    TEXT      NOT NULL,
+	`uid`            INT(11)   NOT NULL,
+	`browserData`    TEXT      NOT NULL,
+	`entriesResults` TEXT      NOT NULL,
+	`catsResults`    TEXT      NOT NULL,
+	PRIMARY KEY (`ssid`)
+)
+	DEFAULT CHARSET = utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_section` (
-  `id` int(11) NOT NULL,
-  `description` text
-) DEFAULT CHARSET=utf8;
+	`id`          INT(11) NOT NULL,
+	`description` TEXT
+)
+	DEFAULT CHARSET = utf8;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_users_relation` (
-  `uid` int(11) NOT NULL DEFAULT '0',
-  `gid` int(11) NOT NULL DEFAULT '0',
-  `validSince` datetime DEFAULT NULL,
-  `validUntil` datetime DEFAULT NULL,
-  PRIMARY KEY  (`uid`,`gid`,`validSince`)
-) CHARSET=utf8;
+	`uid`        INT(11) NOT NULL DEFAULT '0',
+	`gid`        INT(11) NOT NULL DEFAULT '0',
+	`validSince` DATETIME DEFAULT NULL,
+	`validUntil` DATETIME DEFAULT NULL,
+	PRIMARY KEY (`uid`, `gid`, `validSince`)
+)
+	CHARSET = utf8;
 
 DROP TABLE IF EXISTS `#__sobipro_user_group`;
 CREATE TABLE `#__sobipro_user_group` (
-  `description` text,
-  `gid` int(11) NOT NULL AUTO_INCREMENT,
-  `enabled` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `groupName` varchar(150) NOT NULL,
-  PRIMARY KEY (`gid`)
-) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;
+	`description` TEXT,
+	`gid`         INT(11)      NOT NULL AUTO_INCREMENT,
+	`enabled`     INT(11)      NOT NULL,
+	`pid`         INT(11)      NOT NULL,
+	`groupName`   VARCHAR(150) NOT NULL,
+	PRIMARY KEY (`gid`)
+)
+	DEFAULT CHARSET = utf8
+	AUTO_INCREMENT = 5000;

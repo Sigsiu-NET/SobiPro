@@ -481,7 +481,7 @@ abstract class SPDBObject extends SPObject
 		Sobi::Trigger( 'CountVisit', ucfirst( $this->type() ), array( &$count, $this->id ) );
 		if ( $this->id && $count ) {
 			try {
-				SPFactory::db()->update( 'spdb_object', array( 'counter' => ( $reset ? '0' : '++' ) ), array( 'id' => $this->id ), 1 );
+				SPFactory::db()->insertUpdate( 'spdb_counter', array( 'sid' => $this->id, 'counter' => ( $reset ? '0' : $this->counter++ ), 'lastUpdate' => 'FUNCTION:NOW()' ) );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_INC_COUNTER_DB', $x->getMessage() ), SPC::ERROR, 0, __LINE__, __FILE__ );
 			}
@@ -667,9 +667,14 @@ abstract class SPDBObject extends SPObject
 	{
 		if ( $this->has( '_dbTable' ) && $this->_dbTable ) {
 			try {
-				$db =& SPFactory::db();
-				$db->select( '*', $this->_dbTable, array( 'id' => $this->id ) );
-				$obj = $db->loadObject();
+				$db = SPFactory::db();
+				$obj = $db->select( '*', $this->_dbTable, array( 'id' => $this->id ) )
+						->loadObject();
+				$counter = $db->select( 'counter', 'spdb_counter', array( 'sid' => $this->id ) )
+						->loadResult();
+				if( $counter ) {
+					$this->counter = $counter;
+				}
 				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$obj ) );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
