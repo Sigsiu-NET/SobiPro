@@ -128,6 +128,10 @@ Legend:
    (#) Template installer: complex fields' options are incorrect while installing new section (e.g. selected views in SP-GeoMap field)
    (#) Cache not cleaned after an ACL rule has been saved
    (#) Empty values for range search passed to the search method (Issue #806)
+   (#) Clean cache from outside of the SobiPro extension didn't worked
+   (#) Removing entry_row from the cache failed
+   (#) Bug #832 - NOT LIKE creates fatal error
+   (#) Uncaught exception when CURL isn't installed in the administrator main panel
 
 
 -------------------

@@ -412,7 +412,13 @@ class SPJoomlaDb
 					}
 					/* is like */
 					elseif ( strpos( $val, '%' ) !== false ) {
-						$equal = 'LIKE';
+						if( $n == '!') {
+							$n = null;
+							$equal = 'NOT LIKE';
+						}
+						else {
+							$equal = 'LIKE';
+						}
 					}
 					/* regular expressions handling
 						  * array( 'key' => 'REGEXP:^search$' )
