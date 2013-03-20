@@ -102,6 +102,7 @@ Legend:
    (!) JavaScript translation method speed improvement
    (!) IMPORTANT!! The URL contains now the nid/alias instead of the title; that way the generated URL can be better controlled but it also changes all existing URLs
    (!) Alias/nid (beside fields) is now translatable
+   (!) Counter of an object has been moved to a separate table due to performance issues (update statement deletes MySQL cache for a particular table)
 
    (#) {entry.url} placeholder doesn't work (Issue #708)
    (#) Typo in text label in Entry Manager

@@ -1,69 +1,83 @@
+CREATE TABLE IF NOT EXISTS `#__sobipro_counter` (
+	`sid`        INT(11)  NOT NULL,
+	`counter`    INT(11)  NOT NULL,
+	`lastUpdate` DATETIME NOT NULL,
+	PRIMARY KEY (`sid`)
+);
+
 CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
-  `cid` int(11) NOT NULL AUTO_INCREMENT,
-  `section` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `fileName` varchar(100) NOT NULL,
-  `task` varchar(100) NOT NULL,
-  `site` int(11) NOT NULL,
-  `request` varchar(255) NOT NULL,
-  `language` varchar(15) NOT NULL,
-  `template` varchar(150) NOT NULL,
-  `configFile` text NOT NULL,
-  `userGroups` varchar(200) NOT NULL,
-  `created` datetime NOT NULL,
-  PRIMARY KEY (`cid`),
-  KEY `sid` (`sid`),
-  KEY `section` (`section`),
-  KEY `language` (`language`),
-  KEY `task` (`task`),
-  KEY `request` (`request`),
-  KEY `site` (`site`),
-  KEY `userGroups` (`userGroups`)
+	`cid`        INT(11)      NOT NULL AUTO_INCREMENT,
+	`section`    INT(11)      NOT NULL,
+	`sid`        INT(11)      NOT NULL,
+	`fileName`   VARCHAR(100) NOT NULL,
+	`task`       VARCHAR(100) NOT NULL,
+	`site`       INT(11)      NOT NULL,
+	`request`    VARCHAR(255) NOT NULL,
+	`language`   VARCHAR(15)  NOT NULL,
+	`template`   VARCHAR(150) NOT NULL,
+	`configFile` TEXT         NOT NULL,
+	`userGroups` VARCHAR(200) NOT NULL,
+	`created`    DATETIME     NOT NULL,
+	PRIMARY KEY (`cid`),
+	KEY `sid` (`sid`),
+	KEY `section` (`section`),
+	KEY `language` (`language`),
+	KEY `task` (`task`),
+	KEY `request` (`request`),
+	KEY `site` (`site`),
+	KEY `userGroups` (`userGroups`)
 );
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (
-  `cid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  PRIMARY KEY (`cid`,`sid`)
+	`cid` INT(11) NOT NULL,
+	`sid` INT(11) NOT NULL,
+	PRIMARY KEY (`cid`, `sid`)
 );
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` (
-  `url` varchar(255) NOT NULL,
-  `crid` int(11) NOT NULL AUTO_INCREMENT,
-  `state` tinyint(1) NOT NULL,
-  PRIMARY KEY (`crid`),
-  UNIQUE KEY `url` (`url`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
+	`url`   VARCHAR(255) NOT NULL,
+	`crid`  INT(11)      NOT NULL AUTO_INCREMENT,
+	`state` TINYINT(1)   NOT NULL,
+	PRIMARY KEY (`crid`),
+	UNIQUE KEY `url` (`url`)
+)
+	ENGINE = MyISAM
+	DEFAULT CHARSET = utf8;
 
-UPDATE #__sobipro_permissions SET value =  '*' WHERE  pid = 18;
+UPDATE `#__sobipro_permissions`
+SET value = '*'
+WHERE pid = 18;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (
-  `description` text,
-  `gid` int(11) NOT NULL AUTO_INCREMENT,
-  `enabled` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `groupName` varchar(150) NOT NULL,
-  PRIMARY KEY (`gid`)
-) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;
+	`description` TEXT,
+	`gid`         INT(11)      NOT NULL AUTO_INCREMENT,
+	`enabled`     INT(11)      NOT NULL,
+	`pid`         INT(11)      NOT NULL,
+	`groupName`   VARCHAR(150) NOT NULL,
+	PRIMARY KEY (`gid`)
+)
+	DEFAULT CHARSET = utf8
+	AUTO_INCREMENT = 5000;
 
-DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;
-ALTER TABLE `#__sobipro_permissions` ADD UNIQUE  `uniquePermission` (  `subject` ,  `action` ,  `value` ,  `site` );
+DELETE FROM `#__sobipro_permissions`
+WHERE `pid` = 5;
+ALTER TABLE `#__sobipro_permissions` ADD UNIQUE `uniquePermission` (`subject`, `action`, `value`, `site`);
 INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
 (NULL, 'section', 'search', '*', 'front', 1),
 (NULL, 'entry', 'delete', 'own', 'front', 1),
 (NULL, 'entry', 'delete', '*', 'front', 1);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (
-  `date` datetime NOT NULL,
-  `uid` int(11) NOT NULL,
-  `sid` int(11) NOT NULL,
-  `fid` varchar(50) NOT NULL,
-  `ip` varchar(15) NOT NULL,
-  `section` int(11) NOT NULL,
-  `browserData` text NOT NULL,
-  `osData` text NOT NULL,
-  `humanity` int(3) NOT NULL,
-  PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`)
+	`date`        DATETIME    NOT NULL,
+	`uid`         INT(11)     NOT NULL,
+	`sid`         INT(11)     NOT NULL,
+	`fid`         VARCHAR(50) NOT NULL,
+	`ip`          VARCHAR(15) NOT NULL,
+	`section`     INT(11)     NOT NULL,
+	`browserData` TEXT        NOT NULL,
+	`osData`      TEXT        NOT NULL,
+	`humanity`    INT(3)      NOT NULL,
+	PRIMARY KEY (`date`, `sid`, `fid`, `ip`, `section`)
 );
 
 INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) VALUES

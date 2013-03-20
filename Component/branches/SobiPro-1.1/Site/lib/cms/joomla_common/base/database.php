@@ -648,12 +648,14 @@ class SPJoomlaDb
 			}
 			$val = $this->escape( $val );
 			if ( strstr( $val, 'FUNCTION:' ) ) {
-				$v[ ] = str_replace( 'FUNCTION:', null, $val );
+				$f = str_replace( 'FUNCTION:', null, $val );
+				$v[ ] = $f;
+				$c[ ] = "{$var} = {$f}";
 			}
 			else {
 				$v[ ] = "'{$val}'";
+				$c[ ] = "{$var} = '{$val}'";
 			}
-			$c[ ] = "{$var} = '{$val}'";
 			$k[ ] = "`{$var}`";
 
 		}

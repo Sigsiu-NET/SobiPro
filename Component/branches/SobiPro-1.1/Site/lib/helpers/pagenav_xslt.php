@@ -87,6 +87,12 @@ final class SPPageNavXSLT
 				);
 			}
 			for ( $page = 1; $page <= $pages; $page++ ) {
+				/** when we have many pages a lot of nodes is being generated and it is slowing the whole site down */
+				if( $pages > 100 ) {
+					if( $page > $this->current + 10 || $page < $this->current - 10 ) {
+						continue;
+					}
+				}
 				$_attributes = array();
 				if ( $page == $this->current ) {
 					$_attributes[ 'selected' ] = 1;

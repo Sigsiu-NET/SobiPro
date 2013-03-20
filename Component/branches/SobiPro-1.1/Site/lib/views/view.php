@@ -740,8 +740,8 @@ abstract class SPFrontView extends SPObject implements SPView
 	{
 		$this->nonStaticData
 				= SPFactory::db()
-				->select( Sobi::Cfg( 'cache.non_static', 'counter, id' ), 'spdb_object', array( 'id' => $objects ) )
-				->loadAssocList( 'id' );
+				->select( array( 'counter', 'sid' ), 'spdb_counter', array( 'sid' => $objects ) )
+				->loadAssocList( 'sid' );
 	}
 
 	protected function getNonStaticData( $id, $att )
