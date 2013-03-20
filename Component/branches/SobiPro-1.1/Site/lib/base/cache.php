@@ -91,7 +91,9 @@ final class SPCache
 			if ( SPFs::exists( SOBI_PATH . '/var/reset' ) ) {
 				$this->cleanAll();
 				SPFs::delete( SOBI_PATH . '/var/reset' );
-				SPFs::delete( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) );
+				if ( SPLoader::path( 'etc.extensions', 'front', true, 'xml' ) ) {
+					SPFs::delete( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) );
+				}
 			}
 			$init = SPFs::exists( $this->_store . '.htCache_' . $this->_section . '.db' ) ? false : true;
 			if ( class_exists( 'SQLiteDatabase' ) ) {
