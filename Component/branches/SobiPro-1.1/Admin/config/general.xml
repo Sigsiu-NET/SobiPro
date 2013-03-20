@@ -257,21 +257,21 @@
 								<tabs>
 									<tab label="SECN.CFG.REDIRECT_SECTION">
 										<fieldset label="SECN.CFG.REDIRECTS_SECTION_SPACER">
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_enabled]" selected="redirects.section_enabled" class="input-xlarge">
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_access_enabled]" selected="redirects.section_access_enabled" class="input-xlarge">
 												<values>
 													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
 													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.section_url]" value="redirects.section_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_msgtype]" selected="redirects.section_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.section_access_url]" value="redirects.section_access_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_access_msgtype]" selected="redirects.section_access_msgtype" class="input-large">
 												<values>
 													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
 													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
 													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+											<field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_access_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
 										</fieldset>
 										<fieldset label="SECN.CFG.REDIRECTS_SEARCH_SPACER">
 											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_search_enabled]" selected="redirects.section_search_enabled" class="input-xlarge">
@@ -293,21 +293,21 @@
 									</tab>
 									<tab label="SECN.CFG.REDIRECT_CATEGORY">
 										<fieldset label="SECN.CFG.REDIRECTS_CAT_SPACER">
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.category_enabled]" selected="redirects.category_enabled" class="input-xlarge">
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.category_access_enabled]" selected="redirects.category_access_enabled" class="input-xlarge">
 												<values>
 													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
 													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.category_url]" value="redirects.category_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.category_msgtype]" selected="redirects.category_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.category_access_url]" value="redirects.category_access_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.category_access_msgtype]" selected="redirects.category_access_msgtype" class="input-large">
 												<values>
 													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
 													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
 													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.category_msg]" value="redirects.category_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+											<field type="text" name="spcfg[redirects.category_access_msg]" value="redirects.category_access_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
 										</fieldset>
 									</tab>
 
