@@ -165,6 +165,7 @@ class SPEntryCtrl extends SPController
 			}
 		}
 
+		$ajax = SPRequest::cmd( 'method', 'html' ) == 'xhr';
 		/** let's create a simple plug-in method from the template to allow to modify the request */
 		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		$this->tplCfg( $tplPackage );
@@ -219,7 +220,7 @@ class SPEntryCtrl extends SPController
 						$store = array_merge( $store, $request );
 					}
 				} catch ( SPException $x ) {
-					$this->response( Sobi::Back(), $x->getMessage(), false, SPC::ERROR_MSG, array( 'error' => $field->get( 'nid' ) ) );
+					$this->response( Sobi::Back(), $x->getMessage(), !( $ajax ), SPC::ERROR_MSG, array( 'error' => $field->get( 'nid' ) ) );
 				}
 			}
 		}

@@ -210,7 +210,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 		}
 		Sobi::Trigger( 'AfterBasic', 'Search', array( &$this->_results ) );
 
-		/* ... now the extended search. Check which data we've recieved */
+		/* ... now the extended search. Check which data we've received */
 		if ( count( $this->_fields ) ) {
 			$results = null;
 			foreach ( $this->_fields as $field ) {
@@ -249,7 +249,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 			foreach ( $this->_fields as &$field ) {
 				$request = isset( $this->_request[ $field->get( 'nid' ) ] ) ? $this->_request[ $field->get( 'nid' ) ] : null;
 				if ( $request ) {
-					$field->searchNarrowResults( $request, $this->_results );
+					$field->searchNarrowResults( $request, $this->_results, $this->_resultsByPriority );
 				}
 			}
 		}
@@ -307,6 +307,11 @@ final class SPSearchCtrl extends SPSectionCtrl
 						}
 					}
 				}
+			}
+		}
+		foreach ( $this->_resultsByPriority as $prio => $ids ) {
+			if ( count( $ids ) ) {
+				$this->_resultsByPriority[ $prio ] = array_unique( $ids );
 			}
 		}
 		if ( Sobi::Cfg( 'search.entries_ordering', 'disabled' ) != 'disabled' ) {
@@ -524,7 +529,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 			if ( strlen( $r[ 0 ][ 'entriesResults' ] ) ) {
 				$store = SPConfig::unserialize( $r[ 0 ][ 'entriesResults' ] );
 				if ( $store[ 'results' ] ) {
-					$this->_results = explode( ',', $store[ 'results' ] );
+					$this->_results = array_unique( explode( ',', $store[ 'results' ] ) );
 					$this->_resultsByPriority = $store[ 'resultsByPriority' ];
 				}
 				$this->_resultsCount = count( $this->_results );
