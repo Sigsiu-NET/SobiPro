@@ -450,8 +450,9 @@ final class SobiProAdmCtrl
 				}
 			}
 		} catch ( SPException $x ) {
-			Sobi::Error( 'CoreCtrl', SPLang::e( 'No controller to execute. %s', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-			Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), $x->getMessage(), SPC::ERROR_MSG );
+			Sobi::Error( 'CoreCtrl', SPLang::e( 'No controller to execute %s', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
+//			Sobi::Error( 'CoreCtrl', SPLang::e( 'No controller to execute. %s', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+//			Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), $x->getMessage(), SPC::ERROR_MSG );
 		}
 		/* send header data etc ...*/
 		SPFactory::header()->send();

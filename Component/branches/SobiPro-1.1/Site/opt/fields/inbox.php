@@ -107,6 +107,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	/**
 	 * @param SPEntry $entry
 	 * @param string $request
+	 * @throws SPException
 	 * @return string
 	 */
 	private function verify( $entry, $request )

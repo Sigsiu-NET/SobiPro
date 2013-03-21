@@ -523,10 +523,10 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	/**
 	 * @param string $data
 	 * @param $results
-	 * @internal param int $section
+	 * @param $priorities
 	 * @return array
 	 */
-	public function searchNarrowResults( $data, &$results )
+	public function searchNarrowResults( $data, &$results, &$priorities )
 	{
 		if ( is_numeric( $data ) ) {
 			$data = array( $data );
@@ -544,7 +544,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				if ( count( $results ) ) {
 					foreach ( $results as $index => $sid ) {
 						$relation = SPFactory::db()
-								->select( 'id', 'spdb_relations', array( 'id' => $sid, 'oType' => 'entry', 'pid' => $categories ) )
+								->dselect( 'id', 'spdb_relations', array( 'id' => $sid, 'oType' => 'entry', 'pid' => $categories ) )
 								->loadResultArray();
 						if ( !( count( $relation ) ) ) {
 							unset( $results[ $index ] );
@@ -554,8 +554,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				} // it's a real search now - in case we hadn't nothing to filter out
 				else {
 					$results = SPFactory::db()
-							->select( 'id', 'spdb_relations', array( 'oType' => 'entry', 'pid' => $categories ) )
+							->dselect( 'id', 'spdb_relations', array( 'oType' => 'entry', 'pid' => $categories ) )
 							->loadResultArray();
+					$priorities[ $this->priority ] = $results;
 				}
 			}
 		}
