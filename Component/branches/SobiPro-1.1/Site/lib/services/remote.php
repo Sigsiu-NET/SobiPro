@@ -8,9 +8,11 @@
  * Url: http://www.Sigsiu.NET
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * $Date$
  * $Revision$
  * $Author$
@@ -303,7 +305,7 @@ final class SPRemote
 			$url = $url[ 0 ];
 		}
 		if ( !( $this->validateHttp( 'https://' . $url ) ) ) {
-			return array( 'err' => 500, 'msg' => SPLang::e( 'The given URL "%s" seems not to be a valid address. ', 'https://' . $url ) );
+			return array( 'err' => 500, 'msg' => SPLang::e( 'INVALID_URL', 'https://' . $url ) );
 		}
 		$this->setOptions(
 			array(
@@ -318,7 +320,7 @@ final class SPRemote
 		);
 		if ( !( $this->validCode( $this->exec() ) ) ) {
 			$err = $this->info();
-			return array( 'err' => $err[ 'http_code' ], 'msg' => SPLang::e( 'Cannot connect to the given address "%s". Please ensure that this URL is correct', 'https://' . $url ) );
+			return array( 'err' => $err[ 'http_code' ], 'msg' => SPLang::e( 'NO_CONNECT', 'https://' . $url ) );
 		}
 		$res = stream_context_create( array( 'ssl' => array( 'capture_peer_cert' => true ) ) );
 		$client = stream_socket_client( "ssl://{$url}:443", $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $res );
