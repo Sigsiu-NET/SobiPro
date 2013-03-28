@@ -64,7 +64,7 @@
 	</media>
 
 	<administration>
-		<menu img="class:sobipro">COM_SOBIPRO</menu>
+		<menu img="../media/sobipro/sp_16.png">COM_SOBIPRO</menu>
 		<files folder="Admin">
 			<folder>about</folder>
 			<folder>acl</folder>
