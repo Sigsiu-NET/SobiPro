@@ -65,49 +65,6 @@
 				</div>
 				<div style="clear:both;">
 					<tabs>
-						<tab label="APPS.LIST_UPDATES" condition="extensions.updates.length">
-							<div class="SpApps">
-								<table>
-									<head>
-										<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft" />
-										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter" />
-										<cell label="EXTENSIONS.HEADER_ENABLED" class="SpCellCenter" />
-										<cell />
-										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter" />
-										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="SpCellCenter" />
-										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
-									</head>
-									<loop subject="extensions.updates">
-										<cell class="SpCellLeft SpExtName">
-											<cell>
-												<tooltip>
-													<attribute name="content" value="description" parse="true" />
-													<attribute name="href" value="description-url" parse="true" />
-													<attribute name="title" value="name" parse="true" />
-												</tooltip>
-											</cell>
-										</cell>
-										<cell type="text" value="version" class="SpCellCenter" />
-										<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'remove-sign','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.UPDATE_OLD_EXPL', '-2':'', '-3':'EX.UPDATE_REQUIRED' }" />
-										<cell class="SpCloudInstall">
-											<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall" />
-										</cell>
-										<cell type="text" value="author" class="SpCellCenter" />
-										<cell type="text" value="license" class="SpCellCenter" />
-										<cell class="SpCellLeft" condition="availability-link">
-											<cell>
-												<tooltip>
-													<attribute name="content" value="availability-expl" parse="true" />
-													<attribute name="href" value="availability-link" parse="true" />
-													<attribute name="title" value="availability" parse="true" />
-												</tooltip>
-											</cell>
-										</cell>
-										<cell type="text" value="availability" class="SpCellLeft" invert-condition="availability-link" />
-									</loop>
-								</table>
-							</div>
-						</tab>
 						<tab label="APPS.LIST_APPS" condition="extensions.applications.length">
 							<div class="SpApps">
 								<table>
@@ -323,6 +280,49 @@
 								</table>
 							</div>
 						</tab>
+                        <tab label="APPS.LIST_UPDATES" condition="extensions.updates.length">
+                            <div class="SpApps">
+                                <table>
+                                    <head>
+                                        <cell label="EX.HEADER_NAME" type="text" class="SpCellLeft" />
+                                        <cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter" />
+                                        <cell label="EXTENSIONS.HEADER_ENABLED" class="SpCellCenter" />
+                                        <cell />
+                                        <cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter" />
+                                        <cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="SpCellCenter" />
+                                        <cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft" />
+                                    </head>
+                                    <loop subject="extensions.updates">
+                                        <cell class="SpCellLeft SpExtName">
+                                            <cell>
+                                                <tooltip>
+                                                    <attribute name="content" value="description" parse="true" />
+                                                    <attribute name="href" value="description-url" parse="true" />
+                                                    <attribute name="title" value="name" parse="true" />
+                                                </tooltip>
+                                            </cell>
+                                        </cell>
+                                        <cell type="text" value="version" class="SpCellCenter" />
+                                        <cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'remove-sign','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.UPDATE_OLD_EXPL', '-2':'', '-3':'EX.UPDATE_REQUIRED' }" />
+                                        <cell class="SpCloudInstall">
+                                            <button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall" />
+                                        </cell>
+                                        <cell type="text" value="author" class="SpCellCenter" />
+                                        <cell type="text" value="license" class="SpCellCenter" />
+                                        <cell class="SpCellLeft" condition="availability-link">
+                                            <cell>
+                                                <tooltip>
+                                                    <attribute name="content" value="availability-expl" parse="true" />
+                                                    <attribute name="href" value="availability-link" parse="true" />
+                                                    <attribute name="title" value="availability" parse="true" />
+                                                </tooltip>
+                                            </cell>
+                                        </cell>
+                                        <cell type="text" value="availability" class="SpCellLeft" invert-condition="availability-link" />
+                                    </loop>
+                                </table>
+                            </div>
+                        </tab>
 						<tab label="MN.MANAGE_REPOSITORIES">
 							<div class="SpApps">
 								<fieldset>
