@@ -35,9 +35,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	/** @var bool */
 	protected $catsWithChilds = true;
 	/** @var int */
-	protected $width = 100;
+	protected $width = 200;
 	/** @var int */
-	protected $height = 100;
+	protected $height = 150;
 	/** @var string */
 	protected $fixedCid = '';
 	/** @var array */
@@ -49,7 +49,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	/** @var string */
 	protected $searchMethod = 'select';
 	/** @var int */
-	protected $searchWidth = 100;
+	protected $searchWidth = 200;
 	/** @var int */
 	protected $searchHeight = 100;
 
