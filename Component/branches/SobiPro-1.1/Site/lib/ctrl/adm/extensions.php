@@ -8,9 +8,11 @@
  * Url: http://www.Sigsiu.NET
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * $Date$
  * $Revision$
  * $Author$
@@ -123,7 +125,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			} catch ( SPException $x ) {
 				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_GET_UPDATES', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				SPFactory::mainframe()->cleanBuffer();
-				echo json_encode( array( 'err' => SPLang::e( 'An error has occurred. %s', $x->getMessage() ) ) );
+				echo json_encode( array( 'err' => SPLang::e( 'REPO_ERR', $x->getMessage() ) ) );
 				exit;
 			}
 
@@ -140,7 +142,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					$l = $repository->updates( $installed );
 				} catch ( SPException $x ) {
 					SPFactory::mainframe()->cleanBuffer();
-					echo json_encode( array( 'err' => SPLang::e( 'An error has occurred. %s. Repository: %s', $x->getMessage(), $repository->get( 'id' ) ) ) );
+					//echo json_encode( array( 'err' => SPLang::e( '%s Repository: %s', $x->getMessage(), $repository->get( 'id' ) ) ) );
+                    echo json_encode( array( 'err' => SPLang::e( '%s', $x->getMessage() ) ) );
 					exit;
 				}
 				if ( is_array( $l ) ) {
@@ -308,7 +311,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$msg = SPFactory::Controller( 'progress' );
 		if ( !( SPFactory::mainframe()->checkToken( 'get' ) ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-			$msg->error( SPLang::e( 'An error has occurred. %s', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ) ) );
+			$msg->error( SPLang::e( 'REPO_ERR', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ) ) );
 			exit;
 		}
 		$msg->progress( 5, Sobi::Txt( 'EX.CONNECTING_TO_REPO' ) );
@@ -327,14 +330,14 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$repository->connect( $msg );
 			sleep( 1 );
 		} catch ( SPException $x ) {
-			$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
+			$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
 			exit;
 		}
 		try {
 			$response = $repository->request( $repository->get( 'token' ), $tid, $pid );
 //			sleep( 1 );
 		} catch ( SPException $x ) {
-			$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
+			$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
 			exit;
 		}
 		$msg->progress( 50, Sobi::Txt( 'EX.SENDING_REQUEST_TO', array( 'repo' => $repository->get( 'name' ) ) ), 2000 );
@@ -358,7 +361,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$msg->progress( $progress, Sobi::Txt( 'EX.REC_PACKAGE_WITH_TYPE_NAME', array( 'type' => Sobi::Txt( $response[ 'type' ] ), 'name' => $response[ 'name' ] ) ) );
 //			sleep( 1 );
 			if ( !( $response[ 'package' ] ) ) {
-				$msg->error( SPLang::e( 'An error has occurred. No package name received' ) );
+				$msg->error( SPLang::e( 'PACKAGE_ERR' ) );
 			}
 			$package = $this->packageToFile( $response[ 'package' ], $response[ 'checksum' ], $response[ 'filename' ], $msg );
 			try {
@@ -366,7 +369,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$msg->progress( 95, $r[ 'msg' ] );
 				$msg->progress( 100, $r[ 'msg' ], $r[ 'msgtype' ] );
 			} catch ( SPException $x ) {
-				$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
+				$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
 				exit;
 			}
 			exit;
@@ -397,7 +400,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		try {
 			$repository->connect();
 		} catch ( SPException $x ) {
-			$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
+			$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
 			exit;
 		}
 		$callback = SPRequest::word( 'callback' );
@@ -409,7 +412,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$response = call_user_func_array( array( $repository, $callback ), $answer );
 //			sleep( 2 );
 		} catch ( SPException $x ) {
-			$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
+			$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
 			exit;
 		}
 		$this->downloadResponse( $response, $repository, $msg );
@@ -423,7 +426,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		try {
 			SPFs::write( $path . DS . $name, $stream );
 		} catch ( SPException $x ) {
-			$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
+			$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
 			exit;
 		}
 		if ( md5_file( $path . DS . $name ) != $checksum ) {
@@ -440,7 +443,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$msg = SPFactory::Controller( 'progress' );
 		if ( !( SPFactory::mainframe()->checkToken( 'get' ) ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-			$msg->error( SPLang::e( 'An error has occurred. %s', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ) ) );
+			$msg->error( SPLang::e( 'REPO_ERR', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ) ) );
 			exit;
 		}
 		$msg->progress( 0, Sobi::Txt( 'EX.GETTING_REPOS' ) );
@@ -465,7 +468,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$repository->connect( $msg );
 				sleep( 1 );
 			} catch ( SPException $x ) {
-				$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
+				$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
 				exit;
 			}
 
@@ -475,7 +478,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$l = $repository->fetchList( $repository->get( 'token' ) );
 //				sleep( 1 );
 			} catch ( SPException $x ) {
-				$msg->error( SPLang::e( 'An error has occurred. %s', $x->getMessage() ) );
+				$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
 			}
 			if ( is_array( $l ) ) {
 				if ( count( $l ) ) {
@@ -711,7 +714,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		try {
 			$repository->connect();
 		} catch ( SPException $x ) {
-			$this->ajaxResponse( true, SPLang::e( 'An error has occurred. %s', $x->getMessage() ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
+			$this->ajaxResponse( true, SPLang::e( 'REPO_ERR', $x->getMessage() ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 		}
 		$callback = SPRequest::word( 'callback' );
 		$response = call_user_func_array( array( $repository, $callback ), $answer );
@@ -735,10 +738,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 		else {
 			if ( isset( $response[ 'error' ] ) ) {
-				$this->ajaxResponse( true, SPLang::e( 'An error has occurred. %s', $response[ 'msg' ] ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG, false );
+				$this->ajaxResponse( true, SPLang::e( 'REPO_ERR', $response[ 'msg' ] ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG, false );
 			}
 			else {
-				$this->ajaxResponse( true, SPLang::e( 'Unknown error occurred.' ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG, false );
+				$this->ajaxResponse( true, SPLang::e( 'UNKNOWN_ERR' ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG, false );
 			}
 		}
 	}
@@ -823,7 +826,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$def->load( $path );
 			$rDef->loadXML( $info );
 			if ( !( $rDef->schemaValidate( $this->repoSchema() ) ) ) {
-				$this->ajaxResponse( true, SPLang::e( 'An error has occurred and the repository at "%s" could not be added. Could not validate file repository definition against the schema definition at "%s"', "https://{$repositoryId}/repository.xml", "https://xml.sigsiu.net/SobiPro/repository.xsd" ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
+				$this->ajaxResponse( true, SPLang::e( 'SCHEME_ERR', "https://{$repositoryId}/repository.xml", "https://xml.sigsiu.net/SobiPro/repository.xsd" ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 			}
 			$arrDef = SPFactory::Instance( 'types.array' );
 			$arrDef = $arrDef->fromXML( $def, 'repository' );
@@ -859,7 +862,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			try {
 				$repository->connect();
 			} catch ( SPException $x ) {
-				$this->ajaxResponse( true, SPLang::e( 'An error has occurred. %s', $x->getMessage() ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
+				$this->ajaxResponse( true, SPLang::e( 'REPO_ERR', $x->getMessage() ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 			}
 			$response = $repository->register();
 			if ( is_array( $response ) && isset( $response[ 'callback' ] ) ) {
@@ -875,10 +878,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			}
 			else {
 				if ( isset( $response[ 'error' ] ) ) {
-					$this->ajaxResponse( true, SPLang::e( 'An error has occurred. %s', $response[ 'msg' ] ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
+					$this->ajaxResponse( true, SPLang::e( 'REPO_ERR', $response[ 'msg' ] ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 				}
 				else {
-					$this->ajaxResponse( true, SPLang::e( 'Unknown error occurred.' ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
+					$this->ajaxResponse( true, SPLang::e( 'UNKNOWN_ERR' ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 					exit;
 				}
 			}
@@ -937,7 +940,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			SPFactory::mainframe()
 					->cleanBuffer()
 					->customHeader();
-			$response = sprintf( 'An error has occurred and the connection could not be validated. Error number %s, %s', $ssl[ 'err' ], $ssl[ 'msg' ] );
+			//$response = sprintf( 'The connection could not be validated (error number %s). %s', $ssl[ 'err' ], $ssl[ 'msg' ] );
+            $response = SPLang::e( 'NOT_VALIDATED', $ssl[ 'err' ], $ssl[ 'msg' ] );
 			echo json_encode( array( 'message' => array( 'type' => SPC::ERROR_MSG, 'text' => $response ) ) );
 			exit;
 		}
