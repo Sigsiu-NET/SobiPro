@@ -293,6 +293,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
 	KEY `copy` (`copy`),
 	FULLTEXT KEY `baseData` (`baseData`)
 )
+	ENGINE = MyISAM
 	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_field_data` (`publishUp`, `publishDown`, `fid`, `sid`, `section`, `lang`, `enabled`, `params`, `options`, `baseData`, `approved`, `confirmed`, `createdTime`, `createdBy`, `createdIP`, `updatedTime`, `updatedBy`, `updatedIP`, `copy`, `editLimit`) VALUES

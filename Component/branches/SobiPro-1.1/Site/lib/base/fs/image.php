@@ -68,9 +68,11 @@ class SPImage extends SPFile
 
 	/**
 	 * Resample image
-	 * @param $height
 	 * @param $width
-	 * @param $allways - even if smaller as given values
+	 * @param $height
+	 * @param bool $always - even if smaller as given values
+	 * @throws SPException
+	 * @return bool
 	 */
 	public function resample( $width, $height, $always = true )
 	{
@@ -87,7 +89,7 @@ class SPImage extends SPFile
 			throw new SPException( SPLang::e( 'CANNOT_GET_IMG_INFO', $this->_filename ) );
 		}
 
-		/* if not allways and image is smaller */
+		/* if not always and image is smaller */
 		if( !$always && ( ( $wOrg <= $width ) && ( $hOrg <= $height ) ) ) {
 			return true;
 		}
@@ -157,8 +159,9 @@ class SPImage extends SPFile
 
 	/**
 	 * @author Radek Suski
-     * @author Claudio F. images with transparent color are processed in the right way
-     * resampling image to adjusted size
+	 * @author Claudio F. images with transparent color are processed in the right way
+	 * resampling image to adjusted size
+	 * @param $img
 	 * @return void
 	 */
 	private function transparency( &$img )
