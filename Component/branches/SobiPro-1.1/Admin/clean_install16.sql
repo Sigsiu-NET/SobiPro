@@ -411,7 +411,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
 	DEFAULT CHARSET = utf8;
 
 INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES
-('bank_transfer', 'Bank Transfer', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'payment', ''),
+('bank_transfer', 'Offline', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'payment', ''),
 ('paypal', 'PayPal', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'payment', ''),
 ('chbxgroup', 'Check Box Group', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
 ('email', 'Email', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
@@ -423,7 +423,6 @@ INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`
 ('textarea', 'Text Area', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
 ('url', 'URL', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
 ('category', 'Category', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');
-
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_section` (
 	`section`  INT(11)     NOT NULL DEFAULT '0',
