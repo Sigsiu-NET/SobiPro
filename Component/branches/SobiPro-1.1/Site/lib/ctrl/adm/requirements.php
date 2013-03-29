@@ -585,6 +585,7 @@ class SPRequirements extends SPController
 
 	private function store( $key, $value, $msg = null )
 	{
+		// let's try to create kinda mutex here
 		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
 		while ( SPFs::exists( $file ) ) {
 			usleep( 100000 );
@@ -715,7 +716,10 @@ class SPRequirements extends SPController
 		$data = $out->toXML( $settings, 'settings' );
 		$data = str_replace( array( SOBI_ROOT, '></' ), array( 'REMOVED', '>0</' ), $data );
 		$f = SPLang::nid( $settings[ 'SOBI_SETTINGS' ][ 'general' ][ 'site_name' ] );
+
 		SPFactory::mainframe()->cleanBuffer();
+		header( 'Cache-Control: no-cache, must-revalidate' );
+		header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
 		header( "Content-type: application/xml" );
 		header( "Content-Disposition: attachment; filename=\"sobipro_system_{$f}.xml\"" );
 		header( 'Content-Length: ' . strlen( $data ) );
@@ -843,6 +847,8 @@ class SPRequirements extends SPController
 		Sobi::SetUserData( 'requirements', $store );
 		$home = SPRequest::int( 'init' ) ? Sobi::Url( null, true ) : Sobi::Url( 'config', true );
 		/** @var $view SPAdmView */
+//		header( 'Cache-Control: no-cache, must-revalidate' );
+//		header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
 		SPFactory::View( 'view', true )
 				->assign( SPRequest::int( 'init' ), 'init' )
 				->addHidden( $home, 'redirect' )
