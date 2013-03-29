@@ -47,11 +47,22 @@ function SPJmenuFixTask( value )
 
 function SPJoomlaMenu()
 {
-	var JSubmit = Joomla.submitbutton;
-	Joomla.submitbutton = function ( pressbutton, type )
-	{
-		if ( pressbutton.indexOf( 'save' ).indexOf == -1 || pressbutton.indexOf( 'apply' ) == -1 || SPValidate() ) {
-			JSubmit( pressbutton, type );
+	try {
+		var JSubmit = Joomla.submitbutton;
+		Joomla.submitbutton = function ( pressbutton, type )
+		{
+			if ( pressbutton.indexOf( 'save' ).indexOf == -1 || pressbutton.indexOf( 'apply' ) == -1 || SPValidate() ) {
+				JSubmit( pressbutton, type );
+			}
+		}
+	}
+	catch ( x ) {
+		var JSubmit = submitbutton;
+		submitbutton = function ( pressbutton, type )
+		{
+			if ( pressbutton.indexOf( 'save' ).indexOf == -1 || pressbutton.indexOf( 'apply' ) == -1 || SPValidate() ) {
+				JSubmit( pressbutton, type );
+			}
 		}
 	}
 	SobiPro.jQuery( "#spsection" ).bind( "change", function ()
@@ -121,7 +132,7 @@ function SPJoomlaMenu()
 										typeahead.process( responseData );
 										SobiPro.jQuery( '.typeahead' )
 											.addClass( 'typeahead-width' )
-                                            .css('font-size', '13px')
+											.css( 'font-size', '13px' )
 										;
 										SobiPro.jQuery( '#spEntryChooser' ).after( SobiPro.jQuery( '.typeahead' ) );
 									}

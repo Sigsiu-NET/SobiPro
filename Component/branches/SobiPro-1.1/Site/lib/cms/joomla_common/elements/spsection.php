@@ -477,6 +477,9 @@ class JElementSPSection extends JElement
 				$selected[ 'month' ] = isset( $date[ 1 ] ) && $date[ 1 ] ? $date[ 1 ] : null;
 				$selected[ 'day' ] = isset( $date[ 2 ] ) && $date[ 2 ] ? $date[ 2 ] : null;
 			}
+			else {
+				$query[ 'date' ] = '';
+			}
 			$months = array( null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) );
 			$monthsNames = Sobi::Txt( 'JS_CALENDAR_MONTHS' );
 			$monthsNames = explode( ',', $monthsNames );
@@ -498,7 +501,7 @@ class JElementSPSection extends JElement
 				}
 			}
 			return
-				'<div class="SobiPro SobiProCalendar">' .
+					'<div class="SobiPro SobiProCalendar">' .
 					SPHtml_Input::select( 'sp_year', $years, $selected[ 'year' ] ) .
 					SPHtml_Input::select( 'sp_month', $months, $selected[ 'month' ] ) .
 					SPHtml_Input::select( 'sp_day', $days, $selected[ 'day' ] ) .
