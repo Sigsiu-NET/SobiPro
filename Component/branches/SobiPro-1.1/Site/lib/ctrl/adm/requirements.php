@@ -715,7 +715,7 @@ class SPRequirements extends SPController
 		$out = SPFactory::Instance( 'types.array' );
 		$data = $out->toXML( $settings, 'settings' );
 		$data = str_replace( array( SOBI_ROOT, '></' ), array( 'REMOVED', '>0</' ), $data );
-		$f = SPLang::nid( $settings[ 'SOBI_SETTINGS' ][ 'general' ][ 'site_name' ] );
+		$f = SPLang::nid( $settings[ 'SOBI_SETTINGS' ][ 'general' ][ 'site_name' ] . '-' . date( DATE_RFC822 ) );
 
 		SPFactory::mainframe()->cleanBuffer();
 		header( 'Cache-Control: no-cache, must-revalidate' );
