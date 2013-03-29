@@ -28,7 +28,7 @@ Legend:
 
 
 -------------------
-1.1.0 (Alpha W)
+1.1.0 Beta (30 March 2013)
 -------------------
 
    (+) XML based template engine for administrator templates
