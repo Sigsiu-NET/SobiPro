@@ -585,9 +585,17 @@ class SPRequirements extends SPController
 
 	private function store( $key, $value, $msg = null )
 	{
+		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
+		while ( SPFs::exists( $file ) ) {
+			usleep( 100000 );
+		}
+		$c = date( DATE_RFC822 );
+		SPFs::write( $file, $c );
 		$store = Sobi::GetUserData( 'requirements', array() );
 		$store[ $key ] = array( 'value' => $value, 'message' => $msg );
 		Sobi::SetUserData( 'requirements', $store );
+		SPFs::delete( $file );
+
 //		$msg = $msg ? $msg[ 'org' ][ 'label' ] : null;
 //		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
 //		$cont = null;
@@ -624,13 +632,14 @@ class SPRequirements extends SPController
 
 	private function download()
 	{
-		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
+//		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
 		$cont = null;
 		$settings = array();
 		$settings[ 'SobiPro' ] = array( 'Version' => SPFactory::CmsHelper()->myVersion( true ), 'Version_Num' => implode( '.', SPFactory::CmsHelper()->myVersion() ) );
-		if ( SPFs::exists( $file ) ) {
-			$cont = SPFs::read( $file );
-		}
+		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
+//		if ( SPFs::exists( $file ) ) {
+//			$cont = SPFs::read( $file );
+//		}
 //		$cont = explode( "\n", $cont );
 //		if ( count( $cont ) ) {
 //			foreach ( $cont as $line ) {
