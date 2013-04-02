@@ -195,7 +195,13 @@ class SPCrawler extends SPController
 						unset( $links[ $index ] );
 					}
 					elseif ( strstr( $link, '#' ) ) {
-						unset( $links[ $index ] );
+						$link = explode( '#', $link );
+						if ( strlen( $link[ 0 ] ) ) {
+							$links[ $index ] = Sobi::FixPath( $host . '/' . $link[ 0 ] );
+						}
+						else {
+							unset( $links[ $index ] );
+						}
 					}
 					elseif ( $http && !( strstr( $link, $liveSite ) ) ) {
 						unset( $links[ $index ] );
