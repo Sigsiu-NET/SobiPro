@@ -145,7 +145,7 @@ class SPAclView extends SPAdmView
 	 */
 	public function setTitle( $title )
 	{
-		$name = $this->get( 'rule.name' );
+		$name = $this->get( 'rule' );
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
 		$title = Sobi::Txt( $title, array( 'rule_name' => $name ) );
 		$title = parent::setTitle( $title );
