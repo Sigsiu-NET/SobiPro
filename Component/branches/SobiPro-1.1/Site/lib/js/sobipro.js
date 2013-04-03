@@ -25,11 +25,13 @@ function SobiPro()
 	this.jQuery = null;
 	this.lang = null;
 
-	this.DebOut = function( object )
+	this.DebOut = function ( object )
 	{
 		try {
 			console.log( object );
-		} catch( e ) {}
+		}
+		catch ( e ) {
+		}
 	}
 	this.Json = function ( url, options )
 	{
@@ -90,9 +92,35 @@ function SobiPro()
 			return this.lang[ string ].replace( '{newline}', "\n" );
 		}
 		else {
-			return text;
+			return this.Translate( text );
 		}
 	};
+
+	this.Translate = function ( text )
+	{
+		var proxy = this;
+		SobiPro.jQuery.ajax( {
+			url: 'index.php',
+			data: {
+				'option': 'com_sobipro',
+				'task': 'txt.translate',
+				'term': text,
+				'sid': SobiProSection,
+				'format': 'json'
+			},
+			type: 'post',
+			dataType: 'json',
+			async: false,
+			success: function ( data )
+			{
+				if ( data.translation ) {
+					proxy.lang[ text ] = data.translation;
+					text = data.translation;
+				}
+			}
+		} );
+		return text;
+	}
 
 	this.StripSlashes = function ( txt )
 	{
