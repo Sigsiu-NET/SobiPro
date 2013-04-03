@@ -25,7 +25,6 @@
 
 <definition>
 	<header>
-		<title value="ACL_FORM_SITE_TITLE" />
 		<title value="{'acl.add':'ACL_FORM_SITE_TITLE_ADD','acl.edit':'ACL_FORM_SITE_TITLE_EDIT'}" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>

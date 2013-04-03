@@ -1739,23 +1739,25 @@ class SPAdmView extends SPObject implements SPView
 			if ( is_array( $properties ) && count( $properties ) ) {
 				foreach ( $properties as $property ) {
 					$property = trim( $property );
-					/* it has to be SPObject subclass to access the attribute */
-					if ( method_exists( $var, 'has' ) /*&& $var->has( $property )*/ ) {
-						if ( method_exists( $var, 'get' ) ) {
-							$var = $var->get( $property, null, true );
+					if ( is_array( $var ) || is_object( $var ) ) {
+						/* it has to be SPObject subclass to access the attribute */
+						if ( is_object( $var ) && method_exists( $var, 'has' ) /*&& $var->has( $property )*/ ) {
+							if ( method_exists( $var, 'get' ) ) {
+								$var = $var->get( $property, null, true );
+							}
 						}
-					}
-					/* otherwise try to access std object */
-					elseif ( is_object( $var ) && isset( $var->$property ) ) {
-						$var = $var->$property;
-					}
-					elseif ( $property == 'length' && is_array( $var ) ) {
-						$r = count( $var );
-						return $r;
-					}
-					/* otherwise try to access array field */
-					elseif ( is_array( $var ) && isset( $var[ $property ] ) ) {
-						$var = $var[ $property ];
+						/* otherwise try to access std object */
+						elseif ( is_object( $var ) && isset( $var->$property ) ) {
+							$var = $var->$property;
+						}
+						elseif ( $property == 'length' && is_array( $var ) ) {
+							$r = count( $var );
+							return $r;
+						}
+						/* otherwise try to access array field */
+						elseif ( is_array( $var ) && isset( $var[ $property ] ) ) {
+							$var = $var[ $property ];
+						}
 					}
 					else {
 						return $r;
