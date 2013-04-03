@@ -24,20 +24,20 @@
 
 SobiPro.jQuery( document ).ready( function ()
 {
-	spSearchDefStr = SobiPro.jQuery( '#SPSearchBox' ).val();
+	var spSearchDefStr = '';
 	SobiPro.jQuery( '#SPSearchBox' ).bind( 'click', function ()
 	{
+		spSearchDefStr = spSearchDefStr == '' ? SobiPro.Txt( 'SH.SEARCH_FOR_BOX' ) : spSearchDefStr;
 		if ( SobiPro.jQuery( '#SPSearchBox' ).val() == spSearchDefStr ) {
 			SobiPro.jQuery( '#SPSearchBox' ).val( '' );
 		}
-		;
 	} );
 	SobiPro.jQuery( '#SPSearchBox' ).bind( 'blur', function ()
 	{
+		spSearchDefStr = spSearchDefStr == '' ? SobiPro.Txt( 'SH.SEARCH_FOR_BOX' ) : spSearchDefStr;
 		if ( SobiPro.jQuery( '#SPSearchBox' ).val() == '' ) {
 			SobiPro.jQuery( '#SPSearchBox' ).val( spSearchDefStr );
 		}
-		;
 	} );
 	SobiPro.jQuery( '.spsearchphrase' ).each( function ()
 	{

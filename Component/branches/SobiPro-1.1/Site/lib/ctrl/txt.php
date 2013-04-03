@@ -48,7 +48,19 @@ class SPJsTxt extends SPController
 			case 'messages':
 				$this->messages();
 				break;
+			case 'translate':
+				$this->translate();
+				break;
 		}
+	}
+
+	protected function translate()
+	{
+		SPFactory::mainframe()
+				->cleanBuffer()
+				->customHeader();
+		echo json_encode( array( 'translation' => Sobi::Txt( SPRequest::cmd( 'term' ) ) ) );
+		exit;
 	}
 
 	protected function messages()
