@@ -153,7 +153,12 @@ final class SobiProCtrl
 			try {
 				$this->route();
 			} catch ( SPException $x ) {
-				Sobi::Error( 'CoreCtrl', SPLang::e( 'Cannot route: %s.', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
+				if ( defined( 'SOBI_TESTS' ) ) {
+					Sobi::Error( 'CoreCtrl', SPLang::e( 'Cannot route: %s.', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
+				}
+				else {
+					SPFactory::mainframe()->setRedirect( Sobi::Reg( 'live_site' ), SPLang::e( 'PAGE_NOT_FOUND' ), SPC::ERROR_MSG, true );
+				}
 			}
 		}
 		return true;
@@ -464,7 +469,12 @@ final class SobiProCtrl
 				$this->_ctrl->setTask( $this->_task );
 			}
 		} catch ( SPException $x ) {
-			Sobi::Error( 'CoreCtrl', SPLang::e( 'Cannot set controller. %s.', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
+			if ( defined( 'SOBI_TESTS' ) ) {
+				Sobi::Error( 'CoreCtrl', SPLang::e( 'Cannot set controller. %s.', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
+			}
+			else {
+				SPFactory::mainframe()->setRedirect( Sobi::Reg( 'live_site' ), SPLang::e( 'PAGE_NOT_FOUND' ), SPC::ERROR_MSG, true );
+			}
 		}
 		return true;
 	}

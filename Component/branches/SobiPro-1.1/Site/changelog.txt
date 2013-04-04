@@ -33,6 +33,7 @@ Legend:
    (#) Using method_exists on a string in admin view (Issue #841)
    (#) The requestcache is overriding the global $_REQUEST (Issue #835)
    (#) XML cache file deletion of non-existent files (Issue #853)
+   (#) Bug #849 - Calling non existing SEF url causes 500 internal server error
 
    (-) Image field not storing temporary data any longer while using ajax uploader
    (-) Automatic upload of files in file uploader

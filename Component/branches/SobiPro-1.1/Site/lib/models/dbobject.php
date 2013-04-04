@@ -514,7 +514,7 @@ abstract class SPDBObject extends SPObject
 
 		/* just a security check to avoid mistakes */
 		else {
-			$this->createdTime = $this->createdTime ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->createdTime ) : null;
+			$this->createdTime = $this->createdTime && is_numeric( $this->createdTime ) ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->createdTime ) : $this->createdTime;
 			$obj = SPFactory::object( $this->id );
 			if ( $obj->oType != $this->oType ) {
 				Sobi::Error( 'Object Save', sprintf( 'Serious security violation. Trying to save an object which claims to be an %s but it is a %s. Task was %s', $this->oType, $obj->oType, SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
@@ -672,7 +672,7 @@ abstract class SPDBObject extends SPObject
 						->loadObject();
 				$counter = $db->select( 'counter', 'spdb_counter', array( 'sid' => $this->id ) )
 						->loadResult();
-				if( $counter ) {
+				if ( $counter ) {
 					$this->counter = $counter;
 				}
 				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$obj ) );
