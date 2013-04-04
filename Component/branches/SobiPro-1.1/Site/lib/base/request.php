@@ -72,7 +72,7 @@ abstract class SPRequest
 
 		switch ( self::$method ) {
 			case 'GET':
-				// it's seems that Joomla! is storing the decoded variables from a SEF
+				// it's seems that Joomla! is storing the decoded variables from menu
 				// into $_REQUEST instead of $_GET
 				self::$request =& $_REQUEST;
 //				self::$request =& $_GET;
@@ -93,7 +93,8 @@ abstract class SPRequest
 				self::$request =& $_SERVER;
 				break;
 			case 'REQUESTCACHE':
-				self::$request =& Sobi::Reg( 'requestcache' );
+				self::$request =& SPFactory::registry()->__get( 'requestcache' );
+				break;
 			default:
 				self::$request =& $_REQUEST;
 				self::$method = 'REQUEST';

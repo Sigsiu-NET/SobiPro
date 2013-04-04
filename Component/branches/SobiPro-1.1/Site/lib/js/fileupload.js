@@ -25,12 +25,12 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 	"use strict";
 	var proxy = this;
 	this.settings = {
-		'hideProgressBar':true,
-		'styles':{
-			'.progress':{'clear':'left', 'width':'478px', 'float':'left', 'margin':'10px 10px 10px 0' },
-			'.alert':{'clear':'both', 'width':'478px' },
-			'.file input':{ 'margin-bottom':'10px'},
-			'.progress-message':{ 'margin-top':'10px'}
+		'hideProgressBar': true,
+		'styles': {
+			'.progress': {'clear': 'left', 'width': '478px', 'float': 'left', 'margin': '10px 10px 10px 0' },
+			'.alert': {'clear': 'both', 'width': '478px' },
+			'.file input': { 'margin-bottom': '10px'},
+			'.progress-message': { 'margin-top': '10px'}
 		}
 	};
 	this.settings = SobiPro.jQuery.extend( true, options, this.settings );
@@ -44,6 +44,7 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 	var responseMsg = proxy.find( '.alert' );
 	var idStore = proxy.find( '.idStore' );
 	var button = proxy.find( '.upload' );
+
 	this.complete = function ( xhr )
 	{
 		proxy.trigger( 'uploadComplete', [xhr] );
@@ -84,6 +85,41 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 		progressMessage.html( percentVal );
 	};
 
+	this.upload = function ()
+	{
+		var request = SobiPro.jQuery.parseJSON( proxy.find( '.upload' ).attr( 'rel' ) );
+		proxy.trigger( 'createRequest', [ request ] );
+		var container = proxy.find( '.file' );
+		var file = proxy.find( 'input:file' );
+		var id = file.attr( 'name' ) + '-form'
+		var form = '<form action="' + 'index.php" method="post" enctype="multipart/form-data" id="' + id + '">';
+		for ( var field in request ) {
+			form += '<input type="hidden" value="' + request[ field ] + '" name="' + field + '"/>';
+		}
+		form += '</form>';
+		form = SobiPro.jQuery( form );
+		file.appendTo( form );
+		var c = file.clone( file );
+		c.appendTo( container );
+		// frak you damn IE
+		form.appendTo( SobiPro.jQuery( '#SobiPro' ) );
+		SobiPro.jQuery( '#' + id ).ajaxForm( {
+			'dataType': 'json',
+			beforeSend: function ()
+			{
+				proxy.beforeSend();
+			},
+			uploadProgress: function ( event, position, total, percentComplete )
+			{
+				proxy.uploadProgress( event, position, total, percentComplete )
+			},
+			complete: function ( xhr )
+			{
+				proxy.complete( xhr );
+			}
+		} ).submit();
+	}
+
 	this.find( 'input:file' ).change( function ()
 		{
 			if ( SobiPro.jQuery( this ).val() ) {
@@ -95,6 +131,7 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 					filename = filename.substring( 1 );
 				}
 				proxy.find( '.selected' ).val( filename );
+				setTimeout( function() { proxy.upload() }, 500 );
 			}
 		}
 	);
@@ -116,42 +153,16 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 
 	this.find( '.upload' ).click( function ()
 	{
-		var request = SobiPro.jQuery.parseJSON( SobiPro.jQuery( this ).attr( 'rel' ) );
-		proxy.trigger( 'createRequest', [ request ] );
-		var container = proxy.find( '.file' );
-		var file = proxy.find( 'input:file' );
-		var id = file.attr( 'name' ) + '-form'
-		var form = '<form action="' + 'index.php" method="post" enctype="multipart/form-data" id="' + id + '">';
-		for ( var field in request ) {
-			form += '<input type="hidden" value="' + request[ field ] + '" name="' + field + '"/>';
-		}
-		form += '</form>';
-		form = SobiPro.jQuery( form );
-		file.appendTo( form );
-		var c = file.clone( file );
-		c.appendTo( container );
-		// frak you damn IE
-		form.appendTo( SobiPro.jQuery( '#SobiPro' ) );
-		SobiPro.jQuery( '#' + id ).ajaxForm( {
-			'dataType':'json',
-			beforeSend:function ()
-			{
-				proxy.beforeSend();
-			},
-			uploadProgress:function ( event, position, total, percentComplete )
-			{
-				proxy.uploadProgress( event, position, total, percentComplete )
-			},
-			complete:function ( xhr )
-			{
-				proxy.complete( xhr );
-			}
-		} ).submit();
+		proxy.upload();
 	} );
+
 	return this;
 }
 
 SobiPro.jQuery.fn.SPFileUploader = function ( options )
 {
-	return this.each( function () { SobiPro.jQuery( this ).SobiProFileUploader( options ); } );
+	return this.each( function ()
+	{
+		SobiPro.jQuery( this ).SobiProFileUploader( options );
+	} );
 }
