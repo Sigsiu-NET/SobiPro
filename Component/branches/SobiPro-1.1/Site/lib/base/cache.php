@@ -270,7 +270,7 @@ final class SPCache
 		if ( count( $xml ) ) {
 			$relations = array();
 			foreach ( $xml as $cache ) {
-				$file = SPLoader::path( 'var.xml.' . $cache[ 'fileName' ], 'front', false, 'xml' );
+				$file = SPLoader::path( 'var.xml.' . $cache[ 'fileName' ], 'front', true, 'xml' );
 				if ( $file ) {
 					SPFs::delete( $file );
 				}
