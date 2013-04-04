@@ -127,7 +127,7 @@ abstract class SPHtml_Input
 				'format' => 'raw'
 			);
 		}
-		$classes = array( 'class' => 'hide' );
+		$classes = array( 'class' => 'hide spFileUploadHidden' );
 		SPLoader::loadClass( 'env.browser' );
 		$browser = SPBrowser::getInstance()->get( 'browser' );
 		$stupidInternetExplorer = false;
@@ -147,8 +147,8 @@ abstract class SPHtml_Input
 		if ( !( $stupidInternetExplorer ) ) {
 			$f .= '<button class="btn select" type="button"><i class="icon-eye-open"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
 		}
+		$f .= '<button class="btn upload hide" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
 		$f .= '<button class="btn remove" disabled="disabled" type="button">' . '&nbsp;<i class="icon-remove"></i></button>';
-		$f .= '<button class="btn upload" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
 		$f .= '</div>';
 		$f .= '<div class="hide progress-container">';
 		$f .= '<div class="progress progress-success"><div class="bar"></div></div>';

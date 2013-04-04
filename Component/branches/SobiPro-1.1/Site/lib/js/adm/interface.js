@@ -24,7 +24,7 @@ SobiPro.jQuery( document ).ready( function ()
 {
 	SobiPro.jQuery( 'input:file' ).change( function ()
 	{
-		if ( !( SobiPro.jQuery( this ).hasClass( 'spFileUpload' ) ) && SobiPro.jQuery( this ).val() ) {
+		if ( !( SobiPro.jQuery( this ).hasClass( 'spFileUploadHidden' ) ) && SobiPro.jQuery( this ).val() ) {
 			SobiPro.jQuery( '#SP_method' ).val( 'html' );
 		}
 	} );

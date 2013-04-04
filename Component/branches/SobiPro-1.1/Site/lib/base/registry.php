@@ -46,7 +46,7 @@ final class SPRegistry
 	}
 
 	/**
-	 * Deleting stored variabel
+	 * Deleting stored variable
 	 *
 	 * @param string $label
 	 */

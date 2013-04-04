@@ -141,8 +141,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$field .= SPHtml_Input::checkbox( $this->nid . '_delete', 1, Sobi::Txt( 'FD.IMG_DELETE_CURRENT_IMAGE' ), $this->nid . '_delete', false, array( 'class' => $this->cssClass ) );
 			$field .= "\n</div>\n";
 		}
-		if( !( $js ) ) {
-			SPFactory::header()->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( ".spFileUpload" ).SPFileUploader(); } );');
+		if ( !( $js ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
+			SPFactory::header()->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( ".spFileUpload" ).SPFileUploader(); } );' );
 			$js = true;
 		}
 		$field .= SPHtml_Input::fileUpload( $this->nid, 'image/*' );
@@ -161,12 +161,6 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		return preg_replace( $placeHolders, $replacements, $pattern );
 	}
 
-	private function fromCache( $cache )
-	{
-		$tsid = SPRequest::string( 'editentry', null, false, 'cookie' );
-		/* @TODO muss mir hier was ausdenken */
-	}
-
 	/**
 	 * Gets the data for a field, verify it and pre-save it.
 	 * @param SPEntry $entry
@@ -178,15 +172,23 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	{
 		$save = array();
 		if ( $this->verify( $entry, $request ) ) {
-			/* save the file to temporary folder */
-			$data = SPRequest::file( $this->nid, 'tmp_name' );
-			if ( $data ) {
-				$path = SPLoader::dirPath( "tmp.edit.{$tsId}.images", 'front', false );
-				$path .= DS . SPRequest::file( $this->nid, 'name' );
-				$fileClass = SPLoader::loadClass( 'base.fs.file' );
-				$file = new $fileClass();
-				$file->upload( $data, $path );
-				$save[ $this->nid ] = $path;
+			// check if we are using the ajax upload - then we don't need to play with temp data
+			$check = SPRequest::string( $this->nid, null, $request );
+			if ( !( $check ) ) {
+				/* save the file to temporary folder */
+				$data = SPRequest::file( $this->nid, 'tmp_name' );
+				if ( $data ) {
+					$temp = str_replace( '.', '-', $tsId );
+					$path = SPLoader::dirPath( "tmp.edit.{$temp}.images", 'front', false );
+					$path .= '/' . SPRequest::file( $this->nid, 'name' );
+					$fileClass = SPLoader::loadClass( 'base.fs.file' );
+					$file = new $fileClass();
+					$file->upload( $data, $path );
+					$save[ $this->nid ] = $path;
+				}
+			}
+			else {
+				$save[ $this->nid ] = $check;
 			}
 			$save[ $this->nid . '_delete' ] = SPRequest::bool( $this->nid . '_delete' );
 		}
@@ -258,19 +260,24 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$store = SPFactory::registry()->get( 'requestcache_stored' );
 		}
 		if ( is_array( $store ) && isset( $store[ $this->nid ] ) ) {
-			$data = $store[ $this->nid ];
-			$cache = true;
-			$orgName = SPRequest::file( $this->nid, 'name', $request );
+			if ( !( strstr( $store[ $this->nid ], 'file://' ) ) ) {
+				$data = $store[ $this->nid ];
+				$cache = true;
+				$orgName = SPRequest::file( $this->nid, 'name', $request );
+			}
+			else {
+				SPRequest::set( $this->nid, $store[ $this->nid ] );
+				$orgName = SPRequest::file( $this->nid, 'name' );
+				$data = SPRequest::file( $this->nid, 'tmp_name' );
+			}
 		}
 		else {
 			$data = SPRequest::file( $this->nid, 'tmp_name' );
 			$orgName = SPRequest::file( $this->nid, 'name' );
 		}
-
 		$files = array();
 		$sPath = $this->parseName( $entry, $orgName, $this->savePath );
 		$path = SPLoader::dirPath( $sPath, 'root', false );
-
 		/* if we have an image */
 		if ( $data ) {
 			$fileSize = SPRequest::file( $this->nid, 'size' );

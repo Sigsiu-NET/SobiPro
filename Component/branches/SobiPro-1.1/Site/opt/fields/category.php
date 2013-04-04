@@ -426,6 +426,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	 * Gets the data for a field and save it in the database
 	 * @param SPEntry $entry
 	 * @param string $request
+	 * @throws SPException
 	 * @return bool
 	 */
 	public function saveData( &$entry, $request = 'POST' )

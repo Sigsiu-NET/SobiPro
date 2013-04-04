@@ -1758,6 +1758,9 @@ class SPAdmView extends SPObject implements SPView
 						elseif ( is_array( $var ) && isset( $var[ $property ] ) ) {
 							$var = $var[ $property ];
 						}
+						else {
+							return $r;
+						}
 					}
 					else {
 						return $r;

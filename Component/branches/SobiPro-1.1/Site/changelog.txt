@@ -30,6 +30,12 @@ Legend:
 1.1.0 Beta2 ()
 -------------------
 
+   (#) Using method_exists on a string in admin view (Issue #841)
+   (#) The requestcache is overriding the global $_REQUEST (Issue #835)
+
+   (-) Image field not storing temporary data while using ajax uploader
+   (-) Automatic upload of files in file uploader
+
 
 -------------------
 1.1.0 Beta1 (30 March 2013)

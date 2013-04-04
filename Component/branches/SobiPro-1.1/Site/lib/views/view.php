@@ -673,7 +673,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			if ( count( $fields ) ) {
 				array_unshift( $fields, Sobi::Cfg( 'alphamenu.primary_field' ) );
 				foreach ( $fields as $fid ) {
-					if ( method_exists( $fs[ $fid ], 'get' ) ) {
+					if ( isset( $fs[ $fid ] ) && method_exists( $fs[ $fid ], 'get' ) ) {
 						if ( $fs[ $fid ]->get( 'enabled' ) ) {
 							$extraFields[ $fs[ $fid ]->get( 'nid' ) ] = $fs[ $fid ]->get( 'name' );
 						}
