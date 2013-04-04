@@ -414,7 +414,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$nid = SPRequest::cmd( 'field_nid' );
 		if ( !( $nid ) || !( strstr( $nid, 'field_' ) ) ) {
 			/** give me my spaces back!!! */
-			$nid = str_replace( '-', '_', SPLang::nid( 'field_' . SPRequest::string( 'field_name' ) ) );
+			$nid = strtolower( str_replace( '-', '_', SPLang::nid( 'field_' . SPRequest::string( 'field_name' ) ) ) );
 			SPRequest::set( 'field_nid', $nid );
 		}
 		$this->getRequest();
@@ -685,7 +685,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$col = 'isFree';
 				$state = ( $task == 'setFree' ) ? 1 : 0;
 				break;
-			/** @since 1.1 - single row only from the field list  */
+			/** @since 1.1 - single row only from the field list */
 			case 'toggle':
 				$fIds = array();
 				$fid = SPRequest::int( 'fid' );
