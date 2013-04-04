@@ -26,9 +26,13 @@ Legend:
  (-) - Removed
  (!) - Change
 
+-------------------
+1.1.0 Beta2 ()
+-------------------
+
 
 -------------------
-1.1.0 Beta (30 March 2013)
+1.1.0 Beta1 (30 March 2013)
 -------------------
 
    (+) XML based template engine for administrator templates

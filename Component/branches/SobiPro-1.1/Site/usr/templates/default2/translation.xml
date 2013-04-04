@@ -51,4 +51,8 @@
     <term value="EXTENDED_SEARCH">
         <value lang="en-GB"></value>
     </term>
+    <term value="SH.SEARCH_FOUND_RESULTS">
+        <value lang="en-GB"></value>
+    </term>
+
 </translation>
