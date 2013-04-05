@@ -645,7 +645,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	 */
 	public function endOut()
 	{
-		if ( !( strlen( SPRequest::cmd( 'format' ) ) ) && SPRequest::cmd( 'format' ) != 'html' ) {
+		if ( ( !strlen( SPRequest::cmd( 'format' ) ) || SPRequest::cmd( 'format' ) == 'html' )  ) {
 			/* something like 'onDomReady' but it should be bit faster */
 			echo '<script type="text/javascript">SobiPro.Ready();</script>';
 		}
