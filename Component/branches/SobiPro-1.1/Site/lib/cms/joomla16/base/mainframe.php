@@ -194,4 +194,8 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 		}
 	}
 
+	public function setCookie( $name, $value, $expire = 0, $httponly = false, $secure = false, $path = '/', $domain = null )
+	{
+		return JFactory::getApplication()->input->cookie->set( $name, $value, $expire, $path, $domain, $secure, $httponly );
+	}
 }
