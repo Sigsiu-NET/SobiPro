@@ -29,4 +29,10 @@ require_once dirname(__FILE__).'/../../joomla_common/base/mainframe.php';
  * @version 1.0
  * @created 10-Jan-2009 5:50:43 PM
  */
-final class SPJ15MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface {}
+final class SPJ15MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
+{
+	public function setCookie( $name, $value, $expire = 0, $httponly = false, $secure = false, $path = '/', $domain = null )
+	{
+		setcookie( $name, $value, $expire, $path, $domain, $secure, $httponly );
+	}
+}

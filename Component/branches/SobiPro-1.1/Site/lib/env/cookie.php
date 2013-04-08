@@ -47,7 +47,7 @@ abstract class SPCookie
 	{
 		$name = self::prefix.$name;
 		$expire = ( $expire == 0 ) ? $expire : time() + $expire;
-		return setcookie( $name, $value, $expire, $path, $domain, $secure, $httponly ) && SPRequest::string( $name, null, false, 'cookie' );
+		return SPFactory::mainframe()->setCookie( $name, $value, $expire, $httponly, $secure , $path, $domain ) && SPRequest::string( $name, null, false, 'cookie' );
 	}
 
 	/**
@@ -58,7 +58,7 @@ abstract class SPCookie
 	public static function delete( $name )
 	{
 		$name = self::prefix.$name;
-		return setcookie( $name, '', ( time() - 36000 ) );
+		return SPFactory::mainframe()->setCookie( $name, '', ( time() - 36000 ) );
 	}
 
 	/**
