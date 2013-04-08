@@ -69,7 +69,8 @@
 }
 .SigsiuTree .selected {
   float: left;
-  margin-left: 30px;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 .SigsiuTree .selected select {
   min-height: 200px;
@@ -83,6 +84,8 @@
 }
 .SigsiuTree .tree {
   float: left;
+  overflow: auto;
+  width: 50%;
 }
 /* Modale Fenster */
 .modal-backdrop,
