@@ -36,6 +36,7 @@ Legend:
    (#) Bug #849 - Calling non existing SEF url causes 500 internal server error
    (#) Bug #855 - Field aliases are not lowercased
    (#) The SobiPro.Ready JavaScript method is not being called in when format is set to 'html' (Issue #844)
+   (#) Bug #839 "Parent Category selectable" does not work for SigsiuTree method
 
    (-) Image field not storing temporary data any longer while using ajax uploader
    (-) Automatic upload of files in file uploader

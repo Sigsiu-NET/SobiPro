@@ -214,12 +214,15 @@ class SPCategoryCtrl extends SPSectionCtrl
 //		sleep( 2 );
 		$sid = SPRequest::sid();
 		$out = SPRequest::cmd( 'out', 'json' );
-		$path = SPFactory::config()
-				->getParentPath( $sid, true, false, true );
+		$path = SPFactory::config()->getParentPath( $sid, true, false, true );
 		$cats = array();
 		if ( count( $path ) ) {
+			$childs = 0;
 			foreach ( $path as $category ) {
-				$cats[ ] = array( 'id' => $category[ 'id' ], 'name' => $category[ 'name' ] );
+				if( $category[ 'id' ] == $sid ) {
+					$childs = count( SPFactory::Category( $sid )->getChilds( 'category', false, 1 ) );
+				}
+				$cats[ ] = array( 'id' => $category[ 'id' ], 'name' => $category[ 'name' ], 'childsCount' => $childs );
 			}
 		}
 		switch ( $out ) {

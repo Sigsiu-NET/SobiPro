@@ -85,6 +85,7 @@ final class SigsiuTree extends SPObject
      * @var int
      */
     private $_disabled = array();
+	private $preventParents = false;
 
     /**
      * Set category, or set of categories id which should not be selectable in the tree
@@ -110,9 +111,10 @@ final class SigsiuTree extends SPObject
         return $this->tree;
     }
 
-    /**
-     * @return string
-     */
+	/**
+	 * @param bool $return
+	 * @return string
+	 */
     public function display( $return = false )
     {
         Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$this->tree ) );
@@ -124,9 +126,9 @@ final class SigsiuTree extends SPObject
         }
     }
 
-    /**
-     * @param string $_id
-     */
+	/**
+	 * @param $id
+	 */
     public function setId( $id )
     {
         $this->_id = $id;
@@ -141,7 +143,7 @@ final class SigsiuTree extends SPObject
     }
 
     /**
-     * @param array $_images
+     * @param array $images
      */
     public function setImages( $images )
     {
@@ -182,17 +184,23 @@ final class SigsiuTree extends SPObject
         $this->_url = $href;
     }
 
-    /**
-     * constructor
-     * @param array $images
-     * @return SigsiuTree
-     */
-    public function __construct( $ordering = 'position' )
+	/**
+	 * constructor
+	 * @param string $ordering
+	 * @param array $opts
+	 * @return SigsiuTree
+	 */
+    public function __construct( $ordering = 'position', $opts = array() )
     {
         $this->_ordering = $ordering;
         foreach ( $this->_images as $img => $loc ) {
             $this->_images[ $img ] = Sobi::FixPath( Sobi::Cfg( 'tree_images', Sobi::Cfg( 'img_folder_live' ) . '/tree/' . $loc ) );
         }
+	    if( count($opts)) {
+		    foreach( $opts as $a => $v ) {
+			    $this->$a = $v;
+		    }
+	    }
     }
 
     /**
@@ -225,8 +233,6 @@ final class SigsiuTree extends SPObject
         $section = $this->getSection( $sid );
         $sectionLink = $this->parseLink( $section );
         $sectionName = $section->get( 'name' );
-
-        $childs = array();
         $childs = $this->getChilds( $sid );
         //		if( count( $cats ) ) {
         //			foreach ( $cats as $i => $cat ) {

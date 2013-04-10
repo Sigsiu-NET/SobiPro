@@ -96,6 +96,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( !( ( int )$this->catsMaxLimit ) ) {
 			$this->catsMaxLimit = 1;
 		}
+		if ( count( $this->_selectedCats ) > $this->catsMaxLimit ) {
+			$this->_selectedCats = array_slice( $this->_selectedCats, 0, $this->catsMaxLimit );
+		}
 		switch ( $this->method ) {
 			case 'fixed':
 				$this->showLabel = false;
@@ -124,7 +127,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	{
 		$selector = null;
 		$selectedCategories = array();
-		$tree = SPFactory::Instance( 'mlo.tree', Sobi::Cfg( 'list.categories_ordering' ) );
+		$tree = SPFactory::Instance( 'mlo.tree', Sobi::Cfg( 'list.categories_ordering' ), array( 'preventParents' => !( $this->catsWithChilds ) ) );
 		$tree->setHref( '#' );
 		$tree->setTask( 'category.chooser' );
 		$tree->disable( Sobi::Section() );
@@ -132,6 +135,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params = array();
 		$params[ 'maxcats' ] = $this->catsMaxLimit;
 		$params[ 'field' ] = $this->nid;
+		$params[ 'preventParents' ] = !( $this->catsWithChilds );
 		$setheight = '';
 		if ( $this->height > 0 ) {
 			$setheight = " style=\"height: {$this->height}px;\"";
