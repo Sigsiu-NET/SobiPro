@@ -48,6 +48,7 @@ function SigsiuTreeEdit( options )
 			}
 		} );
 	}
+
 	this.init = function ()
 	{
 		this.canvas.find( '.treeNode' ).click( function ( e )
@@ -76,7 +77,7 @@ function SigsiuTreeEdit( options )
 		this.canvas.find( '.selected' ).find( 'input' ).val( 'json://[' + selectedCats.join( ',' ) + ']' );
 	}
 
-	this.addCategory = function ( e )
+	this.addCategory = function ()
 	{
 		var button = this.canvas.find( '[name="addCategory"]' );
 		var error = false;
@@ -92,14 +93,19 @@ function SigsiuTreeEdit( options )
 			button.html( wait + this.addBtn );
 			return setTimeout( function ()
 			{
-				proxy.addCategory()
+				proxy.addCategory();
 			}, 3000 );
 		}
-		var selector = this;
 		if ( !( proxy.category.id ) ) {
 			SobiPro.Alert( 'PLEASE_SELECT_CATEGORY_YOU_WANT_TO_ADD_IN_THE_TREE_FIRST' );
 			error = true;
 		}
+
+		if( proxy.settings.preventParents && proxy.category.childsCount > 0 ) {
+			SobiPro.Alert( 'SELECT_CAT_WITH_NO_CHILDS' );
+			error = true;
+		}
+
 		this.canvas.find( '.selected' ).find( 'select option' ).each( function ( i, option )
 		{
 			if ( proxy.category.id == SobiPro.jQuery( option ).val() ) {
@@ -118,9 +124,9 @@ function SigsiuTreeEdit( options )
 		}
 	}
 
-	this.canvas.find( '[name="addCategory"]' ).click( function ( e )
+	this.canvas.find( '[name="addCategory"]' ).click( function ( )
 	{
-		proxy.addCategory( e );
+		proxy.addCategory();
 	} );
 
 	this.canvas.find( '[name="removeCategory"]' ).click( function ()

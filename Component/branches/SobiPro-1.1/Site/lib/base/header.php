@@ -731,7 +731,9 @@ final class SPHeader
 								}
 								$rPath = Sobi::FixPath( implode( '/', array_reverse( $tempFile ) ) );
 								if ( $c > 1 ) {
-									$realUrl = Sobi::FixPath( str_replace( '..', $rPath, $url ) );
+									//WHY?!!
+									//$realUrl = Sobi::FixPath( str_replace( '..', $rPath, $url ) );
+									$realUrl = Sobi::FixPath( $rPath . '/' . str_replace( '../', null, $url ) );
 								}
 								else {
 									$realUrl = Sobi::FixPath( $rPath . '/' . $url );
