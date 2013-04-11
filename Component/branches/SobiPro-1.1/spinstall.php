@@ -26,8 +26,8 @@ class com_sobiproInstallerScript
 	/**
 	 * Called before any type of action
 	 *
-	 * @param   string  $route  Which action is happening (install|uninstall|discover_install)
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 * @param   string $route  Which action is happening (install|uninstall|discover_install)
+	 * @param   JAdapterInstance $adapter  The object responsible for running this script
 	 *
 	 * @return  boolean  True on success
 	 */
@@ -59,27 +59,27 @@ class com_sobiproInstallerScript
 		}
 
 
-        $srcpath = JPATH_ROOT . '/media/sobipro/icons';
+		$srcpath = JPATH_ROOT . '/media/sobipro/icons';
 
-        if (file_exists ($srcpath)) {
-            $files = scandir($srcpath);
+		if ( file_exists( $srcpath ) ) {
+			$files = scandir( $srcpath );
 
-            $dest = JPATH_ROOT . '/media/sobipro/images';
-            if ( count( $files ) ) {
-                foreach ( $files as $file ) {
-                    if ( $file != '.' && $file != '..' ) {
-                        if ( is_dir( $srcpath . '/' . $file ) ) {
-                            JFolder::move( $srcpath . '/' . $file, $dest . '/' . $file );
-                        }
-                        elseif ( !( file_exists( $dest . '/' . $file ) ) ) {
-                            JFile::move( $srcpath . '/' . $file, $dest . '/' . $file );
-                        }
-                    }
-                }
-            }
-        }
+			$dest = JPATH_ROOT . '/media/sobipro/images';
+			if ( count( $files ) ) {
+				foreach ( $files as $file ) {
+					if ( $file != '.' && $file != '..' ) {
+						if ( is_dir( $srcpath . '/' . $file ) ) {
+							JFolder::move( $srcpath . '/' . $file, $dest . '/' . $file );
+						}
+						elseif ( !( file_exists( $dest . '/' . $file ) ) ) {
+							JFile::move( $srcpath . '/' . $file, $dest . '/' . $file );
+						}
+					}
+				}
+			}
+		}
 
-        $db = JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (  `cid` int(11) NOT NULL AUTO_INCREMENT,  `section` int(11) NOT NULL,  `sid` int(11) NOT NULL,  `fileName` varchar(100) NOT NULL,  `task` varchar(100) NOT NULL,  `site` int(11) NOT NULL,  `request` varchar(255) NOT NULL,  `language` varchar(15) NOT NULL,  `template` varchar(150) NOT NULL,  `configFile` text NOT NULL,  `userGroups` varchar(200) NOT NULL,  `created` datetime NOT NULL,PRIMARY KEY (`cid`),KEY `sid` (`sid`),KEY `section` (`section`),KEY `language` (`language`),KEY `task` (`task`),KEY `request` (`request`),KEY `site` (`site`),KEY `userGroups` (`userGroups`));' );
 		$db->query();
 
@@ -171,13 +171,25 @@ class com_sobiproInstallerScript
 		$db->setQuery( "CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` ( `url` varchar(255) NOT NULL,`crid` int(11) NOT NULL AUTO_INCREMENT,`state` tinyint(1) NOT NULL, PRIMARY KEY (`crid`), UNIQUE KEY `url` (`url`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;" );
 		$db->query();
 
+//		$db->setQuery( 'SELECT pid FROM `#__sobipro_permissions` WHERE subject = "section" AND  action = "search";' );
+//		$pid = $db->loadResult();
+//
+//		$db->setQuery( 'SELECT rid FROM #__sobipro_permissions_rules' );
+//		$rids = $db->loadRowList();
+//		if ( count( $rids ) ) {
+//			$insert = array();
+//			foreach ( $rids as $rid ) {
+//
+//			}
+//		}
+
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px;"></iframe>';
 	}
 
 	/**
 	 * Called on installation
 	 *
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 * @param   JAdapterInstance $adapter  The object responsible for running this script
 	 *
 	 * @return  boolean  True on success
 	 */
@@ -214,7 +226,7 @@ class com_sobiproInstallerScript
 	/**
 	 * Called on uninstallation
 	 *
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 * @param   JAdapterInstance $adapter  The object responsible for running this script
 	 */
 	public function uninstall( JAdapterInstance $adapter )
 	{

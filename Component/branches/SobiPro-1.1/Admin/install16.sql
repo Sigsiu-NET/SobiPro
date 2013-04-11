@@ -1326,6 +1326,7 @@ INSERT IGNORE INTO `#__sobipro_permissions_map` (`rid`, `sid`, `pid`) VALUES
 (1, 1, 7),
 (1, 1, 10),
 (1, 1, 16),
+(1, 1, 26),
 (2, 1, 16),
 (2, 1, 17);
 
