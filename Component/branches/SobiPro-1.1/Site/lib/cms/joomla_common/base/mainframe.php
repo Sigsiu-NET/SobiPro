@@ -104,26 +104,31 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$cfg->set( 'img_folder_path', SOBI_ROOT . '/media/sobipro' );
 
 		if ( $this->JConfigValue( 'config.ftp_enable' ) ) {
-			if ( !( file_exists( $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro' ) ) ) {
-				if ( !( @mkdir( $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro' ) ) ) {
-					JFolder::create( $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro', 0775 );
+			if ( !( file_exists( $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro' ) ) ) {
+				if ( !( @mkdir( $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro' ) ) ) {
+					JFolder::create( $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro', 0775 );
 				}
 			}
-			$cfg->set( 'temp', $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro', 'fs' );
+			$cfg->set( 'temp', $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro', 'fs' );
 		}
 		else {
-			$cfg->set( 'temp', SOBI_PATH . DS . 'tmp', 'fs' );
+			$cfg->set( 'temp', SOBI_PATH . '/tmp', 'fs' );
 		}
+
 		// try mkdir because it's always used by apache
 		if ( !( Sobi::Cfg( 'cache.store', false ) ) ) {
 			if ( $this->JConfigValue( 'config.ftp_enable' ) ) {
 				if ( !( file_exists( $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro/Cache' ) ) ) {
 					if ( !( mkdir( $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro/Cache' ) ) ) {
 						// really ;)
-						JFolder::create( $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro' . DS . 'Cache', 0775 );
+						if ( !( JFolder::create( $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro/Cache', 0775 ) ) ) {
+							SPFactory::message()
+									->setSilentSystemMessage( Sobi::e( 'CANNOT_CREATE_CACHE_DIRECTORY' ), SPC::ERROR_MSG );
+						}
+
 					}
 				}
-				$cfg->set( 'store', $this->JConfigValue( 'config.tmp_path' ) . DS . 'SobiPro' . DS . 'Cache' . DS, 'cache' );
+				$cfg->set( 'store', $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro/Cache/' );
 			}
 		}
 	}
@@ -645,7 +650,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	 */
 	public function endOut()
 	{
-		if ( ( !strlen( SPRequest::cmd( 'format' ) ) || SPRequest::cmd( 'format' ) == 'html' )  ) {
+		if ( ( !strlen( SPRequest::cmd( 'format' ) ) || SPRequest::cmd( 'format' ) == 'html' ) ) {
 			/* something like 'onDomReady' but it should be bit faster */
 			echo '<script type="text/javascript">SobiPro.Ready();</script>';
 		}

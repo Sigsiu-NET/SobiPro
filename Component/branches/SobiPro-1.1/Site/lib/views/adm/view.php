@@ -144,6 +144,7 @@ class SPAdmView extends SPObject implements SPView
 
 	protected function sections()
 	{
+		$subMenu = array();
 		try {
 			$sections = SPFactory::db()
 					->select( 'id', 'spdb_object', array( 'oType' => 'section' ), 'id' )

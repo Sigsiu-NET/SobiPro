@@ -166,6 +166,32 @@ class SPMessage
 
 	/**
 	 * @param $message
+	 * @param $type -
+	 * @param $section string
+	 * @return SPMessage
+	 */
+	public function & setSilentSystemMessage( $message, $type = SPC::NOTICE_MSG,  $section = 'configuration' )
+	{
+		$this->current = array( 'message' => $message, 'type' => $type, 'section' => array( 'id' => Sobi::Section(), 'name' => Sobi::Section( true ) ) );
+		$this->current[ 'issue-type' ] = $section;
+		$this->store[ md5( serialize( $this->current ) ) ] = $this->current;
+		if ( count( $this->store )  ) {
+			$messages = SPConfig::serialize( $this->store );
+			$store = array(
+				'params' => $messages,
+				'key' => 'queue',
+				'value' => date( DATE_RFC822 ),
+				'description' => null,
+				'options' => null
+			);
+			SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
+			SPFactory::cache()->cleanSection( -1, false );
+		}
+		return $this;
+	}
+
+	/**
+	 * @param $message
 	 * @param $spsid string
 	 * @param string $type
 	 * @return SPMessage
