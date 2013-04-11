@@ -418,6 +418,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					continue;
 				}
 				$file = Sobi::FixPath( SOBI_ROOT . "/{$file}" );
+				// should never happen but who knows ....
+				if( $file == SOBI_ROOT ) {
+					continue;
+				}
 				if ( SPFs::exists( $file ) ) {
 					SPFs::delete( $file );
 				}
