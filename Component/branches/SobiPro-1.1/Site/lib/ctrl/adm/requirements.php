@@ -437,7 +437,7 @@ class SPRequirements extends SPController
 	private function SQLite()
 	{
 		$v = false;
-		if ( function_exists( 'sqlite_open' ) ) {
+		if ( class_exists( 'SQLiteDatabase' ) ) {
 			$v = true;
 		}
 		else {
