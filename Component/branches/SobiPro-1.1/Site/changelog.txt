@@ -30,6 +30,8 @@ Legend:
 1.1.0 Beta2 ()
 -------------------
 
+   (+) Joomla! version dependency to the repository data
+
    (#) Using method_exists on a string in admin view (Issue #841)
    (#) The requestcache is overriding the global $_REQUEST (Issue #835)
    (#) XML cache file deletion of non-existent files (Issue #853)

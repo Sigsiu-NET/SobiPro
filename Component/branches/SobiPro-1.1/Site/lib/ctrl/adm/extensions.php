@@ -143,7 +143,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				} catch ( SPException $x ) {
 					SPFactory::mainframe()->cleanBuffer();
 					//echo json_encode( array( 'err' => SPLang::e( '%s Repository: %s', $x->getMessage(), $repository->get( 'id' ) ) ) );
-                    echo json_encode( array( 'err' => SPLang::e( '%s', $x->getMessage() ) ) );
+					echo json_encode( array( 'err' => SPLang::e( '%s', $x->getMessage() ) ) );
 					exit;
 				}
 				if ( is_array( $l ) ) {
@@ -475,7 +475,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$progress += ( $pstep / $steps );
 			$msg->progress( $progress, Sobi::Txt( 'EX.FETCHING_FROM_REPO_D_D', array( 'num' => ( $i + 1 ), 'from' => $cr ) ) );
 			try {
-				$l = $repository->fetchList( $repository->get( 'token' ) );
+				$ver = SPFactory::CmsHelper()->cmsVersion();
+				$l = $repository->fetchList( $repository->get( 'token' ), 'Joomla ' . $ver[ 'major' ] . '.' . $ver[ 'minor' ] );
 //				sleep( 1 );
 			} catch ( SPException $x ) {
 				$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
@@ -565,7 +566,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 						}
 					}
 					if ( $plugin[ 'type' ] == 'update' ) {
-						$compare = version_compare( $plugin[ 'version' ], implode( '.', SPFactory::CmsHelper()->myVersion() ) ) ;
+						$compare = version_compare( $plugin[ 'version' ], implode( '.', SPFactory::CmsHelper()->myVersion() ) );
 						if ( $compare <= 0 ) {
 							$plugin[ 'installed' ] = -1;
 							$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.APP_UPDATE_DISABLED' ), 'class' => 'disabled' );
@@ -941,7 +942,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					->cleanBuffer()
 					->customHeader();
 			//$response = sprintf( 'The connection could not be validated (error number %s). %s', $ssl[ 'err' ], $ssl[ 'msg' ] );
-            $response = SPLang::e( 'NOT_VALIDATED', $ssl[ 'err' ], $ssl[ 'msg' ] );
+			$response = SPLang::e( 'NOT_VALIDATED', $ssl[ 'err' ], $ssl[ 'msg' ] );
 			echo json_encode( array( 'message' => array( 'type' => SPC::ERROR_MSG, 'text' => $response ) ) );
 			exit;
 		}

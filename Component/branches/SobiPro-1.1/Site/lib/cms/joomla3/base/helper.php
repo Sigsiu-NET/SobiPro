@@ -46,7 +46,7 @@ class SPCMSHelper3 extends SPCMSHelper
 	 */
 	public static function minCmsVersion( $recommended = false )
 	{
-		return $recommended ? array( 'major' => 2, 'minor' => 5, 'build' => 0 ) : array( 'major' => 1, 'minor' => 7, 'build' => 3 );
+		return $recommended ? array( 'major' => 3, 'minor' => 0, 'build' => 0 ) : array( 'major' => 3, 'minor' => 0, 'build' => 3 );
 	}
 
 	/**
@@ -56,8 +56,8 @@ class SPCMSHelper3 extends SPCMSHelper
 	 */
 	public static function cmsVersion( $version = null )
 	{
-		if ( ( $version ) && !( in_array( $version, array( 'Joomla 1.6', 'Joomla 1.7' ) ) ) ) {
-			return 'Joomla 3.0+';
+		if ( ( $version ) ) {
+			return 'Joomla 3.0';
 		}
 		$version = new JVersion();
 		$v = explode( '.', $version->RELEASE );

@@ -52,8 +52,8 @@ class SPCMSHelper extends SPJoomlaCMSHelper
 	 */
 	public static function cmsVersion( $version = null )
 	{
-		if ( ( $version ) && !( in_array( $version, array( 'Joomla 1.6', 'Joomla 1.7' ) ) ) ) {
-			return 'Joomla 1.6+';
+		if ( ( $version ) && !( in_array( $version, array( 'Joomla 1.6', 'Joomla 1.7', 'Joomla 2.5' ) ) ) ) {
+			return 'Joomla 2.5';
 		}
 		$version = new JVersion();
 		$v = explode( '.', $version->RELEASE );
