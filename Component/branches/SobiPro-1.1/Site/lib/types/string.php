@@ -10,10 +10,12 @@
 
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
 
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
  * $Date$
  * $Revision$
@@ -74,7 +76,7 @@ class SPData_String
                 $this->string = mb_strtoupper( $this->string );
             }
             else {
-                Sobi::Error( 'String', 'String is a non-latin but we don\'t have unicode handler' );
+                Sobi::Error( 'String', 'String is a non-latin but we don\'t have unicode handler!' );
             }
         }
         return $this;
@@ -86,7 +88,7 @@ class SPData_String
             $this->string = $method( $this->string );
         }
         else {
-            Sobi::Error( 'String', "Function {$method} does not exists", SPC::WARNING );
+            Sobi::Error( 'String', "Function {$method} does not exist!", SPC::WARNING );
         }
         return $this;
     }
