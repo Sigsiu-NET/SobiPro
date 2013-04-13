@@ -308,7 +308,7 @@ abstract class SPHtml_Input
 		if ( !( is_bool( $checked ) ) ) {
 			$checked = ( ( string )$checked == ( string )$value ) ? true : false;
 		}
-		$label = $label ? self::translate( $label ) : null;
+		$label = $label !== null ? self::translate( $label ) : null;
 		$checked = $checked ? " checked=\"checked\" " : null;
 		$$name = self::cleanOpt( $name );
 		$value = self::cleanOpt( $value );
