@@ -46,7 +46,9 @@ class SpAdmToolbar
 		'acl' => 'th-list',
 		'extensions.installed' => 'magic',
 		'options' => 'eye-open',
-		'template.info' => 'picture'
+		'template.info' => 'picture',
+		'selected' => 'check',
+		'not-selected' => 'check-empty'
 	);
 	private $labels = array(
 		'apply' => 'SAVE_ONLY',
@@ -224,6 +226,7 @@ class SpAdmToolbar
 			$this->output[ ] = '</div>';
 			$this->output[ ] = '</div>';
 		}
+		/** Single std button */
 		elseif ( !( $list ) ) {
 			$this->output[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"{$this->btClass}{$class}\"{$target}{$onclick}{$title}>";
 			if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
@@ -235,6 +238,7 @@ class SpAdmToolbar
 			$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
 			$this->output[ ] = '</a>';
 		}
+		/** dropdown */
 		else {
 			if ( $button[ 'element' ] == 'nav-header' ) {
 				$this->output[ ] = '<li class="nav-header">' . $button[ 'label' ] . '</li>';
@@ -246,6 +250,15 @@ class SpAdmToolbar
 				}
 				else {
 					$icon = $button[ 'icon' ];
+				}
+				if ( isset( $button[ 'selected' ] ) ) {
+					if ( !( $button[ 'selected' ] ) ) {
+						$icon = $this->icons[ 'not-selected' ] ;
+					}
+					else {
+						$icon = $this->icons[ 'selected' ] ;
+//						$this->output[ ] = '<i class="icon-' . $this->icons[ 'selected' ] . '"></i>&nbsp;&nbsp;';
+					}
 				}
 				$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
 				$this->output[ ] = '</a></li>';
