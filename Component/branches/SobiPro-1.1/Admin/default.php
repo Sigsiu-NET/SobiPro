@@ -25,7 +25,6 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 $data = $this->getData();
-echo SPHtml_Input::radioList( 'name', array( 'on' => '1', 'off' => (string) 0 ), 'test');
 ?>
 <?php echo $this->toolbar(); ?>
 <?php $this->trigger( 'OnStart' ); ?>

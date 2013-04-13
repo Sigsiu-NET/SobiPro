@@ -197,7 +197,8 @@ class SPAdmView extends SPObject implements SPView
 						'url' => $url,
 						'label' => strlen( $language[ 'name' ] ) < $sectionLength ? $language[ 'name' ] : substr( $language[ 'name' ], 0, $sectionLength - 3 ) . ' ...',
 						'icon' => 'file',
-						'element' => 'button'
+						'element' => 'button',
+						'selected' => $language[ 'tag' ] == Sobi::Lang()
 					);
 				}
 			}
