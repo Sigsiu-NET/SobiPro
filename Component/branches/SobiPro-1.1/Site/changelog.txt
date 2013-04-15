@@ -27,23 +27,23 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.0 Beta2 ()
+1.1.0 Beta2 (15 April 2013)
 -------------------
 
    (+) Joomla! version dependency to the repository data
 
    (#) Using method_exists on a string in admin view (Issue #841)
-   (#) The requestcache is overriding the global $_REQUEST (Issue #835)
+   (#) The request cache is overriding the global $_REQUEST (Issue #835)
    (#) XML cache file deletion of non-existent files (Issue #853)
-   (#) Bug #849 - Calling non existing SEF url causes 500 internal server error
-   (#) Bug #855 - Field aliases are not lowercased
-   (#) The SobiPro.Ready JavaScript method is not being called in when format is set to 'html' (Issue #844)
-   (#) Bug #839 "Parent Category selectable" does not work for SigsiuTree method
-   (#) Bug #846 Search function access level "No Access" for public
-   (#) Bug #858 SPHtml_Input::radioList does not accept '0' as label
+   (#) Calling non existing SEF URL causes 500 internal server error (Issue #849)
+   (#) Field aliases are not lowercase (Issue #855)
+   (#) The SobiPro.Ready JavaScript method is not being called when format is set to 'html' (Issue #844)
+   (#) "Parent Category selectable" does not work for SigsiuTree method (Issue #839)
+   (#) Search function access level "No Access" for public (Issue #846)
+   (#) SPHtml_Input::radioList does not accept '0' as label (Issue #858)
 
    (-) Image field not storing temporary data any longer while using ajax uploader
-   (-) Automatic upload of files in file uploader
+   (-) Automatic upload of files with file uploader
 
 
 -------------------
