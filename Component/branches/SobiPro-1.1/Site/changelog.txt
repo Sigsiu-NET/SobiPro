@@ -27,6 +27,14 @@ Legend:
  (!) - Change
 
 -------------------
+1.1.0 Beta3? ()
+-------------------
+
+   (+)
+
+   (#) Shifted arguments in URL field for the SPRequest::word call (Issue #861)
+
+-------------------
 1.1.0 Beta2 (15 April 2013)
 -------------------
 

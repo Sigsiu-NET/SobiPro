@@ -279,7 +279,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			}
 		}
 		$data = SPRequest::raw( $this->nid . '_url', null, $request );
-		$save[ 'protocol' ] = $db->escape( SPRequest::word( $this->nid . '_protocol', $request ) );
+		$save[ 'protocol' ] = $db->escape( SPRequest::word( $this->nid . '_protocol', null, $request ) );
 		$dexs = strlen( $data );
 		$data = $db->escape( $data );
 		$data = preg_replace( '/([a-z]{1,5}\:\/\/)/i', null, $data );
