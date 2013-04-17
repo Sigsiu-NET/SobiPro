@@ -232,7 +232,7 @@ class SPJoomlaUser extends JUser
 		/* initialise */
 		$auth = false;
 		/* if not initialised */
-		if ( !count( $this->_permissions ) ) {
+		if ( !( isset( $this->_permissions[ $section ] ) ) || !count( $this->_permissions[ $section ] ) ) {
 			$this->getPermissions();
 		}
 
@@ -387,8 +387,8 @@ class SPJoomlaUser extends JUser
 
 	/**
 	 * Sets the value of a user state variable.
-	 * @param    string    $key     - The path of the state.
-	 * @param    string    $value     - The value of the variable.
+	 * @param    string $key     - The path of the state.
+	 * @param    string $value     - The value of the variable.
 	 * @return    mixed    The previous state, if one existed.
 	 */
 	public function setUserState( $key, &$value )
@@ -413,8 +413,8 @@ class SPJoomlaUser extends JUser
 
 	/**
 	 * Sets the value of a user data.
-	 * @param    string    $key     - The path of the state.
-	 * @param    string    $value     - The value of the variable.
+	 * @param    string $key     - The path of the state.
+	 * @param    string $value     - The value of the variable.
 	 * @return    mixed    The previous state, if one existed.
 	 */
 	public function setUserData( $key, &$value )

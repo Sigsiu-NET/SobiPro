@@ -236,7 +236,7 @@ abstract class Sobi
 	 * Can be also used like this:
 	 *         Sobi::Can( 'subject.action.ownership' )
 	 *         Sobi::Can( 'entry.see_unpublished.own' )
-	 *
+	 * @param $subject
 	 * @param string $action - e.g. edit
 	 * @param string $ownership - e.g. own, all or valid
 	 * @param int $section - section. If not given, the current section will be used
