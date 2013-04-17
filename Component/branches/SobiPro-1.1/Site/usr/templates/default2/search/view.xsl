@@ -48,12 +48,12 @@
                         <div class="controls">
                             <input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}" class="input-medium" id="SPSearchBox" />
                             <xsl:if test="/search/fields/top_button/label">
-                                <button type="submit" class="btn">
+                                <button type="submit" class="btn btn-success">
                                     <xsl:value-of select="/search/fields/top_button/label" />
                                 </button>
                             </xsl:if>
                             <xsl:if test="count( /search/fields/* ) &gt; 3">
-                                <button type="button" class="btn btn-info" name="SPExOptBt" id="SPExOptBt">
+                                <button type="button" class="btn" name="SPExOptBt" id="SPExOptBt">
                                     <xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )" />
                                 </button>
                             </xsl:if>
