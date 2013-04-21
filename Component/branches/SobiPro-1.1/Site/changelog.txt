@@ -33,6 +33,7 @@ Legend:
    (+)
 
    (#) Shifted arguments in URL field for the SPRequest::word call (Issue #861)
+   (#) Narrowing search down, when there was no results from previous search acts as there were no other search params
 
 -------------------
 1.1.0 Beta2 (15 April 2013)

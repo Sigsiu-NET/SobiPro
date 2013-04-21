@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -38,7 +34,7 @@ class SPTplParser
 	);
 	protected $_checkedOutIcon = 'lock';
 	static $newLine = "\n";
-	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre' );
+	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre', 'label' );
 	protected $internalAttributes = array( 'condition' );
 
 
@@ -150,7 +146,7 @@ class SPTplParser
 				if ( count( $element[ 'adds' ][ 'after' ] ) ) {
 					foreach ( $element[ 'adds' ][ 'after' ] as $o ) {
 						if ( $this->istSet( $o, 'element', 'button' ) ) {
-							$this->_out[ ] = "<button class=\"{$o['class']}\" type=\"button\">{$o['label']}</button>";
+							$this->_out[ ] = "<button class=\"{$o[ 'class' ]}\" type=\"button\">{$o[ 'label' ]}</button>";
 						}
 						else {
 							$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
@@ -314,7 +310,7 @@ class SPTplParser
 			$el .= "{$tag}=\"{$val}\" ";
 		}
 		if ( $this->istSet( $data, 'icon' ) ) {
-			$el .= "><i class=\"icon-{$data['icon']}\"></i></a>";
+			$el .= "><i class=\"icon-{$data[ 'icon' ]}\"></i></a>";
 		}
 		else {
 			$el .= ">{$data[ 'title' ]}</a>";
@@ -425,6 +421,7 @@ class SPTplParser
 
 	public function proceedCell( $cell, $span = null )
 	{
+		$span = $this->istSet( $cell[ 'attributes' ], 'element' ) ? $cell[ 'attributes' ][ 'element' ] : $span;
 		if ( $cell[ 'type' ] == 'text' ) {
 			return $this->parseElement( $cell );
 		}
@@ -452,7 +449,7 @@ class SPTplParser
 					if ( $this->istSet( $cell[ 'attributes' ], 'target' ) ) {
 						$target = "target=\"{$cell[ 'attributes' ][ 'target' ]}\" ";
 					}
-					$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class}{$target} >";
+					$this->_out[ ] = "<a href=\"{$cell[ 'link' ]}\"{$class}{$target} >";
 				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'icon' ) ) {
 					$this->_out[ ] = '<i class="icon-' . $cell[ 'attributes' ][ 'icon' ] . '"></i>';
@@ -533,7 +530,7 @@ class SPTplParser
 		}
 		elseif ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
 			$aOpen = true;
-			$this->_out[ ] = "<a href=\"{$cell['link']}\" >";
+			$this->_out[ ] = "<a href=\"{$cell[ 'link' ]}\" >";
 		}
 		$icons = array();
 		if ( isset( $cell[ 'attributes' ][ 'icons' ] ) && $cell[ 'attributes' ][ 'icons' ] ) {

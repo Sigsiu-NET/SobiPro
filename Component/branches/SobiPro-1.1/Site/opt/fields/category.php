@@ -61,6 +61,18 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 	}
 
+	public function cleanData()
+	{
+		$this->_selectedCats = $this->getRaw();
+		if ( is_string( $this->_selectedCats ) && strstr( $this->_selectedCats, '://' ) ) {
+			$this->_selectedCats = SPFactory::config()->structuralData( $this->_selectedCats );
+		}
+		else {
+			$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
+		}
+		return $this->_selectedCats;
+	}
+
 	/**
 	 * Shows the field in the edit entry or add entry form
 	 * @param bool $return return or display directly
@@ -71,7 +83,6 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-
 		$this->_selectedCats = $this->getRaw();
 		$this->loadCategories();
 		if ( !( $this->_selectedCats ) && $this->sid ) {
@@ -79,12 +90,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$this->_selectedCats = array_keys( $entry->get( 'categories' ) );
 		}
 		else {
-			if ( is_string( $this->_selectedCats ) && strstr( $this->_selectedCats, '://' ) ) {
-				$this->_selectedCats = SPFactory::config()->structuralData( $this->_selectedCats );
-			}
-			else {
-				$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
-			}
+			$this->cleanData();
 		}
 		if ( !( $this->_selectedCats ) || !( count( $this->_selectedCats ) ) ) {
 			$sid = SPRequest::sid();

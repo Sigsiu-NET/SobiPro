@@ -208,7 +208,7 @@ class SPFile
 	}
 
 	/**
-	 * Saves file as a copu
+	 * Saves file as a copy
 	 * @param string $path
 	 * @return bool
 	 */
@@ -237,7 +237,7 @@ class SPFile
 	}
 
 	/**
-	 * string $name
+	 * @param $name
 	 * @return bool
 	 */
 	public function rename( $name )

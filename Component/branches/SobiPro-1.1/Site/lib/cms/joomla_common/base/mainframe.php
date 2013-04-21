@@ -509,7 +509,11 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$sef = Sobi::Cfg( 'disable_sef_globally', false ) ? false : $sef;
 		Sobi::Trigger( 'Create', 'Url', array( &$var, $js ) );
 		if ( is_array( $var ) && !empty( $var ) ) {
-			if ( ( isset( $var[ 'sid' ] ) && !( defined( 'SOBIPRO_ADM' ) || $forceItemId ) ) || ( defined( 'SOBIPRO_ADM' ) && $sef && $live ) ) {
+			if ( isset( $var[ 'option' ] ) ) {
+				$url = str_replace( 'com_sobipro', $var[ 'option' ], $url );
+				unset( $var[ 'option' ] );
+			}
+			if ( ( isset( $var[ 'sid' ] ) && ( !defined( 'SOBIPRO_ADM' ) || $forceItemId ) ) || ( defined( 'SOBIPRO_ADM' ) && $sef && $live ) ) {
 				SPFactory::mainframe()->getItemid( $var );
 			}
 			if ( isset( $var[ 'title' ] ) ) {
@@ -564,6 +568,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				$url .= SOBI_TASK . '=';
 				$url .= $var;
 			}
+		}
+		elseif ( is_array( $var ) ) {
+
 		}
 		if ( $sef && !( $live ) ) {
 			$url = JRoute::_( $url, false );

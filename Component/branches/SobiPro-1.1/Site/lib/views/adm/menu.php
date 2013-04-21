@@ -156,7 +156,7 @@ final class SPAdmSiteMenu
 				else {
 					$url = Sobi::Url( array( 'task' => $pos ) );
 				}
-				if ( SPRequest::task() == $pos ) {
+				if ( SPRequest::task() == $pos || $this->_task == $pos ) {
 					$v .= "\n\t\t\t\t<li><a href=\"{$url}\" class=\"SPMenuActive\">{$label}</a></li>";
 				}
 				else {
