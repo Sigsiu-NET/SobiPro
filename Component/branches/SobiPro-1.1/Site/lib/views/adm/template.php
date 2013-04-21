@@ -70,6 +70,9 @@ class SPAdmTemplateView extends SPAdmView
 			case 'xml':
 				$jsFiles[] = 'codemirror.mode.xml.xml';
 				break;
+			case 'less':
+				$jsFiles[] = 'codemirror.mode.less.less';
+				break;
 			case 'css':
 				$jsFiles[] = 'codemirror.mode.css.css';
 				break;

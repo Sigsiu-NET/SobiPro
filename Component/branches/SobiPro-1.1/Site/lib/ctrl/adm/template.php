@@ -344,7 +344,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$ext = SPFs::getExt( $file );
 		$fileContent = SPFs::read( $file );
 		if ( strstr( $file, SOBI_PATH ) ) {
-			$filename = str_replace( SOBI_PATH . DS . 'usr' . DS . 'templates' . DS, null, $file );
+			$filename = str_replace( SOBI_PATH .  '/usr/templates/', null, $file );
 		}
 		else {
 			$filename = str_replace( SOBI_ROOT, null, $file );
