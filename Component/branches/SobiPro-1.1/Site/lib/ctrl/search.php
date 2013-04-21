@@ -64,6 +64,10 @@ final class SPSearchCtrl extends SPSectionCtrl
 	 * @var SPDb
 	 */
 	protected $_db = array();
+	/**
+	 * @var bool
+	 */
+	protected $_narrowing = true;
 
 	public function __construct()
 	{
@@ -196,6 +200,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 		/* if we have a string to search */
 		if ( strlen( $this->_request[ 'search_for' ] ) && $this->_request[ 'search_for' ] != Sobi::Txt( 'SH.SEARCH_FOR_BOX' ) ) {
 			$searchForString = true;
+			$this->_narrowing = true;
 			switch ( $this->_request[ 'phrase' ] ) {
 				case 'exact':
 					$this->searchPhrase();
@@ -215,6 +220,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 			$results = null;
 			foreach ( $this->_fields as $field ) {
 				if ( isset( $this->_request[ $field->get( 'nid' ) ] ) && ( $this->_request[ $field->get( 'nid' ) ] != null ) ) {
+					$this->_narrowing = true;
 					$fr = $field->searchData( $this->_request[ $field->get( 'nid' ) ], Sobi::Section() );
 					$priority = $field->get( 'priority' );
 					if ( is_array( $fr ) ) {
@@ -246,10 +252,15 @@ final class SPSearchCtrl extends SPSectionCtrl
 		$this->verify();
 		/** @since 1.1 - a method to narrow the search results down */
 		if ( count( $this->_fields ) ) {
-			foreach ( $this->_fields as &$field ) {
-				$request = isset( $this->_request[ $field->get( 'nid' ) ] ) ? $this->_request[ $field->get( 'nid' ) ] : null;
-				if ( $request ) {
-					$field->searchNarrowResults( $request, $this->_results, $this->_resultsByPriority );
+			// If we have any results already - the we are limiting results down
+			// if we don't have results but we were already searching then skip - because there is nothing to narrow down
+			// if we don't have results but we weren't searching for anything else - then we are narrowing down everything
+			if ( count( $this->_results ) || !( $this->_narrowing ) ) {
+				foreach ( $this->_fields as &$field ) {
+					$request = isset( $this->_request[ $field->get( 'nid' ) ] ) ? $this->_request[ $field->get( 'nid' ) ] : null;
+					if ( $request ) {
+						$field->searchNarrowResults( $request, $this->_results, $this->_resultsByPriority );
+					}
 				}
 			}
 		}

@@ -899,7 +899,10 @@ class SPAdmView extends SPObject implements SPView
 			$url[ $param->attributes->getNamedItem( 'name' )->nodeValue ] = $this->xmlParams( $param, $subject, $index );
 		}
 		if ( $node->attributes->getNamedItem( 'type' ) && $node->attributes->getNamedItem( 'type' )->nodeValue == 'intern' ) {
-			$link = Sobi::Url( $url );
+			$js = $node->attributes->getNamedItem( 'js' ) ? $node->attributes->getNamedItem( 'js' )->nodeValue == 'true' : false;
+			$sef = $itemId = $node->attributes->getNamedItem( 'sef' ) ? $node->attributes->getNamedItem( 'sef' )->nodeValue == 'true' : true;
+			$live = $node->attributes->getNamedItem( 'live' ) ? $node->attributes->getNamedItem( 'live' )->nodeValue == 'true' : false;
+			$link = SPFactory::mainframe()->url( $url, $js, $sef, $live, $itemId );
 		}
 		else {
 			$link = $node->attributes->getNamedItem( 'host' )->nodeValue;
