@@ -63,7 +63,7 @@
 }
 
 .sigsiuTree .clip {
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 
 div.sigsiuTree a,.sigsiuTree a,a.treeNode:hover,a.treeNode,a.treeNode:visited
