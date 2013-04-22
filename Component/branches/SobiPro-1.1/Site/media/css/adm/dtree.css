@@ -9,6 +9,8 @@
 	font-size: 13px;
 	color: #666;
 	white-space: nowrap;
+	overflow: auto;
+	max-height: 650px;
 }
 .dtree img {
 	border: 0px;
@@ -29,5 +31,5 @@
 	background-color: #c0d2ec;
 }
 .dtree .clip {
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
