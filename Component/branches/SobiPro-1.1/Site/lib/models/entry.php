@@ -121,7 +121,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				}
 			}
 			$this->primary =& $this->parent;
-			$this->url = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->get( 'nid' ) : $this->get( 'name' ), 'pid' => $this->get( 'primary' ), 'sid' => $this->id ) );
+			$this->url = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->get( 'nid' ) : $this->get( 'name' ), 'pid' => $this->get( 'primary' ), 'sid' => $this->id ), false, true, true, true );
 			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fieldsIds, &$this->fieldsNids ) );
 		}
 		if ( !( strlen( $this->name ) ) ) {
