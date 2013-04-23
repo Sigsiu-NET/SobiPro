@@ -38,11 +38,12 @@ abstract class Sobi
 	 * @param bool $js
 	 * @param bool $sef
 	 * @param bool $live
+	 * @param bool $forceItemId
 	 * @return string
 	 */
-	public static function Url( $var = null, $js = false, $sef = true, $live = false )
+	public static function Url( $var = null, $js = false, $sef = true, $live = false, $forceItemId = false )
 	{
-		return SPFactory::mainframe()->url( $var, $js, $sef, $live );
+		return SPFactory::mainframe()->url( $var, $js, $sef, $live, $forceItemId );
 	}
 
 	/**
@@ -472,7 +473,7 @@ abstract class Sobi
 		defined( 'SOBI_MEDIA' ) || define( 'SOBI_MEDIA', implode( DS, array( $root, 'media', 'sobipro' ) ) );
 		defined( 'SOBI_PATH' ) || define( 'SOBI_PATH', SOBI_ROOT . DS . 'components' . DS . 'com_sobipro' );
 		defined( 'SOBI_LIVE_PATH' ) || define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );
-		require_once ( SOBI_PATH . DS . 'lib' . DS . 'base' . DS . 'fs' . DS . 'loader.php' );
+		require_once( SOBI_PATH . DS . 'lib' . DS . 'base' . DS . 'fs' . DS . 'loader.php' );
 		SPLoader::loadController( 'sobipro' );
 		SPLoader::loadController( 'interface' );
 		SPLoader::loadClass( 'base.exception' );
