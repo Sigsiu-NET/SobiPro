@@ -478,15 +478,18 @@ class SPAdmView extends SPObject implements SPView
 			if ( $attributes->length ) {
 				/** @var DOMElement $attribute */
 				foreach ( $attributes as $attribute ) {
-					if ( $attribute->nodeName == 'label' ) {
-						$element[ 'attributes' ][ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
-						$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
-					}
-					if ( $attribute->nodeName == 'class' ) {
-						$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
-					}
-					else {
-						$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $attribute->nodeValue );
+					switch ( $attribute->nodeName ) {
+						case 'label':
+							$element[ 'attributes' ][ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+							$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
+							break;
+						case 'class':
+						case 'rel' :
+							$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+							break;
+						default:
+							$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $attribute->nodeValue );
+							break;
 					}
 				}
 			}
@@ -808,6 +811,7 @@ class SPAdmView extends SPObject implements SPView
 			'content' => null,
 			'attributes' => null,
 		);
+		@$type = $cell->attributes->getNamedItem( 'type' )->nodeValue;
 		$this->cellAttributes( $cell, $element, $subject, $i );
 		if ( $cell->nodeName == 'cells' ) {
 			$customCells = $this->get( $subject . '.' . $cell->attributes->getNamedItem( 'value' )->nodeValue, $i );
@@ -871,6 +875,9 @@ class SPAdmView extends SPObject implements SPView
 			switch ( $attribute->nodeName ) {
 				case 'label':
 					$element[ 'label' ] = Sobi::Txt( $attribute->nodeValue );
+					break;
+				case 'rel':
+					$element[ 'label' ] = $attribute->nodeValue;
 					break;
 				case 'value':
 					$element[ 'content' ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
