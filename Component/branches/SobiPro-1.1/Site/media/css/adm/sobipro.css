@@ -167,6 +167,10 @@ input[type='radio'] {
   text-align: center;
   vertical-align: middle;
 }
+.SobiPro .table th.SpCellMiddle,
+.SobiPro .table td.SpCellMiddle {
+  vertical-align: middle;
+}
 .SobiPro .table th.SpCellCenterSmall,
 .SobiPro .table td.SpCellCenterSmall {
   text-align: center;
@@ -461,7 +465,7 @@ fieldset label {
   color: #333333;
   font-size: 110%;
 }
-.SobiPro .SpCellArrow .icon-chevron-down,
+.SobiPro .SpCellArrow .icon-chevron-down,78
 .SobiPro .SpCellArrow .icon-chevron-up {
   color: #6f6f6f;
 }
