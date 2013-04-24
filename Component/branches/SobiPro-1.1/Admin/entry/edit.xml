@@ -103,8 +103,8 @@
 											</url>
 										</value>
 									</field>
-									<field type="dateGetter" label="MODIFIED_AT" name="entry.updatedTime" value="entry.updatedTime" class="infoText" />
-									<field type="userGetter" label="MODIFIED_BY" name="entry.updater" value="entry.updater" class="infoText" format="%name (%id)" />
+									<field type="dateGetter" label="MODIFIED_AT" name="entry.updatedTime" value="entry.updatedTime" dateFormat="d-m-Y H:i:s" class="infoText" />
+									<field type="userGetter" label="MODIFIED_BY" name="entry.updater" value="entry.updater" dateFormat="d-m-Y H:i:s" class="infoText" format="%name (%id)" />
 									<field type="output" label="MODIFIED_BY_IP" name="entry.updaterIP" class="infoText">
 										<value>
 											<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="entry.updaterIP" target="_blank">
