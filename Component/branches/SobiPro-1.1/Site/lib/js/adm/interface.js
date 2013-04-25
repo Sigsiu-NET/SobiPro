@@ -62,9 +62,10 @@ SobiPro.jQuery( document ).ready( function ()
 						}
 					} );
 					if ( counter > 0 ) {
-						var modal = '<div class="modal hide"><div class="modal-body">' + output.join( "\n" ) + '</div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>'
+						var modal = '<div class="modal hide" id="SpModalMsg"><div class="modal-body">' + output.join( "\n" ) + '</div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>'
 						SobiPro.jQuery( modal ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
-						var modalMessage = SobiPro.jQuery( modal ).modal();
+//						SobiPro.jQuery( '#SobiPro' ).append( SobiPro.jQuery( modal ) );
+						var modalMessage = SobiPro.jQuery( '#SpModalMsg' ).modal()
 						modalMessage.on( 'hidden', function ()
 						{
 							proxy.refresh( url );
