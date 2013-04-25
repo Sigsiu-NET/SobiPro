@@ -61,7 +61,7 @@ class SPConfigAdmCtrl extends SPController
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
-				if ( !( parent::execute() ) && !( $this->view() ) ) {
+				if (  !( $this->view() ) && !( parent::execute() )  ) {
 					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}
 				else {
@@ -179,6 +179,7 @@ class SPConfigAdmCtrl extends SPController
 			$view->assign( $alphaFields, 'alphaMenuFields' );
 			$view->assign( $view->languages(), 'languages-list' );
 		}
+		$cfg = SPFactory::config();
 		$view->addHidden( $IP, 'current-ip' );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
 		$view->determineTemplate( 'config', $this->_task );
@@ -460,13 +461,14 @@ class SPConfigAdmCtrl extends SPController
 		$section = false;
 		$data = SPRequest::arr( 'spcfg', array() );
 		// strange thing =8-O
-		if ( !( isset( $data[ 'alphamenu_extra_fields_array' ] ) ) ) {
-			$data[ 'alphamenu_extra_fields_array' ] = array();
+		if ( !( isset( $data[ 'alphamenu.extra_fields_array' ] ) ) ) {
+			$data[ 'alphamenu.extra_fields_array' ] = array();
 		}
 		foreach ( $data as $k => $v ) {
 			if ( is_string( $v ) ) {
 				$v = htmlspecialchars_decode( $v );
 			}
+//			$k = str_replace( array( 'spcfg_', '.' ), array( null, '_' ), $k );
 			$k = str_replace( 'spcfg_', null, $k );
 			$s = explode( '.', $k );
 			$s = $s[ 0 ];
@@ -488,7 +490,7 @@ class SPConfigAdmCtrl extends SPController
 			foreach ( $fields as $sec => $keys ) {
 				if ( count( $keys ) ) {
 					foreach ( $keys as $k => $v ) {
-						$values[ ] = array( 'sKey' => $k, 'sValue' => $v, 'section' => Sobi::Reg( 'current_section', 0 ), 'critical' => 0, 'cSection' => $sec );
+						$values[ ] = array( 'sKey' => $k, 'sValue' => $v, 'section' => Sobi::Section(), 'critical' => 0, 'cSection' => $sec );
 					}
 				}
 			}

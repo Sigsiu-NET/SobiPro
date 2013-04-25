@@ -323,9 +323,10 @@ class SPConfigAdmView extends SPAdmView implements SPView
 		}
 		else {
 			$attr = $config->key( $attr );
-			if ( is_array( $attr ) ) {
-				$attr = implode( ',', $attr );
-			}
+			// WHY?! For gods' sake - write comments to your code you fraking idiot!!!!
+//			if ( is_array( $attr ) ) {
+//				$attr = implode( ',', $attr );
+//			}
 			return $attr;
 		}
 	}
