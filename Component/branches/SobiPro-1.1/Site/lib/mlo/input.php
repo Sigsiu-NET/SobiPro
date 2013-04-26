@@ -261,7 +261,7 @@ abstract class SPHtml_Input
 	 * @param string $image - url of an image
 	 * @return string
 	 */
-	public static function textarea( $name, $value = null, $editor = false, $width = 550, $height = 350, $params = '' )
+	public static function textarea( $name, $value = null, $editor = false, $width = 500, $height = 350, $params = '' )
 	{
 		self::checkArray( $params );
 		if ( !isset( $params[ 'style' ] ) ) {

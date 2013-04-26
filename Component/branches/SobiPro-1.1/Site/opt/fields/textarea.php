@@ -38,7 +38,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * @var int
 	 */
-	protected $width = 550;
+	protected $width = 500;
 	/**
 	 * @var int
 	 */
