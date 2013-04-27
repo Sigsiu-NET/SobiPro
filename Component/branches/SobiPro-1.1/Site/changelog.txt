@@ -27,16 +27,19 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.0 Beta3? ()
+1.1.0 Beta3 ()
 -------------------
 
    (+) Codemirror - added support for less
+
+   (!) Default textarea width reduced
 
    (#) Shifted arguments in URL field for the SPRequest::word call (Issue #861)
    (#) Narrowing search down, when there was no results from previous search acts as there were no other search params
    (#) Scroll bar for template tree added and overflow hidden removed (Issue )
    (#) Overflow hidden removed for SigsiuTree (Issue )
    (#) Some XML attributes in administrator templates are being translated by default (Issue #865)
+   (#) Joomla! icon font was overwritten in frontend (J!3 only)
 
 -------------------
 1.1.0 Beta2 (15 April 2013)
