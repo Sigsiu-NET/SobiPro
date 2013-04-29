@@ -721,7 +721,7 @@ final class SPHeader
 								if ( preg_match( '|http(s)?://|', $url ) || preg_match( '|url\(["\s]*/|', $url ) ) {
 									continue;
 								}
-								elseif( strpos( $url, '/' ) === 0 ) {
+								elseif ( strpos( $url, '/' ) === 0 ) {
 									continue;
 								}
 								$c = preg_match_all( '|\.\./|', $url, $c ) + 1;

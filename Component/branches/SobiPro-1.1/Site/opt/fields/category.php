@@ -526,7 +526,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$cats = array_unique( array_merge( $cats, $data ) );
 		SPFactory::registry()->set( 'request_categories', $cats );
 		if ( $this->method == 'select' && $this->isPrimary ) {
-			$entry->set( $data[ 0 ], 'parent' );
+			$db->update( 'spdb_object', array( 'parent' => $data[ 0 ] ), array( 'id' => $params[ 'sid' ] ) );
 		}
 	}
 

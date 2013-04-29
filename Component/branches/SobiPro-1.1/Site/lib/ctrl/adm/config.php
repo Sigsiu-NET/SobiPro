@@ -61,7 +61,7 @@ class SPConfigAdmCtrl extends SPController
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
-				if (  !( $this->view() ) && !( parent::execute() )  ) {
+				if ( !( parent::execute() ) && !( $this->view() ) ) {
 					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}
 				else {
@@ -76,7 +76,7 @@ class SPConfigAdmCtrl extends SPController
 	 */
 	protected function crawler()
 	{
-		/** @var $view SPAdmView  */
+		/** @var $view SPAdmView */
 		$view = $this->getView( 'config.' . $this->_task );
 		$view->setCtrl( $this );
 		$view->determineTemplate( 'config', $this->_task );
@@ -149,7 +149,7 @@ class SPConfigAdmCtrl extends SPController
 	protected function view()
 	{
 		Sobi::ReturnPoint();
-		/** @var $view SPAdmView  */
+		/** @var $view SPAdmView */
 		$view = $this->getView( 'config.' . $this->_task );
 		$view->setCtrl( $this );
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
