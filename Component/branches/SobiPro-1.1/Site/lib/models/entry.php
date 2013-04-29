@@ -38,7 +38,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		'introtext' => 'string',
 		'showIntrotext' => 'int',
 		'parseDesc' => 'int',
-		'position' => 'int'
+		'position' => 'int',
 	);
 	/**
 	 * @var

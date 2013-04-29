@@ -144,6 +144,15 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 			$document->addCustomTag( "\n\t<script type=\"text/javascript\" src=\"" . str_replace( '&', '&amp;', $jsUrl ) . "\"></script>\n" );
 			$c++;
 			$document->addCustomTag( "\n\t<!--  SobiPro ({$c}) Head Tags Output -->\n" );
+			// we would like to set our own canonical please :P
+			// https://groups.google.com/forum/?fromgroups=#!topic/joomla-dev-cms/sF3-JBQspQU
+			if ( count( $document->_links ) ) {
+				foreach ( $document->_links as $index => $link ) {
+					if ( $link[ 'relation' ] == 'canonical' ) {
+						unset( $document->_links[ $index ] );
+					}
+				}
+			}
 		}
 	}
 

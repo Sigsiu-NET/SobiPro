@@ -402,7 +402,6 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			foreach ( $head as $type => $code ) {
 				switch ( $type ) {
 					default:
-						{
 						if ( count( $code ) ) {
 							foreach ( $code as $html ) {
 								++$c;
@@ -410,15 +409,12 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 							}
 						}
 						break;
-						}
 					case 'robots' :
 					case 'author':
-					{
 						if ( !( defined( 'SOBI_ADM_PATH' ) ) ) {
 							$document->setMetadata( $type, implode( ', ', $code ) );
 						}
 						break;
-					}
 					case 'keywords':
 						if ( !( defined( 'SOBI_ADM_PATH' ) ) ) {
 							$metaKeys = trim( implode( ', ', $code ) );
@@ -444,7 +440,6 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 						}
 						break;
 					case 'description':
-					{
 						$metaDesc = implode( Sobi::Cfg( 'string.meta_desc_separator', ' ' ), $code );
 						if ( strlen( $metaDesc ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
 							if ( Sobi::Cfg( 'meta.desc_append', true ) ) {
@@ -468,7 +463,6 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 							$document->setDescription( $metaDesc );
 						}
 						break;
-					}
 				}
 			}
 			$jsUrl = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . ( defined( 'SOBI_ADM_FOLDER' ) ? SOBI_ADM_FOLDER . '/' : '' ) . self::Url( array( 'task' => 'txt.js', 'format' => 'json' ), true, false ) );
