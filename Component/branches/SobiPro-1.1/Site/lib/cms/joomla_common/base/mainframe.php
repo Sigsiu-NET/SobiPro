@@ -374,10 +374,10 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			$this->addToPathway( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
 			$title[ ] = $obj->get( 'name' );
 		}
-		if ( count( $site ) && $site[ 0 ] ) {
-			$title[ ] = Sobi::Txt( 'SITES_COUNTER', $site[ 1 ], $site[ 0 ] );
-		}
-		SPFactory::header()->addTitle( $title );
+//		if ( count( $site ) && $site[ 0 ] ) {
+//			$title[ ] = Sobi::Txt( 'SITES_COUNTER', $site[ 1 ], $site[ 0 ] );
+//		}
+		SPFactory::header()->addTitle( $title, $site );
 		return $this;
 	}
 

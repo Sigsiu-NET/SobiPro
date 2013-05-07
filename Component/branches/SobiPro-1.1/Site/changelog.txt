@@ -34,6 +34,7 @@ Legend:
 
    (!) Default textarea width reduced
    (!) Removing Joomla! 3.1 canonical (a bit dirty solution)
+   (!) Removing site counter from browser title when there is no more than one page (Issue #877)
 
    (#) Shifted arguments in URL field for the SPRequest::word call (Issue #861)
    (#) Narrowing search down, when there was no results from previous search acts as there were no other search params
