@@ -254,6 +254,7 @@ final class SPHeader
 						return $this;
 					}
 					if ( $script == 'bootstrap' ) {
+						JHtml::_( 'bootstrap.framework' );
 						return $this;
 					}
 				}
