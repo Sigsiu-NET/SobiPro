@@ -43,6 +43,7 @@ Legend:
    (#) Some XML attributes in administrator templates are being translated by default (Issue #865)
    (#) Joomla! icon font was overwritten in frontend (J!3 only)
    (#) Loading bootstrap in Joomla! 3.x if template haven't (Issue #880)
+   (#) Visits counter fixed (Issue #875)
 
 
 -------------------

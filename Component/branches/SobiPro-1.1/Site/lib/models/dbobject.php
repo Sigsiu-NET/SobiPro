@@ -483,7 +483,7 @@ abstract class SPDBObject extends SPObject
 		Sobi::Trigger( 'CountVisit', ucfirst( $this->type() ), array( &$count, $this->id ) );
 		if ( $this->id && $count ) {
 			try {
-				SPFactory::db()->insertUpdate( 'spdb_counter', array( 'sid' => $this->id, 'counter' => ( $reset ? '0' : $this->counter++ ), 'lastUpdate' => 'FUNCTION:NOW()' ) );
+				SPFactory::db()->insertUpdate( 'spdb_counter', array( 'sid' => $this->id, 'counter' => ( $reset ? '0' : ++$this->counter ), 'lastUpdate' => 'FUNCTION:NOW()' ) );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_INC_COUNTER_DB', $x->getMessage() ), SPC::ERROR, 0, __LINE__, __FILE__ );
 			}
