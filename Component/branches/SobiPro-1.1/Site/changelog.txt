@@ -44,6 +44,7 @@ Legend:
    (#) Joomla! icon font was overwritten in frontend (J!3 only)
    (#) Loading bootstrap in Joomla! 3.x if template haven't (Issue #880)
    (#) Visits counter fixed (Issue #875)
+   (#) Wrong path replacement for category chooser (Issue #873)
 
 
 -------------------
