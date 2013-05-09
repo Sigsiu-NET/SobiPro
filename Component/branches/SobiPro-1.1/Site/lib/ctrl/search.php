@@ -26,7 +26,7 @@ SPLoader::loadController( 'section' );
  * @version 1.0
  * @created 29-March-2010 13:08:21
  */
-final class SPSearchCtrl extends SPSectionCtrl
+class SPSearchCtrl extends SPSectionCtrl
 {
 	/**
 	 * @var string
@@ -119,9 +119,13 @@ final class SPSearchCtrl extends SPSectionCtrl
 		return $r;
 	}
 
-	private function suggest()
+	protected function suggest()
 	{
 		$this->_request[ 'search_for' ] = str_replace( '*', '%', SPRequest::string( 'term', null ) );
+		$fieldNid = SPRequest::string( 'fid', null );
+		if ( strlen( $fieldNid ) ) {
+			$fieldNids = SPFactory::config()->structuralData( $fieldNid, true );
+		}
 		$results = array();
 		if ( strlen( $this->_request[ 'search_for' ] ) >= Sobi::Cfg( 'search.suggest_min_chars', 1 ) ) {
 			Sobi::Trigger( 'OnSuggest', 'Search', array( &$this->_request[ 'search_for' ] ) );
@@ -129,9 +133,14 @@ final class SPSearchCtrl extends SPSectionCtrl
 			$search = str_replace( '.', '\.', $this->_request[ 'search_for' ] );
 			if ( count( $this->_fields ) ) {
 				foreach ( $this->_fields as $field ) {
-					$fr = $field->searchSuggest( $search, Sobi::Section(), Sobi::Cfg( 'search.suggest_start_with', true ) );
-					if ( is_array( $fr ) && count( $fr ) ) {
-						$results = array_merge( $results, $fr );
+					if ( count( $fieldNids ) && !( in_array( $field->get( 'nid' ), $fieldNids ) ) ) {
+						continue;
+					}
+					else {
+						$fr = $field->searchSuggest( $search, Sobi::Section(), Sobi::Cfg( 'search.suggest_start_with', true ) );
+						if ( is_array( $fr ) && count( $fr ) ) {
+							$results = array_merge( $results, $fr );
+						}
 					}
 				}
 			}
@@ -156,12 +165,12 @@ final class SPSearchCtrl extends SPSectionCtrl
 		exit();
 	}
 
-	private function sortByLen( $from, $to )
+	protected function sortByLen( $from, $to )
 	{
 		return strlen( $to ) - strlen( $from );
 	}
 
-	private function search()
+	protected function search()
 	{
 		$this->_request = SPRequest::search( 'field_' );
 		$this->_request[ 'search_for' ] = str_replace( '*', '%', SPRequest::string( 'sp_search_for', null ) );
@@ -371,14 +380,14 @@ final class SPSearchCtrl extends SPSectionCtrl
 		}
 	}
 
-	private function searchPhrase()
+	protected function searchPhrase()
 	{
 		/* @TODO categories */
 		$search = str_replace( '.', '\.', $this->_request[ 'search_for' ] );
 		$this->_results = $this->travelFields( "REGEXP:[[:<:]]{$search}[[:>:]]", true );
 	}
 
-	private function searchWords( $all )
+	protected function searchWords( $all )
 	{
 		/* @TODO categories */
 		$matches = array();
@@ -415,7 +424,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 		}
 	}
 
-	private function travelFields( $word, $regex = false )
+	protected function travelFields( $word, $regex = false )
 	{
 		$results = array();
 		if ( count( $this->_fields ) ) {
@@ -431,12 +440,12 @@ final class SPSearchCtrl extends SPSectionCtrl
 		return $results;
 	}
 
-	private function sortByPrio( $obj, $to )
+	protected function sortByPrio( $obj, $to )
 	{
 		return ( $obj->get( 'priority' ) == $to->get( 'priority' ) ) ? 0 : ( ( $obj->get( 'priority' ) < $to->get( 'priority' ) ) ? -1 : 1 );
 	}
 
-	private function form()
+	protected function form()
 	{
 		$ssid = 0;
 		/* determine template package */
@@ -518,7 +527,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 		$view->display();
 	}
 
-	private function getResults( $ssid, $template )
+	protected function getResults( $ssid, $template )
 	{
 		$results = array();
 		/* case some plugin overwrites this method */
@@ -561,7 +570,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 		return $results;
 	}
 
-	private function session( &$ssid )
+	protected function session( &$ssid )
 	{
 		/* if it wasn't new search */
 		$ssid = SPRequest::cmd( 'ssid', SPRequest::cmd( 'ssid', null, 'cookie' ) );
@@ -598,7 +607,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 		return SPCookie::set( 'ssid', $ssid, SPCookie::days( 7 ) );
 	}
 
-	private function loadFields()
+	protected function loadFields()
 	{
 		$fields = null;
 		$fmod = SPLoader::loadModel( 'field' );
@@ -620,7 +629,7 @@ final class SPSearchCtrl extends SPSectionCtrl
 				$fields[ $i ] = $field;
 			}
 		}
-		Sobi::Trigger( 'LoadField', 'Search', array( &$fields ) );
+		Sobi::Trigger( 'LoadFields', 'Search', array( &$fields ) );
 		return $fields;
 	}
 }
