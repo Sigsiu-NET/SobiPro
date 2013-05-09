@@ -27,23 +27,23 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.0 Beta3 ()
+1.1.0 Beta3 (10 May 2013)
 -------------------
 
-   (+) Codemirror - added support for less
-   (+) Extended the search.suggest task with a possibility to select a particular field for the search
+   (+) Added support for less in Codemirror
+   (+) Extended the search.suggest task with the possibility to select a particular field for the search
 
    (!) Default textarea width reduced
-   (!) Removing Joomla! 3.1 canonical (a bit dirty solution)
-   (!) Removing site counter from browser title when there is no more than one page (Issue #877)
+   (!) Removed Joomla! 3.1 canonical URL (a bit dirty solution)
+   (!) Removed site counter from browser's title when there is only one page (Issue #877)
 
-   (#) Shifted arguments in URL field for the SPRequest::word call (Issue #861)
-   (#) Narrowing search down, when there was no results from previous search acts as there were no other search params
-   (#) Scroll bar for template tree added and overflow hidden removed (Issue )
-   (#) Overflow hidden removed for SigsiuTree (Issue )
+   (#) Shifted arguments in URL field for SPRequest::word call (Issue #861)
+   (#) While narrowing search down and if the previous search has no results, the search behaves as if there were no search params (to get a category search only)
+   (#) Scroll bar for template tree added and overflow hidden removed (Issue #867)
+   (#) Overflow hidden removed for SigsiuTree (Issue #868)
    (#) Some XML attributes in administrator templates are being translated by default (Issue #865)
    (#) Joomla! icon font was overwritten in frontend (J!3 only)
-   (#) Loading bootstrap in Joomla! 3.x if template haven't (Issue #880)
+   (#) Loading bootstrap in Joomla! 3.x if template hasn't (Issue #880)
    (#) Visits counter fixed (Issue #875)
    (#) Wrong path replacement for category chooser (Issue #873)
 
