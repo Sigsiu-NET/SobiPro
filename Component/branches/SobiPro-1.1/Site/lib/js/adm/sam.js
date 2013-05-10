@@ -113,7 +113,7 @@ SobiPro.jQuery().ready( function ()
 				}
 				else {
 					if ( data.redirect ) {
-						SobiPro.Alert( data.message.response.replace( /<br\s*[\/]?>/gi, "\n" ) );
+						alert( data.message.response.replace( /<br\s*[\/]?>/gi, "\n" ) );
 						window.location.reload();
 					}
 				}

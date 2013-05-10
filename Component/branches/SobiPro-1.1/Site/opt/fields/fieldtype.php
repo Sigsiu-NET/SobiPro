@@ -345,12 +345,7 @@ class SPFieldType extends SPObject
 
 	protected function checkCopy()
 	{
-		return (
-				in_array( SPRequest::task(), array( 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit' ) ) ||
-						( Sobi::Can( 'entry.access.unapproved_any' ) ) ||
-						//( $entry->get( 'owner' ) == Sobi::My( 'id' ) && Sobi::Can( 'entry.manage.own' ) ) ||
-						Sobi::Can( 'entry.manage.*' )
-		);
+		return ( in_array( SPRequest::task(), array( 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit' ) ) || ( Sobi::Can( 'entry.access.unapproved_any' ) ) || Sobi::Can( 'entry.manage.*' ) );
 	}
 
 	protected function parseOptsFile( $file )

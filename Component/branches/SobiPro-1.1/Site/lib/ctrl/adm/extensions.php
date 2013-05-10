@@ -853,7 +853,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				return $this->ajaxResponse( true, $x->getMessage(), false, SPC::ERROR_MSG );
 			}
 
-			$path = $dir . DS . 'repository.xml';
+			$path = $dir . '/repository.xml';
 			$file = SPFactory::Instance( 'base.fs.file', $path );
 			$def = SPFactory::Instance( 'types.array' );
 			$file->content( $def->toXML( $repoDef, 'repository' ) );

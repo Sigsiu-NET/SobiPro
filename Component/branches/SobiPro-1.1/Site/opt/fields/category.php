@@ -403,11 +403,11 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 		$dexs = count( $data );
 		/* check if it was required */
-		if ( $this->required && !( $dexs ) ) {
+		if ( $this->required && !( $dexs ) && $this->method != 'fixed' ) {
 			throw new SPException( SPLang::e( 'FIELD_REQUIRED_ERR', $this->name ) );
 		}
 		/* check if there was an adminField */
-		if ( $this->adminField && $dexs ) {
+		if ( $this->adminField && $dexs && $this->method != 'fixed' ) {
 			if ( !( Sobi:: Can( 'entry.adm_fields.edit' ) ) ) {
 				throw new SPException( SPLang::e( 'FIELD_NOT_AUTH', $this->name ) );
 			}
