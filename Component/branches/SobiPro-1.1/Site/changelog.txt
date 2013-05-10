@@ -32,6 +32,7 @@ Legend:
 
    (+) Added support for less in Codemirror
    (+) Extended the search.suggest task with the possibility to select a particular field for the search
+   (+) Added message with reserved words to fields defining ini-file format lists
 
    (!) Default textarea width reduced
    (!) Removed Joomla! 3.1 canonical URL (a bit dirty solution)
