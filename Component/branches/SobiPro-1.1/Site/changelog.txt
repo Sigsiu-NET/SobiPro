@@ -36,6 +36,7 @@ Legend:
    (!) Default textarea width reduced
    (!) Removed Joomla! 3.1 canonical URL (a bit dirty solution)
    (!) Removed site counter from browser's title when there is only one page (Issue #877)
+   (!) Category field of method 'fixed choice' cannot be set to required
 
    (#) Shifted arguments in URL field for SPRequest::word call (Issue #861)
    (#) While narrowing search down and if the previous search has no results, the search behaves as if there were no search params (to get a category search only)
