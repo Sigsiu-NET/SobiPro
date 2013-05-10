@@ -60,6 +60,7 @@
 									<field type="text" name="field.defSel" value="field.defSel" label="FMN.RADIO.DEFSEL" class="input-medium" />
 									<field type="fileUpload" name="spfieldsopts" label="FM.UPLOAD_OPT_FILE" />
 									<!-- Upload INI File -->
+                                    <message label="FM.INI_WARNING" type="error" dismiss-button="false" class="spConfigAlert" />
 									<field type="textarea" name="field.options" value="options" label="FMN.OPTIONS" editor="false" class="input-splarge" rows="20" style="" />
 									<!-- List Options -->
 								</fieldset>
