@@ -147,7 +147,8 @@ class SPCrawler extends SPController
 			if ( $multiLang && $langs ) {
 				foreach ( $langs as $lang ) {
 					if ( $lang != $language ) {
-						$url = str_replace( array( '/' . $langs[ $language ], 'lang=' . $langs[ $language ] ), array( '/' . $lang, 'lang=' . $lang ), $url );
+						$url = preg_replace( '|(?<!:/)/' . $langs[ $language ] . '(/)?|', '/' . $lang . '\1', $url );
+						$url = str_replace( 'lang=' . $langs[ $language ], 'lang=' . $lang, $url );
 						$rows[ ] = array( 'crid' => 'NULL', 'url' => $url, 'state' => 0 );
 					}
 				}
