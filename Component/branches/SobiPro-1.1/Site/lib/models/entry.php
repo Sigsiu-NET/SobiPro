@@ -326,6 +326,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 					}
 					if ( count( $categories ) ) {
 						foreach ( $categories as $i => $c ) {
+							if ( !( $this->parent ) ) {
+								$this->parent = $i;
+							}
 							if ( !( in_array( $i, $cats ) ) ) {
 								unset( $categories[ $i ] );
 							}

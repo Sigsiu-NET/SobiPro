@@ -26,11 +26,11 @@ Legend:
  (-) - Removed
  (!) - Change
 
-1.1.0 Beta3 (10 May 2013)
+1.1.0
 -------------------
 
    (#) Fixed language code replacement for the section crawler (Issue #890)
-
+   (#) Fixed missing parent id in entry
 
 -------------------
 1.1.0 Beta3 (10 May 2013)
