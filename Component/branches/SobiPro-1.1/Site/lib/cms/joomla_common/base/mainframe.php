@@ -762,6 +762,11 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			$document->setTitle( SPLang::clean( html_entity_decode( $title ) ) );
 		}
 	}
+
+	public function setCookie( $name, $value, $expire = 0, $httponly = false, $secure = false, $path = '/', $domain = null )
+	{
+		setcookie( $name, $value, $expire, $path, $domain, $secure, $httponly );
+	}
 }
 
 /** Legacy class - @deprecated */
