@@ -26,11 +26,14 @@ Legend:
  (-) - Removed
  (!) - Change
 
-1.1.0
+-------------------
+1.1.0 (28 June 2013)
 -------------------
 
    (#) Fixed language code replacement for the section crawler (Issue #890)
    (#) Fixed missing parent id in entry
+   (#) Fixed installation of clean version on J!1.5
+
 
 -------------------
 1.1.0 Beta3 (10 May 2013)
