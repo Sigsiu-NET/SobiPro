@@ -634,7 +634,7 @@ class SPJoomlaLang
 		$txt = trim( str_replace( array( '.', '_' ), '-', $txt ) );
 		return Sobi::Cfg( 'sef.unicode' ) && $unicode ?
 				self::urlSafe( $txt ) :
-				trim( preg_replace( '/(\s|[^A-Za-z0-9\-])+/', '-', $txt ), '_-\[\]\(\)' );
+				trim( preg_replace( '/(\s|[^A-Za-z0-9\-])+/', '-', JFactory::getLanguage()->transliterate( $txt ) ), '_-\[\]\(\)' );
 	}
 
 	/**
@@ -648,7 +648,7 @@ class SPJoomlaLang
 	 */
 	public static function translateObject( $sids, $fields = null, $type = null, $lang = null )
 	{
-		/** @todo multiple attr does not work because the id is the object id  */
+		/** @todo multiple attr does not work because the id is the object id */
 		$fields = is_array( $fields ) ? $fields : ( strlen( $fields ) ? array( $fields ) : null );
 		$lang = $lang ? $lang : Sobi::Lang( false );
 		$params = array( 'id' => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );

@@ -470,10 +470,10 @@ abstract class Sobi
 		defined( 'SOBI_DEFLANG' ) || define( 'SOBI_DEFLANG', $lang );
 		defined( 'SOBI_ACL' ) || define( 'SOBI_ACL', 'front' );
 		defined( 'SOBI_ROOT' ) || define( 'SOBI_ROOT', $root );
-		defined( 'SOBI_MEDIA' ) || define( 'SOBI_MEDIA', implode( DS, array( $root, 'media', 'sobipro' ) ) );
-		defined( 'SOBI_PATH' ) || define( 'SOBI_PATH', SOBI_ROOT . DS . 'components' . DS . 'com_sobipro' );
+		defined( 'SOBI_MEDIA' ) || define( 'SOBI_MEDIA', implode( '/', array( $root, 'media', 'sobipro' ) ) );
+		defined( 'SOBI_PATH' ) || define( 'SOBI_PATH', SOBI_ROOT . '/components/com_sobipro' );
 		defined( 'SOBI_LIVE_PATH' ) || define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );
-		require_once( SOBI_PATH . DS . 'lib' . DS . 'base' . DS . 'fs' . DS . 'loader.php' );
+		require_once( SOBI_PATH . '/lib/base/fs/loader.php' );
 		SPLoader::loadController( 'sobipro' );
 		SPLoader::loadController( 'interface' );
 		SPLoader::loadClass( 'base.exception' );
@@ -492,13 +492,14 @@ abstract class Sobi
 			if ( $sid ) {
 				$path = array();
 				$id = $sid;
+				$path[ ] = ( int ) $id;
 				while ( $id > 0 ) {
 					try {
 						$id = SPFactory::db()
 								->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
 								->loadResult();
 						if ( $id ) {
-							$path[ ] = ( int )$id;
+							$path[ ] = ( int ) $id;
 						}
 					} catch ( SPException $x ) {
 						Sobi::Error( 'ExtCoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );

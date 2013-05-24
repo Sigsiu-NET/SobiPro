@@ -32,6 +32,7 @@ Legend:
 
    (#) Fixed language code replacement for the section crawler (Issue #890)
    (#) Fixed missing parent id in entry
+   (#) Non-unicode aliases (Issue #901)
    (#) Fixed installation of clean and full version on J!1.5
 
 
