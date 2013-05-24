@@ -95,7 +95,7 @@ class SPJoomlaDb
 			$Args = array();
 			// http://www.php.net/manual/en/function.call-user-func-array.php#91503
 			foreach ( $args as $k => &$arg ) {
-				$Args[ $k ] = &$arg;
+				$Args[ $k ] = & $arg;
 			}
 			return call_user_func_array( array( $this->db, $method ), $Args );
 		}
@@ -367,15 +367,15 @@ class SPJoomlaDb
 					if ( ( isset( $val[ 'from' ] ) && isset( $val[ 'to' ] ) ) && $val[ 'from' ] != SPC::NO_VALUE && $val[ 'to' ] != SPC::NO_VALUE ) {
 						$val[ 'to' ] = $this->escape( $val[ 'to' ] );
 						$val[ 'from' ] = $this->escape( $val[ 'from' ] );
-						$w[ ] = " ( {$col} * 1.0 BETWEEN {$val[ 'from' ]} AND {$val[ 'to' ]} ) ";
+						$w[ ] = " ( {$col} * 1.0 BETWEEN {$val['from']} AND {$val['to']} ) ";
 					}
 					elseif ( $val[ 'from' ] != SPC::NO_VALUE && $val[ 'to' ] == SPC::NO_VALUE ) {
 						$val[ 'from' ] = $this->escape( $val[ 'from' ] );
-						$w[ ] = " ( {$col} * 1.0 > {$val[ 'from' ]} ) ";
+						$w[ ] = " ( {$col} * 1.0 > {$val['from']} ) ";
 					}
 					elseif ( $val[ 'from' ] == SPC::NO_VALUE && $val[ 'to' ] != SPC::NO_VALUE ) {
 						$val[ 'to' ] = $this->escape( $val[ 'to' ] );
-						$w[ ] = " ( {$col} * 1.0 < {$val[ 'to' ]} ) ";
+						$w[ ] = " ( {$col} * 1.0 < {$val['to']} ) ";
 					}
 
 				}
@@ -412,7 +412,7 @@ class SPJoomlaDb
 					}
 					/* is like */
 					elseif ( strpos( $val, '%' ) !== false ) {
-						if( $n == '!') {
+						if ( $n == '!' ) {
 							$n = null;
 							$equal = 'NOT LIKE';
 						}
@@ -799,7 +799,7 @@ class SPJoomlaDb
 				$attr = get_object_vars( $r );
 				foreach ( $attr as $property => $value ) {
 					if ( is_string( $value ) && strstr( $value, '"' ) ) {
-						$r->$property = SPLang::clean( $value );
+						$r->$property = class_exists( 'SPLang' ) ? SPLang::clean( $value ) : $value;
 					}
 				}
 			}
@@ -994,14 +994,14 @@ class SPJoomlaDb
 			$c = 0;
 			foreach ( $params as $table ) {
 				if ( isset( $table[ 'table' ] ) ) {
-					$join = "\n {$table[ 'table' ]} AS {$table[ 'as' ]} ";
+					$join = "\n {$table['table']} AS {$table['as']} ";
 					if ( $c > 0 ) {
 						if ( isset( $table[ 'key' ] ) ) {
 							if ( is_array( $table[ 'key' ] ) ) {
-								$join .= " ON {$table[ 'key' ][ 0 ]} =  {$table[ 'key' ][ 1 ]} ";
+								$join .= " ON {$table[ 'key' ][0]} =  {$table[ 'key' ][1]} ";
 							}
 							else {
-								$join .= " ON {$params[0][ 'as' ]}.{$table[ 'key' ]} =  {$table[ 'as' ]}.{$table[ 'key' ]} ";
+								$join .= " ON {$params[ 0 ]['as']}.{$table['key']} =  {$table['as']}.{$table['key']} ";
 							}
 						}
 					}
@@ -1013,10 +1013,10 @@ class SPJoomlaDb
 		}
 		else {
 			if (
-				( isset( $params[ 0 ][ 'table' ] ) && isset( $params[ 0 ][ 'as' ] ) && isset( $params[ 0 ][ 'key' ] ) ) &&
-				( isset( $params[ 1 ][ 'table' ] ) && isset( $params[ 1 ][ 'as' ] ) && isset( $params[ 1 ][ 'key' ] ) )
+					( isset( $params[ 0 ][ 'table' ] ) && isset( $params[ 0 ][ 'as' ] ) && isset( $params[ 0 ][ 'key' ] ) ) &&
+					( isset( $params[ 1 ][ 'table' ] ) && isset( $params[ 1 ][ 'as' ] ) && isset( $params[ 1 ][ 'key' ] ) )
 			) {
-				$join = " {$params[0][ 'table' ]} AS {$params[0][ 'as' ]} {$through} JOIN {$params[1][ 'table' ]} AS {$params[1][ 'as' ]} ON {$params[0][ 'as' ]}.{$params[0][ 'key' ]} =  {$params[1][ 'as' ]}.{$params[1][ 'key' ]}";
+				$join = " {$params[ 0 ]['table']} AS {$params[ 0 ]['as']} {$through} JOIN {$params[ 1 ]['table']} AS {$params[ 1 ]['as']} ON {$params[ 0 ]['as']}.{$params[ 0 ]['key']} =  {$params[ 1 ]['as']}.{$params[ 1 ]['key']}";
 			}
 		}
 		return $join;

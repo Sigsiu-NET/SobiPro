@@ -35,7 +35,7 @@ final class SPLang extends SPJoomlaLang
 
 	public static function nid( $txt )
 	{
-		return trim( strtolower( str_replace( '__', '_', preg_replace( '/[^a-z0-9\_]/i', '_', preg_replace( '/\W/', '-', $txt ) ) ) ) );
+		return trim( /*strtolower*/( str_replace( '__', '_', preg_replace( '/[^a-z0-9\_]/i', '_', preg_replace( '/\W/', '-', $txt ) ) ) ) );
 	}
 
 }
