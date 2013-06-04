@@ -34,6 +34,7 @@ Legend:
    (#) Fixed missing parent id in entry
    (#) Non-unicode aliases (Issue #901)
    (#) Fixed installation of clean and full version on J!1.5
+   (#) Fixed wrong path replacement on Windows (Issue #891)
 
 
 -------------------

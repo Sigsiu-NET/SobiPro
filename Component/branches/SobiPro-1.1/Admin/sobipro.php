@@ -41,7 +41,7 @@ define( 'SOBI_ROOT', JPATH_ROOT );
 define( 'SOBI_MEDIA', implode( DS, array( JPATH_ROOT, 'media', 'sobipro' ) ) );
 define( 'SOBI_MEDIA_LIVE', JURI::root().'/media/sobipro' );
 define( 'SOBI_PATH', SOBI_ROOT .  '/components/com_sobipro' );
-define( 'SOBI_ADM_PATH', JPATH_ADMINISTRATOR.DS.'components'.DS.'com_sobipro' );
+define( 'SOBI_ADM_PATH', JPATH_ADMINISTRATOR.DS.'components/com_sobipro' );
 $adm = str_replace( JPATH_ROOT, null, JPATH_ADMINISTRATOR );
 define( 'SOBI_ADM_LIVE_PATH', $adm . '/components/com_sobipro' );
 define( 'SOBI_ADM_FOLDER', $adm  );
