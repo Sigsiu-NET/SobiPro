@@ -110,6 +110,17 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
 		}
 		$this->_model->init( $sid );
+
+		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
+		$this->tplCfg( $tplPackage );
+		$customClass = null;
+		if ( isset( $this->_tCfg[ 'general' ][ 'functions' ] ) && $this->_tCfg[ 'general' ][ 'functions' ] ) {
+			$customClass = SPLoader::loadClass( '/' . str_replace( '.php', null, $this->_tCfg[ 'general' ][ 'functions' ] ), false, 'templates' );
+			if ( method_exists( $customClass, 'BeforeStoreEntry' ) ) {
+				$customClass::BeforeStoreEntry( $this->_model, $_POST );
+			}
+		}
+
 		$this->_model->getRequest( $this->_type );
 		$this->authorise( $this->_model->get( 'id' ) ? 'edit' : 'add' );
 
@@ -131,6 +142,10 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$sets[ 'sid' ] = $sid;
 		$sets[ 'entry.nid' ] = $this->_model->get( 'nid' );
 		$sets[ 'entry.id' ] = $sid;
+
+		if ( $customClass && method_exists( $customClass, 'AfterStoreEntry' ) ) {
+			$customClass::AfterStoreEntry( $this->_model );
+		}
 
 		if ( $apply || $clone ) {
 			if ( $clone ) {
