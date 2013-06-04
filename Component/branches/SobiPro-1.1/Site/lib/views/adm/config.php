@@ -322,12 +322,17 @@ class SPConfigAdmView extends SPAdmView implements SPView
 			return parent::get( $attr, $index );
 		}
 		else {
-			$attr = $config->key( $attr );
+			$value = $config->key( $attr );
 			// WHY?! For gods' sake - write comments to your code you fraking idiot!!!!
+			// Tue, Jun 4, 2013 15:21:19 : got that - we have some arrays that have to be displayed as a string while editing config
 //			if ( is_array( $attr ) ) {
 //				$attr = implode( ',', $attr );
 //			}
-			return $attr;
+			// ...  let's fix it ;)
+			if ( is_array( $value ) && strstr( $attr, '_array' ) ) {
+				$value = implode( ',', $value );
+			}
+			return $value;
 		}
 	}
 }
