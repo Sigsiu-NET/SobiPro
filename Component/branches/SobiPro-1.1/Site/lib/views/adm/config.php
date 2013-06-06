@@ -325,6 +325,7 @@ class SPConfigAdmView extends SPAdmView implements SPView
 			$value = $config->key( $attr );
 			// WHY?! For gods' sake - write comments to your code you fraking idiot!!!!
 			// Tue, Jun 4, 2013 15:21:19 : got that - we have some arrays that have to be displayed as a string while editing config
+			// see also bug #894
 //			if ( is_array( $attr ) ) {
 //				$attr = implode( ',', $attr );
 //			}
