@@ -337,6 +337,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 				$entries[ $i ] = $sid;
 			}
 		}
+		Sobi::Trigger( $this->name(), 'AfterGetEntries', array( &$results, false ) );
 		return $entries;
 	}
 
