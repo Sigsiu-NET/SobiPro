@@ -349,8 +349,12 @@
 				}
 				/** no questions here */
 //				if ( prevMonth.getDay() == currentDate ) {
-				if ( ( prevMonth.getDay() == this.date.getDay() ) && ( prevMonth.getWeek() == this.date.getWeek() ) ) {
-					clsName += ' active';
+				try {
+					if ( ( prevMonth.getDay() == this.date.getDay() ) && ( prevMonth.getWeek() == this.date.getWeek() ) ) {
+						clsName += ' active';
+					}
+				}
+				catch ( e ) {
 				}
 				if ( prevMonth.valueOf() < this.startDate || prevMonth.valueOf() > this.endDate ) {
 					clsName += ' disabled';
@@ -944,11 +948,14 @@ SobiPro.jQuery( document ).ready( function ()
 			.spDatepicker()
 			.on( 'changeDate', function ( ev )
 			{
-				if ( ev.date.valueOf() ) {
-					SobiPro.jQuery( ev.currentTarget )
-						.find( ':hidden' )
-						.val( new Date( ev.date.valueOf() ) / 1000 );
+				var set = "";
+				if ( ev.date.valueOf() && SobiPro.jQuery( ev.currentTarget ).find( ':text' ).val() ) {
+					set = new Date( ev.date.valueOf() ) / 1000;
 				}
+				SobiPro.DebOut( set );
+				SobiPro.jQuery( ev.currentTarget )
+					.find( ':hidden' )
+					.val( set );
 			} );
 	} );
 } );
