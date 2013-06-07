@@ -30,6 +30,8 @@ Legend:
 1.1.0 (28 June 2013)
 -------------------
 
+   (!) Larger JS files are minimised now
+
    (#) Fixed language code replacement for the section crawler (Issue #890)
    (#) Fixed missing parent id in entry
    (#) Non-unicode aliases (Issue #901)
