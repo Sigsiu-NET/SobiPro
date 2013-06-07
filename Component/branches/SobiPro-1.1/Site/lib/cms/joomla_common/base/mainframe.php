@@ -8,9 +8,11 @@
  * Url: http://www.Sigsiu.NET
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * $Date$
  * $Revision$
  * $Author$
@@ -737,13 +739,22 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			$title = array( $title );
 		}
 		if ( is_array( $title ) ) {
+		    //browser.add_title = true: adds the Joomla part (this is normally the menu item) in front of it (works only if full_title is also set to true)
+            $jTitle = $document->getTitle();    //get the title Joomla has set
 			if ( Sobi::Cfg( 'browser.add_title', true ) || $forceAdd ) {
-				$jTitle = $document->getTitle();
 				if ( $title[ 0 ] != $jTitle ) {
-					array_unshift( $title, $document->getTitle() );
+					array_unshift( $title, $jTitle);
 				}
 			}
-			if ( Sobi::Cfg( 'browser.full_title', true ) || true ) {
+			else {
+                if ( $title[ 0 ] == $jTitle ) {
+                    array_shift( $title);
+                }
+            }
+            //if ( Sobi::Cfg( 'browser.full_title', true ) || true ) {
+            //browser.full_title = true: if title is array, use only the last. That's e.g. the entry name without categories for SobiPro standard title
+			if ( Sobi::Cfg( 'browser.full_title', true ) ) {
+                //browser.reverse_title = true -> reverses the content of the title array so that e.g. the entry name is first
 				if ( Sobi::Cfg( 'browser.reverse_title', false ) ) {
 					$title = array_reverse( $title );
 				}
