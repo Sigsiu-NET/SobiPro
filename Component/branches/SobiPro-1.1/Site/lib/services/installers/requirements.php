@@ -36,6 +36,7 @@ class SPRequirements
 
 	/**
 	 * @param DOMNodeList $requirements
+	 * @throws SPException
 	 * @return bool
 	 */
 	public function check( $requirements )

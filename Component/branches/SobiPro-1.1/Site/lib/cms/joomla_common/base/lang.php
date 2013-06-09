@@ -287,9 +287,10 @@ class SPJoomlaLang
 	 * @param string $text
 	 * @param SPDBObject $obj
 	 * @param bool $html
+	 * @param bool $dropEmpty
 	 * @return string
 	 */
-	public static function replacePlaceHolders( $text, $obj = null, $html = false )
+	public static function replacePlaceHolders( $text, $obj = null, $html = false, $dropEmpty = false )
 	{
 		preg_match_all( '/{([a-zA-Z0-9\-_\:\.]+)}/', $text, $placeHolders );
 		if ( count( $placeHolders[ 1 ] ) ) {
@@ -318,6 +319,9 @@ class SPJoomlaLang
 				}
 				if ( $replacement && ( is_string( $replacement ) || is_numeric( $replacement ) ) ) {
 					$text = str_replace( '{' . $placeHolder . '}', ( string )$replacement, $text );
+				}
+				elseif( $dropEmpty ) {
+					$text = str_replace( '{' . $placeHolder . '}', null, $text );
 				}
 			}
 		}
