@@ -87,7 +87,8 @@ final class SPAdmSiteMenu
 		$fs = null;
 		if ( count( $this->_sections ) ) {
 			if ( $this->_task == 'section.view' ) {
-				$this->_task = 'section.entries';
+//				$this->_task = 'section.entries';
+				$this->_open = 'AMN.ENT_CAT';
 			}
 			$this->_view[ ] = '<div class="accordion" id="SpMenu">';
 			foreach ( $this->_sections as $section => $list ) {
