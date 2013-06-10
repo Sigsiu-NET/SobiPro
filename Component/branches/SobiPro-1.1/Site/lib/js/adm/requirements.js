@@ -61,7 +61,7 @@ function SobiProRequirements()
 {
 	"use strict";
 	SPStartTime = new Date().getTime();
-	SobiPro.jQuery( '&nbsp;<span id="SpProgress"></span>' )
+	SobiPro.jQuery( ' <span id="SpProgress"></span>' )
 		.appendTo( SobiPro.jQuery( '#SobiPro' ).find( '.alert' ) );
 	this.elements = SobiPro.jQuery( '.spOutput' );
 	this.spinner = '<img src="' + SPLiveSite + 'media/sobipro/adm/spinner.gif"/>';
