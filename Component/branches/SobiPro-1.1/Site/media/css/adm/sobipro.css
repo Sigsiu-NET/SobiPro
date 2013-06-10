@@ -844,6 +844,14 @@ input.sp-input-micro[type="text"] {
 .SobiPro .spReviews .icon-dashboard {
   color: darkblue;
 }
+/* Changes to work with Bootstrap CSS v2.3.2 */
+.SobiPro .dropdown-menu li > a {
+  padding-bottom: 3px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 3px;
+  white-space: nowrap;
+}
 /* Compatibility Styles */
 .SobiPro table.mceLayout {
   border-radius: 3px;
