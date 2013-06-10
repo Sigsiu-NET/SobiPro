@@ -34,6 +34,7 @@ Legend:
    (!) Bootstrap CSS updated to version 2.3.2
    (!) Font Awesome updated to version 3.1.0/3.1.1
    (!) JQuery updated to v1.10.1
+   (!) Added an optional parameter into SPJoomlaLang::replacePlaceHolders for removing empty placeholders
 
    (#) Fixed language code replacement for the section crawler (Issue #890)
    (#) Fixed missing parent id in entry
