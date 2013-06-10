@@ -34,7 +34,7 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 	{
 		parent::getBasicCfg();
 		if ( defined( 'SOBIPRO_ADM' ) ) {
-			SPFactory::config()->change( 'adm_img_folder_live', Sobi::FixPath( JURI::root() . DS . SOBI_ADM_FOLDER . DS . 'templates' . DS . JFactory::getApplication()->getTemplate() . '/images/admin' ), 'general' );
+			SPFactory::config()->change( 'adm_img_folder_live', Sobi::FixPath( JURI::root() . '/' . SOBI_ADM_FOLDER . '/templates/' . JFactory::getApplication()->getTemplate() . '/images/admin' ), 'general' );
 		}
 	}
 
@@ -46,6 +46,9 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 	public function setTitle( $title, $forceAdd = false )
 	{
 		if ( defined( 'SOBIPRO_ADM' ) ) {
+			if ( is_array( $title ) ) {
+				$title = implode( ' ', $title );
+			}
 			JToolbarHelper::title( 'SobiPro: ' . $title );
 		}
 		parent::setTitle( $title, $forceAdd );

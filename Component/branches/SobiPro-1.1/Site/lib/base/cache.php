@@ -427,8 +427,8 @@ final class SPCache
 	 */
 	public function & deleteObj( $type, $id, $sid = 0, $lang = null )
 	{
+		$reinit = false;
 		if ( $this->enabled() ) {
-			$reinit = false;
 			if ( $id && $this->_section == -1 ) {
 				$section = SPFactory::config()->getParentPath( $id );
 				$this->_section = $section[ 0 ];
