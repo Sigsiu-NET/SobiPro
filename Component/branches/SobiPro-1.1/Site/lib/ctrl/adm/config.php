@@ -208,10 +208,10 @@ class SPConfigAdmCtrl extends SPController
 			if ( is_array( $cms ) && isset( $cms[ 'name' ] ) && isset( $cms[ 'data' ] ) && is_array( $cms[ 'data' ] ) && count( $cms[ 'data' ] ) ) {
 				$count++;
 				if ( isset( $cms[ 'icon' ] ) ) {
-					$nodes .= "spTpl.add( {$count}, 0, '{$cms[ 'name' ]}', '', '', '', '{$cms[ 'icon' ]}', '{$cms[ 'icon' ]}' );\n";
+					$nodes .= "spTpl.add( {$count}, 0, '{$cms['name']}', '', '', '', '{$cms['icon']}', '{$cms['icon']}' );\n";
 				}
 				else {
-					$nodes .= "spTpl.add( {$count}, 0, '{$cms[ 'name' ]}' );\n";
+					$nodes .= "spTpl.add( {$count}, 0, '{$cms['name']}' );\n";
 				}
 				$current = $count;
 				foreach ( $cms[ 'data' ] as $name => $path ) {
@@ -478,7 +478,12 @@ class SPConfigAdmCtrl extends SPController
 			$k = str_replace( "{$s}.", null, $k );
 			$c = explode( '_', $k );
 			if ( $c[ count( $c ) - 1 ] == 'array' && !( is_array( $v ) ) ) {
-				$v = explode( ',', $v );
+				if ( !( strstr( $v, '|' ) ) ) {
+					$v = explode( ',', $v );
+				}
+				else {
+					$v = explode( '|', $v );
+				}
 			}
 			$fields[ $s ][ $k ] = $v;
 			if ( preg_match( '/^section.*/', $k ) ) {
