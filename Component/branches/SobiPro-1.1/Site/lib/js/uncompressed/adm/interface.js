@@ -109,7 +109,7 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery( '[name="e_sid[]"]' ).each( function ( i, e )
 		{
 			var element = SobiPro.jQuery( e );
-			if ( element.attr( 'checked' ) == 'checked' ) {
+			if ( element.prop( 'checked' ) ) {
 				entries.push( element );
 			}
 		} );
