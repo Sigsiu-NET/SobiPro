@@ -655,6 +655,10 @@ class SPJoomlaLang
 		/** @todo multiple attr does not work because the id is the object id */
 		$fields = is_array( $fields ) ? $fields : ( strlen( $fields ) ? array( $fields ) : null );
 		$lang = $lang ? $lang : Sobi::Lang( false );
+		// we don't need to specify the language as we want to have all of them and then order it right
+		// when an object name has been entered in a particular language but this language isn't used later
+		// we won't have any label for this certain object
+		//$params = array( 'id' => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );
 		$params = array( 'id' => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );
 		$result = array();
 		if ( $type ) {
