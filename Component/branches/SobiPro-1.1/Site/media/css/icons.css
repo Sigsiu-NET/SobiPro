@@ -101,7 +101,8 @@
 .SobiPro a [class*=" icon-"],
 .SobiPro a [class^="icon-"]:before,
 .SobiPro a [class*=" icon-"]:before {
-  display: inline;
+  display: inline-block;
+  text-decoration: none;
 }
 .SobiPro [class^="icon-"].icon-fixed-width,
 .SobiPro [class*=" icon-"].icon-fixed-width {
