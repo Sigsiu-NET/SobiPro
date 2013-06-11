@@ -207,7 +207,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 * @param $sid - id of the entry
 	 * @param $fullData - the database row form the spdb_field_data table
 	 * @param $rawData - raw data of the field content
-	 * @param $fData - full formated data of the field content
+	 * @param $fData - full formatted data of the field content
 	 * @return void
 	 */
 	public function loadData( $sid, &$fullData, &$rawData, &$fData )
@@ -320,6 +320,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	/**
 	 * @param SPEntry $entry
 	 * @param string $request
+	 * @param $data
+	 * @throws SPException
 	 * @return string
 	 */
 	private function verify( $entry, $request, $data )
@@ -357,6 +359,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	/**
 	 * Gets the data for a field and save it in the database
 	 * @param SPEntry $entry
+	 * @param string $request
 	 * @return bool
 	 */
 	public function saveData( &$entry, $request = 'POST' )
@@ -684,8 +687,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	public function validate( $entry, $request )
 	{
-		/** it can be for core files only at the moment  because a stupid developer (yes, we all know which one) declared too many private methods and inherited classes returning always wrong results */
-		if ( strstr( strtolower( get_class( $this ) ), 'select' ) ) {
+		/** it can be for core files only at the moment because a stupid developer (yes, we all know which one) declared too many private methods and inherited classes returning always wrong results */
+		$class = strtolower( get_class( $this ) );
+		if ( strstr( $class, 'select' )  || strstr( $class, 'radio' ) || strstr( $class, 'chbxgr' ) ) {
 			return $this->verify( $entry, $request, $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ) ) );
 		}
 		else {
