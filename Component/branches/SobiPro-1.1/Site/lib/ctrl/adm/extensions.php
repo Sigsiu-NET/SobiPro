@@ -309,6 +309,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 		$pid = str_replace( '-', '_', SPRequest::cmd( 'exid' ) );
 		$msg = SPFactory::Controller( 'progress' );
+		if ( strstr( $pid, '.disabled' ) ) {
+			$msg->error( SPLang::e( 'REPO_ERR_APP_DISABLED' ) );
+			exit;
+		}
 		if ( !( SPFactory::mainframe()->checkToken( 'get' ) ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			$msg->error( SPLang::e( 'REPO_ERR', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ) ) );
@@ -569,6 +573,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 						$compare = version_compare( $plugin[ 'version' ], implode( '.', SPFactory::CmsHelper()->myVersion() ) );
 						if ( $compare <= 0 ) {
 							$plugin[ 'installed' ] = -1;
+							$eid = $eid . '.disabled';
 							$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.APP_UPDATE_DISABLED' ), 'class' => 'disabled' );
 						}
 						else {
@@ -1169,7 +1174,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 		$cl = count( $list );
 		for ( $i = 0; $i < $cl; $i++ ) {
-			$list[ $i ][ 'locked' ] = SPLoader::path( "etc.installed.{$list[ $i ][ 'type' ]}s.{$list[ $i ][ 'pid' ]}", 'front', true, 'xml' ) ? false : true;
+			$list[ $i ][ 'locked' ] = SPLoader::path( "etc.installed.{$list[ $i ]['type']}s.{$list[ $i ]['pid']}", 'front', true, 'xml' ) ? false : true;
 			$list[ $i ][ 'eid' ] = $list[ $i ][ 'type' ] . '.' . $list[ $i ][ 'pid' ];
 			if ( ( $list[ $i ][ 'pid' ] == 'router' ) || ( in_array( $list[ $i ][ 'type' ], array( 'field', 'language', 'module', 'plugin' ) ) ) ) {
 				$list[ $i ][ 'enabled' ] = -1;

@@ -35,7 +35,7 @@ SobiPro.jQuery().ready( function ()
 			//noinspection JSUnresolvedVariable
 			var def = SobiPro.jQuery( '#SP_method' ).next( 'input' );
 			var url = SobiProAdmUrl.replace( '%task%', task ) + '&' + def.attr( 'name' ) + '=' + def.val();
-			SobiPro.jQuery.ajax( {'type':'get', 'url':url, 'dataType':'json'} );
+			SobiPro.jQuery.ajax( {'type': 'get', 'url': url, 'dataType': 'json'} );
 		}
 	} );
 
@@ -59,11 +59,11 @@ SobiPro.jQuery().ready( function ()
 		this.request = function ( request, callback )
 		{
 			SobiPro.jQuery.ajax( {
-				'type':'post',
-				'url':'index.php',
-				'data':request,
-				'dataType':'json',
-				success:function ( data )
+				'type': 'post',
+				'url': 'index.php',
+				'data': request,
+				'dataType': 'json',
+				success: function ( data )
 				{
 					callback( data, request )
 				}
@@ -126,11 +126,11 @@ SobiPro.jQuery().ready( function ()
 		else {
 			var def = SobiPro.jQuery( '#SP_method' ).next( 'input' );
 			var request = {
-				'option':'com_sobipro',
-				'task':'extensions.addRepo',
-				'method':'xhr',
-				'format':'raw',
-				'repository':this.repository
+				'option': 'com_sobipro',
+				'task': 'extensions.addRepo',
+				'method': 'xhr',
+				'format': 'raw',
+				'repository': this.repository
 			};
 			request[ def.attr( 'name' ) ] = def.val();
 			this.request( request, this.addRepo )
@@ -140,10 +140,10 @@ SobiPro.jQuery().ready( function ()
 	function SPProgressMessage()
 	{
 		SobiPro.jQuery.ajax( {
-			'type':'get',
-			'url':SobiProAdmUrl.replace( '%task%', 'progress' ),
-			'dataType':'json',
-			success:function ( response )
+			'type': 'get',
+			'url': SobiProAdmUrl.replace( '%task%', 'progress' ),
+			'dataType': 'json',
+			success: function ( response )
 			{
 				if ( SpMsgType != response.type ) {
 					SobiPro.jQuery( '#SpProgress .alert' )
@@ -168,7 +168,9 @@ SobiPro.jQuery().ready( function ()
 
 	SobiPro.jQuery( '.SpExtInstall' ).click( function ()
 	{
-		new SpExtInstall( SobiPro.jQuery( this ).parent(), SobiPro.jQuery( this ).attr( 'rel' ) );
+		if ( !( SobiPro.jQuery( this ).hasClass( 'disabled' ) ) ) {
+			new SpExtInstall( SobiPro.jQuery( this ).parent(), SobiPro.jQuery( this ).attr( 'rel' ) );
+		}
 	} );
 
 	SobiPro.jQuery( '.SpRemoveRepo' ).click( function ()
@@ -176,19 +178,19 @@ SobiPro.jQuery().ready( function ()
 		var repository = SobiPro.jQuery( this ).attr( 'rel' );
 		var def = SobiPro.jQuery( '#SP_method' ).next( 'input' );
 		var request = {
-			'option':'com_sobipro',
-			'task':'extensions.delRepo',
-			'method':'xhr',
-			'format':'raw',
-			'repository':repository
+			'option': 'com_sobipro',
+			'task': 'extensions.delRepo',
+			'method': 'xhr',
+			'format': 'raw',
+			'repository': repository
 		};
 		request[ def.attr( 'name' ) ] = def.val();
 		SobiPro.jQuery.ajax( {
-				'type':'post',
-				'url':'index.php',
-				'data':request,
-				'dataType':'json',
-				success:function ( response )
+				'type': 'post',
+				'url': 'index.php',
+				'data': request,
+				'dataType': 'json',
+				success: function ( response )
 				{
 					window.location.replace( response.redirect.url );
 				}
@@ -209,12 +211,11 @@ SobiPro.jQuery().ready( function ()
 		this.progress = function ()
 		{
 			SobiPro.jQuery.ajax( {
-				'type':'get',
-				'url':SobiProAdmUrl.replace( '%task%', 'progress' ) + '&session=' + proxy.ident,
-				'dataType':'json',
-				success:function ( response )
+				'type': 'get',
+				'url': SobiProAdmUrl.replace( '%task%', 'progress' ) + '&session=' + proxy.ident,
+				'dataType': 'json',
+				success: function ( response )
 				{
-					SobiPro.DebOut( response );
 					if ( response.type != 'info' && response.type != 'success' ) {
 						var labelType = response.type == 'error' ? 'important' : response.type;
 						var label = '<p><span class="label label-' + labelType + '">' + response.typeText + '&nbsp;</span></p>';
@@ -238,7 +239,7 @@ SobiPro.jQuery().ready( function ()
 				}
 			} );
 		};
-		SobiPro.jQuery.ajax( {'type':'get', 'url':url, 'dataType':'json'} );
+		SobiPro.jQuery.ajax( {'type': 'get', 'url': url, 'dataType': 'json'} );
 		setTimeout( function ()
 		{
 			proxy.progress();
@@ -259,7 +260,10 @@ SobiPro.jQuery().ready( function ()
 		{
 			if ( e.keyCode == 13 ) {
 				e.preventDefault();
-				setTimeout( function() { SobiPro.jQuery( '.SpAddRepo' ).click(); }, 100 )
+				setTimeout( function ()
+				{
+					SobiPro.jQuery( '.SpAddRepo' ).click();
+				}, 100 )
 			}
 		} );
 	}

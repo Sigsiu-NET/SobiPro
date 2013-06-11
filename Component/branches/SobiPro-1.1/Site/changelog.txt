@@ -48,6 +48,7 @@ Legend:
    (#) XML parser was generating Itemid for all loops in administrator area
    (#) Changed attr method to prop in serial actions (interface.js) as jQuery 1.10 returns "unknown" for the "checked" attribute
    (#) No label for objects (e.g. section drop'n'down menu) when it has been stored in a "dead" language
+   (#) Disabled Core Updates button was clickable
 
 
 -------------------
