@@ -93,7 +93,7 @@
 					</div>
 				</xsl:if>
 			</div>
-			<div class="clearfix" />
+			<div class="clear" />
 		</div>
 	</xsl:template>
 </xsl:stylesheet>
