@@ -124,6 +124,13 @@ class SPEntry extends SPDBObject implements SPDataModel
 			$this->url = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->get( 'nid' ) : $this->get( 'name' ), 'pid' => $this->get( 'primary' ), 'sid' => $this->id ), false, true, true, true );
 			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fieldsIds, &$this->fieldsNids ) );
 		}
+		if( $this->id ) {
+			$counter = SPFactory::db()->select( 'counter', 'spdb_counter', array( 'sid' => $this->id ) )
+					->loadResult();
+			if ( $counter ) {
+				$this->counter = $counter;
+			}
+		}
 		if ( !( strlen( $this->name ) ) ) {
 			$this->name = Sobi::Txt( 'ENTRY_NO_NAME' );
 		}
@@ -507,9 +514,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 	{
 		return !(
 				in_array( SPRequest::task(), array( 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit', 'entry.payment' ) ) ||
-						Sobi::Can( 'entry.access.unapproved_any' ) ||
-						( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.manage.own' ) ) ||
-						Sobi::Can( 'entry.manage.*' )
+				Sobi::Can( 'entry.access.unapproved_any' ) ||
+				( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.manage.own' ) ) ||
+				Sobi::Can( 'entry.manage.*' )
 		);
 	}
 
