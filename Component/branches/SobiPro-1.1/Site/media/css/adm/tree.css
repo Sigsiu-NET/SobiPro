@@ -42,18 +42,14 @@
 	margin: 0;	
 }
 
-.sigsiuTree a {
-	color: #333;
-	text-decoration: none;
-	font-weight: normal;
-}
-
-.sigsiuTree a.node,.sigsiuTree a.nodeSel {
+.sigsiuTree a.node,
+.sigsiuTree a.nodeSel {
 	white-space: nowrap;
 	padding: 1px 2px 1px 2px;
 }
 
-.sigsiuTree a.node:hover,.sigsiuTree a.nodeSel:hover {
+.sigsiuTree a.node:hover,
+.sigsiuTree a.nodeSel:hover {
 	color: #333333;
 	text-decoration: underline;
 }
@@ -66,16 +62,20 @@
 	/*overflow: hidden;*/
 }
 
-div.sigsiuTree a,.sigsiuTree a,a.treeNode:hover,a.treeNode,a.treeNode:visited
-	{
-	color: #333333 !important;
-	text-decoration: none !important;
-	font-weight: normal !important;
-}
-
-a.treeNode:active,a.treeNode:focus {
+div.sigsiuTree a,
+.sigsiuTree a,
+a.treeNode:hover,
+a.treeNode,
+a.treeNode:visited {
 	color: #333333;
 	text-decoration: none;
 	font-weight: normal;
-	background-color: #c0d2ec;
+}
+
+a.treeNode:active,
+a.treeNode:focus {
+	color: #333333;
+	text-decoration: none;
+	font-weight: normal;
+/*	background-color: #c0d2ec; */
 }
