@@ -47,6 +47,15 @@ class SPCrawler extends SPController
 				SPFactory::cache()->cleanSection( Sobi::Section() );
 			}
 			SPFactory::db()->truncate( self::DB_TABLE );
+			$multiLang = Sobi::Cfg( 'lang.multimode', false );
+			if ( $multiLang ) {
+				$langs = SPFactory::CmsHelper()->getLanguages();
+				if ( $multiLang && $langs ) {
+					foreach ( $langs as $lang ) {
+						$responses[ ] = $this->getResponse( Sobi::Cfg( 'live_site' ) . 'index.php?option=com_sobipro&sid=' . Sobi::Section() . '&lang=' . $lang );
+					}
+				}
+			}
 			$responses[ ] = $this->getResponse( Sobi::Cfg( 'live_site' ) . 'index.php?option=com_sobipro&sid=' . Sobi::Section() );
 			$sites = $this->getSites();
 		}
@@ -136,23 +145,23 @@ class SPCrawler extends SPController
 	protected function insertUrls( $urls )
 	{
 		$rows = array();
-		$multiLang = Sobi::Cfg( 'lang.multimode', false );
-		$langs = SPFactory::CmsHelper()->getLanguages();
-		$language = Sobi::Lang();
+//		$multiLang = Sobi::Cfg( 'lang.multimode', false );
+//		$langs = SPFactory::CmsHelper()->getLanguages();
+//		$language = Sobi::Lang();
 		foreach ( $urls as $url ) {
 			if ( !( strlen( $url ) ) ) {
 				continue;
 			}
 			$rows[ ] = array( 'crid' => 'NULL', 'url' => $url, 'state' => 0 );
-			if ( $multiLang && $langs ) {
-				foreach ( $langs as $lang ) {
-					if ( $lang != $language ) {
-						$url = preg_replace( '|(?<!:/)/' . $langs[ $language ] . '(/)?|', '/' . $lang . '\1', $url );
-						$url = str_replace( 'lang=' . $langs[ $language ], 'lang=' . $lang, $url );
-						$rows[ ] = array( 'crid' => 'NULL', 'url' => $url, 'state' => 0 );
-					}
-				}
-			}
+//			if ( $multiLang && $langs ) {
+//				foreach ( $langs as $lang ) {
+//					if ( $lang != $language ) {
+//						$url = preg_replace( '|(?<!:/)/' . $langs[ $language ] . '(/)?|', '/' . $lang . '\1', $url );
+//						$url = str_replace( 'lang=' . $langs[ $language ], 'lang=' . $lang, $url );
+//						$rows[ ] = array( 'crid' => 'NULL', 'url' => $url, 'state' => 0 );
+//					}
+//				}
+//			}
 		}
 		if ( count( $rows ) ) {
 			SPFactory::db()->insertArray( self::DB_TABLE, $rows, false, true );

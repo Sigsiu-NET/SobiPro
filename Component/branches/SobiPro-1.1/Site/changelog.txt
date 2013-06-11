@@ -74,6 +74,7 @@ Legend:
    (#) Loading bootstrap in Joomla! 3.x if template hasn't (Issue #880)
    (#) Visits counter fixed (Issue #875)
    (#) Wrong path replacement for category chooser (Issue #873)
+   (#) Multilanguage mode in directory crawler fixed
 
 
 -------------------
