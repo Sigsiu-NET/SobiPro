@@ -64,17 +64,21 @@ div.menuTreeSigsiuTree {
     padding: 8px 10px;
 }
 
-#SPaccordionTabs a {
+.accordion a {
     color: #555555;
 }
-#SPaccordionTabs a:hover {
+.accordion a:hover {
     background-color: #eeeeee;
     color: #333333;
     text-decoration: none;
 }
+.accordion a:focus {
+  text-decoration: none;
+  color: #333333;
+}
 
-#SPaccordionTabs ul,
-#spaccordiontabs ol {
+.accordion ul,
+.accordion ol {
     margin: 0 0 10px 2px;
     list-style: none;
     font-size: 13px;
@@ -84,7 +88,7 @@ div.menuTreeSigsiuTree {
     color: #7f7f7f;
 }
 
-#SPaccordionTabs li a {
+.accordion li a {
     display: block;
     padding: 3px 5px;
     margin-left: -7px;
@@ -92,11 +96,11 @@ div.menuTreeSigsiuTree {
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
     color: #555555;
 }
-#SPaccordionTabs li .active a,
-#SPaccordionTabs li .active a:hover {
+.accordion li .active a,
+.accordion li .active a:hover {
 }
 
-#SPaccordionTabs a.SPMenuActive {
+.accordion a.SPMenuActive {
     background-color: #993333;
     color: #ffffff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
