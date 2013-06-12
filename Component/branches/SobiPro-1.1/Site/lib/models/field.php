@@ -474,7 +474,7 @@ class SPField extends SPObject
 				array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => Sobi::Lang( false ), 'oType' => 'field' )
 			)->loadAssocList( 'sKey' );
 			if ( !( count( $labels ) ) ) {
-				// last failback
+				// last fallback
 				$labels = SPFactory::db()->select(
 					array( 'sValue', 'sKey' ), 'spdb_language',
 					array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => 'en-GB', 'oType' => 'field' )
@@ -568,6 +568,7 @@ class SPField extends SPObject
 		}
 		$this->sid = $sid;
 		$fdata = Sobi::Reg( 'fields_data_' . $sid, array() );
+		$this->suffix = SPLang::clean( $this->suffix );
 		if ( $sid && count( $fdata ) && isset( $fdata[ $this->id ] ) ) {
 			$this->_fData = $fdata[ $this->id ];
 			$this->lang = $this->_fData->lang;
@@ -683,6 +684,7 @@ class SPField extends SPObject
 	/**
 	 * Checks if the field should be displayed or not
 	 * @param string $view
+	 * @param bool $new
 	 * @return bool
 	 */
 	public function enabled( $view, $new = false )
