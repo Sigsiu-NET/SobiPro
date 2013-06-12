@@ -20,38 +20,38 @@
  $Date$
  $Revision$
  $Author$
- $HeadURL$
+ File location: components/com_sobipro/usr/templates/default2/common/alphamenu.xsl $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
-	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
-	<xsl:include href="alphaindex.xsl" />
-	<xsl:template match="alphaMenu">
+    <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
+    <xsl:include href="alphaindex.xsl" />
+    <xsl:template match="alphaMenu">
         <div class="row-fluid">
-		<div class="navbar">
-			<xsl:if test="count( fields/* )">
-				<div class="span1 alphalist">
-					<div class="btn-group">
-						<a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu">
-							<xsl:for-each select="fields/*">
-								<li>
-									<a href="#" rel="{name()}" class="alpha-switch">
-										<xsl:value-of select="." />
-									</a>
-								</li>
-							</xsl:for-each>
-						</ul>
-					</div>
-				</div>
-			</xsl:if>
-			<div id="alpha-index" class="span11">
-				<xsl:apply-templates select="letters" />
-			</div>
-		</div>
+            <div class="navbar nav-collapse">
+                <xsl:if test="count( fields/* )">
+                    <div class="span1 alphalist">
+                        <div class="btn-group">
+                            <a class="btn dropdown-toggle btn-mini" data-toggle="dropdown" href="#">
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <xsl:for-each select="fields/*">
+                                    <li>
+                                        <a href="#" rel="{name()}" class="alpha-switch">
+                                            <xsl:value-of select="." />
+                                        </a>
+                                    </li>
+                                </xsl:for-each>
+                            </ul>
+                        </div>
+                    </div>
+                </xsl:if>
+                <div id="alpha-index" class="span11">
+                    <xsl:apply-templates select="letters" />
+                </div>
+            </div>
         </div>
-		<div class="clearfix"/>
-	</xsl:template>
+        <div class="clearfix"/>
+    </xsl:template>
 </xsl:stylesheet>
