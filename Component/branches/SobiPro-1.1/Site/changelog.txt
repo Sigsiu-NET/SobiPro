@@ -50,6 +50,7 @@ Legend:
    (#) No label for objects (e.g. section drop'n'down menu) when it has been stored in a "dead" language
    (#) Disabled core update button was clickable
    (#) Checkbox group and radio fields aren't properly validated due to exception in validation method (Issue #910)
+   (#) Multilanguage mode in directory crawler fixed
    (#) Entry counter doesn't work when cache is enabled
    (#) Escaping field suffix
 
@@ -76,7 +77,6 @@ Legend:
    (#) Loading bootstrap in Joomla! 3.x if template hasn't (Issue #880)
    (#) Visits counter fixed (Issue #875)
    (#) Wrong path replacement for category chooser (Issue #873)
-   (#) Multilanguage mode in directory crawler fixed
 
 
 -------------------
