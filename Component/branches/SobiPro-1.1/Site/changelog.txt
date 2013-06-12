@@ -51,6 +51,7 @@ Legend:
    (#) Disabled core update button was clickable
    (#) Checkbox group and radio fields aren't properly validated due to exception in validation method (Issue #910)
    (#) Entry counter doesn't work when cache is enabled
+   (#) Escaping field suffix
 
 
 -------------------
