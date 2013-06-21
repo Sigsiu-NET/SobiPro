@@ -222,7 +222,7 @@ class SPSearchCtrl extends SPSectionCtrl
 			}
 			$this->_results = array_unique( $this->_results );
 		}
-		Sobi::Trigger( 'AfterBasic', 'Search', array( &$this->_results ) );
+		Sobi::Trigger( 'AfterBasic', 'Search', array( &$this->_results, &$this->_resultsByPriority ) );
 
 		/* ... now the extended search. Check which data we've received */
 		if ( count( $this->_fields ) ) {
@@ -274,8 +274,8 @@ class SPSearchCtrl extends SPSectionCtrl
 			}
 		}
 		$this->_request[ 'search_for' ] = str_replace( '%', '*', $this->_request[ 'search_for' ] );
-		Sobi::Trigger( 'AfterExtended', 'Search', array( &$this->_results ) );
 		$this->sortPriority();
+		Sobi::Trigger( 'AfterExtended', 'Search', array( &$this->_results, &$this->_resultsByPriority ) );
 		$req = ( is_array( $this->_request ) && count( $this->_request ) ) ? SPConfig::serialize( $this->_request ) : null;
 		$res = ( is_array( $this->_results ) && count( $this->_results ) ) ? implode( ', ', $this->_results ) : null;
 		$cre = ( is_array( $this->_categoriesResults ) && count( $this->_categoriesResults ) ) ? implode( ', ', $this->_categoriesResults ) : null;

@@ -549,6 +549,10 @@ class SPAdmView extends SPObject implements SPView
 				case 'file':
 					$this->xmlFile( $node, $element );
 					break;
+				case 'call':
+					$element[ 'type' ] = 'text';
+					$element[ 'content' ] = $this->xmlCall( $node );
+					break;
 				case 'menu':
 					$element[ 'content' ] = $this->menu( true );
 					break;
@@ -837,6 +841,10 @@ class SPAdmView extends SPObject implements SPView
 		elseif ( $cell->nodeName == 'field' ) {
 			$this->xmlField( $cell, $element, $element[ 'content' ] );
 		}
+		elseif ( $cell->nodeName == 'call' ) {
+			$element[ 'type' ] = 'text';
+			$element[ 'content' ] = $this->xmlCall( $cell );
+		}
 		if ( $cell->hasChildNodes() ) {
 			/** @var DOMNode $child */
 			foreach ( $cell->childNodes as $child ) {
@@ -861,6 +869,10 @@ class SPAdmView extends SPObject implements SPView
 							$attributes[ $attribute->nodeName ] = $this->parseValue( str_replace( 'var:[', 'var:[' . $subject . '.', $attribute->nodeValue ), $i );
 						}
 						$element[ 'content' ] = $this->xmlButton( $child, $attributes );
+						break;
+					case 'call':
+						$element[ 'type' ] = 'text';
+						$element[ 'content' ] = $this->xmlCall( $child );
 						break;
 					default:
 						$this->xmlCell( $child, $subject, $i, $element[ 'childs' ] );
@@ -1227,8 +1239,8 @@ class SPAdmView extends SPObject implements SPView
 	{
 		$function = $value->attributes->getNamedItem( 'function' )->nodeValue;
 		$r = false;
+		$params = array();
 		if ( $value->hasChildNodes() ) {
-			$params = array();
 			foreach ( $value->childNodes as $p ) {
 				if ( strstr( $p->nodeName, '#' ) ) {
 					continue;
@@ -1246,22 +1258,22 @@ class SPAdmView extends SPObject implements SPView
 					$params[ ] = $p->nodeValue;
 				}
 			}
-			if ( strstr( $function, '::' ) ) {
-				$function = explode( '::', $function );
-				if ( class_exists( $function[ 0 ] ) && method_exists( $function[ 0 ], $function[ 1 ] ) ) {
-					$r = call_user_func_array( array( $function[ 0 ], $function[ 1 ] ), $params );
-				}
-				else {
-					Sobi::Error( $this->name(), SPLang::e( 'METHOD_DOES_NOT_EXISTS', $function[ 0 ] . '::' . $function[ 1 ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
-				}
+		}
+		if ( strstr( $function, '::' ) ) {
+			$function = explode( '::', $function );
+			if ( class_exists( $function[ 0 ] ) && method_exists( $function[ 0 ], $function[ 1 ] ) ) {
+				$r = call_user_func_array( array( $function[ 0 ], $function[ 1 ] ), $params );
 			}
 			else {
-				if ( function_exists( $function ) ) {
-					$r = call_user_func_array( $function, $params );
-				}
-				else {
-					Sobi::Error( $this->name(), SPLang::e( 'METHOD_DOES_NOT_EXISTS', $function ), SPC::WARNING, 0, __LINE__, __FILE__ );
-				}
+				Sobi::Error( $this->name(), SPLang::e( 'METHOD_DOES_NOT_EXISTS', $function[ 0 ] . '::' . $function[ 1 ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			}
+		}
+		else {
+			if ( function_exists( $function ) ) {
+				$r = call_user_func_array( $function, $params );
+			}
+			else {
+				Sobi::Error( $this->name(), SPLang::e( 'METHOD_DOES_NOT_EXISTS', $function ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
 		return $r;

@@ -245,7 +245,7 @@ class SPSectionCtrl extends SPController
 	public function getEntries( $eOrder, $eLimit = null, $eLimStart = null, $count = false, $conditions = array(), $entriesRecursive = false, $pid = 0 )
 	{
 		/* var SPDb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		$entries = array();
 		$eDir = 'asc';
 		$oPrefix = null;
@@ -350,7 +350,6 @@ class SPSectionCtrl extends SPController
 		}
 		Sobi::Trigger( $this->name(), 'AfterGetEntries', array( &$results, $count ) );
 		if ( count( $results ) && !$count ) {
-			$memLimit = ( int )ini_get( 'memory_limit' ) * 2097152;
 			foreach ( $results as $i => $sid ) {
 				// it needs too much memory moving the object creation to the view
 				//$entries[ $i ] = SPFactory::Entry( $sid );
