@@ -53,6 +53,8 @@ Legend:
    (#) Multilanguage mode in directory crawler fixed
    (#) Entry counter doesn't work when cache is enabled
    (#) Escaping field suffix
+   (#) XMLCall error fixed
+   (#) Trigger in search called before the priorities have been rearranged
 
 
 -------------------

@@ -270,12 +270,12 @@ final class SPHeader
 					}
 					if (
 						/* If there is already template defined */
-						Sobi::Reg( 'current_template' ) &&
-						/* and we are NOT including js file from the template  */
-						!( strstr( dirname( $jsFile ), Sobi::Reg( 'current_template' ) ) ) &&
-						/* but there is such file (with the same name) in the template package  */
-						SPFs::exists( Sobi::Reg( 'current_template' ) . '/js/' . basename( $jsFile ) ) &&
-						!( strstr( dirname( $jsFile ), 'templates' ) )
+							Sobi::Reg( 'current_template' ) &&
+							/* and we are NOT including js file from the template  */
+							!( strstr( dirname( $jsFile ), Sobi::Reg( 'current_template' ) ) ) &&
+							/* but there is such file (with the same name) in the template package  */
+							SPFs::exists( Sobi::Reg( 'current_template' ) . '/js/' . basename( $jsFile ) ) &&
+							!( strstr( dirname( $jsFile ), 'templates' ) )
 					) {
 						$jsFile = explode( '.', basename( $jsFile ) );
 						$ext = $jsFile[ count( $jsFile ) - 1 ];
@@ -443,12 +443,12 @@ final class SPHeader
 					$override = false;
 					if (
 						/* If there is already template defined */
-						Sobi::Reg( 'current_template' ) &&
-						/* and we are NOT including css file from the template  */
-						!( strstr( dirname( $cssFile ), Sobi::Reg( 'current_template' ) ) ) &&
-						/* but there is such file (with the same name) in the template package  */
-						SPFs::exists( Sobi::Reg( 'current_template' ) . '/css/' . basename( $cssFile ) ) &&
-						!( strstr( dirname( $cssFile ), 'templates' ) )
+							Sobi::Reg( 'current_template' ) &&
+							/* and we are NOT including css file from the template  */
+							!( strstr( dirname( $cssFile ), Sobi::Reg( 'current_template' ) ) ) &&
+							/* but there is such file (with the same name) in the template package  */
+							SPFs::exists( Sobi::Reg( 'current_template' ) . '/css/' . basename( $cssFile ) ) &&
+							!( strstr( dirname( $cssFile ), 'templates' ) )
 					) {
 						$cssFile = explode( '.', basename( $cssFile ) );
 						$ext = $cssFile[ count( $cssFile ) - 1 ];
@@ -592,9 +592,9 @@ final class SPHeader
 	{
 		//SPFactory::mainframe()->setTitle( SPLang::clean( $title ) );
 		if ( is_array( $title ) )
-            $this->title = $title;
-    	else
-            $this->title = array(SPLang::clean( $title ) );
+			$this->title = $title;
+		else
+			$this->title = array( SPLang::clean( $title ) );
 		return $this;
 	}
 
@@ -708,7 +708,9 @@ final class SPHeader
 				/* * create the right checksum */
 				$check = array( 'section' => Sobi::Section() );
 				foreach ( $this->_cache[ 'css' ] as $file ) {
-					$check[ $file ] = filemtime( $file );
+					if ( file_exists( $file ) ) {
+						$check[ $file ] = filemtime( $file );
+					}
 				}
 				$check = md5( serialize( $check ) );
 				if ( !( SPFs::exists( SOBI_PATH . "/var/css/{$check}.css" ) ) ) {
