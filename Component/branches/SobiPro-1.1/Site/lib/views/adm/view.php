@@ -872,7 +872,7 @@ class SPAdmView extends SPObject implements SPView
 						break;
 					case 'call':
 						$element[ 'type' ] = 'text';
-						$element[ 'content' ] = $this->xmlCall( $child );
+						$element[ 'content' ] = $this->xmlCall( $child, $subject, $i );
 						break;
 					default:
 						$this->xmlCell( $child, $subject, $i, $element[ 'childs' ] );
@@ -1235,7 +1235,7 @@ class SPAdmView extends SPObject implements SPView
 		}
 	}
 
-	protected function xmlCall( $value )
+	protected function xmlCall( $value, $subject = null, $i = -1 )
 	{
 		$function = $value->attributes->getNamedItem( 'function' )->nodeValue;
 		$r = false;
@@ -1246,7 +1246,8 @@ class SPAdmView extends SPObject implements SPView
 					continue;
 				}
 				if ( $p->attributes->length && $p->attributes->getNamedItem( 'value' ) ) {
-					$v = $this->get( $p->attributes->getNamedItem( 'value' )->nodeValue );
+					$subject = $subject ? $subject . '.' . $p->attributes->getNamedItem( 'value' )->nodeValue : $p->attributes->getNamedItem( 'value' )->nodeValue;
+					$v = $this->get( $subject, $i );
 					if ( $v ) {
 						$params[ ] = $v;
 					}
