@@ -34,7 +34,7 @@ class SPTplParser
 	);
 	protected $_checkedOutIcon = 'lock';
 	static $newLine = "\n";
-	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre', 'label' );
+	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre', 'label', 'tr', 'th', 'td' );
 	protected $internalAttributes = array( 'condition' );
 
 
