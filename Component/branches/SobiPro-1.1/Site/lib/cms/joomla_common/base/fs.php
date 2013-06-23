@@ -167,11 +167,16 @@ abstract class SPJoomlaFs
 	/**
 	 * @param string $file
 	 * @param string $buffer
+	 * @param bool $append
 	 * @throws SPException
 	 * @return bool
 	 */
-	public static function write( $file, &$buffer )
+	public static function write( $file, &$buffer, $append = false )
 	{
+		if( $append ) {
+			$content = self::read( $file );
+			$buffer = $content.$buffer;
+		}
 		$return = Jfile::write( $file, $buffer );
 		if ( $return === false ) {
 			throw new SPException( SPLang::e( 'CANNOT_WRITE_TO_FILE_AT', $file ) );

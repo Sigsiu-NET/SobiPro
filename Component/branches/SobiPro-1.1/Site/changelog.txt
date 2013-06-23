@@ -55,6 +55,7 @@ Legend:
    (#) Escaping field suffix
    (#) XMLCall error fixed
    (#) Trigger in search called before the priorities have been rearranged
+   (#) Cached view missing current template name. Override via template package doesn't work
 
 
 -------------------
