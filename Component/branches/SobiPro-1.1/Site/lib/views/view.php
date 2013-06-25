@@ -164,8 +164,9 @@ abstract class SPFrontView extends SPObject implements SPView
 
 	/**
 	 * @param string $template
+	 * @return $this
 	 */
-	public function setTemplate( $template )
+	public function & setTemplate( $template )
 	{
 		$file = explode( '.', $template );
 		if ( strstr( $file[ 0 ], 'cms:' ) ) {
@@ -177,6 +178,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			$this->_template = SOBI_PATH . '/usr/templates/' . str_replace( '.', '/', $template );
 		}
 		Sobi::Trigger( 'setTemplate', $this->name(), array( &$this->_template ) );
+		return $this;
 	}
 
 	/**
@@ -453,8 +455,9 @@ abstract class SPFrontView extends SPObject implements SPView
 	/**
 	 * @param array $cfg
 	 * @param string $template
+	 * @return $this
 	 */
-	public function setConfig( $cfg, $template )
+	public function & setConfig( $cfg, $template )
 	{
 		$this->_config = $cfg;
 		if ( isset( $cfg[ $template ] ) && count( $cfg[ $template ] ) ) {
@@ -485,6 +488,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 		}
 		Sobi::Trigger( 'afterLoadConfig', $this->name(), array( &$this->_config ) );
+		return $this;
 	}
 
 	/**

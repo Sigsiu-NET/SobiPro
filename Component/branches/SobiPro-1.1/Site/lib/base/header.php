@@ -439,6 +439,16 @@ final class SPHeader
 				if ( Sobi::Reg( 'current_template' ) && ( strstr( dirname( $cssFile ), Sobi::Reg( 'current_template' ) ) ) ) {
 					$index *= 100;
 				}
+				if ( $file == 'bootstrap.bootstrap' ) {
+					if ( !( Sobi::Cfg( 'template.bootstrap-disabled' ) ) ) {
+						/** we want bootstrap loaded as the very first because we have to override some things */
+						$index = -100;
+					}
+					else {
+						/** Not nice but it's just easier like this :/ */
+						return $this;
+					}
+				}
 				if ( $cssFile ) {
 					$override = false;
 					if (
