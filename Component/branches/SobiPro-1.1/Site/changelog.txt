@@ -30,6 +30,8 @@ Legend:
 1.1.0 (28 June 2013)
 -------------------
 
+   (+) Possibility to prevent bootstrap CSS loading
+
    (!) Larger JS and CSS files are minimised now
    (!) Bootstrap CSS updated to version 2.3.2
    (!) Font Awesome updated to version 3.1.0/3.1.1
