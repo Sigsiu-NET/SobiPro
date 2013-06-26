@@ -61,7 +61,7 @@ Legend:
    (#) security redirection for specific files only if mod_rewrite available
    (#) Width of image upload field reduced; setting from configuration removed
    (#) fixed width of file upload progress bar and message removed
-   (#) CSS tweaks for URL field
+   (#) CSS tweaks for URL field in default2 template
 
 
 -------------------
