@@ -56,10 +56,12 @@ class SPJsTxt extends SPController
 
 	protected function translate()
 	{
+		$term = Sobi::Txt( SPRequest::cmd( 'term' ) );
+		Sobi::Trigger( 'Translate', 'Text', array( &$term ) );
 		SPFactory::mainframe()
 				->cleanBuffer()
 				->customHeader();
-		echo json_encode( array( 'translation' => Sobi::Txt( SPRequest::cmd( 'term' ) ) ) );
+		echo json_encode( array( 'translation' => $term ) );
 		exit;
 	}
 
