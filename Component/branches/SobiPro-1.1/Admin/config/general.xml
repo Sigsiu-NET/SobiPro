@@ -204,7 +204,6 @@
 
 										</fieldset>
 									</tab>
-
 									<tab label="SEC.CFG.ALPHAMENU_SETTINGS">
 										<fieldset>
 											<field type="toggle" name="spcfg[alphamenu.show]" value="alphamenu.show" label="SECN.CFG.SHOW_ALPHA_MENU" prefix="show" />
@@ -213,6 +212,15 @@
 											<field type="select" label="SECN.CFG.ALPHA_FIELD" name="spcfg[alphamenu.primary_field]" selected="alphamenu.primary_field" values="alphaMenuFields" class="input-large" />
 											<field type="select" label="SECN.CFG.ALPHA_FIELDS" multi="true" size="12" name="spcfg[alphamenu.extra_fields_array]" selected="alphamenu.extra_fields_array" values="alphaMenuFields" class="input-large" />
 										</fieldset>
+									</tab>
+									<tab label="SECN.CFG.SETTINGS_ADVANCED">
+										<div class="row-fluid">
+											<div class="span12">
+												<fieldset>
+													<field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled" label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="yes_no" />
+												</fieldset>
+											</div>
+										</div>
 									</tab>
 								</tabs>
 								<message label="SECN.CFG.WARNING" type="info" dismiss-button="false" class="spConfigAlert" />
