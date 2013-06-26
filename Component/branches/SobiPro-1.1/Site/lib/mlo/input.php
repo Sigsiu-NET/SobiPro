@@ -141,7 +141,7 @@ abstract class SPHtml_Input
 		$f .= self::file( $name . '-file', 0, $classes, $accept );
 		$f .= '</div>';
 		if ( !( $stupidInternetExplorer ) ) {
-			$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-xlarge selected pull-left\" value=\"{$value}\"/>";
+			$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-large selected pull-left\" value=\"{$value}\"/>";
 		}
 		$f .= '<div class="btn-group">';
 		if ( !( $stupidInternetExplorer ) ) {

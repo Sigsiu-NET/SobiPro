@@ -57,7 +57,9 @@ Legend:
    (#) Escaping field suffix
    (#) XMLCall error fixed
    (#) Trigger in search called before the priorities have been rearranged
-   (#) Cached view missing current template name. Override via template package doesn't work
+   (#) Cached view missing current template name; override via template package doesn't work
+   (#) security redirection for specific files only if mod_rewrite available
+   (#) Width of image upload field reduced; setting from configuration removed
 
 
 -------------------
