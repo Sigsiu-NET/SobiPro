@@ -60,6 +60,8 @@ Legend:
    (#) Cached view missing current template name; override via template package doesn't work
    (#) security redirection for specific files only if mod_rewrite available
    (#) Width of image upload field reduced; setting from configuration removed
+   (#) fixed width of file upload progress bar and message removed
+   (#) CSS tweaks for URL field
 
 
 -------------------
