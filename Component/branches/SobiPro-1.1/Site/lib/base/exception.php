@@ -135,9 +135,10 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 		if ( !( strstr( $errFile, 'sobipro' ) ) ) {
 			return false;
 		}
-		static $cs = false;
-		if ( $cs ) {
+		static $cs = 0;
+		if ( $cs > 100 ) {
 			echo '<h1>Error handler: Violation of critical section. Possible infinite loop. Error reporting temporary disabled. ' . $errString . '</h1>';
+			$cs = 0;
 			return false;
 		}
 		if ( !class_exists( 'SPLoader' ) ) {
@@ -148,6 +149,7 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 			$error = json_decode( str_replace( 'json://', null, $errString ), true );
 		}
 		if ( ini_get( 'error_reporting' ) < $errNumber && !( isset( $error[ 'code' ] ) && $error[ 'code' ] ) ) {
+			$cs = 0;
 			return false;
 		}
 		$backTrace = null;
@@ -165,6 +167,7 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 		else {
 			$retCode = 0;
 			if ( !( strstr( $errFile, 'sobi' ) ) ) {
+				$cs = 0;
 				return false;
 			}
 			/* stupid errors we already handle
@@ -172,33 +175,38 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 			 * before it happens
 			 */
 			if ( strstr( $errString, 'gzinflate' ) ) {
+				$cs = 0;
 				return false;
 			}
 			if ( strstr( $errString, 'compress' ) ) {
+				$cs = 0;
 				return false;
 			}
 			if ( strstr( $errString, 'domdocument.loadxml' ) ) {
+				$cs = 0;
 				return false;
 			}
 			/** This really sucks - why do I have the possibility to override a method when I cannot change its parameters :(
 			 * A small design flaw - has to be changed later */
 			if ( strstr( $errString, 'should be compatible with' ) ) {
+				$cs = 0;
 				return false;
 			}
 			/* output of errors / call stack causes sometimes it - it's not really important */
 			if ( strstr( $errString, 'Property access is not allowed yet' ) ) {
+				$cs = 0;
 				return false;
 			}
 			$section = 'PHP';
 		}
-		$cs = true;
+		$cs++;
 		SPException::storeError( $errNumber, $retCode, $errString, $errFile, $errLine, $section, $errContext, $backTrace );
 		if ( $retCode ) {
 			SPLoader::loadClass( 'base.mainframe' );
 			SPLoader::loadClass( 'cms.base.mainframe' );
 			SPFactory::mainframe()->runAway( $errString, $retCode, $backTrace );
 		}
-		$cs = false;
+		$cs = 0;
 		/** do not display our internal errors because this is an array */
 		if ( $error ) {
 			return true;
