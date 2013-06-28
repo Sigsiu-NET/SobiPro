@@ -42,7 +42,7 @@ class SPCMSHelper extends SPJoomlaCMSHelper
 	 */
 	public static function minCmsVersion( $recommended = false )
 	{
-		return $recommended ? array( 'major' => 2, 'minor' => 5, 'build' => 0 ) : array( 'major' => 1, 'minor' => 7, 'build' => 3 );
+		return $recommended ? array( 'major' => 2, 'minor' => 5, 'build' => 11 ) : array( 'major' => 2, 'minor' => 5, 'build' => 0 );
 	}
 
 	/**
