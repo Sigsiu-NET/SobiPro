@@ -198,6 +198,7 @@
 			<field name="category.id" value="category.id" />
 			<field name="category.parent" value="category.parent" />
 			<field name="method" default="xhr" />
+			<field name="sid" value="category.sid" />
 		</hidden>
 	</config>
 </definition>
