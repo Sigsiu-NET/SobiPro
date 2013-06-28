@@ -25,6 +25,7 @@
 @background: #ffffff;
 @font: #333;
 @font-a: #0000B3;
+@font-a-hover: #00007b;
 @font-sobipro: #993333;
 @font-size: 14px;
 @font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -330,8 +331,9 @@ div.spScreenTitle h4 {
   color: @font-a;
 }
 
-.SobiPro a:hover {
-  color: #00007b;
+.SobiPro a:hover,
+.SobiPro a:focus {
+  color: @font-a-hover;
 }
 
 .modal-footer .btn,
@@ -423,7 +425,7 @@ fieldset label {
 }
 
 #SPAdminForm .nav-tabs a:hover {
-  color: #00007b; /*#005580;*/
+  color: @font-a-hover; /*#005580;*/
 }
 
 #SPAdminForm .controls .btn:active,
