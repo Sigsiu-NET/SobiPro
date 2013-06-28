@@ -77,7 +77,8 @@
 									<field type="select" label="SECN.CFG.SECTION_TEMPLATE" name="spcfg[section.template]" selected="section.template" values="templatesList" class="input-xlarge" />
 									<field type="toggle" name="spcfg[general.top_menu]" value="general.top_menu" label="SECN.CFG.SHOW_TOP_MENU" prefix="show" />
 									<field type="toggle" name="spcfg[general.parse_template_content]" value="general.parse_template_content" label="SECN.CFG.PARSE_TPL_CONTENT" prefix="yes_no" />
-								</fieldset>
+                                    <field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled" label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="yes_no" />
+                                </fieldset>
 								<div style="margin-top:40px;"></div>
 								<tabs>
 									<tab label="SECN.CFG.CLISTING_SETTINGS">
@@ -212,15 +213,6 @@
 											<field type="select" label="SECN.CFG.ALPHA_FIELD" name="spcfg[alphamenu.primary_field]" selected="alphamenu.primary_field" values="alphaMenuFields" class="input-large" />
 											<field type="select" label="SECN.CFG.ALPHA_FIELDS" multi="true" size="12" name="spcfg[alphamenu.extra_fields_array]" selected="alphamenu.extra_fields_array" values="alphaMenuFields" class="input-large" />
 										</fieldset>
-									</tab>
-									<tab label="SECN.CFG.SETTINGS_ADVANCED">
-										<div class="row-fluid">
-											<div class="span12">
-												<fieldset>
-													<field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled" label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="yes_no" />
-												</fieldset>
-											</div>
-										</div>
 									</tab>
 								</tabs>
 								<message label="SECN.CFG.WARNING" type="info" dismiss-button="false" class="spConfigAlert" />
