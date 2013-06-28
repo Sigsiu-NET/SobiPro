@@ -26,6 +26,9 @@
   margin: -250px 0 0 -280px;
   top: 50%;
 }
+.SobiPro .modal.fade.in {
+  top: 50%;
+}
 .SobiPro .popover-inner .spclose {
   padding-right: 8px;
   padding-top: 5px;
