@@ -196,8 +196,8 @@ abstract class SPController extends SPObject implements SPControl
 				break;
 			case 'resetCounter':
 				if ( $this->authorise( 'edit', '*' ) ) {
-					$r = true;
 					$this->_model->countVisit( true );
+					exit( true );
 				}
 				break;
 			default:
