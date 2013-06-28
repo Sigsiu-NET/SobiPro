@@ -674,7 +674,7 @@ abstract class SPDBObject extends SPObject
 						->loadObject();
 				$counter = $db->select( 'counter', 'spdb_counter', array( 'sid' => $this->id ) )
 						->loadResult();
-				if ( $counter ) {
+				if ( $counter !== null ) {
 					$this->counter = $counter;
 				}
 				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$obj ) );

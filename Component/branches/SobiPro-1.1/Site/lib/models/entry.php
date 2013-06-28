@@ -127,7 +127,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		if( $this->id ) {
 			$counter = SPFactory::db()->select( 'counter', 'spdb_counter', array( 'sid' => $this->id ) )
 					->loadResult();
-			if ( $counter ) {
+			if ( $counter !== null ) {
 				$this->counter = $counter;
 			}
 		}
