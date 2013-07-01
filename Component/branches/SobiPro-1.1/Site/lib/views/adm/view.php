@@ -1587,11 +1587,13 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param string $template
+	 * @return $this
 	 */
-	public function setTemplate( $template )
+	public function & setTemplate( $template )
 	{
 		$this->_template = $template;
 		Sobi::Trigger( 'setTemplate', $this->name(), array( &$this->_template ) );
+		return $this;
 	}
 
 	/**

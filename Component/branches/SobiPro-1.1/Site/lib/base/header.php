@@ -101,29 +101,6 @@ final class SPHeader
 
 	public function & initBase( $adm = false )
 	{
-//		if ( $adm ) {
-//			$this->addJsFile( array( 'sobipro', 'adm.sobipro', 'jquery', 'adm.interface' ) );
-//		}
-//		else {
-//			$this->addCssFile( 'sobipro' )
-//					->addJsFile( 'sobipro' );
-//		}
-//		if ( SOBI_CMS != 'joomla3' ) {
-//			$this->addCssFile( array( 'bootstrap.bootstrap', 'icons' ) )
-//					->addJsFile( array( 'jquery', 'bootstrap' ) );
-//		}
-//		else {
-//			$this->addCssFile( array( 'bootstrap.bootstrap', 'icons' ) )
-//					->addJsFile( 'jqnc' );
-//		}
-//		if ( $adm ) {
-//			$this->addCssFile( 'adm.sobipro' );
-//		}
-//		else {
-//			$this->addCssFile( 'sobipro' );
-//		}
-//		return $this;
-
 		if ( $adm ) {
 			$this->addCssFile( array( 'bootstrap.bootstrap', 'icons', 'adm.sobipro' ) );
 			$this->addJsFile( array( 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface' ) );
@@ -440,7 +417,7 @@ final class SPHeader
 					$index *= 100;
 				}
 				if ( $file == 'bootstrap.bootstrap' ) {
-					if ( !( Sobi::Cfg( 'template.bootstrap-disabled' ) ) ) {
+					if ( !( Sobi::Cfg( 'template.bootstrap-disabled' ) ) || defined( 'SOBIPRO_ADM' ) ) {
 						/** we want bootstrap loaded as the very first because we have to override some things */
 						$index = -100;
 					}
@@ -757,7 +734,7 @@ final class SPHeader
 								else {
 									$realUrl = Sobi::FixPath( $rPath . '/' . $url );
 								}
-								$realUrl = str_replace( array( '"', "'", ), null, $realUrl );
+								$realUrl = str_replace( array( '"', "'", ' ' ), null, $realUrl );
 								$fc = str_replace( $url, $realUrl, $fc );
 							}
 						}
