@@ -109,6 +109,9 @@ final class SPHeader
 			$this->addCssFile( array( 'sobipro' ) )
 					->addJsFile( array( 'sobipro', 'jquery', 'jqnc' ) );
 		}
+		if ( SOBI_CMS != 'joomla3' ) {
+			$this->addJsFile( 'jquery-migrate' );
+		}
 		return $this;
 	}
 
