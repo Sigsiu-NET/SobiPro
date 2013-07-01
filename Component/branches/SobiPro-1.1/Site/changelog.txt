@@ -30,8 +30,8 @@ Legend:
 1.1.1 (1 July 2013)
 -------------------
 
-   (#) Removing spaces in CSS path in cached file
-   (#) Bootstrap not loaded in administrator area when "disable bootstrap" option activated
+   (#) Removing spaces from CSS paths in cached files
+   (#) Bootstrap not loaded in administrator area when "prevent bootstrap loading" is activated
    (#) Declaration of SPFrontView::setTemplate() incompatible with the interface
    (#) Missing argument 3 for SPField_Category::searchNarrowResults()
 
