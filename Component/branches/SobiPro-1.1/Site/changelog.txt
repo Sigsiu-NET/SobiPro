@@ -30,6 +30,8 @@ Legend:
 1.1.1 (1 July 2013)
 -------------------
 
+   (+) Added jquery-migrate for jQuery backward compatibility
+
    (#) Removing spaces from CSS paths in cached files
    (#) Bootstrap not loaded in administrator area when "prevent bootstrap loading" is activated
    (#) Declaration of SPFrontView::setTemplate() incompatible with the interface
@@ -37,7 +39,6 @@ Legend:
    (#) en-GB preload not enabled by default
    (#) Typo in English language file
 
-   (+) Added jquery-migrate for backward compatibility
 
 -------------------
 1.1.0 (28 June 2013)
