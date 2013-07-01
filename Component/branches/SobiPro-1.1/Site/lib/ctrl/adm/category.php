@@ -354,7 +354,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				->assign( $this->_task, 'task' )
 				->assign( SPFactory::CmsHelper()->userSelect( 'category.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true ), 'owner' )
 				->assign( $id, 'cid' )
-				->assign( SPFactory::registry()->get( 'current_section' ), 'sid' )
+//				->assign( SPFactory::registry()->get( 'current_section' ), 'sid' )
 				->addHidden( Sobi::Section(), 'pid' );
 		Sobi::Trigger( 'Category', 'EditView', array( &$view ) );
 		$view->display();

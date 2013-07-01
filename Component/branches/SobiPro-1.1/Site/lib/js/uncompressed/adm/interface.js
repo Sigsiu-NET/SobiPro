@@ -256,14 +256,14 @@ SobiPro.jQuery( document ).ready( function ()
 	}
 	SobiPro.jQuery( '.counter-reset' ).click( function ()
 	{
-		"use strict";
 		var button = SobiPro.jQuery( this );
+		var sid = SobiPro.jQuery( '#SP_sid' ).val() ? SobiPro.jQuery( '#SP_sid' ).val() : SobiPro.jQuery( '[name^="category.id"]' ).val();
 		if ( button.html() ) {
 			SobiPro.jQuery.ajax( {
 				'type': 'post',
 				'url': SobiProAdmUrl.replace( '%task%', button.attr( 'rel' ) + '.resetCounter' ),
 				'data': {
-					'sid': SobiPro.jQuery( '#SP_sid' ).val(),
+					'sid': sid,
 					'format': 'raw'
 				},
 				'dataType': 'json',
