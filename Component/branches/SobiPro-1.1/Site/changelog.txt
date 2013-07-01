@@ -35,6 +35,7 @@ Legend:
    (#) Declaration of SPFrontView::setTemplate() incompatible with the interface
    (#) Missing argument 3 for SPField_Category::searchNarrowResults()
    (#) en-GB preload not enabled by default
+   (#) Typo in English language file
 
 
 -------------------
