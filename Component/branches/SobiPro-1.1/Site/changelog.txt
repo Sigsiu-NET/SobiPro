@@ -37,6 +37,7 @@ Legend:
    (#) en-GB preload not enabled by default
    (#) Typo in English language file
 
+   (+) Added jquery-migrate for backward compatibility
 
 -------------------
 1.1.0 (28 June 2013)
