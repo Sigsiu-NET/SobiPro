@@ -95,6 +95,9 @@ class com_sobiproInstallerScript
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_counter` ( `sid` INT(11)  NOT NULL, `counter` INT(11) NOT NULL, `lastUpdate` DATETIME NOT NULL, PRIMARY KEY (`sid`) );' );
 		$db->query();
 
+		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( 'engb_preload',  '1',  '0', NULL ,  'lang' )" );
+		$db->query();
+
 		try {
 			$db->setQuery( 'DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;' );
 			$db->query();
