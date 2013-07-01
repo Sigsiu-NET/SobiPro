@@ -27,6 +27,14 @@ Legend:
  (!) - Change
 
 -------------------
+1.1.1 (1 July 2013)
+-------------------
+
+   (#) Removing spaces in CSS path in cached file
+   (#) Bootstrap not loaded in administrator area when "disable bootstrap" option activated
+
+
+-------------------
 1.1.0 (28 June 2013)
 -------------------
 

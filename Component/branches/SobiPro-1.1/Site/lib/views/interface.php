@@ -34,6 +34,6 @@ interface SPView
 	public function display();
 	public function parseTemplate();
 	public function & assign( &$var, $label );
-	public function setTemplate( $template );
+	public function & setTemplate( $template );
 	public function setTitle( $title );
 }

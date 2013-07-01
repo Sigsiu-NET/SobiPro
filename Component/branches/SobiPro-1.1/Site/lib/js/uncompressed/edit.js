@@ -32,7 +32,6 @@ SobiPro.jQuery( document ).ready( function ()
 		{
 			e.preventDefault();
 			var proxy = SobiPro.jQuery( this );
-//			SobiPro.DebOut( proxy );
 			proxy.parent().find( '.close' ).click( function ()
 			{
 				proxy.popover( 'hide' );

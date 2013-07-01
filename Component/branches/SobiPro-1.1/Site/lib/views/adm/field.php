@@ -66,14 +66,16 @@ class SPFieldAdmView extends SPAdmView
 
 	/**
 	 * @param string $template
+	 * @return $this
 	 */
-	public function setTemplate( $template )
+	public function & setTemplate( $template )
 	{
 		if ( !$this->_template ) {
 			$this->_template = $template;
 		}
 		$this->_templates[ ] = $template;
 		Sobi::Trigger( 'setTemplate', $this->name(), array( &$this->_templates ) );
+		return $this;
 	}
 
 	/**
