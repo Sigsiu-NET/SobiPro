@@ -742,8 +742,9 @@ class SPField extends SPObject
 	 *
 	 * @param mixed $request
 	 * @param array $results
+	 * @param array $priorities
 	 */
-	public function searchNarrowResults( $request, &$results )
+	public function searchNarrowResults( $request, &$results, &$priorities )
 	{
 		if ( $this->_type && method_exists( $this->_type, 'searchNarrowResults' ) ) {
 			$this->fullInit();
