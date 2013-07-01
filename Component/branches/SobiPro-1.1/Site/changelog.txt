@@ -34,7 +34,7 @@ Legend:
    (#) Bootstrap not loaded in administrator area when "prevent bootstrap loading" is activated
    (#) Declaration of SPFrontView::setTemplate() incompatible with the interface
    (#) Missing argument 3 for SPField_Category::searchNarrowResults()
-   (#) en-GB preload enabled by default
+   (#) en-GB preload not enabled by default
 
 
 -------------------
