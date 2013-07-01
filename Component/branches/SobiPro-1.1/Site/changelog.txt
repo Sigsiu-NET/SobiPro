@@ -32,6 +32,7 @@ Legend:
 
    (#) Removing spaces in CSS path in cached file
    (#) Bootstrap not loaded in administrator area when "disable bootstrap" option activated
+   (#) Declaration of SPFrontView::setTemplate() incompatible with the interface
 
 
 -------------------

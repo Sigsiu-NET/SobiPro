@@ -51,7 +51,6 @@ class SPCategoryAdmView extends SPSectionAdmView
 	 */
 	public function display()
 	{
-		SPLoader::loadClass( 'html.tooltip' );
 		switch ( $this->get( 'task' ) ) {
 //			case 'list':
 //				$this->listSection();
