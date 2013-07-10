@@ -10,7 +10,7 @@
 	<version>1.1.1</version>
 	<codename>Budgie</codename>
 	<description></description>
-	<version_number>1.1.0</version_number>
+	<version_number>1.1.1</version_number>
 	<SobiPro>
 		<requirements>
 			<core version="1.0.0.2625" />
