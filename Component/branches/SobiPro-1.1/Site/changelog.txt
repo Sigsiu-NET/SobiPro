@@ -32,6 +32,7 @@ Legend:
 
    (#) Wrong parameter in AlphaListingAfterGetEntries Trigger (Issue #964)
    (#) JavaScript file uploader preserving expired form (Issue #928)
+   (#) Category field set to non-editable with "fixed choice" method do not allow edit entries (Issue #966)
 
 -------------------
 1.1.1 (1 July 2013)
