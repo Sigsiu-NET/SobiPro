@@ -24,7 +24,6 @@
 
 SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 {
-	"use strict";
 	var proxy = this;
 	this.settings = {
 		'hideProgressBar': true,
@@ -103,6 +102,7 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 		file.appendTo( form );
 		var c = file.clone( file );
 		c.appendTo( container );
+		proxy.attachListener( c );
 		// frak you damn IE
 		form.appendTo( SobiPro.jQuery( '#SobiPro' ) );
 		SobiPro.jQuery( '#' + id ).ajaxForm( {
@@ -118,15 +118,16 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 			complete: function ( xhr )
 			{
 				proxy.complete( xhr );
+				form.detach();
 			}
 		} ).submit();
 	};
 
-	this.find( 'input:file' ).change( function ()
-		{
-			if ( SobiPro.jQuery( this ).val() ) {
+	this.attachListener = function( el ) {
+		el.change( function () {
+			if ( el.val() ) {
 				proxy.find( '.upload, .remove' ).removeAttr( 'disabled' );
-				var fullPath = SobiPro.jQuery( this ).val();
+				var fullPath = el.val();
 				var startIndex = (fullPath.indexOf( '\\' ) >= 0 ? fullPath.lastIndexOf( '\\' ) : fullPath.lastIndexOf( '/' ));
 				var filename = fullPath.substring( startIndex );
 				if ( filename.indexOf( '\\' ) === 0 || filename.indexOf( '/' ) === 0 ) {
@@ -135,8 +136,10 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 				proxy.find( '.selected' ).val( filename );
 				setTimeout( function() { proxy.upload() }, 500 );
 			}
-		}
-	);
+		} );
+	};
+
+	this.attachListener( this.find( 'input:file' ) );
 
 	this.find( '.select' ).click( function ()
 	{
