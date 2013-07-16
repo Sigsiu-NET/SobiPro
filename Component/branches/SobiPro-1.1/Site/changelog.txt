@@ -27,6 +27,13 @@ Legend:
  (!) - Change
 
 -------------------
+1.1.2 (XX July 2013)
+-------------------
+
+   (#) Wrong parameter in AlphaListingAfterGetEntries Trigger (Issue #964)
+   (#) JavaScript file uploader preserving expired form (Issue #928)
+
+-------------------
 1.1.1 (1 July 2013)
 -------------------
 
