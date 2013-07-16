@@ -56,6 +56,10 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	public function __construct( &$field )
 	{
 		parent::__construct( $field );
+		if ( $this->method == 'fixed' ) {
+			$this->editable = true;
+			$this->editLimit= 5;
+		}
 		if ( $this->method == 'fixed' && in_array( SPRequest::task(), array( 'entry.add', 'entry.edit' ) ) ) {
 			$this->isOutputOnly = true;
 		}
