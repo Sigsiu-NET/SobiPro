@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -37,7 +33,7 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	/**
 	 * @var int
 	 */
-	protected $size =  10;
+	protected $size = 10;
 	/**
 	 * @var string
 	 */
@@ -57,14 +53,14 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		static $lang = null;
-		if( !( $lang ) ) {
+		if ( !( $lang ) ) {
 			$lang = Sobi::Lang( false );
 		}
 		$table = $db->join(
 			array(
 				array( 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ),
 				array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
-				array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue','ldata.sKey' ) ),
+				array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue', 'ldata.sKey' ) ),
 			)
 		);
 		try {
@@ -78,48 +74,47 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 					'ldata.oType' => 'field_option',
 					'ldata.fid' => $this->id,
 				),
-				'scopy', 0,  0, true /*, 'sdata.optValue' */
+				'scopy', 0, 0, true /*, 'sdata.optValue' */
 			);
 			$data = $db->loadObjectList();
-			$order = SPFactory::cache()->getVar( 'order_'.$this->nid );
-			if( !( $order ) ) {
+			$order = SPFactory::cache()->getVar( 'order_' . $this->nid );
+			if ( !( $order ) ) {
 				$db->select( 'optValue', 'spdb_field_option', array( 'fid' => $this->id ), 'optPos' );
 				$order = $db->loadResultArray();
-				SPFactory::cache()->addVar( $order, 'order_'.$this->nid );
+				SPFactory::cache()->addVar( $order, 'order_' . $this->nid );
 			}
 			// check which version the user may see
 			$copy = $this->checkCopy();
-			if( $data && count( $data ) ) {
+			if ( $data && count( $data ) ) {
 				$rawData = array();
 				$sRawData = array();
 				$copied = false;
 				foreach ( $data as $selected ) {
 					// if there was at least once copy
-					if( $selected->scopy ) {
+					if ( $selected->scopy ) {
 						$copied = true;
 					}
 				}
 				// check what we should show
-				$remove = ( int ) $copied && $copy;
+				$remove = ( int )$copied && $copy;
 				foreach ( $data as $selected ) {
-					if(  $selected->scopy == $remove ) {
+					if ( $selected->scopy == $remove ) {
 						// if not already set or the language fits better
-						if( !( isset( $rawData[ $selected->optValue ] ) ) || $selected->language == $lang )	{
+						if ( !( isset( $rawData[ $selected->optValue ] ) ) || $selected->language == $lang ) {
 							$rawData[ $selected->optValue ] = $selected->sValue;
 						}
 					}
 				}
 				foreach ( $order as $opt ) {
-					if( isset( $rawData[ $opt ] ) ) {
-						$sRawData[] = $rawData[ $opt ];
+					if ( isset( $rawData[ $opt ] ) ) {
+						$sRawData[ ] = $rawData[ $opt ];
 					}
 				}
 				$fData = implode( "</li>\n\t<li>", $sRawData );
 				$fData = "<ul id=\"{$this->nid}\" class=\"{$this->cssClass}\">\n\t<li>{$fData}</li>\n</ul>\n";
 				$fullData->baseData = $fData;
 			}
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_SELECTED_OPTIONS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 	}
@@ -147,39 +142,56 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	{
 		$baseData = $this->getRaw();
 		$list = array();
-		$order = SPFactory::cache()->getVar( 'order_'.$this->nid );
-		if( !( $order ) ) {
+		$order = SPFactory::cache()->getVar( 'order_' . $this->nid );
+		if ( !( $order ) ) {
 			$order = SPFactory::db()->select( 'optValue', 'spdb_field_option', array( 'fid' => $this->id ), 'optPos' )->loadResultArray();
-			SPFactory::cache()->addVar( $order, 'order_'.$this->nid );
+			SPFactory::cache()->addVar( $order, 'order_' . $this->nid );
 		}
-		if( is_array( $baseData ) && count( $baseData ) ) {
+		if ( is_array( $baseData ) && count( $baseData ) ) {
 			$this->cssClass = ( strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData' );
-			$this->cssClass = $this->cssClass.' '.$this->nid;
+			$this->cssClass = $this->cssClass . ' ' . $this->nid;
 			$this->cleanCss();
 			foreach ( $order as $opt ) {
-				if( isset( $baseData[ $opt ] ) ) {
-					$list[] = array( '_tag' => 'li', '_value' => SPLang::clean( $baseData[ $opt ] ), '_class' => $opt,/* '_id' => trim( $this->nid.'_'.strtolower( $opt ) )*/ );
+				if ( isset( $baseData[ $opt ] ) ) {
+					$list[ ] = array( '_tag' => 'li', '_value' => SPLang::clean( $baseData[ $opt ] ), '_class' => $opt, /* '_id' => trim( $this->nid.'_'.strtolower( $opt ) )*/ );
 				}
 			}
 			foreach ( $this->options as $opt ) {
-				$struct[] = array(
-					'_complex' => 1,
-					'_data' => $opt[ 'label' ],
-					'_attributes' => array( 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
-				);
+				if ( isset( $opt[ 'options' ] ) && is_array( $opt[ 'options' ] ) ) {
+					foreach( $opt[ 'options' ] as $sub ) {
+						$struct[ ] = array(
+							'_complex' => 1,
+							'_data' => $sub[ 'label' ],
+							'_attributes' => array( 'group' => $opt[ 'id' ], 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
+						);
+//						$group[ ] = array(
+//							'_complex' => 1,
+//							'_data' => $sub[ 'label' ],
+//							'_tag' => 'option',
+//							'_attributes' => array( 'selected' => ( isset( $baseData[ $sub[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
+//						);
+					}
+				}
+				else {
+					$struct[ ] = array(
+						'_complex' => 1,
+						'_data' => $opt[ 'label' ],
+						'_attributes' => array( 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
+					);
+				}
 			}
 			$data = array(
 				'ul' => array(
-				'_complex' => 1,
-				'_data' => $list,
-				'_attributes' => array( /* 'id' => $this->nid, */ 'class' => $this->cssClass ) )
+					'_complex' => 1,
+					'_data' => $list,
+					'_attributes' => array( 'class' => $this->cssClass ) )
 			);
 		}
-		if( count( $list ) ) {
+		if ( count( $list ) ) {
 			return array(
 				'_complex' => 1,
 				'_data' => $data,
-				'_attributes' => array( 'lang' => $this->lang , 'class' => $this->cssClass),
+				'_attributes' => array( 'lang' => $this->lang, 'class' => $this->cssClass ),
 				'_options' => $struct,
 			);
 		}
@@ -190,14 +202,14 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	 */
 	protected function fetchData( $request )
 	{
-		if( is_array( $request ) && count( $request ) ) {
+		if ( is_array( $request ) && count( $request ) ) {
 			$selected = array();
 			foreach ( $request as $opt ) {
 				/* check if such option exist at all */
-				if( !( isset( $this->optionsById[ $opt ] ) ) ) {
+				if ( !( isset( $this->optionsById[ $opt ] ) ) ) {
 					throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $opt, $this->name ) );
 				}
-				$selected[] = preg_replace( '/^[a-z0-9]\.\-\_/ei', null, $opt );
+				$selected[ ] = preg_replace( '/^[a-z0-9]\.\-\_/ei', null, $opt );
 			}
 			return $selected;
 		}

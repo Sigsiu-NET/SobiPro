@@ -198,7 +198,7 @@ abstract class SPJoomlaFs
 			self::mkdir( dirname( $destination ) );
 		}
 		/** Ajax uploader exception */
-		if ( strstr( $name, SOBI_PATH ) ) {
+		if ( strstr( $name, str_replace( '\\', '/', SOBI_PATH ) ) ) {
 			return self::move( $name, $destination );
 		}
 		return Jfile::upload( $name, $destination );
