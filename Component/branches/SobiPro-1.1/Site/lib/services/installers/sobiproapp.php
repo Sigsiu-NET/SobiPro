@@ -523,6 +523,7 @@ class SPAppInstaller extends SPInstaller
 			case 'adm':
 			case 'front':
 			case 'css':
+			case 'less':
 				$path = Sobi::FixPath( SPLoader::newDir( Sobi::FixPath( $path ), $base ) . '/' );
 				break;
 			case 'img':

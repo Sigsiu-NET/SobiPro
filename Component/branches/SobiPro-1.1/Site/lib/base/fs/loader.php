@@ -447,6 +447,10 @@ abstract class SPLoader
 			case 'media.css':
 				$spoint = SOBI_MEDIA . DS . 'css' . DS;
 				break;
+			case 'less':
+			case 'media.less':
+				$spoint = SOBI_MEDIA . DS . 'less' . DS;
+				break;
 			case 'media':
 				$spoint = SOBI_MEDIA . DS;
 				break;
