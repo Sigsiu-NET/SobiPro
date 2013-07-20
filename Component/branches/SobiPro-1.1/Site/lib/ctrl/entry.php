@@ -36,6 +36,8 @@ class SPEntryCtrl extends SPController
 	 */
 	protected $_defTask = 'details';
 
+	protected $store = array();
+
 	/**
 	 */
 	public function execute()
@@ -252,6 +254,7 @@ class SPEntryCtrl extends SPController
 	private function getCache( $tsId, $cache = 'requestcache' )
 	{
 		$store = SPFactory::cache()->getVar( 'request_cache_' . $tsId );
+		$this->store = $store;
 		/* try from Sobi Cache first */
 		if ( $store && isset( $store[ 'post' ] ) && isset( $store[ 'store' ] ) && isset( $store[ 'files' ] ) ) {
 			$post = $store[ 'post' ];
@@ -384,7 +387,9 @@ class SPEntryCtrl extends SPController
 		if ( isset( $this->_tCfg[ 'general' ][ 'functions' ] ) && $this->_tCfg[ 'general' ][ 'functions' ] ) {
 			$customClass = SPLoader::loadClass( '/' . str_replace( '.php', null, $this->_tCfg[ 'general' ][ 'functions' ] ), false, 'templates' );
 			if ( method_exists( $customClass, 'BeforeStoreEntry' ) ) {
-				$customClass::BeforeStoreEntry( $this->_model, $request );
+				$customClass::BeforeStoreEntry( $this->_model, $this->store[ 'post' ] );
+				SPFactory::registry()->set( 'requestcache_stored', $this->store );
+				SPFactory::registry()->set( 'requestcache', $this->store[ 'post' ] );
 			}
 		}
 
