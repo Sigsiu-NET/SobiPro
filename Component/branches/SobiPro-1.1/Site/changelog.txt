@@ -30,6 +30,8 @@ Legend:
 1.1.2 (XX July 2013)
 -------------------
 
+   (+) Calling Joomla! Cache cleaner after SobiPro cache has been invalidated
+
    (#) Wrong parameter in AlphaListingAfterGetEntries Trigger (Issue #964)
    (#) JavaScript file uploader preserving expired form (Issue #928)
    (#) Category field set to non-editable with "fixed choice" method do not allow edit entries (Issue #966)
