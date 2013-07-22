@@ -202,6 +202,7 @@ final class SPCache
 	public function & cleanSection( $section = 0, $system = true )
 	{
 		$sid = $section ? $section : $this->_section;
+		JFactory::getCache()->cache->clean();
 		if ( $section == Sobi::Section() && $this->enabled() ) {
 			$this->Exec( "BEGIN; DELETE FROM vars; COMMIT;" );
 			$this->Exec( "BEGIN; DELETE FROM objects; COMMIT;" );
@@ -267,6 +268,7 @@ final class SPCache
 
 	protected function cleanXML( $xml )
 	{
+		JFactory::getCache()->cache->clean();
 		if ( count( $xml ) ) {
 			$relations = array();
 			foreach ( $xml as $cache ) {
@@ -428,6 +430,7 @@ final class SPCache
 	public function & deleteObj( $type, $id, $sid = 0, $lang = null )
 	{
 		$reinit = false;
+		JFactory::getCache()->cache->clean();
 		if ( $this->enabled() ) {
 			if ( $id && $this->_section == -1 ) {
 				$section = SPFactory::config()->getParentPath( $id );
@@ -466,6 +469,7 @@ final class SPCache
 	 */
 	public function & deleteVar( $id, $section = 0, $lang = null )
 	{
+		JFactory::getCache()->cache->clean();
 		if ( $this->enabled() ) {
 			$lang = $lang ? $lang : Sobi::Lang( false );
 			$section = $section ? $section : $this->_section;
@@ -598,6 +602,7 @@ final class SPCache
 
 	private function cleanTemp( $force = false )
 	{
+		JFactory::getCache()->cache->clean();
 		$this->cleanDir( SPLoader::dirPath( 'var.js' ), 'js', $force );
 		$this->cleanDir( SPLoader::dirPath( 'var.css' ), 'css', $force );
 		$this->cleanDir( SPLoader::dirPath( 'tmp.edit' ), -1, $force );
@@ -629,7 +634,6 @@ final class SPCache
 			$file = SPFactory::db()
 					->select( array( 'fileName', 'template', 'configFile', 'cid' ), 'spdb_view_cache', $query )
 					->loadRow();
-//			SPConfig::debOut(SPFactory::db()->getQuery());
 			$cacheFile = SPLoader::path( 'var.xml.' . $file[ 0 ], 'front', true, 'xml' );
 			if ( !( $cacheFile ) ) {
 				return false;
