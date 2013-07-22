@@ -32,12 +32,15 @@ Legend:
 
    (+) Calling Joomla! Cache cleaner after SobiPro cache has been invalidated
 
+   (!) Style revisions to default2 template and SobiPro frontend CSS
+
    (#) Wrong parameter in AlphaListingAfterGetEntries Trigger (Issue #964)
    (#) JavaScript file uploader preserving expired form (Issue #928)
    (#) Category field set to non-editable with "fixed choice" method do not allow edit entries (Issue #966)
    (#) Wrong directory separator in path comparison for Ajax file upload exception (Issue #930)
    (#) Missing select list nodes in a multi select list with list's groups (Issue #953)
-   (#) Template method "BeforeStoreEntry" getting a data array in administrator area but name of the request in frontend
+   (#) Template method "BeforeStoreEntry" gets data array in administrator area but name of the request in frontend
+
 
 -------------------
 1.1.1 (1 July 2013)

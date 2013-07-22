@@ -20,7 +20,6 @@
  * $Date$
  * $Revision$
  * $Author$
- * $HeadURL$
  */
 
 /* Warning:

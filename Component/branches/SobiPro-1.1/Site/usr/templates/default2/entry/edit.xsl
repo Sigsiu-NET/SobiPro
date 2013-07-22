@@ -45,7 +45,7 @@
 								<div class="control-label">
 									<input name="{$fieldId}Payment" id="{$fieldId}-payment" value="" type="checkbox" class="payment-box" />
 								</div>
-								<div class="alert controls">
+								<div class="alert spAlert controls">
 									<xsl:value-of select="fee_msg" /><xsl:text> </xsl:text>
 									<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )" />
 								</div>
