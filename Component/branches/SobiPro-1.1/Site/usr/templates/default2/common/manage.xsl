@@ -27,7 +27,7 @@
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:template name="manage">
 		<xsl:if test="entry/approve_url or entry/edit_url or entry/publish_url or entry/delete_url">
-			<div class="btn-group pull-left">
+			<div class="btn-group spManage pull-left">
 				<a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
 					<i class="icon-edit"></i>
 				</a>
