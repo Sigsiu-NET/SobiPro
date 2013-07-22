@@ -378,6 +378,7 @@ final class SPCache
 	 */
 	public function & addObj( $obj, $type, $id, $sid = 0, $force = false )
 	{
+		JFactory::getCache()->cache->clean();
 		if ( $this->enabled( !( $force ) ) ) {
 			static $startTime = 0;
 			if ( !( $startTime ) && class_exists( 'Sobi' ) ) {
