@@ -31,6 +31,7 @@ Legend:
 -------------------
 
    (+) Calling Joomla! Cache cleaner after SobiPro cache has been invalidated
+   (+) Keep-Alive method to avoid session expire
 
    (!) Style revisions to default2 template and SobiPro frontend CSS
 

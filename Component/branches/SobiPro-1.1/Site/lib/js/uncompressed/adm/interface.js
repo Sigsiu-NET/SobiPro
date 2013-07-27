@@ -377,4 +377,11 @@ SobiPro.jQuery( document ).ready( function ()
 	if ( SobiPro.jQuery( '.spFileUpload' ).length ) {
 		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
 	}
+	function spKeepAlive()
+	{
+		jQuery.ajax( { url: 'index.php' } );
+		setTimeout( spKeepAlive, 300000 );
+	}
+	spKeepAlive();
+
 } );
