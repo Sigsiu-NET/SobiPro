@@ -187,9 +187,11 @@ class SPCrawler extends SPController
 			foreach ( $header as $line ) {
 				if ( strstr( $line, 'SobiPro' ) ) {
 					$line = explode( ':', $line );
-					$sid = trim( $line[ 1 ] );
-					if ( $sid != Sobi::Section() ) {
-						return 412;
+					if ( trim( $line[ 1 ] ) == 'SobiPro' ) {
+						$sid = trim( $line[ 1 ] );
+						if ( $sid != Sobi::Section() ) {
+							return 412;
+						}
 					}
 				}
 			}
