@@ -41,6 +41,7 @@ Legend:
    (#) Wrong directory separator in path comparison for Ajax file upload exception (Issue #930)
    (#) Missing select list nodes in a multi select list with list's groups (Issue #953)
    (#) Template method "BeforeStoreEntry" gets data array in administrator area but name of the request in frontend
+   (#) No category/section title when page number has been added
 
 
 -------------------

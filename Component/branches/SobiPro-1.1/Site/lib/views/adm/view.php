@@ -123,8 +123,9 @@ class SPAdmView extends SPObject implements SPView
 			$this->assign( $this->sections(), 'sections-list' );
 			$nid = Sobi::Section( 'nid' );
 			$groups = Sobi::My( 'groups' );
+			$disableOverrides = null;
 			if ( is_array( $groups ) ) {
-				$disableOverrides = array_intersect( Sobi::My( 'groups' ), Sobi::Cfg( 'templates.disable-overrides', array() ) );
+				$disableOverrides = array_intersect( $groups, Sobi::Cfg( 'templates.disable-overrides', array() ) );
 			}
 			/** Case we have also override  */
 			if ( !( $disableOverrides ) && SPLoader::translatePath( "{$type}.{$nid}.{$template}", 'adm', true, 'xml' ) ) {

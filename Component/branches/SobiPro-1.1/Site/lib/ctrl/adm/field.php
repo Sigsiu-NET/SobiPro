@@ -115,7 +115,10 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	protected function loadTemplate( $field, $view )
 	{
 		$nid = '/' . Sobi::Section( 'nid' ) . '/';
-		$disableOverrides = array_intersect( Sobi::My( 'groups' ), Sobi::Cfg( 'templates.disable-overrides', array() ) );
+		$disableOverrides = null;
+		if ( is_array( Sobi::My( 'groups' ) ) ) {
+			$disableOverrides = array_intersect( Sobi::My( 'groups' ), Sobi::Cfg( 'templates.disable-overrides', array() ) );
+		}
 		if ( SPLoader::translatePath( 'field.' . $field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
 			/** Case we have also override  */
 			/** section override */
