@@ -581,10 +581,12 @@ final class SPHeader
 	public function & setTitle( $title )
 	{
 		//SPFactory::mainframe()->setTitle( SPLang::clean( $title ) );
-		if ( is_array( $title ) )
+		if ( is_array( $title ) ) {
 			$this->title = $title;
-		else
+		}
+		else {
 			$this->title = array( SPLang::clean( $title ) );
+		}
 		return $this;
 	}
 

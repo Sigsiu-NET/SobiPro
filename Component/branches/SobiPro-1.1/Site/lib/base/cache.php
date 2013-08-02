@@ -202,7 +202,7 @@ final class SPCache
 	public function & cleanSection( $section = 0, $system = true )
 	{
 		$sid = $section ? $section : $this->_section;
-		JFactory::getCache()->cache->clean();
+		$this->cleanJCache();
 		if ( $section == Sobi::Section() && $this->enabled() ) {
 			$this->Exec( "BEGIN; DELETE FROM vars; COMMIT;" );
 			$this->Exec( "BEGIN; DELETE FROM objects; COMMIT;" );
@@ -268,7 +268,7 @@ final class SPCache
 
 	protected function cleanXML( $xml )
 	{
-		JFactory::getCache()->cache->clean();
+		$this->cleanJCache();
 		if ( count( $xml ) ) {
 			$relations = array();
 			foreach ( $xml as $cache ) {
@@ -378,7 +378,7 @@ final class SPCache
 	 */
 	public function & addObj( $obj, $type, $id, $sid = 0, $force = false )
 	{
-		JFactory::getCache()->cache->clean();
+		$this->cleanJCache();
 		if ( $this->enabled( !( $force ) ) ) {
 			static $startTime = 0;
 			if ( !( $startTime ) && class_exists( 'Sobi' ) ) {
@@ -431,7 +431,7 @@ final class SPCache
 	public function & deleteObj( $type, $id, $sid = 0, $lang = null )
 	{
 		$reinit = false;
-		JFactory::getCache()->cache->clean();
+		$this->cleanJCache();
 		if ( $this->enabled() ) {
 			if ( $id && $this->_section == -1 ) {
 				$section = SPFactory::config()->getParentPath( $id );
@@ -470,7 +470,7 @@ final class SPCache
 	 */
 	public function & deleteVar( $id, $section = 0, $lang = null )
 	{
-		JFactory::getCache()->cache->clean();
+		$this->cleanJCache();
 		if ( $this->enabled() ) {
 			$lang = $lang ? $lang : Sobi::Lang( false );
 			$section = $section ? $section : $this->_section;
@@ -603,7 +603,7 @@ final class SPCache
 
 	private function cleanTemp( $force = false )
 	{
-		JFactory::getCache()->cache->clean();
+		$this->cleanJCache();
 		$this->cleanDir( SPLoader::dirPath( 'var.js' ), 'js', $force );
 		$this->cleanDir( SPLoader::dirPath( 'var.css' ), 'css', $force );
 		$this->cleanDir( SPLoader::dirPath( 'tmp.edit' ), -1, $force );
@@ -784,6 +784,13 @@ final class SPCache
 			} catch ( SPException $x ) {
 				Sobi::Error( 'XML-Cache', $x->getMessage() );
 			}
+		}
+	}
+
+	protected function cleanJCache()
+	{
+		if ( SOBI_CMS != 'joomla15' ) {
+			JFactory::getCache()->cache->clean();
 		}
 	}
 }
