@@ -46,6 +46,9 @@ Legend:
    (#) Error when trying to add entry in backend with a filter set (Issue #990)
    (#) Image field as required field doesn't work (Issue #974)
    (#) Alpha search field selector missing the field alias (Issue #980)
+   (#) Category icons on the windows machines (Issue #997)
+
+
 
 -------------------
 1.1.1 (1 July 2013)
