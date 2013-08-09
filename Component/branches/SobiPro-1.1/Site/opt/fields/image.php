@@ -211,6 +211,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 		$del = SPRequest::bool( $this->nid . '_delete', false, $request );
 		$dexs = strlen( $data );
+		if ( $this->required && !( $dexs ) ) {
+			throw new SPException( SPLang::e( 'FIELD_REQUIRED_ERR', $this->name ) );
+		}
 
 		$fileSize = SPRequest::file( $this->nid, 'size' );
 		if ( $fileSize > $this->maxSize ) {
