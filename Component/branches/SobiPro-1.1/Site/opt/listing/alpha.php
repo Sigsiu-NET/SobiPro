@@ -114,11 +114,12 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			}
 		}
 		else {
-			foreach ( $letters as $i => $letter ) {
+			foreach ( $letters as $letter ) {
+				$task = 'list.alpha.' . trim( strtolower( $letter ) ) . '.' . $field;
 				$l[ ] = array(
 					'_complex' => 1,
 					'_data' => trim( $letter ),
-					'_attributes' => array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => 'list.alpha.' . trim( strtolower( $letter ) ) ) ) )
+					'_attributes' => array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => $task ) ) )
 				);
 			}
 		}

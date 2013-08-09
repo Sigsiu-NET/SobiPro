@@ -45,7 +45,7 @@ Legend:
    (#) No category/section title when page number has been added
    (#) Error when trying to add entry in backend with a filter set (Issue #990)
    (#) Image field as required field doesn't work (Issue #974)
-
+   (#) Alpha search field selector missing the field alias (Issue #980)
 
 -------------------
 1.1.1 (1 July 2013)
