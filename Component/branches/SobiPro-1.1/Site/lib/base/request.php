@@ -169,9 +169,10 @@ abstract class SPRequest
 	 * @param string $name variable name
 	 * @param int $default default value
 	 * @param string $method request method
+	 * @param bool $noZero
 	 * @return int
 	 */
-	static public function int( $name, $default = 0, $method = 'REQUEST' )
+	static public function int( $name, $default = 0, $method = 'REQUEST', $noZero = false )
 	{
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
@@ -181,6 +182,7 @@ abstract class SPRequest
 		else {
 			self::$val = $default;
 		}
+		self::$val = $noZero && !( self::$val ) ? $default : self::$val;
 		return self::$val;
 	}
 
@@ -203,11 +205,12 @@ abstract class SPRequest
 	 *
 	 * @param string $method request method
 	 * @param int $default
+	 * @param bool $noZero
 	 * @return int
 	 */
-	static public function sid( $method = 'REQUEST', $default = 0 )
+	static public function sid( $method = 'REQUEST', $default = 0, $noZero = false )
 	{
-		return self::int( 'sid', $default, $method );
+		return self::int( 'sid', $default, $method, $noZero );
 	}
 
 	/**
