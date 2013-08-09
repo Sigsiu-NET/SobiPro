@@ -276,7 +276,7 @@ class SpAdmToolbar
 					break;
 				case 'url':
 					if ( isset( $button[ 'sid' ] ) && $button[ 'sid' ] == 'true' ) {
-						$link = Sobi::Url( array( 'task' => $button[ 'task' ], 'sid' => SPRequest::sid( 'request', SPRequest::int( 'pid' ) ) ) );
+						$link = Sobi::Url( array( 'task' => $button[ 'task' ], 'sid' => SPRequest::sid( 'request', SPRequest::int( 'pid' ), true ) ) );
 					}
 					else {
 						$link = Sobi::Url( $button[ 'task' ] ? $button[ 'task' ] : $button[ 'url' ] );

@@ -192,7 +192,6 @@ class SPConfigAdmCtrl extends SPController
 			$view->assign( $alphaFields, 'alphaMenuFields' );
 			$view->assign( $view->languages(), 'languages-list' );
 		}
-		$cfg = SPFactory::config();
 		$view->addHidden( $IP, 'current-ip' );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
 		$view->determineTemplate( 'config', $this->_task );
@@ -203,8 +202,9 @@ class SPConfigAdmCtrl extends SPController
 
 	protected function listTemplates( $tpl = null, $cmsOv = true )
 	{
-		SPFactory::header()->addJsFile( 'dtree' );
-		SPFactory::header()->addCssFile( 'dtree', true );
+		SPFactory::header()
+				->addJsFile( 'dtree' )
+				->addCssFile( 'dtree', true );
 		SPLoader::loadClass( 'base.fs.directory_iterator' );
 		$ls = Sobi::Cfg( 'live_site' ) . 'media/sobipro/tree';
 		$nodes = null;
