@@ -189,8 +189,8 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$db = SPFactory::db();
 
 		/* get the lists ordering and limits */
-		$eLimit = Sobi::GetUserState( 'adm.entries.limit', 'elimit', Sobi::Cfg( 'admin.entries-limit', 25 ) );
-		$cLimit = Sobi::GetUserState( 'adm.categories.limit', 'climit', Sobi::Cfg( 'admin.categories-limit', 15 ) );
+		$eLimit = Sobi::GetUserState( 'entries.limit', 'elimit', Sobi::Cfg( 'admin.entries-limit', 25 ) );
+		$cLimit = Sobi::GetUserState( 'categories.limit', 'climit', Sobi::Cfg( 'admin.categories-limit', 15 ) );
 
 		$eLimStart = SPRequest::int( 'eSite', 0 );
 		$cLimStart = SPRequest::int( 'cSite', 0 );
