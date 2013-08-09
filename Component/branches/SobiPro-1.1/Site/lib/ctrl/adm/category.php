@@ -189,8 +189,8 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$db = SPFactory::db();
 
 		/* get the lists ordering and limits */
-		$eLimit = Sobi::GetUserState( 'adm.entries.limit', 'elimit', Sobi::Cfg( 'adm_list.entries_limit', 25 ) );
-		$cLimit = Sobi::GetUserState( 'adm.categories.limit', 'climit', Sobi::Cfg( 'adm_list.cats_limit', 15 ) );
+		$eLimit = Sobi::GetUserState( 'adm.entries.limit', 'elimit', Sobi::Cfg( 'admin.entries-limit', 25 ) );
+		$cLimit = Sobi::GetUserState( 'adm.categories.limit', 'climit', Sobi::Cfg( 'admin.categories-limit', 15 ) );
 
 		$eLimStart = SPRequest::int( 'eSite', 0 );
 		$cLimStart = SPRequest::int( 'cSite', 0 );
@@ -371,7 +371,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 	 */
 	protected function parseOrdering( $subject, $col, $def, &$lim, &$lStart, &$sids )
 	{
-		$ord = SPFactory::user()->getUserState( $subject . '.order', $col, $def );
+		$ord = Sobi::GetUserState( $subject . '.order', $col, Sobi::Cfg( 'admin.' . $subject . '-order', $def ) );
 		/** legacy - why the hell I called it order?! */
 		$ord = str_replace( 'order', 'position', $ord );
 		$ord = str_replace( array( 'e_s', 'c_s' ), null, $ord );

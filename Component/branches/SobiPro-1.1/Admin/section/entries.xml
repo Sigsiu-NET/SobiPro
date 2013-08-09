@@ -81,6 +81,7 @@
 								<option value="100" />
 							</values>
 						</field>
+						<field type="button" name="save-ordering" icon="save" class="btn ctrl-default-ordering" data-target="entries"/>
 					</div>
 				</header>
 				<table>

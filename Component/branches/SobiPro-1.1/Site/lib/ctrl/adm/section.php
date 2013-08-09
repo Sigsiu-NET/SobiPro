@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -67,7 +63,6 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	 */
 	protected function view( $allEntries, $term = null )
 	{
-		$config = SPFactory::config();
 		/* @var SPdb $db */
 		$db = SPFactory::db();
 		$c = array();
@@ -77,13 +72,14 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		}
 		$this->_model->init( Sobi::Section() );
 		/* get the lists ordering and limits */
-		$eLimit = Sobi::GetUserState( 'adm.entries.limit', 'elimit', $config->key( 'adm_list.entries_limit', 25 ) );
-		$cLimit = Sobi::GetUserState( 'adm.categories.limit', 'climit', $config->key( 'adm_list.cats_limit', 15 ) );
+		$eLimit = Sobi::GetUserState( 'adm.entries.limit', 'elimit', Sobi::Cfg( 'admin.entries-limit', 25 ) );
+		$cLimit = Sobi::GetUserState( 'adm.categories.limit', 'climit', Sobi::Cfg( 'admin.categories-limit', 15 ) );
+
 		$eLimStart = SPRequest::int( 'eSite', 0 );
 		$cLimStart = SPRequest::int( 'cSite', 0 );
 
 		/* get child categories and entries */
-		/* @todo: need better method - the query can be very large with lot of entries  */
+		/* @todo: need better method - the query can be very large with lot of entries */
 		if ( !( $allEntries ) ) {
 			$e = $this->_model->getChilds();
 			$c = $this->_model->getChilds( 'category' );
@@ -243,11 +239,12 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	 * @param string $def
 	 * @param int $lim
 	 * @param int $lStart
+	 * @param $sids
 	 * @return string
 	 */
 	protected function parseOrdering( $subject, $col, $def, &$lim, &$lStart, &$sids )
 	{
-		$ord = Sobi::GetUserState( $subject . '.order', $col, $def );
+		$ord = Sobi::GetUserState( $subject . '.order', $col, Sobi::Cfg( 'admin.' . $subject . '-order', $def ) );
 		$ord = str_replace( array( 'e_s', 'c_s' ), null, $ord );
 		if ( strstr( $ord, '.' ) ) {
 			$ord = explode( '.', $ord );

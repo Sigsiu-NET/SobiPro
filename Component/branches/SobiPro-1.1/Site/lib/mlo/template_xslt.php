@@ -310,7 +310,8 @@ class SPTemplateXSLT implements SPTemplate
 				foreach ( $data[ '_attributes' ] as $an => $av ) {
 					$an = SPLang::varName( $an );
 					// legacy for 1.0
-					if ( strstr( $an, '-' ) ) {
+					// data- is allowed html5 attribute but data_ will not be valid
+					if ( strstr( $an, '-' ) && !( strstr( $an, 'data-' ) ) ) {
 						$a = $this->_xml->createAttribute( str_replace( '-', '_', $an ) );
 						$a->appendChild( $this->_xml->createTextNode( $av ) );
 						$e->appendChild( $a );

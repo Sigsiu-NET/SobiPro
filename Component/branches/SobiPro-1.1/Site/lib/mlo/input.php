@@ -213,9 +213,10 @@ abstract class SPHtml_Input
 	 * @param string $value - selected value
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @param string $class
+	 * @param null $icon
 	 * @return string
 	 */
-	public static function button( $name, $value = null, $params = null, $class = null )
+	public static function button( $name, $value = null, $params = null, $class = null, $icon = null )
 	{
 		self::checkArray( $params );
 		$f = null;
@@ -225,7 +226,7 @@ abstract class SPHtml_Input
 			SPFactory::header()->addJsCode( "
 				function {$name}Redirect()
 				{
-					window.location ='{$params[ 'href' ]}';
+					window.location ='{$params['href']}';
 					return false;
 				}
 			" );
@@ -241,6 +242,9 @@ abstract class SPHtml_Input
 		}
 		$params = self::params( $params );
 		$value = self::translate( $value );
+		if( $icon ) {
+			$value = "<i class=\"icon-{$icon}\"></i> ".$value;
+		}
 		$f = "\n<button type=\"button\" name=\"{$name}\" {$h}{$params}>{$value}</button>\n";
 		if ( isset( $a ) ) {
 			$f = $a . $f . "</a>\n";
@@ -342,7 +346,7 @@ abstract class SPHtml_Input
 	}
 
 	/**
-	 * Cretaes group of check boxes
+	 * Creates group of check boxes
 	 *
 	 * example:
 	 *
@@ -353,8 +357,9 @@ abstract class SPHtml_Input
 	 * @param string $id - id prefix of the field
 	 * @param array $selected - two-dimensional array with values and their labels. array( 'enabled' => 1, 'disabled' => 0 )
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
-	 * @param string $field - on which site from the label the field should be displayed
+	 * @param array $order
 	 * @param bool $asArray - returns array instead of a string
+	 * @internal param string $field - on which site from the label the field should be displayed
 	 * @return string
 	 */
 	public static function checkBoxGroup( $name, $values, $id, $selected = null, $params = null, $order = array( 'field', 'image', 'label' ), $asArray = false )
@@ -398,6 +403,7 @@ abstract class SPHtml_Input
 	 * @param bool $checked - is selected or not / or string $checked the checked value
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @param array $order - on which site from the label the field should be displayed and on which the image
+	 * @param null $image
 	 * @return string
 	 */
 	public static function checkbox( $name, $value, $label = null, $id = null, $checked = false, $params = null, $order = array( 'field', 'image', 'label' ), $image = null )
@@ -940,8 +946,9 @@ abstract class SPHtml_Input
 		if ( $style ) {
 			$style = " style=\"{$style}\"";
 		}
+		$bid = strlen( $id ) ? $id : md5( rand( 0, 10000 ) );
 		$id = strlen( $id ) ? '" id="' . $id . '"' : null;
-		$save = $saveText ? '<a href="#" id="' . $id . 'Save" class="btn btn-primary save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>' : null;
+		$save = $saveText ? '<a href="#" id="' . $bid . '-save" class="btn btn-primary save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>' : null;
 		$html .= '<div class="' . $classes . $id . $style . '>
 					<div class="modal-header">
 						<h3>' . ( $header ) . '</h3>

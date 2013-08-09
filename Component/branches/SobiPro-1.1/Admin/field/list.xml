@@ -84,6 +84,7 @@
 								<option value="order.desc" label="FMN.ORDER_BY_ORDER_DESC" />
 							</values>
 						</field>
+						<field type="button" name="save-ordering" icon="save" class="btn ctrl-default-ordering" data-target="fields"/>
 					</div>
 				</header>
 				<table>
