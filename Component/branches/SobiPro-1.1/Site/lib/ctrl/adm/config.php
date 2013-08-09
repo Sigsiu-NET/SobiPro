@@ -56,6 +56,9 @@ class SPConfigAdmCtrl extends SPController
 				SPFactory::cache()->cleanSection();
 				$this->response( Sobi::Back(), Sobi::Txt( 'MSG.CACHE_CLEANED' ), false, SPC::SUCCESS_MSG );
 				break;
+			case 'saveOrdering':
+				$this->saveDefaultOrdering();
+				break;
 			case 'crawler':
 				$this->crawler();
 				break;
@@ -83,6 +86,16 @@ class SPConfigAdmCtrl extends SPController
 		$view->display();
 		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
 		return true;
+	}
+
+	protected function saveDefaultOrdering()
+	{
+		$target = SPRequest::cmd( 'target' );
+		$order = Sobi::GetUserState( $target . '.order', null );
+		SPFactory::config()->saveCfg( 'admin.' . $target . '-order', $order );
+		$limit = Sobi::GetUserState( 'admin.' . $target . '.limit', 10 );
+		SPFactory::config()->saveCfg( 'admin.' . $target . '-limit', $limit );
+		$this->response( Sobi::Back(), Sobi::Txt( 'MSG_DEFAULT_ORDERING_SAVED' ), false );
 	}
 
 	/**

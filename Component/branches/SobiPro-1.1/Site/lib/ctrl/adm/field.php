@@ -428,11 +428,15 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$fid = $field->saveNew( $this->attr );
 				$field->save( $this->attr );
 			} catch ( SPException $x ) {
-				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $x->getMessage(), false, 'success' );
+				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $x->getMessage(), false, SPC::ERROR_MSG );
 			}
 		}
 		else {
-			$field->save( $this->attr );
+			try {
+				$field->save( $this->attr );
+			} catch ( SPException $x ) {
+				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $x->getMessage(), false, SPC::ERROR_MSG );
+			}
 		}
 		$alias = $field->get( 'nid' );
 		$fieldSets = $field->get( 'sets' );
@@ -549,7 +553,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	protected function parseOrdering( $col, $def )
 	{
-		$order = Sobi::GetUserState( 'fields.order', $col, $def );
+		$order = Sobi::GetUserState( 'fields.order', $col, Sobi::Cfg( 'admin.fields-order', $def ) );
 		$ord = $order;
 		$dir = 'asc';
 		/** legacy - why the hell I called it order?! */

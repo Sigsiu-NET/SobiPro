@@ -540,7 +540,7 @@ abstract class SPController extends SPObject implements SPControl
 					$node = $required->item( $i );
 					$name = $node->attributes->getNamedItem( 'name' )->nodeValue;
 					if ( !( SPRequest::raw( str_replace( '.', '_', $name ) ) ) ) {
-						$this->response( $errorUrl, Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, 'error', array( 'required' => $name ) );
+						$this->response( $errorUrl, Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, SPC::ERROR_MSG, array( 'required' => $name ) );
 					}
 				}
 			}
