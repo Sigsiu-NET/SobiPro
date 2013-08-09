@@ -57,7 +57,8 @@ class SPCategoryView extends SPSectionView implements SPView
 	public function icon()
 	{
 		/* @TODO  */
-		$tpl = str_replace( implode( DS, array( 'usr', 'templates', 'category' ) ), DS.'views'.DS .'tpl'.DS, $this->_template.'.php' );
+		$tpl = str_replace( implode( '/', array( 'usr', 'templates', 'category' ) ), 'views/tpl/', $this->_template.'.php' );
+//		$tpl = str_replace( implode( DS, array( 'usr', 'templates', 'category' ) ), DS.'views'.DS .'tpl'.DS, $this->_template.'.php' );
 		include( $tpl );
 	}
 }
