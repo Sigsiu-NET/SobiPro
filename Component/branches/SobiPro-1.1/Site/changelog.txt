@@ -32,6 +32,7 @@ Legend:
 
    (+) Calling Joomla! Cache cleaner after SobiPro cache has been invalidated
    (+) Keep-Alive method to avoid session expire
+   (+) Possibility to permanent store ordering of lists in administrator area
 
    (!) Style revisions to default2 template and SobiPro frontend CSS
 
