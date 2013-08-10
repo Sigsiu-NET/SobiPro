@@ -47,8 +47,7 @@ Legend:
    (#) Image field as required field doesn't work (Issue #974)
    (#) Alpha search field selector missing the field alias (Issue #980)
    (#) Category icons on the windows machines (Issue #997)
-
-
+   (#) Publishing entry from frontend - cache issue (Issue #1000)
 
 -------------------
 1.1.1 (1 July 2013)

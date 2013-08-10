@@ -124,7 +124,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			$this->url = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->get( 'nid' ) : $this->get( 'name' ), 'pid' => $this->get( 'primary' ), 'sid' => $this->id ), false, true, true, true );
 			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fieldsIds, &$this->fieldsNids ) );
 		}
-		if( $this->id ) {
+		if ( $this->id ) {
 			$counter = SPFactory::db()->select( 'counter', 'spdb_counter', array( 'sid' => $this->id ) )
 					->loadResult();
 			if ( $counter !== null ) {
@@ -228,8 +228,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 		foreach ( $this->fields as $field ) {
 			$field->changeState( $this->id, $state );
 		}
-		SPFactory::cache()->purgeSectionVars();
-		SPFactory::cache()->deleteObj( 'entry', $this->id );
+		SPFactory::cache()
+				->purgeSectionVars()
+				->deleteObj( 'entry', $this->id )
+				->cleanXMLRelations( $this->categories );
 		Sobi::Trigger( $this->name(), 'AfterChangeState', array( $this->id, $state ) );
 	}
 
