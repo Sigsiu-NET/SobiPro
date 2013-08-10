@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -39,17 +38,22 @@
 				</xsl:call-template>
 				<xsl:apply-templates select="alphaMenu" />
 			</div>
-			<xsl:apply-templates select="messages"/>
+			<xsl:apply-templates select="messages" />
 			<div class="clearfix" />
 			<div class="SPDetailEntry">
 				<xsl:call-template name="manage" />
 				<h1>
 					<xsl:value-of select="entry/name" />
+					<xsl:call-template name="status">
+						<xsl:with-param name="entry" select="entry" />
+					</xsl:call-template>
 				</h1>
 
 				<xsl:for-each select="entry/fields/*">
 					<div>
-						<xsl:attribute name="class"><xsl:value-of select="@css_class" /></xsl:attribute>
+						<xsl:attribute name="class">
+							<xsl:value-of select="@css_class" />
+						</xsl:attribute>
 
 						<xsl:if test="count(data/*) or string-length(data)">
 							<xsl:if test="label/@show = 1">

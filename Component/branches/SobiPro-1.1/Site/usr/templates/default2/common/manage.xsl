@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -69,6 +68,23 @@
 					</xsl:if>
 				</ul>
 			</div>
+		</xsl:if>
+	</xsl:template>
+	<xsl:template name="status">
+		<xsl:param name="entry"/>
+		<xsl:if test="$entry/approved = 0 or $entry/state = 'unpublished'">
+			<xsl:value-of select="php:function( 'SobiPro::AddJsFile', 'bootstrap,bootstrap.tooltips,bootstrap.popover,sobipro.tooltip' )"/>
+			<xsl:value-of select="php:function( 'SobiPro::AddCSSFile', 'bootstrap.bootstrap' )"/>
+		</xsl:if>
+		<xsl:if test="$entry/approved = 0">
+			<a href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNAPPROVED' )}." title="" >
+				<i class="icon-thumbs-down entry-status" />
+			</a>
+		</xsl:if>
+		<xsl:if test="$entry/state = 'unpublished'">
+			<a href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNPUBLISHED' )}." title="" >
+				<i class="icon-remove-sign entry-status" />
+			</a>
 		</xsl:if>
 	</xsl:template>
 </xsl:stylesheet>
