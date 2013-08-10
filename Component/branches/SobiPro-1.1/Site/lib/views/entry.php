@@ -196,7 +196,7 @@ class SPEntryView extends SPFrontView implements SPView
 		$en[ 'counter' ] = $entry->get( 'counter' );
 		$en[ 'approved' ] = $entry->get( 'approved' );
 
- //       $mytime = date( 'Y-m-d H:i:s', time());
+		//       $mytime = date( 'Y-m-d H:i:s', time());
 		if ( $entry->get( 'state' ) == 0 ) {
 			$en[ 'state' ] = 'unpublished';
 		}
@@ -227,7 +227,6 @@ class SPEntryView extends SPFrontView implements SPView
 		if ( Sobi::Can( 'entry', 'publish', '*' ) || ( ( Sobi::My( 'id' ) == $entry->get( 'owner' ) && Sobi::Can( 'entry', 'publish', 'own' ) ) ) ) {
 			$en[ 'publish_url' ] = Sobi::Url( array( 'task' => ( $entry->get( 'state' ) ? 'entry.unpublish' : 'entry.publish' ), 'sid' => $entry->get( 'id' ) ) );
 		}
-
 		$cats = $entry->get( 'categories' );
 		$categories = array();
 		if ( count( $cats ) ) {

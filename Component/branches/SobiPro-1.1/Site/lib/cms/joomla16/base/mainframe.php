@@ -49,7 +49,17 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 			if ( is_array( $title ) ) {
 				$title = implode( ' ', $title );
 			}
-			JToolbarHelper::title( 'SobiPro: ' . $title );
+			static $section = null;
+			if ( !( $section ) ) {
+				$section = Sobi::Section( true );
+			}
+			if ( !( strstr( $title, $section ) ) ) {
+				$title = "SobiPro[ {$section} ] - {$title}";
+			}
+			else {
+				$title = 'SobiPro - ' . $title;
+			}
+			JToolbarHelper::title( $title );
 		}
 		parent::setTitle( $title, $forceAdd );
 	}

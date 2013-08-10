@@ -29,12 +29,14 @@
 		<span class="lead">
 			<a href="{url}">
 				<xsl:value-of select="name" />
+				<xsl:call-template name="status">
+					<xsl:with-param name="entry" select="." />
+				</xsl:call-template>
 			</a>
 		</span>
 		<xsl:for-each select="fields/*">
 			<div>
 				<xsl:attribute name="class"><xsl:value-of select="@css_class" /></xsl:attribute>
-
 				<xsl:if test="count(data/*) or string-length(data)">
 					<xsl:if test="label/@show = 1">
 						<strong><xsl:value-of select="label" />: </strong>
