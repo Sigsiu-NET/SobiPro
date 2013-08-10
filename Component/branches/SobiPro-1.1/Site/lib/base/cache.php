@@ -286,28 +286,36 @@ final class SPCache
 		}
 	}
 
-	protected function cleanXMLRelations( $sid )
+	public function & cleanXMLRelations( $sid )
 	{
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
-			$xml = SPFactory::db()
-					->select( 'cid', 'spdb_view_cache_relation', array( 'sid' => $sid ) )
-					->loadResultArray();
-			if ( count( $xml ) ) {
-				$lang = Sobi::Lang( false );
-				$files = SPFactory::db()
-						->select( 'fileName', 'spdb_view_cache', array( 'cid' => $xml, 'language' => $lang ) )
-						->loadResultArray();
-				foreach ( $files as $file ) {
-					$file = SPLoader::path( 'var.xml.' . $file, 'front', false, 'xml' );
-					if ( $file ) {
-						SPFs::delete( $file );
-					}
+			if ( is_array( $sid ) ) {
+				foreach ( $sid as $id ) {
+					$this->cleanXMLRelations( $id );
 				}
-				SPFactory::db()
-						->delete( 'spdb_view_cache_relation', array( 'cid' => $xml ) )
-						->delete( 'spdb_view_cache', array( 'cid' => $xml ) );
+			}
+			else {
+				$xml = SPFactory::db()
+						->select( 'cid', 'spdb_view_cache_relation', array( 'sid' => $sid ) )
+						->loadResultArray();
+				if ( count( $xml ) ) {
+					$lang = Sobi::Lang( false );
+					$files = SPFactory::db()
+							->select( 'fileName', 'spdb_view_cache', array( 'cid' => $xml, 'language' => $lang ) )
+							->loadResultArray();
+					foreach ( $files as $file ) {
+						$file = SPLoader::path( 'var.xml.' . $file, 'front', false, 'xml' );
+						if ( $file ) {
+							SPFs::delete( $file );
+						}
+					}
+					SPFactory::db()
+							->delete( 'spdb_view_cache_relation', array( 'cid' => $xml ) )
+							->delete( 'spdb_view_cache', array( 'cid' => $xml ) );
+				}
 			}
 		}
+		return $this;
 	}
 
 	/**
