@@ -22,7 +22,6 @@
  * $Author$
  * $HeadURL$
  */
-
 defined( '_JEXEC' ) || exit( 'Restricted access' );
 if( !( JRequest::getVar( 'spconfirm', 0 ) ) ) {
 ?>
