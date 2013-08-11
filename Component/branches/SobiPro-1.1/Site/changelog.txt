@@ -50,6 +50,7 @@ Legend:
    (#) Category icons on the windows machines (Issue #997)
    (#) Publishing entry from frontend - cache issue (Issue #1000)
    (#) Entry not checked in while hitting "exit" in administrator area
+   (#) Entry approve in frontend gives success message in a warning message type container
 
 -------------------
 1.1.1 (1 July 2013)
