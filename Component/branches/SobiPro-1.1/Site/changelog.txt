@@ -33,6 +33,7 @@ Legend:
    (+) Calling Joomla! Cache cleaner after SobiPro cache has been invalidated
    (+) Keep-Alive method to avoid session expire
    (+) Possibility to permanent store ordering of lists in administrator area
+   (+) Information about entry's status while displaying unapproved/unpublished version in default template
 
    (!) Style revisions to default2 template and SobiPro frontend CSS
 
@@ -48,6 +49,7 @@ Legend:
    (#) Alpha search field selector missing the field alias (Issue #980)
    (#) Category icons on the windows machines (Issue #997)
    (#) Publishing entry from frontend - cache issue (Issue #1000)
+   (#) Entry not checked in while hitting "exit" in administrator area
 
 -------------------
 1.1.1 (1 July 2013)
