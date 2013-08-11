@@ -101,7 +101,6 @@ class SPEntryCtrl extends SPController
 			}
 			Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_model ) );
 			$this->response( Sobi::Url( array( 'sid' => $this->_model->get( 'id' ) ) ), Sobi::Txt( 'EN.APPROVED' ), false, SPC::SUCCESS_MSG );
-//			Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url( array( 'sid' => $this->_model->get( 'id' ) ) ) ), Sobi::Txt( 'EN.APPROVED' ) );
 		}
 		else {
 			Sobi::Error( 'entry', SPLang::e( 'UNAUTHORIZED_ACCESS' ), SPC::ERROR, 403, __LINE__, __FILE__ );
