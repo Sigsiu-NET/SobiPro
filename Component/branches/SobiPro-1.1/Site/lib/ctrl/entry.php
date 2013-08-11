@@ -114,7 +114,7 @@ class SPEntryCtrl extends SPController
 	 */
 	protected function checkIn( $sid, $redirect = true )
 	{
-		parent::checkIn( SPRequest::int( 'entry_id' ), $redirect );
+		parent::checkIn( SPRequest::int( 'entry_id', $sid, 'request', true ), $redirect );
 	}
 
 	/**
