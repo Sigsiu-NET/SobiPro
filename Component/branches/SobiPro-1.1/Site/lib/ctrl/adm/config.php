@@ -62,6 +62,9 @@ class SPConfigAdmCtrl extends SPController
 			case 'crawler':
 				$this->crawler();
 				break;
+			case 'fields':
+				$this->fields();
+				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
 				if ( !( parent::execute() ) && !( $this->view() ) ) {
@@ -72,6 +75,19 @@ class SPConfigAdmCtrl extends SPController
 				}
 				break;
 		}
+	}
+
+	public static function fields( $sid = 0, $types = null )
+	{
+		if ( !( $sid ) ) {
+			$sid = SPRequest::sid( 'request', Sobi::Section(), false );
+		}
+		if ( !( $types ) ) {
+			$types = SPRequest::string( 'types', null );
+			$types = SPFactory::config()->structuralData( $types, true );
+		}
+		$fields = SPConfig::fields( $sid, $types );
+		return $fields;
 	}
 
 	/**
