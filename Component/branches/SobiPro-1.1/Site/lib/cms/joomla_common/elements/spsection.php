@@ -155,7 +155,7 @@ class JElementSPSection extends JElement
 		}
 		$jConfig = JFactory::getConfig();
 		defined( 'DS' ) || define( 'DS', DIRECTORY_SEPARATOR );
-		require_once ( JPATH_SITE . '/components/com_sobipro/lib/sobi.php' );
+		require_once( JPATH_SITE . '/components/com_sobipro/lib/sobi.php' );
 		if ( method_exists( $jConfig, 'getValue' ) ) {
 			Sobi::Init( JPATH_SITE, JFactory::getConfig()->getValue( 'config.language' ) );
 		}
@@ -300,7 +300,7 @@ class JElementSPSection extends JElement
 		return parent::fetchTooltip( $label, $node->attributes( 'msg' ), $node, $control_name, $name );
 	}
 
-	private function getCat()
+	protected function getCat()
 	{
 		$params = array(
 			'id' => 'sp_category',
@@ -419,9 +419,9 @@ class JElementSPSection extends JElement
 			case 'sid':
 				$params = array( 'id' => 'sid', 'class' => 'input-mini', 'style' => 'text-align: center; margin-top: 10px; margin-left: 10px;', 'readonly' => 'readonly' );
 				return '<div class="SobiPro" id="jform_request_sid">'
-						. SPHtml_Input::text( 'type', $this->oTypeName, array( 'id' => 'otype', 'class' => 'input-medium', 'style' => 'text-align: center; margin-top: 10px;', 'readonly' => 'readonly' ) )
-						. SPHtml_Input::text( 'urlparams[sid]', $sid, $params )
-						. '</div>';
+				. SPHtml_Input::text( 'type', $this->oTypeName, array( 'id' => 'otype', 'class' => 'input-medium', 'style' => 'text-align: center; margin-top: 10px;', 'readonly' => 'readonly' ) )
+				. SPHtml_Input::text( 'urlparams[sid]', $sid, $params )
+				. '</div>';
 				break;
 			case 'cid':
 				return $this->getCat();
@@ -560,6 +560,9 @@ class JElementSPSection extends JElement
 				$path = Sobi::FixPath( $path . '/listing' );
 				break;
 			default:
+				if ( strstr( $type, 'list' ) ) {
+					$path = Sobi::FixPath( $path . '/listing' );
+				}
 				break;
 		}
 		if ( file_exists( $path ) ) {

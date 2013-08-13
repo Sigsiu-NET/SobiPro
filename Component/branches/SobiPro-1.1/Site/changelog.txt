@@ -34,6 +34,7 @@ Legend:
    (+) Keep-Alive method to avoid session expire
    (+) Possibility to store ordering of lists in administrator area permanently
    (+) Information about entry's status while displaying unapproved/unpublished version in default template
+   (+) Storing currently displayed entries into user state
 
    (!) Style revisions to default2 template and SobiPro frontend CSS
 

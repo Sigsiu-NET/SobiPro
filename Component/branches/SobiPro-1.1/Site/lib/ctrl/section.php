@@ -257,12 +257,6 @@ class SPSectionCtrl extends SPController
 			$eOrder = array_shift( $eOr );
 			$eDir = implode( '.', $eOr );
 		}
-//
-//        if ( strstr( $eOrder, '.' ) ) {
-//            $eOrder = explode( '.', $eOrder );
-//            $eDir = $eOrder[ 1 ];
-//            $eOrder = $eOrder[ 0 ];
-//        }
 		$pid = $pid ? $pid : SPRequest::sid();
 		/* if sort by name, then sort by the name field */
 		if ( $eOrder == 'name' ) {
@@ -357,6 +351,7 @@ class SPSectionCtrl extends SPController
 			}
 		}
 		if ( $count ) {
+			Sobi::SetUserData( 'currently-displayed-entries', $results );
 			return $results;
 		}
 		return $entries;
