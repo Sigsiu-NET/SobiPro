@@ -329,6 +329,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			Sobi::Error( 'AlphaListing', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		if ( $ids ) {
+			Sobi::SetUserData( 'currently-displayed-entries', $results );
 			return $results;
 		}
 		if ( count( $results ) ) {

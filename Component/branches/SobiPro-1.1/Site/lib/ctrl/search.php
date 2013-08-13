@@ -567,6 +567,7 @@ class SPSearchCtrl extends SPSectionCtrl
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_SESSION_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
+		Sobi::SetUserData( 'currently-displayed-entries', $results );
 		return $results;
 	}
 

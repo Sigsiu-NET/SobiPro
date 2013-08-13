@@ -650,7 +650,7 @@ class SPJoomlaLang
 	 * @param string $lang - (optional) specific language. If not given, use currently set language
 	 * @return array
 	 */
-	public static function translateObject( $sids, $fields = null, $type = null, $lang = null )
+	public static function translateObject( $sids, $fields = array(), $type = null, $lang = null )
 	{
 		/** @todo multiple attr does not work because the id is the object id */
 		$fields = is_array( $fields ) ? $fields : ( strlen( $fields ) ? array( $fields ) : null );
