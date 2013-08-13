@@ -648,9 +648,10 @@ class SPJoomlaLang
 	 * @param array $fields - (optional) array (or string) with properties names to translate. If not given, translates all
 	 * @param string $type - (optional) type of object (section, category, entry). If not given, translates all
 	 * @param string $lang - (optional) specific language. If not given, use currently set language
+	 * @param string $ident
 	 * @return array
 	 */
-	public static function translateObject( $sids, $fields = array(), $type = null, $lang = null )
+	public static function translateObject( $sids, $fields = array(), $type = null, $lang = null, $ident = 'id' )
 	{
 		/** @todo multiple attr does not work because the id is the object id */
 		$fields = is_array( $fields ) ? $fields : ( strlen( $fields ) ? array( $fields ) : null );
@@ -659,7 +660,7 @@ class SPJoomlaLang
 		// when an object name has been entered in a particular language but this language isn't used later
 		// we won't have any label for this certain object
 		//$params = array( 'id' => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );
-		$params = array( 'id' => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );
+		$params = array( $ident => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );
 		$result = array();
 		if ( $type ) {
 			$params[ 'oType' ] = $type;
@@ -669,7 +670,7 @@ class SPJoomlaLang
 		}
 		try {
 			$labels = SPFactory::db()
-					->select( 'id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
+					->select( $ident.' AS id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
 					->loadAssocList();
 			if ( count( $labels ) ) {
 				$aliases = array();

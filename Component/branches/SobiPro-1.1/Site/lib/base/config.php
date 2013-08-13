@@ -200,6 +200,26 @@ class SPConfig
 		return true;
 	}
 
+	public static function fields( $sid = 0, $types = null )
+	{
+		$params = array( 'section' => $sid );
+		if ( $types ) {
+			$params[ 'fieldType' ] = $types;
+		}
+		$fields = array();
+
+		$results = SPFactory::db()
+				->select( 'fid', 'spdb_field', $params, 'position' )
+				->loadResultArray();
+		if ( count( $results ) ) {
+			$labels = SPLang::translateObject( $results, array( 'name' ), 'field', null, 'fid' );
+			foreach ( $results as $id ) {
+				$fields[ $id ] = $labels[ $id ][ 'value' ];
+			}
+		}
+		return $fields;
+	}
+
 	public function structuralData( $data, $force = false )
 	{
 		if ( is_string( $data ) && strstr( $data, '://' ) ) {
@@ -259,7 +279,7 @@ class SPConfig
 			return true;
 		}
 		else {
-			/** @todo need to think here something **/
+			/** @todo need to think here something * */
 			//Sobi::Error( 'config', SPLang::e( 'SET_EXISTING_KEY', $label ), SPC::NOTICE, 0, __LINE__, __CLASS__ );
 			return false;
 		}
