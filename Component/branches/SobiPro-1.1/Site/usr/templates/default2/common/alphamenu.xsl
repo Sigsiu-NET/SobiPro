@@ -23,7 +23,7 @@
  File location: components/com_sobipro/usr/templates/default2/common/alphamenu.xsl $
 -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
     <xsl:include href="alphaindex.xsl" />
     <xsl:template match="alphaMenu">

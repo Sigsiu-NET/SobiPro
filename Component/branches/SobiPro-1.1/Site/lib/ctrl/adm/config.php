@@ -87,7 +87,15 @@ class SPConfigAdmCtrl extends SPController
 			$types = SPFactory::config()->structuralData( $types, true );
 		}
 		$fields = SPConfig::fields( $sid, $types );
-		return $fields;
+		if ( SPRequest::bool( 'fields-xhr' ) ) {
+			SPFactory::mainframe()
+					->cleanBuffer()
+					->customHeader();
+			exit( json_encode( $fields ) );
+		}
+		else {
+			return $fields;
+		}
 	}
 
 	/**

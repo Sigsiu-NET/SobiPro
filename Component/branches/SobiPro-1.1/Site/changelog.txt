@@ -37,6 +37,7 @@ Legend:
    (+) Storing currently displayed entries into user state
 
    (!) Style revisions to default2 template and SobiPro frontend CSS
+   (!) Added php-prefix exclusion to all template in default2 template package
 
    (#) Wrong parameter in AlphaListingAfterGetEntries Trigger (Issue #964)
    (#) JavaScript file uploader preserving expired form (Issue #928)
@@ -53,6 +54,7 @@ Legend:
    (#) Publishing entry from frontend - cache issue (Issue #1000)
    (#) Entry not checked in while hitting "exit" in administrator area
    (#) Entry approve in frontend gives success message in a warning message type container
+   (#) Fixed several validations' errors in default RSS feed template
 
 -------------------
 1.1.1 (1 July 2013)
