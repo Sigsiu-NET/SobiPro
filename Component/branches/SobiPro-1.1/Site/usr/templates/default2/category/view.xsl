@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -23,7 +22,7 @@
  $HeadURL$
 -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 
 	<xsl:include href="../common/navigation.xsl" />
@@ -31,20 +30,25 @@
 	<xsl:include href="../common/alphamenu.xsl" />
 	<xsl:include href="../common/entries.xsl" />
 	<xsl:include href="../common/categories.xsl" />
-	<xsl:include href="../common/messages.xsl"/>
+	<xsl:include href="../common/messages.xsl" />
 	<xsl:template match="/category">
 		<xsl:variable name="rssUrlSection">{"sid":"<xsl:value-of select="section/@id" />","sptpl":"feeds.rss","out":"raw"}
 		</xsl:variable>
-		<xsl:variable name="sectionName"><xsl:value-of select="section" /></xsl:variable>
+		<xsl:variable name="sectionName">
+			<xsl:value-of select="section" />
+		</xsl:variable>
 		<xsl:value-of select="php:function( 'SobiPro::AlternateLink', $rssUrlSection, 'application/atom+xml', $sectionName )" />
-		<xsl:variable name="rssUrl">{"sid":"<xsl:value-of select="id" />","sptpl":"feeds.rss","out":"raw"}</xsl:variable>
-		<xsl:variable name="categoryName"><xsl:value-of select="name" /></xsl:variable>
+		<xsl:variable name="rssUrl">{"sid":"<xsl:value-of select="id" />","sptpl":"feeds.rss","out":"raw"}
+		</xsl:variable>
+		<xsl:variable name="categoryName">
+			<xsl:value-of select="name" />
+		</xsl:variable>
 		<xsl:value-of select="php:function( 'SobiPro::AlternateLink', $rssUrl, 'application/atom+xml', $categoryName )" />
 
 		<xsl:call-template name="topMenu">
 			<xsl:with-param name="searchbox">true</xsl:with-param>
 		</xsl:call-template>
-		<xsl:apply-templates select="messages"/>
+		<xsl:apply-templates select="messages" />
 
 		<xsl:apply-templates select="alphaMenu" />
 

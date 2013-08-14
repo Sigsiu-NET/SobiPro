@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -23,7 +22,7 @@
  $HeadURL$
 -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
 	<xsl:output method="xml" encoding="UTF-8" />
 	<xsl:template match="letters|/menu/alphaMenu/letters">
 		<xsl:variable name="letter">
