@@ -149,11 +149,12 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 	this.find( '.remove' ).click( function ()
 	{
 		var file = proxy.find( 'input:file' );
+		var c = file.clone( file );
 		proxy.find( '.upload, .remove' ).attr( 'disabled', 'disabled' );
 		proxy.find( '.selected' ).val( '' );
-		proxy.find( 'idStore' ).val( '' );
-		file.clone( file ).appendTo( file.parent() );
-		file.detach()
+		proxy.find( '.idStore' ).val( '' );
+		proxy.attachListener( c );
+		c.appendTo( file.parent() );
 	} );
 
 	this.find( '.upload' ).click( function ()
