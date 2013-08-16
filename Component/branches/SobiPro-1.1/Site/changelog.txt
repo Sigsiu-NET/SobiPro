@@ -55,6 +55,7 @@ Legend:
    (#) Entry not checked in while hitting "exit" in administrator area
    (#) Entry approve in frontend gives success message in a warning message type container
    (#) Fixed several validation errors in default2 RSS feed template
+   (#) Missing prefix in SPSectionCtrl::userPermissionsQuery for some particular permissions (Issue #1002)
 
 -------------------
 1.1.1 (1 July 2013)
