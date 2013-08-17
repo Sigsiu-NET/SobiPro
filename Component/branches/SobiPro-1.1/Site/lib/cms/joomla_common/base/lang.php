@@ -320,7 +320,7 @@ class SPJoomlaLang
 				if ( $replacement && ( is_string( $replacement ) || is_numeric( $replacement ) ) ) {
 					$text = str_replace( '{' . $placeHolder . '}', ( string )$replacement, $text );
 				}
-				elseif( $dropEmpty ) {
+				elseif ( $dropEmpty ) {
 					$text = str_replace( '{' . $placeHolder . '}', null, $text );
 				}
 			}
@@ -665,12 +665,15 @@ class SPJoomlaLang
 		if ( $type ) {
 			$params[ 'oType' ] = $type;
 		}
+		if ( in_array( 'alias', $fields ) ) {
+			$fields[ ] = 'nid';
+		}
 		if ( $fields && count( $fields ) ) {
 			$params[ 'sKey' ] = $fields;
 		}
 		try {
 			$labels = SPFactory::db()
-					->select( $ident.' AS id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
+					->select( $ident . ' AS id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
 					->loadAssocList();
 			if ( count( $labels ) ) {
 				$aliases = array();
@@ -683,8 +686,13 @@ class SPJoomlaLang
 					if ( !( isset( $result[ $label[ 'id' ] ] ) ) || $label[ 'language' ] == Sobi::Lang() ) {
 						$result[ $label[ 'id' ] ] = $label;
 					}
-					if ( in_array( 'alias', $fields ) ) {
-						$result[ $label[ 'id' ] ][ 'alias' ] = isset( $aliases[ $label[ 'id' ] ] ) ? $aliases[ $label[ 'id' ] ][ 'nid' ] : null;
+					if ( $label[ 'label' ] == 'nid' ) {
+						$result[ $label[ 'id' ] ][ 'alias' ] = $label[ 'value' ];
+					}
+					if ( in_array( 'nid', $fields ) ) {
+						if ( !( isset( $result[ $label[ 'id' ] ][ 'alias' ] ) ) ) {
+							$result[ $label[ 'id' ] ][ 'alias' ] = isset( $aliases[ $label[ 'id' ] ] ) ? $aliases[ $label[ 'id' ] ][ 'nid' ] : null;
+						}
 					}
 				}
 			}

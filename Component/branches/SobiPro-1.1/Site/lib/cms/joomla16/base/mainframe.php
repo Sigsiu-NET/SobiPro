@@ -53,7 +53,7 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 			if ( !( $section ) ) {
 				$section = Sobi::Section( true );
 			}
-			if ( !( strstr( $title, $section ) ) ) {
+			if ( strlen( $section ) && !( strstr( $title, $section ) ) ) {
 				$title = "SobiPro[ {$section} ] - {$title}";
 			}
 			else {
