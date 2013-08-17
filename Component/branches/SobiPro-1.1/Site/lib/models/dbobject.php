@@ -308,7 +308,11 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function getChilds( $type = 'entry', $recursive = false, $state = 0, $name = false )
 	{
-		$childs = SPFactory::cache()->getVar( 'childs_' . $type . ( $recursive ? '_recursive' : '' ) . ( $name ? '_full' : '' ) . $state, $this->id );
+		static $lang = null;
+		if ( !( $lang ) ) {
+			$lang = Sobi::Lang( false );
+		}
+		$childs = SPFactory::cache()->getVar( 'childs_' . $lang . $type . ( $recursive ? '_recursive' : '' ) . ( $name ? '_full' : '' ) . $state, $this->id );
 		if ( $childs ) {
 			return $childs == SPC::NO_VALUE ? array() : $childs;
 		}
@@ -362,7 +366,7 @@ abstract class SPDBObject extends SPObject
 			}
 		}
 		if ( !$state ) {
-			SPFactory::cache()->addVar( $childs, 'childs_' . $type . ( $recursive ? '_recursive' : '' ) . ( $name ? '_full' : '' ) . $state, $this->id );
+			SPFactory::cache()->addVar( $childs, 'childs_' . $lang . $type . ( $recursive ? '_recursive' : '' ) . ( $name ? '_full' : '' ) . $state, $this->id );
 		}
 		return $childs;
 	}
@@ -750,9 +754,9 @@ abstract class SPDBObject extends SPObject
 	public function isCheckedOut()
 	{
 		if (
-			$this->cout &&
-			$this->cout != Sobi::My( 'id' ) &&
-			strtotime( $this->coutTime ) > time()
+				$this->cout &&
+				$this->cout != Sobi::My( 'id' ) &&
+				strtotime( $this->coutTime ) > time()
 		) {
 			return true;
 		}

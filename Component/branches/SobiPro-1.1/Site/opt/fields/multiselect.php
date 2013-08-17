@@ -105,9 +105,10 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 						}
 					}
 				}
-				foreach ( $order as $opt ) {
+				foreach ( $order as $id => $opt ) {
 					if ( isset( $rawData[ $opt ] ) ) {
 						$sRawData[ ] = $rawData[ $opt ];
+						$this->_selected[ $id ] = $opt;
 					}
 				}
 				$fData = implode( "</li>\n\t<li>", $sRawData );
@@ -147,54 +148,51 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 			$order = SPFactory::db()->select( 'optValue', 'spdb_field_option', array( 'fid' => $this->id ), 'optPos' )->loadResultArray();
 			SPFactory::cache()->addVar( $order, 'order_' . $this->nid );
 		}
-		if ( is_array( $baseData ) && count( $baseData ) ) {
-			$this->cssClass = ( strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData' );
-			$this->cssClass = $this->cssClass . ' ' . $this->nid;
-			$this->cleanCss();
-			foreach ( $order as $opt ) {
-				if ( isset( $baseData[ $opt ] ) ) {
-					$list[ ] = array( '_tag' => 'li', '_value' => SPLang::clean( $baseData[ $opt ] ), '_class' => $opt, /* '_id' => trim( $this->nid.'_'.strtolower( $opt ) )*/ );
-				}
+		$this->cssClass = ( strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData' );
+		$this->cssClass = $this->cssClass . ' ' . $this->nid;
+		$this->cleanCss();
+		foreach ( $order as $opt ) {
+			if ( isset( $baseData[ $opt ] ) ) {
+				$list[ ] = array( '_tag' => 'li', '_value' => SPLang::clean( $baseData[ $opt ] ), '_class' => $opt, /* '_id' => trim( $this->nid.'_'.strtolower( $opt ) )*/ );
 			}
-			foreach ( $this->options as $opt ) {
-				if ( isset( $opt[ 'options' ] ) && is_array( $opt[ 'options' ] ) ) {
-					foreach( $opt[ 'options' ] as $sub ) {
-						$struct[ ] = array(
-							'_complex' => 1,
-							'_data' => $sub[ 'label' ],
-							'_attributes' => array( 'group' => $opt[ 'id' ], 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
-						);
+		}
+		foreach ( $this->options as $opt ) {
+			if ( isset( $opt[ 'options' ] ) && is_array( $opt[ 'options' ] ) ) {
+				foreach ( $opt[ 'options' ] as $sub ) {
+					$struct[ ] = array(
+						'_complex' => 1,
+						'_data' => $sub[ 'label' ],
+						'_attributes' => array( 'group' => $opt[ 'id' ], 'selected' => ( isset( $baseData[ $sub [ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
+					);
 //						$group[ ] = array(
 //							'_complex' => 1,
 //							'_data' => $sub[ 'label' ],
 //							'_tag' => 'option',
 //							'_attributes' => array( 'selected' => ( isset( $baseData[ $sub[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
 //						);
-					}
-				}
-				else {
-					$struct[ ] = array(
-						'_complex' => 1,
-						'_data' => $opt[ 'label' ],
-						'_attributes' => array( 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
-					);
 				}
 			}
-			$data = array(
-				'ul' => array(
+			else {
+				$struct[ ] = array(
 					'_complex' => 1,
-					'_data' => $list,
-					'_attributes' => array( 'class' => $this->cssClass ) )
-			);
+					'_data' => $opt[ 'label' ],
+					'_attributes' => array( 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
+				);
+			}
 		}
-		if ( count( $list ) ) {
-			return array(
+		$data = array(
+			'ul' => array(
 				'_complex' => 1,
-				'_data' => $data,
-				'_attributes' => array( 'lang' => $this->lang, 'class' => $this->cssClass ),
-				'_options' => $struct,
-			);
-		}
+				'_data' => $list,
+				'_attributes' => array( 'class' => $this->cssClass ) )
+		);
+		return array(
+			'_complex' => 1,
+			'_data' => $data,
+			'_attributes' => array( 'lang' => $this->lang, 'class' => $this->cssClass ),
+			'_options' => $struct,
+		);
+
 	}
 
 	/* (non-PHPdoc)
