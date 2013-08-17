@@ -56,7 +56,7 @@ Legend:
    (#) Entry approve in frontend gives success message in a warning message type container
    (#) Fixed several validation errors in default2 RSS feed template
    (#) Missing prefix in SPSectionCtrl::userPermissionsQuery for some particular permissions (Issue #1002)
-   (#) Subcategories urls with multilanguage mode. (Issue #1006)
+   (#) SPLang::translateObject is getting nid from the wrong table (Issue #1006)
 
 -------------------
 1.1.1 (1 July 2013)
