@@ -111,7 +111,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			}
 			// we need to get some information from the object table
 			$this->valid = $this->valid && count( $this->categories ) > 0;
-			$this->loadFields();
+			$this->loadFields( Sobi::Section(), true );
 			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fields ) );
 			if ( count( $this->fields ) ) {
 				foreach ( $this->fields as $field ) {
@@ -571,7 +571,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 */
 	public function save( $request = 'post' )
 	{
-		$this->loadFields( Sobi::Section() );
+		$this->loadFields( Sobi::Section(), true );
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( $this->id ) );
 		/* save the base object data */
 		/* @var SPdb $db */
@@ -642,6 +642,13 @@ class SPEntry extends SPDBObject implements SPDataModel
 			}
 			elseif ( strlen( $cats ) ) {
 				$cats = array( ( int )$cats );
+			}
+		}
+		if ( is_array( $cats ) && count( $cats ) ) {
+			foreach ( $cats as $i => $v ) {
+				if ( !( $v ) ) {
+					unset( $cats[ $i ] );
+				}
 			}
 		}
 		if ( is_array( $cats ) && count( $cats ) ) {
