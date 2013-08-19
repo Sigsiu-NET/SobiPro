@@ -57,6 +57,7 @@ Legend:
    (#) Fixed several validation errors in default2 RSS feed template
    (#) Missing prefix in SPSectionCtrl::userPermissionsQuery for some particular permissions (Issue #1002)
    (#) SPLang::translateObject is getting nid from the wrong table (Issue #1006)
+   (#) Language files are not being removed while uninstalling particular language. (Removed SOBI_ROOT from the log for all apps) (Issue #1007)
 
 -------------------
 1.1.1 (1 July 2013)

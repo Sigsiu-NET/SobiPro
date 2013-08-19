@@ -69,6 +69,11 @@ class SPAppInstaller extends SPInstaller
 		$date = str_replace( array( ':', ' ' ), array( '-', '_' ), SPFactory::config()->date( time() ) );
 		if ( $files && ( $files instanceof DOMNodeList ) && $files->length ) {
 			$log[ 'files' ] = $this->files( $files, $id, "{$dir}/{$id}/backup/{$date}" );
+			if ( count( $log[ 'files' ] ) ) {
+				foreach ( $log[ 'files' ] as $i => $f ) {
+					$log[ 'files' ][ $i ] = str_replace( SOBI_ROOT, null, $f );
+				}
+			}
 		}
 
 		$language = $this->xGetChilds( 'language/file' );
@@ -607,8 +612,12 @@ class SPAppInstaller extends SPInstaller
 		$files = $this->xGetChilds( 'installLog/files/*' );
 		if ( $files && ( $files instanceof DOMNodeList ) ) {
 			for ( $i = 0; $i < $files->length; $i++ ) {
-				if ( SPFs::exists( $files->item( $i )->nodeValue ) ) {
-					SPFs::delete( $files->item( $i )->nodeValue );
+				$file = $files->item( $i )->nodeValue;
+				if ( !( strstr( $file, SOBI_ROOT ) ) ) {
+					$file = Sobi::FixPath( SOBI_ROOT . "/{$file}" );
+				}
+				if ( SPFs::exists( $file ) ) {
+					SPFs::delete( $file );
 				}
 			}
 		}
