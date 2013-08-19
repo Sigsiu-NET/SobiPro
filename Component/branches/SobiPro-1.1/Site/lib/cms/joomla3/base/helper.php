@@ -42,7 +42,7 @@ class SPCMSHelper3 extends SPCMSHelper
 	 */
 	public static function minCmsVersion( $recommended = false )
 	{
-		return $recommended ? array( 'major' => 3, 'minor' => 0, 'build' => 0 ) : array( 'major' => 3, 'minor' => 0, 'build' => 3 );
+		return $recommended ? array( 'major' => 3, 'minor' => 1, 'build' => 5 ) : array( 'major' => 3, 'minor' => 0, 'build' => 3 );
 	}
 
 	/**
