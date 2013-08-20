@@ -58,6 +58,7 @@ Legend:
    (#) Missing prefix in SPSectionCtrl::userPermissionsQuery for some particular permissions (Issue #1002)
    (#) SPLang::translateObject is getting nid from the wrong table (Issue #1006)
    (#) Language files are not being removed while uninstalling particular language. (Removed SOBI_ROOT from the log for all apps) (Issue #1007)
+   (#) Language files aren't checked for requirements
 
 -------------------
 1.1.1 (1 July 2013)
