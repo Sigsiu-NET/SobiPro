@@ -69,10 +69,10 @@ class com_sobiproInstallerScript
 				foreach ( $files as $file ) {
 					if ( $file != '.' && $file != '..' ) {
 						if ( is_dir( $srcpath . '/' . $file ) ) {
-							JFolder::move( $srcpath . '/' . $file, $dest . '/' . $file );
+							JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file );
 						}
 						elseif ( !( file_exists( $dest . '/' . $file ) ) ) {
-							JFile::move( $srcpath . '/' . $file, $dest . '/' . $file );
+							JFile::copy( $srcpath . '/' . $file, $dest . '/' . $file );
 						}
 					}
 				}
