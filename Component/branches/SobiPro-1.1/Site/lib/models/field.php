@@ -574,7 +574,7 @@ class SPField extends SPObject
 			// if the field has own method we have to re-init
 			$this->checkMethod( 'loadData' );
 			if ( $this->_type && method_exists( $this->_type, 'loadData' ) ) {
-				$this->_type->loadData( $sid );
+				$this->_type->loadData( $sid, $this->_fData, $this->_rawData, $this->_data );
 			}
 			if ( $this->editLimit > 0 && is_numeric( $this->_fData->editLimit ) ) {
 				$this->editLimit = $this->_fData->editLimit;
@@ -601,7 +601,7 @@ class SPField extends SPObject
 			else {
 				$this->checkMethod( 'loadData' );
 				if ( $this->_type && method_exists( $this->_type, 'loadData' ) ) {
-					$this->_type->loadData( $sid );
+					$this->_type->loadData( $sid, $this->_fData, $this->_rawData, $this->_data );
 				}
 			}
 		}
