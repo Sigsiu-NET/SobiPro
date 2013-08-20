@@ -116,12 +116,7 @@ class SPJoomlaInstaller
 	 */
 	protected function installExt( $def, $dir )
 	{
-		$xp = new DOMXPath( $def );
-		$requirements = $xp->query( '//SobiPro/requirements/*' );
-		if ( $requirements && ( $requirements instanceof DOMNodeList ) ) {
-			$reqCheck =& SPFactory::Instance( 'services.installers.requirements' );
-			$reqCheck->check( $requirements );
-		}
+		$this->checkRequirements( $def );
 		jimport( 'joomla.installer.installer' );
 		jimport( 'joomla.installer.helper' );
 		$installer = JInstaller::getInstance();
@@ -189,6 +184,7 @@ class SPJoomlaInstaller
 
 	protected function installLanguage( $def, $dir )
 	{
+		$this->checkRequirements( $def );
 		$this->definition = new DOMDocument();
 		$this->definition->formatOutput = true;
 		$this->definition->preserveWhiteSpace = false;
@@ -220,7 +216,7 @@ class SPJoomlaInstaller
 		$root->appendChild( $this->definition->createElement( 'name', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ) );
 		$root->appendChild( $Install );
 		$this->definition->appendChild( $root );
-		$path = $dir . DS . $this->id . '.xml';
+		$path = "{$dir}/{$this->id}.xml";
 		$file = SPFactory::Instance( 'base.fs.file', $path );
 		$this->definition->normalizeDocument();
 		$file->content( $this->definition->saveXML() );
@@ -262,6 +258,19 @@ class SPJoomlaInstaller
 			else {
 				SPFactory::message()->error( Sobi::Txt( 'File %s does not exist!', $folder . $file->nodeValue ), false );
 			}
+		}
+	}
+
+	/**
+	 * @param $def
+	 */
+	protected function checkRequirements( $def )
+	{
+		$xp = new DOMXPath( $def );
+		$requirements = $xp->query( '//SobiPro/requirements/*' );
+		if ( $requirements && ( $requirements instanceof DOMNodeList ) ) {
+			$reqCheck =& SPFactory::Instance( 'services.installers.requirements' );
+			$reqCheck->check( $requirements );
 		}
 	}
 }

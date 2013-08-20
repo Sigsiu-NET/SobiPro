@@ -38,7 +38,7 @@ class SPCMSHelper extends SPJoomlaCMSHelper
 	/**
 	 * Return min or recommend Joomla! version
 	 * @param $recommended
-	 * @return unknown_type
+	 * @return array
 	 */
 	public static function minCmsVersion( $recommended = false )
 	{
