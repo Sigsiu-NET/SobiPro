@@ -304,6 +304,8 @@ class SPJoomlaDb
 	 * Creates a "truncate table" SQL query
 	 *
 	 * @param string $table - in which table
+	 * @throws SPException
+	 * @return $this
 	 */
 	public function truncate( $table )
 	{
@@ -449,6 +451,89 @@ class SPJoomlaDb
 			$where = implode( " {$andor} ", $w );
 		}
 		return $where;
+	}
+
+
+	/**
+	 * Sample usage
+	 *        $fields = array(
+	 *            'url' => 'VARCHAR(255) NOT NULL',
+	 *            'crid' => 'INT(11) NOT NULL AUTO_INCREMENT',
+	 *            'state' => 'TINYINT(1) NOT NULL'
+	 *        );
+	 *        $keys = array(
+	 *            'crid' => 'primary',
+	 *            'url' => 'unique'
+	 *        );
+	 *        SPFactory::db()->createTable( 'crawler', array(), array(), true, 'MyISAM' );
+	 * would create query like:
+	 * CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` (
+	 *    `url`   VARCHAR(255) NOT NULL,
+	 *    `crid`  INT(11)      NOT NULL AUTO_INCREMENT,
+	 *    `state` TINYINT(1)   NOT NULL,
+	 *    PRIMARY KEY (`crid`),
+	 *    UNIQUE KEY `url` (`url`)
+	 * ) ENGINE = MyISAM DEFAULT CHARSET = utf8;
+	 *
+	 *
+	 * @param string $name - table name without any prefix
+	 * @param array $fields - array with fields definition like: $fields[ 'url' ] = 'VARCHAR(255) NOT NULL';
+	 * @param array $keys - optional array with keys defined like: $keys[ 'url' ] = 'unique'; || $keys[ 'url, crid' ] = 'primary';
+	 * @param bool $notExists - adds "CREATE TABLE IF NOT EXISTS"
+	 * @param string $engine - optional engine type
+	 * @param string $charset
+	 * @return $this
+	 */
+	public function createTable( $name, $fields, $keys = array(), $notExists = false, $engine = null, $charset = 'utf8' )
+	{
+		$name = "#__sobipro_{$name}";
+		$query = $notExists ? "CREATE TABLE IF NOT EXISTS `{$name}` " : "CREATE TABLE `{$name}` ";
+		$subQuery = null;
+		$count = count( $fields );
+		$i = 0;
+		foreach ( $fields as $name => $definition ) {
+			$i++;
+			$subQuery .= "`{$name}` {$definition}";
+			if ( $i < $count || count( $keys ) ) {
+				$subQuery .= ', ';
+			}
+			else {
+				$subQuery .= ' ';
+			}
+		}
+		if ( count( $keys ) ) {
+			$count = count( $keys );
+			$i = 0;
+			foreach ( $keys as $key => $type ) {
+				$type = strtoupper( $type );
+				if ( strstr( $key, ',' ) ) {
+					$_keys = explode( ',', $key );
+					$key = null;
+					foreach ( $_keys as $i => $subkey ) {
+						$_keys[ $i ] = "`{$subkey}`";
+					}
+					$key = implode( ',', $_keys );
+				}
+				else {
+					$key = "`{$key}`";
+				}
+				$subQuery = "{$type} KEY ( {$key} )";
+				if ( $i < $count ) {
+					$subQuery .= ', ';
+				}
+				else {
+					$subQuery .= ' ';
+				}
+
+			}
+		}
+		$query .= "( {$subQuery} ) ";
+		if ( $engine ) {
+			$query .= " ENGINE = {$engine} ";
+		}
+		$query .= "DEFAULT CHARSET = {$charset};";
+		$this->exec( $query );
+		return $this;
 	}
 
 	/* Arguments and or or

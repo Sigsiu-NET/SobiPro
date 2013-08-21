@@ -35,6 +35,7 @@ Legend:
    (+) Possibility to store ordering of lists in administrator area permanently
    (+) Information about entry's status while displaying unapproved/unpublished version in default template
    (+) Storing currently displayed entries into 'user state'
+   (+) Method for table creation in the database driver
 
    (!) Style revisions to default2 template and SobiPro frontend CSS
    (!) php-prefix exclusion added to all templates in default2 template package
