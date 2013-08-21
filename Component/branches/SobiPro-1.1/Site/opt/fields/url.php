@@ -151,6 +151,24 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	}
 
 	/**
+	 * @param $real
+	 * @param $sid
+	 * @param $nid
+	 * @return string
+	 */
+	protected static function getHits( $real, $sid, $nid )
+	{
+		$query = array( 'sid' => $sid, 'fid' => $nid, 'section' => Sobi::Section() );
+		if ( $real ) {
+			$query[ 'humanity>' ] = Sobi::Cfg( 'field_url.humanity', 90 );
+		}
+		$counter = SPFactory::db()
+				->select( 'count(*)', 'spdb_field_url_clicks', $query )
+				->loadResult();
+		return $counter;
+	}
+
+	/**
 	 * Returns the parameter list
 	 * @return array
 	 */
@@ -178,17 +196,23 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			}
 			$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData';
 			$this->cssClass = $this->cssClass . ' ' . $this->nid;
+			$attributes = array( 'href' => $url, 'class' => $this->cssClass );
 			if ( $this->countClicks ) {
 				SPFactory::header()->addJsFile( 'opt.field_url' );
-				$this->cssClass = $this->cssClass . ' spCountable sid-' . $this->sid;
+				$this->cssClass = $this->cssClass . ' ctrl-visit-countable';
 				$counter = $this->getCounter();
+				$attributes[ 'data-sid' ] = $this->sid;
+				if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
+					$attributes[ 'data-counter' ] = $counter;
+					$attributes[ 'data-refresh' ] = 'true';
+				}
+				$attributes[ 'class' ] = $this->cssClass;
 				if ( $this->counterToLabel ) {
 					$data[ 'label' ] = Sobi::Txt( 'FM.URL.COUNTER_WITH_LABEL', array( 'label' => $data[ 'label' ], 'counter' => $counter ) );
 				}
 			}
 			$this->cleanCss();
 			if ( strlen( $url ) ) {
-				$attributes = array( 'href' => $url, 'class' => $this->cssClass );
 				if ( $this->newWindow ) {
 					$attributes[ 'target' ] = '_blank';
 				}
@@ -208,13 +232,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 
 	protected function getCounter( $real = true )
 	{
-		$query = array( 'sid' => $this->sid, 'fid' => $this->nid, 'section' => Sobi::Section() );
-		if ( $real ) {
-			$query[ 'humanity>' ] = Sobi::Cfg( 'field_url.humanity', 90 );
-		}
-		$counter = SPFactory::db()
-				->select( 'count(*)', 'spdb_field_url_clicks', $query )
-				->loadResult();
+		$counter = self::getHits( $real, $this->sid, $this->nid );
 		return $counter;
 	}
 
@@ -436,6 +454,14 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 					->delete( 'spdb_field_url_clicks', array( 'section' => Sobi::Section(), 'sid' => $eid, 'fid' => $this->nid ) );
 		}
 		echo 1;
+	}
+
+	public function ProxyHits()
+	{
+		SPFactory::mainframe()->cleanBuffer()->customHeader();
+		$r = ( int ) self::getHits( true, SPRequest::int( 'eid' ), $this->nid );
+		echo $r;
+		exit;
 	}
 
 	public function ProxyCount()
