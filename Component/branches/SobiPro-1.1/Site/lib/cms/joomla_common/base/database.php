@@ -465,15 +465,17 @@ class SPJoomlaDb
 	 *            'crid' => 'primary',
 	 *            'url' => 'unique'
 	 *        );
-	 *        SPFactory::db()->createTable( 'crawler', array(), array(), true, 'MyISAM' );
-	 * would create query like:
-	 * CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` (
-	 *    `url`   VARCHAR(255) NOT NULL,
-	 *    `crid`  INT(11)      NOT NULL AUTO_INCREMENT,
-	 *    `state` TINYINT(1)   NOT NULL,
-	 *    PRIMARY KEY (`crid`),
-	 *    UNIQUE KEY `url` (`url`)
-	 * ) ENGINE = MyISAM DEFAULT CHARSET = utf8;
+	 *        SPFactory::db()->createTable( 'crawler', $fields, $keys, true, 'MyISAM' );
+	 *
+	 * Would create query like:
+	 *
+	 *         CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` (
+	 *            `url`   VARCHAR(255) NOT NULL,
+	 *            `crid`  INT(11)      NOT NULL AUTO_INCREMENT,
+	 *            `state` TINYINT(1)   NOT NULL,
+	 *            PRIMARY KEY (`crid`),
+	 *            UNIQUE KEY `url` (`url`)
+	 *         ) ENGINE = MyISAM DEFAULT CHARSET = utf8;
 	 *
 	 *
 	 * @param string $name - table name without any prefix
