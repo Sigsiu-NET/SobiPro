@@ -61,7 +61,8 @@ Legend:
    (#) Language files are not being removed while uninstalling particular language. (Removed SOBI_ROOT from the log for all apps) (Issue #1007)
    (#) Language files aren't checked for requirements
    (#) Wrong URL in the RSS feeds when Joomla! is installed in subdirectory (Issue #1011)
-   (#) Click counter data are not revalidated when XML cache is enabled (Issue #1010)
+   (#) Click counter data are not re-validated when XML cache is enabled (Issue #1010)
+
 
 -------------------
 1.1.1 (1 July 2013)
