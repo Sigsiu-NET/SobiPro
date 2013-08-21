@@ -186,15 +186,18 @@ abstract class SobiPro
 	 * Creates URL to the internal SobiPro function
 	 * @param array $var - JSON encoded array
 	 * @param bool $js
+	 * @param bool $sef
+	 * @param bool $live
+	 * @param bool $forceItemId
 	 * @return string
 	 */
-	public static function Url( $var = null, $js = false )
+	public static function Url( $var = null, $js = false, $sef = true, $live = false, $forceItemId = false )
 	{
 		$url = json_decode( $var, true );
 		foreach ( $url as $k => $v ) {
 			$url[ $k ] = trim( $v );
 		}
-		return SPFactory::mainframe()->url( $url, $js );
+		return Sobi::Url( $url, $js, $sef, $live, $forceItemId );
 	}
 
 	/**

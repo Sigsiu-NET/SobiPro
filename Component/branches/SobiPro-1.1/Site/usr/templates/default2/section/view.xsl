@@ -34,8 +34,7 @@
 	<xsl:include href="../common/messages.xsl" />
 
 	<xsl:template match="/section">
-		<xsl:variable name="rssUrl">{"sid":"<xsl:value-of select="id" />","sptpl":"feeds.rss","out":"raw"}
-		</xsl:variable>
+		<xsl:variable name="rssUrl">{"sid":"<xsl:value-of select="id" />","sptpl":"feeds.rss","out":"raw"}</xsl:variable>
 		<xsl:variable name="sectionName">
 			<xsl:value-of select="name" />
 		</xsl:variable>

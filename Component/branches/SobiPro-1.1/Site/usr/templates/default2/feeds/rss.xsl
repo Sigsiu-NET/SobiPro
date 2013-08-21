@@ -31,8 +31,11 @@
 				<xsl:value-of select="php:function( 'SobiPro::FormatDate', 'c', string($updated_time) )" />
 			</updated>
 			<xsl:for-each select="entries/entry">
+				<xsl:variable name="entryUrl">
+					{"sid":"<xsl:value-of select="@id" />","title":"<xsl:value-of select="@nid" />"}
+				</xsl:variable>
 				<xsl:variable name="url">
-					<xsl:value-of select="php:function( 'SobiPro::Cfg', 'live_site' )" /><xsl:value-of select="url" />
+					<xsl:value-of select="php:function( 'SobiPro::Url', $entryUrl, 0, 1, 1, 1 )" />
 				</xsl:variable>
 				<entry>
 					<title>
@@ -53,13 +56,9 @@
 							</xsl:choose>
 						</name>
 					</author>
-					<link rel="alternate">
-						<xsl:attribute name="href">
-							<xsl:value-of select="php:function( 'Sobi::FixPath', $url )" />
-						</xsl:attribute>
-					</link>
+					<link rel="alternate" href="{$url}"/>
 					<id>
-						<xsl:value-of select="php:function( 'Sobi::FixPath', $url )" />
+						<xsl:value-of select="$url" />
 					</id>
 					<content type="html">
 						<xsl:value-of select="fields/field_description/data" />

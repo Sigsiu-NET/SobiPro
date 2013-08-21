@@ -22,21 +22,42 @@
 
 SobiPro.jQuery( document ).ready( function ()
 {
-	SobiPro.jQuery( '.spCountable' ).click( function ( e )
+	SobiPro.jQuery( '.ctrl-visit-countable' ).click( function ( e )
 	{
 		var fid = '';
-		var sid = 0;
+		var sid = SobiPro.jQuery( this ).data( 'sid' );
 		SobiPro.jQuery.each( SobiPro.jQuery( this ).attr( 'class' ).split( ' ' ), function ( i, c )
 		{
 			if ( c.indexOf( 'field_' ) != -1 ) {
 				fid = c.replace( 'field_', 'field.' );
 			}
-			if ( c.indexOf( 'sid-' ) != -1 ) {
-				sid = c.replace( 'sid-', '' );
-			}
 		} );
 		if ( fid != '' && sid ) {
-			SobiPro.jQuery.ajax( { 'url':'index.php', 'data':{ 'sid':SobiProSection, 'task':fid + '.count', 'eid':sid, 'option':'com_sobipro', 'format':'raw' }, 'type':'post', 'dataType':'json' } );
+			SobiPro.jQuery.ajax( { 'url': 'index.php', 'data': { 'sid': SobiProSection, 'task': fid + '.count', 'eid': sid, 'option': 'com_sobipro', 'format': 'raw', 'tmpl': 'component' }, 'type': 'post', 'dataType': 'json' } );
+		}
+	} );
+
+	SobiPro.jQuery.each( SobiPro.jQuery( '.ctrl-visit-countable' ), function ( i, el )
+	{
+		var e = SobiPro.jQuery( el );
+		if ( e.data( 'refresh' ) ) {
+			var fid = '';
+			var sid = e.data( 'sid' );
+			SobiPro.jQuery.each( e.attr( 'class' ).split( ' ' ), function ( i, c )
+			{
+				if ( c.indexOf( 'field_' ) != -1 ) {
+					fid = c.replace( 'field_', 'field.' );
+				}
+			} );
+			if ( fid != '' && sid ) {
+				SobiPro.jQuery.ajax( { 'url': 'index.php', 'data': { 'sid': SobiProSection, 'task': fid + '.hits', 'eid': sid, 'option': 'com_sobipro', 'format': 'raw', 'tmpl': 'component' }, 'type': 'post', 'dataType': 'json' } ).
+					done( function ( response )
+					{
+						var current = ' ' + e.data( 'counter' ) + ' ';
+						var c = new String( current ).replace( /[0-9]/, response );
+						e.html( e.html().replace( current, c ))
+					} );
+			}
 		}
 	} );
 } );
