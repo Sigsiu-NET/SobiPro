@@ -80,11 +80,13 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	public function cleanData()
 	{
 		$this->_selectedCats = $this->getRaw();
-		if ( is_string( $this->_selectedCats ) && strstr( $this->_selectedCats, '://' ) ) {
-			$this->_selectedCats = SPFactory::config()->structuralData( $this->_selectedCats );
-		}
-		else {
-			$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
+		if ( !( is_numeric( $this->_selectedCats ) || is_array( $this->_selectedCats ) ) ) {
+			if ( is_string( $this->_selectedCats ) && strstr( $this->_selectedCats, '://' ) ) {
+				$this->_selectedCats = SPFactory::config()->structuralData( $this->_selectedCats );
+			}
+			else {
+				$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
+			}
 		}
 		return $this->_selectedCats;
 	}
