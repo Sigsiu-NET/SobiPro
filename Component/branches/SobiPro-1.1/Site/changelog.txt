@@ -62,6 +62,7 @@ Legend:
    (#) Language files aren't checked for requirements
    (#) Wrong URL in the RSS feeds when Joomla! is installed in subdirectory (Issue #1011)
    (#) Click counter data are not re-validated when XML cache is enabled (Issue #1010)
+   (#) Passing unserialised data through the unserialise config method (legacy) (Issue - Chad's bug)
 
 
 -------------------
