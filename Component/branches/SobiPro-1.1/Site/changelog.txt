@@ -27,7 +27,7 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.2 (xx August 2013)
+1.1.2 (22 August 2013)
 -------------------
 
    (+) Calling Joomla! Cache cleaner after SobiPro cache has been invalidated
@@ -62,7 +62,7 @@ Legend:
    (#) Language files aren't checked for requirements
    (#) Wrong URL in the RSS feeds when Joomla! is installed in subdirectory (Issue #1011)
    (#) Click counter data are not re-validated when XML cache is enabled (Issue #1010)
-   (#) Passing unserialised data through the unserialise config method (legacy) (Issue - Chad's bug)
+   (#) Passing un-serialised data through un-serialise config method (legacy) (Issue #Chad's bug)
 
 
 -------------------
