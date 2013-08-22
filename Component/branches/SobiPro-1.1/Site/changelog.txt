@@ -39,6 +39,7 @@ Legend:
 
    (!) Style revisions to default2 template and SobiPro frontend CSS
    (!) php-prefix exclusion added to all templates in default2 template package
+   (!) Section information added to site title in administrator area
 
    (#) Wrong parameter in AlphaListingAfterGetEntries Trigger (Issue #964)
    (#) JavaScript file uploader preserving expired form (Issue #928)
