@@ -60,7 +60,7 @@
 			<div class="span10">
 				<message id="spMessage" />
 				<header label="FM.FIELDS_FOR" icon="SobiFieldList">
-					<div class="btn-group pull-right form-horizontal">
+					<div class="btn-group pull-right">
 						<field type="select" name="forder" selected="ordering" class="input-large spOrdering">
 							<values>
 								<values label="ORDER_BY" />
