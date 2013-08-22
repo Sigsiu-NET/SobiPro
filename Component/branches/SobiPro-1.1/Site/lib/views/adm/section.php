@@ -42,7 +42,7 @@ class SPSectionAdmView extends SPAdmView
 		$name = $this->get( 'section.name' );
 		if ( $name ) {
 			Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-			$title = Sobi::Txt( $title, array( 'category_name' => $name ) );
+			$title = $name; //Sobi::Txt( $title, array( 'category_name' => $name ) );
 			$this->set( $name, 'category_name' );
 			$this->set( $name, 'section_name' );
 			$this->set( $title, 'site_title' );

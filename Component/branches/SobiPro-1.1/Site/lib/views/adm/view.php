@@ -1604,9 +1604,9 @@ class SPAdmView extends SPObject implements SPView
 	public function setTitle( $title )
 	{
 		if ( strstr( $title, '{' ) ) {
-			$title = SPFactory::config()->structuralData( 'json://' . $title );
+			$title = ( array )SPFactory::config()->structuralData( 'json://' . $title );
 			$task = SPRequest::task();
-			$title = $title->$task;
+			$title = $title[ $task ];
 		}
 		$title = $this->parseValue( Sobi::Txt( $title ) );
 		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
