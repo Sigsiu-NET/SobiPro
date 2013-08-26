@@ -655,7 +655,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 //				Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.CANNOT_CHANGE_STATE_ERR', 'error' ), true );
 //			}
 //		}
-//		Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.PLUGIN STATE_CHANGED' ) );
+//		Sobi::Redirect( SPMainFrame::getBack(), Sobi::Txt( 'EX.PLUGIN_STATE_CHANGED' ) );
 	}
 
 	protected function toggle()
