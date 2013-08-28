@@ -63,7 +63,12 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	 */
 	protected function view( $allEntries, $term = null )
 	{
-		SPRequest::set( 'task', 'section.view' );
+		if( $allEntries ) {
+			SPRequest::set( 'task', 'section.entries' );
+		}
+		else {
+			SPRequest::set( 'task', 'section.view' );
+		}
 		/* @var SPdb $db */
 		$db = SPFactory::db();
 		$c = array();

@@ -675,7 +675,6 @@ class SPJoomlaLang
 			$labels = SPFactory::db()
 					->select( $ident . ' AS id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
 					->loadAssocList();
-			$q = SPFactory::db()->getQuery();
 			if ( count( $labels ) ) {
 				$aliases = array();
 				if ( in_array( 'alias', $fields ) ) {
