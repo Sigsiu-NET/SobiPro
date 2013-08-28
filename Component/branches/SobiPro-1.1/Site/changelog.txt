@@ -34,6 +34,7 @@ Legend:
    (#) Backend search for entry returns categories (Issue #1022)
    (#) Editing entries with image field set as required (Issue #1017)
    (#) Category Name as Alias in SobiPro 1.1.2 (Issue #1015)
+   (#) Error while installing Joomla! native extensions in SobiPro (Issue #1013)
 
 -------------------
 1.1.2 (22 August 2013)
