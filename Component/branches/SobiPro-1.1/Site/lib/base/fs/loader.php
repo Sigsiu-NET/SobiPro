@@ -51,7 +51,7 @@ abstract class SPLoader
 		$type = strtolower( trim( $type ) );
 		$name = strtolower( trim( $name ) );
 		if ( isset( $types[ $type ] ) ) {
-			$type = $types[ $type ] . DS;
+			$type = $types[ $type ] . '/';
 		}
 		else {
 			$type = null;
@@ -66,23 +66,23 @@ abstract class SPLoader
 		}
 		if ( $adm ) {
 			if ( $type == 'view' ) {
-				$path = SOBI_ADM_PATH . DS . $type;
+				$path = SOBI_ADM_PATH . '/' . $type;
 			}
 			else {
-				$path = SOBI_PATH . DS . 'lib' . DS . $type . 'adm' . DS;
+				$path = SOBI_PATH . "/lib/{$type}/adm/";
 			}
 		}
 		elseif ( strstr( $type, 'plugin' ) ) {
-			$path = SOBI_PATH . DS . 'opt' . DS . $type;
+			$path = SOBI_PATH . '/opt/' . $type;
 		}
 		elseif ( strstr( $type, 'template' ) ) {
 			$path = SOBI_PATH . '/usr/templates/' . Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		}
 		elseif ( !strstr( $name, 'opt.' ) ) {
-			$path = SOBI_PATH . DS . 'lib' . DS . $type;
+			$path = SOBI_PATH . '/lib/' . $type;
 		}
 		else {
-			$path = SOBI_PATH . DS . $type;
+			$path = SOBI_PATH . '/' . $type;
 		}
 		$name = str_replace( '.', '/', $name );
 		$path .= $name . '.php';
@@ -103,8 +103,8 @@ abstract class SPLoader
 					 * */
 				if ( !( strstr( $path, 'index.php' ) ) ) {
 					if ( class_exists( 'Sobi' ) ) {
-						Sobi::Error( 'Class Load', sprintf( 'Cannot load file at %s. File does not exist or is not readable.', str_replace( SOBI_ROOT . DS, null, $path ) ), SPC::NOTICE, 0 );
-						throw new SPException( sprintf( 'Cannot load file at %s. File does not exist or is not readable.', str_replace( SOBI_ROOT . DS, null, $path ) ) );
+						Sobi::Error( 'Class Load', sprintf( 'Cannot load file at %s. File does not exist or is not readable.', str_replace( SOBI_ROOT . '/', null, $path ) ), SPC::NOTICE, 0 );
+						throw new SPException( sprintf( 'Cannot load file at %s. File does not exist or is not readable.', str_replace( SOBI_ROOT . '/', null, $path ) ) );
 					}
 				}
 			}
@@ -119,10 +119,10 @@ abstract class SPLoader
 				$className = $class[ 2 ];
 			}
 			else {
-				Sobi::Error( 'Class Load', sprintf( 'Cannot determine class name in file %s.', str_replace( SOBI_ROOT . DS, null, $path ) ), SPC::ERROR, 500 );
+				Sobi::Error( 'Class Load', sprintf( 'Cannot determine class name in file %s.', str_replace( SOBI_ROOT . '/', null, $path ) ), SPC::ERROR, 500 );
 				return false;
 			}
-			require_once ( $path );
+			require_once( $path );
 			self::$count++;
 			ob_end_clean();
 			self::$loaded[ $path ] = $className;
@@ -150,7 +150,7 @@ abstract class SPLoader
 		foreach ( $arr as $file => $class ) {
 			if ( !( class_exists( $class ) ) ) {
 				if ( file_exists( $file ) && is_readable( $file ) ) {
-					require_once ( $file );
+					require_once( $file );
 					self::$count++;
 					self::$loaded[ $file ] = $class;
 				}
@@ -188,7 +188,7 @@ abstract class SPLoader
 	 */
 	public static function loadIniFile( $name, $sections = true, $adm = false, $try = false, $absolute = false, $fixedPath = false, $custom = false )
 	{
-		$path = $absolute ? null : ( $adm ? SOBI_ADM_PATH . DS : SOBI_PATH . DS );
+		$path = $absolute ? null : ( $adm ? SOBI_ADM_PATH . '/' : SOBI_PATH . '/' );
 		/* if there is a customized ini file
 		   * it should be named like filename_override.ini
 		   * i.e config_my.ini will be loaded instead fo config.ini
@@ -212,7 +212,7 @@ abstract class SPLoader
 				 * As a result we have the error log file full of USER_ERRORs and it looks badly but it's not really an error.
 				 * So we result wit the 500 response code but we log a notice for the logfile
 				 * */
-				Sobi::Error( 'ini_load', sprintf( 'Cannot load file at %s', str_replace( SOBI_ROOT . DS, null, $path ) ), SPC::NOTICE, 500, __LINE__, __FILE__ );
+				Sobi::Error( 'ini_load', sprintf( 'Cannot load file at %s', str_replace( SOBI_ROOT . '/', null, $path ) ), SPC::NOTICE, 500, __LINE__, __FILE__ );
 			}
 			return false;
 		}
@@ -408,67 +408,67 @@ abstract class SPLoader
 		$start = $start ? $start : 'front';
 		switch ( $start ) {
 			case 'root':
-				$spoint = SOBI_ROOT . DS;
+				$spoint = SOBI_ROOT . '/';
 				break;
 			case 'front':
-				$spoint = SOBI_PATH . DS;
+				$spoint = SOBI_PATH . '/';
 				break;
 			case 'lib':
-				$spoint = SOBI_PATH . DS . 'lib' . DS;
+				$spoint = SOBI_PATH . '/lib/';
 				break;
 			case 'lib.base':
 			case 'base':
-				$spoint = SOBI_PATH . DS . 'lib' . DS . 'base' . DS;
+				$spoint = SOBI_PATH . '/lib/base/';
 				break;
 			case 'lib.ctrl':
 			case 'ctrl':
-				$spoint = SOBI_PATH . DS . 'lib' . DS . 'ctrl' . DS;
+				$spoint = SOBI_PATH . '/lib/ctrl/';
 				break;
 			case 'lib.html':
-				$spoint = SOBI_PATH . DS . 'lib' . DS . 'mlo' . DS;
+				$spoint = SOBI_PATH . '/lib/mlo/';
 				break;
 			case 'lib.model':
 			case 'lib.models':
 			case 'model':
 			case 'models':
-				$spoint = SOBI_PATH . DS . 'lib' . DS . 'models' . DS;
+				$spoint = SOBI_PATH . '/lib/models/';
 				break;
 			case 'lib.views':
 			case 'lib.view':
 			case 'views':
 			case 'view':
-				$spoint = SOBI_PATH . DS . 'lib' . DS . 'views' . DS;
+				$spoint = SOBI_PATH . '/lib/views/';
 				break;
 			case 'js':
 			case 'lib.js':
-				$spoint = SOBI_PATH . DS . 'lib' . DS . 'js' . DS;
+				$spoint = SOBI_PATH . '/lib/js/';
 				break;
 			case 'css':
 			case 'media.css':
-				$spoint = SOBI_MEDIA . DS . 'css' . DS;
+				$spoint = SOBI_MEDIA . '/css/';
 				break;
 			case 'less':
 			case 'media.less':
-				$spoint = SOBI_MEDIA . DS . 'less' . DS;
+				$spoint = SOBI_MEDIA . '/less/';
 				break;
 			case 'media':
-				$spoint = SOBI_MEDIA . DS;
+				$spoint = SOBI_MEDIA . '/';
 				break;
 			case 'locale':
 			case 'lang':
-				$spoint = SOBI_PATH . DS . 'usr' . DS . 'locale' . DS;
+				$spoint = SOBI_PATH . '/usr/locale/' ;
 				break;
 			case 'templates':
 				$spoint = SOBI_PATH . '/usr/templates/';
 				break;
 			case 'img':
 			case 'media.img':
-				$spoint = SOBI_MEDIA . DS . 'img' . DS;
+				$spoint = SOBI_MEDIA . '/img/';
 				break;
 			case 'adm':
 			case 'administrator':
 				if ( defined( 'SOBI_ADM_PATH' ) ) {
-					$spoint = SOBI_ADM_PATH . DS;
+					$spoint = SOBI_ADM_PATH . '/';
 				}
 				else {
 					return false;
@@ -477,7 +477,7 @@ abstract class SPLoader
 			case 'adm.template':
 			case 'adm.templates':
 				if ( defined( 'SOBI_ADM_PATH' ) ) {
-					$spoint = SOBI_ADM_PATH . DS;
+					$spoint = SOBI_ADM_PATH . '/';
 				}
 				else {
 					return false;
@@ -494,12 +494,12 @@ abstract class SPLoader
 		//				$ext = null;
 		//			}
 		//		}
-		$path = str_replace( '|', DS, $path );
+		$path = str_replace( '|', '/', $path );
 		if ( $ext ) {
-			$path = $spoint ? $spoint . DS . $path . '|' . $ext : $path . '|' . $ext;
+			$path = $spoint ? $spoint . '/' . $path . '|' . $ext : $path . '|' . $ext;
 		}
 		else {
-			$path = $spoint ? $spoint . DS . $path : $path;
+			$path = $spoint ? $spoint . '/' . $path : $path;
 		}
 		$path = self::fixPath( $path );
 		if ( $ext ) {
@@ -526,31 +526,30 @@ abstract class SPLoader
 
 	private static function fixPath( $path )
 	{
-		//$path = str_replace( DS.DS, DS, $path );
 		$start = null;
 		/* don't play with the constant parts of the path */
 		if ( defined( 'SOBI_ADM_PATH' ) && strstr( $path, SOBI_ADM_PATH ) ) {
 			$path = str_replace( SOBI_ADM_PATH, null, $path );
 			$start = SOBI_ADM_PATH;
 		}
-		elseif ( defined( 'SOBI_ADM_PATH' ) && strstr( $path, str_replace( DS, '.', SOBI_ADM_PATH ) ) ) {
-			$path = str_replace( str_replace( DS, '.', SOBI_ADM_PATH ), null, $path );
+		elseif ( defined( 'SOBI_ADM_PATH' ) && strstr( $path, str_replace( '/', '.', SOBI_ADM_PATH ) ) ) {
+			$path = str_replace( str_replace( '/', '.', SOBI_ADM_PATH ), null, $path );
 			$start = SOBI_ADM_PATH;
 		}
 		elseif ( strstr( $path, SOBI_PATH ) ) {
 			$path = str_replace( SOBI_PATH, null, $path );
 			$start = SOBI_PATH;
 		}
-		elseif ( strstr( $path, str_replace( DS, '.', SOBI_PATH ) ) ) {
-			$path = str_replace( str_replace( DS, '.', SOBI_PATH ), null, $path );
+		elseif ( strstr( $path, str_replace( '/', '.', SOBI_PATH ) ) ) {
+			$path = str_replace( str_replace( '/', '.', SOBI_PATH ), null, $path );
 			$start = SOBI_PATH;
 		}
 		elseif ( strstr( $path, SOBI_ROOT ) ) {
 			$path = str_replace( SOBI_ROOT, null, $path );
 			$start = SOBI_ROOT;
 		}
-		elseif ( strstr( $path, str_replace( DS, '.', SOBI_ROOT ) ) ) {
-			$path = str_replace( str_replace( DS, '.', SOBI_ROOT ), null, $path );
+		elseif ( strstr( $path, str_replace( '/', '.', SOBI_ROOT ) ) ) {
+			$path = str_replace( str_replace( '/', '.', SOBI_ROOT ), null, $path );
 			$start = SOBI_ROOT;
 		}
 
@@ -568,7 +567,7 @@ abstract class SPLoader
 	 */
 	public static function translateDirPath( $path, $start = 'front', $existCheck = true )
 	{
-		return self::translatePath( str_replace( '.', DS, $path ), $start, $existCheck, null, false );
+		return self::translatePath( str_replace( '.', '/', $path ), $start, $existCheck, null, false );
 	}
 
 	/**
@@ -581,8 +580,8 @@ abstract class SPLoader
 	 */
 	public static function dirPath( $path, $root = 'front', $checkExist = true )
 	{
-		$path = self::translatePath( str_replace( '.', DS, $path ), $root, $checkExist, null, false );
-		return strlen( $path ) ? self::clean( $path . DS ) : $path;
+		$path = self::translatePath( str_replace( '.', '/', $path ), $root, $checkExist, null, false );
+		return strlen( $path ) ? self::clean( $path . '/' ) : $path;
 	}
 
 	/**
