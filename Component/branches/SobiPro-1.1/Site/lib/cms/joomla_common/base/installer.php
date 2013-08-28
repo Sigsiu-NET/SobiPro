@@ -121,6 +121,7 @@ class SPJoomlaInstaller
 		jimport( 'joomla.installer.helper' );
 		$installer = JInstaller::getInstance();
 		$type = JInstallerHelper::detectType( $dir );
+		$xp = new DOMXPath( $def );
 		try {
 			$installer->install( $dir );
 			// it was core update - break now
@@ -150,7 +151,7 @@ class SPJoomlaInstaller
 				if ( !( SPFs::exists( $dir ) ) ) {
 					SPFs::mkdir( $dir );
 				}
-				$path = $dir . DS . $this->id . '.xml';
+				$path = $dir . '/' . $this->id . '.xml';
 				$file = SPFactory::Instance( 'base.fs.file', $path );
 				$this->definition->normalizeDocument();
 				$file->content( $this->definition->saveXML() );
