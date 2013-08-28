@@ -141,7 +141,7 @@
 		<action value="index.php" />
 		<hidden>
 			<field name="option" default="com_sobipro" />
-			<field name="task" default="" />
+			<field name="task" default="section.entries" />
 		</hidden>
 	</config>
 </definition>
