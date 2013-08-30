@@ -61,6 +61,10 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				$r = true;
 				$this->reorder();
 				break;
+			case 'reject':
+				$r = true;
+				$this->reject();
+				break;
 			case 'search':
 				$this->search();
 				break;
@@ -75,6 +79,44 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				break;
 		}
 		return $r;
+	}
+
+	protected function reject()
+	{
+		if ( !( SPFactory::mainframe()->checkToken() ) ) {
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+		}
+		if ( $this->authorise( 'manage' ) ) {
+			$changes = array();
+			$objects = array(
+				'entry' => $this->_model,
+				'user' => SPFactory::user(),
+				'author' => SPFactory::Instance( 'cms.base.user', $this->_model->get( 'owner' ) )
+			);
+			$messages =& SPFactory::registry()->get( 'messages' );
+			$reason = SPLang::replacePlaceHolders( SPRequest::string( 'reason', null, true, 'post' ), $objects );
+			$objects[ 'reason' ] = $reason;
+			$messages[ 'rejection' ] = $objects;
+			SPFactory::registry()->set( 'messages', $messages );
+			$this->_model->setMessage( $reason, 'reason' );
+			if ( SPRequest::bool( 'unpublish', false, 'post' ) ) {
+				$this->_model->changeState( 0, $reason, false );
+				$changes[ ] = 'unpublish';
+			}
+			if ( SPRequest::bool( 'trigger_unpublish', false, 'post' ) ) {
+				Sobi::Trigger( 'Entry', 'AfterChangeState', array( $this->_model, 0, 'messages' => $this->_model->get( 'messages' ) ) );
+			}
+			if ( SPRequest::bool( 'discard', false, 'post' ) ) {
+				$changes[ ] = 'discard';
+				$data = $this->_model->discard( false );
+			}
+			if ( SPRequest::bool( 'trigger_unapprove', false, 'post' ) ) {
+				Sobi::Trigger( 'Entry', 'AfterUnapprove', array( $this->_model, 0 ) );
+			}
+			Sobi::Trigger( 'Entry', 'AfterReject', array( $this->_model, 0 ) );
+			SPFactory::message()->logAction( 'reject', $this->_model->get( 'id' ), $data, $reason );
+			$this->response( Sobi::Back(), Sobi::Txt( 'ENTRY_REJECTED', $this->_model->get( 'name' ) ), true, SPC::SUCCESS_MSG );
+		}
 	}
 
 	protected function search()
@@ -146,7 +188,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		if ( $customClass && method_exists( $customClass, 'AfterStoreEntry' ) ) {
 			$customClass::AfterStoreEntry( $this->_model );
 		}
-
+		$this->logChanges( 'save', SPRequest::string( 'history-note' ) );
 		if ( $apply || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
@@ -193,6 +235,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
 			}
+			$this->logChanges( 'approve' );
 			SPFactory::cache()->purgeSectionVars();
 			$this->response( Sobi::Back(), Sobi::Txt( $approve ? 'EMN.APPROVED' : 'EMN.UNAPPROVED', $entry->get( 'name' ) ), false, SPC::SUCCESS_MSG );
 		}
@@ -294,6 +337,37 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		if ( !count( $fields ) ) {
 			throw new SPException( SPLang::e( 'CANNOT_GET_FIELDS_IN_SECTION', Sobi::Reg( 'current_section' ) ) );
 		}
+		$revisionChange = false;
+		$rev = SPRequest::cmd( 'revision' );
+		if ( $rev ) {
+			$revision = SPFactory::message()->getRevision( SPRequest::cmd( 'revision' ) );
+			if ( isset( $revision[ 'changes' ] ) && count( $revision[ 'changes' ] ) ) {
+				SPFactory::message()->warning( Sobi::Txt( 'HISTORY_REVISION_WARNING', $revision[ 'changedAt' ] ), false );
+				foreach ( $fields as $i => $field ) {
+					if ( ( $field->get( 'enabled' ) ) && $field->enabled( 'form' ) ) {
+						if ( isset( $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ] ) ) {
+							$revisionData = $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ];
+						}
+						else {
+							$revisionData = null;
+						}
+						$currentData = $field->getRaw();
+						if ( ( $currentData ) != ( $revisionData ) ) {
+							$field->revisionChanged()
+									->setRawData( $revisionData );
+						}
+
+						$fields[ $i ] = $field;
+					}
+				}
+				$revisionChange = true;
+			}
+			else {
+				SPFactory::message()
+						->error( Sobi::Txt( 'HISTORY_REVISION_NOT_FOUND' ), false )
+						->setSystemMessage();
+			}
+		}
 		$f = array();
 		foreach ( $fields as $field ) {
 			if ( ( $field->get( 'enabled' ) ) && $field->enabled( 'form' ) ) {
@@ -333,12 +407,30 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			$view->assign( $n, 'parent_path' );
 		}
 
+		$history = array();
+		$messages = SPFactory::message()->getHistory( $id );
+		if ( count( $messages ) ) {
+			foreach ( $messages as $message ) {
+				$message[ 'change' ] = Sobi::Txt( 'HISTORY_CHANGE_TYPE_' . str_replace( '-', '_', strtoupper( $message[ 'change' ] ) ) );
+				$message[ 'site' ] = Sobi::Txt( 'HISTORY_CHANGE_AREA_' . strtoupper( $message[ 'site' ] ) );
+				if ( strlen( $message[ 'reason' ] ) ) {
+					$message[ 'status' ] = 1;
+				}
+				else {
+					$message[ 'status' ] = 0;
+				}
+				$history[ ] = $message;
+			}
+		}
 		$view->assign( $this->_task, 'task' )
 				->assign( $f, 'fields' )
 				->assign( $id, 'id' )
+				->assign( $history, 'history' )
+				->assign( $revisionChange, 'revision-change' )
 				->assign( SPFactory::CmsHelper()->userSelect( 'entry.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true ), 'owner' )
 				->assign( Sobi::Reg( 'current_section' ), 'sid' )
 				->determineTemplate( 'entry', 'edit' )
+				->addHidden( $rev, 'revision' )
 				->addHidden( $sid, 'pid' );
 		$view->display();
 	}

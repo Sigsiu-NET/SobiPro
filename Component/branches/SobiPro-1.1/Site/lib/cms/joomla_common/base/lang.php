@@ -292,7 +292,7 @@ class SPJoomlaLang
 	 */
 	public static function replacePlaceHolders( $text, $obj = null, $html = false, $dropEmpty = false )
 	{
-		preg_match_all( '/{([a-zA-Z0-9\-_\:\.]+)}/', $text, $placeHolders );
+		preg_match_all( '/{([a-zA-Z0-9\-_\:\.\%\s]+)}/', $text, $placeHolders );
 		if ( count( $placeHolders[ 1 ] ) ) {
 			foreach ( $placeHolders[ 1 ] as $placeHolder ) {
 				$replacement = null;
@@ -309,11 +309,19 @@ class SPJoomlaLang
 						$replacement = SPFactory::mainframe()->token();
 						break;
 					default:
+						if ( strstr( $placeHolder, 'date%' ) ) {
+							$date = explode( '%', $placeHolder );
+							$replacement = date( $date[ 1 ] );
+							break;
+						}
 						if ( strstr( $placeHolder, 'cfg:' ) ) {
 							$replacement = Sobi::Cfg( str_replace( 'cfg:', null, $placeHolder ) );
 							break;
 						}
 						else {
+							if ( strstr( $placeHolder, 'messages' ) ) {
+								$obj = SPFactory::registry()->get( 'messages' );
+							}
 							$replacement = self::parseVal( $placeHolder, $obj, $html );
 						}
 				}

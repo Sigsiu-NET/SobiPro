@@ -792,6 +792,7 @@ class SPAdmView extends SPObject implements SPView
 				'adds' => array( 'before' => null, 'after' => $adds ),
 				'help-text' => $field->get( 'description' ),
 				'id' => $field->get( 'nid' ),
+				'revisions-change' => $field->get( 'revisionChange' ),
 			);
 			// show label is for details view only. Right?
 //			if ( !( $field->get( 'showLabel' ) ) ) {
@@ -839,6 +840,12 @@ class SPAdmView extends SPObject implements SPView
 		elseif ( $cell->nodeName == 'text' ) {
 			$element[ 'content' ] = $this->xmlText( $cell );
 		}
+		elseif ( $cell->nodeName == 'date' ) {
+			$element[ 'type' ] = 'text';
+			$date = strtotime( $element[ 'attributes' ][ 'value' ] );
+			$date = date( $element[ 'attributes' ][ 'dateFormat' ], ( $date ) );
+			$element[ 'content' ] = $date;
+		}
 		elseif ( $cell->nodeName == 'field' ) {
 			$this->xmlField( $cell, $element, $element[ 'content' ] );
 		}
@@ -857,6 +864,9 @@ class SPAdmView extends SPObject implements SPView
 					case 'url':
 						if ( $child->attributes->getNamedItem( 'class' ) && $child->attributes->getNamedItem( 'class' )->nodeValue ) {
 							$element[ 'attributes' ][ 'link-class' ] = $child->attributes->getNamedItem( 'class' )->nodeValue;
+						}
+						if ( $child->attributes->getNamedItem( 'icon' ) && $child->attributes->getNamedItem( 'icon' )->nodeValue ) {
+							$element[ 'attributes' ][ 'icon' ] = $child->attributes->getNamedItem( 'icon' )->nodeValue;
 						}
 						$element[ 'link' ] = $this->xmlUrl( $child, $subject, $i );
 						break;

@@ -69,7 +69,7 @@ class com_sobiproInstallerScript
 				foreach ( $files as $file ) {
 					if ( $file != '.' && $file != '..' ) {
 						if ( is_dir( $srcpath . '/' . $file ) ) {
-							JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file );
+							JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file, '', true );
 						}
 						elseif ( !( file_exists( $dest . '/' . $file ) ) ) {
 							JFile::copy( $srcpath . '/' . $file, $dest . '/' . $file );

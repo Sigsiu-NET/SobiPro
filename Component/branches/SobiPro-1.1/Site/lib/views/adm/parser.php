@@ -34,7 +34,7 @@ class SPTplParser
 	);
 	protected $_checkedOutIcon = 'lock';
 	static $newLine = "\n";
-	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre', 'label', 'tr', 'th', 'td' );
+	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre', 'label', 'tr', 'th', 'td', 'code', 'i' );
 	protected $internalAttributes = array( 'condition' );
 
 
@@ -91,7 +91,7 @@ class SPTplParser
 					if ( isset( $element[ 'help-text' ] ) && $element[ 'help-text' ] ) {
 						$element[ 'label' ] = '<a href="#" rel="popover" data-title="' . htmlspecialchars( $element[ 'label' ], ENT_COMPAT ) . '" data-content="' . htmlspecialchars( $element[ 'help-text' ], ENT_COMPAT ) . '">' . $element[ 'label' ] . '</a>';
 					}
-					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element[ 'id' ]}\">{$element[ 'label' ]}</label>\n";
+					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element['id']}\">{$element['label']}</label>\n";
 				}
 				if ( $this->table ) {
 					$this->_out[ ] = '</td>';
@@ -101,7 +101,7 @@ class SPTplParser
 
 				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
 					if ( $this->istSet( $element, 'id' ) ) {
-						$this->_out[ ] = "<div class=\"spOutput\" id=\"{$element[ 'id' ]}\">";
+						$this->_out[ ] = "<div class=\"spOutput\" id=\"{$element['id']}\">";
 					}
 					else {
 						$this->_out[ ] = "<div class=\"spOutput\">";
@@ -124,6 +124,10 @@ class SPTplParser
 						$this->_out[ ] = "<span{$id}>\n";
 					}
 				}
+				if ( $this->istSet( $element, 'revisions-change' ) ) {
+					$this->_out[ ] = '<a data-fid="' . $element[ 'id' ] . '" href="#" class="btn btn-small pull-left ctrl-revision-compare">&nbsp;<i class="icon-random"></i></a>&nbsp;';
+				}
+
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {
 					$class .= 'input-prepend ';
 				}
@@ -146,7 +150,7 @@ class SPTplParser
 				if ( count( $element[ 'adds' ][ 'after' ] ) ) {
 					foreach ( $element[ 'adds' ][ 'after' ] as $o ) {
 						if ( $this->istSet( $o, 'element', 'button' ) ) {
-							$this->_out[ ] = "<button class=\"{$o[ 'class' ]}\" type=\"button\">{$o[ 'label' ]}</button>";
+							$this->_out[ ] = "<button class=\"{$o['class']}\" type=\"button\">{$o['label']}</button>";
 						}
 						else {
 							$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
@@ -159,6 +163,10 @@ class SPTplParser
 				if ( $class ) {
 					$this->_out[ ] = "</div>\n";
 				}
+//				if ( $this->istSet( $element, 'revisions-change' ) ) {
+//					$this->_out[ ] = '<a href="#" class="btn btn-small">&nbsp;<i class="icon-random"></i></a>&nbsp;';
+//				}
+
 				if ( $this->table ) {
 					$this->_out[ ] = '</td>';
 					$this->_out[ ] = '</tr>';
@@ -173,7 +181,7 @@ class SPTplParser
 				break;
 			case 'url':
 				if ( isset( $element[ 'attributes' ][ 'image' ] ) ) {
-					$this->_out[ ] = "<img src=\"{$element[ 'attributes' ][ 'image' ]}\" alt=\"{$element[ 'attributes' ][ 'label' ]}\" />";
+					$this->_out[ ] = "<img src=\"{$element[ 'attributes' ]['image']}\" alt=\"{$element[ 'attributes' ]['label']}\" />";
 					$this->closeElement( $element );
 					$this->openElement( $element );
 				}
@@ -310,10 +318,10 @@ class SPTplParser
 			$el .= "{$tag}=\"{$val}\" ";
 		}
 		if ( $this->istSet( $data, 'icon' ) ) {
-			$el .= "><i class=\"icon-{$data[ 'icon' ]}\"></i></a>";
+			$el .= "><i class=\"icon-{$data['icon']}\"></i></a>";
 		}
 		else {
-			$el .= ">{$data[ 'title' ]}</a>";
+			$el .= ">{$data['title']}</a>";
 		}
 		$this->_out[ ] = $el;
 	}
@@ -444,15 +452,15 @@ class SPTplParser
 					$class = null;
 					$target = null;
 					if ( $this->istSet( $cell[ 'attributes' ], 'link-class' ) ) {
-						$class = "class=\"{$cell[ 'attributes' ][ 'link-class' ]}\" ";
+						$class = "class=\"{$cell[ 'attributes' ]['link-class']}\" ";
 					}
 					if ( $this->istSet( $cell[ 'attributes' ], 'target' ) ) {
-						$target = "target=\"{$cell[ 'attributes' ][ 'target' ]}\" ";
+						$target = "target=\"{$cell[ 'attributes' ]['target']}\" ";
 					}
-					$this->_out[ ] = "<a href=\"{$cell[ 'link' ]}\"{$class}{$target} >";
+					$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class}{$target} >";
 				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'icon' ) ) {
-					$this->_out[ ] = '<i class="icon-' . $cell[ 'attributes' ][ 'icon' ] . '"></i>';
+					$this->_out[ ] = '<i class="icon-' . $cell[ 'attributes' ][ 'icon' ] . '"></i>&nbsp;';
 				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'label' ) ) {
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
@@ -460,9 +468,9 @@ class SPTplParser
 				if ( $this->istSet( $cell, 'label' ) ) {
 					$class = null; //if label in cell directly (with optional class) add a span as it could be a label/value pair
 					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
-						$class = "class=\"{$cell[ 'attributes' ][ 'class' ]}Label\"";
+						$class = "class=\"{$cell[ 'attributes' ]['class']}Label\"";
 					}
-					$this->_out[ ] = "<span {$class}>{$cell[ 'label' ]}</span>";
+					$this->_out[ ] = "<span {$class}>{$cell['label']}</span>";
 				}
 				if ( $this->istSet( $cell[ 'content' ], 'element', 'button' ) ) {
 					$this->renderButton( $cell[ 'content' ] );
@@ -504,6 +512,7 @@ class SPTplParser
 	public function ticker( $cell )
 	{
 		$index = $cell[ 'content' ];
+		$linkClass = isset( $cell[ 'attributes' ][ 'link-class' ] ) ? ' ' . $cell[ 'attributes' ][ 'link-class' ] : null;
 		$aOpen = false;
 		/** is expired ? */
 		if ( isset( $cell[ 'attributes' ][ 'valid-until' ] ) && $cell[ 'attributes' ][ 'valid-until' ] && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) < time() && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) > 0 ) {
@@ -517,7 +526,7 @@ class SPTplParser
 			$index = -2;
 			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );
-			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending">';
+			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending' . $linkClass . '">';
 		}
 		elseif ( $index < 0 ) {
 			$txt = 'Locked';
@@ -526,11 +535,11 @@ class SPTplParser
 				$txt = Sobi::Txt( $txt[ $index ] );
 			}
 			$aOpen = true;
-			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending">';
+			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending' . $linkClass . '">';
 		}
 		elseif ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
 			$aOpen = true;
-			$this->_out[ ] = "<a href=\"{$cell[ 'link' ]}\" >";
+			$this->_out[ ] = "<a href=\"{$cell['link']}\" class=\"{$linkClass}\" >";
 		}
 		$icons = array();
 		if ( isset( $cell[ 'attributes' ][ 'icons' ] ) && $cell[ 'attributes' ][ 'icons' ] ) {
@@ -594,10 +603,10 @@ class SPTplParser
 		foreach ( $element[ 'content' ] as $tab ) {
 			if ( !( $active ) ) {
 				$active = true;
-				$this->_out[ ] = "<li class=\"active\" ><a href=\"#{$tab[ 'id' ]}\">{$tab[ 'label' ]}</a></li>\n";
+				$this->_out[ ] = "<li class=\"active\" ><a href=\"#{$tab['id']}\">{$tab['label']}</a></li>\n";
 			}
 			else {
-				$this->_out[ ] = "<li><a href=\"#{$tab[ 'id' ]}\">{$tab[ 'label' ]}</a> </li>\n";
+				$this->_out[ ] = "<li><a href=\"#{$tab['id']}\">{$tab['label']}</a> </li>\n";
 			}
 		}
 		$this->_out[ ] = '</ul>';
@@ -617,7 +626,7 @@ class SPTplParser
 			$href = null;
 		}
 		$label = $button[ 'label' ];
-		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button[ 'target' ]}\"" : null;
+		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button['target']}\"" : null;
 		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
 			$this->_out[ ] = '<div class="btn-group">';
 			$this->_out[ ] = "<a href=\"{$href}\" class=\"btn{$class}\"{$target} rel=\"{$rel}\">";
@@ -650,7 +659,7 @@ class SPTplParser
 			}
 			else {
 				if ( isset( $button[ 'rel' ] ) ) {
-					$r = " rel=\"{$button[ 'rel' ]}\" ";
+					$r = " rel=\"{$button['rel']}\" ";
 				}
 				$this->_out[ ] = "<div class=\"btn{$class}\"{$r}{$target}>";
 			}

@@ -233,6 +233,10 @@ class SPField extends SPObject
 	 */
 	protected $currentView = null;
 	/**
+	 * @var string
+	 */
+	protected $revisionChange = null;
+	/**
 	 * @var array
 	 */
 	private $_translatable = array( 'name', 'description', 'suffix' );
@@ -260,6 +264,12 @@ class SPField extends SPObject
 	public function setRawData( $data )
 	{
 		$this->_rawData = $data;
+	}
+
+	public function & revisionChanged()
+	{
+		$this->revisionChange = true;
+		return $this;
 	}
 
 	/**
@@ -602,6 +612,11 @@ class SPField extends SPObject
 				$this->checkMethod( 'loadData' );
 				if ( $this->_type && method_exists( $this->_type, 'loadData' ) ) {
 					$this->_type->loadData( $sid, $this->_fData, $this->_rawData, $this->_data );
+				}
+				else {
+					$this->_rawData = SPFactory::db()
+							->select( 'baseData', 'spdb_field_data', array( 'sid' => $this->sid, 'fid' => $this->fid, 'lang' => Sobi::Lang( false ) ) )
+							->loadResult();
 				}
 			}
 		}

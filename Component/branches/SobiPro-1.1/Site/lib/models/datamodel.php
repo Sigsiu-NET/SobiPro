@@ -31,7 +31,6 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 interface SPDataModel
 {
 	public function __construct();
-	public function changeState( $state, $reason = null );
 	public function checkIn();
 	public function checkOut();
 	public function delete();

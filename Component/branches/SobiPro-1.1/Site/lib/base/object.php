@@ -32,6 +32,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 class SPObject
 {
 
+	protected $messages = array();
 	/**
 	 * @return string
 	 */
@@ -44,6 +45,16 @@ class SPObject
 	{
 	}
 
+	public function & setMessage( $message, $index = null )
+	{
+		if( $index ) {
+			$this->messages[ $index ] = $message;
+		}
+		else {
+			$this->messages[] = $message;
+		}
+		return $this;
+	}
 	/**
 	 */
 	public function toXML()
@@ -88,6 +99,7 @@ class SPObject
 	/**
 	 * @param string $var
 	 * @param mixed $val
+	 * @return $this
 	 */
 	public function & set( $var, $val )
 	{

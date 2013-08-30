@@ -53,6 +53,57 @@ class SPMessage
 	}
 
 	/**
+	 * @param $action
+	 * @param int $sid
+	 * @param array $changes
+	 * @param $message
+	 * @return SPMessage
+	 */
+	public function & logAction( $action, $sid = 0, $changes = array(), $message = null )
+	{
+		$log = array(
+			'revision' => microtime( true ) . '.' . $sid . '.' . Sobi::My( 'id' ),
+			'changedAt' => 'FUNCTION:NOW()',
+			'uid' => Sobi::My( 'id' ),
+			'userName' => Sobi::My( 'name' ),
+			'userEmail' => Sobi::My( 'mail' ),
+			'change' => $action,
+			'site' => defined( 'SOBIPRO_ADM' ) ? 'adm' : 'site',
+			'sid' => $sid,
+			'changes' => SPConfig::serialize( $changes ),
+			'params' => null,
+			'reason' => $message,
+			'language' => Sobi::Lang()
+		);
+		SPFactory::db()->insert( 'spdb_history', $log );
+		return $this;
+	}
+
+	public function getHistory( $sid )
+	{
+		$log = ( array ) SPFactory::db()
+				->select( '*', 'spdb_history', array( 'sid' => $sid ), 'changedAt.desc' )
+				->loadAssocList( 'revision' );
+		if ( count( $log ) ) {
+			foreach ( $log as $revision => $data ) {
+				$log[ $revision ][ 'changes' ] = SPConfig::unserialize( $data[ 'changes' ] );
+			}
+		}
+		return $log;
+	}
+
+	public function getRevision( $rev )
+	{
+		$log = ( array ) SPFactory::db()
+				->select( '*', 'spdb_history', array( 'revision' => $rev ) )
+				->loadObject( 'revision' );
+		if ( count( $log ) ) {
+			$log[ 'changes' ] = SPConfig::unserialize( $log[ 'changes' ] );
+		}
+		return $log;
+	}
+
+	/**
 	 * @return void
 	 */
 	public function storeMessages()
@@ -170,12 +221,12 @@ class SPMessage
 	 * @param $section string
 	 * @return SPMessage
 	 */
-	public function & setSilentSystemMessage( $message, $type = SPC::NOTICE_MSG,  $section = 'configuration' )
+	public function & setSilentSystemMessage( $message, $type = SPC::NOTICE_MSG, $section = 'configuration' )
 	{
 		$this->current = array( 'message' => $message, 'type' => $type, 'section' => array( 'id' => Sobi::Section(), 'name' => Sobi::Section( true ) ) );
 		$this->current[ 'issue-type' ] = $section;
 		$this->store[ md5( serialize( $this->current ) ) ] = $this->current;
-		if ( count( $this->store )  ) {
+		if ( count( $this->store ) ) {
 			$messages = SPConfig::serialize( $this->store );
 			$store = array(
 				'params' => $messages,
