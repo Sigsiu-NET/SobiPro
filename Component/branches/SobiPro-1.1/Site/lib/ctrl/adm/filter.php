@@ -72,7 +72,7 @@ class SPFilter extends SPConfigAdmCtrl
 			$this->response( Sobi::Url( 'filter' ), Sobi::Txt( 'FLR.MSG_FILTER_DELETED' ), true, SPC::SUCCESS_MSG );
 		}
 		else {
-			$this->response( Sobi::Url( 'filter' ), SPLang::e( 'FILTER_NOT_FOUND' ), true, SPC::SUCCESS_MSG );
+			$this->response( Sobi::Url( 'filter' ), SPLang::e( 'FILTER_NOT_FOUND' ), true, SPC::ERROR_MSG );
 		}
 	}
 

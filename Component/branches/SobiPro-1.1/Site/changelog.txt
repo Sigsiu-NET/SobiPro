@@ -30,6 +30,10 @@ Legend:
 1.1.3 (xx September 2013)
 -------------------
 
+   (+) History of changes of an entry
+   (+) Rejection functionality
+   (+) Version management
+
    (#) Language of common frontend and backend texts (Issue #1012)
    (#) Backend search for entry returns categories (Issue #1022)
    (#) Editing entries with image field set as required (Issue #1017)

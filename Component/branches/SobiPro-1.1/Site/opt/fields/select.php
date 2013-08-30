@@ -524,15 +524,31 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		return SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params );
 	}
 
+	/**
+	 * @param int $sid - entry id
+	 * @return void
+	 */
+	public function rejectChanges( $sid )
+	{
+		parent::rejectChanges( $sid );
+		try {
+			SPFactory::db()
+					->delete( 'spdb_field_option_selected', array( 'sid' => $sid, 'fid' => $this->fid, 'copy' => '1', ) );
+		} catch ( SPException $x ) {
+			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+		}
+
+	}
+
 	/* (non-PHPdoc)
 	 * @see Site/opt/fields/SPFieldType#deleteData($sid)
 	 */
 	public function deleteData( $sid )
 	{
 		parent::deleteData( $sid );
-		$db =& SPFactory::db();
 		try {
-			$db->delete( 'spdb_field_option_selected', array( 'sid' => $sid, 'fid' => $this->fid ) );
+			SPFactory::db()
+					->delete( 'spdb_field_option_selected', array( 'sid' => $sid, 'fid' => $this->fid ) );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}

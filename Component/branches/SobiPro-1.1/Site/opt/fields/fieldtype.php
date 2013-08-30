@@ -330,6 +330,24 @@ class SPFieldType extends SPObject
 	 * @param int $sid - entry id
 	 * @return void
 	 */
+	public function rejectChanges( $sid )
+	{
+		static $deleted = array();
+		if ( !( isset( $deleted[ $sid ] ) ) ) {
+			$db =& SPFactory::db();
+			try {
+				$db->delete( 'spdb_field_data', array( 'sid' => $sid, 'copy' => 1 ) );
+			} catch ( SPException $x ) {
+				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DELETE_FIELD_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			}
+			$deleted[ $sid ] = true;
+		}
+	}
+
+	/**
+	 * @param int $sid - entry id
+	 * @return void
+	 */
 	public function deleteData( $sid )
 	{
 		static $deleted = array();

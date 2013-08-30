@@ -100,6 +100,7 @@ class SPEntryCtrl extends SPController
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_model ) );
+			$this->logChanges( 'approve' );
 			$this->response( Sobi::Url( array( 'sid' => $this->_model->get( 'id' ) ) ), Sobi::Txt( 'EN.APPROVED' ), false, SPC::SUCCESS_MSG );
 		}
 		else {
@@ -127,18 +128,8 @@ class SPEntryCtrl extends SPController
 			}
 			if ( ( ( $this->_model->get( 'owner' ) == Sobi::My( 'id' ) ) && Sobi::Can( 'entry.publish.own' ) ) || Sobi::Can( 'entry.publish.*' ) ) {
 				$this->_model->changeState( $state );
-//				if ( time() % 2 ) {
-//					SPFactory::message()->setReport( 'Send an email to someone for it', SPRequest::cmd( 'spsid' ) );
-//					$this->response( Sobi::Back(), Sobi::Txt( 'EN.IS_CHECKED_OUT', $this->_model->get( 'name' ) ), false, SPC::WARN_MSG );
-//				}
-//				elseif ( time() % 3 ) {
-//					SPFactory::message()->setReport( 'here is an error', SPRequest::cmd( 'spsid' ), SPC::WARN_MSG );
-//					$this->response( Sobi::Back(), Sobi::Txt( 'CHANGE_NO_ID' ), false, SPC::ERROR_MSG );
-//				}
-//				else {
-//					SPFactory::message()->setReport( 'I sent this email', SPRequest::cmd( 'spsid' ), SPC::SUCCESS_MSG );
+				$this->logChanges( 'change-state' );
 				$this->response( Sobi::Back(), Sobi::Txt( $state ? 'EN.PUBLISHED' : 'EN.UNPUBLISHED', $this->_model->get( 'name' ) ), false, SPC::SUCCESS_MSG );
-//				}
 			}
 			else {
 				Sobi::Error( 'entry', SPLang::e( 'UNAUTHORIZED_ACCESS' ), SPC::ERROR, 403, __LINE__, __FILE__ );
@@ -483,6 +474,7 @@ class SPEntryCtrl extends SPController
 		if ( $customClass && method_exists( $customClass, 'AfterStoreEntry' ) ) {
 			$customClass::AfterStoreEntry( $this->_model );
 		}
+		$this->logChanges( 'save', SPRequest::string( 'history-note' ) );
 		$this->response( $url, $msg, true, SPC::SUCCESS_MSG );
 	}
 
@@ -698,5 +690,21 @@ class SPEntryCtrl extends SPController
 			$header =& SPFactory::header();
 			$header->addJsVarFile( 'efilter', md5( $validate ), array( 'OBJ' => addslashes( $validate ) ) );
 		}
+	}
+
+	/**
+	 * @param $action
+	 * @param null $reason
+	 */
+	protected function logChanges( $action, $reason = null )
+	{
+		$changes = $this->_model->getCurrentBaseData();
+		$fields = $this->_model->getFields();
+		if ( count( $fields ) ) {
+			foreach ( $fields as $nid => $field ) {
+				$changes[ 'fields' ][ $nid ] = $field->getRaw();
+			}
+		}
+		SPFactory::message()->logAction( $action, $this->_model->get( 'id' ), $changes, $reason );
 	}
 }

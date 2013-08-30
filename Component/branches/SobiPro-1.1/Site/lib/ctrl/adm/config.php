@@ -65,6 +65,16 @@ class SPConfigAdmCtrl extends SPController
 			case 'fields':
 				$this->fields();
 				break;
+			case 'saveRejectionTpl':
+				$this->saveRejectionTpl();
+				break;
+			case 'rejectionTemplates':
+				$this->rejectionTemplates();
+				break;
+			case 'deleteRejectionTemplate':
+				$this->deleteRejectionTemplate();
+				break;
+
 			default:
 				/* case plugin didn't registered this task, it was an error */
 				if ( !( parent::execute() ) && !( $this->view() ) ) {
@@ -75,6 +85,95 @@ class SPConfigAdmCtrl extends SPController
 				}
 				break;
 		}
+	}
+
+	protected function deleteRejectionTemplate()
+	{
+		if ( !( SPFactory::mainframe()->checkToken() ) ) {
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+		}
+		$templates = $this->getRejectionsTemplates();
+		foreach ( $templates as $tid => $template ) {
+			unset( $templates[ $tid ][ 'description' ] );
+		}
+		unset( $templates[ SPRequest::cmd( 'tid' ) ] );
+		if ( count( $templates ) ) {
+			SPFactory::registry()
+					->saveDBSection( $templates, 'rejections-templates_' . Sobi::Section() );
+		}
+		SPFactory::db()
+				->delete( 'spdb_language', array( 'sKey' => SPRequest::cmd( 'tid' ), 'section' => Sobi::Section() ) );
+		$this->response( Sobi::Back(), Sobi::Txt( 'ENTRY_REJECT_DELETED_TPL' ), false, SPC::SUCCESS_MSG );
+	}
+
+	protected function rejectionTemplates()
+	{
+		$templates = $this->getRejectionsTemplates();
+		SPFactory::mainframe()
+				->cleanBuffer()
+				->customHeader();
+		echo json_encode( $templates );
+		exit;
+	}
+
+	protected function saveRejectionTpl()
+	{
+		if ( !( SPFactory::mainframe()->checkToken() ) ) {
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+		}
+		$templates = $this->getRejectionsTemplates();
+		$id = SPLang::nid( SPRequest::string( 'templateName' ) );
+		$templates[ $id ] = array(
+			'params' => SPConfig::serialize(
+				array(
+					'trigger.unpublish' => SPRequest::bool( 'trigger_unpublish' ),
+					'trigger.unapprove' => SPRequest::bool( 'trigger_unapprove' ),
+					'unpublish' => SPRequest::bool( 'unpublish' ),
+					'discard' => SPRequest::bool( 'discard' ),
+				)
+			),
+			'key' => $id,
+			'value' => SPRequest::string( 'templateName' ),
+			'options' => array()
+		);
+		foreach ( $templates as $tid => $template ) {
+			unset( $templates[ $tid ][ 'description' ] );
+		}
+		SPFactory::registry()
+				->saveDBSection( $templates, 'rejections-templates_' . Sobi::Section() );
+		$data = array(
+			'key' => $id,
+			'value' => SPRequest::string( 'reason', null, true, 'post' ),
+			'type' => 'rejections-templates',
+			'id' => Sobi::Section(),
+			'section' => Sobi::Section()
+		);
+		SPLang::saveValues( $data );
+		$this->response( Sobi::Back(), Sobi::Txt( 'ENTRY_REJECT_SAVED_TPL' ), false, SPC::SUCCESS_MSG );
+	}
+
+	protected function getRejectionsTemplates()
+	{
+		$templates = SPFactory::registry()
+				->loadDBSection( 'rejections-templates_' . Sobi::Section() )
+				->get( 'rejections-templates_' . Sobi::Section() );
+		if ( !( $templates ) ) {
+			$templates = SPFactory::registry()
+					->loadDBSection( 'rejections-templates' )
+					->get( 'rejections-templates' );
+		}
+		$f = array();
+		foreach ( $templates as $tid => $template ) {
+			$f[ $tid ] = array(
+				'params' => SPConfig::unserialize( $template[ 'params' ] ),
+				'key' => $tid,
+				'value' => $template[ 'value' ],
+				'description' => SPLang::getValue( $tid, 'rejections-templates', Sobi::Section() ),
+				'options' => $template[ 'options' ]
+			);
+		}
+		ksort( $f );
+		return $f;
 	}
 
 	public static function fields( $sid = 0, $types = null )

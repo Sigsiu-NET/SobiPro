@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  @version: $Id$
  @package: SobiPro
 
@@ -27,15 +26,27 @@
 		<file type="script" filename="bootstrap.tabs" />
 		<file type="script" filename="bootstrap.tooltips" />
 		<file type="script" filename="bootstrap.popover" />
+		<file type="script" filename="adm.revisions" />
+		<file type="script" filename="diff" />
+		<file type="script" filename="jquery-diff" />
+		<style>
+			ins {
+			    background-color: #c6ffc6;
+			    text-decoration: none;
+			}
+			del {
+			    background-color: #ffc6c6;
+			}
+		</style>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiEdit">
-        <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
-        <divider />
+		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
+		<divider />
 		<button task="entry.apply" type="apply">
 			<button type="save" task="entry.save" />
 			<button type="duplicate" task="entry.clone" />
 		</button>
-        <divider />
+		<divider />
 		<button type="exit" task="entry.cancel" />
 		<divider />
 		<button type="help" target="_blank" />
@@ -59,6 +70,7 @@
 							<div class="span12">
 								<fieldset>
 									<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
+									<field type="textarea" name="history-note" value="" label="HISTORY_NOTE" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 							</div>
 						</div>
@@ -119,7 +131,89 @@
 							</div>
 						</div>
 					</tab>
+					<tab label="EN.ENTRY_HISTORY" condition="history.length">
+						<div class="row-fluid">
+							<div class="span12">
+								<table>
+									<head>
+										<cell label="HEAD_HISTORY_DATE" type="text" class="SpCellCenter" />
+										<cell label="HEAD_HISTORY_TYPE" type="text" />
+										<cell label="HEAD_HISTORY_CHANGED_BY" type="text" />
+										<cell label="HEAD_HISTORY_NOTE" type="text" class="SpCellCenter" />
+										<cell label="HEAD_HISTORY_LOAD" type="text" class="SpCellCenter" />
+										<cell label="HEAD_HISTORY_SITE" type="text" class="SpCellCenter" />
+									</head>
+									<loop subject="history">
+										<cell class="SpCellCenter">
+											<date value="changedAt" dateFormat="d-m-Y H:i:s" />
+										</cell>
+										<cell type="text" value="change" />
+										<cell type="link" value="userName" condition="uid" target="_blank" sef="false" live="true">
+											<url type="intern">
+												<param name="option" value="com_users" />
+												<param name="task" value="user.edit" />
+												<param name="id" value="uid" parse="true" />
+											</url>
+										</cell>
+										<cell class="SpCellCenter">
+											<cell condition="status">
+												<tooltip>
+													<attribute name="content" value="reason" parse="true" />
+													<attribute name="title" value="" parse="false" />
+													<attribute name="icon" value="info-sign" parse="false" />
+												</tooltip>
+											</cell>
+										</cell>
+										<cell type="text" value="changedAt" class="SpCellCenter" />
+										<cell type="link" label="HISTORY_LOAD" sef="false" live="true" class="SpCellCenter">
+											<url type="intern" class="btn" icon="refresh">
+												<param name="task" value="entry.edit" />
+												<param name="sid" value="id" parse="true" subject="skip" />
+												<param name="pid" value="sid" parse="true" subject="skip" />
+												<param name="revision" value="revision" parse="true" />
+												<param name="sp-language" value="language" parse="true" />
+											</url>
+										</cell>
+										<cell type="text" value="site" class="SpCellCenter" />
+									</loop>
+								</table>
+							</div>
+						</div>
+					</tab>
 				</tabs>
+			</div>
+		</div>
+		<div condition="revision-change">
+			<div class="modal hide" id="revisions-window" style="width:800px">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&amp;times;</button>
+					<h3>
+						<text value="HISTORY_REVISION_COMPARE" />
+					</h3>
+				</div>
+				<div class="modal-body">
+					<div class="row-fluid">
+						<div class="span4">
+							<text value="HISTORY_REVISION_CURRENT" />
+						</div>
+						<div class="span4">
+							<text value="HISTORY_REVISION_LOADED" />
+						</div>
+						<div class="span4">
+							<text value="HISTORY_REVISION_DIFF" />
+						</div>
+					</div>
+					<div class="row-fluid ctrl-diff">
+						<div class="span4 original" id="revision-current"></div>
+						<div class="span4 changed" id="revision-loaded"></div>
+						<div class="span4 diff"></div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn" data-dismiss="modal">
+						<text value="CLOSE" />
+					</a>
+				</div>
 			</div>
 		</div>
 	</body>

@@ -213,15 +213,51 @@ class SPEntry extends SPDBObject implements SPDataModel
 	}
 
 	/**
+	 * @param bool $trigger
+	 * @return array
+	 */
+	public function discard( $trigger = true )
+	{
+		$data = $this->getCurrentBaseData();
+		if ( $trigger ) {
+			Sobi::Trigger( 'Entry', 'Unapprove', array( $this->_model, 0 ) );
+		}
+		// restore previous version
+		foreach ( $this->fields as $field ) {
+			$field->rejectChanges( $this->id );
+		}
+		// reload fields
+		$this->loadFields( $this->id );
+		// store data
+		foreach ( $this->fields as $field ) {
+			$field->loadData( $this->id );
+			$data[ 'fields' ][ $field->get( 'nid' ) ] = $field->getRaw();
+		}
+		SPFactory::db()
+				->delete( 'spdb_relations', array( 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ) );
+		if ( $trigger ) {
+			Sobi::Trigger( 'Entry', 'AfterUnapprove', array( $this->_model, 0 ) );
+		}
+		SPFactory::cache()
+				->purgeSectionVars()
+				->deleteObj( 'entry', $this->id )
+				->cleanXMLRelations( $this->categories );
+		return $data;
+	}
+
+	/**
 	 * @param int $state
 	 * @param string $reason
+	 * @param bool $trigger
 	 */
-	public function changeState( $state, $reason = null )
+	public function changeState( $state, $reason = null, $trigger = true )
 	{
-		Sobi::Trigger( $this->name(), 'ChangeState', array( $this->id, $state ) );
-		$db =& SPFactory::db();
+		if ( $trigger ) {
+			Sobi::Trigger( $this->name(), 'ChangeState', array( $this->id, $state ) );
+		}
 		try {
-			$db->update( 'spdb_object', array( 'state' => ( int )$state, 'stateExpl' => $reason ), array( 'id' => $this->id ) );
+			SPFactory::db()
+					->update( 'spdb_object', array( 'state' => ( int )$state, 'stateExpl' => $reason ), array( 'id' => $this->id ) );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
@@ -232,7 +268,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 				->purgeSectionVars()
 				->deleteObj( 'entry', $this->id )
 				->cleanXMLRelations( $this->categories );
-		Sobi::Trigger( $this->name(), 'AfterChangeState', array( $this->id, $state ) );
+		if ( $trigger ) {
+			Sobi::Trigger( $this->name(), 'AfterChangeState', array( $this->id, $state ) );
+		}
 	}
 
 	/**
@@ -706,5 +744,29 @@ class SPEntry extends SPDBObject implements SPDataModel
 			}
 		}
 		Sobi::Trigger( $this->name(), 'After' . ucfirst( __FUNCTION__ ), array( &$this ) );
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getCurrentBaseData()
+	{
+		$data = array();
+		$data[ 'owner' ] = $this->owner;
+		$data[ 'categories' ] = $this->categories;
+		$data[ 'position' ] = $this->position;
+		$data[ 'createdTime' ] = $this->createdTime;
+		$data[ 'updatedTime' ] = $this->updatedTime;
+		$data[ 'updater' ] = $this->updater;
+		$data[ 'updaterIP' ] = $this->updaterIP;
+		$data[ 'counter' ] = $this->counter;
+		$data[ 'nid' ] = $this->nid;
+		$data[ 'ownerIP' ] = $this->ownerIP;
+		$data[ 'parent' ] = $this->parent;
+		$data[ 'state' ] = $this->state;
+		$data[ 'validSince' ] = $this->validSince;
+		$data[ 'validUntil' ] = $this->validUntil;
+		$data[ 'version' ] = $this->version;
+		return $data;
 	}
 }
