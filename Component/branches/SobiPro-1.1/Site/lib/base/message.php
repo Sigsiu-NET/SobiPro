@@ -82,7 +82,7 @@ class SPMessage
 	public function getHistory( $sid )
 	{
 		$log = ( array ) SPFactory::db()
-				->select( '*', 'spdb_history', array( 'sid' => $sid ), 'changedAt.desc' )
+				->select( '*', 'spdb_history', array( 'sid' => $sid ), 'changedAt.desc', 100 )
 				->loadAssocList( 'revision' );
 		if ( count( $log ) ) {
 			foreach ( $log as $revision => $data ) {

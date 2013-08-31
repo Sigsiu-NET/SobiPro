@@ -419,7 +419,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 
 							}
 						}
-						if ( $revisionData && $currentData ) {
+						if ( $revisionData || $currentData ) {
 							if ( md5( serialize( $currentData ) ) != md5( serialize( $revisionData ) ) ) {
 								$field->revisionChanged()
 										->setRawData( $revisionData );
