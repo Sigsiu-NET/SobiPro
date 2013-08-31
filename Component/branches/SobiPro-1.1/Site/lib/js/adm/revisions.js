@@ -10,12 +10,11 @@ SobiPro.jQuery( document ).ready( function ()
 	SobiPro.jQuery( '.ctrl-revision-compare' ).click( function ( e )
 	{
 		e.preventDefault();
-//		SobiPro.jQuery( '#revision-current' ).html( '<i class="icon-spinner icon-spin icon-large"></i>' );
-//		SobiPro.jQuery( '#revision-loaded' ).html( '<i class="icon-spinner icon-spin icon-large"></i>' );
 		SobiPro.jQuery( '#revisions-window' ).modal();
+		SobiPro.jQuery( '.ctrl-diff' ).html( '<i class="icon-spinner icon-spin icon-large"></i>' );
 		var request = {
 			'option': 'com_sobipro',
-			'task': 'field.revisions',
+			'task': 'entry.revisions',
 			'sid': SobiPro.jQuery( '#SP_sid' ).val(),
 			'format': 'raw',
 			'tmpl': 'component',
@@ -30,9 +29,7 @@ SobiPro.jQuery( document ).ready( function ()
 			data: request
 		} ).done( function ( response )
 			{
-				SobiPro.jQuery( '#revision-current' ).html( response.current );
-				SobiPro.jQuery( '#revision-loaded' ).html( response.revision );
-				SobiPro.jQuery( '.ctrl-diff' ).prettyTextDiff( { 'cleanup': true } );
+				SobiPro.jQuery( '.ctrl-diff' ).html( response.diff );
 			} );
 	} );
 } );

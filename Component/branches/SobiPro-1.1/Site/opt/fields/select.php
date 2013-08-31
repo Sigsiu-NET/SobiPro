@@ -705,11 +705,30 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	{
 		/** it can be for core files only at the moment because a stupid developer (yes, we all know which one) declared too many private methods and inherited classes returning always wrong results */
 		$class = strtolower( get_class( $this ) );
-		if ( strstr( $class, 'select' )  || strstr( $class, 'radio' ) || strstr( $class, 'chbxgr' ) ) {
+		if ( strstr( $class, 'select' ) || strstr( $class, 'radio' ) || strstr( $class, 'chbxgr' ) ) {
 			return $this->verify( $entry, $request, $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ) ) );
 		}
 		else {
 			return true;
+		}
+	}
+
+	public function compareRevisions( $revision, $current )
+	{
+		if( is_array( $revision ) || is_array( $current ))
+		{
+			if ( is_array( $current ) ) {
+				ksort( $current );
+				$cur = implode( "\n", ( $current ) );
+			}
+			if ( is_array( $revision ) ) {
+				ksort( $revision );
+				$rev = implode( "\n", ( $revision ) );
+			}
+			return array( 'current' => $cur, 'revision' => $rev );
+		}
+		else {
+			return array( 'current' => $current, 'revision' => $revision );
 		}
 	}
 }
