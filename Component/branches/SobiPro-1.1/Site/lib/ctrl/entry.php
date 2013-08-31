@@ -702,7 +702,12 @@ class SPEntryCtrl extends SPController
 		$fields = $this->_model->getFields();
 		if ( count( $fields ) ) {
 			foreach ( $fields as $nid => $field ) {
-				$changes[ 'fields' ][ $nid ] = $field->getRaw();
+				try {
+					$changes[ 'fields' ][ $nid ] = $field->saveHistory();
+				}
+				catch( SPException $x ) {
+					$changes[ 'fields' ][ $nid ] = $field->getRaw();
+				}
 			}
 		}
 		SPFactory::message()->logAction( $action, $this->_model->get( 'id' ), $changes, $reason );

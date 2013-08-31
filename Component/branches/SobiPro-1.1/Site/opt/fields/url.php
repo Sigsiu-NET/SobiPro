@@ -70,11 +70,13 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			$raw = $this->fromCache( $fdata );
 		}
 		else {
-			try {
-				$raw = SPConfig::unserialize( $this->getRaw() );
-			}
-			catch( SPException $x ) {
-				$raw = null;
+			$raw = $this->getRaw();
+			if ( !( is_array( $raw ) ) ) {
+				try {
+					$raw = SPConfig::unserialize( $raw );
+				} catch ( SPException $x ) {
+					$raw = null;
+				}
 			}
 		}
 		if ( $this->ownLabel ) {
@@ -140,7 +142,29 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		}
 	}
 
-	private function fromCache( $cache )
+	public function compareRevisions( $revision, $current )
+	{
+		return array( 'current' => $this->paresUrl( $current ), 'revision' => $this->paresUrl( $revision ) );
+	}
+
+	protected function paresUrl( $url )
+	{
+		if ( $url[ 'protocol' ] == 'relative' ) {
+			$dUrl = $url[ 'url' ];
+		}
+		else {
+			$dUrl = $url[ 'protocol' ] . '://' . $url[ 'url' ];
+		}
+		if ( isset( $url[ 'label' ] ) ) {
+			return "{$url['label']}\n{$dUrl}";
+		}
+		else {
+			return $dUrl;
+		}
+	}
+
+	private
+	function fromCache( $cache )
 	{
 		$data = array();
 		if ( isset( $cache ) && isset( $cache[ $this->nid ] ) ) {
@@ -155,13 +179,15 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		return $data;
 	}
 
+
 	/**
 	 * @param $real
 	 * @param $sid
 	 * @param $nid
 	 * @return string
 	 */
-	protected static function getHits( $real, $sid, $nid )
+	protected
+	static function getHits( $real, $sid, $nid )
 	{
 		$query = array( 'sid' => $sid, 'fid' => $nid, 'section' => Sobi::Section() );
 		if ( $real ) {
@@ -390,6 +416,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		$save = $this->verify( $entry, $db, $request );
+		$this->setRawData( $save );
 
 		$time = SPRequest::now();
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
@@ -464,7 +491,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	public function ProxyHits()
 	{
 		SPFactory::mainframe()->cleanBuffer()->customHeader();
-		$r = ( int ) self::getHits( true, SPRequest::int( 'eid' ), $this->nid );
+		$r = ( int )self::getHits( true, SPRequest::int( 'eid' ), $this->nid );
 		echo $r;
 		exit;
 	}

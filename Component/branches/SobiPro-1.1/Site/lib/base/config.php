@@ -618,7 +618,7 @@ class SPConfig
 			if ( ( $var2 = base64_decode( $var, true ) ) ) {
 				if ( function_exists( 'gzinflate' ) ) {
 					if ( ( $r = @gzinflate( $var2 ) ) ) {
-						if ( !$r = unserialize( $r ) ) {
+						if ( !$r = @unserialize( $r ) ) {
 							throw new SPException( sprintf( 'Cannot unserialize compressed variable %s', $name ) );
 						}
 					}
