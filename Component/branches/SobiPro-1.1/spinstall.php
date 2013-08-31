@@ -95,6 +95,9 @@ class com_sobiproInstallerScript
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_counter` ( `sid` INT(11)  NOT NULL, `counter` INT(11) NOT NULL, `lastUpdate` DATETIME NOT NULL, PRIMARY KEY (`sid`) );' );
 		$db->query();
 
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_history` ( `revision` varchar(150) NOT NULL, `changedAt` datetime NOT NULL, `uid` int(11) NOT NULL, `userName` varchar(150) NOT NULL, `userEmail` varchar(150) NOT NULL, `change` varchar(150) NOT NULL, `site` enum(\'site\',\'adm\') NOT NULL, `sid` int(11) NOT NULL, `changes` text NOT NULL, `params` text NOT NULL, `reason` text NOT NULL, `language` varchar(50) NOT NULL, PRIMARY KEY (`revision`) ) DEFAULT CHARSET=utf8;' );
+		$db->query();
+
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( 'engb_preload',  '1',  '0', NULL ,  'lang' )" );
 		$db->query();
 
