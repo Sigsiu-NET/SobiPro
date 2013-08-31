@@ -101,12 +101,17 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			$revision = $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ];
 		}
 		else {
-			$revision = null;
+			$revision = "";
 		}
 		$current = $field->getRaw();
 		if ( !( is_array( $current ) ) ) {
 			try {
 				$current = SPConfig::unserialize( $current );
+			} catch ( SPException $x ) {
+			}
+		}
+		if ( !( is_array( $revision ) ) ) {
+			try {
 				$revision = SPConfig::unserialize( $revision );
 			} catch ( SPException $x ) {
 			}
@@ -407,11 +412,19 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 							$revisionData = null;
 						}
 						$currentData = $field->getRaw();
-						if ( ( $currentData ) != ( $revisionData ) ) {
-							$field->revisionChanged()
-									->setRawData( $revisionData );
-						}
+						if ( is_array( $revisionData ) && !( is_array( $currentData ) ) ) {
+							try {
+								$currentData = SPConfig::unserialize( $currentData );
+							} catch ( SPException $x ) {
 
+							}
+						}
+						if ( $revisionData && $currentData ) {
+							if ( md5( serialize( $currentData ) ) != md5( serialize( $revisionData ) ) ) {
+								$field->revisionChanged()
+										->setRawData( $revisionData );
+							}
+						}
 						$fields[ $i ] = $field;
 					}
 				}
