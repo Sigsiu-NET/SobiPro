@@ -106,6 +106,17 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		return array( 'width', 'savePath', 'inDetails', 'inVcard', 'thumbHeight', 'thumbWidth', 'thumbName', 'keepOrg', 'resize', 'maxSize', 'resizeWidth', 'resizeHeight', 'imageName', 'generateThumb', 'thumbFloat', 'imageFloat' );
 	}
 
+	public function compareRevisions( $revision, $current )
+	{
+		if ( isset( $revision[ 'image' ] ) ) {
+			$rev = basename( $revision[ 'image' ] );
+		}
+		if ( isset( $current[ 'image' ] ) ) {
+			$cur = basename( $current[ 'image' ] );
+		}
+		return array( 'current' => $cur, 'revision' => $rev );
+	}
+
 	/**
 	 * Shows the field in the edit entry or add entry form
 	 * @param bool $return return or display directly

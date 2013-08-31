@@ -65,6 +65,10 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				$r = true;
 				$this->reject();
 				break;
+			case 'revisions':
+				$r = true;
+				$this->revisions();
+				break;
 			case 'search':
 				$this->search();
 				break;
@@ -79,6 +83,57 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				break;
 		}
 		return $r;
+	}
+
+	protected function revisions()
+	{
+		$revision = SPFactory::message()->getRevision( SPRequest::cmd( 'revision' ) );
+		$sid = SPRequest::sid();
+		$fid = SPRequest::cmd( 'fid' );
+		$fid = SPFactory::db()
+				->select( 'fid', 'spdb_field', array( 'nid' => $fid, 'section' => Sobi::Section() ) )
+				->loadResult();
+		/** @var SPField $field */
+		$field = SPFactory::Model( 'field' );
+		$field->init( $fid );
+		$field->loadData( $sid );
+		if ( isset( $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ] ) ) {
+			$revision = $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ];
+		}
+		else {
+			$revision = null;
+		}
+		$current = $field->getRaw();
+		if ( !( is_array( $current ) ) ) {
+			try {
+				$current = SPConfig::unserialize( $current );
+				$revision = SPConfig::unserialize( $revision );
+			} catch ( SPException $x ) {
+			}
+		}
+		try {
+			$data = $field->compareRevisions( $revision, $current );
+		} catch ( SPException $x ) {
+			if ( is_array( $current ) ) {
+				$current = print_r( $current, true );
+			}
+			if ( is_array( $revision ) ) {
+				$revision = print_r( $revision, true );
+			}
+			$data = array(
+				'current' => $current,
+				'revision' => $revision
+			);
+		}
+		$diff = SPFactory::Instance( 'services.third-party.diff.lib.Diff', explode( "\n", $data[ 'revision' ] ), explode( "\n", $data[ 'current' ] ) );
+		$renderer = SPFactory::Instance( 'services.third-party.diff.lib.Diff.Renderer.Html.SideBySide' );
+		$difference = $diff->Render( $renderer );
+		$data[ 'diff' ] = $difference;
+		SPFactory::mainframe()
+				->cleanBuffer()
+				->customHeader();
+		echo json_encode( $data );
+		exit;
 	}
 
 	protected function reject()

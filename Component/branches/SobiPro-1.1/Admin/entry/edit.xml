@@ -27,8 +27,6 @@
 		<file type="script" filename="bootstrap.tooltips" />
 		<file type="script" filename="bootstrap.popover" />
 		<file type="script" filename="adm.revisions" />
-		<file type="script" filename="diff" />
-		<file type="script" filename="jquery-diff" />
 		<style>
 			ins {
 			    background-color: #c6ffc6;
@@ -193,20 +191,9 @@
 				</div>
 				<div class="modal-body">
 					<div class="row-fluid">
-						<div class="span4">
-							<text value="HISTORY_REVISION_CURRENT" />
-						</div>
-						<div class="span4">
-							<text value="HISTORY_REVISION_LOADED" />
-						</div>
-						<div class="span4">
-							<text value="HISTORY_REVISION_DIFF" />
-						</div>
 					</div>
 					<div class="row-fluid ctrl-diff">
-						<div class="span4 original" id="revision-current"></div>
-						<div class="span4 changed" id="revision-loaded"></div>
-						<div class="span4 diff"></div>
+						<div class="diff" id="revision-diff" style="overflow:scroll"></div>
 					</div>
 				</div>
 				<div class="modal-footer">

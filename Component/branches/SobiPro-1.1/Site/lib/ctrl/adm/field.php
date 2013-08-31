@@ -826,39 +826,4 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 		return $r;
 	}
-
-	protected function revisions()
-	{
-		$revision = SPFactory::message()->getRevision( SPRequest::cmd( 'revision' ) );
-		$sid = SPRequest::sid();
-		$fid = SPRequest::cmd( 'fid' );
-		$fid = SPFactory::db()
-				->select( 'fid', 'spdb_field', array( 'nid' => $fid, 'section' => Sobi::Section() ) )
-				->loadResult();
-		/** @var SPField $field */
-		$field = SPFactory::Model( 'field' );
-		$field->init( $fid );
-		$field->loadData( $sid );
-		if ( isset( $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ] ) ) {
-			$revision = $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ];
-		}
-		else {
-			$revision = null;
-		}
-		if ( method_exists( $field, 'compareData' ) ) {
-			$data = $field->compareData( $revision );
-		}
-		else {
-			$current = $field->getRaw();
-			$data = array(
-				'current' => $current,
-				'revision' => $revision
-			);
-		}
-		SPFactory::mainframe()
-				->cleanBuffer()
-				->customHeader();
-		echo json_encode( $data );
-		exit;
-	}
 }

@@ -49,7 +49,7 @@ abstract class SPLoader
 	{
 		static $types = array( 'base' => 'base', 'controller' => 'ctrl', 'controls' => 'ctrl', 'ctrl' => 'ctrl', 'model' => 'models', 'plugin' => 'plugins', 'application' => 'plugins', 'view' => 'views', 'templates' => 'templates' );
 		$type = strtolower( trim( $type ) );
-		$name = strtolower( trim( $name ) );
+		$name = ( trim( $name ) );
 		if ( isset( $types[ $type ] ) ) {
 			$type = $types[ $type ] . '/';
 		}

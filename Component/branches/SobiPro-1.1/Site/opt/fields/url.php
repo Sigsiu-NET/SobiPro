@@ -70,7 +70,12 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			$raw = $this->fromCache( $fdata );
 		}
 		else {
-			$raw = SPConfig::unserialize( $this->getRaw() );
+			try {
+				$raw = SPConfig::unserialize( $this->getRaw() );
+			}
+			catch( SPException $x ) {
+				$raw = null;
+			}
 		}
 		if ( $this->ownLabel ) {
 			$fieldTitle = null;
