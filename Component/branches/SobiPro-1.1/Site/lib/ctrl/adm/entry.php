@@ -393,7 +393,6 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		/* get fields for this section */
 		/* @var SPEntry $this->_model */
 		$fields = $this->_model->get( 'fields' );
-
 		if ( !count( $fields ) ) {
 			throw new SPException( SPLang::e( 'CANNOT_GET_FIELDS_IN_SECTION', Sobi::Reg( 'current_section' ) ) );
 		}
