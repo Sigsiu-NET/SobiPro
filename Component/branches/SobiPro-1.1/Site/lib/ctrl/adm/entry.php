@@ -132,6 +132,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		}
 		$diff = SPFactory::Instance( 'services.third-party.diff.lib.Diff', explode( "\n", $data[ 'revision' ] ), explode( "\n", $data[ 'current' ] ) );
 		$renderer = SPFactory::Instance( 'services.third-party.diff.lib.Diff.Renderer.Html.SideBySide' );
+//		$renderer = SPFactory::Instance( 'services.third-party.diff.lib.Diff.Renderer.Html.Inline' );
 		$difference = $diff->Render( $renderer );
 		$data[ 'diff' ] = $difference;
 		SPFactory::mainframe()

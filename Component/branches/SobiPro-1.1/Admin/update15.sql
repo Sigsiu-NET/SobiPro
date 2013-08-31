@@ -85,3 +85,19 @@ INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) V
 
 INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES
 ('category', 'Category', '1.1', NULL, 'Sigsiu.NET GmbH', 'http://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');
+
+CREATE TABLE IF NOT EXISTS `#__sobipro_history` (
+  `revision` varchar(150) NOT NULL,
+  `changedAt` datetime NOT NULL,
+  `uid` int(11) NOT NULL,
+  `userName` varchar(150) NOT NULL,
+  `userEmail` varchar(150) NOT NULL,
+  `change` varchar(150) NOT NULL,
+  `site` enum('site','adm') NOT NULL,
+  `sid` int(11) NOT NULL,
+  `changes` text NOT NULL,
+  `params` text NOT NULL,
+  `reason` text NOT NULL,
+  `language` varchar(50) NOT NULL,
+  PRIMARY KEY (`revision`)
+) DEFAULT CHARSET=utf8;
