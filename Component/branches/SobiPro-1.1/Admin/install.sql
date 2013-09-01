@@ -1430,7 +1430,10 @@ INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `
 ('paypal', 'ppcc', 'EUR', '', '', ''),
 ('paypal', 'pprurl', '{cfg:live_site}/index.php?option=com_sobipro&sid={section.id}', '', '', ''),
 ('paypal', 'ppurl', 'https://www.paypal.com/cgi-bin/webscr', '', '', ''),
-('paypal', 'ppemail', 'change@me.com', '', '', '');
+('paypal', 'ppemail', 'change@me.com', '', '', ''),
+('rejections-templates', 'rejection-of-a-new-entry', 'Rejection of a new entry', 'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjoxO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjA7czo5OiJ1bnB1Ymxpc2giO2I6MTtzOjc6ImRpc2NhcmQiO2I6MDt9', '', ''),
+('rejections-templates', 'rejection-of-changes', 'Rejection of changes', 'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjowO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjE7czo5OiJ1bnB1Ymxpc2giO2I6MDtzOjc6ImRpc2NhcmQiO2I6MTt9', '', '');
+
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_relations` (
 	`id`         INT(11)     NOT NULL DEFAULT '0',
