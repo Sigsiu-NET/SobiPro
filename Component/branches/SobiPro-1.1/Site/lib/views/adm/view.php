@@ -1015,6 +1015,12 @@ class SPAdmView extends SPObject implements SPView
 		if ( !( $this->xmlCondition( $node ) ) ) {
 			return;
 		}
+		if ( SPRequest::task() == 'entry.edit' && SPRequest::cmd( 'revision' ) && isset( $element[ 'attributes' ][ 'name' ] ) ) {
+			$i = str_replace( 'entry.', null, $element[ 'attributes' ][ 'name' ] );
+			if ( isset( $this->_attr[ 'revision' ][ $i ] ) ) {
+				$element[ 'revisions-change' ] = $element[ 'attributes' ][ 'name' ];
+			}
+		}
 		/** process all attributes  */
 		$attributes = $node->attributes;
 		$params = array();

@@ -64,7 +64,6 @@ SobiPro.jQuery( document ).ready( function ()
 					if ( counter > 0 ) {
 						var modal = '<div class="modal hide" id="SpModalMsg"><div class="modal-body">' + output.join( "\n" ) + '</div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>';
 						SobiPro.jQuery( modal ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
-//						SobiPro.jQuery( '#SobiPro' ).append( SobiPro.jQuery( modal ) );
 						var modalMessage = SobiPro.jQuery( '#SpModalMsg' ).modal();
 						modalMessage.on( 'hidden', function ()
 						{
@@ -153,6 +152,13 @@ SobiPro.jQuery( document ).ready( function ()
 				return new SpSerialAction( task );
 			}
 			else if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
+				SobiPro.jQuery( '#SP_task' ).val( task );
+				if ( task == 'entry.save' || task == 'entry.apply' ) {
+					var note = prompt( SobiPro.Txt( 'HISTORY_NOTE' ), ' ' );
+					if ( note != '' && note != null ) {
+						SobiPro.jQuery( '#history-note' ).val( note );
+					}
+				}
 				var handler = { 'takeOver': false };
 				SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit', [ handler, task ] );
 				if ( handler.takeOver == true ) {
@@ -162,12 +168,11 @@ SobiPro.jQuery( document ).ready( function ()
 				var req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
 				SobiPro.jQuery( SobiPro.jQuery( '#SPAdminForm' ).find( ':button' ) ).each( function ( i, b )
 				{
-					bt = SobiPro.jQuery( b );
+					var bt = SobiPro.jQuery( b );
 					if ( bt.attr( 'disabled' ) != 'disabled' && bt.hasClass( 'active' ) ) {
 						req += '&' + bt.attr( 'name' ) + '=' + bt.val();
 					}
 				} );
-				SobiPro.jQuery( '#SP_task' ).val( task );
 				SobiPro.jQuery.ajax( {
 					'url': 'index.php',
 					'data': req,
@@ -402,10 +407,10 @@ SobiPro.jQuery( document ).ready( function ()
 					'method': 'xhr'
 				}
 			} ).done( function ( data )
-			{
-				var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text+ '</div>';
-				SobiPro.jQuery( '#spMessage' ).html( Message );
-			} );
+				{
+					var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + '</div>';
+					SobiPro.jQuery( '#spMessage' ).html( Message );
+				} );
 		}
 	} );
 } );
