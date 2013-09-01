@@ -146,7 +146,8 @@ class SPConfigAdmCtrl extends SPController
 			'value' => SPRequest::string( 'reason', null, true, 'post' ),
 			'type' => 'rejections-templates',
 			'id' => Sobi::Section(),
-			'section' => Sobi::Section()
+			'section' => Sobi::Section(),
+			'options' => SPRequest::string( 'templateName' )
 		);
 		SPLang::saveValues( $data );
 		$this->response( Sobi::Back(), Sobi::Txt( 'ENTRY_REJECT_SAVED_TPL' ), false, SPC::SUCCESS_MSG );
@@ -164,11 +165,15 @@ class SPConfigAdmCtrl extends SPController
 		}
 		$f = array();
 		foreach ( $templates as $tid => $template ) {
+			$desc = SPLang::getValue( $tid, 'rejections-templates', Sobi::Section() );
+			if ( !( $desc ) ) {
+				$desc = SPLang::getValue( $tid, 'rejections-templates', 0 );
+			}
 			$f[ $tid ] = array(
 				'params' => SPConfig::unserialize( $template[ 'params' ] ),
 				'key' => $tid,
 				'value' => $template[ 'value' ],
-				'description' => SPLang::getValue( $tid, 'rejections-templates', Sobi::Section() ),
+				'description' => $desc,
 				'options' => $template[ 'options' ]
 			);
 		}
