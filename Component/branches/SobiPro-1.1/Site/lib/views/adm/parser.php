@@ -91,7 +91,12 @@ class SPTplParser
 					if ( isset( $element[ 'help-text' ] ) && $element[ 'help-text' ] ) {
 						$element[ 'label' ] = '<a href="#" rel="popover" data-title="' . htmlspecialchars( $element[ 'label' ], ENT_COMPAT ) . '" data-content="' . htmlspecialchars( $element[ 'help-text' ], ENT_COMPAT ) . '">' . $element[ 'label' ] . '</a>';
 					}
-					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element['id']}\">{$element['label']}</label>\n";
+					$add = null;
+					if ( $this->istSet( $element, 'revisions-change' ) ) {
+						$i = strlen( $element[ 'revisions-change' ] ) > 5 ? $element[ 'revisions-change' ] : $element[ 'id' ];
+						$add = '&nbsp;<a data-fid="' . $i . '" href="#" class="btn btn-mini btn-warning ctrl-revision-compare">&nbsp;<i class="icon-random"></i></a>';
+					}
+					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element['id']}\">{$element['label']}{$add}</label>\n";
 				}
 				if ( $this->table ) {
 					$this->_out[ ] = '</td>';
@@ -124,10 +129,6 @@ class SPTplParser
 						$this->_out[ ] = "<span{$id}>\n";
 					}
 				}
-				if ( $this->istSet( $element, 'revisions-change' ) ) {
-					$this->_out[ ] = '<a data-fid="' . $element[ 'id' ] . '" href="#" class="btn btn-small pull-left ctrl-revision-compare">&nbsp;<i class="icon-random"></i></a>&nbsp;';
-				}
-
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {
 					$class .= 'input-prepend ';
 				}
@@ -163,10 +164,6 @@ class SPTplParser
 				if ( $class ) {
 					$this->_out[ ] = "</div>\n";
 				}
-//				if ( $this->istSet( $element, 'revisions-change' ) ) {
-//					$this->_out[ ] = '<a href="#" class="btn btn-small">&nbsp;<i class="icon-random"></i></a>&nbsp;';
-//				}
-
 				if ( $this->table ) {
 					$this->_out[ ] = '</td>';
 					$this->_out[ ] = '</tr>';

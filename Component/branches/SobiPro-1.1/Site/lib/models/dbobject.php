@@ -167,7 +167,7 @@ abstract class SPDBObject extends SPObject
 	}
 
 	/**
-	 * list of adjustable proporties and the corresponding request method for each property.
+	 * list of adjustable properties and the corresponding request method for each property.
 	 * If a property isn't declared here, it will be ignored in the getRequest method
 	 * @var array
 	 */

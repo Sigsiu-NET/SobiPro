@@ -90,45 +90,82 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$revision = SPFactory::message()->getRevision( SPRequest::cmd( 'revision' ) );
 		$sid = SPRequest::sid();
 		$fid = SPRequest::cmd( 'fid' );
-		$fid = SPFactory::db()
-				->select( 'fid', 'spdb_field', array( 'nid' => $fid, 'section' => Sobi::Section() ) )
-				->loadResult();
-		/** @var SPField $field */
-		$field = SPFactory::Model( 'field' );
-		$field->init( $fid );
-		$field->loadData( $sid );
-		if ( isset( $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ] ) ) {
-			$revision = $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ];
+		if ( strstr( $fid, 'field_' ) ) {
+			$fid = SPFactory::db()
+					->select( 'fid', 'spdb_field', array( 'nid' => $fid, 'section' => Sobi::Section() ) )
+					->loadResult();
+			/** @var SPField $field */
+			$field = SPFactory::Model( 'field' );
+			$field->init( $fid );
+			$field->loadData( $sid );
+			if ( isset( $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ] ) ) {
+				$revision = $revision[ 'changes' ][ 'fields' ][ $field->get( 'nid' ) ];
+			}
+			else {
+				$revision = "";
+			}
+			$current = $field->getRaw();
+			if ( !( is_array( $current ) ) ) {
+				try {
+					$current = SPConfig::unserialize( $current );
+				} catch ( SPException $x ) {
+				}
+			}
+			if ( !( is_array( $revision ) ) ) {
+				try {
+					$revision = SPConfig::unserialize( $revision );
+				} catch ( SPException $x ) {
+				}
+			}
+			try {
+				$data = $field->compareRevisions( $revision, $current );
+			} catch ( SPException $x ) {
+				if ( is_array( $current ) ) {
+					$current = print_r( $current, true );
+				}
+				if ( is_array( $revision ) ) {
+					$revision = print_r( $revision, true );
+				}
+				$data = array(
+					'current' => $current,
+					'revision' => $revision
+				);
+			}
 		}
+		// core data
 		else {
-			$revision = "";
-		}
-		$current = $field->getRaw();
-		if ( !( is_array( $current ) ) ) {
-			try {
-				$current = SPConfig::unserialize( $current );
-			} catch ( SPException $x ) {
+			$i = str_replace( 'entry.', null, $fid );
+			if ( isset( $revision[ 'changes' ][ $i ] ) ) {
+				$revision = $revision[ 'changes' ][ $i ];
 			}
-		}
-		if ( !( is_array( $revision ) ) ) {
-			try {
-				$revision = SPConfig::unserialize( $revision );
-			} catch ( SPException $x ) {
+			else {
+				$revision = "";
 			}
-		}
-		try {
-			$data = $field->compareRevisions( $revision, $current );
-		} catch ( SPException $x ) {
-			if ( is_array( $current ) ) {
-				$current = print_r( $current, true );
+			switch ( $i ) {
+				case 'owner':
+				case 'updater':
+					$currentUser = null;
+					$pastUser = null;
+					if ( $this->_model->get( $i ) ) {
+						$currentUser = SPUser::getBaseData( ( int ) $this->_model->get( $i ) );
+						$currentUser = $currentUser->name . ' (' . $currentUser->id . ')';
+					}
+					if ( $revision ) {
+						$pastUser = SPUser::getBaseData( ( int )$revision );
+						$pastUser = $pastUser->name . ' (' . $pastUser->id . ')';
+					}
+					$data = array(
+						'current' => $currentUser,
+						'revision' => $pastUser,
+					);
+					break;
+				default:
+					$data = array(
+						'current' => $this->_model->get( $i ),
+						'revision' => $revision
+					);
+					break;
 			}
-			if ( is_array( $revision ) ) {
-				$revision = print_r( $revision, true );
-			}
-			$data = array(
-				'current' => $current,
-				'revision' => $revision
-			);
 		}
 		$diff = SPFactory::Instance( 'services.third-party.diff.lib.Diff', explode( "\n", $data[ 'revision' ] ), explode( "\n", $data[ 'current' ] ) );
 		$renderer = SPFactory::Instance( 'services.third-party.diff.lib.Diff.Renderer.Html.SideBySide' );
@@ -399,6 +436,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		}
 		$revisionChange = false;
 		$rev = SPRequest::cmd( 'revision' );
+		$revisionsDelta = array();
 		if ( $rev ) {
 			$revision = SPFactory::message()->getRevision( SPRequest::cmd( 'revision' ) );
 			if ( isset( $revision[ 'changes' ] ) && count( $revision[ 'changes' ] ) ) {
@@ -426,6 +464,13 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 							}
 						}
 						$fields[ $i ] = $field;
+					}
+				}
+				unset( $revision[ 'changes' ][ 'fields' ] );
+				foreach ( $revision[ 'changes' ] as $attr => $value ) {
+					if ( $value != $this->_model->get( $attr ) ) {
+						$revisionsDelta[ $attr ] = $value;
+						$this->_model->setRevData( $attr, $value );
 					}
 				}
 				$revisionChange = true;
@@ -495,6 +540,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				->assign( $id, 'id' )
 				->assign( $history, 'history' )
 				->assign( $revisionChange, 'revision-change' )
+				->assign( $revisionsDelta, 'revision' )
 				->assign( SPFactory::CmsHelper()->userSelect( 'entry.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true ), 'owner' )
 				->assign( Sobi::Reg( 'current_section' ), 'sid' )
 				->determineTemplate( 'entry', 'edit' )

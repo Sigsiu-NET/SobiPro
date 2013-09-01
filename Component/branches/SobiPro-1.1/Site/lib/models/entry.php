@@ -769,4 +769,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 		$data[ 'version' ] = $this->version;
 		return $data;
 	}
+
+	public function setRevData( $attr, $value )
+	{
+		$this->$attr = $value;
+	}
 }
