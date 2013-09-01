@@ -156,7 +156,7 @@ SobiPro.jQuery( document ).ready( function ()
 				if ( task == 'entry.save' || task == 'entry.apply' ) {
 					var note = prompt( SobiPro.Txt( 'HISTORY_NOTE' ), ' ' );
 					if ( note != '' && note != null ) {
-						SobiPro.jQuery( '#history-note' ).val( note );
+						SobiPro.jQuery( '#SP_history-note' ).val( note );
 					}
 				}
 				var handler = { 'takeOver': false };
