@@ -155,8 +155,11 @@ SobiPro.jQuery( document ).ready( function ()
 				SobiPro.jQuery( '#SP_task' ).val( task );
 				if ( task == 'entry.save' || task == 'entry.apply' ) {
 					var note = prompt( SobiPro.Txt( 'HISTORY_NOTE' ), ' ' );
-					if ( note != '' && note != null ) {
+					if ( ( typeof note ) == 'string' ) {
 						SobiPro.jQuery( '#SP_history-note' ).val( note );
+					}
+					else {
+						return;
 					}
 				}
 				var handler = { 'takeOver': false };
