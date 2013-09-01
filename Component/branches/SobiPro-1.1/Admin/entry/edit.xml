@@ -68,7 +68,6 @@
 							<div class="span12">
 								<fieldset>
 									<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
-									<field type="textarea" name="history-note" value="" label="HISTORY_NOTE" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 							</div>
 						</div>
@@ -212,6 +211,7 @@
 			<field name="method" default="xhr" />
 			<field name="sp-language" default="" />
 			<field name="sid" value="entry.sid" />
+			<field name="history-note" default=""/>
 		</hidden>
 	</config>
 </definition>
