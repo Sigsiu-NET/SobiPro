@@ -61,46 +61,58 @@ class SPMessage
 	 */
 	public function & logAction( $action, $sid = 0, $changes = array(), $message = null )
 	{
-		$log = array(
-			'revision' => microtime( true ) . '.' . $sid . '.' . Sobi::My( 'id' ),
-			'changedAt' => 'FUNCTION:NOW()',
-			'uid' => Sobi::My( 'id' ),
-			'userName' => Sobi::My( 'name' ),
-			'userEmail' => Sobi::My( 'mail' ),
-			'change' => $action,
-			'site' => defined( 'SOBIPRO_ADM' ) ? 'adm' : 'site',
-			'sid' => $sid,
-			'changes' => SPConfig::serialize( $changes ),
-			'params' => null,
-			'reason' => $message,
-			'language' => Sobi::Lang()
-		);
-		SPFactory::db()->insert( 'spdb_history', $log );
+		if ( Sobi::Cfg( 'entry.versioning', true ) ) {
+			$log = array(
+				'revision' => microtime( true ) . '.' . $sid . '.' . Sobi::My( 'id' ),
+				'changedAt' => 'FUNCTION:NOW()',
+				'uid' => Sobi::My( 'id' ),
+				'userName' => Sobi::My( 'name' ),
+				'userEmail' => Sobi::My( 'mail' ),
+				'change' => $action,
+				'site' => defined( 'SOBIPRO_ADM' ) ? 'adm' : 'site',
+				'sid' => $sid,
+				'changes' => SPConfig::serialize( $changes ),
+				'params' => null,
+				'reason' => $message,
+				'language' => Sobi::Lang()
+			);
+			SPFactory::db()->insert( 'spdb_history', $log );
+		}
 		return $this;
 	}
 
 	public function getHistory( $sid )
 	{
-		$log = ( array ) SPFactory::db()
-				->select( '*', 'spdb_history', array( 'sid' => $sid ), 'changedAt.desc', 100 )
-				->loadAssocList( 'revision' );
-		if ( count( $log ) ) {
-			foreach ( $log as $revision => $data ) {
-				$log[ $revision ][ 'changes' ] = SPConfig::unserialize( $data[ 'changes' ] );
+		if ( Sobi::Cfg( 'entry.versioning', true ) ) {
+			$log = ( array )SPFactory::db()
+					->select( '*', 'spdb_history', array( 'sid' => $sid ), 'changedAt.desc', 100 )
+					->loadAssocList( 'revision' );
+			if ( count( $log ) ) {
+				foreach ( $log as $revision => $data ) {
+					$log[ $revision ][ 'changes' ] = SPConfig::unserialize( $data[ 'changes' ] );
+				}
 			}
+			return $log;
 		}
-		return $log;
+		else {
+			return array();
+		}
 	}
 
 	public function getRevision( $rev )
 	{
-		$log = ( array ) SPFactory::db()
-				->select( '*', 'spdb_history', array( 'revision' => $rev ) )
-				->loadObject( 'revision' );
-		if ( count( $log ) ) {
-			$log[ 'changes' ] = SPConfig::unserialize( $log[ 'changes' ] );
+		if ( Sobi::Cfg( 'entry.versioning', true ) ) {
+			$log = ( array )SPFactory::db()
+					->select( '*', 'spdb_history', array( 'revision' => $rev ) )
+					->loadObject( 'revision' );
+			if ( count( $log ) ) {
+				$log[ 'changes' ] = SPConfig::unserialize( $log[ 'changes' ] );
+			}
+			return $log;
 		}
-		return $log;
+		else {
+			return array();
+		}
 	}
 
 	/**
