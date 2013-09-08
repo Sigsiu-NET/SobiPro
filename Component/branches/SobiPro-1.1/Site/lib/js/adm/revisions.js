@@ -20,7 +20,8 @@ SobiPro.jQuery( document ).ready( function ()
 			'tmpl': 'component',
 			'method': 'xhr',
 			'revision': SobiPro.jQuery( '#SP_revision' ).val(),
-			'fid': SobiPro.jQuery( this ).data( 'fid' )
+			'fid': SobiPro.jQuery( this ).data( 'fid' ),
+			'html': 1
 		}
 		SobiPro.jQuery.ajax( {
 			url: 'index.php',

@@ -196,6 +196,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
+					<!--<a href="#" class="btn btn ctrl-revision-html">-->
+						<!--<text value="HTML" /> <i class="icon-code"></i>-->
+					<!--</a>-->
 					<a href="#" class="btn" data-dismiss="modal">
 						<text value="CLOSE" />
 					</a>
