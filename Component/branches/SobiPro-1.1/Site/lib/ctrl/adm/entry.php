@@ -147,7 +147,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 					$currentUser = null;
 					$pastUser = null;
 					if ( $this->_model->get( $i ) ) {
-						$currentUser = SPUser::getBaseData( ( int ) $this->_model->get( $i ) );
+						$currentUser = SPUser::getBaseData( ( int )$this->_model->get( $i ) );
 						$currentUser = $currentUser->name . ' (' . $currentUser->id . ')';
 					}
 					if ( $revision ) {
@@ -167,7 +167,18 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 					break;
 			}
 		}
-		$diff = SPFactory::Instance( 'services.third-party.diff.lib.Diff', explode( "\n", $data[ 'revision' ] ), explode( "\n", $data[ 'current' ] ) );
+		if ( !( SPRequest::bool( 'html', false, 'post' ) ) ) {
+			$data = array(
+				'current' => html_entity_decode( strip_tags( $data[ 'current' ] ), ENT_QUOTES, 'UTF-8' ),
+				'revision' => html_entity_decode( strip_tags( $data[ 'revision' ] ), ENT_QUOTES, 'UTF-8' ),
+			);
+
+		}
+		$data = array(
+			'current' => explode( "\n", $data[ 'current' ] ),
+			'revision' => explode( "\n", $data[ 'revision' ] )
+		);
+		$diff = SPFactory::Instance( 'services.third-party.diff.lib.Diff', $data[ 'revision' ], $data[ 'current' ] );
 		$renderer = SPFactory::Instance( 'services.third-party.diff.lib.Diff.Renderer.Html.SideBySide' );
 //		$renderer = SPFactory::Instance( 'services.third-party.diff.lib.Diff.Renderer.Html.Inline' );
 		$difference = $diff->Render( $renderer );
