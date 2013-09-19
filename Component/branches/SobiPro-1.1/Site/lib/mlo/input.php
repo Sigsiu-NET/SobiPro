@@ -242,8 +242,8 @@ abstract class SPHtml_Input
 		}
 		$params = self::params( $params );
 		$value = self::translate( $value );
-		if( $icon ) {
-			$value = "<i class=\"icon-{$icon}\"></i> ".$value;
+		if ( $icon ) {
+			$value = "<i class=\"icon-{$icon}\"></i> " . $value;
 		}
 		$f = "\n<button type=\"button\" name=\"{$name}\" {$h}{$params}>{$value}</button>\n";
 		if ( isset( $a ) ) {
@@ -734,7 +734,7 @@ abstract class SPHtml_Input
 	public static function datePicker( $name, $value, $dateFormat = 'Y-m-d H:i:s', $params = null, $icon = 'th' )
 	{
 		self::createLangFile();
-		$value = strtotime( $value );
+		$value = ( ( int ) $value != 0 && $value ) ? strtotime( $value ) : null;
 		/** The stupid JavaScript to PHP conversion. */
 		$jsDateFormat = str_replace(
 			array( 'y', 'Y', 'F', 'n', 'm', 'd', 'j', 'h', 'H', 'i', 's' ),

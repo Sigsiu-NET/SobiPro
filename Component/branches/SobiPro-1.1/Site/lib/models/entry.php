@@ -470,12 +470,12 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 		$nameField = $this->nameField();
 
-		if ( !( $this->_loaded ) ) {
+		if ( !( $this->_loaded ) || !( count( $fields[ $sid ] ) ) ) {
 			if ( count( $fields[ $sid ] ) ) {
 				/* if it is an entry - prefetch the basic fields data */
 				if ( $this->id ) {
 					$noCopy = $this->checkCopy();
-					/* in case the entry is approved, or we are aditing an entry, or the user can see unapproved changes */
+					/* in case the entry is approved, or we are editing an entry, or the user can see unapproved changes */
 					if ( $this->approved || $noCopy ) {
 						$ordering = 'copy.desc';
 					}

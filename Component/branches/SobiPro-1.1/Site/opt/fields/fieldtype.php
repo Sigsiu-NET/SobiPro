@@ -238,25 +238,26 @@ class SPFieldType extends SPObject
 
 	public function approve( $sid )
 	{
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		static $lang = null;
 		if ( !( $lang ) ) {
 			$lang = Sobi::Lang( false );
 		}
 		try {
-			$db->select( 'COUNT( fid )', 'spdb_field_data', array( 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ) );
-			$copy = $db->loadResult();
+			$copy = $db
+					->select( 'COUNT( fid )', 'spdb_field_data', array( 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ) )
+					->loadResult();
 			if ( $copy ) {
 				/**
 				 * Fri, Apr 6, 2012
 				 * Ok, this is tricky now.
 				 * Normally we have such situation:
 				 * User is adding an entry and flags are:
-				 * approved    | copy    | baseData
+				 * approved    | copy  | baseData
 				 *    0        |  1    |    Org
 				 * When it's just being approved everything works just fine
 				 * Problem is when the admin is changing the data then after edit it looks like this
-				 * approved    | copy    | baseData
+				 * approved    | copy  | baseData
 				 *    0        |  1    |    Org         << org user data
 				 *    1        |  0    |    Changed     << data changed by the administrator
 				 * So in the normal way we'll delete the changed data and approve the old data
@@ -275,10 +276,10 @@ class SPFieldType extends SPObject
 				else {
 					$params = array( 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid );
 					/**
-					 * when we have good multilanguage management
+					 * when we have good multilingual management
 					 * we can change it
 					 * for the moment if an entry is entered in i.e. de_DE
-					 * but the admin approves the entry in en_GB and the multilang mode is enabled
+					 * but the admin approves the entry in en_GB and the multilingual mode is enabled
 					 * in case it was a new entry - empty data is being displayed
 					 */
 					if ( !( Sobi::Cfg( 'entry.approve_all_langs', true ) ) ) {
