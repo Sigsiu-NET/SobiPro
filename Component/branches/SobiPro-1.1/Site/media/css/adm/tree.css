@@ -71,11 +71,15 @@ a.treeNode:visited {
 	text-decoration: none;
 	font-weight: normal;
 }
+a.treeNode:hover {
+    background-color: #EEEEEE;
+}
 
 a.treeNode:active,
 a.treeNode:focus {
 	color: #333333;
 	text-decoration: none;
 	font-weight: normal;
+    background-color: #C0D2EC;
 /*	background-color: #c0d2ec; */
 }
