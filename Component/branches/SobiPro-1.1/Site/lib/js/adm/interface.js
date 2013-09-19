@@ -154,7 +154,7 @@ SobiPro.jQuery( document ).ready( function ()
 			else if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
 				SobiPro.jQuery( '#SP_task' ).val( task );
 				if ( task == 'entry.save' || task == 'entry.apply' ) {
-					var note = prompt( SobiPro.Txt( 'HISTORY_NOTE' ), ' ' );
+					var note = prompt( SobiPro.Txt( 'HISTORY_NOTE' ), '' );
 					if ( ( typeof note ) == 'string' ) {
 						SobiPro.jQuery( '#SP_history-note' ).val( note );
 					}

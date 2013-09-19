@@ -63,7 +63,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	 */
 	protected function view( $allEntries, $term = null )
 	{
-		if( $allEntries ) {
+		if ( $allEntries ) {
 			SPRequest::set( 'task', 'section.entries' );
 		}
 		else {
@@ -96,9 +96,14 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			$c[ ] = Sobi::Section();
 			if ( count( $c ) ) {
 				try {
-					$e = $db
+					$e1 = $db
 							->dselect( 'id', 'spdb_relations', array( 'pid' => $c, 'oType' => 'entry' ) )
 							->loadResultArray();
+					$e2 = $db
+							->dselect( 'sid', 'spdb_field_data', array( 'section' => Sobi::Section(), 'fid' => Sobi::Cfg( 'entry.name_field' ) ) )
+							->loadResultArray();
+					$e = array_merge( $e1, $e2 );
+					$e = array_unique( $e );
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
