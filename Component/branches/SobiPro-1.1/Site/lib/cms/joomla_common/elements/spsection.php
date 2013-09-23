@@ -178,7 +178,7 @@ class JElementSPSection extends JElement
 			$head->addJsFile( array( 'sobipro', 'jqnc', 'adm.sobipro', 'adm.jmenu' ) );
 		}
 		else {
-			$head->addJsFile( array( 'sobipro', 'jquery', 'adm.sobipro', 'adm.jmenu' ) );
+			$head->addJsFile( array( 'sobipro', 'jquery', 'adm.sobipro', 'adm.jmenu', 'jquery-migrate' ) );
 		}
 
 		if ( SOBI_CMS != 'joomla3' ) {

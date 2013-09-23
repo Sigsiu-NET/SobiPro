@@ -33,14 +33,22 @@ Legend:
    (+) History of changes of an entry
    (+) Rejection functionality
    (+) Version management
+   (+) Support for custom templates override while adding menu item
 
    (!) Default input style for URL and Email field improved
 
    (#) Language of common frontend and backend texts (Issue #1012)
    (#) Backend search for entry returns categories (Issue #1022)
    (#) Editing entries with image field set as required (Issue #1017)
-   (#) Category Name as Alias in SobiPro 1.1.2 (Issue #1015)
    (#) Error while installing Joomla! native extensions in SobiPro (Issue #1013)
+   (#) Add menu entry to an entry in Joomla 2.5 (Issue #1042)
+   (#) Preventing saving of custom ordering when nothing has been selected (Issue ##1041)
+   (#) Entries without valid category assigned are not visible in 'All Entries' screen (Issue #1037)
+   (#) Approving changes from the front-end with multilingual mode (Issue #1027)
+   (#) Backend search for entry redirects to main section view (Issue #1022)
+   (#) Editing entries with image field set as required (Issue #1017)
+   (#) Category Name as Alias in SobiPro 1.1.2 (Issue #1015)
+   (#) Destination folder not found while updating SobiPro (Issue #1014)
 
 
 -------------------

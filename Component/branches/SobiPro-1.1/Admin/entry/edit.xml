@@ -161,7 +161,6 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="changedAt" class="SpCellCenter" />
 										<cell type="link" label="HISTORY_LOAD" sef="false" live="true" class="SpCellCenter">
 											<url type="intern" class="btn" icon="refresh">
 												<param name="task" value="entry.edit" />

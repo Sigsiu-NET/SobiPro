@@ -220,9 +220,13 @@ class SPConfigAdmCtrl extends SPController
 	{
 		$target = SPRequest::cmd( 'target' );
 		$order = Sobi::GetUserState( $target . '.order', null );
-		SPFactory::config()->saveCfg( 'admin.' . $target . '-order', $order );
+		if ( strlen( $order ) ) {
+			SPFactory::config()->saveCfg( 'admin.' . $target . '-order', $order );
+		}
 		$limit = Sobi::GetUserState( $target . '.limit', 10 );
-		SPFactory::config()->saveCfg( 'admin.' . $target . '-limit', $limit );
+		if ( $limit ) {
+			SPFactory::config()->saveCfg( 'admin.' . $target . '-limit', $limit );
+		}
 		$this->response( Sobi::Back(), Sobi::Txt( 'MSG_DEFAULT_ORDERING_SAVED' ), false );
 	}
 
