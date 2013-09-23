@@ -282,9 +282,11 @@ class SPFieldType extends SPObject
 					 * but the admin approves the entry in en_GB and the multilingual mode is enabled
 					 * in case it was a new entry - empty data is being displayed
 					 */
-					if ( !( Sobi::Cfg( 'entry.approve_all_langs', true ) ) ) {
+					/** Mon, Sep 23, 2013 10:39:37 - I think is should always change the data in the current lang
+					 * Since 1.1 we have good multilingual management so it is probably this issue */
+//					if ( !( Sobi::Cfg( 'entry.approve_all_langs', true ) ) ) {
 						$params[ 'lang' ] = array( $lang, SPC::NO_VALUE );
-					}
+//					}
 					$el = $db
 							->select( 'editLimit', 'spdb_field_data', $params )
 							->loadResult();
@@ -310,6 +312,8 @@ class SPFieldType extends SPObject
 	}
 
 	/**
+	 * @param $data
+	 * @param $section
 	 * @return bool
 	 */
 	public function searchString( $data, $section )
