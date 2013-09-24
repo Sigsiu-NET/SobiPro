@@ -216,6 +216,7 @@
 			<field name="sp-language" default="" />
 			<field name="method" default="xhr" />
 			<field name="format" default="raw" />
+			<field name="field.showIn" default="hidden" />
 		</hidden>
 	</config>
 </definition>
