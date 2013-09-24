@@ -91,10 +91,10 @@
 						<cell type="checkbox" rel="e_sid" class="SpCellCenter" />
 						<cell label="HEADER_ENTRIES_NAME" type="text" />
 						<cells value="customHeader" class="SpCellCenter" type="text" />
-						<cell label="HEADER_ENTRIES_REJECT" type="text" class="SpCellCenter" />
 						<cell label="HEADER_ENTRIES_STATE" type="text" class="SpCellCenter" />
 						<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter" />
+                        <cell label="HEADER_ENTRIES_REJECT" type="text" class="SpCellCenter" />
 					</head>
 					<loop subject="entries">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -110,12 +110,6 @@
 						</cell>
 						<!--<cell type="text" value="field_price"/>-->
 						<cells value="customFields" class="SpCellCenter" />
-						<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'warning-sign','1':'warning-sign'}">
-							<url type="intern" class="btn btn-mini ctrl-entry-reject">
-								<param name="task" value="entry.edit" />
-								<param name="sid" value="id" parse="true" />
-							</url>
-						</cell>
 						<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="entry.toggle.enabled" />
@@ -129,6 +123,12 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
+                        <cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'undo','1':'undo'}">
+                            <url type="intern" class="btn btn-mini ctrl-entry-reject">
+                                <param name="task" value="entry.edit" />
+                                <param name="sid" value="id" parse="true" />
+                            </url>
+                        </cell>
 					</loop>
 				</table>
 				<pagination set="eSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
