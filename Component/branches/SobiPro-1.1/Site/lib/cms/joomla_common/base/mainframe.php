@@ -324,9 +324,16 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$sid = isset( $menu[ 'sid' ] ) ? $menu[ 'sid' ] : 0;
 		if ( $obj->get( 'oType' ) == 'entry' ) {
 			$id = SPRequest::int( 'pid' );
-			/* if we didn't entered this entry via category */
-			if ( !$id || $id == Sobi::Section() || Sobi::Cfg( 'entry.primary_path_always' ) ) {
-				$id = $obj->get( 'parent' );
+			/** if the entry isn't linked directly in the menu */
+			if ( !( $obj->get( 'id' ) == $sid ) ) {
+				/* if we didn't entered this entry via category */
+				if ( !$id || $id == Sobi::Section() || Sobi::Cfg( 'entry.primary_path_always' ) ) {
+					$id = $obj->get( 'parent' );
+				}
+			}
+			/** if it is linked in the Joomla! menu we have nothing to do */
+			else {
+				return $this;
 			}
 		}
 		else {
@@ -367,12 +374,10 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 					continue;
 				}
 				$title[ ] = $data[ 'name' ];
-//				$pathway->addItem( $data[ 'name' ], ( self::url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
 				$this->addToPathway( $data[ 'name' ], ( self::url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
 			}
 		}
 		if ( $obj->get( 'oType' ) == 'entry' ) {
-//			$pathway->addItem( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
 			$this->addToPathway( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
 			$title[ ] = $obj->get( 'name' );
 		}
