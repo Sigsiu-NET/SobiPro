@@ -94,7 +94,7 @@ class SPTplParser
 					$add = null;
 					if ( $this->istSet( $element, 'revisions-change' ) ) {
 						$i = strlen( $element[ 'revisions-change' ] ) > 5 ? $element[ 'revisions-change' ] : $element[ 'id' ];
-						$add = '&nbsp;<a data-fid="' . $i . '" href="#" class="btn btn-mini btn-warning ctrl-revision-compare">&nbsp;<i class="icon-random"></i></a>';
+						$add = '&nbsp;<a data-fid="' . $i . '" href="#" class="btn btn-mini btn-warning ctrl-revision-compare">&nbsp;<i class="icon-resize-horizontal"></i></a>';
 					}
 					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element['id']}\">{$element['label']}{$add}</label>\n";
 				}
