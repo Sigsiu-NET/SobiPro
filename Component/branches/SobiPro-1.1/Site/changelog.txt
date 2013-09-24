@@ -49,6 +49,7 @@ Legend:
    (#) Editing entries with image field set as required (Issue #1017)
    (#) Category Name as Alias in SobiPro 1.1.2 (Issue #1015)
    (#) Destination folder not found while updating SobiPro (Issue #1014)
+   (#) Missing "showIn" option in category field (Issue #1047)
 
 
 -------------------
