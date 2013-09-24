@@ -50,6 +50,7 @@ Legend:
    (#) Category Name as Alias in SobiPro 1.1.2 (Issue #1015)
    (#) Destination folder not found while updating SobiPro (Issue #1014)
    (#) Missing "showIn" option in category field (Issue #1047)
+   (#) Wrong pathway when entry is linked directly in the menu (Issue #1046)
 
 
 -------------------
