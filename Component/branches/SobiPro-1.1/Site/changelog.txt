@@ -27,7 +27,7 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.3 (xx September 2013)
+1.1.3 (xx October 2013)
 -------------------
 
    (+) History of changes of an entry
@@ -49,7 +49,7 @@ Legend:
    (#) Editing entries with image field set as required (Issue #1017)
    (#) Category Name as Alias in SobiPro 1.1.2 (Issue #1015)
    (#) Destination folder not found while updating SobiPro (Issue #1014)
-   (#) Missing "showIn" option in category field (Issue #1047)
+   (#) Missing hidden "showIn" option in category field (Issue #1047)
    (#) Wrong pathway when entry is linked directly in the menu (Issue #1046)
 
 
