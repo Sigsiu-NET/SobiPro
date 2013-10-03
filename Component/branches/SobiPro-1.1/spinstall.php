@@ -243,11 +243,11 @@ class com_sobiproInstallerScript
 	protected function installPlugins()
 	{
 		$plugins = array( 'Header' );
-		$path = JPATH_ROOT . '/components/com_sobipro/Plugins/';
+		$path = JPATH_ROOT . '/components/com_sobipro/_plugins';
 		$installer = JInstaller::getInstance();
 		$db = JFactory::getDBO();
 		foreach ( $plugins as $plugin ) {
-			$dir = $path . $plugin;
+			$dir = $path . '/' . $plugin;
 			$installer->install( $dir );
 			$db->setQuery( "UPDATE #__extensions SET enabled =  '1' WHERE  element = 'sp{$plugin}';" );
 			$db->query();
