@@ -21,11 +21,6 @@
 defined( '_JEXEC' ) or die();
 class plgSystemSpHeader extends JPlugin
 {
-//	public function __construct()
-//	{
-//		exit;
-//	}
-
 	public function onAfterDispatch()
 	{
 		// if the class exists it means something initialised it so we can send the header
