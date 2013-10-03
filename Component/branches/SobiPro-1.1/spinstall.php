@@ -33,12 +33,13 @@ class com_sobiproInstallerScript
 	 */
 	function preflight( $route, JAdapterInstance $adapter )
 	{
-		// Installing component manifest file version
-		$this->release = $adapter->get( "manifest" )->version;
-
-		// Show the essential information at the install/update back-end
-		echo '<h3>Installing SobiPro version ' . $this->release . ' ...</h3>';
-
+		if ( $adapter instanceof JInstallerAdapterComponent ) {
+			// Installing component manifest file version
+			$this->release = $adapter->get( 'manifest' )->version;
+			// Show the essential information at the install/update back-end
+			echo '<h3>Installing SobiPro version ' . $this->release . ' ...';
+			$this->installPlugins( $adapter->get( 'parent' )->get( 'paths' ) );
+		}
 	}
 
 	/**
@@ -198,7 +199,6 @@ class com_sobiproInstallerScript
 //
 //			}
 //		}
-		$this->installPlugins();
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px;"></iframe>';
 	}
 
@@ -236,16 +236,15 @@ class com_sobiproInstallerScript
 			$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD  `editLimit` INT( 11 );' );
 			$db->query();
 		}
-		$this->installPlugins();
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px;"></iframe>';
 	}
 
-	protected function installPlugins()
+	protected function installPlugins( $source )
 	{
+		$source = $source[ 'source' ];
 		$plugins = array( 'Header' );
-		$path = JPATH_ROOT . '/components/com_sobipro/_plugins';
+		$path = $source . '/Plugins';
 		$installer = JInstaller::getInstance();
-		$installer = clone $installer;
 		$db = JFactory::getDBO();
 		foreach ( $plugins as $plugin ) {
 			$dir = $path . '/' . $plugin;
@@ -253,7 +252,6 @@ class com_sobiproInstallerScript
 			$db->setQuery( "UPDATE #__extensions SET enabled =  '1' WHERE  element = 'sp{$plugin}';" );
 			$db->query();
 		}
-		JFolder::delete( $path );
 	}
 
 	/**
