@@ -462,44 +462,48 @@ abstract class Sobi
 	 */
 	public static function Init( $root = null, $lang = null, $sid = 0 )
 	{
-		if ( !( defined( 'SOBI_CMS' ) ) ) {
-			define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
+		static $loaded = false;
+		if ( !( $loaded ) ) {
+			if ( !( defined( 'SOBI_CMS' ) ) ) {
+				define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
+			}
+			defined( 'SOBIPRO' ) || define( 'SOBIPRO', true );
+			defined( 'SOBI_TASK' ) || define( 'SOBI_TASK', 'task' );
+			defined( 'SOBI_DEFLANG' ) || define( 'SOBI_DEFLANG', $lang );
+			defined( 'SOBI_ACL' ) || define( 'SOBI_ACL', 'front' );
+			defined( 'SOBI_ROOT' ) || define( 'SOBI_ROOT', $root );
+			defined( 'SOBI_MEDIA' ) || define( 'SOBI_MEDIA', implode( '/', array( $root, 'media', 'sobipro' ) ) );
+			defined( 'SOBI_PATH' ) || define( 'SOBI_PATH', SOBI_ROOT . '/components/com_sobipro' );
+			defined( 'SOBI_LIVE_PATH' ) || define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );
+			require_once( SOBI_PATH . '/lib/base/fs/loader.php' );
+			SPLoader::loadController( 'sobipro' );
+			SPLoader::loadController( 'interface' );
+			SPLoader::loadClass( 'base.exception' );
+			SPLoader::loadClass( 'base.const' );
+			SPLoader::loadClass( 'base.object' );
+			SPLoader::loadClass( 'base.filter' );
+			SPLoader::loadClass( 'base.request' );
+			SPLoader::loadClass( 'cms.base.lang' );
+			SPLoader::loadClass( 'models.dbobject' );
+			SPLoader::loadClass( 'base.factory' );
+			SPLoader::loadClass( 'base.config' );
+			SPLoader::loadClass( 'cms.base.fs' );
+			SPFactory::config()->set( 'live_site', JURI::root() );
+			$loaded = true;
 		}
-		defined( 'SOBIPRO' ) || define( 'SOBIPRO', true );
-		defined( 'SOBI_TASK' ) || define( 'SOBI_TASK', 'task' );
-		defined( 'SOBI_DEFLANG' ) || define( 'SOBI_DEFLANG', $lang );
-		defined( 'SOBI_ACL' ) || define( 'SOBI_ACL', 'front' );
-		defined( 'SOBI_ROOT' ) || define( 'SOBI_ROOT', $root );
-		defined( 'SOBI_MEDIA' ) || define( 'SOBI_MEDIA', implode( '/', array( $root, 'media', 'sobipro' ) ) );
-		defined( 'SOBI_PATH' ) || define( 'SOBI_PATH', SOBI_ROOT . '/components/com_sobipro' );
-		defined( 'SOBI_LIVE_PATH' ) || define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );
-		require_once( SOBI_PATH . '/lib/base/fs/loader.php' );
-		SPLoader::loadController( 'sobipro' );
-		SPLoader::loadController( 'interface' );
-		SPLoader::loadClass( 'base.exception' );
-		SPLoader::loadClass( 'base.const' );
-		SPLoader::loadClass( 'base.object' );
-		SPLoader::loadClass( 'base.filter' );
-		SPLoader::loadClass( 'base.request' );
-		SPLoader::loadClass( 'cms.base.lang' );
-		SPLoader::loadClass( 'models.dbobject' );
-		SPLoader::loadClass( 'base.factory' );
-		SPLoader::loadClass( 'base.config' );
-		SPLoader::loadClass( 'cms.base.fs' );
-		SPFactory::config()->set( 'live_site', JURI::root() );
 		if ( $sid ) {
 			$section = null;
 			if ( $sid ) {
 				$path = array();
 				$id = $sid;
-				$path[ ] = ( int ) $id;
+				$path[ ] = ( int )$id;
 				while ( $id > 0 ) {
 					try {
 						$id = SPFactory::db()
 								->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
 								->loadResult();
 						if ( $id ) {
-							$path[ ] = ( int ) $id;
+							$path[ ] = ( int )$id;
 						}
 					} catch ( SPException $x ) {
 						Sobi::Error( 'ExtCoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
