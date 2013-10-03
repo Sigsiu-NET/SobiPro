@@ -245,6 +245,7 @@ class com_sobiproInstallerScript
 		$plugins = array( 'Header' );
 		$path = JPATH_ROOT . '/components/com_sobipro/_plugins';
 		$installer = JInstaller::getInstance();
+		$installer = clone $installer;
 		$db = JFactory::getDBO();
 		foreach ( $plugins as $plugin ) {
 			$dir = $path . '/' . $plugin;
