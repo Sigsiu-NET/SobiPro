@@ -239,6 +239,21 @@ class com_sobiproInstallerScript
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px;"></iframe>';
 	}
 
+	protected function installPlugins()
+	{
+		$plugins = array( 'Header' );
+		$path = JPATH_ROOT . '/components/com_sobipro/Plugins/';
+		$installer = JInstaller::getInstance();
+		$db = JFactory::getDBO();
+		foreach ( $plugins as $plugin ) {
+			$dir = $path . $plugin;
+			$installer->install( $dir );
+			$db->setQuery( "UPDATE #__extensions SET enabled =  '1' WHERE  element = 'sp{$plugin}';" );
+			$db->query();
+		}
+		JFolder::delete( $path );
+	}
+
 	/**
 	 * Called on uninstallation
 	 *

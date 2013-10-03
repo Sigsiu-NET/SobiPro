@@ -791,40 +791,49 @@ final class SPHeader
 	}
 
 	/**
-	 * Send the header via the mainframe interface
+	 * @deprecated
 	 */
 	public function send()
 	{
-		if ( count( $this->js ) ) {
-			$jsCode = null;
-			foreach ( $this->js as $js ) {
-				$jsCode .= "\n\t" . str_replace( "\n", "\n\t", $js );
+	}
+
+	/**
+	 * Send the header via the mainframe interface
+	 */
+	public function sendHeader()
+	{
+		if ( count( $this->_store ) ) {
+			if ( count( $this->js ) ) {
+				$jsCode = null;
+				foreach ( $this->js as $js ) {
+					$jsCode .= "\n\t" . str_replace( "\n", "\n\t", $js );
+				}
+				$this->js = array( "\n<script type=\"text/javascript\">\n/*<![CDATA[*/{$jsCode}\n/*]]>*/\n</script>\n" );
 			}
-			$this->js = array( "\n<script type=\"text/javascript\">\n/*<![CDATA[*/{$jsCode}\n/*]]>*/\n</script>\n" );
-		}
-		if ( count( $this->css ) ) {
-			$cssCode = null;
-			foreach ( $this->css as $css ) {
-				$cssCode .= "\n\t" . str_replace( "\n", "\n\t", $css );
+			if ( count( $this->css ) ) {
+				$cssCode = null;
+				foreach ( $this->css as $css ) {
+					$cssCode .= "\n\t" . str_replace( "\n", "\n\t", $css );
+				}
+				$this->css = array( "<style type=\"text/css\">\n{$cssCode}\n</style>" );
 			}
-			$this->css = array( "<style type=\"text/css\">\n{$cssCode}\n</style>" );
+			$this->head[ 'keywords' ] = $this->keywords;
+			$this->head[ 'author' ] = $this->author;
+			$this->head[ 'robots' ] = $this->robots;
+			$this->head[ 'description' ] = $this->description;
+			$this->head[ 'css' ] = $this->_cssFiles();
+			$this->head[ 'js' ] = $this->_jsFiles();
+			$this->head[ 'links' ] = $this->links;
+			$this->head[ 'css' ] = array_merge( $this->head[ 'css' ], $this->css );
+			$this->head[ 'js' ] = array_merge( $this->head[ 'js' ], $this->js );
+			$this->head[ 'raw' ] = $this->raw;
+			Sobi::Trigger( 'Header', 'Send', array( &$this->head ) );
+			SPFactory::mainframe()->addHead( $this->head );
+			if ( count( $this->title ) ) {
+				SPFactory::mainframe()->setTitle( $this->title );
+			}
+			SPFactory::cache()->storeView( $this->_store );
+			$this->reset();
 		}
-		$this->head[ 'keywords' ] = $this->keywords;
-		$this->head[ 'author' ] = $this->author;
-		$this->head[ 'robots' ] = $this->robots;
-		$this->head[ 'description' ] = $this->description;
-		$this->head[ 'css' ] = $this->_cssFiles();
-		$this->head[ 'js' ] = $this->_jsFiles();
-		$this->head[ 'links' ] = $this->links;
-		$this->head[ 'css' ] = array_merge( $this->head[ 'css' ], $this->css );
-		$this->head[ 'js' ] = array_merge( $this->head[ 'js' ], $this->js );
-		$this->head[ 'raw' ] = $this->raw;
-		Sobi::Trigger( 'Header', 'Send', array( &$this->head ) );
-		SPFactory::mainframe()->addHead( $this->head );
-		if ( count( $this->title ) ) {
-			SPFactory::mainframe()->setTitle( $this->title );
-		}
-		SPFactory::cache()->storeView( $this->_store );
-		$this->reset();
 	}
 }
