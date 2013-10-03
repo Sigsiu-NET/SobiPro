@@ -32,6 +32,7 @@
         <folder>usr</folder>
         <folder>var</folder>
         <folder>views</folder>
+		<folder>_plugins</folder>
         <filename>sobipro.php</filename>
         <filename>changelog.txt</filename>
         <filename>metadata.xml</filename>
