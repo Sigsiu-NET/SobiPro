@@ -34,12 +34,12 @@ class com_sobiproInstallerScript
 	function preflight( $route, JAdapterInstance $adapter )
 	{
 		if ( $adapter instanceof JInstallerAdapterComponent ) {
-			// Installing component manifest file version
-			$this->release = $adapter->get( 'manifest' )->version;
-			// Show the essential information at the install/update back-end
-			echo '<h3>Installing SobiPro version ' . $this->release . ' ...';
 			$this->installPlugins( $adapter->get( 'parent' )->get( 'paths' ) );
 		}
+		// Installing component manifest file version
+		$this->release = $adapter->get( 'manifest' )->version;
+		// Show the essential information at the install/update back-end
+		echo '<h3>Installing SobiPro version ' . $this->release . ' ...';
 	}
 
 	/**
@@ -244,7 +244,7 @@ class com_sobiproInstallerScript
 		$source = $source[ 'source' ];
 		$plugins = array( 'Header' );
 		$path = $source . '/Plugins';
-		$installer = JInstaller::getInstance();
+		$installer = new JInstaller;
 		$db = JFactory::getDBO();
 		foreach ( $plugins as $plugin ) {
 			$dir = $path . '/' . $plugin;
