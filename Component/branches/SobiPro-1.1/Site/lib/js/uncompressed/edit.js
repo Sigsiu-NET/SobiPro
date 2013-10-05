@@ -27,7 +27,7 @@ SobiPro.jQuery( document ).ready( function ()
 {
 	var template = '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="pull-right close spclose">x</div><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>';
 	SobiPro.jQuery( 'a[rel=popover]' )
-		.popover( { 'html':true, 'trigger':'click', 'template':template } )
+		.popover( { 'html': true, 'trigger': 'click', 'template': template } )
 		.click( function ( e )
 		{
 			e.preventDefault();
@@ -86,11 +86,11 @@ SobiPro.jQuery( document ).ready( function ()
 				}
 			} );
 			SobiPro.jQuery.ajax( {
-				'url':'index.php',
-				'data':request,
-				'type':'post',
-				'dataType':'json',
-				success:function ( response )
+				'url': 'index.php',
+				'data': request,
+				'type': 'post',
+				'dataType': 'json',
+				success: function ( response )
 				{
 					if ( response.message.type == 'error' ) {
 						proxy.errorHandler( response );
@@ -131,7 +131,7 @@ SobiPro.jQuery( document ).ready( function ()
 				var popover = SobiPro.jQuery( '<a class="sobipro-input-note" data-placement="' + placement + '" rel="popover" data-content="' + response.message.text + '" data-original-title="' + SobiPro.Txt( 'ATTENTION' ) + '">&nbsp;</a>' );
 				attach.append( popover );
 				attach.removeClass( 'hide' );
-				popover.popover( {'template':template} );
+				popover.popover( {'template': template} );
 				popover.popover( 'show' );
 				attach.find( '.close' ).click( function ()
 				{
@@ -188,6 +188,14 @@ function SPTriggerFrakingWYSIWYGEditors()
 	}
 	try {
 		tinyMCE.triggerSave();
+	}
+	catch ( e ) {
+	}
+	try {
+		SobiPro.jQuery.each( Joomla.editors.instances, function ( i, e )
+		{
+			e.save();
+		} )
 	}
 	catch ( e ) {
 	}

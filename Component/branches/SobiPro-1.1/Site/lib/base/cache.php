@@ -30,34 +30,39 @@ final class SPCache
 	/**
 	 * @var SQLiteDatabase
 	 */
-	private $_db = null;
-	private $_driver = '';
-	private $_enabled = true;
-	private $_store = null;
-	private $_check = null;
-	private $_section = -1;
-	private $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', '.publish' );
-	private $requestStore = array();
-	private $view = array( 'xml' => null, 'template' => null );
-	private $_disableViewCache = array( 'entry.add', 'entry.edit', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
-	private $_cachedView = false;
-	private $cacheViewQuery = array();
+	protected $_db = null;
+	protected $_driver = '';
+	protected $_enabled = true;
+	protected $_store = null;
+	protected $_check = null;
+	protected $_section = -1;
+	protected $_sid = 0;
+	protected $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', '.publish' );
+	protected $requestStore = array();
+	protected $view = array( 'xml' => null, 'template' => null );
+	protected $_disableViewCache = array( 'entry.add', 'entry.edit', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
+	protected $_cachedView = false;
+	protected $cacheViewQuery = array();
 
 	/**
 	 * Singleton - returns instance of the config object
 	 *
+	 * @param int $sid
 	 * @return SPCache
 	 */
-	public static function & getInstance()
+	public static function & getInstance( $sid = 0 )
 	{
-		static $cache = false;
-		if ( !$cache || !( $cache instanceof self ) ) {
-			$cache = new self();
+		if ( !( $sid ) ) {
+			$sid = Sobi::Section();
 		}
-		return $cache;
+		static $cache = array();
+		if ( !( isset( $cache[ $sid ] ) ) || !( $cache[ $sid ] instanceof self ) ) {
+			$cache[ $sid ] = new self( $sid );
+		}
+		return $cache[ $sid ];
 	}
 
-	private function close()
+	protected function close()
 	{
 		switch ( $this->_driver ) {
 			case 'SQLITE':
@@ -72,18 +77,19 @@ final class SPCache
 		}
 	}
 
-	private function __construct()
+	protected function __construct( $sid )
 	{
+		$this->_section = $sid;
 		$this->_enabled = Sobi::Cfg( 'cache.l3_enabled', true );
 		$this->requestStore = $_REQUEST;
 		$this->initialise();
 	}
 
-	private function initialise()
+	protected function initialise()
 	{
 		if ( $this->_enabled ) {
-			$sid = Sobi::Section();
-			$this->_section = $sid ? $sid : $this->_section;
+//			$sid = Sobi::Section();
+//			$this->_section = $sid ? $sid : $this->_section;
 			$this->_store = Sobi::Cfg( 'cache.store', SOBI_PATH . '/var/cache/' );
 			if ( !( strlen( $this->_store ) ) ) {
 				$this->_store = SOBI_PATH . '/var/cache/';
@@ -133,7 +139,7 @@ final class SPCache
 		}
 	}
 
-	private function disable()
+	protected function disable()
 	{
 		if ( defined( 'SOBIPRO_ADM' ) ) {
 			SPFactory::config()
@@ -141,7 +147,7 @@ final class SPCache
 		}
 	}
 
-	private function Query( $query )
+	protected function Query( $query )
 	{
 		//		SPConfig::debOut( $query, false, false, true );
 		switch ( $this->_driver ) {
@@ -177,7 +183,7 @@ final class SPCache
 		return $r;
 	}
 
-	private function Exec( $query )
+	protected function Exec( $query )
 	{
 		switch ( $this->_driver ) {
 			case 'SQLITE':
@@ -526,7 +532,7 @@ final class SPCache
 		$this->_check[ $type ][ $id ] = true;
 	}
 
-	private function enabled( $obj = false )
+	protected function enabled( $obj = false )
 	{
 		if ( $obj ) {
 			if ( $this->_enabled && ( $this->_driver ) && class_exists( 'SPConfig' ) && Sobi::Cfg( 'cache.l3_enabled' ) ) {
@@ -546,7 +552,7 @@ final class SPCache
 			return $this->_enabled && ( $this->_driver ) && class_exists( 'SPConfig' );
 	}
 
-	private function init()
+	protected function init()
 	{
 		$this->Exec(
 			"
@@ -595,7 +601,7 @@ final class SPCache
 		return $this;
 	}
 
-	private function cleanDir( $dir, $ext, $force = false )
+	protected function cleanDir( $dir, $ext, $force = false )
 	{
 		if ( $dir ) {
 			$js = scandir( $dir );
@@ -609,7 +615,7 @@ final class SPCache
 		}
 	}
 
-	private function cleanTemp( $force = false )
+	protected function cleanTemp( $force = false )
 	{
 		$this->cleanJCache();
 		$this->cleanDir( SPLoader::dirPath( 'var.js' ), 'js', $force );
