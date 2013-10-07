@@ -53,6 +53,7 @@ Legend:
    (#) Missing hidden "showIn" option in category field (Issue #1047)
    (#) Wrong pathway when entry is linked directly in the menu (Issue #1046)
    (#) No data sent to check when using CodeMirror (Issue #1048)
+   (#) Email field: corrected path replacement to fit to windows directory separator (Issue #1045)
 
 
 -------------------
