@@ -68,7 +68,7 @@ abstract class SobiPro
 			$cache[ $sid ] = SPFactory::Model( 'category' );
 			$cache[ $sid ]->init( $sid );
 		}
-		return $cache[ $sid ]->countChilds( $childs );
+		return $cache[ $sid ]->countChilds( $childs, 1 );
 	}
 
 	/**

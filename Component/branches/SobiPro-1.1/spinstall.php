@@ -36,6 +36,9 @@ class com_sobiproInstallerScript
 		if ( $adapter instanceof JInstallerAdapterComponent ) {
 			$this->installPlugins( $adapter->get( 'parent' )->get( 'paths' ) );
 		}
+		elseif ( $adapter instanceof JInstallerComponent ) {
+			$this->installPlugins( $adapter->get( 'parent' )->get( '_paths' ) );
+		}
 		// Installing component manifest file version
 		$this->release = $adapter->get( 'manifest' )->version;
 		// Show the essential information at the install/update back-end
