@@ -134,7 +134,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 				);
 				return array(
 					'_complex' => 1,
-					'_validate' => array( 'class' => str_replace( SOBI_PATH, null, __FILE__ ), 'method' => 'validateVisibility' ),
+					'_validate' => array( 'class' => str_replace( str_replace( '\\', '/', SOBI_PATH ), null, str_replace( '\\', '/', __FILE__ ) ), 'method' => 'validateVisibility' ),
 					'_data' => array( 'a' => $data ),
 					'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass )
 				);
