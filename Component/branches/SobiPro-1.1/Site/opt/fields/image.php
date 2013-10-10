@@ -165,16 +165,17 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 	}
 
-	private function parseName( $entry, $name, $pattern )
+	private function parseName( $entry, $name, $pattern, $addExt = false )
 	{
-		$name = explode( '.', $name );
-		$ext = array_pop( $name );
-		$name = implode( '.', $name );
+		$nameArray = explode( '.', $name );
+		$ext = array_pop( $nameArray );
+		$name = implode( '.', $nameArray );
 		$user = SPUser::getBaseData( ( int )$entry->get( 'owner' ) );
 		// @todo change to the global method
 		$placeHolders = array( '/{id}/', '/{orgname}/', '/{entryname}/', '/{oid}/', '/{ownername}/', '/{uid}/', '/{username}/' );
 		$replacements = array( $entry->get( 'id' ), $name, $entry->get( 'nid' ), $user->id, SPLang::nid( $user->name ), Sobi::My( 'id' ), SPLang::nid( Sobi::My( 'name' ) ) );
-		return preg_replace( $placeHolders, $replacements, $pattern ) . '.' . $ext;
+		$fileName = preg_replace( $placeHolders, $replacements, $pattern );
+		return $addExt ? $fileName . '.' . $ext : $fileName;
 	}
 
 	/**
@@ -325,7 +326,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$image = clone $orgImage;
 				try {
 					$image->resample( $this->resizeWidth, $this->resizeHeight, false );
-					$files[ 'image' ] = $this->parseName( $entry, $orgName, $this->imageName );
+					$files[ 'image' ] = $this->parseName( $entry, $orgName, $this->imageName, true );
 					$image->saveAs( $path . $files[ 'image' ] );
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -337,7 +338,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$thumb = clone $orgImage;
 				try {
 					$thumb->resample( $this->thumbWidth, $this->thumbHeight, false );
-					$files[ 'thumb' ] = $this->parseName( $entry, $orgName, $this->thumbName );
+					$files[ 'thumb' ] = $this->parseName( $entry, $orgName, $this->thumbName, true );
 					$thumb->saveAs( $path . $files[ 'thumb' ] );
 
 				} catch ( SPException $x ) {
@@ -350,7 +351,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			try {
 				$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '80:80' ) );
 				$ico->resample( $icoSize[ 0 ], $icoSize[ 1 ], false );
-				$files[ 'ico' ] = $this->parseName( $entry, strtolower( $orgName ), 'ico_{orgname}' );
+				$files[ 'ico' ] = $this->parseName( $entry, strtolower( $orgName ), 'ico_{orgname}', true );
 				$ico->saveAs( $path . $files[ 'ico' ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -361,7 +362,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$orgImage->delete();
 			}
 			else {
-				$files[ 'original' ] = $this->parseName( $entry, $orgName, '{orgname}' );
+				$files[ 'original' ] = $this->parseName( $entry, $orgName, '{orgname}', true );
 			}
 			foreach ( $files as $i => $file ) {
 				$files[ $i ] = $sPath . $file;
