@@ -49,16 +49,17 @@ class SPPPaypal extends SPPlugin
         return $this->PaymentMethodView( $methods, $entry, $payment, !( $html ) );
     }
 
-    /**
-     * This function have to add own string into the given array
-     * Basically: $methods[ $this->id ] = "Some String To Output";
-     * Optionally the value can be also SobiPro Arr2XML array.
-     * Check the documentation for more information
-     * @param array $methods
-     * @param SPEntry $entry
-     * @param array $payment
-     * @return void
-     */
+	/**
+	 * This function have to add own string into the given array
+	 * Basically: $methods[ $this->id ] = "Some String To Output";
+	 * Optionally the value can be also SobiPro Arr2XML array.
+	 * Check the documentation for more information
+	 * @param array $methods
+	 * @param SPEntry $entry
+	 * @param array $payment
+	 * @param bool $message
+	 * @return void
+	 */
     public function PaymentMethodView( &$methods, $entry, &$payment, $message = false )
     {
         $data = SPFactory::registry()
@@ -115,7 +116,7 @@ class SPPPaypal extends SPPlugin
             $v[ ] = $field . '=' . urlencode( SPLang::replacePlaceHolders( $value, $values ) );
         }
         $out .= implode( '&', $v );
-        return $out;
+        return SPLang::clean($out);;
     }
 
     /**
@@ -135,6 +136,6 @@ class SPPPaypal extends SPPlugin
         $img = SPLang::replacePlaceHolders( $config[ 'general' ][ 'image' ] );
         $out .= '<input src="' . $img . '" name="submit" alt="" type="image"/>' . "\n";
         $out .= '</form>' . "\n";
-        return $out;
+        return SPLang::clean($out);
     }
 }

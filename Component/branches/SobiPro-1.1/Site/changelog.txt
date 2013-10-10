@@ -56,6 +56,7 @@ Legend:
    (#) No data sent to check when using CodeMirror (Issue #1048)
    (#) Email field: corrected path replacement to fit to windows directory separator (Issue #1045)
    (#) Missing file extension in image field if not using "orgname" placeholder (Issue #1058)
+   (#) Quotes in the payment descriptions are not escaped (Issue: #1057)
 
 
 -------------------
