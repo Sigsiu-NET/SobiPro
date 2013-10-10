@@ -39,7 +39,6 @@ Legend:
    (!) Default input style for URL and Email field improved
    (!) Header output moved to a separate plugin
 
-//   (#) Language of common frontend and backend texts (Issue #1012)
    (#) Backend search for entry returns categories (Issue #1022)
    (#) Editing entries with image field set as required (Issue #1017)
    (#) Error while installing Joomla! native extensions in SobiPro (Issue #1013)
@@ -54,7 +53,7 @@ Legend:
    (#) Missing hidden "showIn" option in category field (Issue #1047)
    (#) Wrong pathway when entry is linked directly in the menu (Issue #1046)
    (#) No data sent to check when using CodeMirror (Issue #1048)
-   (#) Email field: corrected path replacement to fit to windows directory separator (Issue #1045)
+   (#) Email field: corrected path replacement to fit to Windows directory separator (Issue #1045)
    (#) Missing file extension in image field if not using "orgname" placeholder (Issue #1058)
    (#) Quotes in the payment descriptions are not escaped (Issue: #1057)
 
