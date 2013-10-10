@@ -333,7 +333,17 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			}
 			/** if it is linked in the Joomla! menu we have nothing to do */
 			else {
+				/** ok - here is the weird thing:
+				 * When it is accessed via menu we have to force cache to create another version
+				 * because the pathway is stored in the cache
+				 * @todo find better solution for it
+				 */
+				$mid = true;
+				SPFactory::registry()
+						->set( 'cache_view_recreate_request', $mid )
+						->set( 'cache_view_add_itemid', JSite::getMenu()->getActive()->id );
 				return $this;
+
 			}
 		}
 		else {

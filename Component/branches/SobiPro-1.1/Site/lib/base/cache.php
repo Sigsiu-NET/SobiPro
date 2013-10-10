@@ -43,6 +43,7 @@ final class SPCache
 	protected $_disableViewCache = array( 'entry.add', 'entry.edit', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
 	protected $_cachedView = false;
 	protected $cacheViewQuery = array();
+	protected $cacheViewRequest = array();
 
 	/**
 	 * Singleton - returns instance of the config object
@@ -640,16 +641,36 @@ final class SPCache
 			return false;
 		}
 		if ( !( in_array( SPRequest::task(), $this->_disableViewCache ) ) ) {
+			$cacheFile = null;
+			$file = null;
 			foreach ( $this->_disableObjectCache as $task ) {
 				if ( strstr( SPRequest::task(), $task ) ) {
 					return false;
 				}
 			}
 			$query = $this->viewRequest();
-			$file = SPFactory::db()
-					->select( array( 'fileName', 'template', 'configFile', 'cid' ), 'spdb_view_cache', $query )
-					->loadRow();
-			$cacheFile = SPLoader::path( 'var.xml.' . $file[ 0 ], 'front', true, 'xml' );
+			/** here comes an exception for the linked entries */
+			$link = array();
+			parse_str( JSite::getMenu()->getActive()->link, $link );
+			/** now we know that it is directly linked but not if it is an entry link */
+			if ( isset( $link[ 'sid' ] ) && $link[ 'sid' ] == SPRequest::sid() ) {
+				$request = $this->cacheViewRequest;
+				$request[ 'Itemid' ] = SPRequest::int( 'Itemid' );
+				$query[ 'request' ] = str_replace( '"', null, json_encode( $request ) );
+				$query[ 'task' ] = 'entry.details';
+				$file = SPFactory::db()
+						->select( array( 'fileName', 'template', 'configFile', 'cid' ), 'spdb_view_cache', $query )
+						->loadRow();
+			}
+			if ( !( $file ) ) {
+				$query = $this->viewRequest();
+				$file = SPFactory::db()
+						->select( array( 'fileName', 'template', 'configFile', 'cid' ), 'spdb_view_cache', $query )
+						->loadRow();
+			}
+			if ( ( $file ) ) {
+				$cacheFile = SPLoader::path( 'var.xml.' . $file[ 0 ], 'front', true, 'xml' );
+			}
 			if ( !( $cacheFile ) ) {
 				return false;
 			}
@@ -686,7 +707,7 @@ final class SPCache
 
 	protected function viewRequest()
 	{
-		if ( !( count( $this->cacheViewQuery ) ) ) {
+		if ( !( count( $this->cacheViewQuery ) ) || Sobi::Reg( 'cache_view_recreate_request' ) ) {
 			$request = array();
 			if ( count( $this->requestStore ) ) {
 				$keys = array_keys( $this->requestStore );
@@ -696,12 +717,16 @@ final class SPCache
 					}
 				}
 			}
-			$reserved = array( 'site', 'task', 'pid', 'sid', 'sptpl', 'dbg', 'Itemid', 'option', 'tmpl', 'format', 'crawl', 'language', 'lang' );
+			$reserved = array( 'site', 'task', 'sid', 'sptpl', 'dbg', 'Itemid', 'option', 'tmpl', 'format', 'crawl', 'language', 'lang' );
+			if ( Sobi::Reg( 'cache_view_add_itemid' ) ) {
+				unset( $reserved[ array_search( 'Itemid', $reserved ) ] );
+			}
 			foreach ( $reserved as $var ) {
 				if ( isset( $request[ $var ] ) ) {
 					unset( $request[ $var ] );
 				}
 			}
+			$this->cacheViewRequest = $request;
 			$this->cacheViewQuery = array(
 				'section' => Sobi::Section(),
 				'sid' => SPRequest::sid(),

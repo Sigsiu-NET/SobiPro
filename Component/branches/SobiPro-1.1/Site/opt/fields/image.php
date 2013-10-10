@@ -167,9 +167,14 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 	private function parseName( $entry, $name, $pattern )
 	{
-		$placeHolders = array( '/{id}/', '/{orgname}/', '/{entryname}/' );
-		$replacements = array( $entry->get( 'id' ), $name, $entry->get( 'nid' ) );
-		return preg_replace( $placeHolders, $replacements, $pattern );
+		$name = explode( '.', $name );
+		$ext = array_pop( $name );
+		$name = implode( '.', $name );
+		$user = SPUser::getBaseData( ( int )$entry->get( 'owner' ) );
+		// @todo change to the global method
+		$placeHolders = array( '/{id}/', '/{orgname}/', '/{entryname}/', '/{oid}/', '/{ownername}/', '/{uid}/', '/{username}/' );
+		$replacements = array( $entry->get( 'id' ), $name, $entry->get( 'nid' ), $user->id, SPLang::nid( $user->name ), Sobi::My( 'id' ), SPLang::nid( Sobi::My( 'name' ) ) );
+		return preg_replace( $placeHolders, $replacements, $pattern ) . '.' . $ext;
 	}
 
 	/**
