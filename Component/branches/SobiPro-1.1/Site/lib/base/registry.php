@@ -39,10 +39,12 @@ final class SPRegistry
 	 *
 	 * @param string $label
 	 * @param mixed $object
+	 * @return $this
 	 */
-	public function set ( $label, &$object )
+	public function & set ( $label, &$object )
 	{
 		$this->store[ 0 ][ $label ] =& $object;
+		return $this;
 	}
 
 	/**
