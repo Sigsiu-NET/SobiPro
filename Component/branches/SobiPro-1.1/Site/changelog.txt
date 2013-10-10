@@ -34,6 +34,7 @@ Legend:
    (+) Rejection functionality
    (+) Version management
    (+) Support for custom templates override while adding menu item
+   (+) Extended number of possible placeholders for path in image field. {id}, {orgname}, {entryname}, {oid}, {ownername}, {uid}, {username}
 
    (!) Default input style for URL and Email field improved
    (!) Header output moved to a separate plugin
@@ -54,6 +55,7 @@ Legend:
    (#) Wrong pathway when entry is linked directly in the menu (Issue #1046)
    (#) No data sent to check when using CodeMirror (Issue #1048)
    (#) Email field: corrected path replacement to fit to windows directory separator (Issue #1045)
+   (#) Missing file extension in image field if not using "orgname" placeholder (Issue #1058)
 
 
 -------------------
