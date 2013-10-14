@@ -285,7 +285,7 @@ class SPFieldType extends SPObject
 					/** Mon, Sep 23, 2013 10:39:37 - I think is should always change the data in the current lang
 					 * Since 1.1 we have good multilingual management so it is probably this issue */
 //					if ( !( Sobi::Cfg( 'entry.approve_all_langs', true ) ) ) {
-						$params[ 'lang' ] = array( $lang, SPC::NO_VALUE );
+//						$params[ 'lang' ] = array( $lang, SPC::NO_VALUE );
 //					}
 					$el = $db
 							->select( 'editLimit', 'spdb_field_data', $params )
