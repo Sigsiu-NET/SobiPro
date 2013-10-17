@@ -291,7 +291,12 @@ class SPFieldType extends SPObject
 							->select( 'editLimit', 'spdb_field_data', $params )
 							->loadResult();
 					$cParams = $params;
+					/** we need to delete only the entries that have the copy flag set to 1 with the selected language */
+					$languages = $db
+							->select( 'lang', 'spdb_field_data', array( 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ) )
+							->loadResultArray();
 					$cParams[ 'copy' ] = 0;
+					$cParams[ 'lang' ] = $languages;
 					$db->delete( 'spdb_field_data', $cParams );
 					$db->update( 'spdb_field_data', array( 'copy' => '0', 'editLimit' => $el ), $params );
 				}
