@@ -27,14 +27,14 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.3 (xx October 2013)
+1.1.3 (18 October 2013)
 -------------------
 
    (+) History of changes of an entry
    (+) Rejection functionality
    (+) Version management
    (+) Support for custom templates override while adding menu item
-   (+) Extended number of possible placeholders for path in image field. {id}, {orgname}, {entryname}, {oid}, {ownername}, {uid}, {username}
+   (+) Possible placeholders for path in image field extended; {id}, {orgname}, {entryname}, {oid}, {ownername}, {uid}, {username}
 
    (!) Default input style for URL and Email field improved
    (!) Header output moved to a separate plugin
