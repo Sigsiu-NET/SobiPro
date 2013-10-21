@@ -21,7 +21,7 @@
 defined( '_JEXEC' ) or die();
 class plgSystemSpHeader extends JPlugin
 {
-	public function onAfterRender()
+	public function onBeforeCompileHead()
 	{
 		// if the class exists it means something initialised it so we can send the header
 		if ( class_exists( 'SPFactory' ) ) {
