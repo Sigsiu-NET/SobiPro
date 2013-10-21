@@ -834,6 +834,7 @@ final class SPHeader
 			}
 			SPFactory::cache()->storeView( $this->_store );
 			$this->reset();
+			SPConfig::debOut($this->head);
 		}
 	}
 }
