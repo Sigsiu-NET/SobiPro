@@ -27,6 +27,12 @@ Legend:
  (!) - Change
 
 -------------------
+1.1.4 ()
+-------------------
+
+    (#) Missing error text for FILE_WRONG_TYPE added.
+
+-------------------
 1.1.3 (21 October 2013)
 -------------------
 
