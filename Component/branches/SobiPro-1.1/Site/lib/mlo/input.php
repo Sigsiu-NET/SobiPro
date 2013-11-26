@@ -738,7 +738,7 @@ abstract class SPHtml_Input
 		/** The stupid JavaScript to PHP conversion. */
 		$jsDateFormat = str_replace(
 			array( 'y', 'Y', 'F', 'n', 'm', 'd', 'j', 'h', 'H', 'i', 's' ),
-			array( 'yy', 'yyyy', 'MM', 'm', 'mm', 'dd', 'd', 'hh', 'hh', 'ii', 'ss' ),
+			array( 'yy', 'yyyy', 'MM', 'm', 'mm', 'dd', 'd', 'hh', 'hh', 'mm', 'ss' ),
 			$dateFormat
 		);
 		$valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat ) : null;
@@ -751,9 +751,9 @@ abstract class SPHtml_Input
 				->addJsFile( array( 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ) );
 		$params = self::params( $params );
 		$f = "\n";
-		$f .= '<div class="input-append date spDatePicker" data-date-format="' . $jsDateFormat . '">';
+		$f .= '<div class="input-append date spDatePicker">';
 		$f .= "\n\t";
-		$f .= '<input type="text" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder"/>';
+		$f .= '<input type="text" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" data-format="' . $jsDateFormat . '"/>';
 		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '"/>';
 		$f .= "\n\t";
 		$f .= '<span class="add-on"><i class="icon-' . $icon . '"></i></span>';
