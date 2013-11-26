@@ -510,10 +510,17 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$extensions[ 'extensions' ] = $list;
 			$progress += 10;
 			$msg->progress( $progress );
+			/** @var SPFile $file */
 			$file = SPFactory::Instance( 'base.fs.file', SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) );
 			$def = SPFactory::Instance( 'types.array' );
 			$file->content( $def->toXML( $extensions, 'extensionsList' ) );
-			$file->save();
+			$msg->progress( $progress, $def->toXML( $extensions, 'extensionsList' ) );
+			try {
+				$file->save();
+			}
+			catch ( SPException $x ) {
+				$msg->progress( $progress, $x->getMessage() );
+			}
 //			sleep( 1 );
 		}
 		$msg->progress( 100, Sobi::Txt( 'EX.EXT_LIST_UPDATED' ), SPC::SUCCESS_MSG );

@@ -1,1 +1,1459 @@
-!function(){function UTCDate(){return new Date(Date.UTC.apply(Date,arguments))}function UTCToday(){var a=new Date();return UTCDate(a.getUTCFullYear(),a.getUTCMonth(),a.getUTCDate())}var k=function(a,b){var c=this;this.element=SobiPro.jQuery(a);this.language=b.language||this.element.data('date-language')||"en";this.language=this.language in l?this.language:"en";this.format=b.format||SobiPro.jQuery(a).data("date-format")||'mm/dd/yyyy hh:ii:ss';this.picker=SobiPro.jQuery(m.template).appendTo(SobiPro.jQuery('#SobiPro')).on({click:SobiPro.jQuery.proxy(this.click,this)});this.isInput=this.element.is('input');this.component=this.element.is('.date')?this.element.find('.add-on'):false;this.hasInput=this.component&&this.element.find('input').length;this.ident=this.element.find('input').length?this.element.find('input').attr('name'):'undef';if(this.component&&this.component.length===0){this.component=false}if(this.isInput){this.element.on({focus:SobiPro.jQuery.proxy(this.show,this),keyup:SobiPro.jQuery.proxy(this.update,this),blur:SobiPro.jQuery.proxy(this.update,this),keydown:SobiPro.jQuery.proxy(this.keydown,this)})}else{if(this.component&&this.hasInput){this.element.find('input').on({focus:SobiPro.jQuery.proxy(this.show,this),keyup:SobiPro.jQuery.proxy(this.update,this),keydown:SobiPro.jQuery.proxy(this.keydown,this)});this.component.on('click',SobiPro.jQuery.proxy(this.show,this))}else{this.element.on('click',SobiPro.jQuery.proxy(this.show,this))}}SobiPro.jQuery(document).mousedown(function(e){if(SobiPro.jQuery(e.target).closest('.datepicker').length==0){c.hide()}});this.autoclose=true;if('autoclose'in b){this.autoclose=b.autoclose}else if('dateAutoclose'in this.element.data()){this.autoclose=this.element.data('date-autoclose')}this.keyboardNavigation=true;if('keyboardNavigation'in b){this.keyboardNavigation=b.keyboardNavigation}else if('dateKeyboardNavigation'in this.element.data()){this.keyboardNavigation=this.element.data('date-keyboard-navigation')}switch(b.startView||this.element.data('date-start-view')){case 2:case'decade':this.viewMode=this.startViewMode=2;break;case 1:case'year':this.viewMode=this.startViewMode=1;break;case 0:case'month':default:this.viewMode=this.startViewMode=0;break}this.todayBtn=(b.todayBtn||this.element.data('date-today-btn')||true);this.todayHighlight=(b.todayHighlight||this.element.data('date-today-highlight')||false);this.weekStart=((b.weekStart||this.element.data('date-weekstart')||l[this.language].weekStart||0)%7);this.weekEnd=((this.weekStart+6)%7);this.startDate=-Infinity;this.endDate=Infinity;this.setStartDate(b.startDate||this.element.data('date-startdate'));this.setEndDate(b.endDate||this.element.data('date-enddate'));this.fillDow();this.fillMonths();this.update();this.showMode()};k.prototype={constructor:k,time:{},saveTime:true,show:function(e){this.saveTime=false;this.picker.show();this.height=this.component?this.component.outerHeight():this.element.outerHeight();this.update();this.place();SobiPro.jQuery(window).on('resize',SobiPro.jQuery.proxy(this.place,this));if(e){e.stopPropagation();e.preventDefault()}this.element.trigger({type:'show',date:this.date})},hide:function(e){this.picker.hide();SobiPro.jQuery(window).off('resize',this.place);this.viewMode=this.startViewMode;this.showMode();if(!this.isInput){SobiPro.jQuery(document).off('mousedown',this.hide)}if(e&&e.currentTarget.value)this.setValue()},getDate:function(){var d=this.getUTCDate();return new Date(d.getTime()+(d.getTimezoneOffset()*60000))},getUTCDate:function(){return this.date},setDate:function(d){this.setUTCDate(new Date(d.getTime()-(d.getTimezoneOffset()*60000)))},setUTCDate:function(d){this.date=d;this.setValue()},setValue:function(){var a=m.formatDate(this.date,this.format,this.language);if(!this.isInput){if(this.component){this.element.find('input').prop('value',a)}this.element.data('date',a)}else{this.element.prop('value',a)}},setStartDate:function(a){this.startDate=a||-Infinity;if(this.startDate!==-Infinity){this.startDate=m.parseDate(this.startDate,this.format)}this.update();this.updateNavArrows()},setEndDate:function(a){this.endDate=a||Infinity;if(this.endDate!==Infinity){this.endDate=m.parseDate(this.endDate,this.format)}this.update();this.updateNavArrows()},place:function(){var a=parseInt(this.element.parents().filter(function(){return SobiPro.jQuery(this).css('z-index')!='auto'}).first().css('z-index'))+10;var b=this.component?this.component.offset():this.element.offset();this.picker.css({top:b.top+this.height,left:b.left,zIndex:a})},update:function(e){if(!(this.time[this.ident])){this.time[this.ident]={'hours':00,'minutes':00,'seconds':00}}try{if(e.type=='keyup'){this.saveTime=true}}catch(e){}this.date=m.parseDate(this.element.find('input').prop('value'),this.format,this.time[this.ident],this.saveTime);if(this.date<this.startDate){this.viewDate=new Date(this.startDate)}else if(this.date>this.endDate){this.viewDate=new Date(this.endDate)}else{this.viewDate=new Date(this.date)}this.fill();this.element.trigger({type:'changeDate',date:this.date})},fillDow:function(){var a=this.weekStart;var b='<tr>';while(a<this.weekStart+7){b+='<th class="dow">'+l[this.language].daysMin[(a++)%7]+'</th>'}b+='</tr>';this.picker.find('.datepicker-days thead').append(b)},fillMonths:function(){var a='';var i=0;while(i<12){a+='<span class="month">'+l[this.language].monthsShort[i++]+'</span>'}this.picker.find('.datepicker-months td').html(a)},fill:function(){var d=new Date(this.viewDate),year=d.getUTCFullYear(),month=d.getUTCMonth(),startYear=this.startDate!==-Infinity?this.startDate.getUTCFullYear():-Infinity,startMonth=this.startDate!==-Infinity?this.startDate.getUTCMonth():-Infinity,endYear=this.endDate!==Infinity?this.endDate.getUTCFullYear():Infinity,endMonth=this.endDate!==Infinity?this.endDate.getUTCMonth():Infinity,currentDate=this.date.valueOf(),today=new Date();this.picker.find('.datepicker-days thead th:eq(1)').text(l[this.language].months[month]+' '+year);this.picker.find('tfoot th.today').text(l[this.language].today).toggle(this.todayBtn);this.updateNavArrows();this.fillMonths();var a=UTCDate(year,month-1,28,0,0,0,0),day=m.getDaysInMonth(a.getUTCFullYear(),a.getUTCMonth());a.setUTCDate(day);a.setUTCDate(day-(a.getUTCDay()-this.weekStart+7)%7);var b=new Date(a);b.setUTCDate(b.getUTCDate()+42);b=b.valueOf();var c=[];var f;while(a.valueOf()<b){if(a.getUTCDay()==this.weekStart){c.push('<tr>')}f='';if(a.getUTCFullYear()<year||(a.getUTCFullYear()==year&&a.getUTCMonth()<month)){f+=' old'}else if(a.getUTCFullYear()>year||(a.getUTCFullYear()==year&&a.getUTCMonth()>month)){f+=' new'}if(this.todayHighlight&&a.getUTCFullYear()==today.getFullYear()&&a.getUTCMonth()==today.getMonth()&&a.getUTCDate()==today.getDate()){f+=' today'}try{if((a.getDay()==this.date.getDay())&&(a.getWeek()==this.date.getWeek())){f+=' active'}}catch(e){}if(a.valueOf()<this.startDate||a.valueOf()>this.endDate){f+=' disabled'}c.push('<td class="day'+f+'">'+a.getUTCDate()+'</td>');if(a.getUTCDay()==this.weekEnd){c.push('</tr>')}a.setUTCDate(a.getUTCDate()+1)}this.picker.find('.datepicker-days tbody').empty().append(c.join(''));var g=this.date.getUTCFullYear();var h=this.picker.find('.datepicker-months').find('th:eq(1)').text(year).end().find('span').removeClass('active');if(g==year){h.eq(this.date.getUTCMonth()).addClass('active')}if(year<startYear||year>endYear){h.addClass('disabled')}if(year==startYear){h.slice(0,startMonth).addClass('disabled')}if(year==endYear){h.slice(endMonth+1).addClass('disabled')}c='';year=parseInt(year/10,10)*10;var j=this.picker.find('.datepicker-years').find('th:eq(1)').text(year+'-'+(year+9)).end().find('td');year-=1;for(var i=-1;i<11;i++){c+='<span class="year'+(i==-1||i==10?' old':'')+(g==year?' active':'')+(year<startYear||year>endYear?' disabled':'')+'">'+year+'</span>';year+=1}j.html(c)},updateNavArrows:function(){var d=new Date(this.viewDate),year=d.getUTCFullYear(),month=d.getUTCMonth();switch(this.viewMode){case 0:if(this.startDate!==-Infinity&&year<=this.startDate.getUTCFullYear()&&month<=this.startDate.getUTCMonth()){this.picker.find('.prev').css({visibility:'hidden'})}else{this.picker.find('.prev').css({visibility:'visible'})}if(this.endDate!==Infinity&&year>=this.endDate.getUTCFullYear()&&month>=this.endDate.getUTCMonth()){this.picker.find('.next').css({visibility:'hidden'})}else{this.picker.find('.next').css({visibility:'visible'})}break;case 1:case 2:if(this.startDate!==-Infinity&&year<=this.startDate.getUTCFullYear()){this.picker.find('.prev').css({visibility:'hidden'})}else{this.picker.find('.prev').css({visibility:'visible'})}if(this.endDate!==Infinity&&year>=this.endDate.getUTCFullYear()){this.picker.find('.next').css({visibility:'hidden'})}else{this.picker.find('.next').css({visibility:'visible'})}break}},click:function(e){e.stopPropagation();e.preventDefault();var a=SobiPro.jQuery(e.target).closest('span, td, th');if(a.length==1){switch(a[0].nodeName.toLowerCase()){case'th':switch(a[0].className){case'switch':this.showMode(1);break;case'prev':case'next':var b=m.modes[this.viewMode].navStep*(a[0].className=='prev'?-1:1);switch(this.viewMode){case 0:this.viewDate=this.moveMonth(this.viewDate,b);break;case 1:case 2:this.viewDate=this.moveYear(this.viewDate,b);break}this.fill();break;case'today':var c=new Date();c.setUTCMilliseconds(0);this.showMode(-2);var d=this.todayBtn=='linked'?null:'view';this.time[this.ident]={'hours':c.getHours(),'minutes':c.getMinutes(),'seconds':c.getSeconds()};this.date=m.parseDate(c,this.format,this.time[this.ident],true);this._setDate(c,d);break}break;case'span':if(!a.is('.disabled')){this.viewDate.setUTCDate(1);if(a.is('.month')){var f=a.parent().find('span').index(a);this.viewDate.setUTCMonth(f);this.element.trigger({type:'changeMonth',date:this.viewDate})}else{var g=parseInt(a.text(),10)||0;this.viewDate.setUTCFullYear(g);this.element.trigger({type:'changeYear',date:this.viewDate})}this.showMode(-1);this.fill()}break;case'td':if(a.is('.day')&&!a.is('.disabled')){this.saveTime=false;var h=parseInt(a.text(),10)||1;var g=this.viewDate.getUTCFullYear(),f=this.viewDate.getUTCMonth();if(a.is('.old')){if(f==0){f=11;g-=1}else{f-=1}}else if(a.is('.new')){if(f==11){f=0;g+=1}else{f+=1}}var i=UTCDate(g,f,h,0,0,0,0);storedTime=this.time[this.ident];if(storedTime.hours){i.setHours(storedTime.hours)}if(storedTime.minutes){i.setMinutes(storedTime.minutes)}if(storedTime.seconds){i.setSeconds(storedTime.seconds)}this._setDate(i)}break}}},_setDate:function(a,b){if(!b||b=='date')this.date=a;if(!b||b=='view')this.viewDate=a;this.fill();this.setValue();this.element.trigger({type:'changeDate',date:this.date});var c;if(this.isInput){c=this.element}else if(this.component){c=this.element.find('input')}if(c){c.change();if(this.autoclose){this.hide()}}},moveMonth:function(a,b){if(!b)return a;var c=new Date(a.valueOf()),day=c.getUTCDate(),month=c.getUTCMonth(),mag=Math.abs(b),new_month,test;b=b>0?1:-1;if(mag==1){test=b==-1?function(){return c.getUTCMonth()==month}:function(){return c.getUTCMonth()!=new_month};new_month=month+b;c.setUTCMonth(new_month);if(new_month<0||new_month>11)new_month=(new_month+12)%12}else{for(var i=0;i<mag;i++)c=this.moveMonth(c,b);new_month=c.getUTCMonth();c.setUTCDate(day);test=function(){return new_month!=c.getUTCMonth()}}while(test()){c.setUTCDate(--day);c.setUTCMonth(new_month)}return c},moveYear:function(a,b){return this.moveMonth(a,b*12)},dateWithinRange:function(a){return a>=this.startDate&&a<=this.endDate},keydown:function(e){if(this.picker.is(':not(:visible)')){if(e.keyCode==27)this.show();return}var a=false,dir,day,month,newDate,newViewDate;switch(e.keyCode){case 27:this.hide();e.preventDefault();break;case 37:case 39:if(!this.keyboardNavigation)break;dir=e.keyCode==37?-1:1;if(e.ctrlKey){newDate=this.moveYear(this.date,dir);newViewDate=this.moveYear(this.viewDate,dir)}else if(e.shiftKey){newDate=this.moveMonth(this.date,dir);newViewDate=this.moveMonth(this.viewDate,dir)}else{newDate=new Date(this.date);newDate.setUTCDate(this.date.getUTCDate()+dir);newViewDate=new Date(this.viewDate);newViewDate.setUTCDate(this.viewDate.getUTCDate()+dir)}if(this.dateWithinRange(newDate)){this.date=newDate;this.viewDate=newViewDate;this.setValue();this.update();e.preventDefault();a=true}break;case 38:case 40:if(!this.keyboardNavigation)break;dir=e.keyCode==38?-1:1;if(e.ctrlKey){newDate=this.moveYear(this.date,dir);newViewDate=this.moveYear(this.viewDate,dir)}else if(e.shiftKey){newDate=this.moveMonth(this.date,dir);newViewDate=this.moveMonth(this.viewDate,dir)}else{newDate=new Date(this.date);newDate.setUTCDate(this.date.getUTCDate()+dir*7);newViewDate=new Date(this.viewDate);newViewDate.setUTCDate(this.viewDate.getUTCDate()+dir*7)}if(this.dateWithinRange(newDate)){this.date=newDate;this.viewDate=newViewDate;this.setValue();this.update();e.preventDefault();a=true}break;case 13:this.hide();e.preventDefault();break;case 9:this.hide();break}if(a){this.element.trigger({type:'changeDate',date:this.date});var b;if(this.isInput){b=this.element}else if(this.component){b=this.element.find('input')}if(b){b.change()}}},showMode:function(a){if(a){this.viewMode=Math.max(0,Math.min(2,this.viewMode+a))}this.picker.find('>div').hide().filter('.datepicker-'+m.modes[this.viewMode].clsName).show();this.updateNavArrows()}};SobiPro.jQuery.fn.spDatepicker=function(b){var c=Array.apply(null,arguments);c.shift();return this.each(function(){var a=SobiPro.jQuery(this),data=a.data('datepicker'),options=typeof b=='object'&&b;if(!data){a.data('datepicker',(data=new k(this,SobiPro.jQuery.extend({},SobiPro.jQuery.fn.spDatepicker.defaults,options))))}if(typeof b=='string'&&typeof data[b]=='function'){data[b].apply(data,c)}})};SobiPro.jQuery.fn.spDatepicker.defaults={};SobiPro.jQuery.fn.spDatepicker.Constructor=k;var l=SobiPro.jQuery.fn.spDatepicker.dates={en:spDatePickerLang};var m={modes:[{clsName:'days',navFnc:'Month',navStep:1},{clsName:'months',navFnc:'FullYear',navStep:1},{clsName:'years',navFnc:'FullYear',navStep:10}],isLeapYear:function(a){return(((a%4===0)&&(a%100!==0))||(a%400===0))},getDaysInMonth:function(a,b){return[31,(m.isLeapYear(a)?29:28),31,30,31,30,31,31,30,31,30,31][b]},validParts:/dd?|g|G|h|s|H|i|mm?|MM?|yy(?:yy)?/g,nonpunctuation:/[^ -\/:-@\[-`{-~\t\n\r]+/g,parseFormat:function(a){var b=a.replace(this.validParts,'\0').split('\0');var c=a.match(this.validParts);if(!b||!b.length||!c||c.length==0){throw new Error("Invalid date format.");}return{separators:b,parts:c}},parseDate:function(a,b,c,d){if(a instanceof Date){return a}if(!(a)){this.date=0;return new Date()}var e=a.split(/[^a-zA-Z0-9]/g);var f=b.split(/[^a-zA-Z]/g);date=new Date(),date.setHours(0);date.setMinutes(0);date.setSeconds(0);date.setMilliseconds(0);for(var g in f){if(typeof e[g]!='undefined'){val=e[g];switch(f[g]){case'dd':case'd':date.setDate(val);break;case'mm':case'm':date.setMonth(val-1);break;case'yy':date.setFullYear(2000+val);break;case'yyyy':date.setFullYear(val);break;case'hh':case'h':if(d){c.hours=val;date.setHours(val)}else{date.setHours(c.hours)}break;case'ii':case'i':if(d){c.minutes=val;date.setMinutes(val)}else{date.setMinutes(c.minutes)}break;case'ss':case's':if(d){c.seconds=val;date.setSeconds(val)}else{date.setSeconds(c.seconds)}break}}}return date},formatDate:function(a,b){var c={dd:(a.getDate()<10?'0':'')+a.getDate(),d:a.getDate(),mm:((a.getMonth()+1)<10?'0':'')+(a.getMonth()+1),m:a.getMonth()+1,yyyy:a.getFullYear(),yy:a.getFullYear().toString().substring(2),hh:(a.getHours()<10?'0':'')+a.getHours(),h:a.getHours(),ii:(a.getMinutes()<10?'0':'')+a.getMinutes(),i:a.getMinutes(),ss:(a.getSeconds()<10?'0':'')+a.getSeconds(),s:a.getSeconds()};var d=b;for(var e in c){val=c[e];d=d.replace(e,val)}return d},headTemplate:'<thead>'+'<tr>'+'<th class="prev"><i class="icon-arrow-left"/></th>'+'<th colspan="5" class="switch"></th>'+'<th class="next"><i class="icon-arrow-right"/></th>'+'</tr>'+'</thead>',contTemplate:'<tbody><tr><td colspan="7"></td></tr></tbody>',footTemplate:'<tfoot><tr><th colspan="7" class="today"></th></tr></tfoot>'};m.template='<div class="datepicker dropdown-menu hide">'+'<div class="datepicker-days">'+'<table class=" table-condensed">'+m.headTemplate+'<tbody></tbody>'+m.footTemplate+'</table>'+'</div>'+'<div class="datepicker-months">'+'<table class="table-condensed">'+m.headTemplate+m.contTemplate+m.footTemplate+'</table>'+'</div>'+'<div class="datepicker-years">'+'<table class="table-condensed">'+m.headTemplate+m.contTemplate+m.footTemplate+'</table>'+'</div>'+'</div>'}(window.jQuery);SobiPro.jQuery(document).ready(function(){SobiPro.jQuery('.spDatePicker').each(function(i,e){"use strict";SobiPro.jQuery(e).spDatepicker().on('changeDate',function(a){var b="";if(a.date.valueOf()&&SobiPro.jQuery(a.currentTarget).find(':text').val()){b=new Date(a.date.valueOf())/1000}SobiPro.DebOut(b);SobiPro.jQuery(a.currentTarget).find(':hidden').val(b)})})});
+/**
+ * @license
+ * =========================================================
+ * bootstrap-datetimepicker.js
+ * http://www.eyecon.ro/bootstrap-datepicker
+ * =========================================================
+ * Copyright 2012 Stefan Petre
+ *
+ * Contributions:
+ *  - Andrew Rowls
+ *  - Thiago de Arruda
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * =========================================================
+ */
+
+$ = SobiPro.jQuery;
+(function ( $ )
+{
+
+	// Picker object
+	var smartPhone = (window.orientation != undefined);
+	var DateTimePicker = function ( element, options )
+	{
+		this.id = dpgId++;
+		this.init( element, options );
+	};
+
+	var dateToDate = function ( dt )
+	{
+		if ( typeof dt === 'string' ) {
+			return new Date( dt );
+		}
+		return dt;
+	};
+
+	DateTimePicker.prototype = {
+		constructor: DateTimePicker,
+
+		init: function ( element, options )
+		{
+			var icon;
+			if ( !(options.pickTime || options.pickDate) )
+				throw new Error( 'Must choose at least one picker' );
+			this.options = options;
+			this.$element = SobiPro.jQuery( element );
+			this.language = options.language in dates ? options.language : 'en'
+			this.pickDate = options.pickDate;
+			this.pickTime = options.pickTime;
+			this.isInput = this.$element.is( 'input' );
+			this.component = false;
+			if ( this.$element.find( '.input-append' ) || this.$element.find( '.input-prepend' ) )
+				this.component = this.$element.find( '.add-on' );
+			this.format = options.format;
+			if ( !this.format ) {
+				if ( this.isInput ) this.format = this.$element.data( 'format' );
+				else this.format = this.$element.find( 'input' ).data( 'format' );
+				if ( !this.format ) this.format = 'MM/dd/yyyy';
+			}
+			this._compileFormat();
+			if ( this.component ) {
+				icon = this.component.find( 'i' );
+			}
+			if ( this.pickTime ) {
+				if ( icon && icon.length ) this.timeIcon = icon.data( 'time-icon' );
+				if ( !this.timeIcon ) this.timeIcon = 'icon-time';
+				icon.addClass( this.timeIcon );
+			}
+			if ( this.pickDate ) {
+				if ( icon && icon.length ) this.dateIcon = icon.data( 'date-icon' );
+				if ( !this.dateIcon ) this.dateIcon = 'icon-calendar';
+				icon.removeClass( this.timeIcon );
+				icon.addClass( this.dateIcon );
+			}
+			this.widget = SobiPro.jQuery( getTemplate( this.timeIcon, options.pickDate, options.pickTime, options.pick12HourFormat, options.pickSeconds, options.collapse ) ).appendTo( '#SobiPro' );
+			this.minViewMode = options.minViewMode || this.$element.data( 'date-minviewmode' ) || 0;
+			if ( typeof this.minViewMode === 'string' ) {
+				switch ( this.minViewMode ) {
+					case 'months':
+						this.minViewMode = 1;
+						break;
+					case 'years':
+						this.minViewMode = 2;
+						break;
+					default:
+						this.minViewMode = 0;
+						break;
+				}
+			}
+			this.viewMode = options.viewMode || this.$element.data( 'date-viewmode' ) || 0;
+			if ( typeof this.viewMode === 'string' ) {
+				switch ( this.viewMode ) {
+					case 'months':
+						this.viewMode = 1;
+						break;
+					case 'years':
+						this.viewMode = 2;
+						break;
+					default:
+						this.viewMode = 0;
+						break;
+				}
+			}
+			this.startViewMode = this.viewMode;
+			this.weekStart = options.weekStart || this.$element.data( 'date-weekstart' ) || 0;
+			this.weekEnd = this.weekStart === 0 ? 6 : this.weekStart - 1;
+			this.setStartDate( options.startDate || this.$element.data( 'date-startdate' ) );
+			this.setEndDate( options.endDate || this.$element.data( 'date-enddate' ) );
+			this.fillDow();
+			this.fillMonths();
+			this.fillHours();
+			this.fillMinutes();
+			this.fillSeconds();
+			this.update();
+			this.showMode();
+			this._attachDatePickerEvents();
+		},
+
+		show: function ( e )
+		{
+			this.widget.show();
+			this.height = this.component ? this.component.outerHeight() : this.$element.outerHeight();
+			this.place();
+			this.$element.trigger( {
+				type: 'show',
+				date: this._date
+			} );
+			this._attachDatePickerGlobalEvents();
+			if ( e ) {
+				e.stopPropagation();
+				e.preventDefault();
+			}
+		},
+
+		disable: function ()
+		{
+			this.$element.find( 'input' ).prop( 'disabled', true );
+			this._detachDatePickerEvents();
+		},
+		enable: function ()
+		{
+			this.$element.find( 'input' ).prop( 'disabled', false );
+			this._attachDatePickerEvents();
+		},
+
+		hide: function ()
+		{
+			// Ignore event if in the middle of a picker transition
+			var collapse = this.widget.find( '.collapse' )
+			for ( var i = 0; i < collapse.length; i++ ) {
+				var collapseData = collapse.eq( i ).data( 'collapse' );
+				if ( collapseData && collapseData.transitioning )
+					return;
+			}
+			this.widget.hide();
+			this.viewMode = this.startViewMode;
+			this.showMode();
+			this.set();
+			// Sigsiu.NET - for some reason this is hiding the whole input field
+//			this.$element.trigger( {
+//				type: 'hide',
+//				date: this._date
+//			} );
+			this._detachDatePickerGlobalEvents();
+		},
+
+		set: function ()
+		{
+			var formatted = '';
+			if ( !this._unset ) formatted = this.formatDate( this._date );
+			if ( !this.isInput ) {
+				if ( this.component ) {
+					var input = this.$element.find( 'input' );
+					input.val( formatted );
+					this._resetMaskPos( input );
+				}
+				this.$element.data( 'date', formatted );
+			}
+			else {
+				this.$element.val( formatted );
+				this._resetMaskPos( this.$element );
+			}
+		},
+
+		setValue: function ( newDate )
+		{
+			if ( !newDate ) {
+				this._unset = true;
+			}
+			else {
+				this._unset = false;
+			}
+			if ( typeof newDate === 'string' ) {
+				this._date = this.parseDate( newDate );
+			}
+			else if ( newDate ) {
+				this._date = new Date( newDate );
+			}
+			this.set();
+			this.viewDate = UTCDate( this._date.getUTCFullYear(), this._date.getUTCMonth(), 1, 0, 0, 0, 0 );
+			this.fillDate();
+			this.fillTime();
+		},
+
+		getDate: function ()
+		{
+			if ( this._unset ) return null;
+			return new Date( this._date.valueOf() );
+		},
+
+		setDate: function ( date )
+		{
+			if ( !date ) this.setValue( null );
+			else this.setValue( date.valueOf() );
+		},
+
+		setStartDate: function ( date )
+		{
+			if ( date instanceof Date ) {
+				this.startDate = date;
+			}
+			else if ( typeof date === 'string' ) {
+				this.startDate = new UTCDate( date );
+				if ( !this.startDate.getUTCFullYear() ) {
+					this.startDate = -Infinity;
+				}
+			}
+			else {
+				this.startDate = -Infinity;
+			}
+			if ( this.viewDate ) {
+				this.update();
+			}
+		},
+
+		setEndDate: function ( date )
+		{
+			if ( date instanceof Date ) {
+				this.endDate = date;
+			}
+			else if ( typeof date === 'string' ) {
+				this.endDate = new UTCDate( date );
+				if ( !this.endDate.getUTCFullYear() ) {
+					this.endDate = Infinity;
+				}
+			}
+			else {
+				this.endDate = Infinity;
+			}
+			if ( this.viewDate ) {
+				this.update();
+			}
+		},
+
+		getLocalDate: function ()
+		{
+			if ( this._unset ) return null;
+			var d = this._date;
+			return new Date( d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(),
+				d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds() );
+		},
+
+		setLocalDate: function ( localDate )
+		{
+			if ( !localDate ) this.setValue( null );
+			else
+				this.setValue( Date.UTC(
+					localDate.getFullYear(),
+					localDate.getMonth(),
+					localDate.getDate(),
+					localDate.getHours(),
+					localDate.getMinutes(),
+					localDate.getSeconds(),
+					localDate.getMilliseconds() ) );
+		},
+
+		place: function ()
+		{
+			var position = 'absolute';
+			var offset = this.component ? this.component.offset() : this.$element.offset();
+			this.width = this.component ? this.component.outerWidth() : this.$element.outerWidth();
+			offset.top = offset.top + this.height;
+
+			var $window = SobiPro.jQuery( window );
+
+			if ( this.options.width != undefined ) {
+				this.widget.width( this.options.width );
+			}
+
+			if ( this.options.orientation == 'left' ) {
+				this.widget.addClass( 'left-oriented' );
+				offset.left = offset.left - this.widget.width() + 20;
+			}
+
+			if ( this._isInFixed() ) {
+				position = 'fixed';
+				offset.top -= $window.scrollTop();
+				offset.left -= $window.scrollLeft();
+			}
+
+			if ( $window.width() < offset.left + this.widget.outerWidth() ) {
+				offset.right = $window.width() - offset.left - this.width;
+				offset.left = 'auto';
+				this.widget.addClass( 'pull-right' );
+			}
+			else {
+				offset.right = 'auto';
+				this.widget.removeClass( 'pull-right' );
+			}
+
+			this.widget.css( {
+				position: position,
+				top: offset.top,
+				left: offset.left,
+				right: offset.right
+			} );
+		},
+
+		notifyChange: function ()
+		{
+			this.$element.trigger( {
+				type: 'changeDate',
+				date: this.getDate(),
+				localDate: this.getLocalDate()
+			} );
+		},
+
+		update: function ( newDate )
+		{
+			var dateStr = newDate;
+			if ( !dateStr ) {
+				if ( this.isInput ) {
+					dateStr = this.$element.val();
+				}
+				else {
+					dateStr = this.$element.find( 'input' ).val();
+				}
+				if ( dateStr ) {
+					this._date = this.parseDate( dateStr );
+				}
+				if ( !this._date ) {
+					var tmp = new Date()
+					this._date = UTCDate( tmp.getFullYear(),
+						tmp.getMonth(),
+						tmp.getDate(),
+						tmp.getHours(),
+						tmp.getMinutes(),
+						tmp.getSeconds(),
+						tmp.getMilliseconds() )
+				}
+			}
+			this.viewDate = UTCDate( this._date.getUTCFullYear(), this._date.getUTCMonth(), 1, 0, 0, 0, 0 );
+			this.fillDate();
+			this.fillTime();
+		},
+
+		fillDow: function ()
+		{
+			var dowCnt = this.weekStart;
+			var html = SobiPro.jQuery( '<tr>' );
+			while ( dowCnt < this.weekStart + 7 ) {
+				html.append( '<th class="dow">' + dates[this.language].daysMin[(dowCnt++) % 7] + '</th>' );
+			}
+			this.widget.find( '.datepicker-days thead' ).append( html );
+		},
+
+		fillMonths: function ()
+		{
+			var html = '';
+			var i = 0
+			while ( i < 12 ) {
+				html += '<span class="month">' + dates[this.language].monthsShort[i++] + '</span>';
+			}
+			this.widget.find( '.datepicker-months td' ).append( html );
+		},
+
+		fillDate: function ()
+		{
+			var year = this.viewDate.getUTCFullYear();
+			var month = this.viewDate.getUTCMonth();
+			var currentDate = UTCDate(
+				this._date.getUTCFullYear(),
+				this._date.getUTCMonth(),
+				this._date.getUTCDate(),
+				0, 0, 0, 0
+			);
+			var startYear = typeof this.startDate === 'object' ? this.startDate.getUTCFullYear() : -Infinity;
+			var startMonth = typeof this.startDate === 'object' ? this.startDate.getUTCMonth() : -1;
+			var endYear = typeof this.endDate === 'object' ? this.endDate.getUTCFullYear() : Infinity;
+			var endMonth = typeof this.endDate === 'object' ? this.endDate.getUTCMonth() : 12;
+
+			this.widget.find( '.datepicker-days' ).find( '.disabled' ).removeClass( 'disabled' );
+			this.widget.find( '.datepicker-months' ).find( '.disabled' ).removeClass( 'disabled' );
+			this.widget.find( '.datepicker-years' ).find( '.disabled' ).removeClass( 'disabled' );
+
+			this.widget.find( '.datepicker-days th:eq(1)' ).text(
+				dates[this.language].months[month] + ' ' + year );
+
+			var prevMonth = UTCDate( year, month - 1, 28, 0, 0, 0, 0 );
+			var day = DPGlobal.getDaysInMonth(
+				prevMonth.getUTCFullYear(), prevMonth.getUTCMonth() );
+			prevMonth.setUTCDate( day );
+			prevMonth.setUTCDate( day - (prevMonth.getUTCDay() - this.weekStart + 7) % 7 );
+			if ( (year == startYear && month <= startMonth) || year < startYear ) {
+				this.widget.find( '.datepicker-days th:eq(0)' ).addClass( 'disabled' );
+			}
+			if ( (year == endYear && month >= endMonth) || year > endYear ) {
+				this.widget.find( '.datepicker-days th:eq(2)' ).addClass( 'disabled' );
+			}
+
+			var nextMonth = new Date( prevMonth.valueOf() );
+			nextMonth.setUTCDate( nextMonth.getUTCDate() + 42 );
+			nextMonth = nextMonth.valueOf();
+			var html = [];
+			var row;
+			var clsName;
+			while ( prevMonth.valueOf() < nextMonth ) {
+				if ( prevMonth.getUTCDay() === this.weekStart ) {
+					row = SobiPro.jQuery( '<tr>' );
+					html.push( row );
+				}
+				clsName = '';
+				if ( prevMonth.getUTCFullYear() < year ||
+					(prevMonth.getUTCFullYear() == year &&
+						prevMonth.getUTCMonth() < month) ) {
+					clsName += ' old';
+				}
+				else if ( prevMonth.getUTCFullYear() > year ||
+					(prevMonth.getUTCFullYear() == year &&
+						prevMonth.getUTCMonth() > month) ) {
+					clsName += ' new';
+				}
+				if ( prevMonth.valueOf() === currentDate.valueOf() ) {
+					clsName += ' active';
+				}
+				if ( (prevMonth.valueOf() + 86400000) <= this.startDate ) {
+					clsName += ' disabled';
+				}
+				if ( prevMonth.valueOf() > this.endDate ) {
+					clsName += ' disabled';
+				}
+				row.append( '<td class="day' + clsName + '">' + prevMonth.getUTCDate() + '</td>' );
+				prevMonth.setUTCDate( prevMonth.getUTCDate() + 1 );
+			}
+			this.widget.find( '.datepicker-days tbody' ).empty().append( html );
+			var currentYear = this._date.getUTCFullYear();
+
+			var months = this.widget.find( '.datepicker-months' ).find(
+				'th:eq(1)' ).text( year ).end().find( 'span' ).removeClass( 'active' );
+			if ( currentYear === year ) {
+				months.eq( this._date.getUTCMonth() ).addClass( 'active' );
+			}
+			if ( currentYear - 1 < startYear ) {
+				this.widget.find( '.datepicker-months th:eq(0)' ).addClass( 'disabled' );
+			}
+			if ( currentYear + 1 > endYear ) {
+				this.widget.find( '.datepicker-months th:eq(2)' ).addClass( 'disabled' );
+			}
+			for ( var i = 0; i < 12; i++ ) {
+				if ( (year == startYear && startMonth > i) || (year < startYear) ) {
+					SobiPro.jQuery( months[i] ).addClass( 'disabled' );
+				}
+				else if ( (year == endYear && endMonth < i) || (year > endYear) ) {
+					SobiPro.jQuery( months[i] ).addClass( 'disabled' );
+				}
+			}
+
+			html = '';
+			year = parseInt( year / 10, 10 ) * 10;
+			var yearCont = this.widget.find( '.datepicker-years' ).find(
+				'th:eq(1)' ).text( year + '-' + (year + 9) ).end().find( 'td' );
+			this.widget.find( '.datepicker-years' ).find( 'th' ).removeClass( 'disabled' );
+			if ( startYear > year ) {
+				this.widget.find( '.datepicker-years' ).find( 'th:eq(0)' ).addClass( 'disabled' );
+			}
+			if ( endYear < year + 9 ) {
+				this.widget.find( '.datepicker-years' ).find( 'th:eq(2)' ).addClass( 'disabled' );
+			}
+			year -= 1;
+			for ( var i = -1; i < 11; i++ ) {
+				html += '<span class="year' + (i === -1 || i === 10 ? ' old' : '') + (currentYear === year ? ' active' : '') + ((year < startYear || year > endYear) ? ' disabled' : '') + '">' + year + '</span>';
+				year += 1;
+			}
+			yearCont.html( html );
+		},
+
+		fillHours: function ()
+		{
+			var table = this.widget.find(
+				'.timepicker .timepicker-hours table' );
+			table.parent().hide();
+			var html = '';
+			if ( this.options.pick12HourFormat ) {
+				var current = 1;
+				for ( var i = 0; i < 3; i += 1 ) {
+					html += '<tr>';
+					for ( var j = 0; j < 4; j += 1 ) {
+						var c = current.toString();
+						html += '<td class="hour">' + padLeft( c, 2, '0' ) + '</td>';
+						current++;
+					}
+					html += '</tr>'
+				}
+			}
+			else {
+				var current = 0;
+				for ( var i = 0; i < 6; i += 1 ) {
+					html += '<tr>';
+					for ( var j = 0; j < 4; j += 1 ) {
+						var c = current.toString();
+						html += '<td class="hour">' + padLeft( c, 2, '0' ) + '</td>';
+						current++;
+					}
+					html += '</tr>'
+				}
+			}
+			table.html( html );
+		},
+
+		fillMinutes: function ()
+		{
+			var table = this.widget.find(
+				'.timepicker .timepicker-minutes table' );
+			table.parent().hide();
+			var html = '';
+			var current = 0;
+			for ( var i = 0; i < 5; i++ ) {
+				html += '<tr>';
+				for ( var j = 0; j < 4; j += 1 ) {
+					var c = current.toString();
+					html += '<td class="minute">' + padLeft( c, 2, '0' ) + '</td>';
+					current += 3;
+				}
+				html += '</tr>';
+			}
+			table.html( html );
+		},
+
+		fillSeconds: function ()
+		{
+			var table = this.widget.find(
+				'.timepicker .timepicker-seconds table' );
+			table.parent().hide();
+			var html = '';
+			var current = 0;
+			for ( var i = 0; i < 5; i++ ) {
+				html += '<tr>';
+				for ( var j = 0; j < 4; j += 1 ) {
+					var c = current.toString();
+					html += '<td class="second">' + padLeft( c, 2, '0' ) + '</td>';
+					current += 3;
+				}
+				html += '</tr>';
+			}
+			table.html( html );
+		},
+
+		fillTime: function ()
+		{
+			if ( !this._date )
+				return;
+			var timeComponents = this.widget.find( '.timepicker span[data-time-component]' );
+			var table = timeComponents.closest( 'table' );
+			var is12HourFormat = this.options.pick12HourFormat;
+			var hour = this._date.getUTCHours();
+			var period = 'AM';
+			if ( is12HourFormat ) {
+				if ( hour >= 12 ) period = 'PM';
+				if ( hour === 0 ) hour = 12;
+				else if ( hour != 12 ) hour = hour % 12;
+				this.widget.find(
+					'.timepicker [data-action=togglePeriod]' ).text( period );
+			}
+			hour = padLeft( hour.toString(), 2, '0' );
+			var minute = padLeft( this._date.getUTCMinutes().toString(), 2, '0' );
+			var second = padLeft( this._date.getUTCSeconds().toString(), 2, '0' );
+			timeComponents.filter( '[data-time-component=hours]' ).text( hour );
+			timeComponents.filter( '[data-time-component=minutes]' ).text( minute );
+			timeComponents.filter( '[data-time-component=seconds]' ).text( second );
+		},
+
+		click: function ( e )
+		{
+			e.stopPropagation();
+			e.preventDefault();
+			this._unset = false;
+			var target = SobiPro.jQuery( e.target ).closest( 'span, td, th' );
+			if ( target.length === 1 ) {
+				if ( !target.is( '.disabled' ) ) {
+					switch ( target[0].nodeName.toLowerCase() ) {
+						case 'th':
+							switch ( target[0].className ) {
+								case 'switch':
+									this.showMode( 1 );
+									break;
+								case 'prev':
+								case 'next':
+									var vd = this.viewDate;
+									var navFnc = DPGlobal.modes[this.viewMode].navFnc;
+									var step = DPGlobal.modes[this.viewMode].navStep;
+									if ( target[0].className === 'prev' ) step = step * -1;
+									vd['set' + navFnc]( vd['get' + navFnc]() + step );
+									this.fillDate();
+									this.set();
+									break;
+							}
+							break;
+						case 'span':
+							if ( target.is( '.month' ) ) {
+								var month = target.parent().find( 'span' ).index( target );
+								this.viewDate.setUTCMonth( month );
+							}
+							else {
+								var year = parseInt( target.text(), 10 ) || 0;
+								this.viewDate.setUTCFullYear( year );
+							}
+							if ( this.viewMode !== 0 ) {
+								this._date = UTCDate(
+									this.viewDate.getUTCFullYear(),
+									this.viewDate.getUTCMonth(),
+									this.viewDate.getUTCDate(),
+									this._date.getUTCHours(),
+									this._date.getUTCMinutes(),
+									this._date.getUTCSeconds(),
+									this._date.getUTCMilliseconds()
+								);
+								this.notifyChange();
+							}
+							this.showMode( -1 );
+							this.fillDate();
+							this.set();
+							break;
+						case 'td':
+							if ( target.is( '.day' ) ) {
+								var day = parseInt( target.text(), 10 ) || 1;
+								var month = this.viewDate.getUTCMonth();
+								var year = this.viewDate.getUTCFullYear();
+								if ( target.is( '.old' ) ) {
+									if ( month === 0 ) {
+										month = 11;
+										year -= 1;
+									}
+									else {
+										month -= 1;
+									}
+								}
+								else if ( target.is( '.new' ) ) {
+									if ( month == 11 ) {
+										month = 0;
+										year += 1;
+									}
+									else {
+										month += 1;
+									}
+								}
+								this._date = UTCDate(
+									year, month, day,
+									this._date.getUTCHours(),
+									this._date.getUTCMinutes(),
+									this._date.getUTCSeconds(),
+									this._date.getUTCMilliseconds()
+								);
+								this.viewDate = UTCDate(
+									year, month, Math.min( 28, day ), 0, 0, 0, 0 );
+								this.fillDate();
+								this.set();
+								this.notifyChange();
+							}
+							break;
+					}
+				}
+			}
+		},
+
+		actions: {
+			incrementHours: function ( e )
+			{
+				this._date.setUTCHours( this._date.getUTCHours() + 1 );
+			},
+
+			incrementMinutes: function ( e )
+			{
+				this._date.setUTCMinutes( this._date.getUTCMinutes() + 1 );
+			},
+
+			incrementSeconds: function ( e )
+			{
+				this._date.setUTCSeconds( this._date.getUTCSeconds() + 1 );
+			},
+
+			decrementHours: function ( e )
+			{
+				this._date.setUTCHours( this._date.getUTCHours() - 1 );
+			},
+
+			decrementMinutes: function ( e )
+			{
+				this._date.setUTCMinutes( this._date.getUTCMinutes() - 1 );
+			},
+
+			decrementSeconds: function ( e )
+			{
+				this._date.setUTCSeconds( this._date.getUTCSeconds() - 1 );
+			},
+
+			togglePeriod: function ( e )
+			{
+				var hour = this._date.getUTCHours();
+				if ( hour >= 12 ) hour -= 12;
+				else hour += 12;
+				this._date.setUTCHours( hour );
+			},
+
+			showPicker: function ()
+			{
+				this.widget.find( '.timepicker > div:not(.timepicker-picker)' ).hide();
+				this.widget.find( '.timepicker .timepicker-picker' ).show();
+			},
+
+			showHours: function ()
+			{
+				this.widget.find( '.timepicker .timepicker-picker' ).hide();
+				this.widget.find( '.timepicker .timepicker-hours' ).show();
+			},
+
+			showMinutes: function ()
+			{
+				this.widget.find( '.timepicker .timepicker-picker' ).hide();
+				this.widget.find( '.timepicker .timepicker-minutes' ).show();
+			},
+
+			showSeconds: function ()
+			{
+				this.widget.find( '.timepicker .timepicker-picker' ).hide();
+				this.widget.find( '.timepicker .timepicker-seconds' ).show();
+			},
+
+			selectHour: function ( e )
+			{
+				var tgt = SobiPro.jQuery( e.target );
+				var value = parseInt( tgt.text(), 10 );
+				if ( this.options.pick12HourFormat ) {
+					var current = this._date.getUTCHours();
+					if ( current >= 12 ) {
+						if ( value != 12 ) value = (value + 12) % 24;
+					}
+					else {
+						if ( value === 12 ) value = 0;
+						else value = value % 12;
+					}
+				}
+				this._date.setUTCHours( value );
+				this.actions.showPicker.call( this );
+			},
+
+			selectMinute: function ( e )
+			{
+				var tgt = SobiPro.jQuery( e.target );
+				var value = parseInt( tgt.text(), 10 );
+				this._date.setUTCMinutes( value );
+				this.actions.showPicker.call( this );
+			},
+
+			selectSecond: function ( e )
+			{
+				var tgt = SobiPro.jQuery( e.target );
+				var value = parseInt( tgt.text(), 10 );
+				this._date.setUTCSeconds( value );
+				this.actions.showPicker.call( this );
+			}
+		},
+
+		doAction: function ( e )
+		{
+			e.stopPropagation();
+			e.preventDefault();
+			if ( !this._date ) this._date = UTCDate( 1970, 0, 0, 0, 0, 0, 0 );
+			var action = SobiPro.jQuery( e.currentTarget ).data( 'action' );
+			var rv = this.actions[action].apply( this, arguments );
+			this.set();
+			this.fillTime();
+			this.notifyChange();
+			return rv;
+		},
+
+		stopEvent: function ( e )
+		{
+			e.stopPropagation();
+			e.preventDefault();
+		},
+
+		// part of the following code was taken from
+		// http://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.js
+		keydown: function ( e )
+		{
+			var self = this, k = e.which, input = SobiPro.jQuery( e.target );
+			if ( k == 8 || k == 46 ) {
+				// backspace and delete cause the maskPosition
+				// to be recalculated
+				setTimeout( function ()
+				{
+					self._resetMaskPos( input );
+				} );
+			}
+		},
+
+		keypress: function ( e )
+		{
+			var k = e.which;
+			if ( k == 8 || k == 46 ) {
+				// For those browsers which will trigger
+				// keypress on backspace/delete
+				return;
+			}
+			var input = SobiPro.jQuery( e.target );
+			var c = String.fromCharCode( k );
+			var val = input.val() || '';
+			val += c;
+			var mask = this._mask[this._maskPos];
+			if ( !mask ) {
+				return false;
+			}
+			if ( mask.end != val.length ) {
+				return;
+			}
+			if ( !mask.pattern.test( val.slice( mask.start ) ) ) {
+				val = val.slice( 0, val.length - 1 );
+				while ( (mask = this._mask[this._maskPos]) && mask.character ) {
+					val += mask.character;
+					// advance mask position past static
+					// part
+					this._maskPos++;
+				}
+				val += c;
+				if ( mask.end != val.length ) {
+					input.val( val );
+					return false;
+				}
+				else {
+					if ( !mask.pattern.test( val.slice( mask.start ) ) ) {
+						input.val( val.slice( 0, mask.start ) );
+						return false;
+					}
+					else {
+						input.val( val );
+						this._maskPos++;
+						return false;
+					}
+				}
+			}
+			else {
+				this._maskPos++;
+			}
+		},
+
+		change: function ( e )
+		{
+			var input = SobiPro.jQuery( e.target );
+			var val = input.val();
+			if ( this._formatPattern.test( val ) ) {
+				this.update();
+				this.setValue( this._date.getTime() );
+				this.notifyChange();
+				this.set();
+			}
+			else if ( val && val.trim() ) {
+				this.setValue( this._date.getTime() );
+				if ( this._date ) this.set();
+				else input.val( '' );
+			}
+			else {
+				if ( this._date ) {
+					this.setValue( null );
+					// unset the date when the input is
+					// erased
+					this.notifyChange();
+					this._unset = true;
+				}
+			}
+			this._resetMaskPos( input );
+		},
+
+		showMode: function ( dir )
+		{
+			if ( dir ) {
+				this.viewMode = Math.max( this.minViewMode, Math.min(
+					2, this.viewMode + dir ) );
+			}
+			this.widget.find( '.datepicker > div' ).hide().filter(
+				'.datepicker-' + DPGlobal.modes[this.viewMode].clsName ).show();
+		},
+
+		destroy: function ()
+		{
+			this._detachDatePickerEvents();
+			this._detachDatePickerGlobalEvents();
+			this.widget.remove();
+			this.$element.removeData( 'datetimepicker' );
+			this.component.removeData( 'datetimepicker' );
+		},
+
+		formatDate: function ( d )
+		{
+			return this.format.replace( formatReplacer, function ( match )
+			{
+				var methodName, property, rv, len = match.length;
+				if ( match === 'ms' )
+					len = 1;
+				property = dateFormatComponents[match].property
+				if ( property === 'Hours12' ) {
+					rv = d.getUTCHours();
+					if ( rv === 0 ) rv = 12;
+					else if ( rv !== 12 ) rv = rv % 12;
+				}
+				else if ( property === 'Period12' ) {
+					if ( d.getUTCHours() >= 12 ) return 'PM';
+					else return 'AM';
+				}
+				else if ( property === 'UTCYear' ) {
+					rv = d.getUTCFullYear();
+					rv = rv.toString().substr( 2 );
+				}
+				else {
+					methodName = 'get' + property;
+					rv = d[methodName]();
+				}
+				if ( methodName === 'getUTCMonth' ) rv = rv + 1;
+				return padLeft( rv.toString(), len, '0' );
+			} );
+		},
+
+		parseDate: function ( str )
+		{
+			var match, i, property, methodName, value, parsed = {};
+			if ( !(match = this._formatPattern.exec( str )) )
+				return null;
+			for ( i = 1; i < match.length; i++ ) {
+				property = this._propertiesByIndex[i];
+				if ( !property )
+					continue;
+				value = match[i];
+				if ( /^\d+$/.test( value ) )
+					value = parseInt( value, 10 );
+				parsed[property] = value;
+			}
+			return this._finishParsingDate( parsed );
+		},
+
+		_resetMaskPos: function ( input )
+		{
+			var val = input.val();
+			for ( var i = 0; i < this._mask.length; i++ ) {
+				if ( this._mask[i].end > val.length ) {
+					// If the mask has ended then jump to
+					// the next
+					this._maskPos = i;
+					break;
+				}
+				else if ( this._mask[i].end === val.length ) {
+					this._maskPos = i + 1;
+					break;
+				}
+			}
+		},
+
+		_finishParsingDate: function ( parsed )
+		{
+			var year, month, date, hours, minutes, seconds, milliseconds;
+			year = parsed.UTCFullYear;
+			if ( parsed.UTCYear ) year = 2000 + parsed.UTCYear;
+			if ( !year ) year = 1970;
+			if ( parsed.UTCMonth ) month = parsed.UTCMonth - 1;
+			else month = 0;
+			date = parsed.UTCDate || 1;
+			hours = parsed.UTCHours || 0;
+			minutes = parsed.UTCMinutes || 0;
+			seconds = parsed.UTCSeconds || 0;
+			milliseconds = parsed.UTCMilliseconds || 0;
+			if ( parsed.Hours12 ) {
+				hours = parsed.Hours12;
+			}
+			if ( parsed.Period12 ) {
+				if ( /pm/i.test( parsed.Period12 ) ) {
+					if ( hours != 12 ) hours = (hours + 12) % 24;
+				}
+				else {
+					hours = hours % 12;
+				}
+			}
+			return UTCDate( year, month, date, hours, minutes, seconds, milliseconds );
+		},
+
+		_compileFormat: function ()
+		{
+			var match, component, components = [], mask = [],
+				str = this.format, propertiesByIndex = {}, i = 0, pos = 0;
+			while ( match = formatComponent.exec( str ) ) {
+				component = match[0];
+				if ( component in dateFormatComponents ) {
+					i++;
+					propertiesByIndex[i] = dateFormatComponents[component].property;
+					components.push( '\\s*' + dateFormatComponents[component].getPattern(
+						this ) + '\\s*' );
+					mask.push( {
+						pattern: new RegExp( dateFormatComponents[component].getPattern(
+							this ) ),
+						property: dateFormatComponents[component].property,
+						start: pos,
+						end: pos += component.length
+					} );
+				}
+				else {
+					components.push( escapeRegExp( component ) );
+					mask.push( {
+						pattern: new RegExp( escapeRegExp( component ) ),
+						character: component,
+						start: pos,
+						end: ++pos
+					} );
+				}
+				str = str.slice( component.length );
+			}
+			this._mask = mask;
+			this._maskPos = 0;
+			this._formatPattern = new RegExp( '^\\s*' + components.join( '' ) + '\\s*$' );
+			this._propertiesByIndex = propertiesByIndex;
+		},
+
+		_attachDatePickerEvents: function ()
+		{
+			var self = this;
+			// this handles date picker clicks
+			this.widget.on( 'click', '.datepicker *', SobiPro.jQuery.proxy( this.click, this ) );
+			// this handles time picker clicks
+			this.widget.on( 'click', '[data-action]', SobiPro.jQuery.proxy( this.doAction, this ) );
+			this.widget.on( 'mousedown', SobiPro.jQuery.proxy( this.stopEvent, this ) );
+			if ( this.pickDate && this.pickTime ) {
+				this.widget.on( 'click.togglePicker', '.accordion-toggle', function ( e )
+				{
+					e.stopPropagation();
+					var $this = SobiPro.jQuery( this );
+					var $parent = $this.closest( 'ul' );
+					var expanded = $parent.find( '.collapse.in' );
+					var closed = $parent.find( '.collapse:not(.in)' );
+
+					if ( expanded && expanded.length ) {
+						var collapseData = expanded.data( 'collapse' );
+						if ( collapseData && collapseData.transitioning ) return;
+						expanded.collapse( 'hide' );
+						closed.collapse( 'show' )
+						$this.find( 'i' ).toggleClass( self.timeIcon + ' ' + self.dateIcon );
+						self.$element.find( '.add-on i' ).toggleClass( self.timeIcon + ' ' + self.dateIcon );
+					}
+				} );
+			}
+			if ( this.isInput ) {
+				this.$element.on( {
+					'focus': SobiPro.jQuery.proxy( this.show, this ),
+					'change': SobiPro.jQuery.proxy( this.change, this )
+				} );
+				if ( this.options.maskInput ) {
+					this.$element.on( {
+						'keydown': SobiPro.jQuery.proxy( this.keydown, this ),
+						'keypress': SobiPro.jQuery.proxy( this.keypress, this )
+					} );
+				}
+			}
+			else {
+				this.$element.on( {
+					'change': SobiPro.jQuery.proxy( this.change, this )
+				}, 'input' );
+				if ( this.options.maskInput ) {
+					this.$element.on( {
+						'keydown': SobiPro.jQuery.proxy( this.keydown, this ),
+						'keypress': SobiPro.jQuery.proxy( this.keypress, this )
+					}, 'input' );
+				}
+				if ( this.component ) {
+					this.component.on( 'click', SobiPro.jQuery.proxy( this.show, this ) );
+				}
+				else {
+					this.$element.on( 'click', SobiPro.jQuery.proxy( this.show, this ) );
+				}
+			}
+		},
+
+		_attachDatePickerGlobalEvents: function ()
+		{
+			SobiPro.jQuery( window ).on( 'resize.datetimepicker' + this.id, SobiPro.jQuery.proxy( this.place, this ) );
+			if ( !this.isInput ) {
+				SobiPro.jQuery( document ).on( 'mousedown.datetimepicker' + this.id, SobiPro.jQuery.proxy( this.hide, this ) );
+			}
+		},
+
+		_detachDatePickerEvents: function ()
+		{
+			this.widget.off( 'click', '.datepicker *', this.click );
+			this.widget.off( 'click', '[data-action]' );
+			this.widget.off( 'mousedown', this.stopEvent );
+			if ( this.pickDate && this.pickTime ) {
+				this.widget.off( 'click.togglePicker' );
+			}
+			if ( this.isInput ) {
+				this.$element.off( {
+					'focus': this.show,
+					'change': this.change
+				} );
+				if ( this.options.maskInput ) {
+					this.$element.off( {
+						'keydown': this.keydown,
+						'keypress': this.keypress
+					} );
+				}
+			}
+			else {
+				this.$element.off( {
+					'change': this.change
+				}, 'input' );
+				if ( this.options.maskInput ) {
+					this.$element.off( {
+						'keydown': this.keydown,
+						'keypress': this.keypress
+					}, 'input' );
+				}
+				if ( this.component ) {
+					this.component.off( 'click', this.show );
+				}
+				else {
+					this.$element.off( 'click', this.show );
+				}
+			}
+		},
+
+		_detachDatePickerGlobalEvents: function ()
+		{
+			SobiPro.jQuery( window ).off( 'resize.datetimepicker' + this.id );
+			if ( !this.isInput ) {
+				SobiPro.jQuery( document ).off( 'mousedown.datetimepicker' + this.id );
+			}
+		},
+
+		_isInFixed: function ()
+		{
+			if ( this.$element ) {
+				var parents = this.$element.parents();
+				var inFixed = false;
+				for ( var i = 0; i < parents.length; i++ ) {
+					if ( SobiPro.jQuery( parents[i] ).css( 'position' ) == 'fixed' ) {
+						inFixed = true;
+						break;
+					}
+				}
+				;
+				return inFixed;
+			}
+			else {
+				return false;
+			}
+		}
+	};
+
+	SobiPro.jQuery.fn.datetimepicker = function ( option, val )
+	{
+		return this.each( function ()
+		{
+			var $this = SobiPro.jQuery( this ),
+				data = $this.data( 'datetimepicker' ),
+				options = typeof option === 'object' && option;
+			if ( !data ) {
+				$this.data( 'datetimepicker', (data = new DateTimePicker(
+					this, SobiPro.jQuery.extend( {}, SobiPro.jQuery.fn.datetimepicker.defaults, options ) )) );
+			}
+			if ( typeof option === 'string' ) data[option]( val );
+		} );
+	};
+
+	SobiPro.jQuery.fn.datetimepicker.defaults = {
+		maskInput: false,
+		pickDate: true,
+		pickTime: true,
+		pick12HourFormat: false,
+		pickSeconds: true,
+		startDate: -Infinity,
+		endDate: Infinity,
+		collapse: true
+	};
+	SobiPro.jQuery.fn.datetimepicker.Constructor = DateTimePicker;
+	var dpgId = 0;
+	var dates = SobiPro.jQuery.fn.datetimepicker.dates = { en:spDatePickerLang };
+//	var dates = $.fn.datetimepicker.dates = {
+//		en: {
+//			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+//				"Friday", "Saturday", "Sunday"],
+//			daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+//			daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+//			months: ["January", "February", "March", "April", "May", "June",
+//				"July", "August", "September", "October", "November", "December"],
+//			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+//				"Aug", "Sep", "Oct", "Nov", "Dec"]
+//		}
+//	};
+
+	var dateFormatComponents = {
+		dd: {property: 'UTCDate', getPattern: function ()
+		{
+			return '(0?[1-9]|[1-2][0-9]|3[0-1])\\b';
+		}},
+		MM: {property: 'UTCMonth', getPattern: function ()
+		{
+			return '(0?[1-9]|1[0-2])\\b';
+		}},
+		yy: {property: 'UTCYear', getPattern: function ()
+		{
+			return '(\\d{2})\\b'
+		}},
+		yyyy: {property: 'UTCFullYear', getPattern: function ()
+		{
+			return '(\\d{4})\\b';
+		}},
+		hh: {property: 'UTCHours', getPattern: function ()
+		{
+			return '(0?[0-9]|1[0-9]|2[0-3])\\b';
+		}},
+		mm: {property: 'UTCMinutes', getPattern: function ()
+		{
+			return '(0?[0-9]|[1-5][0-9])\\b';
+		}},
+		ss: {property: 'UTCSeconds', getPattern: function ()
+		{
+			return '(0?[0-9]|[1-5][0-9])\\b';
+		}},
+		ms: {property: 'UTCMilliseconds', getPattern: function ()
+		{
+			return '([0-9]{1,3})\\b';
+		}},
+		HH: {property: 'Hours12', getPattern: function ()
+		{
+			return '(0?[1-9]|1[0-2])\\b';
+		}},
+		PP: {property: 'Period12', getPattern: function ()
+		{
+			return '(AM|PM|am|pm|Am|aM|Pm|pM)\\b';
+		}}
+	};
+
+	var keys = [];
+	for ( var k in dateFormatComponents ) keys.push( k );
+	keys[keys.length - 1] += '\\b';
+	keys.push( '.' );
+
+	var formatComponent = new RegExp( keys.join( '\\b|' ) );
+	keys.pop();
+	var formatReplacer = new RegExp( keys.join( '\\b|' ), 'g' );
+
+	function escapeRegExp( str )
+	{
+		// http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+		return str.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&" );
+	}
+
+	function padLeft( s, l, c )
+	{
+		if ( l < s.length ) return s;
+		else return Array( l - s.length + 1 ).join( c || ' ' ) + s;
+	}
+
+	function getTemplate( timeIcon, pickDate, pickTime, is12Hours, showSeconds, collapse )
+	{
+		if ( pickDate && pickTime ) {
+			return (
+				'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+					'<ul>' +
+					'<li' + (collapse ? ' class="collapse in"' : '') + '>' +
+					'<div class="datepicker">' +
+					DPGlobal.template +
+					'</div>' +
+					'</li>' +
+					'<li class="picker-switch accordion-toggle"><a><i class="' + timeIcon + '"></i></a></li>' +
+					'<li' + (collapse ? ' class="collapse"' : '') + '>' +
+					'<div class="timepicker">' +
+					TPGlobal.getTemplate( is12Hours, showSeconds ) +
+					'</div>' +
+					'</li>' +
+					'</ul>' +
+					'</div>'
+				);
+		}
+		else if ( pickTime ) {
+			return (
+				'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+					'<div class="timepicker">' +
+					TPGlobal.getTemplate( is12Hours, showSeconds ) +
+					'</div>' +
+					'</div>'
+				);
+		}
+		else {
+			return (
+				'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+					'<div class="datepicker">' +
+					DPGlobal.template +
+					'</div>' +
+					'</div>'
+				);
+		}
+	}
+
+	function UTCDate()
+	{
+		return new Date( Date.UTC.apply( Date, arguments ) );
+	}
+
+	var DPGlobal = {
+		modes: [
+			{
+				clsName: 'days',
+				navFnc: 'UTCMonth',
+				navStep: 1
+			},
+			{
+				clsName: 'months',
+				navFnc: 'UTCFullYear',
+				navStep: 1
+			},
+			{
+				clsName: 'years',
+				navFnc: 'UTCFullYear',
+				navStep: 10
+			}
+		],
+		isLeapYear: function ( year )
+		{
+			return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0))
+		},
+		getDaysInMonth: function ( year, month )
+		{
+			return [31, (DPGlobal.isLeapYear( year ) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
+		},
+		headTemplate: '<thead>' +
+			'<tr>' +
+			'<th class="prev">&lsaquo;</th>' +
+			'<th colspan="5" class="switch"></th>' +
+			'<th class="next">&rsaquo;</th>' +
+			'</tr>' +
+			'</thead>',
+		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>'
+	};
+	DPGlobal.template =
+		'<div class="datepicker-days">' +
+			'<table class="table-condensed">' +
+			DPGlobal.headTemplate +
+			'<tbody></tbody>' +
+			'</table>' +
+			'</div>' +
+			'<div class="datepicker-months">' +
+			'<table class="table-condensed">' +
+			DPGlobal.headTemplate +
+			DPGlobal.contTemplate +
+			'</table>' +
+			'</div>' +
+			'<div class="datepicker-years">' +
+			'<table class="table-condensed">' +
+			DPGlobal.headTemplate +
+			DPGlobal.contTemplate +
+			'</table>' +
+			'</div>';
+	var TPGlobal = {
+		hourTemplate: '<span data-action="showHours" data-time-component="hours" class="timepicker-hour"></span>',
+		minuteTemplate: '<span data-action="showMinutes" data-time-component="minutes" class="timepicker-minute"></span>',
+		secondTemplate: '<span data-action="showSeconds" data-time-component="seconds" class="timepicker-second"></span>'
+	};
+	TPGlobal.getTemplate = function ( is12Hours, showSeconds )
+	{
+		return (
+			'<div class="timepicker-picker">' +
+				'<table class="table-condensed"' +
+				(is12Hours ? ' data-hour-format="12"' : '') +
+				'>' +
+				'<tr>' +
+				'<td><a href="#" class="btn" data-action="incrementHours"><i class="icon-chevron-up"></i></a></td>' +
+				'<td class="separator"></td>' +
+				'<td><a href="#" class="btn" data-action="incrementMinutes"><i class="icon-chevron-up"></i></a></td>' +
+				(showSeconds ?
+					'<td class="separator"></td>' +
+						'<td><a href="#" class="btn" data-action="incrementSeconds"><i class="icon-chevron-up"></i></a></td>' : '') +
+				(is12Hours ? '<td class="separator"></td>' : '') +
+				'</tr>' +
+				'<tr>' +
+				'<td>' + TPGlobal.hourTemplate + '</td> ' +
+				'<td class="separator">:</td>' +
+				'<td>' + TPGlobal.minuteTemplate + '</td> ' +
+				(showSeconds ?
+					'<td class="separator">:</td>' +
+						'<td>' + TPGlobal.secondTemplate + '</td>' : '') +
+				(is12Hours ?
+					'<td class="separator"></td>' +
+						'<td>' +
+						'<button type="button" class="btn btn-primary" data-action="togglePeriod"></button>' +
+						'</td>' : '') +
+				'</tr>' +
+				'<tr>' +
+				'<td><a href="#" class="btn" data-action="decrementHours"><i class="icon-chevron-down"></i></a></td>' +
+				'<td class="separator"></td>' +
+				'<td><a href="#" class="btn" data-action="decrementMinutes"><i class="icon-chevron-down"></i></a></td>' +
+				(showSeconds ?
+					'<td class="separator"></td>' +
+						'<td><a href="#" class="btn" data-action="decrementSeconds"><i class="icon-chevron-down"></i></a></td>' : '') +
+				(is12Hours ? '<td class="separator"></td>' : '') +
+				'</tr>' +
+				'</table>' +
+				'</div>' +
+				'<div class="timepicker-hours" data-action="selectHour">' +
+				'<table class="table-condensed">' +
+				'</table>' +
+				'</div>' +
+				'<div class="timepicker-minutes" data-action="selectMinute">' +
+				'<table class="table-condensed">' +
+				'</table>' +
+				'</div>' +
+				(showSeconds ?
+					'<div class="timepicker-seconds" data-action="selectSecond">' +
+						'<table class="table-condensed">' +
+						'</table>' +
+						'</div>' : '')
+			);
+	}
+
+
+})( SobiPro.jQuery )
+
+SobiPro.jQuery( document ).ready( function ()
+{
+	SobiPro.jQuery( '.spDatePicker' ).each( function ( i, e )
+	{
+		SobiPro.jQuery( e )
+			.datetimepicker()
+			.on( 'changeDate', function ( ev )
+			{
+				var set = "";
+				if ( ev.date.valueOf() && SobiPro.jQuery( ev.currentTarget ).find( ':text' ).val() ) {
+					set = new Date( ev.date.valueOf() ) / 1000;
+				}
+				SobiPro.DebOut( set );
+				SobiPro.jQuery( ev.currentTarget )
+					.find( ':hidden' )
+					.val( set );
+			} );
+	} );
+} );

@@ -32,6 +32,8 @@ Legend:
 
     (#) Missing error text for FILE_WRONG_TYPE added.
 
+    (!) Changed bootstrap datepicker to datetimepicker
+
 -------------------
 1.1.3 (21 October 2013)
 -------------------

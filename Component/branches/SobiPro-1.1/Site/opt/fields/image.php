@@ -307,10 +307,6 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			if ( $fileSize > $this->maxSize ) {
 				throw new SPException( SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $fileSize, $this->maxSize ) );
 			}
-			//			$imgClass = SPLoader::loadClass( 'base.fs.image' );
-			//			if( !$this->keepOrg ) {
-			//				$orgName = $this->parseName( $entry, $orgName, $this->imageName );
-			//			}
 			/**
 			 * @var SPImage $orgImage
 			 */
@@ -322,6 +318,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$orgImage = SPFactory::Instance( 'base.fs.image' );
 				$orgImage->upload( $data, $path . $orgName );
 			}
+			$files[ 'data' ][ 'exif' ] = $orgImage->exif();
 			if ( $this->resize ) {
 				$image = clone $orgImage;
 				try {
@@ -365,6 +362,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$files[ 'original' ] = $this->parseName( $entry, $orgName, '{orgname}', true );
 			}
 			foreach ( $files as $i => $file ) {
+				if ( $i == 'data' ) {
+					continue;
+				}
 				$files[ $i ] = $sPath . $file;
 			}
 		}
@@ -452,6 +452,12 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 	}
 
+	protected function convertGPS( $deg, $min, $sec, $hem )
+	{
+		$d = $deg + ( ( ( $min / 60 ) + ( $sec / 3600 ) ) / 100 );
+		return ( $hem == 'S' || $hem == 'W' ) ? $d *= -1 : $d;
+	}
+
 	/**
 	 * @return array
 	 */
@@ -460,6 +466,13 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$files = SPConfig::unserialize( $this->getRaw() );
 		if ( isset( $files[ 'original' ] ) ) {
 			$files[ 'orginal' ] = $files[ 'original' ];
+		}
+		if ( !( isset( $files[ 'data' ][ 'exif' ] ) ) ) {
+			$files[ 'data' ][ 'exif' ] = null;
+		}
+		if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) ) {
+			$files[ 'data' ][ 'exif' ][ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
+			$files[ 'data' ][ 'exif' ][ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );
 		}
 		$float = null;
 		if ( is_array( $files ) && count( $files ) ) {
@@ -507,7 +520,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				}
 				return array(
 					'_complex' => 1,
-					'_data' => array( 'img' => $data ),
+					'_data' => array( 'img' => $data, 'exif' => $files[ 'data' ][ 'exif' ] ),
 					'_attributes' => array(
 						'icon' => isset( $files[ 'ico' ] ) ? $files[ 'ico' ] : null,
 						'image' => isset( $files[ 'image' ] ) ? $files[ 'image' ] : null,

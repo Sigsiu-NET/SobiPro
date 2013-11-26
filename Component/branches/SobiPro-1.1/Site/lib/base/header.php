@@ -562,12 +562,14 @@ final class SPHeader
 	 */
 	public function & addDescription( $desc )
 	{
-		$checksum = md5( $desc );
-		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
-			$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
-			$this->store( get_defined_vars(), __FUNCTION__ );
-			if ( strlen( $desc ) ) {
-				$this->description[ ] = strip_tags( str_replace( '"', "'", SPLang::entities( $desc, true ) ) );
+		if ( is_string( $desc ) ) {
+			$checksum = md5( $desc );
+			if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
+				$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
+				$this->store( get_defined_vars(), __FUNCTION__ );
+				if ( strlen( $desc ) ) {
+					$this->description[ ] = strip_tags( str_replace( '"', "'", SPLang::entities( $desc, true ) ) );
+				}
 			}
 		}
 		return $this;
@@ -653,16 +655,18 @@ final class SPHeader
 	 */
 	public function & addKeyword( $keys )
 	{
-		$checksum = md5( $keys );
-		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
-			$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
-			$this->store( get_defined_vars(), __FUNCTION__ );
-			if ( strlen( $keys ) ) {
-				$keys = explode( Sobi::Cfg( 'string.meta_keys_separator', ',' ), $keys );
-				if ( !empty( $keys ) ) {
-					$this->count++;
-					foreach ( $keys as $key ) {
-						$this->keywords[ ] = strip_tags( trim( SPLang::entities( $key, true ) ) );
+		if ( is_string( $keys ) ) {
+			$checksum = md5( $keys );
+			if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
+				$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
+				$this->store( get_defined_vars(), __FUNCTION__ );
+				if ( strlen( $keys ) ) {
+					$keys = explode( Sobi::Cfg( 'string.meta_keys_separator', ',' ), $keys );
+					if ( !empty( $keys ) ) {
+						$this->count++;
+						foreach ( $keys as $key ) {
+							$this->keywords[ ] = strip_tags( trim( SPLang::entities( $key, true ) ) );
+						}
 					}
 				}
 			}
