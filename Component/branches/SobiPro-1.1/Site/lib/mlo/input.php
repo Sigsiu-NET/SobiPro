@@ -734,18 +734,27 @@ abstract class SPHtml_Input
 	public static function datePicker( $name, $value, $dateFormat = 'Y-m-d H:i:s', $params = null, $icon = 'th' )
 	{
 		self::createLangFile();
-		$value = ( ( int ) $value != 0 && $value ) ? strtotime( $value ) : null;
+		// another mystery - what the heck was this supposed to do?
+//		$value = ( ( int ) $value != 0 && $value ) ? strtotime( $value ) : null;
 		/** The stupid JavaScript to PHP conversion. */
 		$jsDateFormat = str_replace(
-			array( 'y', 'Y', 'F', 'n', 'm', 'd', 'j', 'h', 'H', 'i', 's' ),
-			array( 'yy', 'yyyy', 'MM', 'm', 'mm', 'dd', 'd', 'hh', 'hh', 'mm', 'ss' ),
+			array( 'y', 'Y', 'F', 'n', 'm', 'd', 'j', 'h', 'H', 'i', 's', 'A' ),
+			array( 'yy', 'yyyy', 'MM', 'm', 'MM', 'dd', 'd', 'hh', 'HH', 'mm', 'ss', 'PP' ),
 			$dateFormat
 		);
-		$valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat ) : null;
+		$valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat, true ) : null;
 		$params = self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
 			$params[ 'id' ] = SPLang::nid( $name );
 		}
+		if ( !( isset( $params[ 'data' ] ) ) ) {
+			$params[ 'data' ] = array();
+		}
+		if ( strstr( $dateFormat, 'A' ) ) {
+			$params[ 'data' ][ 'am-pm' ] = 'true';
+		}
+		$params[ 'data' ][ 'format' ] = $jsDateFormat;
+		$data = self::createDataTag( $params );
 		SPFactory::header()
 				->addCssFile( 'bootstrap.datepicker' )
 				->addJsFile( array( 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ) );
@@ -753,7 +762,7 @@ abstract class SPHtml_Input
 		$f = "\n";
 		$f .= '<div class="input-append date spDatePicker">';
 		$f .= "\n\t";
-		$f .= '<input type="text" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" data-format="' . $jsDateFormat . '"/>';
+		$f .= '<input type="text" disabled="disabled" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" ' . $data . '/>';
 		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '"/>';
 		$f .= "\n\t";
 		$f .= '<span class="add-on"><i class="icon-' . $icon . '"></i></span>';
@@ -765,11 +774,29 @@ abstract class SPHtml_Input
 	}
 
 	/**
+	 * @param array $data
+	 * @return string
+	 */
+	private function createDataTag( &$data )
+	{
+		$tag = ' ';
+		if ( count( $data[ 'data' ] ) ) {
+			foreach ( $data[ 'data' ] as $name => $value ) {
+				$name = SPLang::nid( $name );
+				$tag .= "data-{$name}=\"{$value}\" ";
+			}
+			unset( $data[ 'data' ] );
+		}
+		return $tag;
+	}
+
+	/**
 	 * @param $name - field name
 	 * @param $value - field value
+	 * @param null $class
 	 * @param string $dateFormat - date format in PHP
 	 * @param null $params - additional parameters
-	 * @param string $icon - field icon
+	 * @internal param string $icon - field icon
 	 * @return string
 	 */
 	public static function dateGetter( $name, $value, $class = null, $dateFormat = 'Y-m-d H:i:s', $params = null )
