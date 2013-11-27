@@ -739,11 +739,11 @@ abstract class SPHtml_Input
 		/** The stupid JavaScript to PHP conversion. */
 		$jsDateFormat = str_replace(
 			array( 'y', 'Y', 'F', 'n', 'm', 'd', 'j', 'h', 'H', 'i', 's', 'A' ),
-			array( 'yy', 'yyyy', 'MM', 'm', 'MM', 'dd', 'd', 'hh', 'HH', 'mm', 'ss', 'PP' ),
+			array( 'yy', 'yyyy', 'MM', 'm', 'MM', 'dd', 'd', 'HH', 'hh', 'mm', 'ss', 'PP' ),
 			$dateFormat
 		);
 		$valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat, true ) : null;
-		$params = self::checkArray( $params );
+		self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
 			$params[ 'id' ] = SPLang::nid( $name );
 		}
