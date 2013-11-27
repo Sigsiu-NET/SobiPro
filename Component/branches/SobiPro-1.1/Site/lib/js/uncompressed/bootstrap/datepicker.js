@@ -1,9 +1,14 @@
-/* =========================================================
- * bootstrap-datepicker.js
+/**
+ * @license
+ * =========================================================
+ * bootstrap-datetimepicker.js
  * http://www.eyecon.ro/bootstrap-datepicker
  * =========================================================
  * Copyright 2012 Stefan Petre
- * Improvements by Andrew Rowls
+ *
+ * Contributions:
+ *  - Andrew Rowls
+ *  - Thiago de Arruda
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,943 +22,1440 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * =========================================================
- * Sigsiu.NET - Tue, Nov 6, 2012 10:57:50
- * Fits for mootools-more compat
- * Renamed to prevent name conflicts
- * extended to include time
- * added time to date - partially based on Gus' version
- * ========================================================= */
+ */
 
-!function ()
+$ = SobiPro.jQuery;
+(function ()
 {
-	function UTCDate()
+
+	// Picker object
+	var smartPhone = (window.orientation != undefined);
+	var SpDateTimePicker = function ( element, options )
 	{
-		return new Date( Date.UTC.apply( Date, arguments ) );
-	}
-
-	function UTCToday()
-	{
-		var today = new Date();
-		return UTCDate( today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate() );
-	}
-
-	var SPDatepicker = function ( element, options )
-	{
-		var proxy = this;
-		this.element = SobiPro.jQuery( element );
-		this.language = options.language || this.element.data( 'date-language' ) || "en";
-		this.language = this.language in dates ? this.language : "en";
-//		this.format = DPGlobal.parseFormat( options.format || this.element.data( 'date-format' ) || 'mm/dd/yyyy' );
-		this.format = options.format || SobiPro.jQuery( element ).data( "date-format" ) || 'mm/dd/yyyy hh:ii:ss';
-		this.picker = SobiPro.jQuery( DPGlobal.template )
-			.appendTo( SobiPro.jQuery( '#SobiPro' ) )
-			.on( {
-				click:SobiPro.jQuery.proxy( this.click, this )
-			} );
-		this.isInput = this.element.is( 'input' );
-		this.component = this.element.is( '.date' ) ? this.element.find( '.add-on' ) : false;
-		this.hasInput = this.component && this.element.find( 'input' ).length;
-		this.ident = this.element.find( 'input' ).length ? this.element.find( 'input' ).attr( 'name' ) : 'undef';
-		if ( this.component && this.component.length === 0 ) {
-			this.component = false;
-		}
-
-		if ( this.isInput ) {
-			this.element.on( {
-				focus:SobiPro.jQuery.proxy( this.show, this ),
-				keyup:SobiPro.jQuery.proxy( this.update, this ),
-				blur:SobiPro.jQuery.proxy( this.update, this ),
-				keydown:SobiPro.jQuery.proxy( this.keydown, this )
-			} );
-		}
-		else {
-			if ( this.component && this.hasInput ) {
-				// For components that are not readonly, allow keyboard nav
-				this.element.find( 'input' ).on( {
-					focus:SobiPro.jQuery.proxy( this.show, this ),
-					keyup:SobiPro.jQuery.proxy( this.update, this ),
-					keydown:SobiPro.jQuery.proxy( this.keydown, this )
-				} );
-
-				this.component.on( 'click', SobiPro.jQuery.proxy( this.show, this ) );
-			}
-			else {
-				this.element.on( 'click', SobiPro.jQuery.proxy( this.show, this ) );
-			}
-		}
-
-		SobiPro.jQuery( document ).mousedown( function ( e )
-		{
-			// Clicked outside the datepicker, hide it
-			if ( SobiPro.jQuery( e.target ).closest( '.datepicker' ).length == 0 ) {
-				proxy.hide();
-			}
-		} );
-
-		this.autoclose = true;
-		if ( 'autoclose' in options ) {
-			this.autoclose = options.autoclose;
-		}
-		else if ( 'dateAutoclose' in this.element.data() ) {
-			this.autoclose = this.element.data( 'date-autoclose' );
-		}
-
-		this.keyboardNavigation = true;
-		if ( 'keyboardNavigation' in options ) {
-			this.keyboardNavigation = options.keyboardNavigation;
-		}
-		else if ( 'dateKeyboardNavigation' in this.element.data() ) {
-			this.keyboardNavigation = this.element.data( 'date-keyboard-navigation' );
-		}
-
-		switch ( options.startView || this.element.data( 'date-start-view' ) ) {
-			case 2:
-			case 'decade':
-				this.viewMode = this.startViewMode = 2;
-				break;
-			case 1:
-			case 'year':
-				this.viewMode = this.startViewMode = 1;
-				break;
-			case 0:
-			case 'month':
-			default:
-				this.viewMode = this.startViewMode = 0;
-				break;
-		}
-		this.todayBtn = (options.todayBtn || this.element.data( 'date-today-btn' ) || true);
-		this.todayHighlight = (options.todayHighlight || this.element.data( 'date-today-highlight' ) || false);
-		this.weekStart = ((options.weekStart || this.element.data( 'date-weekstart' ) || dates[this.language].weekStart || 0) % 7);
-		this.weekEnd = ((this.weekStart + 6) % 7);
-		this.startDate = -Infinity;
-		this.endDate = Infinity;
-		this.setStartDate( options.startDate || this.element.data( 'date-startdate' ) );
-		this.setEndDate( options.endDate || this.element.data( 'date-enddate' ) );
-		this.fillDow();
-		this.fillMonths();
-		this.update();
-		this.showMode();
+		this.id = dpgId++;
+		this.init( element, options );
 	};
-	SPDatepicker.prototype = {
-		constructor:SPDatepicker,
-		time:{},
-		saveTime:true,
-		show:function ( e )
+
+	var dateToDate = function ( dt )
+	{
+		if ( typeof dt === 'string' ) {
+			return new Date( dt );
+		}
+		return dt;
+	};
+
+	SpDateTimePicker.prototype = {
+		constructor: SpDateTimePicker,
+
+		init: function ( element, options )
 		{
-			/* after the initialisation it should be set to false so only a "keyup" event can change the time */
-			this.saveTime = false;
-			this.picker.show();
-			this.height = this.component ? this.component.outerHeight() : this.element.outerHeight();
+			var icon;
+			if ( !(options.pickTime || options.pickDate) )
+				throw new Error( 'Must choose at least one picker' );
+			this.options = options;
+			this.$element = SobiPro.jQuery( element );
+			this.language = options.language in dates ? options.language : 'en';
+			this.pickDate = options.pickDate;
+			this.pickTime = options.pickTime;
+			this.isInput = this.$element.is( 'input' );
+			this.component = false;
+			if ( this.$element.find( '.input-append' ) || this.$element.find( '.input-prepend' ) )
+				this.component = this.$element.find( '.add-on' );
+			this.format = options.format;
+			if ( !this.format ) {
+				if ( this.isInput ) this.format = this.$element.data( 'format' );
+				else this.format = this.$element.find( 'input' ).data( 'format' );
+				if ( !this.format ) this.format = 'MM/dd/yyyy';
+			}
+			options.pick12HourFormat = this.$element.find( 'input' ).data( 'am-pm' );
+			this._compileFormat();
+			if ( this.component ) {
+				icon = this.component.find( 'i' );
+			}
+			if ( this.pickTime ) {
+				if ( icon && icon.length ) this.timeIcon = icon.data( 'time-icon' );
+				if ( !this.timeIcon ) this.timeIcon = 'icon-time';
+				icon.addClass( this.timeIcon );
+			}
+			if ( this.pickDate ) {
+				if ( icon && icon.length ) this.dateIcon = icon.data( 'date-icon' );
+				if ( !this.dateIcon ) this.dateIcon = 'icon-calendar';
+				icon.removeClass( this.timeIcon );
+				icon.addClass( this.dateIcon );
+			}
+			this.widget = SobiPro.jQuery( getTemplate( this.timeIcon, options.pickDate, options.pickTime, options.pick12HourFormat, options.pickSeconds, options.collapse ) ).appendTo( '#SobiPro' );
+			this.minViewMode = options.minViewMode || this.$element.data( 'date-minviewmode' ) || 0;
+			if ( typeof this.minViewMode === 'string' ) {
+				switch ( this.minViewMode ) {
+					case 'months':
+						this.minViewMode = 1;
+						break;
+					case 'years':
+						this.minViewMode = 2;
+						break;
+					default:
+						this.minViewMode = 0;
+						break;
+				}
+			}
+			this.viewMode = options.viewMode || this.$element.data( 'date-viewmode' ) || 0;
+			if ( typeof this.viewMode === 'string' ) {
+				switch ( this.viewMode ) {
+					case 'months':
+						this.viewMode = 1;
+						break;
+					case 'years':
+						this.viewMode = 2;
+						break;
+					default:
+						this.viewMode = 0;
+						break;
+				}
+			}
+			this.startViewMode = this.viewMode;
+			this.weekStart = options.weekStart || this.$element.data( 'date-weekstart' ) || 0;
+			this.weekEnd = this.weekStart === 0 ? 6 : this.weekStart - 1;
+			this.setStartDate( options.startDate || this.$element.data( 'date-startdate' ) );
+			this.setEndDate( options.endDate || this.$element.data( 'date-enddate' ) );
+			this.fillDow();
+			this.fillMonths();
+			this.fillHours();
+			this.fillMinutes();
+			this.fillSeconds();
 			this.update();
+			this.showMode();
+			this._attachDatePickerEvents();
+		},
+
+		show: function ( e )
+		{
+			this.widget.show();
+			this.height = this.component ? this.component.outerHeight() : this.$element.outerHeight();
 			this.place();
-			SobiPro.jQuery( window ).on( 'resize', SobiPro.jQuery.proxy( this.place, this ) );
+			this.$element.trigger( {
+				type: 'show',
+				date: this._date
+			} );
+			this._attachDatePickerGlobalEvents();
 			if ( e ) {
 				e.stopPropagation();
 				e.preventDefault();
 			}
-			this.element.trigger( {
-				type:'show',
-				date:this.date
-			} );
 		},
 
-		hide:function ( e )
+		disable: function ()
 		{
-			this.picker.hide();
-			SobiPro.jQuery( window ).off( 'resize', this.place );
+			this.$element.find( 'input' ).prop( 'disabled', true );
+			this._detachDatePickerEvents();
+		},
+		enable: function ()
+		{
+			this.$element.find( 'input' ).prop( 'disabled', false );
+			this._attachDatePickerEvents();
+		},
+
+		hide: function ()
+		{
+			// Ignore event if in the middle of a picker transition
+			var collapse = this.widget.find( '.collapse' );
+			for ( var i = 0; i < collapse.length; i++ ) {
+				var collapseData = collapse.eq( i ).data( 'collapse' );
+				if ( collapseData && collapseData.transitioning )
+					return;
+			}
+			this.widget.hide();
 			this.viewMode = this.startViewMode;
 			this.showMode();
-			if ( !this.isInput ) {
-				SobiPro.jQuery( document ).off( 'mousedown', this.hide );
-			}
-			if ( e && e.currentTarget.value )
-				this.setValue();
-			/* for some reason it is hiding the whole input box as well
+			this.set();
+			/* Sigsiu.NET - for some reason this is hiding the whole input field
 			 * probably only Joomla! problem caused by mt or something similar
 			 */
-//			this.element.trigger( {
-//				type:'hide',
-//				date:this.date
+
+//			this.$element.trigger( {
+//				type: 'hide',
+//				date: this._date
 //			} );
+			this._detachDatePickerGlobalEvents();
 		},
 
-		getDate:function ()
+		set: function ()
 		{
-			var d = this.getUTCDate();
-			return new Date( d.getTime() + (d.getTimezoneOffset() * 60000) )
-		},
-
-		getUTCDate:function ()
-		{
-			return this.date;
-		},
-
-		setDate:function ( d )
-		{
-			this.setUTCDate( new Date( d.getTime() - (d.getTimezoneOffset() * 60000) ) );
-		},
-
-		setUTCDate:function ( d )
-		{
-			this.date = d;
-			this.setValue();
-		},
-
-		setValue:function ()
-		{
-			var formatted = DPGlobal.formatDate( this.date, this.format, this.language );
+			var formatted = '';
+			if ( !this._unset ) formatted = this.formatDate( this._date );
 			if ( !this.isInput ) {
 				if ( this.component ) {
-					this.element.find( 'input' ).prop( 'value', formatted );
+					var input = this.$element.find( 'input:text' );
+					input.val( formatted );
+					this._resetMaskPos( input );
 				}
-				this.element.data( 'date', formatted );
+				this.$element.data( 'date', formatted );
 			}
 			else {
-				this.element.prop( 'value', formatted );
+				this.$element.val( formatted );
+				this._resetMaskPos( this.$element );
 			}
 		},
 
-		setStartDate:function ( startDate )
+		setValue: function ( newDate )
 		{
-			this.startDate = startDate || -Infinity;
-			if ( this.startDate !== -Infinity ) {
-				this.startDate = DPGlobal.parseDate( this.startDate, this.format );
+			if ( !newDate ) {
+				this._unset = true;
 			}
-			this.update();
-			this.updateNavArrows();
+			else {
+				this._unset = false;
+			}
+			if ( typeof newDate === 'string' ) {
+				this._date = this.parseDate( newDate );
+			}
+			else if ( newDate ) {
+				this._date = new Date( newDate );
+			}
+			this.set();
+			this.viewDate = UTCDate( this._date.getUTCFullYear(), this._date.getUTCMonth(), 1, 0, 0, 0, 0 );
+			this.fillDate();
+			this.fillTime();
 		},
 
-		setEndDate:function ( endDate )
+		getDate: function ()
 		{
-			this.endDate = endDate || Infinity;
-			if ( this.endDate !== Infinity ) {
-				this.endDate = DPGlobal.parseDate( this.endDate, this.format );
-			}
-			this.update();
-			this.updateNavArrows();
+			if ( this._unset ) return null;
+			return new Date( this._date.valueOf() );
 		},
 
-		place:function ()
+		setDate: function ( date )
 		{
-			var zIndex = parseInt( this.element.parents().filter(function ()
-			{
-				return SobiPro.jQuery( this ).css( 'z-index' ) != 'auto';
-			} ).first().css( 'z-index' ) ) + 10;
-			var offset = this.component ? this.component.offset() : this.element.offset();
-			this.picker.css( {
-				top:offset.top + this.height,
-				left:offset.left,
-				zIndex:zIndex
+			if ( !date ) this.setValue( null );
+			else this.setValue( date.valueOf() );
+		},
+
+		setStartDate: function ( date )
+		{
+			if ( date instanceof Date ) {
+				this.startDate = date;
+			}
+			else if ( typeof date === 'string' ) {
+				this.startDate = new UTCDate( date );
+				if ( !this.startDate.getUTCFullYear() ) {
+					this.startDate = -Infinity;
+				}
+			}
+			else {
+				this.startDate = -Infinity;
+			}
+			if ( this.viewDate ) {
+				this.update();
+			}
+		},
+
+		setEndDate: function ( date )
+		{
+			if ( date instanceof Date ) {
+				this.endDate = date;
+			}
+			else if ( typeof date === 'string' ) {
+				this.endDate = new UTCDate( date );
+				if ( !this.endDate.getUTCFullYear() ) {
+					this.endDate = Infinity;
+				}
+			}
+			else {
+				this.endDate = Infinity;
+			}
+			if ( this.viewDate ) {
+				this.update();
+			}
+		},
+
+		getLocalDate: function ()
+		{
+			if ( this._unset ) return null;
+			var d = this._date;
+			return new Date( d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(),
+				d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds() );
+		},
+
+		setLocalDate: function ( localDate )
+		{
+			if ( !localDate ) this.setValue( null );
+			else
+				this.setValue( Date.UTC(
+					localDate.getFullYear(),
+					localDate.getMonth(),
+					localDate.getDate(),
+					localDate.getHours(),
+					localDate.getMinutes(),
+					localDate.getSeconds(),
+					localDate.getMilliseconds() ) );
+		},
+
+		place: function ()
+		{
+			var position = 'absolute';
+			var offset = this.component ? this.component.offset() : this.$element.offset();
+			this.width = this.component ? this.component.outerWidth() : this.$element.outerWidth();
+			offset.top = offset.top + this.height;
+
+			var $window = SobiPro.jQuery( window );
+
+			if ( this.options.width != undefined ) {
+				this.widget.width( this.options.width );
+			}
+
+			if ( this.options.orientation == 'left' ) {
+				this.widget.addClass( 'left-oriented' );
+				offset.left = offset.left - this.widget.width() + 20;
+			}
+
+			if ( this._isInFixed() ) {
+				position = 'fixed';
+				offset.top -= $window.scrollTop();
+				offset.left -= $window.scrollLeft();
+			}
+
+			if ( $window.width() < offset.left + this.widget.outerWidth() ) {
+				offset.right = $window.width() - offset.left - this.width;
+				offset.left = 'auto';
+				this.widget.addClass( 'pull-right' );
+			}
+			else {
+				offset.right = 'auto';
+				this.widget.removeClass( 'pull-right' );
+			}
+
+			this.widget.css( {
+				position: position,
+				top: offset.top,
+				left: offset.left,
+				right: offset.right
 			} );
 		},
 
-		update:function ( e )
+		notifyChange: function ()
 		{
-			if ( !( this.time[ this.ident ]) ) {
-				this.time[ this.ident ] = {'hours':00, 'minutes':00, 'seconds':00 };
-			}
-			try {
-				if ( e.type == 'keyup' ) {
-					this.saveTime = true;
-				}
-			}
-			catch ( e ) {
-			}
-			// 				this.isInput ? this.element.prop( 'value' ) : this.element.data( 'date' ) || this.element.find( 'input' ).prop( 'value' ),
-			this.date = DPGlobal.parseDate(
-				this.element.find( 'input' ).prop( 'value' ),
-				this.format, this.time[ this.ident ], this.saveTime
-			);
-			if ( this.date < this.startDate ) {
-				this.viewDate = new Date( this.startDate );
-			}
-			else if ( this.date > this.endDate ) {
-				this.viewDate = new Date( this.endDate );
-			}
-			else {
-				this.viewDate = new Date( this.date );
-			}
-//			SobiPro.DebOut(this.date);
-			this.fill();
-			this.element.trigger( {
-				type:'changeDate',
-				date:this.date
+			this.$element.trigger( {
+				type: 'changeDate',
+				date: this.getDate(),
+				localDate: this.getLocalDate()
 			} );
 		},
 
-		fillDow:function ()
+		update: function ( newDate )
+		{
+			var dateStr = newDate;
+			if ( !dateStr ) {
+				if ( this.isInput ) {
+					dateStr = this.$element.val();
+				}
+				else {
+					dateStr = this.$element.find( 'input' ).val();
+				}
+				if ( dateStr ) {
+					this._date = this.parseDate( dateStr );
+				}
+				if ( !this._date ) {
+					var tmp = new Date();
+					this._date = UTCDate( tmp.getFullYear(),
+						tmp.getMonth(),
+						tmp.getDate(),
+						tmp.getHours(),
+						tmp.getMinutes(),
+						tmp.getSeconds(),
+						tmp.getMilliseconds() )
+				}
+			}
+			this.viewDate = UTCDate( this._date.getUTCFullYear(), this._date.getUTCMonth(), 1, 0, 0, 0, 0 );
+			this.fillDate();
+			this.fillTime();
+		},
+
+		fillDow: function ()
 		{
 			var dowCnt = this.weekStart;
-			var html = '<tr>';
+			var html = SobiPro.jQuery( '<tr>' );
 			while ( dowCnt < this.weekStart + 7 ) {
-				html += '<th class="dow">' + dates[this.language].daysMin[(dowCnt++) % 7] + '</th>';
+				html.append( '<th class="dow">' + dates[this.language].daysMin[(dowCnt++) % 7] + '</th>' );
 			}
-			html += '</tr>';
-			this.picker.find( '.datepicker-days thead' ).append( html );
+			this.widget.find( '.datepicker-days thead' ).append( html );
 		},
 
-		fillMonths:function ()
+		fillMonths: function ()
 		{
 			var html = '';
 			var i = 0;
 			while ( i < 12 ) {
 				html += '<span class="month">' + dates[this.language].monthsShort[i++] + '</span>';
 			}
-			this.picker.find( '.datepicker-months td' ).html( html );
+			this.widget.find( '.datepicker-months td' ).append( html );
 		},
 
-		fill:function ()
+		fillDate: function ()
 		{
-			var d = new Date( this.viewDate ),
-				year = d.getUTCFullYear(),
-				month = d.getUTCMonth(),
-				startYear = this.startDate !== -Infinity ? this.startDate.getUTCFullYear() : -Infinity,
-				startMonth = this.startDate !== -Infinity ? this.startDate.getUTCMonth() : -Infinity,
-				endYear = this.endDate !== Infinity ? this.endDate.getUTCFullYear() : Infinity,
-				endMonth = this.endDate !== Infinity ? this.endDate.getUTCMonth() : Infinity,
-				currentDate = this.date.valueOf(),
-				today = new Date();
-			this.picker.find( '.datepicker-days thead th:eq(1)' )
-				.text( dates[this.language].months[month] + ' ' + year );
-			this.picker.find( 'tfoot th.today' )
-				.text( dates[this.language].today )
-				.toggle( this.todayBtn );
-			this.updateNavArrows();
-			this.fillMonths();
-			var prevMonth = UTCDate( year, month - 1, 28, 0, 0, 0, 0 ),
-				day = DPGlobal.getDaysInMonth( prevMonth.getUTCFullYear(), prevMonth.getUTCMonth() );
+			var year = this.viewDate.getUTCFullYear();
+			var month = this.viewDate.getUTCMonth();
+			var currentDate = UTCDate(
+				this._date.getUTCFullYear(),
+				this._date.getUTCMonth(),
+				this._date.getUTCDate(),
+				0, 0, 0, 0
+			);
+			var startYear = typeof this.startDate === 'object' ? this.startDate.getUTCFullYear() : -Infinity;
+			var startMonth = typeof this.startDate === 'object' ? this.startDate.getUTCMonth() : -1;
+			var endYear = typeof this.endDate === 'object' ? this.endDate.getUTCFullYear() : Infinity;
+			var endMonth = typeof this.endDate === 'object' ? this.endDate.getUTCMonth() : 12;
+
+			this.widget.find( '.datepicker-days' ).find( '.disabled' ).removeClass( 'disabled' );
+			this.widget.find( '.datepicker-months' ).find( '.disabled' ).removeClass( 'disabled' );
+			this.widget.find( '.datepicker-years' ).find( '.disabled' ).removeClass( 'disabled' );
+
+			this.widget.find( '.datepicker-days th:eq(1)' ).text(
+				dates[this.language].months[month] + ' ' + year );
+
+			var prevMonth = UTCDate( year, month - 1, 28, 0, 0, 0, 0 );
+			var day = DPGlobal.getDaysInMonth(
+				prevMonth.getUTCFullYear(), prevMonth.getUTCMonth() );
 			prevMonth.setUTCDate( day );
 			prevMonth.setUTCDate( day - (prevMonth.getUTCDay() - this.weekStart + 7) % 7 );
-			var nextMonth = new Date( prevMonth );
+			if ( (year == startYear && month <= startMonth) || year < startYear ) {
+				this.widget.find( '.datepicker-days th:eq(0)' ).addClass( 'disabled' );
+			}
+			if ( (year == endYear && month >= endMonth) || year > endYear ) {
+				this.widget.find( '.datepicker-days th:eq(2)' ).addClass( 'disabled' );
+			}
+
+			var nextMonth = new Date( prevMonth.valueOf() );
 			nextMonth.setUTCDate( nextMonth.getUTCDate() + 42 );
 			nextMonth = nextMonth.valueOf();
 			var html = [];
+			var row;
 			var clsName;
 			while ( prevMonth.valueOf() < nextMonth ) {
-				if ( prevMonth.getUTCDay() == this.weekStart ) {
-					html.push( '<tr>' );
+				if ( prevMonth.getUTCDay() === this.weekStart ) {
+					row = SobiPro.jQuery( '<tr>' );
+					html.push( row );
 				}
 				clsName = '';
-				if ( prevMonth.getUTCFullYear() < year || (prevMonth.getUTCFullYear() == year && prevMonth.getUTCMonth() < month) ) {
+				if ( prevMonth.getUTCFullYear() < year ||
+					(prevMonth.getUTCFullYear() == year &&
+						prevMonth.getUTCMonth() < month) ) {
 					clsName += ' old';
 				}
-				else if ( prevMonth.getUTCFullYear() > year || (prevMonth.getUTCFullYear() == year && prevMonth.getUTCMonth() > month) ) {
+				else if ( prevMonth.getUTCFullYear() > year ||
+					(prevMonth.getUTCFullYear() == year &&
+						prevMonth.getUTCMonth() > month) ) {
 					clsName += ' new';
 				}
-				// Compare internal UTC date with local today, not UTC today
-				if ( this.todayHighlight &&
-					prevMonth.getUTCFullYear() == today.getFullYear() &&
-					prevMonth.getUTCMonth() == today.getMonth() &&
-					prevMonth.getUTCDate() == today.getDate() ) {
-					clsName += ' today';
+				if ( prevMonth.valueOf() === currentDate.valueOf() ) {
+					clsName += ' active';
 				}
-				/** no questions here */
-//				if ( prevMonth.getDay() == currentDate ) {
-				try {
-					if ( ( prevMonth.getDay() == this.date.getDay() ) && ( prevMonth.getWeek() == this.date.getWeek() ) ) {
-						clsName += ' active';
-					}
-				}
-				catch ( e ) {
-				}
-				if ( prevMonth.valueOf() < this.startDate || prevMonth.valueOf() > this.endDate ) {
+				if ( (prevMonth.valueOf() + 86400000) <= this.startDate ) {
 					clsName += ' disabled';
 				}
-				html.push( '<td class="day' + clsName + '">' + prevMonth.getUTCDate() + '</td>' );
-				if ( prevMonth.getUTCDay() == this.weekEnd ) {
-					html.push( '</tr>' );
+				if ( prevMonth.valueOf() > this.endDate ) {
+					clsName += ' disabled';
 				}
+				row.append( '<td class="day' + clsName + '">' + prevMonth.getUTCDate() + '</td>' );
 				prevMonth.setUTCDate( prevMonth.getUTCDate() + 1 );
 			}
-			this.picker.find( '.datepicker-days tbody' ).empty().append( html.join( '' ) );
-			var currentYear = this.date.getUTCFullYear();
+			this.widget.find( '.datepicker-days tbody' ).empty().append( html );
+			var currentYear = this._date.getUTCFullYear();
 
-			var months = this.picker.find( '.datepicker-months' )
-				.find( 'th:eq(1)' )
-				.text( year )
-				.end()
-				.find( 'span' ).removeClass( 'active' );
-			if ( currentYear == year ) {
-				months.eq( this.date.getUTCMonth() ).addClass( 'active' );
+			var months = this.widget.find( '.datepicker-months' ).find(
+				'th:eq(1)' ).text( year ).end().find( 'span' ).removeClass( 'active' );
+			if ( currentYear === year ) {
+				months.eq( this._date.getUTCMonth() ).addClass( 'active' );
 			}
-			if ( year < startYear || year > endYear ) {
-				months.addClass( 'disabled' );
+			if ( currentYear - 1 < startYear ) {
+				this.widget.find( '.datepicker-months th:eq(0)' ).addClass( 'disabled' );
 			}
-			if ( year == startYear ) {
-				months.slice( 0, startMonth ).addClass( 'disabled' );
+			if ( currentYear + 1 > endYear ) {
+				this.widget.find( '.datepicker-months th:eq(2)' ).addClass( 'disabled' );
 			}
-			if ( year == endYear ) {
-				months.slice( endMonth + 1 ).addClass( 'disabled' );
+			for ( var i = 0; i < 12; i++ ) {
+				if ( (year == startYear && startMonth > i) || (year < startYear) ) {
+					SobiPro.jQuery( months[i] ).addClass( 'disabled' );
+				}
+				else if ( (year == endYear && endMonth < i) || (year > endYear) ) {
+					SobiPro.jQuery( months[i] ).addClass( 'disabled' );
+				}
 			}
 
 			html = '';
 			year = parseInt( year / 10, 10 ) * 10;
-			var yearCont = this.picker.find( '.datepicker-years' )
-				.find( 'th:eq(1)' )
-				.text( year + '-' + (year + 9) )
-				.end()
-				.find( 'td' );
+			var yearCont = this.widget.find( '.datepicker-years' ).find(
+				'th:eq(1)' ).text( year + '-' + (year + 9) ).end().find( 'td' );
+			this.widget.find( '.datepicker-years' ).find( 'th' ).removeClass( 'disabled' );
+			if ( startYear > year ) {
+				this.widget.find( '.datepicker-years' ).find( 'th:eq(0)' ).addClass( 'disabled' );
+			}
+			if ( endYear < year + 9 ) {
+				this.widget.find( '.datepicker-years' ).find( 'th:eq(2)' ).addClass( 'disabled' );
+			}
 			year -= 1;
 			for ( var i = -1; i < 11; i++ ) {
-				html += '<span class="year' + (i == -1 || i == 10 ? ' old' : '') + (currentYear == year ? ' active' : '') + (year < startYear || year > endYear ? ' disabled' : '') + '">' + year + '</span>';
+				html += '<span class="year' + (i === -1 || i === 10 ? ' old' : '') + (currentYear === year ? ' active' : '') + ((year < startYear || year > endYear) ? ' disabled' : '') + '">' + year + '</span>';
 				year += 1;
 			}
 			yearCont.html( html );
 		},
 
-		updateNavArrows:function ()
+		fillHours: function ()
 		{
-			var d = new Date( this.viewDate ),
-				year = d.getUTCFullYear(),
-				month = d.getUTCMonth();
-			switch ( this.viewMode ) {
-				case 0:
-					if ( this.startDate !== -Infinity && year <= this.startDate.getUTCFullYear() && month <= this.startDate.getUTCMonth() ) {
-						this.picker.find( '.prev' ).css( {visibility:'hidden'} );
+			var table = this.widget.find(
+				'.timepicker .timepicker-hours table' );
+			table.parent().hide();
+			var html = '';
+			if ( this.options.pick12HourFormat ) {
+				var current = 1;
+				for ( var i = 0; i < 3; i += 1 ) {
+					html += '<tr>';
+					for ( var j = 0; j < 4; j += 1 ) {
+						var c = current.toString();
+						html += '<td class="hour">' + padLeft( c, 2, '0' ) + '</td>';
+						current++;
 					}
-					else {
-						this.picker.find( '.prev' ).css( {visibility:'visible'} );
-					}
-					if ( this.endDate !== Infinity && year >= this.endDate.getUTCFullYear() && month >= this.endDate.getUTCMonth() ) {
-						this.picker.find( '.next' ).css( {visibility:'hidden'} );
-					}
-					else {
-						this.picker.find( '.next' ).css( {visibility:'visible'} );
-					}
-					break;
-				case 1:
-				case 2:
-					if ( this.startDate !== -Infinity && year <= this.startDate.getUTCFullYear() ) {
-						this.picker.find( '.prev' ).css( {visibility:'hidden'} );
-					}
-					else {
-						this.picker.find( '.prev' ).css( {visibility:'visible'} );
-					}
-					if ( this.endDate !== Infinity && year >= this.endDate.getUTCFullYear() ) {
-						this.picker.find( '.next' ).css( {visibility:'hidden'} );
-					}
-					else {
-						this.picker.find( '.next' ).css( {visibility:'visible'} );
-					}
-					break;
+					html += '</tr>'
+				}
 			}
+			else {
+				var current = 0;
+				for ( var i = 0; i < 6; i += 1 ) {
+					html += '<tr>';
+					for ( var j = 0; j < 4; j += 1 ) {
+						var c = current.toString();
+						html += '<td class="hour">' + padLeft( c, 2, '0' ) + '</td>';
+						current++;
+					}
+					html += '</tr>'
+				}
+			}
+			table.html( html );
 		},
 
-		click:function ( e )
+		fillMinutes: function ()
+		{
+			var table = this.widget.find(
+				'.timepicker .timepicker-minutes table' );
+			table.parent().hide();
+			var html = '';
+			var current = 0;
+			for ( var i = 0; i < 5; i++ ) {
+				html += '<tr>';
+				for ( var j = 0; j < 4; j += 1 ) {
+					var c = current.toString();
+					html += '<td class="minute">' + padLeft( c, 2, '0' ) + '</td>';
+					current += 3;
+				}
+				html += '</tr>';
+			}
+			table.html( html );
+		},
+
+		fillSeconds: function ()
+		{
+			var table = this.widget.find(
+				'.timepicker .timepicker-seconds table' );
+			table.parent().hide();
+			var html = '';
+			var current = 0;
+			for ( var i = 0; i < 5; i++ ) {
+				html += '<tr>';
+				for ( var j = 0; j < 4; j += 1 ) {
+					var c = current.toString();
+					html += '<td class="second">' + padLeft( c, 2, '0' ) + '</td>';
+					current += 3;
+				}
+				html += '</tr>';
+			}
+			table.html( html );
+		},
+
+		fillTime: function ()
+		{
+			if ( !this._date )
+				return;
+			var timeComponents = this.widget.find( '.timepicker span[data-time-component]' );
+			var table = timeComponents.closest( 'table' );
+			var is12HourFormat = this.options.pick12HourFormat;
+			var hour = this._date.getUTCHours();
+			var period = 'AM';
+			if ( is12HourFormat ) {
+				if ( hour >= 12 ) period = 'PM';
+				if ( hour === 0 ) hour = 12;
+				else if ( hour != 12 ) hour = hour % 12;
+				this.widget.find(
+					'.timepicker [data-action=togglePeriod]' ).text( period );
+			}
+			hour = padLeft( hour.toString(), 2, '0' );
+			var minute = padLeft( this._date.getUTCMinutes().toString(), 2, '0' );
+			var second = padLeft( this._date.getUTCSeconds().toString(), 2, '0' );
+			timeComponents.filter( '[data-time-component=hours]' ).text( hour );
+			timeComponents.filter( '[data-time-component=minutes]' ).text( minute );
+			timeComponents.filter( '[data-time-component=seconds]' ).text( second );
+		},
+
+		click: function ( e )
 		{
 			e.stopPropagation();
 			e.preventDefault();
+			this._unset = false;
 			var target = SobiPro.jQuery( e.target ).closest( 'span, td, th' );
-			if ( target.length == 1 ) {
-				switch ( target[0].nodeName.toLowerCase() ) {
-					case 'th':
-						switch ( target[0].className ) {
-							case 'switch':
-								this.showMode( 1 );
-								break;
-							case 'prev':
-							case 'next':
-								var dir = DPGlobal.modes[this.viewMode].navStep * (target[0].className == 'prev' ? -1 : 1);
-								switch ( this.viewMode ) {
-									case 0:
-										this.viewDate = this.moveMonth( this.viewDate, dir );
-										break;
-									case 1:
-									case 2:
-										this.viewDate = this.moveYear( this.viewDate, dir );
-										break;
-								}
-								this.fill();
-								break;
-							case 'today':
-								var date = new Date();
-								date.setUTCMilliseconds( 0 );
-								this.showMode( -2 );
-								var which = this.todayBtn == 'linked' ? null : 'view';
-								this.time[ this.ident ] = { 'hours':date.getHours(), 'minutes':date.getMinutes(), 'seconds':date.getSeconds() };
-								this.date = DPGlobal.parseDate( date, this.format, this.time[ this.ident ], true );
-								this._setDate( date, which );
-								break;
-						}
-						break;
-					case 'span':
-						if ( !target.is( '.disabled' ) ) {
-							this.viewDate.setUTCDate( 1 );
+			if ( target.length === 1 ) {
+				if ( !target.is( '.disabled' ) ) {
+					switch ( target[0].nodeName.toLowerCase() ) {
+						case 'th':
+							switch ( target[0].className ) {
+								case 'switch':
+									this.showMode( 1 );
+									break;
+								case 'prev':
+								case 'next':
+									var vd = this.viewDate;
+									var navFnc = DPGlobal.modes[this.viewMode].navFnc;
+									var step = DPGlobal.modes[this.viewMode].navStep;
+									if ( target[0].className === 'prev' ) step = step * -1;
+									vd['set' + navFnc]( vd['get' + navFnc]() + step );
+									this.fillDate();
+									this.set();
+									break;
+							}
+							break;
+						case 'span':
 							if ( target.is( '.month' ) ) {
 								var month = target.parent().find( 'span' ).index( target );
 								this.viewDate.setUTCMonth( month );
-								this.element.trigger( {
-									type:'changeMonth',
-									date:this.viewDate
-								} );
 							}
 							else {
 								var year = parseInt( target.text(), 10 ) || 0;
 								this.viewDate.setUTCFullYear( year );
-								this.element.trigger( {
-									type:'changeYear',
-									date:this.viewDate
-								} );
+							}
+							if ( this.viewMode !== 0 ) {
+								this._date = UTCDate(
+									this.viewDate.getUTCFullYear(),
+									this.viewDate.getUTCMonth(),
+									this.viewDate.getUTCDate(),
+									this._date.getUTCHours(),
+									this._date.getUTCMinutes(),
+									this._date.getUTCSeconds(),
+									this._date.getUTCMilliseconds()
+								);
+								this.notifyChange();
 							}
 							this.showMode( -1 );
-							this.fill();
-						}
-						break;
-					// this is when a date has been selected in the picker << this is a comment for Gods' sake
-					case 'td':
-						if ( target.is( '.day' ) && !target.is( '.disabled' ) ) {
-							this.saveTime = false;
-							var day = parseInt( target.text(), 10 ) || 1;
-							var year = this.viewDate.getUTCFullYear(),
-								month = this.viewDate.getUTCMonth();
-							if ( target.is( '.old' ) ) {
-								if ( month == 0 ) {
-									month = 11;
-									year -= 1;
+							this.fillDate();
+							this.set();
+							break;
+						case 'td':
+							if ( target.is( '.day' ) ) {
+								var day = parseInt( target.text(), 10 ) || 1;
+								var month = this.viewDate.getUTCMonth();
+								var year = this.viewDate.getUTCFullYear();
+								if ( target.is( '.old' ) ) {
+									if ( month === 0 ) {
+										month = 11;
+										year -= 1;
+									}
+									else {
+										month -= 1;
+									}
 								}
-								else {
-									month -= 1;
+								else if ( target.is( '.new' ) ) {
+									if ( month == 11 ) {
+										month = 0;
+										year += 1;
+									}
+									else {
+										month += 1;
+									}
 								}
+								this._date = UTCDate(
+									year, month, day,
+									this._date.getUTCHours(),
+									this._date.getUTCMinutes(),
+									this._date.getUTCSeconds(),
+									this._date.getUTCMilliseconds()
+								);
+								this.viewDate = UTCDate(
+									year, month, Math.min( 28, day ), 0, 0, 0, 0 );
+								this.fillDate();
+								this.set();
+								this.notifyChange();
 							}
-							else if ( target.is( '.new' ) ) {
-								if ( month == 11 ) {
-									month = 0;
-									year += 1;
-								}
-								else {
-									month += 1;
-								}
-							}
-							var setDate = UTCDate( year, month, day, 0, 0, 0, 0 );
-							storedTime = this.time[ this.ident ];
-							if ( storedTime.hours ) {
-								setDate.setHours( storedTime.hours );
-							}
-							if ( storedTime.minutes ) {
-								setDate.setMinutes( storedTime.minutes );
-							}
-							if ( storedTime.seconds ) {
-								setDate.setSeconds( storedTime.seconds );
-							}
-							this._setDate( setDate );
-						}
-						break;
+							break;
+					}
 				}
 			}
 		},
 
-		_setDate:function ( date, which )
-		{
-			if ( !which || which == 'date' )
-				this.date = date;
-			if ( !which || which == 'view' )
-				this.viewDate = date;
-			this.fill();
-			this.setValue();
-			this.element.trigger( {
-				type:'changeDate',
-				date:this.date
-			} );
-			var element;
-			if ( this.isInput ) {
-				element = this.element;
-			}
-			else if ( this.component ) {
-				element = this.element.find( 'input' );
-			}
-			if ( element ) {
-				element.change();
-				if ( this.autoclose ) {
-					this.hide();
+		actions: {
+			incrementHours: function ( e )
+			{
+				this._date.setUTCHours( this._date.getUTCHours() + 1 );
+			},
+
+			incrementMinutes: function ( e )
+			{
+				this._date.setUTCMinutes( this._date.getUTCMinutes() + 1 );
+			},
+
+			incrementSeconds: function ( e )
+			{
+				this._date.setUTCSeconds( this._date.getUTCSeconds() + 1 );
+			},
+
+			decrementHours: function ( e )
+			{
+				this._date.setUTCHours( this._date.getUTCHours() - 1 );
+			},
+
+			decrementMinutes: function ( e )
+			{
+				this._date.setUTCMinutes( this._date.getUTCMinutes() - 1 );
+			},
+
+			decrementSeconds: function ( e )
+			{
+				this._date.setUTCSeconds( this._date.getUTCSeconds() - 1 );
+			},
+
+			togglePeriod: function ( e )
+			{
+				var hour = this._date.getUTCHours();
+				if ( hour >= 12 ) hour -= 12;
+				else hour += 12;
+				this._date.setUTCHours( hour );
+			},
+
+			showPicker: function ()
+			{
+				this.widget.find( '.timepicker > div:not(.timepicker-picker)' ).hide();
+				this.widget.find( '.timepicker .timepicker-picker' ).show();
+			},
+
+			showHours: function ()
+			{
+				this.widget.find( '.timepicker .timepicker-picker' ).hide();
+				this.widget.find( '.timepicker .timepicker-hours' ).show();
+			},
+
+			showMinutes: function ()
+			{
+				this.widget.find( '.timepicker .timepicker-picker' ).hide();
+				this.widget.find( '.timepicker .timepicker-minutes' ).show();
+			},
+
+			showSeconds: function ()
+			{
+				this.widget.find( '.timepicker .timepicker-picker' ).hide();
+				this.widget.find( '.timepicker .timepicker-seconds' ).show();
+			},
+
+			selectHour: function ( e )
+			{
+				var tgt = SobiPro.jQuery( e.target );
+				var value = parseInt( tgt.text(), 10 );
+				if ( this.options.pick12HourFormat ) {
+					var current = this._date.getUTCHours();
+					if ( current >= 12 ) {
+						if ( value != 12 ) value = (value + 12) % 24;
+					}
+					else {
+						if ( value === 12 ) value = 0;
+						else value = value % 12;
+					}
 				}
+				this._date.setUTCHours( value );
+				this.actions.showPicker.call( this );
+			},
+
+			selectMinute: function ( e )
+			{
+				var tgt = SobiPro.jQuery( e.target );
+				var value = parseInt( tgt.text(), 10 );
+				this._date.setUTCMinutes( value );
+				this.actions.showPicker.call( this );
+			},
+
+			selectSecond: function ( e )
+			{
+				var tgt = SobiPro.jQuery( e.target );
+				var value = parseInt( tgt.text(), 10 );
+				this._date.setUTCSeconds( value );
+				this.actions.showPicker.call( this );
 			}
 		},
 
-		moveMonth:function ( date, dir )
+		doAction: function ( e )
 		{
-			if ( !dir ) return date;
-			var new_date = new Date( date.valueOf() ),
-				day = new_date.getUTCDate(),
-				month = new_date.getUTCMonth(),
-				mag = Math.abs( dir ),
-				new_month, test;
-			dir = dir > 0 ? 1 : -1;
-			if ( mag == 1 ) {
-				test = dir == -1
-					// If going back one month, make sure month is not current month
-					// (eg, Mar 31 -> Feb 31 == Feb 28, not Mar 02)
-					? function ()
+			e.stopPropagation();
+			e.preventDefault();
+			if ( !this._date ) this._date = UTCDate( 1970, 0, 0, 0, 0, 0, 0 );
+			var action = SobiPro.jQuery( e.currentTarget ).data( 'action' );
+			var rv = this.actions[action].apply( this, arguments );
+			this.set();
+			this.fillTime();
+			this.notifyChange();
+			return rv;
+		},
+
+		stopEvent: function ( e )
+		{
+			e.stopPropagation();
+			e.preventDefault();
+		},
+
+		// part of the following code was taken from
+		// http://cloud.github.com/downloads/digitalBush/jquery.maskedinput/jquery.maskedinput-1.3.js
+		keydown: function ( e )
+		{
+			var self = this, k = e.which, input = SobiPro.jQuery( e.target );
+			if ( k == 8 || k == 46 ) {
+				// backspace and delete cause the maskPosition
+				// to be recalculated
+				setTimeout( function ()
 				{
-					return new_date.getUTCMonth() == month;
-				}
-					// If going forward one month, make sure month is as expected
-					// (eg, Jan 31 -> Feb 31 == Feb 28, not Mar 02)
-					: function ()
-				{
-					return new_date.getUTCMonth() != new_month;
-				};
-				new_month = month + dir;
-				new_date.setUTCMonth( new_month );
-				// Dec -> Jan (12) or Jan -> Dec (-1) -- limit expected date to 0-11
-				if ( new_month < 0 || new_month > 11 )
-					new_month = (new_month + 12) % 12;
+					self._resetMaskPos( input );
+				} );
 			}
-			else {
-				// For magnitudes >1, move one month at a time...
-				for ( var i = 0; i < mag; i++ )
-					// ...which might decrease the day (eg, Jan 31 to Feb 28, etc)...
-					new_date = this.moveMonth( new_date, dir );
-				// ...then reset the day, keeping it in the new month
-				new_month = new_date.getUTCMonth();
-				new_date.setUTCDate( day );
-				test = function ()
-				{
-					return new_month != new_date.getUTCMonth();
-				};
-			}
-			// Common date-resetting loop -- if date is beyond end of month, make it
-			// end of month
-			while ( test() ) {
-				new_date.setUTCDate( --day );
-				new_date.setUTCMonth( new_month );
-			}
-			return new_date;
 		},
 
-		moveYear:function ( date, dir )
+		keypress: function ( e )
 		{
-			return this.moveMonth( date, dir * 12 );
-		},
-
-		dateWithinRange:function ( date )
-		{
-			return date >= this.startDate && date <= this.endDate;
-		},
-
-		keydown:function ( e )
-		{
-			if ( this.picker.is( ':not(:visible)' ) ) {
-				if ( e.keyCode == 27 ) // allow escape to hide and re-show picker
-					this.show();
+			var k = e.which;
+			if ( k == 8 || k == 46 ) {
+				// For those browsers which will trigger
+				// keypress on backspace/delete
 				return;
 			}
-			var dateChanged = false,
-				dir, day, month,
-				newDate, newViewDate;
-			switch ( e.keyCode ) {
-				case 27: // escape
-					this.hide();
-					e.preventDefault();
-					break;
-				case 37: // left
-				case 39: // right
-					if ( !this.keyboardNavigation ) break;
-					dir = e.keyCode == 37 ? -1 : 1;
-					if ( e.ctrlKey ) {
-						newDate = this.moveYear( this.date, dir );
-						newViewDate = this.moveYear( this.viewDate, dir );
-					}
-					else if ( e.shiftKey ) {
-						newDate = this.moveMonth( this.date, dir );
-						newViewDate = this.moveMonth( this.viewDate, dir );
-					}
-					else {
-						newDate = new Date( this.date );
-						newDate.setUTCDate( this.date.getUTCDate() + dir );
-						newViewDate = new Date( this.viewDate );
-						newViewDate.setUTCDate( this.viewDate.getUTCDate() + dir );
-					}
-					if ( this.dateWithinRange( newDate ) ) {
-						this.date = newDate;
-						this.viewDate = newViewDate;
-						this.setValue();
-						this.update();
-						e.preventDefault();
-						dateChanged = true;
-					}
-					break;
-				case 38: // up
-				case 40: // down
-					if ( !this.keyboardNavigation ) break;
-					dir = e.keyCode == 38 ? -1 : 1;
-					if ( e.ctrlKey ) {
-						newDate = this.moveYear( this.date, dir );
-						newViewDate = this.moveYear( this.viewDate, dir );
-					}
-					else if ( e.shiftKey ) {
-						newDate = this.moveMonth( this.date, dir );
-						newViewDate = this.moveMonth( this.viewDate, dir );
-					}
-					else {
-						newDate = new Date( this.date );
-						newDate.setUTCDate( this.date.getUTCDate() + dir * 7 );
-						newViewDate = new Date( this.viewDate );
-						newViewDate.setUTCDate( this.viewDate.getUTCDate() + dir * 7 );
-					}
-					if ( this.dateWithinRange( newDate ) ) {
-						this.date = newDate;
-						this.viewDate = newViewDate;
-						this.setValue();
-						this.update();
-						e.preventDefault();
-						dateChanged = true;
-					}
-					break;
-				case 13: // enter
-					this.hide();
-					e.preventDefault();
-					break;
-				case 9: // tab
-					this.hide();
-					break;
+			var input = SobiPro.jQuery( e.target );
+			var c = String.fromCharCode( k );
+			var val = input.val() || '';
+			val += c;
+			var mask = this._mask[this._maskPos];
+			if ( !mask ) {
+				return false;
 			}
-			if ( dateChanged ) {
-				this.element.trigger( {
-					type:'changeDate',
-					date:this.date
-				} );
-				var element;
-				if ( this.isInput ) {
-					element = this.element;
+			if ( mask.end != val.length ) {
+				return;
+			}
+			if ( !mask.pattern.test( val.slice( mask.start ) ) ) {
+				val = val.slice( 0, val.length - 1 );
+				while ( (mask = this._mask[this._maskPos]) && mask.character ) {
+					val += mask.character;
+					// advance mask position past static
+					// part
+					this._maskPos++;
 				}
-				else if ( this.component ) {
-					element = this.element.find( 'input' );
+				val += c;
+				if ( mask.end != val.length ) {
+					input.val( val );
+					return false;
 				}
-				if ( element ) {
-					element.change();
+				else {
+					if ( !mask.pattern.test( val.slice( mask.start ) ) ) {
+						input.val( val.slice( 0, mask.start ) );
+						return false;
+					}
+					else {
+						input.val( val );
+						this._maskPos++;
+						return false;
+					}
+				}
+			}
+			else {
+				this._maskPos++;
+			}
+		},
+
+		change: function ( e )
+		{
+			var input = SobiPro.jQuery( e.target );
+			var val = input.val();
+			if ( this._formatPattern.test( val ) ) {
+				this.update();
+				this.setValue( this._date.getTime() );
+				this.notifyChange();
+				this.set();
+			}
+			else if ( val && val.trim() ) {
+				this.setValue( this._date.getTime() );
+				if ( this._date ) this.set();
+				else input.val( '' );
+			}
+			else {
+				if ( this._date ) {
+					this.setValue( null );
+					// unset the date when the input is
+					// erased
+					this.notifyChange();
+					this._unset = true;
+				}
+			}
+			this._resetMaskPos( input );
+		},
+
+		showMode: function ( dir )
+		{
+			if ( dir ) {
+				this.viewMode = Math.max( this.minViewMode, Math.min(
+					2, this.viewMode + dir ) );
+			}
+			this.widget.find( '.datepicker > div' ).hide().filter(
+				'.datepicker-' + DPGlobal.modes[this.viewMode].clsName ).show();
+		},
+
+		destroy: function ()
+		{
+			this._detachDatePickerEvents();
+			this._detachDatePickerGlobalEvents();
+			this.widget.remove();
+			this.$element.removeData( 'datetimepicker' );
+			this.component.removeData( 'datetimepicker' );
+		},
+
+		formatDate: function ( d )
+		{
+			return this.format.replace( formatReplacer, function ( match )
+			{
+				var methodName, property, rv, len = match.length;
+				if ( match === 'ms' )
+					len = 1;
+				property = dateFormatComponents[match].property;
+				if ( property === 'Hours12' ) {
+					rv = d.getUTCHours();
+					if ( rv === 0 ) rv = 12;
+					else if ( rv !== 12 ) rv = rv % 12;
+				}
+				else if ( property === 'Period12' ) {
+					if ( d.getUTCHours() >= 12 ) return 'PM';
+					else return 'AM';
+				}
+				else if ( property === 'UTCYear' ) {
+					rv = d.getUTCFullYear();
+					rv = rv.toString().substr( 2 );
+				}
+				else {
+					methodName = 'get' + property;
+					rv = d[methodName]();
+				}
+				if ( methodName === 'getUTCMonth' ) rv = rv + 1;
+				return padLeft( rv.toString(), len, '0' );
+			} );
+		},
+
+		parseDate: function ( str )
+		{
+			var match, i, property, methodName, value, parsed = {};
+			if ( !(match = this._formatPattern.exec( str )) )
+				return null;
+			for ( i = 1; i < match.length; i++ ) {
+				property = this._propertiesByIndex[i];
+				if ( !property )
+					continue;
+				value = match[i];
+				if ( /^\d+$/.test( value ) )
+					value = parseInt( value, 10 );
+				parsed[property] = value;
+			}
+			return this._finishParsingDate( parsed );
+		},
+
+		_resetMaskPos: function ( input )
+		{
+			var val = input.val();
+			for ( var i = 0; i < this._mask.length; i++ ) {
+				if ( this._mask[i].end > val.length ) {
+					// If the mask has ended then jump to
+					// the next
+					this._maskPos = i;
+					break;
+				}
+				else if ( this._mask[i].end === val.length ) {
+					this._maskPos = i + 1;
+					break;
 				}
 			}
 		},
 
-		showMode:function ( dir )
+		_finishParsingDate: function ( parsed )
 		{
-			if ( dir ) {
-				this.viewMode = Math.max( 0, Math.min( 2, this.viewMode + dir ) );
+			var year, month, date, hours, minutes, seconds, milliseconds;
+			year = parsed.UTCFullYear;
+			if ( parsed.UTCYear ) year = 2000 + parsed.UTCYear;
+			if ( !year ) year = 1970;
+			if ( parsed.UTCMonth ) month = parsed.UTCMonth - 1;
+			else month = 0;
+			date = parsed.UTCDate || 1;
+			hours = parsed.UTCHours || 0;
+			minutes = parsed.UTCMinutes || 0;
+			seconds = parsed.UTCSeconds || 0;
+			milliseconds = parsed.UTCMilliseconds || 0;
+			if ( parsed.Hours12 ) {
+				hours = parsed.Hours12;
 			}
-			this.picker.find( '>div' ).hide().filter( '.datepicker-' + DPGlobal.modes[this.viewMode].clsName ).show();
-			this.updateNavArrows();
+			if ( parsed.Period12 ) {
+				if ( /pm/i.test( parsed.Period12 ) ) {
+					if ( hours != 12 ) hours = (hours + 12) % 24;
+				}
+				else {
+					hours = hours % 12;
+				}
+			}
+			return UTCDate( year, month, date, hours, minutes, seconds, milliseconds );
+		},
+
+		_compileFormat: function ()
+		{
+			var match, component, components = [], mask = [],
+				str = this.format, propertiesByIndex = {}, i = 0, pos = 0;
+			while ( match = formatComponent.exec( str ) ) {
+				component = match[0];
+				if ( component in dateFormatComponents ) {
+					i++;
+					propertiesByIndex[i] = dateFormatComponents[component].property;
+					components.push( '\\s*' + dateFormatComponents[component].getPattern(
+						this ) + '\\s*' );
+					mask.push( {
+						pattern: new RegExp( dateFormatComponents[component].getPattern(
+							this ) ),
+						property: dateFormatComponents[component].property,
+						start: pos,
+						end: pos += component.length
+					} );
+				}
+				else {
+					components.push( escapeRegExp( component ) );
+					mask.push( {
+						pattern: new RegExp( escapeRegExp( component ) ),
+						character: component,
+						start: pos,
+						end: ++pos
+					} );
+				}
+				str = str.slice( component.length );
+			}
+			this._mask = mask;
+			this._maskPos = 0;
+			this._formatPattern = new RegExp( '^\\s*' + components.join( '' ) + '\\s*$' );
+			this._propertiesByIndex = propertiesByIndex;
+		},
+
+		_attachDatePickerEvents: function ()
+		{
+			var self = this;
+			// this handles date picker clicks
+			this.widget.on( 'click', '.datepicker *', SobiPro.jQuery.proxy( this.click, this ) );
+			// this handles time picker clicks
+			this.widget.on( 'click', '[data-action]', SobiPro.jQuery.proxy( this.doAction, this ) );
+			this.widget.on( 'mousedown', SobiPro.jQuery.proxy( this.stopEvent, this ) );
+			if ( this.pickDate && this.pickTime ) {
+				this.widget.on( 'click.togglePicker', '.accordion-toggle', function ( e )
+				{
+					e.stopPropagation();
+					var $this = SobiPro.jQuery( this );
+					var $parent = $this.closest( 'ul' );
+					var expanded = $parent.find( '.collapse.in' );
+					var closed = $parent.find( '.collapse:not(.in)' );
+
+					if ( expanded && expanded.length ) {
+						var collapseData = expanded.data( 'collapse' );
+						if ( collapseData && collapseData.transitioning ) return;
+						expanded.collapse( 'hide' );
+						closed.collapse( 'show' );
+						$this.find( 'i' ).toggleClass( self.timeIcon + ' ' + self.dateIcon );
+						self.$element.find( '.add-on i' ).toggleClass( self.timeIcon + ' ' + self.dateIcon );
+					}
+				} );
+			}
+			if ( this.isInput ) {
+				this.$element.on( {
+					'focus': SobiPro.jQuery.proxy( this.show, this ),
+					'change': SobiPro.jQuery.proxy( this.change, this )
+				} );
+				if ( this.options.maskInput ) {
+					this.$element.on( {
+						'keydown': SobiPro.jQuery.proxy( this.keydown, this ),
+						'keypress': SobiPro.jQuery.proxy( this.keypress, this )
+					} );
+				}
+			}
+			else {
+				this.$element.on( {
+					'change': SobiPro.jQuery.proxy( this.change, this )
+				}, 'input' );
+				if ( this.options.maskInput ) {
+					this.$element.on( {
+						'keydown': SobiPro.jQuery.proxy( this.keydown, this ),
+						'keypress': SobiPro.jQuery.proxy( this.keypress, this )
+					}, 'input' );
+				}
+				if ( this.component ) {
+					this.component.on( 'click', SobiPro.jQuery.proxy( this.show, this ) );
+				}
+				else {
+					this.$element.on( 'click', SobiPro.jQuery.proxy( this.show, this ) );
+				}
+			}
+		},
+
+		_attachDatePickerGlobalEvents: function ()
+		{
+			SobiPro.jQuery( window ).on( 'resize.datetimepicker' + this.id, SobiPro.jQuery.proxy( this.place, this ) );
+			if ( !this.isInput ) {
+				SobiPro.jQuery( document ).on( 'mousedown.datetimepicker' + this.id, SobiPro.jQuery.proxy( this.hide, this ) );
+			}
+		},
+
+		_detachDatePickerEvents: function ()
+		{
+			this.widget.off( 'click', '.datepicker *', this.click );
+			this.widget.off( 'click', '[data-action]' );
+			this.widget.off( 'mousedown', this.stopEvent );
+			if ( this.pickDate && this.pickTime ) {
+				this.widget.off( 'click.togglePicker' );
+			}
+			if ( this.isInput ) {
+				this.$element.off( {
+					'focus': this.show,
+					'change': this.change
+				} );
+				if ( this.options.maskInput ) {
+					this.$element.off( {
+						'keydown': this.keydown,
+						'keypress': this.keypress
+					} );
+				}
+			}
+			else {
+				this.$element.off( {
+					'change': this.change
+				}, 'input' );
+				if ( this.options.maskInput ) {
+					this.$element.off( {
+						'keydown': this.keydown,
+						'keypress': this.keypress
+					}, 'input' );
+				}
+				if ( this.component ) {
+					this.component.off( 'click', this.show );
+				}
+				else {
+					this.$element.off( 'click', this.show );
+				}
+			}
+		},
+
+		_detachDatePickerGlobalEvents: function ()
+		{
+			SobiPro.jQuery( window ).off( 'resize.datetimepicker' + this.id );
+			if ( !this.isInput ) {
+				SobiPro.jQuery( document ).off( 'mousedown.datetimepicker' + this.id );
+			}
+		},
+
+		_isInFixed: function ()
+		{
+			if ( this.$element ) {
+				var parents = this.$element.parents();
+				var inFixed = false;
+				for ( var i = 0; i < parents.length; i++ ) {
+					if ( SobiPro.jQuery( parents[i] ).css( 'position' ) == 'fixed' ) {
+						inFixed = true;
+						break;
+					}
+				}
+				;
+				return inFixed;
+			}
+			else {
+				return false;
+			}
 		}
 	};
 
-	SobiPro.jQuery.fn.spDatepicker = function ( option )
+	SobiPro.jQuery.fn.datetimepicker = function ( option, val )
 	{
-		var args = Array.apply( null, arguments );
-		args.shift();
 		return this.each( function ()
 		{
-			var _this = SobiPro.jQuery( this ),
-				data = _this.data( 'datepicker' ),
-				options = typeof option == 'object' && option;
+			var $this = SobiPro.jQuery( this ),
+				data = $this.data( 'datetimepicker' ),
+				options = typeof option === 'object' && option;
 			if ( !data ) {
-				_this.data( 'datepicker', (data = new SPDatepicker( this, SobiPro.jQuery.extend( {}, SobiPro.jQuery.fn.spDatepicker.defaults, options ) )) );
+				$this.data( 'datetimepicker', (data = new SpDateTimePicker(
+					this, SobiPro.jQuery.extend( {}, SobiPro.jQuery.fn.datetimepicker.defaults, options ) )) );
 			}
-			if ( typeof option == 'string' && typeof data[option] == 'function' ) {
-				data[option].apply( data, args );
-			}
+			if ( typeof option === 'string' ) data[option]( val );
 		} );
 	};
 
-	SobiPro.jQuery.fn.spDatepicker.defaults = {
+	SobiPro.jQuery.fn.datetimepicker.defaults = {
+		maskInput: false,
+		pickDate: true,
+		pickTime: true,
+		pick12HourFormat: false,
+		pickSeconds: true,
+		startDate: -Infinity,
+		endDate: Infinity,
+		collapse: true
 	};
-	SobiPro.jQuery.fn.spDatepicker.Constructor = SPDatepicker;
-	var dates = SobiPro.jQuery.fn.spDatepicker.dates = { en:spDatePickerLang };
-//	{
-//		en:{
-//			days:["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-//			daysShort:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-//			daysMin:["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-//			months:["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-//			monthsShort:["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-//			today:"Today"
+	SobiPro.jQuery.fn.datetimepicker.Constructor = SpDateTimePicker;
+	var dpgId = 0;
+	var dates = SobiPro.jQuery.fn.datetimepicker.dates = { en: spDatePickerLang };
+//	var dates = $.fn.datetimepicker.dates = {
+//		en: {
+//			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+//				"Friday", "Saturday", "Sunday"],
+//			daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+//			daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+//			months: ["January", "February", "March", "April", "May", "June",
+//				"July", "August", "September", "October", "November", "December"],
+//			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+//				"Aug", "Sep", "Oct", "Nov", "Dec"]
 //		}
 //	};
 
+	var dateFormatComponents = {
+		dd: {property: 'UTCDate', getPattern: function ()
+		{
+			return '(0?[1-9]|[1-2][0-9]|3[0-1])\\b';
+		}},
+		MM: {property: 'UTCMonth', getPattern: function ()
+		{
+			return '(0?[1-9]|1[0-2])\\b';
+		}},
+		yy: {property: 'UTCYear', getPattern: function ()
+		{
+			return '(\\d{2})\\b'
+		}},
+		yyyy: {property: 'UTCFullYear', getPattern: function ()
+		{
+			return '(\\d{4})\\b';
+		}},
+		hh: {property: 'UTCHours', getPattern: function ()
+		{
+			return '(0?[0-9]|1[0-9]|2[0-3])\\b';
+		}},
+		mm: {property: 'UTCMinutes', getPattern: function ()
+		{
+			return '(0?[0-9]|[1-5][0-9])\\b';
+		}},
+		ss: {property: 'UTCSeconds', getPattern: function ()
+		{
+			return '(0?[0-9]|[1-5][0-9])\\b';
+		}},
+		ms: {property: 'UTCMilliseconds', getPattern: function ()
+		{
+			return '([0-9]{1,3})\\b';
+		}},
+		HH: {property: 'Hours12', getPattern: function ()
+		{
+			return '(0?[1-9]|1[0-2])\\b';
+		}},
+		PP: {property: 'Period12', getPattern: function ()
+		{
+			return '(AM|PM|am|pm|Am|aM|Pm|pM)\\b';
+		}}
+	};
+
+	var keys = [];
+	for ( var k in dateFormatComponents ) keys.push( k );
+	keys[keys.length - 1] += '\\b';
+	keys.push( '.' );
+
+	var formatComponent = new RegExp( keys.join( '\\b|' ) );
+	keys.pop();
+	var formatReplacer = new RegExp( keys.join( '\\b|' ), 'g' );
+
+	function escapeRegExp( str )
+	{
+		// http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+		return str.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&" );
+	}
+
+	function padLeft( s, l, c )
+	{
+		if ( l < s.length ) return s;
+		else return Array( l - s.length + 1 ).join( c || ' ' ) + s;
+	}
+
+	function getTemplate( timeIcon, pickDate, pickTime, is12Hours, showSeconds, collapse )
+	{
+		if ( pickDate && pickTime ) {
+			return (
+				'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+					'<ul>' +
+					'<li' + (collapse ? ' class="collapse in"' : '') + '>' +
+					'<div class="datepicker">' +
+					DPGlobal.template +
+					'</div>' +
+					'</li>' +
+					'<li class="picker-switch accordion-toggle"><a><i class="' + timeIcon + '"></i></a></li>' +
+					'<li' + (collapse ? ' class="collapse"' : '') + '>' +
+					'<div class="timepicker">' +
+					TPGlobal.getTemplate( is12Hours, showSeconds ) +
+					'</div>' +
+					'</li>' +
+					'</ul>' +
+					'</div>'
+				);
+		}
+		else if ( pickTime ) {
+			return (
+				'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+					'<div class="timepicker">' +
+					TPGlobal.getTemplate( is12Hours, showSeconds ) +
+					'</div>' +
+					'</div>'
+				);
+		}
+		else {
+			return (
+				'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+					'<div class="datepicker">' +
+					DPGlobal.template +
+					'</div>' +
+					'</div>'
+				);
+		}
+	}
+
+	function UTCDate()
+	{
+		return new Date( Date.UTC.apply( Date, arguments ) );
+	}
+
 	var DPGlobal = {
-		modes:[
+		modes: [
 			{
-				clsName:'days',
-				navFnc:'Month',
-				navStep:1
+				clsName: 'days',
+				navFnc: 'UTCMonth',
+				navStep: 1
 			},
 			{
-				clsName:'months',
-				navFnc:'FullYear',
-				navStep:1
+				clsName: 'months',
+				navFnc: 'UTCFullYear',
+				navStep: 1
 			},
 			{
-				clsName:'years',
-				navFnc:'FullYear',
-				navStep:10
+				clsName: 'years',
+				navFnc: 'UTCFullYear',
+				navStep: 10
 			}
 		],
-		isLeapYear:function ( year )
+		isLeapYear: function ( year )
 		{
 			return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0))
 		},
-		getDaysInMonth:function ( year, month )
+		getDaysInMonth: function ( year, month )
 		{
 			return [31, (DPGlobal.isLeapYear( year ) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
 		},
-		validParts:/dd?|g|G|h|s|H|i|mm?|MM?|yy(?:yy)?/g,
-		nonpunctuation:/[^ -\/:-@\[-`{-~\t\n\r]+/g,
-		parseFormat:function ( format )
-		{
-			// IE treats \0 as a string end in inputs (truncating the value),
-			// so it's a bad format delimiter, anyway
-			var separators = format.replace( this.validParts, '\0' ).split( '\0' );
-			var parts = format.match( this.validParts );
-			if ( !separators || !separators.length || !parts || parts.length == 0 ) {
-				throw new Error( "Invalid date format." );
-			}
-			return {separators:separators, parts:parts};
-		},
-		parseDate:function ( dateStr, format, time, saveTime )
-		{
-			if ( dateStr instanceof Date ) {
-				return dateStr;
-			}
-			if ( !( dateStr ) ) {
-				this.date = 0;
-				return new Date();
-			}
-			//convert str into date
-			var strParts = dateStr.split( /[^a-zA-Z0-9]/g );
-			var formatParts = format.split( /[^a-zA-Z]/g );
-
-			date = new Date(),
-				date.setHours( 0 );
-			date.setMinutes( 0 );
-			date.setSeconds( 0 );
-			date.setMilliseconds( 0 );
-			for ( var key in formatParts ) {
-				if ( typeof strParts[key] != 'undefined' ) {
-					val = strParts[key];
-					switch ( formatParts[key] ) {
-						case 'dd':
-						case 'd':
-							date.setDate( val );
-							break;
-						case 'mm':
-						case 'm':
-							date.setMonth( val - 1 );
-							break;
-						case 'yy':
-							date.setFullYear( 2000 + val );
-							break;
-						case 'yyyy':
-							date.setFullYear( val );
-							break;
-						case 'hh':
-						case 'h':
-							if ( saveTime ) {
-								time.hours = val;
-								date.setHours( val );
-							}
-							else {
-								date.setHours( time.hours );
-							}
-							break;
-						case 'ii':
-						case 'i':
-							if ( saveTime ) {
-								time.minutes = val;
-								date.setMinutes( val );
-							}
-							else {
-								date.setMinutes( time.minutes );
-							}
-							break;
-						case 'ss':
-						case 's':
-							if ( saveTime ) {
-								time.seconds = val;
-								date.setSeconds( val );
-							}
-							else {
-								date.setSeconds( time.seconds );
-							}
-							break;
-					}
-				}
-			}
-			return date;
-		},
-		formatDate:function ( date, format )
-		{ // build a formatted string
-			var templateParts = {
-				dd:(date.getDate() < 10 ? '0' : '') + date.getDate(),
-				d:date.getDate(),
-				mm:((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1),
-				m:date.getMonth() + 1,
-				yyyy:date.getFullYear(),
-				yy:date.getFullYear().toString().substring( 2 ),
-				hh:(date.getHours() < 10 ? '0' : '') + date.getHours(),
-				h:date.getHours(),
-				ii:(date.getMinutes() < 10 ? '0' : '') + date.getMinutes(),
-				i:date.getMinutes(),
-				ss:(date.getSeconds() < 10 ? '0' : '') + date.getSeconds(),
-				s:date.getSeconds()
-			};
-
-			var dateStr = format;
-
-			for ( var key in templateParts ) {
-				val = templateParts[key];
-				dateStr = dateStr.replace( key, val );
-			}
-
-			return dateStr;
-		},
-		headTemplate:'<thead>' +
+		headTemplate: '<thead>' +
 			'<tr>' +
-			'<th class="prev"><i class="icon-arrow-left"/></th>' +
+			'<th class="prev">&lsaquo;</th>' +
 			'<th colspan="5" class="switch"></th>' +
-			'<th class="next"><i class="icon-arrow-right"/></th>' +
+			'<th class="next">&rsaquo;</th>' +
 			'</tr>' +
 			'</thead>',
-		contTemplate:'<tbody><tr><td colspan="7"></td></tr></tbody>',
-		footTemplate:'<tfoot><tr><th colspan="7" class="today"></th></tr></tfoot>'
+		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>'
 	};
-	DPGlobal.template = '<div class="datepicker dropdown-menu hide">' +
+	DPGlobal.template =
 		'<div class="datepicker-days">' +
-		'<table class=" table-condensed">' +
-		DPGlobal.headTemplate +
-		'<tbody></tbody>' +
-		DPGlobal.footTemplate +
-		'</table>' +
-		'</div>' +
-		'<div class="datepicker-months">' +
-		'<table class="table-condensed">' +
-		DPGlobal.headTemplate +
-		DPGlobal.contTemplate +
-		DPGlobal.footTemplate +
-		'</table>' +
-		'</div>' +
-		'<div class="datepicker-years">' +
-		'<table class="table-condensed">' +
-		DPGlobal.headTemplate +
-		DPGlobal.contTemplate +
-		DPGlobal.footTemplate +
-		'</table>' +
-		'</div>' +
-		'</div>';
-}( window.jQuery );
+			'<table class="table-condensed">' +
+			DPGlobal.headTemplate +
+			'<tbody></tbody>' +
+			'</table>' +
+			'</div>' +
+			'<div class="datepicker-months">' +
+			'<table class="table-condensed">' +
+			DPGlobal.headTemplate +
+			DPGlobal.contTemplate +
+			'</table>' +
+			'</div>' +
+			'<div class="datepicker-years">' +
+			'<table class="table-condensed">' +
+			DPGlobal.headTemplate +
+			DPGlobal.contTemplate +
+			'</table>' +
+			'</div>';
+	var TPGlobal = {
+		hourTemplate: '<span data-action="showHours" data-time-component="hours" class="timepicker-hour"></span>',
+		minuteTemplate: '<span data-action="showMinutes" data-time-component="minutes" class="timepicker-minute"></span>',
+		secondTemplate: '<span data-action="showSeconds" data-time-component="seconds" class="timepicker-second"></span>'
+	};
+	TPGlobal.getTemplate = function ( is12Hours, showSeconds )
+	{
+		return (
+			'<div class="timepicker-picker">' +
+				'<table class="table-condensed"' +
+				(is12Hours ? ' data-hour-format="12"' : '') +
+				'>' +
+				'<tr>' +
+				'<td><a href="#" class="btn" data-action="incrementHours"><i class="icon-chevron-up"></i></a></td>' +
+				'<td class="separator"></td>' +
+				'<td><a href="#" class="btn" data-action="incrementMinutes"><i class="icon-chevron-up"></i></a></td>' +
+				(showSeconds ?
+					'<td class="separator"></td>' +
+						'<td><a href="#" class="btn" data-action="incrementSeconds"><i class="icon-chevron-up"></i></a></td>' : '') +
+				(is12Hours ? '<td class="separator"></td>' : '') +
+				'</tr>' +
+				'<tr>' +
+				'<td>' + TPGlobal.hourTemplate + '</td> ' +
+				'<td class="separator">:</td>' +
+				'<td>' + TPGlobal.minuteTemplate + '</td> ' +
+				(showSeconds ?
+					'<td class="separator">:</td>' +
+						'<td>' + TPGlobal.secondTemplate + '</td>' : '') +
+				(is12Hours ?
+					'<td class="separator"></td>' +
+						'<td>' +
+						'<button type="button" class="btn btn-primary" data-action="togglePeriod"></button>' +
+						'</td>' : '') +
+				'</tr>' +
+				'<tr>' +
+				'<td><a href="#" class="btn" data-action="decrementHours"><i class="icon-chevron-down"></i></a></td>' +
+				'<td class="separator"></td>' +
+				'<td><a href="#" class="btn" data-action="decrementMinutes"><i class="icon-chevron-down"></i></a></td>' +
+				(showSeconds ?
+					'<td class="separator"></td>' +
+						'<td><a href="#" class="btn" data-action="decrementSeconds"><i class="icon-chevron-down"></i></a></td>' : '') +
+				(is12Hours ? '<td class="separator"></td>' : '') +
+				'</tr>' +
+				'</table>' +
+				'</div>' +
+				'<div class="timepicker-hours" data-action="selectHour">' +
+				'<table class="table-condensed">' +
+				'</table>' +
+				'</div>' +
+				'<div class="timepicker-minutes" data-action="selectMinute">' +
+				'<table class="table-condensed">' +
+				'</table>' +
+				'</div>' +
+				(showSeconds ?
+					'<div class="timepicker-seconds" data-action="selectSecond">' +
+						'<table class="table-condensed">' +
+						'</table>' +
+						'</div>' : '')
+			);
+	}
+
+
+})( SobiPro.jQuery );
 
 SobiPro.jQuery( document ).ready( function ()
 {
 	SobiPro.jQuery( '.spDatePicker' ).each( function ( i, e )
 	{
-		"use strict";
+		var proxy = this;
 		SobiPro.jQuery( e )
-			.spDatepicker()
+			.datetimepicker()
 			.on( 'changeDate', function ( ev )
 			{
 				var set = "";
-				if ( ev.date.valueOf() && SobiPro.jQuery( ev.currentTarget ).find( ':text' ).val() ) {
-					set = new Date( ev.date.valueOf() ) / 1000;
+				if ( ev.date.valueOf() && SobiPro.jQuery( proxy ).find( ':text' ).val() ) {
+					set = ev.date.valueOf();
 				}
-				SobiPro.DebOut( set );
-				SobiPro.jQuery( ev.currentTarget )
+				SobiPro.jQuery( proxy )
 					.find( ':hidden' )
 					.val( set );
 			} );
