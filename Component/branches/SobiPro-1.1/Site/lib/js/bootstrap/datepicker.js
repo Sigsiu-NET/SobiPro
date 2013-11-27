@@ -25,12 +25,12 @@
  */
 
 $ = SobiPro.jQuery;
-(function ( $ )
+(function ()
 {
 
 	// Picker object
 	var smartPhone = (window.orientation != undefined);
-	var DateTimePicker = function ( element, options )
+	var SpDateTimePicker = function ( element, options )
 	{
 		this.id = dpgId++;
 		this.init( element, options );
@@ -44,8 +44,8 @@ $ = SobiPro.jQuery;
 		return dt;
 	};
 
-	DateTimePicker.prototype = {
-		constructor: DateTimePicker,
+	SpDateTimePicker.prototype = {
+		constructor: SpDateTimePicker,
 
 		init: function ( element, options )
 		{
@@ -67,6 +67,7 @@ $ = SobiPro.jQuery;
 				else this.format = this.$element.find( 'input' ).data( 'format' );
 				if ( !this.format ) this.format = 'MM/dd/yyyy';
 			}
+			options.pick12HourFormat = this.$element.find( 'input' ).data( 'am-pm' );
 			this._compileFormat();
 			if ( this.component ) {
 				icon = this.component.find( 'i' );
@@ -166,7 +167,10 @@ $ = SobiPro.jQuery;
 			this.viewMode = this.startViewMode;
 			this.showMode();
 			this.set();
-			// Sigsiu.NET - for some reason this is hiding the whole input field
+			/* Sigsiu.NET - for some reason this is hiding the whole input field
+			 * probably only Joomla! problem caused by mt or something similar
+			 */
+
 //			this.$element.trigger( {
 //				type: 'hide',
 //				date: this._date
@@ -180,7 +184,7 @@ $ = SobiPro.jQuery;
 			if ( !this._unset ) formatted = this.formatDate( this._date );
 			if ( !this.isInput ) {
 				if ( this.component ) {
-					var input = this.$element.find( 'input' );
+					var input = this.$element.find( 'input:text' );
 					input.val( formatted );
 					this._resetMaskPos( input );
 				}
@@ -1177,7 +1181,7 @@ $ = SobiPro.jQuery;
 				data = $this.data( 'datetimepicker' ),
 				options = typeof option === 'object' && option;
 			if ( !data ) {
-				$this.data( 'datetimepicker', (data = new DateTimePicker(
+				$this.data( 'datetimepicker', (data = new SpDateTimePicker(
 					this, SobiPro.jQuery.extend( {}, SobiPro.jQuery.fn.datetimepicker.defaults, options ) )) );
 			}
 			if ( typeof option === 'string' ) data[option]( val );
@@ -1194,9 +1198,9 @@ $ = SobiPro.jQuery;
 		endDate: Infinity,
 		collapse: true
 	};
-	SobiPro.jQuery.fn.datetimepicker.Constructor = DateTimePicker;
+	SobiPro.jQuery.fn.datetimepicker.Constructor = SpDateTimePicker;
 	var dpgId = 0;
-	var dates = SobiPro.jQuery.fn.datetimepicker.dates = { en:spDatePickerLang };
+	var dates = SobiPro.jQuery.fn.datetimepicker.dates = { en: spDatePickerLang };
 //	var dates = $.fn.datetimepicker.dates = {
 //		en: {
 //			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
@@ -1442,16 +1446,16 @@ SobiPro.jQuery( document ).ready( function ()
 {
 	SobiPro.jQuery( '.spDatePicker' ).each( function ( i, e )
 	{
+		var proxy = this;
 		SobiPro.jQuery( e )
 			.datetimepicker()
 			.on( 'changeDate', function ( ev )
 			{
 				var set = "";
-				if ( ev.date.valueOf() && SobiPro.jQuery( ev.currentTarget ).find( ':text' ).val() ) {
-					set = new Date( ev.date.valueOf() ) / 1000;
+				if ( ev.localDate.valueOf() && SobiPro.jQuery( proxy ).find( ':text' ).val() ) {
+					set = ev.date.valueOf() //new Date( ( ev.localDate.valueOf() ) ).valueOf() // 1000;
 				}
-				SobiPro.DebOut( set );
-				SobiPro.jQuery( ev.currentTarget )
+				SobiPro.jQuery( proxy )
 					.find( ':hidden' )
 					.val( set );
 			} );

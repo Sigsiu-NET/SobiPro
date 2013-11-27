@@ -584,10 +584,12 @@ class SPConfig
 	 * Returns formated date
 	 *
 	 * @param string $time - time or date
+	 * @param string $formatKey
 	 * @param string $format - section and key in the config
+	 * @param bool $gmt
 	 * @return string
 	 */
-	public function date( $time = null, $formatKey = 'date.publishing_format', $format = null )
+	public function date( $time = null, $formatKey = 'date.publishing_format', $format = null, $gmt = false )
 	{
 		if ( $time == SPFactory::db()->getNullDate() ) {
 			return null;
@@ -602,7 +604,7 @@ class SPConfig
 			$format = $this->key( $formatKey, 'Y-m-d H:i:s' );
 		}
 		$date = $time ? ( is_numeric( $time ) ? $time : strtotime( $time ) ) : time();
-		return date( $format, $date );
+		return $gmt ? gmdate( $format, $date ) : date( $format, $date );
 	}
 
 	/**
