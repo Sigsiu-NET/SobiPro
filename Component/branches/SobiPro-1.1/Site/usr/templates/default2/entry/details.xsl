@@ -50,11 +50,10 @@
 				</h1>
 
 				<xsl:for-each select="entry/fields/*">
-					<div>
-						<xsl:attribute name="class">
-							<xsl:value-of select="@css_class" />
-						</xsl:attribute>
-
+					<div class="{@css_class}">
+						<xsl:if test="string-length(@itemprop)">
+							<xsl:attribute name="itemprop"><xsl:value-of select="@itemprop"/></xsl:attribute>
+						</xsl:if>
 						<xsl:if test="count(data/*) or string-length(data)">
 							<xsl:if test="label/@show = 1">
 								<strong>

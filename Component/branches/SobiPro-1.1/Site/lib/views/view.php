@@ -775,7 +775,7 @@ abstract class SPFrontView extends SPObject implements SPView
 						),
 						'data' => $struct,
 					),
-					'_attributes' => array( 'id' => $field->get( 'id' ), 'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
+					'_attributes' => array( 'id' => $field->get( 'id' ), 'itemprop' => $field->get( 'itemprop' ),  'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
 				);
 				if ( Sobi::Cfg( 'entry.field_description', false ) ) {
 					$data[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );

@@ -72,11 +72,11 @@
 					<div class="span12">
 						<fieldset>
 							<field type="toggle" name="section.state" label="PUBLISHED" prefix="yes_no" />
-                            <field type="datePicker" label="VALID_SINCE" name="section.validSince" class="span2" dateFormat="d-m-Y H:i:s" icon="unlock" />
-                            <field type="datePicker" label="VALID_UNTIL" name="section.validUntil" class="span2" dateFormat="d-m-Y H:i:s" icon="lock" />
+                            <field type="datePicker" label="VALID_SINCE" name="section.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" />
+                            <field type="datePicker" label="VALID_UNTIL" name="section.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" />
 						</fieldset>
                         <fieldset label="CATN.EDIT_DATA">
-                            <field type="datePicker" label="CREATED_AT" name="section.createdTime" class="span2" dateFormat="d-m-Y H:i:s" icon="edit" />
+                            <field type="datePicker" label="CREATED_AT" name="section.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="edit" />
 						</fieldset>
 					</div>
 				</div>

@@ -141,7 +141,7 @@ final class SPAdmField extends SPField
 			$this->_type->save( $base );
 		}
 
-		/* get database colums and their ordering */
+		/* get database columns and their ordering */
 		$cols = $db->getColumns( 'spdb_field' );
 		$values = array();
 
