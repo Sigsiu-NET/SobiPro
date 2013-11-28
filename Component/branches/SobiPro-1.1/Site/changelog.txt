@@ -31,9 +31,13 @@ Legend:
 -------------------
 
     (+) Added support for schema.org in field model and default templates
+    (+) Passing exif data to the XML output in image field
 
     (#) Missing error text for FILE_WRONG_TYPE added.
     (#) Additional parameters in some fields are being destroyed
+    (#) No requirement to pass selected categories while editing existing entry (Issue #1106)
+    (#) Wrong config key for the default phrase (Issue #1104)
+    (#) Templates are being installed (copied) even if requirements are not satisfied
 
     (!) Changed bootstrap datepicker to datetimepicker
 

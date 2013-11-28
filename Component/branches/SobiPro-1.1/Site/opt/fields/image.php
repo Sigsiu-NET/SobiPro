@@ -464,15 +464,16 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	public function struct()
 	{
 		$files = SPConfig::unserialize( $this->getRaw() );
+		$exif = array();
 		if ( isset( $files[ 'original' ] ) ) {
 			$files[ 'orginal' ] = $files[ 'original' ];
 		}
-		if ( !( isset( $files[ 'data' ][ 'exif' ] ) ) ) {
-			$files[ 'data' ][ 'exif' ] = null;
+		if ( isset( $files[ 'data' ][ 'exif' ] ) ) {
+			$exif = $files[ 'data' ][ 'exif' ];
 		}
 		if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) ) {
-			$files[ 'data' ][ 'exif' ][ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
-			$files[ 'data' ][ 'exif' ][ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );
+			$exif[ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
+			$exif[ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );
 		}
 		$float = null;
 		if ( is_array( $files ) && count( $files ) ) {
@@ -520,14 +521,15 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				}
 				return array(
 					'_complex' => 1,
-					'_data' => array( 'img' => $data, 'exif' => $files[ 'data' ][ 'exif' ] ),
+					'_data' => array( 'img' => $data ),
 					'_attributes' => array(
 						'icon' => isset( $files[ 'ico' ] ) ? $files[ 'ico' ] : null,
 						'image' => isset( $files[ 'image' ] ) ? $files[ 'image' ] : null,
 						'thumbnail' => isset( $files[ 'thumb' ] ) ? $files[ 'thumb' ] : null,
 						'original' => isset( $files[ 'original' ] ) ? $files[ 'original' ] : null,
 						'class' => $this->cssClass
-					)
+					),
+					'_options' => array( 'exif' => $exif ),
 				);
 			}
 		}

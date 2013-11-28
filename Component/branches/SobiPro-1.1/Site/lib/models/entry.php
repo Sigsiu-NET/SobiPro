@@ -722,7 +722,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
 		}
-		else {
+		elseif ( !( count( $this->categories ) ) ) {
 			throw new SPException( SPLang::e( 'MISSING_CAT' ) );
 		}
 		/* trigger possible state changes */

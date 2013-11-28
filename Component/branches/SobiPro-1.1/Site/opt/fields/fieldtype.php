@@ -62,8 +62,8 @@ class SPFieldType extends SPObject
 		/* transform params from the basic object to the spec. field properties */
 		if ( count( $this->params ) ) {
 			foreach ( $this->params as $k => $v ) {
-				if ( property_exists( $this, $k ) ) {
-//				if ( isset( $this->$k  ) ) {
+//				if ( property_exists( $this, $k ) ) {
+				if ( isset( $this->$k  ) ) {
 					$this->$k = $v;
 				}
 			}
