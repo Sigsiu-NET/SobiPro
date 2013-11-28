@@ -158,9 +158,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 	/**
 	 * @static
-	 * @param string $msg    The error message, which may also be shown the user if need be.
+	 * @param string $msg The error message, which may also be shown the user if need be.
 	 * @param int $code The application-internal error code for this error
-	 * @param mixed $info    Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database DSN).
+	 * @param mixed $info Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database DSN).
 	 * @param bool $translate
 	 * @return object    $error    The configured JError object
 	 */
@@ -789,6 +789,12 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			}
 		}
 		if ( strlen( $title ) ) {
+			if ( JFactory::getApplication()->getCfg( 'sitename_pagetitles', 0 ) == 1 ) {
+				$title = JText::sprintf( 'JPAGETITLE', JFactory::getApplication()->getCfg( 'sitename' ), $title );
+			}
+			elseif ( JFactory::getApplication()->getCfg( 'sitename_pagetitles', 0 ) == 2 ) {
+				$title = JText::sprintf( 'JPAGETITLE', $title, JFactory::getApplication()->getCfg( 'sitename' ) );
+			}
 			$document->setTitle( SPLang::clean( html_entity_decode( $title ) ) );
 		}
 	}

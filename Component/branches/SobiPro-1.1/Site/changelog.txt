@@ -38,6 +38,7 @@ Legend:
     (#) No requirement to pass selected categories while editing existing entry (Issue #1106)
     (#) Wrong config key for the default phrase (Issue #1104)
     (#) Templates are being installed (copied) even if requirements are not satisfied
+    (#) Missing Site name in the browser title if set in Joomla! configuration (Issue #1088)
 
     (!) Changed bootstrap datepicker to datetimepicker
 
