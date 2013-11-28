@@ -1309,6 +1309,9 @@ class SPAdmView extends SPObject implements SPView
 				case 'hidden':
 					$hidden = $node->childNodes;
 					foreach ( $hidden as $field ) {
+						if ( !( $this->xmlCondition( $field ) ) ) {
+							continue;
+						}
 						/** @var DOMNode $field */
 						if ( !( strstr( $field->nodeName, '#' ) ) ) {
 							if ( $field->attributes->getNamedItem( 'const' ) && $field->attributes->getNamedItem( 'const' )->nodeValue ) {
