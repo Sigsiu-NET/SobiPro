@@ -39,7 +39,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	/** * @var string */
 	protected $searchMethod = 'general';
 	/** * @var string */
-	protected $itemprop = null;
+	protected $itemprop = '';
 
 	/**
 	 * Shows the field in the edit entry or add entry form

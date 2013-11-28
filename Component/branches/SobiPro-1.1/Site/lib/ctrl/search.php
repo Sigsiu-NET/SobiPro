@@ -174,7 +174,8 @@ class SPSearchCtrl extends SPSectionCtrl
 	{
 		$this->_request = SPRequest::search( 'field_' );
 		$this->_request[ 'search_for' ] = str_replace( '*', '%', SPRequest::string( 'sp_search_for', null ) );
-		$this->_request[ 'phrase' ] = SPRequest::string( 'spsearchphrase', Sobi::Cfg( 'search.searchphrase', 'all' ) );
+		$this->_request[ 'phrase' ] = SPRequest::string( 'spsearchphrase', Sobi::Cfg( 'search.form_searchphrase_def', 'all' ) );
+		$this->_request[ 'phrase' ] = strlen( $this->_request[ 'phrase' ] ) ? $this->_request[ 'phrase' ] : Sobi::Cfg( 'search.form_searchphrase_def', 'all' );
 		$ssid = SPRequest::cmd( 'ssid', SPRequest::cmd( 'ssid', null, 'cookie' ) );
 		$this->_fields = $this->loadFields();
 		$searchForString = false;

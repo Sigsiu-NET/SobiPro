@@ -125,13 +125,13 @@ class SPConfigAdmCtrl extends SPController
 		$id = SPLang::nid( SPRequest::string( 'templateName' ) );
 		$templates[ $id ] = array(
 			'params' => SPConfig::serialize(
-				array(
-					'trigger.unpublish' => SPRequest::bool( 'trigger_unpublish' ),
-					'trigger.unapprove' => SPRequest::bool( 'trigger_unapprove' ),
-					'unpublish' => SPRequest::bool( 'unpublish' ),
-					'discard' => SPRequest::bool( 'discard' ),
-				)
-			),
+						array(
+							'trigger.unpublish' => SPRequest::bool( 'trigger_unpublish' ),
+							'trigger.unapprove' => SPRequest::bool( 'trigger_unapprove' ),
+							'unpublish' => SPRequest::bool( 'unpublish' ),
+							'discard' => SPRequest::bool( 'discard' ),
+						)
+					),
 			'key' => $id,
 			'value' => SPRequest::string( 'templateName' ),
 			'options' => array()
@@ -346,8 +346,13 @@ class SPConfigAdmCtrl extends SPController
 			$realName = Sobi::Txt( 'TP.INFO' );
 			$iTask = Sobi::Url( array( 'task' => 'template.info', 'template' => basename( $tpl ), 'sid' => Sobi::Section() ) );
 			$nodes .= "spTpl.add( -123, 0,'{$realName}','{$iTask}', '', '', '{$ls}/info.png' );\n";
+			if ( file_exists( "{$tpl}/settings.xml" ) ) {
+				$realName = Sobi::Txt( 'TP.SETTINGS' );
+				$iTask = Sobi::Url( array( 'task' => 'template.settings', 'template' => basename( $tpl ), 'sid' => Sobi::Section() ) );
+				$nodes .= "spTpl.add( -120, 0,'{$realName}','{$iTask}', '', '', '{$ls}/globe.gif' );\n";
+			}
 		}
-		$this->traveTpl( new SPDirectoryIterator( $tpl ), $nodes, 0, $count );
+		$this->travelTpl( new SPDirectoryIterator( $tpl ), $nodes, 0, $count );
 		if ( $cmsOv ) {
 			$cms = SPFactory::CmsHelper()->templatesPath();
 			if ( is_array( $cms ) && isset( $cms[ 'name' ] ) && isset( $cms[ 'data' ] ) && is_array( $cms[ 'data' ] ) && count( $cms[ 'data' ] ) ) {
@@ -362,7 +367,7 @@ class SPConfigAdmCtrl extends SPController
 				foreach ( $cms[ 'data' ] as $name => $path ) {
 					$count++;
 					$nodes .= "spTpl.add( {$count}, {$current},'{$name}' );\n";
-					$this->traveTpl( new SPDirectoryIterator( $path ), $nodes, $count, $count, true );
+					$this->travelTpl( new SPDirectoryIterator( $path ), $nodes, $count, $count, true );
 				}
 			}
 		}
@@ -413,7 +418,7 @@ class SPConfigAdmCtrl extends SPController
 	 * @param bool $package
 	 * @return void
 	 */
-	private function traveTpl( $dir, &$nodes, $current, &$count, $package = false )
+	private function travelTpl( $dir, &$nodes, $current, &$count, $package = false )
 	{
 		$ls = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ) . '/tree' );
 		static $root = null;
@@ -422,36 +427,42 @@ class SPConfigAdmCtrl extends SPController
 		}
 		foreach ( $dir as $file ) {
 			$task = null;
-			$fname = $file->getFilename();
-			if ( $file->isDot() ) {
+			$fileName = $file->getFilename();
+			if ( $file->isDot() || $fileName == 'settings.xml' ) {
 				continue;
 			}
 			$count++;
 			if ( $file->isDir() ) {
 				if ( $current == 0 || $package ) {
 					if ( strstr( $file->getPathname(), $root->getPathname() ) ) {
-						$fpath = str_replace( $root->getPathname() . '/usr/templates/', null, $file->getPathname() );
+						$filePath = str_replace( $root->getPathname() . '/usr/templates/', null, $file->getPathname() );
 					}
 					else {
-						$fpath = 'cms:' . str_replace( SOBI_ROOT . DS, null, $file->getPathname() );
+						$filePath = 'cms:' . str_replace( SOBI_ROOT . '/', null, $file->getPathname() );
 					}
-					$fpath = str_replace( '/', '.', $fpath );
-					$itask = Sobi::Url( array( 'task' => 'template.info', 'template' => $fpath ) );
-					$nodes .= "spTpl.add( {$count}, {$current},'{$fname}','', '', '', '{$ls}/imgfolder.gif', '{$ls}/imgfolder.gif' );\n";
+					$filePath = str_replace( '/', '.', $filePath );
+					$insertTask = Sobi::Url( array( 'task' => 'template.info', 'template' => $filePath ) );
+					$nodes .= "spTpl.add( {$count}, {$current},'{$fileName}','', '', '', '{$ls}/imgfolder.gif', '{$ls}/imgfolder.gif' );\n";
 					if ( !( Sobi::Section() ) ) {
 						$count2 = $count * -100;
-						$fname = Sobi::Txt( 'TP.INFO' );
-						$nodes .= "spTpl.add( {$count2}, {$count},'{$fname}','{$itask}', '', '', '{$ls}/info.png' );\n";
+						$fileName = Sobi::Txt( 'TP.INFO' );
+						$nodes .= "spTpl.add( {$count2}, {$count},'{$fileName}','{$insertTask}', '', '', '{$ls}/info.png' );\n";
+						if ( file_exists( $file->getPathname() . "/settings.xml" ) ) {
+							$fileName = Sobi::Txt( 'TP.SETTINGS' );
+							$count2--;
+							$insertTask = Sobi::Url( array( 'task' => 'template.settings', 'template' => $filePath ) );
+							$nodes .= "spTpl.add( {$count2}, {$count},'{$fileName}','{$insertTask}', '', '', '{$ls}/globe.gif' );\n";
+						}
 					}
 				}
 				else {
-					$nodes .= "spTpl.add( {$count}, {$current},'{$fname}','');\n";
+					$nodes .= "spTpl.add( {$count}, {$current},'{$fileName}','');\n";
 				}
-				$this->traveTpl( new SPDirectoryIterator( $file->getPathname() ), $nodes, $count, $count );
+				$this->travelTpl( new SPDirectoryIterator( $file->getPathname() ), $nodes, $count, $count );
 			}
 			else {
-				$ext = SPFs::getExt( $fname );
-				if ( in_array( $ext, array( 'htaccess', 'zip' ) ) || $fname == 'index.html' ) {
+				$ext = SPFs::getExt( $fileName );
+				if ( in_array( $ext, array( 'htaccess', 'zip' ) ) || $fileName == 'index.html' ) {
 					continue;
 				}
 				switch ( strtolower( $ext ) ) {
@@ -478,20 +489,20 @@ class SPConfigAdmCtrl extends SPController
 				}
 				if ( !( $task ) ) {
 					if ( strstr( $file->getPathname(), $root->getPathname() ) ) {
-						$fpath = str_replace( $root->getPathname() . '/usr/templates/', null, $file->getPathname() );
+						$filePath = str_replace( $root->getPathname() . '/usr/templates/', null, $file->getPathname() );
 					}
 					else {
-						$fpath = 'cms:' . str_replace( SOBI_ROOT . DS, null, $file->getPathname() );
+						$filePath = 'cms:' . str_replace( SOBI_ROOT . DS, null, $file->getPathname() );
 					}
-					$fpath = str_replace( '/', '.', $fpath );
+					$filePath = str_replace( '/', '.', $filePath );
 					if ( Sobi::Section() ) {
-						$task = Sobi::Url( array( 'task' => 'template.edit', 'file' => $fpath, 'sid' => Sobi::Section() ) );
+						$task = Sobi::Url( array( 'task' => 'template.edit', 'file' => $filePath, 'sid' => Sobi::Section() ) );
 					}
 					else {
-						$task = Sobi::Url( array( 'task' => 'template.edit', 'file' => $fpath ) );
+						$task = Sobi::Url( array( 'task' => 'template.edit', 'file' => $filePath ) );
 					}
 				}
-				$nodes .= "spTpl.add( {$count}, {$current},'{$fname}','{$task}', '', '', '{$ico}' );\n";
+				$nodes .= "spTpl.add( {$count}, {$current},'{$fileName}','{$task}', '', '', '{$ico}' );\n";
 			}
 		}
 	}

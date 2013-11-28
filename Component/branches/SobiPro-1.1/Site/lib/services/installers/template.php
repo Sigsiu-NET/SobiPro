@@ -35,6 +35,13 @@ class SPTemplateInstaller extends SPInstaller
 		if ( SPLoader::dirPath( 'usr.templates.' . $id ) && !( SPRequest::bool( 'force' ) ) ) {
 			throw new SPException( SPLang::e( 'TEMPLATE_INST_DUPLICATE', $name ) . ' ' . Sobi::Txt( 'FORCE_TPL_UPDATE', Sobi::Url( array( 'task' => 'extensions.install', 'force' => 1, 'root' => basename( $this->root ) . '/' . basename( $this->xmlFile ) ) ) ) );
 		}
+
+		$requirements = $this->xGetChilds( 'requirements/*' );
+		if ( $requirements && ( $requirements instanceof DOMNodeList ) ) {
+			SPFactory::Instance( 'services.installers.requirements' )
+					->check( $requirements );
+		}
+
 		$path = SPLoader::dirPath( 'usr.templates.' . $id, 'front', false );
 		if ( SPRequest::bool( 'force' ) ) {
 			/** @var $from SPDirectory */
@@ -46,11 +53,6 @@ class SPTemplateInstaller extends SPInstaller
 				throw new SPException( SPLang::e( 'CANNOT_MOVE_DIRECTORY', $this->root, $path ) );
 			}
 		}
-		$requirements = $this->xGetChilds( 'requirements/*' );
-		if ( $requirements && ( $requirements instanceof DOMNodeList ) ) {
-			$reqCheck =& SPFactory::Instance( 'services.installers.requirements' );
-			$reqCheck->check( $requirements );
-		}
 
 		if ( !( SPRequest::bool( 'force' ) ) ) {
 			$section = $this->xGetChilds( 'install' );
@@ -61,7 +63,7 @@ class SPTemplateInstaller extends SPInstaller
 
 		$exec = $this->xGetString( 'exec' );
 		if ( $exec && SPFs::exists( $this->root . DS . $exec ) ) {
-			include_once $this->root . DS . $exec;
+			include_once( "{$this->root}/{$exec}");
 		}
 		/** @var $dir SPDirectory */
 		$dir =& SPFactory::Instance( 'base.fs.directory', $path );
