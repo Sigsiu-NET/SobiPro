@@ -39,6 +39,8 @@ Legend:
     (#) Wrong config key for the default phrase (Issue #1104)
     (#) Templates are being installed (copied) even if requirements are not satisfied
     (#) Missing Site name in the browser title if set in Joomla! configuration (Issue #1088)
+    (#) Missing argument 3 for SPField_Category (Issue #1079)
+    (#) Added legacy layer for multiple predefined data (Issue #1078)
 
     (!) Changed bootstrap datepicker to datetimepicker
 

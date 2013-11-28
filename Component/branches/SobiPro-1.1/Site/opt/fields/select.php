@@ -235,7 +235,6 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 					'ldata.fid' => $this->id
 				), $order, 0, 0, true /*, 'sdata.copy' */ );
 			$data = $db->loadObjectList( 'language' );
-//            SPConfig::debOut($data);
 			if ( $data ) {
 				if ( isset( $data[ Sobi::Lang() ] ) ) {
 					$data = $data[ Sobi::Lang() ];
@@ -644,7 +643,19 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$sids = array();
 		/* check if there was something to search for */
 		if ( ( is_array( $request ) && count( $request ) ) || ( is_string( $request ) && strlen( $request ) ) ) {
-			$db =& SPFactory::db();
+			/** @var SPDb $db */
+			$db = SPFactory::db();
+			// legacy stuff - we need to search for _ and - as white space replacement
+			if ( is_array( $request ) ) {
+				foreach ( $request as $option ) {
+					if ( strstr( $option, '-' ) ) {
+						$request[] = str_replace( '-', '_', $option );
+					}
+					elseif ( strstr( $option, '-' ) ) {
+						$request[] = str_replace( '-', '_', $option );
+					}
+				}
+			}
 			try {
 				/* if we are searching for multiple options
 				 * and the field contains 'predefined_multi_data_multi_choice'
@@ -715,8 +726,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 
 	public function compareRevisions( $revision, $current )
 	{
-		if( is_array( $revision ) || is_array( $current ))
-		{
+		if ( is_array( $revision ) || is_array( $current ) ) {
 			if ( is_array( $current ) ) {
 				ksort( $current );
 				$cur = implode( "\n", ( $current ) );
