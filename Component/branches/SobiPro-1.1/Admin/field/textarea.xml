@@ -89,7 +89,6 @@
 									<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 								</fieldset>
 
-
 								<fieldset label="FMN.FIELD_ENTRYINPUT_HTML">
 									<field type="toggle" name="field.editor" value="field.editor" label="FM.TXT.ENABLE_WYSIWYG" prefix="yes_no" />
 									<field type="select" name="field.allowHtml" selected="field.allowHtml" label="FM.TXT.ALLOW_HTML" class="input-large">
@@ -135,6 +134,7 @@
 											<option value="hidden" label="FMN.HIDDEN_OPT" />
 										</values>
 									</field>
+									<field type="text" name="field.itemprop" label="FMN.ITEMPROP" />
 									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
 									<field type="toggle" name="field.parse" value="field.parse" label="FM.TXT.PARSE_CONTENT" prefix="yes_no" />
 								</fieldset>

@@ -144,6 +144,7 @@
 											<option value="hidden" label="FMN.HIDDEN_OPT" />
 										</values>
 									</field>
+									<field type="text" name="field.itemprop" label="FMN.ITEMPROP" />
 									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
 									<field type="select" name="field.inVcard" selected="field.inVcard" label="FM.IMG.SHOW_IN_V_CARD" class="input-medium">
 										<values>
