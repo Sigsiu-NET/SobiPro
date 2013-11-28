@@ -30,7 +30,10 @@ Legend:
 1.1.4 ()
 -------------------
 
+    (+) Added support for schema.org in field model and default templates
+
     (#) Missing error text for FILE_WRONG_TYPE added.
+    (#) Additional parameters in some fields are being destroyed
 
     (!) Changed bootstrap datepicker to datetimepicker
 

@@ -26,28 +26,20 @@ SPLoader::loadClass( 'opt.fields.fieldtype' );
  */
 class SPField_Inbox extends SPFieldType implements SPFieldInterface
 {
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	protected $maxLength = 150;
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	protected $width = 350;
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $cssClass = "";
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $searchRangeValues = "";
 	/** @var bool */
 	protected $freeRange = false;
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $searchMethod = 'general';
+	/** * @var string */
+	protected $itemprop = null;
 
 	/**
 	 * Shows the field in the edit entry or add entry form
