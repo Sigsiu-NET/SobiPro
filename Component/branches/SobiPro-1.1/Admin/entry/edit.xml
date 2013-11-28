@@ -213,7 +213,7 @@
 			<field name="method" default="xhr" />
 			<field name="sp-language" default="" />
 			<field name="sid" value="entry.sid" />
-			<field name="history-note" default=""/>
+			<field name="history-note" default="" condition="history.length"/>
 		</hidden>
 	</config>
 </definition>
