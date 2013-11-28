@@ -676,7 +676,7 @@ class SPField extends SPObject
 			return $this->getRaw();
 		}
 		if ( isset( $this->$attr ) ) {
-			return $this->$attr;
+			return is_string( $this->$attr ) && class_exists( 'SPLang' ) ? SPLang::clean( $this->$attr ) : $this->$attr;
 		}
 		if ( !( $this->_type ) && !( $this->_off ) ) {
 			$this->fullInit();

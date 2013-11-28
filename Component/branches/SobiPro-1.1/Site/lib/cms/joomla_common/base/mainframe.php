@@ -789,11 +789,13 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			}
 		}
 		if ( strlen( $title ) ) {
-			if ( JFactory::getApplication()->getCfg( 'sitename_pagetitles', 0 ) == 1 ) {
-				$title = JText::sprintf( 'JPAGETITLE', JFactory::getApplication()->getCfg( 'sitename' ), $title );
-			}
-			elseif ( JFactory::getApplication()->getCfg( 'sitename_pagetitles', 0 ) == 2 ) {
-				$title = JText::sprintf( 'JPAGETITLE', $title, JFactory::getApplication()->getCfg( 'sitename' ) );
+			if ( !( defined( 'SOBIPRO_ADM' ) ) ) {
+				if ( JFactory::getApplication()->getCfg( 'sitename_pagetitles', 0 ) == 1 ) {
+					$title = JText::sprintf( 'JPAGETITLE', JFactory::getApplication()->getCfg( 'sitename' ), $title );
+				}
+				elseif ( JFactory::getApplication()->getCfg( 'sitename_pagetitles', 0 ) == 2 ) {
+					$title = JText::sprintf( 'JPAGETITLE', $title, JFactory::getApplication()->getCfg( 'sitename' ) );
+				}
 			}
 			$document->setTitle( SPLang::clean( html_entity_decode( $title ) ) );
 		}
