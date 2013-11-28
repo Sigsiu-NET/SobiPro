@@ -123,6 +123,7 @@
 											<option value="hidden" label="FMN.HIDDEN_OPT" />
 										</values>
 									</field>
+									<field type="text" name="field.itemprop" label="FMN.ITEMPROP" />
 									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYVIEW_META">
