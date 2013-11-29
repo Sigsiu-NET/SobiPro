@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -34,7 +30,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * @var int
 	 */
-	protected $maxLength =  0;
+	protected $maxLength = 0;
 	/**
 	 * @var int
 	 */
@@ -63,10 +59,10 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	 */
 	public function field( $return = false )
 	{
-		if( !( $this->enabled ) ) {
+		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$class =  $this->required ? $this->cssClass.' required' : $this->cssClass;
+		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 // Switched to Ajax validation
 //		if( $this->maxLength ) {
 //			if( !( $this->editor ) ) {
@@ -88,11 +84,11 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 //			}
 //		}
 		$params = array( 'id' => $this->nid, 'class' => $class );
-		if( $this->maxLength ) {
+		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
 		$field = SPHtml_Input::textarea( $this->nid, $this->getRaw(), $this->editor, $this->width, $this->height, $params );
-		if( !$return ) {
+		if ( !$return ) {
 			echo $field;
 		}
 		else {
@@ -107,9 +103,9 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	{
 		$data = $this->data();
 		$attributes = array();
-		if( strlen( $data ) ) {
+		if ( strlen( $data ) ) {
 			$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData';
-			$this->cssClass = $this->cssClass.' '.$this->nid;
+			$this->cssClass = $this->cssClass . ' ' . $this->nid;
 			$this->cleanCss();
 			$attributes = array(
 				'lang' => Sobi::Lang(),
@@ -119,7 +115,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		else {
 			$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spField';
 		}
-		if( !( $this->editor || $this->allowHtml ) ) {
+		if ( !( $this->editor || $this->allowHtml ) ) {
 			$data = nl2br( $data );
 		}
 		return array(
@@ -127,7 +123,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			'_data' => $data,
 			'_attributes' => $attributes
 		);
-}
+	}
 
 	/**
 	 * @param SPEntry $entry
@@ -140,30 +136,37 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		$data = SPRequest::raw( $this->nid, null, $request );
 		$dexs = strlen( $data );
 		/* check if it was required */
-		if( $this->required && !( $dexs ) ) {
+		if ( $this->required && !( $dexs ) ) {
 			throw new SPException( SPLang::e( 'FIELD_REQUIRED_ERR', $this->name ) );
 		}
-		if( $dexs ) {
+		if ( $dexs ) {
 			/* check if there was an adminField */
-			if( $this->adminField ) {
-				if( !( Sobi:: Can( 'entry.adm_fields.edit' ) ) ) {
+			if ( $this->adminField ) {
+				if ( !( Sobi:: Can( 'entry.adm_fields.edit' ) ) ) {
 					throw new SPException( SPLang::e( 'FIELD_NOT_AUTH', $this->get( 'name' ) ) );
 				}
 			}
 			/* check if it was free */
-			if( !( $this->isFree ) && $this->fee ) {
+			if ( !( $this->isFree ) && $this->fee ) {
 				SPFactory::payment()->add( $this->fee, $this->name, $entry->get( 'id' ), $this->fid );
 			}
 			/* check if it was editLimit */
-			if( $this->editLimit == 0 && !( Sobi::Can( 'entry.adm_fields.edit' ) ) ) {
+			if ( $this->editLimit == 0 && !( Sobi::Can( 'entry.adm_fields.edit' ) ) ) {
 				throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_EXP', $this->name ) );
 			}
 			/* check if it was editable */
-			if( !( $this->editable ) && !( Sobi::Can( 'entry.adm_fields.edit' ) ) && $entry->get( 'version' ) > 1 ) {
+			if ( !( $this->editable ) && !( Sobi::Can( 'entry.adm_fields.edit' ) ) && $entry->get( 'version' ) > 1 ) {
 				throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_NOT_ED', $this->name ) );
 			}
-			if( $this->maxLength && $dexs > $this->maxLength ) {
-				throw new SPException( SPLang::e( 'FIELD_TEXTAREA_LIMIT', $this->maxLength, $this->name, $dexs ) );
+			if ( $this->allowHtml ) {
+				if ( $this->maxLength && strip_tags( $dexs ) > $this->maxLength ) {
+					throw new SPException( SPLang::e( 'FIELD_TEXTAREA_LIMIT', $this->maxLength, $this->name, $dexs ) );
+				}
+			}
+			else {
+				if ( $this->maxLength && $dexs > $this->maxLength ) {
+					throw new SPException( SPLang::e( 'FIELD_TEXTAREA_LIMIT', $this->maxLength, $this->name, $dexs ) );
+				}
 			}
 		}
 		$data = SPRequest::string( $this->nid, null, true, $request );
@@ -181,7 +184,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{
 		$data = $this->verify( $entry, $request );
-		if( strlen( $data ) ) {
+		if ( strlen( $data ) ) {
 			return SPRequest::search( $this->nid, $request );
 		}
 		else {
@@ -206,7 +209,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	 */
 	public function saveData( &$entry, $request = 'POST' )
 	{
-		if( !( $this->enabled ) ) {
+		if ( !( $this->enabled ) ) {
 			return false;
 		}
 
@@ -219,17 +222,17 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 
-		if( $this->allowHtml ) {
+		if ( $this->allowHtml ) {
 			/* filter data */
-			if( count( $this->allowedAttributes ) ) {
+			if ( count( $this->allowedAttributes ) ) {
 				SPRequest::setAttributesAllowed( $this->allowedAttributes );
 			}
-			if( count( $this->allowedTags ) ) {
+			if ( count( $this->allowedTags ) ) {
 				SPRequest::setTagsAllowed( $this->allowedTags );
 			}
 			$data = SPRequest::string( $this->nid, null, $this->allowHtml, $request );
 			SPRequest::resetFilter();
-			if( !( $this->editor ) && $this->maxLength && ( strlen( $data ) > $this->maxLength ) ) {
+			if ( !( $this->editor ) && $this->maxLength && ( strlen( $data ) > $this->maxLength ) ) {
 				$data = substr( $data, 0, $this->maxLength );
 			}
 		}
@@ -252,7 +255,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		$params[ 'approved' ] = $entry->get( 'approved' );
 		$params[ 'confirmed' ] = $entry->get( 'confirmed' );
 		/* if it is the first version, it is new entry */
-		if( $entry->get( 'version' ) == 1 ) {
+		if ( $entry->get( 'version' ) == 1 ) {
 			$params[ 'createdTime' ] = $time;
 			$params[ 'createdBy' ] = $uid;
 			$params[ 'createdIP' ] = $IP;
@@ -261,7 +264,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		$params[ 'updatedBy' ] = $uid;
 		$params[ 'updatedIP' ] = $IP;
 		$params[ 'copy' ] = !( $entry->get( 'approved' ) );
-		if( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
+		if ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
 			--$this->editLimit;
 		}
 		$params[ 'editLimit' ] = $this->editLimit;
@@ -269,18 +272,16 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		/* save it */
 		try {
 			$db->insertUpdate( 'spdb_field_data', $params );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
 		/* if it wasn't edited in the default language, we have to try to insert it also for def lang */
-		if( Sobi::Lang() != Sobi::DefLang() ) {
+		if ( Sobi::Lang() != Sobi::DefLang() ) {
 			$params[ 'lang' ] = Sobi::DefLang();
 			try {
 				$db->insert( 'spdb_field_data', $params, true, true );
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
