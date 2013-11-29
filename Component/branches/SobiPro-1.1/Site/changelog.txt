@@ -49,6 +49,7 @@ Legend:
     (#) Double directory separator in the 'SOBI_MEDIA_LIVE' definition (Issue #1062)
     (#) Translation method returns NID instead of name (Issue #1060)
     (#) Disabling storing XML cache when template override is enabled (Issue #1064)
+    (#) Unapproved images are being displayed for unauthorised users (Issue #1095)
 
     (!) Changed bootstrap datepicker to datetimepicker
     (!) Textarea field with allowed HTML input ignores HTML markup while checking the allowed length
