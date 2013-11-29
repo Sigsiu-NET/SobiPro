@@ -267,8 +267,12 @@ class SPConfigAdmView extends SPAdmView implements SPView
 		if ( count( $fields ) ) {
 			foreach ( $fields as $fid => $field ) {
 				if ( $ordering ) {
-					$fData[ $field->get( 'nid' ) . '.asc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt('EMN.ORDER_BY_FIELD_ASC');
-                    $fData[ $field->get( 'nid' ) . '.desc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt('EMN.ORDER_BY_FIELD_DESC');
+					try {
+						$fData = $field->setCustomOrdering( $fData );
+					} catch ( SPException $x ) {
+						$fData[ $field->get( 'nid' ) . '.asc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt('EMN.ORDER_BY_FIELD_ASC');
+	                    $fData[ $field->get( 'nid' ) . '.desc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt('EMN.ORDER_BY_FIELD_DESC');
+					}
 				}
 				else {
 					$fData[ $fid ] = $field->get( 'name' );

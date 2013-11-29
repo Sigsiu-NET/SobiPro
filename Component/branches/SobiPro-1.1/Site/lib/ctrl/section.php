@@ -292,10 +292,17 @@ class SPSectionCtrl extends SPController
 					$field = SPLoader::loadClass( 'opt.fields.' . $fType );
 				}
 			}
-			if ( $field && method_exists( $field, 'sortBy' ) ) {
+			if ( $field && method_exists( $field, 'customOrdering' ) ) {
 				$table = null;
 				$oPrefix = null;
-				$specificMethod = call_user_func_array( array( $field, 'sortBy' ), array( &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ) );
+//				$specificMethod = call_user_func_array( array( $field, 'customOrdering' ), array( &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ) );
+				$specificMethod = $field->customOrdering( $table, $conditions, $oPrefix, $eOrder, $eDir );
+			}
+			elseif ( $field && method_exists( $field, 'sortBy' ) ) {
+				$table = null;
+				$oPrefix = null;
+				$specificMethod = $field->sortBy( $table, $conditions, $oPrefix, $eOrder, $eDir );
+//				$specificMethod = call_user_func_array( array( $field, 'sortBy' ), array( &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ) );
 			}
 			if ( !$specificMethod ) {
 				$table = $db->join(
