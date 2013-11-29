@@ -580,11 +580,10 @@ class SPConfigAdmCtrl extends SPController
 			}
 		}
 
-		/* @var SPdb $db */
-		$db =& SPFactory::db();
 		try {
-			$db->select( 'fid', 'spdb_field', array( 'fieldType' => $types, 'section' => Sobi::Reg( 'current_section' ) ) );
-			$fids = $db->loadResultArray();
+			$fids = SPFactory::db()
+					->select( 'fid', 'spdb_field', array( 'fieldType' => $types, 'section' => Sobi::Reg( 'current_section' ) ) )
+					->loadResultArray();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_FOR_NAMES', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
@@ -593,7 +592,11 @@ class SPConfigAdmCtrl extends SPController
 			foreach ( $fids as $fid ) {
 				$f = SPFactory::Model( 'field', true );
 				$f->init( $fid );
-				$fields[ $fid ] = $f;
+				try {
+					$f->setCustomOrdering( $fields );
+				} catch ( SPException $x ) {
+					$fields[ $fid ] = $f;
+				}
 			}
 		}
 		$cache[ $pos ? 'pos' : 'npos' ] = $fields;
