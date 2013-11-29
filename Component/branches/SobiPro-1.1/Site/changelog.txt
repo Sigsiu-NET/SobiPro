@@ -46,6 +46,7 @@ Legend:
     (#) Preventing invalid category id in category field when set to fixed choice (Issue #1075)
     (#) Allowing float values in range search (Issue #1074)
     (#) Reverse title key fixed (Issue #1067)
+    (#) Double directory separator in the 'SOBI_MEDIA_LIVE' definition (Issue #1062)
 
     (!) Changed bootstrap datepicker to datetimepicker
 

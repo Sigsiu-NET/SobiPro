@@ -38,7 +38,7 @@ else {
 define( 'SOBI_ACL', 'front' );
 define( 'SOBI_ROOT', JPATH_ROOT );
 define( 'SOBI_MEDIA', implode( DS, array( JPATH_ROOT, 'media', 'sobipro' ) ) );
-define( 'SOBI_MEDIA_LIVE', JURI::root().'/media/sobipro' );
+define( 'SOBI_MEDIA_LIVE', JURI::root().'media/sobipro' );
 define( 'SOBI_PATH', SOBI_ROOT.'/components/com_sobipro' );
 define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );
 require_once ( SOBI_PATH.'/lib/base/fs/loader.php' );
