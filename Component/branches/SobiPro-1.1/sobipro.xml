@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>SobiPro</name>
-    <creationDate>21 October 2013</creationDate>
+	<creationDate>29 November 2013</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2013 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.1.3</version>
+	<version>1.1.4.A</version>
 	<codename>Budgie</codename>
 	<description></description>
-	<version_number>1.1.3</version_number>
+	<version_number>1.1.4.A</version_number>
 	<SobiPro>
 		<requirements>
 			<core version="1.1.0.2625" />
@@ -28,9 +28,9 @@
 		<filename>sobipro.php</filename>
 		<filename>changelog.txt</filename>
 		<filename>metadata.xml</filename>
-        <filename>gplv3.txt</filename>
-        <filename>gplv3addterms.txt</filename>
-        <filename>.htaccess</filename>
+		<filename>gplv3.txt</filename>
+		<filename>gplv3addterms.txt</filename>
+		<filename>.htaccess</filename>
 	</files>
 	<installfile>install.php</installfile>
 	<uninstallfile>uninstall.php</uninstallfile>
@@ -46,14 +46,14 @@
 	</languages>
 	<media folder="Site/media" destination="sobipro">
 		<folder>css</folder>
-        <folder>images</folder>
-        <folder>adm</folder>
+		<folder>images</folder>
+		<folder>adm</folder>
 		<folder>browser</folder>
-        <folder>tree</folder>
-        <folder>styles</folder>
-        <folder>progress</folder>
-        <folder>icons</folder>
-        <folder>32x32</folder>
+		<folder>tree</folder>
+		<folder>styles</folder>
+		<folder>progress</folder>
+		<folder>icons</folder>
+		<folder>32x32</folder>
 		<filename>donate.png</filename>
 		<filename>jointheclub.png</filename>
 		<filename>sp_16.png</filename>
@@ -76,7 +76,7 @@
 			<folder>template</folder>
 			<filename>sobipro.php</filename>
 			<filename>install.sql</filename>
-            <filename>default.php</filename>
+			<filename>default.php</filename>
 		</files>
 		<files>
 			<filename>sobipro.xml</filename>
@@ -85,9 +85,9 @@
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.js.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.about.ini</language>
-            <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.sys.ini</language>
-            <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.messages.ini</language>
-            <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.check.ini</language>
+			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.sys.ini</language>
+			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.messages.ini</language>
+			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.check.ini</language>
 		</languages>
 	</administration>
 </install>

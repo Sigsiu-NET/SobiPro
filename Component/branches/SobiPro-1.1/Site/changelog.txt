@@ -48,6 +48,7 @@ Legend:
     (#) Reverse title key fixed (Issue #1067)
     (#) Double directory separator in the 'SOBI_MEDIA_LIVE' definition (Issue #1062)
     (#) Translation method returns NID instead of name (Issue #1060)
+    (#) Disabling storing XML cache when template override is enabled (Issue #1064)
 
     (!) Changed bootstrap datepicker to datetimepicker
     (!) Textarea field with allowed HTML input ignores HTML markup while checking the allowed length
