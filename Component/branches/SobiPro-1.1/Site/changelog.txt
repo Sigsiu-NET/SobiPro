@@ -45,6 +45,7 @@ Legend:
     (#) When entry history is disabled, editing entries in backend keeps asking for reason (Issue #1077)
     (#) Preventing invalid category id in category field when set to fixed choice (Issue #1075)
     (#) Allowing float values in range search (Issue #1074)
+    (#) Reverse title key fixed (Issue #1067)
 
     (!) Changed bootstrap datepicker to datetimepicker
 

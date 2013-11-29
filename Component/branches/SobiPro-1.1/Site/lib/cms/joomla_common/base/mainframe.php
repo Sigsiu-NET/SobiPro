@@ -767,26 +767,21 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			}
 			//if ( Sobi::Cfg( 'browser.full_title', true ) || true ) {
 			//browser.full_title = true: if title is array, use only the last. That's e.g. the entry name without categories for SobiPro standard title
-			if ( Sobi::Cfg( 'browser.full_title', true ) ) {
-				//browser.reverse_title = true -> reverses the content of the title array so that e.g. the entry name is first
-				if ( Sobi::Cfg( 'browser.reverse_title', false ) ) {
-					$title = array_reverse( $title );
-				}
-				$title = implode( Sobi::Cfg( 'browser.title_separator', ' - ' ), $title );
-			}
-			else {
-				if ( count( $title ) ) {
-					if ( is_array( $title ) ) {
-						$title = implode( Sobi::Cfg( 'browser.title_separator', ' - ' ), $title );
+			if ( count( $title ) ) {
+				if ( is_array( $title ) ) {
+					if ( Sobi::Cfg( 'browser.reverse_title', false ) ) {
+						$title = array_reverse( $title );
 					}
-					else {
-						$title = isset( $title[ count( $title ) - 1 ] ) ? $title[ count( $title ) - 1 ] : $title[ 0 ];
-					}
+					$title = implode( Sobi::Cfg( 'browser.title_separator', ' - ' ), $title );
 				}
 				else {
-					$title = null;
+					$title = isset( $title[ count( $title ) - 1 ] ) ? $title[ count( $title ) - 1 ] : $title[ 0 ];
 				}
 			}
+			else {
+				$title = null;
+			}
+
 		}
 		if ( strlen( $title ) ) {
 			if ( !( defined( 'SOBIPRO_ADM' ) ) ) {
