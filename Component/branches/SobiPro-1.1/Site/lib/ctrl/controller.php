@@ -399,6 +399,9 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		/* determine template file */
 		$template = SPRequest::cmd( 'sptpl', $this->_task );
+		if ( strlen( $template ) ) {
+			SPFactory::registry()->set( 'break_cache_view', $template );
+		}
 		if ( strstr( $template, '.' ) ) {
 			$template = explode( '.', $template );
 			$this->templateType = $template[ 0 ];
