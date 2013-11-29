@@ -493,9 +493,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 								/* if it has been already set - check if it is not better language choose */
 								if ( isset( $fieldsdata[ $data->fid ] ) ) {
 									/*
-											  * I know - the whole thing could be shorter
-											  * but it is better to understand and debug this way
-											  */
+									 * I know - the whole thing could be shorter
+									 * but it is better to understand and debug this way
+									 */
 									if ( $data->lang == $lang ) {
 										if ( $noCopy ) {
 											if ( !( $data->copy ) ) {
@@ -533,7 +533,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 					/* @var SPField $field */
 					$field = SPFactory::Model( 'field', defined( 'SOBIPRO_ADM' ) );
 					$field->extend( $f );
-					$field->loadData( $this->id );
+					if ( isset( $fieldsdata[ $f->fid ] ) ) {
+						$field->loadData( $this->id );
+					}
 					$this->fields[ ] = $field;
 					$this->fieldsNids[ $field->get( 'nid' ) ] = $this->fields[ count( $this->fields ) - 1 ];
 					$this->fieldsIds[ $field->get( 'fid' ) ] = $this->fields[ count( $this->fields ) - 1 ];
