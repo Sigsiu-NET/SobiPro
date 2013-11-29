@@ -37,12 +37,13 @@ abstract class SPFactory
 	}
 
 	/**
+	 * @param int $sid
 	 * @return SPCache
 	 */
-	public static function & cache()
+	public static function & cache( $sid = 0 )
 	{
 		SPLoader::loadClass( 'base.cache' );
-		return SPCache::getInstance();
+		return SPCache::getInstance( $sid );
 	}
 
 	/**
