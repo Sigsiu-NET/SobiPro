@@ -63,7 +63,7 @@ class SPFieldType extends SPObject
 		if ( count( $this->params ) ) {
 			foreach ( $this->params as $k => $v ) {
 //				if ( property_exists( $this, $k ) ) {
-				if ( isset( $this->$k  ) ) {
+				if ( isset( $this->$k ) ) {
 					$this->$k = $v;
 				}
 			}
@@ -160,8 +160,10 @@ class SPFieldType extends SPObject
 	{
 		$sids = array();
 		if ( $request[ 'from' ] || $request[ 'to' ] ) {
-			$request[ 'from' ] = isset( $request[ 'from' ] ) ? (int)$request[ 'from' ] : SPC::NO_VALUE;
-			$request[ 'to' ] = isset( $request[ 'to' ] ) ? (int)$request[ 'to' ] : SPC::NO_VALUE;
+			$request[ 'from' ] = isset( $request[ 'from' ] ) ? $request[ 'from' ] : SPC::NO_VALUE;
+			$request[ 'to' ] = isset( $request[ 'to' ] ) ? $request[ 'to' ] : SPC::NO_VALUE;
+			$request[ 'from' ] = strstr( $request[ 'from' ], '.' ) ? ( floatval( $request[ 'from' ] ) ) : (int)$request[ 'from' ];
+			$request[ 'to' ] = strstr( $request[ 'to' ], '.' ) ? ( floatval( $request[ 'to' ] ) ) : (int)$request[ 'to' ];
 			try {
 				$sids = SPFactory::db()
 						->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $request, 'section' => $section ) )
