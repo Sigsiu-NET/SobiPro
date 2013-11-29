@@ -43,6 +43,7 @@ Legend:
     (#) Added legacy layer for multiple predefined data (Issue #1078)
     (#) Special characters in field label not escaped (Issue #1087)
     (#) When entry history is disabled, editing entries in backend keeps asking for reason (Issue #1077)
+    (#) Preventing invalid category id in category field when set to fixed choice (Issue #1075)
 
     (!) Changed bootstrap datepicker to datetimepicker
 
