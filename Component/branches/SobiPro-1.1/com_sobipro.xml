@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade" overwrite="true">
-    <name>SobiPro</name>
-    <creationDate>29 November 2013</creationDate>
-    <author>Sigsiu.NET GmbH</author>
-    <authorEmail>sobi[at]sigsiu.net</authorEmail>
-    <authorUrl>http://www.Sigsiu.NET</authorUrl>
-    <copyright>Copyright (C) 2006-2013 Sigsiu.NET GmbH</copyright>
-    <license>GNU General Public License v3</license>
-    <version>1.1.4.A</version>
-    <codename>Budgie</codename>
-    <description></description>
-    <version_number>1.1.4.A</version_number>
-    <svn>$Revision$</svn>
-    <SobiPro>
-	  <requirements>
-	    <core version="1.0.0.2625"/>
-	  </requirements>
-    </SobiPro>
+	<name>SobiPro</name>
+	<creationDate>04 December 2013</creationDate>
+	<author>Sigsiu.NET GmbH</author>
+	<authorEmail>sobi[at]sigsiu.net</authorEmail>
+	<authorUrl>http://www.Sigsiu.NET</authorUrl>
+	<copyright>Copyright (C) 2006-2013 Sigsiu.NET GmbH</copyright>
+	<license>GNU General Public License v3</license>
+	<version>1.1.4.B</version>
+	<codename>Budgie</codename>
+	<description></description>
+	<version_number>1.1.4.B</version_number>
+	<svn>$Revision$</svn>
+	<SobiPro>
+		<requirements>
+			<core version="1.0.0.2625" />
+		</requirements>
+	</SobiPro>
 	<install>
 		<sql>
 			<file charset="utf8" driver="mysql">install16.sql</file>
 		</sql>
 	</install>
-    <scriptfile>spinstall.php</scriptfile>
+	<scriptfile>spinstall.php</scriptfile>
 	<files folder="Site">
-        <folder>etc</folder>
-        <folder>lib</folder>
-        <folder>media</folder>
-        <folder>opt</folder>
-        <folder>tmp</folder>
-        <folder>usr</folder>
-        <folder>var</folder>
-        <folder>views</folder>
-        <filename>sobipro.php</filename>
-        <filename>changelog.txt</filename>
-        <filename>metadata.xml</filename>
-        <filename>gplv3.txt</filename>
-        <filename>gplv3addterms.txt</filename>
-        <filename>.htaccess</filename>
+		<folder>etc</folder>
+		<folder>lib</folder>
+		<folder>media</folder>
+		<folder>opt</folder>
+		<folder>tmp</folder>
+		<folder>usr</folder>
+		<folder>var</folder>
+		<folder>views</folder>
+		<filename>sobipro.php</filename>
+		<filename>changelog.txt</filename>
+		<filename>metadata.xml</filename>
+		<filename>gplv3.txt</filename>
+		<filename>gplv3addterms.txt</filename>
+		<filename>.htaccess</filename>
 	</files>
 	<languages>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.ini</language>
@@ -46,15 +46,15 @@
 	</languages>
 
 	<media folder="Site/media" destination="sobipro">
-        <folder>css</folder>
-        <folder>images</folder>
-        <folder>adm</folder>
-        <folder>browser</folder>
-        <folder>tree</folder>
-        <folder>styles</folder>
-        <folder>progress</folder>
-        <folder>icons</folder>
-        <folder>32x32</folder>
+		<folder>css</folder>
+		<folder>images</folder>
+		<folder>adm</folder>
+		<folder>browser</folder>
+		<folder>tree</folder>
+		<folder>styles</folder>
+		<folder>progress</folder>
+		<folder>icons</folder>
+		<folder>32x32</folder>
 		<filename>donate.png</filename>
 		<filename>jointheclub.png</filename>
 		<filename>sp_16.png</filename>
@@ -78,18 +78,19 @@
 			<folder>template</folder>
 			<filename>sobipro.php</filename>
 			<filename>install16.sql</filename>
-            <filename>default.php</filename>
+			<filename>default.php</filename>
 		</files>
 		<languages>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.js.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.sys.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.about.ini</language>
-            <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.messages.ini</language>
-            <language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.check.ini</language>
-        </languages>
+			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.messages.ini</language>
+			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.check.ini</language>
+		</languages>
 	</administration>
 	<updateservers>
-		<server type="extension" priority="1" name="SobiPro Updates"><![CDATA[https://xml.sigsiu.net/SobiPro/SobiPro.xml]]></server>
+		<server type="extension" priority="1" name="SobiPro Updates">
+			<![CDATA[https://xml.sigsiu.net/SobiPro/SobiPro.xml]]></server>
 	</updateservers>
 </extension>
