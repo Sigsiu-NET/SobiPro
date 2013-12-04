@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
- @version: $Id$
+ @version: $Id: filter.xml 3019 2013-01-19 11:48:28Z Sigrid Suski $
  @package: SobiPro Component for Joomla!
 
  @author
@@ -16,27 +16,27 @@
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
- $Date$
- $Revision$
- $Author$
- $HeadURL$
+ $Date: 2013-01-19 12:48:28 +0100 (Sat, 19 Jan 2013) $
+ $Revision: 3019 $
+ $Author: Sigrid Suski $
+ $HeadURL: https://svn.suski.eu/SobiPro/Component/branches/SobiPro-1.1/Admin/field/filter.xml $
 -->
 
-<metadata>
-	<menu>
-		<options var="task">
-			<default name="SP.SOBI_NATIVE_TASKS" msg="SP.SOBI_NATIVE_TASKS_EXPL" />
-		</options>
-		<fields name="request">
-			<fieldset name="request" label="COM_MENUS_BASIC_FIELDSET_LABEL" addfieldpath="/components/com_sobipro/lib/cms/joomla16/elements">
-				<field name="sid" type="native" label="SP.SOBI_SELECT_SECTION" />
-				<field name="special" type="native" label="SP.SOBI_SELECT_FUNCTIONALITY" />
-			</fieldset>
-		</fields>
-		<fields name="params">
-			<fieldset name="menu-options" label="COM_MENUS_LINKTYPE_OPTIONS_LABEL">
-				<field name="SobiProSettings" type="textarea" label="" class="hide SobiProSettings" />
-			</fieldset>
-		</fields>
-	</menu>
-</metadata>
+<definition>
+	<header>
+		<title value="MENU_LINK_TO_SEARCH_FUNCTION" />
+	</header>
+	<body>
+		<div class="alert alert-success">
+			<text value="MENU_LINK_TO_SEARCH_FUNCTION_SELECTED" />
+		</div>
+	</body>
+	<config>
+		<hidden>
+			<field name="params[text]" const="MENU_LINK_TO_SEARCH_FUNCTION" />
+			<field name="function-name" translate="MENU_LINK_TO_SEARCH_FUNCTION" />
+			<field name="request[task]" const="search" />
+			<field name="request[sid]" value="sectionId" />
+		</hidden>
+	</config>
+</definition>

@@ -22,21 +22,34 @@
  $HeadURL$
 -->
 
-<metadata>
-	<menu>
-		<options var="task">
-			<default name="SP.SOBI_NATIVE_TASKS" msg="SP.SOBI_NATIVE_TASKS_EXPL" />
-		</options>
-		<fields name="request">
-			<fieldset name="request" label="COM_MENUS_BASIC_FIELDSET_LABEL" addfieldpath="/components/com_sobipro/lib/cms/joomla16/elements">
-				<field name="sid" type="native" label="SP.SOBI_SELECT_SECTION" />
-				<field name="special" type="native" label="SP.SOBI_SELECT_FUNCTIONALITY" />
-			</fieldset>
-		</fields>
-		<fields name="params">
-			<fieldset name="menu-options" label="COM_MENUS_LINKTYPE_OPTIONS_LABEL">
-				<field name="SobiProSettings" type="textarea" label="" class="hide SobiProSettings" />
-			</fieldset>
-		</fields>
-	</menu>
-</metadata>
+<definition>
+	<header>
+		<title value="MENU_LINK_TO_CATEGORY" />
+		<!--<file type="script" filename="adm.fields.category" />-->
+		<!--<file type="language" filename="SpApp.notifications" />-->
+	</header>
+	<body>
+		<h4>
+			<text value="MENU_LINK_TO_CATEGORY" />
+		</h4>
+		<call function="tree.display">
+			<param>TRUE</param>
+		</call>
+		<fieldset type="horizontal">
+			<field type="select" name="request[sptpl]" selected="template" multi="false" values="templates" label="SOBI_TPL_OVERRIDE" class="span2" />
+		</fieldset>
+		<div class="hide" id="categoryName">
+			<text value="MENU_LINK_TO_SELECTED_CATEGORY" />
+		</div>
+	</body>
+	<config>
+		<calls>
+			<call file="ctrl.adm.menu" method="category" />
+		</calls>
+		<hidden>
+			<field name="sid" value="sectionId" />
+			<field name="function-name" const="MENU_LINK_TO_SELECTED_CATEGORY" />
+			<field name="params[interpreter]" const="ctrl.adm.menu.categoryLabel" />
+		</hidden>
+	</config>
+</definition>
