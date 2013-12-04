@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -49,13 +45,13 @@ class SPJoomlaCMSHelper
 	public static function myVersion( $str = false )
 	{
 		static $ver = array();
-		if( !isset( $ver[ $str ] ) ) {
+		if ( !isset( $ver[ $str ] ) ) {
 			$def = SOBI_CMS == 'joomla15' ? 'sobipro.xml' : 'com_sobipro.xml';
-			$doc = DOMDocument::load( Sobi::FixPath( SOBI_ADM_PATH.DS.$def ) );
-			if( $str ) {
+			$doc = DOMDocument::load( Sobi::FixPath( SOBI_ADM_PATH . DS . $def ) );
+			if ( $str ) {
 				$ver[ $str ] = $doc->getElementsByTagName( 'version' )->item( 0 )->nodeValue;
-                $codename = $doc->getElementsByTagName( 'codename' )->item( 0 )->nodeValue;
-                $ver[ $str ] = $ver[ $str ].' [ '.$codename.' ]';
+				$codename = $doc->getElementsByTagName( 'codename' )->item( 0 )->nodeValue;
+				$ver[ $str ] = $ver[ $str ] . ' [ ' . $codename . ' ]';
 			}
 			else {
 				$v = explode( '.', $doc->getElementsByTagName( 'version_number' )->item( 0 )->nodeValue );
@@ -83,7 +79,7 @@ class SPJoomlaCMSHelper
 	public static function cmsSetting( $setting )
 	{
 		static $cfg;
-		if( !$cfg ) {
+		if ( !$cfg ) {
 			$cfg = new JConfig();
 		}
 		switch ( $setting ) {
@@ -104,7 +100,7 @@ class SPJoomlaCMSHelper
 	 */
 	public static function cmsVersion( $version = null )
 	{
-		if( ( $version ) && ( $version != 'Joomla 1.5' ) ) {
+		if ( ( $version ) && ( $version != 'Joomla 1.5' ) ) {
 			return 'Joomla 1.5';
 		}
 		$version = new JVersion();
@@ -120,9 +116,9 @@ class SPJoomlaCMSHelper
 	{
 		foreach ( $files as $file ) {
 			$def = DOMDocument::load( $file, LIBXML_NOERROR );
-			if( in_array( trim( $def->documentElement->tagName ), array( 'install', 'extension' ) ) ) {
-				if( $def->getElementsByTagName( 'SobiPro' )->length ) {
-					if( in_array( trim( $def->documentElement->getAttribute( 'type' ) ), array( 'language', 'module', 'plugin', 'component' ) ) ) {
+			if ( in_array( trim( $def->documentElement->tagName ), array( 'install', 'extension' ) ) ) {
+				if ( $def->getElementsByTagName( 'SobiPro' )->length ) {
+					if ( in_array( trim( $def->documentElement->getAttribute( 'type' ) ), array( 'language', 'module', 'plugin', 'component' ) ) ) {
 						return $def;
 					}
 				}
@@ -153,15 +149,15 @@ class SPJoomlaCMSHelper
 	public static function installLang( $lang, $force = true )
 	{
 		$log = array();
-		if( count( $lang ) ) {
+		if ( count( $lang ) ) {
 			foreach ( $lang as $language => $files ) {
 				$language = str_replace( '_', '-', $language );
-				if( count( $files ) ) {
+				if ( count( $files ) ) {
 					foreach ( $files as $file ) {
 						$target = $file[ 'adm' ] ? implode( DS, array( JPATH_ADMINISTRATOR, 'language', $language ) ) : implode( DS, array( SOBI_ROOT, 'language', $language ) );
-						if( $force || SPFs::exists( $target ) ) {
-							$iFile = $target.'/'.trim( $file[ 'name' ] );
-							$log[] = $iFile;
+						if ( $force || SPFs::exists( $target ) ) {
+							$iFile = $target . '/' . trim( $file[ 'name' ] );
+							$log[ ] = $iFile;
 							SPFs::copy( Sobi::FixPath( $file[ 'path' ] ), $iFile );
 						}
 					}
@@ -188,7 +184,7 @@ class SPJoomlaCMSHelper
 	public static function availableLanguages( $list = false )
 	{
 		$langs = JFactory::getLanguage()->getKnownLanguages();
-		if( $list ) {
+		if ( $list ) {
 			$llist = array();
 			foreach ( $langs as $i => $value ) {
 				$llist[ $i ] = $value[ 'name' ];
@@ -208,24 +204,114 @@ class SPJoomlaCMSHelper
 		$jTemplates = new SPDirectoryIterator( SPLoader::dirPath( 'templates', 'root', true ) );
 		$tr = array();
 		foreach ( $jTemplates as $template ) {
-			if( $template->isDot()) {
+			if ( $template->isDot() ) {
 				continue;
 			}
-			if( $template->isDir() ) {
-				if( file_exists( implode( DS, array( $template->getPathname(), 'html', 'com_sobipro' ) ) ) && file_exists( implode( DS, array( $template->getPathname(), 'templateDetails.xml' ) ) ) ) {
+			if ( $template->isDir() ) {
+				if ( file_exists( implode( '/', array( $template->getPathname(), 'html', 'com_sobipro' ) ) ) && file_exists( implode( '/', array( $template->getPathname(), 'templateDetails.xml' ) ) ) ) {
 					$data = new DOMDocument( '1.0', 'utf-8' );
-					$data->load( Sobi::FixPath( $template->getPathname() . DS . 'templateDetails.xml' ) );
+					$data->load( Sobi::FixPath( $template->getPathname() . '/templateDetails.xml' ) );
 					$name = $data->getElementsByTagName( 'name' )->item( 0 )->nodeValue;
 					$tr[ $name ] = Sobi::FixPath( implode( DS, array( $template->getPathname(), 'html', 'com_sobipro' ) ) );
 				}
 			}
 		}
-		return array( 'name' => Sobi::Txt( 'TP.TEMPLATES_OVERRIDE' ), 'icon' => Sobi::Cfg( 'live_site' ).'media/sobipro/tree/joomla.gif', 'data' => $tr );
+		return array( 'name' => Sobi::Txt( 'TP.TEMPLATES_OVERRIDE' ), 'icon' => Sobi::Cfg( 'live_site' ) . 'media/sobipro/tree/joomla.gif', 'data' => $tr );
 	}
 
 
 	public function getLanguages()
 	{
 		return null;
+	}
+
+	/**
+	 * This method is adding new tasks to the XML files used for Joomla! menu definition
+	 * @param $tasks - list of tasks to add
+	 * @param $controlString - a single string to check for if it has not been already added
+	 * @param $languageFile - language file where the translation for tasks can be found
+	 * @param array $additionalStrings - optional list of additional strings to add to the sys ini files
+	 * @param bool $force - force even if it has been already done - forcing only language files redefinition
+	 * @return void
+	 */
+	public function updateXMLDefinition( $tasks, $controlString, $languageFile, $additionalStrings = array(), $force = false )
+	{
+		$file = SPLoader::translatePath( 'metadata', 'front', true, 'xml' );
+		$run = false;
+		$strings = array();
+		foreach ( $tasks as $label ) {
+			$strings[ ] = $label;
+			$strings[ ] = $label . '_EXPL';
+		}
+		if ( count( $additionalStrings ) ) {
+			foreach ( $additionalStrings as $additionalString ) {
+				$strings[ ] = $additionalString;
+			}
+		}
+		/** check if it hasn't been already added */
+		if ( !( strstr( SPFs::read( $file ), $controlString ) ) ) {
+			$run = true;
+			$doc = new DOMDocument();
+			$doc->load( $file );
+			$options = $doc->getElementsByTagName( 'options' )->item( 0 );
+			foreach ( $tasks as $task => $label ) {
+				$node = $doc->createElement( 'option' );
+				$attribute = $doc->createAttribute( 'value' );
+				$attribute->value = $task;
+				$node->appendChild( $attribute );
+				$attribute = $doc->createAttribute( 'name' );
+				$attribute->value = 'SP.' . $label;
+				$node->appendChild( $attribute );
+				$attribute = $doc->createAttribute( 'msg' );
+				$attribute->value = 'SP.' . $label . '_EXPL';
+				$node->appendChild( $attribute );
+				$options->appendChild( $node );
+			}
+			$doc->save( $file );
+		}
+		if ( $run || $force ) {
+			$dirPath = SPLoader::dirPath( 'administrator.language', 'root' );
+			/** @var SPDirectory $dir */
+			$dir = SPFactory::Instance( 'base.fs.directory', $dirPath );
+			$files = $dir->searchFile( 'com_sobipro.sys.ini', false, 2 );
+			$default = array();
+			$defaultLangDir = SPLoader::dirPath( "language.en-GB", 'root', true );
+			$defaultLang = parse_ini_file( $defaultLangDir . 'en-GB.' . $languageFile . '.ini' );
+			foreach ( $strings as $string ) {
+				$default[ 'SP.' . $string ] = $defaultLang[ 'SP.' . $string ];
+			}
+			/** @var SPFile $file */
+			$file = null;
+			foreach ( $files as $file ) {
+				$fileName = $file->getFileName();
+				list( $language ) = explode( '.', $fileName );
+				$nativeLangDir = SPLoader::dirPath( "language.{$language}", 'root', true );
+				$nativeStrings = array();
+				if ( $nativeLangDir ) {
+					$nativeLangFile = $nativeLangDir . $language . '.' . $languageFile . '.ini';
+					if ( file_exists( $nativeLangFile ) ) {
+						$nativeLang = @parse_ini_file( $nativeLangFile );
+						foreach ( $strings as $string ) {
+							if ( isset( $nativeLang[ 'SP.' . $string ] ) ) {
+								$nativeStrings[ 'SP.' . $string ] = $nativeLang[ 'SP.' . $string ];
+							}
+						}
+					}
+				}
+				$add = null;
+				foreach ( $strings as $string ) {
+					if ( isset( $nativeStrings[ 'SP.' . $string ] ) ) {
+						$add .= "\nSP.{$string}=\"{$nativeStrings['SP.' . $string]}\"";
+					}
+					else {
+						$add .= "\nSP.{$string}=\"{$default['SP.' . $string]}\"";
+					}
+				}
+				$add .= "\n";
+				$content = SPFs::read( $file->getPathname() );
+				$add = $content . $add;
+				SPFs::write( $file->getPathname(), $add );
+			}
+		}
 	}
 }

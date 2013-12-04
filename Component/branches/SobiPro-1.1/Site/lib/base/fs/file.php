@@ -54,6 +54,14 @@ class SPFile
 	}
 
 	/**
+	 * @return array
+	 */
+	public function getPathInfo()
+	{
+		return $this->_pathinfo;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getName()

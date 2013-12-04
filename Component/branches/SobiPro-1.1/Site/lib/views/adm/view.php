@@ -36,7 +36,7 @@ class SPAdmView extends SPObject implements SPView
 	/**
 	 * @var array
 	 */
-	private $_config = array();
+	protected $_config = array();
 	/**
 	 * @var string
 	 */
@@ -1286,6 +1286,11 @@ class SPAdmView extends SPObject implements SPView
 				Sobi::Error( $this->name(), SPLang::e( 'METHOD_DOES_NOT_EXISTS', $function[ 0 ] . '::' . $function[ 1 ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
+		elseif ( strstr( $function, '.' ) ) {
+			$function = explode( '.', $function );
+			$object = $this->get( $function[ 0 ] );
+			$r = call_user_func_array( array( $object, $function[ 1 ] ), $params );
+		}
 		else {
 			if ( function_exists( $function ) ) {
 				$r = call_user_func_array( $function, $params );
@@ -1317,6 +1322,9 @@ class SPAdmView extends SPObject implements SPView
 							if ( $field->attributes->getNamedItem( 'const' ) && $field->attributes->getNamedItem( 'const' )->nodeValue ) {
 								$this->addHidden( $field->attributes->getNamedItem( 'const' )->nodeValue, $field->attributes->getNamedItem( 'name' )->nodeValue );
 							}
+							elseif ( $field->attributes->getNamedItem( 'translate' ) && $field->attributes->getNamedItem( 'translate' )->nodeValue ) {
+								$this->addHidden( Sobi::Txt( $field->attributes->getNamedItem( 'translate' )->nodeValue ), $field->attributes->getNamedItem( 'name' )->nodeValue );
+							}
 							else {
 								$value = null;
 								$name = $field->attributes->getNamedItem( 'name' )->nodeValue;
@@ -1333,7 +1341,9 @@ class SPAdmView extends SPObject implements SPView
 					break;
 				default:
 					if ( !( strstr( $node->nodeName, '#' ) ) ) {
-						$this->_config[ 'general' ][ $node->nodeName ] = $node->attributes->getNamedItem( 'value' )->nodeValue;
+						if ( $node->attributes->getNamedItem( 'value' ) ) {
+							$this->_config[ 'general' ][ $node->nodeName ] = $node->attributes->getNamedItem( 'value' )->nodeValue;
+						}
 					}
 					break;
 			}
@@ -1356,6 +1366,9 @@ class SPAdmView extends SPObject implements SPView
 				case 'style':
 					SPFactory::header()
 							->addCSSCode( $node->nodeValue );
+					break;
+				case 'language':
+					SPLang::load( $node->nodeValue );
 					break;
 				case 'file':
 					if ( $node->attributes->getNamedItem( 'type' )->nodeValue == 'style' ) {

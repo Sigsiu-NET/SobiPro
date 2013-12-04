@@ -125,7 +125,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fieldsIds, &$this->fieldsNids ) );
 		}
 		if ( $this->id ) {
-			$counter = SPFactory::db()->select( 'counter', 'spdb_counter', array( 'sid' => $this->id ) )
+			$counter = SPFactory::db()
+					->select( 'counter', 'spdb_counter', array( 'sid' => $this->id ) )
 					->loadResult();
 			if ( $counter !== null ) {
 				$this->counter = $counter;
