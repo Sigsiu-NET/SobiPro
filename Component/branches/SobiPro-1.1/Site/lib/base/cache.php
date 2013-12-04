@@ -826,6 +826,14 @@ final class SPCache
 		}
 	}
 
+	public function & setJoomlaCaching( $enabled )
+	{
+		if ( SOBI_CMS != 'joomla15' ) {
+			JFactory::getCache()->cache->setCaching( $enabled );
+		}
+		return $this;
+	}
+
 	protected function cleanJCache()
 	{
 		if ( SOBI_CMS != 'joomla15' ) {
