@@ -393,7 +393,6 @@ final class SPCache
 	 */
 	public function & addObj( $obj, $type, $id, $sid = 0, $force = false )
 	{
-		$this->cleanJCache();
 		if ( $this->enabled( !( $force ) ) ) {
 			static $startTime = 0;
 			if ( !( $startTime ) && class_exists( 'Sobi' ) ) {
@@ -431,6 +430,7 @@ final class SPCache
 			// the "deleteObj" causing however a chain reaction which would delete lot of other things so it doesn't make any sense here
 //			$this->deleteObj( $type, $id, $sid );
 			$this->Exec( "BEGIN; REPLACE INTO objects ( type, validtime, id, sid, lang, params, checksum, schecksum, data, classes ) VALUES( '{$type}', '0', '{$id}', '{$sid}', '{$lang}', NULL, '{$checksum}', '{$schecksum}', '{$obj}', '{$loaded}' ); COMMIT;" );
+			$this->cleanJCache();
 		}
 		return $this;
 	}
