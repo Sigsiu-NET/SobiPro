@@ -546,7 +546,17 @@ class SPJoomlaDb
 	{
 		$cond = array();
 		foreach ( $val as $i => $k ) {
-			$cond[ ] .= $i . ' = ' . $k;
+			$equal = ' = ';
+			if ( strpos( $i, '<' ) ) {
+				$equal = '<';
+				$i = trim( str_replace( '<', null, $i ) );
+			}
+			/* is greater */
+			elseif ( strpos( $i, '>' ) ) {
+				$equal = '>';
+				$i = trim( str_replace( '>', null, $i ) );
+			}
+			$cond[ ] .= $i . $equal . $k;
 		}
 		$cond = implode( ' OR ', $cond );
 		return '( ' . $cond . ' )';
@@ -556,8 +566,8 @@ class SPJoomlaDb
 	 * Creates a "update" SQL query
 	 *
 	 * @param string $table - table to update
-	 * @param array $set  - two-dimensional array with table row name to update => new value
-	 * @param string $where  - SQL update condition
+	 * @param array $set - two-dimensional array with table row name to update => new value
+	 * @param string $where - SQL update condition
 	 * @param int $limit
 	 */
 	public function update( $table, $set, $where, $limit = 0 )

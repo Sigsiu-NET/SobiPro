@@ -248,7 +248,6 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 					}
 				}
 				$rawData = $data->sKey;
-//				$fullData = $data;
 				$fullData->baseData = $data->sValue;
 				$fData = $data->sValue;
 			}

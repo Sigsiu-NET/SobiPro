@@ -54,9 +54,11 @@ class SPMenuAdm extends SPController
 		$this->menu = SPFactory::db()
 				->select( '*', '#__menu', array( 'id' => SPRequest::int( 'mid' ) ) )
 				->loadObject();
-		$this->menu->params = json_decode( $this->menu->params );
-		if ( isset( $this->menu->params->SobiProSettings ) ) {
-			$this->menu->params->SobiProSettings = json_decode( base64_decode( $this->menu->params->SobiProSettings ) );
+		if ( isset( $this->menu->params ) ) {
+			$this->menu->params = json_decode( $this->menu->params );
+			if ( isset( $this->menu->params->SobiProSettings ) ) {
+				$this->menu->params->SobiProSettings = json_decode( base64_decode( $this->menu->params->SobiProSettings ) );
+			}
 		}
 		/** @var SPAdmView $view */
 		$view = SPFactory::View( 'joomla-menu', true );
@@ -64,9 +66,15 @@ class SPMenuAdm extends SPController
 		$section = SPRequest::int( 'section' );
 		if ( $calls->length ) {
 			foreach ( $calls as $file ) {
-				$obj = SPFactory::Instance( $file->attributes->getNamedItem( 'file' )->nodeValue );
 				$method = $file->attributes->getNamedItem( 'method' )->nodeValue;
-				$obj->$method( $view, $this->menu );
+				if ( $file->attributes->getNamedItem( 'static' )->nodeValue && $file->attributes->getNamedItem( 'static' )->nodeValue == 'true' ) {
+					$class = SPLoader::loadClass( $file->attributes->getNamedItem( 'file' )->nodeValue );
+					$class::$method( $view, $this->menu );
+				}
+				else {
+					$obj = SPFactory::Instance( $file->attributes->getNamedItem( 'file' )->nodeValue );
+					$obj->$method( $view, $this->menu );
+				}
 			}
 		}
 		$view->assign( $section, 'sectionId' )

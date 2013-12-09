@@ -111,7 +111,7 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	 * @param $sid - id of the entry
 	 * @param $fullData - the database row form the spdb_field_data table
 	 * @param $rawData - raw data of the field content
-	 * @param $fData - full formated data of the field content
+	 * @param $fData - full formatted data of the field content
 	 * @return void
 	 */
 	public function loadData( $sid, &$fullData, &$rawData, &$fData )

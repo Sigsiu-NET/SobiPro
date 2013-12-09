@@ -22,6 +22,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * =========================================================
+ * http://tarruda.github.io/bootstrap-datetimepicker/
  */
 
 $ = SobiPro.jQuery;
@@ -1173,7 +1174,7 @@ $ = SobiPro.jQuery;
 		}
 	};
 
-	SobiPro.jQuery.fn.datetimepicker = function ( option, val )
+	SobiPro.jQuery.fn.SpDateTimePicker = function ( option, val )
 	{
 		return this.each( function ()
 		{
@@ -1182,13 +1183,13 @@ $ = SobiPro.jQuery;
 				options = typeof option === 'object' && option;
 			if ( !data ) {
 				$this.data( 'datetimepicker', (data = new SpDateTimePicker(
-					this, SobiPro.jQuery.extend( {}, SobiPro.jQuery.fn.datetimepicker.defaults, options ) )) );
+					this, SobiPro.jQuery.extend( {}, SobiPro.jQuery.fn.SpDateTimePicker.defaults, options ) )) );
 			}
 			if ( typeof option === 'string' ) data[option]( val );
 		} );
 	};
 
-	SobiPro.jQuery.fn.datetimepicker.defaults = {
+	SobiPro.jQuery.fn.SpDateTimePicker.defaults = {
 		maskInput: false,
 		pickDate: true,
 		pickTime: true,
@@ -1198,9 +1199,9 @@ $ = SobiPro.jQuery;
 		endDate: Infinity,
 		collapse: true
 	};
-	SobiPro.jQuery.fn.datetimepicker.Constructor = SpDateTimePicker;
+	SobiPro.jQuery.fn.SpDateTimePicker.Constructor = SpDateTimePicker;
 	var dpgId = 0;
-	var dates = SobiPro.jQuery.fn.datetimepicker.dates = { en: spDatePickerLang };
+	var dates = SobiPro.jQuery.fn.SpDateTimePicker.dates = { en: spDatePickerLang };
 //	var dates = $.fn.datetimepicker.dates = {
 //		en: {
 //			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
@@ -1448,16 +1449,17 @@ SobiPro.jQuery( document ).ready( function ()
 	{
 		var proxy = this;
 		SobiPro.jQuery( e )
-			.datetimepicker()
+			.SpDateTimePicker()
 			.on( 'changeDate', function ( ev )
 			{
-				var set = "";
+				var set = '';
 				if ( ev.date.valueOf() && SobiPro.jQuery( proxy ).find( ':text' ).val() ) {
 					set = ev.date.valueOf();
 				}
 				SobiPro.jQuery( proxy )
 					.find( ':hidden' )
 					.val( set );
+				SobiPro.jQuery( proxy ).trigger( 'OnDateChanged', [ set, SobiPro.jQuery( this ) ] );
 			} );
 	} );
 } );
