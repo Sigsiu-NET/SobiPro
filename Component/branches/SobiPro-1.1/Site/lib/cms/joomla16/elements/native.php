@@ -91,6 +91,9 @@ class JFormFieldNative extends JFormField
 			self::$functionsLabel = $obj->$function( self::$sid, self::$section );
 		}
 		elseif ( isset( $this->params->text ) ) {
+			if( isset( $this->params->loadTextFile ) ) {
+				SPLang::load( $this->params->loadTextFile );
+			}
 			self::$functionsLabel = Sobi::Txt( $this->params->text );
 		}
 	}
