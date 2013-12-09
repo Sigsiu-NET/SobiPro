@@ -75,6 +75,7 @@
 			<folder>front</folder>
 			<folder>section</folder>
 			<folder>template</folder>
+			<folder>menu</folder>
 			<filename>sobipro.php</filename>
 			<filename>install.sql</filename>
 			<filename>default.php</filename>
