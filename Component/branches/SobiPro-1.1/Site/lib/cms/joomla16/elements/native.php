@@ -41,12 +41,12 @@ class JFormFieldNative extends JFormField
 			if ( SOBI_CMS == 'joomla3' ) {
 				SPFactory::header()
 						->initBase( true )
-						->addJsFile( array( 'sobipro', 'jqnc', 'adm.sobipro', 'adm.jmenu', 'jquery-base64' ) );
+						->addJsFile( array( 'sobipro', 'jqnc', 'adm.sobipro', 'adm.jnmenu', 'jquery-base64' ) );
 			}
 			else {
 				SPFactory::header()
 						->initBase( true )
-						->addJsFile( array( 'sobipro', 'jquery', 'adm.sobipro', 'adm.jmenu', 'jquery-migrate', 'jquery-base64' ) );
+						->addJsFile( array( 'sobipro', 'jquery', 'adm.sobipro', 'adm.jnmenu', 'jquery-migrate', 'jquery-base64' ) );
 			}
 			$loaded = true;
 			SPLoader::loadClass( 'mlo.input' );

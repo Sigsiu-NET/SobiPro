@@ -51,6 +51,7 @@ Legend:
     (#) Disabling storing XML cache when template override is enabled (Issue #1064)
     (#) Unapproved images are being displayed for unauthorised users (Issue #1095)
     (#) Joomla! cache is being frequently deleted
+    (#) Disabling Joomla! cache in the search results
 
     (!) Changed bootstrap datepicker to datetimepicker
     (!) Textarea field with allowed HTML input ignores HTML markup while checking the allowed length

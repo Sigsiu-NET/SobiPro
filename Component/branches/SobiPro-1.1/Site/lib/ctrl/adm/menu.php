@@ -33,7 +33,7 @@ class SPMenuAdm extends SPController
 	public function execute()
 	{
 		$function = SPRequest::cmd( 'function' );
-		SPFactory::header()->addJsFile( 'jmenu', true );
+		SPFactory::header()->addJsFile( 'jnmenu', true );
 		SPLang::load( 'com_sobipro.sys' );
 		if ( !( $function ) ) {
 			$this->listFunctions();
