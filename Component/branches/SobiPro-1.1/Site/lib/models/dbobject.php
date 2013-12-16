@@ -199,7 +199,7 @@ abstract class SPDBObject extends SPObject
 	/**
 	 * @var array
 	 */
-	private static $translatable = array( 'nid' );
+	private static $translatable = array( 'nid', 'metaDesc', 'metaKeys' );
 
 	/**
 	 * @return \SPDBObject
@@ -705,12 +705,14 @@ abstract class SPDBObject extends SPObject
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', array( &$attributes ) );
 		$db =& SPFactory::db();
 		try {
-			$db->select( 'sValue, sKey', 'spdb_language', array( 'id' => $this->id, 'sKey' => $attributes, 'language' => Sobi::Lang(), 'oType' => $this->type() ) );
-			$labels = $db->loadAssocList( 'sKey' );
+			$labels = $db
+					->select( 'sValue, sKey', 'spdb_language', array( 'id' => $this->id, 'sKey' => $attributes, 'language' => Sobi::Lang(), 'oType' => $this->type() ) )
+					->loadAssocList( 'sKey' );
 			/* get labels in the default lang first */
 			if ( Sobi::Lang( false ) != Sobi::DefLang() ) {
-				$db->select( 'sValue, sKey', 'spdb_language', array( 'id' => $this->id, 'sKey' => $attributes, 'language' => Sobi::DefLang(), 'oType' => $this->type() ) );
-				$dlabels = $db->loadAssocList( 'sKey' );
+				$dlabels = $db
+						->select( 'sValue, sKey', 'spdb_language', array( 'id' => $this->id, 'sKey' => $attributes, 'language' => Sobi::DefLang(), 'oType' => $this->type() ) )
+						->loadAssocList( 'sKey' );
 				if ( count( $dlabels ) ) {
 					foreach ( $dlabels as $k => $v ) {
 						if ( !( isset( $labels[ $k ] ) ) || !( $labels[ $k ] ) ) {

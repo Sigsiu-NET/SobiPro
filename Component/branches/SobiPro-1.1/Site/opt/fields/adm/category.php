@@ -34,6 +34,7 @@ class SPField_CategoryAdm extends SPField_Category
 
 	public function save( &$attr )
 	{
+		parent::save( $attr );
 		if ( $attr[ 'method' ] == 'fixed' ) {
 			if ( !( $attr[ 'fixedCid' ] ) ) {
 				throw new SPException( SPLang::e( 'FIELD_FIXED_CID_MISSING' ) );

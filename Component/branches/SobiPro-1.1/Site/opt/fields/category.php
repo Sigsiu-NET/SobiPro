@@ -415,7 +415,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			}
 		}
 		else {
-			if ( count( $data ) > $this->catsMaxLimit ) {
+			if ( count( $data ) > $this->catsMaxLimit && count( $data ) > 1 ) {
 				$data = array_slice( $data, 0, $this->catsMaxLimit );
 			}
 		}

@@ -54,7 +54,7 @@ final class SPCache
 	public static function & getInstance( $sid = 0 )
 	{
 		if ( !( $sid ) ) {
-			$sid = Sobi::Section();
+			$sid = Sobi::Section() ? Sobi::Section() : -1;
 		}
 		static $cache = array();
 		if ( !( isset( $cache[ $sid ] ) ) || !( $cache[ $sid ] instanceof self ) ) {
@@ -804,6 +804,7 @@ final class SPCache
 			$filePath = SPLoader::path( 'var.xml.' . $fileName, 'front', false, 'xml' );
 			$content = $xml->saveXML();
 			$content = str_replace( '&nbsp;', '&#160;', $content );
+			$content = preg_replace( '/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', null, $content );
 			$matches = array();
 			preg_match_all( '/<(category|entry|subcategory)[^>]*id="(\d{1,})"/', $content, $matches );
 			try {

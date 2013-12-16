@@ -33,6 +33,7 @@ class SPCrawler extends SPController
 	const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1');";
 	const DB_TABLE = 'spdb_crawler';
 	protected $start = 0;
+	const FORMAT = 'tmpl=component&crawl=1';
 
 	public function execute()
 	{
@@ -99,7 +100,7 @@ class SPCrawler extends SPController
 		else {
 			$request .= '&';
 		}
-		$request .= 'format=raw&crawl=1';
+		$request .= self::FORMAT;
 		/** @var $connection SPRemote */
 		$connection = SPFactory::Instance( 'services.remote' );
 		$connection->setOptions(
@@ -123,7 +124,7 @@ class SPCrawler extends SPController
 		}
 		if ( $response[ 'http_code' ] == 303 ) {
 			preg_match( '/Location: (http.*)/', $content, $newUrl );
-			$urls[ ] = str_replace( array( '?format=raw&crawl=1', '&format=raw&crawl=1' ), null, trim( $newUrl[ 1 ] ) );
+			$urls[ ] = str_replace( array( '?' . self::FORMAT, '&' . self::FORMAT ), null, trim( $newUrl[ 1 ] ) );
 		}
 		if ( count( $urls ) ) {
 			$this->insertUrls( $urls );

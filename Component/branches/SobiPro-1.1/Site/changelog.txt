@@ -52,6 +52,8 @@ Legend:
     (#) Unapproved images are being displayed for unauthorised users (Issue #1095)
     (#) Joomla! cache is being frequently deleted
     (#) Disabling Joomla! cache in the search results
+    (#) View cache broken
+    (#) Entry meta data is not translatable (Issue #1110)
 
     (!) Changed bootstrap datepicker to datetimepicker
     (!) Textarea field with allowed HTML input ignores HTML markup while checking the allowed length

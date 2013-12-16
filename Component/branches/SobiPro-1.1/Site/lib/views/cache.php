@@ -38,9 +38,18 @@ class SPCachedView extends SPFrontView implements SPView
 			if ( strstr( $templateOverride, '.' ) ) {
 				$templateOverride = str_replace( '.', '/', $templateOverride );
 			}
-			$template = $templateOverride;
+			$template = $templateOverride.'.xsl';
 		}
-		$template = Sobi::FixPath( $templatePackage . '/' . $template );
+		if ( file_exists( Sobi::FixPath( $templatePackage . '/' . $template ) ) ) {
+			$template = Sobi::FixPath( $templatePackage . '/' . $template );
+		}
+		else {
+			$type = SPFactory::db()
+					->select( 'oType', 'spdb_object', array( 'id' => SPRequest::sid() ) )
+					->loadResult();
+			$template = ( $templatePackage . '/' . $type . '/' . $template );
+		}
+
 		SPFactory::registry()->set( 'current_template', $templatePackage );
 		$this->_templatePath = $templatePackage;
 		$this->_template = str_replace( '.xsl', null, $template );

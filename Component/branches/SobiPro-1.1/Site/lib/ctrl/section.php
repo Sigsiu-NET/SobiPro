@@ -295,14 +295,12 @@ class SPSectionCtrl extends SPController
 			if ( $field && method_exists( $field, 'customOrdering' ) ) {
 				$table = null;
 				$oPrefix = null;
-//				$specificMethod = call_user_func_array( array( $field, 'customOrdering' ), array( &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ) );
-				$specificMethod = $field->customOrdering( $table, $conditions, $oPrefix, $eOrder, $eDir );
+				$specificMethod = call_user_func_array( array( $field, 'customOrdering' ), array( &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ) );
 			}
 			elseif ( $field && method_exists( $field, 'sortBy' ) ) {
 				$table = null;
 				$oPrefix = null;
-				$specificMethod = $field->sortBy( $table, $conditions, $oPrefix, $eOrder, $eDir );
-//				$specificMethod = call_user_func_array( array( $field, 'sortBy' ), array( &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ) );
+				$specificMethod = call_user_func_array( array( $field, 'sortBy' ), array( &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ) );
 			}
 			if ( !$specificMethod ) {
 				$table = $db->join(
@@ -344,8 +342,9 @@ class SPSectionCtrl extends SPController
 			$conditions[ 'sprl.copy' ] = '0';
 		}
 		try {
-			$db->select( $oPrefix . 'id', $table, $conditions, $eOrder, $eLimit, $eLimStart, true );
-			$results = $db->loadResultArray();
+			$results = $db
+					->select( $oPrefix . 'id', $table, $conditions, $eOrder, $eLimit, $eLimStart, true )
+					->loadResultArray();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
