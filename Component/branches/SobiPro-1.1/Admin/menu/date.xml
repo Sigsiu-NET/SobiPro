@@ -26,7 +26,6 @@
 	<header>
 		<title value="SOBI_DATE_LISTING" />
 		<file type="script" filename="adm.jmenu" />
-		<file type="script" filename="bootstrap.typeahead" />
 	</header>
 	<body>
 		<h4>

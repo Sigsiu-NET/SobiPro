@@ -743,6 +743,9 @@ abstract class SPHtml_Input
 			$dateFormat
 		);
 		$valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat, true ) : null;
+		if ( !( is_numeric( $value ) ) ) {
+			$value = strtotime( $value );
+		}
 		self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
 			$params[ 'id' ] = SPLang::nid( $name );
