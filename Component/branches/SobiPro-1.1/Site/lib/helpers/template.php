@@ -47,6 +47,10 @@ abstract class SobiPro
 		return call_user_func_array( array( 'Sobi', 'Txt' ), $args );
 	}
 
+	public static function LoadLang( $lang )
+	{
+		SPLang::load( $lang );
+	}
 	/**
 	 * @return string
 	 */

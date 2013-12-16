@@ -139,6 +139,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			$stop = true;
 			SPFactory::registry()->set( 'break_cache_view', $stop );
 		}
+		$this->translate();
 	}
 
 	/**

@@ -42,6 +42,26 @@ abstract class SPFactory
 	 */
 	public static function & cache( $sid = 0 )
 	{
+		if ( !( Sobi::Section() ) ) {
+			$path = array();
+			$id = $sid;
+			while ( $id > 0 ) {
+				try {
+					$id = SPFactory::db()
+							->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
+							->loadResult();
+					if ( $id ) {
+						$path[ ] = ( int )$id;
+					}
+				} catch ( SPException $x ) {
+					Sobi::Error( 'CoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
+				}
+			}
+			if ( count( $path ) ) {
+				$path = array_reverse( $path );
+			}
+			SPFactory::registry()->set( 'current_section', $path[ 0 ] );
+		}
 		SPLoader::loadClass( 'base.cache' );
 		return SPCache::getInstance( $sid );
 	}
@@ -226,7 +246,7 @@ abstract class SPFactory
 	 */
 	public static function & Entry( $sid )
 	{
-		$cached = SPFactory::cache()->getObj( 'entry', $sid );
+		$cached = SPFactory::cache( $sid )->getObj( 'entry', $sid );
 		if ( $cached && is_object( $cached ) ) {
 			$cached->validateCache();
 			return $cached;

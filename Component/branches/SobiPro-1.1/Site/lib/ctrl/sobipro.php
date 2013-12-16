@@ -200,8 +200,8 @@ final class SobiProCtrl
 				$id = $sid;
 				while ( $id > 0 ) {
 					try {
-						$db->select( 'pid', 'spdb_relations', array( 'id' => $id ) );
-						$id = $db->loadResult();
+						$id = $db->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
+								->loadResult();
 						if ( $id ) {
 							$path[ ] = ( int )$id;
 						}
@@ -550,7 +550,9 @@ final class SobiProCtrl
 			$view->display();
 		}
 		/* send header data etc ...*/
-		SPFactory::header()->send();
+		if ( SPRequest::cmd( 'format' ) == 'raw' && SPRequest::bool( 'xmlc' ) ) {
+			SPFactory::cache()->storeView( array() );
+		}
 		SPFactory::mainframe()->endOut();
 		Sobi::Trigger( 'End' );
 		/* redirect if any redirect has been set */

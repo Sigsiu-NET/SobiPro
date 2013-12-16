@@ -319,6 +319,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$orgImage->upload( $data, $path . $orgName );
 			}
 			$files[ 'data' ][ 'exif' ] = $orgImage->exif();
+			$this->cleanExif( $files[ 'data' ][ 'exif' ] );
 			if ( $this->resize ) {
 				$image = clone $orgImage;
 				try {
@@ -419,6 +420,18 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$db->insertUpdate( 'spdb_field_data', $params );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_FIELDS_DATA_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+		}
+	}
+
+	protected function cleanExif( &$data )
+	{
+		foreach ( $data as $index => $row ) {
+			if ( is_array( $row ) ) {
+				$this->cleanExif( $row );
+			}
+			else {
+				$data[ $index ] = preg_replace( '#\\xED[\\xA0-\\xBF][\\x80-\\xBF]#', '', $row );
+			}
 		}
 	}
 
