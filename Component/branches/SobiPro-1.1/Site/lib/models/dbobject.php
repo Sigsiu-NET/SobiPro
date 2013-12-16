@@ -193,8 +193,8 @@ abstract class SPDBObject extends SPObject
 		'parent' => 'int',
 		'state' => 'int',
 		'stateExpl' => 'string',
-		'validSince' => 'int',
-		'validUntil' => 'int',
+		'validSince' => 'timestamp',
+		'validUntil' => 'timestamp',
 	);
 	/**
 	 * @var array

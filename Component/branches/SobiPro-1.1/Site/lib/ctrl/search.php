@@ -73,6 +73,8 @@ class SPSearchCtrl extends SPSectionCtrl
 	{
 		$this->_db =& SPFactory::db();
 		parent::__construct();
+		/** because we have always the same URL - disable Joomla! cache */
+		SPFactory::cache()->setJoomlaCaching( false );
 	}
 
 	/**
@@ -533,10 +535,6 @@ class SPSearchCtrl extends SPSectionCtrl
 		$results = array();
 		/* case some plugin overwrites this method */
 		Sobi::Trigger( 'GetResults', 'Search', array( &$results, &$ssid, &$template ) );
-
-		/** because we have always the same URL - disable Joomla! cache */
-		SPFactory::cache()->setJoomlaCaching( false );
-
 		if ( count( $results ) ) {
 			return $results;
 		}

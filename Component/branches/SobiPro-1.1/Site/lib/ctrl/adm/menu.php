@@ -67,7 +67,7 @@ class SPMenuAdm extends SPController
 		if ( $calls->length ) {
 			foreach ( $calls as $file ) {
 				$method = $file->attributes->getNamedItem( 'method' )->nodeValue;
-				if ( $file->attributes->getNamedItem( 'static' )->nodeValue && $file->attributes->getNamedItem( 'static' )->nodeValue == 'true' ) {
+				if ( $file->attributes->getNamedItem( 'static' ) && $file->attributes->getNamedItem( 'static' )->nodeValue == 'true' ) {
 					$class = SPLoader::loadClass( $file->attributes->getNamedItem( 'file' )->nodeValue );
 					$class::$method( $view, $this->menu );
 				}
@@ -109,7 +109,7 @@ class SPMenuAdm extends SPController
 			$query[ 'date' ] = '';
 		}
 
-		for ( $i = 1; $i < 12; $i++ ) {
+		for ( $i = 1; $i < 13; $i++ ) {
 			$months[ $i ] = $monthsNames[ $i - 1 ];
 		}
 
@@ -337,9 +337,11 @@ class SPMenuAdm extends SPController
 	{
 		$templates = $this->getTemplates( $type );
 		$view->assign( $templates, 'templates' );
-		$link = $menu->link;
 		$query = array();
-		parse_str( $link, $query );
+		if ( isset( $menu->link ) ) {
+			$link = $menu->link;
+			parse_str( $link, $query );
+		}
 		if ( isset( $query[ 'sptpl' ] ) ) {
 			$view->assign( $query[ 'sptpl' ], 'template' );
 		}

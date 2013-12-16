@@ -187,6 +187,22 @@ abstract class SPRequest
 	}
 
 	/**
+	 * Returns integer value of requested variable and checks for a valid timestamp
+	 *
+	 * @param string $name variable name
+	 * @param int $default default value
+	 * @param string $method request method
+	 * @param bool $noZero
+	 * @return int
+	 */
+	static public function timestamp( $name, $default = 0, $method = 'REQUEST', $noZero = false )
+	{
+		self::$val = self::int( $name, $default, $method, $noZero );
+		// JavaScript conversion
+		return self::$val > 10000000000 ? self::$val / 1000 : self::$val;
+	}
+
+	/**
 	 * Set variable
 	 *
 	 * @param string $name variable name
