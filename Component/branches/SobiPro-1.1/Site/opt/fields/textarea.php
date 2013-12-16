@@ -198,7 +198,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'height', 'editor', 'allowHtml' );
+		return array( 'maxLength', 'width', 'height', 'editor', 'allowHtml', 'itemprop' );
 	}
 
 	/**

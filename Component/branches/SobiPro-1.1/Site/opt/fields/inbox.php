@@ -75,7 +75,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange' );
+		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop' );
 	}
 
 	/**

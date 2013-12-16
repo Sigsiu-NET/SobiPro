@@ -123,7 +123,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 				$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData';
 				$this->cssClass = $this->cssClass . ' ' . $this->nid;
 				$this->cleanCss();
-				$attributes = array( 'href' => "mailto:{$data[ 'url' ]}", 'class' => $this->cssClass );
+				$attributes = array( 'href' => "mailto:{$data['url']}", 'class' => $this->cssClass );
 				if ( $this->newWindow ) {
 					$attributes[ 'target' ] = '_blank';
 				}
@@ -184,6 +184,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	{
 		$attr = parent::getAttr();
 		$attr[ ] = 'botProtection';
+		$attr[ ] = 'itemprop';
 		return $attr;
 	}
 
