@@ -46,7 +46,8 @@ class JFormFieldNative extends JFormField
 			else {
 				SPFactory::header()
 						->initBase( true )
-						->addJsFile( array( 'sobipro', 'jquery', 'adm.sobipro', 'adm.jnmenu', 'jquery-migrate', 'jquery-base64' ) );
+						->addJsFile( array( 'sobipro', 'jquery', 'adm.sobipro', 'adm.jnmenu', 'jquery-migrate', 'jquery-base64' ) )
+						->addCSSCode( '#toolbar-box { display: block }' );
 			}
 			$loaded = true;
 			SPLoader::loadClass( 'mlo.input' );
