@@ -172,6 +172,6 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'defSel' );
+		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'defSel','itemprop' );
 	}
 }

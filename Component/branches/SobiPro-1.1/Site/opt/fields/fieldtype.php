@@ -236,7 +236,7 @@ class SPFieldType extends SPObject
 
 	protected function getAttr()
 	{
-		return array();
+		return array( 'itemprop' );
 	}
 
 	public function approve( $sid )

@@ -280,7 +280,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', );
+		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop' );
 	}
 
 	protected function fetchData( $request )
@@ -648,10 +648,10 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			if ( is_array( $request ) ) {
 				foreach ( $request as $option ) {
 					if ( strstr( $option, '-' ) ) {
-						$request[] = str_replace( '-', '_', $option );
+						$request[ ] = str_replace( '-', '_', $option );
 					}
 					elseif ( strstr( $option, '-' ) ) {
-						$request[] = str_replace( '-', '_', $option );
+						$request[ ] = str_replace( '-', '_', $option );
 					}
 				}
 			}
