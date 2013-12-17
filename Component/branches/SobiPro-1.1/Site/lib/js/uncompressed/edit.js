@@ -1,5 +1,5 @@
 /**
- * @version: $Id: edit.js 3021 2013-01-19 13:14:46Z Radek Suski $
+ * @version: $Id$
  * @package: SobiPro Component for Joomla!
 
  * @author
@@ -14,10 +14,10 @@
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
- * $Date: 2013-01-19 14:14:46 +0100 (Sat, 19 Jan 2013) $
- * $Revision: 3021 $
- * $Author: Radek Suski $
- * $HeadURL: https://svn.suski.eu/SobiPro/Component/branches/SobiPro-1.1/Site/usr/templates/default/js/edit.js $
+ * $Date$
+ * $Revision$
+ * $Author$
+ * $HeadURL$
  *
  * This is the default JavaScript for the edit screen. It requires a default or default based frontend template
  *

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
- @version: $Id: filter.xml 3019 2013-01-19 11:48:28Z Sigrid Suski $
+ @version: $Id$
  @package: SobiPro Component for Joomla!
 
  @author
@@ -16,10 +16,10 @@
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
- $Date: 2013-01-19 12:48:28 +0100 (Sat, 19 Jan 2013) $
- $Revision: 3019 $
- $Author: Sigrid Suski $
- $HeadURL: https://svn.suski.eu/SobiPro/Component/branches/SobiPro-1.1/Admin/field/filter.xml $
+ $Date$
+ $Revision$
+ $Author$
+ $HeadURL$
 -->
 
 <definition>
