@@ -20,7 +20,7 @@
  $Date$
  $Revision$
  $Author$
- $HeadURL$
+ File location: components/com_sobipro/usr/templates/default2/common/categories.xsl $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -41,8 +41,7 @@
 		</xsl:variable>
 
 		<xsl:comment> categories loop - start </xsl:comment>
-        <div class="row-fluid category-container">
-            <div class="span12">
+        <div class="category-container">
                 <xsl:for-each select="categories/category">
                     <xsl:if test="($catsInLine > 1 and (position() = 1 or (position() mod $catsInLine) = 1)) or $catsInLine = 1">
                         <!-- opening the "table" row -->
@@ -55,9 +54,7 @@
                         <!-- closing the "table" row -->
                         <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                     </xsl:if>
-
                 </xsl:for-each>
-            </div>
         </div>
 		<xsl:comment> categories loop - end </xsl:comment>
 	</xsl:template>

@@ -20,7 +20,7 @@
  $Date$
  $Revision$
  $Author$
- $HeadURL$
+ File location: components/com_sobipro/usr/templates/default2/common/category.xsl $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
