@@ -1,6 +1,6 @@
 <?php
 /**
- * @version: $Id: install.php 2998 2013-01-16 17:09:18Z Sigrid Suski $
+ * @version: $Id$
  * @package: SobiPro Component for Joomla!
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
@@ -13,9 +13,9 @@
  * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
- * $Date: 2013-01-16 18:09:18 +0100 (Wed, 16 Jan 2013) $
- * $Revision: 2998 $
- * $Author: Sigrid Suski $
+ * $Date$
+ * $Revision$
+ * $Author$
  */
 
 defined( '_JEXEC' ) or die();
