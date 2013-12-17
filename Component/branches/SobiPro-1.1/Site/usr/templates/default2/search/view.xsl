@@ -20,7 +20,7 @@
  $Date$
  $Revision$
  $Author$
- $HeadURL$
+ File location: components/com_sobipro/usr/templates/default2/search/view.xsl $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
@@ -45,13 +45,13 @@
                         <label class="control-label" for="SPSearchBox">
                             <xsl:value-of select="/search/fields/searchbox/label" />
                         </label>
-                        <div class="controls">
-                            <input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}" class="input-medium" id="SPSearchBox" />
-                            <xsl:if test="/search/fields/top_button/label">
-                                <button type="submit" class="btn btn-success">
-                                    <xsl:value-of select="/search/fields/top_button/label" />
-                                </button>
-                            </xsl:if>
+                        <div class="controls sp-search-controls">
+                                <input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}" class="input-medium" id="SPSearchBox" />
+                                <xsl:if test="/search/fields/top_button/label">
+                                    <button type="submit" class="btn btn-success">
+                                        <xsl:value-of select="/search/fields/top_button/label" />
+                                    </button>
+                                </xsl:if>
                             <xsl:if test="count( /search/fields/* ) &gt; 3">
                                 <button type="button" class="btn" name="SPExOptBt" id="SPExOptBt">
                                     <xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )" />
@@ -74,8 +74,8 @@
                                             <xsl:value-of select="./label" />
                                         </button>
                                     </xsl:for-each>
-	                                <input type="hidden" name="spsearchphrase" id="spsearchphrase" value=""/>
                                 </div>
+                                <input type="hidden" name="spsearchphrase" id="spsearchphrase" value=""/>
                             </div>
                         </div>
 					</xsl:if>

@@ -58,6 +58,7 @@ Legend:
     (!) Changed bootstrap datepicker to datetimepicker
     (!) Textarea field with allowed HTML input ignores HTML markup while checking the allowed length
     (!) Changed Joomla! menu handling. Added possibility to load new options dynamically
+    (!) Improved the default template (Thanks to Robert Vining)
 
 -------------------
 1.1.3 (21 October 2013)

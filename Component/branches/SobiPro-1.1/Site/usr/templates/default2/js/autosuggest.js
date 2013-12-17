@@ -19,7 +19,7 @@
  * $Date$
  * $Revision$
  * $Author$
- * $HeadURL$
+ * File location: components/com_sobipro/usr/templates/default2/js/autosuggest.js $
  */
 
 SobiPro.jQuery( document ).ready( function ()

@@ -20,7 +20,7 @@
  $Date$
  $Revision$
  $Author$
- $HeadURL$
+ File location: components/com_sobipro/usr/templates/default2/common/entries.xsl $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -42,14 +42,13 @@
 		</xsl:variable>
 
 		<xsl:comment>entries loop - start</xsl:comment>
-        <div class="row-fluid entry-container">
-            <div class="span12">
+        <div class="entry-container">
                 <xsl:for-each select="entries/entry">
                     <xsl:if test="($entriesInLine > 1 and (position() = 1 or (position() mod $entriesInLine) = 1 )) or $entriesInLine = 1">
                         <!-- opening the "table" row -->
                         <xsl:text disable-output-escaping="yes">&lt;div class="row-fluid" &gt;</xsl:text>
                     </xsl:if>
-                    <div class="span{$cellClass} thumbnail">
+                    <div class="span{$cellClass}">
                         <xsl:call-template name="vcard" />
                     </div>
                     <xsl:if test="($entriesInLine > 1 and ((position() mod $entriesInLine) = 0 or position() = $entriesCount)) or $entriesInLine = 1">
@@ -57,7 +56,6 @@
                         <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                     </xsl:if>
                 </xsl:for-each>
-            </div>
         </div>
 		<xsl:comment>entries loop - end</xsl:comment>
 
