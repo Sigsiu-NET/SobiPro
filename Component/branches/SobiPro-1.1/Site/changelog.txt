@@ -32,6 +32,7 @@ Legend:
 
     (+) Added support for schema.org in field model and default templates
     (+) Passing exif data to the XML output in image field
+    (+) Timestamp to the URL of search results site to prevent caching by the Joomla! page cache plugin (adjustable in config.ini)
 
     (#) Missing error text for FILE_WRONG_TYPE added.
     (#) Additional parameters in some fields are being destroyed
