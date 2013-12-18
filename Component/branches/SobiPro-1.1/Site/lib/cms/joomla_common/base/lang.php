@@ -667,8 +667,9 @@ class SPJoomlaLang
 		// we don't need to specify the language as we want to have all of them and then order it right
 		// when an object name has been entered in a particular language but this language isn't used later
 		// we won't have any label for this certain object
+		// Wed, Dec 18, 2013 09:57:04
 		//$params = array( 'id' => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );
-		$params = array( $ident => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );
+		$params = array( $ident => $sids );
 		$result = array();
 		if ( $type ) {
 			$params[ 'oType' ] = $type;
