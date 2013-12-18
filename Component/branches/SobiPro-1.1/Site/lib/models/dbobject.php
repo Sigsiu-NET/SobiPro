@@ -175,7 +175,7 @@ abstract class SPDBObject extends SPObject
 		'approved' => 'bool',
 		'confirmed' => 'bool',
 		'counter' => 'int',
-		'createdTime' => 'int',
+		'createdTime' => 'timestamp',
 		'defURL' => 'string',
 		'metaAuthor' => 'string',
 		'metaDesc' => 'string',
