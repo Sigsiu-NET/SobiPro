@@ -250,6 +250,9 @@ class SPField extends SPObject
 			$this->_rawData = stripslashes( $this->_rawData );
 		}
 		$r = $this->_rawData;
+		if ( $this->_type && method_exists( $this->_type, 'getRawData' ) ) {
+			$r =& $this->_type->getRawData( $this->_rawData );
+		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$r ) );
 		return $r;
 	}

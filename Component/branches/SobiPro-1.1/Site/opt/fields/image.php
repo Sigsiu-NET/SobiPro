@@ -178,6 +178,15 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		return $addExt ? $fileName . '.' . $ext : $fileName;
 	}
 
+	public function getRawData( $data )
+	{
+		// legacy for ImEx - did you learned a lesson Radek?
+		if ( isset( $data[ 'exif' ] ) ) {
+			unset( $data[ 'exif' ] );
+		}
+		return $data;
+	}
+
 	/**
 	 * Gets the data for a field, verify it and pre-save it.
 	 * @param SPEntry $entry
