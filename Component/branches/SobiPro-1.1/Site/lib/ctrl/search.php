@@ -305,6 +305,9 @@ class SPSearchCtrl extends SPSectionCtrl
 		if ( !( SPRequest::cmd( 'ssid', null, 'cookie' ) ) ) {
 			$url[ 'ssid' ] = $ssid;
 		}
+		if ( Sobi::Cfg( 'cache.unique_search_url' ) ) {
+			$url[ 't' ] = microtime( true );
+		}
 		Sobi::Redirect( Sobi::Url( $url ) );
 	}
 
