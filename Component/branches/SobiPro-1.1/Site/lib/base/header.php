@@ -582,7 +582,9 @@ final class SPHeader
 	 */
 	public function & setTitle( $title )
 	{
-		//SPFactory::mainframe()->setTitle( SPLang::clean( $title ) );
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			SPFactory::mainframe()->setTitle( SPLang::clean( $title ) );
+		}
 		if ( is_array( $title ) ) {
 			$this->title = $title;
 		}
