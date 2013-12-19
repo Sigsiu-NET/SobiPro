@@ -180,6 +180,13 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 	public function getRawData( $data )
 	{
+		if ( is_string( $data ) ) {
+			try {
+				$data = SPConfig::unserialize( $data );
+			} catch ( SPException $x ) {
+				$data = null;
+			}
+		}
 		// legacy for ImEx - did you learned a lesson Radek?
 		if ( isset( $data[ 'exif' ] ) ) {
 			unset( $data[ 'exif' ] );
