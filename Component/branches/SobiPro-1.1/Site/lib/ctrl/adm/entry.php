@@ -57,6 +57,9 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				SPRequest::set( 'entry_state', 0, 'post' );
 				$this->save( false, true );
 				break;
+			case 'saveWithRevision':
+				$this->save( true );
+				break;
 			case 'reorder':
 				$r = true;
 				$this->reorder();
@@ -297,7 +300,9 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		if ( $customClass && method_exists( $customClass, 'AfterStoreEntry' ) ) {
 			$customClass::AfterStoreEntry( $this->_model );
 		}
-		$this->logChanges( 'save', SPRequest::string( 'history-note' ) );
+		if ( SPRequest::string( 'history-note' ) || $this->_task == 'saveWithRevision' || Sobi::Cfg( 'entry.versioningAdminBehaviour', 1 ) ) {
+			$this->logChanges( 'save', SPRequest::string( 'history-note' ) );
+		}
 		if ( $apply || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
@@ -440,7 +445,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			$this->_model->checkOut();
 		}
 		/* get fields for this section */
-		/* @var SPEntry $this->_model */
+		/* @var SPEntry $this ->_model */
 		$fields = $this->_model->get( 'fields' );
 		if ( !count( $fields ) ) {
 			throw new SPException( SPLang::e( 'CANNOT_GET_FIELDS_IN_SECTION', Sobi::Reg( 'current_section' ) ) );
@@ -546,12 +551,14 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				$history[ ] = $message;
 			}
 		}
+		$versioningAdminBehaviour = Sobi::Cfg( 'entry.versioningAdminBehaviour', 1 );
 		$view->assign( $this->_task, 'task' )
 				->assign( $f, 'fields' )
 				->assign( $id, 'id' )
 				->assign( $history, 'history' )
 				->assign( $revisionChange, 'revision-change' )
 				->assign( $revisionsDelta, 'revision' )
+				->assign( $versioningAdminBehaviour, 'history-behaviour' )
 				->assign( SPFactory::CmsHelper()->userSelect( 'entry.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true ), 'owner' )
 				->assign( Sobi::Reg( 'current_section' ), 'sid' )
 				->determineTemplate( 'entry', 'edit' )

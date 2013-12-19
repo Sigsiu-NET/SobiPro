@@ -64,7 +64,6 @@ SobiPro.jQuery( document ).ready( function ()
 					if ( counter > 0 ) {
 						var modal = '<div class="modal hide" id="SpModalMsg"><div class="modal-body">' + output.join( "\n" ) + '</div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>';
 						SobiPro.jQuery( modal ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
-//						SobiPro.jQuery( '#SobiPro' ).append( SobiPro.jQuery( modal ) );
 						var modalMessage = SobiPro.jQuery( '#SpModalMsg' ).modal();
 						modalMessage.on( 'hidden', function ()
 						{
@@ -153,6 +152,16 @@ SobiPro.jQuery( document ).ready( function ()
 				return new SpSerialAction( task );
 			}
 			else if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
+				SobiPro.jQuery( '#SP_task' ).val( task );
+				if ( (( task == 'entry.save' || task == 'entry.apply' ) && SobiPro.jQuery( '#SP_history-note' ).length && SobiPro.jQuery( '#SP_history-note' ).val() != 0 ) || task == 'entry.saveWithRevision' ) {
+					var note = prompt( SobiPro.Txt( 'HISTORY_NOTE' ), '' );
+					if ( ( typeof note ) == 'string' ) {
+						SobiPro.jQuery( '#SP_history-note' ).val( note );
+					}
+					else {
+						return;
+					}
+				}
 				var handler = { 'takeOver': false };
 				SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit', [ handler, task ] );
 				if ( handler.takeOver == true ) {
@@ -162,12 +171,11 @@ SobiPro.jQuery( document ).ready( function ()
 				var req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
 				SobiPro.jQuery( SobiPro.jQuery( '#SPAdminForm' ).find( ':button' ) ).each( function ( i, b )
 				{
-					bt = SobiPro.jQuery( b );
+					var bt = SobiPro.jQuery( b );
 					if ( bt.attr( 'disabled' ) != 'disabled' && bt.hasClass( 'active' ) ) {
 						req += '&' + bt.attr( 'name' ) + '=' + bt.val();
 					}
 				} );
-				SobiPro.jQuery( '#SP_task' ).val( task );
 				SobiPro.jQuery.ajax( {
 					'url': 'index.php',
 					'data': req,
@@ -186,8 +194,8 @@ SobiPro.jQuery( document ).ready( function ()
 							if ( count > 1 ) {
 								c = '&nbsp;(' + count + ')';
 							}
-							alert = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + c + '</div>';
-							SobiPro.jQuery( '#spMessage' ).html( alert );
+							var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + c + '</div>';
+							SobiPro.jQuery( '#spMessage' ).html( Message );
 							try {
 								SobiPro.jQuery.each( data.data.sets, function ( i, val )
 								{
@@ -382,6 +390,30 @@ SobiPro.jQuery( document ).ready( function ()
 		jQuery.ajax( { url: 'index.php' } );
 		setTimeout( spKeepAlive, 300000 );
 	}
+
 	spKeepAlive();
 
+	SobiPro.jQuery( '.ctrl-default-ordering' ).click( function ( e )
+	{
+		e.preventDefault();
+		if ( confirm( SobiPro.Txt( 'STORE_DEFAULT_ORDERING' ) ) ) {
+			SobiPro.jQuery.ajax( {
+				'type': 'post',
+				'url': 'index.php',
+				'data': {
+					'sid': SobiProSection,
+					'format': 'raw',
+					'option': 'com_sobipro',
+					'tmpl': 'component',
+					'task': 'config.saveOrdering',
+					'target': SobiPro.jQuery( this ).data( 'target' ),
+					'method': 'xhr'
+				}
+			} ).done( function ( data )
+				{
+					var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + '</div>';
+					SobiPro.jQuery( '#spMessage' ).html( Message );
+				} );
+		}
+	} );
 } );
