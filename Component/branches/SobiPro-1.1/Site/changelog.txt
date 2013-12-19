@@ -53,7 +53,7 @@ Legend:
     (#) Disabling storing XML cache when template override is enabled (Issue #1064)
     (#) Unapproved images are being displayed for unauthorised users (Issue #1095)
     (#) Joomla! cache is being frequently deleted
-    (#) Disabling Joomla! cache in the search results
+    (#) Disabling Joomla! cache in search results
     (#) View cache broken
     (#) Entry meta data is not translatable (Issue #1110)
     (#) Missing labels for different objects when a label is entered in a language which isn't used later
