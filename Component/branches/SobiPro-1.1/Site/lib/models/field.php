@@ -478,10 +478,13 @@ class SPField extends SPObject
 	private function loadTables()
 	{
 		try {
-			$labels = SPFactory::db()->select(
-				array( 'sValue', 'sKey' ), 'spdb_language',
-				array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => Sobi::Lang( false ), 'oType' => 'field' )
-			)->loadAssocList( 'sKey' );
+			$lang = Sobi::Lang( false );
+			$labels = SPFactory::db()
+					->select(
+						array( 'sValue', 'sKey' ), 'spdb_language',
+						array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'oType' => 'field' ),
+						"FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )"
+					)->loadAssocList( 'sKey' );
 			if ( !( count( $labels ) ) ) {
 				// last fallback
 				$labels = SPFactory::db()->select(
