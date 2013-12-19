@@ -552,6 +552,11 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			}
 		}
 		$versioningAdminBehaviour = Sobi::Cfg( 'entry.versioningAdminBehaviour', 1 );
+		if( $versioningAdminBehaviour ) {
+			SPFactory::header()->addJsCode('
+				SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( "[rel=\'entry.saveWithRevision\']" ).parent().css( "display", "none" ); } );
+			');
+		}
 		$view->assign( $this->_task, 'task' )
 				->assign( $f, 'fields' )
 				->assign( $id, 'id' )
