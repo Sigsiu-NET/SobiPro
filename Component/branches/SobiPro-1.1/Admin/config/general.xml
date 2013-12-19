@@ -375,6 +375,7 @@
 							<div class="span12">
 								<fieldset>
 									<field type="toggle" name="spcfg[entry.versioning]" value="entry.versioning" label="ENTRY_VERSIONING" prefix="enabled" />
+									<field type="toggle" name="spcfg[entry.versioningAdminBehaviour]" value="entry.versioningAdminBehaviour" label="ENTRY_VERSIONING_ADM_BEHAVIOUR" prefix="versioning_adm" />
 								</fieldset>
 								<fieldset>
 									<field type="textarea" name="spcfg[html.allowed_tags_array]" value="html.allowed_tags_array" label="SEC.CFG.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />

@@ -42,6 +42,7 @@
 		<divider />
 		<button task="entry.apply" type="apply">
 			<button type="save" task="entry.save" />
+			<button type="save" task="entry.saveWithRevision" label="TB.SAVE_WITH_REVISION" invert-condition="history-behaviour" icon="sitemap"/>
 			<button type="duplicate" task="entry.clone" />
 		</button>
 		<divider />
@@ -213,7 +214,7 @@
 			<field name="method" default="xhr" />
 			<field name="sp-language" default="" />
 			<field name="sid" value="entry.sid" />
-			<field name="history-note" default="" condition="history.length"/>
+			<field name="history-note" value="history-behaviour" condition="history.length"/>
 		</hidden>
 	</config>
 </definition>
