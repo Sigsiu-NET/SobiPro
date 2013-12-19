@@ -373,11 +373,11 @@
 					<tab label="SECN.CFG.SECURITY_SETTINGS">
 						<div class="row-fluid">
 							<div class="span12">
-								<fieldset>
+								<fieldset label="CFG.VERSIONING">
 									<field type="toggle" name="spcfg[entry.versioning]" value="entry.versioning" label="ENTRY_VERSIONING" prefix="enabled" />
 									<field type="toggle" name="spcfg[entry.versioningAdminBehaviour]" value="entry.versioningAdminBehaviour" label="ENTRY_VERSIONING_ADM_BEHAVIOUR" prefix="versioning_adm" />
 								</fieldset>
-								<fieldset>
+								<fieldset label="CFG.HTML_ELEMENTS">
 									<field type="textarea" name="spcfg[html.allowed_tags_array]" value="html.allowed_tags_array" label="SEC.CFG.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />
 									<field type="textarea" name="spcfg[html.allowed_attributes_array]" value="html.allowed_attributes_array" label="SEC.CFG.ALLOWED_ATTRIBUTES" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
