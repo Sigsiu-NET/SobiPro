@@ -58,6 +58,7 @@ Legend:
     (#) Entry meta data is not translatable (Issue #1110)
     (#) Missing labels for different objects when a label is entered in a language which isn't used later
     (#) Missing header title in administrator area (Issue 1086)
+    (#) Missing template override in the pagination
 
     (!) Changed bootstrap datepicker to datetimepicker
     (!) Textarea field with allowed HTML input ignores HTML markup while checking the allowed length
