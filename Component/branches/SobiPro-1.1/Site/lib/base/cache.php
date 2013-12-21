@@ -54,7 +54,7 @@ final class SPCache
 	public static function & getInstance( $sid = 0 )
 	{
 		if ( !( $sid ) ) {
-			$sid = Sobi::Section() ? Sobi::Section() : -1;
+			$sid = Sobi::Section();
 		}
 		static $cache = array();
 		if ( !( isset( $cache[ $sid ] ) ) || !( $cache[ $sid ] instanceof self ) ) {
@@ -717,7 +717,8 @@ final class SPCache
 					}
 				}
 			}
-			$reserved = array( 'site', 'task', 'sid', 'sptpl', 'dbg', 'Itemid', 'option', 'tmpl', 'format', 'crawl', 'language', 'lang' );
+
+			$reserved = array( 'site', 'task', 'sid', 'dbg', 'Itemid', 'option', 'tmpl', 'format', 'crawl', 'language', 'lang' );
 			if ( Sobi::Reg( 'cache_view_add_itemid' ) ) {
 				unset( $reserved[ array_search( 'Itemid', $reserved ) ] );
 			}
@@ -779,8 +780,11 @@ final class SPCache
 		}
 		if ( $this->view[ 'xml' ] ) {
 			$xml = $this->view[ 'xml' ];
-			$template = $this->view[ 'template' ];
-			$template = str_replace( SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' ), null, $template );
+			$template = Sobi::Reg( 'cache_view_template' );
+			if ( !( $template ) ) {
+				$template = $this->view[ 'template' ];
+				$template = str_replace( SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' ), null, $template );
+			}
 			$root = $xml->documentElement;
 			$root->removeChild( $root->getElementsByTagName( 'visitor' )->item( 0 ) );
 			if ( $root->getElementsByTagName( 'messages' )->length ) {

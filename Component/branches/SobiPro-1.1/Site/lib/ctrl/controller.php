@@ -315,6 +315,9 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		if ( $this->authorise( 'manage' ) ) {
 			if ( $this->_task == 'toggle.enabled' ) {
+				if ( !( $this->_model->get( 'state' ) ) ) {
+					$this->approval( true );
+				}
 				$this->state( !( $this->_model->get( 'state' ) ) );
 			}
 			else {
@@ -399,9 +402,6 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		/* determine template file */
 		$template = SPRequest::cmd( 'sptpl', $this->_task );
-		if ( strlen( $template && $template != $this->_task ) && !( SPRequest::bool( 'xmlc' ) ) ) {
-			SPFactory::registry()->set( 'break_cache_view', $template );
-		}
 		if ( strstr( $template, '.' ) ) {
 			$template = explode( '.', $template );
 			$this->templateType = $template[ 0 ];
@@ -410,6 +410,10 @@ abstract class SPController extends SPObject implements SPControl
 		else {
 			$this->templateType = $this->_type;
 			$this->template = $template ? $template : $this->_task;
+		}
+		if ( strlen( $template && $template != $this->_task ) && !( SPRequest::bool( 'xmlc' ) ) ) {
+			$template = "/{$this->templateType}/{$this->template}.xsl";
+			SPFactory::registry()->set( 'cache_view_template', $template );
 		}
 	}
 

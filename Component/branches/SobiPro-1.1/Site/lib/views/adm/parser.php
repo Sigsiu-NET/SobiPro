@@ -535,6 +535,7 @@ class SPTplParser
 			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending' . $linkClass . '">';
 		}
 		elseif ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
+			$cell[ 'link' ] = $cell[ 'link' ] . '&t=' . microtime( true );
 			$aOpen = true;
 			$this->_out[ ] = "<a href=\"{$cell['link']}\" class=\"{$linkClass}\" >";
 		}
