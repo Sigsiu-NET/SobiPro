@@ -267,7 +267,6 @@ abstract class SPController extends SPObject implements SPControl
 	protected function save( $apply, $clone = false )
 	{
 		$sets = array();
-		sleep( 5 );
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
