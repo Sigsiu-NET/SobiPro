@@ -110,6 +110,7 @@ class SpAdmToolbar
 			return null;
 		}
 		$id = isset( $options[ 'id' ] ) ? $options[ 'id' ] : 'SPAdmToolbar';
+		$this->output[ ] = '<div id="SpSpinner" class="SobiPro hide" style="position:fixed; top:50%; left:50%; font-size: 35px;"><i class="icon-spinner icon-spin icon-large"></i></div>';
 		$this->output[ ] = '<div class="breadcrumb" id="' . $id . '">';
 		$this->output[ ] = '<div id="SPRightMenuHold">';
 		$this->output[ ] = '</div>';
@@ -204,7 +205,7 @@ class SpAdmToolbar
 			$rel = null;
 		}
 
-		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button[ 'target' ]}\"" : null;
+		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button['target']}\"" : null;
 		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
 			$this->output[ ] = '<div class="btn-group">';
 			$this->output[ ] = "<a href=\"{$href}\" class=\"{$this->btClass}{$class}\"{$target} rel=\"{$rel}\">";
@@ -253,10 +254,10 @@ class SpAdmToolbar
 				}
 				if ( isset( $button[ 'selected' ] ) ) {
 					if ( !( $button[ 'selected' ] ) ) {
-						$icon = $this->icons[ 'not-selected' ] ;
+						$icon = $this->icons[ 'not-selected' ];
 					}
 					else {
-						$icon = $this->icons[ 'selected' ] ;
+						$icon = $this->icons[ 'selected' ];
 //						$this->output[ ] = '<i class="icon-' . $this->icons[ 'selected' ] . '"></i>&nbsp;&nbsp;';
 					}
 				}

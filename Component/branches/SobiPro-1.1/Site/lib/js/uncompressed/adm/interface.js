@@ -176,6 +176,9 @@ SobiPro.jQuery( document ).ready( function ()
 						req += '&' + bt.attr( 'name' ) + '=' + bt.val();
 					}
 				} );
+				SobiPro.jQuery( '#SobiPro' ).css( 'opacity', 0.3 );
+				SobiPro.jQuery( '#SobiPro' ).before( SobiPro.jQuery( '#SpSpinner' ) );
+				SobiPro.jQuery( '#SpSpinner' ).removeClass( 'hide' );
 				SobiPro.jQuery.ajax( {
 					'url': 'index.php',
 					'data': req,
@@ -194,6 +197,8 @@ SobiPro.jQuery( document ).ready( function ()
 							if ( count > 1 ) {
 								c = '&nbsp;(' + count + ')';
 							}
+							SobiPro.jQuery( '#SobiPro' ).css( 'opacity', 1 );
+							SobiPro.jQuery( '#SpSpinner' ).addClass( 'hide' );
 							var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + c + '</div>';
 							SobiPro.jQuery( '#spMessage' ).html( Message );
 							try {
