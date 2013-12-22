@@ -207,7 +207,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			);
 			$messages =& SPFactory::registry()->get( 'messages' );
 			$reason = SPLang::replacePlaceHolders( SPRequest::string( 'reason', null, true, 'post' ), $objects );
-			$objects[ 'reason' ] = $reason;
+			$objects[ 'reason' ] = nl2br( $reason );
 			$messages[ 'rejection' ] = $objects;
 			SPFactory::registry()->set( 'messages', $messages );
 			$this->_model->setMessage( $reason, 'reason' );
