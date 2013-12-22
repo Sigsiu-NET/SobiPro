@@ -315,12 +315,14 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		if ( $this->authorise( 'manage' ) ) {
 			if ( $this->_task == 'toggle.enabled' ) {
-				if ( !( $this->_model->get( 'state' ) ) ) {
-					$this->approval( true );
-				}
 				$this->state( !( $this->_model->get( 'state' ) ) );
 			}
 			else {
+				if ( Sobi::Cfg( 'entry.approval_publish', true ) ) {
+					if ( !( $this->_model->get( 'approved' ) ) ) {
+						$this->state( true );
+					}
+				}
 				$this->approval( !( $this->_model->get( 'approved' ) ) );
 			}
 		}
