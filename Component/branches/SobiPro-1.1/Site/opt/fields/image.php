@@ -135,7 +135,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
-		$files = $this->getRaw() ;
+		$files = $this->getRaw();
 		if ( is_string( $files ) ) {
 			try {
 				$files = SPConfig::unserialize( $files );
@@ -448,12 +448,14 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 	protected function cleanExif( &$data )
 	{
-		foreach ( $data as $index => $row ) {
-			if ( is_array( $row ) ) {
-				$this->cleanExif( $row );
-			}
-			else {
-				$data[ $index ] = preg_replace( '#\\xED[\\xA0-\\xBF][\\x80-\\xBF]#', '', $row );
+		if ( count( $data ) ) {
+			foreach ( $data as $index => $row ) {
+				if ( is_array( $row ) ) {
+					$this->cleanExif( $row );
+				}
+				else {
+					$data[ $index ] = preg_replace( '#\\xED[\\xA0-\\xBF][\\x80-\\xBF]#', '', $row );
+				}
 			}
 		}
 	}
@@ -499,7 +501,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 */
 	public function struct()
 	{
-		$files = $this->getRaw() ;
+		$files = $this->getRaw();
 		if ( is_string( $files ) ) {
 			try {
 				$files = SPConfig::unserialize( $files );
