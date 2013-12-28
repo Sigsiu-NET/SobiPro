@@ -66,6 +66,7 @@
                                     <input type="text" name="sp_search_for" autocomplete="off" class="search-query" placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}" />
                                     <input type="hidden" name="task" value="search.search" />
                                     <input type="hidden" name="option" value="com_sobipro" />
+	                                <input type="hidden" name="sid" value="{//id}" />
                                 </form>
                             </div>
                         </xsl:if>
