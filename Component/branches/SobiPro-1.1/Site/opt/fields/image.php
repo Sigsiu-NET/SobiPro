@@ -135,8 +135,15 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
+		$files = $this->getRaw() ;
+		if ( is_string( $files ) ) {
+			try {
+				$files = SPConfig::unserialize( $files );
+			} catch ( SPException $x ) {
+				$files = null;
+			}
+		}
 
-		$files = SPConfig::unserialize( $this->getRaw() );
 		if ( is_array( $files ) && count( $files ) ) {
 			if ( isset( $files[ 'ico' ] ) ) {
 				$show = $files[ 'ico' ];
