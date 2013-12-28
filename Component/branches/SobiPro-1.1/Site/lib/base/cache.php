@@ -341,7 +341,8 @@ final class SPCache
 				$var = SPC::NO_VALUE;
 			}
 			$section = $section ? $section : $this->_section;
-			$sid = $sid ? $sid : $this->_section;
+			$sid = ( int )$sid;
+			$sid = $sid ? $sid : $section;
 			$lang = $lang ? $lang : Sobi::Lang();
 			$checksum = null; //md5( serialize( $var ) );
 			$var = SPConfig::serialize( $var );
@@ -364,8 +365,9 @@ final class SPCache
 		if ( $this->enabled() ) {
 			$section = $section ? $section : $this->_section;
 			$lang = $lang ? $lang : Sobi::Lang( false );
+			$sid = ( int )$sid;
 			$sid = $sid ? $sid : $section;
-			$result = $this->Query( "SELECT * FROM vars WHERE( name = '{$id}' AND lang = '{$lang}' AND section = '{$section}' AND sid = {$sid} )" );
+			$result = $this->Query( "SELECT * FROM vars WHERE( name = '{$id}' AND lang = '{$lang}' AND section = '{$section}' AND sid = '{$sid}' )" );
 			if ( !( is_array( $result ) ) || !( count( $result ) ) || !( strlen( $result[ 'data' ] ) ) ) {
 				return false;
 			}
