@@ -178,7 +178,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		return $addExt ? $fileName . '.' . $ext : $fileName;
 	}
 
-	public function getRawData( $data )
+	public function getRawData( &$data )
 	{
 		if ( is_string( $data ) ) {
 			try {
@@ -188,8 +188,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			}
 		}
 		// legacy for ImEx - did you learned a lesson Radek?
-		if ( isset( $data[ 'exif' ] ) ) {
-			unset( $data[ 'exif' ] );
+		if ( isset( $data[ 'data' ] ) && defined( 'SOBIPRO_ADM' ) ) {
+			unset( $data[ 'data' ] );
 		}
 		return $data;
 	}
@@ -492,7 +492,14 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 */
 	public function struct()
 	{
-		$files = SPConfig::unserialize( $this->getRaw() );
+		$files = $this->getRaw() ;
+		if ( is_string( $files ) ) {
+			try {
+				$files = SPConfig::unserialize( $files );
+			} catch ( SPException $x ) {
+				$files = null;
+			}
+		}
 		$exif = array();
 		if ( isset( $files[ 'original' ] ) ) {
 			$files[ 'orginal' ] = $files[ 'original' ];

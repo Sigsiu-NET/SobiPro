@@ -236,8 +236,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		if ( $rid ) {
 			$this->remove( $rid );
 		}
-		$vs = SPRequest::int( 'set_validSince' );
-		$vu = SPRequest::int( 'set_validUntil' );
+		$vs = SPRequest::timestamp( 'set_validSince' );
+		$vu = SPRequest::timestamp( 'set_validUntil' );
 		$vs = $vs ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $vs ) : null;
 		$vu = $vu ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $vu ) : null;
 

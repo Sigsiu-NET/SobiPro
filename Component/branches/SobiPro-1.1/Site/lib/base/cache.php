@@ -364,7 +364,7 @@ final class SPCache
 		if ( $this->enabled() ) {
 			$section = $section ? $section : $this->_section;
 			$lang = $lang ? $lang : Sobi::Lang( false );
-			$sid = $sid ? $sid : $this->_section;
+			$sid = $sid ? $sid : $section;
 			$result = $this->Query( "SELECT * FROM vars WHERE( name = '{$id}' AND lang = '{$lang}' AND section = '{$section}' AND sid = {$sid} )" );
 			if ( !( is_array( $result ) ) || !( count( $result ) ) || !( strlen( $result[ 'data' ] ) ) ) {
 				return false;
