@@ -35,6 +35,13 @@ Legend:
     (+) Timestamp to the URL of search results site to prevent caching by the Joomla! page cache plugin (adjustable in config.ini)
     (+) Moderate mode for history changes in the administrator area
 
+    (!) Changed bootstrap datepicker to datetimepicker
+    (!) Textarea field with allowed HTML input ignores HTML markup while checking the allowed length
+    (!) Changed Joomla! menu handling; added possibility to load new options dynamically
+    (!) Improved default template (Thanks to Robert Vining)
+    (!) Approval of unpublished entries triggers automatically "publish" action (adjustable in config.ini)
+    (!) Added spinner in administrator area
+
     (#) Missing error text for FILE_WRONG_TYPE added.
     (#) Additional parameters in some fields are being destroyed
     (#) No requirement to pass selected categories while editing existing entry (Issue #1106)
@@ -57,16 +64,10 @@ Legend:
     (#) View cache broken
     (#) Entry meta data is not translatable (Issue #1110)
     (#) Missing labels for different objects when a label is entered in a language which isn't used later
-    (#) Missing header title in administrator area (Issue 1086)
-    (#) Missing template override in the pagination
+    (#) Missing header title in administrator area (Issue #1086)
+    (#) Missing template override in pagination
     (#) Added timestamp to several URLs administrator links to leverage browser caching
 
-    (!) Changed bootstrap datepicker to datetimepicker
-    (!) Textarea field with allowed HTML input ignores HTML markup while checking the allowed length
-    (!) Changed Joomla! menu handling; added possibility to load new options dynamically
-    (!) Improved default template (Thanks to Robert Vining)
-    (!) Approval of unpublished entries triggers automatic "publish" action (adjustable in config.ini)
-    (!) Added spinner in administrator area
 
 -------------------
 1.1.3 (21 October 2013)
