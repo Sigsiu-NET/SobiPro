@@ -27,7 +27,7 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.4 ()
+1.1.4 (28 December 2012)
 -------------------
 
     (+) Added support for schema.org in field model and default templates
