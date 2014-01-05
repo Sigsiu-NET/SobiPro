@@ -126,6 +126,7 @@ $ = SobiPro.jQuery;
 			this.update();
 			this.showMode();
 			this._attachDatePickerEvents();
+			this._attachSpecialButtons();
 		},
 
 		show: function ( e )
@@ -177,6 +178,8 @@ $ = SobiPro.jQuery;
 //				date: this._date
 //			} );
 			this._detachDatePickerGlobalEvents();
+			// Sigsiu.NET - we need to format the date even if we didn't realy chosen anything
+			this.notifyChange();
 		},
 
 		set: function ()
@@ -1041,6 +1044,19 @@ $ = SobiPro.jQuery;
 			this._propertiesByIndex = propertiesByIndex;
 		},
 
+		_attachSpecialButtons: function ()
+		{
+			var proxy = this;
+			this.widget.on( 'click', '.ctrl-set-now', function ()
+			{
+				proxy._date = new Date();
+				proxy.update( new Date() );
+				proxy.fillDate();
+				proxy.set();
+				proxy.notifyChange();
+			} );
+		},
+
 		_attachDatePickerEvents: function ()
 		{
 			var self = this;
@@ -1288,7 +1304,11 @@ $ = SobiPro.jQuery;
 					DPGlobal.template +
 					'</div>' +
 					'</li>' +
-					'<li class="picker-switch accordion-toggle"><a><i class="' + timeIcon + '"></i></a></li>' +
+					'<li class="picker-switch">' +
+//					'   <a class="ctrl-reset-date"><i class="icon-refresh"></i></a>' +
+					'   <a class="ctrl-set-now"><i class="icon-ok-sign"></i></a>' +
+					'   <a class="accordion-toggle"><i class="' + timeIcon + '"></i></a>' +
+					'</li>' +
 					'<li' + (collapse ? ' class="collapse"' : '') + '>' +
 					'<div class="timepicker">' +
 					TPGlobal.getTemplate( is12Hours, showSeconds ) +

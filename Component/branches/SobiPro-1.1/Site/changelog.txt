@@ -30,10 +30,11 @@ Legend:
 1.1.5 (28 January 2014)
 -------------------
 
-    (+)
+    (+) "Now" selector in date-time picker
 
     (#) Changed timestamp getter from integer to double to avoid problems on old 32 bit systems (Issue #1143)
     (#) Removed short open tag in the administrator/components/com_sobipro/default.php file (Issue #1141)
+    (#) Improved the default date-time picker (Issue #1137)
 
 -------------------
 1.1.4 (28 December 2013)
