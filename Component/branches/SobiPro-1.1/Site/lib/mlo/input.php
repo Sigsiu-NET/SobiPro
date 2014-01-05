@@ -785,7 +785,7 @@ abstract class SPHtml_Input
 		$tag = ' ';
 		if ( count( $data[ 'data' ] ) ) {
 			foreach ( $data[ 'data' ] as $name => $value ) {
-				$name = SPLang::nid( $name );
+				$name = SPLang::nid( preg_replace( '/(?<!^)([A-Z])/', '-\\1', $name ) );
 				$tag .= "data-{$name}=\"{$value}\" ";
 			}
 			unset( $data[ 'data' ] );

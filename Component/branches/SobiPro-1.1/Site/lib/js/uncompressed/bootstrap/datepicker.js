@@ -1165,7 +1165,6 @@ $ = SobiPro.jQuery;
 						break;
 					}
 				}
-				;
 				return inFixed;
 			}
 			else {
@@ -1182,8 +1181,7 @@ $ = SobiPro.jQuery;
 				data = $this.data( 'datetimepicker' ),
 				options = typeof option === 'object' && option;
 			if ( !data ) {
-				$this.data( 'datetimepicker', (data = new SpDateTimePicker(
-					this, SobiPro.jQuery.extend( {}, SobiPro.jQuery.fn.SpDateTimePicker.defaults, options ) )) );
+				$this.data( 'datetimepicker', ( data = new SpDateTimePicker( this, SobiPro.jQuery.extend( {}, SobiPro.jQuery.fn.SpDateTimePicker.defaults, options ) ) ) );
 			}
 			if ( typeof option === 'string' ) data[option]( val );
 		} );
@@ -1449,7 +1447,7 @@ SobiPro.jQuery( document ).ready( function ()
 	{
 		var proxy = this;
 		SobiPro.jQuery( e )
-			.SpDateTimePicker()
+			.SpDateTimePicker( SobiPro.jQuery( e ).find( 'input[type=text]' ).data() )
 			.on( 'changeDate', function ( ev )
 			{
 				var set = '';

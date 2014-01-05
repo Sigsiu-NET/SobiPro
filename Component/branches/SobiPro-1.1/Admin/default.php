@@ -25,10 +25,11 @@ $data = $this->getData();
 <?php echo $this->toolbar(); ?>
 <?php $this->trigger( 'OnStart' ); ?>
 	<!--starts here-->
-<? if ( count( $data[ 'data' ] ) ) : ?>
+<?php if ( count( $data[ 'data' ] ) ) : ?>
 	<?php foreach ( $data[ 'data' ] as $element ) : ?>
 		<?php $this->getParser()->parse( $element ); ?>
 	<?php endforeach; ?>
 <?php endif ?>
 	<!--ends here-->
 <?php $this->trigger('OnEnd'); ?>
+

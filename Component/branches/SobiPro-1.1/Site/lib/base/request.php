@@ -187,8 +187,8 @@ abstract class SPRequest
 	}
 
 	/**
-	 * Returns integer value of requested variable and checks for a valid timestamp
-	 *
+	 * Returns double value of requested variable and checks for a valid timestamp
+	 * Sun, Jan 5, 2014 11:27:04 changed to double because of 32 bit systems (seriously?!)
 	 * @param string $name variable name
 	 * @param int $default default value
 	 * @param string $method request method
@@ -197,7 +197,7 @@ abstract class SPRequest
 	 */
 	static public function timestamp( $name, $default = 0, $method = 'REQUEST', $noZero = false )
 	{
-		self::$val = self::int( $name, $default, $method, $noZero );
+		self::$val = self::double( $name, $default, $method, $noZero );
 		// JavaScript conversion
 		return self::$val > 10000000000 ? self::$val / 1000 : self::$val;
 	}
@@ -252,14 +252,15 @@ abstract class SPRequest
 	 * @param string $name variable name
 	 * @param \double|int $default default value
 	 * @param string $method request method
+	 * @param bool $noZero
 	 * @return double
 	 */
-	static public function double( $name, $default = 0, $method = 'REQUEST' )
+	static public function double( $name, $default = 0, $method = 'REQUEST', $noZero = false )
 	{
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
 		self::$val = preg_replace( '/[^0-9\.]/', null, self::$val );
-		self::$val = ( double )self::$val;
+		self::$val = $noZero && !( self::$val ) ? ( double ) $default : ( double ) self::$val;
 		return self::$val;
 	}
 
