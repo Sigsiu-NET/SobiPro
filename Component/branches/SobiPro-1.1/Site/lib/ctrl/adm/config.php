@@ -207,7 +207,7 @@ class SPConfigAdmCtrl extends SPController
 	 */
 	protected function crawler()
 	{
-		$cronCommandFile = SOBI_PATH.'/libraries/ctrl/cron.php';
+		$cronCommandFile = SOBI_PATH.'/lib/ctrl/cron.php';
 		$phpCmd = PHP_BINDIR.'/php';
 		$section = Sobi::Section();
 		$cron = array(
