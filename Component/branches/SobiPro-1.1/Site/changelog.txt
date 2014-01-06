@@ -36,6 +36,7 @@ Legend:
     (#) Changed timestamp getter from integer to double to avoid problems on old 32 bit systems (Issue #1143)
     (#) Removed short open tag in the administrator/components/com_sobipro/default.php file (Issue #1141)
     (#) Improved the default date-time picker (Issue #1137)
+    (#) Editing entries with image field set as required (Issue #1017)
 
 
 -------------------
@@ -95,7 +96,6 @@ Legend:
    (!) Header output moved to a separate plugin
 
    (#) Backend search for entry returns categories (Issue #1022)
-   (#) Editing entries with image field set as required (Issue #1017)
    (#) Error while installing Joomla! native extensions in SobiPro (Issue #1013)
    (#) Add menu entry to an entry in Joomla 2.5 (Issue #1042)
    (#) Preventing saving of custom ordering when nothing has been selected (Issue ##1041)
