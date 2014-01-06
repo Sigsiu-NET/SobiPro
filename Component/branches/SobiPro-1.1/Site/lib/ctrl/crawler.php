@@ -20,7 +20,7 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-SPLoader::loadController( 'txt' );
+SPLoader::loadController( 'controller' );
 
 /**
  * @author Radek Suski
@@ -67,13 +67,14 @@ class SPCrawler extends SPController
 		}
 		if ( count( $sites ) ) {
 			$i = 0;
+			$timeLimit = SPRequest::int( 'timeLimit', self::TIME_LIMIT, 'get', true );
 			foreach ( $sites as $site ) {
 				if ( !( strlen( $site ) ) ) {
 					continue;
 				}
 				$responses[ ] = $this->getResponse( $site );
 				$i++;
-				if ( microtime( true ) - $this->start > self::TIME_LIMIT ) {
+				if ( microtime( true ) - $this->start > $timeLimit ) {
 					break;
 				}
 			}
