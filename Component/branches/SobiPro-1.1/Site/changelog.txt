@@ -39,6 +39,7 @@ Legend:
     (#) Removed short open tag in the administrator/components/com_sobipro/default.php file (Issue #1141)
     (#) Improved the default date-time picker (Issue #1137)
     (#) Editing entries with image field set as required (Issue #1017)
+    (#) Improved the pathway creation (Issue #1147)
 
 
 -------------------

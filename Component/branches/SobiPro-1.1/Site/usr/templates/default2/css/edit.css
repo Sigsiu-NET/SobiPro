@@ -21,82 +21,104 @@
  * $Author$
  */
 .spFieldUrlLabel {
-  display: block;
+	display: block;
 }
+
 .spFieldUrlLabel label {
-  padding-right: 5px;
-  color: #666666;
-  margin-top: 5px;
-  float: left;
+	padding-right: 5px;
+	color: #666666;
+	margin-top: 5px;
+	float: left;
 }
+
 .spFieldUrl {
-  display: block;
-  margin-top: 10px;
+	display: block;
+	margin-top: 10px;
 }
+
 .spFieldUrl select {
-  width: 100px;
+	width: 100px;
 }
+
 .spFileUpload input,
 .spFieldRadio,
 .spFieldCheckbox {
-  float: left;
+	float: left;
 }
+
 .spFieldCheckbox label {
-  color: #666666;
-  float: left;
-  margin-top: 5px;
+	color: #666666;
+	float: left;
+	margin-top: 5px;
 }
+
 .spFieldCheckbox input {
-  margin-top: 6px !important;
-  margin-left: 5px !important;
-  margin-right: 5px !important;
-  float: left;
+	margin-top: 6px !important;
+	margin-left: 5px !important;
+	margin-right: 5px !important;
+	float: left;
 }
+
 .spFieldRadio label {
-  color: #666666;
-  float: left;
-  margin-top: 5px;
+	color: #666666;
+	float: left;
+	margin-top: 5px;
 }
+
 .spFieldRadio input {
-  margin-top: 8px !important;
-  margin-left: 5px !important;
-  margin-right: 5px !important;
-  float: left;
+	margin-top: 8px !important;
+	margin-left: 5px !important;
+	margin-right: 5px !important;
+	float: left;
 }
+
 .SobiPro table.mceLayout {
-  border-radius: 3px;
+	border-radius: 3px;
 }
+
 .SigsiuTree .selected {
-  float: left;
-  margin-left: 10px;
-  margin-top: 10px;
+	float: left;
+	margin-left: 10px;
+	margin-top: 10px;
 }
+
 .SigsiuTree .selected select {
-  min-height: 200px;
+	min-height: 200px;
 }
+
 .SigsiuTree .buttons {
-  clear: both;
-  padding: 10px;
+	clear: both;
+	padding: 10px;
 }
+
 .SigsiuTree .buttons button {
-  margin: 5px;
+	margin: 5px;
 }
+
 .SigsiuTree .tree {
-  float: left;
-  overflow: auto;
-  width: 50%;
+	float: left;
+	overflow: auto;
+	width: 50%;
 }
+
 /* Modale Fenster */
 .modal-backdrop,
 .modal-backdrop.fade.in {
-  opacity: 0.2;
+	opacity: 0.2;
 }
+
 .modal-backdrop {
-  background-color: #000000;
-  bottom: 0;
-  left: 0;
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 1040;
+	background-color: #000000;
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 1040;
+}
+
+.SobiPro .SPEntryEdit div.required {
+	border: 1px solid #7ac6ff;
+	border-radius: 4px;
+	padding: 2px;
 }
