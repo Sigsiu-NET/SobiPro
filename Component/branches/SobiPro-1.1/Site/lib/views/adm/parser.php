@@ -333,6 +333,9 @@ class SPTplParser
 				if ( $type == 'alert-success' ) {
 					$icon = 'icon-thumbs-up';
 				}
+				elseif ( $type == 'alert-info' ) {
+					$icon = 'icon-lightbulb';
+				}
 				else {
 					$icon = 'icon-thumbs-down';
 				}
