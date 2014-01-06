@@ -276,8 +276,8 @@ abstract class Sobi
 
 	/**
 	 * Sets the value of a user data.
-	 * @param    string $key     - The path of the state.
-	 * @param    string $value     - The value of the variable.
+	 * @param    string $key - The path of the state.
+	 * @param    string $value - The value of the variable.
 	 * @return    mixed    The previous state, if one existed.
 	 */
 	public static function SetUserData( $key, $value )
@@ -488,7 +488,10 @@ abstract class Sobi
 			SPLoader::loadClass( 'base.factory' );
 			SPLoader::loadClass( 'base.config' );
 			SPLoader::loadClass( 'cms.base.fs' );
-			SPFactory::config()->set( 'live_site', JURI::root() );
+			// in case it is a CLI call
+			if ( isset( $_SERVER[ 'REQUEST_URI' ] ) ) {
+				SPFactory::config()->set( 'live_site', JURI::root() );
+			}
 			$loaded = true;
 		}
 		if ( $sid ) {
