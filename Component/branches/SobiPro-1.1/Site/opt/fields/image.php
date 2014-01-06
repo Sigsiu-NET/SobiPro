@@ -253,7 +253,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$dexs = strlen( $data );
 		if ( $this->required && !( $dexs ) ) {
 			$files = $this->getRaw();
-			if ( !( strlen( $files ) ) ) {
+			if ( !( count( $files ) ) ) {
 				throw new SPException( SPLang::e( 'FIELD_REQUIRED_ERR', $this->name ) );
 			}
 		}
