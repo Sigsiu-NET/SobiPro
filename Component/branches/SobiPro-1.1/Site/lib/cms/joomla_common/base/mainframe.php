@@ -322,13 +322,15 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		}
 		$menu = JSite::getMenu()->getActive()->query;
 		$sid = isset( $menu[ 'sid' ] ) ? $menu[ 'sid' ] : 0;
+		$resetPathway = false;
 		if ( $obj->get( 'oType' ) == 'entry' ) {
 			$id = SPRequest::int( 'pid' );
 			/** if the entry isn't linked directly in the menu */
 			if ( !( $obj->get( 'id' ) == $sid ) ) {
 				/* if we didn't entered this entry via category */
-				if ( !$id || $id == Sobi::Section() || Sobi::Cfg( 'entry.primary_path_always' ) ) {
+				if ( !( $id ) || $id == Sobi::Section() || Sobi::Cfg( 'entry.primary_path_always' ) ) {
 					$id = $obj->get( 'parent' );
+					$resetPathway = true;
 				}
 			}
 			/** if it is linked in the Joomla! menu we have nothing to do */
@@ -379,6 +381,16 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		 * Related to Bug #692
 		 */
 		if ( count( $path ) ) {
+			if ( $resetPathway ) {
+				/** we have to reset the J! pathway in case:
+				 *  - we are entering an entry and we want to show the pathway corresponding to the main parent if of the entry
+				 *    but we have also an Itemid and Joomla! set already the pathway partialy so we need to override it
+				 *    It wouldn't be normally a problem but when SEF is enabled we do not have the pid so we don't know how it has been enetered
+				 */
+				JFactory::getApplication()
+						->getPathway()
+						->setPathway( array() );
+			}
 			foreach ( $path as $data ) {
 				if ( !( isset( $data[ 'name' ] ) || isset( $data[ 'id' ] ) ) || !( $data[ 'id' ] ) ) {
 					continue;
