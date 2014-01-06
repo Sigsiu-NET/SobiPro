@@ -31,6 +31,7 @@ Legend:
 -------------------
 
     (+) "Now" selector in date-time picker
+    (+) A CLI crawler script to re-create cache from command line and/or cron job
 
     (#) Changed timestamp getter from integer to double to avoid problems on old 32 bit systems (Issue #1143)
     (#) Removed short open tag in the administrator/components/com_sobipro/default.php file (Issue #1141)

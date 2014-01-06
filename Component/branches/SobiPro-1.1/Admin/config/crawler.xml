@@ -53,6 +53,7 @@
 			<div class="span10">
 				<message id="spMessage" />
                 <message label="CRAWL.INFO" class="alert alert-info" type="info" dismiss-button="false" />
+				<message parse="cron" dismiss-button="false" icon="true"  />
 				<div id="crawlerResponse" class="hide">
 					<div class="alert alert-info" id="progressMessage" />
                     <table>

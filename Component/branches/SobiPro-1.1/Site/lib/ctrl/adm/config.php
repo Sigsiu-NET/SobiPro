@@ -207,8 +207,17 @@ class SPConfigAdmCtrl extends SPController
 	 */
 	protected function crawler()
 	{
+		$cronCommandFile = SOBI_PATH.'/libraries/ctrl/cron.php';
+		$phpCmd = PHP_BINDIR.'/php';
+		$section = Sobi::Section();
+		$cron = array(
+			'type' => 'info',
+			'label' => nl2br( Sobi::Txt( 'CRAWLER_CRON_INFO', "'{$phpCmd} {$cronCommandFile} section={$section}'", "'{$phpCmd} {$cronCommandFile}", "'{$phpCmd} {$cronCommandFile} --help" ) ),
+		);
+
 		/** @var $view SPAdmView */
 		$view = $this->getView( 'config.' . $this->_task );
+		$view->assign( $cron, 'cron' );
 		$view->setCtrl( $this );
 		$view->determineTemplate( 'config', $this->_task );
 		$view->display();

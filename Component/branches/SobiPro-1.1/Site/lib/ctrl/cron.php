@@ -126,6 +126,7 @@ class SobiProCrawler extends JApplicationCli
 				}
 			}
 		}
+		return true;
 	}
 
 	protected function SobiCrawlerHelpScreen()
@@ -133,7 +134,7 @@ class SobiProCrawler extends JApplicationCli
 		$this->out( '============' );
 		$this->out( 'SobiPro crawler v 1.0' );
 		$this->out( 'Copyright (C) 2006 - 2014 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.');
-		$this->out( 'License GNU/LGPL Version 3');
+		$this->out( 'License GNU/GPL Version 3');
 		$this->out( '============' );
 		$this->out( '' );
 		$this->out( 'The SobiPro crawler allows you to set up a cronjob to check all SobiPro links and build up the SobiPro caches which are useful to speed up your site significantly' );
@@ -172,5 +173,4 @@ class SobiProCrawler extends JApplicationCli
 		return array( $content, $response );
 	}
 }
-
 JApplicationCli::getInstance( 'SobiProCrawler' )->execute( $argv );
