@@ -26,8 +26,8 @@ class com_sobiproInstallerScript
 	/**
 	 * Called before any type of action
 	 *
-	 * @param   string $route  Which action is happening (install|uninstall|discover_install)
-	 * @param   JAdapterInstance $adapter  The object responsible for running this script
+	 * @param   string $route Which action is happening (install|uninstall|discover_install)
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 *
 	 * @return  boolean  True on success
 	 */
@@ -61,10 +61,7 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) ) ) {
 			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
 		}
-
-
 		$srcpath = JPATH_ROOT . '/media/sobipro/icons';
-
 		if ( file_exists( $srcpath ) ) {
 			$files = scandir( $srcpath );
 
@@ -208,7 +205,7 @@ class com_sobiproInstallerScript
 	/**
 	 * Called on installation
 	 *
-	 * @param   JAdapterInstance $adapter  The object responsible for running this script
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 *
 	 * @return  boolean  True on success
 	 */
@@ -232,6 +229,7 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) ) ) {
 			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
 		}
+		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/repository.1.1.5.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/repository.xml' );
 		$db = JFactory::getDBO();
 		$db->setQuery( 'SHOW COLUMNS FROM #__sobipro_field_data' );
 		$cols = $db->loadAssocList( 'Field' );
@@ -260,7 +258,7 @@ class com_sobiproInstallerScript
 	/**
 	 * Called on uninstallation
 	 *
-	 * @param   JAdapterInstance $adapter  The object responsible for running this script
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 */
 	public function uninstall( JAdapterInstance $adapter )
 	{
