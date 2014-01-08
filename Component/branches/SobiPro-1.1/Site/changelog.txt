@@ -40,6 +40,7 @@ Legend:
     (#) Improved the default date-time picker (Issue #1137)
     (#) Editing entries with image field set as required (Issue #1017)
     (#) Improved the pathway creation (Issue #1147)
+    (#) Approval status is displayed to unauthorised users (Issue #1150)
     (#) Do not overriding the repository.xml on update
 
 

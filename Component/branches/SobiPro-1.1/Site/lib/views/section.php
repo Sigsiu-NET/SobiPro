@@ -200,8 +200,7 @@ class SPSectionView extends SPFrontView implements SPView
 			);
 			$en[ 'url_array' ] = array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) );
 			if ( strstr( SPRequest::task(), 'search' ) || $noId || ( Sobi::Cfg( 'section.force_category_id', false ) && SPRequest::sid() == Sobi::Section() ) ) {
-				$en[ 'url' ] = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), /*'task' => 'entry.details',*/
-					'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) ) );
+				$en[ 'url' ] = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) ) );
 			}
 			else {
 				$en[ 'url' ] = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => SPRequest::sid(), 'sid' => $entry->get( 'id' ) ) );
