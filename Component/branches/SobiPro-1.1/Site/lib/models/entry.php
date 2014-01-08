@@ -140,6 +140,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 			SPFactory::registry()->set( 'break_cache_view', $stop );
 		}
 		$this->translate();
+		// if the visitor can't see unapproved entries we are showing the approved version anyway
+		if ( !( $this->approved ) && !( Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ) ) {
+			$this->approved = 1;
+		}
 	}
 
 	/**
