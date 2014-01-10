@@ -102,6 +102,15 @@ class com_sobiproInstallerScript
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( 'engb_preload',  '1',  '0', NULL ,  'lang' )" );
 		$db->query();
 
+		$db->setQuery( "UPDATE #__sobipro_field_option_selected SET `optValue` = REPLACE (`optValue`, '_', '-')" );
+		$db->query();
+
+		$db->setQuery( "UPDATE #__sobipro_field_option SET `optValue` = REPLACE (`optValue`, '_', '-')" );
+		$db->query();
+
+		$db->setQuery( "UPDATE #__sobipro_language SET  `sKey` = REPLACE(  `sKey` ,  '_',  '-' ) WHERE  `oType` =  'field_option'" );
+		$db->query();
+
 		try {
 			$db->setQuery( 'DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;' );
 			$db->query();
