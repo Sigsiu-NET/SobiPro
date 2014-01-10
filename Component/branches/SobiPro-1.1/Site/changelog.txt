@@ -42,6 +42,7 @@ Legend:
     (#) Improved the pathway creation (Issue #1147)
     (#) Approval status is displayed to unauthorised users (Issue #1150)
     (#) Do not overriding the repository.xml on update
+    (#) Replacing '_' with '-' on update
 
 
 -------------------
