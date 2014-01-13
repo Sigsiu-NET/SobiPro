@@ -39,12 +39,13 @@ Legend:
     (#) Removed short open tag in the administrator/components/com_sobipro/default.php file (Issue #1141)
     (#) Improved the default date-time picker (Issue #1137)
     (#) Editing entries with image field set as required (Issue #1017)
-    (#) Improved the pathway creation (Issue #1147)
+    (#) Pathway creation improved (Issue #1147)
     (#) Approval status is displayed to unauthorised users (Issue #1150)
-    (#) Do not overriding the repository.xml on update
-    (#) Replacing '_' with '-' on update
+    (#) repository.xml won't be overwritten on update
+    (#) Replacing '_' with '-' on update (options)
     (#) Preventing entries id being used as parent id. (Issue #1157 and #1158)
-    (#) Minor fixes for Firefox in the default CSS
+    (#) Minor fixes for Firefox in CSS file of default template
+
 
 -------------------
 1.1.4 (28 December 2013)
