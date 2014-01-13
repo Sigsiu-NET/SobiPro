@@ -77,12 +77,12 @@
 			<xsl:value-of select="php:function( 'SobiPro::AddCSSFile', 'bootstrap.bootstrap' )"/>
 		</xsl:if>
 		<xsl:if test="$entry/approved = 0">
-			<a href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNAPPROVED' )}." title="" >
+			<a href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNAPPROVED' )}" title="" >
 				<i class="icon-thumbs-down entry-status" />
 			</a>
 		</xsl:if>
 		<xsl:if test="$entry/state = 'unpublished'">
-			<a href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNPUBLISHED' )}." title="" >
+			<a href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNPUBLISHED' )}" title="" >
 				<i class="icon-remove-sign entry-status" />
 			</a>
 		</xsl:if>
