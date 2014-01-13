@@ -176,7 +176,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			if ( count( $selected ) ) {
 				$count = 0;
 				foreach ( $selected as $category ) {
-					if( $category[ 'value' ] )
+					if( $category[ 'id' ] == $this->sid ) {
+						continue;
+					}
 					$selectedCategories[ $category[ 'id' ] ] = $category[ 'value' ];
 					$count++;
 					if ( $count == $this->catsMaxLimit ) {
