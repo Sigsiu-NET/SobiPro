@@ -44,6 +44,7 @@ Legend:
     (#) Do not overriding the repository.xml on update
     (#) Replacing '_' with '-' on update
     (#) Preventing entries id being used as parent id. (Issue #1157 and #1158)
+    (#) Minor fixes for Firefox in the default CSS
 
 -------------------
 1.1.4 (28 December 2013)

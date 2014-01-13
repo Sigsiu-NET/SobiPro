@@ -24,20 +24,24 @@
 .SobiPro .form-horizontal input[type="text"],
 .SobiPro .form-horizontal textarea,
 .SobiPro .form-horizontal select {
-  box-sizing: border-box;
-  min-height: 30px;
-  max-width: 100%;
+	box-sizing: border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	min-height: 30px;
+	max-width: 100%;
 }
+
 @media (max-width: 599px) {
-  .SobiPro .form-horizontal .control-label {
-    float: none;
-    width: 100%;
-    text-align: left;
-  }
-  .SobiPro .form-horizontal .controls {
-    margin-left: 0;
-  }
+	.SobiPro .form-horizontal .control-label {
+		float: none;
+		width: 100%;
+		text-align: left;
+	}
+
+	.SobiPro .form-horizontal .controls {
+		margin-left: 0;
+	}
 }
+
 .SobiPro .SPtagsinput input {
-  width: 90px;
+	width: 90px;
 }
