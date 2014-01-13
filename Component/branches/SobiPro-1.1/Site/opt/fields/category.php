@@ -101,7 +101,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$this->_selectedCats = $this->getRaw();
+		$this->_selectedCats = $this->cleanData();
 		$this->loadCategories();
 		if ( !( $this->_selectedCats ) && $this->sid ) {
 			$entry = SPFactory::Entry( $this->sid );
@@ -112,7 +112,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 		if ( !( $this->_selectedCats ) || !( count( $this->_selectedCats ) ) ) {
 			$sid = SPRequest::sid();
-			if ( $sid != Sobi::Section() ) {
+			if ( $sid != Sobi::Section() && $sid != $this->sid ) {
 				$this->_selectedCats = array( SPRequest::sid() );
 			}
 		}
@@ -172,10 +172,11 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { new SigsiuTreeEdit( ' . json_encode( $params ) . '); } );' );
 		$selector = $selector . '<div class="tree"' . $setheight . '>' . $tree->display( true ) . '</div>';
 		if ( count( $this->_selectedCats ) ) {
-			$selected = SPLang::translateObject( $this->_selectedCats, 'name' );
+			$selected = SPLang::translateObject( $this->_selectedCats, 'name', 'category' );
 			if ( count( $selected ) ) {
 				$count = 0;
 				foreach ( $selected as $category ) {
+					if( $category[ 'value' ] )
 					$selectedCategories[ $category[ 'id' ] ] = $category[ 'value' ];
 					$count++;
 					if ( $count == $this->catsMaxLimit ) {

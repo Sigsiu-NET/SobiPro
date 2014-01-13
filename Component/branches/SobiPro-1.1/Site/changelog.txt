@@ -43,7 +43,7 @@ Legend:
     (#) Approval status is displayed to unauthorised users (Issue #1150)
     (#) Do not overriding the repository.xml on update
     (#) Replacing '_' with '-' on update
-
+    (#) Preventing entries id being used as parent id. (Issue #1157 and #1158)
 
 -------------------
 1.1.4 (28 December 2013)

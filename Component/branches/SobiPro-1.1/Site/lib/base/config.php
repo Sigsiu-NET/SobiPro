@@ -715,8 +715,9 @@ class SPConfig
 		$path = $parents ? array() : array( $id );
 		while ( $id > 0 ) {
 			try {
+				// it doesn't make sense but it happened because of a bug in the SigsiuTree category selector
 				$id = $db
-						->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
+						->select( 'pid', 'spdb_relations', array( 'id' => $id, '!pid' => $id ) )
 						->loadResult();
 				if ( $id ) {
 					$path[ ] = ( int )$id;
