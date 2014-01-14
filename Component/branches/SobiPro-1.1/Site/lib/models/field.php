@@ -481,23 +481,18 @@ class SPField extends SPObject
 		try {
 			$lang = Sobi::Lang( false );
 			$labels = SPFactory::db()
-					->select(
-						array( 'sValue', 'sKey' ), 'spdb_language',
-						array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'oType' => 'field' ),
-						"FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )"
-					)->loadAssocList( 'sKey' );
+					->select( array( 'sValue', 'sKey' ), 'spdb_language', array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'oType' => 'field' ), "FIELD( language, '{$lang}', '%' ) ASC" )
+					->loadAssocList( 'sKey' );
 			if ( !( count( $labels ) ) ) {
 				// last fallback
-				$labels = SPFactory::db()->select(
-					array( 'sValue', 'sKey' ), 'spdb_language',
-					array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => 'en-GB', 'oType' => 'field' )
-				)->loadAssocList( 'sKey' );
+				$labels = SPFactory::db()
+						->select( array( 'sValue', 'sKey' ), 'spdb_language', array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => 'en-GB', 'oType' => 'field' ) )
+						->loadAssocList( 'sKey' );
 			}
 			if ( Sobi::Lang( false ) != Sobi::DefLang() ) {
-				$labels2 = SPFactory::db()->select(
-					array( 'sValue', 'sKey' ), 'spdb_language',
-					array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => Sobi::DefLang(), 'oType' => 'field' )
-				)->loadAssocList( 'sKey' );
+				$labels2 = SPFactory::db()
+						->select( array( 'sValue', 'sKey' ), 'spdb_language', array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => Sobi::DefLang(), 'oType' => 'field' ) )
+						->loadAssocList( 'sKey' );
 				$labels = array_merge( $labels2, $labels );
 			}
 		} catch ( SPException $x ) {
