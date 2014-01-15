@@ -116,8 +116,8 @@ function SobiProRequirements()
 					SPErrors++
 				}
 				var icons = {
-					'important': 'thumbs-down',
-					'success': 'thumbs-up',
+					'important': 'thumbs-down-alt',
+					'success': 'thumbs-up-alt',
 					'warning': 'hand-right'
 				};
 				el.html( '<span class="label label-' + response.type + '">&nbsp;<i class="icon-' + icons[ response.type ] + '"></i>&nbsp;&nbsp;' + response.textType + '</span>&nbsp;&nbsp;' + response.message );

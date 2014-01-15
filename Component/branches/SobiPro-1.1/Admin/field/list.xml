@@ -141,7 +141,7 @@
 								<param name="sid" value="request.sid" parse="true" subject="skip" />
 							</url>
 						</cell>
-						<cell type="ticker" value="isFree" class="SpCellCenter" icons="{'0':'money','1':'gift'}">
+						<cell type="ticker" value="isFree" class="SpCellCenter" icons="{'0':'dollar','1':'gift'}">
 							<url type="intern">
 								<param name="task" value="field.toggle.free" />
 								<param name="fid" value="fid" parse="true" />
