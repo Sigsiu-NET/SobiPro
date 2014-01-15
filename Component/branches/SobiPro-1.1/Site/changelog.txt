@@ -33,7 +33,7 @@ Legend:
     (+) "Now" selector in date-time picker
     (+) CLI crawler script to re-create cache from command line and/or cron job
 
-    (!) Background colour of Datepicker and Userselector buttons changed
+    (!) Background colour of Datepicker and Userselector buttons changed in backend
 
     (#) Changed timestamp getter from integer to double to avoid problems on old 32 bit systems (Issue #1143)
     (#) Removed short open tag in the administrator/components/com_sobipro/default.php file (Issue #1141)
@@ -43,10 +43,11 @@ Legend:
     (#) Approval status is displayed to unauthorised users (Issue #1150)
     (#) repository.xml won't be overwritten on update
     (#) Replacing '_' with '-' on update (options)
-    (#) Preventing entries id being used as parent id. (Issue #1157 and #1158)
-    (#) Minor fixes for Firefox in CSS file of default template
-    (#) Wrong language identifier for fields label while editing field definition (Issue #1161)
+    (#) Preventing entries id being used as parent id (Issue #1157 and #1158)
+    (#) Minor fix for Firefox in CSS file of default template
+    (#) Wrong language identifier for field labels while editing field definition (Issue #1161)
     (#) URL field set as required doesn't work correctly (Issue #1160)
+
 
 -------------------
 1.1.4 (28 December 2013)
