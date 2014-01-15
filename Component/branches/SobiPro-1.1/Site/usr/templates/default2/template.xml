@@ -50,35 +50,35 @@
 		<file path="css/default.css">
 			Default CSS file.
 		</file>
-        <file path="less/default.less">
-            LESS file for the default CSS file in case you prefer using Less.
-        </file>
         <file path="css/default-responsive.css">
             Additional default responsive CSS file.
-        </file>
-        <file path="less/default-responsive.less">
-            LESS file for the default responsive CSS file in case you prefer using Less.
         </file>
 		<file path="css/edit.css">
 			CSS file with extra styles for the add/edit entry page.
 		</file>
-        <file path="less/edit.less">
-            LESS file for the add/edit entry CSS file in case you prefer using Less.
-        </file>
         <file path="css/form-responsive.css">
             Additional CSS file with extra styles for the responsive form pages.
-        </file>
-        <file path="less/edit.less">
-            LESS file for the add/edit entry CSS file in case you prefer using Less.
         </file>
 		<file path="css/search.css">
 			CSS file with extra styles for the search function.
 		</file>
-        <file path="less/search.less">
-            LESS file for the search CSS file in case you prefer using Less.
-        </file>
         <file path="css/search-responsive.css">
             Additional CSS file with extra styles for the responsive search function.
+        </file>
+        <file path="less/default.less">
+            LESS file for the default CSS file in case you prefer using Less.
+        </file>
+        <file path="less/default-responsive.less">
+            LESS file for the default responsive CSS file in case you prefer using Less.
+        </file>
+        <file path="less/edit.less">
+            LESS file for the add/edit entry CSS file in case you prefer using Less.
+        </file>
+        <file path="less/form-responsive.less">
+            LESS file for the CSS file with extra styles for the responsive form pages in case you prefer using Less.
+        </file>
+        <file path="less/search.less">
+            LESS file for the search CSS file in case you prefer using Less.
         </file>
         <file path="less/search-responsive.less">
             LESS file for the responsive search CSS file in case you prefer using Less.

@@ -78,7 +78,7 @@
 		</xsl:if>
 		<xsl:if test="$entry/approved = 0">
 			<a href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNAPPROVED' )}" title="" >
-				<i class="icon-thumbs-down entry-status" />
+				<i class="icon-thumbs-down-alt entry-status" />
 			</a>
 		</xsl:if>
 		<xsl:if test="$entry/state = 'unpublished'">
