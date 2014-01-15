@@ -77,6 +77,20 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				$r = true;
 				$this->toggleState();
 				break;
+			case 'delete':
+				/** Wed, Jan 15, 2014 11:05:28
+				 * in the administrator are we can delete category only from the list
+				 * Preventing deletion of THIS category (Issue #1162)
+				 * Basically if there was no array of $cids something went wrong
+				 */
+				$cids = SPRequest::arr( 'c_sid', array() );
+				if ( count( $cids ) ) {
+					parent::execute();
+				}
+				else {
+					$this->response( Sobi::Back(), SPLang::e( 'DELETE_CAT_NO_ID' ), false, SPC::ERROR_MSG );
+				}
+				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
 				if ( !parent::execute() ) {

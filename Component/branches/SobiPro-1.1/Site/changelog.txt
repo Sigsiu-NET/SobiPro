@@ -47,6 +47,7 @@ Legend:
     (#) Minor fix for Firefox in CSS file of default template
     (#) Wrong language identifier for field labels while editing field definition (Issue #1161)
     (#) URL field set as required doesn't work correctly (Issue #1160)
+    (#) Deleting category without selection deletes current category (Issue #1162)
 
 
 -------------------
