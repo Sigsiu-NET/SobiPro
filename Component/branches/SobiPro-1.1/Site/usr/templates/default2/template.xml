@@ -6,10 +6,10 @@
 	<authorName>Sigrid Suski and Radek Suski</authorName>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
-	<copyright>Copyright (C) 2006-2013 Sigsiu.NET GmbH</copyright>
+	<copyright>Copyright (C) 2006-2014 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License</license>
-	<creationDate>2013-01-01</creationDate>
-	<version>2.0</version>
+	<creationDate>2013-01-15</creationDate>
+	<version>2.1</version>
 	<description>
 		Default SobiPro Template for SobiPro 1.1
     </description>
@@ -50,20 +50,38 @@
 		<file path="css/default.css">
 			Default CSS file.
 		</file>
-        <file path="css/default.less">
-            Less file for the default CSS file in case you prefer using Less.
+        <file path="less/default.less">
+            LESS file for the default CSS file in case you prefer using Less.
+        </file>
+        <file path="css/default-responsive.css">
+            Additional default responsive CSS file.
+        </file>
+        <file path="less/default-responsive.less">
+            LESS file for the default responsive CSS file in case you prefer using Less.
         </file>
 		<file path="css/edit.css">
 			CSS file with extra styles for the add/edit entry page.
 		</file>
-        <file path="css/edit.less">
-            Less file for the add/edit entry CSS file in case you prefer using Less.
+        <file path="less/edit.less">
+            LESS file for the add/edit entry CSS file in case you prefer using Less.
+        </file>
+        <file path="css/form-responsive.css">
+            Additional CSS file with extra styles for the responsive form pages.
+        </file>
+        <file path="less/edit.less">
+            LESS file for the add/edit entry CSS file in case you prefer using Less.
         </file>
 		<file path="css/search.css">
 			CSS file with extra styles for the search function.
 		</file>
-        <file path="css/search.less">
-            Less file for the search CSS file in case you prefer using Less.
+        <file path="less/search.less">
+            LESS file for the search CSS file in case you prefer using Less.
+        </file>
+        <file path="css/search-responsive.css">
+            Additional CSS file with extra styles for the responsive search function.
+        </file>
+        <file path="less/search-responsive.less">
+            LESS file for the responsive search CSS file in case you prefer using Less.
         </file>
 		<file path="entry/details.xsl">
 			Template for the entry details view page.
