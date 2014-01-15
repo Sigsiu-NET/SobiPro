@@ -17,14 +17,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
  * $Date$
- *
+ * $Revision$
  * $Author$
  */
 @media (max-width: 599px) {
-    .SobiPro .entry-container > .row-fluid > [class*='span'],
-    .SobiPro .category-container > .row-fluid > [class*='span'] {
-        width: 100%;
-        float: none;
-        margin-left: 0;
-    }
+  .SobiPro .entry-container > .row-fluid > [class*='span'],
+  .SobiPro .category-container > .row-fluid > [class*='span'] {
+    width: 100%;
+    float: none;
+    margin-left: 0;
+  }
 }
