@@ -46,6 +46,7 @@ Legend:
     (#) Preventing entries id being used as parent id. (Issue #1157 and #1158)
     (#) Minor fixes for Firefox in CSS file of default template
     (#) Wrong language identifier for fields label while editing field definition (Issue #1161)
+    (#) URL field set as required doesn't work correctly (Issue #1160)
 
 -------------------
 1.1.4 (28 December 2013)

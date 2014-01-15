@@ -299,6 +299,17 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		}
 	}
 
+
+	/**
+	 * @param SPEntry $entry
+	 * @param string $request
+	 * @return string
+	 */
+	public function validate( $entry, $request )
+	{
+		return $this->verify( $entry, SPFactory::db(), $request );
+	}
+
 	/**
 	 * @param SPEntry $entry
 	 * @param SPdb $db
