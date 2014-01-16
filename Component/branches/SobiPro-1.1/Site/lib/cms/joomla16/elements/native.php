@@ -130,7 +130,7 @@ class JFormFieldNative extends JFormField
 		return
 				'<div class="SobiPro">' .
 				'	<div id="SobiProSelector" class="btn btn-primary" data-mid="' . self::$mid . '">' .
-				'		<i class="icon-cog"></i>&nbsp;<span id="SobiProSelectedFunction">' . $label . '</span>' .
+				'		<i class="icon-expand"></i>&nbsp;<span id="SobiProSelectedFunction">' . $label . '</span>' .
 				'	</div>' .
 				'   <div class="modal hide" id="SobiProModal" >' .
 				'       <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>' .

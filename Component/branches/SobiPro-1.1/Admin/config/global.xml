@@ -93,6 +93,8 @@
 										<values>
 											<option value="%number%sign" label="GB.CFG.PMN_PRC_FORMAT_NS" />
 											<option value="%number %sign" label="GB.CFG.PMN_PRC_FORMAT_NSS" />
+                                            <option value="%sign%number" label="GB.CFG.PMN_PRC_FORMAT_SN" />
+                                            <option value="%sign %number" label="GB.CFG.PMN_PRC_FORMAT_SSN" />
 										</values>
 									</field>
 								</fieldset>
