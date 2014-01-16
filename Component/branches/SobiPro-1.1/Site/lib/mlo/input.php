@@ -737,11 +737,29 @@ abstract class SPHtml_Input
 		// another mystery - what the heck was this supposed to do?
 //		$value = ( ( int ) $value != 0 && $value ) ? strtotime( $value ) : null;
 		/** The stupid JavaScript to PHP conversion. */
-		$jsDateFormat = str_replace(
-			array( 'y', 'Y', 'F', 'n', 'm', 'd', 'j', 'h', 'H', 'i', 's', 'A' ),
-			array( 'yy', 'yyyy', 'MM', 'm', 'MM', 'dd', 'd', 'HH', 'hh', 'mm', 'ss', 'PP' ),
-			$dateFormat
+//		$jsDateFormat = str_replace(
+//			array( 'n', 'm', 'd', 'j', 'h', 'H', 'i', 's', 'A' ),
+//			array( 'm', 'MM', 'dd', 'd', 'HH', 'hh', 'mm', 'ss', 'PP' ),
+//			$dateFormat
+//		);
+		$jsDateFormat = $dateFormat;
+		$jsReplacements = array(
+			'y' => 'yy',
+			'Y' => 'yyyy',
+			'F' => 'MM',
+			'n' => 'm',
+			'm' => 'MM',
+			'd' => 'dd',
+			'j' => 'd',
+			'H' => 'hh',
+			'h' => 'HH',
+			'i' => 'mm',
+			's' => 'ss',
+			'A' => 'PP'
 		);
+		foreach ( $jsReplacements as $php => $js ) {
+			$jsDateFormat = str_replace( $php, $js, $jsDateFormat );
+		}
 		$valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat, true ) : null;
 		if ( !( is_numeric( $value ) ) ) {
 			$value = strtotime( $value );
