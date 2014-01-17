@@ -51,6 +51,7 @@ Legend:
     (#) URL field set as required doesn't work correctly (Issue #1160)
     (#) Deleting category without selection deletes current category (Issue #1162)
     (#) Missing 'Percent Formats' in Global Configuration added
+    (#) Missing text for SP.EX.CORE_PLUGIN
 
 
 -------------------
