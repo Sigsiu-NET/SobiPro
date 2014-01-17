@@ -130,7 +130,6 @@
 									<field type="text" name="spcfg[debug.xml_ip]" value="debug.xml_ip" label="GBN.CFG.DEB_XML_IP" class="input-medium" />
 								</fieldset>
 								<fieldset label="GBN.CFG.DEB_LOG">
-									<field type="toggle" name="spcfg[debug.display_errors]" value="debug.display_errors" label="GBN.CFG.DEB_DISPLAY_ERRORS" prefix="yes_no" />
 									<field type="select" label="GBN.CFG.DEB_LEVEL" name="spcfg[debug.level]" selected="debug.level" class="input-xlarge">
 										<values>
 											<option value="0" label="GB.CFG.DEB_LEVEL_NONE" />
@@ -139,6 +138,7 @@
 											<option value="30719" label="GB.CFG.DEB_LEVEL_ALL" />
 										</values>
 									</field>
+                                    <field type="toggle" name="spcfg[debug.display_errors]" value="debug.display_errors" label="GBN.CFG.DEB_DISPLAY_ERRORS" prefix="yes_no" />
 								</fieldset>
 							</div>
 						</div>
