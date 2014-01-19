@@ -94,7 +94,10 @@ class SPCrawler extends SPController
 
 	protected function getResponse( $url )
 	{
-		$request = $url;
+		$request = str_replace( 'amp;', null, $url );
+//		$request = parse_url( $url );
+//		$request[ 'query' ] =  urlencode( $request[ 'query' ] );
+//		$request = $request[ 'scheme' ].'://'.$request[ 'host' ].$request[ 'path' ].'?'.$request[ 'query' ];
 		if ( !( strstr( $request, '?' ) ) ) {
 			$request .= '?';
 		}

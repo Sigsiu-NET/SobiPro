@@ -329,7 +329,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 		}
 
-		if ( $o == 'html' && ( !strlen( SPRequest::cmd( 'format' ) ) || SPRequest::cmd( 'format' ) == 'html' ) ) {
+		if ( $o == 'html' && ( !strlen( SPRequest::cmd( 'format' ) ) || SPRequest::cmd( 'format' ) == 'html' || SPRequest::int( 'crawl' ) ) ) {
 			$out .= $this->pb();
 			if ( ( SPRequest::cmd( 'dbg' ) || Sobi::Cfg( 'debug' ) ) && Sobi::My( 'id' ) ) {
 				$start = Sobi::Reg( 'start' );
