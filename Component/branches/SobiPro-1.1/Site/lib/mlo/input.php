@@ -742,6 +742,9 @@ abstract class SPHtml_Input
 //			array( 'm', 'MM', 'dd', 'd', 'HH', 'hh', 'mm', 'ss', 'PP' ),
 //			$dateFormat
 //		);
+		if ( strstr( $dateFormat, 'A' ) ) {
+			$dateFormat = str_replace( array( 'h', 'H' ), array( 'g', 'G' ), $dateFormat );
+		}
 		$jsDateFormat = $dateFormat;
 		$jsReplacements = array(
 			'y' => 'yy',
@@ -752,7 +755,8 @@ abstract class SPHtml_Input
 			'd' => 'dd',
 			'j' => 'd',
 			'H' => 'hh',
-			'h' => 'HH',
+			'g' => 'HH',
+			'G' => 'HH',
 			'i' => 'mm',
 			's' => 'ss',
 			'A' => 'PP'
