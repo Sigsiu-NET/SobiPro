@@ -114,7 +114,12 @@ abstract class SPController extends SPObject implements SPControl
 		if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
 			$redirect = Sobi::Url( $redirect );
 		}
-		Sobi::Redirect( $redirect, Sobi::Txt( $msg ), $msgType, true );
+		if ( $msgType != 'none' ) {
+			Sobi::Redirect( $redirect, Sobi::Txt( $msg ), $msgType, true );
+		}
+		else {
+			Sobi::Redirect( $redirect, null, null, true );
+		}
 		exit;
 	}
 
