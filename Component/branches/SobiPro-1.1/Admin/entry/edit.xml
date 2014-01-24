@@ -99,6 +99,7 @@
 							<div class="span12">
 								<fieldset>
 									<field type="toggle" name="entry.state" value="entry.state" label="PUBLISHED" prefix="yes_no" />
+                                    <field type="toggle" name="entry.approved" value="entry.approved" label="APPROVED" prefix="yes_no" />
 									<field type="datePicker" label="VALID_SINCE" name="entry.validSince" value="entry.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" />
 									<field type="datePicker" label="VALID_UNTIL" name="entry.validUntil" value="entry.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" />
 								</fieldset>
