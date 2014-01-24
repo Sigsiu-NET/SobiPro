@@ -54,6 +54,7 @@ Legend:
     (#) Deleting category without selection deletes current category (Issue #1162)
     (#) Missing 'Percent Formats' in Global Configuration added
     (#) Missing text for SP.EX.CORE_PLUGIN
+    (#) Comma as decimal mark translation corrupted (Issue #1016)
 
 
 -------------------
