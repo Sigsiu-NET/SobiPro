@@ -90,7 +90,7 @@ class SPJoomlaLang
 		if ( !( $over ) ) {
 			$a[ 0 ] = 'SP.' . $a[ 0 ];
 			$m = call_user_func_array( array( 'JText', '_' ), array( $a[ 0 ] ) );
-			if ( $m == $a[ 0 ] ) {
+			if ( $m == $a[ 0 ] || $m == 'SP.' ) {
 				$m = $in;
 			}
 			$test = $this->tplOverride( $m );
