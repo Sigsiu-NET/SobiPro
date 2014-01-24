@@ -36,6 +36,7 @@ Legend:
     (!) Background colour of Datepicker and Userselector buttons changed in backend
     (!) Font Awesome updated to version 3.2.1
     (!) JQuery updated to v1.10.2
+    (!) Allowing link to an unpublished entry in Joomla! menu manager
 
     (#) Changed timestamp getter from integer to double to avoid problems on old 32 bit systems (Issue #1143)
     (#) Removed short open tag in the administrator/components/com_sobipro/default.php file (Issue #1141)

@@ -288,20 +288,25 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	public function searchSuggest( $data, $section, $startWith = true, $ids = false )
 	{
 		$terms = array();
-		echo $data = $startWith ? "{$data}%" : "%{$data}%";
+		$data = $startWith ? "{$data}%" : "%{$data}%";
 		$request = array( 'baseData' );
 		if ( $ids ) {
 			$request[ ] = 'sid';
 		}
 		try {
 			if ( $ids ) {
+				$conditions = array( 'fid' => $this->fid, 'baseData' => $data, 'section' => $section );
+				if ( !( defined( 'SOBIPRO_ADM' ) ) ) {
+					$conditions[ 'copy' ] = 0;
+					$conditions[ 'enabled' ] = 1;
+				}
 				$result = SPFactory::db()
-						->dselect( $request, 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ) )
+						->dselect( $request, 'spdb_field_data', $conditions )
 						->loadAssocList();
 				$terms = array();
 				if ( count( $result ) ) {
 					foreach ( $result as $row ) {
-						$terms[ ] = array( 'id' => $row[ 'sid' ], 'name' => $row[ 'baseData' ] );
+						$terms[ ] = array( 'id' => $row[ 'sid' ], 'name' => SPLang::clean( $row[ 'baseData' ] ) );
 					}
 				}
 			}
