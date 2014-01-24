@@ -546,11 +546,16 @@ abstract class SPDBObject extends SPObject
 		 * @todo: manage own is not implemented yet
 		 */
 		//$this->approved = Sobi::Can( $this->type(), 'manage', 'own' );
-		$this->approved = Sobi::Can( $this->type(), 'publish', 'own' );
 		/* if not published, check if user can manage own and if yes, publish it */
 		if ( !( $this->state ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			$this->state = Sobi::Can( $this->type(), 'publish', 'own' );
 		}
+		if ( !( $this->approved ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
+			$this->approved = Sobi::Can( $this->type(), 'publish', 'own' );
+		}
+//		elseif ( defined( 'SOBIPRO_ADM' ) ) {
+//			$this->approved = Sobi::Can( $this->type(), 'publish', 'own' );
+//		}
 
 		/* and sort the properties in the same order */
 		foreach ( $cols as $col ) {
