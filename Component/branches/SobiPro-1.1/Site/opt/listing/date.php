@@ -50,7 +50,7 @@ class SPDateListing extends SPSectionCtrl implements SPListing
 			$this->setModel( 'section' );
 			$this->_model->init( Sobi::Section() );
 		}
-
+		$this->visible();
 		/* load template config */
 		$this->template();
 		$this->tplCfg( $tplPackage );

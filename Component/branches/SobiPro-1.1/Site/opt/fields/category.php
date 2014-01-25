@@ -101,6 +101,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
+		if ( !( $this->sid ) ) {
+			$this->sid = SPRequest::sid();
+		}
 		$this->_selectedCats = $this->cleanData();
 		$this->loadCategories();
 		if ( !( $this->_selectedCats ) && $this->sid ) {
@@ -176,7 +179,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			if ( count( $selected ) ) {
 				$count = 0;
 				foreach ( $selected as $category ) {
-					if( $category[ 'id' ] == $this->sid ) {
+					if ( $category[ 'id' ] == $this->sid ) {
 						continue;
 					}
 					$selectedCategories[ $category[ 'id' ] ] = $category[ 'value' ];
