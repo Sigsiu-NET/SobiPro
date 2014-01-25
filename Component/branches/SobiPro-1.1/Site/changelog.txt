@@ -55,7 +55,8 @@ Legend:
     (#) Missing 'Percent Formats' in Global Configuration added
     (#) Missing text for SP.EX.CORE_PLUGIN
     (#) Comma as decimal mark translation corrupted (Issue #1016)
-    (#) Several listings missing the ACL check (Issue #1177)
+
+    (*) Several listings missing the ACL check (Issue #1177)
 
 
 -------------------
