@@ -37,7 +37,7 @@ Legend:
     (!) Background colour of Datepicker and Userselector buttons changed in backend
     (!) Font Awesome updated to version 3.2.1
     (!) JQuery updated to v1.10.2
-    (!) Unpublished entries are shown in Joomla! menu manager (to be able to link to them)
+    (!) Unpublished entries are now shown in Joomla! menu manager (to be able to link to them)
 
     (#) Changed timestamp getter from integer to double to avoid problems on old 32 bit systems (Issue #1143)
     (#) Removed short open tag in the administrator/components/com_sobipro/default.php file (Issue #1141)
@@ -56,7 +56,7 @@ Legend:
     (#) Missing text for SP.EX.CORE_PLUGIN
     (#) Comma as decimal mark translation corrupted (Issue #1016)
 
-    (*) Several listings missing the ACL check (Issue #1177)
+    (*) Section listings missing the ACL check (Issue #1177)
 
 
 -------------------
