@@ -141,7 +141,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 		$this->translate();
 		// if the visitor can't see unapproved entries we are showing the approved version anyway
-		if ( !( $this->approved ) && !( Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ) ) {
+		if ( ( SPRequest::task( ) != 'entry.edit' && SPRequest::task( ) != 'entry.submit' && SPRequest::task( ) != 'entry.save' ) && !( $this->approved ) && !( Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ) ) {
 			$this->approved = 1;
 		}
 	}
