@@ -430,6 +430,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$id = $this->_model->get( 'id' );
 		if ( !$id ) {
 			$this->_model->set( 'state', 1 );
+			$this->_model->set( 'approved', 1 );
 		}
 		else {
 			$view->assign( $view->languages(), 'languages-list' );
