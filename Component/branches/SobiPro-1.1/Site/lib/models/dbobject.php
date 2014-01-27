@@ -550,7 +550,7 @@ abstract class SPDBObject extends SPObject
 		if ( !( $this->state ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			$this->state = Sobi::Can( $this->type(), 'publish', 'own' );
 		}
-		if ( !( $this->approved ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
+		if ( !( defined( 'SOBIPRO_ADM' ) ) ) {
 			$this->approved = Sobi::Can( $this->type(), 'publish', 'own' );
 		}
 //		elseif ( defined( 'SOBIPRO_ADM' ) ) {
