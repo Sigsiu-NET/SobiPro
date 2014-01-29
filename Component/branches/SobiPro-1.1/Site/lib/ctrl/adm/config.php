@@ -213,7 +213,7 @@ class SPConfigAdmCtrl extends SPController
 		$liveUrl = Sobi::Cfg( 'live_site' );
 		$cron = array(
 			'type' => 'info',
-			'label' => nl2br( Sobi::Txt( 'CRAWLER_CRON_INFO', "'{$phpCmd} {$cronCommandFile} section={$section} liveURL={$liveUrl}'", "'{$phpCmd} {$cronCommandFile} liveURL={$liveUrl}'", "'{$phpCmd} {$cronCommandFile} --help" ) ),
+			'label' => nl2br( Sobi::Txt( 'CRAWLER_CRON_INFO', "{$phpCmd} {$cronCommandFile} section={$section} liveURL={$liveUrl}", "{$phpCmd} {$cronCommandFile} liveURL={$liveUrl}", "{$phpCmd} {$cronCommandFile} --help" ) ),
 		);
 
 		/** @var $view SPAdmView */
