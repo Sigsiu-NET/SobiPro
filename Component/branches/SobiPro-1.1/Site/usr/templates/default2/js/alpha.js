@@ -26,7 +26,7 @@ SobiPro.jQuery( document ).ready( function ()
 {
 	SobiPro.jQuery( '.alpha-switch' ).bind( 'click', function ( e )
 	{
-		e.preventDefault()
+		e.preventDefault();
 		SobiPro.jQuery.ajax( {
 			url:SobiProUrl.replace( '%task%', 'list.alpha.switch.' + SobiPro.jQuery( this ).attr( 'rel' ) ),
 			data:{ sid:SobiProSection, tmpl:"component", format:"raw" },

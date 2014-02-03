@@ -47,12 +47,12 @@ SobiPro.jQuery( document ).ready( function ()
 				}
 			} );
 		},
-		onselect:function ( obj )
-		{
-			SobiPro.DebOut( this )
+//		onselect:function ( obj )
+//		{
+//			SobiPro.DebOut( this )
 //			this.$element.value( obj.name );
-			SobiPro.DebOut(SobiPro.jQuery( this.$element ).find( 'form' ))
-		},
+//			SobiPro.DebOut(SobiPro.jQuery( this.$element ).find( 'form' ))
+//		},
 		property:"name"
 	} );
 } );
