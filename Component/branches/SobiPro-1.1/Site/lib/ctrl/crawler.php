@@ -44,8 +44,8 @@ class SPCrawler extends SPController
 		$responses = array();
 		$status = 'working';
 		$message = null;
-//		$this->format = SPRequest::bool( 'fullFormat' ) ? self::FORMAT_FULL : self::FORMAT;
-		$this->format = SPRequest::bool( 'fullFormat' ) ? self::FORMAT_FULL : self::FORMAT_FULL;
+		$this->format = SPRequest::bool( 'fullFormat' ) ? self::FORMAT_FULL : self::FORMAT;
+//		$this->format = SPRequest::bool( 'fullFormat' ) ? self::FORMAT_FULL : self::FORMAT_FULL;
 		$task = SPRequest::task();
 		if ( in_array( $task, array( 'crawler.init', 'crawler.restart' ) ) ) {
 			if ( $task == 'crawler.restart' ) {
