@@ -644,17 +644,6 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( ( is_array( $request ) && count( $request ) ) || ( is_string( $request ) && strlen( $request ) ) ) {
 			/** @var SPDb $db */
 			$db = SPFactory::db();
-			// legacy stuff - we need to search for _ and - as white space replacement
-			if ( is_array( $request ) ) {
-				foreach ( $request as $option ) {
-					if ( strstr( $option, '-' ) ) {
-						$request[ ] = str_replace( '-', '_', $option );
-					}
-					elseif ( strstr( $option, '-' ) ) {
-						$request[ ] = str_replace( '-', '_', $option );
-					}
-				}
-			}
 			try {
 				/* if we are searching for multiple options
 				 * and the field contains 'predefined_multi_data_multi_choice'

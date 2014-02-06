@@ -26,13 +26,11 @@ Legend:
  (-) - Removed
  (!) - Change
 
--------------------
-1.1.6 ()
--------------------
 
-    (#) Typo in English language
-    (#) Missing semicolon in alpha.js (Issue #1182)
-
+-------------------
+1.1.6
+-------------------
+    (#) Problems with searching when field is set to multi selection in the search (Issue #1187)
 
 -------------------
 1.1.5 (28 January 2014)
