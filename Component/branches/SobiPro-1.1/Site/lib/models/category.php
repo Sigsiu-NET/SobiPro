@@ -103,6 +103,8 @@ class SPCategory extends SPDBObject implements SPDataModel
 		$db	= SPFactory::db();
 		$this->nid = $this->createAlias();
 
+		$this->approved = Sobi::Can( $this->type(), 'publish', 'own' );
+
 		$db->transaction();
 		parent::save();
 		$properties = get_class_vars( __CLASS__ );
