@@ -340,6 +340,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				$time = microtime( true ) - $time;
 				SPConfig::debOut( "Memory: {$mem}<br/>Time: {$time}<br/> Queries: {$queries}" );
 			}
+			header( 'SobiPro: ' . Sobi::Section() );
 			echo "\n<!-- Start of SobiPro component-->\n<div id=\"SobiPro\" class=\"SobiPro\">\n{$out}\n</div>\n<!-- End of SobiPro component Copyright (C) 2012 Sigsiu.NET GmbH -->\n";
 		}
 		else {
@@ -383,7 +384,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				Sobi::Error( $this->name(), SPLang::e( 'Cannot determine class name in file %s.', str_replace( SOBI_ROOT . DS, null, $path ) ), SPC::WARNING, 0 );
 				return false;
 			}
-			require_once ( $path );
+			require_once( $path );
 			$methods = get_class_methods( $className );
 			if ( count( $methods ) ) {
 				foreach ( $methods as $method ) {
@@ -775,7 +776,7 @@ abstract class SPFrontView extends SPObject implements SPView
 						),
 						'data' => $struct,
 					),
-					'_attributes' => array( 'id' => $field->get( 'id' ), 'itemprop' => $field->get( 'itemprop' ),  'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
+					'_attributes' => array( 'id' => $field->get( 'id' ), 'itemprop' => $field->get( 'itemprop' ), 'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
 				);
 				if ( Sobi::Cfg( 'entry.field_description', false ) ) {
 					$data[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );

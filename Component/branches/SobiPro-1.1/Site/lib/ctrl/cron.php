@@ -77,7 +77,7 @@ class SobiProCrawler extends JApplicationCli
 		$task = $this->cleanCache ? 'crawler.restart' : 'crawler.init';
 		$connection = SPFactory::Instance( 'services.remote' );
 		while ( !( $done ) && ( time() - $this->start ) < $this->timeLimit ) {
-			$url = $this->liveURL . "/index.php?option=com_sobipro&task={$task}&sid={$sid}&format=raw&tmpl=component&timeLimit={$this->loopTimeLimit}";
+			$url = $this->liveURL . "/index.php?option=com_sobipro&task={$task}&sid={$sid}&format=raw&tmpl=component&timeLimit={$this->loopTimeLimit}&fullFormat=1";
 			list( $content, $response ) = $this->SpConnect( $connection, $url );
 			$task = 'crawler';
 			if ( $response[ 'http_code' ] == 303 ) {

@@ -34,6 +34,8 @@ class SPCrawler extends SPController
 	const DB_TABLE = 'spdb_crawler';
 	protected $start = 0;
 	const FORMAT = 'tmpl=component&crawl=1';
+	const FORMAT_FULL = 'crawl=1';
+	private $format = null;
 
 	public function execute()
 	{
@@ -42,6 +44,8 @@ class SPCrawler extends SPController
 		$responses = array();
 		$status = 'working';
 		$message = null;
+//		$this->format = SPRequest::bool( 'fullFormat' ) ? self::FORMAT_FULL : self::FORMAT;
+		$this->format = SPRequest::bool( 'fullFormat' ) ? self::FORMAT_FULL : self::FORMAT_FULL;
 		$task = SPRequest::task();
 		if ( in_array( $task, array( 'crawler.init', 'crawler.restart' ) ) ) {
 			if ( $task == 'crawler.restart' ) {
@@ -104,7 +108,7 @@ class SPCrawler extends SPController
 		else {
 			$request .= '&';
 		}
-		$request .= self::FORMAT;
+		$request .= $this->format;
 		/** @var $connection SPRemote */
 		$connection = SPFactory::Instance( 'services.remote' );
 		$connection->setOptions(
@@ -128,7 +132,7 @@ class SPCrawler extends SPController
 		}
 		if ( $response[ 'http_code' ] == 303 ) {
 			preg_match( '/Location: (http.*)/', $content, $newUrl );
-			$urls[ ] = str_replace( array( '?' . self::FORMAT, '&' . self::FORMAT ), null, trim( $newUrl[ 1 ] ) );
+			$urls[ ] = str_replace( array( '?' . $this->format, '&' . $this->format ), null, trim( $newUrl[ 1 ] ) );
 		}
 		if ( count( $urls ) ) {
 			$this->insertUrls( $urls );
@@ -154,7 +158,35 @@ class SPCrawler extends SPController
 //		$langs = SPFactory::CmsHelper()->getLanguages();
 //		$language = Sobi::Lang();
 		foreach ( $urls as $url ) {
+			$url = str_replace( '&amp;', '&', $url );
 			if ( !( strlen( $url ) ) ) {
+				continue;
+			}
+			$schema = parse_url( $url );
+			if ( isset( $schema[ 'query' ] ) ) {
+				parse_str( $schema[ 'query' ], $query );
+				if ( isset( $query[ 'format' ] ) ) {
+					continue;
+				}
+				if ( isset( $query[ 'date' ] ) ) {
+					$query[ 'date' ] = explode( '.', $query[ 'date' ] );
+					$year = $query[ 'date' ][ 0 ];
+					if ( $year > ( date( 'Y' ) + 5 ) || $year < ( date( 'Y' ) - 5 ) ) {
+						continue;
+					}
+				}
+			}
+			if ( preg_match( '/(\d{4}\.\d{1,2})/', $url, $matches ) ) {
+				if ( isset( $matches[ 0 ] ) ) {
+					if ( $matches[ 0 ] > ( date( 'Y' ) + 5 ) || $matches[ 0 ] < ( date( 'Y' ) - 5 ) ) {
+						continue;
+					}
+				}
+			}
+			if ( strstr( $url, 'favicon.ico' ) ) {
+				continue;
+			}
+			if ( strstr( $url, '.css' ) ) {
 				continue;
 			}
 			$rows[ ] = array( 'crid' => 'NULL', 'url' => $url, 'state' => 0 );
@@ -189,16 +221,23 @@ class SPCrawler extends SPController
 		if ( strlen( $response ) && strstr( $response, 'SobiPro' ) ) {
 			list( $header, $response ) = explode( "\r\n\r\n", $response );
 			$header = explode( "\n", $header );
+			$SobiPro = false;
 			foreach ( $header as $line ) {
 				if ( strstr( $line, 'SobiPro' ) ) {
 					$line = explode( ':', $line );
-					if ( trim( $line[ 1 ] ) == 'SobiPro' ) {
+					if ( trim( $line[ 0 ] ) == 'SobiPro' ) {
 						$sid = trim( $line[ 1 ] );
 						if ( $sid != Sobi::Section() ) {
 							return 412;
 						}
+						else {
+							$SobiPro = true;
+						}
 					}
 				}
+			}
+			if ( !( $SobiPro ) ) {
+				return 412;
 			}
 			preg_match_all( '/href=[\'"]?([^\'" >]+)/', $response, $links, PREG_PATTERN_ORDER );
 			if ( isset( $links[ 1 ] ) && $links[ 1 ] ) {
