@@ -35,7 +35,8 @@ Legend:
     (#) Newly created categories are not approved by default (Issue #1183)
     (#) New Approval in Entry detail does not fire EntryAfterChangeState and EntryAfterApprove (Issue #1184)
     (#) Apostrophes are not correctly escaped in section name (Issue #1188)
-
+    (#) Wrong path definition in the cronjob script
+    (#) Several fixes in the crawler
 
 
 -------------------
