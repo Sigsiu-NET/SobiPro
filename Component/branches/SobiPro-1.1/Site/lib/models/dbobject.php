@@ -173,6 +173,7 @@ abstract class SPDBObject extends SPObject
 	 */
 	private static $types = array(
 		'approved' => 'bool',
+		'state' => 'int',
 		'confirmed' => 'bool',
 		'counter' => 'int',
 		'createdTime' => 'timestamp',
@@ -191,7 +192,6 @@ abstract class SPDBObject extends SPObject
 		'owner' => 'int',
 		'ownerIP' => 'ip',
 		'parent' => 'int',
-		'state' => 'int',
 		'stateExpl' => 'string',
 		'validSince' => 'timestamp',
 		'validUntil' => 'timestamp',

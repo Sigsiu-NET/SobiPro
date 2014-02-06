@@ -284,6 +284,14 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $sid ) {
 			$this->_model->init( $sid );
 		}
+		/** store previous state for possible triggers */
+		$preState = array(
+			'approved' => $this->_model->get( 'approved' ),
+			'state' => $this->_model->get( 'state' ),
+			'new' => !( $this->_model->get( 'id' ) )
+		);
+		SPFactory::registry()->set( 'object_previous_state', $preState );
+
 		$this->_model->getRequest( $this->_type );
 		if ( $this->_model->get( 'id' ) ) {
 			if ( Sobi::My( 'id' ) && Sobi::My( 'id' ) == $this->_model->get( 'owner' ) ) {
