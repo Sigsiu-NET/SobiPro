@@ -141,7 +141,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 		$this->translate();
 		// if the visitor can't see unapproved entries we are showing the approved version anyway
-		if ( ( SPRequest::task( ) != 'entry.edit' && SPRequest::task( ) != 'entry.submit' && SPRequest::task( ) != 'entry.save' ) && !( $this->approved ) && !( Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ) ) {
+		if ( ( SPRequest::task() != 'entry.edit' && SPRequest::task() != 'entry.submit' && SPRequest::task() != 'entry.save' ) && !( $this->approved ) && !( Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ) ) {
 			$this->approved = 1;
 		}
 	}
@@ -635,11 +635,12 @@ class SPEntry extends SPDBObject implements SPDataModel
 			SPRequest::set( 'entry_validUntil', 0, $request );
 			$this->validUntil = date( 'Y-m-d H:i:s', time() + ( Sobi::Cfg( 'entry.publish_limit', 0 ) * 24 * 3600 ) );
 		}
-		$preState = array(
-			'approved' => $this->approved,
-			'state' => $this->state,
-			'new' => !( $this->id )
-		);
+//		$preState = array(
+//			'approved' => $this->approved,
+//			'state' => $this->state,
+//			'new' => !( $this->id )
+//		);
+		$preState = Sobi::Reg( 'object_previous_state' );
 		parent::save( $request );
 		$nameField = $this->nameField();
 		/* get the fields for this section */

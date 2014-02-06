@@ -146,6 +146,7 @@ final class SPPlugins
         $actions[ $count++ ] = $action;
         // this always
         SPFactory::mainframe()->trigger( $action, $params );
+//	    SPConfig::debOut( $action, false, false, true );
         /**
          * An Application should not trigger other applications
          * Apps are running non parallel

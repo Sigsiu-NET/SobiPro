@@ -74,7 +74,7 @@ class SPEntryCtrl extends SPController
 				$this->payment();
 				break;
 			default:
-				if ( !parent::execute() ) {
+				if ( !( parent::execute() ) ) {
 					Sobi::Error( 'entry_ctrl', SPLang::e( 'TASK_NOT_FOUND' ), SPC::NOTICE, 404, __LINE__, $this->name() );
 				}
 				else {
@@ -383,6 +383,12 @@ class SPEntryCtrl extends SPController
 				SPFactory::registry()->set( 'requestcache', $this->store[ 'post' ] );
 			}
 		}
+		$preState = array(
+			'approved' => $this->_model->get( 'approved' ),
+			'state' => $this->_model->get( 'state' ),
+			'new' => !( $this->_model->get( 'id' ) )
+		);
+		SPFactory::registry()->set( 'object_previous_state', $preState );
 
 		$this->_model->getRequest( $this->_type, $request );
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_model ) );
@@ -704,8 +710,7 @@ class SPEntryCtrl extends SPController
 			foreach ( $fields as $nid => $field ) {
 				try {
 					$changes[ 'fields' ][ $nid ] = $field->saveHistory();
-				}
-				catch( SPException $x ) {
+				} catch ( SPException $x ) {
 					$changes[ 'fields' ][ $nid ] = $field->getRaw();
 				}
 			}
