@@ -34,6 +34,9 @@ Legend:
     (#) Problems with searching when field is set to multi selection in the search (Issue #1187)
     (#) Newly created categories are not approved by default (Issue #1183)
     (#) New Approval in Entry detail does not fire EntryAfterChangeState and EntryAfterApprove (Issue #1184)
+    (#) Apostrophes are not correctly escaped in section name (Issue #1188)
+
+
 
 -------------------
 1.1.5 (28 January 2014)

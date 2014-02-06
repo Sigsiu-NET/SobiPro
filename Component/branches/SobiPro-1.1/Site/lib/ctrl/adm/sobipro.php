@@ -2,19 +2,15 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -122,7 +118,7 @@ final class SobiProAdmCtrl
 
 		/** @noinspection PhpParamsInspection */
 		$sectionName = SPLang::translateObject( $this->_section, 'name', 'section' );
-		SPFactory::registry()->set( 'current_section_name', $sectionName[ $this->_section ][ 'value' ] );
+		SPFactory::registry()->set( 'current_section_name', SPLang::clean( $sectionName[ $this->_section ][ 'value' ] ) );
 		if ( $this->_section && !( Sobi::Cfg( 'section.template' ) ) ) {
 			SPFactory::config()->set( 'template', SPC::DEFAULT_TEMPLATE, 'section' );
 		}
@@ -204,7 +200,7 @@ final class SobiProAdmCtrl
 		if ( $pid ) {
 			$this->_model = SPFactory::object( $pid );
 			/** @noinspection PhpParamsInspection
-			 * @var $this->_model stdClass
+			 * @var $this ->_model stdClass
 			 */
 			if ( $this->_model->oType == 'section' ) {
 				$this->_section = $this->_model->id;
