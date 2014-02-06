@@ -171,14 +171,14 @@ class SPCrawler extends SPController
 				if ( isset( $query[ 'date' ] ) ) {
 					$query[ 'date' ] = explode( '.', $query[ 'date' ] );
 					$year = $query[ 'date' ][ 0 ];
-					if ( $year > ( date( 'Y' ) + 5 ) || $year < ( date( 'Y' ) - 5 ) ) {
+					if ( $year > ( date( 'Y' ) + 2 ) || $year < ( date( 'Y' ) - 2  ) ) {
 						continue;
 					}
 				}
 			}
 			if ( preg_match( '/(\d{4}\.\d{1,2})/', $url, $matches ) ) {
 				if ( isset( $matches[ 0 ] ) ) {
-					if ( $matches[ 0 ] > ( date( 'Y' ) + 5 ) || $matches[ 0 ] < ( date( 'Y' ) - 5 ) ) {
+					if ( $matches[ 0 ] > ( date( 'Y' ) + 2 ) || $matches[ 0 ] < ( date( 'Y' ) - 2 ) ) {
 						continue;
 					}
 				}
