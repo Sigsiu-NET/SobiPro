@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade" overwrite="true">
 	<name>SobiPro</name>
-	<creationDate>7 February 2014</creationDate>
+	<creationDate>10 February 2014</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
@@ -14,7 +14,7 @@
 	<svn>$Revision$</svn>
 	<SobiPro>
 		<requirements>
-			<core version="1.0.0.2625" />
+			<core version="1.1" />
 		</requirements>
 	</SobiPro>
 	<install>
