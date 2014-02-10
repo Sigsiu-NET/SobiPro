@@ -347,6 +347,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 			return $this->searchForRange( $request, $section );
 		}
 		else {
+			$request = preg_quote( $request );
 			return $this->search( "REGEXP:^{$request}$", $section );
 		}
 	}

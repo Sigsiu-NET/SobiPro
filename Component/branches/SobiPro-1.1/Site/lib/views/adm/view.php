@@ -167,7 +167,7 @@ class SPAdmView extends SPObject implements SPView
 					'type' => 'url',
 					'task' => '',
 					'url' => array( 'sid' => $section[ 'id' ] ),
-					'label' => strlen( $section[ 'value' ] ) < $sectionLength ? $section[ 'value' ] : substr( $section[ 'value' ], 0, $sectionLength - 3 ) . ' ...',
+					'label' => SPLang::clean( strlen( $section[ 'value' ] ) < $sectionLength ? $section[ 'value' ] : substr( $section[ 'value' ], 0, $sectionLength - 3 ) . ' ...' ),
 					'icon' => 'file',
 					'element' => 'button'
 				);
