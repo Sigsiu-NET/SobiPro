@@ -32,7 +32,7 @@ require_once( JPATH_ROOT . '/components/com_sobipro/lib/sobi.php' );
 class SobiProCrawler extends JApplicationCli
 {
 	const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1');";
-	protected $silent = false;
+	protected $silent = true;
 	protected $section = 0;
 	protected $sections = array();
 	protected $timeLimit = 3600;
@@ -142,7 +142,7 @@ class SobiProCrawler extends JApplicationCli
 		$this->out( 'Parameter list:' );
 		$this->out( '' );
 		$this->out( "\t liveURL - The URL address of your website/Joomla! root. Defines like liveURL=http://demo.sobi.pro This is a required parameter!" );
-		$this->out( "\t silent - yes/no. In case set to 'yes' only error messages are going to be displayed" );
+		$this->out( "\t silent - yes/no. In case set to 'yes' only error messages are going to be displayed. Default set to 'yes'" );
 		$this->out( "\t section - section id of the section you want to crawl. If not given all valid sections are going to be crawled" );
 		$this->out( "\t timeLimit - time limit (in seconds - default 3600). If the limit has been reached while crawling the crawler will stop any actions" );
 		$this->out( "\t cleanCache - yes/no If set to 'yes' the cache will be invalidated first. Default set to 'yes'" );

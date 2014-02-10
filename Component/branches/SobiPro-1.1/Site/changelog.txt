@@ -37,6 +37,7 @@ Legend:
     (#) Apostrophes are not correctly escaped in section name (Issue #1188)
     (#) Wrong path definition in the cronjob script
     (#) Several fixes in the crawler
+    (#) Special characters in regex not escaped. Issue (#1189)
 
 
 -------------------
