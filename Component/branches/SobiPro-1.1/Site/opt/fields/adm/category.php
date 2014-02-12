@@ -49,7 +49,7 @@ class SPField_CategoryAdm extends SPField_Category
 						}
 						else {
 							$parents = SPFactory::config()->getParentPath( $catId );
-							if ( !( isset( $parents[ 0 ] ) ) || $parents[ 0 ] != Sobi::Section() ) {
+							if ( !( isset( $parents[ 0 ] ) ) || $parents[ 0 ] == Sobi::Section() ) {
 								throw new SPException( SPLang::e( 'FIELD_FIXED_CID_INVALID_SECTION', $catId ) );
 							}
 						}

@@ -38,6 +38,8 @@ Legend:
     (#) Wrong path definition in the cronjob script
     (#) Several fixes in the crawler
     (#) Special characters in regex not escaped. Issue (#1189)
+    (#) ACL permission "see unpublished entries" has no effect (#1192)
+    (#) Category field in fixed choice allow to select section id (#1192)
 
 
 -------------------

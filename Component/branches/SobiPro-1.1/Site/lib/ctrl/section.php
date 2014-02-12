@@ -218,7 +218,7 @@ class SPSectionCtrl extends SPController
 					$conditions[ $oPrefix . 'approved' ] = '1';
 				}
 			}
-			else {
+			elseif ( !( Sobi::Can( 'entry.access.unpublished_any' ) ) ) {
 				$conditions[ $oPrefix . 'state' ] = '1';
 			}
 		}

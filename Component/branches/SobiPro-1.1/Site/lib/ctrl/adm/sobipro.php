@@ -117,12 +117,13 @@ final class SobiProAdmCtrl
 		SPFactory::header()->initBase( true );
 
 		/** @noinspection PhpParamsInspection */
-		$sectionName = SPLang::translateObject( $this->_section, 'name', 'section' );
-		SPFactory::registry()->set( 'current_section_name', SPLang::clean( $sectionName[ $this->_section ][ 'value' ] ) );
+		if ( $this->_section ) {
+			$sectionName = SPLang::translateObject( $this->_section, 'name', 'section' );
+			SPFactory::registry()->set( 'current_section_name', SPLang::clean( $sectionName[ $this->_section ][ 'value' ] ) );
+		}
 		if ( $this->_section && !( Sobi::Cfg( 'section.template' ) ) ) {
 			SPFactory::config()->set( 'template', SPC::DEFAULT_TEMPLATE, 'section' );
 		}
-//		SPConfig::debOut( SPFactory::config()->unserialize( '7VjdboIwFH6XPgChoAKHK7PbLVli9gAVi5JYMFBMDOHd14KCYGs255YAuyrp+aHfd/4KBDAUEWCfAHahyAAvAC1DTtMVOVKD5HyXpEhIK+EMUJgmDPlCzwNUBOEWGIn2htyNCaOlFLm11psQVJrzvmalZQHiSSXHQp5nNDUaDwspa+yti5xKDxfjIJAPJiC52IDWnQ1x0h1ntT0gLFcHEI3Jek83yI/A9Mv6aFdgNyyKfxmr3lMXs9bPd2CbOtjuGfbHYUP4H0VZnLWoX6SL86zVUERalQaPht3p4R9b4LXAvTPw5eGQJseBRP6HmN0+5uFE+4k5b136+suOxFu64jLxk3ggtX87Ih6lYa6hYSotwHJUBIThFFqBugYk9gG1hKeVQjMM3smJ0ZhPahg0mCdT9zO5x9OToR6G3ljxtzdhLAyCPOMJe40y3ngQ5NhWhxxte/gnSUPS9T3CG13z+Ao7vfq6+bKaKCvdnOn9U/BG9U+h3b3DB1bwMbbuYiqZse8xU5af') );
 		/* check if it wasn't plugin custom task */
 		if ( !( Sobi::Trigger( 'custom', 'task', array( $this, SPRequest::task() ) ) ) ) {
 			/* if not, start to route */
