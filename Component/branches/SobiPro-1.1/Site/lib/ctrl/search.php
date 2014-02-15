@@ -301,10 +301,19 @@ class SPSearchCtrl extends SPSectionCtrl
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_CREATE_SESSION_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 		$url = array( 'task' => 'search.results', 'sid' => Sobi::Section() );
+		// For Peter's Components Anywhere extension and other
+		$params = Sobi::Cfg( 'search.params_to_pass' );
+		if ( count( $params ) ) {
+			foreach ( $params as $param ) {
+				$url[ $param ] = SPRequest::raw( $param );
+			}
+		}
+
 		/* if we cannot transfer the search id in cookie */
 		if ( !( SPRequest::cmd( 'ssid', null, 'cookie' ) ) ) {
 			$url[ 'ssid' ] = $ssid;
 		}
+
 		if ( Sobi::Cfg( 'cache.unique_search_url' ) ) {
 			$url[ 't' ] = microtime( true );
 		}

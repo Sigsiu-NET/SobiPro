@@ -89,7 +89,11 @@ class SPMessage
 					->loadAssocList( 'revision' );
 			if ( count( $log ) ) {
 				foreach ( $log as $revision => $data ) {
-					$log[ $revision ][ 'changes' ] = SPConfig::unserialize( $data[ 'changes' ] );
+					try {
+						$log[ $revision ][ 'changes' ] = SPConfig::unserialize( $data[ 'changes' ] );
+					} catch ( Exception $x ) {
+						$this->warning( sprintf( "Can't restore revision from %s. Error was '%s'", $data[ 'changedAt' ], $x->getMessage() ), false );
+					}
 				}
 			}
 			return $log;
