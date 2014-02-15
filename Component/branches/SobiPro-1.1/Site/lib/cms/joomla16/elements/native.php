@@ -76,6 +76,13 @@ class JFormFieldNative extends JFormField
 	{
 		if ( !( self::$sid ) ) {
 			self::$sid = isset( $this->params->sid ) ? $this->params->sid : $this->value;
+			$link = $this->form->getValue( 'link' );
+			if ( !( self::$sid ) && strlen( $link ) ) {
+				parse_str( $link, $request );
+				if ( isset( $request[ 'sid' ] ) && $request[ 'sid' ] ) {
+					self::$sid = $request[ 'sid' ];
+				}
+			}
 			$path = SPFactory::config()->getParentPath( self::$sid );
 			self::$section = $path[ 0 ];
 			$this->getFunctionsLabel();
@@ -92,7 +99,7 @@ class JFormFieldNative extends JFormField
 			self::$functionsLabel = $obj->$function( self::$sid, self::$section );
 		}
 		elseif ( isset( $this->params->text ) ) {
-			if( isset( $this->params->loadTextFile ) ) {
+			if ( isset( $this->params->loadTextFile ) ) {
 				SPLang::load( $this->params->loadTextFile );
 			}
 			self::$functionsLabel = Sobi::Txt( $this->params->text );

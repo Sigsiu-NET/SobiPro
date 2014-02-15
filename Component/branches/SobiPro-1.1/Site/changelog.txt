@@ -31,15 +31,18 @@ Legend:
 1.1.6
 -------------------
 
+    (+) Possibility to define list of parameters to pass from the search function to the search results page
+
     (#) Problems with searching when field is set to multi selection in the search (Issue #1187)
     (#) Newly created categories are not approved by default (Issue #1183)
     (#) New Approval in Entry detail does not fire EntryAfterChangeState and EntryAfterApprove (Issue #1184)
     (#) Apostrophes are not correctly escaped in section name (Issue #1188)
     (#) Wrong path definition in the cronjob script
     (#) Several fixes in the crawler
-    (#) Special characters in regex not escaped. Issue (#1189)
-    (#) ACL permission "see unpublished entries" has no effect (#1192)
-    (#) Category field in fixed choice allow to select section id (#1191)
+    (#) Special characters in regex not escaped. (Issue #1189)
+    (#) ACL permission "see unpublished entries" has no effect (Issue #1192)
+    (#) Category field in fixed choice allow to select section id (Issue #1191)
+    (#) Problem with creating Joomla! menu item (Issue #1166)
 
 
 -------------------
