@@ -448,12 +448,19 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 	protected function cleanExif( &$data )
 	{
+		// Wed, Feb 19, 2014 17:17:20
+		// we need to remove junk from indexes too
+		// it appears to be the easies method
+		$data = json_encode( $data );
+		$data = preg_replace( '/\p{Cc}+/u', null, $data );
+		$data = json_decode( $data, true );
 		if ( count( $data ) ) {
 			foreach ( $data as $index => $row ) {
 				if ( is_array( $row ) ) {
 					$this->cleanExif( $row );
 				}
 				else {
+//					$data[ preg_replace( '/\\xED[\\xA0-\\xBF][\\x80-\\xBF]/', '', $index ) ] = preg_replace( '/\\xED[\\xA0-\\xBF][\\x80-\\xBF]/', '', $row );
 					$data[ $index ] = preg_replace( '#\\xED[\\xA0-\\xBF][\\x80-\\xBF]#', '', $row );
 				}
 			}

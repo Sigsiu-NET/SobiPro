@@ -33,6 +33,8 @@ Legend:
 
     (+) Possibility to define list of parameters to pass from the search function to the search results page
 
+    (!) Improved exif data cleaning method
+
     (#) Problems with searching when field is set to multi selection in the search (Issue #1187)
     (#) Newly created categories are not approved by default (Issue #1183)
     (#) New Approval in Entry detail does not fire EntryAfterChangeState and EntryAfterApprove (Issue #1184)
