@@ -357,7 +357,7 @@ var select = {};
       if (to && to != from)
         range.setEndPoint("EndToEnd", rangeAt(to));
       range.select();
-    }
+    };
 
     // Some hacks for storing and re-storing the selection when the editor loses and regains focus.
     select.getBookmark = function (container) {
@@ -587,7 +587,7 @@ var select = {};
           return true;
         }
 
-        var backlog = []
+        var backlog = [];
         function decompose(node) {
           if (node.nodeType == 3)
             backlog.push(node);

@@ -47,7 +47,7 @@ function SigsiuTreeEdit( options )
 				proxy.loading = false;
 			}
 		} );
-	}
+	};
 
 	this.init = function ()
 	{
@@ -58,7 +58,7 @@ function SigsiuTreeEdit( options )
 			proxy.getCategoryData( SobiPro.jQuery( this ).attr( 'rel' ) );
 		} );
 
-	}
+	};
 
 	this.canvas.find( '.tree' ).bind( 'DOMNodeInserted', function ()
 	{
@@ -75,7 +75,7 @@ function SigsiuTreeEdit( options )
 			selectedCats.push( SobiPro.jQuery( e ).val() )
 		} );
 		this.canvas.find( '.selected' ).find( 'input' ).val( 'json://[' + selectedCats.join( ',' ) + ']' );
-	}
+	};
 
 	this.addCategory = function ()
 	{
@@ -122,7 +122,7 @@ function SigsiuTreeEdit( options )
 			}
 			this.updateSelected();
 		}
-	}
+	};
 
 	this.canvas.find( '[name="addCategory"]' ).click( function ( )
 	{

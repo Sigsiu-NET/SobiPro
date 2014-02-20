@@ -652,7 +652,7 @@ Calendar.prototype.create = function (_par) {
 	this._nav_nm.ttip = Calendar._TT["NEXT_MONTH"];
 
 	this._nav_ny = hh("&#x00bb;", 1, 2);
-	this._nav_ny.ttip = Calendar._TT["NEXT_YEAR"]
+	this._nav_ny.ttip = Calendar._TT["NEXT_YEAR"];
 
 	// day names
 	row = Calendar.createElement("tr", thead);

@@ -37,7 +37,7 @@ function SPCalendar( id, bid, format )
 		calendar.create();
 	}
 	calendar.setDateFormat( format );
-	calendar.setTtDateFormat( "__FORMAT_TXT__" )
+	calendar.setTtDateFormat( "__FORMAT_TXT__" );
 	calendar.parseDate( el.value );
 	calendar.sel = el;
 	calendar.showAtElement( SP_id( id ) );
