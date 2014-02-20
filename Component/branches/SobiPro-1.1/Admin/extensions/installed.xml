@@ -24,7 +24,6 @@
 <definition>
 	<header>
 		<title value="EX.INSTALLED" />
-		<file type="script" filename="bootstrap.tooltips" />
 		<file type="script" filename="adm.sam" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
