@@ -35,6 +35,7 @@ Legend:
 
     (!) Improved exif data cleaning method
     (!) Uncompressed js files removed from packages; separate package available
+    (!) Bootstrap javascript plugin files removed as already included in the main Bootstrap file
 
     (#) Problems with searching when field is set to multi selection in the search (Issue #1187)
     (#) Newly created categories are not approved by default (Issue #1183)

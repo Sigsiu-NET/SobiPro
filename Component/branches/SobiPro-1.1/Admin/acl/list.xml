@@ -26,7 +26,6 @@
 <definition>
 	<header>
 		<title value="MN.ACL" />
-		<file type="script" filename="bootstrap.tooltips" />
 	</header>
 	<toolbar title="MN.ACL" icon="SobiUser">
 		<divider />

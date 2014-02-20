@@ -25,7 +25,6 @@
 	<header>
 		<title value="MN.AVAILABLE_EXTENSIONS" />
 		<file type="script" filename="bootstrap.tabs" />
-		<file type="script" filename="bootstrap.tooltips" />
 		<file type="script" filename="adm.sam" />
 		<style>.SpAddRepo { float: none; }</style>
 	</header>

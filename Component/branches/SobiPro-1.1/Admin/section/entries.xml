@@ -23,7 +23,6 @@
 <definition>
 	<header>
 		<title value="SECTION_ALL_ENTRIES_TITLE" />
-		<file type="script" filename="bootstrap.tooltips" />
 		<file type="script" filename="bootstrap.bootbox" />
 		<file type="script" filename="adm.rejection" />
 	</header>

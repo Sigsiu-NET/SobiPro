@@ -24,8 +24,6 @@
 	<header>
 		<title value="{'entry.add':'ADD_NEW_ENTRY','entry.edit':'EDIT_EXISTING_ENTRY'}" />
 		<file type="script" filename="bootstrap.tabs" />
-		<file type="script" filename="bootstrap.tooltips" />
-		<file type="script" filename="bootstrap.popover" />
 		<file type="script" filename="adm.revisions" />
 		<style>
 			ins {

@@ -25,7 +25,6 @@
 	<header>
 		<title value="{'category.view':'CATEGORY_LIST_HEADER','section.view':''}" />
 		<!--<title value="CATEGORY_LIST_HEADER" />-->
-		<file type="script" filename="bootstrap.tooltips" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSection">
 		<buttons type="entry">
