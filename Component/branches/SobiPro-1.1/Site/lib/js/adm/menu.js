@@ -34,7 +34,7 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( '#SPRightMenuHold' ).hide();
 			SobiPro.jQuery( '#SPRightMenuHold' ).html( SobiPro.jQuery( '#SPMenuCtrl' ).html() );
 			SobiPro.jQuery( '#SPMenuCtrl' ).html( '' );
-			SobiPro.jQuery( '#SPMenuCtrlBt' ).html( '+ menu' )
+			SobiPro.jQuery( '#SPMenuCtrlBt' ).html( '+ menu' );
 			SobiPro.jQuery( '#SPRightMenuHold' ).fadeIn( 'slide' );
 			SobiPro.jQuery( '#SPRightMenu' )
 				.siblings( 'div' )
@@ -45,8 +45,8 @@ SobiPro.jQuery( document ).ready( function ()
 		else {
 			SobiPro.jQuery( '#SPRightMenu' ).show( 'slide' );
 			SobiPro.jQuery( '#SPMenuCtrl' ).html( SobiPro.jQuery( '#SPRightMenuHold' ).html() );
-			SobiPro.jQuery( '#SPRightMenuHold' ).html( '' )
-			SobiPro.jQuery( '#SPMenuCtrlBt' ).html( '-' )
+			SobiPro.jQuery( '#SPRightMenuHold' ).html( '' );
+			SobiPro.jQuery( '#SPMenuCtrlBt' ).html( '-' );
 			SobiPro.jQuery( '#SPRightMenu' )
 				.siblings( 'div' )
 				.removeClass( 'span12' )

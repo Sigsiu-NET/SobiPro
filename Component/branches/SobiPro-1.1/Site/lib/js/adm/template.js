@@ -51,7 +51,7 @@ function SPInitTplEditor( mode )
 		indentWithTabs:true,
 		enterMode:"keep",
 		tabMode:"shift"
-	}
+	};
 	if ( mode ) {
 		options[ 'mode' ] = mode;
 	}

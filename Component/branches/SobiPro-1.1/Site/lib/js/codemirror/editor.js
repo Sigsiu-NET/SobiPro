@@ -832,7 +832,7 @@ var Editor = (function(){
       // compute how much this differs from the current indentation.
       var newIndent = 0, curIndent = whiteSpace ? whiteSpace.currentText.length : 0;
       if (direction != null && this.options.tabMode == "shift")
-        newIndent = direction ? curIndent + indentUnit : Math.max(0, curIndent - indentUnit)
+        newIndent = direction ? curIndent + indentUnit : Math.max(0, curIndent - indentUnit);
       else if (start)
         newIndent = start.indentation(nextChars, curIndent, direction);
       else if (Editor.Parser.firstIndentation)

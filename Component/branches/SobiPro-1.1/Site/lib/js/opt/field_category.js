@@ -28,7 +28,7 @@ function SPCategoryChooser( opt )
 		{
 			var selected = SobiPro.jQuery( this ).find( ':selected' );
 			if ( selected.length > opt.limit ) {
-				alert( SobiPro.Txt( 'FCC_LIMIT_REACHED' ).replace( '%d', opt.limit ) )
+				alert( SobiPro.Txt( 'FCC_LIMIT_REACHED' ).replace( '%d', opt.limit ) );
 				for ( var i = opt.limit; i < selected.length; i++ ) {
 					SobiPro.jQuery( selected[ i ] ).removeAttr( 'selected' );
 				}
