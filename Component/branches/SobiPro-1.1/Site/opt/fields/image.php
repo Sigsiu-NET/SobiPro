@@ -198,7 +198,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( isset( $data[ 'data' ] ) && defined( 'SOBIPRO_ADM' ) ) {
 			unset( $data[ 'data' ] );
 		}
-		return $data;
+		return SPConfig::serialize( $data );
 	}
 
 	/**
