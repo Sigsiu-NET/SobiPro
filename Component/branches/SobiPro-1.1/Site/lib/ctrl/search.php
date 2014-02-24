@@ -305,7 +305,10 @@ class SPSearchCtrl extends SPSectionCtrl
 		$params = Sobi::Cfg( 'search.params_to_pass' );
 		if ( count( $params ) ) {
 			foreach ( $params as $param ) {
-				$url[ $param ] = SPRequest::raw( $param );
+				$val = SPRequest::raw( $param );
+				if ( $val ) {
+					$url[ $param ] = SPRequest::raw( $param );
+				}
 			}
 		}
 
