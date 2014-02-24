@@ -159,7 +159,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 				throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_NOT_ED', $this->name ) );
 			}
 			if ( $this->allowHtml ) {
-				if ( $this->maxLength && strip_tags( $dexs ) > $this->maxLength ) {
+				$check = str_replace( array( "\n", "\r", "\t" ), null, strip_tags( $dexs ) );
+				if ( $this->maxLength && $check > $this->maxLength ) {
 					throw new SPException( SPLang::e( 'FIELD_TEXTAREA_LIMIT', $this->maxLength, $this->name, $dexs ) );
 				}
 			}
