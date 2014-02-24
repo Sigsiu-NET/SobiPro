@@ -460,8 +460,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					$this->cleanExif( $row );
 				}
 				else {
-//					$data[ preg_replace( '/\\xED[\\xA0-\\xBF][\\x80-\\xBF]/', '', $index ) ] = preg_replace( '/\\xED[\\xA0-\\xBF][\\x80-\\xBF]/', '', $row );
-					$data[ $index ] = preg_replace( '#\\xED[\\xA0-\\xBF][\\x80-\\xBF]#', '', $row );
+					$data[ $index ] = preg_replace( '/\p{Cc}+/u', null, $row );
 				}
 			}
 		}
@@ -521,7 +520,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$files[ 'orginal' ] = $files[ 'original' ];
 		}
 		if ( isset( $files[ 'data' ][ 'exif' ] ) ) {
-			$exif = $files[ 'data' ][ 'exif' ];
+			$exif = json_encode( $files[ 'data' ][ 'exif' ] );
+			$exif = json_decode( preg_replace( '/[^a-zA-Z0-9\{\}\:\.\,\(\)\"\'\/\\\\!\?\[\]\@\#\$\%\^\&\*\+\-\_]/', '', $exif ), true );
 		}
 		if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) ) {
 			$exif[ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
