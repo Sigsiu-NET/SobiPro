@@ -246,16 +246,49 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		if ( $this->searchMethod == 'range' ) {
 			return $this->rangeSearch( $this->searchRangeValues, $this->freeRange );
 		}
-		$db = SPFactory::db();
 		$fdata = array();
 		try {
-			$db->dselect( array( 'baseData' ), 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1 ), 'field( lang, \'' . Sobi::Lang() . '\'), baseData', 0, 0, 'baseData' );
-			$data = $db->loadResultArray();
+			$data = SPFactory::db()
+					->dselect( array( 'baseData', 'sid', 'lang' ), 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1 ), 'field( lang, \'' . Sobi::Lang() . '\'), baseData', 0, 0, 'baseData' )
+					->loadAssocList();
+			$languages = array();
+			$output = array();
+			$lang = Sobi::Lang( false );
+			$defLang = Sobi::DefLang();
+			if ( count( $data ) ) {
+				foreach ( $data as $row ) {
+					$languages[ $row[ 'lang' ] ][ $row[ 'sid' ] ] = $row[ 'baseData' ];
+				}
+			}
+			if ( isset( $languages[ $lang ] ) ) {
+				foreach ( $languages[ $lang ] as $sid => $fieldData ) {
+					$output[ $sid ] = $fieldData;
+				}
+				unset( $languages[ $lang ] );
+			}
+			if ( isset( $languages[ $defLang ] ) ) {
+				foreach ( $languages[ $defLang ] as $sid => $fieldData ) {
+					if ( !( isset( $output[ $sid ] ) ) ) {
+						$output[ $sid ] = $fieldData;
+					}
+				}
+				unset( $languages[ $defLang ] );
+			}
+			if ( count( $languages ) ) {
+				foreach( $languages as $language => $langData ) {
+					foreach ( $langData as $sid => $fieldData ) {
+						if ( !( isset( $output[ $sid ] ) ) ) {
+							$output[ $sid ] = $fieldData;
+						}
+					}
+					unset( $languages[ $language ] );
+				}
+			}
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELDS_DATA_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
-		$data = ( ( array )$data );
+		$data = ( ( array ) $output );
 		if ( count( $data ) ) {
 			$fdata[ '' ] = Sobi::Txt( 'FD.INBOX_SEARCH_SELECT', array( 'name' => $this->name ) );
 			foreach ( $data as $i => $d ) {

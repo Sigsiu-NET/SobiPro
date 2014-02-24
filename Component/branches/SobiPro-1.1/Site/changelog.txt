@@ -47,6 +47,7 @@ Legend:
     (#) ACL permission "see unpublished entries" has no effect (Issue #1192)
     (#) Category field in fixed choice allow to select section id (Issue #1191)
     (#) Problem with creating Joomla! menu item (Issue #1166)
+    (#) Inputbox search method single select list and multilingual mode (Issue #1193)
 
 
 -------------------
