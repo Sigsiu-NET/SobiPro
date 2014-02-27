@@ -26,6 +26,7 @@
 	<header>
 		<title value="MENU_LINK_TO_ENTRY" />
 		<file type="script" filename="adm.jmenu" />
+		<file type="script" filename="bootstrap.typeahead" />
 		<!--<file type="language" filename="SpApp.notifications" />-->
 	</header>
 	<body>

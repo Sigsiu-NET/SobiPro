@@ -328,7 +328,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				Sobi::Trigger( 'Parse', 'Content', array( &$out ) );
 			}
 		}
-
+		header( 'SobiPro: ' . Sobi::Section() );
 		if ( $o == 'html' && ( !strlen( SPRequest::cmd( 'format' ) ) || SPRequest::cmd( 'format' ) == 'html' || SPRequest::int( 'crawl' ) ) ) {
 			$out .= $this->pb();
 			if ( ( SPRequest::cmd( 'dbg' ) || Sobi::Cfg( 'debug' ) ) && Sobi::My( 'id' ) ) {
@@ -340,7 +340,6 @@ abstract class SPFrontView extends SPObject implements SPView
 				$time = microtime( true ) - $time;
 				SPConfig::debOut( "Memory: {$mem}<br/>Time: {$time}<br/> Queries: {$queries}" );
 			}
-			header( 'SobiPro: ' . Sobi::Section() );
 			echo "\n<!-- Start of SobiPro component-->\n<div id=\"SobiPro\" class=\"SobiPro\">\n{$out}\n</div>\n<!-- End of SobiPro component Copyright (C) 2012 Sigsiu.NET GmbH -->\n";
 		}
 		else {
