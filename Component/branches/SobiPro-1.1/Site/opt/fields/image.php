@@ -453,6 +453,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		// it appears to be the easies method
 		$data = json_encode( $data );
 		$data = preg_replace( '/\p{Cc}+/u', null, $data );
+		$data = str_replace( 'UndefinedTag:', null, $data );
 		$data = json_decode( $data, true );
 		if ( count( $data ) ) {
 			foreach ( $data as $index => $row ) {
@@ -515,17 +516,32 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$files = null;
 			}
 		}
-		$exif = array();
+		$exifToPass = array();
 		if ( isset( $files[ 'original' ] ) ) {
 			$files[ 'orginal' ] = $files[ 'original' ];
 		}
 		if ( isset( $files[ 'data' ][ 'exif' ] ) ) {
 			$exif = json_encode( $files[ 'data' ][ 'exif' ] );
+			$exif = str_replace( 'UndefinedTag:', null, $exif );
+			$exif = preg_replace( '/\p{Cc}+/u', null, $exif );
 			$exif = json_decode( preg_replace( '/[^a-zA-Z0-9\{\}\:\.\,\(\)\"\'\/\\\\!\?\[\]\@\#\$\%\^\&\*\+\-\_]/', '', $exif ), true );
-		}
-		if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) ) {
-			$exif[ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
-			$exif[ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );
+			$exifToPass[ 'EXIF' ] = $exif[ 'EXIF' ];
+			if ( isset( $exif[ 'FILE' ] ) ) {
+				$exifToPass[ 'FILE' ] = $exif[ 'FILE' ];
+			}
+			if ( isset( $exif[ 'FILE' ] ) ) {
+				$exifToPass[ 'FILE' ] = $exif[ 'FILE' ];
+			}
+			if ( isset( $exif[ 'IFD0' ] ) ) {
+				$tags = array( 'Make', 'Model', 'Orientation', 'XResolution', 'YResolution', 'ResolutionUnit', 'Software', 'DateTime', 'YCbCrPositioning', 'Copyright', 'Exif_IFD_Pointer', 'CustomRendered', 'ExposureMode', 'WhiteBalance', 'DigitalZoomRatio', 'SceneCaptureType', 'YCbCrPositioning', 'CustomRendered', 'ExposureMode', 'WhiteBalance', 'DigitalZoomRatio', 'SceneCaptureType' );
+				foreach ( $tags as $tag ) {
+					$exifToPass[ 'IFD0' ][ $tag ] = isset( $exif[ 'IFD0' ][ $tag ] ) ? $exif[ 'IFD0' ][ $tag ] : 'unknown';
+				}
+			}
+			if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) ) {
+				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
+				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );
+			}
 		}
 		$float = null;
 		if ( is_array( $files ) && count( $files ) ) {
@@ -581,7 +597,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 						'original' => isset( $files[ 'original' ] ) ? $files[ 'original' ] : null,
 						'class' => $this->cssClass
 					),
-					'_options' => array( 'exif' => $exif ),
+					'_options' => array( 'exif' => $exifToPass ),
 				);
 			}
 		}

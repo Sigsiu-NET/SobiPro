@@ -220,6 +220,7 @@ class JElementSPSection extends JElement
 		$strings = json_encode( $strings );
 
 		$head->addJsCode( "SPJmenuFixTask( '{$this->taskName}' );" )
+				->addJsFile( 'bootstrap.typeahead' )
 				->addJsCode( "var SPJmenuStrings = {$strings}" );
 		if ( $this->task != 'list.date' ) {
 			if ( SOBI_CMS == 'joomla3' ) {
