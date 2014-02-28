@@ -28,7 +28,7 @@ Legend:
 
 
 -------------------
-1.1.6
+1.1.6 (28 February 2014)
 -------------------
 
     (+) Possibility to define list of parameters to pass from the search function to the search results page
