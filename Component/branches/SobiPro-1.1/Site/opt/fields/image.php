@@ -520,12 +520,19 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( isset( $files[ 'original' ] ) ) {
 			$files[ 'orginal' ] = $files[ 'original' ];
 		}
-		if ( isset( $files[ 'data' ][ 'exif' ] ) ) {
+		if ( isset( $files[ 'data' ][ 'exif' ] ) && Sobi::Cfg( 'image_field.pass_exif', true ) ) {
 			$exif = json_encode( $files[ 'data' ][ 'exif' ] );
 			$exif = str_replace( 'UndefinedTag:', null, $exif );
 			$exif = preg_replace( '/\p{Cc}+/u', null, $exif );
 			$exif = json_decode( preg_replace( '/[^a-zA-Z0-9\{\}\:\.\,\(\)\"\'\/\\\\!\?\[\]\@\#\$\%\^\&\*\+\-\_]/', '', $exif ), true );
-			$exifToPass[ 'EXIF' ] = $exif[ 'EXIF' ];
+			if ( isset( $exif[ 'EXIF' ] ) ) {
+				$tags = Sobi::Cfg( 'image_field.exif_data', array() );
+				if ( count( $tags ) ) {
+					foreach ( $tags as $tag ) {
+						$exifToPass[ 'BASE' ][ $tag ] = isset( $exif[ 'EXIF' ][ $tag ] ) ? $exif[ 'EXIF' ][ $tag ] : 'unknown';
+					}
+				}
+			}
 			if ( isset( $exif[ 'FILE' ] ) ) {
 				$exifToPass[ 'FILE' ] = $exif[ 'FILE' ];
 			}
@@ -533,14 +540,25 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$exifToPass[ 'FILE' ] = $exif[ 'FILE' ];
 			}
 			if ( isset( $exif[ 'IFD0' ] ) ) {
-				$tags = array( 'Make', 'Model', 'Orientation', 'XResolution', 'YResolution', 'ResolutionUnit', 'Software', 'DateTime', 'YCbCrPositioning', 'Copyright', 'Exif_IFD_Pointer', 'CustomRendered', 'ExposureMode', 'WhiteBalance', 'DigitalZoomRatio', 'SceneCaptureType', 'YCbCrPositioning', 'CustomRendered', 'ExposureMode', 'WhiteBalance', 'DigitalZoomRatio', 'SceneCaptureType' );
-				foreach ( $tags as $tag ) {
-					$exifToPass[ 'IFD0' ][ $tag ] = isset( $exif[ 'IFD0' ][ $tag ] ) ? $exif[ 'IFD0' ][ $tag ] : 'unknown';
+				$tags = Sobi::Cfg( 'image_field.exif_id_data', array() );
+				if ( count( $tags ) ) {
+					foreach ( $tags as $tag ) {
+						$exifToPass[ 'IFD0' ][ $tag ] = isset( $exif[ 'IFD0' ][ $tag ] ) ? $exif[ 'IFD0' ][ $tag ] : 'unknown';
+					}
 				}
 			}
 			if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) ) {
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );
+				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'latitude-ref' ] = isset( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] ) ? $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] : 'unknown';
+				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'longitude-ref' ] = isset( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] ) ? $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] : 'unknown';
+				$tags = Sobi::Cfg( 'image_field.exif_gps_data', array() );
+				if ( count( $tags ) ) {
+					foreach ( $tags as $tag ) {
+						$exifToPass[ 'GPS' ][ $tag ] = isset( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPS'.$tag ] ) ? $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPS'.$tag ] : 'unknown';
+					}
+				}
+
 			}
 		}
 		$float = null;

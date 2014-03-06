@@ -536,7 +536,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				unset( $var[ 'option' ] );
 			}
 			if ( ( isset( $var[ 'sid' ] ) && ( !defined( 'SOBIPRO_ADM' ) || $forceItemId ) ) || ( defined( 'SOBIPRO_ADM' ) && $sef && $live ) ) {
-				SPFactory::mainframe()->getItemid( $var );
+				if ( !( isset( $var[ 'Itemid' ] ) ) || !( $var[ 'Itemid' ] ) ) {
+					SPFactory::mainframe()->getItemid( $var );
+				}
 			}
 			if ( isset( $var[ 'title' ] ) ) {
 				if ( Sobi::Cfg( 'url.title', true ) ) {
@@ -649,7 +651,11 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			return false;
 		}
 		$url[ 'Itemid' ] = 0;
-		$menu =& JApplication::getMenu( 'site' );
+		// Thu, Feb 27, 2014 16:28:22 - iy is probably the right solution
+		// but NTaRS
+		$menu = JFactory::getApplication( 'site' )->getMenu( 'site' );
+		// Thu, Mar 6, 2014 12:42:01  - let's check
+//		$menu = JApplication::getMenu( 'site' );
 		if ( isset( $url[ 'task' ] ) ) {
 			$task = ( $url[ 'task' ] == 'search.results' ) ? 'search' : $url[ 'task' ];
 			$link = 'index.php?option=com_sobipro&task=' . $task . '&sid=' . $sid;
