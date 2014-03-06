@@ -26,6 +26,13 @@ Legend:
  (-) - Removed
  (!) - Change
 
+-------------------
+1.1.7
+-------------------
+
+    (+) Possibility to define list of exif data to pass to the XML output
+
+    (!) Improved exif data cleaning method (again)
 
 -------------------
 1.1.6 (28 February 2014)
