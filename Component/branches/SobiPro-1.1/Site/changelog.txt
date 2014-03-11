@@ -33,6 +33,8 @@ Legend:
     (+) Possibility to define list of exif data to pass to the XML output
 
     (!) Improved exif data cleaning method (again)
+    (!) CSS style for alert messages
+
 
 -------------------
 1.1.6 (28 February 2014)
