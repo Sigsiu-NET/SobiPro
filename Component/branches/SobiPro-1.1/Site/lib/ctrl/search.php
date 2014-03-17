@@ -284,10 +284,10 @@ class SPSearchCtrl extends SPSectionCtrl
 		$cre = ( is_array( $this->_categoriesResults ) && count( $this->_categoriesResults ) ) ? implode( ', ', $this->_categoriesResults ) : null;
 		/* determine the search parameters */
 		$attr = array(
-			'entriesResults' => array( 'results' => $res, 'resultsByPriority' => $this->_resultsByPriority ),
-			'catsResults' => $cre,
-			'uid' => Sobi::My( 'id' ),
-			'browserData' => SPConfig::serialize( SPBrowser::getInstance() )
+				'entriesResults' => array( 'results' => $res, 'resultsByPriority' => $this->_resultsByPriority ),
+				'catsResults' => $cre,
+				'uid' => Sobi::My( 'id' ),
+				'browserData' => SPConfig::serialize( SPBrowser::getInstance() )
 		);
 		if ( strlen( $req ) ) {
 			$attr[ 'requestData' ] = $req;
@@ -325,34 +325,34 @@ class SPSearchCtrl extends SPSectionCtrl
 
 	protected function sortPriority()
 	{
-		foreach ( $this->_resultsByPriority as $prio => $ids ) {
-			$this->_resultsByPriority[ $prio ] = array_unique( $ids );
-			foreach ( $ids as $i => $sid ) {
-				if ( !( in_array( $sid, $this->_results ) ) ) {
-					unset( $this->_resultsByPriority[ $prio ][ $i ] );
+		if ( Sobi::Cfg( 'search.entries_ordering', 'disabled' ) != 'disabled' ) {
+			foreach ( $this->_resultsByPriority as $prio => $ids ) {
+				$this->_resultsByPriority[ $prio ] = array_unique( $ids );
+				foreach ( $ids as $i => $sid ) {
+					if ( !( in_array( $sid, $this->_results ) ) ) {
+						unset( $this->_resultsByPriority[ $prio ][ $i ] );
+					}
 				}
 			}
-		}
-		foreach ( $this->_resultsByPriority as $prio => $ids ) {
-			foreach ( $ids as $id ) {
-				foreach ( $this->_resultsByPriority as $p => $sids ) {
-					if ( $p <= $prio ) {
-						continue;
-					}
-					foreach ( $sids as $i => $sid ) {
-						if ( $sid == $id ) {
-							unset( $this->_resultsByPriority[ $p ][ $i ] );
+			foreach ( $this->_resultsByPriority as $prio => $ids ) {
+				foreach ( $ids as $id ) {
+					foreach ( $this->_resultsByPriority as $p => $sids ) {
+						if ( $p <= $prio ) {
+							continue;
+						}
+						foreach ( $sids as $i => $sid ) {
+							if ( $sid == $id ) {
+								unset( $this->_resultsByPriority[ $p ][ $i ] );
+							}
 						}
 					}
 				}
 			}
-		}
-		foreach ( $this->_resultsByPriority as $prio => $ids ) {
-			if ( count( $ids ) ) {
-				$this->_resultsByPriority[ $prio ] = array_unique( $ids );
+			foreach ( $this->_resultsByPriority as $prio => $ids ) {
+				if ( count( $ids ) ) {
+					$this->_resultsByPriority[ $prio ] = array_unique( $ids );
+				}
 			}
-		}
-		if ( Sobi::Cfg( 'search.entries_ordering', 'disabled' ) != 'disabled' ) {
 			$this->_results = array();
 			foreach ( $this->_resultsByPriority as $prio => $ids ) {
 				if ( count( $ids ) ) {
@@ -368,6 +368,9 @@ class SPSearchCtrl extends SPSectionCtrl
 				}
 			}
 		}
+		else {
+			$this->_resultsByPriority = array();
+		}
 	}
 
 	protected function verify()
@@ -379,7 +382,7 @@ class SPSearchCtrl extends SPSectionCtrl
 			}
 			else {
 				$conditions = array( 'state' => '1', /* 'approved' => '1' ,*/
-					'@VALID' => $this->_db->valid( 'validUntil', 'validSince' ) );
+						'@VALID' => $this->_db->valid( 'validUntil', 'validSince' ) );
 			}
 			$conditions[ 'id' ] = $this->_results;
 			$conditions[ 'oType' ] = 'entry';
@@ -601,9 +604,9 @@ class SPSearchCtrl extends SPSectionCtrl
 		}
 
 		$attr = array(
-			'ssid' => $ssid,
-			'uid' => Sobi::My( 'id' ),
-			'browserData' => SPConfig::serialize( SPBrowser::getInstance() )
+				'ssid' => $ssid,
+				'uid' => Sobi::My( 'id' ),
+				'browserData' => SPConfig::serialize( SPBrowser::getInstance() )
 		);
 
 		/* get search request */
