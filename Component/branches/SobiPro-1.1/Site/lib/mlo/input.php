@@ -18,6 +18,7 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -119,12 +120,12 @@ abstract class SPHtml_Input
 		SPFactory::header()->addJsFile( $scripts );
 		if ( !( $request ) ) {
 			$request = array(
-				'option' => 'com_sobipro',
-				'task' => $task,
-				'sid' => Sobi::Section(),
-				'ident' => $name . '-file',
-				SPFactory::mainframe()->token() => 1,
-				'format' => 'raw'
+					'option' => 'com_sobipro',
+					'task' => $task,
+					'sid' => Sobi::Section(),
+					'ident' => $name . '-file',
+					SPFactory::mainframe()->token() => 1,
+					'format' => 'raw'
 			);
 		}
 		$classes = array( 'class' => 'hide spFileUploadHidden' );
@@ -191,7 +192,7 @@ abstract class SPHtml_Input
 		$params = self::params( $params );
 		$value = self::translate( $value );
 		$value = strlen( $value ) ? SPLang::entities( /*Sobi::Txt*/
-			( $value ), true ) : null;
+				( $value ), true ) : null;
 		$f = "\n<input type=\"submit\" name=\"{$name}\" value=\"{$value}\"{$params}/>\n";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
 		return "\n<!-- SubmitButton '{$name}' Output -->{$f}<!-- SubmitButton '{$name}' End -->\n\n";
@@ -261,12 +262,15 @@ abstract class SPHtml_Input
 	 * @param bool $editor - enables WYSIWYG editor
 	 * @param int $width - width of the created textarea field in pixel
 	 * @param int $height - height of the created textarea field in pixel
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
-	 * @param string $image - url of an image
+	 * @param array|string $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param string | array $editorParams
 	 * @return string
 	 */
-	public static function textarea( $name, $value = null, $editor = false, $width = 500, $height = 350, $params = '' )
+	public static function textarea( $name, $value = null, $editor = false, $width = 500, $height = 350, $params = '', $editorParams = null )
 	{
+		if ( !( is_array( $editorParams ) ) && strlen( $editorParams ) ) {
+			$editorParams = SPFactory::config()->structuralData( $editorParams );
+		}
 		self::checkArray( $params );
 		if ( !isset( $params[ 'style' ] ) ) {
 			$params[ 'style' ] = "width: {$width}px; height: {$height}px;";
@@ -278,7 +282,7 @@ abstract class SPHtml_Input
 			$c = SPLoader::loadClass( $e );
 			if ( $c ) {
 				$e = new $c();
-				$area = $e->display( $name, $value, $width, $height, ( boolean )Sobi::Cfg( 'html.editor_buttons', false ), $params = array() );
+				$area = $e->display( $name, $value, $width, $height, ( boolean )Sobi::Cfg( 'html.editor_buttons', false ), $editorParams );
 			}
 		}
 		else {
@@ -625,7 +629,7 @@ abstract class SPHtml_Input
 			$v = SPLang::entities( $v, true );
 			if ( is_array( $l ) ) {
 				self::optGrp( $cells, $selected, $l, /*Sobi::Txt*/
-					( $v ) );
+						( $v ) );
 			}
 			else {
 				$sel = in_array( ( string )$v, $selected, true ) ? ' selected="selected" ' : null;
@@ -747,19 +751,19 @@ abstract class SPHtml_Input
 		}
 		$jsDateFormat = $dateFormat;
 		$jsReplacements = array(
-			'y' => 'yy',
-			'Y' => 'yyyy',
-			'F' => 'MM',
-			'n' => 'm',
-			'm' => 'MM',
-			'd' => 'dd',
-			'j' => 'd',
-			'H' => 'hh',
-			'g' => 'HH',
-			'G' => 'HH',
-			'i' => 'mm',
-			's' => 'ss',
-			'A' => 'PP'
+				'y' => 'yy',
+				'Y' => 'yyyy',
+				'F' => 'MM',
+				'n' => 'm',
+				'm' => 'MM',
+				'd' => 'dd',
+				'j' => 'd',
+				'H' => 'hh',
+				'g' => 'HH',
+				'G' => 'HH',
+				'i' => 'mm',
+				's' => 'ss',
+				'A' => 'PP'
 		);
 		foreach ( $jsReplacements as $php => $js ) {
 			$jsDateFormat = str_replace( $php, $js, $jsDateFormat );
@@ -855,12 +859,12 @@ abstract class SPHtml_Input
 		static $loaded = false;
 		if ( !( $loaded ) ) {
 			$lang = array(
-				'months' => Sobi::Txt( 'JS_CALENDAR_MONTHS' ),
-				'monthsShort' => Sobi::Txt( 'JS_CALENDAR_MONTHS_SHORT' ),
-				'days' => Sobi::Txt( 'JS_CALENDAR_DAYS' ),
-				'daysShort' => Sobi::Txt( 'JS_CALENDAR_DAYS_SHORT' ),
-				'daysMin' => Sobi::Txt( 'JS_CALENDAR_DAYS_MINI' ),
-				'today' => Sobi::Txt( 'JS_CALENDAR_TODAY' ),
+					'months' => Sobi::Txt( 'JS_CALENDAR_MONTHS' ),
+					'monthsShort' => Sobi::Txt( 'JS_CALENDAR_MONTHS_SHORT' ),
+					'days' => Sobi::Txt( 'JS_CALENDAR_DAYS' ),
+					'daysShort' => Sobi::Txt( 'JS_CALENDAR_DAYS_SHORT' ),
+					'daysMin' => Sobi::Txt( 'JS_CALENDAR_DAYS_MINI' ),
+					'today' => Sobi::Txt( 'JS_CALENDAR_TODAY' ),
 			);
 			$check = md5( serialize( $lang ) );
 			if ( !( SPLoader::JsFile( 'locale.' . Sobi::Lang( false ) . '_date_picker', false, true, false ) ) || !( stripos( SPFs::read( SPLoader::JsFile( 'locale.' . Sobi::Lang( false ) . '_date_picker', false, false, false ) ), $check ) ) ) {
@@ -891,11 +895,11 @@ abstract class SPHtml_Input
 		SPFactory::header()->addJsFile( 'user_selector' );
 		$user = SPUser::getBaseData( ( int )$value );
 		$settings = array(
-			'groups' => $groups,
-			'format' => $format,
-			'user' => Sobi::My( 'id' ),
-			'ordering' => $orderBy,
-			'time' => microtime( true ),
+				'groups' => $groups,
+				'format' => $format,
+				'user' => Sobi::My( 'id' ),
+				'ordering' => $orderBy,
+				'time' => microtime( true ),
 		);
 		if ( count( $session ) ) {
 			foreach ( $session as $id => $data ) {
