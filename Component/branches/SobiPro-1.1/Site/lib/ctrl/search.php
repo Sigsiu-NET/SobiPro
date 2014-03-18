@@ -182,6 +182,7 @@ class SPSearchCtrl extends SPSectionCtrl
 		$this->_fields = $this->loadFields();
 		$searchForString = false;
 		Sobi::Trigger( 'OnRequest', 'Search', array( &$this->_request ) );
+		$searchLimit = Sobi::Cfg( 'search.result_limit', 1000 );
 		for ( $i = 1; $i < 11; $i++ ) {
 			$this->_resultsByPriority[ $i ] = array();
 		}
@@ -277,7 +278,14 @@ class SPSearchCtrl extends SPSectionCtrl
 			}
 		}
 		$this->_request[ 'search_for' ] = str_replace( '%', '*', $this->_request[ 'search_for' ] );
-		$this->sortPriority();
+		if ( count( $this->_results ) > $searchLimit ) {
+			SPFactory::message()->error( Sobi::Txt( 'SH.SEARCH_TOO_MANY_RESULTS', count( $this->_results ), $searchLimit ), false );
+			$this->_resultsByPriority = array();
+			$this->_results = array_slice( $this->_results, 0, $searchLimit );
+		}
+		else {
+			$this->sortPriority();
+		}
 		Sobi::Trigger( 'AfterExtended', 'Search', array( &$this->_results, &$this->_resultsByPriority ) );
 		$req = ( is_array( $this->_request ) && count( $this->_request ) ) ? SPConfig::serialize( $this->_request ) : null;
 		$res = ( is_array( $this->_results ) && count( $this->_results ) ) ? implode( ', ', $this->_results ) : null;

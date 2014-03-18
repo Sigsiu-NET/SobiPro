@@ -33,8 +33,12 @@ Legend:
     (+) Possibility to define list of exif data to pass to the XML output
     (+) Possibility to pass parameters to the editor
 
-    (!) Improved exif data cleaning method (again)
+    (!) Improved exif data cleaning method (again) (Issue #1205)
+    (!) Limiting the search results to 1000 by default (adjustable in config.ini)
+    (!) Several improvement in the search functionality
     (!) CSS style for alert messages
+
+    (#) Possibility to define the Itemid and pass it to SobiPro::Url (Issue #1206)
 
 
 -------------------
