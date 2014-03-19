@@ -219,7 +219,9 @@ class SPCrawler extends SPController
 		}
 		$links = array();
 		if ( strlen( $response ) && strstr( $response, 'SobiPro' ) ) {
-			list( $header, $response ) = explode( "\r\n\r\n", $response );
+			// we need to limit the "explode" to two pieces only because otherwise
+			// if the separator is used somewhere in the <body> it will be split into more pieces
+			list( $header, $response ) = explode( "\r\n\r\n", $response, 2 );
 			$header = explode( "\n", $header );
 			$SobiPro = false;
 			foreach ( $header as $line ) {
