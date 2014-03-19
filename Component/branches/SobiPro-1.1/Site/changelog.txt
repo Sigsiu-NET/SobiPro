@@ -39,6 +39,7 @@ Legend:
     (!) CSS style for alert messages
 
     (#) Possibility to define the Itemid and pass it to SobiPro::Url (Issue #1206)
+    (#) Limiting the "explode" in crawler to separate body from header to two pieces
 
 
 -------------------
