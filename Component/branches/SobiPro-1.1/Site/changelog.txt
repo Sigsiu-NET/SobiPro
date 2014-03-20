@@ -27,7 +27,7 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.7
+1.1.7 (xx March 2014)
 -------------------
 
     (+) Possibility to define list of exif data to pass to the XML output
@@ -35,7 +35,7 @@ Legend:
 
     (!) Improved exif data cleaning method (again) (Issue #1205)
     (!) Limiting the search results to 1000 by default (adjustable in config.ini)
-    (!) Several improvement in the search functionality
+    (!) Several improvements in the search functionality
     (!) CSS style for alert messages
 
     (#) Possibility to define the Itemid and pass it to SobiPro::Url (Issue #1206)
