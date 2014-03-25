@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -19,84 +20,97 @@
  $Date$
  $Revision$
  $Author$
- File location: components/com_sobipro/usr/templates/default2/entry/details.xsl $
+ File location: components/com_sobipro/usr/templates/default2/entry/edit.xsl $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
-
 	<xsl:include href="../common/topmenu.xsl" />
-	<xsl:include href="../common/manage.xsl" />
-	<xsl:include href="../common/alphamenu.xsl" />
 	<xsl:include href="../common/messages.xsl" />
 
-	<xsl:template match="/entry_details">
-		<div class="SPDetails">
+	<xsl:template match="/entry_form">
+		<div class="SPEntryEdit">
 			<div>
 				<xsl:call-template name="topMenu">
-					<xsl:with-param name="searchbox">true</xsl:with-param>
+					<xsl:with-param name="searchbox">false</xsl:with-param>
 				</xsl:call-template>
-				<xsl:apply-templates select="alphaMenu" />
 			</div>
 			<xsl:apply-templates select="messages" />
-			<div class="clearfix" />
-			<div class="SPDetailEntry">
-				<xsl:call-template name="manage" />
-				<h1>
-					<xsl:value-of select="entry/name" />
-					<xsl:call-template name="status">
-						<xsl:with-param name="entry" select="entry" />
-					</xsl:call-template>
-				</h1>
-
+			<div class="form-horizontal">
 				<xsl:for-each select="entry/fields/*">
-					<div class="{@css_class}">
-						<xsl:if test="string-length(@itemprop)">
-							<xsl:attribute name="itemprop"><xsl:value-of select="@itemprop"/></xsl:attribute>
+					<xsl:if test="( name() != 'save_button' ) and ( name() != 'cancel_button' )">
+						<xsl:variable name="fieldId" select="name(.)" />
+						<xsl:if test="string-length( fee )">
+							<div class="control-group">
+								<div class="control-label">
+									<input name="{$fieldId}Payment" id="{$fieldId}-payment" value="" type="checkbox" class="payment-box" />
+								</div>
+								<div class="alert spAlert controls">
+									<xsl:value-of select="fee_msg" /><xsl:text> </xsl:text>
+									<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )" />
+								</div>
+							</div>
 						</xsl:if>
-						<xsl:if test="count(data/*) or string-length(data)">
-							<xsl:if test="label/@show = 1">
-								<strong>
-									<xsl:value-of select="label" /><xsl:text>: </xsl:text>
-								</strong>
-							</xsl:if>
-						</xsl:if>
-
-						<xsl:choose>
-							<xsl:when test="count(data/*)">
-								<xsl:copy-of select="data/*" />
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:if test="string-length(data)">
-									<xsl:value-of select="data" disable-output-escaping="yes" />
+						<div class="control-group" id="{$fieldId}-container">
+							<label class="control-label" for="{$fieldId}-input-container">
+								<xsl:choose>
+									<xsl:when test="string-length( description )">
+										<a href="#" data-toggle="popover" rel="popover" data-placement="top" data-content="{description}" data-original-title="{label}">
+											<xsl:value-of select="label" />
+										</a>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="label" />
+									</xsl:otherwise>
+								</xsl:choose>
+							</label>
+							<div class="controls" id="{$fieldId}-input-container">
+								<div>
+									<xsl:if test="string-length( @suffix )">
+										<xsl:attribute name="class">input-append</xsl:attribute>
+									</xsl:if>
+									<xsl:choose>
+										<xsl:when test="data/@escaped">
+											<xsl:value-of select="data" disable-output-escaping="yes" />
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:copy-of select="data/*" />
+										</xsl:otherwise>
+									</xsl:choose>
+									<xsl:choose>
+										<xsl:when test="string-length( @suffix )">
+											<span class="add-on">
+												<xsl:value-of select="@suffix" />
+											</span>
+										</xsl:when>
+										<xsl:otherwise>
+											<span id="{$fieldId}-message" class="hide message-lightbulb">
+												<i class="icon-lightbulb" />
+											</span>
+										</xsl:otherwise>
+									</xsl:choose>
+								</div>
+								<xsl:if test="string-length( @suffix )">
+									<span id="{$fieldId}-message" class="hide message-lightbulb">
+										<i class="icon-lightbulb" />
+									</span>
 								</xsl:if>
-							</xsl:otherwise>
-						</xsl:choose>
-
-						<xsl:if test="count(data/*) or string-length(data)">
-							<xsl:if test="string-length(@suffix)">
-								<xsl:text> </xsl:text>
-								<xsl:value-of select="@suffix" />
-							</xsl:if>
-						</xsl:if>
-					</div>
+							</div>
+						</div>
+					</xsl:if>
 				</xsl:for-each>
-
-				<xsl:if test="count(entry/categories)">
-					<div class="spEntryCats">
-						<xsl:value-of select="php:function( 'SobiPro::Txt' , 'ENTRY_LOCATED_IN' )" /><xsl:text> </xsl:text>
-						<xsl:for-each select="entry/categories/category">
-							<a href="{@url}">
-								<xsl:value-of select="." />
-							</a>
-							<xsl:if test="position() != last()">
-								<xsl:text> | </xsl:text>
-							</xsl:if>
-						</xsl:for-each>
-					</div>
-				</xsl:if>
+			</div>
+			<div class="pull-right">
+				<button class="btn sobipro-cancel" type="button">
+					<xsl:value-of select="entry/fields/cancel_button/data/button" />
+				</button>
+				<button class="btn btn-primary sobipro-submit" type="button" data-loading-text="Loading...">
+					<xsl:value-of select="entry/fields/save_button/data/input/@value" />
+				</button>
 			</div>
 			<div class="clearfix" />
 		</div>
+		<input type="hidden" name="method" value="xhr" />
+		<input type="hidden" name="format" value="raw" />
 	</xsl:template>
 </xsl:stylesheet>
