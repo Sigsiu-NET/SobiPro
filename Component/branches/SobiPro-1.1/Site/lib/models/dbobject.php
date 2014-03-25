@@ -385,9 +385,13 @@ abstract class SPDBObject extends SPObject
 		$db =& SPFactory::db();
 		try {
 			$cond = array( 'pid' => $id );
-			if ( $type ) {
-				$cond[ 'oType' ] = $type;
-			}
+			/** Tue, Mar 25, 2014 12:46:08 - it's a recursive function so we need entries and categories
+			 *  See Issue #1211
+			 *  Thanks Marcel
+			 * */
+//			if ( $type ) {
+//				$cond[ 'oType' ] = $type;
+//			}
 			$db->select( array( 'id', 'oType' ), 'spdb_relations', $cond );
 			$r = $db->loadAssocList( 'id' );
 		} catch ( SPException $x ) {

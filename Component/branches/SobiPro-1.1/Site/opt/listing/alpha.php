@@ -54,6 +54,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 
 	public function execute()
 	{
+		SPRequest::set( 'task', $this->_type . '.' . $this->_task );
 		$task = str_replace( ':', '-', SPRequest::task() );
 		$task = explode( '.', $task );
 		if ( isset( $task[ 2 ] ) && $task[ 2 ] == 'switch' && isset( $task[ 3 ] ) ) {
