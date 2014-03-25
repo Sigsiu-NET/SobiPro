@@ -1,4 +1,6 @@
 /**
+ * SobiPro datepicker - Tue, Mar 25, 2014 11:52:37
+ * Based mainly on: >>
  * @license
  * =========================================================
  * bootstrap-datetimepicker.js
@@ -1055,6 +1057,15 @@ $ = SobiPro.jQuery;
 				proxy.set();
 				proxy.notifyChange();
 			} );
+			this.widget.on( 'click', '.ctrl-reset-date', function ()
+			{
+				proxy.hide();
+				var input = proxy.$element.find( 'input:text' );
+				input.val( '' );
+				proxy._resetMaskPos( input );
+				proxy.$element.data( 'date', '' );
+				proxy.notifyChange();
+			} );
 		},
 
 		_attachDatePickerEvents: function ()
@@ -1305,7 +1316,7 @@ $ = SobiPro.jQuery;
 					'</div>' +
 					'</li>' +
 					'<li class="picker-switch">' +
-//					'   <a class="ctrl-reset-date"><i class="icon-refresh"></i></a>' +
+					'   <a class="ctrl-reset-date"><i class="icon-remove-circle"></i></a>' +
 					'   <a class="ctrl-set-now"><i class="icon-ok-sign"></i></a>' +
 					'   <a class="accordion-toggle"><i class="' + timeIcon + '"></i></a>' +
 					'</li>' +
