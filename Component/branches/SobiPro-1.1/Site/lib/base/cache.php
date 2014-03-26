@@ -19,12 +19,12 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 defined( 'SQLITE_ASSOC' ) || define( 'SQLITE_ASSOC', null );
+
 /**
  * @author Radek Suski
  * @version 1.0
  * @created 16-Aug-2009 9:54:07
  */
-
 final class SPCache
 {
 	/**
@@ -558,18 +558,18 @@ final class SPCache
 	protected function init()
 	{
 		$this->Exec(
-			"
-			BEGIN;
-			CREATE TABLE vars ( name CHAR(150), validtime int(11), section int(11) default NULL, sid int(11) default NULL, lang CHAR(50) default NULL, params text, checksum CHAR(150) default NULL, schecksum CHAR(150) default NULL, data blob, PRIMARY KEY( name, section, sid, lang ) );
-			CREATE INDEX vars_name on vars( name );
-			CREATE INDEX vars_section on vars( section );
-			CREATE INDEX vars_sid on vars( sid );
-			CREATE TABLE objects ( type CHAR(150), validtime int(11), id int(11) default NULL, sid int(11) default NULL, lang CHAR(50) default NULL, params text, checksum CHAR(150) default NULL, schecksum CHAR(150) default NULL, data blob, classes text, PRIMARY KEY( id, sid, lang ) );
-			CREATE INDEX objects_name on objects( type );
-			CREATE INDEX objects_section on objects( id );
-			CREATE INDEX objects_sid on objects( sid );
-			COMMIT;
-			"
+				"
+				BEGIN;
+				CREATE TABLE vars ( name CHAR(150), validtime int(11), section int(11) default NULL, sid int(11) default NULL, lang CHAR(50) default NULL, params text, checksum CHAR(150) default NULL, schecksum CHAR(150) default NULL, data blob, PRIMARY KEY( name, section, sid, lang ) );
+				CREATE INDEX vars_name on vars( name );
+				CREATE INDEX vars_section on vars( section );
+				CREATE INDEX vars_sid on vars( sid );
+				CREATE TABLE objects ( type CHAR(150), validtime int(11), id int(11) default NULL, sid int(11) default NULL, lang CHAR(50) default NULL, params text, checksum CHAR(150) default NULL, schecksum CHAR(150) default NULL, data blob, classes text, PRIMARY KEY( id, sid, lang ) );
+				CREATE INDEX objects_name on objects( type );
+				CREATE INDEX objects_section on objects( id );
+				CREATE INDEX objects_sid on objects( sid );
+				COMMIT;
+				"
 		);
 	}
 
@@ -731,13 +731,13 @@ final class SPCache
 			}
 			$this->cacheViewRequest = $request;
 			$this->cacheViewQuery = array(
-				'section' => Sobi::Section(),
-				'sid' => SPRequest::sid(),
-				'task' => SPRequest::task(),
-				'site' => SPRequest::int( 'site', 1 ),
-				'request' => str_replace( '"', null, json_encode( $request ) ),
-				'language' => Sobi::Lang(),
-				'userGroups' => str_replace( '"', null, json_encode( Sobi::My( 'groups' ) ) ),
+					'section' => Sobi::Section(),
+					'sid' => SPRequest::sid(),
+					'task' => SPRequest::task(),
+					'site' => SPRequest::int( 'site', 1 ),
+					'request' => str_replace( '"', null, json_encode( $request ) ),
+					'language' => Sobi::Lang(),
+					'userGroups' => str_replace( '"', null, json_encode( Sobi::My( 'groups' ) ) ),
 			);
 		}
 		return $this->cacheViewQuery;
@@ -837,6 +837,10 @@ final class SPCache
 	{
 		if ( SOBI_CMS != 'joomla15' ) {
 			JFactory::getCache()->cache->setCaching( $enabled );
+			if ( !( $enabled ) ) {
+				JEventDispatcher::getInstance()
+						->detach( 'PlgSystemCache' );
+			}
 		}
 		return $this;
 	}
