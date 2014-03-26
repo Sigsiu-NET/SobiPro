@@ -39,6 +39,7 @@ Legend:
     (!) Several improvements in the search functionality
     (!) CSS style for alert messages
     (!) Improved Joomla! cache management
+    (!) Added several task to be ignored for crawler
 
     (#) Possibility to define the Itemid and pass it to SobiPro::Url (Issue #1206)
     (#) Limiting the "explode" in crawler to separate body from header to two pieces

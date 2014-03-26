@@ -36,6 +36,7 @@ class SPCrawler extends SPController
 	const FORMAT = 'tmpl=component&crawl=1';
 	const FORMAT_FULL = 'crawl=1';
 	private $format = null;
+	private $skipTasks = array( 'entry.edit', 'entry.disable', 'entry.save', 'entry.clone', 'entry.payment', 'entry.submit', 'entry.approve', 'entry.publish', 'entry.delete' );
 
 	public function execute()
 	{
@@ -174,6 +175,9 @@ class SPCrawler extends SPController
 					if ( $year > ( date( 'Y' ) + 2 ) || $year < ( date( 'Y' ) - 2  ) ) {
 						continue;
 					}
+				}
+				if ( isset( $query[ 'task' ] ) && in_array( $query[ 'task' ], $this->skipTasks ) ) {
+					continue;
 				}
 			}
 			if ( preg_match( '/(\d{4}\.\d{1,2})/', $url, $matches ) ) {
