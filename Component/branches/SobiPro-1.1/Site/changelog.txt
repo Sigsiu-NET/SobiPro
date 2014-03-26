@@ -38,6 +38,7 @@ Legend:
     (!) Limiting the search results to 1000 by default (adjustable in config.ini)
     (!) Several improvements in the search functionality
     (!) CSS style for alert messages
+    (!) Improved Joomla! cache management
 
     (#) Possibility to define the Itemid and pass it to SobiPro::Url (Issue #1206)
     (#) Limiting the "explode" in crawler to separate body from header to two pieces

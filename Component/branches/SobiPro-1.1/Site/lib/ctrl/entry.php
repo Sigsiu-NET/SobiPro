@@ -545,6 +545,7 @@ class SPEntryCtrl extends SPController
 		$section = SPFactory::Model( 'section' );
 		$section->init( Sobi::Section() );
 
+		SPFactory::cache()->setJoomlaCaching( false );
 		if ( $this->_model ) {
 			/* handle meta data */
 			SPFactory::header()->objMeta( $this->_model );
