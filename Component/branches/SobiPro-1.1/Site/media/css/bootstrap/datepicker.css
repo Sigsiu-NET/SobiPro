@@ -1,4 +1,4 @@
-SobiPro .clearfix {
+.SobiPro .clearfix {
 	*zoom: 1
 }
 
@@ -287,3 +287,9 @@ SobiPro .clearfix {
 	font-size: 20px;
 	color: #08c;
 }
+
+.SobiPro .ctrl-set-now,
+.SobiPro .ctrl-reset-date {
+    cursor: pointer;
+}
+
