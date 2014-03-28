@@ -38,11 +38,11 @@ Legend:
     (!) Limiting the search results to 1000 by default (adjustable in config.ini)
     (!) Several improvements in the search functionality
     (!) CSS style for alert messages
-    (!) Improved Joomla! cache management
-    (!) Added several task to be ignored for crawler
+    (!) Improved Joomla! cache management (not caching session token)
+    (!) Added several tasks (entry submit, delete, approve, publish, ...) to be ignored by the crawler
 
     (#) Possibility to define the Itemid and pass it to SobiPro::Url (Issue #1206)
-    (#) Limiting the "explode" in crawler to separate body from header to two pieces
+    (#) Limiting the "explode" in crawler to separate body from header to two pieces (Issue #1213)
     (#) Method SPDBObject::getChilds limits type to entries only.
 
 
