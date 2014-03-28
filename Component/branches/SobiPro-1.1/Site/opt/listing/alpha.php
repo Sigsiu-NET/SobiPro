@@ -20,6 +20,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadController( 'listing_interface' );
 SPLoader::loadController( 'section' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -54,7 +55,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 
 	public function execute()
 	{
-		SPRequest::set( 'task', $this->_type . '.' . $this->_task );
+		SPRequest::set( 'task', strtolower( $this->_type . '.' . $this->_task ) );
 		$task = str_replace( ':', '-', SPRequest::task() );
 		$task = explode( '.', $task );
 		if ( isset( $task[ 2 ] ) && $task[ 2 ] == 'switch' && isset( $task[ 3 ] ) ) {
@@ -118,9 +119,9 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			foreach ( $letters as $letter ) {
 				$task = 'list.alpha.' . trim( strtolower( $letter ) ) . '.' . $field;
 				$l[ ] = array(
-					'_complex' => 1,
-					'_data' => trim( $letter ),
-					'_attributes' => array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => $task ) ) )
+						'_complex' => 1,
+						'_data' => trim( $letter ),
+						'_attributes' => array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => $task ) ) )
 				);
 			}
 		}
@@ -143,18 +144,18 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 	{
 		if ( is_numeric( $nid ) ) {
 			$field = SPFactory::db()->select(
-				array( 'fid', 'fieldType', 'nid' ),
-				'spdb_field',
-				array( 'section' => Sobi::Section(), /*'enabled' => 1, */
-					'fid' => $nid )
+					array( 'fid', 'fieldType', 'nid' ),
+					'spdb_field',
+					array( 'section' => Sobi::Section(), /*'enabled' => 1, */
+							'fid' => $nid )
 			)->loadObject();
 		}
 		else {
 			$field = SPFactory::db()->select(
-				array( 'fid', 'fieldType', 'nid' ),
-				'spdb_field',
-				array( 'section' => Sobi::Section(), /*'enabled' => 1, */
-					'nid' => $nid )
+					array( 'fid', 'fieldType', 'nid' ),
+					'spdb_field',
+					array( 'section' => Sobi::Section(), /*'enabled' => 1, */
+							'nid' => $nid )
 			)->loadObject();
 		}
 		$this->_field = $field->fid;
@@ -197,9 +198,9 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		}
 
 		$pn = SPFactory::Instance(
-			'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ),
-			$eLimit, $eCount, $site,
-			array( 'sid' => SPRequest::sid(), 'task' => $t )
+				'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ),
+				$eLimit, $eCount, $site,
+				array( 'sid' => SPRequest::sid(), 'task' => $t )
 		);
 		$cUrl = array( 'sid' => SPRequest::sid(), 'task' => $t );
 		if ( SPRequest::int( 'site', 0 ) ) {
@@ -260,7 +261,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		$eLimStart = ( ( $site - 1 ) * $eLimit );
 
 		if ( isset( $this->_letter[ 1 ] ) && $this->_letter[ 1 ] == '-' ) {
-			$this->_letter = "[{$this->_letter[ 0 ]}-{$this->_letter[ 2 ]}]";
+			$this->_letter = "[{$this->_letter[0]}-{$this->_letter[2]}]";
 		}
 		$db = SPFactory::db();
 		/*
@@ -285,12 +286,12 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			case 'multiselect':
 				$eOrder = 'sValue';
 				$table = $db->join(
-					array(
-						array( 'table' => 'spdb_field_option_selected', 'as' => 'opts' ),
-						array( 'table' => 'spdb_language', 'as' => 'lang', 'key' => array( 'opts.optValue', 'lang.sKey' ) ),
-						array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'opts.sid', 'spo.id' ) ),
-						array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'opts.sid', 'sprl.id' ) ),
-					)
+						array(
+								array( 'table' => 'spdb_field_option_selected', 'as' => 'opts' ),
+								array( 'table' => 'spdb_language', 'as' => 'lang', 'key' => array( 'opts.optValue', 'lang.sKey' ) ),
+								array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'opts.sid', 'spo.id' ) ),
+								array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'opts.sid', 'sprl.id' ) ),
+						)
 				);
 				$oPrefix = 'spo.';
 				$conditions[ 'spo.oType' ] = 'entry';
@@ -300,12 +301,12 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			default:
 				$eOrder = 'baseData';
 				$table = $db->join(
-					array(
-						array( 'table' => 'spdb_field', 'as' => 'fdef', 'key' => 'fid' ),
-						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
-						array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'fdata.sid', 'spo.id' ) ),
-						array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'fdata.sid', 'sprl.id' ) ),
-					)
+						array(
+								array( 'table' => 'spdb_field', 'as' => 'fdef', 'key' => 'fid' ),
+								array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
+								array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'fdata.sid', 'spo.id' ) ),
+								array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'fdata.sid', 'sprl.id' ) ),
+						)
 				);
 				$oPrefix = 'spo.';
 				$conditions[ 'spo.oType' ] = 'entry';
