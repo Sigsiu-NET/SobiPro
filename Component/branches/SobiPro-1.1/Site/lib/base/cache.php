@@ -837,7 +837,7 @@ final class SPCache
 	{
 		if ( SOBI_CMS != 'joomla15' ) {
 			JFactory::getCache()->cache->setCaching( $enabled );
-			if ( !( $enabled ) ) {
+			if ( !( $enabled ) && SOBI_CMS == 'joomla3' ) {
 				JEventDispatcher::getInstance()
 						->detach( 'PlgSystemCache' );
 			}
