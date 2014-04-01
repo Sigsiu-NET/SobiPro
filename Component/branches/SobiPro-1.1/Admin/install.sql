@@ -1141,8 +1141,8 @@ INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language
 ('sfMetaDesc', 'Search Business', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
 ('efMetaKeys', 'add, edit', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
 ('efMetaDesc', 'Add/Edit Business', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
-('rejection-of-a-new-entry', 'Entry {entry.name} has been rejected as it does not comply with the rules.\n\nRejected by {user.name} at {date%F Y H:i:s}', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', ''),
-('rejection-of-changes', 'Changes in {entry.name} discarded as these changes violating rules. \n\nRejected by {user.name} at {date}', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', '');
+('rejection-of-a-new-entry', 'Entry {entry.name} has been rejected as it does not comply with the rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', ''),
+('rejection-of-changes', 'Changes in {entry.name} discarded as these changes violating rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', '');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
 	`id`          INT(11)      NOT NULL AUTO_INCREMENT,
