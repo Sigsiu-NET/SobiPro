@@ -246,7 +246,7 @@ abstract class SPFactory
 	 */
 	public static function & Entry( $sid )
 	{
-		$cached = SPFactory::cache( $sid )->getObj( 'entry', $sid );
+		$cached = SPFactory::cache( Sobi::Section() )->getObj( 'entry', $sid );
 		if ( $cached && is_object( $cached ) ) {
 			$cached->validateCache();
 			return $cached;

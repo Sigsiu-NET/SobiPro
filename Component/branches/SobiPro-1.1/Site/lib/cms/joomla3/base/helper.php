@@ -19,6 +19,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 require_once dirname( __FILE__ ) . '/../../joomla16/base/helper.php';
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -42,7 +43,17 @@ class SPCMSHelper3 extends SPCMSHelper
 	 */
 	public static function minCmsVersion( $recommended = false )
 	{
-		return $recommended ? array( 'major' => 3, 'minor' => 1, 'build' => 5 ) : array( 'major' => 3, 'minor' => 0, 'build' => 3 );
+		$updater = JUpdater::getInstance();
+		$updater->findUpdates( 700, 0 );
+		$version = SPFactory::db()
+				->select( 'version', '#__updates', array( 'extension_id' => 700 ) )
+				->loadResult();
+		$recommendedVersion = array( 'major' => 3, 'minor' => 2, 'build' => 3 );
+		if ( $version ) {
+			$version = explode( '.', $version );
+			$recommendedVersion = array( 'major' => $version[ 0 ], 'minor' => $version[ 1 ], 'build' => $version[ 2 ] );
+		}
+		return $recommended ? $recommendedVersion : array( 'major' => 3, 'minor' => 2, 'build' => 0 );
 	}
 
 	/**
@@ -53,7 +64,7 @@ class SPCMSHelper3 extends SPCMSHelper
 	public static function cmsVersion( $version = null )
 	{
 		if ( ( $version ) ) {
-			return 'Joomla 3.0';
+			return 'Joomla 3.[1/2/3]';
 		}
 		$version = new JVersion();
 		$v = explode( '.', $version->RELEASE );
