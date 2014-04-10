@@ -118,7 +118,7 @@
 								</fieldset>
 								<fieldset label="CATN.EDIT_DATA">
 									<field type="output" value="category.version" label="VERSION" class="badge" />
-									<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="edit" />
+									<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="calendar" />
 									<field type="userSelector" label="CREATED_BY" name="category.owner" value="category.owner" class="span2" format="%name (%id)" />
 									<field type="output" label="CREATED_BY_IP" name="category.ownerIP" class="infoText">
 										<value>

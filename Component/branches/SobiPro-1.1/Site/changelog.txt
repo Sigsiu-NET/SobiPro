@@ -33,6 +33,7 @@ Legend:
     (#) Rejection messages corrected
 
     (!) Requirement checker is getting current version from Joomla updater extension
+    (!) Some icons in administration panel improved (datepicker)
 
 
 -------------------
