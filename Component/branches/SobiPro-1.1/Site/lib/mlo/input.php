@@ -794,7 +794,7 @@ abstract class SPHtml_Input
 		$f .= '<input type="text" disabled="disabled" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" ' . $data . '/>';
 		$f .= '<input type="hidden" value="' . $value * 1000 . '" name="' . $name . '"/>';
 		$f .= "\n\t";
-		$f .= '<span class="add-on"><i class="icon-' . $icon . '"></i></span>';
+		$f .= '<span class="add-on"><i data-date-icon="icon-' . $icon . '" class="icon-' . $icon . '"></i></span>';
 		$f .= "\n";
 		$f .= '</div>';
 		$f .= "\n";
