@@ -62,7 +62,7 @@
 									<field type="textarea" name="section.description" value="section.description" editor="true" label="SECN.CFG.SECTION_DESCRIPTION" />
 								</fieldset>
 								<fieldset label="SECN.CFG.PUBLISHING">
-									<field type="datePicker" label="CREATED_AT" name="section.createdTime" value="section.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="edit" />
+									<field type="datePicker" label="CREATED_AT" name="section.createdTime" value="section.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="calendar" />
 									<field type="datePicker" label="VALID_SINCE" name="section.validSince" value="section.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" />
 									<field type="datePicker" label="VALID_UNTIL" name="section.validUntil" value="section.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" />
 								</fieldset>

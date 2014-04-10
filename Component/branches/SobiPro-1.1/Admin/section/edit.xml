@@ -8,7 +8,7 @@
  Email: sobi[at]sigsiu.net
  Url: http://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2013 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2014 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
@@ -71,12 +71,12 @@
 				<div class="row-fluid">
 					<div class="span12">
 						<fieldset>
-							<field type="toggle" name="section.state" label="PUBLISHED" prefix="yes_no" />
+							<field type="toggle" name="section.state" label="ENABLED" prefix="yes_no" />
+						</fieldset>
+                        <fieldset label="SECN.CFG.PUBLISHING">
+                            <field type="datePicker" label="CREATED_AT" name="section.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="calendar" />
                             <field type="datePicker" label="VALID_SINCE" name="section.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" />
                             <field type="datePicker" label="VALID_UNTIL" name="section.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" />
-						</fieldset>
-                        <fieldset label="CATN.EDIT_DATA">
-                            <field type="datePicker" label="CREATED_AT" name="section.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="edit" />
 						</fieldset>
 					</div>
 				</div>
