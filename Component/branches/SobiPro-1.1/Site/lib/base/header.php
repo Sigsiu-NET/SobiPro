@@ -183,8 +183,8 @@ final class SPHeader
 				$name = "name=\"{$name}\" ";
 			}
 			if ( count( $attributes ) ) {
-				foreach ( $attributes as $name => $value ) {
-					$custom .= $name . '="' . $value . '"';
+				foreach ( $attributes as $attr => $value ) {
+					$custom .= $attr . '="' . $value . '"';
 				}
 			}
 			$this->raw[ ++$this->count ] = "<meta {$name}content=\"{$content}\" {$custom}/>";

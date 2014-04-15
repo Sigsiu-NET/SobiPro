@@ -364,7 +364,7 @@ class SPAdmView extends SPObject implements SPView
 			$invert = true;
 		}
 		if ( $condition ) {
-			// allow to have a gloabel condition within a loop like condition="/ordering = position.asc"
+			// allow to have a global condition within a loop like condition="/ordering = position.asc"
 			if ( strstr( $condition, './' ) ) {
 				$i = -1;
 				$condition = preg_replace( '/.*\.\//', null, $condition );
