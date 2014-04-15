@@ -20,6 +20,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'controller' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -133,8 +134,8 @@ class SPSectionCtrl extends SPController
 				case 'name.asc':
 				case 'name.desc':
 					$table = $db->join( array(
-						array( 'table' => 'spdb_language', 'as' => 'splang', 'key' => 'id' ),
-						array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
+							array( 'table' => 'spdb_language', 'as' => 'splang', 'key' => 'id' ),
+							array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
 					) );
 					$oPrefix = 'spo.';
 					$conditions[ 'spo.oType' ] = 'category';
@@ -148,8 +149,8 @@ class SPSectionCtrl extends SPController
 				case 'position.asc':
 				case 'position.desc':
 					$table = $db->join( array(
-						array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => 'id' ),
-						array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
+							array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => 'id' ),
+							array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
 					) );
 					$conditions[ 'spo.oType' ] = 'category';
 					$oPrefix = 'spo.';
@@ -308,12 +309,12 @@ class SPSectionCtrl extends SPController
 			}
 			if ( !$specificMethod ) {
 				$table = $db->join(
-					array(
-						array( 'table' => 'spdb_field', 'as' => 'fdef', 'key' => 'fid' ),
-						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
-						array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'fdata.sid', 'spo.id' ) ),
-						array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'fdata.sid', 'sprl.id' ) ),
-					)
+						array(
+								array( 'table' => 'spdb_field', 'as' => 'fdef', 'key' => 'fid' ),
+								array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
+								array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'fdata.sid', 'spo.id' ) ),
+								array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'fdata.sid', 'sprl.id' ) ),
+						)
 				);
 				$oPrefix = 'spo.';
 				$conditions[ 'spo.oType' ] = 'entry';
@@ -323,8 +324,8 @@ class SPSectionCtrl extends SPController
 		}
 		else {
 			$table = $db->join( array(
-				array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => 'id' ),
-				array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
+					array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => 'id' ),
+					array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
 			) );
 			$conditions[ 'spo.oType' ] = 'entry';
 			$eOrder = $eOrder . '.' . $eDir;
