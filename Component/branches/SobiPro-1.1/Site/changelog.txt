@@ -30,9 +30,12 @@ Legend:
 1.1.9 ()
 -------------------
 
+    (+) SEF router now included in SobiPro directly
+
     (#) Rejection messages corrected
     (#) Corrected attributes handling in SPHeader::meta()
     (#) Discard changes for a new entry (Issue #1221)
+    (#) Extended exceptions to include "entry.delete" in router (#Issue)
 
     (!) Requirement checker is getting current version from Joomla updater extension
     (!) Some icons in administration panel improved (datepicker)
