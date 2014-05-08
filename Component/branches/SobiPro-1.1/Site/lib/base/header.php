@@ -20,6 +20,7 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -823,10 +824,12 @@ final class SPHeader
 				}
 				$this->css = array( "<style type=\"text/css\">\n{$cssCode}\n</style>" );
 			}
-			$this->head[ 'keywords' ] = $this->keywords;
+			// Thu, May 8, 2014 13:10:19 - changed order of meta keys and meta description
+			// See #1231
+			$this->head[ 'keywords' ] = array_reverse( $this->keywords );
 			$this->head[ 'author' ] = $this->author;
 			$this->head[ 'robots' ] = $this->robots;
-			$this->head[ 'description' ] = $this->description;
+			$this->head[ 'description' ] = array_reverse( $this->description );
 			$this->head[ 'css' ] = $this->_cssFiles();
 			$this->head[ 'js' ] = $this->_jsFiles();
 			$this->head[ 'links' ] = $this->links;
