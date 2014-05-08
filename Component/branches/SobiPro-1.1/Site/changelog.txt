@@ -37,6 +37,7 @@ Legend:
     (#) Corrected attributes handling in SPHeader::meta()
     (#) Discard changes for a new entry (Issue #1221)
     (#) Extended exceptions to include "entry.delete" in router (#Issue)
+    (#) Workaround for a bug in JApplicationCli
 
     (!) Requirement checker is getting current version from Joomla updater extension
     (!) Some icons in administration panel improved (datepicker)
