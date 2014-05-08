@@ -32,6 +32,7 @@ Legend:
 
     (#) Rejection messages corrected
     (#) Corrected attributes handling in SPHeader::meta()
+    (#) Discard changes for a new entry (Issue #1221)
 
     (!) Requirement checker is getting current version from Joomla updater extension
     (!) Some icons in administration panel improved (datepicker)
