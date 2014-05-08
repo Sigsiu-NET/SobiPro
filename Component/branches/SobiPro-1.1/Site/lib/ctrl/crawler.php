@@ -163,6 +163,16 @@ class SPCrawler extends SPController
 			if ( !( strlen( $url ) ) ) {
 				continue;
 			}
+			$break = false;
+			foreach( $this->skipTasks as $task ) {
+				if( strstr( $url, $task ) ) {
+					$break = true;
+					break;
+				}
+			}
+			if( $break ) {
+				return $break;
+			}
 			$schema = parse_url( $url );
 			if ( isset( $schema[ 'query' ] ) ) {
 				parse_str( $schema[ 'query' ], $query );

@@ -31,13 +31,14 @@ Legend:
 -------------------
 
     (+) SEF router now included in SobiPro directly
-    (+) Warning about missin menu entry to the SobiPro section
+    (+) Warning about missing menu entry to the SobiPro section
 
     (#) Rejection messages corrected
     (#) Corrected attributes handling in SPHeader::meta()
     (#) Discard changes for a new entry (Issue #1221)
     (#) Extended exceptions to include "entry.delete" in router (#Issue)
     (#) Workaround for a bug in JApplicationCli
+    (#) Crawler accessing operational tasks (Issue #1226)
 
     (!) Requirement checker is getting current version from Joomla updater extension
     (!) Some icons in administration panel improved (datepicker)
