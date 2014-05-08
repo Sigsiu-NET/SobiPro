@@ -25,8 +25,17 @@ if ( !( defined( 'JPATH_BASE' ) ) ) {
 require_once JPATH_BASE . '/includes/defines.php';
 require_once JPATH_LIBRARIES . '/import.legacy.php';
 require_once JPATH_LIBRARIES . '/cms/version/version.php';
-$jVersion = new JVersion;
-define( 'JVERSION', $jVersion->getShortVersion() );
+if ( file_exists( JPATH_LIBRARIES . '/import.legacy.php' ) ) {
+	require_once JPATH_LIBRARIES . '/import.legacy.php';
+}
+if ( file_exists( JPATH_LIBRARIES . '/cms.php' ) ) {
+	require_once JPATH_LIBRARIES . '/cms.php';
+}
+
+if ( !( defined( 'JVERSION' ) ) ) {
+	$jVersion = new JVersion;
+	define( 'JVERSION', $jVersion->getShortVersion() );
+}
 require_once( JPATH_ROOT . '/components/com_sobipro/lib/sobi.php' );
 
 class SobiProCrawler extends JApplicationCli
