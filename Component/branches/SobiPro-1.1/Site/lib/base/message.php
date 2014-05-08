@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version: $Id$
  * @package: SobiPro Library
@@ -16,7 +17,6 @@
  * $Author$
  * $HeadURL$
  */
-
 class SPMessage
 {
 	/** @var array */
@@ -63,18 +63,18 @@ class SPMessage
 	{
 		if ( Sobi::Cfg( 'entry.versioning', true ) ) {
 			$log = array(
-				'revision' => microtime( true ) . '.' . $sid . '.' . Sobi::My( 'id' ),
-				'changedAt' => 'FUNCTION:NOW()',
-				'uid' => Sobi::My( 'id' ),
-				'userName' => Sobi::My( 'name' ),
-				'userEmail' => Sobi::My( 'mail' ),
-				'change' => $action,
-				'site' => defined( 'SOBIPRO_ADM' ) ? 'adm' : 'site',
-				'sid' => $sid,
-				'changes' => SPConfig::serialize( $changes ),
-				'params' => null,
-				'reason' => $message,
-				'language' => Sobi::Lang()
+					'revision' => microtime( true ) . '.' . $sid . '.' . Sobi::My( 'id' ),
+					'changedAt' => 'FUNCTION:NOW()',
+					'uid' => Sobi::My( 'id' ),
+					'userName' => Sobi::My( 'name' ),
+					'userEmail' => Sobi::My( 'mail' ),
+					'change' => $action,
+					'site' => defined( 'SOBIPRO_ADM' ) ? 'adm' : 'site',
+					'sid' => $sid,
+					'changes' => SPConfig::serialize( $changes ),
+					'params' => null,
+					'reason' => $message,
+					'language' => Sobi::Lang()
 			);
 			SPFactory::db()->insert( 'spdb_history', $log );
 		}
@@ -148,11 +148,11 @@ class SPMessage
 		$this->store = array();
 		$this->storeMessages();
 		$store = array(
-			'params' => array(),
-			'key' => 'queue',
-			'value' => date( DATE_RFC822 ),
-			'description' => null,
-			'options' => null
+				'params' => array(),
+				'key' => 'queue',
+				'value' => date( DATE_RFC822 ),
+				'description' => null,
+				'options' => null
 		);
 		SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
 		return $this;
@@ -185,9 +185,10 @@ class SPMessage
 	 * @param string $message
 	 * @param bool $translate
 	 * @param string $type
+	 * @param bool $display
 	 * @return SPMessage
 	 */
-	public function & setMessage( $message, $translate = true, $type = 'warning' )
+	public function & setMessage( $message, $translate = true, $type = 'warning', $display = true )
 	{
 		if ( $translate && !( $this->langLoaded ) ) {
 			SPLang::load( 'com_sobipro.messages' );
@@ -198,11 +199,14 @@ class SPMessage
 		}
 		if ( is_array( $message ) && !( is_string( $message ) ) ) {
 			foreach ( $message as $msg ) {
-				$this->setMessage( $msg[ 'text' ], $translate, $msg[ 'type' ] );
+				$this->setMessage( $msg[ 'text' ], $translate, $msg[ 'type' ], $display );
 			}
 		}
-		$this->messages[ $type ][ $message ] = $translate ? Sobi::Txt( strtoupper( $type ) . '.' . $message ) : $message;
-		$this->current = array( 'message' => $this->messages[ $type ][ $message ], 'type' => $type, 'section' => array( 'id' => Sobi::Section(), 'name' => Sobi::Section( true ) ) );
+		$messageText = $translate ? Sobi::Txt( strtoupper( $type ) . '.' . $message ) : $message;
+		if ( $display ) {
+			$this->messages[ $type ][ $message ] = $messageText;
+		}
+		$this->current = array( 'message' => $messageText, 'type' => $type, 'section' => array( 'id' => Sobi::Section(), 'name' => Sobi::Section( true ) ) );
 		$this->storeMessages();
 		return $this;
 	}
@@ -219,11 +223,11 @@ class SPMessage
 		if ( count( $this->store ) > $change ) {
 			$messages = SPConfig::serialize( $this->store );
 			$store = array(
-				'params' => $messages,
-				'key' => 'queue',
-				'value' => date( DATE_RFC822 ),
-				'description' => null,
-				'options' => null
+					'params' => $messages,
+					'key' => 'queue',
+					'value' => date( DATE_RFC822 ),
+					'description' => null,
+					'options' => null
 			);
 			SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
 			SPFactory::cache()->cleanSection( -1, false );
@@ -245,11 +249,11 @@ class SPMessage
 		if ( count( $this->store ) ) {
 			$messages = SPConfig::serialize( $this->store );
 			$store = array(
-				'params' => $messages,
-				'key' => 'queue',
-				'value' => date( DATE_RFC822 ),
-				'description' => null,
-				'options' => null
+					'params' => $messages,
+					'key' => 'queue',
+					'value' => date( DATE_RFC822 ),
+					'description' => null,
+					'options' => null
 			);
 			SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
 			SPFactory::cache()->cleanSection( -1, false );
@@ -269,11 +273,11 @@ class SPMessage
 		if ( count( $this->reports ) ) {
 			$messages = SPConfig::serialize( $this->reports );
 			$store = array(
-				'params' => $messages,
-				'key' => 'queue',
-				'value' => date( DATE_RFC822 ),
-				'description' => null,
-				'options' => null
+					'params' => $messages,
+					'key' => 'queue',
+					'value' => date( DATE_RFC822 ),
+					'description' => null,
+					'options' => null
 			);
 			SPFactory::registry()->saveDBSection( array( 'reports' => $store ), 'reports' );
 		}
@@ -292,11 +296,11 @@ class SPMessage
 			$reports = $this->reports[ $spsid ];
 			unset( $this->reports[ $spsid ] );
 			$store = array(
-				'params' => $messages,
-				'key' => 'queue',
-				'value' => date( DATE_RFC822 ),
-				'description' => null,
-				'options' => null
+					'params' => $messages,
+					'key' => 'queue',
+					'value' => date( DATE_RFC822 ),
+					'description' => null,
+					'options' => null
 			);
 			SPFactory::registry()->saveDBSection( array( 'reports' => $store ), 'reports' );
 		}
@@ -339,40 +343,44 @@ class SPMessage
 	/**
 	 * @param string $message
 	 * @param bool $translate
+	 * @param bool $display
 	 * @return SPMessage
 	 */
-	public function & info( $message, $translate = true )
+	public function & info( $message, $translate = true, $display = true )
 	{
-		return $this->setMessage( $message, $translate, 'info' );
+		return $this->setMessage( $message, $translate, 'info', $display );
 	}
 
 	/**
 	 * @param string $message
 	 * @param bool $translate
+	 * @param bool $display
 	 * @return SPMessage
 	 */
-	public function & warning( $message, $translate = true )
+	public function & warning( $message, $translate = true, $display = true )
 	{
-		return $this->setMessage( $message, $translate );
+		return $this->setMessage( $message, $translate, 'warning', $display );
 	}
 
 	/**
 	 * @param string $message
 	 * @param bool $translate
+	 * @param bool $display
 	 * @return SPMessage
 	 */
-	public function & error( $message, $translate = true )
+	public function & error( $message, $translate = true, $display = true )
 	{
-		return $this->setMessage( $message, $translate, 'error' );
+		return $this->setMessage( $message, $translate, 'error', $display );
 	}
 
 	/**
 	 * @param string $message
 	 * @param bool $translate
+	 * @param bool $display
 	 * @return SPMessage
 	 */
-	public function & success( $message, $translate = true )
+	public function & success( $message, $translate = true, $display = true )
 	{
-		return $this->setMessage( $message, $translate, 'success' );
+		return $this->setMessage( $message, $translate, 'success', $display );
 	}
 }

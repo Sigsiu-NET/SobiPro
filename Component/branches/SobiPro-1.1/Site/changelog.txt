@@ -31,6 +31,7 @@ Legend:
 -------------------
 
     (+) SEF router now included in SobiPro directly
+    (+) Warning about missin menu entry to the SobiPro section
 
     (#) Rejection messages corrected
     (#) Corrected attributes handling in SPHeader::meta()
