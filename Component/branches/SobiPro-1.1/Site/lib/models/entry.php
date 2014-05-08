@@ -32,13 +32,13 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 * @var array
 	 */
 	private static $types = array(
-		'description' => 'html',
-		'icon' => 'string',
-		'showIcon' => 'int',
-		'introtext' => 'string',
-		'showIntrotext' => 'int',
-		'parseDesc' => 'int',
-		'position' => 'int',
+			'description' => 'html',
+			'icon' => 'string',
+			'showIcon' => 'int',
+			'introtext' => 'string',
+			'showIntrotext' => 'int',
+			'parseDesc' => 'int',
+			'position' => 'int',
 	);
 	/**
 	 * @var
@@ -228,9 +228,17 @@ class SPEntry extends SPDBObject implements SPDataModel
 		if ( $trigger ) {
 			Sobi::Trigger( 'Entry', 'Unapprove', array( $this->_model, 0 ) );
 		}
-		// restore previous version
-		foreach ( $this->fields as $field ) {
-			$field->rejectChanges( $this->id );
+		// check if the entry was ever approved.
+		// if it wasn't we would delete current data and there would be no other data at all
+		// See #1221 - Thu, May 8, 2014 11:18:20
+		$count = SPFactory::db()
+				->select( 'COUNT(*)', 'spdb_history', array( 'sid' => $this->id, 'change' => 'approve' ) )
+				->loadResult();
+		if ( $count ) {
+			// restore previous version
+			foreach ( $this->fields as $field ) {
+				$field->rejectChanges( $this->id );
+			}
 		}
 		// reload fields
 		$this->loadFields( $this->id );
@@ -239,8 +247,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 			$field->loadData( $this->id );
 			$data[ 'fields' ][ $field->get( 'nid' ) ] = $field->getRaw();
 		}
-		SPFactory::db()
-				->delete( 'spdb_relations', array( 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ) );
+		if ( $count ) {
+			SPFactory::db()
+					->delete( 'spdb_relations', array( 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ) );
+		}
 		if ( $trigger ) {
 			Sobi::Trigger( 'Entry', 'AfterUnapprove', array( $this->_model, 0 ) );
 		}
