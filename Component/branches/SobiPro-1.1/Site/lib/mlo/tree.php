@@ -85,7 +85,6 @@ final class SigsiuTree extends SPObject
      * @var int
      */
     private $_disabled = array();
-	private $preventParents = false;
 
     /**
      * Set category, or set of categories id which should not be selectable in the tree

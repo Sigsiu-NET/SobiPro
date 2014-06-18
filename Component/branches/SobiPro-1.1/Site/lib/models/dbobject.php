@@ -172,29 +172,29 @@ abstract class SPDBObject extends SPObject
 	 * @var array
 	 */
 	private static $types = array(
-		'approved' => 'bool',
-		'state' => 'int',
-		'confirmed' => 'bool',
-		'counter' => 'int',
-		'createdTime' => 'timestamp',
-		'defURL' => 'string',
-		'metaAuthor' => 'string',
-		'metaDesc' => 'string',
-		'metaKeys' => 'string',
-		'metaRobots' => 'string',
-		'name' => 'string',
-		'nid' => 'cmd',
+			'approved' => 'bool',
+			'state' => 'int',
+			'confirmed' => 'bool',
+			'counter' => 'int',
+			'createdTime' => 'timestamp',
+			'defURL' => 'string',
+			'metaAuthor' => 'string',
+			'metaDesc' => 'string',
+			'metaKeys' => 'string',
+			'metaRobots' => 'string',
+			'name' => 'string',
+			'nid' => 'cmd',
 		/**
 		 * the id is not needed (and it's dangerous) because if we updating an object it's being created through the id anyway
 		 * so at that point we have to already have it. If not, we don't need it because then we are creating a new object
 		 */
 //		'id' => 'int',
-		'owner' => 'int',
-		'ownerIP' => 'ip',
-		'parent' => 'int',
-		'stateExpl' => 'string',
-		'validSince' => 'timestamp',
-		'validUntil' => 'timestamp',
+			'owner' => 'int',
+			'ownerIP' => 'ip',
+			'parent' => 'int',
+			'stateExpl' => 'string',
+			'validSince' => 'timestamp',
+			'validUntil' => 'timestamp',
 	);
 	/**
 	 * @var array
@@ -324,10 +324,10 @@ abstract class SPDBObject extends SPObject
 				$cond[ 'so.state' ] = $state;
 				$cond[ 'so.approved' ] = $state;
 				$tables = $db->join(
-					array(
-						array( 'table' => 'spdb_object', 'as' => 'so', 'key' => 'id' ),
-						array( 'table' => 'spdb_relations', 'as' => 'sr', 'key' => 'id' )
-					)
+						array(
+								array( 'table' => 'spdb_object', 'as' => 'so', 'key' => 'id' ),
+								array( 'table' => 'spdb_relations', 'as' => 'sr', 'key' => 'id' )
+						)
 				);
 				$db->select( array( 'sr.id', 'sr.oType' ), $tables, $cond );
 			}
@@ -392,13 +392,16 @@ abstract class SPDBObject extends SPObject
 //			if ( $type ) {
 //				$cond[ 'oType' ] = $type;
 //			}
-			$db->select( array( 'id', 'oType' ), 'spdb_relations', $cond );
-			$r = $db->loadAssocList( 'id' );
+			$r = $db->select( array( 'id', 'oType' ), 'spdb_relations', $cond )
+					->loadAssocList( 'id' );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_CHILDS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		if ( count( $r ) ) {
 			foreach ( $r as $id => $rs ) {
+				if ( $rs[ 'oType' ] == 'entry' ) {
+					continue;
+				}
 				$results[ $id ] = $rs;
 				$this->rGetChilds( $results, $id, $type );
 			}

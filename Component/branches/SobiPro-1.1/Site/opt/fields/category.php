@@ -157,6 +157,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$tree = SPFactory::Instance( 'mlo.tree', Sobi::Cfg( 'list.categories_ordering' ), array( 'preventParents' => !( $this->catsWithChilds ) ) );
 		$tree->setHref( '#' );
 		$tree->setTask( 'category.chooser' );
+		$tree->setId( $this->nid );
 		$tree->disable( Sobi::Section() );
 		$tree->init( Sobi::Section() );
 		$params = array();

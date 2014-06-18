@@ -175,7 +175,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	private function parseName( $entry, $name, $pattern, $addExt = false )
 	{
 		$nameArray = explode( '.', $name );
-		$ext = array_pop( $nameArray );
+		$ext = strtolower( array_pop( $nameArray ) );
 		$name = implode( '.', $nameArray );
 		$user = SPUser::getBaseData( ( int )$entry->get( 'owner' ) );
 		// @todo change to the global method
