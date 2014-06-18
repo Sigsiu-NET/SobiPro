@@ -39,10 +39,13 @@ Legend:
     (#) Extended exceptions to include "entry.delete" in router (#Issue)
     (#) Workaround for a bug in JApplicationCli
     (#) Crawler accessing operational tasks (Issue #1226)
+    (#) Set now in the datepicker set wrong hour (Issue #1223)
+    (#) Not possible to use more than 1 SigsiuTree categories chooser(Issue #1220)
 
     (!) Requirement checker is getting current version from Joomla updater extension
     (!) Some icons in administration panel improved (datepicker)
     (!) Changed order of meta keys and meta description (Issue #1231)
+    (!) Image field - changing all files extensions to lower case
 
 
 -------------------

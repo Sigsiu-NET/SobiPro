@@ -265,7 +265,9 @@ class SPSectionCtrl extends SPController
 		$pid = $pid ? $pid : SPRequest::sid();
 		/* if sort by name, then sort by the name field */
 		if ( $eOrder == 'name' ) {
-			$eOrder = SPFactory::config()->nameField()->get( 'fid' );
+			$eOrder = SPFactory::config()
+					->nameField()
+					->get( 'fid' );
 		}
 		if ( $entriesRecursive ) {
 			$pids = $this->_model->getChilds( 'category', true );
