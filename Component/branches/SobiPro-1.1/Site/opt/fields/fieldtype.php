@@ -128,6 +128,20 @@ class SPFieldType extends SPObject
 		}
 	}
 
+	/**
+	 * This function is used for the case that a field wasn't used for some reason while saving an entry
+	 * But it has to perform some operation
+	 * E.g. Category field is set to be administrative and isn't used
+	 * but it needs to pass the previously selected categories to the entry model
+	 * @param SPEntry $entry
+	 * @param string $request
+	 * @return bool
+	 * */
+	public function finaliseSave( $entry, $request = 'post' )
+	{
+		return true;
+	}
+
 	protected function rangeSearch( $values, $freeInput = false )
 	{
 		$request[ 'from' ] = isset( $this->_selected[ 'from' ] ) ? (int)$this->_selected[ 'from' ] : '';
