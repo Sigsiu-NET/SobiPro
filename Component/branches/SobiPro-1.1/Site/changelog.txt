@@ -40,7 +40,8 @@ Legend:
     (#) Workaround for a bug in JApplicationCli
     (#) Crawler accessing operational tasks (Issue #1226)
     (#) Set now in the datepicker set wrong hour (Issue #1223)
-    (#) Not possible to use more than 1 SigsiuTree categories chooser(Issue #1220)
+    (#) Not possible to use more than 1 SigsiuTree categories chooser (Issue #1220)
+    (#) Category field set to be an administrative field is loosing data when user editing an entry (Issue #1219)
 
     (!) Requirement checker is getting current version from Joomla updater extension
     (!) Some icons in administration panel improved (datepicker)

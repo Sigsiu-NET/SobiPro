@@ -204,9 +204,13 @@ class SPEntry extends SPDBObject implements SPDataModel
 		if ( $approve ) {
 			$db = SPFactory::db();
 			try {
-				$count = $db->select( 'COUNT(id)', 'spdb_relations', array( 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ) )->loadResult();
+				$count = $db
+						->select( 'COUNT(id)', 'spdb_relations', array( 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ) )
+						->loadResult();
 				if ( $count ) {
-					$db->delete( 'spdb_relations', array( 'id' => $this->id, 'copy' => '0', 'oType' => 'entry' ) );
+					/** Thu, Jun 19, 2014 11:24:05: here is the question: why are we deleting the 1 status when the list of categories is re-generating each time anyway
+					 *   So basically there should not be a situation that there is any relation which should be removed while approving an entry */
+					// $db->delete( 'spdb_relations', array( 'id' => $this->id, 'copy' => '0', 'oType' => 'entry' ) );
 					$db->update( 'spdb_relations', array( 'copy' => '0' ), array( 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ) );
 				}
 			} catch ( SPException $x ) {
@@ -659,6 +663,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 			try {
 				if ( $field->enabled( 'form', $preState[ 'new' ] ) ) {
 					$field->saveData( $this, $request );
+				}
+				else {
+					$field->finaliseSave( $this, $request );
 				}
 				if ( $field->get( 'id' ) == $nameField ) {
 					/* get the entry name */

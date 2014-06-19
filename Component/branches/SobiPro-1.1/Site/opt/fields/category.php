@@ -458,6 +458,23 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 
 	/**
+	 * This function is used for the case that a field wasn't used for some reason while saving an entry
+	 * But it has to perform some operation
+	 * E.g. Category field is set to be administrative and isn't used
+	 * but it needs to pass the previously selected categories to the entry model
+	 * @param SPEntry $entry
+	 * @param string $request
+	 * @return bool
+	 * */
+	public function finaliseSave( $entry, $request = 'post' )
+	{
+		$cats = SPFactory::registry()->get( 'request_categories', array() );
+		$cats = array_unique( array_merge( $cats, $this->cleanData() ) );
+		SPFactory::registry()->set( 'request_categories', $cats );
+		return true;
+	}
+
+	/**
 	 * Gets the data for a field and save it in the database
 	 * @param SPEntry $entry
 	 * @param string $request
