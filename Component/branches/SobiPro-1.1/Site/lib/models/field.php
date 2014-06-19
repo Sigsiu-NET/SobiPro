@@ -21,6 +21,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadModel( 'field' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -328,14 +329,14 @@ class SPField extends SPObject
 				}
 
 				$attributes = array(
-					'lang' => Sobi::Lang( false ),
-					'class' => $this->cssClass
+						'lang' => Sobi::Lang( false ),
+						'class' => $this->cssClass
 				);
 			}
 			$r = array(
-				'_complex' => 1,
-				'_data' => $this->data(),
-				'_attributes' => $attributes
+					'_complex' => 1,
+					'_data' => $this->data(),
+					'_attributes' => $attributes
 			);
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$r ) );
@@ -746,11 +747,17 @@ class SPField extends SPObject
 		/*
 		 * not every field has the same raw data
 		 */
+		/** Thu, Jun 19, 2014 11:39:04 fix by Anibal Sanchez see #1242 */
 		if ( isset( $this->_fData->publishDown ) ) {
-			if ( count( $this->_fData ) && ( !( strtotime( $this->_fData->publishUp ) < time() ) || ( ( ( strtotime( $this->_fData->publishDown ) > 0 ) && strtotime( $this->_fData->publishDown ) > time() ) ) ) ) {
+			if ( count( $this->_fData ) && ( !( strtotime( $this->_fData->publishUp ) < time() ) || ( ( ( strtotime( $this->_fData->publishDown ) > 0 ) && strtotime( $this->_fData->publishDown ) <= time() ) ) ) ) {
 				return false;
 			}
 		}
+		//		if ( isset( $this->_fData->publishDown ) ) {
+//			if ( count( $this->_fData ) && ( !( strtotime( $this->_fData->publishUp ) < time() ) || ( ( ( strtotime( $this->_fData->publishDown ) > 0 ) && strtotime( $this->_fData->publishDown ) > time() ) ) ) ) {
+//				return false;
+//			}
+//		}
 		return true;
 	}
 
