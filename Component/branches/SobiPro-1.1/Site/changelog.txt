@@ -31,22 +31,22 @@ Legend:
 -------------------
 
     (+) SEF router now included in SobiPro directly
-    (+) Warning about missing menu entry to the SobiPro section
+    (+) Warning about missing menu item to SobiPro section view
 
     (#) Rejection messages corrected
     (#) Corrected attributes handling in SPHeader::meta()
     (#) Discard changes for a new entry (Issue #1221)
     (#) Extended exceptions to include "entry.delete" in router (#Issue)
     (#) Workaround for a bug in JApplicationCli
-    (#) Crawler accessing operational tasks (Issue #1226)
-    (#) Set now in the datepicker set wrong hour (Issue #1223)
-    (#) Not possible to use more than 1 SigsiuTree categories chooser (Issue #1220)
-    (#) Category field set to be an administrative field is loosing data when user editing an entry (Issue #1219)
+    (#) Crawler accesses operational tasks (Issue #1226)
+    (#) 'Now' in the datepicker sets wrong hour (Issue #1223)
+    (#) Not possible to use more than one SigsiuTree categories chooser (Issue #1220)
+    (#) Category field set to be an administrative field is loosing data when user edits the entry (Issue #1219)
 
-    (!) Requirement checker is getting current version from Joomla updater extension
+    (!) Requirements checker is getting current version from Joomla updater extension
     (!) Some icons in administration panel improved (datepicker)
     (!) Changed order of meta keys and meta description (Issue #1231)
-    (!) Image field - changing all files extensions to lower case
+    (!) Image field - changing all file extensions to lower case
 
 
 -------------------
