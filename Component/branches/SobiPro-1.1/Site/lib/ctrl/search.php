@@ -534,6 +534,13 @@ class SPSearchCtrl extends SPSectionCtrl
 			/* @var SPPageNavXSLT $pn */
 			$pn = new $pnc( $eLimit, $this->_resultsCount, $site, $url );
 			$view->assign( $pn->get(), 'navigation' );
+			/**
+			 * this is te special case:
+			 * no matter what task we currently have - if someone called this we need the data for the V-Card
+			 * Soe we have to trigger all these plugins we need and therefore also fake the task
+			 */
+			$task = 'list.custom';
+			SPFactory::registry()->set( 'task', $task );
 		}
 		else {
 			$eLimit = -1;
