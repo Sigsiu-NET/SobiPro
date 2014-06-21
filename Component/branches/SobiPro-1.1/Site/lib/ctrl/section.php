@@ -64,6 +64,7 @@ class SPSectionCtrl extends SPController
 		$eOrder = $this->parseOrdering( 'entries', 'eorder', $this->tKey( $this->template, 'entries_ordering', Sobi::Cfg( 'list.entries_ordering', 'name.asc' ) ) );
 		$cOrder = $this->parseOrdering( 'categories', 'corder', $this->tKey( $this->template, 'categories_ordering', Sobi::Cfg( 'list.categories_ordering', 'name.asc' ) ) );
 
+		$orderings = array( 'entries' => $eOrder, 'categories' => $cOrder );
 		/* get entries */
 		$eCount = count( $this->getEntries( $eOrder, 0, 0, true, null, $entriesRecursive ) );
 		$entries = $this->getEntries( $eOrder, $eLimit, $eLimStart, false, null, $entriesRecursive );
@@ -89,21 +90,23 @@ class SPSectionCtrl extends SPController
 
 		$this->_model->countVisit();
 		/* get view class */
-		$class = SPLoader::loadView( $this->_type );
-		$view = new $class( $this->template );
-		$view->assign( $eLimit, '$eLimit' );
-		$view->assign( $eLimStart, '$eLimStart' );
-		$view->assign( $eCount, '$eCount' );
-		$view->assign( $cInLine, '$cInLine' );
-		$view->assign( $eInLine, '$eInLine' );
-		$view->assign( $this->_task, 'task' );
-		$view->assign( $this->_model, $this->_type );
-		$view->setConfig( $this->_tCfg, $this->template );
-		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );
-		$view->assign( $categories, 'categories' );
-		$view->assign( $pn->get(), 'navigation' );
-		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
-		$view->assign( $entries, 'entries' );
+//		$class = SPLoader::loadView( $this->_type );
+		$view = SPFactory::View( $this->_type );
+//		$view = new $class( $this->template );
+		$view->assign( $eLimit, '$eLimit' )
+				->assign( $eLimStart, '$eLimStart' )
+				->assign( $eCount, '$eCount' )
+				->assign( $cInLine, '$cInLine' )
+				->assign( $eInLine, '$eInLine' )
+				->assign( $this->_task, 'task' )
+				->assign( $this->_model, $this->_type )
+				->setConfig( $this->_tCfg, $this->template )
+				->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template )
+				->assign( $categories, 'categories' )
+				->assign( $pn->get(), 'navigation' )
+				->assign( SPFactory::user()->getCurrent(), 'visitor' )
+				->assign( $entries, 'entries' )
+				->assign( $orderings, 'orderings' );
 		Sobi::Trigger( $this->name(), 'View', array( &$view ) );
 		$view->display( $this->_type );
 	}
@@ -155,6 +158,19 @@ class SPSectionCtrl extends SPController
 					$conditions[ 'spo.oType' ] = 'category';
 					$oPrefix = 'spo.';
 					break;
+				case 'counter.asc':
+				case 'counter.desc':
+					$table = $db->join( array(
+							array( 'table' => 'spdb_counter', 'as' => 'spcounter', 'key' => 'sid' ),
+							array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
+					) );
+					$oPrefix = 'spo.';
+					$conditions[ 'spo.oType' ] = 'category';
+					if ( strstr( $cOrder, '.' ) ) {
+						$cOrder = explode( '.', $cOrder );
+						$cOrder = 'spcounter.counter.' . $cOrder[ 1 ];
+					}
+					break;
 				default:
 					$table = 'spdb_object';
 					break;
@@ -193,8 +209,9 @@ class SPSectionCtrl extends SPController
 			}
 			$conditions[ $oPrefix . 'id' ] = $this->_model->getChilds( 'category' );
 			try {
-				$db->select( $oPrefix . 'id', $table, $conditions, $cOrder, $cLim, 0, true );
-				$results = $db->loadResultArray();
+				$results = $db
+						->select( $oPrefix . 'id', $table, $conditions, $cOrder, $cLim, 0, true )
+						->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
@@ -290,8 +307,9 @@ class SPSectionCtrl extends SPController
 			$specificMethod = false;
 			if ( !$field ) {
 				try {
-					$db->select( 'fieldType', 'spdb_field', array( 'nid' => $eOrder, 'section' => Sobi::Section() ) );
-					$fType = $db->loadResult();
+					$fType = $db
+							->select( 'fieldType', 'spdb_field', array( 'nid' => $eOrder, 'section' => Sobi::Section() ) )
+							->loadResult();
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DETERMINE_FIELD_TYPE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
@@ -322,6 +340,22 @@ class SPSectionCtrl extends SPController
 				$conditions[ 'spo.oType' ] = 'entry';
 				$conditions[ 'fdef.nid' ] = $eOrder;
 				$eOrder = 'baseData.' . $eDir;
+			}
+		}
+		elseif ( strstr( $eOrder, 'counter' ) ) {
+			$table = $db->join( array(
+					array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' ),
+					array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'spo.id', 'sprl.id' ) ),
+					array( 'table' => 'spdb_counter', 'as' => 'spcounter', 'key' => array( 'spo.id', 'spcounter.sid' ) ),
+			) );
+			$oPrefix = 'spo.';
+			$conditions[ 'spo.oType' ] = 'entry';
+			if ( strstr( $eOrder, '.' ) ) {
+				$cOrder = explode( '.', $eOrder );
+				$eOrder = 'spcounter.counter.' . $cOrder[ 1 ];
+			}
+			else {
+				$eOrder = 'spcounter.counter.desc';
 			}
 		}
 		else {

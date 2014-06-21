@@ -42,6 +42,8 @@ Legend:
     (#) 'Now' in the datepicker sets wrong hour (Issue #1223)
     (#) Not possible to use more than one SigsiuTree categories chooser (Issue #1220)
     (#) Category field set to be an administrative field is loosing data when user edits the entry (Issue #1219)
+    (#) Incorrect results while ordering by popularity (counter) (Issue #1267)
+    (#) Incorrect results while ordering by title in multilingual mode (Issue #1258)
 
     (!) Requirements checker is getting current version from Joomla updater extension
     (!) Some icons in administration panel improved (datepicker)
