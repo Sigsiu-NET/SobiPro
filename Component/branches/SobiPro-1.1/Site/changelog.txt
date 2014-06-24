@@ -48,7 +48,7 @@ Legend:
     (!) Requirements checker is getting current version from Joomla updater extension
     (!) Some icons in administration panel improved (datepicker)
     (!) Changed order of meta keys and meta description (Issue #1231)
-    (!) Image field - changing all file extensions to lower case
+    (!) Image field - changing all file extensions to lower case now
 
 
 -------------------

@@ -39,6 +39,7 @@
 			<call file="ctrl.adm.menu" method="section" />
 		</calls>
 		<hidden>
+			<field name="sid" value="sectionId" />
 			<field name="params[text]" const="MENU_LINK_TO_SECTION" />
 			<field name="function-name" translate="MENU_LINK_TO_SECTION" />
 			<field name="request[sid]" value="sectionId" />

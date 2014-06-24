@@ -180,7 +180,7 @@ class SPMenuAdm extends SPController
 
 	public function categoryLabel( $sid )
 	{
-		return Sobi::Txt( 'MENU_LINK_TO_SELECTED_CATEGORY', SPFactory::Category( $sid )->get( 'name' ) );
+		return $sid ? Sobi::Txt( 'MENU_LINK_TO_SELECTED_CATEGORY', SPFactory::Category( $sid )->get( 'name' ) ) : null;
 	}
 
 	public function entryLabel( $sid )
@@ -206,6 +206,18 @@ class SPMenuAdm extends SPController
 		$tree->init( $section );
 		$view->assign( $tree, 'tree' );
 		$this->addTemplates( $view, $menu, 'category' );
+		SPFactory::header()->addJsCode(
+				'SobiPro.jQuery( ".ctrl-save", window.parent.document )
+					.click( function( e )
+						{
+							if( SobiPro.jQuery( "#SP_function-name" ).val() == "MENU_LINK_TO_SELECTED_CATEGORY" ) {
+								e.preventDefault();
+								e.stopPropagation();
+								alert( "' . Sobi::Txt( 'MENU_CAT_FUNCTION_SELECT_CAT_FIRST' ) . '" );
+								SobiPro.jQuery( "#SobiProSelectedFunction", window.parent.document ).html( "'.Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' ).'" );
+						}
+					} ); '
+		);
 	}
 
 	protected function listFunctions()

@@ -524,9 +524,6 @@ class SPEntryCtrl extends SPController
 			$this->_model = null;
 			$sid = SPRequest::int( 'pid' );
 			$section = SPFactory::Section( Sobi::Section() );
-			SPFactory::header()
-					->addKeyword( $section->get( 'efMetaKeys' ) )
-					->addDescription( $section->get( 'efMetaDesc' ) );
 		}
 
 		if ( $this->_model && $this->_model->isCheckedOut() ) {
@@ -557,6 +554,11 @@ class SPEntryCtrl extends SPController
 		else {
 			/* handle meta data */
 			SPFactory::header()->objMeta( $section );
+			if ( $this->_task == 'add' ) {
+				SPFactory::header()
+						->addKeyword( $section->get( 'efMetaKeys' ) )
+						->addDescription( $section->get( 'efMetaDesc' ) );
+			}
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'EN.ADD_PATH_TITLE' ), Sobi::Url( 'current' ) );
 			SPFactory::mainframe()->setTitle( Sobi::Txt( 'EN.ADD_TITLE', array( 'section' => $section->get( 'name' ) ) ) );
 

@@ -17,6 +17,8 @@
  * $HeadURL$
  */
 
+include_once JPATH_ADMINISTRATOR.'/components/com_menus/tables/menu.php';
+
 class JFormFieldNative extends JFormField
 {
 	protected $params = array();

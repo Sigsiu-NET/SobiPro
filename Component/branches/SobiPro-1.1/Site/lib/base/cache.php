@@ -56,6 +56,9 @@ final class SPCache
 		if ( !( $sid ) ) {
 			$sid = Sobi::Section();
 		}
+		if ( !( $sid ) ) {
+			$sid = -1;
+		}
 		static $cache = array();
 		if ( !( isset( $cache[ $sid ] ) ) || !( $cache[ $sid ] instanceof self ) ) {
 			$cache[ $sid ] = new self( $sid );
