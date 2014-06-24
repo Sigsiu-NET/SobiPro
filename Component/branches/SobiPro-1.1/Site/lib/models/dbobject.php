@@ -535,10 +535,10 @@ abstract class SPDBObject extends SPObject
 			}
 		}
 		if ( is_numeric( $this->validUntil ) ) {
-			$this->validUntil = $this->validUntil ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validUntil ) : null;
+			$this->validUntil = $this->validUntil ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validUntil ) : null;
 		}
 		if ( is_numeric( $this->validSince ) ) {
-			$this->validSince = $this->validSince ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validSince ) : null;
+			$this->validSince = $this->validSince ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validSince ) : null;
 		}
 
 		/* @var SPdb $db */
