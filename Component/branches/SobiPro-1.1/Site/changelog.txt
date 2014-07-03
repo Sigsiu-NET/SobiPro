@@ -27,11 +27,17 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.9 ()
+1.1.9 (03 July 2014)
 -------------------
 
     (+) SEF router now included in SobiPro directly
     (+) Warning about missing menu item to SobiPro section view
+
+    (!) Requirements checker is getting current version from Joomla updater extension
+    (!) Some icons in administration panel improved (datepicker)
+    (!) Changed order of meta keys and meta description (Issue #1231)
+    (!) Image field - changing all file extensions to lower case now
+    (!) Repository SSL Certificate information renewed
 
     (#) Rejection messages corrected
     (#) Corrected attributes handling in SPHeader::meta()
@@ -44,11 +50,6 @@ Legend:
     (#) Category field set to be an administrative field is loosing data when user edits the entry (Issue #1219)
     (#) Incorrect results while ordering by popularity (counter) (Issue #1267)
     (#) Incorrect results while ordering by title in multilingual mode (Issue #1258)
-
-    (!) Requirements checker is getting current version from Joomla updater extension
-    (!) Some icons in administration panel improved (datepicker)
-    (!) Changed order of meta keys and meta description (Issue #1231)
-    (!) Image field - changing all file extensions to lower case now
 
 
 -------------------
