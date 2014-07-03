@@ -1,20 +1,26 @@
 <?php
 /**
- * @version: $Id: router.php 2337 2012-04-02 09:15:13Z Radek Suski $
+ * @version: $Id$
  * @package: SobiPro Component for Joomla!
- * ===================================================
+
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
- * ===================================================
- * @copyright Copyright (C) 2006 - 2012 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
- * @license see http://www.gnu.org/licenses/gpl.html GNU/GPL Version 3.
- * You can use, redistribute this file and/or modify it under the terms of the GNU General Public License version 3
- * ===================================================
- * $Date: 2012-04-02 11:15:13 +0200 (Mo, 02 Apr 2012) $
- * $Revision: 2337 $
- * $Author: Radek Suski $
+
+ * @copyright Copyright (C) 2006 - 2014 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license GNU/GPL Version 3
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+ * $Date$
+ * $Revision$
+ * $Author$
+ * $HeadURL$
  */
 
 function SobiProBuildRoute( &$query )
