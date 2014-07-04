@@ -27,6 +27,13 @@ Legend:
  (!) - Change
 
 -------------------
+1.1.10 ()
+-------------------
+
+    (#) Router not copied during installation process
+
+
+-------------------
 1.1.9 (03 July 2014)
 -------------------
 
