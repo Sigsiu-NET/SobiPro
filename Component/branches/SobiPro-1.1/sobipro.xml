@@ -27,6 +27,7 @@
 		<folder>var</folder>
 		<folder>views</folder>
 		<filename>sobipro.php</filename>
+        <filename>router.php</filename>
 		<filename>changelog.txt</filename>
 		<filename>metadata.xml</filename>
 		<filename>gplv3.txt</filename>
