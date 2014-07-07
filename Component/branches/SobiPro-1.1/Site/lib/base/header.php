@@ -156,11 +156,14 @@ final class SPHeader
 			$this->store( get_defined_vars(), __FUNCTION__ );
 			$custom = null;
 			if ( count( $attributes ) ) {
-				foreach ( $attributes as $name => $value ) {
-					$custom .= $name . '="' . $value . '"';
+				foreach ( $attributes as $attribute => $value ) {
+					$custom .= $attribute . '="' . $value . '"';
 				}
 			}
-			$this->raw[ ++$this->count ] = "<meta name=\"{$name}\" content=\"{$content}\" {$custom}/>";
+			if( strlen($name)) {
+				$name = " name=\"{$name}\" ";
+			}
+			$this->raw[ ++$this->count ] = "<meta{$name} content=\"{$content}\" {$custom}/>";
 		}
 		return $this;
 	}
