@@ -31,6 +31,7 @@ Legend:
 -------------------
 
     (#) Router not copied during installation process
+    (#) Bug in SPHeader::addMeta fixed
 
 
 -------------------
