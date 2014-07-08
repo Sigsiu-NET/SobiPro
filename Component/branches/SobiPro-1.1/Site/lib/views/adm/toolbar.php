@@ -56,7 +56,7 @@ class SpAdmToolbar
 		'exit' => 'EXIT',
 		'help' => 'HELP',
 		'save' => 'SAVE_EXIT',
-		'duplicate' => 'SAVE_NEW',
+		'duplicate' => 'SAVE_AS_COPY',
 		'new' => 'ADD_NEW',
 		'delete' => 'DELETE',
 		'actions' => 'ACTIONS',
