@@ -30,13 +30,14 @@ Legend:
 1.1.10 ()
 -------------------
 
-    (+) "Save and New" functionality for entries and categories
+    (+) "Save & New" functionality for entries and categories
+
+    (!) Label "Save as New" to "Save as Copy"
 
     (#) Router not copied during installation process
     (#) Bug in SPHeader::addMeta fixed
     (#) Parent category in add entry form not pre-selected (Issue #1299)
 
-    (!) Label "Save as New" to "Save as Copy"
 
 -------------------
 1.1.9 (03 July 2014)

@@ -41,8 +41,8 @@
 		<button task="entry.apply" type="apply">
 			<button type="save" task="entry.save" />
 			<button type="save" task="entry.saveWithRevision" label="TB.SAVE_WITH_REVISION" invert-condition="history-behaviour" icon="comment"/>
+            <button task="entry.saveAndNew" label="TB.SAVE_AND_NEW" icon="file-text" />
 			<button type="duplicate" task="entry.clone" />
-			<button task="entry.saveAndNew" label="TB.SAVE_AND_NEW" icon="file-text" />
 		</button>
 		<divider />
 		<button type="exit" task="entry.cancel" />
