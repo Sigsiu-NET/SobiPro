@@ -238,7 +238,7 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) ) ) {
 			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
 		}
-		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/repository.1.1.5.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/repository.xml' );
+		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/repository.1.1.9.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/repository.xml' );
 		$db = JFactory::getDBO();
 		$db->setQuery( 'SHOW COLUMNS FROM #__sobipro_field_data' );
 		$cols = $db->loadAssocList( 'Field' );
