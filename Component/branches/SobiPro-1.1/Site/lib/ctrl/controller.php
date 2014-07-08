@@ -150,6 +150,7 @@ abstract class SPController extends SPObject implements SPControl
 				break;
 			case 'apply':
 			case 'save':
+			case 'saveAndNew':
 				$r = true;
 				$this->save( $this->_task == 'apply' );
 				break;
@@ -286,9 +287,9 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		/** store previous state for possible triggers */
 		$preState = array(
-			'approved' => $this->_model->get( 'approved' ),
-			'state' => $this->_model->get( 'state' ),
-			'new' => !( $this->_model->get( 'id' ) )
+				'approved' => $this->_model->get( 'approved' ),
+				'state' => $this->_model->get( 'state' ),
+				'new' => !( $this->_model->get( 'id' ) )
 		);
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 
@@ -318,6 +319,15 @@ abstract class SPController extends SPObject implements SPControl
 				$msg = Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' );
 				$this->response( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg, $this->_type == 'section', 'success', array( 'sets' => $sets ) );
 			}
+		}
+		elseif ( $this->_task == 'saveAndNew' ) {
+			$msg = Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' );
+			$sid = $this->_model->get( 'parent' );
+			if ( !( $sid ) ) {
+				$sid = Sobi::Section();
+			}
+			$this->response( Sobi::Url( array( 'task' => $this->_type . '.add', 'sid' => $sid ) ), $msg, true, 'success', array( 'sets' => $sets ) );
+
 		}
 		else {
 			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_type ) ) ), true, 'success' );
@@ -525,11 +535,11 @@ abstract class SPController extends SPObject implements SPControl
 					->cleanBuffer()
 					->customHeader();
 			echo json_encode(
-				array(
-					'message' => array( 'text' => $message, 'type' => $type ),
-					'redirect' => array( 'url' => $url, 'execute' => ( bool )$redirect ),
-					'data' => $data
-				)
+					array(
+							'message' => array( 'text' => $message, 'type' => $type ),
+							'redirect' => array( 'url' => $url, 'execute' => ( bool )$redirect ),
+							'data' => $data
+					)
 			);
 			exit;
 		}

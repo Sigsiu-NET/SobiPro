@@ -130,8 +130,8 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 					$revision = print_r( $revision, true );
 				}
 				$data = array(
-					'current' => $current,
-					'revision' => $revision
+						'current' => $current,
+						'revision' => $revision
 				);
 			}
 		}
@@ -158,28 +158,28 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 						$pastUser = $pastUser->name . ' (' . $pastUser->id . ')';
 					}
 					$data = array(
-						'current' => $currentUser,
-						'revision' => $pastUser,
+							'current' => $currentUser,
+							'revision' => $pastUser,
 					);
 					break;
 				default:
 					$data = array(
-						'current' => $this->_model->get( $i ),
-						'revision' => $revision
+							'current' => $this->_model->get( $i ),
+							'revision' => $revision
 					);
 					break;
 			}
 		}
 		if ( !( SPRequest::bool( 'html', false, 'post' ) ) ) {
 			$data = array(
-				'current' => html_entity_decode( strip_tags( $data[ 'current' ] ), ENT_QUOTES, 'UTF-8' ),
-				'revision' => html_entity_decode( strip_tags( $data[ 'revision' ] ), ENT_QUOTES, 'UTF-8' ),
+					'current' => html_entity_decode( strip_tags( $data[ 'current' ] ), ENT_QUOTES, 'UTF-8' ),
+					'revision' => html_entity_decode( strip_tags( $data[ 'revision' ] ), ENT_QUOTES, 'UTF-8' ),
 			);
 
 		}
 		$data = array(
-			'current' => explode( "\n", $data[ 'current' ] ),
-			'revision' => explode( "\n", $data[ 'revision' ] )
+				'current' => explode( "\n", $data[ 'current' ] ),
+				'revision' => explode( "\n", $data[ 'revision' ] )
 		);
 		$diff = SPFactory::Instance( 'services.third-party.diff.lib.Diff', $data[ 'revision' ], $data[ 'current' ] );
 		$renderer = SPFactory::Instance( 'services.third-party.diff.lib.Diff.Renderer.Html.SideBySide' );
@@ -201,9 +201,9 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		if ( $this->authorise( 'manage' ) ) {
 			$changes = array();
 			$objects = array(
-				'entry' => $this->_model,
-				'user' => SPFactory::user(),
-				'author' => SPFactory::Instance( 'cms.base.user', $this->_model->get( 'owner' ) )
+					'entry' => $this->_model,
+					'user' => SPFactory::user(),
+					'author' => SPFactory::Instance( 'cms.base.user', $this->_model->get( 'owner' ) )
 			);
 			$messages =& SPFactory::registry()->get( 'messages' );
 			$reason = SPLang::replacePlaceHolders( SPRequest::string( 'reason', null, true, 'post' ), $objects );
@@ -276,9 +276,9 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		}
 
 		$preState = array(
-			'approved' => $this->_model->get( 'approved' ),
-			'state' => $this->_model->get( 'state' ),
-			'new' => !( $this->_model->get( 'id' ) )
+				'approved' => $this->_model->get( 'approved' ),
+				'state' => $this->_model->get( 'state' ),
+				'new' => !( $this->_model->get( 'id' ) )
 		);
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 
@@ -319,6 +319,15 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				$msg = Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
 				$this->response( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg, false, 'success', array( 'sets' => $sets ) );
 			}
+		}
+		elseif ( $this->_task == 'saveAndNew' ) {
+			$msg = Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' );
+			$sid = $this->_model->get( 'parent' );
+			if ( !( $sid ) ) {
+				$sid = Sobi::Section();
+			}
+			$this->response( Sobi::Url( array( 'task' => $this->_type . '.add', 'sid' => $sid ) ), $msg, true, 'success', array( 'sets' => $sets ) );
+
 		}
 		else {
 			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) ) );
