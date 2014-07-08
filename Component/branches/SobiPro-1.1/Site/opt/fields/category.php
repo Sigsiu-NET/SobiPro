@@ -19,6 +19,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.fieldtype' );
+
 /**
  * @author Radek Suski
  * @version 1.1
@@ -86,6 +87,11 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			}
 			else {
 				$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
+			}
+		}
+		if ( !( $this->_selectedCats ) ) {
+			if ( SPRequest::task() == 'entry.add' ) {
+				$this->_selectedCats = array( SPRequest::sid() );
 			}
 		}
 		return $this->_selectedCats;
@@ -180,7 +186,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			if ( count( $selected ) ) {
 				$count = 0;
 				foreach ( $selected as $category ) {
-					if ( $category[ 'id' ] == $this->sid ) {
+					if ( $category[ 'id' ] == $this->sid && SPRequest::task() != 'entry.add' ) {
 						continue;
 					}
 					$selectedCategories[ $category[ 'id' ] ] = $category[ 'value' ];
@@ -222,8 +228,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( count( $this->_cats ) ) {
 			$values = array();
 			$params = array(
-				'id' => $this->nid,
-				'class' => 'required ' . $this->cssClass
+					'id' => $this->nid,
+					'class' => 'required ' . $this->cssClass
 			);
 			if ( $this->width ) {
 				$params[ 'style' ] = "width: {$this->width}px;";
@@ -245,8 +251,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( count( $this->_cats ) ) {
 			$values = array();
 			$params = array(
-				'id' => $this->nid,
-				'class' => 'required ' . $this->cssClass
+					'id' => $this->nid,
+					'class' => 'required ' . $this->cssClass
 			);
 			if ( $this->width && $this->height ) {
 				$params[ 'style' ] = "width: {$this->width}px; height: {$this->height}px";
@@ -280,9 +286,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				}
 			}
 			$result[ ] = array(
-				'label' => $margin . ' ' . $cat[ 'name' ],
-				'value' => $cat[ 'sid' ],
-				'params' => $params
+					'label' => $margin . ' ' . $cat[ 'name' ],
+					'value' => $cat[ 'sid' ],
+					'params' => $params
 			);
 			if ( count( ( $cat[ 'childs' ] ) ) ) {
 				$this->createValues( $cat[ 'childs' ], $result, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) . $margin, $selector );
@@ -308,11 +314,11 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$category = SPFactory::Model( $init == true ? 'section' : 'category' );
 		$category->init( $sid );
 		$cats[ $sid ] = array(
-			'sid' => $sid,
-			'state' => $category->get( 'state' ),
-			'name' => $category->get( 'name' ),
-			'type' => $category->get( 'oType' ),
-			'childs' => array(),
+				'sid' => $sid,
+				'state' => $category->get( 'state' ),
+				'name' => $category->get( 'name' ),
+				'type' => $category->get( 'oType' ),
+				'childs' => array(),
 		);
 		$childs = $category->getChilds( 'category' );
 		if ( count( $childs ) ) {
@@ -350,8 +356,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 		if ( $this->searchMethod == 'select' ) {
 			$params = array(
-				'id' => $this->nid,
-				'class' => $this->cssClass
+					'id' => $this->nid,
+					'class' => $this->cssClass
 			);
 			if ( $this->searchWidth ) {
 				$params[ 'style' ] = "width: {$this->searchWidth}px;";
@@ -360,8 +366,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 		elseif ( $this->searchMethod == 'mselect' ) {
 			$params = array(
-				'id' => $this->nid,
-				'class' => $this->cssClass
+					'id' => $this->nid,
+					'class' => $this->cssClass
 			);
 			if ( $this->searchWidth && $this->searchHeight ) {
 				$params[ 'style' ] = "width: {$this->searchWidth}px; height: {$this->searchHeight}px";

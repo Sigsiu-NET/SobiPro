@@ -32,7 +32,7 @@ Legend:
 
     (#) Router not copied during installation process
     (#) Bug in SPHeader::addMeta fixed
-
+    (#) Parent category in add entry form not pre-selected
 
 -------------------
 1.1.9 (03 July 2014)
