@@ -37,6 +37,7 @@ Legend:
     (#) Router not copied during installation process
     (#) Bug in SPHeader::addMeta fixed
     (#) Parent category in add entry form not pre-selected (Issue #1299)
+    (#) Limiting chars for textarea doesn't work correctly with Hebrew chars (Issue #1293)
 
 
 -------------------
