@@ -147,6 +147,7 @@ class SPJoomlaDb
 	public function setQuery( $sql )
 	{
 		$sql = str_replace( 'spdb', $this->prefix . 'sobipro', $sql );
+		$sql = str_replace( 'NOW()', '\'' . gmdate( Sobi::Cfg( 'date.db_format', 'Y-m-d H:i:s' ) ) . '\'', $sql );
 		return $this->db->setQuery( $sql );
 	}
 
@@ -1128,7 +1129,6 @@ class SPJoomlaDb
 	 */
 	public function valid( $until, $since = null, $pub = null )
 	{
-		$now = $this->now();
 		$null = $this->getNullDate();
 		$pub = $pub ? " AND {$pub} = 1 " : null;
 		$stamp = date( SPFactory::config()->key( 'date.db_format', 'Y-m-d H:i:s' ), 0 );

@@ -33,6 +33,7 @@ Legend:
     (+) "Save & New" functionality for entries and categories
 
     (!) Label "Save as New" to "Save as Copy"
+    (!) Changing all db dates to UTC. Warning! can cause a glitch in the matrix
 
     (#) Router not copied during installation process
     (#) Bug in SPHeader::addMeta fixed

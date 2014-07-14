@@ -452,7 +452,7 @@ abstract class SPRequest
 	 */
 	static public function now()
 	{
-		self::$val = date( 'Y-m-d H:i:s' );
+		self::$val = gmdate( 'Y-m-d H:i:s' );
 		return self::$val;
 	}
 
