@@ -768,10 +768,10 @@ abstract class SPHtml_Input
 		foreach ( $jsReplacements as $php => $js ) {
 			$jsDateFormat = str_replace( $php, $js, $jsDateFormat );
 		}
-		$valueDisplay = $value ? SPFactory::config()->date( $value, null, $dateFormat, true ) : null;
 		if ( !( is_numeric( $value ) ) ) {
 			$value = strtotime( $value );
 		}
+		$valueDisplay = $value ? SPFactory::config()->date( $value + SPFactory::config()->getTimeOffset(), null, $dateFormat ) : null;
 		self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
 			$params[ 'id' ] = SPLang::nid( $name );

@@ -472,9 +472,9 @@ class SPConfig
 		}
 		if ( $store ) {
 			file_put_contents(
-				SPLoader::path( 'var.log.debug', 'front', false, 'html' ),
+					SPLoader::path( 'var.log.debug', 'front', false, 'html' ),
 					'<br/>[' . date( DATE_RFC822 ) . "]<br/>{$str}<br/>",
-				SPC::FS_APP
+					SPC::FS_APP
 			);
 		}
 		elseif ( $return ) {
@@ -581,7 +581,7 @@ class SPConfig
 //	}
 
 	/**
-	 * Returns formated date
+	 * Returns formatted date
 	 *
 	 * @param string $time - time or date
 	 * @param string $formatKey
@@ -605,6 +605,20 @@ class SPConfig
 		}
 		$date = $time ? ( is_numeric( $time ) ? $time : strtotime( $time ) ) : time();
 		return $gmt ? gmdate( $format, $date ) : date( $format, $date );
+	}
+
+	/**
+	 * Returns time offset to UTC
+	 * @return int
+	 */
+	public function getTimeOffset()
+	{
+		static $offset = 0;
+		if ( !( $offset ) ) {
+			$tz = new DateTimeZone( Sobi::Cfg( 'time_offset' ) );
+			$offset = $tz->getOffset( new DateTime( 'now', new DateTimeZone( 'UTC' ) ) );
+		}
+		return $offset;
 	}
 
 	/**
