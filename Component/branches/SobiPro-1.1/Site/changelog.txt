@@ -34,11 +34,13 @@ Legend:
 
     (!) Label "Save as New" to "Save as Copy"
     (!) Changing all db dates to UTC. Warning! can cause a glitch in the matrix
+    (!) Dates like "valid until, since, etc" are displayed in the in Joomla! set timezone
 
     (#) Router not copied during installation process
     (#) Bug in SPHeader::addMeta fixed
     (#) Parent category in add entry form not pre-selected (Issue #1299)
     (#) Limiting chars for textarea doesn't work correctly with Hebrew chars (Issue #1293)
+    (#) Image field - EXIF data - wrong coordinates calculation
 
 
 -------------------

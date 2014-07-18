@@ -514,15 +514,16 @@ class SPTplParser
 		$index = $cell[ 'content' ];
 		$linkClass = isset( $cell[ 'attributes' ][ 'link-class' ] ) ? ' ' . $cell[ 'attributes' ][ 'link-class' ] : null;
 		$aOpen = false;
+		$now = gmdate( 'U' );
 		/** is expired ? */
-		if ( isset( $cell[ 'attributes' ][ 'valid-until' ] ) && $cell[ 'attributes' ][ 'valid-until' ] && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) < time() && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) > 0 ) {
+		if ( isset( $cell[ 'attributes' ][ 'valid-until' ] ) && $cell[ 'attributes' ][ 'valid-until' ] && strtotime( $cell[ 'attributes' ][ 'valid-until' ].' UTC' ) < $now && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) > 0 ) {
 			$index = -1;
 			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_EXPIRED', $cell[ 'attributes' ][ 'valid-until' ] );
 			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="expired">';
 		}
 		/** is pending ? */
-		elseif ( ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] ) > time() ) && $index == 1 ) {
+		elseif ( ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ].' UTC' ) > $now ) && $index == 1 ) {
 			$index = -2;
 			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );
@@ -561,7 +562,7 @@ class SPTplParser
 	public function checkbox( $cell )
 	{
 		/** First let's check if it is not checked out */
-		if ( isset( $cell[ 'attributes' ][ 'checked-out-by' ] ) && isset( $cell[ 'attributes' ][ 'checked-out-time' ] ) && $cell[ 'attributes' ][ 'checked-out-by' ] && $cell[ 'attributes' ][ 'checked-out-by' ] != Sobi::My( 'id' ) && strtotime( $cell[ 'attributes' ][ 'checked-out-time' ] ) > time() ) {
+		if ( isset( $cell[ 'attributes' ][ 'checked-out-by' ] ) && isset( $cell[ 'attributes' ][ 'checked-out-time' ] ) && $cell[ 'attributes' ][ 'checked-out-by' ] && $cell[ 'attributes' ][ 'checked-out-by' ] != Sobi::My( 'id' ) && strtotime( $cell[ 'attributes' ][ 'checked-out-time' ] ) > gmdate( 'U' ) ) {
 			if ( isset( $cell[ 'attributes' ][ 'checked-out-ico' ] ) && $cell[ 'attributes' ][ 'checked-out-ico' ] ) {
 				$icon = $cell[ 'attributes' ][ 'checked-out-ico' ];
 			}
