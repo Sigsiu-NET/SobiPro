@@ -74,9 +74,9 @@
 							<field type="toggle" name="section.state" label="ENABLED" prefix="yes_no" />
 						</fieldset>
                         <fieldset label="SECN.CFG.PUBLISHING">
-                            <field type="datePicker" label="CREATED_AT" name="section.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="calendar" />
-                            <field type="datePicker" label="VALID_SINCE" name="section.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" />
-                            <field type="datePicker" label="VALID_UNTIL" name="section.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" />
+                            <field type="datePicker" label="CREATED_AT" name="section.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="calendar" addOffset="true" />
+                            <field type="datePicker" label="VALID_SINCE" name="section.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" addOffset="true" />
+                            <field type="datePicker" label="VALID_UNTIL" name="section.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" addOffset="true" />
 						</fieldset>
 					</div>
 				</div>
