@@ -58,8 +58,8 @@
 					<div class="span12">
 						<fieldset>
 							<field type="toggle" name="set.state" label="ACL_ENABLED" prefix="yes_no" />
-							<field type="datePicker" label="VALID_SINCE" name="set.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" />
-							<field type="datePicker" label="VALID_UNTIL" name="set.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" />
+							<field type="datePicker" label="VALID_SINCE" name="set.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" addOffset="true" />
+							<field type="datePicker" label="VALID_UNTIL" name="set.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" addOffset="true" />
 						</fieldset>
 					</div>
 				</tab>
