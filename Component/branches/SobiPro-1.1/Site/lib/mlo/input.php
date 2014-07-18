@@ -733,11 +733,14 @@ abstract class SPHtml_Input
 	 * @param string $dateFormat - date format in PHP
 	 * @param null $params - additional parameters
 	 * @param string $icon - field icon
+	 * @param bool $addOffset
+	 * @param null $timeOffset
 	 * @return string
 	 */
-	public static function datePicker( $name, $value, $dateFormat = 'Y-m-d H:i:s', $params = null, $icon = 'th' )
+	public static function datePicker( $name, $value, $dateFormat = 'Y-m-d H:i:s', $params = null, $icon = 'th', $addOffset = false, $timeOffset = null )
 	{
 		self::createLangFile();
+		$timeOffset = strlen( $timeOffset ) ? $timeOffset : Sobi::Cfg( 'time_offset' );
 		// another mystery - what the heck was this supposed to do?
 //		$value = ( ( int ) $value != 0 && $value ) ? strtotime( $value ) : null;
 		/** The stupid JavaScript to PHP conversion. */
@@ -783,6 +786,10 @@ abstract class SPHtml_Input
 			$params[ 'data' ][ 'am-pm' ] = 'true';
 		}
 		$params[ 'data' ][ 'format' ] = $jsDateFormat;
+		if ( $addOffset ) {
+			$params[ 'data' ][ 'time-zone' ] = $timeOffset;
+			$params[ 'data' ][ 'time-offset' ] = SPFactory::config()->getTimeOffset();
+		}
 		$data = self::createDataTag( $params );
 		SPFactory::header()
 				->addCssFile( 'bootstrap.datepicker' )
@@ -792,7 +799,7 @@ abstract class SPHtml_Input
 		$f .= '<div class="input-append date spDatePicker">';
 		$f .= "\n\t";
 		$f .= '<input type="text" disabled="disabled" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" ' . $data . '/>';
-		$f .= '<input type="hidden" value="' . $value * 1000 . '" name="' . $name . '"/>';
+		$f .= '<input type="hidden" value="' . ( $value + SPFactory::config()->getTimeOffset() ) * 1000 . '" name="' . $name . '"/>';
 		$f .= "\n\t";
 		$f .= '<span class="add-on"><i data-date-icon="icon-' . $icon . '" class="icon-' . $icon . '"></i></span>';
 		$f .= "\n";

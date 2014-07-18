@@ -21,6 +21,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.inbox' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -499,7 +500,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 	protected function convertGPS( $deg, $min, $sec, $hem )
 	{
-		$d = $deg + ( ( ( $min / 60 ) + ( $sec / 3600 ) ) / 100 );
+		$d = $deg + ( ( ( $min / 60 ) + ( $sec / 3600 ) / 100 ) );
 		return ( $hem == 'S' || $hem == 'W' ) ? $d *= -1 : $d;
 	}
 
@@ -547,6 +548,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					}
 				}
 			}
+			SPConfig::debOut( $files[ 'data' ][ 'exif' ][ 'GPS' ] );
 			if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) ) {
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );
@@ -555,7 +557,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$tags = Sobi::Cfg( 'image_field.exif_gps_data', array() );
 				if ( count( $tags ) ) {
 					foreach ( $tags as $tag ) {
-						$exifToPass[ 'GPS' ][ $tag ] = isset( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPS'.$tag ] ) ? $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPS'.$tag ] : 'unknown';
+						$exifToPass[ 'GPS' ][ $tag ] = isset( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPS' . $tag ] ) ? $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPS' . $tag ] : 'unknown';
 					}
 				}
 
@@ -594,28 +596,28 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 						break;
 				}
 				$data = array(
-					'_complex' => 1,
-					'_data' => null,
-					'_attributes' => array(
-						'class' => $this->cssClass,
-						'src' => Sobi::Cfg( 'live_site' ) . $show,
-						'alt' => ''
-					)
+						'_complex' => 1,
+						'_data' => null,
+						'_attributes' => array(
+								'class' => $this->cssClass,
+								'src' => Sobi::Cfg( 'live_site' ) . $show,
+								'alt' => ''
+						)
 				);
 				if ( $float ) {
 					$data[ '_attributes' ][ 'style' ] = "float:{$float};";
 				}
 				return array(
-					'_complex' => 1,
-					'_data' => array( 'img' => $data ),
-					'_attributes' => array(
-						'icon' => isset( $files[ 'ico' ] ) ? $files[ 'ico' ] : null,
-						'image' => isset( $files[ 'image' ] ) ? $files[ 'image' ] : null,
-						'thumbnail' => isset( $files[ 'thumb' ] ) ? $files[ 'thumb' ] : null,
-						'original' => isset( $files[ 'original' ] ) ? $files[ 'original' ] : null,
-						'class' => $this->cssClass
-					),
-					'_options' => array( 'exif' => $exifToPass ),
+						'_complex' => 1,
+						'_data' => array( 'img' => $data ),
+						'_attributes' => array(
+								'icon' => isset( $files[ 'ico' ] ) ? $files[ 'ico' ] : null,
+								'image' => isset( $files[ 'image' ] ) ? $files[ 'image' ] : null,
+								'thumbnail' => isset( $files[ 'thumb' ] ) ? $files[ 'thumb' ] : null,
+								'original' => isset( $files[ 'original' ] ) ? $files[ 'original' ] : null,
+								'class' => $this->cssClass
+						),
+						'_options' => array( 'exif' => $exifToPass ),
 				);
 			}
 		}
