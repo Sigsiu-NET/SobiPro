@@ -548,7 +548,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					}
 				}
 			}
-			SPConfig::debOut( $files[ 'data' ][ 'exif' ][ 'GPS' ] );
+			SPConfig::debOut( $files[ 'data' ][ 'exif' ] );
 			if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) ) {
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );

@@ -66,7 +66,9 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 			}
 			JToolbarHelper::title( $title );
 		}
-		parent::setTitle( $title, $forceAdd );
+		else {
+			parent::setTitle( $title, $forceAdd );
+		}
 	}
 
 	/**

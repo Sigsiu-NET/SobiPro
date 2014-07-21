@@ -41,6 +41,10 @@ Legend:
     (#) Parent category in add entry form not pre-selected (Issue #1299)
     (#) Limiting chars for textarea doesn't work correctly with Hebrew chars (Issue #1293)
     (#) Image field - EXIF data - wrong coordinates calculation
+    (#) Double title in administrator area (Issue #1306)
+    (#) Apostrophes are not correctly escaped in Sub-categories names (Issue #1308)
+    (#) Textarea not saving changes when using Code Mirror (Issue #1303)
+
 
 
 -------------------
