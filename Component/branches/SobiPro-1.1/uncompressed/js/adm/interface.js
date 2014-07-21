@@ -310,12 +310,24 @@ SobiPro.jQuery( document ).ready( function ()
 			}
 			catch ( e ) {
 			}
+			try {
+			}
+			catch ( e ) {
+			}
 		}
 		try {
 			tinyMCE.triggerSave();
 		}
 		catch ( e ) {
 		}
+		SobiPro.jQuery.each( Joomla.editors.instances, function ()
+		{
+			try {
+				this.toTextArea();
+			}
+			catch ( e ) {
+			}
+		} );
 	}
 
 	SobiPro.jQuery( '.spSubmit' ).keydown(
@@ -415,10 +427,10 @@ SobiPro.jQuery( document ).ready( function ()
 					'method': 'xhr'
 				}
 			} ).done( function ( data )
-				{
-					var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + '</div>';
-					SobiPro.jQuery( '#spMessage' ).html( Message );
-				} );
+			{
+				var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + '</div>';
+				SobiPro.jQuery( '#spMessage' ).html( Message );
+			} );
 		}
 	} );
 } );

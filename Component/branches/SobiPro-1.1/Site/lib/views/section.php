@@ -106,7 +106,7 @@ class SPSectionView extends SPFrontView implements SPView
 					foreach ( $subcats as $id => $name ) {
 						$sc[ ] = array(
 								'_complex' => 1,
-								'_data' => $name[ 'name' ],
+								'_data' => SPLang::clean( $name[ 'name' ] ),
 								'_attributes' => array( 'lang' => Sobi::Lang( false ), 'id' => $id, 'url' => Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $name[ 'alias' ] : $name[ 'name' ], 'sid' => $id, ) ) )
 						);
 					}
