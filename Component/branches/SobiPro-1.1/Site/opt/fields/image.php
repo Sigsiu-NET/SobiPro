@@ -340,10 +340,18 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			}
 			else {
 				$orgImage = SPFactory::Instance( 'base.fs.image' );
+				$nameArray = explode( '.', $orgName );
+				$ext = strtolower( array_pop( $nameArray ) );
+				$nameArray[ ] = $ext;
+				$orgName = implode( '.', $nameArray );
 				$orgImage->upload( $data, $path . $orgName );
 			}
 			$files[ 'data' ][ 'exif' ] = $orgImage->exif();
 			$this->cleanExif( $files[ 'data' ][ 'exif' ] );
+			if ( Sobi::Cfg( 'image_field.fix_rotation', true ) ) {
+				$orgImage->fixRotation();
+				$orgImage->save();
+			}
 			if ( $this->resize ) {
 				$image = clone $orgImage;
 				try {
@@ -548,7 +556,6 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					}
 				}
 			}
-			SPConfig::debOut( $files[ 'data' ][ 'exif' ] );
 			if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) ) {
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );

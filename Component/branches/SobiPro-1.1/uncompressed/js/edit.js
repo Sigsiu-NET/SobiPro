@@ -191,14 +191,18 @@ function SPTriggerFrakingWYSIWYGEditors()
 	}
 	catch ( e ) {
 	}
-	SobiPro.jQuery.each( Joomla.editors.instances, function ()
-	{
-		try {
-			this.toTextArea();
-		}
-		catch ( e ) {
-		}
-	} );
+	try {
+		SobiPro.jQuery.each( Joomla.editors.instances, function ()
+		{
+			try {
+				this.toTextArea();
+			}
+			catch ( e ) {
+			}
+		} );
+	}
+	catch ( e ) {
+	}
 	try {
 		SobiPro.jQuery.each( Joomla.editors.instances, function ( i, e )
 		{

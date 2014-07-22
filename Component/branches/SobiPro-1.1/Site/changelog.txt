@@ -31,6 +31,7 @@ Legend:
 -------------------
 
     (+) "Save & New" functionality for entries and categories
+    (+) Fixing image rotation according to the EXIF data
 
     (!) Label "Save as New" to "Save as Copy"
     (!) Changing all db dates to UTC. Warning! can cause a glitch in the matrix
