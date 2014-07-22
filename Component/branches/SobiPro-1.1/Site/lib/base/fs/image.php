@@ -28,26 +28,20 @@ SPLoader::loadClass( 'base.fs.file' );
 class SPImage extends SPFile
 {
 
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	private $type = 0;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	private $temp = null;
-	/**
-	 * @var resource
-	 */
+	/*** @var resource */
 	private $image = null;
-	/**
-	 * @var array
-	 */
+	/*** @var resource */
+	private $exif = null;
+	/*** @var array */
 	static $imgFunctions = array(
-		IMAGETYPE_GIF => 'imagecreatefromgif',
-		IMAGETYPE_JPEG => 'imagecreatefromjpeg',
-		IMAGETYPE_PNG => 'imagecreatefrompng',
-		IMAGETYPE_JPEG2000 => 'imagecreatefromjpeg'
+			IMAGETYPE_GIF => 'imagecreatefromgif',
+			IMAGETYPE_JPEG => 'imagecreatefromjpeg',
+			IMAGETYPE_PNG => 'imagecreatefrompng',
+			IMAGETYPE_JPEG2000 => 'imagecreatefromjpeg'
 	);
 
 	/**
@@ -55,7 +49,8 @@ class SPImage extends SPFile
 	public function exif( $sections = 0, $array = true )
 	{
 		if ( function_exists( 'exif_read_data' ) && $this->_filename ) {
-			return exif_read_data( $this->_filename, $sections, $array );
+			$this->exif = exif_read_data( $this->_filename, $sections, $array );
+			return $this->exif;
 		}
 		else {
 			return false;
@@ -101,15 +96,7 @@ class SPImage extends SPFile
 
 		/* create new image */
 		$this->image = imagecreatetruecolor( $width, $height );
-
-		/* create image object from the current file */
-		if ( isset( self::$imgFunctions[ $imgType ] ) ) {
-			$function = self::$imgFunctions[ $imgType ];
-			$currentImg = $function( $this->_filename );
-		}
-		if ( !isset( self::$imgFunctions[ $imgType ] ) || !isset( $currentImg ) ) {
-			throw new SPException( SPLang::e( 'CREATE_IMAGE_MISSING_HANDLER', $this->_filename, $imgType ) );
-		}
+		$currentImg = $this->createImage( $imgType );
 
 		$this->type = $imgType;
 
@@ -121,6 +108,43 @@ class SPImage extends SPFile
 		/* resample image */
 		imagecopyresampled( $this->image, $currentImg, 0, 0, 0, 0, $width, $height, $wOrg, $hOrg );
 		$this->storeImage();
+	}
+
+	/**
+	 * Rotate image
+	 * @param $angle
+	 * @param $backgroundColor
+	 * @param bool $ignoreTransparent
+	 * @return bool
+	 */
+	public function rotate( $angle, $backgroundColor, $ignoreTransparent = false )
+	{
+		if ( !( $this->type ) ) {
+			list( $wOrg, $hOrg, $this->type ) = getimagesize( $this->_filename );
+		}
+		$currentImg = $this->createImage( $this->type );
+		$this->image = imagerotate( $currentImg, $angle, $backgroundColor, $ignoreTransparent );
+		$this->storeImage();
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function fixRotation()
+	{
+		if ( isset( $this->exif[ 'IFD0' ][ 'Orientation' ] ) ) {
+			switch ( $this->exif[ 'IFD0' ][ 'Orientation' ] ) {
+				case 3:
+					$this->rotate( 180, 0 );
+					break;
+				case 6:
+					$this->rotate( -90, 0 );
+					break;
+				case 8:
+					$this->rotate( 90, 0 );
+					break;
+			}
+		}
 	}
 
 	/**
@@ -185,5 +209,23 @@ class SPImage extends SPFile
 			/* Restore transparency blending */
 			imagesavealpha( $this->image, true );
 		}
+	}
+
+	/**
+	 * @param $imgType
+	 * @return mixed
+	 * @throws SPException
+	 */
+	protected function createImage( $imgType )
+	{
+		/* create image object from the current file */
+		if ( isset( self::$imgFunctions[ $imgType ] ) ) {
+			$function = self::$imgFunctions[ $imgType ];
+			$currentImg = $function( $this->_filename );
+		}
+		if ( !isset( self::$imgFunctions[ $imgType ] ) || !isset( $currentImg ) ) {
+			throw new SPException( SPLang::e( 'CREATE_IMAGE_MISSING_HANDLER', $this->_filename, $imgType ) );
+		}
+		return $currentImg;
 	}
 }
