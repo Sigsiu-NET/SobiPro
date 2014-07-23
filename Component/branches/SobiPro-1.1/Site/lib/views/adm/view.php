@@ -847,7 +847,7 @@ class SPAdmView extends SPObject implements SPView
 			$element[ 'content' ] = $date;
 		}
 		elseif ( $cell->nodeName == 'field' ) {
-			$this->xmlField( $cell, $element, $element[ 'content' ] );
+			$this->xmlField( $cell, $element, $element[ 'content' ], true );
 		}
 		elseif ( $cell->nodeName == 'call' ) {
 			$element[ 'type' ] = 'text';
@@ -1008,11 +1008,12 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNode $node
 	 * @param array $element
 	 * @param mixed $value
+	 * @param bool $skipCondition
 	 * @return void
 	 */
-	protected function xmlField( $node, &$element, $value = null )
+	protected function xmlField( $node, &$element, $value = null, $skipCondition = false )
 	{
-		if ( !( $this->xmlCondition( $node ) ) ) {
+		if ( !( $skipCondition ) && !( $this->xmlCondition( $node ) ) ) {
 			return;
 		}
 		if ( SPRequest::task() == 'entry.edit' && SPRequest::cmd( 'revision' ) && isset( $element[ 'attributes' ][ 'name' ] ) ) {
