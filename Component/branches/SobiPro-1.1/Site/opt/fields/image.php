@@ -349,8 +349,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$files[ 'data' ][ 'exif' ] = $orgImage->exif();
 			$this->cleanExif( $files[ 'data' ][ 'exif' ] );
 			if ( Sobi::Cfg( 'image_field.fix_rotation', true ) ) {
-				$orgImage->fixRotation();
-				$orgImage->save();
+				if ( $orgImage->fixRotation() ) {
+					$orgImage->save();
+				}
 			}
 			if ( $this->resize ) {
 				$image = clone $orgImage;

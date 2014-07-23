@@ -132,19 +132,24 @@ class SPImage extends SPFile
 	 */
 	public function fixRotation()
 	{
+		$return = false;
 		if ( isset( $this->exif[ 'IFD0' ][ 'Orientation' ] ) ) {
 			switch ( $this->exif[ 'IFD0' ][ 'Orientation' ] ) {
 				case 3:
+					$return = true;
 					$this->rotate( 180, 0 );
 					break;
 				case 6:
+					$return = true;
 					$this->rotate( -90, 0 );
 					break;
 				case 8:
+					$return = true;
 					$this->rotate( 90, 0 );
 					break;
 			}
 		}
+		return $return;
 	}
 
 	/**

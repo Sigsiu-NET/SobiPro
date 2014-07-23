@@ -45,6 +45,7 @@ Legend:
     (#) Double title in administrator area (Issue #1306)
     (#) Apostrophes are not correctly escaped in Sub-categories names (Issue #1308)
     (#) Textarea not saving changes when using Code Mirror (Issue #1303)
+    (#) Field in loop conditions check was executed twice and due to wrong subject the second one fails
 
 
 
