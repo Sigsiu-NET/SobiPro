@@ -1054,11 +1054,10 @@ $ = SobiPro.jQuery;
 				var currentDate = new Date();
 				currentDate = new Date( Date.now() - ( currentDate.getTimezoneOffset() * 60000 ) );
 				proxy.update( currentDate );
-				if ( parseInt( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) ) != 0 ) {
+				if ( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) && parseInt( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) ) != 0 ) {
 					currentDate = new Date( Date.now() + ( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) * 1000 ) );
 				}
 				proxy._date = currentDate;
-
 				proxy.fillDate();
 				proxy.set();
 				proxy.notifyChange();
@@ -1490,7 +1489,7 @@ SobiPro.jQuery( document ).ready( function ()
 				var set = '';
 				if ( ev.date.valueOf() && SobiPro.jQuery( proxy ).find( ':text' ).val() ) {
 					set = ev.date.valueOf();
-					if ( parseInt( SobiPro.jQuery( proxy ).find( 'input:text' ).data( 'timeOffset' ) ) != 0 ) {
+					if ( SobiPro.jQuery( proxy ).find( 'input:text' ).data( 'timeOffset' ) && parseInt( SobiPro.jQuery( proxy ).find( 'input:text' ).data( 'timeOffset' ) ) != 0 ) {
 						set = new Date( set - ( SobiPro.jQuery( proxy ).find( 'input:text' ).data( 'timeOffset' ) * 1000 ) ).getTime();
 					}
 				}
