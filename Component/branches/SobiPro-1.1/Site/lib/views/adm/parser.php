@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version: $Id$
  * @package: SobiPro Library
@@ -16,7 +17,6 @@
  * $Author$
  * $HeadURL$
  */
-
 class SPTplParser
 {
 	protected $tabsContentOpen = false;
@@ -27,10 +27,10 @@ class SPTplParser
 	protected $_out = array();
 	protected $loopOpen = false;
 	protected $_tickerIcons = array(
-		0 => 'remove',
-		1 => 'ok',
-		-1 => 'stop',
-		-2 => 'pause'
+			0 => 'remove',
+			1 => 'ok',
+			-1 => 'stop',
+			-2 => 'pause'
 	);
 	protected $_checkedOutIcon = 'lock';
 	static $newLine = "\n";
@@ -127,6 +127,11 @@ class SPTplParser
 					}
 					else {
 						$this->_out[ ] = "<span{$id}>\n";
+					}
+					if ( isset( $element[ 'attributes' ][ 'icons' ] ) && $element[ 'attributes' ][ 'icons' ] ) {
+						$icons = json_decode( str_replace( "'", '"', $element[ 'attributes' ][ 'icons' ] ), true );
+						$icon = ( isset( $icons[ $element[ 'content' ] ] ) && $icons[ $element[ 'content' ] ] ) ? $icons[ $element[ 'content' ] ] : $this->_tickerIcons[ $element[ 'content' ] ];
+						$element[ 'content' ] = '<i class="icon-' . $icon . '"></i>';
 					}
 				}
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {
@@ -516,14 +521,14 @@ class SPTplParser
 		$aOpen = false;
 		$now = gmdate( 'U' );
 		/** is expired ? */
-		if ( isset( $cell[ 'attributes' ][ 'valid-until' ] ) && $cell[ 'attributes' ][ 'valid-until' ] && strtotime( $cell[ 'attributes' ][ 'valid-until' ].' UTC' ) < $now && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) > 0 ) {
+		if ( isset( $cell[ 'attributes' ][ 'valid-until' ] ) && $cell[ 'attributes' ][ 'valid-until' ] && strtotime( $cell[ 'attributes' ][ 'valid-until' ] . ' UTC' ) < $now && strtotime( $cell[ 'attributes' ][ 'valid-until' ] ) > 0 ) {
 			$index = -1;
 			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_EXPIRED', $cell[ 'attributes' ][ 'valid-until' ] );
 			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="expired">';
 		}
 		/** is pending ? */
-		elseif ( ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ].' UTC' ) > $now ) && $index == 1 ) {
+		elseif ( ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] . ' UTC' ) > $now ) && $index == 1 ) {
 			$index = -2;
 			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );
