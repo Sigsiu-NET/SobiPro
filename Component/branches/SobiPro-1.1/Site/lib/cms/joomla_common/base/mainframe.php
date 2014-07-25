@@ -90,7 +90,11 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 		$cfg->set( 'unicode', $this->JConfigValue( 'unicodeslugs' ), 'sef' );
 
-		$cfg->set( 'language', $this->JConfigValue( 'language' ) );
+		$lang = $this->JConfigValue( 'language' );
+		if ( !( $lang ) ) {
+			$lang = SPRequest::cmd( 'language' );
+		}
+		$cfg->set( 'language', $lang );
 		$cfg->set( 'secret', $this->JConfigValue( 'secret' ) );
 		$cfg->set( 'site_name', $this->JConfigValue( 'config.sitename' ) );
 		$cfg->set( 'images_folder', SOBI_ROOT . '/media/sobipro/' );
