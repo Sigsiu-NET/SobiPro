@@ -207,8 +207,8 @@ abstract class SPDBObject extends SPObject
 	public function __construct()
 	{
 		$this->validUntil = SPFactory::config()->date( SPFactory::db()->getNullDate(), 'date.db_format' );
-		$this->createdTime = SPFactory::config()->date( time(), 'date.db_format' );
-		$this->validSince = SPFactory::config()->date( time(), 'date.db_format' );
+		$this->createdTime = SPFactory::config()->date( gmdate( 'U' ), 'date.db_format', null, true );
+		$this->validSince = SPFactory::config()->date( gmdate( 'U' ), 'date.db_format', null, true );
 		$this->ownerIP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		$this->updaterIP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		$this->updater = Sobi::My( 'id' );
@@ -448,7 +448,7 @@ abstract class SPDBObject extends SPObject
 		/* get data types of my  properties */
 		$properties = get_object_vars( $this );
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', array( &$properties ) );
-		/* and of the parent proporties */
+		/* and of the parent properties */
 		$types = array_merge( $this->types(), self::$types );
 		foreach ( $properties as $property => $values ) {
 			/* if this is an internal variable */
