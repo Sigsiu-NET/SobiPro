@@ -34,8 +34,8 @@ class SPImage extends SPFile
 	private $temp = null;
 	/*** @var resource */
 	private $image = null;
-	/*** @var resource */
-	private $exif = null;
+	/*** @var array */
+	private $exif = array();
 	/*** @var array */
 	static $imgFunctions = array(
 			IMAGETYPE_GIF => 'imagecreatefromgif',
@@ -49,7 +49,9 @@ class SPImage extends SPFile
 	public function exif( $sections = 0, $array = true )
 	{
 		if ( function_exists( 'exif_read_data' ) && $this->_filename ) {
-			$this->exif = exif_read_data( $this->_filename, $sections, $array );
+			if ( in_array( strtolower( SPFs::getExt( $this->_filename ) ), array( 'jpg', 'jpeg', 'tiff' ) ) ) {
+				$this->exif = exif_read_data( $this->_filename, $sections, $array );
+			}
 			return $this->exif;
 		}
 		else {

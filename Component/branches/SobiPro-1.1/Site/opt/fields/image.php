@@ -181,7 +181,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$user = SPUser::getBaseData( ( int )$entry->get( 'owner' ) );
 		// @todo change to the global method
 		$placeHolders = array( '/{id}/', '/{orgname}/', '/{entryname}/', '/{oid}/', '/{ownername}/', '/{uid}/', '/{username}/' );
-		$replacements = array( $entry->get( 'id' ), $name, $entry->get( 'nid' ), $user->id, SPLang::nid( $user->name ), Sobi::My( 'id' ), SPLang::nid( Sobi::My( 'name' ) ) );
+		$replacements = array( $entry->get( 'id' ), $name, $entry->get( 'nid' ), $user->id, ( isset( $user->name ) ? SPLang::nid( $user->name ) : 'guest' ), Sobi::My( 'id' ), SPLang::nid( Sobi::My( 'name' ) ) );
 		$fileName = preg_replace( $placeHolders, $replacements, $pattern );
 		return $addExt ? $fileName . '.' . $ext : $fileName;
 	}
@@ -465,7 +465,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$data = preg_replace( '/\p{Cc}+/u', null, $data );
 		$data = str_replace( 'UndefinedTag:', null, $data );
 		$data = json_decode( $data, true );
-		if ( count( $data ) ) {
+		if ( is_array( $data ) && count( $data ) ) {
 			foreach ( $data as $index => $row ) {
 				if ( is_array( $row ) ) {
 					$this->cleanExif( $row );
