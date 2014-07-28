@@ -51,7 +51,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				$this->toggleState();
 				break;
 			default:
-				/* case plugin didn't registered this task, it was an error */
+				/* case plugin didn't register this task, it was an error */
 				if ( !( parent::execute() ) ) {
 					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}

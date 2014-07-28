@@ -34,8 +34,8 @@ Legend:
     (+) Fixing image rotation according to the EXIF data
 
     (!) Label "Save as New" to "Save as Copy"
-    (!) Changing all db dates to UTC. Warning! can cause a glitch in the matrix
-    (!) Dates like "valid until, since, etc" are displayed in the in Joomla! set timezone
+    (!) Changing all db dates to UTC; Warning! can cause a glitch in the matrix
+    (!) Dates like "valid until, since, etc" are displayed in 'in Joomla! set' timezone by default
 
     (#) Router not copied during installation process
     (#) Changed language recognition method (compatibility with Joomla! 3.3.2)
