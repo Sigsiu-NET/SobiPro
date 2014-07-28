@@ -108,8 +108,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			$this->cssClass = $this->cssClass . ' ' . $this->nid;
 			$this->cleanCss();
 			$attributes = array(
-				'lang' => Sobi::Lang(),
-				'class' => $this->cssClass
+					'lang' => Sobi::Lang(),
+					'class' => $this->cssClass
 			);
 		}
 		else {
@@ -119,9 +119,9 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			$data = nl2br( $data );
 		}
 		return array(
-			'_complex' => 1,
-			'_data' => $data,
-			'_attributes' => $attributes
+				'_complex' => 1,
+				'_data' => $data,
+				'_attributes' => $attributes
 		);
 	}
 
@@ -159,7 +159,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 				throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_NOT_ED', $this->name ) );
 			}
 			if ( $this->allowHtml ) {
-				$check = strlen( str_replace( array( "\n", "\r", "\t" ), null, strip_tags( $data ) ) );
+				$checkMethod = function_exists( 'mb_strlen' ) ? 'mb_strlen' : 'strlen';
+				$check = $checkMethod( str_replace( array( "\n", "\r", "\t" ), null, strip_tags( $data ) ) );
 				if ( $this->maxLength && $check > $this->maxLength ) {
 					throw new SPException( SPLang::e( 'FIELD_TEXTAREA_LIMIT', $this->maxLength, $this->name, $dexs ) );
 				}
