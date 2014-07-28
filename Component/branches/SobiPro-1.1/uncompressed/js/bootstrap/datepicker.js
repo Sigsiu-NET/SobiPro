@@ -1052,7 +1052,6 @@ $ = SobiPro.jQuery;
 			this.widget.on( 'click', '.ctrl-set-now', function ()
 			{
 				var currentDate = new Date();
-				currentDate = new Date( Date.now() - ( currentDate.getTimezoneOffset() * 60000 ) );
 				proxy.update( currentDate );
 				if ( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) && parseInt( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) ) != 0 ) {
 					currentDate = new Date( Date.now() + ( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) * 1000 ) );
