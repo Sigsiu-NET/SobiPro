@@ -102,7 +102,7 @@ abstract class SPLists
 	}
 
 	/**
-	 * Creates the "poition" table row with order up/order down and position inputbox
+	 * Creates the "position" table row with order up/order down and position inputbox
 	 *
 	 * @param $row - SPDataModel
 	 * @param $count - number of entries/cats

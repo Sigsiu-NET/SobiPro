@@ -26,8 +26,9 @@ Legend:
  (-) - Removed
  (!) - Change
 
+
 -------------------
-1.1.10 ()
+1.1.10 (28 july 2014)
 -------------------
 
     (+) "Save & New" functionality for entries and categories
@@ -47,7 +48,6 @@ Legend:
     (#) Apostrophes are not correctly escaped in Sub-categories names (Issue #1308)
     (#) Textarea not saving changes when using Code Mirror (Issue #1303)
     (#) Field in loop conditions check was executed twice and due to wrong subject the second one fails
-
 
 
 -------------------
