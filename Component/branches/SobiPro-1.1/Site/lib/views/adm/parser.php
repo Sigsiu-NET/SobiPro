@@ -130,6 +130,7 @@ class SPTplParser
 					}
 					if ( isset( $element[ 'attributes' ][ 'icons' ] ) && $element[ 'attributes' ][ 'icons' ] ) {
 						$icons = json_decode( str_replace( "'", '"', $element[ 'attributes' ][ 'icons' ] ), true );
+						$element[ 'content' ] = (int)$element[ 'content' ];
 						$icon = ( isset( $icons[ $element[ 'content' ] ] ) && $icons[ $element[ 'content' ] ] ) ? $icons[ $element[ 'content' ] ] : $this->_tickerIcons[ $element[ 'content' ] ];
 						$element[ 'content' ] = '<i class="icon-' . $icon . '"></i>';
 					}
