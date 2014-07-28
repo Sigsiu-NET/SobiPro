@@ -143,7 +143,9 @@ final class SobiProCtrl
 		SPFactory::header()->initBase();
 
 		$sectionName = SPLang::translateObject( $this->_section, 'name', 'section' );
-		SPFactory::registry()->set( 'current_section_name', SPLang::clean( $sectionName[ $this->_section ][ 'value' ] ) );
+		if( $this->_section ) {
+			SPFactory::registry()->set( 'current_section_name', SPLang::clean( $sectionName[ $this->_section ][ 'value' ] ) );
+		}
 
 		$start = array( $this->_mem, $this->_time );
 		SPFactory::registry()->set( 'start', $start );

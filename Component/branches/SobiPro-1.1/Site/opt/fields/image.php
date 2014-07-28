@@ -181,7 +181,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$user = SPUser::getBaseData( ( int )$entry->get( 'owner' ) );
 		// @todo change to the global method
 		$placeHolders = array( '/{id}/', '/{orgname}/', '/{entryname}/', '/{oid}/', '/{ownername}/', '/{uid}/', '/{username}/' );
-		$replacements = array( $entry->get( 'id' ), $name, $entry->get( 'nid' ), $user->id, ( isset( $user->name ) ? SPLang::nid( $user->name ) : 'guest' ), Sobi::My( 'id' ), SPLang::nid( Sobi::My( 'name' ) ) );
+		$replacements = array( $entry->get( 'id' ), $name, $entry->get( 'nid' ), ( isset( $user->id ) ? $user->id : null ), ( isset( $user->name ) ? SPLang::nid( $user->name ) : 'guest' ), Sobi::My( 'id' ), SPLang::nid( Sobi::My( 'name' ) ) );
 		$fileName = preg_replace( $placeHolders, $replacements, $pattern );
 		return $addExt ? $fileName . '.' . $ext : $fileName;
 	}
