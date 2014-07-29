@@ -28,7 +28,7 @@ Legend:
 
 
 -------------------
-1.1.10 (28 july 2014)
+1.1.10 (28 July 2014)
 -------------------
 
     (+) "Save & New" functionality for entries and categories
