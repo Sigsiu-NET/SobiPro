@@ -417,6 +417,9 @@ class SPField extends SPObject
 	public function delete()
 	{
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( $this->id ) );
+		if( !( $this->_type  ) ) {
+			$this->loadType();
+		}
 		if ( $this->_type && method_exists( $this->_type, 'delete' ) ) {
 			$this->_type->delete();
 		}

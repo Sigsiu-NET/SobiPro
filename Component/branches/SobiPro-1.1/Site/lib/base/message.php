@@ -292,11 +292,14 @@ class SPMessage
 	{
 		$reports = array();
 		if ( $this->reports[ $spsid ] ) {
-			$messages = SPConfig::serialize( $this->reports );
+//			$messages = SPConfig::serialize( $this->reports );
 			$reports = $this->reports[ $spsid ];
 			unset( $this->reports[ $spsid ] );
+			/** Thu, Jul 31, 2014 11:12:02
+			 * Why the hell we are setting these messages into the db again?
+			 */
 			$store = array(
-					'params' => $messages,
+					'params' => array(),//$messages,
 					'key' => 'queue',
 					'value' => date( DATE_RFC822 ),
 					'description' => null,

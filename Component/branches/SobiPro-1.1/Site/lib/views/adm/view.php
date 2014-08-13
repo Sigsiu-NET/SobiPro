@@ -245,6 +245,7 @@ class SPAdmView extends SPObject implements SPView
 					break;
 			}
 		}
+		Sobi::Trigger( 'afterParseDefinition', $this->name(), array( &$this ) );
 	}
 
 	public function getData()
@@ -343,6 +344,7 @@ class SPAdmView extends SPObject implements SPView
 					break;
 			}
 		}
+		Sobi::Trigger( 'beforeRenderToolbar', $this->name(), array( &$buttons ) );
 		SPFactory::AdmToolbar()->addButtons( $buttons );
 	}
 
@@ -657,14 +659,21 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param DOMNode $node
+	 * @param $subject
+	 * @param $i
 	 * @return string
 	 */
-	protected function xmlText( $node )
+	protected function xmlText( $node, $subject = 0, $i = -1 )
 	{
 		$value = null;
 		if ( $node->attributes->getNamedItem( 'value' ) ) {
 			if ( $node->attributes->getNamedItem( 'parse' ) && $node->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
-				$value = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
+				if ( strlen( $subject ) ) {
+					$value = $this->get( $subject . '.' . $node->attributes->getNamedItem( 'value' )->nodeValue, $i );
+				}
+				else {
+					$value = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue, $i );
+				}
 			}
 			else {
 				$args = array( $node->attributes->getNamedItem( 'value' )->nodeValue );
@@ -838,7 +847,7 @@ class SPAdmView extends SPObject implements SPView
 			}
 		}
 		elseif ( $cell->nodeName == 'text' ) {
-			$element[ 'content' ] = $this->xmlText( $cell );
+			$element[ 'content' ] = $this->xmlText( $cell, $subject, $i );
 		}
 		elseif ( $cell->nodeName == 'date' ) {
 			$element[ 'type' ] = 'text';
