@@ -162,7 +162,7 @@ class SPJoomlaDb
 		if ( count( $sql ) ) {
 			foreach ( $sql as $query ) {
 				if ( strlen( $query ) ) {
-					$this->exec( str_replace( 'spdb', $this->prefix . 'sobipro', $query ) );
+					$this->exec( str_replace( 'spdb_', $this->prefix . 'sobipro_', $query ) );
 					$log[ ] = $query;
 				}
 			}

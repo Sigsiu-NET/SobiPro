@@ -60,6 +60,11 @@ class SPTplParser
 					$this->parse( $element );
 				}
 			}
+//			elseif ( isset( $data[ 'childs' ] ) && !( is_string( $data[ 'childs' ] ) ) && is_array( $data[ 'childs' ] ) && count( $data[ 'childs' ] ) ) {
+//				foreach ( $data[ 'childs' ] as $element ) {
+//					$this->parse( $element );
+//				}
+//			}
 			if ( isset( $data[ 'type' ] ) ) {
 				$this->closeElement( $data );
 			}
@@ -442,12 +447,21 @@ class SPTplParser
 		if ( $cell[ 'type' ] == 'tooltip' || $cell[ 'type' ] == 'popover' ) {
 			return $this->tooltip( $cell );
 		}
+		$data = null;
+		if ( isset( $cell[ 'attributes' ] ) && count( $cell[ 'attributes' ] ) ) {
+			foreach ( $cell[ 'attributes' ] as $att => $value ) {
+				if ( !( strstr( $att, 'data-' ) ) ) {
+					continue;
+				}
+				$data .= ' ' . $att . '="' . $value . '" ';
+			}
+		}
 		if ( isset( $cell[ 'attributes' ][ 'class' ] ) ) {
 			$c = $cell[ 'attributes' ][ 'class' ];
-			$this->_out[ ] = "\n<{$span} class=\"{$c}\">\n";
+			$this->_out[ ] = "\n<{$span} {$data} class=\"{$c}\">\n";
 		}
 		else {
-			$this->_out[ ] = "\n<{$span}>\n";
+			$this->_out[ ] = "\n<{$span} {$data}>\n";
 		}
 		$type = isset( $cell[ 'attributes' ][ 'type' ] ) ? $cell[ 'attributes' ][ 'type' ] : 'text';
 		switch ( $type ) {
