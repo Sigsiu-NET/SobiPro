@@ -241,7 +241,6 @@ class SPRequirements extends SPController
 		$v = function_exists( 'exec' ) ? true : false;
 		$disabled = explode( ', ', ini_get( 'disable_functions' ) );
 		if ( $v && ( !( in_array( 'exec', $disabled ) ) ) ) {
-			$ver = gd_info();
 			echo $this->ok( $this->txt( 'REQ.EXEC_ENABLED' ), __FUNCTION__ );
 		}
 		else {

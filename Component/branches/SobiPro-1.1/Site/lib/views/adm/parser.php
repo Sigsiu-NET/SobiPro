@@ -162,7 +162,17 @@ class SPTplParser
 				if ( count( $element[ 'adds' ][ 'after' ] ) ) {
 					foreach ( $element[ 'adds' ][ 'after' ] as $o ) {
 						if ( $this->istSet( $o, 'element', 'button' ) ) {
-							$this->_out[ ] = "<button class=\"{$o['class']}\" type=\"button\">{$o['label']}</button>";
+							if ( ( isset( $o[ 'icon' ] ) && $o[ 'icon' ] ) ) {
+								$o[ 'label' ] = '<i class="icon-' . $o[ 'icon' ] . '"></i>' . $o[ 'label' ];
+							}
+							$data = null;
+							foreach ( $o as $a => $v ) {
+								if ( !( strstr( $a, 'data-' ) ) ) {
+									continue;
+								}
+								$data .= ' ' . $a . '="' . $v . '" ';
+							}
+							$this->_out[ ] = "<button class=\"{$o['class']}\" {$data} type=\"button\">{$o['label']}</button>";
 						}
 						else {
 							$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
