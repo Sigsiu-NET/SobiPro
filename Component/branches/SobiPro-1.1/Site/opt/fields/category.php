@@ -85,6 +85,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			if ( is_string( $this->_selectedCats ) && strstr( $this->_selectedCats, '://' ) ) {
 				$this->_selectedCats = SPFactory::config()->structuralData( $this->_selectedCats );
 			}
+			elseif ( is_string( $this->_selectedCats ) && strstr( $this->_selectedCats, ',' ) ) {
+				$this->_selectedCats = explode( ',', $this->_selectedCats );
+			}
 			else {
 				$this->_selectedCats = SPConfig::unserialize( $this->_selectedCats );
 			}
