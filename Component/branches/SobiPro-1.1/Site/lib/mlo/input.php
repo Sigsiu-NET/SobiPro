@@ -799,7 +799,8 @@ abstract class SPHtml_Input
 		$f .= '<div class="input-append date spDatePicker">';
 		$f .= "\n\t";
 		$f .= '<input type="text" disabled="disabled" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" ' . $data . '/>';
-		$f .= '<input type="hidden" value="' . ( $value ? ( $value + SPFactory::config()->getTimeOffset() ) * 1000 : null ) . '" name="' . $name . '"/>';
+		$f .= '<input type="hidden" value="' . ( $value ? (int)( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null ) . '" name="' . $name . '"/>';
+//		$f .= '<input type="hidden" value="' . ( $value ? ( $value + SPFactory::config()->getTimeOffset() ) * 1000 : null ) . '" name="' . $name . '"/>';
 		$f .= "\n\t";
 		$f .= '<span class="add-on"><i data-date-icon="icon-' . $icon . '" class="icon-' . $icon . '"></i></span>';
 		$f .= "\n";
