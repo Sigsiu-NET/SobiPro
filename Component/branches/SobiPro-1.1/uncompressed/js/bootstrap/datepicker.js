@@ -1346,9 +1346,16 @@ $ = SobiPro.jQuery;
 		else {
 			return (
 				'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+					'<ul>' +
 					'<div class="datepicker">' +
 					DPGlobal.template +
 					'</div>' +
+					'</li>' +
+					'<li class="picker-switch">' +
+					'   <a class="ctrl-reset-date"><i class="icon-remove-circle"></i></a>' +
+					'   <a class="ctrl-set-now"><i class="icon-ok-sign"></i></a>' +
+					'</li>' +
+					'</ul>' +
 					'</div>'
 				);
 		}
