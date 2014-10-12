@@ -199,7 +199,7 @@ class SPEntryCtrl extends SPController
 			$tsId = ( microtime( true ) * 100 ) . '.' . rand( 0, 99 ) . '.' . str_replace( array( ':', '.' ), null, SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
 			SPLoader::loadClass( 'env.cookie' );
 			// in case we wre not able for some reason to set the cookie - we are going to pass this id into the URL
-			if ( !( SPCookie::set( 'editentry', $tsId, SPCookie::hours( 12 ) ) ) ) {
+			if ( !( SPCookie::set( 'editentry', $tsId, SPCookie::hours( 48 ) ) ) ) {
 				$tsIdToRequest = true;
 			}
 		}
@@ -238,7 +238,7 @@ class SPEntryCtrl extends SPController
 			if ( $tsIdToRequest ) {
 				$url[ 'ssid' ] = $tsId;
 			}
-			$this->response( Sobi::Url( $url ) );
+			$this->response( Sobi::Url( $url, false, false ) );
 		}
 	}
 

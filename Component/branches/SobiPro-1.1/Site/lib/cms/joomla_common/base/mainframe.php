@@ -241,15 +241,21 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$r = SPFactory::registry()->get( 'redirect' );
 		if ( $r && isset( $r[ 'address' ] ) ) {
 			$r[ 'address' ] = str_replace( '&amp;', '&', $r[ 'address' ] );
-			$msg = isset( $r[ 'msg' ] ) && strlen( $r[ 'msg' ] ) ? Sobi::Txt( $r[ 'msg' ] ) : null;
-			if ( $msg ) {
-				$type = $r[ 'msgtype' ];
-			}
-			else {
-				$type = null;
-			}
+			/** Sat, Oct 4, 2014 15:22:44
+			 * Here is something wrong. The method redirect do not get the message and type params
+			 * Instead we're sending a "moved" param which results with a 303 redirect code */
+//			$msg = isset( $r[ 'msg' ] ) && strlen( $r[ 'msg' ] ) ? Sobi::Txt( $r[ 'msg' ] ) : null;
+//			if ( $msg ) {
+//				$type = $r[ 'msgtype' ];
+//			}
+//			else {
+//				$type = null;
+//			}
+//			JFactory::getApplication()
+//					->redirect( $r[ 'address' ], $msg, $type );
 			JFactory::getApplication()
-					->redirect( $r[ 'address' ], $msg, $type );
+					->redirect( $r[ 'address' ] );
+
 		}
 	}
 
