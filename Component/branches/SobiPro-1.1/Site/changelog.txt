@@ -39,6 +39,7 @@ Legend:
     (#) DatePicker converts timestamp to a scientific notation on some servers. Forcing integer output
     (#) Router - not possible to use dash in the in config defined alias (Issue #1322)
     (#) Creation date of the duplicated entry is the same as the original (Issue #1328)
+    (#) If in datepicker all time options are disabled it is removing also 'now' and 'clear' buttons (Issue #1346)
 
     (!) Changed deprecated JException to core Exception
 
