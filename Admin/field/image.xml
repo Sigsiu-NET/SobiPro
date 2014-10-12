@@ -85,6 +85,7 @@
 
 									<field type="text" name="field.imageName" value="field.imageName" label="FM.IMG.IMG_NAME" maxlength="100" class="input-large" />
 									<field type="toggle" name="field.resize" value="field.resize" label="FM.IMG.RESIZE_IMG" prefix="yes_no" />
+									<field type="toggle" name="field.crop" value="field.crop" label="FM.IMG.CROP_IMG" prefix="yes_no" />
 									<field type="text" name="field.resizeWidth" value="field.resizeWidth" label="FM.IMG.RESIZEWIDTH_TO" maxlength="50" class="input-mini">
 										<add where="after">
 											<text>px</text>

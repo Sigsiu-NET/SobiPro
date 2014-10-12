@@ -38,6 +38,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected $resize = true;
 	/**
+	 * @var bool
+	 */
+	protected $crop = true;
+	/**
 	 * @var double
 	 */
 	protected $maxSize = 2097152;
