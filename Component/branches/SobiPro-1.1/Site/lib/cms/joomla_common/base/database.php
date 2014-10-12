@@ -272,7 +272,7 @@ class SPJoomlaDb
 		$limit = $limit ? "LIMIT $limit" : null;
 		try {
 			$this->exec( "DELETE FROM {$table} WHERE {$where} {$limit}" );
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 		if ( $this->db->getErrorNum() ) {
 			throw new SPException( $this->db->stderr() );
@@ -293,7 +293,7 @@ class SPJoomlaDb
 		$ifExists = $ifExists ? 'IF EXISTS' : null;
 		try {
 			$this->exec( "DROP TABLE {$ifExists} {$table}" );
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 		if ( $this->db->getErrorNum() ) {
 			throw new SPException( $this->db->stderr() );
@@ -312,7 +312,7 @@ class SPJoomlaDb
 	{
 		try {
 			$this->exec( "TRUNCATE TABLE {$table}" );
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 		if ( $this->db->getErrorNum() ) {
 			throw new SPException( $this->db->stderr() );
@@ -622,7 +622,7 @@ class SPJoomlaDb
 		$v = implode( ',', $v );
 		try {
 			$this->exec( "REPLACE INTO {$table} VALUES ({$v})" );
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 		if ( $this->db->getErrorNum() ) {
 			throw new SPException( $this->db->stderr() );
@@ -661,7 +661,7 @@ class SPJoomlaDb
 		$v = implode( ',', $v );
 		try {
 			$this->exec( "INSERT {$ignore} INTO {$table} VALUES ({$v})" );
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 		if ( $this->db->getErrorNum() ) {
 			throw new SPException( $this->db->stderr() );
@@ -725,7 +725,7 @@ class SPJoomlaDb
 		$update = $update ? "ON DUPLICATE KEY UPDATE {$vars}" : null;
 		try {
 			$this->exec( "INSERT {$ignore} INTO {$table} ( `{$k}` ) VALUES ({$rows}) {$update}" );
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 		if ( $this->db->getErrorNum() ) {
 			throw new SPException( $this->db->stderr() );
@@ -768,7 +768,7 @@ class SPJoomlaDb
 		$k = implode( ',', $k );
 		try {
 			$this->exec( "INSERT INTO {$table} ({$k}) VALUES ({$v}) ON DUPLICATE KEY UPDATE {$c}" );
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 		if ( $this->db->getErrorNum() ) {
 			throw new SPException( $this->db->stderr() );
@@ -819,7 +819,7 @@ class SPJoomlaDb
 		try {
 			$r = $this->db->loadResult();
 			$this->count++;
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 
 		if ( $this->db->getErrorNum() ) {
@@ -841,7 +841,7 @@ class SPJoomlaDb
 		try {
 			$r = $this->db->loadResultArray();
 			$this->count++;
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 
 		if ( $this->db->getErrorNum() ) {
@@ -864,7 +864,7 @@ class SPJoomlaDb
 		try {
 			$r = $this->db->loadAssocList( $key );
 			$this->count++;
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 
 		if ( $this->db->getErrorNum() ) {
@@ -886,7 +886,7 @@ class SPJoomlaDb
 		try {
 			$r = $this->db->loadObject();
 			$this->count++;
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 
 		if ( $this->db->getErrorNum() ) {
@@ -917,7 +917,7 @@ class SPJoomlaDb
 		try {
 			$r = $this->db->loadObjectList( $key );
 			$this->count++;
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 
 		if ( $this->db->getErrorNum() ) {
@@ -939,7 +939,7 @@ class SPJoomlaDb
 		try {
 			$r = $this->db->loadRow();
 			$this->count++;
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 
 		if ( $this->db->getErrorNum() ) {
@@ -962,7 +962,7 @@ class SPJoomlaDb
 		try {
 			$r = $this->db->loadRowList( $key );
 			$this->count++;
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 
 		if ( $this->db->getErrorNum() ) {
@@ -1005,7 +1005,7 @@ class SPJoomlaDb
 		$this->setQuery( $query );
 		try {
 			$r = $this->query();
-		} catch ( JException $e ) {
+		} catch ( Exception $e ) {
 		}
 		if ( $this->db->getErrorNum() ) {
 			throw new SPException( $this->db->stderr() );
@@ -1028,7 +1028,7 @@ class SPJoomlaDb
 			$this->setQuery( "SHOW COLUMNS FROM {$table}" );
 			try {
 				$cache[ $table ] = $this->loadResultArray();
-			} catch ( JException $e ) {
+			} catch ( Exception $e ) {
 			}
 			if ( $this->db->getErrorNum() ) {
 				throw new SPException( $this->db->stderr() );

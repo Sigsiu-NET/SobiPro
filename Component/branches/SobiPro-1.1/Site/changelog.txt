@@ -32,6 +32,12 @@ Legend:
 -------------------
 
     (#) Messages que overflow.
+    (#) Category field causes 500 error if contains comma separated data
+    (#) SobiPro redirects are causing a 303 code
+    (#) DatePicker converts timestamp to a scientific notation on some servers. Forcing integer output
+    (#) Router - not possible to use dash in the in config defined alias (Issue #1322)
+
+    (!) Changed deprecated JException to core Exception
 
 -------------------
 1.1.10 (28 July 2014)
