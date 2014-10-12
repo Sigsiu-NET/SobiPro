@@ -31,6 +31,8 @@ Legend:
 1.1.11 ()
 -------------------
 
+    (+) Possibility to define parent container for datePicker
+
     (#) Messages que overflow.
     (#) Category field causes 500 error if contains comma separated data
     (#) SobiPro redirects are causing a 303 code
