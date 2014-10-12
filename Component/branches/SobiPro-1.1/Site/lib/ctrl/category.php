@@ -211,7 +211,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 	 */
 	private function parents()
 	{
-		sleep( 5 );
+//		sleep( 5 );
 		$sid = SPRequest::sid();
 		$out = SPRequest::cmd( 'out', 'json' );
 		$path = SPFactory::config()->getParentPath( $sid, true, false, true );
