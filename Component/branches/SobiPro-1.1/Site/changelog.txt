@@ -36,6 +36,7 @@ Legend:
     (#) SobiPro redirects are causing a 303 code
     (#) DatePicker converts timestamp to a scientific notation on some servers. Forcing integer output
     (#) Router - not possible to use dash in the in config defined alias (Issue #1322)
+    (#) Creation date of the duplicated entry is the same as the original (Issue #1328)
 
     (!) Changed deprecated JException to core Exception
 
