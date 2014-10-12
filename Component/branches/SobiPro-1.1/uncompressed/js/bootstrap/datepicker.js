@@ -86,7 +86,8 @@ $ = SobiPro.jQuery;
 				icon.removeClass( this.timeIcon );
 				icon.addClass( this.dateIcon );
 			}
-			this.widget = SobiPro.jQuery( getTemplate( this.timeIcon, options.pickDate, options.pickTime, options.pick12HourFormat, options.pickSeconds, options.collapse ) ).appendTo( '#SobiPro' );
+			var parentContainer = this.$element.find( 'input' ).data( 'appendTo' ) && this.$element.find( 'input' ).data( 'appendTo' ).length ? this.$element.find( 'input' ).data( 'appendTo' ) : '#SobiPro';
+			this.widget = SobiPro.jQuery( getTemplate( this.timeIcon, options.pickDate, options.pickTime, options.pick12HourFormat, options.pickSeconds, options.collapse ) ).appendTo( parentContainer );
 			this.minViewMode = options.minViewMode || this.$element.data( 'date-minviewmode' ) || 0;
 			if ( typeof this.minViewMode === 'string' ) {
 				switch ( this.minViewMode ) {
