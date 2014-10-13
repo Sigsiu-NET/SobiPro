@@ -654,8 +654,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$secret = md5( Sobi::Cfg( 'secret' ) );
 		if ( $data ) {
 			$properties = SPRequest::file( $ident );
-			$fileName = md5( SPRequest::file( $ident, 'name' ) . time() . $secret );
-			$path = SPLoader::dirPath( "tmp.files.{$secret}", 'front', false ) . $fileName . '/' . SPRequest::file( $ident, 'name' );
+			$dirNameHash = md5( SPRequest::file( $ident, 'name' ) . time() . $secret );
+			$dirName = SPLoader::dirPath( "tmp.files.{$secret}.{$dirNameHash}", 'front', false );
+			SPFs::mkdir( $dirName );
+			$path = $dirName . SPRequest::file( $ident, 'name' );
 			/** @var $file SPFile */
 			$file = SPFactory::Instance( 'base.fs.file' );
 			if ( !( $file->upload( $data, $path ) ) ) {
@@ -668,8 +670,13 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$response = array(
 					'type' => 'success',
 					'text' => Sobi::Txt( 'FILE_UPLOADED', $properties[ 'name' ], $type ),
-					'id' => 'directory://' . $fileName,
-					'data' => array( 'name' => $properties[ 'name' ], 'type' => $properties[ 'type' ], 'size' => $properties[ 'size' ] )
+					'id' => 'directory://' . $dirName,
+					'data' => array(
+							'name' => $properties[ 'name' ],
+							'type' => $properties[ 'type' ],
+							'size' => $properties[ 'size' ],
+							'original' => $dirNameHash . '/' . $properties[ 'name' ]
+					)
 			);
 		}
 		else {
@@ -679,7 +686,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					'id' => '',
 			);
 		}
-//		$this->message( $response );
+		$this->message( $response );
 	}
 
 	protected function check( $file )
