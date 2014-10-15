@@ -179,6 +179,12 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$js = true;
 		}
 		$field .= SPHtml_Input::fileUpload( $this->nid, 'image/*', null, 'spImageUpload', str_replace( 'field_', 'field.', $this->nid ) . '.upload' );
+		if ( $this->crop ) {
+			SPFactory::header()
+					->addJsFile( 'cropper' )
+					->addCssFile( 'cropper' );
+			$field .= SPHtml_Input::modalWindow( Sobi::Txt( 'IMAGE_CROP_HEADER' ), $this->nid . '_modal', null, 'modal hide', 'CLOSE', 'SAVE' );
+		}
 		if ( !$return ) {
 			echo $field;
 		}
@@ -760,7 +766,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			}
 			$image = clone $orgImage;
 			try {
-				$previewSize = explode( ':', Sobi::Cfg( 'image.preview_size', '300:300' ) );
+				$previewSize = explode( ':', Sobi::Cfg( 'image.preview_size', '500:500' ) );
 				$image->resample( $previewSize[ 0 ], $previewSize[ 1 ], false );
 				$image->saveAs( $dirName . 'resized_' . $orgFileName );
 			} catch ( SPException $x ) {
@@ -783,7 +789,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 			$response = array(
 					'type' => 'success',
-					'text' => Sobi::Txt( 'FILE_UPLOADED', $properties[ 'name' ], $type ),
+					'text' => Sobi::Txt( 'IMAGE_UPLOADED_CROP', $properties[ 'name' ], $type ),
 					'id' => 'directory://' . $dirNameHash,
 					'data' => array(
 							'name' => $properties[ 'name' ],
@@ -791,7 +797,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 							'size' => $properties[ 'size' ],
 							'original' => $dirNameHash . '/' . $properties[ 'name' ],
 							'icon' => $dirNameHash . '/' . 'icon_' . $orgFileName,
-							'crop' => $this->crop
+							'crop' => $this->crop,
+							'height' => $this->resizeHeight,
+							'width' => $this->resizeWidth,
 					)
 			);
 		}
