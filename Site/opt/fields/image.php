@@ -160,15 +160,25 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( $show ) {
 			$img = Sobi::Cfg( 'live_site' ) . $show;
 			$field .= "\n<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
+			$field .= "\n<div class=\"spEditImagePreview\">";
 			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\"/>";
+			$field .= "\n</div>";
 			$field .= SPHtml_Input::checkbox( $this->nid . '_delete', 1, Sobi::Txt( 'FD.IMG_DELETE_CURRENT_IMAGE' ), $this->nid . '_delete', false, array( 'class' => $this->cssClass ) );
 			$field .= "\n</div>\n";
 		}
-		if ( !( $js ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
-			SPFactory::header()->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( ".spFileUpload" ).SPFileUploader(); } );' );
+		else {
+			$field .= "\n<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
+			$field .= "\n<div class=\"spEditImagePreview\">";
+			$field .= "\n</div>";
+			$field .= "\n</div>\n";
+		}
+		if ( !( $js ) ) {
+			SPFactory::header()
+					->addJsFile( 'opt.field_image_edit' )
+					->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( ".spImageUpload" ).SPFileUploader(); } );' );
 			$js = true;
 		}
-		$field .= SPHtml_Input::fileUpload( $this->nid, 'image/*', null, 'spFileUpload', str_replace( 'field_', 'field.', $this->nid ) . '.upload' );
+		$field .= SPHtml_Input::fileUpload( $this->nid, 'image/*', null, 'spImageUpload', str_replace( 'field_', 'field.', $this->nid ) . '.upload' );
 		if ( !$return ) {
 			echo $field;
 		}
@@ -248,11 +258,39 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
+		$directory = SPRequest::string( $this->nid, null, false, $request );
+		$fileSize = SPRequest::file( $this->nid, 'size' );
 		if ( strtolower( $request ) == 'post' || strtolower( $request ) == 'get' ) {
 			$data = SPRequest::file( $this->nid, 'tmp_name' );
 		}
 		else {
 			$data = SPRequest::file( $this->nid, 'tmp_name', $request );
+		}
+		if ( $directory && strstr( $directory, 'directory://' ) ) {
+			list( $data, $dirName, $files ) = $this->getAjaxFiles( $directory );
+			if ( count( $files ) ) {
+				foreach ( $files as $file ) {
+					if ( $file == '.' ) {
+						continue;
+					}
+					if ( $file == '..' ) {
+						continue;
+					}
+					if ( strpos( $file, 'icon_' ) !== false ) {
+						continue;
+					}
+					if ( strpos( $file, 'resized_' ) !== false ) {
+						continue;
+					}
+					if ( strpos( $file, 'cropped_' ) !== false ) {
+						continue;
+					}
+					if ( strpos( $file, '.var' ) !== false ) {
+						continue;
+					}
+					$fileSize = filesize( $dirName . $file );
+				}
+			}
 		}
 		$del = SPRequest::bool( $this->nid . '_delete', false, $request );
 		$dexs = strlen( $data );
@@ -263,7 +301,6 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			}
 		}
 
-		$fileSize = SPRequest::file( $this->nid, 'size' );
 		if ( $fileSize > $this->maxSize ) {
 			throw new SPException( SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $fileSize, $this->maxSize ) );
 		}
@@ -305,6 +342,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			return false;
 		}
 		$del = SPRequest::bool( $this->nid . '_delete', false, $request );
+		$fileSize = SPRequest::file( $this->nid, 'size' );
+		$cropped = null;
 		static $store = null;
 		$cache = false;
 		if ( $store == null ) {
@@ -326,12 +365,46 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$data = SPRequest::file( $this->nid, 'tmp_name' );
 			$orgName = SPRequest::file( $this->nid, 'name' );
 		}
+		/** Wed, Oct 15, 2014 13:51:03
+		 * Implemented a cropper with Ajax checker.
+		 * This is the actual method to get those files
+		 * Other methods left for BC
+		 * */
+		if ( !( $data ) ) {
+			$directory = SPRequest::string( $this->nid, null, false, $request );
+			list( $data, $dirName, $files ) = $this->getAjaxFiles( $directory );
+			if ( count( $files ) ) {
+				foreach ( $files as $file ) {
+					if ( $file == '.' ) {
+						continue;
+					}
+					if ( $file == '..' ) {
+						continue;
+					}
+					if ( strpos( $file, 'icon_' ) !== false ) {
+						continue;
+					}
+					if ( strpos( $file, 'resized_' ) !== false ) {
+						continue;
+					}
+					if ( strpos( $file, 'cropped_' ) !== false ) {
+						$cropped = $dirName . $file;
+						continue;
+					}
+					if ( strpos( $file, '.var' ) !== false ) {
+						continue;
+					}
+					$fileSize = filesize( $dirName . $file );
+					$orgName = $file;
+				}
+			}
+			$data = strlen( $cropped ) ? $cropped : $dirName . $file;
+		}
 		$files = array();
 		$sPath = $this->parseName( $entry, $orgName, $this->savePath );
 		$path = SPLoader::dirPath( $sPath, 'root', false );
 		/* if we have an image */
 		if ( $data ) {
-			$fileSize = SPRequest::file( $this->nid, 'size' );
 			if ( $fileSize > $this->maxSize ) {
 				throw new SPException( SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $fileSize, $this->maxSize ) );
 			}
@@ -654,37 +727,76 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$secret = md5( Sobi::Cfg( 'secret' ) );
 		if ( $data ) {
 			$properties = SPRequest::file( $ident );
-			$dirNameHash = md5( SPRequest::file( $ident, 'name' ) . time() . $secret );
+			$orgFileName = $properties[ 'name' ];
+			if ( $properties[ 'size' ] > $this->maxSize ) {
+				$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $properties[ 'size' ], $this->maxSize ), 'id' => '', ) );
+			}
+			$dirNameHash = md5( $orgFileName . time() . $secret );
 			$dirName = SPLoader::dirPath( "tmp.files.{$secret}.{$dirNameHash}", 'front', false );
 			SPFs::mkdir( $dirName );
-			$path = $dirName . SPRequest::file( $ident, 'name' );
-			/** @var $file SPFile */
-			$file = SPFactory::Instance( 'base.fs.file' );
-			if ( !( $file->upload( $data, $path ) ) ) {
+			$path = $dirName . $orgFileName;
+			/** @var $file SPImage */
+			$orgImage = SPFactory::Instance( 'base.fs.image' );
+			if ( !( $orgImage->upload( $data, $path ) ) ) {
 				$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'CANNOT_UPLOAD_FILE' ), 'id' => '' ) );
 			}
-			$path = $file->getPathname();
+			if ( Sobi::Cfg( 'image_field.fix_rotation', true ) ) {
+				if ( $orgImage->fixRotation() ) {
+					$orgImage->save();
+				}
+			}
+			if ( $this->crop ) {
+				$croppedImage = clone $orgImage;
+				list( $originalWidth, $originalHeight ) = getimagesize( $path );
+				$aspectRatio = $this->resizeWidth / $this->resizeHeight;
+				$width = $aspectRatio * $originalHeight > $originalWidth ? $originalWidth : $aspectRatio * $originalHeight;
+				$height = $originalWidth / $aspectRatio > $originalHeight ? $originalHeight : $originalWidth / $aspectRatio;
+				$croppedImage->crop( $width, $height );
+				$croppedImage->saveAs( $dirName . 'cropped_' . $orgFileName );
+				$ico = SPFactory::Instance( 'base.fs.image', $dirName . 'cropped_' . $orgFileName );
+			}
+			else {
+				$ico = clone $orgImage;
+			}
+			$image = clone $orgImage;
+			try {
+				$previewSize = explode( ':', Sobi::Cfg( 'image.preview_size', '300:300' ) );
+				$image->resample( $previewSize[ 0 ], $previewSize[ 1 ], false );
+				$image->saveAs( $dirName . 'resized_' . $orgFileName );
+			} catch ( SPException $x ) {
+				$image->delete();
+				$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ), 'id' => '', ) );
+			}
+			try {
+				$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '80:80' ) );
+				$ico->resample( $icoSize[ 0 ], $icoSize[ 1 ], false );
+				$ico->saveAs( $dirName . 'icon_' . $orgFileName );
+			} catch ( SPException $x ) {
+				$ico->delete();
+				$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ), 'id' => '', ) );
+			}
+
+			$path = $orgImage->getPathname();
 			$type = $this->check( $path );
 			$properties[ 'tmp_name' ] = $path;
-			SPFs::write( $path . '.var', SPConfig::serialize( $properties ) );
+			SPFs::write( SPLoader::dirPath( "tmp.files.{$secret}", 'front', false ) . '/' . $orgFileName . '.var', SPConfig::serialize( $properties ) );
+
 			$response = array(
 					'type' => 'success',
 					'text' => Sobi::Txt( 'FILE_UPLOADED', $properties[ 'name' ], $type ),
-					'id' => 'directory://' . $dirName,
+					'id' => 'directory://' . $dirNameHash,
 					'data' => array(
 							'name' => $properties[ 'name' ],
 							'type' => $properties[ 'type' ],
 							'size' => $properties[ 'size' ],
-							'original' => $dirNameHash . '/' . $properties[ 'name' ]
+							'original' => $dirNameHash . '/' . $properties[ 'name' ],
+							'icon' => $dirNameHash . '/' . 'icon_' . $orgFileName,
+							'crop' => $this->crop
 					)
 			);
 		}
 		else {
-			$response = array(
-					'type' => 'error',
-					'text' => SPLang::e( 'CANNOT_UPLOAD_FILE_NO_DATA' ),
-					'id' => '',
-			);
+			$response = array( 'type' => 'error', 'text' => SPLang::e( 'CANNOT_UPLOAD_FILE_NO_DATA' ), 'id' => '', );
 		}
 		$this->message( $response );
 	}
@@ -695,7 +807,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$mType = SPFactory::Instance( 'services.fileinfo', $file )->mimeType();
 		if ( strlen( $mType ) && !( in_array( $mType, $allowed ) ) ) {
 			SPFs::delete( $file );
-//			$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'FILE_WRONG_TYPE', $mType ), 'id' => '' ) );
+			$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'FILE_WRONG_TYPE', $mType ), 'id' => '' ) );
 		}
 		return $mType;
 	}
@@ -707,5 +819,34 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				->customHeader();
 		echo json_encode( $response );
 		exit;
+	}
+
+	/**
+	 * */
+	public function ProxyIcon()
+	{
+		$secret = md5( Sobi::Cfg( 'secret' ) );
+		$file = SPRequest::string( 'file' );
+		$file = explode( '/', $file );
+		$dirName = SPLoader::dirPath( "tmp.files.{$secret}.{$file[0]}", 'front', true );
+		$fileName = $dirName . $file[ 1 ];
+		header( 'Content-Type:' . image_type_to_mime_type( exif_imagetype( $fileName ) ) );
+		header( 'Content-Length: ' . filesize( $fileName ) );
+		readfile( $fileName );
+		exit;
+	}
+
+	/**
+	 * @param $directory
+	 * @return array
+	 */
+	private function getAjaxFiles( $directory )
+	{
+		$secret = md5( Sobi::Cfg( 'secret' ) );
+		$dirNameHash = str_replace( 'directory://', null, $directory );
+		$data = $dirNameHash;
+		$dirName = SPLoader::dirPath( "tmp.files.{$secret}.{$dirNameHash}", 'front', false );
+		$files = scandir( $dirName );
+		return array( $data, $dirName, $files );
 	}
 }

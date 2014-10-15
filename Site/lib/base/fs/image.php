@@ -59,6 +59,31 @@ class SPImage extends SPFile
 		}
 	}
 
+
+	/**
+	 * Resample image
+	 * @param $width
+	 * @param $height
+	 * @param $x
+	 * @param $y
+	 * @throws SPException
+	 * @return bool
+	 */
+	public function crop( $width, $height, $x = 0, $y = 0 )
+	{
+		if ( !$this->_content ) {
+			$this->read();
+		}
+		list( $wOrg, $hOrg, $imgType ) = getimagesize( $this->_filename );
+		$this->type = $imgType;
+		$currentImg = $this->createImage( $imgType );
+		$this->image = imagecrop( $currentImg, array( 'x' => $x, 'y' => $y, 'width' => $width, 'height' => $height ) );
+		if ( $imgType == IMAGETYPE_GIF || $imgType == IMAGETYPE_PNG ) {
+			$this->transparency( $this->image );
+		}
+		$this->storeImage();
+	}
+
 	/**
 	 * Resample image
 	 * @param $width
