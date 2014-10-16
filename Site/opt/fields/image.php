@@ -159,26 +159,32 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 		if ( $show ) {
 			$img = Sobi::Cfg( 'live_site' ) . $show;
-			$field .= "\n<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
-			$field .= "\n<div class=\"spEditImagePreview\">";
+		}
+		$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '80:80' ) );
+		$field .= "\n<div class=\"row spImageField\">";
+		$field .= "\n<div class=\"span2\">";
+		$field .= "\n<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
+		$field .= "\n<div class=\"spEditImagePreview\" style=\"width: {$icoSize[ 0 ]}px; height: {$icoSize[ 1 ]}px;\">";
+		if ( $show ) {
 			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\"/>";
-			$field .= "\n</div>";
+		}
+		$field .= "\n</div>";
+		$field .= "\n</div>";
+		$field .= "\n</div>";
+		$field .= "\n<div class=\"span5\">";
+		if ( $show ) {
 			$field .= SPHtml_Input::checkbox( $this->nid . '_delete', 1, Sobi::Txt( 'FD.IMG_DELETE_CURRENT_IMAGE' ), $this->nid . '_delete', false, array( 'class' => $this->cssClass ) );
-			$field .= "\n</div>\n";
 		}
-		else {
-			$field .= "\n<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
-			$field .= "\n<div class=\"spEditImagePreview\">";
-			$field .= "\n</div>";
-			$field .= "\n</div>\n";
-		}
+		$field .= SPHtml_Input::fileUpload( $this->nid, 'image/*', null, 'spImageUpload', str_replace( 'field_', 'field.', $this->nid ) . '.upload' );
+		$field .= "\n</div>";
+		$field .= "\n</div>";
+
 		if ( !( $js ) ) {
 			SPFactory::header()
 					->addJsFile( 'opt.field_image_edit' )
 					->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( ".spImageUpload" ).SPFileUploader(); } );' );
 			$js = true;
 		}
-		$field .= SPHtml_Input::fileUpload( $this->nid, 'image/*', null, 'spImageUpload', str_replace( 'field_', 'field.', $this->nid ) . '.upload' );
 		if ( $this->crop ) {
 			SPFactory::header()
 					->addJsFile( 'cropper' )
@@ -265,7 +271,6 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	private function verify( $entry, $request )
 	{
 		$directory = SPRequest::string( $this->nid, null, false, $request );
-		$fileSize = SPRequest::file( $this->nid, 'size' );
 		if ( strtolower( $request ) == 'post' || strtolower( $request ) == 'get' ) {
 			$data = SPRequest::file( $this->nid, 'tmp_name' );
 		}
@@ -297,6 +302,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					$fileSize = filesize( $dirName . $file );
 				}
 			}
+		}
+		else {
+			$fileSize = SPRequest::file( $this->nid, 'size' );
 		}
 		$del = SPRequest::bool( $this->nid . '_delete', false, $request );
 		$dexs = strlen( $data );
@@ -378,41 +386,43 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		 * */
 		if ( !( $data ) ) {
 			$directory = SPRequest::string( $this->nid, $store[ $this->nid ], false, $request );
-			list( $data, $dirName, $files, $coordinates ) = $this->getAjaxFiles( $directory );
-			if ( count( $files ) ) {
-				foreach ( $files as $file ) {
-					if ( $file == '.' ) {
-						continue;
+			if ( strlen( $directory ) ) {
+				list( $data, $dirName, $files, $coordinates ) = $this->getAjaxFiles( $directory );
+				if ( count( $files ) ) {
+					foreach ( $files as $file ) {
+						if ( $file == '.' ) {
+							continue;
+						}
+						if ( $file == '..' ) {
+							continue;
+						}
+						if ( strpos( $file, 'icon_' ) !== false ) {
+							continue;
+						}
+						if ( strpos( $file, 'resized_' ) !== false ) {
+							continue;
+						}
+						if ( strpos( $file, 'cropped_' ) !== false ) {
+							$cropped = $dirName . $file;
+							continue;
+						}
+						if ( strpos( $file, '.var' ) !== false ) {
+							continue;
+						}
+						$fileSize = filesize( $dirName . $file );
+						$orgName = $file;
 					}
-					if ( $file == '..' ) {
-						continue;
-					}
-					if ( strpos( $file, 'icon_' ) !== false ) {
-						continue;
-					}
-					if ( strpos( $file, 'resized_' ) !== false ) {
-						continue;
-					}
-					if ( strpos( $file, 'cropped_' ) !== false ) {
-						$cropped = $dirName . $file;
-						continue;
-					}
-					if ( strpos( $file, '.var' ) !== false ) {
-						continue;
-					}
-					$fileSize = filesize( $dirName . $file );
-					$orgName = $file;
 				}
+				if ( strlen( $coordinates ) ) {
+					$coordinates = json_decode( SPLang::clean( $coordinates ), true );
+					/** @var SPImage $croppedImage */
+					$croppedImage = SPFactory::Instance( 'base.fs.image', $dirName . $orgName );
+					$croppedImage->crop( $coordinates[ 'width' ], $coordinates[ 'height' ], $coordinates[ 'x' ], $coordinates[ 'y' ] );
+					$cropped = $dirName . 'cropped_' . $file;
+					$croppedImage->saveAs( $cropped );
+				}
+				$data = strlen( $cropped ) ? $cropped : $dirName . $file;
 			}
-			if ( strlen( $coordinates ) ) {
-				$coordinates = json_decode( SPLang::clean( $coordinates ), true );
-				/** @var SPImage $croppedImage */
-				$croppedImage = SPFactory::Instance( 'base.fs.image', $dirName . $orgName );
-				$croppedImage->crop( $coordinates[ 'width' ], $coordinates[ 'height' ], $coordinates[ 'x' ], $coordinates[ 'y' ] );
-				$cropped = $dirName . 'cropped_' . $file;
-				$croppedImage->saveAs( $cropped );
-			}
-			$data = strlen( $cropped ) ? $cropped : $dirName . $file;
 		}
 		$files = array();
 		$sPath = $this->parseName( $entry, $orgName, $this->savePath );
@@ -501,9 +511,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$this->delImgs();
 			$files = array();
 		}
-//		else {
-//			return true;
-//		}
+		else {
+			return true;
+		}
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		$this->verify( $entry, $request );

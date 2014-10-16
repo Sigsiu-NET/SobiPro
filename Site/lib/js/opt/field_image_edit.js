@@ -29,6 +29,7 @@ SobiPro.jQuery( document ).ready( function ()
 			var Nid = Id.replace( 'field_', 'field.' );
 			SobiPro.jQuery( this )
 				.parent()
+				.parent()
 				.find( '.spEditImagePreview' )
 				.html( '<img style="cursor:pointer;" id="' + Id + '_icon" class="spImageCrop" src="index.php?option=com_sobipro&task=' + Nid + '.icon&sid=' + SobiProSection + '&file=' + response.responseJSON.data.icon + '"/>' );
 			SobiPro.jQuery( '#' + Id + '_icon' )
@@ -54,7 +55,7 @@ SobiPro.jQuery( document ).ready( function ()
 						},
 						done: function ( data )
 						{
-							if ( data.x ) {
+							if ( data.length || true ) {
 								SobiPro.jQuery( '#' + Id + '_modal' ).attr( 'data-coordinates', '::coordinates://' + JSON.stringify( {
 									'x': data.x,
 									'y': data.y,
@@ -69,15 +70,17 @@ SobiPro.jQuery( document ).ready( function ()
 				Modal.find( 'a.save' ).click( function ( ev )
 				{
 					//ev.preventDefault();
-					//ev.stopPropagation();
+					//ev.stopPropagation()
 					var Store = Proxy.parent().parent().parent().find( '.idStore' );
 					var Current = Store.val();
-					if ( Current.indexOf( 'coordinates://' ) != -1 ) {
-						var currentArray = Current.split( '::coordinates://' );
-						Store.val( currentArray[0] + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );
-					}
-					else {
-						Store.val( Current + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );
+					if ( Current + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ).length ) {
+						if ( Current.indexOf( 'coordinates://' ) != -1 ) {
+							var currentArray = Current.split( 'coordinates://' );
+							Store.val( currentArray[0] + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );
+						}
+						else {
+							Store.val( Current + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );
+						}
 					}
 				} )
 			} );

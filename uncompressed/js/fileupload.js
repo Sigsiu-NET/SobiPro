@@ -28,10 +28,10 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 	this.settings = {
 		'hideProgressBar': true,
 		'styles': {
-			'.progress': {'clear': 'left', 'float': 'left', 'margin': '10px 10px 10px 0' },
+			'.progress': { /*'clear': 'left', 'float': 'left', */'margin': '10px 10px 10px 10px' },
 			'.alert': {'clear': 'both' },
 			'.file input': { 'margin-bottom': '10px'},
-			'.progress-message': { 'margin-top': '10px'}
+			'.progress-message': { }
 		}
 	};
 	this.settings = SobiPro.jQuery.extend( true, options, this.settings );
