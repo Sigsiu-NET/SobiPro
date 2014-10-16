@@ -69,11 +69,9 @@ SobiPro.jQuery( document ).ready( function ()
 				var Modal = SobiPro.jQuery( '#' + Id + '_modal' ).modal();
 				Modal.find( 'a.save' ).click( function ( ev )
 				{
-					//ev.preventDefault();
-					//ev.stopPropagation()
-					var Store = Proxy.parent().parent().parent().find( '.idStore' );
+					var Store = SobiPro.jQuery( '[name="' + Id + '"]');
 					var Current = Store.val();
-					if ( Current + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ).length ) {
+					if ( Current && SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ).length ) {
 						if ( Current.indexOf( 'coordinates://' ) != -1 ) {
 							var currentArray = Current.split( 'coordinates://' );
 							Store.val( currentArray[0] + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );
