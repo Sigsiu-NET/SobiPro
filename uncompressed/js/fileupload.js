@@ -48,7 +48,7 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 
 	this.complete = function ( xhr )
 	{
-		proxy.trigger( 'uploadComplete', [xhr] );
+		proxy.trigger( 'uploadComplete', [ xhr ] );
 		var percentVal = '100%';
 		bar.width( percentVal );
 		progressMessage.html( percentVal );

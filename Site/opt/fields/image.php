@@ -356,7 +356,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$store = SPFactory::registry()->get( 'requestcache_stored' );
 		}
 		if ( is_array( $store ) && isset( $store[ $this->nid ] ) ) {
-			if ( !( strstr( $store[ $this->nid ], 'file://' ) ) ) {
+			if ( !( strstr( $store[ $this->nid ], 'file://' ) ) && !( strstr( $store[ $this->nid ], 'directory://' ) ) ) {
 				$data = $store[ $this->nid ];
 				$cache = true;
 				$orgName = SPRequest::file( $this->nid, 'name', $request );
@@ -377,8 +377,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		 * Other methods left for BC
 		 * */
 		if ( !( $data ) ) {
-			$directory = SPRequest::string( $this->nid, null, false, $request );
-			list( $data, $dirName, $files ) = $this->getAjaxFiles( $directory );
+			$directory = SPRequest::string( $this->nid, $store[ $this->nid ], false, $request );
+			list( $data, $dirName, $files, $coordinates ) = $this->getAjaxFiles( $directory );
 			if ( count( $files ) ) {
 				foreach ( $files as $file ) {
 					if ( $file == '.' ) {
@@ -404,6 +404,14 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					$orgName = $file;
 				}
 			}
+			if ( strlen( $coordinates ) ) {
+				$coordinates = json_decode( SPLang::clean( $coordinates ), true );
+				/** @var SPImage $croppedImage */
+				$croppedImage = SPFactory::Instance( 'base.fs.image', $dirName . $orgName );
+				$croppedImage->crop( $coordinates[ 'width' ], $coordinates[ 'height' ], $coordinates[ 'x' ], $coordinates[ 'y' ] );
+				$cropped = $dirName . 'cropped_' . $file;
+				$croppedImage->saveAs( $cropped );
+			}
 			$data = strlen( $cropped ) ? $cropped : $dirName . $file;
 		}
 		$files = array();
@@ -413,6 +421,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( $data ) {
 			if ( $fileSize > $this->maxSize ) {
 				throw new SPException( SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $fileSize, $this->maxSize ) );
+			}
+			if ( $cropped ) {
+
 			}
 			/**
 			 * @var SPImage $orgImage
@@ -851,10 +862,16 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	private function getAjaxFiles( $directory )
 	{
 		$secret = md5( Sobi::Cfg( 'secret' ) );
+		$coordinates = null;
 		$dirNameHash = str_replace( 'directory://', null, $directory );
+		if ( strstr( $dirNameHash, '::coordinates://' ) ) {
+			$struct = explode( '::coordinates://', $dirNameHash );
+			$dirNameHash = $struct[ 0 ];
+			$coordinates = $struct[ 1 ];
+		}
 		$data = $dirNameHash;
 		$dirName = SPLoader::dirPath( "tmp.files.{$secret}.{$dirNameHash}", 'front', false );
 		$files = scandir( $dirName );
-		return array( $data, $dirName, $files );
+		return array( $data, $dirName, $files, $coordinates );
 	}
 }

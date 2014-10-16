@@ -25,54 +25,59 @@ SobiPro.jQuery( document ).ready( function ()
 	SobiPro.jQuery( '.spImageUpload' ).bind( 'uploadComplete', function ( ev, response )
 	{
 		if ( response.responseJSON.data && response.responseJSON.data.icon && response.responseJSON.data.icon.length ) {
-			var id = SobiPro.jQuery( this ).parent().find( '.idStore' ).attr( 'name' );
-			var nid = id.replace( 'field_', 'field.' );
+			var Id = SobiPro.jQuery( this ).parent().find( '.idStore' ).attr( 'name' );
+			var Nid = Id.replace( 'field_', 'field.' );
 			SobiPro.jQuery( this )
 				.parent()
 				.find( '.spEditImagePreview' )
-				.html( '<img style="cursor:pointer;" id="' + id + '_icon" class="spImageCrop" src="index.php?option=com_sobipro&task=' + nid + '.icon&sid=' + SobiProSection + '&file=' + response.responseJSON.data.icon + '"/>' );
-			SobiPro.jQuery( '#' + id + '_icon' )
+				.html( '<img style="cursor:pointer;" id="' + Id + '_icon" class="spImageCrop" src="index.php?option=com_sobipro&task=' + Nid + '.icon&sid=' + SobiProSection + '&file=' + response.responseJSON.data.icon + '"/>' );
+			SobiPro.jQuery( '#' + Id + '_icon' )
 				.attr( 'data-width', response.responseJSON.data.width )
 				.attr( 'data-height', response.responseJSON.data.height );
 			SobiPro.jQuery( '.spImageCrop' ).click( function ()
 			{
-				var id = SobiPro.jQuery( this ).attr( 'id' ).replace( '_icon', '' );
+				var Id = SobiPro.jQuery( this ).attr( 'Id' ).replace( '_icon', '' );
 				//var url = SobiPro.jQuery( this ).attr( 'src' ).replace( 'icon_', 'resized_' );
-				var url = SobiPro.jQuery( this ).attr( 'src' ).replace( 'icon_', '' );
-				var pId = SobiPro.jQuery( this ).attr( 'id' ).replace( '_icon', '_preview' );
-				SobiPro.jQuery( '#' + id + '_modal' )
-					.find( '.modal-body' )
-					.html( '<img src="' + url + '" id="' + pId + '"/>' );
-				var proxy = SobiPro.jQuery( this );
-				SobiPro.jQuery( '#' + pId ).cropper( {
-					aspectRatio: proxy.data( 'width' ) / proxy.data( 'height' ),
-					data: {
-						x: 0,
-						y: 0
-					},
-					done: function ( data )
-					{
-						if ( data.x ) {
-							SobiPro.jQuery( '#' + id + '_modal' ).attr( 'data-coordinates', '::coordinates://' + JSON.stringify( {
-								'x': data.x,
-								'y': data.y,
-								'height': data.height,
-								'width': data.width
-							} ) );
+				var Url = SobiPro.jQuery( this ).attr( 'src' ).replace( 'icon_', '' );
+				var Pid = SobiPro.jQuery( this ).attr( 'Id' ).replace( '_icon', '_preview' );
+				if ( SobiPro.jQuery( '#' + Id + '_modal' ).attr( 'data-image-url' ) != Url ) {
+					SobiPro.jQuery( '#' + Id + '_modal' ).attr( 'data-image-url', Url );
+					SobiPro.jQuery( '#' + Id + '_modal' )
+						.find( '.modal-body' )
+						.html( '<img src="' + Url + '" Id="' + Pid + '"/>' );
+					var Proxy = SobiPro.jQuery( this );
+					SobiPro.jQuery( '#' + Pid ).cropper( {
+						aspectRatio: Proxy.data( 'width' ) / Proxy.data( 'height' ),
+						data: {
+							x: 0,
+							y: 0
+						},
+						done: function ( data )
+						{
+							if ( data.x ) {
+								SobiPro.jQuery( '#' + Id + '_modal' ).attr( 'data-coordinates', '::coordinates://' + JSON.stringify( {
+									'x': data.x,
+									'y': data.y,
+									'height': data.height,
+									'width': data.width
+								} ) );
+							}
 						}
-					}
-				} );
-				var modal = SobiPro.jQuery( '#' + id + '_modal' ).modal();
-				modal.find( 'a.save' ).click( function ()
+					} );
+				}
+				var Modal = SobiPro.jQuery( '#' + Id + '_modal' ).modal();
+				Modal.find( 'a.save' ).click( function ( ev )
 				{
-					var store = proxy.parent().parent().parent().find( '.idStore' );
-					var current = store.val();
-					if ( current.indexOf( 'coordinates://' ) != -1 ) {
-						var currentArray = current.split( 'coordinates://' );
-						store.val( currentArray[0] + SobiPro.jQuery( '#' + id + '_modal' ).data( 'coordinates' ) );
+					//ev.preventDefault();
+					//ev.stopPropagation();
+					var Store = Proxy.parent().parent().parent().find( '.idStore' );
+					var Current = Store.val();
+					if ( Current.indexOf( 'coordinates://' ) != -1 ) {
+						var currentArray = Current.split( '::coordinates://' );
+						Store.val( currentArray[0] + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );
 					}
 					else {
-						store.val( current + SobiPro.jQuery( '#' + id + '_modal' ).data( 'coordinates' ) );
+						Store.val( Current + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );
 					}
 				} )
 			} );
