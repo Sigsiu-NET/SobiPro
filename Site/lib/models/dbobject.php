@@ -527,7 +527,7 @@ abstract class SPDBObject extends SPObject
 
 		/* just a security check to avoid mistakes */
 		else {
-			$this->createdTime = $this->createdTime && is_numeric( $this->createdTime ) ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->createdTime ) : $this->createdTime;
+			$this->createdTime = $this->createdTime && is_numeric( $this->createdTime ) ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->createdTime + SPFactory::config()->getTimeOffset() ) : $this->createdTime;
 			$obj = SPFactory::object( $this->id );
 			if ( $obj->oType != $this->oType ) {
 				Sobi::Error( 'Object Save', sprintf( 'Serious security violation. Trying to save an object which claims to be an %s but it is a %s. Task was %s', $this->oType, $obj->oType, SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
@@ -535,10 +535,10 @@ abstract class SPDBObject extends SPObject
 			}
 		}
 		if ( is_numeric( $this->validUntil ) ) {
-			$this->validUntil = $this->validUntil ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validUntil ) : null;
+			$this->validUntil = $this->validUntil ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validUntil - SPFactory::config()->getTimeOffset() ) : null;
 		}
 		if ( is_numeric( $this->validSince ) ) {
-			$this->validSince = $this->validSince ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validSince ) : null;
+			$this->validSince = $this->validSince ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validSince - SPFactory::config()->getTimeOffset() ) : null;
 		}
 
 		/* @var SPdb $db */
