@@ -42,6 +42,7 @@ Legend:
     (#) If in datepicker all time options are disabled it is removing also 'now' and 'clear' buttons (Issue #1346)
     (#) Wrong date when Joomla! time zone is different than server time (Issue #1348)
     (#) Wrong results for range search (Issue #1343)
+    (#) SigsiuTree, category field: Disabled possibility to select (click) additional category as long the previous wasn't added (Issue #1347)
 
     (!) Changed deprecated JException to core Exception
 

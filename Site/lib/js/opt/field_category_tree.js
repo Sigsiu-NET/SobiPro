@@ -1,5 +1,5 @@
 /**
- * @version: $Id$
+ * @version: $Id: field_category_tree.js 4090 2014-02-20 15:57:30Z Sigrid Suski $
  * @package: SobiPro Library
 
  * @author
@@ -14,10 +14,10 @@
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
+ * $Date: 2014-02-20 16:57:30 +0100 (Thu, 20 Feb 2014) $
+ * $Revision: 4090 $
+ * $Author: Sigrid Suski $
+ * File location: components/com_sobipro/lib/js/opt/field_category_tree.js $
  */
 
 function SigsiuTreeEdit( options )
@@ -35,13 +35,14 @@ function SigsiuTreeEdit( options )
 	{
 		this.loading = true;
 		SobiPro.jQuery.ajax( {
-			'url':'index.php',
-			'data':{'option':'com_sobipro', 'task':'category.parents', 'sid':sid, 'out':'json'},
-			'type':'post',
-			'dataType':'json',
-			success:function ( data )
+			'url': 'index.php',
+			'data': {'option': 'com_sobipro', 'task': 'category.parents', 'sid': sid, 'out': 'json'},
+			'type': 'post',
+			'dataType': 'json',
+			success: function ( data )
 			{
-				SobiPro.jQuery.each( data.categories, function( i, category ) {
+				SobiPro.jQuery.each( data.categories, function ( i, category )
+				{
 					proxy.category = category;
 				} );
 				proxy.loading = false;
@@ -91,6 +92,8 @@ function SigsiuTreeEdit( options )
 			var wait = '<i class="icon-spinner icon-spin"></i>&nbsp;&nbsp;';
 			button.attr( 'disabled', 'disabled' );
 			button.html( wait + this.addBtn );
+			proxy.canvas.find( '.sigsiuTree' )
+				.addClass( 'disabledArea' );
 			return setTimeout( function ()
 			{
 				proxy.addCategory();
@@ -101,7 +104,7 @@ function SigsiuTreeEdit( options )
 			error = true;
 		}
 
-		if( proxy.settings.preventParents && proxy.category.childsCount > 0 ) {
+		if ( proxy.settings.preventParents && proxy.category.childsCount > 0 ) {
 			SobiPro.Alert( 'SELECT_CAT_WITH_NO_CHILDS' );
 			error = true;
 		}
@@ -116,15 +119,17 @@ function SigsiuTreeEdit( options )
 		if ( !( error ) ) {
 			this.selectField.append( new Option( SobiPro.StripSlashes( this.category.name ), this.category.id ) );
 			this.canvas.find( '[name="removeCategory"]' ).removeAttr( 'disabled', 'disabled' );
+			proxy.canvas.find( '.sigsiuTree' ).removeClass( 'disabledArea' );
 			if ( this.canvas.find( '.selected' ).find( 'select option' ).length >= this.settings.maxcats ) {
 				this.selectField.attr( 'readonly', 'readonly' );
 				button.attr( 'disabled', 'disabled' );
 			}
 			this.updateSelected();
 		}
+
 	};
 
-	this.canvas.find( '[name="addCategory"]' ).click( function ( )
+	this.canvas.find( '[name="addCategory"]' ).click( function ()
 	{
 		proxy.addCategory();
 	} );
@@ -148,9 +153,12 @@ function SigsiuTreeEdit( options )
 
 	try {
 		SobiPro.jQuery( '#' + this.settings.field + '_modal' ).click(
-			function() {
+			function ()
+			{
 //				SobiPro.jQuery( '#' + proxy.settings.field + '_modal' ).css( 'display', '');
 			}
 		);
-	} catch ( e ) {}
+	}
+	catch ( e ) {
+	}
 }

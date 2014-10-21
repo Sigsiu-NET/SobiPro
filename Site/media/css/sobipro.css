@@ -134,7 +134,6 @@
 
 .SobiPro .spdFileUpload .alert,
 .SobiPro .spImageUpload .alert {
-	/*max-width: 40%;*/
 	margin-top: 5px;
 }
 
@@ -144,4 +143,12 @@
 
 .SobiPro .spImageField label {
 	display: inline-block;
+}
+
+.SobiPro .disabledArea {
+	opacity: 0.3;
+	cursor:progress;
+}
+.SobiPro .disabledArea a {
+	cursor:progress;
 }
