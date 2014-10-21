@@ -41,6 +41,7 @@ Legend:
     (#) Creation date of the duplicated entry is the same as the original (Issue #1328)
     (#) If in datepicker all time options are disabled it is removing also 'now' and 'clear' buttons (Issue #1346)
     (#) Wrong date when Joomla! time zone is different than server time (Issue #1348)
+    (#) Wrong results for range search (Issue #1343)
 
     (!) Changed deprecated JException to core Exception
 

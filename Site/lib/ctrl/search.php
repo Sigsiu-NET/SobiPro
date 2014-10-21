@@ -251,7 +251,11 @@ class SPSearchCtrl extends SPSectionCtrl
 					}
 				}
 			}
-			if ( is_array( $results ) && count( $results ) ) {
+			/** Tue, Oct 21, 2014 10:18:37
+			 * No result is also a result so no "count"
+			 * */
+//			if ( is_array( $results ) && count( $results ) ) {
+			if ( is_array( $results ) ) {
 				/* if we had also a string to search we have to get the intersection */
 				if ( $searchForString ) {
 					$this->_results = array_intersect( $this->_results, $results );
