@@ -28,22 +28,21 @@ Legend:
 
 
 -------------------
-1.1.11 ()
+1.1.11 (Sun, Oct 12, 2014 19:59:36 )
 -------------------
 
     (+) Possibility to define parent container for datePicker
-    (+) Image Field functionality extended: possibility to crop an image
 
-    (#) Messages queue overflow
+    (#) Messages que overflow.
     (#) Category field causes 500 error if contains comma separated data
     (#) SobiPro redirects are causing a 303 code
-    (#) DatePicker converts timestamp to a scientific notation on some servers; forcing integer output
+    (#) DatePicker converts timestamp to a scientific notation on some servers. Forcing integer output
     (#) Router - not possible to use dash in the in config defined alias (Issue #1322)
     (#) Creation date of the duplicated entry is the same as the original (Issue #1328)
     (#) If in datepicker all time options are disabled it is removing also 'now' and 'clear' buttons (Issue #1346)
     (#) Wrong date when Joomla! time zone is different than server time (Issue #1348)
     (#) Wrong results for range search (Issue #1343)
-    (#) SigsiuTree, category field: disabled possibility to select (click) additional category as long as the previous wasn't added (Issue #1347)
+    (#) SigsiuTree, category field: Disabled possibility to select (click) additional category as long the previous wasn't added (Issue #1347)
 
     (!) Changed deprecated JException to core Exception
 
@@ -68,6 +67,7 @@ Legend:
     (#) Apostrophes are not correctly escaped in Sub-categories names (Issue #1308)
     (#) Textarea not saving changes when using Code Mirror (Issue #1303)
     (#) Field in loop conditions check was executed twice and due to wrong subject the second one fails
+    (#) Wrong language used with 'en-GB' pre-load function is disabled (Issue #1352)
 
 
 -------------------

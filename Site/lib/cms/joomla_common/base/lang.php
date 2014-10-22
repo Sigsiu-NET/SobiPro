@@ -207,10 +207,10 @@ class SPJoomlaLang
 
 	protected function _eload()
 	{
-		JFactory::getLanguage()->load( 'com_sobipro.err', JPATH_SITE, 'en-GB' );
 		if ( $this->_lang != 'en-GB' && Sobi::Cfg( 'lang.engb_preload', true ) ) {
-			JFactory::getLanguage()->load( 'com_sobipro.err', JPATH_SITE );
+			JFactory::getLanguage()->load( 'com_sobipro.err', JPATH_SITE, 'en-GB' );
 		}
+		JFactory::getLanguage()->load( 'com_sobipro.err', JPATH_SITE );
 	}
 
 	protected function _load()
