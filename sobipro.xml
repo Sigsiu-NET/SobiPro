@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="component" version="1.5.0" method="upgrade">
 	<name>SobiPro</name>
-	<creationDate>22 October 2014</creationDate>
+	<creationDate>23 October 2014</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
