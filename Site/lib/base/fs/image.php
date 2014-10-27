@@ -71,16 +71,23 @@ class SPImage extends SPFile
 	 */
 	public function crop( $width, $height, $x = 0, $y = 0 )
 	{
-		if ( !( function_exists( 'imagecrop' ) ) ) {
-			throw new SPException( 'Function "imagecrop" is not available on this server' );
-		}
+//		if ( !( function_exists( 'imagecrop' ) ) ) {
+//			throw new SPException( 'Function "imagecrop" is not available on this server' );
+//		}
 		if ( !$this->_content ) {
 			$this->read();
 		}
 		list( $wOrg, $hOrg, $imgType ) = getimagesize( $this->_filename );
 		$this->type = $imgType;
 		$currentImg = $this->createImage( $imgType );
-		$this->image = imagecrop( $currentImg, array( 'x' => $x, 'y' => $y, 'width' => $width, 'height' => $height ) );
+		if ( function_exists( 'imagecrop' ) ) {
+			$this->image = imagecrop( $currentImg, array( 'x' => $x, 'y' => $y, 'width' => $width, 'height' => $height ) );
+		}
+		else {
+			// imagecopy ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $src_w , int $src_h )
+			$this->image = imagecreatetruecolor( $width, $height );
+			imagecopy( $this->image, $currentImg, 0, 0, $x, $y, $width, $height );
+		}
 		if ( $imgType == IMAGETYPE_GIF || $imgType == IMAGETYPE_PNG ) {
 			$this->transparency( $this->image );
 		}
