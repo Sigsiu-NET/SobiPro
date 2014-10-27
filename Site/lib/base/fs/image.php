@@ -71,6 +71,9 @@ class SPImage extends SPFile
 	 */
 	public function crop( $width, $height, $x = 0, $y = 0 )
 	{
+		if ( !( function_exists( 'imagecrop' ) ) ) {
+			throw new SPException( 'Function "imagecrop" is not available on this server' );
+		}
 		if ( !$this->_content ) {
 			$this->read();
 		}

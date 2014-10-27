@@ -778,9 +778,14 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$aspectRatio = $this->resizeWidth / $this->resizeHeight;
 				$width = $aspectRatio * $originalHeight > $originalWidth ? $originalWidth : $aspectRatio * $originalHeight;
 				$height = $originalWidth / $aspectRatio > $originalHeight ? $originalHeight : $originalWidth / $aspectRatio;
-				$croppedImage->crop( $width, $height );
-				$croppedImage->saveAs( $dirName . 'cropped_' . $orgFileName );
-				$ico = SPFactory::Instance( 'base.fs.image', $dirName . 'cropped_' . $orgFileName );
+				try {
+					$croppedImage->crop( $width, $height );
+					$croppedImage->saveAs( $dirName . 'cropped_' . $orgFileName );
+					$ico = SPFactory::Instance( 'base.fs.image', $dirName . 'cropped_' . $orgFileName );
+				}
+				catch( SPException $x ) {
+					$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'FIELD_IMG_CANNOT_CROP', $x->getMessage() ), 'id' => '', ) );
+				}
 			}
 			else {
 				$ico = clone $orgImage;
