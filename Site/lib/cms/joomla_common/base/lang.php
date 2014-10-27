@@ -468,17 +468,20 @@ class SPJoomlaLang
 
 	protected function _jsLang( $adm )
 	{
-		$path = $adm ? implode( DS, array( JPATH_ADMINISTRATOR, 'language', 'en-GB', 'en-GB.com_sobipro.js' ) ) : implode( DS, array( SOBI_ROOT, 'language', 'en-GB', 'en-GB.com_sobipro.js' ) );
 		$front = array();
 		if ( $adm ) {
 			$front = $this->_jsLang( false );
 		}
-		$def = SPLoader::loadIniFile( $path, false, false, true, true, true );
+		$path = $adm ? implode( DS, array( JPATH_ADMINISTRATOR, 'language', 'en-GB', 'en-GB.com_sobipro.js' ) ) : implode( DS, array( SOBI_ROOT, 'language', 'en-GB', 'en-GB.com_sobipro.js' ) );
 		if ( $this->_lang != 'en-GB' && Sobi::Cfg( 'lang.engb_preload', true ) ) {
 			$strings = SPLoader::loadIniFile( str_replace( 'en-GB', str_replace( '_', '-', $this->_lang ), $path ), false, false, true, true, true );
+			$def = SPLoader::loadIniFile( $path, false, false, true, true, true );
 			if ( is_array( $strings ) && count( $strings ) ) {
 				$def = array_merge( $front, $def, $strings );
 			}
+		}
+		else {
+			$def = SPLoader::loadIniFile( str_replace( 'en-GB', str_replace( '_', '-', $this->_lang ), $path ), false, false, true, true, true );
 		}
 		return $def;
 	}
