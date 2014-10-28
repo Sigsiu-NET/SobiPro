@@ -28,7 +28,7 @@ Legend:
 
 
 -------------------
-1.1.11 ()
+1.1.11 (28 October 2014)
 -------------------
 
     (+) Possibility to define parent container for datePicker
@@ -45,7 +45,7 @@ Legend:
     (#) Wrong results for range search (Issue #1343)
     (#) SigsiuTree, category field: disabled possibility to select (click) additional category as long as the previous wasn't added (Issue #1347)
     (#) Wrong language used if 'en-GB' pre-load function is disabled (Issue #1352)
-    (#) Pending entries aren't visible in the front-end (Issue #1354)
+    (#) Pending entries aren't visible in front-end (Issue #1354)
 
     (!) Changed deprecated JException to core Exception
 
