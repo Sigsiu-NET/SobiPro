@@ -801,7 +801,19 @@ abstract class SPHtml_Input
 		$f .= '<div class="input-append date spDatePicker">';
 		$f .= "\n\t";
 		$f .= '<input type="text" disabled="disabled" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" ' . $data . '/>';
-		$f .= '<input type="hidden" value="' . ( $value ? (int)( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null ) . '" name="' . $name . '"/>';
+		/**
+		 * Mon, Nov 17, 2014 11:39:34 So here I am a bit baffled: we initially changed it to integer (unfortunately I do not remember why)
+		 * but it seems that it may be overwriting the 32 bit (why a 64-bit machine limits integer to 32 bit is another story).
+		 * I suppose it was to get rid of (possible) decimal place.
+		 * So let's try another method!
+		 * */
+		$value = ( $value ? ( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null );
+		if ( strstr( $value, '.' ) ) {
+			$value = explode( '.', $value );
+			$value = $value[ 0 ];
+		}
+		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '"/>';
+//		$f .= '<input type="hidden" value="' . ( $value ? (int)( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null ) . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? ( $value + SPFactory::config()->getTimeOffset() ) * 1000 : null ) . '" name="' . $name . '"/>';
 		$f .= "\n\t";
 		$f .= '<span class="add-on"><i data-date-icon="icon-' . $icon . '" class="icon-' . $icon . '"></i></span>';
