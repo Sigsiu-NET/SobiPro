@@ -751,6 +751,7 @@ abstract class SPHtml_Input
 //			array( 'm', 'MM', 'dd', 'd', 'HH', 'hh', 'mm', 'ss', 'PP' ),
 //			$dateFormat
 //		);
+
 		if ( strstr( $dateFormat, 'A' ) ) {
 			$dateFormat = str_replace( array( 'h', 'H' ), array( 'g', 'G' ), $dateFormat );
 		}
@@ -787,10 +788,12 @@ abstract class SPHtml_Input
 		if ( strstr( $dateFormat, 'A' ) ) {
 			$params[ 'data' ][ 'am-pm' ] = 'true';
 		}
+		$offset = 0;
 		$params[ 'data' ][ 'format' ] = $jsDateFormat;
 		if ( $addOffset ) {
 			$params[ 'data' ][ 'time-zone' ] = $timeOffset;
 			$params[ 'data' ][ 'time-offset' ] = SPFactory::config()->getTimeOffset();
+			$offset = $params[ 'data' ][ 'time-offset' ];
 		}
 		$data = self::createDataTag( $params );
 		SPFactory::header()
@@ -807,11 +810,11 @@ abstract class SPHtml_Input
 		 * I suppose it was to get rid of (possible) decimal place.
 		 * So let's try another method!
 		 * */
-		$value = ( $value ? ( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null );
 		if ( strstr( $value, '.' ) ) {
 			$value = explode( '.', $value );
 			$value = $value[ 0 ];
 		}
+		$value = ( $value ? ( ( $value + $offset ) * 1000 ) : null );
 		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? (int)( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null ) . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? ( $value + SPFactory::config()->getTimeOffset() ) * 1000 : null ) . '" name="' . $name . '"/>';
