@@ -777,7 +777,11 @@ abstract class SPHtml_Input
 		if ( !( is_numeric( $value ) ) ) {
 			$value = strtotime( $value );
 		}
-		$valueDisplay = $value ? SPFactory::config()->date( $value + SPFactory::config()->getTimeOffset(), null, $dateFormat ) : null;
+		$offset = null;
+		if ( $addOffset ) {
+			$offset = SPFactory::config()->getTimeOffset();
+		}
+		$valueDisplay = $value ? SPFactory::config()->date( $value - $offset, null, $dateFormat, !( $addOffset ) ) : null;
 		self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
 			$params[ 'id' ] = SPLang::nid( $name );

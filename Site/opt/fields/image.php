@@ -164,7 +164,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$field .= "\n<div class=\"row spImageField\">";
 		$field .= "\n<div class=\"span2\">";
 		$field .= "\n<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
-		$field .= "\n<div class=\"spEditImagePreview\" style=\"width: {$icoSize[ 0 ]}px; height: {$icoSize[ 1 ]}px;\">";
+		$field .= "\n<div class=\"spEditImagePreview\" style=\"width: {$icoSize[0]}px; height: {$icoSize[1]}px;\">";
 		if ( $show ) {
 			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\"/>";
 		}
@@ -270,12 +270,24 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
+		static $store = null;
 		$directory = SPRequest::string( $this->nid, null, false, $request );
 		if ( strtolower( $request ) == 'post' || strtolower( $request ) == 'get' ) {
 			$data = SPRequest::file( $this->nid, 'tmp_name' );
 		}
 		else {
 			$data = SPRequest::file( $this->nid, 'tmp_name', $request );
+		}
+		if ( $store == null ) {
+			$store = SPFactory::registry()->get( 'requestcache_stored' );
+		}
+		if ( is_array( $store ) && isset( $store[ $this->nid ] ) ) {
+			if ( !( strstr( $store[ $this->nid ], 'file://' ) ) && !( strstr( $store[ $this->nid ], 'directory://' ) ) ) {
+				$data = $store[ $this->nid ];
+			}
+			else {
+				$directory = $store[ $this->nid ];
+			}
 		}
 		if ( $directory && strstr( $directory, 'directory://' ) ) {
 			list( $data, $dirName, $files ) = $this->getAjaxFiles( $directory );
@@ -379,6 +391,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$data = SPRequest::file( $this->nid, 'tmp_name' );
 			$orgName = SPRequest::file( $this->nid, 'name' );
 		}
+		$sPath = $this->parseName( $entry, $orgName, $this->savePath );
+		$path = SPLoader::dirPath( $sPath, 'root', false );
 		/** Wed, Oct 15, 2014 13:51:03
 		 * Implemented a cropper with Ajax checker.
 		 * This is the actual method to get those files
@@ -404,6 +418,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 						}
 						if ( strpos( $file, 'cropped_' ) !== false ) {
 							$cropped = $dirName . $file;
+							SPFs::upload( $cropped, $path . basename( $cropped ) );
 							continue;
 						}
 						if ( strpos( $file, '.var' ) !== false ) {
@@ -418,22 +433,20 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					/** @var SPImage $croppedImage */
 					$croppedImage = SPFactory::Instance( 'base.fs.image', $dirName . $orgName );
 					$croppedImage->crop( $coordinates[ 'width' ], $coordinates[ 'height' ], $coordinates[ 'x' ], $coordinates[ 'y' ] );
-					$cropped = $dirName . 'cropped_' . $file;
+					$cropped = 'cropped_' . $orgName;
 					$croppedImage->saveAs( $cropped );
 				}
 				$data = strlen( $cropped ) ? $cropped : $dirName . $file;
 			}
 		}
 		$files = array();
-		$sPath = $this->parseName( $entry, $orgName, $this->savePath );
-		$path = SPLoader::dirPath( $sPath, 'root', false );
 		/* if we have an image */
 		if ( $data ) {
 			if ( $fileSize > $this->maxSize ) {
 				throw new SPException( SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $fileSize, $this->maxSize ) );
 			}
 			if ( $cropped ) {
-
+				SPFs::upload( $dirName . $orgName, $path . $orgName );
 			}
 			/**
 			 * @var SPImage $orgImage
@@ -448,7 +461,12 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$ext = strtolower( array_pop( $nameArray ) );
 				$nameArray[ ] = $ext;
 				$orgName = implode( '.', $nameArray );
-				$orgImage->upload( $data, $path . $orgName );
+				if ( $cropped ) {
+					$orgImage->upload( $dirName . $data, $path . basename( $data ) );
+				}
+				else {
+					$orgImage->upload( $dirName . $data, $path . $orgName );
+				}
 			}
 			$files[ 'data' ][ 'exif' ] = $orgImage->exif();
 			$this->cleanExif( $files[ 'data' ][ 'exif' ] );
@@ -782,8 +800,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					$croppedImage->crop( $width, $height );
 					$croppedImage->saveAs( $dirName . 'cropped_' . $orgFileName );
 					$ico = SPFactory::Instance( 'base.fs.image', $dirName . 'cropped_' . $orgFileName );
-				}
-				catch( SPException $x ) {
+				} catch ( SPException $x ) {
 					$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'FIELD_IMG_CANNOT_CROP', $x->getMessage() ), 'id' => '', ) );
 				}
 			}

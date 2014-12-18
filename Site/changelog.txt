@@ -26,6 +26,17 @@ Legend:
  (-) - Removed
  (!) - Change
 
+-------------------
+1.1.12 ()
+-------------------
+
+    (+)
+    (+)
+
+    (#) Image field didn't appear on payment page (Issue #1375)
+    (#) Original image is being overwritten with cropped image
+
+
 
 -------------------
 1.1.11 (28 October 2014)
