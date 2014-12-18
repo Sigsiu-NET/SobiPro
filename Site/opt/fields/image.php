@@ -441,7 +441,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 		$files = array();
 		/* if we have an image */
-		if ( $data ) {
+		if ( $data && $orgName ) {
 			if ( $fileSize > $this->maxSize ) {
 				throw new SPException( SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $fileSize, $this->maxSize ) );
 			}
@@ -465,7 +465,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					$orgImage->upload( $dirName . $data, $path . basename( $data ) );
 				}
 				else {
-					$orgImage->upload( $dirName . $data, $path . $orgName );
+					$orgImage->upload( $dirName . $orgName, $path . $orgName );
 				}
 			}
 			$files[ 'data' ][ 'exif' ] = $orgImage->exif();
