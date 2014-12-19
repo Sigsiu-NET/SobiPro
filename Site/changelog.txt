@@ -26,6 +26,7 @@ Legend:
  (-) - Removed
  (!) - Change
 
+
 -------------------
 1.1.12 ()
 -------------------
@@ -35,6 +36,7 @@ Legend:
 
     (#) Image field didn't appear on payment page (Issue #1375)
     (#) Original image is being overwritten with cropped image
+    (#) Size of News container corrected
 
 
 
