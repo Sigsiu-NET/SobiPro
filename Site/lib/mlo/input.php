@@ -781,7 +781,8 @@ abstract class SPHtml_Input
 		if ( $addOffset ) {
 			$offset = SPFactory::config()->getTimeOffset();
 		}
-		$valueDisplay = $value ? SPFactory::config()->date( $value - $offset, null, $dateFormat, !( $addOffset ) ) : null;
+		$valueDisplay = $value ? SPFactory::config()->date( $value + $offset, null, $dateFormat, !( $addOffset ) ) : null;
+//		SPConfig::debOut( date( "l jS \of F Y h:i:s A", $value ) );
 		self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
 			$params[ 'id' ] = SPLang::nid( $name );
