@@ -666,9 +666,9 @@ abstract class SPFrontView extends SPObject implements SPView
 									->trim()
 									->get();
 					$l[ ] = array(
-						'_complex' => 1,
-						'_data' => trim( $letter ),
-						'_attributes' => array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => 'list.alpha.' . $urlLetter ) ) )
+							'_complex' => 1,
+							'_data' => trim( $letter ),
+							'_attributes' => array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => 'list.alpha.' . $urlLetter ) ) )
 					);
 				}
 			}
@@ -687,9 +687,9 @@ abstract class SPFrontView extends SPObject implements SPView
 					$extraFields = array();
 				}
 				$extraFields = array(
-					'_complex' => 1,
-					'_data' => $extraFields,
-					'_attributes' => array( 'current' => $field )
+						'_complex' => 1,
+						'_data' => $extraFields,
+						'_attributes' => array( 'current' => $field )
 				);
 			}
 			$data[ 'alphaMenu' ] = array( '_complex' => 1, '_data' => array( 'letters' => $l, 'fields' => $extraFields ) );
@@ -702,17 +702,17 @@ abstract class SPFrontView extends SPObject implements SPView
 		if ( strlen( $usertype ) == 0 )
 			$usertype = 'Visitor';
 		return array(
-			'_complex' => 1,
-			'_data' => array(
-				'name' => $visitor->get( 'name' ),
-				'username' => $visitor->get( 'username' ),
-				'usertype' => array(
-					'_complex' => 1,
-					'_data' => $usertype,
-					'_attributes' => array( 'gid' => implode( ', ', $visitor->get( 'gid' ) ) )
-				)
-			),
-			'_attributes' => array( 'id' => $visitor->get( 'id' ) )
+				'_complex' => 1,
+				'_data' => array(
+						'name' => $visitor->get( 'name' ),
+						'username' => $visitor->get( 'username' ),
+						'usertype' => array(
+								'_complex' => 1,
+								'_data' => $usertype,
+								'_attributes' => array( 'gid' => implode( ', ', $visitor->get( 'gid' ) ) )
+						)
+				),
+				'_attributes' => array( 'id' => $visitor->get( 'id' ) )
 		);
 	}
 
@@ -766,16 +766,16 @@ abstract class SPFrontView extends SPObject implements SPView
 					unset( $struct[ '_options' ] );
 				}
 				$data[ $field->get( 'nid' ) ] = array(
-					'_complex' => 1,
-					'_data' => array(
-						'label' => array(
-							'_complex' => 1,
-							'_data' => $field->get( 'name' ),
-							'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
+						'_complex' => 1,
+						'_data' => array(
+								'label' => array(
+										'_complex' => 1,
+										'_data' => $field->get( 'name' ),
+										'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
+								),
+								'data' => $struct,
 						),
-						'data' => $struct,
-					),
-					'_attributes' => array( 'id' => $field->get( 'id' ), 'itemprop' => $field->get( 'itemprop' ), 'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
+						'_attributes' => array( 'id' => $field->get( 'id' ), 'itemprop' => $field->get( 'itemprop' ), 'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
 				);
 				if ( Sobi::Cfg( 'entry.field_description', false ) ) {
 					$data[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
@@ -807,34 +807,58 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 	}
 
+	protected function fixTimes( &$data )
+	{
+		$fix = array( 'valid_since', 'valid_until', 'updated_time', 'created_time' );
+		static $offset = null;
+		if ( $offset === null ) {
+			$offset = SPFactory::config()->getTimeOffset();
+		}
+		foreach ( $fix as $index ) {
+			$timestamp = strtotime( $data[ $index ] . 'UTC' );
+			if ( !( $data[ $index ] ) ) {
+				continue;
+			}
+			$data[ $index ] = array(
+					'_complex' => 1,
+					'_data' => gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $timestamp + $offset ),
+					'_attributes' => array(
+							'UTC' => $data[ $index ],
+							'timestamp' => $timestamp,
+							'offset' => $offset
+					)
+			);
+		}
+	}
+
 	protected function menu( &$data )
 	{
 		if ( Sobi::Cfg( 'general.top_menu', true ) ) {
 			$data[ 'menu' ] = array(
-				'front' => array(
-					'_complex' => 1,
-					'_data' => Sobi::Reg( 'current_section_name' ),
-					'_attributes' => array(
-						'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'sid' => Sobi::Section() ) )
+					'front' => array(
+							'_complex' => 1,
+							'_data' => Sobi::Reg( 'current_section_name' ),
+							'_attributes' => array(
+									'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'sid' => Sobi::Section() ) )
+							)
 					)
-				)
 			);
 			if ( Sobi::Can( 'section.search' ) ) {
 				$data[ 'menu' ][ 'search' ] = array(
-					'_complex' => 1,
-					'_data' => Sobi::Txt( 'MN.SEARCH' ),
-					'_attributes' => array(
-						'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'task' => 'search', 'sid' => Sobi::Section() ) )
-					)
+						'_complex' => 1,
+						'_data' => Sobi::Txt( 'MN.SEARCH' ),
+						'_attributes' => array(
+								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'task' => 'search', 'sid' => Sobi::Section() ) )
+						)
 				);
 			}
 			if ( Sobi::Can( 'entry', 'add', 'own', Sobi::Section() ) ) {
 				$data[ 'menu' ][ 'add' ] = array(
-					'_complex' => 1,
-					'_data' => Sobi::Txt( 'MN.ADD_ENTRY' ),
-					'_attributes' => array(
-						'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'task' => 'entry.add', 'sid' => SPRequest::sid() ) )
-					)
+						'_complex' => 1,
+						'_data' => Sobi::Txt( 'MN.ADD_ENTRY' ),
+						'_attributes' => array(
+								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'task' => 'entry.add', 'sid' => SPRequest::sid() ) )
+						)
 				);
 			}
 		}

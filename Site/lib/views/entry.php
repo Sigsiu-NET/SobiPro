@@ -196,6 +196,8 @@ class SPEntryView extends SPFrontView implements SPView
 		$en[ 'counter' ] = $entry->get( 'counter' );
 		$en[ 'approved' ] = $entry->get( 'approved' );
 
+		$this->fixTimes( $en );
+
 		//       $mytime = date( 'Y-m-d H:i:s', time());
 		if ( $entry->get( 'state' ) == 0 ) {
 			$en[ 'state' ] = 'unpublished';

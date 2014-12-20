@@ -226,6 +226,7 @@ class SPSectionView extends SPFrontView implements SPView
 			$en[ 'updated_time' ] = $entry->get( 'updatedTime' );
 			$en[ 'valid_since' ] = $entry->get( 'validSince' );
 			$en[ 'valid_until' ] = $entry->get( 'validUntil' );
+			$this->fixTimes( $en );
 			if ( $entry->get( 'state' ) == 0 ) {
 				$en[ 'state' ] = 'unpublished';
 			}
@@ -421,6 +422,7 @@ class SPSectionView extends SPFrontView implements SPView
 				}
 				$this->navigation( $data );
 			}
+			$this->fixTimes( $data );
 			$this->_attr = $data;
 		}
 		Sobi::Trigger( $this->_type, ucfirst( __FUNCTION__ ), array( &$this->_attr ) );
