@@ -825,7 +825,8 @@ abstract class SPFrontView extends SPObject implements SPView
 					'_attributes' => array(
 							'UTC' => $data[ $index ],
 							'timestamp' => $timestamp,
-							'offset' => $offset
+							'offset' => $offset,
+							'timezone' => Sobi::Cfg( 'time_offset' )
 					)
 			);
 		}
