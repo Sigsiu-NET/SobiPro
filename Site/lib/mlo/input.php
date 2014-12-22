@@ -782,7 +782,7 @@ abstract class SPHtml_Input
 			$offset = SPFactory::config()->getTimeOffset();
 		}
 		$valueDisplay = $value ? SPFactory::config()->date( $value + $offset, null, $dateFormat, $addOffset ) : null;
-		SPConfig::debOut( gmdate( "l jS \of F Y h:i:s A", $value + $offset ) );
+//		SPConfig::debOut( gmdate( "l jS \of F Y h:i:s A", $value + $offset ) );
 //		SPConfig::debOut( $valueDisplay );
 		self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
