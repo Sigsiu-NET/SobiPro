@@ -775,14 +775,15 @@ abstract class SPHtml_Input
 			$jsDateFormat = str_replace( $php, $js, $jsDateFormat );
 		}
 		if ( !( is_numeric( $value ) ) ) {
-			$value = strtotime( $value );
+			$value = $addOffset ? strtotime( $value . 'UTC' ) : strtotime( $value );
 		}
 		$offset = null;
 		if ( $addOffset ) {
 			$offset = SPFactory::config()->getTimeOffset();
 		}
-		$valueDisplay = $value ? SPFactory::config()->date( $value + $offset, null, $dateFormat, !( $addOffset ) ) : null;
-//		SPConfig::debOut( date( "l jS \of F Y h:i:s A", $value ) );
+		$valueDisplay = $value ? SPFactory::config()->date( $value + $offset, null, $dateFormat, $addOffset ) : null;
+		SPConfig::debOut( gmdate( "l jS \of F Y h:i:s A", $value + $offset ) );
+//		SPConfig::debOut( $valueDisplay );
 		self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
 			$params[ 'id' ] = SPLang::nid( $name );
@@ -793,12 +794,12 @@ abstract class SPHtml_Input
 		if ( strstr( $dateFormat, 'A' ) ) {
 			$params[ 'data' ][ 'am-pm' ] = 'true';
 		}
-		$offset = 0;
+//		$offset = 0;
 		$params[ 'data' ][ 'format' ] = $jsDateFormat;
 		if ( $addOffset ) {
 			$params[ 'data' ][ 'time-zone' ] = $timeOffset;
 			$params[ 'data' ][ 'time-offset' ] = SPFactory::config()->getTimeOffset();
-			$offset = $params[ 'data' ][ 'time-offset' ];
+//			$offset = $params[ 'data' ][ 'time-offset' ];
 		}
 		$data = self::createDataTag( $params );
 		SPFactory::header()
@@ -819,7 +820,9 @@ abstract class SPHtml_Input
 			$value = explode( '.', $value );
 			$value = $value[ 0 ];
 		}
-		$value = ( $value ? ( ( $value + $offset ) * 1000 ) : null );
+		/** no offset, we are using UTC times only */
+//		$value = ( $value ? ( ( $value + $offset ) * 1000 ) : null );
+		$value = ( $value ? ( $value * 1000 ) : null );
 		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? (int)( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null ) . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? ( $value + SPFactory::config()->getTimeOffset() ) * 1000 : null ) . '" name="' . $name . '"/>';
