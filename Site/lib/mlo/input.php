@@ -774,7 +774,7 @@ abstract class SPHtml_Input
 		foreach ( $jsReplacements as $php => $js ) {
 			$jsDateFormat = str_replace( $php, $js, $jsDateFormat );
 		}
-		if ( !( is_numeric( $value ) ) ) {
+		if ( $value && !( is_numeric( $value ) ) ) {
 			$value = $addOffset ? strtotime( $value . 'UTC' ) : strtotime( $value );
 		}
 		$offset = null;
