@@ -434,7 +434,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					$croppedImage = SPFactory::Instance( 'base.fs.image', $dirName . $orgName );
 					$croppedImage->crop( $coordinates[ 'width' ], $coordinates[ 'height' ], $coordinates[ 'x' ], $coordinates[ 'y' ] );
 					$cropped = 'cropped_' . $orgName;
-					$croppedImage->saveAs( $cropped );
+					$croppedImage->saveAs( $path.$cropped );
 				}
 				$data = strlen( $cropped ) ? $cropped : $dirName . $file;
 			}
