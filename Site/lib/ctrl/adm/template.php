@@ -198,7 +198,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$view = SPFactory::View( 'template', true );
 		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == SPC::DEFAULT_TEMPLATE ) {
 			SPFactory::message()
-					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false )
+					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
 					->setSystemMessage();
 		}
 
@@ -337,7 +337,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	{
 		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == SPC::DEFAULT_TEMPLATE ) {
 			SPFactory::message()
-					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false )
+					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
 					->setSystemMessage();
 		}
 		$file = SPRequest::cmd( 'file' );

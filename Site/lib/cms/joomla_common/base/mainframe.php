@@ -692,7 +692,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		// if we still don't have an Itemid it means that there is no link to SobiPro section
 		if ( !( $url[ 'Itemid' ] ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			SPFactory::message()
-					->warning( Sobi::Txt( 'ITEMID_MISSING_WARN', 'http://sobipro.sigsiu.net/help_screen/joomla.menu', $sid ), false, false )
+					->warning( Sobi::Txt( 'ITEMID_MISSING_WARN', 'https://www.sigsiu.net/help_screen/joomla.menu', $sid ), false, false )
 					->setSystemMessage( 'SEF-URL' );
 		}
 	}

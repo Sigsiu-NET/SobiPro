@@ -275,7 +275,7 @@ class SPConfigAdmCtrl extends SPController
 		if ( $sid ) {
 			if ( Sobi::Cfg( 'section.template' ) == SPC::DEFAULT_TEMPLATE && strstr( SPRequest::task(), 'config' ) ) {
 				SPFactory::message()
-						->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'http://sobipro.sigsiu.net/help_screen/template.info' ), false )
+						->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
 						->setSystemMessage();
 			}
 			/* create new SigsiuTree */
