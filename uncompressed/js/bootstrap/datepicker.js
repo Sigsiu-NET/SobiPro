@@ -443,12 +443,12 @@ $ = SobiPro.jQuery;
 				clsName = '';
 				if ( prevMonth.getUTCFullYear() < year ||
 					(prevMonth.getUTCFullYear() == year &&
-						prevMonth.getUTCMonth() < month) ) {
+					prevMonth.getUTCMonth() < month) ) {
 					clsName += ' old';
 				}
 				else if ( prevMonth.getUTCFullYear() > year ||
 					(prevMonth.getUTCFullYear() == year &&
-						prevMonth.getUTCMonth() > month) ) {
+					prevMonth.getUTCMonth() > month) ) {
 					clsName += ' new';
 				}
 				if ( prevMonth.valueOf() === currentDate.valueOf() ) {
@@ -1057,6 +1057,10 @@ $ = SobiPro.jQuery;
 				if ( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) && parseInt( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) ) != 0 ) {
 					currentDate = new Date( Date.now() + ( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) * 1000 ) );
 				}
+				else if( parseInt( proxy.$element.find( 'input:text' ).data( 'timeOffset' ) ) != 0 ) {
+					currentDate = new Date( Date.now() - ( currentDate.getTimezoneOffset() * 60000 ) );
+					proxy.update( currentDate );
+				}
 				proxy._date = currentDate;
 				proxy.fillDate();
 				proxy.set();
@@ -1231,7 +1235,7 @@ $ = SobiPro.jQuery;
 	};
 	SobiPro.jQuery.fn.SpDateTimePicker.Constructor = SpDateTimePicker;
 	var dpgId = 0;
-	var dates = SobiPro.jQuery.fn.SpDateTimePicker.dates = { en: spDatePickerLang };
+	var dates = SobiPro.jQuery.fn.SpDateTimePicker.dates = {en: spDatePickerLang};
 //	var dates = $.fn.datetimepicker.dates = {
 //		en: {
 //			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
@@ -1246,46 +1250,66 @@ $ = SobiPro.jQuery;
 //	};
 
 	var dateFormatComponents = {
-		dd: {property: 'UTCDate', getPattern: function ()
-		{
-			return '(0?[1-9]|[1-2][0-9]|3[0-1])\\b';
-		}},
-		MM: {property: 'UTCMonth', getPattern: function ()
-		{
-			return '(0?[1-9]|1[0-2])\\b';
-		}},
-		yy: {property: 'UTCYear', getPattern: function ()
-		{
-			return '(\\d{2})\\b'
-		}},
-		yyyy: {property: 'UTCFullYear', getPattern: function ()
-		{
-			return '(\\d{4})\\b';
-		}},
-		hh: {property: 'UTCHours', getPattern: function ()
-		{
-			return '(0?[0-9]|1[0-9]|2[0-3])\\b';
-		}},
-		mm: {property: 'UTCMinutes', getPattern: function ()
-		{
-			return '(0?[0-9]|[1-5][0-9])\\b';
-		}},
-		ss: {property: 'UTCSeconds', getPattern: function ()
-		{
-			return '(0?[0-9]|[1-5][0-9])\\b';
-		}},
-		ms: {property: 'UTCMilliseconds', getPattern: function ()
-		{
-			return '([0-9]{1,3})\\b';
-		}},
-		HH: {property: 'Hours12', getPattern: function ()
-		{
-			return '(0?[1-9]|1[0-2])\\b';
-		}},
-		PP: {property: 'Period12', getPattern: function ()
-		{
-			return '(AM|PM|am|pm|Am|aM|Pm|pM)\\b';
-		}}
+		dd: {
+			property: 'UTCDate', getPattern: function ()
+			{
+				return '(0?[1-9]|[1-2][0-9]|3[0-1])\\b';
+			}
+		},
+		MM: {
+			property: 'UTCMonth', getPattern: function ()
+			{
+				return '(0?[1-9]|1[0-2])\\b';
+			}
+		},
+		yy: {
+			property: 'UTCYear', getPattern: function ()
+			{
+				return '(\\d{2})\\b'
+			}
+		},
+		yyyy: {
+			property: 'UTCFullYear', getPattern: function ()
+			{
+				return '(\\d{4})\\b';
+			}
+		},
+		hh: {
+			property: 'UTCHours', getPattern: function ()
+			{
+				return '(0?[0-9]|1[0-9]|2[0-3])\\b';
+			}
+		},
+		mm: {
+			property: 'UTCMinutes', getPattern: function ()
+			{
+				return '(0?[0-9]|[1-5][0-9])\\b';
+			}
+		},
+		ss: {
+			property: 'UTCSeconds', getPattern: function ()
+			{
+				return '(0?[0-9]|[1-5][0-9])\\b';
+			}
+		},
+		ms: {
+			property: 'UTCMilliseconds', getPattern: function ()
+			{
+				return '([0-9]{1,3})\\b';
+			}
+		},
+		HH: {
+			property: 'Hours12', getPattern: function ()
+			{
+				return '(0?[1-9]|1[0-2])\\b';
+			}
+		},
+		PP: {
+			property: 'Period12', getPattern: function ()
+			{
+				return '(AM|PM|am|pm|Am|aM|Pm|pM)\\b';
+			}
+		}
 	};
 
 	var keys = [];
@@ -1313,51 +1337,51 @@ $ = SobiPro.jQuery;
 	{
 		if ( pickDate && pickTime ) {
 			return (
-				'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
-					'<ul>' +
-					'<li' + (collapse ? ' class="collapse in"' : '') + '>' +
-					'<div class="datepicker">' +
-					DPGlobal.template +
-					'</div>' +
-					'</li>' +
-					'<li class="picker-switch">' +
-					'   <a class="ctrl-reset-date"><i class="icon-remove-circle"></i></a>' +
-					'   <a class="ctrl-set-now"><i class="icon-ok-sign"></i></a>' +
-					'   <a class="accordion-toggle"><i class="' + timeIcon + '"></i></a>' +
-					'</li>' +
-					'<li' + (collapse ? ' class="collapse"' : '') + '>' +
-					'<div class="timepicker">' +
-					TPGlobal.getTemplate( is12Hours, showSeconds ) +
-					'</div>' +
-					'</li>' +
-					'</ul>' +
-					'</div>'
-				);
+			'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+			'<ul>' +
+			'<li' + (collapse ? ' class="collapse in"' : '') + '>' +
+			'<div class="datepicker">' +
+			DPGlobal.template +
+			'</div>' +
+			'</li>' +
+			'<li class="picker-switch">' +
+			'   <a class="ctrl-reset-date"><i class="icon-remove-circle"></i></a>' +
+			'   <a class="ctrl-set-now"><i class="icon-ok-sign"></i></a>' +
+			'   <a class="accordion-toggle"><i class="' + timeIcon + '"></i></a>' +
+			'</li>' +
+			'<li' + (collapse ? ' class="collapse"' : '') + '>' +
+			'<div class="timepicker">' +
+			TPGlobal.getTemplate( is12Hours, showSeconds ) +
+			'</div>' +
+			'</li>' +
+			'</ul>' +
+			'</div>'
+			);
 		}
 		else if ( pickTime ) {
 			return (
-				'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
-					'<div class="timepicker">' +
-					TPGlobal.getTemplate( is12Hours, showSeconds ) +
-					'</div>' +
-					'</div>'
-				);
+			'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+			'<div class="timepicker">' +
+			TPGlobal.getTemplate( is12Hours, showSeconds ) +
+			'</div>' +
+			'</div>'
+			);
 		}
 		else {
 			return (
-				'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
-					'<ul>' +
-					'<div class="datepicker">' +
-					DPGlobal.template +
-					'</div>' +
-					'</li>' +
-					'<li class="picker-switch">' +
-					'   <a class="ctrl-reset-date"><i class="icon-remove-circle"></i></a>' +
-					'   <a class="ctrl-set-now"><i class="icon-ok-sign"></i></a>' +
-					'</li>' +
-					'</ul>' +
-					'</div>'
-				);
+			'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+			'<ul>' +
+			'<div class="datepicker">' +
+			DPGlobal.template +
+			'</div>' +
+			'</li>' +
+			'<li class="picker-switch">' +
+			'   <a class="ctrl-reset-date"><i class="icon-remove-circle"></i></a>' +
+			'   <a class="ctrl-set-now"><i class="icon-ok-sign"></i></a>' +
+			'</li>' +
+			'</ul>' +
+			'</div>'
+			);
 		}
 	}
 
@@ -1393,33 +1417,33 @@ $ = SobiPro.jQuery;
 			return [31, (DPGlobal.isLeapYear( year ) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month]
 		},
 		headTemplate: '<thead>' +
-			'<tr>' +
-			'<th class="prev">&lsaquo;</th>' +
-			'<th colspan="5" class="switch"></th>' +
-			'<th class="next">&rsaquo;</th>' +
-			'</tr>' +
-			'</thead>',
+		'<tr>' +
+		'<th class="prev">&lsaquo;</th>' +
+		'<th colspan="5" class="switch"></th>' +
+		'<th class="next">&rsaquo;</th>' +
+		'</tr>' +
+		'</thead>',
 		contTemplate: '<tbody><tr><td colspan="7"></td></tr></tbody>'
 	};
 	DPGlobal.template =
 		'<div class="datepicker-days">' +
-			'<table class="table-condensed">' +
-			DPGlobal.headTemplate +
-			'<tbody></tbody>' +
-			'</table>' +
-			'</div>' +
-			'<div class="datepicker-months">' +
-			'<table class="table-condensed">' +
-			DPGlobal.headTemplate +
-			DPGlobal.contTemplate +
-			'</table>' +
-			'</div>' +
-			'<div class="datepicker-years">' +
-			'<table class="table-condensed">' +
-			DPGlobal.headTemplate +
-			DPGlobal.contTemplate +
-			'</table>' +
-			'</div>';
+		'<table class="table-condensed">' +
+		DPGlobal.headTemplate +
+		'<tbody></tbody>' +
+		'</table>' +
+		'</div>' +
+		'<div class="datepicker-months">' +
+		'<table class="table-condensed">' +
+		DPGlobal.headTemplate +
+		DPGlobal.contTemplate +
+		'</table>' +
+		'</div>' +
+		'<div class="datepicker-years">' +
+		'<table class="table-condensed">' +
+		DPGlobal.headTemplate +
+		DPGlobal.contTemplate +
+		'</table>' +
+		'</div>';
 	var TPGlobal = {
 		hourTemplate: '<span data-action="showHours" data-time-component="hours" class="timepicker-hour"></span>',
 		minuteTemplate: '<span data-action="showMinutes" data-time-component="minutes" class="timepicker-minute"></span>',
@@ -1428,57 +1452,57 @@ $ = SobiPro.jQuery;
 	TPGlobal.getTemplate = function ( is12Hours, showSeconds )
 	{
 		return (
-			'<div class="timepicker-picker">' +
-				'<table class="table-condensed"' +
-				(is12Hours ? ' data-hour-format="12"' : '') +
-				'>' +
-				'<tr>' +
-				'<td><a href="#" class="btn" data-action="incrementHours"><i class="icon-chevron-up"></i></a></td>' +
-				'<td class="separator"></td>' +
-				'<td><a href="#" class="btn" data-action="incrementMinutes"><i class="icon-chevron-up"></i></a></td>' +
-				(showSeconds ?
-					'<td class="separator"></td>' +
-						'<td><a href="#" class="btn" data-action="incrementSeconds"><i class="icon-chevron-up"></i></a></td>' : '') +
-				(is12Hours ? '<td class="separator"></td>' : '') +
-				'</tr>' +
-				'<tr>' +
-				'<td>' + TPGlobal.hourTemplate + '</td> ' +
-				'<td class="separator">:</td>' +
-				'<td>' + TPGlobal.minuteTemplate + '</td> ' +
-				(showSeconds ?
-					'<td class="separator">:</td>' +
-						'<td>' + TPGlobal.secondTemplate + '</td>' : '') +
-				(is12Hours ?
-					'<td class="separator"></td>' +
-						'<td>' +
-						'<button type="button" class="btn btn-primary" data-action="togglePeriod"></button>' +
-						'</td>' : '') +
-				'</tr>' +
-				'<tr>' +
-				'<td><a href="#" class="btn" data-action="decrementHours"><i class="icon-chevron-down"></i></a></td>' +
-				'<td class="separator"></td>' +
-				'<td><a href="#" class="btn" data-action="decrementMinutes"><i class="icon-chevron-down"></i></a></td>' +
-				(showSeconds ?
-					'<td class="separator"></td>' +
-						'<td><a href="#" class="btn" data-action="decrementSeconds"><i class="icon-chevron-down"></i></a></td>' : '') +
-				(is12Hours ? '<td class="separator"></td>' : '') +
-				'</tr>' +
-				'</table>' +
-				'</div>' +
-				'<div class="timepicker-hours" data-action="selectHour">' +
-				'<table class="table-condensed">' +
-				'</table>' +
-				'</div>' +
-				'<div class="timepicker-minutes" data-action="selectMinute">' +
-				'<table class="table-condensed">' +
-				'</table>' +
-				'</div>' +
-				(showSeconds ?
-					'<div class="timepicker-seconds" data-action="selectSecond">' +
-						'<table class="table-condensed">' +
-						'</table>' +
-						'</div>' : '')
-			);
+		'<div class="timepicker-picker">' +
+		'<table class="table-condensed"' +
+		(is12Hours ? ' data-hour-format="12"' : '') +
+		'>' +
+		'<tr>' +
+		'<td><a href="#" class="btn" data-action="incrementHours"><i class="icon-chevron-up"></i></a></td>' +
+		'<td class="separator"></td>' +
+		'<td><a href="#" class="btn" data-action="incrementMinutes"><i class="icon-chevron-up"></i></a></td>' +
+		(showSeconds ?
+		'<td class="separator"></td>' +
+		'<td><a href="#" class="btn" data-action="incrementSeconds"><i class="icon-chevron-up"></i></a></td>' : '') +
+		(is12Hours ? '<td class="separator"></td>' : '') +
+		'</tr>' +
+		'<tr>' +
+		'<td>' + TPGlobal.hourTemplate + '</td> ' +
+		'<td class="separator">:</td>' +
+		'<td>' + TPGlobal.minuteTemplate + '</td> ' +
+		(showSeconds ?
+		'<td class="separator">:</td>' +
+		'<td>' + TPGlobal.secondTemplate + '</td>' : '') +
+		(is12Hours ?
+		'<td class="separator"></td>' +
+		'<td>' +
+		'<button type="button" class="btn btn-primary" data-action="togglePeriod"></button>' +
+		'</td>' : '') +
+		'</tr>' +
+		'<tr>' +
+		'<td><a href="#" class="btn" data-action="decrementHours"><i class="icon-chevron-down"></i></a></td>' +
+		'<td class="separator"></td>' +
+		'<td><a href="#" class="btn" data-action="decrementMinutes"><i class="icon-chevron-down"></i></a></td>' +
+		(showSeconds ?
+		'<td class="separator"></td>' +
+		'<td><a href="#" class="btn" data-action="decrementSeconds"><i class="icon-chevron-down"></i></a></td>' : '') +
+		(is12Hours ? '<td class="separator"></td>' : '') +
+		'</tr>' +
+		'</table>' +
+		'</div>' +
+		'<div class="timepicker-hours" data-action="selectHour">' +
+		'<table class="table-condensed">' +
+		'</table>' +
+		'</div>' +
+		'<div class="timepicker-minutes" data-action="selectMinute">' +
+		'<table class="table-condensed">' +
+		'</table>' +
+		'</div>' +
+		(showSeconds ?
+		'<div class="timepicker-seconds" data-action="selectSecond">' +
+		'<table class="table-condensed">' +
+		'</table>' +
+		'</div>' : '')
+		);
 	}
 
 
@@ -1503,7 +1527,7 @@ SobiPro.jQuery( document ).ready( function ()
 				SobiPro.jQuery( proxy )
 					.find( ':hidden' )
 					.val( set );
-				SobiPro.jQuery( proxy ).trigger( 'OnDateChanged', [ set, SobiPro.jQuery( this ) ] );
+				SobiPro.jQuery( proxy ).trigger( 'OnDateChanged', [set, SobiPro.jQuery( this )] );
 			} );
 	} );
 } );
