@@ -38,6 +38,7 @@ Legend:
     (#) Original image is being overwritten with cropped image
     (#) Size of News container corrected
     (#) Fixed issues with time and time offset
+    (#) Help URL corrected
 
 
 
