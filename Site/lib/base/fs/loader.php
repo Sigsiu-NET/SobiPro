@@ -18,6 +18,7 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -47,7 +48,7 @@ abstract class SPLoader
 	 */
 	public static function loadClass( $name, $adm = false, $type = null, $raiseErr = true )
 	{
-		static $types = array( 'base' => 'base', 'controller' => 'ctrl', 'controls' => 'ctrl', 'ctrl' => 'ctrl', 'model' => 'models', 'plugin' => 'plugins', 'application' => 'plugins', 'view' => 'views', 'templates' => 'templates' );
+		static $types = array( 'sp-root' => 'sp-root', 'base' => 'base', 'controller' => 'ctrl', 'controls' => 'ctrl', 'ctrl' => 'ctrl', 'model' => 'models', 'plugin' => 'plugins', 'application' => 'plugins', 'view' => 'views', 'templates' => 'templates' );
 		$type = strtolower( trim( $type ) );
 		$name = ( trim( $name ) );
 		if ( isset( $types[ $type ] ) ) {
@@ -77,6 +78,9 @@ abstract class SPLoader
 		}
 		elseif ( strstr( $type, 'template' ) ) {
 			$path = SOBI_PATH . '/usr/templates/' . Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
+		}
+		elseif ( $type == 'sp-root/' ) {
+			$path = SOBI_PATH . '/';
 		}
 		elseif ( !strstr( $name, 'opt.' ) ) {
 			$path = SOBI_PATH . '/lib/' . $type;
@@ -456,7 +460,7 @@ abstract class SPLoader
 				break;
 			case 'locale':
 			case 'lang':
-				$spoint = SOBI_PATH . '/usr/locale/' ;
+				$spoint = SOBI_PATH . '/usr/locale/';
 				break;
 			case 'templates':
 				$spoint = SOBI_PATH . '/usr/templates/';

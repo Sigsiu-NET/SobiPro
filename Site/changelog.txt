@@ -31,7 +31,7 @@ Legend:
 1.1.12 ()
 -------------------
 
-    (+)
+    (+) Possibility to define template functions globally
     (+)
 
     (#) Image field didn't appear on payment page (Issue #1375)

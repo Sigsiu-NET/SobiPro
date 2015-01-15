@@ -448,7 +448,7 @@ abstract class Sobi
 			$root = JPATH_ROOT;
 		}
 		if ( !( $lang ) ) {
-			$lang = JFactory::getLanguage()->getDefault();
+			$lang = JComponentHelper::getParams( 'com_languages' )->get( 'site', 'en-GB' );
 		}
 		self::Init( $root, $lang, $sid );
 	}

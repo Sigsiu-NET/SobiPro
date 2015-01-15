@@ -84,6 +84,9 @@ class SPTemplateXSLT implements SPTemplate
 		$stdFunctions = SPLoader::loadIniFile( 'etc.template_functions' );
 		if ( count( $stdFunctions ) ) {
 			foreach ( $stdFunctions as $class => $fns ) {
+				if ( strstr( $class, '.' ) ) {
+					$class = SPLoader::loadClass( $class, false, 'sp-root' );
+				}
 				if ( count( $fns ) ) {
 					foreach ( $fns as $method => $state ) {
 						if ( $state ) {
@@ -234,9 +237,9 @@ class SPTemplateXSLT implements SPTemplate
 							$attr[ 'id' ] = $values[ '_id' ];
 						}
 						$values = array(
-							'_complex' => 1,
-							'_data' => $values[ '_value' ],
-							'_attributes' => $attr
+								'_complex' => 1,
+								'_data' => $values[ '_value' ],
+								'_attributes' => $attr
 						);
 					}
 					else {
@@ -334,10 +337,10 @@ class SPTemplateXSLT implements SPTemplate
 	{
 		if ( class_exists( 'tidy' ) ) {
 			$c = array(
-				'clean' => true,
-				'output-xhtml' => true,
-				'show-body-only' => true,
-				'input-xml' => true
+					'clean' => true,
+					'output-xhtml' => true,
+					'show-body-only' => true,
+					'input-xml' => true
 			);
 			$tidy = new tidy();
 			$tidy->parseString( $node, $c, 'utf8' );
