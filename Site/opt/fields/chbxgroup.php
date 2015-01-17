@@ -38,6 +38,7 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	 * @var string
 	 */
 	protected $dType = 'predefined_multi_data_multi_choice';
+	/** * @var string */
 
 	/**
 	 * Shows the field in the edit entry or add entry form

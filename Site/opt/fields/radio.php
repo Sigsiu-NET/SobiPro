@@ -58,6 +58,8 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	 * @var string
 	 */
 	protected $defSel = '';
+	/** * @var string */
+	protected $itemprop = '';
 
 
 	/**

@@ -70,6 +70,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 * @var string
 	 */
 	protected $dType = 'predefined_multi_data_single_choice';
+	/** * @var string */
+	protected $itemprop = '';
 
 	/**
 	 * Shows the field in the edit entry or add entry form
