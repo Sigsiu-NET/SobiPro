@@ -780,13 +780,21 @@ final class SPBrowser
 	    // end of robots
 
 	    // MSIE
-	    if(preg_match('/microsoft.*internet.*explorer/si', $user_agent, $tmp_array) && !$client_data['browser'])
+		// Sun, Jan 18, 2015 21:09:32
+		if(preg_match('/microsoft.*internet.*explorer/si', $user_agent, $tmp_array) && !$client_data['browser']) {
+			  $client_data['browser'] = "Microsoft Internet Explorer 1.0";
+			  $client_data['browser_icon'] = 'msie';
+			  $client_data['type'] = 'normal';
+		  }
+
+	    if(preg_match('/Trident/si', $user_agent, $tmp_array) && !$client_data['browser'])
 	    {
-	    	$client_data['browser'] = "Microsoft Internet Explorer 1.0";
+	    	$client_data['browser'] = "Microsoft Internet Explorer 11";
 	    	$client_data['browser_icon'] = 'msie';
 	    	$client_data['type'] = 'normal';
-	    	$client_data['humanity'] = 30;
+		    $client_data['humanity'] = 130;
 	    }
+
 	    if(preg_match('/mozilla.*MSIE ([0-9a-z\+\-\.]+).*/si', $user_agent, $tmp_array) && !$client_data['browser'])
 	    {
 	    	$client_data['browser'] = "Microsoft Internet Explorer" . ($tmp_array[1] ? " ".$tmp_array[1] : "");
