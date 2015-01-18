@@ -174,6 +174,7 @@ class SPEntryView extends SPFrontView implements SPView
 
 	protected function entryData( $getFields = true )
 	{
+		/** @var SPEntry $entry */
 		$entry = $this->get( 'entry' );
 		$visitor = $this->get( 'visitor' );
 		$data = array();

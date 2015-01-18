@@ -396,9 +396,9 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		/* if it's expired or not valid yet  */
 		$va = $this->_model->get( 'validUntil' );
-		$va = $va ? strtotime( $va ) + SPFactory::config()->getTimeOffset() : 0;
+		$va = $va ? strtotime( $va . ' UTC' ) : 0;
 		if ( !( $error ) ) {
-			if ( strtotime( $this->_model->get( 'validSince' ) ) + SPFactory::config()->getTimeOffset() > gmdate( 'U' ) ) {
+			if ( strtotime( $this->_model->get( 'validSince' ) . ' UTC' ) > gmdate( 'U' ) ) {
 				if ( !( Sobi::Can( $type, 'access', 'unpublished_any' ) ) ) {
 					$error = true;
 				}

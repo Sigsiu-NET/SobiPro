@@ -39,7 +39,8 @@ Legend:
     (#) Size of News container corrected
     (#) Fixed issues with time and time offset
     (#) Help URL corrected
-    §
+    (#) Itemprop attribute not being displayed in the field edit form (Issue #1392)
+    (#) Not possible to access entries in front end due to time offset (Issue #1389)
 
 
 
