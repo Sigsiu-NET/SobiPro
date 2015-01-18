@@ -41,7 +41,7 @@ Legend:
     (#) Help URL corrected
     (#) Itemprop attribute not being displayed in the field edit form (Issue #1392)
     (#) Not possible to access entries in front end due to time offset (Issue #1389)
-
+    (#) Path issues at Windows "server" (Issue #1365)
 
 
 -------------------

@@ -145,7 +145,15 @@ class SPFile
 			return $this->_filename;
 		}
 		else {
-			throw new SPException( SPLang::e( 'CANNOT_UPLOAD_FILE_TO', str_replace( SOBI_ROOT, null, $destination ) ) );
+			// Sun, Jan 18, 2015 20:41:09
+			// stupid windows exception. I am not going to waste my time trying to find why the hell it doesn't work as it should
+			if ( SPFs::upload( Sobi::FixPath( $name ), $destination ) ) {
+				$this->_filename = $destination;
+				return $this->_filename;
+			}
+			else {
+				throw new SPException( SPLang::e( 'CANNOT_UPLOAD_FILE_TO', str_replace( SOBI_ROOT, null, $destination ) ) );
+			}
 		}
 	}
 

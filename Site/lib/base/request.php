@@ -18,6 +18,7 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -260,7 +261,7 @@ abstract class SPRequest
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
 		self::$val = preg_replace( '/[^0-9\.]/', null, self::$val );
-		self::$val = $noZero && !( self::$val ) ? ( double ) $default : ( double ) self::$val;
+		self::$val = $noZero && !( self::$val ) ? ( double )$default : ( double )self::$val;
 		return self::$val;
 	}
 
@@ -509,9 +510,11 @@ abstract class SPRequest
 				$secret = md5( Sobi::Cfg( 'secret' ) );
 				$fileName = str_replace( 'file://', null, $check );
 				$path = SPLoader::dirPath( "tmp.files.{$secret}", 'front', false ) . '/' . $fileName;
-				$cfg = SPFs::read( "{$path}.var" );
-				$data = SPConfig::unserialize( $cfg );
-				$_FILES[ $name ] = $data;
+				if ( file_exists( "{$path}.var" ) ) {
+					$cfg = SPFs::read( "{$path}.var" );
+					$data = SPConfig::unserialize( $cfg );
+					$_FILES[ $name ] = $data;
+				}
 			}
 		}
 		self::init( $name, $request );
