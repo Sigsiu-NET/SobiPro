@@ -244,15 +244,17 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			/** Sat, Oct 4, 2014 15:22:44
 			 * Here is something wrong. The method redirect do not get the message and type params
 			 * Instead we're sending a "moved" param which results with a 303 redirect code */
-//			$msg = isset( $r[ 'msg' ] ) && strlen( $r[ 'msg' ] ) ? Sobi::Txt( $r[ 'msg' ] ) : null;
-//			if ( $msg ) {
-//				$type = $r[ 'msgtype' ];
-//			}
-//			else {
-//				$type = null;
-//			}
 //			JFactory::getApplication()
 //					->redirect( $r[ 'address' ], $msg, $type );
+			$msg = isset( $r[ 'msg' ] ) && strlen( $r[ 'msg' ] ) ? Sobi::Txt( $r[ 'msg' ] ) : null;
+			if ( $msg ) {
+				$type = $r[ 'msgtype' ];
+			}
+			else {
+				$type = 'message';
+			}
+			JFactory::getApplication()
+					->enqueueMessage( $msg, $type );
 			JFactory::getApplication()
 					->redirect( $r[ 'address' ] );
 
