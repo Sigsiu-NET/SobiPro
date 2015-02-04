@@ -405,7 +405,7 @@ final class SPCache
 				$startTime = $start[ 1 ];
 			}
 			// storing need time - if we are over five seconds - skip
-			if ( !defined( 'SOBIPRO_ADM' ) && microtime( true ) - $startTime > 5 ) {
+			if ( !defined( 'SOBIPRO_ADM' ) && !( $force ) && microtime( true ) - $startTime > 5 ) {
 				return $this;
 			}
 
