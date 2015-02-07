@@ -48,6 +48,7 @@ Legend:
     (#) Disabling time check in cache while adding an object and "force" parameter is set to true
     (#) SobiPro menu link looses function if edited (Issue #1397)
     (#) Pre-selecting categories in SigsiuTree to prevent "O items selected" output on iOS (Issue #1367)
+    (#) Task transformation doesn't works for alpha index (Issue #1362)
 
 
 -------------------

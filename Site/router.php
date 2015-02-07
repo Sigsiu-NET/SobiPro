@@ -30,8 +30,8 @@ function SobiProBuildRoute( &$query )
 		}
 		if ( isset( $query[ 'sid' ] ) && isset( $query[ 'Itemid' ] ) ) {
 			if ( !( SobiProIsLinked( $query[ 'Itemid' ], $query[ 'sid' ], $query[ 'task' ] ) ) ) {
-				if ( isset( $cfg[ 'tasks' ][ $query[ 'task' ] ] ) ) {
-					$task = str_replace( $query[ 'task' ], $cfg[ 'tasks' ][ $query[ 'task' ] ], $query[ 'task' ] );
+				if ( isset( $cfg[ 'tasks' ][ strtolower( $query[ 'task' ] ) ] ) ) {
+					$task = str_replace( $query[ 'task' ], $cfg[ 'tasks' ][ strtolower( $query[ 'task' ] ) ], $query[ 'task' ] );
 				}
 				else {
 					$task = str_replace( '.', '/', $query[ 'task' ] );
