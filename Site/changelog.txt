@@ -46,6 +46,7 @@ Legend:
     (#) Allowing unicode groups names in select lis (Issue #1364)
     (#) Redirection message is missing (Issue #1366)
     (#) Disabling time check in cache while adding an object and "force" parameter is set to true
+    (#) SobiPro menu link looses function if edited (Issue #1397)
 
 
 -------------------

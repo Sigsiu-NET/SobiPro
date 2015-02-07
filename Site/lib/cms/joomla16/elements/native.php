@@ -17,7 +17,7 @@
  * $HeadURL$
  */
 
-include_once JPATH_ADMINISTRATOR.'/components/com_menus/tables/menu.php';
+include_once JPATH_ADMINISTRATOR . '/components/com_menus/tables/menu.php';
 
 class JFormFieldNative extends JFormField
 {
@@ -60,14 +60,14 @@ class JFormFieldNative extends JFormField
 					->getItem();
 
 			self::$mid = $model->id;
-			if ( isset( $model->params[ 'SobiProSettings' ] ) ) {
+			if ( isset( $model->params[ 'SobiProSettings' ] ) && strlen( $model->params[ 'SobiProSettings' ] ) ) {
 				$this->params = json_decode( base64_decode( $model->params[ 'SobiProSettings' ] ) );
 			}
 			$jsString = json_encode(
-				array(
-					'component' => Sobi::Txt( 'SOBI_NATIVE_TASKS' ),
-					'buttonLabel' => Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' )
-				)
+					array(
+							'component' => Sobi::Txt( 'SOBI_NATIVE_TASKS' ),
+							'buttonLabel' => Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' )
+					)
 			);
 			SPFactory::header()
 					->addJsCode( "SpStrings = {$jsString}; " );

@@ -212,7 +212,8 @@ function SPUpdateUrl()
 	}
 	if ( SobiProUrl == '' ) {
 		SobiProUrl = 'index.php?option=com_sobipro&sid=' + SobiPro.jQuery( '#selectedSid' ).val();
-		SobiPro.jQuery( '.SobiProSettings' ).val( '' );
+		/** Sat, Feb 7, 2015 18:16:22 - what the heck? */
+		//SobiPro.jQuery( '.SobiProSettings' ).val( '' );
 	}
 	SobiPro.jQuery( '#jform_link' ).val( SobiProUrl );
 }
