@@ -73,6 +73,7 @@ function SigsiuTreeEdit( options )
 		var selectedCats = [];
 		this.canvas.find( '.selected' ).find( 'select option' ).each( function ( i, e )
 		{
+			SobiPro.jQuery( e ).prop( 'selected', true );
 			selectedCats.push( SobiPro.jQuery( e ).val() )
 		} );
 		this.canvas.find( '.selected' ).find( 'input' ).val( 'json://[' + selectedCats.join( ',' ) + ']' );
@@ -116,6 +117,7 @@ function SigsiuTreeEdit( options )
 				error = true;
 			}
 		} );
+
 		if ( !( error ) ) {
 			this.selectField.append( new Option( SobiPro.StripSlashes( this.category.name ), this.category.id ) );
 			this.canvas.find( '[name="removeCategory"]' ).removeAttr( 'disabled', 'disabled' );

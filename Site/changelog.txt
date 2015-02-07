@@ -68,6 +68,7 @@ Legend:
     (#) SigsiuTree, category field: disabled possibility to select (click) additional category as long as the previous wasn't added (Issue #1347)
     (#) Wrong language used if 'en-GB' pre-load function is disabled (Issue #1352)
     (#) Pending entries aren't visible in front-end (Issue #1354)
+    (#) Pre-selecting categories in SigsiuTree to prevent "O items selected" output on iOS
 
     (!) Changed deprecated JException to core Exception
 
