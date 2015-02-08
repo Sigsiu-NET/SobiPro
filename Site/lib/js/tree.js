@@ -1,5 +1,5 @@
 /**
- * @version: $Id$
+ * @version: $Id: tree.js 2989 2013-01-15 16:32:42Z Sigrid Suski $
  * @package: SobiPro Library
 
  * @author
@@ -14,10 +14,10 @@
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
+ * $Date: 2013-01-15 17:32:42 +0100 (Tue, 15 Jan 2013) $
+ * $Revision: 2989 $
+ * $Author: Sigrid Suski $
+ * File location: components/com_sobipro/lib/js/tree.js $
  */
 
 var __ID___stmcid = 0;
@@ -110,8 +110,14 @@ function __ID___stmAddSubcats( XMLDoc, deep, ccatid )
 				__ID___stmImgMatrix[ catid ][ j ] = 'joinBottom';
 			}
 		}
-		subcats = subcats + "<div class='sigsiuTreeNode' id='__ID__stNode" + catid + "'>" + margin  + join + "<a id='__ID__" + catid + "' href=\"" + url + "\"><img src='" + __ID___stmImgs[ 'folder' ] + "' id='__ID___imgFolder" + catid + "' alt=''></a><a class='treeNode' rel=\""+ catid + "\" id='__ID___CatUrl" + catid + "' href=\"" + url + "\">" + name + "</a></div>";
+		
+		subcats = subcats + "<div class='sigsiuTreeNode' id='__ID__stNode" + catid + "'><div style=\"width: 24%; float: left;\"> " + margin  + join + "<a id='__ID__" + catid + "' href=\"" + url + "\"><img src='" + __ID___stmImgs[ 'folder' ] + "' id='__ID___imgFolder" + catid + "' alt=''></a></div>";
+		 subcats = subcats + "<select class=\"childsContainer sigsiuTreeNode\" name=\"childsContainer\" id=\"__ID___CatUrl" + catid + "\" multiple=\"multiple\" style='display: block; height: 20px; margin: 2px 0px 0px 27px; overflow-y: hidden; width: 63%; float: left;'>"
+			subcats = subcats + "<option value=\""+ catid + "\" >" + name + "</option>";
+			subcats = subcats + "</select></div>"
+		 
 		if( childs > 0 ) {
+			//subcats = subcats + "<select class=\"childsContainer sigsiuTreeNode\" name=\"childsContainer\" id=\"__ID___childsContainer" + catid + "\" multiple=\"multiple\"  style='display: block; height: 20px; margin: 2px 0px 0px 24px; overflow-y: hidden; width: 77%; float: left;'><option value=\""+ catid + "\" >" + name + "</option></select>"
 			subcats = subcats + "<__TAG__ class='clip' id='__ID___childsContainer" + catid + "' style='display: block;  display:none;'></div>"
 		}
 	}
@@ -185,3 +191,4 @@ function __ID___stmColapse( id, deep )
 	}
 	SP_id( "__ID___imgUrlExpand" + id ).href = "javascript:__ID___stmExpand( " + id + ", " + deep + ", " + __ID___stmPid + " );";
 }
+
