@@ -1,6 +1,6 @@
 <?php
 /**
- * @version: $Id$
+ * @version: $Id: tree.php 4350 2014-10-28 16:44:50Z Sigrid Suski $
  * @package: SobiPro Library
 
  * @author
@@ -15,10 +15,16 @@
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
+ * $Date: 2014-10-28 17:44:50 +0100 (Tue, 28 Oct 2014) $
+ * $Revision: 4350 $
+ * $Author: Radek Suski , Marcos A. Rodríguez Roldán $
+ * I modified a couple of files and created a new one
+
+Files are:
+components/com_sobipro/lib/js/opt/field_category_tree.js
+components/com_sobipro/lib/js/tree.js (I have the original file renamed to "tree-ori.js" , to work in the same way as before in the administrator)
+components/com_sobipro/lib/mlo/tree.php
+ * $HeadURL: file:///opt/svn/SobiPro/Component/branches/SobiPro-1.1/Site/lib/mlo/tree.php $
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -213,8 +219,11 @@ final class SigsiuTree extends SPObject
         $head =& SPFactory::header();
         if ( defined( 'SOBIPRO_ADM' ) ) {
             $head->addCssFile( 'tree', true );
-        }
+			$treeadmin = 'tree-ori';     
+			$div = ""; }
         else {
+			$treeadmin = 'tree';
+			$div = "<div style=\" width: 14%; float: left;\">" ; 
             if ( Sobi::Reg( 'current_template_path', null ) && SPFs::exists( Sobi::Reg( 'current_template_path' ) . 'css' . DS . 'tree.css' ) ) {
                 $head->addCssFile( 'absolute.' . Sobi::Reg( 'current_template_path' ) . 'css' . DS . 'tree.css' );
             }
@@ -243,21 +252,21 @@ final class SigsiuTree extends SPObject
         $lastNode = 0;
 
         $tree .= "\n\t<{$this->_tag} class=\"sigsiuTree {$this->_id}SigsiuTree\">";
-        $tree .= "\n\t\t<{$this->_tag} class=\"sigsiuTreeNode\" id=\"{$this->_id}stNode0\">";
+        $tree .= "\n\t\t<div class=\"childsContainer\" id=\"{$this->_id}stNode0\">";
         if ( !( in_array( $sid, $this->_disabled ) ) ) {
-            $tree .= "<a href=\"{$sectionLink}\" id=\"{$this->_id}_imgFolderUrl0\"><img id=\"{$this->_id}0\" src=\"{$this->_images['root']}\" alt=\"{$sectionName}\"/></a>";
+         
         }
         else {
             $tree .= "<img id=\"{$this->_id}0\" src=\"{$this->_images['root']}\" alt=\"{$sectionName}\"/>";
         }
         if ( !( in_array( $sid, $this->_disabled ) ) ) {
-            $tree .= "<a href=\"{$sectionLink}\"  rel=\"{$sid}\" data-sid=\"{$sid}\" class=\"treeNode\" id=\"{$this->_id}_CatUrl0\">{$sectionName}</a>";
+            $tree .= "<a href=\"{$sectionLink}\"  value=\"{$sid}\" data-sid=\"{$sid}\" class=\"treeNode\" id=\"{$this->_id}_CatUrl0\">{$sectionName}</a>";
         }
         else {
             $tree .= $sectionName;
         }
         $tree .= "</{$this->_tag}>";
-        $tree .= "\n\t\t<{$this->_tag} id=\"{$this->_id}\" class=\"clip\" style=\"display: block;\">";
+        $tree .= "\n\t\t<{$this->_tag} id=\"{$this->_id}\" class=\"clip\" style=\"width: 100%; display: block;\">";
 
         if ( count( $childs ) ) {
             foreach ( $childs as $cat ) {
@@ -269,17 +278,17 @@ final class SigsiuTree extends SPObject
                 $cid = $cat->get( 'id' );
                 $url = $this->parseLink( $cat );
                 $disabled = ( in_array( $cid, $this->_disabled ) ) ? true : false;
-
-                $tree .= "\n\t\t\t<{$this->_tag} class=\"sigsiuTreeNode\" id=\"{$this->_id}stNode{$cid}\">";
-
+  				if ( defined( 'SOBIPRO_ADM' ) ) {
+              $tree .= "\n\t\t\t<{$this->_tag} class=\"sigsiuTreeNode\" id=\"{$this->_id}stNode{$cid}\">";
+				}else{$tree .= ""; }
                 if ( $hasChilds ) {
                     if ( $countNodes == 0 && !$disabled ) {
                         $lastNode = $cid;
-                        $tree .= "\n\t\t\t\t\t<a href=\"javascript:{$this->_id}_stmExpand( {$cid}, 0, {$this->_pid} );\" id=\"{$this->_id}_imgUrlExpand{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'plusBottom' ]}\" id=\"{$this->_id}_imgExpand{$cid}\"  style=\"border-style:none;\" alt=\"expand\"/>\n\t\t\t\t\t</a>";
+                        $tree .= "\n\t\t\t\t\t".$div."<a href=\"javascript:{$this->_id}_stmExpand( {$cid}, 0, {$this->_pid} );\" id=\"{$this->_id}_imgUrlExpand{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'plusBottom' ]}\" id=\"{$this->_id}_imgExpand{$cid}\"  style=\"border-style:none;\" alt=\"expand\"/>\n\t\t\t\t\t</a>";
                         $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plusBottom' );";
                     }
                     elseif ( !$disabled ) {
-                        $tree .= "\n\t\t\t\t\t<a href=\"javascript:{$this->_id}_stmExpand( {$cid}, 0, {$this->_pid} );\" id=\"{$this->_id}_imgUrlExpand{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'plus' ]}\" id=\"{$this->_id}_imgExpand{$cid}\"  style=\"border-style:none;\" alt=\"expand\"/>\n\t\t\t\t\t</a>";
+                        $tree .= "\n\t\t\t\t\t".$div."<a href=\"javascript:{$this->_id}_stmExpand( {$cid}, 0, {$this->_pid} );\" id=\"{$this->_id}_imgUrlExpand{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'plus' ]}\" id=\"{$this->_id}_imgExpand{$cid}\"  style=\"border-style:none;\" alt=\"expand\"/>\n\t\t\t\t\t</a>";
                         $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plus' );";
                     }
                     else {
@@ -304,21 +313,24 @@ final class SigsiuTree extends SPObject
 
                 }
                 if ( !$disabled ) {
-                    $tree .= "\n\t\t\t\t\t<a href=\"{$url}\" id=\"{$this->_id}_imgFolderUrl{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'folder' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>\n\t\t\t\t\t</a>\n\t\t\t\t\t<a href=\"{$url}\" rel=\"{$cid}\" data-sid=\"{$cid}\" class=\"treeNode\" id=\"{$this->_id}_CatUrl{$cid}\">\n\t\t\t\t\t\t{$catName}\n\t\t\t\t\t</a>";
+                    $tree .= "\n\t\t\t\t\t<a href=\"{$url}\" id=\"{$this->_id}_imgFolderUrl{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'folder' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>\n\t\t\t\t\t</a>\n\t\t\t\t\t\n\t\t\t";
+					if ( defined( 'SOBIPRO_ADM' )){$tree .= "<a href=\"{$url}\" rel=\"{$cid}\" data-sid=\"{$cid}\" class=\"treeNode\" id=\"{$this->_id}_CatUrl{$cid}\">\n\t\t\t\t\t\t{$catName}\n\t\t\t\t\t</a>";}
+					else{$tree .= "</div><select multiple=\"multiple\" class=\"sigsiuTreeNode childsContainer\" style=\"display: block; height: 20px; margin: 2px 0px 0px 5px; overflow-y: hidden; width: 83%; float: left;\" id=\"{$this->_id}stNode{$cid}\"><option href=\"{$url}\" value=\"{$cid}\" data-sid=\"{$cid}\" class=\"treeNode\" id=\"{$this->_id}_CatUrl{$cid}\">\n\t\t\t\t\t\t{$catName}\n\t\t\t\t\t</option>";}
                 }
                 else {
                     $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'disabled' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>\n\t\t\t\t\t{$catName}\n\t\t\t\t\t</a>";
                 }
 
-                $tree .= "\n\t\t\t</{$this->_tag}>";
+                $tree .= "\n\t\t\t";
+				if ( defined( 'SOBIPRO_ADM' )){$tree .= "</{$this->_tag}>";}else{$tree .= "</select>";}
                 if ( $hasChilds && !$disabled ) {
-                    $tree .= "\n\t\t\t<{$this->_tag} id=\"{$this->_id}_childsContainer{$cid}\" class=\"clip\" style=\"display: block; display:none;\"></{$this->_tag}>";
+                    $tree .= "\n\t\t\t<{$this->_tag} id=\"{$this->_id}_childsContainer{$cid}\" class=\"clip\" style=\"width: 100%; display: block; display:none;\"></{$this->_tag}>";
                 }
             }
         }
         $tree .= "\n\t\t</{$this->_tag}>";
         $tree .= "\n\t</{$this->_tag}>\n\n";
-        $this->createScript( $lastNode, $childs, $matrix, $head );
+        $this->createScript( $lastNode, $childs, $matrix, $head, $treeadmin );
         $this->tree = $tree;
     }
 
@@ -382,7 +394,7 @@ final class SigsiuTree extends SPObject
 
     /**
      */
-    private function createScript( $lastNode, $childs, $matrix, $head )
+    private function createScript( $lastNode, $childs, $matrix, $head, $treeadmin )
     {
         $params = array();
         $params[ 'ID' ] = $this->_id;
@@ -408,7 +420,8 @@ final class SigsiuTree extends SPObject
         $params[ 'TAG' ] = $this->_tag;
         $params[ 'SPINNER' ] = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ) . '/adm/spinner.gif' );
         Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$params ) );
-        $head->addJsVarFile( 'tree', md5( count( $childs, COUNT_RECURSIVE ) . $this->_id . $this->_sid . $this->_task . serialize( $params ) ), $params );
+        $head->addJsVarFile( $treeadmin, md5( count( $childs, COUNT_RECURSIVE ) . $this->_id . $this->_sid . $this->_task . serialize( $params ) ), $params );
+		
     }
 
     /**
