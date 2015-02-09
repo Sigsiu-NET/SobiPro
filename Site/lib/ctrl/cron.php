@@ -141,7 +141,7 @@ class SobiProCrawler extends JApplicationCli
 	{
 		$this->out( '============' );
 		$this->out( 'SobiPro crawler v 1.0' );
-		$this->out( 'Copyright (C) 2006 - 2014 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.' );
+		$this->out( 'Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.' );
 		$this->out( 'License GNU/GPL Version 3' );
 		$this->out( '============' );
 		$this->out( '' );
