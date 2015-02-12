@@ -248,14 +248,14 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 					$attributes[ 'target' ] = '_blank';
 				}
 				$data = array(
-					'_complex' => 1,
-					'_data' => SPLang::clean( $data[ 'label' ] ),
-					'_attributes' => $attributes
+						'_complex' => 1,
+						'_data' => SPLang::clean( $data[ 'label' ] ),
+						'_attributes' => $attributes
 				);
 				return array(
-					'_complex' => 1,
-					'_data' => array( 'a' => $data ),
-					'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass, 'counter' => $counter )
+						'_complex' => 1,
+						'_data' => array( 'a' => $data ),
+						'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass, 'counter' => $counter )
 				);
 			}
 		}
@@ -382,12 +382,12 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			try {
 				$connection = new $rclass();
 				$connection->setOptions(
-					array(
-						'url' => $save[ 'protocol' ] . '://' . $data,
-						'connecttimeout' => 10,
-						'header' => false,
-						'returntransfer' => true
-					)
+						array(
+								'url' => $save[ 'protocol' ] . '://' . $data,
+								'connecttimeout' => 10,
+								'header' => false,
+								'returntransfer' => true
+						)
 				);
 				$connection->exec();
 				$response = $connection->info( 'response_code' );
@@ -512,20 +512,22 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		SPLoader::loadClass( 'env.browser' );
 		SPLoader::loadClass( 'env.cookie' );
 		$browser = SPBrowser::getInstance();
-		$check = SPRequest::cmd( 'count_' . $this->nid, null, 'cookie' );
+		$this->nid = str_replace( array( '.count', '.' ), array( null, '_' ), SPRequest::task() );
+		$ident = $this->nid . '_' . SPRequest::int( 'eid' );
+		$check = SPRequest::cmd( 'count_' . $ident, null, 'cookie' );
 		if ( !( $check ) ) {
 			$data = array(
-				'date' => 'FUNCTION:NOW()',
-				'uid' => Sobi::My( 'id' ),
-				'sid' => SPRequest::int( 'eid' ),
-				'fid' => $this->nid,
-				'ip' => SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ),
-				'section' => Sobi::Section(),
-				'browserData' => $browser->get( 'browser' ),
-				'osData' => $browser->get( 'system' ),
-				'humanity' => $browser->get( 'humanity' )
+					'date' => 'FUNCTION:NOW()',
+					'uid' => Sobi::My( 'id' ),
+					'sid' => SPRequest::int( 'eid' ),
+					'fid' => $this->nid,
+					'ip' => SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ),
+					'section' => Sobi::Section(),
+					'browserData' => $browser->get( 'browser' ),
+					'osData' => $browser->get( 'system' ),
+					'humanity' => $browser->get( 'humanity' )
 			);
-			SPCookie::set( 'count_' . $this->nid, 1, SPCookie::hours( 2 ) );
+			SPCookie::set( 'count_' . $ident, 1, SPCookie::hours( 2 ) );
 			SPFactory::db()->insert( 'spdb_field_url_clicks', $data );
 		}
 	}

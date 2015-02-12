@@ -208,6 +208,7 @@ abstract class Sobi
 	 * @param bool $adm - if true, admin file will be loaded
 	 * @param string $defSection - default section to load, only if not parsing sections
 	 * @param string $lang - language folder. Default the currently selected language will be loaded
+	 * @deprecated
 	 * @return bool
 	 */
 	public static function LoadLangFile( $name, $sections = true, $adm = false, $defSection = 'general', $lang = null )

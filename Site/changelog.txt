@@ -49,6 +49,7 @@ Legend:
     (#) SobiPro menu link looses function if edited (Issue #1397)
     (#) Pre-selecting categories in SigsiuTree to prevent "O items selected" output on iOS (Issue #1367)
     (#) Task transformation doesn't works for alpha index (Issue #1362)
+    (#) URL click counter counts only once (Issue #1283)
 
 
 -------------------
