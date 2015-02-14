@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -27,8 +26,8 @@
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
-        <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
-        <divider />
+		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
+		<divider />
 		<button task="field.apply" type="apply">
 			<button type="save" task="field.save" />
 			<button type="duplicate" task="field.clone" />
@@ -57,11 +56,17 @@
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 
+								<fieldset label="FM.SEL.LIST_DEPENDENCY">
+									<field type="toggle" name="field.dependency" value="field.dependency" label="FMN.LIST_DEPENDENCY" prefix="yes_no" />
+									<field type="select" name="field.dependencyDefinition" selected="field.dependencyDefinition" values="dependencyDefinition" label="FMN.LIST_DEPENDENCY_FILE" class="input-medium"/>
+									<field type="fileUpload" name="select-list-dependency" label="FM.UPLOAD_DEPENDENCY_FILE" />
+								</fieldset>
 								<fieldset label="FM.SEL.LIST_OPTIONS">
+
 									<field type="fileUpload" name="spfieldsopts" label="FM.UPLOAD_OPT_FILE" />
 									<!-- Upload INI File -->
 
-                                    <message label="FM.INI_WARNING" type="error" dismiss-button="false" class="spConfigAlert" />
+									<message label="FM.INI_WARNING" type="error" dismiss-button="false" class="spConfigAlert" />
 									<field type="textarea" name="field.options" value="options" label="FMN.OPTIONS" editor="false" class="input-splarge" rows="20" style="" />
 									<!-- List Options -->
 								</fieldset>

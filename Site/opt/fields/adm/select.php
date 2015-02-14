@@ -121,9 +121,73 @@ class SPField_SelectAdm extends SPField_Select
 				$properties[ $property ] = isset( $attr[ $property ] ) ? ( $attr[ $property ] ) : null;
 			}
 		}
-		$attr[ 'params' ] = $properties;
 		$this->sets[ 'field.options' ] = SPFactory::Instance( 'types.array' )
 				->toINIString( $data );
+
+		/** handle upload of new definition file */
+		$XMLFile = SPRequest::file( 'select-list-dependency', 'tmp_name' );
+		if ( $XMLFile && file_exists( $XMLFile ) ) {
+			$XMLFileName = SPRequest::file( 'select-list-dependency', 'name' );
+			if ( SPFs::upload( $XMLFile, SOBI_PATH . '/etc/fields/select-list/' . $XMLFileName ) ) {
+				$properties[ 'dependencyDefinition' ] = $XMLFileName;
+			}
+		}
+
+		/** if we use it - let's transform the XML file  */
+		if ( $properties[ 'dependency' ] ) {
+			$this->parseDependencyDefinition( $properties[ 'dependencyDefinition' ] );
+		}
+		$attr[ 'params' ] = $properties;
+	}
+
+	protected function parseDependencyDefinition( $file )
+	{
+		$dom = new DOMDocument();
+		$dom->load( SOBI_PATH . '/etc/fields/select-list/' . $file );
+		$xpath = new DOMXPath( $dom );
+		$definition = array();
+		$root = $xpath->query( '/definition' );
+		$definition[ 'prefix' ] = $root->item( 0 )->attributes->getNamedItem( 'prefix' )->nodeValue;
+		$definition[ 'translation' ] = $root->item( 0 )->attributes->getNamedItem( 'translation' )->nodeValue;
+		$definition[ 'options' ] = array();
+		$this->_parseXML( $xpath->query( '/definition/option' ), $definition[ 'options' ] );
+		SPFs::write( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $file ) ), json_encode( $definition ) );
+	}
+
+	/**
+	 * @param DOMNodeList $nodes
+	 * @param $definition
+	 */
+	protected function _parseXML( DOMNodeList $nodes, &$definition )
+	{
+		foreach ( $nodes as $node ) {
+			if ( !( $node->attributes ) ) {
+				continue;
+			}
+			$option = array(
+					'id' => $node->attributes->getNamedItem( 'id' )->nodeValue,
+					'final' => $node->attributes->getNamedItem( 'final' ) ? $node->attributes->getNamedItem( 'final' )->nodeValue : false,
+					'childs' => array()
+			);
+			if ( $node->hasChildNodes() ) {
+				$this->_parseXML( $node->childNodes, $option[ 'childs' ] );
+			}
+			$definition[ ] = $option;
+		}
+	}
+
+	public function onFieldEdit( &$view )
+	{
+		$dependencyDefinitions = scandir( SOBI_PATH . '/etc/fields/select-list/' );
+		if ( count( $dependencyDefinitions ) ) {
+			$set = array();
+			foreach ( $dependencyDefinitions as $file ) {
+				if ( !( is_dir( SOBI_PATH . '/etc/fields/select-list/' . $file ) ) ) {
+					$set[ $file ] = $file;
+				}
+			}
+			$view->assign( $set, 'dependencyDefinition' );
+		}
 	}
 
 	public function delete()
