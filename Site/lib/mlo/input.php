@@ -528,6 +528,7 @@ abstract class SPHtml_Input
 		if ( is_array( $params ) && ( isset( $params[ 'size' ] ) && $params[ 'size' ] == 1 ) ) {
 			unset( $params[ 'size' ] );
 		}
+		$data = self::createDataTag( $params );
 		$params = self::params( $params );
 		self::checkArray( $values );
 		if ( $selected !== null && !( is_array( $selected ) ) ) {
@@ -614,7 +615,7 @@ abstract class SPHtml_Input
 			$name .= '[]';
 		}
 		$cells = implode( "\n\t", $cells );
-		$f = "\n<select name=\"{$name}\"{$multi}{$params}>\n\t{$cells}\n</select>\n";
+		$f = "\n<select name=\"{$name}\"{$multi}{$params}{$data}>\n\t{$cells}\n</select>\n";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
 		return "\n<!-- SelectList '{$name}' Output -->{$f}<!-- SelectList '{$name}' End -->\n\n";
 	}
@@ -839,17 +840,18 @@ abstract class SPHtml_Input
 	 * @param array $data
 	 * @return string
 	 */
-	private function createDataTag( &$data )
+	private static function createDataTag( &$data )
 	{
-		$tag = ' ';
-		if ( count( $data[ 'data' ] ) ) {
+		if ( is_array( $data ) && isset( $data[ 'data' ] ) && count( $data[ 'data' ] ) ) {
+			$tag = ' ';
 			foreach ( $data[ 'data' ] as $name => $value ) {
 				$name = SPLang::nid( preg_replace( '/(?<!^)([A-Z])/', '-\\1', $name ) );
 				$tag .= "data-{$name}=\"{$value}\" ";
 			}
 			unset( $data[ 'data' ] );
+			return $tag;
 		}
-		return $tag;
+		return null;
 	}
 
 	/**
@@ -1054,10 +1056,11 @@ abstract class SPHtml_Input
 		return $html;
 	}
 
-	public static function hidden( $name, $value = null, $id = null )
+	public static function hidden( $name, $value = null, $id = null, $params = array() )
 	{
+		$data = self::createDataTag( $params );
 		$id = $id ? $id : SPLang::nid( $name );
-		$f = "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\"/>";
+		$f = "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\" {$data}/>";
 		return "\n<!--  '{$name}' Output -->{$f}<!-- '{$name}' End -->\n\n";
 	}
 }

@@ -166,13 +166,12 @@ class SPField_SelectAdm extends SPField_Select
 			}
 			$option = array(
 					'id' => $node->attributes->getNamedItem( 'id' )->nodeValue,
-					'final' => $node->attributes->getNamedItem( 'final' ) ? $node->attributes->getNamedItem( 'final' )->nodeValue : false,
 					'childs' => array()
 			);
 			if ( $node->hasChildNodes() ) {
 				$this->_parseXML( $node->childNodes, $option[ 'childs' ] );
 			}
-			$definition[ ] = $option;
+			$definition[ $option[ 'id' ] ] = $option;
 		}
 	}
 

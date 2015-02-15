@@ -86,6 +86,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			return false;
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
+		$class = $this->dependency ? $class . ' ctrl-dependency-field' : $class;
 
 		$params = array( 'id' => $this->nid, 'size' => $this->size, 'class' => $class );
 		if ( $this->maxLength ) {
@@ -93,6 +94,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
+		}
+		if ( $this->dependency ) {
+			$params[ 'data' ] = array( 'order' => '1' );
 		}
 		$selected = $this->getRaw();
 		/*
@@ -103,7 +107,13 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( is_array( $selected ) && count( $selected ) && !( isset( $selected[ 0 ] ) ) ) {
 			$selected = array_keys( $selected );
 		}
-		$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
+		if ( !( $this->dependency ) ) {
+			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
+		}
+		else {
+			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
+			$field .= SPHtml_Input::hidden( $this->nid . '_path', null, null, array( 'data' => array( 'selected' => '' ) ) );
+		}
 		if ( !$return ) {
 			echo $field;
 		}
@@ -115,7 +125,24 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	private function getValues( $required = true )
 	{
 		$values = array();
-		if ( count( $this->options ) ) {
+		if ( $this->dependency ) {
+			SPFactory::header()
+					->addJsFile( 'opt.field_select' );
+			$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+			if ( isset( $options[ 'translation' ] ) ) {
+				SPLang::load( $options[ 'translation' ] );
+				$values[ 0 ] = Sobi::Txt( $this->selectLabel, $this->name );
+				foreach ( $options[ 'options' ] as $option ) {
+					if ( isset( $options[ 'translation' ] ) ) {
+						$values[ $option[ 'id' ] ] = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $option[ 'id' ] ) );
+					}
+					else {
+						$values[ $option[ 'id' ] ] = $option[ 'id' ];
+					}
+				}
+			}
+		}
+		elseif ( count( $this->options ) ) {
 			if ( $required ) {
 				$this->required( $values );
 			}
@@ -219,25 +246,25 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		$table = $db->join(
-			array(
-				array( 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ),
-				array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
-				array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue', 'ldata.sKey' ) ),
-			)
+				array(
+						array( 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ),
+						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
+						array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue', 'ldata.sKey' ) ),
+				)
 		);
 		try {
 			//$order = $this->checkCopy() ? 'scopy.desc' : 'scopy.asc';
 			$order = $this->checkCopy() ? 'scopy.asc' : 'scopy.desc';
 			$db->select(
-				'*, sdata.copy as scopy',
-				$table,
-				array(
-					'sdata.fid' => $this->id,
-					'sdata.sid' => $sid,
-					'fdata.sid' => $sid,
-					'ldata.oType' => 'field_option',
-					'ldata.fid' => $this->id
-				), $order, 0, 0, true /*, 'sdata.copy' */ );
+					'*, sdata.copy as scopy',
+					$table,
+					array(
+							'sdata.fid' => $this->id,
+							'sdata.sid' => $sid,
+							'fdata.sid' => $sid,
+							'ldata.oType' => 'field_option',
+							'ldata.fid' => $this->id
+					), $order, 0, 0, true /*, 'sdata.copy' */ );
 			$data = $db->loadObjectList( 'language' );
 			if ( $data ) {
 				if ( isset( $data[ Sobi::Lang() ] ) ) {
@@ -470,14 +497,14 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		$tables = $db->join(
-			array(
-				array( 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ),
-				array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'sdata.sid', 'spo.id' ) ),
-				array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => array( 'fdata.fid', 'sdata.fid' ) ),
-				array( 'table' => 'spdb_field', 'as' => 'fdef', 'key' => array( 'fdef.fid', 'sdata.fid' ) ),
-				array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue', 'ldata.sKey' ) ),
-				array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'spo.id', 'sprl.id' ) ),
-			)
+				array(
+						array( 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ),
+						array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'sdata.sid', 'spo.id' ) ),
+						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => array( 'fdata.fid', 'sdata.fid' ) ),
+						array( 'table' => 'spdb_field', 'as' => 'fdef', 'key' => array( 'fdef.fid', 'sdata.fid' ) ),
+						array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue', 'ldata.sKey' ) ),
+						array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'spo.id', 'sprl.id' ) ),
+				)
 		);
 		$oPrefix = 'spo.';
 		$conditions[ 'spo.oType' ] = 'entry';
@@ -722,5 +749,38 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		else {
 			return array( 'current' => $current, 'revision' => $revision );
 		}
+	}
+
+	/**
+	 * */
+	public function ProxyDependency()
+	{
+		$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+		$path = json_decode( Sobi::Clean( SPRequest::string( 'path' ) ), true );
+		if ( isset( $options[ 'translation' ] ) ) {
+			SPLang::load( $options[ 'translation' ] );
+		}
+		$selected = $options[ 'options' ];
+		foreach ( $path as $option ) {
+			if ( !( strlen( $option ) ) ) {
+				continue;
+			}
+			$selected = $selected[ $option ][ 'childs' ];
+		}
+		$values = array();
+		if ( is_array( $selected ) && count( $selected ) ) {
+			foreach ( $selected as $child ) {
+				$values[ 0 ] = Sobi::Txt( $this->selectLabel, $this->name );
+				if ( isset( $options[ 'translation' ] ) ) {
+					$values[ $child[ 'id' ] ] = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $child[ 'id' ] ) );
+				}
+				else {
+					$values[ $child[ 'id' ] ] = $child[ 'id' ];
+				}
+			}
+		}
+		SPFactory::mainframe()
+				->customHeader();
+		exit( json_encode( array( 'options' => $values, 'path' => ( json_encode( $path ) ) ) ) );
 	}
 }

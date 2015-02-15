@@ -21,209 +21,209 @@
 -->
 <definition prefix="countries" translation="SpApp.select-list.countries">
 	<option id="africa">
-		<option id="algeria" final="true" />
-		<option id="angola" final="true" />
-		<option id="benin" final="true" />
-		<option id="botswana" final="true" />
-		<option id="burkina" final="true" />
-		<option id="burundi" final="true" />
-		<option id="cameroon" final="true" />
-		<option id="cape-verde" final="true" />
-		<option id="central-african-republic" final="true" />
-		<option id="chad" final="true" />
-		<option id="comoros" final="true" />
-		<option id="congo" final="true" />
-		<option id="congo-democratic-republic-of" final="true" />
-		<option id="djibouti" final="true" />
-		<option id="egypt" final="true" />
-		<option id="equatorial-guinea" final="true" />
-		<option id="eritrea" final="true" />
-		<option id="ethiopia" final="true" />
-		<option id="gabon" final="true" />
-		<option id="gambia" final="true" />
-		<option id="ghana" final="true" />
-		<option id="guinea" final="true" />
-		<option id="guinea-bissau" final="true" />
-		<option id="ivory-coast" final="true" />
-		<option id="kenya" final="true" />
-		<option id="lesotho" final="true" />
-		<option id="liberia" final="true" />
-		<option id="libya" final="true" />
-		<option id="madagascar" final="true" />
-		<option id="malawi" final="true" />
-		<option id="mali" final="true" />
-		<option id="mauritania" final="true" />
-		<option id="mauritius" final="true" />
-		<option id="morocco" final="true" />
-		<option id="mozambique" final="true" />
-		<option id="namibia" final="true" />
-		<option id="niger" final="true" />
-		<option id="nigeria" final="true" />
-		<option id="rwanda" final="true" />
-		<option id="sao-tome-and-principe" final="true" />
-		<option id="senegal" final="true" />
-		<option id="seychelles" final="true" />
-		<option id="sierra-leone" final="true" />
-		<option id="somalia" final="true" />
-		<option id="south-africa" final="true" />
-		<option id="south-sudan" final="true" />
-		<option id="sudan" final="true" />
-		<option id="swaziland" final="true" />
-		<option id="tanzania" final="true" />
-		<option id="togo" final="true" />
-		<option id="tunisia" final="true" />
-		<option id="uganda" final="true" />
-		<option id="zambia" final="true" />
-		<option id="zimbabwe" final="true" />
+		<option id="algeria"/>
+		<option id="angola"/>
+		<option id="benin"/>
+		<option id="botswana"/>
+		<option id="burkina"/>
+		<option id="burundi"/>
+		<option id="cameroon"/>
+		<option id="cape-verde"/>
+		<option id="central-african-republic"/>
+		<option id="chad"/>
+		<option id="comoros"/>
+		<option id="congo"/>
+		<option id="congo-democratic-republic-of"/>
+		<option id="djibouti"/>
+		<option id="egypt"/>
+		<option id="equatorial-guinea"/>
+		<option id="eritrea"/>
+		<option id="ethiopia"/>
+		<option id="gabon"/>
+		<option id="gambia"/>
+		<option id="ghana"/>
+		<option id="guinea"/>
+		<option id="guinea-bissau"/>
+		<option id="ivory-coast"/>
+		<option id="kenya"/>
+		<option id="lesotho"/>
+		<option id="liberia"/>
+		<option id="libya"/>
+		<option id="madagascar"/>
+		<option id="malawi"/>
+		<option id="mali"/>
+		<option id="mauritania"/>
+		<option id="mauritius"/>
+		<option id="morocco"/>
+		<option id="mozambique"/>
+		<option id="namibia"/>
+		<option id="niger"/>
+		<option id="nigeria"/>
+		<option id="rwanda"/>
+		<option id="sao-tome-and-principe"/>
+		<option id="senegal"/>
+		<option id="seychelles"/>
+		<option id="sierra-leone"/>
+		<option id="somalia"/>
+		<option id="south-africa"/>
+		<option id="south-sudan"/>
+		<option id="sudan"/>
+		<option id="swaziland"/>
+		<option id="tanzania"/>
+		<option id="togo"/>
+		<option id="tunisia"/>
+		<option id="uganda"/>
+		<option id="zambia"/>
+		<option id="zimbabwe"/>
 	</option>
 	<option id="asia">
-		<option id="afghanistan" final="true" />
-		<option id="bahrain" final="true" />
-		<option id="bangladesh" final="true" />
-		<option id="bhutan" final="true" />
-		<option id="brunei" final="true" />
-		<option id="burma" final="true" />
-		<option id="cambodia" final="true" />
-		<option id="china" final="true" />
-		<option id="east-timor" final="true" />
-		<option id="india" final="true" />
-		<option id="indonesia" final="true" />
-		<option id="iran" final="true" />
-		<option id="iraq" final="true" />
-		<option id="israel" final="true" />
-		<option id="japan" final="true" />
-		<option id="jordan" final="true" />
-		<option id="kazakhstan" final="true" />
-		<option id="korea-north" final="true" />
-		<option id="korea-south" final="true" />
-		<option id="kuwait" final="true" />
-		<option id="kyrgyzstan" final="true" />
-		<option id="laos" final="true" />
-		<option id="lebanon" final="true" />
-		<option id="malaysia" final="true" />
-		<option id="maldives" final="true" />
-		<option id="mongolia" final="true" />
-		<option id="nepal" final="true" />
-		<option id="oman" final="true" />
-		<option id="pakistan" final="true" />
-		<option id="philippines" final="true" />
-		<option id="qatar" final="true" />
-		<option id="russian-federation" final="true" />
-		<option id="saudi-arabia" final="true" />
-		<option id="singapore" final="true" />
-		<option id="sri-lanka" final="true" />
-		<option id="syria" final="true" />
-		<option id="tajikistan" final="true" />
-		<option id="thailand" final="true" />
-		<option id="turkey" final="true" />
-		<option id="turkmenistan" final="true" />
-		<option id="united-arab-emirates" final="true" />
-		<option id="uzbekistan" final="true" />
-		<option id="vietnam" final="true" />
-		<option id="yemen" final="true" />
+		<option id="afghanistan"/>
+		<option id="bahrain"/>
+		<option id="bangladesh"/>
+		<option id="bhutan"/>
+		<option id="brunei"/>
+		<option id="burma"/>
+		<option id="cambodia"/>
+		<option id="china"/>
+		<option id="east-timor"/>
+		<option id="india"/>
+		<option id="indonesia"/>
+		<option id="iran"/>
+		<option id="iraq"/>
+		<option id="israel"/>
+		<option id="japan"/>
+		<option id="jordan"/>
+		<option id="kazakhstan"/>
+		<option id="korea-north"/>
+		<option id="korea-south"/>
+		<option id="kuwait"/>
+		<option id="kyrgyzstan"/>
+		<option id="laos"/>
+		<option id="lebanon"/>
+		<option id="malaysia"/>
+		<option id="maldives"/>
+		<option id="mongolia"/>
+		<option id="nepal"/>
+		<option id="oman"/>
+		<option id="pakistan"/>
+		<option id="philippines"/>
+		<option id="qatar"/>
+		<option id="russian-federation"/>
+		<option id="saudi-arabia"/>
+		<option id="singapore"/>
+		<option id="sri-lanka"/>
+		<option id="syria"/>
+		<option id="tajikistan"/>
+		<option id="thailand"/>
+		<option id="turkey"/>
+		<option id="turkmenistan"/>
+		<option id="united-arab-emirates"/>
+		<option id="uzbekistan"/>
+		<option id="vietnam"/>
+		<option id="yemen"/>
 	</option>
 	<option id="europe">
-		<option id="albania" final="true" />
-		<option id="andorra" final="true" />
-		<option id="armenia" final="true" />
-		<option id="austria" final="true" />
-		<option id="azerbaijan" final="true" />
-		<option id="belarus" final="true" />
-		<option id="belgium" final="true" />
-		<option id="bosnia-and-herzegovina" final="true" />
-		<option id="bulgaria" final="true" />
-		<option id="croatia" final="true" />
-		<option id="cyprus" final="true" />
-		<option id="czech-republic" final="true" />
-		<option id="denmark" final="true" />
-		<option id="estonia" final="true" />
-		<option id="finland" final="true" />
-		<option id="france" final="true" />
-		<option id="georgia" final="true" />
-		<option id="germany" final="true" />
-		<option id="greece" final="true" />
-		<option id="hungary" final="true" />
-		<option id="iceland" final="true" />
-		<option id="ireland" final="true" />
-		<option id="italy" final="true" />
-		<option id="latvia" final="true" />
-		<option id="liechtenstein" final="true" />
-		<option id="lithuania" final="true" />
-		<option id="luxembourg" final="true" />
-		<option id="macedonia" final="true" />
-		<option id="malta" final="true" />
-		<option id="moldova" final="true" />
-		<option id="monaco" final="true" />
-		<option id="montenegro" final="true" />
-		<option id="netherlands" final="true" />
-		<option id="norway" final="true" />
-		<option id="poland" final="true" />
-		<option id="portugal" final="true" />
-		<option id="romania" final="true" />
-		<option id="san-marino" final="true" />
-		<option id="serbia" final="true" />
-		<option id="slovakia" final="true" />
-		<option id="slovenia" final="true" />
-		<option id="spain" final="true" />
-		<option id="sweden" final="true" />
-		<option id="switzerland" final="true" />
-		<option id="ukraine" final="true" />
-		<option id="united-kingdom" final="true" />
-		<option id="vatican-city" final="true" />
+		<option id="albania"/>
+		<option id="andorra"/>
+		<option id="armenia"/>
+		<option id="austria"/>
+		<option id="azerbaijan"/>
+		<option id="belarus"/>
+		<option id="belgium"/>
+		<option id="bosnia-and-herzegovina"/>
+		<option id="bulgaria"/>
+		<option id="croatia"/>
+		<option id="cyprus"/>
+		<option id="czech-republic"/>
+		<option id="denmark"/>
+		<option id="estonia"/>
+		<option id="finland"/>
+		<option id="france"/>
+		<option id="georgia"/>
+		<option id="germany"/>
+		<option id="greece"/>
+		<option id="hungary"/>
+		<option id="iceland"/>
+		<option id="ireland"/>
+		<option id="italy"/>
+		<option id="latvia"/>
+		<option id="liechtenstein"/>
+		<option id="lithuania"/>
+		<option id="luxembourg"/>
+		<option id="macedonia"/>
+		<option id="malta"/>
+		<option id="moldova"/>
+		<option id="monaco"/>
+		<option id="montenegro"/>
+		<option id="netherlands"/>
+		<option id="norway"/>
+		<option id="poland"/>
+		<option id="portugal"/>
+		<option id="romania"/>
+		<option id="san-marino"/>
+		<option id="serbia"/>
+		<option id="slovakia"/>
+		<option id="slovenia"/>
+		<option id="spain"/>
+		<option id="sweden"/>
+		<option id="switzerland"/>
+		<option id="ukraine"/>
+		<option id="united-kingdom"/>
+		<option id="vatican-city"/>
 	</option>
 	<option id="north-america">
-		<option id="antigua-and-barbuda" final="true" />
-		<option id="bahamas" final="true" />
-		<option id="barbados" final="true" />
-		<option id="belize" final="true" />
-		<option id="canada" final="true" />
-		<option id="costa-rica" final="true" />
-		<option id="cuba" final="true" />
-		<option id="dominica" final="true" />
-		<option id="dominican-republic" final="true" />
-		<option id="el-salvador" final="true" />
-		<option id="grenada" final="true" />
-		<option id="guatemala" final="true" />
-		<option id="haiti" final="true" />
-		<option id="honduras" final="true" />
-		<option id="jamaica" final="true" />
-		<option id="mexico" final="true" />
-		<option id="nicaragua" final="true" />
-		<option id="panama" final="true" />
-		<option id="saint-kitts-and-nevis" final="true" />
-		<option id="saint-lucia" final="true" />
-		<option id="saint-vincent-and-the-grenadines" final="true" />
-		<option id="trinidad-and-tobago" final="true" />
-		<option id="united-states" final="true" />
+		<option id="antigua-and-barbuda"/>
+		<option id="bahamas"/>
+		<option id="barbados"/>
+		<option id="belize"/>
+		<option id="canada"/>
+		<option id="costa-rica"/>
+		<option id="cuba"/>
+		<option id="dominica"/>
+		<option id="dominican-republic"/>
+		<option id="el-salvador"/>
+		<option id="grenada"/>
+		<option id="guatemala"/>
+		<option id="haiti"/>
+		<option id="honduras"/>
+		<option id="jamaica"/>
+		<option id="mexico"/>
+		<option id="nicaragua"/>
+		<option id="panama"/>
+		<option id="saint-kitts-and-nevis"/>
+		<option id="saint-lucia"/>
+		<option id="saint-vincent-and-the-grenadines"/>
+		<option id="trinidad-and-tobago"/>
+		<option id="united-states"/>
 	</option>
 	<option id="oceania">
-		<option id="australia" final="true" />
-		<option id="fiji" final="true" />
-		<option id="kiribati" final="true" />
-		<option id="marshall-islands" final="true" />
-		<option id="micronesia" final="true" />
-		<option id="nauru" final="true" />
-		<option id="new-zealand" final="true" />
-		<option id="palau" final="true" />
-		<option id="papua-new-guinea" final="true" />
-		<option id="samoa" final="true" />
-		<option id="solomon-islands" final="true" />
-		<option id="tonga" final="true" />
-		<option id="tuvalu" final="true" />
-		<option id="vanuatu" final="true" />
+		<option id="australia"/>
+		<option id="fiji"/>
+		<option id="kiribati"/>
+		<option id="marshall-islands"/>
+		<option id="micronesia"/>
+		<option id="nauru"/>
+		<option id="new-zealand"/>
+		<option id="palau"/>
+		<option id="papua-new-guinea"/>
+		<option id="samoa"/>
+		<option id="solomon-islands"/>
+		<option id="tonga"/>
+		<option id="tuvalu"/>
+		<option id="vanuatu"/>
 	</option>
 	<option id="south-america">
-		<option id="argentina" final="true" />
-		<option id="bolivia" final="true" />
-		<option id="brazil" final="true" />
-		<option id="chile" final="true" />
-		<option id="colombia" final="true" />
-		<option id="ecuador" final="true" />
-		<option id="guyana" final="true" />
-		<option id="paraguay" final="true" />
-		<option id="peru" final="true" />
-		<option id="suriname" final="true" />
-		<option id="uruguay" final="true" />
-		<option id="venezuela" final="true" />
+		<option id="argentina"/>
+		<option id="bolivia"/>
+		<option id="brazil"/>
+		<option id="chile"/>
+		<option id="colombia"/>
+		<option id="ecuador"/>
+		<option id="guyana"/>
+		<option id="paraguay"/>
+		<option id="peru"/>
+		<option id="suriname"/>
+		<option id="uruguay"/>
+		<option id="venezuela"/>
 	</option>
 </definition>
