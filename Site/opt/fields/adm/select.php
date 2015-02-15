@@ -188,6 +188,12 @@ class SPField_SelectAdm extends SPField_Select
 			}
 			$view->assign( $set, 'dependencyDefinition' );
 		}
+		/** @var $arr SPData_Array */
+		$arr = SPFactory::Instance( 'types.array' );
+		$options = array();
+		$this->_parseOptions( $this->options, $options );
+		$options = $arr->toINIString( $options );
+		$view->assign( $options, 'options' );
 	}
 
 	public function delete()

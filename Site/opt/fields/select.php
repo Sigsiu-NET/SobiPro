@@ -676,16 +676,6 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		return $sids;
 	}
 
-	public function onFieldEdit( &$view )
-	{
-		/** @var $arr SPData_Array */
-		$arr = SPFactory::Instance( 'types.array' );
-		$options = array();
-		$this->_parseOptions( $this->options, $options );
-		$options = $arr->toINIString( $options );
-		$view->assign( $options, 'options' );
-	}
-
 	protected function _parseOptions( $options, &$arr )
 	{
 		foreach ( $options as $value ) {

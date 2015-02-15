@@ -24,6 +24,7 @@
 	<header>
 		<title value="FM.EDIT_FIELD" />
 		<file type="script" filename="bootstrap.tabs" />
+		<file type="script" filename="adm.fields.select" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
@@ -54,14 +55,14 @@
 									<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
 									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="toggle" name="field.dependency" value="field.dependency" label="FMN.LIST_DEPENDENCY" prefix="yes_no" />
 								</fieldset>
 
-								<fieldset label="FM.SEL.LIST_DEPENDENCY">
-									<field type="toggle" name="field.dependency" value="field.dependency" label="FMN.LIST_DEPENDENCY" prefix="yes_no" />
+								<fieldset label="FM.SEL.LIST_DEPENDENCY" id="dependency">
 									<field type="select" name="field.dependencyDefinition" selected="field.dependencyDefinition" values="dependencyDefinition" label="FMN.LIST_DEPENDENCY_FILE" class="input-medium"/>
 									<field type="fileUpload" name="select-list-dependency" label="FM.UPLOAD_DEPENDENCY_FILE" />
 								</fieldset>
-								<fieldset label="FM.SEL.LIST_OPTIONS">
+								<fieldset label="FM.SEL.LIST_OPTIONS" id="regular">
 
 									<field type="fileUpload" name="spfieldsopts" label="FM.UPLOAD_OPT_FILE" />
 									<!-- Upload INI File -->
