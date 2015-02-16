@@ -20,7 +20,7 @@
  $HeadURL$
 -->
 <definition prefix="countries" translation="SpApp.select-list.countries">
-	<option id="africa">
+	<option id="africa" child-type="country">
 		<option id="algeria"/>
 		<option id="angola"/>
 		<option id="benin"/>
@@ -76,7 +76,7 @@
 		<option id="zambia"/>
 		<option id="zimbabwe"/>
 	</option>
-	<option id="asia">
+	<option id="asia" child-type="country">
 		<option id="afghanistan"/>
 		<option id="bahrain"/>
 		<option id="bangladesh"/>
@@ -122,7 +122,7 @@
 		<option id="vietnam"/>
 		<option id="yemen"/>
 	</option>
-	<option id="europe">
+	<option id="europe" child-type="country">
 		<option id="albania"/>
 		<option id="andorra"/>
 		<option id="armenia"/>
@@ -171,7 +171,7 @@
 		<option id="united-kingdom"/>
 		<option id="vatican-city"/>
 	</option>
-	<option id="north-america">
+	<option id="north-america" child-type="country">
 		<option id="antigua-and-barbuda"/>
 		<option id="bahamas"/>
 		<option id="barbados"/>
@@ -196,7 +196,7 @@
 		<option id="trinidad-and-tobago"/>
 		<option id="united-states"/>
 	</option>
-	<option id="oceania">
+	<option id="oceania" child-type="country">
 		<option id="australia"/>
 		<option id="fiji"/>
 		<option id="kiribati"/>
@@ -212,7 +212,7 @@
 		<option id="tuvalu"/>
 		<option id="vanuatu"/>
 	</option>
-	<option id="south-america">
+	<option id="south-america" child-type="country">
 		<option id="argentina"/>
 		<option id="bolivia"/>
 		<option id="brazil"/>

@@ -760,17 +760,19 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( isset( $options[ 'translation' ] ) ) {
 			SPLang::load( $options[ 'translation' ] );
 		}
+		$type = null;
 		$selected = $options[ 'options' ];
 		foreach ( $path as $option ) {
 			if ( !( strlen( $option ) ) ) {
 				continue;
 			}
+			$type = isset( $selected[ $option ][ 'child-type' ] ) ? Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $selected[ $option ][ 'child-type' ] ) ) : null;
 			$selected = $selected[ $option ][ 'childs' ];
 		}
 		$values = array();
 		if ( is_array( $selected ) && count( $selected ) ) {
+			$values[ 0 ] = Sobi::Txt( $this->selectLabel, ( strlen( $type ) ? $type : $this->name ) );
 			foreach ( $selected as $child ) {
-				$values[ 0 ] = Sobi::Txt( $this->selectLabel, $this->name );
 				if ( isset( $options[ 'translation' ] ) ) {
 					$values[ $child[ 'id' ] ] = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $child[ 'id' ] ) );
 				}

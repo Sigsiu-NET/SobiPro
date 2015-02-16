@@ -60,7 +60,7 @@
 
 								<fieldset label="FM.SEL.LIST_DEPENDENCY" id="dependency">
 									<field type="select" name="field.dependencyDefinition" selected="field.dependencyDefinition" values="dependencyDefinition" label="FMN.LIST_DEPENDENCY_FILE" class="input-medium"/>
-									<field type="fileUpload" name="select-list-dependency" label="FM.UPLOAD_DEPENDENCY_FILE" />
+									<field type="fileUpload" name="select-list-dependency" label="FM.UPLOAD_DEPENDENCY_FILE" accept="application/zip|text/xml"/>
 								</fieldset>
 								<fieldset label="FM.SEL.LIST_OPTIONS" id="regular">
 

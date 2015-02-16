@@ -128,13 +128,44 @@ class SPField_SelectAdm extends SPField_Select
 		$XMLFile = SPRequest::file( 'select-list-dependency', 'tmp_name' );
 		if ( $XMLFile && file_exists( $XMLFile ) ) {
 			$XMLFileName = SPRequest::file( 'select-list-dependency', 'name' );
-			if ( SPFs::upload( $XMLFile, SOBI_PATH . '/etc/fields/select-list/' . $XMLFileName ) ) {
-				$properties[ 'dependencyDefinition' ] = $XMLFileName;
+			if ( SPFs::getExt( $XMLFileName ) == 'zip' ) {
+				$arch = SPFactory::Instance( 'base.fs.archive' );
+				$name = str_replace( '.zip', null, $XMLFileName );
+				$path = SPLoader::dirPath( 'tmp.install.' . $name, 'front', false );
+				$c = 0;
+				while ( SPFs::exists( $path ) ) {
+					$path = SPLoader::dirPath( 'tmp.install.' . $name . '_' . ++$c, 'front', false );
+				}
+				$arch->upload( $XMLFile, $path . '/' . $XMLFileName );
+				$arch->extract( $path );
+				$files = scandir( $path );
+				if ( count( $files ) ) {
+					foreach ( $files as $defFile ) {
+						switch ( SPFs::getExt( $defFile ) ) {
+							case 'xml':
+								$properties[ 'dependencyDefinition' ] = $defFile;
+								SPFs::move( $path . '/' . $defFile, SOBI_PATH . '/etc/fields/select-list/' . $defFile );
+								break;
+							case 'ini':
+								$defLang = explode( '.', $defFile );
+								$defLang = $defLang[ 0 ];
+								if ( file_exists( SOBI_ROOT . '/language/' . $defLang ) ) {
+									SPFs::move( $path . '/' . $defFile, SOBI_ROOT . '/language/' . $defLang . '/' . $defFile );
+								}
+								break;
+						}
+					}
+				}
+			}
+			elseif ( SPFs::getExt( $XMLFileName ) == 'xml' ) {
+				if ( SPFs::upload( $XMLFile, SOBI_PATH . '/etc/fields/select-list/' . $XMLFileName ) ) {
+					$properties[ 'dependencyDefinition' ] = $XMLFileName;
+				}
 			}
 		}
 
 		/** if we use it - let's transform the XML file  */
-		if ( $properties[ 'dependency' ] ) {
+		if ( $properties[ 'dependency' ] && $properties[ 'dependencyDefinition' ] ) {
 			$this->parseDependencyDefinition( $properties[ 'dependencyDefinition' ] );
 		}
 		$attr[ 'params' ] = $properties;
@@ -168,6 +199,9 @@ class SPField_SelectAdm extends SPField_Select
 					'id' => $node->attributes->getNamedItem( 'id' )->nodeValue,
 					'childs' => array()
 			);
+			if ( $node->attributes->getNamedItem( 'child-type' ) ) {
+				$option[ 'child-type' ] = $node->attributes->getNamedItem( 'child-type' )->nodeValue;
+			}
 			if ( $node->hasChildNodes() ) {
 				$this->_parseXML( $node->childNodes, $option[ 'childs' ] );
 			}
