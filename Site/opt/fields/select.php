@@ -72,7 +72,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	protected $dType = 'predefined_multi_data_single_choice';
 	/** * @var string */
 	protected $itemprop = '';
+	/** @var bool */
 	protected $dependency = false;
+	/** @var string */
 	protected $dependencyDefinition = '';
 
 	/**
@@ -111,6 +113,11 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
 		}
 		else {
+			$path = null;
+			if ( strlen( $this->_fData->options ) ) {
+				$path = SPConfig::unserialize( $this->_fData->options );
+				$selected = $path[ 1 ];
+			}
 			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
 			$field .= SPHtml_Input::hidden( $this->nid . '_path', null, null, array( 'data' => array( 'selected' => '' ) ) );
 		}
@@ -317,8 +324,24 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	protected function fetchData( $request )
 	{
 		if ( $request && strlen( $request ) ) {
+			if ( $this->dependency ) {
+				$path = json_decode( Sobi::Clean( SPRequest::string( $this->nid . '_path' ) ), true );
+				if ( count( $path ) ) {
+					$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+					$selected = $options[ 'options' ];
+					foreach ( $path as $part ) {
+						if ( isset( $selected[ $part ] ) ) {
+							$selected = $selected[ $part ][ 'childs' ];
+						}
+						else {
+							throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $request, $this->name ) );
+						}
+					}
+				}
+				return $path;
+			}
 			/* check if such option exist at all */
-			if ( !( isset( $this->optionsById[ $request ] ) ) ) {
+			elseif ( !( isset( $this->optionsById[ $request ] ) ) ) {
 				throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $request, $this->name ) );
 			}
 			return array( $request );
@@ -385,6 +408,52 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		return $cdata;
 	}
 
+
+	/**
+	 * @param $entry
+	 * @param $data
+	 * @param $request
+	 */
+	protected function saveDependencyField( &$entry, $data, $request )
+	{
+		$time = SPRequest::now();
+		$uid = Sobi::My( 'id' );
+		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$params = array();
+		$params[ 'publishUp' ] = $entry->get( 'publishUp' );
+		$params[ 'publishDown' ] = $entry->get( 'publishDown' );
+		$params[ 'fid' ] = $this->fid;
+		$params[ 'sid' ] = $entry->get( 'id' );
+		$params[ 'section' ] = Sobi::Reg( 'current_section' );
+		$params[ 'lang' ] = Sobi::Lang();
+		$params[ 'enabled' ] = $entry->get( 'state' );
+		$params[ 'approved' ] = $entry->get( 'approved' );
+		$params[ 'confirmed' ] = $entry->get( 'confirmed' );
+		/* if it is the first version, it is new entry */
+		if ( $entry->get( 'version' ) == 1 ) {
+			$params[ 'createdTime' ] = $time;
+			$params[ 'createdBy' ] = $uid;
+			$params[ 'createdIP' ] = $IP;
+		}
+		$params[ 'updatedTime' ] = $time;
+		$params[ 'updatedBy' ] = $uid;
+		$params[ 'updatedIP' ] = $IP;
+		$params[ 'options' ] = $data;
+		$params[ 'copy' ] = 0;
+		$params[ 'baseData' ] = SPRequest::string( $this->nid, null, false, $request );
+		$params[ 'copy' ] = ( int )!( $entry->get( 'approved' ) );
+		if ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
+			--$this->editLimit;
+		}
+		$params[ 'editLimit' ] = $this->editLimit;
+		try {
+			SPFactory::db()
+					->insertUpdate( 'spdb_field_data', $params );
+		} catch ( SPException $x ) {
+			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+		}
+	}
+
 	/**
 	 * Gets the data for a field and save it in the database
 	 * @param SPEntry $entry
@@ -398,19 +467,20 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ) );
 		$cdata = $this->verify( $entry, $request, $data );
-
 		$time = SPRequest::now();
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		$uid = Sobi::My( 'id' );
+
 
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 
 		/* if we are here, we can save these data */
 		if ( $cdata ) {
-			$fdata = array();
+			if ( $this->dependency ) {
+				return $this->saveDependencyField( $entry, $data, $request );
+			}
 			$options = array();
-
 			$params = array();
 			$params[ 'publishUp' ] = $entry->get( 'publishUp' );
 			$params[ 'publishDown' ] = $entry->get( 'publishDown' );
@@ -437,6 +507,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				--$this->editLimit;
 			}
 			$params[ 'editLimit' ] = $this->editLimit;
+
 
 			/* save it */
 			try {

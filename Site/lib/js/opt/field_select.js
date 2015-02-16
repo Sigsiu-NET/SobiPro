@@ -38,15 +38,15 @@ SobiPro.jQuery( document ).ready( function ()
 			LastList = el;
 		} );
 		if ( Proxy.data( 'order' ) < LastList ) {
-			SobiPro.jQuery.each( Canvas.find( '[name="' + Proxy.attr( 'id' ) + '"]' ), function ( i, el )
+			SobiPro.jQuery.each( Canvas.find( '[name="' + Proxy.attr( 'name' ) + '"]' ), function ( i, el )
 			{
-				if ( SobiPro.jQuery( el ).data( 'order' ) > Proxy.data( 'order' ) ) {
+				if ( SobiPro.jQuery( el ).attr( 'data-order' ) > Proxy.attr( 'data-order' ) ) {
 					SobiPro.jQuery( el ).detach();
 					delete Selected[SobiPro.jQuery( el ).data( 'order' )];
 				}
 			} );
 		}
-		Selected[Proxy.data( 'order' )] = Proxy.val();
+		Selected[Proxy.attr( 'data-order' )] = Proxy.val();
 		Path.val( JSON.stringify( Selected ) );
 		SobiPro.jQuery.ajax( {
 			'url': 'index.php',
@@ -71,7 +71,8 @@ SobiPro.jQuery( document ).ready( function ()
 				{
 					SelectList.append( new Option( id, label ) );
 				} );
-				SelectList.data( 'order', parseInt( SelectList.data( 'order' ) ) + 1 )
+				var Current = parseInt( SelectList.attr( 'data-order' ) ) + 1;
+				SelectList.attr( 'data-order', Current );
 				SelectList.insertAfter( Proxy );
 				SelectList.change( function ()
 				{
