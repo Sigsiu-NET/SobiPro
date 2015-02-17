@@ -304,15 +304,18 @@ class SPField extends SPObject
 	}
 
 	/**
+	 * @param bool $skipNative
 	 * @return array
 	 */
-	public function struct()
+	public function struct( $skipNative = false )
 	{
 		if ( $this->_off ) {
 			return null;
 		}
-		$this->checkMethod( 'struct' );
-		if ( $this->_type && method_exists( $this->_type, 'struct' ) ) {
+		if ( !( $skipNative ) ) {
+			$this->checkMethod( 'struct' );
+		}
+		if ( !( $skipNative ) && $this->_type && method_exists( $this->_type, 'struct' ) ) {
 			$r = $this->_type->struct();
 		}
 		else {
@@ -417,7 +420,7 @@ class SPField extends SPObject
 	public function delete()
 	{
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( $this->id ) );
-		if( !( $this->_type  ) ) {
+		if ( !( $this->_type ) ) {
 			$this->loadType();
 		}
 		if ( $this->_type && method_exists( $this->_type, 'delete' ) ) {

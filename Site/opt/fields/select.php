@@ -890,4 +890,36 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 		return $values;
 	}
+
+	/**
+	 * @return array
+	 */
+	public function struct()
+	{
+		if ( !( $this->dependency ) ) {
+			return parent::struct( true );
+		}
+		$selected = $this->getRaw();
+		$path = SPConfig::unserialize( $this->_fData->options );
+		$selectedPath = array();
+		$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+		if ( isset( $options[ 'translation' ] ) ) {
+			SPLang::load( $options[ 'translation' ] );
+			$selected = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $selected ) );
+		}
+		if ( count( $path ) && isset( $options[ 'translation' ] ) ) {
+			foreach ( $path as $step ) {
+				$selectedPath[ $step ] = $selected = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $step ) );
+			}
+		}
+		return array(
+				'_complex' => 1,
+				'_data' => $selected,
+				'_attributes' => array(
+						'class' => $this->cssClass
+				),
+				'_options' => array( 'path' => count( $selectedPath ) ? $selectedPath : $path ),
+		);
+
+	}
 }
