@@ -595,6 +595,7 @@ class SPSearchCtrl extends SPSectionCtrl
 				$this->_resultsCount = count( $this->_results );
 			}
 			$this->_request = SPConfig::unserialize( $r[ 0 ][ 'requestData' ] );
+			SPFactory::registry()->set( 'requestcache', $this->_request );
 			if ( count( $this->_results ) ) {
 				$r = array_slice( $this->_results, $eLimStart, $eLimit );
 				/* so we have a results */

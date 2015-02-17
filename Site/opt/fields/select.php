@@ -472,6 +472,25 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		} catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
+		foreach ( $data as $selected ) {
+			/* collect the needed params */
+			$params[ 'baseData' ] = strip_tags( SPFactory::db()->escape( $selected ) );
+			$options[ ] = array( 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'optValue' => $selected, 'copy' => $params[ 'copy' ], 'params' => null );
+		}
+
+		/* delete old selected values */
+		try {
+			SPFactory::db()->delete( 'spdb_field_option_selected', array( 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'copy' => $params[ 'copy' ] ) );
+		} catch ( SPException $x ) {
+			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_DELETE_PREVIOUS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+		}
+
+		/* insert new selected value */
+		try {
+			SPFactory::db()->insertArray( 'spdb_field_option_selected', $options );
+		} catch ( SPException $x ) {
+			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_SELECTED_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+		}
 	}
 
 	/**
@@ -485,12 +504,12 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
+
 		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ) );
 		$cdata = $this->verify( $entry, $request, $data );
 		$time = SPRequest::now();
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		$uid = Sobi::My( 'id' );
-
 
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
@@ -632,16 +651,25 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( $this->searchMethod == 'general' ) {
 			return false;
 		}
+		$hidden = null;
 		$d = $this->getValues( false );
 		$data = array( '' => Sobi::Txt( 'FD.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) );
 		foreach ( $d as $k => $v ) {
 			$data[ $k ] = $v;
 		}
 		$params = array( 'id' => $this->nid, 'size' => $this->ssize, 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) );
+		if ( $this->dependency ) {
+			SPFactory::header()
+					->addJsFile( 'opt.field_select' );
+			$request = json_decode( SPLang::clean( SPRequest::raw( $this->nid . '_path', null, 'requestcache' ) ), true );
+			$params[ 'class' ] .= ' ctrl-dependency-field';
+			$hidden = SPHtml_Input::hidden( $this->nid . '_path', '{}', null, array( 'data' => array( 'selected' => '' ) ) );
+			$params[ 'data' ] = array( 'order' => '1' );
+		}
 		if ( $this->swidth ) {
 			$params[ 'style' ] = "width: {$this->swidth}px;";
 		}
-		return SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params );
+		return SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params ) . $hidden;
 	}
 
 	/**
@@ -702,6 +730,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	public function searchString( $data, $section, $regex = false )
 	{
+		if ( ( $this->dependency ) ) {
+			return parent::searchString( $data, $section, $regex );
+		}
 		/* @var SPdb $db */
 		$db = SPFactory::db();
 		$sids = array();
@@ -732,6 +763,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	public function searchSuggest( $data, $section, $startWith = true )
 	{
+		if ( ( $this->dependency ) ) {
+			return parent::searchSuggest( $data, $section, $startWith );
+		}
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		$terms = array();
@@ -761,6 +795,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	public function searchData( $request, $section )
 	{
+//		if ( ( $this->dependency ) ) {
+//			return parent::searchData( $request, $section );
+//		}
 		$sids = array();
 		/* check if there was something to search for */
 		if ( ( is_array( $request ) && count( $request ) ) || ( is_string( $request ) && strlen( $request ) ) ) {
@@ -912,6 +949,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				$selectedPath[ $step ] = $selected = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $step ) );
 			}
 		}
+		$this->cleanCss();
 		return array(
 				'_complex' => 1,
 				'_data' => $selected,
