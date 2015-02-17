@@ -114,12 +114,32 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 		else {
 			$path = null;
+			$subFields = null;
+			$hiddenValue = null;
 			if ( strlen( $this->_fData->options ) ) {
 				$path = SPConfig::unserialize( $this->_fData->options );
+				if ( count( $path ) ) {
+					$progress = array();
+					$subParams = $params;
+					foreach ( $path as $index => $step ) {
+						$progress[ ] = $step;
+						if ( $step == $path[ 0 ] ) {
+							continue;
+						}
+						$subParams[ 'data' ][ 'order' ] = $index + 1;
+						$subParams[ 'id' ] = $this->nid . '_' . $index;
+						$lists = $this->loadDependencyDefinition( $progress );
+						if ( count( $lists ) ) {
+							$subFields .= SPHtml_Input::select( $this->nid, $lists, $path[ $index + 1 ], false, $subParams );
+						}
+					}
+				}
 				$selected = $path[ 1 ];
+				$hiddenValue = str_replace( '"', "'", json_encode( (object)$path ) );
 			}
 			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
-			$field .= SPHtml_Input::hidden( $this->nid . '_path', null, null, array( 'data' => array( 'selected' => '' ) ) );
+			$field .= $subFields;
+			$field .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'selected' => '' ) ) );
 		}
 		if ( !$return ) {
 			echo $field;
@@ -826,8 +846,23 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 * */
 	public function ProxyDependency()
 	{
-		$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 		$path = json_decode( Sobi::Clean( SPRequest::string( 'path' ) ), true );
+		$values = $this->loadDependencyDefinition( $path );
+		SPFactory::mainframe()
+				->customHeader();
+		exit( json_encode( array( 'options' => $values, 'path' => ( json_encode( $path ) ) ) ) );
+	}
+
+	/**
+	 * @param $path
+	 * @return array
+	 */
+	protected function loadDependencyDefinition( $path )
+	{
+		static $options = array();
+		if ( !( count( $options ) ) ) {
+			$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+		}
 		if ( isset( $options[ 'translation' ] ) ) {
 			SPLang::load( $options[ 'translation' ] );
 		}
@@ -851,9 +886,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 					$values[ $child[ 'id' ] ] = $child[ 'id' ];
 				}
 			}
+			return $values;
 		}
-		SPFactory::mainframe()
-				->customHeader();
-		exit( json_encode( array( 'options' => $values, 'path' => ( json_encode( $path ) ) ) ) );
+		return $values;
 	}
 }

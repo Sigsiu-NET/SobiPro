@@ -31,7 +31,7 @@ SobiPro.jQuery( document ).ready( function ()
 		var Selected = {};
 		var LastList;
 		if ( Path.val().length ) {
-			Selected = JSON.parse( Path.val() )
+			Selected = JSON.parse( Path.val().replace( /\'/g, '"' ) );
 		}
 		SobiPro.jQuery.each( Selected, function ( el )
 		{
