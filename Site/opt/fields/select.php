@@ -91,11 +91,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$class = $this->dependency ? $class . ' ctrl-dependency-field' : $class;
 
 		$params = array( 'id' => $this->nid, 'size' => $this->size, 'class' => $class );
-		if ( $this->maxLength ) {
-			$params[ 'maxlength' ] = $this->maxLength;
-		}
 		if ( $this->width ) {
-			$params[ 'style' ] = "width: {$this->width}px;";
+			$params[ 'style' ] = "width: {$this->width}px; margin-top:5px;";
 		}
 		if ( $this->dependency ) {
 			$params[ 'data' ] = array( 'order' => '1' );

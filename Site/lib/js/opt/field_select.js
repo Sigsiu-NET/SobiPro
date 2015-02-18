@@ -25,11 +25,12 @@ SobiPro.jQuery( document ).ready( function ()
 	function SpAddDependencyListener( e )
 	{
 		var Proxy = SobiPro.jQuery( e );
-		var Fid = Proxy.attr( 'id' ).replace( '_', '.' );
+		var Fid = Proxy.attr( 'name' ).replace( '_', '.' );
 		var Canvas = Proxy.parent().parent();
 		var Path = Canvas.find( 'input:hidden' );
 		var Selected = {};
 		var LastList;
+		var Spinner;
 		if ( Path.val().length ) {
 			Selected = JSON.parse( Path.val().replace( /\'/g, '"' ) );
 		}
@@ -48,8 +49,11 @@ SobiPro.jQuery( document ).ready( function ()
 		}
 		Selected[Proxy.attr( 'data-order' )] = Proxy.val();
 		Path.val( JSON.stringify( Selected ) );
+		Spinner = SobiPro.jQuery( '<i class="icon-spinner icon-spin icon-large"></i>' );
+		Spinner.insertAfter( Proxy );
+		Proxy.css( 'opacity', 0.5 );
 		SobiPro.jQuery.ajax( {
-			'url': 'index.php',
+			'url': SPLiveSite + 'index.php',
 			'data': {
 				'sid': SobiProSection,
 				'parent': Proxy.val(),
@@ -64,6 +68,8 @@ SobiPro.jQuery( document ).ready( function ()
 		} ).done( function ( response )
 		{
 			Path.val( response.path );
+			Spinner.detach();
+			Proxy.css( 'opacity', 1 );
 			if ( SobiPro.jQuery.makeArray( response.options ).length ) {
 				var SelectList = Proxy.clone();
 				SelectList.find( 'option' ).remove();
