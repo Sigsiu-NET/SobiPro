@@ -118,22 +118,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$hiddenValue = null;
 			if ( strlen( $this->_fData->options ) ) {
 				$path = SPConfig::unserialize( $this->_fData->options );
-				if ( count( $path ) ) {
-					$progress = array();
-					$subParams = $params;
-					foreach ( $path as $index => $step ) {
-						$progress[ ] = $step;
-						if ( $step == $path[ 0 ] ) {
-							continue;
-						}
-						$subParams[ 'data' ][ 'order' ] = $index + 1;
-						$subParams[ 'id' ] = $this->nid . '_' . $index;
-						$lists = $this->loadDependencyDefinition( $progress );
-						if ( count( $lists ) ) {
-							$subFields .= SPHtml_Input::select( $this->nid, $lists, $path[ $index + 1 ], false, $subParams );
-						}
-					}
-				}
+				$subFields = $this->travelDependencyPath( $path, $params );
 				$selected = $path[ 1 ];
 				$hiddenValue = str_replace( '"', "'", json_encode( (object)$path ) );
 			}
@@ -658,16 +643,19 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$data[ $k ] = $v;
 		}
 		$params = array( 'id' => $this->nid, 'size' => $this->ssize, 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) );
+		if ( $this->swidth ) {
+			$params[ 'style' ] = "width: {$this->swidth}px;";
+		}
 		if ( $this->dependency ) {
 			SPFactory::header()
 					->addJsFile( 'opt.field_select' );
 			$request = json_decode( SPLang::clean( SPRequest::raw( $this->nid . '_path', null, 'requestcache' ) ), true );
 			$params[ 'class' ] .= ' ctrl-dependency-field';
-			$hidden = SPHtml_Input::hidden( $this->nid . '_path', '{}', null, array( 'data' => array( 'selected' => '' ) ) );
+			$hidden = $this->travelDependencyPath( $request, $params );
+			$this->_selected = $request[ 1 ];
+			$hiddenValue = str_replace( '"', "'", json_encode( (object)$request ) );
+			$hidden .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'selected' => '' ) ) );
 			$params[ 'data' ] = array( 'order' => '1' );
-		}
-		if ( $this->swidth ) {
-			$params[ 'style' ] = "width: {$this->swidth}px;";
 		}
 		return SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params ) . $hidden;
 	}
@@ -795,9 +783,12 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	public function searchData( $request, $section )
 	{
-//		if ( ( $this->dependency ) ) {
-//			return parent::searchData( $request, $section );
-//		}
+		if ( ( $this->dependency ) ) {
+			$path = json_decode( Sobi::Clean( SPRequest::string( $this->nid . '_path' ) ), true );
+			if ( count( $path ) ) {
+				$request = array_pop( $path );
+			}
+		}
 		$sids = array();
 		/* check if there was something to search for */
 		if ( ( is_array( $request ) && count( $request ) ) || ( is_string( $request ) && strlen( $request ) ) ) {
@@ -959,5 +950,31 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				'_options' => array( 'path' => count( $selectedPath ) ? $selectedPath : $path ),
 		);
 
+	}
+
+	/**
+	 * @param $path
+	 * @param $subParams
+	 * @return string
+	 */
+	protected function travelDependencyPath( $path, $subParams )
+	{
+		$subFields = null;
+		if ( count( $path ) ) {
+			$progress = array();
+			foreach ( $path as $index => $step ) {
+				$progress[ ] = $step;
+				if ( $step == $path[ 0 ] ) {
+					continue;
+				}
+				$subParams[ 'data' ][ 'order' ] = $index + 1;
+				$subParams[ 'id' ] = $this->nid . '_' . $index;
+				$lists = $this->loadDependencyDefinition( $progress );
+				if ( count( $lists ) ) {
+					$subFields .= SPHtml_Input::select( $this->nid, $lists, $path[ $index + 1 ], false, $subParams );
+				}
+			}
+		}
+		return $subFields;
 	}
 }
