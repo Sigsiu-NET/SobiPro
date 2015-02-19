@@ -32,7 +32,7 @@ Legend:
 -------------------
 
     (+) Possibility to define template functions globally
-    (+)
+    (+) Implemented "dependency" functionality for single select list
 
     (#) Image field didn't appear on payment page (Issue #1375)
     (#) Original image is being overwritten with cropped image
@@ -50,6 +50,7 @@ Legend:
     (#) Pre-selecting categories in SigsiuTree to prevent "O items selected" output on iOS (Issue #1367)
     (#) Task transformation doesn't works for alpha index (Issue #1362)
     (#) URL click counter counts only once (Issue #1283)
+    (#) "Entry update" no fired while updating an entry from administrator area
 
 
 -------------------

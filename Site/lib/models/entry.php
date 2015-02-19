@@ -632,7 +632,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 	public function save( $request = 'post' )
 	{
 		$this->loadFields( Sobi::Section(), true );
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( $this->id ) );
+		// Thu, Feb 19, 2015 12:12:47 - it should be actually "beforeSave"
+		Sobi::Trigger( $this->name(), 'Before' . ucfirst( __FUNCTION__ ), array( $this->id ) );
 		/* save the base object data */
 		/* @var SPdb $db */
 		$db = SPFactory::db();
@@ -649,11 +650,6 @@ class SPEntry extends SPDBObject implements SPDataModel
 			SPRequest::set( 'entry_validUntil', 0, $request );
 			$this->validUntil = gmdate( 'Y-m-d H:i:s', time() + ( Sobi::Cfg( 'entry.publish_limit', 0 ) * 24 * 3600 ) );
 		}
-//		$preState = array(
-//			'approved' => $this->approved,
-//			'state' => $this->state,
-//			'new' => !( $this->id )
-//		);
 		$preState = Sobi::Reg( 'object_previous_state' );
 		parent::save( $request );
 		$nameField = $this->nameField();
@@ -769,7 +765,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				SPFactory::cache()->deleteObj( 'category', $cat );
 			}
 		}
-		Sobi::Trigger( $this->name(), 'After' . ucfirst( __FUNCTION__ ), array( &$this ) );
+		Sobi::Trigger( $this->name(), 'After' . ucfirst( $preState[ 'new' ] ? __FUNCTION__ : 'Update' ), array( &$this ) );
 	}
 
 	/**
