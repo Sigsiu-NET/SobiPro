@@ -763,10 +763,11 @@ final class SPCache
 					return false;
 				}
 			}
-			$request = array_diff( $_GET, $this->requestStore );
-			if ( count( $request ) ) {
-				foreach ( $request as $k => $v ) {
-					$data[ 'request' ][ $k ] = SPRequest::string( $k );
+			if ( count( $_REQUEST ) ) {
+				foreach ( $_REQUEST as $k => $v ) {
+					if( !( isset( $this->requestStore[$k]))) {
+						$data[ 'request' ][ $k ] = SPRequest::string( $k );
+					}
 				}
 			}
 			$data[ 'pathway' ] = SPFactory::mainframe()->getPathway();
