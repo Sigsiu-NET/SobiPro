@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade" overwrite="true">
 	<name>SobiPro</name>
-	<creationDate>09 February 2015</creationDate>
+	<creationDate>19 February 2015</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2014 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.1.12.A</version>
+	<version>1.1.12.B</version>
 	<codename>Budgie</codename>
 	<description></description>
 	<version_number>1.1.12</version_number>
@@ -33,7 +33,7 @@
 		<folder>var</folder>
 		<folder>views</folder>
 		<filename>sobipro.php</filename>
-        <filename>router.php</filename>
+		<filename>router.php</filename>
 		<filename>changelog.txt</filename>
 		<filename>metadata.xml</filename>
 		<filename>gplv3.txt</filename>
@@ -93,6 +93,7 @@
 	</administration>
 	<updateservers>
 		<server type="extension" priority="1" name="SobiPro Updates">
-			<![CDATA[https://xml.sigsiu.net/SobiPro/SobiPro.xml]]></server>
+			<![CDATA[https://xml.sigsiu.net/SobiPro/SobiPro.xml]]>
+		</server>
 	</updateservers>
 </extension>
