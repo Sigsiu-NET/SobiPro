@@ -38,15 +38,13 @@ SobiPro.jQuery( document ).ready( function ()
 		{
 			LastList = el;
 		} );
-		if ( Proxy.data( 'order' ) < LastList ) {
-			SobiPro.jQuery.each( Canvas.find( '[name="' + Proxy.attr( 'name' ) + '"]' ), function ( i, el )
-			{
-				if ( SobiPro.jQuery( el ).attr( 'data-order' ) > Proxy.attr( 'data-order' ) ) {
-					SobiPro.jQuery( el ).detach();
-					delete Selected[SobiPro.jQuery( el ).data( 'order' )];
-				}
-			} );
-		}
+		SobiPro.jQuery.each( Canvas.find( '[name="' + Proxy.attr( 'name' ) + '"]' ), function ( i, el )
+		{
+			if ( SobiPro.jQuery( el ).attr( 'data-order' ) > Proxy.attr( 'data-order' ) ) {
+				SobiPro.jQuery( el ).detach();
+				delete Selected[SobiPro.jQuery( el ).data( 'order' )];
+			}
+		} );
 		Selected[Proxy.attr( 'data-order' )] = Proxy.val();
 		Path.val( JSON.stringify( Selected ) );
 		Spinner = SobiPro.jQuery( '<i class="icon-spinner icon-spin icon-large"></i>' );
