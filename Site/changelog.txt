@@ -52,6 +52,7 @@ Legend:
     (#) URL click counter counts only once (Issue #1283)
     (#) "Entry update" no fired while updating an entry from administrator area
     (#) View Cache is not restoring task for the $_REQUEST array (Issue #1321)
+    (#) Loading language from XML administrator definition file
 
 
 -------------------

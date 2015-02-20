@@ -1392,11 +1392,16 @@ class SPAdmView extends SPObject implements SPView
 					SPLang::load( $node->nodeValue );
 					break;
 				case 'file':
-					if ( $node->attributes->getNamedItem( 'type' )->nodeValue == 'style' ) {
-						$this->loadCSSFile( $node->attributes->getNamedItem( 'filename' )->nodeValue, false );
-					}
-					elseif ( $node->attributes->getNamedItem( 'type' )->nodeValue == 'script' ) {
-						$this->loadJsFile( $node->attributes->getNamedItem( 'filename' )->nodeValue, false );
+					switch( $node->attributes->getNamedItem( 'type' )->nodeValue ) {
+						case 'style':
+							$this->loadCSSFile( $node->attributes->getNamedItem( 'filename' )->nodeValue, false );
+							break;
+						case 'script':
+							$this->loadJsFile( $node->attributes->getNamedItem( 'filename' )->nodeValue, false );
+							break;
+						case 'language':
+							SPLang::load( $node->attributes->getNamedItem( 'filename' )->nodeValue );
+							break;
 					}
 					break;
 				case 'title':
