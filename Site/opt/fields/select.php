@@ -867,6 +867,27 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 	}
 
+	public function onFieldEdit( &$view )
+	{
+		$dependencyDefinitions = scandir( SOBI_PATH . '/etc/fields/select-list/' );
+		if ( count( $dependencyDefinitions ) ) {
+			$set = array();
+			foreach ( $dependencyDefinitions as $file ) {
+				if ( !( is_dir( SOBI_PATH . '/etc/fields/select-list/' . $file ) ) ) {
+					$set[ $file ] = $file;
+				}
+			}
+			$view->assign( $set, 'dependencyDefinition' );
+		}
+		/** @var $arr SPData_Array */
+		$arr = SPFactory::Instance( 'types.array' );
+		$options = array();
+		$this->_parseOptions( $this->options, $options );
+		$options = $arr->toINIString( $options );
+		$view->assign( $options, 'options' );
+	}
+
+
 	/**
 	 * */
 	public function ProxyDependency()

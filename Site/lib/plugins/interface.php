@@ -92,7 +92,7 @@ final class SPPlugins
         elseif ( !( SPRequest::sid() || SPRequest::int( 'pid' ) ) ) {
             $this->_actions[ $task ] = $pids;
         }
-        // here is a special exception for the cusom listings
+        // here is a special exception for the custom listings
         // it can be l.alpha or list.alpha or listing.alpha
         if ( preg_match( '/^list\..*/', $task ) || preg_match( '/^l\..*/', $task ) ) {
             $this->_actions[ 'listing' . '.' . $t[ 1 ] ] = $pids;
