@@ -642,12 +642,13 @@ class SPJoomlaLang
 	/**
 	 * @param string $txt
 	 * @param bool $unicode
+	 * @param bool $forceUnicode
 	 * @return string
 	 */
-	public static function nid( $txt, $unicode = false )
+	public static function nid( $txt, $unicode = false, $forceUnicode = false )
 	{
 		$txt = trim( str_replace( array( '.', '_' ), '-', $txt ) );
-		return Sobi::Cfg( 'sef.unicode' ) && $unicode ?
+		return ( Sobi::Cfg( 'sef.unicode' ) && $unicode ) || $forceUnicode ?
 				self::urlSafe( $txt ) :
 				trim( preg_replace( '/(\s|[^A-Za-z0-9\-])+/', '-', JFactory::getLanguage()->transliterate( $txt ) ), '_-\[\]\(\)' );
 	}

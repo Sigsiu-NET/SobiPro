@@ -409,7 +409,7 @@ class SPFieldType extends SPObject
 						$group = $group[ 1 ];
 					}
 					else {
-						$gid = SPLang::nid( $key, true );
+						$gid = SPLang::nid( $key, true, true );
 						$group = $key;
 					}
 					$options[ ] = array( 'id' => $gid, 'name' => $group, 'parent' => null, 'position' => ++$p );
