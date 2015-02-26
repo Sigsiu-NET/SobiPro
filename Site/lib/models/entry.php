@@ -507,6 +507,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 						$fdata = $db
 								->select( '*', 'spdb_field_data', array( 'sid' => $this->id ), $ordering )
 								->loadObjectList();
+						$db->getQuery();
 						$fieldsdata = array();
 						if ( count( $fdata ) ) {
 							foreach ( $fdata as $data ) {
@@ -578,6 +579,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				in_array( SPRequest::task(), array( 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit', 'entry.payment' ) ) ||
 				Sobi::Can( 'entry.access.unapproved_any' ) ||
 				( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.manage.own' ) ) ||
+				( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.access.unpublished_own' ) ) ||
 				Sobi::Can( 'entry.manage.*' )
 		);
 	}

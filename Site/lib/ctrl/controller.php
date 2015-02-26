@@ -399,8 +399,15 @@ abstract class SPController extends SPObject implements SPControl
 		$va = $va ? strtotime( $va . ' UTC' ) : 0;
 		if ( !( $error ) ) {
 			if ( strtotime( $this->_model->get( 'validSince' ) . ' UTC' ) > gmdate( 'U' ) ) {
-				if ( !( Sobi::Can( $type, 'access', 'unpublished_any' ) ) ) {
-					$error = true;
+				if ( $owner == Sobi::My( 'id' ) ) {
+					if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) ) ) {
+						$error = true;
+					}
+				}
+				else {
+					if ( !( Sobi::Can( $type, 'access', 'unpublished_any' ) ) ) {
+						$error = true;
+					}
 				}
 			}
 			elseif ( $va > 0 && $va < gmdate( 'U' ) ) {

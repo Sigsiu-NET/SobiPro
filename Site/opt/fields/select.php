@@ -323,11 +323,11 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency' );
 	}
 
-	protected function fetchData( $request )
+	protected function fetchData( $data, $request = 'post' )
 	{
-		if ( $request && strlen( $request ) ) {
+		if ( $data && strlen( $data ) ) {
 			if ( $this->dependency ) {
-				$path = json_decode( Sobi::Clean( SPRequest::string( $this->nid . '_path' ) ), true );
+				$path = json_decode( Sobi::Clean( SPRequest::string( $this->nid . '_path', null, false, $request ) ), true );
 				if ( count( $path ) ) {
 					$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 					$selected = $options[ 'options' ];
@@ -336,17 +336,17 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 							$selected = $selected[ $part ][ 'childs' ];
 						}
 						else {
-							throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $request, $this->name ) );
+							throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $data, $this->name ) );
 						}
 					}
 				}
 				return $path;
 			}
 			/* check if such option exist at all */
-			elseif ( !( isset( $this->optionsById[ $request ] ) ) ) {
-				throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $request, $this->name ) );
+			elseif ( !( isset( $this->optionsById[ $data ] ) ) ) {
+				throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $data, $this->name ) );
 			}
-			return array( $request );
+			return array( $data );
 		}
 		else {
 			return null;
@@ -487,7 +487,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			return false;
 		}
 
-		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ) );
+		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ), $request );
 		$cdata = $this->verify( $entry, $request, $data );
 		$time = SPRequest::now();
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );

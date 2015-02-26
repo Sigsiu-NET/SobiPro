@@ -53,6 +53,7 @@ Legend:
     (#) "Entry update" no fired while updating an entry from administrator area
     (#) View Cache is not restoring task for the $_REQUEST array (Issue #1321)
     (#) Loading language from XML administrator definition file
+    (#) Pending/expired entries not visible in category when user has permission to see those (Issue #1354)
 
 
 -------------------

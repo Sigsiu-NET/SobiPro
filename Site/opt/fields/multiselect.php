@@ -198,11 +198,11 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	/* (non-PHPdoc)
 	 * @see Site/opt/fields/SPField_Select#fetchData($request)
 	 */
-	protected function fetchData( $request )
+	protected function fetchData( $data )
 	{
-		if ( is_array( $request ) && count( $request ) ) {
+		if ( is_array( $data ) && count( $data ) ) {
 			$selected = array();
-			foreach ( $request as $opt ) {
+			foreach ( $data as $opt ) {
 				/* check if such option exist at all */
 				if ( !( isset( $this->optionsById[ $opt ] ) ) ) {
 					throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $opt, $this->name ) );
