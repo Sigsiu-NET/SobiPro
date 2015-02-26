@@ -54,7 +54,7 @@ Legend:
     (#) View Cache is not restoring task for the $_REQUEST array (Issue #1321)
     (#) Loading language from XML administrator definition file
     (#) Pending/expired entries not visible in category when user has permission to see those (Issue #1354)
-
+    (#) Not possible to add an image with an uppercased file extension (Issue #1404)
 
 -------------------
 1.1.11 (28 October 2014)

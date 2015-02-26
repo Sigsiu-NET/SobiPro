@@ -434,7 +434,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					$croppedImage = SPFactory::Instance( 'base.fs.image', $dirName . $orgName );
 					$croppedImage->crop( $coordinates[ 'width' ], $coordinates[ 'height' ], $coordinates[ 'x' ], $coordinates[ 'y' ] );
 					$cropped = 'cropped_' . $orgName;
-					$croppedImage->saveAs( $path.$cropped );
+					$croppedImage->saveAs( $path . $cropped );
 				}
 				$data = strlen( $cropped ) ? $cropped : $dirName . $file;
 			}
@@ -773,6 +773,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( $data ) {
 			$properties = SPRequest::file( $ident );
 			$orgFileName = $properties[ 'name' ];
+			$extension = SPFs::getExt( $orgFileName );
+			$orgFileName = str_replace( '.' . $extension, '.' . strtolower( $extension ), $orgFileName );
 			if ( $properties[ 'size' ] > $this->maxSize ) {
 				$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $properties[ 'size' ], $this->maxSize ), 'id' => '', ) );
 			}
