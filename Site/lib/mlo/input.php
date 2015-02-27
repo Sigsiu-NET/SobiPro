@@ -137,7 +137,7 @@ abstract class SPHtml_Input
 			$stupidInternetExplorer = true;
 		}
 		$f = null;
-		$f .= "<div class=\"{$class}\">";
+		$f .= "<div class=\"{$class}\" data-section=" . Sobi::Section() . ">";
 		$f .= '<div class="file">';
 		$f .= self::file( $name . '-file', 0, $classes, $accept );
 		$f .= '</div>';

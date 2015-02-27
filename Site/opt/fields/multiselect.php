@@ -181,14 +181,14 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 			}
 		}
 		$data = array(
-			'ul' => array(
+			'ul'  => array(
 				'_complex' => 1,
 				'_data' => $list,
 				'_attributes' => array( 'class' => $this->cssClass ) )
 		);
 		return array(
 			'_complex' => 1,
-			'_data' => $data,
+			'_data' => count( $list ) ? $data : null,
 			'_attributes' => array( 'lang' => $this->lang, 'class' => $this->cssClass ),
 			'_options' => $struct,
 		);
@@ -218,11 +218,6 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 
 	/**
 	 * Static function to create the right SQL-Query if a entries list should be sorted by this field
-	 * @param string $tables - table or tables join
-	 * @param array $conditions - array with conditions
-	 * @param string $oPrefix
-	 * @param string $eOrder
-	 * @param string $eDir
 	 * @return void
 	 */
 	public static function sortBy()

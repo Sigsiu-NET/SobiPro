@@ -31,7 +31,7 @@ SobiPro.jQuery( document ).ready( function ()
 				.parent()
 				.parent()
 				.find( '.spEditImagePreview' )
-				.html( '<img style="cursor:pointer;" id="' + Id + '_icon" class="spImageCrop" src="index.php?option=com_sobipro&task=' + Nid + '.icon&sid=' + SobiProSection + '&file=' + response.responseJSON.data.icon + '"/>' );
+				.html( '<img style="cursor:pointer;" id="' + Id + '_icon" class="spImageCrop" src="index.php?option=com_sobipro&task=' + Nid + '.icon&sid=' + SobiPro.jQuery( this ).data( 'section' ) + '&file=' + response.responseJSON.data.icon + '"/>' );
 			SobiPro.jQuery( '#' + Id + '_icon' )
 				.attr( 'data-width', response.responseJSON.data.width )
 				.attr( 'data-height', response.responseJSON.data.height );
@@ -69,7 +69,7 @@ SobiPro.jQuery( document ).ready( function ()
 				var Modal = SobiPro.jQuery( '#' + Id + '_modal' ).modal();
 				Modal.find( 'a.save' ).click( function ( ev )
 				{
-					var Store = SobiPro.jQuery( '[name="' + Id + '"]');
+					var Store = SobiPro.jQuery( '[name="' + Id + '"]' );
 					var Current = Store.val();
 					if ( Current && SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ).length ) {
 						if ( Current.indexOf( 'coordinates://' ) != -1 ) {
