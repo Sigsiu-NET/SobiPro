@@ -53,7 +53,7 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery.ajax( {
 			'url': SPLiveSite + 'index.php',
 			'data': {
-				'sid': SobiProSection,
+				'sid': Path.attr( 'data-section' ),
 				'parent': Proxy.val(),
 				'path': Path.val(),
 				'task': Fid + '.dependency',

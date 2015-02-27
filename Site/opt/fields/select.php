@@ -121,7 +121,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			}
 			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
 			$field .= $subFields;
-			$field .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'selected' => '' ) ) );
+			$field .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'section' => Sobi::Section() ) ) );
 		}
 		if ( !$return ) {
 			echo $field;
@@ -895,6 +895,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$path = json_decode( Sobi::Clean( SPRequest::string( 'path' ) ), true );
 		$values = $this->loadDependencyDefinition( $path );
 		SPFactory::mainframe()
+				->cleanBuffer()
 				->customHeader();
 		exit( json_encode( array( 'options' => $values, 'path' => ( json_encode( $path ) ) ) ) );
 	}
