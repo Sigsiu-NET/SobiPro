@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade" overwrite="true">
 	<name>SobiPro</name>
-	<creationDate>19 February 2015</creationDate>
+	<creationDate>27 February 2015</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2014 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.1.12.B</version>
+	<version>1.1.12.D</version>
 	<codename>Budgie</codename>
 	<description></description>
 	<version_number>1.1.12</version_number>
@@ -44,6 +44,7 @@
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.ini</language>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.js.ini</language>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.err.ini</language>
+		<language tag="en-GB">Site/usr/locale/site/en-GB.SpApp.select-list.countries.ini</language>
 	</languages>
 
 	<media folder="Site/media" destination="sobipro">

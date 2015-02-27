@@ -37,7 +37,7 @@ final class SPCache
 	protected $_check = null;
 	protected $_section = -1;
 	protected $_sid = 0;
-	protected $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', '.publish' );
+	protected $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', '.publish', '.icon' );
 	protected $requestStore = array();
 	protected $view = array( 'xml' => null, 'template' => null );
 	protected $_disableViewCache = array( 'entry.add', 'entry.edit', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
@@ -117,7 +117,7 @@ final class SPCache
 						$this->cleanAll();
 					}
 				} catch ( SQLiteException $e ) {
-					Sobi::Error( 'cache', sprintf( 'SQLite error: %s', $msg ), SPC::WARNING, 0, __LINE__, __FILE__ );
+					Sobi::Error( 'cache', sprintf( 'SQLite error: %s', $e->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 					$this->_enabled = false;
 					$this->cleanAll();
 				}

@@ -113,7 +113,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$path = null;
 			$subFields = null;
 			$hiddenValue = null;
-			if ( strlen( $this->_fData->options ) ) {
+			if ( isset( $this->_fData->options ) && strlen( $this->_fData->options ) ) {
 				$path = SPConfig::unserialize( $this->_fData->options );
 				$subFields = $this->travelDependencyPath( $path, $params );
 				$selected = $path[ 1 ];
@@ -946,7 +946,12 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			return parent::struct( true );
 		}
 		$selected = $this->getRaw();
-		$path = SPConfig::unserialize( $this->_fData->options );
+		if ( isset( $this->_fData->options ) ) {
+			$path = SPConfig::unserialize( $this->_fData->options );
+		}
+		else {
+			return null;
+		}
 		$selectedPath = array();
 		$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 		if ( isset( $options[ 'translation' ] ) ) {
@@ -982,9 +987,6 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$progress = array();
 			foreach ( $path as $index => $step ) {
 				$progress[ ] = $step;
-				if ( $step == $path[ 0 ] ) {
-					continue;
-				}
 				$subParams[ 'data' ][ 'order' ] = $index + 1;
 				$subParams[ 'id' ] = $this->nid . '_' . $index;
 				$lists = $this->loadDependencyDefinition( $progress );
