@@ -55,7 +55,8 @@ Legend:
     (#) Loading language from XML administrator definition file
     (#) Pending/expired entries not visible in category when user has permission to see those (Issue #1354)
     (#) Not possible to add an image with an uppercase file extension (Issue #1404)
-    (#) Removing empty UL list from the Multiselect field if no data is selected
+    (#) Removing empty <ul> list from the multiselect field if no data are selected
+
 
 -------------------
 1.1.11 (28 October 2014)
