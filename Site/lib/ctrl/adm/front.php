@@ -20,6 +20,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'controller' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -152,14 +153,14 @@ class SPAdminPanel extends SPController
 		else {
 			try {
 				$connection = SPFactory::Instance( 'services.remote' );
-				$news = 'http://www.sigsiu.net/news.rss';
+				$news = 'http://rss.sigsiu.net';
 				$connection->setOptions(
-					array(
-						'url' => $news,
-						'connecttimeout' => 10,
-						'header' => false,
-						'returntransfer' => true,
-					)
+						array(
+								'url' => $news,
+								'connecttimeout' => 10,
+								'header' => false,
+								'returntransfer' => true,
+						)
 				);
 				$file = SPFactory::Instance( 'base.fs.file', $path );
 				$content = $connection->exec();
@@ -175,19 +176,20 @@ class SPAdminPanel extends SPController
 		}
 		try {
 			$news = new DOMXPath( DOMDocument::loadXML( $content ) );
-			$out[ 'title' ] = $news->query( '/rss/channel/title' )->item( 0 )->nodeValue;
-			$items = $news->query( '/rss/channel/item[*]' );
+			$news->registerNamespace( 'atom', 'http://www.w3.org/2005/Atom' );
+			$out[ 'title' ] = $news->query( '/atom:feed/atom:title' )->item( 0 )->nodeValue;
+			$items = $news->query( '/atom:feed/atom:entry[*]' );
 			$c = 5;
 			$open = false;
 			foreach ( $items as $item ) {
-				$date = $item->getElementsByTagName( 'pubDate' )->item( 0 )->nodeValue;
+				$date = $item->getElementsByTagName( 'updated' )->item( 0 )->nodeValue;
 				if ( !( $open ) && time() - strtotime( $date ) < ( 60 * 60 * 24 ) ) {
 					$open = true;
 				}
 				$feed = array(
-					'url' => $item->getElementsByTagName( 'link' )->item( 0 )->nodeValue,
-					'title' => $item->getElementsByTagName( 'title' )->item( 0 )->nodeValue,
-					'content' => $item->getElementsByTagName( 'description' )->item( 0 )->nodeValue
+						'url' => $item->getElementsByTagName( 'link' )->item( 0 )->nodeValue,
+						'title' => $item->getElementsByTagName( 'title' )->item( 0 )->nodeValue,
+						'content' => $item->getElementsByTagName( 'content' )->item( 0 )->nodeValue
 				);
 				if ( !( $c-- ) ) {
 					break;
@@ -245,32 +247,32 @@ class SPAdminPanel extends SPController
 			SPLang::load( 'com_sobipro.messages' );
 			$state = array();
 			$state[ 'accelerator' ] = array(
-				'type' => Sobi::Cfg( 'cache.l3_enabled', true ) ? 'success' : 'error',
-				'label' => Sobi::Cfg( 'cache.l3_enabled', true ) ? Sobi::Txt( 'ACCELERATOR_ENABLED' ) : Sobi::Txt( 'ACCELERATOR_DISABLED' ),
+					'type' => Sobi::Cfg( 'cache.l3_enabled', true ) ? 'success' : 'error',
+					'label' => Sobi::Cfg( 'cache.l3_enabled', true ) ? Sobi::Txt( 'ACCELERATOR_ENABLED' ) : Sobi::Txt( 'ACCELERATOR_DISABLED' ),
 			);
 			$state[ 'xml-optimiser' ] = array(
-				'type' => Sobi::Cfg( 'cache.xml_enabled', true ) ? 'success' : 'error',
-				'label' => Sobi::Cfg( 'cache.xml_enabled', true ) ? Sobi::Txt( 'XML_CACHE_ENABLED' ) : Sobi::Txt( 'XML_CACHE_DISABLED' ),
+					'type' => Sobi::Cfg( 'cache.xml_enabled', true ) ? 'success' : 'error',
+					'label' => Sobi::Cfg( 'cache.xml_enabled', true ) ? Sobi::Txt( 'XML_CACHE_ENABLED' ) : Sobi::Txt( 'XML_CACHE_DISABLED' ),
 			);
 			$state[ 'javascript-cache' ] = array(
-				'type' => Sobi::Cfg( 'cache.include_js_files', false ) ? 'success' : 'warning',
-				'label' => Sobi::Cfg( 'cache.include_js_files', false ) ? Sobi::Txt( 'JS_CACHE_ENABLED' ) : Sobi::Txt( 'JS_CACHE_DISABLED' ),
+					'type' => Sobi::Cfg( 'cache.include_js_files', false ) ? 'success' : 'warning',
+					'label' => Sobi::Cfg( 'cache.include_js_files', false ) ? Sobi::Txt( 'JS_CACHE_ENABLED' ) : Sobi::Txt( 'JS_CACHE_DISABLED' ),
 			);
 			$state[ 'css-cache' ] = array(
-				'type' => Sobi::Cfg( 'cache.include_css_files', false ) ? 'success' : 'warning',
-				'label' => Sobi::Cfg( 'cache.include_css_files', false ) ? Sobi::Txt( 'CSS_CACHE_ENABLED' ) : Sobi::Txt( 'CSS_CACHE_DISABLED' ),
+					'type' => Sobi::Cfg( 'cache.include_css_files', false ) ? 'success' : 'warning',
+					'label' => Sobi::Cfg( 'cache.include_css_files', false ) ? Sobi::Txt( 'CSS_CACHE_ENABLED' ) : Sobi::Txt( 'CSS_CACHE_DISABLED' ),
 			);
 			$state[ 'display-errors' ] = array(
-				'type' => Sobi::Cfg( 'debug.display_errors', false ) ? 'error' : 'success',
-				'label' => Sobi::Cfg( 'debug.display_errors', false ) ? Sobi::Txt( 'DISPLAY_ERRORS_ENABLED' ) : Sobi::Txt( 'DISPLAY_ERRORS_DISABLED' ),
+					'type' => Sobi::Cfg( 'debug.display_errors', false ) ? 'error' : 'success',
+					'label' => Sobi::Cfg( 'debug.display_errors', false ) ? Sobi::Txt( 'DISPLAY_ERRORS_ENABLED' ) : Sobi::Txt( 'DISPLAY_ERRORS_DISABLED' ),
 			);
 			$state[ 'debug-level' ] = array(
-				'type' => Sobi::Cfg( 'debug.level', 0 ) > 2 ? 'warning' : 'success',
-				'label' => Sobi::Cfg( 'debug.level', 0 ) > 2 ? Sobi::Txt( 'DEBUG_LEVEL_TOO_HIGH' ) : Sobi::Txt( 'DEBUG_LEVEL_OK' ),
+					'type' => Sobi::Cfg( 'debug.level', 0 ) > 2 ? 'warning' : 'success',
+					'label' => Sobi::Cfg( 'debug.level', 0 ) > 2 ? Sobi::Txt( 'DEBUG_LEVEL_TOO_HIGH' ) : Sobi::Txt( 'DEBUG_LEVEL_OK' ),
 			);
 			$state[ 'debug-xml' ] = array(
-				'type' => Sobi::Cfg( 'debug.xml_raw', false ) ? 'error' : 'success',
-				'label' => Sobi::Cfg( 'debug.xml_raw', false ) ? Sobi::Txt( 'DEBUG_XML_ENABLED' ) : Sobi::Txt( 'DEBUG_XML_DISABLED' ),
+					'type' => Sobi::Cfg( 'debug.xml_raw', false ) ? 'error' : 'success',
+					'label' => Sobi::Cfg( 'debug.xml_raw', false ) ? Sobi::Txt( 'DEBUG_XML_ENABLED' ) : Sobi::Txt( 'DEBUG_XML_DISABLED' ),
 			);
 //			uasort( $state, array( $this, 'sortMessages' ) );
 			$messages = SPFactory::message()->getSystemMessages();
@@ -278,7 +280,7 @@ class SPAdminPanel extends SPController
 			if ( count( $messages ) ) {
 				foreach ( $messages as $message ) {
 					$url = Sobi::Url( array( 'sid' => $message[ 'section' ][ 'id' ] ) );
-					$url = "<a href=\"{$url}\">{$message[ 'section' ][ 'name' ]}</a> ";
+					$url = "<a href=\"{$url}\">{$message['section']['name']}</a> ";
 					$message[ 'section' ][ 'link' ] = $url;
 					$message[ 'type-text' ] = ucfirst( Sobi::Txt( $message[ 'type' ] ) );
 					$state[ 'messages' ][ ] = $message;

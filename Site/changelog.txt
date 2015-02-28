@@ -55,6 +55,7 @@ Legend:
     (#) Loading language from XML administrator definition file
     (#) Pending/expired entries not visible in category when user has permission to see those (Issue #1354)
     (#) Not possible to add an image with an uppercase file extension (Issue #1404)
+    (#) Removing empty UL list from the Multiselect field if no data is selected
 
 -------------------
 1.1.11 (28 October 2014)
@@ -75,7 +76,6 @@ Legend:
     (#) SigsiuTree, category field: disabled possibility to select (click) additional category as long as the previous wasn't added (Issue #1347)
     (#) Wrong language used if 'en-GB' pre-load function is disabled (Issue #1352)
     (#) Pending entries aren't visible in front-end (Issue #1354)
-    (#) Removing empty UL list from the Multiselect field if no data is selected
 
     (!) Changed deprecated JException to core Exception
 
