@@ -26,6 +26,12 @@ Legend:
  (-) - Removed
  (!) - Change
 
+-------------------
+1.1.13 ()
+-------------------
+
+    (!) Showing the fields in default2 template moved to a separate template
+
 
 -------------------
 1.1.12 (28 February 2015)
