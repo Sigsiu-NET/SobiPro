@@ -238,8 +238,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		}
 		$vs = SPRequest::timestamp( 'set_validSince' );
 		$vu = SPRequest::timestamp( 'set_validUntil' );
-		$vs = $vs ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $vs ) : null;
-		$vu = $vu ? date( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $vu ) : null;
+		$vs = $vs ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $vs ) : null;
+		$vu = $vu ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $vu ) : null;
 
 		$name = SPRequest::string( 'set_name' );
 		$nid = SPRequest::cmd( 'set_nid' );
@@ -443,8 +443,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		}
 		else {
 			$rule = array(
-				'validUntil' => $db->getNullDate(),
-				'validSince' => $db->getNullDate(),
+				'validUntil' => null,
+				'validSince' => null,
 				'name' => '',
 				'nid' => '',
 				'note' => '',

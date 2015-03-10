@@ -30,6 +30,8 @@ Legend:
 1.1.13 ()
 -------------------
 
+    (#) Valid since / valid until time issues while creating new ACL rule (Issue #1415)
+
     (!) Showing the fields in default2 template moved to a separate template
 
 
