@@ -815,10 +815,10 @@ abstract class SPFrontView extends SPObject implements SPView
 			$offset = SPFactory::config()->getTimeOffset();
 		}
 		foreach ( $fix as $index ) {
-			$timestamp = strtotime( $data[ $index ] . 'UTC' );
-			if ( !( $data[ $index ] ) ) {
+			if ( !( isset( $data[ $index ] ) ) || !( $data[ $index ] ) ) {
 				continue;
 			}
+			$timestamp = strtotime( $data[ $index ] . 'UTC' );
 			$data[ $index ] = array(
 					'_complex' => 1,
 					'_data' => gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $timestamp + $offset ),
