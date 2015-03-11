@@ -249,7 +249,7 @@ class SPSectionCtrl extends SPController
 				// conflicts with "entry.access.unpublished_own" See #521
 				//$conditions[ 'state' ] = '1';
 				if ( ( Sobi::Can( 'entry.access.unpublished_own' ) ) ) {
-					$conditions[ '@VALID' ] = $db->argsOr( array( $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ) );
+					$conditions[ '@VALID' ] = $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince', null, array( 'owner' => Sobi::My( 'id' ) ) );
 				}
 				elseif ( !( Sobi::Can( 'entry.access.unpublished_any' ) ) ) {
 					$conditions[ '@VALID' ] = $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' );

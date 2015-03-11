@@ -33,6 +33,7 @@ Legend:
     (#) Valid since / valid until time issues while creating new ACL rule (Issue #1415)
     (#) Dependency field don't work in search view (Issue #1417)
     (#) Notices in function fixTimes() (Issue #1423)
+    (#) Access own unpublished rule hide other users entries (Issue #1419)
 
     (!) Showing the fields in default2 template moved to a separate template
 
