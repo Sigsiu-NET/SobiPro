@@ -74,6 +74,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	protected $itemprop = '';
 	/** @var bool */
 	protected $dependency = false;
+	/** @var bool */
+	protected $allowParents = true;
 	/** @var string */
 	protected $dependencyDefinition = '';
 
@@ -320,12 +322,12 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency' );
+		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents' );
 	}
 
 	protected function fetchData( $data, $request = 'post' )
 	{
-		if ( $data && strlen( $data ) ) {
+		if ( $data && strlen( $data ) || $this->dependency ) {
 			if ( $this->dependency ) {
 				$path = json_decode( Sobi::Clean( SPRequest::string( $this->nid . '_path', null, false, $request ) ), true );
 				if ( count( $path ) ) {
@@ -339,11 +341,14 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 							throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $data, $this->name ) );
 						}
 					}
+					if ( count( $selected ) && !( $this->allowParents ) ) {
+						throw new SPException( SPLang::e( 'SELECT_FIELD_NO_PARENT', $this->name ) );
+					}
 				}
 				return $path;
 			}
 			/* check if such option exist at all */
-			elseif ( !( isset( $this->optionsById[ $data ] ) ) ) {
+			elseif ( $data && strlen( $data ) && !( isset( $this->optionsById[ $data ] ) ) ) {
 				throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $data, $this->name ) );
 			}
 			return array( $data );
@@ -651,7 +656,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$hidden = $this->travelDependencyPath( $request, $params );
 			$this->_selected = $request[ 1 ];
 			$hiddenValue = str_replace( '"', "'", json_encode( (object)$request ) );
-			$hidden .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'selected' => '', 'section' => Sobi::Section()) ) );
+			$hidden .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'selected' => '', 'section' => Sobi::Section() ) ) );
 			$params[ 'data' ] = array( 'order' => '1' );
 		}
 		return SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params ) . $hidden;

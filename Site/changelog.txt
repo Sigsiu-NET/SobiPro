@@ -35,6 +35,8 @@ Legend:
     (#) Notices in function fixTimes() (Issue #1423)
     (#) Access own unpublished rule hide other users entries (Issue #1419)
 
+    (+) Possibility to prevent choosing parent options in the select field with dependency list (Related to #1421)
+
     (!) Showing the fields in default2 template moved to a separate template
 
 
