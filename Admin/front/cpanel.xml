@@ -328,11 +328,15 @@
 								</text>
 							</a>
 						</div>
+
 						<div id="SobiProNewsPane" class="accordion-body collapse">
 							<div class="accordion-inner">
 								<div class="spNews">
 									<loop subject="news.feeds" table="false">
 										<cell class="SpCellContainer">
+                                            <cell type="image" value="title" class="SpCellNewsImage">
+                                                <url type="extern" host="src" />
+                                            </cell>
 											<cell type="link" value="title" class="SpCellNewsTitle">
 												<url type="extern" host="url" />
 											</cell>
