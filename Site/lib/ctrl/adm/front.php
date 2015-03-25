@@ -178,26 +178,26 @@ class SPAdminPanel extends SPController
 			$news = new DOMXPath( DOMDocument::loadXML( $content ) );
 
 			$atom = false;
-			if ($atom) {    //Atom
-				$news->registerNamespace('atom', 'http://www.w3.org/2005/Atom');
-				$out['title'] = $news->query('/atom:feed/atom:title')->item(0)->nodeValue;
-				$items = $news->query('/atom:feed/atom:entry[*]');
+			if ( $atom ) {    //Atom
+				$news->registerNamespace( 'atom', 'http://www.w3.org/2005/Atom' );
+				$out[ 'title' ] = $news->query( '/atom:feed/atom:title' )->item( 0 )->nodeValue;
+				$items = $news->query( '/atom:feed/atom:entry[*]' );
 				$c = 5;
 				$open = false;
-				foreach ($items as $item) {
-					$date = $item->getElementsByTagName('updated')->item(0)->nodeValue;
-					if (!($open) && time() - strtotime($date) < (60 * 60 * 24)) {
+				foreach ( $items as $item ) {
+					$date = $item->getElementsByTagName( 'updated' )->item( 0 )->nodeValue;
+					if ( !( $open ) && time() - strtotime( $date ) < ( 60 * 60 * 24 ) ) {
 						$open = true;
 					}
 					$feed = array(
-						'url' => $item->getElementsByTagName('link')->item(0)->nodeValue,
-						'title' => $item->getElementsByTagName('title')->item(0)->nodeValue,
-						'content' => $item->getElementsByTagName('content')->item(0)->nodeValue
+							'url' => $item->getElementsByTagName( 'link' )->item( 0 )->nodeValue,
+							'title' => $item->getElementsByTagName( 'title' )->item( 0 )->nodeValue,
+							'content' => $item->getElementsByTagName( 'content' )->item( 0 )->nodeValue
 					);
-					if (!($c--)) {
+					if ( !( $c-- ) ) {
 						break;
 					}
-					$out['feeds'][] = $feed;
+					$out[ 'feeds' ][ ] = $feed;
 				}
 			}
 			else {  //RSS
@@ -206,16 +206,16 @@ class SPAdminPanel extends SPController
 				$c = 5;
 				$open = false;
 				foreach ( $items as $item ) {
-					$date = $item->getElementsByTagName( 'pubDate' )->item( 0 )->nodeValue;
+					$date = $item->getElementsByTagName( 'updated' )->item( 0 )->nodeValue;
 					if ( !( $open ) && time() - strtotime( $date ) < ( 60 * 60 * 24 ) ) {
 						$open = true;
 					}
 					$feed = array(
-						'url' => $item->getElementsByTagName( 'link' )->item( 0 )->nodeValue,
-						'title' => $item->getElementsByTagName( 'title' )->item( 0 )->nodeValue,
-						'content' => $item->getElementsByTagName( 'description' )->item( 0 )->nodeValue,
-						'src' => $item->getElementsByTagName( 'enclosure' )->item( 0 )->attributes->getNamedItem('url')->nodeValue
-				);
+							'url' => $item->getElementsByTagName( 'link' )->item( 0 )->nodeValue,
+							'title' => $item->getElementsByTagName( 'title' )->item( 0 )->nodeValue,
+							'content' => $item->getElementsByTagName( 'description' )->item( 0 )->nodeValue,
+							'image' => $item->getElementsByTagName( 'enclosure' )->item( 0 )->attributes->getNamedItem( 'url' )->nodeValue,
+					);
 					if ( !( $c-- ) ) {
 						break;
 					}

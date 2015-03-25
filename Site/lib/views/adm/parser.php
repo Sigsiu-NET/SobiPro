@@ -199,7 +199,7 @@ class SPTplParser
 				break;
 			case 'url':
 				if ( isset( $element[ 'attributes' ][ 'image' ] ) ) {
-					$this->_out[ ] = "<img src=\"{$element[ 'attributes' ]['image']}\" alt=\"{$element[ 'attributes' ]['label']}\" />";
+					$this->_out[ ] = "<img src=\"{$element['attributes']['image']}\" alt=\"{$element['attributes']['label']}\" />";
 					$this->closeElement( $element );
 					$this->openElement( $element );
 				}
@@ -482,10 +482,10 @@ class SPTplParser
 					$class = null;
 					$target = null;
 					if ( $this->istSet( $cell[ 'attributes' ], 'link-class' ) ) {
-						$class = "class=\"{$cell[ 'attributes' ]['link-class']}\" ";
+						$class = "class=\"{$cell['attributes']['link-class']}\" ";
 					}
 					if ( $this->istSet( $cell[ 'attributes' ], 'target' ) ) {
-						$target = "target=\"{$cell[ 'attributes' ]['target']}\" ";
+						$target = "target=\"{$cell['attributes']['target']}\" ";
 					}
 					$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class}{$target} >";
 				}
@@ -498,7 +498,7 @@ class SPTplParser
 				if ( $this->istSet( $cell, 'label' ) ) {
 					$class = null; //if label in cell directly (with optional class) add a span as it could be a label/value pair
 					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
-						$class = "class=\"{$cell[ 'attributes' ]['class']}Label\"";
+						$class = "class=\"{$cell['attributes']['class']}Label\"";
 					}
 					$this->_out[ ] = "<span {$class}>{$cell['label']}</span>";
 				}
@@ -512,6 +512,9 @@ class SPTplParser
 				if ( $type == 'link' ) {
 					$this->_out[ ] = "</a>";
 				}
+				break;
+			case 'image':
+				$this->_out[ ] = "<img src=\"{$cell['link']}\" />";
 				break;
 			case 'ordering':
 				if ( isset( $cell[ 'attributes' ][ 'label' ] ) ) {

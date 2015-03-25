@@ -335,7 +335,7 @@
 									<loop subject="news.feeds" table="false">
 										<cell class="SpCellContainer">
                                             <cell type="image" value="title" class="SpCellNewsImage">
-                                                <url type="extern" host="src" />
+                                                <url type="extern" host="image" />
                                             </cell>
 											<cell type="link" value="title" class="SpCellNewsTitle">
 												<url type="extern" host="url" />
