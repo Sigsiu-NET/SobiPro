@@ -267,12 +267,12 @@
 						<div id="collapseOne" class="accordion-body collapse in">
 							<div class="accordion-inner spPanelSobiPro">
 								<div style="float: right; margin: 10px 0 0 10px;">
-									<a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
+									<a href="https://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
 										<img src="../media/sobipro/sigsiu.png" alt="Sigsiu.NET Software Development" />
 									</a>
 								</div>
 								<div style="float: left; margin: 0 10px 0 0;">
-									<a href="http://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
+									<a href="https://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
 										<img src="../media/sobipro/logo.png" alt="Sigsiu.NET Software Development" />
 									</a>
 								</div>
@@ -293,9 +293,9 @@
 								<p class="spText">
 									<text value="ABOUT.SP_CLUBDESC">
 										<param>
-											<![CDATA[<a href="http://SobiPro.Sigsiu.NET" target="_blank" >SobiPro Club</a>]]></param>
+											<![CDATA[<a href="https://www.sigsiu.net/subscribe/levels" target="_blank" >SobiPro Club</a>]]></param>
 										<param>
-											<![CDATA[<a href="https://forum.Sigsiu.NET" target="_blank">SobiPro Forum</a>]]></param>
+											<![CDATA[<a href="https://www.Sigsiu.NET/support" target="_blank">SobiPro Support System</a>]]></param>
 									</text>
 								</p>
 								<a href="http://SobiPro.Sigsiu.NET" target="_blank" title="The SobiPro Club - Support, Documentation, Applications and much more .... ">

@@ -206,7 +206,7 @@ class SPAdminPanel extends SPController
 				$c = 5;
 				$open = false;
 				foreach ( $items as $item ) {
-					$date = $item->getElementsByTagName( 'updated' )->item( 0 )->nodeValue;
+					$date = $item->getElementsByTagName( 'pubDate' )->item( 0 )->nodeValue;
 					if ( !( $open ) && time() - strtotime( $date ) < ( 60 * 60 * 24 ) ) {
 						$open = true;
 					}
