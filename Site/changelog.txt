@@ -27,7 +27,7 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.13 ()
+1.1.13 (31 March 2015)
 -------------------
 
     (#) Valid since / valid until time issues while creating new ACL rule (Issue #1415)
