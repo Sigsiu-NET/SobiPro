@@ -139,7 +139,8 @@
 								<fieldset label="FMN.FIELD_ENTRYVIEW_META">
 									<field type="toggle" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
 									<field type="toggle" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
-								</fieldset>
+                                    <field type="text" name="field.metaSeparator" value="field.metaSeparator" label="FM.META_SEPARATOR" class="input-mini" maxlength="6" />
+                                </fieldset>
 							</div>
 						</div>
 					</tab>

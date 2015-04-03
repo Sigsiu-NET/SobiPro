@@ -573,6 +573,7 @@ final class SPHeader
 				$this->store( get_defined_vars(), __FUNCTION__ );
 				if ( strlen( $desc ) ) {
 					$this->description[ ] = strip_tags( str_replace( '"', "'", SPLang::entities( $desc, true ) ) );
+					//$this->description[ ] = strip_tags( str_replace( '"', "'", SPLang::entities( $desc, true ) ) ) . ' ';
 				}
 			}
 		}
@@ -625,7 +626,12 @@ final class SPHeader
 			$fields = $obj->getFields();
 			if ( count( $fields ) ) {
 				foreach ( $fields as $field ) {
-					$this->addDescription( $field->metaDesc() );
+					$separator = $field->get('metaSeparator');
+					$desc = $field->metaDesc();
+					if (strlen($desc)) {
+						$desc .= $separator;
+					}
+					$this->addDescription( $desc );
 					$this->addKeyword( $field->metaKeys() );
 				}
 			}

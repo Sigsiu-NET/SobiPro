@@ -27,17 +27,24 @@ Legend:
  (!) - Change
 
 -------------------
+1.1.14 ()
+-------------------
+
+    (+) Possibility to define a separator sign for meta descriptions from fields
+
+
+-------------------
 1.1.13 (31 March 2015)
 -------------------
+
+    (+) Possibility to prevent choosing parent options in the select field with dependency list (Related to #1421)
+
+    (!) Showing the fields in default2 template moved to a separate template
 
     (#) Valid since / valid until time issues while creating new ACL rule (Issue #1415)
     (#) Dependency field don't work in search view (Issue #1417)
     (#) Notices in function fixTimes() (Issue #1423)
     (#) Access own unpublished rule hide other users entries (Issue #1419)
-
-    (+) Possibility to prevent choosing parent options in the select field with dependency list (Related to #1421)
-
-    (!) Showing the fields in default2 template moved to a separate template
 
 
 -------------------

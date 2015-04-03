@@ -40,6 +40,8 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	protected $searchMethod = 'general';
 	/** * @var string */
 	protected $itemprop = '';
+	/** * @var string */
+	protected $metaSeparator = ' ';
 
 	/**
 	 * Shows the field in the edit entry or add entry form
@@ -75,7 +77,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop' );
+		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop', 'metaSeparator' );
 	}
 
 	/**

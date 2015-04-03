@@ -78,6 +78,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	protected $allowParents = true;
 	/** @var string */
 	protected $dependencyDefinition = '';
+	/** * @var string */
+	protected $metaSeparator = ' ';
 
 	/**
 	 * Shows the field in the edit entry or add entry form
@@ -322,7 +324,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents' );
+		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator' );
 	}
 
 	protected function fetchData( $data, $request = 'post' )

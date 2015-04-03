@@ -60,6 +60,8 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	protected $defSel = '';
 	/** * @var string */
 	protected $itemprop = '';
+	/** * @var string */
+	protected $metaSeparator = ' ';
 
 
 	/**
@@ -174,6 +176,6 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'defSel','itemprop' );
+		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator' );
 	}
 }
