@@ -27,29 +27,23 @@ SPLoader::loadClass( 'opt.fields.inbox' );
  */
 class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 {
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	protected $maxLength = 0;
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	protected $width = 500;
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	protected $height = 100;
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $cssClass = "";
-	/**
-	 * @var bool
-	 */
+	/** * @var string */
+	protected $cssClassView = '';
+	/** * @var string */
+	protected $cssClassEdit = '';
+	/** * @var string */
+	protected $cssClassSearch = '';
+	/** * @var bool */
 	protected $editor = false;
-	/**
-	 * @var bool
-	 */
+	/** * @var bool */
 	protected $allowHtml = 2;
 	/** * @var string */
 	protected $metaSeparator = ' ';
@@ -64,7 +58,9 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
+		$class = $this->cssClass . (strlen($this->cssClassEdit) ? ' ' . $this->cssClassEdit : '');
+		$class = $this->required ? $class . ' required' : $class;
+
 // Switched to Ajax validation
 //		if( $this->maxLength ) {
 //			if( !( $this->editor ) ) {
@@ -202,7 +198,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'height', 'editor', 'allowHtml', 'itemprop', 'metaSeparator' );
+		return array( 'maxLength', 'width', 'height', 'editor', 'allowHtml', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit' );
 	}
 
 	/**

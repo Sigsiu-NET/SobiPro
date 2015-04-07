@@ -46,10 +46,14 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 * @var string
 	 */
 	protected $selectLabel = 'Select %s';
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $cssClass = "";
+	/** * @var string */
+	protected $cssClassView = '';
+	/** * @var string */
+	protected $cssClassEdit = '';
+	/** * @var string */
+	protected $cssClassSearch = '';
 	/**
 	 * @var bool
 	 */
@@ -324,7 +328,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator' );
+		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit' );
 	}
 
 	protected function fetchData( $data, $request = 'post' )
