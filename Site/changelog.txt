@@ -31,6 +31,7 @@ Legend:
 -------------------
 
     (+) Possibility to define a separator sign for meta descriptions from fields
+    (+) Required state of a field as node attribute in XML data available
 
 
 -------------------

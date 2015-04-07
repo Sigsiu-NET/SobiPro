@@ -101,7 +101,13 @@ class SPEntryView extends SPFrontView implements SPView
 								'fee' => $pf,
 								'fee_msg' => $pfm
 							),
-							'_attributes' => array( 'id' => $field->get( 'id' ), 'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
+							'_attributes' => array( 'id' => $field->get( 'id' ),
+													'type' => $field->get( 'type' ),
+													'suffix' => $field->get( 'suffix' ),
+													'position' => $field->get( 'position' ),
+													'required' => $field->get( 'required' ),
+								'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
+							)
 						);
 					}
 				}
