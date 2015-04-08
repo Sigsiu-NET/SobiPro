@@ -242,7 +242,13 @@ class SPEntryView extends SPFrontView implements SPView
 		}
 		$primaryCat = $entry->get( 'parent' );
 		foreach ( $cats as $cid => $cat ) {
-			$cAttr = array( 'lang' => Sobi::Lang( false ), 'id' => $cat[ 'pid' ], 'position' => $cat[ 'position' ], 'url' => Sobi::Url( array( 'sid' => $cat[ 'pid' ], 'title' => Sobi::Cfg( 'sef.alias', true ) ? $cat[ 'alias' ] : $cat[ 'name' ] ) ) );
+			$cAttr = array( 'lang' => Sobi::Lang( false ),
+							'id' => $cat[ 'pid' ],
+							'alias' => $cat ['alias'],
+							'position' => $cat[ 'position' ],
+							'url' => Sobi::Url( array( 'sid' => $cat[ 'pid' ],
+							'title' => Sobi::Cfg( 'sef.alias', true ) ? $cat[ 'alias' ] : $cat[ 'name' ] ) )
+			);
 			if ( $cat[ 'pid' ] == $primaryCat ) {
 				$cAttr[ 'primary' ] = 'true';
 			}
