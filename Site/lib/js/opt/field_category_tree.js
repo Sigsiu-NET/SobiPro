@@ -1,5 +1,5 @@
 /**
- * @version: $Id: field_category_tree.js 4090 2014-02-20 15:57:30Z Sigrid Suski $
+ * @version: $Id: field_category_tree.js 4342 2014-10-22 09:05:14Z Radek Suski $
  * @package: SobiPro Library
 
  * @author
@@ -14,9 +14,10 @@
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
- * $Date: 2014-02-20 16:57:30 +0100 (Thu, 20 Feb 2014) $
- * $Revision: 4090 $
- * $Author: Sigrid Suski $
+ * $Date: 2014-10-22 11:05:14 +0200 (Wed, 22 Oct 2014) $
+ * $Revision: 4342 $
+ * $Author: Radek Suski , Marcos A. Rodríguez Roldán $
+ * $
  * File location: components/com_sobipro/lib/js/opt/field_category_tree.js $
  */
 
@@ -57,6 +58,7 @@ function SigsiuTreeEdit( options )
 			SobiPro.jQuery( this ).focus();
 			e.preventDefault();
 			proxy.getCategoryData( SobiPro.jQuery( this ).attr( 'rel' ) );
+		
 		} );
 
 	};
@@ -73,7 +75,6 @@ function SigsiuTreeEdit( options )
 		var selectedCats = [];
 		this.canvas.find( '.selected' ).find( 'select option' ).each( function ( i, e )
 		{
-			SobiPro.jQuery( e ).prop( 'selected', true );
 			selectedCats.push( SobiPro.jQuery( e ).val() )
 		} );
 		this.canvas.find( '.selected' ).find( 'input' ).val( 'json://[' + selectedCats.join( ',' ) + ']' );
@@ -97,7 +98,7 @@ function SigsiuTreeEdit( options )
 				.addClass( 'disabledArea' );
 			return setTimeout( function ()
 			{
-				proxy.addCategory();
+				//proxy.addCategory();
 			}, 3000 );
 		}
 		if ( !( proxy.category.id ) ) {
@@ -117,7 +118,6 @@ function SigsiuTreeEdit( options )
 				error = true;
 			}
 		} );
-
 		if ( !( error ) ) {
 			this.selectField.append( new Option( SobiPro.StripSlashes( this.category.name ), this.category.id ) );
 			this.canvas.find( '[name="removeCategory"]' ).removeAttr( 'disabled', 'disabled' );
@@ -133,7 +133,44 @@ function SigsiuTreeEdit( options )
 
 	this.canvas.find( '[name="addCategory"]' ).click( function ()
 	{
-		proxy.addCategory();
+		
+
+	/*
+
+for(a=0;a<formularios1.option.length;a++){
+formularios2.options[a].value = formularios1.options[a].value;
+formularios2.options[a].text = formularios1.options[a].text;
+}*/   // pasar_parametro('field_category_childsContainer', 'field_category_list[]')
+	var clon = proxy.canvas.find('.childsContainer option:selected');
+	var selected1 = proxy.selectField.find( 'option' );
+
+		if ( selected1.length  ) {
+		selected1.each( function ( a, option2 )
+			{	
+		clon.each( function ( e, option )
+			{
+						//alert('clom:'+ option.value +'\n selec:'+option2.value )
+						if(option.value == option2.value){
+							
+							/*clon.attr('disabled','disabled');
+	clon.removeAttr( 'selected', 'selected' );*/
+	SobiPro.Alert( 'THIS_CATEGORY_HAS_BEEN_ALREADY_ADDED' );
+	stopadd();	
+							}
+			} );} );
+		}
+
+	if(!clon.length){SobiPro.Alert( 'PLEASE_SELECT_CATEGORY_YOU_WANT_TO_ADD_IN_THE_TREE_FIRST' );
+	/*if ( proxy.settings.preventParents && proxy.category.childsCount > 0 ) {
+			SobiPro.Alert( 'SELECT_CAT_WITH_NO_CHILDS' );
+			
+		}*/}
+	clon.clone().appendTo(proxy.selectField);
+	clon.attr('disabled','disabled');
+	clon.removeAttr( 'selected', 'selected' );
+	//clon.attr('style','color:#D5D5D5;');
+		proxy.canvas.find( '[name="removeCategory"]' ).removeAttr( 'disabled', 'disabled' );
+			proxy.updateSelected();
 	} );
 
 	this.canvas.find( '[name="removeCategory"]' ).click( function ()
@@ -142,11 +179,17 @@ function SigsiuTreeEdit( options )
 		if ( selected.length ) {
 			selected.each( function ( i, option )
 			{
+				//var disaremo = $('.field_category_childsContainer option[value="' + option.value+']')
+				var disaremo = SobiPro.jQuery('.childsContainer option[value="' + option.value+'"]')
+			
+				disaremo.removeAttr( 'disabled', 'disabled' );
+				//disaremo.removeAttr( 'style' );
 				SobiPro.jQuery( option ).remove()
+				 //selected.remove().appendTo('.field_category_childsContainer'); 
 			} );
 			proxy.selectField.removeAttr( 'readonly', 'readonly' );
 			proxy.canvas.find( '[name="addCategory"]' ).removeAttr( 'disabled', 'disabled' );
-		}
+		}if ( !selected.length ){SobiPro.Alert( 'PLEASE_SELECT_CATEGORY_YOU_WANT_TO_REMOVE')}
 		if ( !( proxy.canvas.find( '.selected' ).find( 'select option' ).length ) ) {
 			SobiPro.jQuery( this ).attr( 'disabled', 'disabled' );
 		}
@@ -164,3 +207,5 @@ function SigsiuTreeEdit( options )
 	catch ( e ) {
 	}
 }
+
+
