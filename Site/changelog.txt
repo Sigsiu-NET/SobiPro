@@ -22,7 +22,6 @@ $Date$
 Legend:
  (*) - Security Fix
  (#) - Bug Fix
- (+) - Addition
  (-) - Removed
  (!) - Change
 

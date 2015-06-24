@@ -1,5 +1,5 @@
 /**
- * @version: $Id: field_category_tree.js 4090 2014-02-20 15:57:30Z Sigrid Suski $
+ * @version: $Id: field_category_tree.js 4387 2015-02-19 12:24:35Z Radek Suski $
  * @package: SobiPro Library
 
  * @author
@@ -14,9 +14,9 @@
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
- * $Date: 2014-02-20 16:57:30 +0100 (Thu, 20 Feb 2014) $
- * $Revision: 4090 $
- * $Author: Sigrid Suski $
+ * $Date: 2015-02-19 13:24:35 +0100 (Thu, 19 Feb 2015) $
+ * $Revision: 4387 $
+ * $Author: Radek Suski $
  * File location: components/com_sobipro/lib/js/opt/field_category_tree.js $
  */
 
@@ -29,7 +29,9 @@ function SigsiuTreeEdit( options )
 	this.options = this.canvas.find( '.selected' ).find( 'select option' );
 	this.selectField = this.canvas.find( '.selected' ).find( 'select' );
 	this.loading = false;
+	this.requested = false;
 	this.addBtn = '';
+	this.rel = 0;
 
 	this.getCategoryData = function ( sid )
 	{
@@ -55,8 +57,12 @@ function SigsiuTreeEdit( options )
 		this.canvas.find( '.treeNode' ).click( function ( e )
 		{
 			SobiPro.jQuery( this ).focus();
-			e.preventDefault();
-			proxy.getCategoryData( SobiPro.jQuery( this ).attr( 'rel' ) );
+			var Rel = SobiPro.jQuery( this ).attr( 'rel' );
+			if ( proxy.rel != Rel ) {
+				proxy.rel = Rel;
+				e.preventDefault();
+				proxy.getCategoryData( SobiPro.jQuery( this ).attr( 'rel' ) );
+			}
 		} );
 
 	};
@@ -98,7 +104,7 @@ function SigsiuTreeEdit( options )
 			return setTimeout( function ()
 			{
 				proxy.addCategory();
-			}, 3000 );
+			}, 1000 );
 		}
 		if ( !( proxy.category.id ) ) {
 			SobiPro.Alert( 'PLEASE_SELECT_CATEGORY_YOU_WANT_TO_ADD_IN_THE_TREE_FIRST' );
