@@ -531,6 +531,7 @@ abstract class SPHtml_Input
 		$data = self::createDataTag( $params );
 		$params = self::params( $params );
 		self::checkArray( $values );
+		self::checkArray( $selected );
 		if ( $selected !== null && !( is_array( $selected ) ) ) {
 			$selected = array( ( string )$selected );
 		}

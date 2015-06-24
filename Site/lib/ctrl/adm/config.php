@@ -340,6 +340,7 @@ class SPConfigAdmCtrl extends SPController
 			$view->assign( $entriesOrdering, 'entriesOrdering' );
 			$view->assign( $alphaFields, 'alphaMenuFields' );
 			$view->assign( $view->languages(), 'languages-list' );
+			$alpha = Sobi::Cfg('alphamenu.extra_fields_array');
 		}
 		$view->addHidden( $IP, 'current-ip' );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
