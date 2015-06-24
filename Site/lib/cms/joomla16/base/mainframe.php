@@ -19,6 +19,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 require_once dirname( __FILE__ ) . '/../../joomla_common/base/mainframe.php';
+
 /**
  * Interface between SobiPro and the used CMS
  * @author Radek Suski
@@ -91,31 +92,29 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 			}
 			foreach ( $head as $type => $code ) {
 				switch ( $type ) {
-					default:
-						{
-						if ( count( $code ) ) {
-							foreach ( $code as $html ) {
-								++$c;
-								$document->addCustomTag( $html );
-							}
+					default: {
+					if ( count( $code ) ) {
+						foreach ( $code as $html ) {
+							++$c;
+							$document->addCustomTag( $html );
 						}
-						break;
-						}
+					}
+					break;
+					}
 					case 'robots' :
-					case 'author':
-					{
+					case 'author': {
 						$document->setMetaData( $type, implode( ', ', $code ) );
 //						$document->setHeadData( array( $type => implode( ', ', $code ) ) );
 						break;
 					}
-					case 'keywords':
-					{
+					case 'keywords': {
 						$metaKeys = trim( implode( ', ', $code ) );
 						if ( Sobi::Cfg( 'meta.keys_append', true ) ) {
 							$metaKeys .= Sobi::Cfg( 'string.meta_keys_separator', ',' ) . $document->getMetaData( 'keywords' );
 						}
 						$metaKeys = explode( Sobi::Cfg( 'string.meta_keys_separator', ',' ), $metaKeys );
 						if ( count( $metaKeys ) ) {
+							$metaKeys = array_unique( $metaKeys );
 							foreach ( $metaKeys as $i => $p ) {
 								if ( strlen( trim( $p ) ) ) {
 									$metaKeys[ $i ] = trim( $p );
@@ -132,8 +131,7 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 						$document->setMetadata( 'keywords', $metaKeys );
 						break;
 					}
-					case 'description':
-					{
+					case 'description': {
 						$metaDesc = implode( Sobi::Cfg( 'string.meta_desc_separator', ' ' ), $code );
 						if ( strlen( $metaDesc ) ) {
 							if ( Sobi::Cfg( 'meta.desc_append', true ) ) {
