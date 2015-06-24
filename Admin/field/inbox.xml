@@ -82,6 +82,7 @@
 										</add>
 									</field>
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
+                                    <field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-medium" />
 									<field type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
 									<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 									<field type="select" name="field.filter" values="filters" label="FM.FILTER" multi="false" selected="field.filter" class="input-large" />
@@ -119,11 +120,13 @@
 									</field>
 									<field type="text" name="field.itemprop" label="FMN.ITEMPROP" />
 									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
+                                    <field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-medium" />
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYVIEW_META">
 									<field type="toggle" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />
 									<field type="toggle" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
-								</fieldset>
+                                    <field type="text" name="field.metaSeparator" value="field.metaSeparator" label="FM.META_SEPARATOR" class="input-mini" maxlength="6" />
+                                </fieldset>
 							</div>
 						</div>
 					</tab>
@@ -155,6 +158,7 @@
 									</field>
 									<field type="textarea" name="field.searchRangeValues" value="field.searchRangeValues" label="FM.SEARCH_RANGE_SETTINGS" editor="false" class="input-splarge" rows="4" style="" />
 									<field type="toggle" name="field.freeRange" value="field.freeRange" label="FMN.FREE_RANGE" prefix="yes_no" />
+                                    <field type="text" name="field.cssClassSearch" value="field.cssClassSearch" label="FM.CSS_CLASS" class="input-medium" />
 								</fieldset>
 							</div>
 						</div>

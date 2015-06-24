@@ -42,10 +42,14 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	 * @var string
 	 */
 	protected $labelSite = 'right';
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $cssClass = "";
+	/** * @var string */
+	protected $cssClassView = '';
+	/** * @var string */
+	protected $cssClassEdit = '';
+	/** * @var string */
+	protected $cssClassSearch = '';
 	/**
 	 * @var string
 	 */
@@ -60,6 +64,8 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	protected $defSel = '';
 	/** * @var string */
 	protected $itemprop = '';
+	/** * @var string */
+	protected $metaSeparator = ' ';
 
 
 	/**
@@ -174,6 +180,6 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'defSel','itemprop' );
+		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit' );
 	}
 }

@@ -41,6 +41,12 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	protected $width = 350;
 	/** @var string */
 	protected $cssClass = "";
+	/** * @var string */
+	protected $cssClassView = '';
+	/** * @var string */
+	protected $cssClassEdit = '';
+	/** * @var string */
+	protected $cssClassSearch = '';
 	/** @var bool */
 	protected $validateUrl = false;
 	/** @var array */
@@ -205,7 +211,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop' );
+		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassSearch', 'cssClassEdit' );
 	}
 
 	/**

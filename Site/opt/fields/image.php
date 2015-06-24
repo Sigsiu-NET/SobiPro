@@ -93,10 +93,14 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 * @var string
 	 */
 	protected $savePath = 'images/sobipro/entries/{id}/';
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $cssClass = "";
+	/** * @var string */
+	protected $cssClassView = '';
+	/** * @var string */
+	protected $cssClassEdit = '';
+	/** * @var string */
+	protected $cssClassSearch = '';
 	/**
 	 * @var string
 	 */
@@ -108,7 +112,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'width', 'savePath', 'inDetails', 'inVcard', 'thumbHeight', 'thumbWidth', 'thumbName', 'keepOrg', 'resize', 'maxSize', 'resizeWidth', 'resizeHeight', 'imageName', 'generateThumb', 'thumbFloat', 'imageFloat', 'itemprop', 'crop' );
+		return array( 'width', 'savePath', 'inDetails', 'inVcard', 'thumbHeight', 'thumbWidth', 'thumbName', 'keepOrg', 'resize', 'maxSize', 'resizeWidth', 'resizeHeight', 'imageName', 'generateThumb', 'thumbFloat', 'imageFloat', 'itemprop', 'crop', 'cssClassView', 'cssClassSearch', 'cssClassEdit' );
 	}
 
 	public function compareRevisions( $revision, $current )

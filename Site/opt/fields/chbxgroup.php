@@ -26,10 +26,14 @@ SPLoader::loadClass( 'opt.fields.radio' );
  */
 class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 {
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $cssClass = '';
+	/** * @var string */
+	protected $cssClassView = '';
+	/** * @var string */
+	protected $cssClassEdit = '';
+	/** * @var string */
+	protected $cssClassSearch = '';
 	/**
 	 * @var bool
 	 */
@@ -38,6 +42,8 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	 * @var string
 	 */
 	protected $dType = 'predefined_multi_data_multi_choice';
+	/** * @var string */
+	protected $metaSeparator = ' ';
 
 	/**
 	 * Shows the field in the edit entry or add entry form
@@ -258,6 +264,6 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'itemprop' );
+		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit' );
 	}
 }
