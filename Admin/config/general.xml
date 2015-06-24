@@ -78,6 +78,8 @@
 									<field type="toggle" name="spcfg[general.top_menu]" value="general.top_menu" label="SECN.CFG.SHOW_TOP_MENU" prefix="show" />
 									<field type="toggle" name="spcfg[general.parse_template_content]" value="general.parse_template_content" label="SECN.CFG.PARSE_TPL_CONTENT" prefix="yes_no" />
                                     <field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled" label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="yes_no" />
+                                    <field type="toggle" name="spcfg[template.css-disabled]" value="template.css-disabled" label="SECN.CFG.SETTINGS_CSS_DISABLED" prefix="yes_no" />
+                                    <field type="toggle" name="spcfg[template.fontawesome-disabled]" value="template.fontawesome-disabled" label="SECN.CFG.SETTINGS_AWESOME_DISABLED" prefix="yes_no" />
                                 </fieldset>
 								<div style="margin-top:40px;"></div>
 								<tabs>
