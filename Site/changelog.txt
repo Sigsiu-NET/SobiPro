@@ -37,6 +37,7 @@ Legend:
     (#) Fixed issues in SigsiuTree and Internet Explorer (Issue #1469)
     (#) Passing comma separated values to the SPHtml_Input::select (Issue #1481)
     (#) Removing duplicates meta keys (Issue #1476)
+    (#) Approved value in the front-end when user is accessing unapproved version (Issue #1472)
 
 
 -------------------
