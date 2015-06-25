@@ -21,63 +21,90 @@
  * $Author$
  */
 
-/* to override dominant Joomla template styles (e.g. Beez) for SobiPro in Joomla 2.5
-  can be removed if a template is used that does not interfere in SobiPro styling using CSS id */
-#SobiPro ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+// from the original SobiPro.CSS file which does not longer include these:
+.SobiPro div.modal {
+  width: 520px;
+  margin: -250px 0 0 -280px;
+  top: 50%;
 }
-#SobiPro .topmenu a:hover,
-#SobiPro .topmenu a:active,
-#SobiPro .topmenu a:focus {
-  background: inherit;
-  color: inherit;
+.SobiPro .modal.fade.in { top: 50%; }
+.SobiPro .popover-inner .spclose {
+  padding-right: 8px;
+  padding-top: 5px;
+  font-size: 15px;
 }
-#SobiPro .pagination li {
-  padding: inherit;
-  margin: inherit;
-}
-#SobiPro .pagination {
+.SobiPro .thumbnail { margin-bottom: 9px; }
+.SobiPro div.thumbcat {
   border: none;
-  padding: 0;
-  margin-bottom: 20px;
+  box-shadow: 0 0 0 0;
+  display: block;
+  line-height: 20px;
+  padding: 4px;
 }
-#SobiPro .btn.dropdown-toggle {
-  background-color: #E6E6E6;
+.SobiPro p.thumbcat { margin: 0; }
+.SobiPro .category-container,
+.SobiPro .entry-container {
+  margin-bottom: 15px;
+  margin-top: 5px;
 }
-#SobiPro h1 {
-  border-bottom: none;
-  color: inherit;
-  font-family: inherit;
-  font-size: 28px;
-  font-weight: inherit;
-  line-height: 40px;
-  margin: inherit;
-  padding: inherit;
-  padding-left: 0px;
+.SobiPro .btn .caret { margin-bottom: 9px; }
+.SobiPro .SPEntryEdit .required { border-color: #7ac6ff; }
+.SobiPro .SPEntryEdit .spAlert {
+  margin-bottom: 0;
+  margin-top: 10px;
 }
-#SobiPro h3 {
-  margin: inherit;
+.SobiPro .SPEntryEdit .progress {
+  min-width: 100px;
+  width: 50%;
 }
-/* end Joomla! 2.5 template compatibility */
-/* General Styling */
-.SPDetailEntry h1 {
-  font-size: 28px;
+.SobiPro .SPEntryEdit .message-lightbulb { margin-left: 15px; }
+.SobiPro #alpha-index .pagination { margin-top: 5px; }
+.SobiPro .alphalist { text-align: right; }
+.SobiPro .alphalist .dropdown-menu { text-align: left; }
+.SobiPro table.payment td { line-height: 10px; }
+.SobiPro table tr.summary td {
+  background-color: #ffffff;
+  padding-top: 25px;
 }
-.SPDetailEntry {
-  padding: 10px;
+.SobiPro table tr.sum td { font-weight: bold; }
+.SPSearchSelectRangeTo,
+.SPSearchSelectRangeFrom {
+  padding-bottom: 3px;
+  padding-top: 3px;
 }
-.SPDetailEntry .spManage {
+.SobiPro .input-prepend .alert,
+.SobiPro .input-append .alert { font-size: 14px; }
+.SobiPro .spdFileUpload .span1,
+.SobiPro .spImageUpload .span1 { margin-left: 10px; }
+.SobiPro .spdFileUpload .progress-message,
+.SobiPro .spImageUpload .progress-message {
+  margin-top: 10px;
+  margin-left: 20px;
+  clear:left;
+}
+.SobiPro .spImageUpload .progress-message {
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.SobiPro .spEditImagePreview img { margin: 8px; }
+.SobiPro .spImageField input[type='checkbox'] { margin: 5px; }
+.SobiPro .spdFileUpload .alert,
+.SobiPro .spImageUpload .alert { margin-top: 5px; }
+.SobiPro .spImageField .span2 { width: 80px; }
+.SobiPro .spImageField label { display: inline-block; }
+.SobiPro .disabledArea {
+  opacity: 0.3;
+  cursor:progress;
+}
+.SobiPro .disabledArea a { cursor:progress; }
+// - end
+
+// General Styling
+.SobiPro .SPDetailEntry h1 { font-size: 28px; }
+.SobiPro .SPDetailEntry { padding: 10px; }
+.SobiPro .SPDetailEntry .spManage {
   margin-right: 10px;
   margin-top: 17px;
-}
-/* Individual Styling, please adapt if you change field names */
-.field_country,
-.field_fax,
-.field_website,
-.field_business_days {
-  padding-bottom: 10px;
 }
 .entry-status {
   font-size: 15px;
@@ -87,4 +114,12 @@
 .popover {
   font-size: 13px;
   line-height: 13px;
+}
+
+// Individual Styling for default fields
+.field_country,
+.field_fax,
+.field_website,
+.field_business_days {
+  padding-bottom: 10px;
 }
