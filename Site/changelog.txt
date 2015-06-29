@@ -39,6 +39,7 @@ Legend:
     (#) Passing comma separated values to the SPHtml_Input::select (Issue #1481)
     (#) Removing duplicates meta keys (Issue #1476)
     (#) Approved value in the front-end when user is accessing unapproved version (Issue #1472)
+    (#) Non-Editable field cannot be set as required. It should be set as not required after it has been used once (Issue  #1457)
 
 
 -------------------

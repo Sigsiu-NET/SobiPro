@@ -513,7 +513,7 @@ class SPField extends SPObject
 		}
 		$this->priority = $this->priority ? $this->priority : 5;
 		/* if field is an admin filed - it cannot be required */
-		if ( ( $this->adminField || !( $this->editable ) || !( $this->enabled ) ) && ( !( defined( 'SOBIPRO_ADM' ) ) ) ) {
+		if ( ( $this->adminField || !( $this->enabled ) ) && ( !( defined( 'SOBIPRO_ADM' ) ) ) ) {
 			$this->required = false;
 		}
 	}
@@ -629,12 +629,17 @@ class SPField extends SPObject
 				}
 			}
 		}
-		if ( !( $this->isFree ) && SPRequest::task() == 'entry.edit' ) {
-			/* in case we are editing - check if this field wasn't paid already */
-			SPLoader::loadClass( 'services.payment' );
-			if ( SPPayment::check( $sid, $this->id ) ) {
-				$this->fee = 0;
-				$this->isFree = true;
+		if ( SPRequest::task() == 'entry.edit' ) {
+			if ( !( $this->isFree ) && SPRequest::task() == 'entry.edit' ) {
+				/* in case we are editing - check if this field wasn't paid already */
+				SPLoader::loadClass( 'services.payment' );
+				if ( SPPayment::check( $sid, $this->id ) ) {
+					$this->fee = 0;
+					$this->isFree = true;
+				}
+			}
+			if ( !( $this->editable ) && $this->_fData ) {
+				$this->required = false;
 			}
 		}
 	}

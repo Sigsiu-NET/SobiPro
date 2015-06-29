@@ -32,7 +32,7 @@ abstract class SPHtml_Input
 	 */
 	private static function checkArray( &$params )
 	{
-		if ( $params && is_string( $params ) ) {
+		if ( $params && is_string( $params ) && strstr( $params, ',' ) ) {
 			$class = SPLoader::loadClass( 'types.array' );
 			$arr = new $class;
 			$arr->fromString( $params, ',', '=' );
@@ -530,8 +530,10 @@ abstract class SPHtml_Input
 		}
 		$data = self::createDataTag( $params );
 		$params = self::params( $params );
+		if ( strstr( $name, '_array' ) ) {
+			self::checkArray( $selected );
+		}
 		self::checkArray( $values );
-		self::checkArray( $selected );
 		if ( $selected !== null && !( is_array( $selected ) ) ) {
 			$selected = array( ( string )$selected );
 		}
