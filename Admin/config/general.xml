@@ -88,9 +88,6 @@
 											<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3" />
 										</values>
 									</field>
-
-									<field type="toggle" name="spcfg[template.css-disabled]" value="template.css-disabled" label="SECN.CFG.SETTINGS_CSS_DISABLED" prefix="yes_no" />
-									<field type="toggle" name="spcfg[template.fontawesome-disabled]" value="template.fontawesome-disabled" label="SECN.CFG.SETTINGS_AWESOME_DISABLED" prefix="yes_no" />
 								</fieldset>
 								<div style="margin-top:40px;"></div>
 								<tabs>
