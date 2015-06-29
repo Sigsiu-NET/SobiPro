@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -25,6 +24,9 @@
 	<header>
 		<title value="SEC.CFG.CONFIGURATION_OF_SECTION" />
 		<file type="script" filename="bootstrap.tabs" />
+		<style>
+			input[type=checkbox] { float: left; margin-right: 5px!important; }
+		</style>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSectionCfg">
 		<button type="apply" task="config.save" />
@@ -77,10 +79,19 @@
 									<field type="select" label="SECN.CFG.SECTION_TEMPLATE" name="spcfg[section.template]" selected="section.template" values="templatesList" class="input-xlarge" />
 									<field type="toggle" name="spcfg[general.top_menu]" value="general.top_menu" label="SECN.CFG.SHOW_TOP_MENU" prefix="show" />
 									<field type="toggle" name="spcfg[general.parse_template_content]" value="general.parse_template_content" label="SECN.CFG.PARSE_TPL_CONTENT" prefix="yes_no" />
-                                    <field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled" label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="yes_no" />
-                                    <field type="toggle" name="spcfg[template.css-disabled]" value="template.css-disabled" label="SECN.CFG.SETTINGS_CSS_DISABLED" prefix="yes_no" />
-                                    <field type="toggle" name="spcfg[template.fontawesome-disabled]" value="template.fontawesome-disabled" label="SECN.CFG.SETTINGS_AWESOME_DISABLED" prefix="yes_no" />
-                                </fieldset>
+									<field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled" label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="yes_no" />
+
+									<field type="checkBoxGroup" label="SECN.CFG.LOAD_ICONS_FONTS" name="spcfg[template.icon_fonts_arr]" selected="template.icon_fonts_arr" class="input-xlarge">
+										<values>
+											<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4" />
+											<option value="google-materials" label="SECN.CFG.ICONS_MATERIAL" />
+											<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3" />
+										</values>
+									</field>
+
+									<field type="toggle" name="spcfg[template.css-disabled]" value="template.css-disabled" label="SECN.CFG.SETTINGS_CSS_DISABLED" prefix="yes_no" />
+									<field type="toggle" name="spcfg[template.fontawesome-disabled]" value="template.fontawesome-disabled" label="SECN.CFG.SETTINGS_AWESOME_DISABLED" prefix="yes_no" />
+								</fieldset>
 								<div style="margin-top:40px;"></div>
 								<tabs>
 									<tab label="SECN.CFG.CLISTING_SETTINGS">
@@ -365,7 +376,7 @@
 												</values>
 											</field>
 											<field type="text" name="spcfg[redirects.entry_save_msg]" value="redirects.entry_save_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
-                                            <message label="SECN.CFG.REDIRECT_ENTRY_INFO" type="warning" dismiss-button="false" class="spConfigAlert" />
+											<message label="SECN.CFG.REDIRECT_ENTRY_INFO" type="warning" dismiss-button="false" class="spConfigAlert" />
 										</fieldset>
 									</tab>
 								</tabs>

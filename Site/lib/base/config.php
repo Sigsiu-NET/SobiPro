@@ -180,7 +180,7 @@ class SPConfig
 					$this->_store[ $row->configsection ] = array();
 				}
 				$_c = explode( '_', $row->sKey );
-				if ( $_c[ count( $_c ) - 1 ] == 'array' ) {
+				if ( $_c[ count( $_c ) - 1 ] == 'array' || $_c[ count( $_c ) - 1 ] == 'arr' ) {
 					try {
 						$row->sValue = self::unserialize( $row->sValue );
 					} catch ( SPException $x ) {
