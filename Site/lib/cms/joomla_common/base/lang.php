@@ -350,10 +350,15 @@ class SPJoomlaLang
 		foreach ( $properties as $property ) {
 			if ( ( $var instanceof SPDBObject ) || ( method_exists( $var, 'get' ) ) ) {
 				if ( strstr( $property, 'field_' ) && $var instanceof SPEntry ) {
-//                if ( strstr( $property, 'field_' && $var instanceof SPEntry ) ) {
-					$var = $var->getField( $property )->data();
+					$field = $var->getField( $property );
+					if ( $field && method_exists( $field, 'data' ) ) {
+						$var = $field->data();
+					}
+					else {
+						return null;
+					}
 				}
-				// after an entry has been saved this attribut is being emptied
+				// after an entry has been saved this attribute is being emptied
 				elseif ( ( $property == 'name' ) && ( $var instanceof SPEntry ) && !( strlen( $var->get( $property ) ) ) ) {
 					$var = $var->getField( ( int )Sobi::Cfg( 'entry.name_field' ) )->data( $html );
 				}

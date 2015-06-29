@@ -305,17 +305,22 @@ class SPEntry extends SPDBObject implements SPDataModel
 			if ( isset( $this->fieldsIds[ $ident ] ) ) {
 				$field =& $this->fieldsIds[ $ident ];
 			}
-			else {
-				throw new SPException( SPLang::e( 'THERE_IS_NO_SUCH_FIELD', $ident ) );
-			}
+			//  Mon, Jun 29, 2015 10:21:08
+			//  Removed as for some reason Rochen's cache (I assume) behave very strange.
+			//  When we unpublish a field it causes this exception because for some reason
+			//  at their server the data is still being sent.
+			//  On the other hand it is not really an issue if we just ignore it
+//			else {
+//				throw new SPException( SPLang::e( 'THERE_IS_NO_SUCH_FIELD', $ident ) );
+//			}
 		}
 		else {
 			if ( isset( $this->fieldsNids[ $ident ] ) ) {
 				$field =& $this->fieldsNids[ $ident ];
 			}
-			else {
-				throw new SPException( SPLang::e( 'THERE_IS_NO_SUCH_FIELD', $ident ) );
-			}
+//			else {
+//				throw new SPException( SPLang::e( 'THERE_IS_NO_SUCH_FIELD', $ident ) );
+//			}
 		}
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( $ident, &$this->fieldsIds, &$this->fieldsNids ) );
 		return $field;

@@ -109,6 +109,12 @@ final class SPHeader
 		else {
 			$this->addCssFile( array( 'sobipro' ) )
 					->addJsFile( array( 'sobipro', 'jquery', 'jqnc' ) );
+			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
+			if ( count( $fonts ) ) {
+				foreach ( $fonts as $font ) {
+					$this->addHeadLink( Sobi::Cfg( 'icon-fonts.' . $font ), null, null, 'stylesheet' );
+				}
+			}
 		}
 		if ( SOBI_CMS != 'joomla3' ) {
 			$this->addJsFile( 'jquery-migrate' );
@@ -160,7 +166,7 @@ final class SPHeader
 					$custom .= $attribute . '="' . $value . '"';
 				}
 			}
-			if( strlen($name)) {
+			if ( strlen( $name ) ) {
 				$name = " name=\"{$name}\" ";
 			}
 			$this->raw[ ++$this->count ] = "<meta{$name} content=\"{$content}\" {$custom}/>";
@@ -626,9 +632,9 @@ final class SPHeader
 			$fields = $obj->getFields();
 			if ( count( $fields ) ) {
 				foreach ( $fields as $field ) {
-					$separator = $field->get('metaSeparator');
+					$separator = $field->get( 'metaSeparator' );
 					$desc = $field->metaDesc();
-					if (strlen($desc)) {
+					if ( strlen( $desc ) ) {
 						$desc .= $separator;
 					}
 					$this->addDescription( $desc );
@@ -839,9 +845,9 @@ final class SPHeader
 			$this->head[ 'author' ] = $this->author;
 			$this->head[ 'robots' ] = $this->robots;
 			$this->head[ 'description' ] = array_reverse( $this->description );
+			$this->head[ 'links' ] = $this->links;
 			$this->head[ 'css' ] = $this->_cssFiles();
 			$this->head[ 'js' ] = $this->_jsFiles();
-			$this->head[ 'links' ] = $this->links;
 			$this->head[ 'css' ] = array_merge( $this->head[ 'css' ], $this->css );
 			$this->head[ 'js' ] = array_merge( $this->head[ 'js' ], $this->js );
 			$this->head[ 'raw' ] = $this->raw;
