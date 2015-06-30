@@ -1,0 +1,176 @@
+/**
+ * @version: $Id: edit.css 4387 2015-02-19 12:24:35Z Radek Suski $
+ * @package: SobiPro Component for Joomla!
+
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: http://www.Sigsiu.NET
+
+ * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license GNU/GPL Version 3
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+ * $Date: 2015-02-19 13:24:35 +0100 (Thu, 19 Feb 2015) $
+ * $Revision: 4387 $
+ * $Author: Radek Suski $
+ */
+
+.SobiPro .SPEntryEdit .required { border-color: #7ac6ff; }
+.SobiPro .SPEntryEdit .progress {
+    min-width: 100px;
+    width: 50%;
+}
+
+.SobiPro .form-horizontal {
+    margin-right: 20px;
+}
+
+.SobiPro .form-horizontal .spFieldUrlLabel {
+    margin-bottom: 5px;
+}
+.SobiPro .form-horizontal .spFieldUrlLabel label {
+    padding-right: 5px;
+    color: #666666;
+    margin-top: 5px;
+    float: left;
+}
+.SobiPro .form-horizontal .spFieldUrl {
+    margin-top: 10px;
+}
+.SobiPro .form-horizontal .spFieldUrl select { width: 70px; }
+
+.SobiPro .spEditImagePreview img {
+    padding: 3px;
+    padding: 4px;
+    background-color: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 0 5px 5px 0;
+}
+
+.SobiPro .spEditImagePreview {
+    float: left;
+}
+
+.SobiPro .spImageField input[type='checkbox'] { margin: 5px; }
+.SobiPro .spImageField label { display: inline-block; }
+
+.SobiPro .spImageUpload input { height: 21px; }
+.SobiPro .spdFileUpload .span1,
+.SobiPro .spImageUpload .span1 { margin-left: 10px; }
+.SobiPro .spdFileUpload .progress-message,
+.SobiPro .spImageUpload .progress-message {
+    margin-top: 10px;
+    margin-left: 20px;
+    clear:left;
+}
+.SobiPro .spImageUpload .progress-message {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+.SobiPro .spdFileUpload .alert,
+.SobiPro .spImageUpload .alert { margin-top: 5px; }
+
+
+.SobiPro.spFieldCheckbox label {
+    color: #666666;
+    float: left;
+    margin-top: 5px;
+}
+.SobiPro.spFieldCheckbox input {
+    margin-top: 6px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    float: left;
+}
+.SobiPro.spFieldRadio label {
+    color: #666666;
+    float: left;
+    margin-top: 5px;
+}
+.SobiPro.spFieldRadio input {
+    margin-top: 8px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+    float: left;
+}
+
+.SigsiuTree .selected {
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.SigsiuTree .selected select {
+    min-height: 200px;
+}
+.SigsiuTree .buttons {
+    clear: both;
+    padding: 10px;
+}
+.SigsiuTree .buttons button {
+    margin: 5px;
+}
+.SigsiuTree .tree {
+    float: left;
+    overflow: auto;
+    width: 50%;
+}
+
+
+/* Modale Fenster */
+.modal-backdrop,
+.modal-backdrop.fade.in {
+    opacity: 0.2;
+}
+.modal-backdrop {
+    background-color: #000000;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1040;
+}
+
+@media (max-width: 749px) {
+    .SobiPro .editor,
+    .SobiPro .form-horizontal .SPtagsinput,
+    .SobiPro .form-horizontal .uneditable-input,
+    .SobiPro .form-horizontal input[type="text"],
+    .SobiPro .form-horizontal textarea,
+    .SobiPro .form-horizontal select {
+        width: 100%!important;
+    }
+    .SobiPro .form-horizontal .spImageUpload input {
+        width: 70px!important;
+        height: 31px;
+    }
+    .SobiPro .form-horizontal .spFieldUrl select {
+        width: 70%!important;
+        margin-bottom: 3px;
+    }
+}
+
+@media (max-width: 599px) {
+    .SobiPro .form-horizontal .control-label {
+        float: none;
+        width: 100%;
+        text-align: left;
+    }
+    .SobiPro .form-horizontal .controls {
+        margin-left: 0;
+    }
+    .SobiPro .spEditImagePreview { float: none; }
+    .SobiPro .form-horizontal .spImageUpload input {
+        width: 100%!important;
+        height: 31px;
+    }
+}
+
+
