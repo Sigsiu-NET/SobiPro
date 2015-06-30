@@ -35,6 +35,8 @@ Legend:
     (+) Category alias as node attribute in details view
     (+) Possibility to include font icons (Material Icons, Font Awesome 3 and 4)
 
+    (!) Template styles from SobiPro.css moved to templates default.css file
+
     (#) Fixed issues in SigsiuTree and Internet Explorer (Issue #1469)
     (#) Passing comma separated values to the SPHtml_Input::select (Issue #1481)
     (#) Removing duplicates meta keys (Issue #1476)
