@@ -112,7 +112,12 @@ final class SPHeader
 			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
 			if ( count( $fonts ) ) {
 				foreach ( $fonts as $font ) {
-					$this->addHeadLink( Sobi::Cfg( 'icon-fonts.' . $font ), null, null, 'stylesheet' );
+					if ( $font == 'font-awesome-local' ) {
+						$this->addCssFile( 'icons' );
+					}
+					else {
+						$this->addHeadLink( Sobi::Cfg( 'icon-fonts.' . $font ), null, null, 'stylesheet' );
+					}
 				}
 			}
 		}
