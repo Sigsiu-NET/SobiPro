@@ -295,9 +295,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 						$data = $v;
 					}
 				}
-				$rawData = $data->sKey;
-				$fullData->baseData = $data->sValue;
-				$fData = $data->sValue;
+				$rawData = isset( $data->sKey ) ? $data->sKey : null;
+				$fullData->baseData = isset( $data->sValue ) ? $data->sValue : null;
+				$fData = isset( $data->sValue ) ? $data->sValue : null;
 			}
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_SELECTED_OPTIONS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
