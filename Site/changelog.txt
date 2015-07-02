@@ -26,7 +26,7 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.14 ()
+1.2 ()
 -------------------
 
     (+) Possibility to define a separator sign for meta descriptions from fields
@@ -36,6 +36,7 @@ Legend:
     (+) Possibility to include font icons (Material Icons, Font Awesome 3 and 4)
 
     (!) Template styles from SobiPro.css moved to templates default.css file
+    (!) New tree icons
 
     (#) Fixed issues in SigsiuTree and Internet Explorer (Issue #1469)
     (#) Passing comma separated values to the SPHtml_Input::select (Issue #1481)
