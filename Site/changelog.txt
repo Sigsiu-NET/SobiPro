@@ -37,6 +37,7 @@ Legend:
 
     (!) Template styles from SobiPro.css moved to templates default.css file
     (!) New tree icons
+    (!) new Paypal logo
 
     (#) Fixed issues in SigsiuTree and Internet Explorer (Issue #1469)
     (#) Passing comma separated values to the SPHtml_Input::select (Issue #1481)
