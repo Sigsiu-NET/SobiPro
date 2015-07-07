@@ -361,6 +361,8 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		else {
 			$this->_model->checkOut();
 		}
+		// we need it for the icons' fonts
+		SPFactory::header()->initBase();
 		$view = SPFactory::View( 'category', true );
 		$view->assign( $this->_model, 'category' )
 				->assign( $this->_task, 'task' )

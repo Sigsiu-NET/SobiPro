@@ -2,21 +2,17 @@
 /**
  * @version: $Id$
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
  * $Date$
  * $Revision$
  * $Author$
@@ -26,6 +22,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadModel( 'datamodel' );
 SPLoader::loadModel( 'dbobject' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -76,14 +73,14 @@ class SPCategory extends SPDBObject implements SPDataModel
 	/**
 	 * @var array
 	 */
-	private static $types = array (
-		'description' => 'html',
-		'icon' => 'string',
-		'showIcon' => 'int',
-		'introtext' => 'string',
-		'showIntrotext' => 'int',
-		'parseDesc' => 'int',
-		'position' => 'int'
+	private static $types = array(
+			'description' => 'html',
+			'icon' => 'string',
+			'showIcon' => 'string',
+			'introtext' => 'string',
+			'showIntrotext' => 'int',
+			'parseDesc' => 'int',
+			'position' => 'int'
 	);
 	/**
 	 * @var array
@@ -100,7 +97,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 	{
 		/* initial org settings */
 		/* @var SPdb $db */
-		$db	= SPFactory::db();
+		$db = SPFactory::db();
 		$this->nid = $this->createAlias();
 
 		$this->approved = Sobi::Can( $this->type(), 'publish', 'own' );
@@ -110,7 +107,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 		$properties = get_class_vars( __CLASS__ );
 
 		/* get database columns and their ordering */
-		$cols	= $db->getColumns( $this->_dbTable );
+		$cols = $db->getColumns( $this->_dbTable );
 		$values = array();
 
 		/* and sort the properties in the same order */
@@ -118,11 +115,10 @@ class SPCategory extends SPDBObject implements SPDataModel
 			$values[ $col ] = array_key_exists( $col, $properties ) ? $this->$col : '';
 		}
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$values ) );
- 		/* try to save */
+		/* try to save */
 		try {
 			$db->insertUpdate( $this->_dbTable, $values );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			$db->rollback();
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_CATEGORY_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
@@ -130,16 +126,15 @@ class SPCategory extends SPDBObject implements SPDataModel
 		/* insert relation */
 		try {
 			$db->delete( 'spdb_relations', array( 'id' => $this->id, 'oType' => 'category' ) );
-			if( !$this->position ) {
+			if ( !$this->position ) {
 				$db->select( 'MAX( position ) + 1', 'spdb_relations', array( 'pid' => $this->parent, 'oType' => 'category' ) );
-				$this->position = ( int ) $db->loadResult();
-				if( !$this->position ) {
+				$this->position = ( int )$db->loadResult();
+				if ( !$this->position ) {
 					$this->position = 1;
 				}
 			}
 			$db->insertUpdate( 'spdb_relations', array( 'id' => $this->id, 'pid' => $this->parent, 'oType' => 'category', 'position' => $this->position, 'validSince' => $this->validSince, 'validUntil' => $this->validUntil ) );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			$db->rollback();
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_CATEGORY_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
@@ -148,9 +143,9 @@ class SPCategory extends SPDBObject implements SPDataModel
 		$db->commit();
 
 		SPFactory::cache()
-                ->purgeSectionVars()
-		        ->deleteObj( 'category', $this->id )
-                ->deleteObj( 'category', $this->parent );
+				->purgeSectionVars()
+				->deleteObj( 'category', $this->id )
+				->deleteObj( 'category', $this->parent );
 		/* trigger plugins */
 		Sobi::Trigger( 'afterSave', $this->name(), array( &$this ) );
 	}
@@ -162,21 +157,21 @@ class SPCategory extends SPDBObject implements SPDataModel
 		parent::loadTable();
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
+		$this->icon = SPLang::clean( $this->icon );
 		try {
 			$db->select( array( 'position', 'pid' ), 'spdb_relations', array( 'id' => $this->id ) );
 			$r = $db->loadObject();
 			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$r ) );
 			$this->position = $r->position;
 			$this->parent = $r->pid;
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		if( SPRequest::task() != 'category.edit'  ) {
-			if( $this->parseDesc == SPC::GLOBAL_SETTING ) {
+		if ( SPRequest::task() != 'category.edit' ) {
+			if ( $this->parseDesc == SPC::GLOBAL_SETTING ) {
 				$this->parseDesc = Sobi::Cfg( 'category.parse_desc', true );
 			}
-			if( $this->parseDesc ) {
+			if ( $this->parseDesc ) {
 				Sobi::Trigger( 'Parse', 'Content', array( &$this->description ) );
 			}
 		}
@@ -195,7 +190,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 		try {
 			/* get all child cats and delete these too */
 			$childs = $this->getChilds( 'category', true );
-			if( count( $childs ) ) {
+			if ( count( $childs ) ) {
 				foreach ( $childs as $child ) {
 					$cat = new self();
 					$cat->init( $child );
@@ -204,14 +199,14 @@ class SPCategory extends SPDBObject implements SPDataModel
 			}
 			$childs[ $this->id ] = $this->id;
 			SPFactory::db()->delete( 'spdb_category', array( 'id' => $this->id ) );
-			if( $childs ) {
+			if ( $childs ) {
 				SPFactory::db()->update( 'spdb_object', array( 'parent' => Sobi::Section() ), array( 'parent' => $childs ) );
 			}
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DELETE_CATEGORY_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 	}
+
 	/**
 	 * @return array
 	 */

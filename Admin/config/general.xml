@@ -84,7 +84,7 @@
 									<field type="checkBoxGroup" label="SECN.CFG.LOAD_ICONS_FONTS" name="spcfg[template.icon_fonts_arr]" selected="template.icon_fonts_arr" class="input-xlarge">
 										<values>
 											<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4" />
-											<option value="google-materials" label="SECN.CFG.ICONS_MATERIAL" />
+											<option value="font-google-materials" label="SECN.CFG.ICONS_MATERIAL" />
 											<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3" />
 											<option value="font-awesome-local" label="SECN.CFG.ICONS_FONT_AWESOME_3_LOCAL" />
 										</values>

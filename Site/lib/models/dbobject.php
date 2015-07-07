@@ -184,17 +184,13 @@ abstract class SPDBObject extends SPObject
 			'metaRobots' => 'string',
 			'name' => 'string',
 			'nid' => 'cmd',
-		/**
-		 * the id is not needed (and it's dangerous) because if we updating an object it's being created through the id anyway
-		 * so at that point we have to already have it. If not, we don't need it because then we are creating a new object
-		 */
-//		'id' => 'int',
 			'owner' => 'int',
 			'ownerIP' => 'ip',
 			'parent' => 'int',
 			'stateExpl' => 'string',
 			'validSince' => 'timestamp',
 			'validUntil' => 'timestamp',
+			'params' => 'arr',
 	);
 	/**
 	 * @var array

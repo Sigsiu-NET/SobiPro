@@ -76,6 +76,9 @@ class SPCategoryCtrl extends SPSectionCtrl
 		if ( !( Sobi::Can( 'category.edit' ) ) ) {
 			Sobi::Error( 'category', 'You have no permission to access this site', SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
+		if ( strlen( SPRequest::cmd( 'font' ) ) ) {
+			return $this->icontFonts();
+		}
 		$folder = SPRequest::cmd( 'iconFolder', null );
 		$callback = SPRequest::cmd( 'callback', 'SPSelectIcon' );
 		$dir = $folder ? Sobi::Cfg( 'images.category_icons' ) . str_replace( '.', '/', $folder ) . '/' : Sobi::Cfg( 'images.category_icons' );
@@ -85,9 +88,9 @@ class SPCategoryCtrl extends SPSectionCtrl
 			$up = explode( '.', $folder );
 			unset( $up[ count( $up ) - 1 ] );
 			$dirs[ ] = array(
-				'name' => Sobi::Txt( 'FOLEDR_UP' ),
-				'count' => ( count( scandir( $dir . '..' ) ) - 2 ),
-				'url' => Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( count( $up ) ? implode( '.', $up ) : null ) ) )
+					'name' => Sobi::Txt( 'FOLEDR_UP' ),
+					'count' => ( count( scandir( $dir . '..' ) ) - 2 ),
+					'url' => Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( count( $up ) ? implode( '.', $up ) : null ) ) )
 			);
 		}
 		$ext = array( 'png', 'jpg', 'jpeg', 'gif' );
@@ -95,16 +98,16 @@ class SPCategoryCtrl extends SPSectionCtrl
 			while ( ( $file = readdir( $dh ) ) !== false ) {
 				if ( ( filetype( $dir . $file ) == 'file' ) && in_array( strtolower( SPFs::getExt( $file ) ), $ext ) ) {
 					$files[ ] = array(
-						'name' => $folder ? str_replace( '.', '/', $folder ) . '/' . $file : $file,
-						'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) )
+							'name' => $folder ? str_replace( '.', '/', $folder ) . '/' . $file : $file,
+							'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) )
 					);
 				}
 				elseif ( filetype( $dir . $file ) == 'dir' && !( $file == '.' || $file == '..' ) ) {
 					$dirs[ ] = array(
-						'name' => $file,
-						'count' => ( count( scandir( $dir . $file ) ) - 2 ),
-						'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) ),
-						'url' => Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( $folder ? $folder . '.' . $file : $file ) ) )
+							'name' => $file,
+							'count' => ( count( scandir( $dir . $file ) ) - 2 ),
+							'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) ),
+							'url' => Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( $folder ? $folder . '.' . $file : $file ) ) )
 					);
 				}
 			}
@@ -122,9 +125,21 @@ class SPCategoryCtrl extends SPSectionCtrl
 		$view->icon();
 	}
 
+	protected function icontFonts()
+	{
+		$font = SPRequest::cmd( 'font' );
+		if ( strstr( $font, 'font-' ) ) {
+			SPFactory::mainframe()
+					->cleanBuffer()
+					->customHeader();
+			exit( SPFs::read( SPLoader::translatePath( 'etc.fonts.' . $font, 'front', true, 'json' ) ) );
+		}
+	}
+
 	/**
 	 * Show category chooser
-	 *
+	 * @param bool $menu
+	 * @throws SPException
 	 */
 	protected function chooser( $menu = false )
 	{
@@ -219,7 +234,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 		if ( count( $path ) ) {
 			$childs = 0;
 			foreach ( $path as $category ) {
-				if( $category[ 'id' ] == $sid ) {
+				if ( $category[ 'id' ] == $sid ) {
 					$childs = count( SPFactory::Category( $sid )->getChilds( 'category', false, 1 ) );
 				}
 				$cats[ ] = array( 'id' => $category[ 'id' ], 'name' => $category[ 'name' ], 'childsCount' => $childs );

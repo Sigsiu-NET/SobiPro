@@ -466,7 +466,15 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$nameArray[ ] = $ext;
 				$orgName = implode( '.', $nameArray );
 				if ( $cropped ) {
-					$orgImage->upload( $dirName . $data, $path . basename( $data ) );
+					// Fri, Jul 3, 2015 17:15:05
+					// it has been actually uploaded at ~425
+					// not sure why we are trying to upload it again
+					if ( SPFs::exists( $dirName . $data ) ) {
+						$orgImage->upload( $dirName . $data, $path . basename( $data ) );
+					}
+					else {
+						$orgImage->setFile( $path . basename( $data ) );
+					}
 				}
 				else {
 					$orgImage->upload( $dirName . $orgName, $path . $orgName );

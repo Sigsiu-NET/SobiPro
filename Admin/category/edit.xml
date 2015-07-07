@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -30,14 +29,14 @@
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiEdit">
-        <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
-        <divider />
+		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
+		<divider />
 		<button task="category.apply" type="apply">
 			<button type="save" task="category.save" />
-            <button task="category.saveAndNew" label="TB.SAVE_AND_NEW" icon="file-text" />
+			<button task="category.saveAndNew" label="TB.SAVE_AND_NEW" icon="file-text" />
 			<button type="duplicate" task="category.clone" />
 		</button>
-        <divider />
+		<divider />
 		<button type="exit" task="category.cancel" />
 		<divider />
 		<button type="help" target="_blank" />
@@ -61,11 +60,19 @@
 								</fieldset>
 
 								<fieldset label="CATN.CATEGORY_DATA">
-									<field type="select" label="CAT.SHOW_ICON" name="category.showIcon" selected="category.showIcon" class="input-small">
+									<field type="select" label="CAT.SHOW_ICON" name="category.showIcon" selected="category.showIcon" class="">
 										<values>
 											<option value="2" label="OPT_GLOBAL" />
 											<option value="1" label="OPT_YES" />
 											<option value="0" label="OPT_NO" />
+										</values>
+									</field>
+									<field type="select" label="CAT.USE_ICON_FONT" name="category.params[icon-font]" selected="category.params.icon-font" class="">
+										<values>
+											<option value="0" label="OPT_NO" />
+											<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3" />
+											<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4" />
+											<option value="font-google-materials" label="SECN.CFG.ICONS_MATERIAL" />
 										</values>
 									</field>
 									<field type="button" label="CATN.SELECT_CATEGORY_ICON" name="cat_ico" class="btn" id="catIcoChooser" rel="var:[icon_chooser_url]" />
