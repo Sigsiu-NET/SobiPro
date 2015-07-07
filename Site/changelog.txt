@@ -26,7 +26,7 @@ Legend:
  (!) - Change
 
 -------------------
-1.1.14 ()
+1.2 ()
 -------------------
 
     (+) Possibility to define a separator sign for meta descriptions from fields
@@ -36,13 +36,15 @@ Legend:
     (+) Possibility to include font icons (Material Icons, Font Awesome 3 and 4)
 
     (!) Template styles from SobiPro.css moved to templates default.css file
+    (!) New tree icons
+    (!) new Paypal logo
 
     (#) Fixed issues in SigsiuTree and Internet Explorer (Issue #1469)
     (#) Passing comma separated values to the SPHtml_Input::select (Issue #1481)
     (#) Removing duplicates meta keys (Issue #1476)
     (#) Approved value in the front-end when user is accessing unapproved version (Issue #1472)
-    (#) Non-Editable field cannot be set as required. It should be set as not required after it has been used once (Issue  #1457)
-    (#) Illegal use of not initialised std object in select field (Issue #1442)
+    (#) Non-Editable field cannot be set as required; it should be set as not required after it has been used once (Issue  #1457)
+    (#) HTML style error in range search corrected
 
 
 -------------------

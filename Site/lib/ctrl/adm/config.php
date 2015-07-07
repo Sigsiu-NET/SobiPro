@@ -487,8 +487,10 @@ class SPConfigAdmCtrl extends SPController
 						$ico = $ls . '/php.png';
 						break;
 					case 'xml':
-					case 'xsl':
 						$ico = $ls . '/xml.png';
+						break;
+					case 'xsl':
+						$ico = $ls . '/xsl.png';
 						break;
 					case 'css':
 						$ico = $ls . '/css.png';
@@ -500,6 +502,15 @@ class SPConfigAdmCtrl extends SPController
 					case 'gif':
 						$ico = $ls . '/img.png';
 						$task = 'javascript:void(0);';
+						break;
+					case 'ini':
+						$ico = $ls . '/ini.png';
+						break;
+					case 'less':
+						$ico = $ls . '/less.png';
+						break;
+					case 'js':
+						$ico = $ls . '/js.png';
 						break;
 					default:
 						$ico = $ls . '/page.gif';

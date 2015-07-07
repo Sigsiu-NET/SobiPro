@@ -1,0 +1,341 @@
+/**
+ * @version: $Id: default.css 4387 2015-02-19 12:24:35Z Radek Suski $
+ * @package: SobiPro Component for Joomla!
+
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: http://www.Sigsiu.NET
+
+ * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license GNU/GPL Version 3
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+ * $Date: 2015-02-19 13:24:35 +0100 (Thu, 19 Feb 2015) $
+ * $Revision: 4387 $
+ * $Author: Radek Suski $
+ */
+
+@base-color: #3498DB;
+@text-color: #ffffff;
+@active-color: #004C8F;
+
+// Overwrite some bootstrap styles
+// ----------------------------------------
+.SobiPro a { color: @active-color;}
+.SobiPro a:hover,
+.SobiPro a:focus {
+  color: darken(@active-color, 10%);
+}
+
+.SobiPro .btn { border-radius: 0; }
+.SobiPro div.modal {
+  width: 520px;
+  margin: -250px 0 0 -280px;
+  top: 50%;
+}
+.SobiPro .modal.fade.in { top: 50%; }
+.SobiPro .popover-inner .spclose {
+  padding-right: 8px;
+  padding-top: 5px;
+  font-size: 15px;
+}
+.SobiPro .input-prepend .alert,
+.SobiPro .input-append .alert { font-size: 14px; }
+
+.SobiPro .page-header {
+  margin-bottom: 10px;
+}
+
+// no round corners
+.SobiPro .alert,
+.SobiPro .dropdown-menu,
+.SobiPro select,
+.SobiPro textarea,
+.SobiPro input[type="text"],
+.SobiPro input[type="password"],
+.SobiPro input[type="datetime"],
+.SobiPro input[type="datetime-local"],
+.SobiPro input[type="date"],
+.SobiPro input[type="month"],
+.SobiPro input[type="time"],
+.SobiPro input[type="week"],
+.SobiPro input[type="number"],
+.SobiPro input[type="email"],
+.SobiPro input[type="url"],
+.SobiPro input[type="search"],
+.SobiPro input[type="tel"],
+.SobiPro input[type="color"],
+.SobiPro .uneditable-input {
+  border-radius: 0;
+}
+.SobiPro .btn-group > .btn:first-child,
+.SobiPro .pagination ul > li:first-child > a,
+.SobiPro .pagination ul > li:first-child > span,
+.SobiPro .pagination-mini ul > li:first-child > a,
+.SobiPro .pagination-small ul > li:first-child > a,
+.SobiPro .pagination-mini ul > li:first-child > span,
+.SobiPro .pagination-small ul > li:first-child > span {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+.SobiPro .btn-group > .btn:last-child,
+.SobiPro .btn-group > .dropdown-toggle,
+.SobiPro .pagination ul > li:last-child > a,
+.SobiPro .pagination ul > li:last-child > span,
+.SobiPro .pagination-mini ul > li:last-child > a,
+.SobiPro .pagination-small ul > li:last-child > a,
+.SobiPro .pagination-mini ul > li:last-child > span,
+.SobiPro .pagination-small ul > li:last-child > span {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.SobiPro .pagination ul > li > a,
+.SobiPro .pagination ul > li > span {
+  border-color: @base-color;
+}
+.SobiPro .pagination ul > li > a,
+.SobiPro .pagination ul > li > span {
+  border-color: lighten(@base-color,10%);
+}
+.SobiPro .pagination ul > li > a {
+  color: @text-color;
+  background-color: @base-color;
+  font-weight: bold;
+}
+.SobiPro .pagination ul > li > a:hover,
+.SobiPro .pagination ul > li > a:focus,
+.SobiPro .pagination ul > .active > a,
+.SobiPro .pagination ul > .active > span {
+  color: @text-color;
+  background-color: @active-color;
+  font-weight: bold;
+}
+.SobiPro .pagination ul > .disabled > span,
+.SobiPro .pagination ul > .disabled > a,
+.SobiPro .pagination ul > .disabled > a:hover,
+.SobiPro .pagination ul > .disabled > a:focus {
+  font-weight: normal;
+}
+
+.SobiPro .dropdown-menu > li > a:hover,
+.SobiPro .dropdown-menu > li > a:focus,
+.SobiPro .dropdown-submenu:hover > a,
+.SobiPro .dropdown-submenu:focus > a {
+  color: @text-color;
+  background-color: @active-color;
+  background-image: none;
+}
+
+
+//new button colour
+// ----------------------------------------
+.SobiPro .btn-advanced {
+  color: @text-color;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: @base-color;
+  background-image: linear-gradient(to bottom, darken(@base-color,5%), lighten(@base-color,5%));
+  background-repeat: repeat-x;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+.SobiPro .btn-group.open .btn-advanced.dropdown-toggle,
+.SobiPro .btn-advanced:hover,
+.SobiPro .btn-advanced:focus,
+.SobiPro .btn-advanced:active,
+.SobiPro .btn-advanced.active { background-color: lighten(@base-color,5%); color: @text-color; }
+.SobiPro .btn-advanced .caret { border-top-color: @text-color; }
+
+
+// Topmenu
+// ----------------------------------------
+.SobiPro .topmenu .nav > li,
+.SobiPro .topmenu .nav > li a:hover,
+.SobiPro .topmenu .nav > li a:focus,
+.SobiPro .topmenu .nav > li a {
+  text-shadow: none;
+  color: @text-color;
+}
+.SobiPro .topmenu .nav > li a:focus,
+.SobiPro .topmenu .nav > li a:hover { background-color: @active-color;}
+.SobiPro .topmenu li { line-height: 40px; }
+.SobiPro .topmenu .navbar-inner {
+  background-color: @base-color;
+  background-image: none;
+  min-height: 60px;
+  border-radius: 0;
+  border: none;
+  font-size: 15px;
+}
+.SobiPro .topmenu .navbar-search { margin-top: 15px; }
+.SobiPro .topmenu .navbar-search .search-query { border-radius: 0; }
+.SobiPro .topmenu input[type="text"] {
+  border-color: darken(@base-color,5%);
+}
+
+
+// Alphalist
+// ----------------------------------------
+.SobiPro .alphalist {
+  float: left;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+.SobiPro .alpha .pagination { margin-top: 5px; }
+.SobiPro .alphalist .dropdown-menu { text-align: left; }
+
+
+
+// Category images and icons
+// ----------------------------------------
+.SobiPro .thumbnail { margin-bottom: 9px; }
+.SobiPro div.thumbcat {
+  border: none;
+  box-shadow: 0 0 0 0;
+  display: block;
+  line-height: 20px;
+  padding: 4px;
+}
+.SobiPro p.thumbcat { margin: 0; font-size: 14px; }
+.SobiPro .thumbcat img { width: 80%; }
+.SobiPro .caticon i { font-size: 250%; }
+.SobiPro .caticon { text-align: right; margin-top: 0; }
+.SobiPro .caticon a { color: @base-color; }
+.SobiPro .caticon a:hover { color: @base-color; text-decoration: none;}
+.spEntryCats { font-size: 80%; }
+
+
+// Entry detail
+// ----------------------------------------
+.SPDetailEntry h1 {
+  font-size: 28px;
+  color: @active-color;
+}
+.SPDetailEntry .spManage {
+  margin-right: 7px;
+  margin-top: 7px;
+}
+
+
+// Entry Status
+// ----------------------------------------
+.entry-status i {
+  font-size: 70%;
+  color: #A90000;
+  padding-left: 5px;
+}
+a.entry-status:hover,
+a.entry-status:active,
+a.entry-status:focus { text-decoration: none; }
+.popover {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: normal;
+}
+
+
+// Fields styling (don't work if you change the field alias or the CSS class in the Fields Manager)
+// ----------------------------------------
+.fulldescription { padding-top: 15px;}
+.field_city { float: left; padding-right: 5px; }
+.field_city::after { content: ","; }
+.field_phone {
+  padding-top: 10px;
+}
+div.website { padding-top: 10px; }
+div.entryimage img {
+  padding: 4px;
+  background-color: #FFF;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin: 5px;
+}
+
+
+
+.SobiPro .category-container,
+.SobiPro .entry-container {
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+.SobiPro .SPEntryEdit .required { border-color: #7ac6ff; }
+.SobiPro .SPEntryEdit .progress {
+  min-width: 100px;
+  width: 50%;
+}
+.SobiPro .SPEntryEdit .message-lightbulb { margin-left: 15px; }
+.SobiPro table.payment td { line-height: 10px; }
+.SobiPro table tr.summary td {
+  background-color: #ffffff;
+  padding-top: 25px;
+}
+.SobiPro table tr.sum td { font-weight: bold; }
+.SPSearchSelectRangeTo,
+.SPSearchSelectRangeFrom {
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+.SobiPro .spdFileUpload .span1,
+.SobiPro .spImageUpload .span1 { margin-left: 10px; }
+.SobiPro .spdFileUpload .progress-message,
+.SobiPro .spImageUpload .progress-message {
+  margin-top: 10px;
+  margin-left: 20px;
+  clear:left;
+}
+.SobiPro .spImageUpload .progress-message {
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.SobiPro .spEditImagePreview img { margin: 8px; }
+.SobiPro .spImageField input[type='checkbox'] { margin: 5px; }
+.SobiPro .spdFileUpload .alert,
+.SobiPro .spImageUpload .alert { margin-top: 5px; }
+.SobiPro .spImageField .span2 { width: 80px; }
+.SobiPro .spImageField label { display: inline-block; }
+.SobiPro .disabledArea {
+  opacity: 0.3;
+  cursor:progress;
+}
+.SobiPro .disabledArea a { cursor:progress; }
+// - end
+
+
+// Custom Media Queries
+// ==============================================
+// Large desktop
+@media (min-width: 1200px) {
+}
+// Desktop
+@media (min-width: 993px) and (max-width: 1199px) {
+}
+// Portrait tablet to landscape and desktop
+@media (min-width: 768px) and (max-width: 992px) {
+}
+// Landscape phone to portrait tablet
+@media (max-width: 767px) {
+  .SobiPro .navbar .nav > li { float: none; }
+  .SobiPro .topmenu li { line-height: 20px; }
+  .SobiPro .topmenu .navbar-inner {
+    min-height: 20px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // originally from 599px
+  .SobiPro .entry-container > .row-fluid > [class*='span'],
+  .SobiPro .category-container > .row-fluid > [class*='span'] {
+    width: 100%;
+    float: none;
+    margin-left: 0;
+  }
+}
+
+
+// Landscape phones and down
+@media (max-width: 480px) {
+}

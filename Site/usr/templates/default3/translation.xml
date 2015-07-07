@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translation>
+	<term value="ENTRY_MANAGE_DISABLE">
+		<value lang="en-GB"></value>
+	</term>
+    <term value="ENTRY_MANAGE_ENABLE">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="ENTRY_MANAGE_APPROVE">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="ENTRY_MANAGE_EDIT">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="SH.SEARCH_FOR_BOX">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="ENTRY_LOCATED_IN">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="TP.PAYMENT_ADD">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="PAYMENT_POSITION_NAME">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="PAYMENT_POSITION_NET">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="PAYMENT_POSITION_GROSS">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="PAYMENT_POSITION_SUMMARY">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="VAT">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="PAYMENT_SELECT_PAYMENT">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="PAYMENT_CHOSEN_FOLLOWING_OPTIONS">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="EN.PAYMENT_BACK_BT">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="EN.PAYMENT_SAVE_ENTRY_BT">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="EXTENDED_SEARCH">
+        <value lang="en-GB"></value>
+    </term>
+    <term value="SH.SEARCH_FOUND_RESULTS">
+        <value lang="en-GB"></value>
+    </term>
+
+</translation>
