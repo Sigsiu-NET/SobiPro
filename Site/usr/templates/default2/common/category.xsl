@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -31,11 +30,23 @@
 		</xsl:variable>
 		<div class="row-fluid">
 			<div class="span2">
-				<xsl:if test="string-length( icon )">
-					<a href="{url}">
-						<img alt="{name}" src="{icon}" />
-					</a>
-				</xsl:if>
+				<xsl:choose>
+					<xsl:when test="string-length( icon/@element )">
+						<xsl:element name="{icon/@element}">
+							<xsl:attribute name="class">
+								<xsl:value-of select="icon/@class" />
+							</xsl:attribute>
+							<xsl:value-of select="icon/@content" />
+						</xsl:element>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:if test="string-length( icon )">
+							<a href="{url}">
+								<img alt="{name}" src="{icon}" />
+							</a>
+						</xsl:if>
+					</xsl:otherwise>
+				</xsl:choose>
 			</div>
 			<div class="span10">
 				<p class="thumbcat">
@@ -47,7 +58,9 @@
 				<xsl:for-each select="subcategories/subcategory">
 					<xsl:if test="position() &lt; ( $subcatsNumber + 1 )">
 						<a href="{@url}">
-							<small><xsl:value-of select="." /></small>
+							<small>
+								<xsl:value-of select="." />
+							</small>
 						</a>
 						<xsl:if test="position() != last() and position() &lt; $subcatsNumber">
 							<xsl:text>, </xsl:text>

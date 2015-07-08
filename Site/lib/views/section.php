@@ -69,7 +69,15 @@ class SPSectionView extends SPFrontView implements SPView
 				$showIcon = Sobi::Cfg( 'category.show_icon', true );
 			}
 			if ( $showIcon && $category->get( 'icon' ) ) {
-				if ( SPFs::exists( Sobi::Cfg( 'images.category_icons' ) . DS . $category->get( 'icon' ) ) ) {
+				if ( strstr( $category->get( 'icon' ), 'font-' ) ) {
+					$icon = json_decode( str_replace( "'", '"', $category->get( 'icon' ) ), true );
+					$cat[ 'icon' ] = array(
+							'_complex' => 1,
+							'_data' => '',
+							'_attributes' => $icon
+					);
+				}
+				elseif ( SPFs::exists( Sobi::Cfg( 'images.category_icons' ) . '/' . $category->get( 'icon' ) ) ) {
 					$cat[ 'icon' ] = Sobi::FixPath( Sobi::Cfg( 'images.category_icons_live' ) . $category->get( 'icon' ) );
 				}
 			}
