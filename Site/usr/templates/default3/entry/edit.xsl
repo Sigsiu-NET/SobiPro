@@ -85,14 +85,14 @@
 										</xsl:when>
 										<xsl:otherwise>
 											<span id="{$fieldId}-message" class="hide message-lightbulb">
-												<i class="icon-lightbulb" />
+												<i class="icon-lightbulb icon-large text-error" />
 											</span>
 										</xsl:otherwise>
 									</xsl:choose>
 								</div>
 								<xsl:if test="string-length( @suffix )">
 									<span id="{$fieldId}-message" class="hide message-lightbulb">
-										<i class="icon-lightbulb" />
+										<i class="icon-lightbulb icon-large text-error" />
 									</span>
 								</xsl:if>
 							</div>
@@ -104,7 +104,7 @@
 				<button class="btn sobipro-cancel" type="button">
 					<xsl:value-of select="entry/fields/cancel_button/data/button" />
 				</button>
-				<button class="btn btn-primary sobipro-submit" type="button" data-loading-text="Loading...">
+				<button class="btn btn-advanced sobipro-submit" type="button" data-loading-text="Loading...">
 					<xsl:value-of select="entry/fields/save_button/data/input/@value" />
 				</button>
 			</div>

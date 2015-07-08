@@ -20,7 +20,7 @@
  $Date: 2015-02-19 13:24:35 +0100 (Thu, 19 Feb 2015) $
  $Revision: 4387 $
  $Author: Radek Suski $
- File location: components/com_sobipro/usr/templates/default2/payment/submit.xsl $
+ File location: components/com_sobipro/usr/templates/default3/payment/submit.xsl $
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />

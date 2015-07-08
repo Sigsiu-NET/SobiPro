@@ -6,13 +6,13 @@
  @author
  Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  Email: sobi[at]sigsiu.net
- Url: http://www.Sigsiu.NET
+ Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+ See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
@@ -20,7 +20,7 @@
  $Date: 2015-02-19 13:24:35 +0100 (Thu, 19 Feb 2015) $
  $Revision: 4387 $
  $Author: Radek Suski $
- File location: components/com_sobipro/usr/templates/default2/payment/payment.xsl $
+ File location: components/com_sobipro/usr/templates/default3/payment/payment.xsl $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
@@ -43,7 +43,25 @@
 			</p>
 			<div class="payment-details row-fluid">
 				<xsl:for-each select="payment_methods/*">
-					<div class="thumbnail span6">
+					<div class="thumbnail span6 hidden-phone">
+						<xsl:value-of select="@title" />
+						<xsl:choose>
+							<xsl:when test="@escaped">
+								<xsl:value-of select="." disable-output-escaping="yes" />
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:choose>
+									<xsl:when test="count(./*)">
+										<xsl:copy-of select="./*" />
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:value-of select="." disable-output-escaping="yes" />
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:otherwise>
+						</xsl:choose>
+					</div>
+					<div class="thumbnail span12 visible-phone">
 						<xsl:value-of select="@title" />
 						<xsl:choose>
 							<xsl:when test="@escaped">

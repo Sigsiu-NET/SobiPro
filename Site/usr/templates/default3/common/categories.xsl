@@ -41,13 +41,13 @@
 		</xsl:variable>
 
 		<xsl:comment> categories loop - start </xsl:comment>
-        <div class="category-container">
+        <div class="spCategoryContainer">
                 <xsl:for-each select="categories/category">
                     <xsl:if test="($catsInLine > 1 and (position() = 1 or (position() mod $catsInLine) = 1)) or $catsInLine = 1">
                         <!-- opening the "table" row -->
                         <xsl:text disable-output-escaping="yes">&lt;div class="row-fluid" &gt;</xsl:text>
                     </xsl:if>
-                    <div class="span{$cellClass} thumbcat">
+                    <div class="span{$cellClass} spCat">
                         <xsl:call-template name="category" />
                     </div>
                     <xsl:if test="($catsInLine > 1 and ((position() mod $catsInLine) = 0 or position() = $catsCount))  or $catsInLine = 1">

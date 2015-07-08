@@ -30,26 +30,29 @@
             <xsl:value-of select="/section/number_of_subcats" />
         </xsl:variable>
         <div class="row-fluid">
-            <div class="span2">
-                <!-- <xsl:if test="string-length (icon) | string-length (iconlibrary)"> -->
-                    <!-- <xsl:if test="string-length (icon)">
+            <div class="span2 spCaticon">
+				<xsl:choose>
+                    <xsl:when test="string-length( icon/@element )">
                         <a href="{url}">
-                            <img alt="{name}" src="{icon}" />
+                            <xsl:element name="{icon/@element}">
+                                <xsl:attribute name="class">
+                                    <xsl:value-of select="icon/@class" />
+                                </xsl:attribute>
+                                <xsl:value-of select="icon/@content" />
+                            </xsl:element>
                         </a>
-                    </xsl:if>
-                    -->
-                    <!-- <xsl:if test="string-length (iconlibrary)"> -->
-                        <div class="caticon">
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:if test="string-length( icon )">
                             <a href="{url}">
-                                <xsl:copy-of select="libraryicon" />
-                                <i class="icon-envelope"></i>
+                                <img alt="{name}" src="{icon}" />
                             </a>
-                        </div>
-                    <!-- </xsl:if> -->
-                <!-- </xsl:if> -->
-            </div>
-            <div class="span10">
-                <p class="thumbcat">
+                        </xsl:if>
+                    </xsl:otherwise>
+				</xsl:choose>
+			</div>
+            <div class="span10 spCatname">
+                <p>
                     <a href="{url}">
                         <xsl:value-of select="name" />
                     </a>

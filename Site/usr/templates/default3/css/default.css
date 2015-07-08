@@ -5,20 +5,20 @@
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
- * Url: http://www.Sigsiu.NET
+ * Url: https://www.Sigsiu.NET
 
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+ * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
  * $Date: 2015-02-19 13:24:35 +0100 (Thu, 19 Feb 2015) $
  * $Revision: 4387 $
- * $Author: Radek Suski $
+ * $Author: Sigrid Suski $
  */
 .SobiPro a {
   color: #004c8f;
@@ -27,13 +27,8 @@
 .SobiPro a:focus {
   color: #00315c;
 }
-.SobiPro .btn {
-  border-radius: 0;
-}
-.SobiPro div.modal {
-  width: 520px;
-  margin: -250px 0 0 -280px;
-  top: 50%;
+.SobiPro .modal-body {
+  width: 95%;
 }
 .SobiPro .modal.fade.in {
   top: 50%;
@@ -50,10 +45,22 @@
 .SobiPro .page-header {
   margin-bottom: 10px;
 }
+.SobiPro .btn,
+.SobiPro .modal,
 .SobiPro .alert,
+.SobiPro .label,
+.SobiPro .thumbnail,
+.SobiPro .popover,
 .SobiPro .dropdown-menu,
 .SobiPro select,
 .SobiPro textarea,
+.SobiPro .input-append .add-on:last-child,
+.SobiPro .input-append .btn:last-child,
+.SobiPro .input-append .btn-group:last-child > .dropdown-toggle,
+.SobiPro .bootstrap-datetimepicker-widget td,
+.SobiPro .bootstrap-datetimepicker-widget th,
+.SobiPro .bootstrap-tagsinput,
+.SobiPro .topmenu .navbar-inner,
 .SobiPro input[type="text"],
 .SobiPro input[type="password"],
 .SobiPro input[type="datetime"],
@@ -68,7 +75,8 @@
 .SobiPro input[type="search"],
 .SobiPro input[type="tel"],
 .SobiPro input[type="color"],
-.SobiPro .uneditable-input {
+.SobiPro .uneditable-input,
+.SobiPro .topmenu .navbar-search .search-query {
   border-radius: 0;
 }
 .SobiPro .btn-group > .btn:first-child,
@@ -130,6 +138,13 @@
 select option:focus {
   background: #004c8f;
 }
+.SobiPro .thumbnail {
+  margin-bottom: 9px;
+}
+.SobiPro .label-info,
+.SobiPro .badge-info {
+  background-color: #3498db;
+}
 .SobiPro .btn-advanced {
   color: #ffffff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -149,6 +164,9 @@ select option:focus {
 .SobiPro .btn-advanced .caret {
   border-top-color: #ffffff;
 }
+.SobiPro .text-advanced {
+  color: #3498db;
+}
 .SobiPro .topmenu .nav > li,
 .SobiPro .topmenu .nav > li a:hover,
 .SobiPro .topmenu .nav > li a:focus,
@@ -167,15 +185,11 @@ select option:focus {
   background-color: #3498db;
   background-image: none;
   min-height: 60px;
-  border-radius: 0;
   border: none;
   font-size: 15px;
 }
 .SobiPro .topmenu .navbar-search {
   margin-top: 15px;
-}
-.SobiPro .topmenu .navbar-search .search-query {
-  border-radius: 0;
 }
 .SobiPro .topmenu input[type="text"] {
   border-color: #258cd1;
@@ -191,36 +205,39 @@ select option:focus {
 .SobiPro .alphalist .dropdown-menu {
   text-align: left;
 }
-.SobiPro .thumbnail {
-  margin-bottom: 9px;
-}
-.SobiPro div.thumbcat {
+.SobiPro div.spCat {
   border: none;
   box-shadow: 0 0 0 0;
   display: block;
   line-height: 20px;
   padding: 4px;
 }
-.SobiPro p.thumbcat {
-  margin: 0;
+.SobiPro .spCatname p {
+  margin: 5px 0 0 0;
   font-size: 14px;
 }
-.SobiPro .thumbcat img {
-  width: 80%;
-}
-.SobiPro .caticon i {
-  font-size: 250%;
-}
-.SobiPro .caticon {
-  text-align: right;
-  margin-top: 0;
-}
-.SobiPro .caticon a {
+.SobiPro .spCaticon i {
   color: #3498db;
 }
-.SobiPro .caticon a:hover {
+.SobiPro .spCaticon [class^="icon-"],
+.SobiPro .spCaticon [class*=" icon-"] {
+  margin-right: 0;
+}
+.SobiPro .spCaticon {
+  text-align: right;
+  margin-top: 5px;
+}
+.SobiPro .spCaticon a {
+  color: #3498db;
+}
+.SobiPro .spCaticon a:hover {
   color: #3498db;
   text-decoration: none;
+}
+.SobiPro .spCategoryContainer,
+.SobiPro .entry-container {
+  margin-bottom: 15px;
+  margin-top: 15px;
 }
 .spEntryCats {
   font-size: 80%;
@@ -256,6 +273,179 @@ a.entry-status:focus {
   font-weight: bold;
   font-size: 95%;
 }
+.SobiPro .SPEntryEdit .required {
+  border-color: #7ac6ff;
+}
+.SobiPro .SPEntryEdit .progress {
+  min-width: 100px;
+  width: 50%;
+}
+.SobiPro .form-horizontal {
+  margin-right: 20px;
+}
+.SobiPro .form-horizontal .spFieldUrl {
+  display: inline;
+}
+.SobiPro .form-horizontal .spFieldUrlLabel {
+  margin-bottom: 5px;
+}
+.SobiPro .form-horizontal .spFieldUrlLabel label {
+  padding-right: 5px;
+  color: #666666;
+  margin-top: 5px;
+  float: left;
+}
+.SobiPro .form-horizontal .spFieldUrl {
+  margin-top: 10px;
+}
+.SobiPro .form-horizontal .spFieldUrl select {
+  width: 80px;
+}
+.SobiPro .spEditImagePreview {
+  float: left;
+}
+.SobiPro .spEditImagePreview img {
+  padding: 4px;
+  background-color: #FFF;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin: 0 5px 5px 0;
+}
+.SobiPro .spImageField input[type='checkbox'] {
+  margin: 5px;
+}
+.SobiPro .spImageField label {
+  display: inline-block;
+}
+.SobiPro .spImageUpload input {
+  height: 21px;
+}
+.SobiPro .spdFileUpload .span1,
+.SobiPro .spImageUpload .span1 {
+  margin-left: 10px;
+}
+.SobiPro .spdFileUpload .progress-message,
+.SobiPro .spImageUpload .progress-message {
+  margin-top: 10px;
+  margin-left: 20px;
+  clear: left;
+}
+.SobiPro .spImageUpload .progress-message {
+  margin-top: 15px;
+  margin-left: 10px;
+}
+.SobiPro .spdFileUpload .alert,
+.SobiPro .spImageUpload .alert {
+  margin-top: 5px;
+}
+.SigsiuTree .selected {
+  float: left;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.SigsiuTree .selected select {
+  min-height: 200px;
+}
+.SigsiuTree .buttons {
+  clear: both;
+  padding: 10px;
+}
+.SigsiuTree .buttons button {
+  margin: 5px;
+}
+.SigsiuTree .tree {
+  float: left;
+  overflow: auto;
+  width: 50%;
+  max-height: 250px;
+}
+.SobiPro .SPEntryEdit .message-lightbulb {
+  margin-left: 15px;
+}
+.SobiPro .bootstrap-tagsinput .tag {
+  color: #ffffff;
+}
+.modal-backdrop,
+.modal-backdrop.fade.in {
+  opacity: 0.2;
+}
+.modal-backdrop {
+  background-color: #000000;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1040;
+}
+.SobiPro .spFieldCheckbox,
+.SobiPro .spFieldRadio {
+  float: left;
+}
+.SobiPro .spFieldRadio label,
+.SobiPro .spFieldCheckbox label {
+  color: #666666;
+  float: left;
+}
+.SobiPro .spFieldCheckbox label {
+  margin-top: 5px;
+}
+.SobiPro .spFieldRadio label {
+  margin-top: 5px;
+}
+.SobiPro .spFieldCheckbox input,
+.SobiPro .spFieldRadio input {
+  margin-left: 5px;
+  margin-right: 5px;
+  float: left;
+}
+.SobiPro .spFieldCheckbox input {
+  margin-top: 6px;
+}
+.SobiPro .spFieldRadio input {
+  margin-top: 10px;
+}
+.SPSearchInputRangeFrom,
+.SPSearchInputRangeTo {
+  float: left;
+  margin: 3px;
+}
+.SobiPro .SPSearchSelectRangeFrom,
+.SobiPro .SPSearchSelectRangeTo {
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+.SPSearchSelectRangeFrom span,
+.SPSearchSelectRangeTo span {
+  display: inline-block;
+  min-width: 34px;
+}
+.SobiPro .bootstrap-datetimepicker-widget td span.active:hover,
+.SobiPro .bootstrap-datetimepicker-widget td span.active:active,
+.SobiPro .bootstrap-datetimepicker-widget td span.active.active,
+.SobiPro .bootstrap-datetimepicker-widget td span.active.disabled,
+.SobiPro .bootstrap-datetimepicker-widget td span.active[disabled],
+.SobiPro .bootstrap-datetimepicker-widget td.active:hover,
+.SobiPro .bootstrap-datetimepicker-widget td.active:hover:hover,
+.SobiPro .bootstrap-datetimepicker-widget td.active:active,
+.SobiPro .bootstrap-datetimepicker-widget td.active:hover:active,
+.SobiPro .bootstrap-datetimepicker-widget td.active.active,
+.SobiPro .bootstrap-datetimepicker-widget td.active.active:hover,
+.SobiPro .bootstrap-datetimepicker-widget td.active.disabled,
+.SobiPro .bootstrap-datetimepicker-widget td.active.disabled:hover,
+.SobiPro .bootstrap-datetimepicker-widget td.active[disabled],
+.SobiPro .bootstrap-datetimepicker-widget td.active[disabled]:hover {
+  color: #ffffff;
+  background-color: #3498db;
+}
+.SobiPro .bootstrap-datetimepicker-widget td span.active,
+.SobiPro .bootstrap-datetimepicker-widget td.active,
+.SobiPro .bootstrap-datetimepicker-widget td.active:hover {
+  background-image: linear-gradient(to bottom, #258cd1, #4aa3df);
+}
+.SobiPro .bootstrap-datetimepicker-widget a [class^="icon-"] {
+  color: #3498db;
+}
 .fulldescription {
   padding-top: 15px;
 }
@@ -272,32 +462,51 @@ a.entry-status:focus {
 div.website {
   padding-top: 10px;
 }
-div.entryimage img {
+img.field_company_logo {
   padding: 4px;
   background-color: #FFF;
   border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin: 5px;
 }
-.SobiPro .category-container,
-.SobiPro .entry-container {
-  margin-bottom: 15px;
-  margin-top: 5px;
+div.field_map {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.days {
+  margin-top: 10px;
+}
+.days li {
+  list-style: none;
+}
+.days li::before {
+  font-family: FontAwesome;
+  content: "";
+  padding-right: 5px;
+  color: #808080;
+}
+.report,
+.contact {
+  margin: 10px 0 10px 0;
+}
+.report {
+  text-align: right;
 }
 .SobiPro table.payment td {
   line-height: 10px;
 }
 .SobiPro table tr.summary td {
-  background-color: #ffffff;
+  background-color: #ffffff!important;
   padding-top: 25px;
+}
+.SobiPro table.payment tbody tr.info > td {
+  background-color: #c2e2ff;
+}
+.SobiPro table.payment tbody tr.success > td {
+  background-color: #fff8c2;
 }
 .SobiPro table tr.sum td {
   font-weight: bold;
-}
-.SPSearchSelectRangeTo,
-.SPSearchSelectRangeFrom {
-  padding-bottom: 3px;
-  padding-top: 3px;
 }
 .SobiPro .disabledArea {
   opacity: 0.3;
@@ -305,15 +514,6 @@ div.entryimage img {
 }
 .SobiPro .disabledArea a {
   cursor: progress;
-}
-@media (min-width: 1200px) {
-  
-}
-@media (min-width: 993px) and (max-width: 1199px) {
-  
-}
-@media (min-width: 768px) and (max-width: 992px) {
-  
 }
 @media (max-width: 767px) {
   .SobiPro .navbar .nav > li {
@@ -327,13 +527,77 @@ div.entryimage img {
     padding-left: 0;
     padding-right: 0;
   }
+  .SobiPro .editor,
+  .SobiPro .form-horizontal .uneditable-input,
+  .SobiPro .form-horizontal input[type="text"],
+  .SobiPro .form-horizontal textarea,
+  .SobiPro .form-horizontal select {
+    width: 100%!important;
+  }
+  .SobiPro .form-horizontal .spImageUpload input {
+    width: 70px!important;
+    height: 31px;
+  }
+  .SobiPro .form-horizontal .spFieldUrl select {
+    margin-bottom: 3px;
+    width: 80px!important;
+  }
+  .SobiPro .form-horizontal .bootstrap-tagsinput input {
+    width: 70%!important;
+  }
+}
+@media (max-width: 599px) {
   .SobiPro .entry-container > .row-fluid > [class*='span'],
-  .SobiPro .category-container > .row-fluid > [class*='span'] {
+  .SobiPro .spCategoryContainer > .row-fluid > [class*='span'] {
     width: 100%;
     float: none;
     margin-left: 0;
   }
-}
-@media (max-width: 480px) {
-  
+  .SobiPro .form-horizontal .control-label {
+    float: none;
+    width: 100%;
+    text-align: left;
+  }
+  .SobiPro .form-horizontal .controls {
+    margin-left: 0;
+  }
+  .SobiPro .spEditImagePreview {
+    float: none;
+  }
+  .SobiPro .form-horizontal .spImageUpload input {
+    width: 100%!important;
+    height: 31px;
+  }
+  .SobiPro .sp-search-controls .btn {
+    width: 100%;
+  }
+  .SobiPro .btn[name="spsearchphrase"] {
+    padding: 2px 10px;
+    font-size: 12px;
+  }
+  .SobiPro .form-horizontal .control-label {
+    float: none;
+    width: 100%;
+    text-align: left;
+  }
+  .SobiPro .form-horizontal .controls {
+    margin-left: 0;
+  }
+  .SobiPro input[name="sp_search_for"],
+  .SobiPro .form-horizontal input[type="text"],
+  .SobiPro .form-horizontal select {
+    width: 100%!important;
+  }
+  .SobiPro .form-horizontal .bootstrap-tagsinput input {
+    width: 90%!important;
+  }
+  .SobiPro input[name="sp_search_for"] {
+    margin-bottom: 10px;
+  }
+  .SPSearchInputRangeFrom,
+  .SPSearchInputRangeTo {
+    float: none;
+    margin: 0;
+    width: 80%;
+  }
 }
