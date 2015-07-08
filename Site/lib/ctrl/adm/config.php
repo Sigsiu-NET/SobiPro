@@ -22,6 +22,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'controller' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -126,17 +127,17 @@ class SPConfigAdmCtrl extends SPController
 		$templates = $this->getRejectionsTemplates();
 		$id = SPLang::nid( SPRequest::string( 'templateName' ) );
 		$templates[ $id ] = array(
-			'params' => SPConfig::serialize(
+				'params' => SPConfig::serialize(
 						array(
-							'trigger.unpublish' => SPRequest::bool( 'trigger_unpublish' ),
-							'trigger.unapprove' => SPRequest::bool( 'trigger_unapprove' ),
-							'unpublish' => SPRequest::bool( 'unpublish' ),
-							'discard' => SPRequest::bool( 'discard' ),
+								'trigger.unpublish' => SPRequest::bool( 'trigger_unpublish' ),
+								'trigger.unapprove' => SPRequest::bool( 'trigger_unapprove' ),
+								'unpublish' => SPRequest::bool( 'unpublish' ),
+								'discard' => SPRequest::bool( 'discard' ),
 						)
-					),
-			'key' => $id,
-			'value' => SPRequest::string( 'templateName' ),
-			'options' => array()
+				),
+				'key' => $id,
+				'value' => SPRequest::string( 'templateName' ),
+				'options' => array()
 		);
 		foreach ( $templates as $tid => $template ) {
 			unset( $templates[ $tid ][ 'description' ] );
@@ -144,12 +145,12 @@ class SPConfigAdmCtrl extends SPController
 		SPFactory::registry()
 				->saveDBSection( $templates, 'rejections-templates_' . Sobi::Section() );
 		$data = array(
-			'key' => $id,
-			'value' => SPRequest::string( 'reason', null, true, 'post' ),
-			'type' => 'rejections-templates',
-			'id' => Sobi::Section(),
-			'section' => Sobi::Section(),
-			'options' => SPRequest::string( 'templateName' )
+				'key' => $id,
+				'value' => SPRequest::string( 'reason', null, true, 'post' ),
+				'type' => 'rejections-templates',
+				'id' => Sobi::Section(),
+				'section' => Sobi::Section(),
+				'options' => SPRequest::string( 'templateName' )
 		);
 		SPLang::saveValues( $data );
 		$this->response( Sobi::Back(), Sobi::Txt( 'ENTRY_REJECT_SAVED_TPL' ), false, SPC::SUCCESS_MSG );
@@ -172,11 +173,11 @@ class SPConfigAdmCtrl extends SPController
 				$desc = SPLang::getValue( $tid, 'rejections-templates', 0 );
 			}
 			$f[ $tid ] = array(
-				'params' => SPConfig::unserialize( $template[ 'params' ] ),
-				'key' => $tid,
-				'value' => $template[ 'value' ],
-				'description' => $desc,
-				'options' => $template[ 'options' ]
+					'params' => SPConfig::unserialize( $template[ 'params' ] ),
+					'key' => $tid,
+					'value' => $template[ 'value' ],
+					'description' => $desc,
+					'options' => $template[ 'options' ]
 			);
 		}
 		ksort( $f );
@@ -214,8 +215,8 @@ class SPConfigAdmCtrl extends SPController
 		$section = Sobi::Section();
 		$liveUrl = Sobi::Cfg( 'live_site' );
 		$cron = array(
-			'type' => 'info',
-			'label' => nl2br( Sobi::Txt( 'CRAWLER_CRON_INFO', "{$phpCmd} {$cronCommandFile} section={$section} liveURL={$liveUrl}", "{$phpCmd} {$cronCommandFile} liveURL={$liveUrl}", "{$phpCmd} {$cronCommandFile} --help" ) ),
+				'type' => 'info',
+				'label' => nl2br( Sobi::Txt( 'CRAWLER_CRON_INFO', "{$phpCmd} {$cronCommandFile} section={$section} liveURL={$liveUrl}", "{$phpCmd} {$cronCommandFile} liveURL={$liveUrl}", "{$phpCmd} {$cronCommandFile} --help" ) ),
 		);
 
 		/** @var $view SPAdmView */
@@ -235,16 +236,16 @@ class SPConfigAdmCtrl extends SPController
 		$saved = false;
 		if ( strlen( $order ) ) {
 			SPFactory::config()->saveCfg( 'admin.' . $target . '-order', $order );
-            $saved = true;
+			$saved = true;
 		}
 		$limit = Sobi::GetUserState( $target . '.limit', 10 );
 		if ( $limit ) {
 			SPFactory::config()->saveCfg( 'admin.' . $target . '-limit', $limit );
-            $saved = true;
+			$saved = true;
 		}
-        if ($saved) {
-            $this->response( Sobi::Back(), Sobi::Txt( 'MSG_DEFAULT_ORDERING_SAVED' ), false );
-        }
+		if ( $saved ) {
+			$this->response( Sobi::Back(), Sobi::Txt( 'MSG_DEFAULT_ORDERING_SAVED' ), false );
+		}
 	}
 
 	/**
@@ -650,6 +651,9 @@ class SPConfigAdmCtrl extends SPController
 		// strange thing =8-O
 		if ( !( isset( $data[ 'alphamenu.extra_fields_array' ] ) ) ) {
 			$data[ 'alphamenu.extra_fields_array' ] = array();
+		}
+		if ( !( isset( $data[ 'template.icon_fonts_arr' ] ) ) ) {
+			$data[ 'template.icon_fonts_arr' ] = array();
 		}
 		foreach ( $data as $k => $v ) {
 			if ( is_string( $v ) ) {
