@@ -71,6 +71,9 @@ class SPSectionView extends SPFrontView implements SPView
 			if ( $showIcon && $category->get( 'icon' ) ) {
 				if ( strstr( $category->get( 'icon' ), 'font-' ) ) {
 					$icon = json_decode( str_replace( "'", '"', $category->get( 'icon' ) ), true );
+					if ( $category->param( 'icon-font-add-class' ) ) {
+						$icon[ 'class' ] .= ' ' . $category->param( 'icon-font-add-class' );
+					}
 					$cat[ 'icon' ] = array(
 							'_complex' => 1,
 							'_data' => '',

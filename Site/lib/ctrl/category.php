@@ -58,6 +58,10 @@ class SPCategoryCtrl extends SPSectionCtrl
 				$r = true;
 				$this->iconChooser();
 				break;
+			case 'iconFonts':
+				$r = true;
+				$this->iconFonts();
+				break;
 			default:
 				/* case parent didn't registered this task, it was an error */
 				if ( !( parent::execute() ) && $this->name() == __CLASS__ ) {
@@ -77,7 +81,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 			Sobi::Error( 'category', 'You have no permission to access this site', SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		if ( strlen( SPRequest::cmd( 'font' ) ) ) {
-			return $this->icontFonts();
+			return $this->iconFont();
 		}
 		$folder = SPRequest::cmd( 'iconFolder', null );
 		$callback = SPRequest::cmd( 'callback', 'SPSelectIcon' );
@@ -125,7 +129,23 @@ class SPCategoryCtrl extends SPSectionCtrl
 		$view->icon();
 	}
 
-	protected function icontFonts()
+	protected function iconFonts()
+	{
+		SPFactory::mainframe()
+				->cleanBuffer()
+				->customHeader();
+		$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
+		if ( count( $fonts ) ) {
+			foreach ( $fonts as $i => $font ) {
+				if ( strstr( $font, '-local' ) ) {
+					$fonts[ $i ] = str_replace( '-local', null, $font );
+				}
+			}
+		}
+		exit( json_encode( $fonts ) );
+	}
+
+	protected function iconFont()
 	{
 		$font = SPRequest::cmd( 'font' );
 		if ( strstr( $font, 'font-' ) ) {

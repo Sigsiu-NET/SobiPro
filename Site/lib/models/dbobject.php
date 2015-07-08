@@ -213,6 +213,28 @@ abstract class SPDBObject extends SPObject
 		Sobi::Trigger( 'CreateModel', $this->name(), array( &$this ) );
 	}
 
+
+	/**
+	 * @param string $attr
+	 * @param mixed $default
+	 * @return mixed
+	 */
+	public function param( $attr, $default = null )
+	{
+		if ( isset( $this->params[ $attr ] ) ) {
+			if ( is_string( $this->params[ $attr ] ) ) {
+				return stripslashes( $this->params[ $attr ] );
+			}
+			else {
+				return $this->params[ $attr ];
+			}
+		}
+		else {
+			return $default;
+		}
+	}
+
+
 	public function formatDatesToEdit()
 	{
 		if ( $this->validUntil ) {
