@@ -20,6 +20,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'config', true );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -69,6 +70,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			case 'delete':
 				$this->delete();
 				break;
+			case 'compile':
+				$this->compile();
+				break;
 			case 'clone':
 				$this->cloneTpl();
 				break;
@@ -85,6 +89,29 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				}
 				break;
 		}
+	}
+
+	protected function compile()
+	{
+		if ( !( SPFactory::mainframe()->checkToken() ) ) {
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+		}
+		$file = $this->file( SPRequest::cmd( 'fileName' ) );
+		$output = str_replace( 'less', 'css', $file );
+		Sobi::Trigger( 'BeforeCompileLess', $this->name(), array( &$file ) );
+		$u = array( 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) );
+		if ( Sobi::Section() ) {
+			$u[ 'sid' ] = Sobi::Section();
+		}
+		if ( !( $file ) ) {
+			$this->response( Sobi::Url( $u ), SPLang::e( 'Missing file to compile %s', SPRequest::cmd( 'fileName' ) ), false, SPC::ERROR_MSG );
+		}
+		try {
+			SPFactory::CmsHelper()->compileLessFile( $file, $output, $backup = true );
+		} catch ( SPException $x ) {
+			$this->response( Sobi::Url( $u ), SPLang::e( 'TP.LESS_FILE_NOT_COMPILED', $x->getMessage() ), false, SPC::ERROR_MSG );
+		}
+		$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.LESS_FILE_COMPILED', str_replace( SOBI_PATH, null, $output ) ), false, SPC::SUCCESS_MSG );
 	}
 
 	protected function getTemplateFiles()
@@ -210,9 +237,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$template[ 'name' ] = $xinfo->query( '/template/name' )->item( 0 )->nodeValue;
 			$view->assign( $template[ 'name' ], 'template_name' );
 			$template[ 'author' ] = array(
-				'name' => $xinfo->query( '/template/authorName' )->item( 0 )->nodeValue,
-				'email' => $xinfo->query( '/template/authorEmail' )->item( 0 )->nodeValue,
-				'url' => $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue ? $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue : null,
+					'name' => $xinfo->query( '/template/authorName' )->item( 0 )->nodeValue,
+					'email' => $xinfo->query( '/template/authorEmail' )->item( 0 )->nodeValue,
+					'url' => $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue ? $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue : null,
 			);
 			$template[ 'copyright' ] = $xinfo->query( '/template/copyright' )->item( 0 )->nodeValue;
 			$template[ 'license' ] = $xinfo->query( '/template/license' )->item( 0 )->nodeValue;
@@ -234,9 +261,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 						$filePath = null;
 					}
 					$files[ ] = array(
-						'file' => $file->attributes->getNamedItem( 'path' )->nodeValue,
-						'description' => $file->nodeValue,
-						'filepath' => $filePath
+							'file' => $file->attributes->getNamedItem( 'path' )->nodeValue,
+							'description' => $file->nodeValue,
+							'filepath' => $filePath
 					);
 				}
 				$template[ 'files' ] = $files;
@@ -346,7 +373,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$fileContent = SPFs::read( $file );
 		$path = str_replace( '\\', '/', SOBI_PATH );
 		if ( strstr( $file, $path ) ) {
-			$filename = str_replace( $path .  '/usr/templates/', null, $file );
+			$filename = str_replace( $path . '/usr/templates/', null, $file );
 		}
 		else {
 			$filename = str_replace( SOBI_ROOT, null, $file );

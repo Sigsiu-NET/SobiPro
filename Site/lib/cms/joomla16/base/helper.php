@@ -112,4 +112,9 @@ class SPCMSHelper extends SPJoomlaCMSHelper
 		}
 		return $return;
 	}
+
+	public static function compileLessFile( $file, $output, $backup = true )
+	{
+		throw new SPException( 'This method works for Joomla! > 3.4 only' );
+	}
 }

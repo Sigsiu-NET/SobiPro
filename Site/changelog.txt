@@ -35,6 +35,7 @@ Legend:
     (+) Category alias as node attribute in details view
     (+) Possibility to include font icons (Material Icons, Font Awesome 3 and 4)
     (+) Possibility to add condition attribute into toolbar's elements in administrator area
+    (+) LESS compiler for SobiPro templates
 
     (!) Template styles from SobiPro.css moved to templates default.css file
     (!) New tree icons
