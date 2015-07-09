@@ -36,6 +36,8 @@ Legend:
     (+) Possibility to load different font icons (Material Icons, Font Awesome 3 and 4)
     (+) Possibility to load no icon font in frontend
     (+) Possibility to select font icons for categories
+    (+) Possibility to add condition attributes into toolbar's elements in administrator area
+    (+) LESS compiler for SobiPro templates
 
     (!) Template styles from SobiPro.css moved to templates default.css file
     (!) New tree icons

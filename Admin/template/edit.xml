@@ -31,6 +31,7 @@
 	<toolbar title="var:[site_title]" icon="SobiTemplate">
 		<button type="apply" task="template.save">
 			<button type="duplicate" task="template.saveAs" />
+			<button type="compile" task="template.compile" condition="file_ext=less" />
 		</button>
 		<divider />
         <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
