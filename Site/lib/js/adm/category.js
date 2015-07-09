@@ -118,14 +118,32 @@ SobiPro.jQuery( document ).ready( function ()
 			} ).done( function ( response )
 			{
 				if ( response.length ) {
-					var Element;
+                    var Element;
+                    var Size = 1;
+                    try {
+                        Size = SobiPro.jQuery( '#category-params-icon-font option:selected' ).text().match( /\((.*?)\)/ );
+                        Size = parseInt( Size[1] );
+                    }
+                    catch ( e ) {
+                        Size = 1;
+                    }
+                    var divheight;
+                    var divwidth;
+                    var paddingtop;
+                    switch (Size) {
+                        case 2: divheight=30; divwidth=40; paddingtop=5; break;
+                        case 3: divheight=38; divwidth=58; paddingtop=10; break;
+                        case 4: divheight=45; divwidth=80; paddingtop=10; break;
+                        case 5: divheight=50; divwidth=100; paddingtop=15; break;
+                        default: divheight=20; divwidth=30; paddingtop=3; break;
+                    }
 					SobiPro.jQuery.each( response, function ( i, e )
 					{
 						var Content = ( e.content != undefined ) ? e.content : '';
 						Element = e.element;
 						e.font = SobiPro.jQuery( '#category-params-icon-font' ).val();
 						SobiPro.jQuery( '#spIcoChooser' )
-							.append( '<' + e.element + ' style="margin: 5px; padding: 5px; cursor: pointer; display:inline-table" class="' + e.class + '" data-setting="' + JSON.stringify( e ).replace( /"/g, "'" ) + '">' + Content + '</' + e.element + '>' );
+							.append( '<div style="float:left;width:' + divwidth + 'px;line-height:' + divheight + 'px;border: solid 1px #cccccc;border-radius:4px;margin:2px;background-color:#F4F4F4;text-align:center;padding-top:' + paddingtop + 'px;"><' + e.element + ' style="cursor: pointer; margin-right:0;" class="' + e.class + '" data-setting="' + JSON.stringify( e ).replace( /"/g, "'" ) + '">' + Content + '</' + e.element + '></div>' );
 					} );
 					SobiPro.jQuery( '#spIcoChooser' ).find( Element ).click( function ()
 					{
@@ -133,6 +151,7 @@ SobiPro.jQuery( document ).ready( function ()
 						SobiPro.jQuery( '#catIcoChooser' ).append( SobiPro.jQuery( this ).clone() );
 						SobiPro.jQuery( '[name^="category.icon"]' ).val( SobiPro.jQuery( this ).data( 'setting' ) )
 					} );
+					SobiPro.jQuery( '#spIcoChooser').css('padding-left','22px');
 					SobiPro.jQuery( '#spIco' ).modal();
 				}
 			} );
