@@ -34,6 +34,7 @@ Legend:
     (+) Additional CSS class node attributes for fields in add/edit form (css-edit), details view & vCard (css-view) and search form (css-search)
     (+) Category alias as node attribute in details view
     (+) Possibility to include font icons (Material Icons, Font Awesome 3 and 4)
+    (+) Possibility to add condition attribute into toolbar's elements in administrator area
 
     (!) Template styles from SobiPro.css moved to templates default.css file
     (!) New tree icons

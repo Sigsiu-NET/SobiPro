@@ -287,6 +287,9 @@ class SPAdmView extends SPObject implements SPView
 			if ( strstr( $node->nodeName, '#' ) ) {
 				continue;
 			}
+			if ( !( $this->xmlCondition( $node ) ) ) {
+				continue;
+			}
 			/** @var DOMNode $node */
 			switch ( $node->nodeName ) {
 				case 'button':
@@ -325,6 +328,9 @@ class SPAdmView extends SPObject implements SPView
 					if ( $node->hasChildNodes() ) {
 						foreach ( $node->childNodes as $bt ) {
 							if ( strstr( $bt->nodeName, '#' ) ) {
+								continue;
+							}
+							if ( !( $this->xmlCondition( $bt ) ) ) {
 								continue;
 							}
 							if ( $bt->nodeName == 'nav-header' ) {
@@ -402,6 +408,7 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	protected function xmlButton( $xml, $attributes = array() )
 	{
+
 		$button = array(
 				'type' => null,
 				'task' => null,
@@ -424,6 +431,9 @@ class SPAdmView extends SPObject implements SPView
 			if ( $xml->hasChildNodes() ) {
 				foreach ( $xml->childNodes as $node ) {
 					if ( strstr( $node->nodeName, '#' ) ) {
+						continue;
+					}
+					if ( !( $this->xmlCondition( $node ) ) ) {
 						continue;
 					}
 					$button[ 'buttons' ][ ] = $this->xmlButton( $node, $attributes );
