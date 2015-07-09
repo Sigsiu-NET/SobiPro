@@ -37,6 +37,7 @@
 		<xsl:variable name="sectionName">
 			<xsl:value-of select="section" />
 		</xsl:variable>
+
 		<xsl:value-of select="php:function( 'SobiPro::AlternateLink', $rssUrlSection, 'application/atom+xml', $sectionName )" />
 		<xsl:variable name="rssUrl">{"sid":"<xsl:value-of select="id" />","sptpl":"feeds.rss","out":"raw"}
 		</xsl:variable>
@@ -52,6 +53,7 @@
 
 		<xsl:apply-templates select="alphaMenu" />
 
+        <h1><xsl:value-of select="name" /></h1>
 		<xsl:value-of select="description" disable-output-escaping="yes" />
 
 		<xsl:call-template name="categoriesLoop" />

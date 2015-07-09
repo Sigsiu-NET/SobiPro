@@ -52,7 +52,12 @@
 
 .SobiPro .page-header {
     margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: 300;
 }
+
+.SobiPro h1 { color: @active-color; font-size: 28px; }
+
 
 & when (@corners = angular) {
     .SobiPro .btn,
@@ -229,13 +234,25 @@ select option:focus {
     line-height: 20px;
     padding: 4px;
 }
-.SobiPro .spCatname p { margin: 5px 0 0 0; font-size: 14px; }
+.SobiPro .spCatname p { margin: 5px 0 0 0; font-size: 15px; }
 .SobiPro .spCaticon i { color: @base-color; }
 .SobiPro .spCaticon [class^="icon-"],
 .SobiPro .spCaticon [class*=" icon-"] { margin-right: 0; }
-.SobiPro .spCaticon { text-align: right; margin-top: 5px; }
+.SobiPro .spCaticon {
+    text-align: center;
+    margin-top: 5px;
+    padding-left: 12px;
+}
 .SobiPro .spCaticon a { color: @base-color; }
 .SobiPro .spCaticon a:hover { color: @base-color; text-decoration: none;}
+.SobiPro .spCatintro {
+    font-size: 90%;
+    line-height: 15px;
+    color: #808080;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 
 //Views/DV
@@ -250,10 +267,6 @@ select option:focus {
 
 // Entry detail
 // ----------------------------------------
-.SPDetailEntry h1 {
-    font-size: 28px;
-    color: @active-color;
-}
 .SPDetailEntry .spManage {
     margin-right: 7px;
     margin-top: 7px;
@@ -531,6 +544,7 @@ div.field_map { padding-top: 10px; padding-bottom: 10px; }
         width: 80px!important;
     }
     .SobiPro .form-horizontal .bootstrap-tagsinput input { width: 70%!important; }
+    .SobiPro .spCaticon i { font-size: 2.2em; }
 }
 
 @media (max-width: 599px) {
@@ -587,8 +601,10 @@ div.field_map { padding-top: 10px; padding-bottom: 10px; }
         margin: 0;
         width: 80%;
     }
+    .SobiPro .spCaticon i { font-size: 3em; }
 }
 // Landscape phones and down
 @media (max-width: 480px) {
+    .SobiPro .spCaticon i { font-size: 1.5em; }
 }
 

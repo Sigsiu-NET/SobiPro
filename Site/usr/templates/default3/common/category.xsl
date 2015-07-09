@@ -57,7 +57,9 @@
                         <xsl:value-of select="name" />
                     </a>
                 </p>
-                <xsl:value-of select="introtext" disable-output-escaping="yes" />
+                <div class="spCatintro">
+                    <xsl:value-of select="introtext" disable-output-escaping="yes" />
+                </div>
                 <xsl:for-each select="subcategories/subcategory">
                     <xsl:if test="position() &lt; ( $subcatsNumber + 1 )">
                         <a href="{@url}">
@@ -70,5 +72,6 @@
                 </xsl:for-each>
             </div>
         </div>
+
     </xsl:template>
 </xsl:stylesheet>

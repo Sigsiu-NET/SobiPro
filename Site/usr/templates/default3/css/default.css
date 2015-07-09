@@ -44,6 +44,12 @@
 }
 .SobiPro .page-header {
   margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: 300;
+}
+.SobiPro h1 {
+  color: #004c8f;
+  font-size: 28px;
 }
 .SobiPro .btn,
 .SobiPro .modal,
@@ -214,7 +220,7 @@ select option:focus {
 }
 .SobiPro .spCatname p {
   margin: 5px 0 0 0;
-  font-size: 14px;
+  font-size: 15px;
 }
 .SobiPro .spCaticon i {
   color: #3498db;
@@ -224,8 +230,9 @@ select option:focus {
   margin-right: 0;
 }
 .SobiPro .spCaticon {
-  text-align: right;
+  text-align: center;
   margin-top: 5px;
+  padding-left: 12px;
 }
 .SobiPro .spCaticon a {
   color: #3498db;
@@ -234,6 +241,14 @@ select option:focus {
   color: #3498db;
   text-decoration: none;
 }
+.SobiPro .spCatintro {
+  font-size: 90%;
+  line-height: 15px;
+  color: #808080;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .SobiPro .spCategoryContainer,
 .SobiPro .entry-container {
   margin-bottom: 15px;
@@ -241,10 +256,6 @@ select option:focus {
 }
 .spEntryCats {
   font-size: 80%;
-}
-.SPDetailEntry h1 {
-  font-size: 28px;
-  color: #004c8f;
 }
 .SPDetailEntry .spManage {
   margin-right: 7px;
@@ -545,6 +556,9 @@ div.field_map {
   .SobiPro .form-horizontal .bootstrap-tagsinput input {
     width: 70%!important;
   }
+  .SobiPro .spCaticon i {
+    font-size: 2.2em;
+  }
 }
 @media (max-width: 599px) {
   .SobiPro .entry-container > .row-fluid > [class*='span'],
@@ -599,5 +613,13 @@ div.field_map {
     float: none;
     margin: 0;
     width: 80%;
+  }
+  .SobiPro .spCaticon i {
+    font-size: 3em;
+  }
+}
+@media (max-width: 480px) {
+  .SobiPro .spCaticon i {
+    font-size: 1.5em;
   }
 }

@@ -43,5 +43,5 @@ abstract class SPC
 	const GLOBAL_SETTING = 2;
 	const SHOW = 1;
 	const NO = 0;
-	const DEFAULT_TEMPLATE = 'default2';
+	const DEFAULT_TEMPLATE = 'default3';
 }

@@ -26,7 +26,8 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
 	<xsl:include href="category.xsl" />
-	<xsl:template name="categoriesLoop">
+
+    <xsl:template name="categoriesLoop">
 
 		<xsl:variable name="catsInLine">
 			<xsl:value-of select="categories_in_line" />
