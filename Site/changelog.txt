@@ -42,6 +42,7 @@ Legend:
     (!) Template styles from SobiPro.css moved to templates default.css file
     (!) New tree icons
     (!) New Paypal logo
+    (!) Removed MYISAM setting from the few tables left
 
     (-) Category icons removed
 
