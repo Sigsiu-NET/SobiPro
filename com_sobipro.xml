@@ -80,7 +80,7 @@
 			<folder>template</folder>
 			<folder>menu</folder>
 			<filename>sobipro.php</filename>
-			<filename>install16.sql</filename>
+			<filename>install3x.sql</filename>
 			<filename>default.php</filename>
 		</files>
 		<languages>
