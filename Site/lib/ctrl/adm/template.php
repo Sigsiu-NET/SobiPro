@@ -106,9 +106,17 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		if ( !( $file ) ) {
 			$this->response( Sobi::Url( $u ), SPLang::e( 'Missing file to compile %s', SPRequest::cmd( 'fileName' ) ), false, SPC::ERROR_MSG );
 		}
+		include( 'phar://' . SOBI_PATH . '/lib/services/third-party/less/less.phar.tar.gz/Autoloader.php' );
 		try {
-			SPFactory::CmsHelper()->compileLessFile( $file, $output, $backup = true );
-		} catch ( SPException $x ) {
+			Less_Autoloader::register();
+			$parser = new Less_Parser();
+			$parser->parseFile( $file, SPFactory::config()->get( 'live_site' ) );
+			$css = $parser->getCss();
+			if ( SPFs::exists( $output ) ) {
+				SPFs::delete( $output );
+			}
+			SPFs::write( $output, $css );
+		} catch ( Exception $x ) {
 			$this->response( Sobi::Url( $u ), SPLang::e( 'TP.LESS_FILE_NOT_COMPILED', $x->getMessage() ), false, SPC::ERROR_MSG );
 		}
 		$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.LESS_FILE_COMPILED', str_replace( SOBI_PATH, null, $output ) ), false, SPC::SUCCESS_MSG );

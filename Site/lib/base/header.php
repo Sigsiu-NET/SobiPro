@@ -444,7 +444,7 @@ final class SPHeader
 						return $this;
 					}
 				}
-				elseif ( $file == 'icons' ) {
+				elseif ( $file == 'icons' && !( defined( 'SOBIPRO_ADM' ) ) ) {
 					$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
 					if ( !( in_array( 'font-awesome-3-local', $fonts ) ) ) {
 						return $this;

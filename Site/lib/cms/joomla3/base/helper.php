@@ -110,20 +110,4 @@ class SPCMSHelper3 extends SPCMSHelper
 		$f->setup( $s );
 		return $f->input;
 	}
-
-	/**
-	 * @param $file
-	 * @param $output
-	 * @throws SPException
-	 */
-	public static function compileLessFile( $file, $output )
-	{
-		$version = self::cmsVersion();
-		if ( $version[ 'minor' ] < 4 ) {
-			throw new SPException( 'This method works for Joomla! >= 3.4 only' );
-		}
-		$less = new JLess;
-		$less->setFormatter( new JLessFormatterJoomla );
-		$less->compileFile( $file, $output );
-	}
 }
