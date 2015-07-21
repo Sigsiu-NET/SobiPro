@@ -42,7 +42,7 @@ Legend:
     (!) Template styles from SobiPro.css moved to templates default.css file
     (!) New tree icons
     (!) New Paypal logo
-    (!) Removed MYISAM setting from the few tables left
+    (!) Removed MYISAM setting from the tables where it is not necessary
 
     (-) Category icons removed
 
@@ -50,7 +50,7 @@ Legend:
     (#) Passing comma separated values to the SPHtml_Input::select (Issue #1481)
     (#) Removing duplicates meta keys (Issue #1476)
     (#) Approved value in the front-end when user is accessing unapproved version (Issue #1472)
-    (#) Non-Editable field cannot be set as required; it should be set as not required after it has been used once (Issue  #1457)
+    (#) Non-editable field cannot be set as required; it should be set as not required after it has been used once (Issue  #1457)
     (#) HTML style error in range search corrected
     (#) Crop function doesn't work under Joomla! higher than 3.4.1 (Issue #1487)
 

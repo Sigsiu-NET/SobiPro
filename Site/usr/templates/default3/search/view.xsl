@@ -31,7 +31,7 @@
 	<xsl:include href="../common/entries.xsl" />
 	<xsl:include href="../common/messages.xsl"/>
 	<xsl:template match="/search">
-		<div class="SPSearch">
+		<div class="spSearch">
 			<div>
 				<xsl:call-template name="topMenu">
 					<xsl:with-param name="searchbox">false</xsl:with-param>
@@ -48,7 +48,7 @@
                         <div class="controls sp-search-controls">
                                 <input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}" class="input-medium" id="SPSearchBox" />
                                 <xsl:if test="/search/fields/top_button/label">
-                                    <button type="submit" class="btn btn-advanced">
+                                    <button type="submit" class="btn btn-sigsiu">
                                         <xsl:value-of select="/search/fields/top_button/label" />
                                     </button>
                                 </xsl:if>

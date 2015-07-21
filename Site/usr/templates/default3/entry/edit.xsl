@@ -104,7 +104,7 @@
 				<button class="btn sobipro-cancel" type="button">
 					<xsl:value-of select="entry/fields/cancel_button/data/button" />
 				</button>
-				<button class="btn btn-advanced sobipro-submit" type="button" data-loading-text="Loading...">
+				<button class="btn btn-sigsiu sobipro-submit" type="button" data-loading-text="Loading...">
 					<xsl:value-of select="entry/fields/save_button/data/input/@value" />
 				</button>
 			</div>

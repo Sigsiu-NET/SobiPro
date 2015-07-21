@@ -30,7 +30,7 @@
             <xsl:value-of select="/section/number_of_subcats" />
         </xsl:variable>
         <div class="row-fluid">
-            <div class="span2 spCaticon">
+            <div class="span3 spCaticon">
 				<xsl:choose>
                     <xsl:when test="string-length( icon/@element )">
                         <a href="{url}">
@@ -51,7 +51,7 @@
                     </xsl:otherwise>
 				</xsl:choose>
 			</div>
-            <div class="span10 spCatname">
+            <div class="span9 spCatname">
                 <p>
                     <a href="{url}">
                         <xsl:value-of select="name" />

@@ -31,8 +31,8 @@
             <div class="span12 hidden-phone">
                 <xsl:if test="count( fields/* )">
                     <div class=" alphalist">
-                        <div class="btn-group advanced">
-                            <a class="btn dropdown-toggle btn-mini btn-advanced" data-toggle="dropdown" href="#">
+                        <div class="btn-group">
+                            <a class="btn dropdown-toggle btn-mini btn-sigsiu" data-toggle="dropdown" href="#">
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">

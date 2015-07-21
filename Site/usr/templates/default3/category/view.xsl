@@ -54,7 +54,9 @@
 		<xsl:apply-templates select="alphaMenu" />
 
         <h1><xsl:value-of select="name" /></h1>
-		<xsl:value-of select="description" disable-output-escaping="yes" />
+        <div class="spCategoryDesc">
+    		<xsl:value-of select="description" disable-output-escaping="yes" />
+    	</div>
 
 		<xsl:call-template name="categoriesLoop" />
 		<xsl:call-template name="entriesLoop" />

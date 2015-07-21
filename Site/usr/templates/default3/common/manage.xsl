@@ -27,7 +27,7 @@
 	<xsl:template name="manage">
 		<xsl:if test="entry/approve_url or entry/edit_url or entry/publish_url or entry/delete_url">
 			<div class="btn-group spManage pull-left">
-				<a class="btn btn-advanced dropdown-toggle btn-small" data-toggle="dropdown" href="#">
+				<a class="btn btn-sigsiu dropdown-toggle btn-small" data-toggle="dropdown" href="#">
 					<i class="icon-edit"></i>
 				</a>
 				<ul class="dropdown-menu">

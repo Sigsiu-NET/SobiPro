@@ -42,7 +42,7 @@
 		</xsl:variable>
 
 		<xsl:comment>entries loop - start</xsl:comment>
-        <div class="entry-container">
+        <div class="spEntryContainer">
                 <xsl:for-each select="entries/entry">
                     <xsl:if test="($entriesInLine > 1 and (position() = 1 or (position() mod $entriesInLine) = 1 )) or $entriesInLine = 1">
                         <!-- opening the "table" row -->
