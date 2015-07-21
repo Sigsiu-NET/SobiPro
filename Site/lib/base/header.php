@@ -645,7 +645,7 @@ final class SPHeader
 				foreach ( $fields as $field ) {
 					$separator = $field->get( 'metaSeparator' );
 					$desc = $field->metaDesc();
-					if ( strlen( $desc ) ) {
+					if ( is_string( $desc ) && strlen( $desc ) ) {
 						$desc .= $separator;
 					}
 					$this->addDescription( $desc );
