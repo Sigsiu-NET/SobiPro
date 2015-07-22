@@ -43,6 +43,7 @@ Legend:
     (!) New tree icons
     (!) New Paypal logo
     (!) Removed MYISAM setting from the tables where it is not necessary
+    (!) Curl test URL changed
 
     (-) Category icons removed
 

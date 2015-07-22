@@ -779,7 +779,7 @@ class SPRequirements extends SPController
 			$cfg[ 'available' ] = 'available';
 			set_time_limit( 15 );
 			$cfg[ 'version' ] = curl_version();
-			$c = curl_init( "http://www.sigsiu.net/sobi2/test" );
+			$c = curl_init( "https://www.sigsiu.net/sobipro-check/testcurl" );
 			if ( $c !== false ) {
 				$fp = fopen( "temp.txt", "w" );
 				//curl_setopt( $c, CURLOPT_MUTE, true );
