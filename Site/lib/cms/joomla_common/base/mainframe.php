@@ -142,6 +142,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		if ( $cfg->get( 'template.icon_fonts_arr', -1 ) == -1 ) {
 			$cfg->set( 'icon_fonts_arr', array( 'font-awesome-local' ), 'template' );
 		}
+		if ( !( is_array( $cfg->get( 'template.icon_fonts_arr', -1 ) ) ) ) {
+			$cfg->change( 'icon_fonts_arr', array( $cfg->get( 'template.icon_fonts_arr', -1 ) ), 'template' );
+		}
 	}
 
 	/**

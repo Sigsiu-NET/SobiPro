@@ -186,7 +186,8 @@ final class SPSection extends SPDBObject implements SPDataModel
 			);
 			SPFactory::config()
 					->saveCfg( 'entry.name_field', $fid )
-					->saveCfg( 'list.entries_ordering', 'field_name' );
+					->saveCfg( 'list.entries_ordering', 'field_name' )
+					->saveCfg( 'template.icon_fonts_arr', array('font-awesome-3-local') );
 
 			SPFactory::Controller( 'acl', true )
 					->addNewRule( $this->get( 'name' ), array( $this->id ), array( 'section.access.valid', 'category.access.valid', 'entry.access.valid', 'entry.add.own', 'section.search.*' ), array( 'visitor', 'registered' ), 'Default permissions for the section "' . $this->get( 'name' ) . '"' );
