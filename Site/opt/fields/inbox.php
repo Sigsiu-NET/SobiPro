@@ -31,13 +31,13 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	/** * @var int */
 	protected $width = 350;
 	/** * @var string */
-	protected $cssClass = "";
+	protected $cssClass = 'spClassInbox';
 	/** * @var string */
-	protected $cssClassView = '';
+	protected $cssClassView = 'spClassViewInbox';
 	/** * @var string */
-	protected $cssClassEdit = '';
+	protected $cssClassEdit = 'spClassEditInbox';
 	/** * @var string */
-	protected $cssClassSearch = '';
+	protected $cssClassSearch = 'spClassSearchInbox';
 	/** * @var string */
 	protected $searchRangeValues = "";
 	/** @var bool */

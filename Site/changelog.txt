@@ -22,6 +22,7 @@ $Date$
 Legend:
  (*) - Security Fix
  (#) - Bug Fix
+ (+) - Addition
  (-) - Removed
  (!) - Change
 
@@ -38,8 +39,10 @@ Legend:
     (+) Possibility to select font icons for categories
     (+) Possibility to add condition attributes into toolbar's elements in administrator area
     (+) LESS compiler for SobiPro templates
+    (+) New default template (default3)
+    (+) Different default class selectors for fields
 
-    (!) Template styles from SobiPro.css moved to templates default.css file
+    (!) Template styles from SobiPro.css moved to template's css file
     (!) New tree icons
     (!) New Paypal logo
     (!) Removed MYISAM setting from the tables where it is not necessary
@@ -54,6 +57,9 @@ Legend:
     (#) Non-editable field cannot be set as required; it should be set as not required after it has been used once (Issue  #1457)
     (#) HTML style error in range search corrected
     (#) Crop function doesn't work under Joomla! higher than 3.4.1 (Issue #1487)
+    (#) Wrong query in header functions fixed
+    (#) Default option id for Select/Multi-Select/Checkbox/Radio set to option-id
+
 
 
 -------------------

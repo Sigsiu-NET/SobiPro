@@ -31,8 +31,4 @@ SPLoader::loadClass( 'opt.fields.inbox' );
  */
 class SPField_InboxAdm extends SPField_Inbox
 {
-	/**
-	 * @var string
-	 */
-	public $cssClass = "inputbox";
 }

@@ -30,9 +30,4 @@ SPLoader::loadClass( 'opt.fields.image' );
  * @created 28-Nov-2009 20:06:47
  */
 class SPField_ImageAdm extends SPField_Image {
-
-	/**
-	 * @var string
-	 */
-	public $cssClass = "inputbox";
 }

@@ -68,7 +68,7 @@ class SPFieldType extends SPObject
 				}
 			}
 		}
-		$this->cssClass = $field->get( 'cssClass' );
+//		$this->cssClass = $field->get( 'cssClass' );
 
 //		if ( !( $this->cssClass ) ) {
 //			$this->cssClass = 'input-medium';

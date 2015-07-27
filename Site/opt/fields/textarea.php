@@ -34,13 +34,13 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	/** * @var int */
 	protected $height = 100;
 	/** * @var string */
-	protected $cssClass = "";
+	protected $cssClass = 'spClassText';
 	/** * @var string */
-	protected $cssClassView = '';
+	protected $cssClassView = 'spClassViewText';
 	/** * @var string */
-	protected $cssClassEdit = '';
+	protected $cssClassEdit = 'spClassEditText';
 	/** * @var string */
-	protected $cssClassSearch = '';
+	protected $cssClassSearch = 'spClassSearchText';
 	/** * @var bool */
 	protected $editor = false;
 	/** * @var bool */

@@ -27,13 +27,13 @@ SPLoader::loadClass( 'opt.fields.radio' );
 class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 {
 	/** * @var string */
-	protected $cssClass = '';
+	protected $cssClass = 'spClassCheckbox';
 	/** * @var string */
-	protected $cssClassView = '';
+	protected $cssClassView = 'spClassViewCheckbox';
 	/** * @var string */
-	protected $cssClassEdit = '';
+	protected $cssClassEdit = 'spClassEditCheckbox';
 	/** * @var string */
-	protected $cssClassSearch = '';
+	protected $cssClassSearch = 'spClassSearchCheckbox';
 	/**
 	 * @var bool
 	 */

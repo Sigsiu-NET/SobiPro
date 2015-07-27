@@ -43,13 +43,13 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	 */
 	protected $labelSite = 'right';
 	/** * @var string */
-	protected $cssClass = "";
+	protected $cssClass = 'spClassRadio';
 	/** * @var string */
-	protected $cssClassView = '';
+	protected $cssClassView = 'spClassViewRadio';
 	/** * @var string */
-	protected $cssClassEdit = '';
+	protected $cssClassEdit = 'spClassEditRadio';
 	/** * @var string */
-	protected $cssClassSearch = '';
+	protected $cssClassSearch = 'spClassSearchRadio';
 	/**
 	 * @var string
 	 */

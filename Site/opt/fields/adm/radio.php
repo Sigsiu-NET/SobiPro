@@ -27,11 +27,6 @@ SPLoader::loadClass( 'opt.fields.radio' );
  */
 class SPField_RadioAdm extends SPField_Radio
 {
-	/**
-	 * @var string
-	 */
-	protected $cssClass = "inputbox";
-
 	public function save( &$attr )
 	{
 		static $lang = null;

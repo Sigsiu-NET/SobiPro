@@ -31,11 +31,6 @@ SPLoader::loadClass( 'opt.fields.multiselect' );
  */
 class SPField_MultiSelectAdm extends SPField_MultiSelect
 {
-	/**
-	 * @var string
-	 */
-	public $cssClass = "inputbox";
-
 	public function save( &$attr )
 	{
 		static $lang = null;

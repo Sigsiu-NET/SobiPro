@@ -144,7 +144,7 @@ class SPField extends SPObject
 	/**
 	 * @var string
 	 */
-	protected $cssClass = 'spField';
+	protected $cssClass = null;
 	/**
 	 * @var int
 	 */

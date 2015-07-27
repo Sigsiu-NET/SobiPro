@@ -30,10 +30,6 @@ SPLoader::loadClass( 'opt.fields.email' );
  * @created 15-Jan-2009 14:33:16
  */
 class SPField_EmailAdm extends SPField_Email {
-	/**
-	 * @var string
-	 */
-	public $cssClass = "inputbox";
 
 	public function save( &$attr )
 	{

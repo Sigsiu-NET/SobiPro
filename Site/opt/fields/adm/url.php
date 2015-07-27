@@ -27,11 +27,6 @@ SPLoader::loadClass( 'opt.fields.url' );
  */
 class SPField_UrlAdm extends SPField_Url
 {
-	/**
-	 * @var string
-	 */
-	public $cssClass = "inputbox";
-
 	public function onFieldEdit()
 	{
 		$this->allowedProtocols = is_array( $this->allowedProtocols ) ? implode( ',', $this->allowedProtocols ) : null;

@@ -41,6 +41,14 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	 */
 	protected $dType = 'special';
 
+	/** @var string */
+	protected $cssClass = 'spClassEmail';
+	/** * @var string */
+	protected $cssClassView = 'spClassViewEmail';
+	/** * @var string */
+	protected $cssClassEdit = 'spClassEditEmail';
+
+
 	/**
 	 * Shows the field in the edit entry or add entry form
 	 * @param bool $return return or display directly

@@ -39,6 +39,16 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	 */
 	protected $dType = 'predefined_multi_data_multi_choice';
 
+	/** * @var string */
+	protected $cssClass = 'spClassMSelect';
+	/** * @var string */
+	protected $cssClassView = 'spClassViewMSelect';
+	/** * @var string */
+	protected $cssClassEdit = 'spClassEditMSelect';
+	/** * @var string */
+	protected $cssClassSearch = 'spClassSearchMSelect';
+
+
 
 	/**
 	 * Get field specific values if these are in an other table

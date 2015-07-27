@@ -47,13 +47,13 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected $selectLabel = 'Select %s';
 	/** * @var string */
-	protected $cssClass = "";
+	protected $cssClass = 'spClassSelect';
 	/** * @var string */
-	protected $cssClassView = '';
+	protected $cssClassView = 'spClassViewSelect';
 	/** * @var string */
-	protected $cssClassEdit = '';
+	protected $cssClassEdit = 'spClassEditSelect';
 	/** * @var string */
-	protected $cssClassSearch = '';
+	protected $cssClassSearch = 'spClassSearchSelect';
 	/**
 	 * @var bool
 	 */
@@ -243,7 +243,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$this->options = $this->sortOpt( $options );
 		}
 		else {
-			$this->options[ 0 ][ 'id' ] = 'option_id';
+			$this->options[ 0 ][ 'id' ] = 'option-id';
 			$this->options[ 0 ][ 'label' ] = Sobi::Txt( 'FD.SELECT_OPTION_NAME' );
 			$this->options[ 0 ][ 'position' ] = 1;
 			$this->options[ 0 ][ 'parent' ] = null;
