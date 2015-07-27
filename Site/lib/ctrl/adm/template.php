@@ -59,7 +59,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				break;
 			case 'save':
 			case 'saveAs':
-				$this->save( $this->_task == 'saveAs' );
+			case 'compileSave':
+				$this->save( $this->_task == 'saveAs', $this->_task == 'compileSave' );
 				break;
 			case 'info':
 				$this->info();
@@ -91,7 +92,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 	}
 
-	protected function compile()
+	protected function compile( $outputMessage = true )
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
@@ -119,7 +120,12 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		} catch ( Exception $x ) {
 			$this->response( Sobi::Url( $u ), SPLang::e( 'TP.LESS_FILE_NOT_COMPILED', $x->getMessage() ), false, SPC::ERROR_MSG );
 		}
-		$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.LESS_FILE_COMPILED', str_replace( SOBI_PATH, null, $output ) ), false, SPC::SUCCESS_MSG );
+		if ( $outputMessage ) {
+			$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.LESS_FILE_COMPILED', str_replace( SOBI_PATH, null, $output ) ), false, SPC::SUCCESS_MSG );
+		}
+		else {
+			return Sobi::Txt( 'TP.LESS_FILE_COMPILED', str_replace( SOBI_PATH, null, $output ) );
+		}
 	}
 
 	protected function getTemplateFiles()
@@ -305,7 +311,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		return $this->listTemplates( SPLoader::dirPath( 'usr.templates.' ) . $template, false );
 	}
 
-	protected function save( $new = false )
+	protected function save( $new = false, $compile = false )
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
@@ -318,13 +324,17 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		$File = SPFactory::Instance( 'base.fs.file', $file );
 		$File->content( stripslashes( $content ) );
+		$message = Sobi::Txt( 'TP.FILE_SAVED' );
+		if ( $compile ) {
+			$message .= "\n" . $this->compile( false );
+		}
 		try {
 			$File->save();
 			$u = array( 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) );
 			if ( Sobi::Section() ) {
 				$u[ 'sid' ] = Sobi::Section();
 			}
-			$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.FILE_SAVED' ), $new, 'success' );
+			$this->response( Sobi::Url( $u ), $message, $new, 'success' );
 		} catch ( SPException $x ) {
 			$this->response( Sobi::Back(), $x->getMessage(), false, 'error' );
 		}
