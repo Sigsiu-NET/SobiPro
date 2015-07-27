@@ -58,7 +58,7 @@ Legend:
     (#) HTML style error in range search corrected
     (#) Crop function doesn't work under Joomla! higher than 3.4.1 (Issue #1487)
     (#) Wrong query in header functions fixed
-    (#) Default option id for Select/Multi-Select/Checkbox/Radio set to option-id
+    (#) Default option id for Select/Multi-Select/Checkbox/Radio fields set to option-id
 
 
 

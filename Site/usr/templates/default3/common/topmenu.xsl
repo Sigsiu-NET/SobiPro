@@ -52,7 +52,7 @@
                             </xsl:if>
                             <xsl:if test="//menu/search">
                                 <li>
-                                    <a href="{//menu/search/@url}">
+                                    <a href="{//menu/search/@url}" class="active">
                                         <i class="icon-search"></i>
                                         <xsl:text> </xsl:text>
                                         <xsl:value-of select="//menu/search" />

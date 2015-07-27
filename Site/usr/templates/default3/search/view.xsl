@@ -84,7 +84,7 @@
 					<div id="SPExtSearch">
 						<xsl:for-each select="fields/*">
 							<xsl:if test="position() &gt; 3">
-                                <div class="control-group">
+                                <div class="control-group {@css-search}">
                                     <label class="control-label" for="{name(.)}">
                                         <xsl:value-of select="label" />
                                     </label>

@@ -37,15 +37,23 @@
 		</h2>
 		
 		<xsl:for-each select="fields/*">
-            <xsl:call-template name="showfield">
-                <xsl:with-param name="fieldname" select="." />
-            </xsl:call-template>
+            <xsl:if test="count(./data/*) or string-length(./data)">
+                <xsl:call-template name="showfield">
+                    <xsl:with-param name="fieldname" select="." />
+                </xsl:call-template>
+            </xsl:if>
 		</xsl:for-each>
 	</xsl:template>
 
     <xsl:template name="showfield">
         <xsl:param name="fieldname" />
-        <div class="{$fieldname/@css_class}">
+
+        <div>
+            <xsl:if test="string-length($fieldname/@css-view)">
+                <xsl:attribute name="class">
+                    <xsl:value-of select="$fieldname/@css-view" />
+                </xsl:attribute>
+            </xsl:if>
             <xsl:if test="string-length($fieldname/@itemprop)">
                 <xsl:attribute name="itemprop"><xsl:value-of select="$fieldname/@itemprop"/></xsl:attribute>
             </xsl:if>

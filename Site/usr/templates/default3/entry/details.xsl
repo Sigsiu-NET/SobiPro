@@ -75,7 +75,7 @@
 
 	<xsl:template name="showfield">
         <xsl:param name="fieldname" />
-        <div class="{$fieldname/@css_class}">
+        <div class="{$fieldname/@css-view}">
             <xsl:if test="string-length($fieldname/@itemprop)">
                 <xsl:attribute name="itemprop"><xsl:value-of select="$fieldname/@itemprop"/></xsl:attribute>
             </xsl:if>

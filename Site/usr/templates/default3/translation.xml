@@ -54,5 +54,8 @@
     <term value="SH.SEARCH_FOUND_RESULTS">
         <value lang="en-GB"></value>
     </term>
+    <term value="ALPHALIST_SELECT">
+        <value lang="en-GB">Select</value>
+    </term>
 
 </translation>

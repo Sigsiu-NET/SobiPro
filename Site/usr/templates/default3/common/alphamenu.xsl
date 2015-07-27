@@ -23,16 +23,17 @@
  File location: components/com_sobipro/usr/templates/default2/common/alphamenu.xsl $
 -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
     <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
     <xsl:include href="alphaindex.xsl" />
     <xsl:template match="alphaMenu">
         <div class="row-fluid">
-            <div class="span12 hidden-phone">
+            <div class="span12">
                 <xsl:if test="count( fields/* )">
-                    <div class=" alphalist">
+                    <div class="alphalist">
                         <div class="btn-group">
                             <a class="btn dropdown-toggle btn-mini btn-sigsiu" data-toggle="dropdown" href="#">
+                                <xsl:value-of select="php:function( 'SobiPro::Txt', 'ALPHALIST_SELECT' )" /><xsl:text> </xsl:text>
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">

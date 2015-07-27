@@ -28,55 +28,65 @@
 	<xsl:template match="navigation" name="navigation">
 		<xsl:if test="count( sites/* ) &gt; 0">
 			<div class="clearfix" />
-			<div class="pagination pagination-centered">
-				<ul>
-					<xsl:for-each select="sites/site">
-						<xsl:variable name="limit">
-							<xsl:choose>
-								<xsl:when test="../../current_site &lt; 4">
-									<xsl:value-of select="8 - ../../current_site" />
-								</xsl:when>
-								<xsl:when test="../../current_site &gt; count( ../../sites/* ) - 8">
-									<xsl:value-of select="7 - ( ../../all_sites  - ../../current_site )" />
-								</xsl:when>
-								<xsl:otherwise>4</xsl:otherwise>
-							</xsl:choose>
-						</xsl:variable>
-						<xsl:variable name="show">
-							<xsl:choose>
-								<xsl:when test="(.) &gt; ( ../../current_site - $limit ) and (.) &lt; ../../current_site">1</xsl:when>
-								<xsl:when test="(.) &lt; ( ../../current_site + $limit ) and (.) &gt; ../../current_site">2</xsl:when>
-								<xsl:when test="(.) = ../../current_site">3</xsl:when>
-								<xsl:when test="number(.) != (.)">4</xsl:when>
-								<xsl:otherwise>0</xsl:otherwise>
-							</xsl:choose>
-						</xsl:variable>
-						<xsl:if test="$show &gt; 0">
-							<li>
-								<xsl:if test="@selected = 1">
-									<xsl:attribute name="class">active</xsl:attribute>
-								</xsl:if>
-								<xsl:if test="not( @url )">
-									<xsl:attribute name="class">disabled</xsl:attribute>
-								</xsl:if>
-								<xsl:choose>
-									<xsl:when test="@url">
-										<a href="{@url}">
-											<xsl:value-of select="." />
-										</a>
-									</xsl:when>
-									<xsl:otherwise>
-										<a href="#">
-											<xsl:value-of select="." />
-										</a>
-									</xsl:otherwise>
-								</xsl:choose>
-							</li>
-						</xsl:if>
-					</xsl:for-each>
-				</ul>
+			<div class="pagination pagination-centered hidden-phone">
+                <xsl:call-template name="showpagination">
+                </xsl:call-template>
 			</div>
+            <div class="pagination pagination-midi pagination-centered visible-phone">
+                <xsl:call-template name="showpagination">
+                </xsl:call-template>
+            </div>
 			<div class="clearfix" />
 		</xsl:if>
 	</xsl:template>
+
+    <xsl:template name="showpagination">
+        <ul>
+            <xsl:for-each select="sites/site">
+                <xsl:variable name="limit">
+                    <xsl:choose>
+                        <xsl:when test="../../current_site &lt; 4">
+                            <xsl:value-of select="8 - ../../current_site" />
+                        </xsl:when>
+                        <xsl:when test="../../current_site &gt; count( ../../sites/* ) - 8">
+                            <xsl:value-of select="7 - ( ../../all_sites  - ../../current_site )" />
+                        </xsl:when>
+                        <xsl:otherwise>4</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <xsl:variable name="show">
+                    <xsl:choose>
+                        <xsl:when test="(.) &gt; ( ../../current_site - $limit ) and (.) &lt; ../../current_site">1</xsl:when>
+                        <xsl:when test="(.) &lt; ( ../../current_site + $limit ) and (.) &gt; ../../current_site">2</xsl:when>
+                        <xsl:when test="(.) = ../../current_site">3</xsl:when>
+                        <xsl:when test="number(.) != (.)">4</xsl:when>
+                        <xsl:otherwise>0</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <xsl:if test="$show &gt; 0">
+                    <li>
+                        <xsl:if test="not( @url )">
+                            <xsl:attribute name="class">disabled</xsl:attribute>
+                        </xsl:if>
+                        <xsl:if test="@selected = 1">
+                            <xsl:attribute name="class">active</xsl:attribute>
+                        </xsl:if>
+                        <xsl:choose>
+                            <xsl:when test="@url">
+                                <a href="{@url}">
+                                    <xsl:value-of select="." />
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <a href="#">
+                                    <xsl:value-of select="." />
+                                </a>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </li>
+                </xsl:if>
+            </xsl:for-each>
+        </ul>
+    </xsl:template>
+
 </xsl:stylesheet>

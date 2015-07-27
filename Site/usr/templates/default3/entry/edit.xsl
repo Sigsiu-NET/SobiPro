@@ -36,14 +36,19 @@
 				</xsl:call-template>
 			</div>
 			<xsl:apply-templates select="messages" />
+
 			<div class="form-horizontal">
 				<xsl:for-each select="entry/fields/*">
 					<xsl:if test="( name() != 'save_button' ) and ( name() != 'cancel_button' )">
 						<xsl:variable name="fieldId" select="name(.)" />
 						<xsl:if test="string-length( fee )">
-							<div class="control-group">
+							<div class="control-group payment-message">
 								<div class="control-label">
-									<input name="{$fieldId}Payment" id="{$fieldId}-payment" value="" type="checkbox" class="payment-box" />
+	    							<div class="paybox">
+	    							    <span>
+    									    <input name="{$fieldId}Payment" id="{$fieldId}-payment" value="" type="checkbox" class="payment-box" />
+                                        </span>
+                                    </div>
 								</div>
 								<div class="alert spAlert controls">
 									<xsl:value-of select="fee_msg" /><xsl:text> </xsl:text>
@@ -51,7 +56,7 @@
 								</div>
 							</div>
 						</xsl:if>
-						<div class="control-group" id="{$fieldId}-container">
+						<div class="control-group {@css-edit}" id="{$fieldId}-container">
 							<label class="control-label" for="{$fieldId}-input-container">
 								<xsl:choose>
 									<xsl:when test="string-length( description )">
