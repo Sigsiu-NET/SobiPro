@@ -1,6 +1,5 @@
 <?php
 /**
- * @version: $Id$
  * @package: SobiPro Component for Joomla!
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
@@ -11,10 +10,6 @@
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -51,6 +46,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	protected $allowedProtocols = array( 'http', 'https', 'ftp' );
 	/** @var bool */
 	protected $newWindow = true;
+	/** @var bool */
+	protected $noFollow = false;
 	/** @var string */
 	protected $dType = 'special';
 	/** @var bool */
@@ -209,7 +206,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit' );
+		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit', 'noFollow' );
 	}
 
 	/**
@@ -250,6 +247,9 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			if ( strlen( $url ) ) {
 				if ( $this->newWindow ) {
 					$attributes[ 'target' ] = '_blank';
+				}
+				if ( $this->noFollow ) {
+					$attributes[ 'rel' ] = 'nofollow';
 				}
 				$data = array(
 						'_complex' => 1,
