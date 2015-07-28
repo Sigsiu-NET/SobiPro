@@ -60,6 +60,7 @@ Legend:
     (#) Crop function doesn't work under Joomla! higher than 3.4.1 (Issue #1487)
     (#) Wrong query in header functions fixed
     (#) Default option id for Select/Multi-Select/Checkbox/Radio fields set to option-id
+    (#) Problem when editing a select field using dependency list which is a required field (Issue #1496)
 
 
 

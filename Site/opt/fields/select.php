@@ -335,7 +335,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	{
 		if ( $data && strlen( $data ) || $this->dependency ) {
 			if ( $this->dependency ) {
-				$path = json_decode( Sobi::Clean( SPRequest::string( $this->nid . '_path', null, false, $request ) ), true );
+				$path = json_decode( str_replace( "'", '"', Sobi::Clean( SPRequest::string( $this->nid . '_path', null, false, $request ) ) ), true );
 				if ( count( $path ) ) {
 					$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 					$selected = $options[ 'options' ];
