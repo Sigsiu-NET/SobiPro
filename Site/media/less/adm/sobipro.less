@@ -52,7 +52,6 @@ body.contentpane {
   margin: 10px 10px 0 0;
   background-color: @background;
   height: 95%;
-  height: 95%;
 }
 body.contentpane a {
   color: @font-a;
@@ -142,7 +141,6 @@ input[type='radio']{
 #SPAdminForm #SPAdmToolbar .dropdown-menu .SpDropDownBt li a:focus,
 #SPAdminForm #SPAdmToolbar .dropdown-submenu:hover a {
   color: #ffffff;
-  background-color: #a90000;
   background-color: #890000;
   background-image: -moz-linear-gradient(top, #a90000, #890000);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#a90000), to(#890000));
@@ -1086,13 +1084,17 @@ input.sp-input-micro[type="text"] {
   margin-top: 6px;
   color: #666666;
 }
-
 .GeoMap {
   margin-right: 10px !important;
 }
-
 .controls img {
   max-width: inherit;
+}
+
+// Try to get the checkbox inline with the label without hurting anything else
+.SobiPro .form-horizontal input[type="checkbox"] {
+    float: left;
+    margin-right: 5px;
 }
 
 /* Aggregation Field */

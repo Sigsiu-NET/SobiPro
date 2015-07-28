@@ -31,7 +31,7 @@
 	<xsl:include href="../common/messages.xsl" />
 
 	<xsl:template match="/entry_details">
-		<div class="SPDetails">
+		<div class="spDetails">
 			<div>
 				<xsl:call-template name="topMenu">
 					<xsl:with-param name="searchbox">true</xsl:with-param>
@@ -40,7 +40,7 @@
 			</div>
 			<xsl:apply-templates select="messages" />
 			<div class="clearfix" />
-			<div class="SPDetailEntry">
+			<div class="spDetailEntry">
 				<xsl:call-template name="manage" />
 				<h1>
 					<xsl:value-of select="entry/name" />
@@ -50,9 +50,11 @@
 				</h1>
 
 				<xsl:for-each select="entry/fields/*">
-                    <xsl:call-template name="showfield">
-                        <xsl:with-param name="fieldname" select="." />
-                    </xsl:call-template>
+                    <xsl:if test="count(./data/*) or string-length(./data)">
+                        <xsl:call-template name="showfield">
+                            <xsl:with-param name="fieldname" select="." />
+                        </xsl:call-template>
+                    </xsl:if>
 				</xsl:for-each>
 
 				<xsl:if test="count(entry/categories)">
@@ -75,7 +77,12 @@
 
 	<xsl:template name="showfield">
         <xsl:param name="fieldname" />
-        <div class="{$fieldname/@css-view}">
+        <div>
+            <xsl:if test="string-length($fieldname/@css-view)">
+                <xsl:attribute name="class">
+                    <xsl:value-of select="$fieldname/@css-view" />
+                </xsl:attribute>
+            </xsl:if>
             <xsl:if test="string-length($fieldname/@itemprop)">
                 <xsl:attribute name="itemprop"><xsl:value-of select="$fieldname/@itemprop"/></xsl:attribute>
             </xsl:if>

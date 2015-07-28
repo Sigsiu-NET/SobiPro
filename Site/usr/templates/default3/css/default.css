@@ -1,3 +1,1 @@
-/*------------------------------*/
-/* add your CSS styles here.... */
-/*------------------------------*/
+.address{font-size:120%;font-weight:400}.city{display:inline-block;font-size:120%;font-weight:400}.city::after{content:","}.street,.country{font-size:120%;font-weight:400}.postcode{display:inline-block;font-size:120%;font-weight:400}.fulldescription{padding-top:15px}.phone{padding-top:10px}.days{margin-top:10px}.days li{list-style:none}.days li::before{font-family:FontAwesome;content:"";padding-right:5px;color:#808080}
