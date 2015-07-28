@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- @version: $Id$
  @package: SobiPro Component for Joomla!
 
  @author
@@ -14,11 +13,6 @@
  See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
 
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
- $Date$
- $Revision$
- $Author$
- $HeadURL$
 -->
 
 <definition>
@@ -54,7 +48,7 @@
 									<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL"  class="input-large" maxlength="255" required="true" />
 									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" />
 									<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
-									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-medium" />
+									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-large" />
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 
@@ -85,7 +79,7 @@
 										</add>
 									</field>
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
-                                    <field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-medium" />
+                                    <field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />
 									<field type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
 									<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 								</fieldset>
@@ -142,7 +136,7 @@
 									</field>
 									<field type="text" name="field.itemprop" label="FMN.ITEMPROP" />
 									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
-                                    <field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-medium" />
+                                    <field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-large" />
 									<field type="toggle" name="field.newWindow" value="field.newWindow" label="FM.URL.NEW_WINDOW" prefix="yes_no" />
                                 </fieldset>
 
