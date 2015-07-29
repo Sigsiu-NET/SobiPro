@@ -806,7 +806,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 			$response = array(
 					'type' => 'success',
-					'text' => Sobi::Txt( 'IMAGE_UPLOADED_CROP', $properties[ 'name' ], $type ),
+					'text' => $this->crop ? Sobi::Txt( 'IMAGE_UPLOADED_CROP', $properties[ 'name' ], $type ) : Sobi::Txt( 'FILE_UPLOADED', $properties[ 'name' ] ),
 					'id' => 'directory://' . $dirNameHash,
 					'data' => array(
 							'name' => $properties[ 'name' ],

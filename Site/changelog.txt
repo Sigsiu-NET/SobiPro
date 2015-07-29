@@ -63,6 +63,7 @@ Legend:
     (#) Problem when editing a select field using dependency list which is a required field (Issue #1496)
     (#) Cloning images while entry is being saved "as copy" (Issue #1494)
     (#) Category field warnings in the search (Issue #1492)
+    (#) Wrong message in image field if cropping is disabled (Issue #1486)
 
 
 
