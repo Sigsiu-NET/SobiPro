@@ -140,14 +140,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
-		$files = $this->getRaw();
-		if ( is_string( $files ) ) {
-			try {
-				$files = SPConfig::unserialize( $files );
-			} catch ( SPException $x ) {
-				$files = null;
-			}
-		}
+		$files = $this->getExistingFiles();
 
 		if ( is_array( $files ) && count( $files ) ) {
 			if ( isset( $files[ 'ico' ] ) ) {
@@ -363,15 +356,25 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 * Gets the data for a field and save it in the database
 	 * @param SPEntry $entry
 	 * @param string $request
+	 * @param bool $clone
 	 * @throws SPException
 	 * @return bool
 	 */
-	public function saveData( &$entry, $request = 'POST' )
+	public function saveData( &$entry, $request = 'POST', $clone = false )
 	{
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
 		$del = SPRequest::bool( $this->nid . '_delete', false, $request );
+		if ( $clone ) {
+			$orgSid = SPRequest::sid();
+			$this->loadData( $orgSid );
+			$files = $this->getExistingFiles();
+			$cloneFiles = array();
+			if ( isset( $files[ 'original' ] ) && file_exists( SOBI_ROOT . '/' . $files[ 'original' ] ) ) {
+				return $this->cloneFiles( $entry, $request, $files, $cloneFiles );
+			}
+		}
 		$fileSize = SPRequest::file( $this->nid, 'size' );
 		$cropped = null;
 		static $store = null;
@@ -544,50 +547,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		else {
 			return true;
 		}
-		/* @var SPdb $db */
-		$db =& SPFactory::db();
-		$this->verify( $entry, $request );
-
-		$time = SPRequest::now();
-		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
-		$uid = Sobi::My( 'id' );
-
-		/* if we are here, we can save these data */
-
-		/* collect the needed params */
-		$save = count( $files ) ? SPConfig::serialize( $files ) : null;
-		$params = array();
-		$params[ 'publishUp' ] = $entry->get( 'publishUp' );
-		$params[ 'publishDown' ] = $entry->get( 'publishDown' );
-		$params[ 'fid' ] = $this->fid;
-		$params[ 'sid' ] = $entry->get( 'id' );
-		$params[ 'section' ] = Sobi::Reg( 'current_section' );
-		$params[ 'lang' ] = Sobi::Lang();
-		$params[ 'enabled' ] = $entry->get( 'state' );
-		$params[ 'baseData' ] = $db->escape( $save );
-		$params[ 'approved' ] = $entry->get( 'approved' );
-		$params[ 'confirmed' ] = $entry->get( 'confirmed' );
-		/* if it is the first version, it is new entry */
-		if ( $entry->get( 'version' ) == 1 ) {
-			$params[ 'createdTime' ] = $time;
-			$params[ 'createdBy' ] = $uid;
-			$params[ 'createdIP' ] = $IP;
-		}
-		$params[ 'updatedTime' ] = $time;
-		$params[ 'updatedBy' ] = $uid;
-		$params[ 'updatedIP' ] = $IP;
-		$params[ 'copy' ] = !( $entry->get( 'approved' ) );
-		if ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
-			--$this->editLimit;
-		}
-		$params[ 'editLimit' ] = $this->editLimit;
-
-		/* save it */
-		try {
-			$db->insertUpdate( 'spdb_field_data', $params );
-		} catch ( SPException $x ) {
-			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_FIELDS_DATA_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-		}
+		$this->storeData( $entry, $request, $files );
 	}
 
 	protected function cleanExif( &$data )
@@ -919,5 +879,105 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$dirName = SPLoader::dirPath( "tmp.files.{$secret}.{$dirNameHash}", 'front', false );
 		$files = scandir( $dirName );
 		return array( $data, $dirName, $files, $coordinates );
+	}
+
+	/**
+	 * @return mixed|null
+	 */
+	protected function getExistingFiles()
+	{
+		$files = $this->getRaw();
+		if ( is_string( $files ) ) {
+			try {
+				$files = SPConfig::unserialize( $files );
+				return $files;
+			} catch ( SPException $x ) {
+				return null;
+			}
+		}
+		return $files;
+	}
+
+	/**
+	 * @param $entry
+	 * @param $request
+	 * @param $files
+	 * @return SPdb
+	 * @throws SPException
+	 */
+	protected function storeData( &$entry, $request, $files )
+	{
+		/* @var SPdb $db */
+		$db =& SPFactory::db();
+		$this->verify( $entry, $request );
+
+		$time = SPRequest::now();
+		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$uid = Sobi::My( 'id' );
+
+		/* if we are here, we can save these data */
+
+		/* collect the needed params */
+		$save = count( $files ) ? SPConfig::serialize( $files ) : null;
+		$params = array();
+		$params[ 'publishUp' ] = $entry->get( 'publishUp' );
+		$params[ 'publishDown' ] = $entry->get( 'publishDown' );
+		$params[ 'fid' ] = $this->fid;
+		$params[ 'sid' ] = $entry->get( 'id' );
+		$params[ 'section' ] = Sobi::Reg( 'current_section' );
+		$params[ 'lang' ] = Sobi::Lang();
+		$params[ 'enabled' ] = $entry->get( 'state' );
+		$params[ 'baseData' ] = $db->escape( $save );
+		$params[ 'approved' ] = $entry->get( 'approved' );
+		$params[ 'confirmed' ] = $entry->get( 'confirmed' );
+		/* if it is the first version, it is new entry */
+		if ( $entry->get( 'version' ) == 1 ) {
+			$params[ 'createdTime' ] = $time;
+			$params[ 'createdBy' ] = $uid;
+			$params[ 'createdIP' ] = $IP;
+		}
+		$params[ 'updatedTime' ] = $time;
+		$params[ 'updatedBy' ] = $uid;
+		$params[ 'updatedIP' ] = $IP;
+		$params[ 'copy' ] = !( $entry->get( 'approved' ) );
+		if ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
+			--$this->editLimit;
+		}
+		$params[ 'editLimit' ] = $this->editLimit;
+
+		/* save it */
+		try {
+			$db->insertUpdate( 'spdb_field_data', $params );
+			return $db;
+		} catch ( SPException $x ) {
+			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_FIELDS_DATA_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+			return $db;
+		}
+		return $db;
+	}
+
+	/**
+	 * @param $entry
+	 * @param $request
+	 * @param $files
+	 * @param $cloneFiles
+	 * @return SPdb
+	 */
+	protected function cloneFiles( &$entry, $request, $files, $cloneFiles )
+	{
+		$orgName = basename( $files[ 'original' ] );
+		$sPath = $this->parseName( $entry, $orgName, $this->savePath );
+		$cloneFiles[ 'original' ] = $sPath . $this->parseName( $entry, $orgName, '{orgname}', true );
+		SPFs::copy( SOBI_ROOT . '/' . $files[ 'original' ], SOBI_ROOT . '/' . $cloneFiles[ 'original' ] );
+
+		$cloneFiles[ 'image' ] = $sPath . $this->parseName( $entry, $orgName, $this->imageName, true );
+		SPFs::copy( SOBI_ROOT . '/' . $files[ 'image' ], SOBI_ROOT . '/' . $cloneFiles[ 'image' ] );
+
+		$cloneFiles[ 'thumb' ] = $sPath . $this->parseName( $entry, $orgName, $this->thumbName, true );
+		SPFs::copy( SOBI_ROOT . '/' . $files[ 'thumb' ], SOBI_ROOT . '/' . $cloneFiles[ 'thumb' ] );
+
+		$cloneFiles[ 'ico' ] = $sPath . $this->parseName( $entry, strtolower( $orgName ), 'ico_{orgname}', true );
+		SPFs::copy( SOBI_ROOT . '/' . $files[ 'ico' ], SOBI_ROOT . '/' . $cloneFiles[ 'ico' ] );
+		return $this->storeData( $entry, $request, $cloneFiles );
 	}
 }

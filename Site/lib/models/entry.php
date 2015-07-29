@@ -645,8 +645,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 		/* @var SPdb $db */
 		$db = SPFactory::db();
 		$db->transaction();
+		$clone = SPRequest::task() == 'entry.clone';
 
-		if ( !( $this->nid ) || SPRequest::task() == 'entry.clone' ) {
+		if ( !( $this->nid ) || $clone ) {
 			$this->nid = SPRequest::string( $this->nameField, null, false, $request );
 			$this->nid = $this->createAlias();
 			$this->name = $this->nid;
@@ -665,10 +666,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 			/* @var $field SPField */
 			try {
 				if ( $field->enabled( 'form', $preState[ 'new' ] ) ) {
-					$field->saveData( $this, $request );
+					$field->saveData( $this, $request, $clone );
 				}
 				else {
-					$field->finaliseSave( $this, $request );
+					$field->finaliseSave( $this, $request, $clone );
 				}
 				if ( $field->get( 'id' ) == $nameField ) {
 					/* get the entry name */
