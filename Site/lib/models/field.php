@@ -785,7 +785,7 @@ class SPField extends SPObject
 	{
 		if ( $this->_type && method_exists( $this->_type, 'searchNarrowResults' ) ) {
 			$this->fullInit();
-			$this->_type->searchNarrowResults( $request, $results );
+			$this->_type->searchNarrowResults( $request, $results, $priorities );
 		}
 	}
 
