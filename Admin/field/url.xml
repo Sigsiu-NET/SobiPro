@@ -137,6 +137,7 @@
 									<field type="text" name="field.itemprop" label="FMN.ITEMPROP" />
 									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
                                     <field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-large" />
+                                    <field type="toggle" name="field.noFollow" value="field.noFollow" label="FM.URL.NOFOLLOW" prefix="yes_no" />
 									<field type="toggle" name="field.newWindow" value="field.newWindow" label="FM.URL.NEW_WINDOW" prefix="yes_no" />
                                 </fieldset>
 

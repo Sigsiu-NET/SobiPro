@@ -41,6 +41,7 @@ Legend:
     (+) LESS compiler for SobiPro templates
     (+) New default template (default3)
     (+) Different default class selectors for fields
+    (+) Nofollow attribute for url field
 
     (!) Template styles from SobiPro.css moved to template's css file
     (!) New tree icons

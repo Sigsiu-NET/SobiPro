@@ -167,7 +167,9 @@
     background-color: lighten(@base-color,55%);
 }
 
-
+.SobiPro .dropdown-menu > .active > a,
+.SobiPro .dropdown-menu > .active > a:hover,
+.SobiPro .dropdown-menu > .active > a:focus,
 .SobiPro .dropdown-menu > li > a:hover,
 .SobiPro .dropdown-menu > li > a:focus,
 .SobiPro .dropdown-submenu:hover > a,
@@ -342,16 +344,16 @@ margin-right: 5px;
     margin-bottom: 15px;
     margin-top: 15px;
 }
-.spEntryCats { font-size: 80%; }
-
+.SobiPro .spEntryCats { font-size: 80%; }
+.SobiPro .spDetails { font-size: 14px;}
 
 // Entry detail
 // ----------------------------------------
-.SPDetailEntry .spManage {
+.spDetailEntry .spManage {
     margin-right: 7px;
     margin-top: 7px;
 }
-.SPDetails .alert-success {
+.spDetails .alert-success {
     background-color: @alert-color;
     color: @active-color;
     border-color: darken(@alert-color,10%);
@@ -403,8 +405,11 @@ a.entry-status:focus { text-decoration: none; }
     margin-top: 5px;
     float: left;
 }
+
+// special adjustments for inverse template colors
+// -----------------------------------------------
 & when (@inverse = inverse) {
-    .SobiPro .SPDetails { font-size: 110%;}
+    .SobiPro .spDetails { font-size: 110%;}
 
     .SobiPro .SPEntryEdit label,
     .SobiPro .spSearch label,
@@ -416,7 +421,7 @@ a.entry-status:focus { text-decoration: none; }
     .SobiPro .spCategoryDesc p,
     .SobiPro .spEntryContainer p,
     .SobiPro .spEntryContainer div,
-    .SobiPro .SPDetailEntry div,
+    .SobiPro .spDetailEntry div,
     .SobiPro .spFieldRadio label,
     .SobiPro .spFieldCheckbox label,
     .SobiPro .form-horizontal .spFieldUrlLabel label {
@@ -602,46 +607,6 @@ a.entry-status:focus { text-decoration: none; }
     background-color: #fff;
 }
 
-
-// Common fields styling (don't work if you change the field CSS classes in the Fields Manager)
-// ----------------------------------------
-div.spClassViewUrl { padding-top: 10px; }
-img.spClassViewImage {
-    padding: 4px;
-    background-color: #FFF;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    margin: 5px;
-}
-// SP-GeoMap Field
-div.field_map { padding-top: 10px; padding-bottom: 10px; }
-
-// Calendar Field
-// ----------------------------------------
-.report,
-.contact { margin: 10px 0 10px 0;}
-.report { text-align: right;
-}
-
-
-// Special fields styling for sample data (don't work if you change the field CSS classes in the Fields Manager)
-// ----------------------------------------
-.fulldescription { padding-top: 15px;}
-.city { float: left; padding-right: 5px; }
-.city::after { content: ","; }
-.phone {
-    padding-top: 10px;
-}
-.days { margin-top: 10px; }
-.days li { list-style: none; }
-.days li::before {
-    font-family: FontAwesome;
-    content: "";
-    padding-right: 5px;
-    color: #808080;
-}
-
-
 // Payment popup
 // ----------------------------------------
 .SobiPro table.payment td { line-height: 10px; }
@@ -657,6 +622,30 @@ div.field_map { padding-top: 10px; padding-bottom: 10px; }
     cursor:progress;
 }
 .SobiPro .disabledArea a { cursor:progress; }
+
+
+
+// Common fields styling via variable CSS classes
+// (don't work if you change the field CSS classes in the Fields Manager)
+// ----------------------------------------
+// Core Fields
+div.spClassViewUrl { padding-top: 10px; }
+div.spClassViewImage img {
+    padding: 4px;
+    background-color: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+}
+div.spClassViewMap { padding-top: 10px; padding-bottom: 10px; } // SP-GeoMap Field
+div.spClassViewAggregation { padding-top: 15px; font-size: 80%; }
+div.spClassViewAggregation strong { font-weight: 400; }
+
+// Calendar Field
+.report,
+.contact { margin: 10px 0 10px 0;}
+.report { text-align: right;
+}
 
 
 
@@ -688,6 +677,7 @@ div.field_map { padding-top: 10px; padding-bottom: 10px; }
 }
 // Landscape phone to portrait tablet
 @media (max-width: 768px) {
+    .spClassEditCategory select { height: 100px !important; }
     .SobiPro .topmenu ul.nav { width: 100%; }
 
     .SobiPro .form-horizontal .uneditable-input,

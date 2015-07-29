@@ -28,6 +28,10 @@ SPLoader::loadClass( 'opt.fields.fieldtype' );
 class SPField_Category extends SPFieldType implements SPFieldInterface
 {
 	/** @var string */
+	protected $cssClass = 'spClassCategory';
+	/** * @var string */
+	protected $cssClassEdit = 'spClassEditCategory';
+	/** @var string */
 	protected $method = 'mselect';
 	/** @var bool */
 	protected $modal = false;
