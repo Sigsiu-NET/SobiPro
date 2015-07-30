@@ -67,7 +67,7 @@ Legend:
     (#) Payments and history of an entry not being deleted when entry is being deleted (Issue #1491)
     (#) Deleting section related data from ACL while deleting a section (Issue #1491)
     (#) Issues with alias for an entry fixed (Issue #1468)
-
+    (#) Missing user id in request params for unique cache creation (Issue #1453)
 
 
 -------------------

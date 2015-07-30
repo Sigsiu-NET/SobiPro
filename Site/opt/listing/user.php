@@ -20,6 +20,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadController( 'listing_interface' );
 SPLoader::loadController( 'section' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -68,6 +69,7 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 		}
 		else {
 			$this->uid = (int)Sobi::My( 'id' );
+			SPRequest::set( 'uid', $this->uid );
 		}
 		$this->user = SPJoomlaUser::getBaseData( (int)$this->uid );
 		if ( !( $this->user ) ) {
