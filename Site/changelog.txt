@@ -69,6 +69,7 @@ Legend:
     (#) Issues with alias for an entry fixed (Issue #1468)
     (#) Missing user id in request params for unique cache creation (Issue #1453)
     (#) Valid until reset after each edit (Issue #1452)
+    (#) Wrong error code if page has not been found (Issue #1440)
 
 
 -------------------
