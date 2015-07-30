@@ -65,6 +65,7 @@ Legend:
     (#) Category field warnings in the search (Issue #1492)
     (#) Wrong message in image field if cropping is disabled (Issue #1486)
     (#) Payments and history of an entry not being deleted when entry is being deleted (Issue #1491)
+    (#) Deleting section related data from ACL while deleting a section (Issue #1491)
 
 
 

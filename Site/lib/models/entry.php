@@ -614,6 +614,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 		SPFactory::payment()
 				->deletePayments( $this->id );
 
+		/** Thu, Jul 30, 2015 11:32:45 - delete counters */
+		SPFactory::db()
+				->delete( 'spdb_counter', array( 'sid' => $this->id ) );
+
 		SPFactory::cache()->purgeSectionVars();
 		SPFactory::cache()->deleteObj( 'entry', $this->id );
 	}

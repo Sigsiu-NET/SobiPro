@@ -91,8 +91,11 @@ final class SPSection extends SPDBObject implements SPDataModel
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			try {
-				$db->delete( 'spdb_config', array( 'section' => $this->id ) );
-				$db->delete( 'spdb_plugin_section', array( 'section' => $this->id ) );
+				$db
+						->delete( 'spdb_config', array( 'section' => $this->id ) )
+						->delete( 'spdb_plugin_section', array( 'section' => $this->id ) )
+						->delete( 'spdb_permissions_map', array( 'sid' => $this->id ) );
+
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
