@@ -665,7 +665,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			/** Thu, Jul 30, 2015 12:15:25 - what the hell was that? */
 //			$this->name = $this->nid;
 		}
-		if ( Sobi::Cfg( 'entry.publish_limit', 0 ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
+		if ( !( $this->id ) && Sobi::Cfg( 'entry.publish_limit', 0 ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
 			SPRequest::set( 'entry_createdTime', 0, $request );
 			SPRequest::set( 'entry_validSince', 0, $request );
 			SPRequest::set( 'entry_validUntil', 0, $request );
