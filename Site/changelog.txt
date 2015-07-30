@@ -64,6 +64,7 @@ Legend:
     (#) Cloning images while entry is being saved "as copy" (Issue #1494)
     (#) Category field warnings in the search (Issue #1492)
     (#) Wrong message in image field if cropping is disabled (Issue #1486)
+    (#) Payments and history of an entry not being deleted when entry is being deleted (Issue #1491)
 
 
 

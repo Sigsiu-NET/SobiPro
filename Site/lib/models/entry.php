@@ -606,6 +606,14 @@ class SPEntry extends SPDBObject implements SPDataModel
 		foreach ( $this->fields as $field ) {
 			$field->deleteData( $this->id );
 		}
+		/** Thu, Jul 30, 2015 10:11:57 - delete history */
+		SPFactory::db()
+				->delete( 'spdb_history', array( 'sid' => $this->id ) );
+
+		/** Thu, Jul 30, 2015 10:22:38 - delete payments */
+		SPFactory::payment()
+				->deletePayments( $this->id );
+
 		SPFactory::cache()->purgeSectionVars();
 		SPFactory::cache()->deleteObj( 'entry', $this->id );
 	}
