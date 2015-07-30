@@ -94,9 +94,10 @@ abstract class SPHtml_Input
 	public static function file( $name, $size = 50, $params = null, $accept = '*' )
 	{
 		$params = self::params( $params );
-		$f = "\n<input name=\"{$name}\" type=\"file\" size=\"{$size}\" value=\"\" accept=\"{$accept}\"{$params}/>\n";
+		$f = "<input name=\"{$name}\" type=\"file\" size=\"{$size}\" value=\"\" accept=\"{$accept}\"{$params}/>";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- FileBox '{$name}' Output -->{$f}<!-- FileBox '{$name}' End -->\n\n";
+//		return "\n<!-- FileBox '{$name}' Output -->{$f}<!-- FileBox '{$name}' End -->\n\n";
+		return "\n{$f}\n\n";
 	}
 
 
@@ -177,8 +178,8 @@ abstract class SPHtml_Input
 		$value = strlen( $value ) ? str_replace( '"', '&quot;', SPLang::entities( $value, true ) ) : null;
 		$f = "<input type=\"text\" name=\"{$name}\" value=\"{$value}\"{$params}/>";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return $f;
 		//"\n<!-- InputBox '{$name}' Output -->{$f}<!-- InputBox '{$name}' End -->\n\n";
+		return "\n{$f}\n\n";
 	}
 
 	/**
@@ -195,9 +196,10 @@ abstract class SPHtml_Input
 		$value = self::translate( $value );
 		$value = strlen( $value ) ? SPLang::entities( /*Sobi::Txt*/
 				( $value ), true ) : null;
-		$f = "\n<input type=\"submit\" name=\"{$name}\" value=\"{$value}\"{$params}/>\n";
+		$f = "<input type=\"submit\" name=\"{$name}\" value=\"{$value}\"{$params}/>";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- SubmitButton '{$name}' Output -->{$f}<!-- SubmitButton '{$name}' End -->\n\n";
+//		return "\n<!-- SubmitButton '{$name}' Output -->{$f}<!-- SubmitButton '{$name}' End -->\n\n";
+		return "\n{$f}\n\n";
 	}
 
 	/**
@@ -235,8 +237,8 @@ abstract class SPHtml_Input
 			" );
 			$params[ 'href' ] = htmlentities( $params[ 'href' ] );
 			// sending data twice in payment screen
-//			$a = "\n<a href=\"{$params[ 'href' ]}\" class=\"spDisabled\">";
-//			$a = "\n<a href=\"#\" class=\"spDisabled\">";
+//			$a = "<a href=\"{$params[ 'href' ]}\" class=\"spDisabled\">";
+//			$a = "<a href=\"#\" class=\"spDisabled\">";
 			$h = " onclick=\"{$name}Redirect()\"";
 			unset( $params[ 'href' ] );
 		}
@@ -248,12 +250,13 @@ abstract class SPHtml_Input
 		if ( $icon ) {
 			$value = "<i class=\"icon-{$icon}\"></i> " . $value;
 		}
-		$f = "\n<button type=\"button\" name=\"{$name}\" {$h}{$params}>{$value}</button>\n";
+		$f = "<button type=\"button\" name=\"{$name}\" {$h}{$params}>{$value}</button>";
 		if ( isset( $a ) ) {
-			$f = $a . $f . "</a>\n";
+			$f = $a . $f . "</a>";
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- Button '{$name}' Output --> {$f}<!-- Button '{$name}' End -->\n\n";
+//		return "\n<!-- Button '{$name}' Output --> {$f}<!-- Button '{$name}' End -->\n\n";
+		return "\n{$f}\n\n";
 	}
 
 	/**
@@ -268,7 +271,7 @@ abstract class SPHtml_Input
 	 * @param string | array $editorParams
 	 * @return string
 	 */
-	public static function textarea( $name, $value = null, $editor = false, $width = 500, $height = 350, $params = '', $editorParams = null )
+	public static function textarea( $name, $value = null, $editor = false, $width = '', $height = 350, $params = '', $editorParams = null )
 	{
 		if ( !( is_array( $editorParams ) ) && strlen( $editorParams ) ) {
 			$editorParams = SPFactory::config()->structuralData( $editorParams );
@@ -292,7 +295,8 @@ abstract class SPHtml_Input
 			$area = "<textarea name=\"{$name}\" {$params}>{$value}</textarea>";
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$area ) );
-		return "\n<!-- TextArea '{$name}' Output -->\n{$area}\n<!-- TextArea '{$name}' End -->\n\n";
+//		return "\n<!-- TextArea '{$name}' Output -->\n{$area}\n<!-- TextArea '{$name}' End -->\n\n";
+		return "\n{$area}\n\n";
 	}
 
 	/**
@@ -322,7 +326,7 @@ abstract class SPHtml_Input
 		$checked = $checked ? " checked=\"checked\" " : null;
 		$$name = self::cleanOpt( $name );
 		$value = self::cleanOpt( $value );
-		$f = "\n<input type=\"radio\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\"{$checked}{$params}/>";
+		$f = "<input type=\"radio\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\"{$checked}{$params}/>";
 		$l = $label ? "\n<label for=\"{$id}\">{$label}</label>" : null;
 		if ( $image ) {
 			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
@@ -348,7 +352,8 @@ abstract class SPHtml_Input
 			$f = ( $order == 'left' ) ? $l . $f : $f . $l;
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- RadioButton '{$name}' Output -->{$f}\n<!-- RadioButton '{$name}' End -->\n";
+//		return "\n<!-- RadioButton '{$name}' Output -->{$f}\n<!-- RadioButton '{$name}' End -->\n";
+		return "\n{$f}\n\n";
 	}
 
 	/**
@@ -423,7 +428,7 @@ abstract class SPHtml_Input
 		$ids = $id ? "id=\"{$id}\" " : $id;
 		$$name = self::cleanOpt( $name );
 		$value = self::cleanOpt( $value );
-		$f = "\n<input type=\"checkbox\" name=\"{$name}\" {$ids}value=\"{$value}\"{$checked}{$params}/>";
+		$f = "<input type=\"checkbox\" name=\"{$name}\" {$ids}value=\"{$value}\"{$checked}{$params}/>";
 		$l = $label ? "\n<label for=\"{$id}\">{$label}</label>" : null;
 		if ( $image ) {
 			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
@@ -448,8 +453,9 @@ abstract class SPHtml_Input
 		else {
 			$f = ( $order == 'left' ) ? $l . $f : $f . $l;
 		}
-		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- CheckBox '{$name}' Output -->{$f}\n<!-- CheckBox '{$name}' End -->\n";
+//		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
+////		return "\n<!-- CheckBox '{$name}' Output -->{$f}\n<!-- CheckBox '{$name}' End -->\n";
+		return "\n{$f}\n";
 	}
 
 	/**
@@ -618,9 +624,10 @@ abstract class SPHtml_Input
 			$name .= '[]';
 		}
 		$cells = implode( "\n\t", $cells );
-		$f = "\n<select name=\"{$name}\"{$multi}{$params}{$data}>\n\t{$cells}\n</select>\n";
+		$f = "<select name=\"{$name}\"{$multi}{$params}{$data}>\n\t{$cells}\n</select>";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- SelectList '{$name}' Output -->{$f}<!-- SelectList '{$name}' End -->\n\n";
+//		return "\n<!-- SelectList '{$name}' Output -->{$f}<!-- SelectList '{$name}' End -->\n\n";
+		return "\n{$f}\n\n";
 	}
 
 	private static function cleanOpt( $opt )
@@ -677,12 +684,12 @@ abstract class SPHtml_Input
 	public static function toggle( $name, $value, $id, $prefix /*, $params = null*/ )
 	{
 		$value = (int)$value;
-		$field = null;
-		$field .= "\n" . '<div class="btn-group buttons-radio" data-toggle="buttons-radio" id="' . $id . '">';
-		$field .= "\n\t" . '<button type="button" name="' . $name . '" class="btn btn-success' . ( $value ? ' active selected' : '' ) . '" value="1">' . Sobi::Txt( $prefix . '_yes' ) . '</button>';
-		$field .= "\n\t" . '<button type="button" name="' . $name . '" class="btn btn-danger' . ( $value ? '' : ' active selected' ) . '" value="0">' . Sobi::Txt( $prefix . '_no' ) . '</button>';
-		$field .= "\n" . '</div>';
-		return "\n<!-- States '{$name}' Output -->{$field}\n<!-- States '{$name}' End -->\n";
+		$field = '<div class="btn-group buttons-radio" data-toggle="buttons-radio" id="' . $id . '">';
+		$field .= '<button type="button" name="' . $name . '" class="btn btn-success' . ( $value ? ' active selected' : '' ) . '" value="1">' . Sobi::Txt( $prefix . '_yes' ) . '</button>';
+		$field .= '<button type="button" name="' . $name . '" class="btn btn-danger' . ( $value ? '' : ' active selected' ) . '" value="0">' . Sobi::Txt( $prefix . '_no' ) . '</button>';
+		$field .= '</div>';
+//		return "\n<!-- States '{$name}' Output -->{$field}\n<!-- States '{$name}' End -->\n";
+		return "\n{$field}\n\n";
 	}
 
 	/**
@@ -810,9 +817,7 @@ abstract class SPHtml_Input
 				->addCssFile( 'bootstrap.datepicker' )
 				->addJsFile( array( 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ) );
 		$params = self::params( $params );
-		$f = "\n";
-		$f .= '<div class="input-append date spDatePicker">';
-		$f .= "\n\t";
+		$f = '<div class="input-append date spDatePicker">';
 		$f .= '<input type="text" disabled="disabled" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" ' . $data . '/>';
 		/**
 		 * Mon, Nov 17, 2014 11:39:34 So here I am a bit baffled: we initially changed it to integer (unfortunately I do not remember why)
@@ -830,13 +835,11 @@ abstract class SPHtml_Input
 		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? (int)( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null ) . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? ( $value + SPFactory::config()->getTimeOffset() ) * 1000 : null ) . '" name="' . $name . '"/>';
-		$f .= "\n\t";
 		$f .= '<span class="add-on"><i data-date-icon="icon-' . $icon . '" class="icon-' . $icon . '"></i></span>';
-		$f .= "\n";
 		$f .= '</div>';
-		$f .= "\n";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- Date Picker '{$name}' Output -->{$f}<!-- Date Picker '{$name}' End -->\n\n";
+//		return "\n<!-- Date Picker '{$name}' Output -->{$f}<!-- Date Picker '{$name}' End -->\n\n";
+		return "\n{$f}\n\n";
 	}
 
 	/**
@@ -880,16 +883,13 @@ abstract class SPHtml_Input
 		}
 		$params = self::params( $params );
 
-		$f = "\n";
-		$f .= '<div class="spOutput">';
-		$f .= "\n\t";
+		$f = '<div class="spOutput">';
 		$f .= '<span ' . $params . '>' . $valueDisplay . '</span>';
-		$f .= "\n";
 		$f .= '</div>';
-		$f .= "\n";
 
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- Date Getter '{$name}' Output -->{$f}<!-- Date Getter '{$name}' End -->\n\n";
+//		return "\n<!-- Date Getter '{$name}' Output -->{$f}<!-- Date Getter '{$name}' End -->\n\n";
+		return "\n{$f}\n\n";
 	}
 
 	private static function createLangFile()
@@ -972,23 +972,20 @@ abstract class SPHtml_Input
 		$filter = '<input type="text" placeholder="' . Sobi::Txt( 'FILTER' ) . '" class="search pull-right spDisableEnter" name="q">';
 		$id = $params[ 'id' ];
 		$params = self::params( $params );
-		$f = "\n";
-		$f .= '<div class="spUserSelector">';
+		$f.= '<div class="spUserSelector">';
 		$f .= '<div class="input-append">';
-		$f .= "\n\t";
 		$f .= '<input type="text" value="' . $userData . '" ' . $params . ' name="' . $name . 'Holder" readonly="readonly" class="trigger user-name"/>';
 		$f .= '<span class="add-on trigger"><i class="icon-' . $icon . '"></i></span>';
 		$f .= '</div>';
 		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '" rel="selected"/>';
 		$f .= '<input type="hidden" value="' . $ssid . '" name="' . $name . 'Ssid"/>';
 		$f .= '<input type="hidden" value="1" name="' . SPFactory::mainframe()->token() . '"/>';
-		$f .= "\n\t";
 		$f .= "\n";
 		$f .= self::modalWindow( Sobi::Txt( $header ) . $filter, $id . '-window', $modal );
 		$f .= '</div>';
-		$f .= "\n";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- User Picker '{$name}' Output -->{$f}<!-- User Picker '{$name}' End -->\n\n";
+//		return "\n<!-- User Picker '{$name}' Output -->{$f}<!-- User Picker '{$name}' End -->\n\n";
+		return "\n{$f}\n\n";
 	}
 
 	public static function userGetter( $name, $value, $params = null, $class = null, $format = '%user' )
@@ -1022,15 +1019,12 @@ abstract class SPHtml_Input
 			}
 		}
 		$params = self::params( $params );
-		$f = "\n";
-		$f .= '<div class="spOutput">';
-		$f .= "\n\t";
+		$f = '<div class="spOutput">';
 		$f .= '<span ' . $params . '>' . $userData . '</span>';
-		$f .= "\n";
 		$f .= '</div>';
-		$f .= "\n";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
-		return "\n<!-- User Getter '{$name}' Output -->{$f}<!-- User Getter '{$name}' End -->\n\n";
+//		return "\n<!-- User Getter '{$name}' Output -->{$f}<!-- User Getter '{$name}' End -->\n\n";
+		return "\n{$f}\n\n";
 	}
 
 
@@ -1063,7 +1057,8 @@ abstract class SPHtml_Input
 	{
 		$data = self::createDataTag( $params );
 		$id = $id ? $id : SPLang::nid( $name );
-		$f = "\n<input type=\"hidden\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\" {$data}/>";
-		return "\n<!--  '{$name}' Output -->{$f}<!-- '{$name}' End -->\n\n";
+		$f = "<input type=\"hidden\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\" {$data}/>";
+//		return "\n<!--  '{$name}' Output -->{$f}<!-- '{$name}' End -->\n\n";
+		return "\n{$f}\n\n";
 	}
 }
