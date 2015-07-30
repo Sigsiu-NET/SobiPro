@@ -435,7 +435,7 @@ abstract class SPDBObject extends SPObject
 		static $add = 0;
 		$suffix = null;
 		if ( !( strlen( $this->nid ) ) ) {
-			$this->nid = SPLang::nid( $this->name, true );
+			$this->nid = strtolower( SPLang::nid( $this->name, true ) );
 		}
 		while ( $c ) {
 			try {
@@ -447,7 +447,7 @@ abstract class SPDBObject extends SPObject
 						->select( 'COUNT( nid )', 'spdb_object', $condition )
 						->loadResult();
 				if ( $c > 0 ) {
-					$suffix = '_' . ++$add;
+					$suffix = '-' . ++$add;
 				}
 			} catch ( SPException $x ) {
 			}

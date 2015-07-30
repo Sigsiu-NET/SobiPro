@@ -660,9 +660,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 		$clone = SPRequest::task() == 'entry.clone';
 
 		if ( !( $this->nid ) || $clone ) {
-			$this->nid = SPRequest::string( $this->nameField, null, false, $request );
+			$this->nid = strtolower( SPLang::nid( SPRequest::string( $this->nameField, null, false, $request ) ) );
 			$this->nid = $this->createAlias();
-			$this->name = $this->nid;
+			/** Thu, Jul 30, 2015 12:15:25 - what the hell was that? */
+//			$this->name = $this->nid;
 		}
 		if ( Sobi::Cfg( 'entry.publish_limit', 0 ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
 			SPRequest::set( 'entry_createdTime', 0, $request );
