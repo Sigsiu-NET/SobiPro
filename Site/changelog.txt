@@ -48,6 +48,7 @@ Legend:
     (!) New Paypal logo
     (!) Removed MYISAM setting from the tables where it is not necessary
     (!) Curl test URL changed
+    (!) Bootstrap responsive CSS file added by default
 
     (-) Category icons removed
 
