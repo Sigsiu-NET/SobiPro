@@ -70,6 +70,7 @@ Legend:
     (#) Missing user id in request params for unique cache creation (Issue #1453)
     (#) Valid until reset after each edit (Issue #1452)
     (#) Wrong error code if page has not been found (Issue #1440)
+    (#) Issues with image cropper while uploading same image (name) into two different fields (Issue #1431)
 
 
 -------------------

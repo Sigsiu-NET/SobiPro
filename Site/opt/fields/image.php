@@ -519,7 +519,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			try {
 				$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '80:80' ) );
 				$ico->resample( $icoSize[ 0 ], $icoSize[ 1 ], false );
-				$files[ 'ico' ] = $this->parseName( $entry, strtolower( $orgName ), 'ico_{orgname}', true );
+				$files[ 'ico' ] = $this->parseName( $entry, strtolower( $orgName ), 'ico_{orgname}_' . $this->nid, true );
 				$ico->saveAs( $path . $files[ 'ico' ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );

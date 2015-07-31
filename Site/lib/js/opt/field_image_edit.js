@@ -38,7 +38,6 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( '.spImageCrop' ).click( function ()
 			{
 				var Id = SobiPro.jQuery( this ).attr( 'Id' ).replace( '_icon', '' );
-				//var url = SobiPro.jQuery( this ).attr( 'src' ).replace( 'icon_', 'resized_' );
 				var Url = SobiPro.jQuery( this ).attr( 'src' ).replace( 'icon_', '' );
 				var Pid = SobiPro.jQuery( this ).attr( 'Id' ).replace( '_icon', '_preview' );
 				if ( SobiPro.jQuery( '#' + Id + '_modal' ).attr( 'data-image-url' ) != Url ) {
@@ -73,7 +72,7 @@ SobiPro.jQuery( document ).ready( function ()
 					var Current = Store.val();
 					if ( Current && SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ).length ) {
 						if ( Current.indexOf( 'coordinates://' ) != -1 ) {
-							var currentArray = Current.split( 'coordinates://' );
+							var currentArray = Current.split( '::coordinates://' );
 							Store.val( currentArray[0] + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );
 						}
 						else {
