@@ -393,14 +393,14 @@ class SPSearchCtrl extends SPSectionCtrl
 				$this->userPermissionsQuery( $conditions, null );
 			}
 			else {
-				$conditions = array( 'state' => '1', /* 'approved' => '1' ,*/
-						'@VALID' => $this->_db->valid( 'validUntil', 'validSince' ) );
+				$conditions = array( 'state' => '1', '@VALID' => $this->_db->valid( 'validUntil', 'validSince' ) );
 			}
 			$conditions[ 'id' ] = $this->_results;
 			$conditions[ 'oType' ] = 'entry';
 			try {
-				$this->_db->select( 'id', 'spdb_object', $conditions );
-				$results = $this->_db->loadResultArray();
+				$results = $this->_db->select( 'id', 'spdb_object', $conditions )
+						->loadResultArray();
+				SPFactory::db()->getQuery();
 				foreach ( $this->_results as $i => $sid ) {
 					if ( !( in_array( $sid, $results ) ) ) {
 						unset( $this->_results[ $i ] );
@@ -577,15 +577,14 @@ class SPSearchCtrl extends SPSectionCtrl
 		}
 		/* get limits - if defined in template config - otherwise from the section config */
 		$eLimit = $this->tKey( $template, 'entries_limit', Sobi::Cfg( 'search.entries_limit', Sobi::Cfg( 'list.entries_limit', 2 ) ) );
-		$eInLine = $this->tKey( $template, 'entries_in_line', Sobi::Cfg( 'search.entries_in_line', Sobi::Cfg( 'list.entries_in_line', 2 ) ) );
 
 		/* get the site to display */
 		$site = SPRequest::int( 'site', 1 );
 		$eLimStart = ( ( $site - 1 ) * $eLimit );
 
 		try {
-			$this->_db->select( array( 'entriesResults', 'requestData' ), 'spdb_search', array( 'ssid' => $ssid ) );
-			$r = $this->_db->loadAssocList();
+			$r = $this->_db->select( array( 'entriesResults', 'requestData' ), 'spdb_search', array( 'ssid' => $ssid ) )
+					->loadAssocList();
 			if ( strlen( $r[ 0 ][ 'entriesResults' ] ) ) {
 				$store = SPConfig::unserialize( $r[ 0 ][ 'entriesResults' ] );
 				if ( $store[ 'results' ] ) {

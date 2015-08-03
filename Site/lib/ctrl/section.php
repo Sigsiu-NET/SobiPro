@@ -231,7 +231,9 @@ class SPSectionCtrl extends SPController
 		$db =& SPFactory::db();
 		if ( !( Sobi::Can( 'entry.access.*' ) ) ) {
 			if ( Sobi::Can( 'entry.access.unpublished_own' ) ) {
-				$conditions[ ] = $db->argsOr( array( $oPrefix . 'state' => '1', $oPrefix . 'owner' => Sobi::My( 'id' ) ) );
+				if ( !( Sobi::Can( 'entry.access.unpublished_any' ) ) ) {
+					$conditions[ ] = $db->argsOr( array( $oPrefix . 'state' => '1', $oPrefix . 'owner' => Sobi::My( 'id' ) ) );
+				}
 				if ( Sobi::Can( 'entry.access.unapproved_own' ) ) {
 					$conditions[ ] = $db->argsOr( array( $oPrefix . 'approved' => '1', $oPrefix . 'owner' => Sobi::My( 'id' ) ) );
 				}
