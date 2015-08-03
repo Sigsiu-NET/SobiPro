@@ -240,17 +240,22 @@ class SPImage extends SPFile
 			/* Set the background color for new image to transparent */
 			imagecolortransparent( $this->image, $index );
 		}
+		/** Mon, Aug 3, 2015 09:32:49
+		 * It doesn't make much sense. If the uploaded PNG file is not transparent in original
+		 * why do we need to add the transparency?
+		 * Let's see if we screw something with that
+		 */
 		/* Always make a transparent background color for PNGs that don't have one allocated already */
-		else {
-			/* Turn off transparency blending (temporarily) */
-			imagealphablending( $this->image, false );
-			/* Create a new transparent color for image */
-			$color = imagecolorallocatealpha( $this->image, 0, 0, 0, 127 );
-			/* Completely fill the background of the new image with allocated color. */
-			imagefill( $this->image, 0, 0, $color );
-			/* Restore transparency blending */
-			imagesavealpha( $this->image, true );
-		}
+//		else {
+//			/* Turn off transparency blending (temporarily) */
+//			imagealphablending( $this->image, false );
+//			/* Create a new transparent color for image */
+//			$color = imagecolorallocatealpha( $this->image, 0, 0, 0, 127 );
+//			/* Completely fill the background of the new image with allocated color. */
+//			imagefill( $this->image, 0, 0, $color );
+//			/* Restore transparency blending */
+//			imagesavealpha( $this->image, true );
+//		}
 	}
 
 	/**
