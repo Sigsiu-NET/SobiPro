@@ -69,12 +69,12 @@ Legend:
     (#) Deleting section related data from ACL while deleting a section (Issue #1491)
     (#) Issues with alias for an entry fixed (Issue #1468)
     (#) Missing user id in request params for unique cache creation (Issue #1453)
-    (#) Valid until reset after each edit (Issue #1452)
+    (#) 'Valid until' reset after each edit (Issue #1452)
     (#) Wrong error code if page has not been found (Issue #1440)
     (#) Issues with image cropper while uploading same image (name) into two different fields (Issue #1431)
     (#) Checking for width and height size in image field when crop or resize is enabled (Issue #1445)
     (#) Image handler is adding transparency to images that originally don't have it and removes the background
-    (#) Permission "to access any unpublished entry" is being overriden by the permission to access own unpublished entries (Issue #1439)
+    (#) Permission "to access any unpublished entry" is being overridden by the permission to access own unpublished entries (Issue #1439)
 
 
 -------------------

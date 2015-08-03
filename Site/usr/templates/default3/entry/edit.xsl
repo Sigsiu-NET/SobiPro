@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- @version: $Id: edit.xsl 4387 2015-02-19 12:24:35Z Radek Suski $
+<?xml version="1.0" encoding="UTF-8"?><!--
  @package: SobiPro Component for Joomla!
 
  @author
@@ -16,11 +14,6 @@
 
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
- $Date: 2015-02-19 13:24:35 +0100 (Thu, 19 Feb 2015) $
- $Revision: 4387 $
- $Author: Radek Suski $
- File location: components/com_sobipro/usr/templates/default2/entry/edit.xsl $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
@@ -29,7 +22,7 @@
 	<xsl:include href="../common/messages.xsl" />
 
 	<xsl:template match="/entry_form">
-		<div class="SPEntryEdit">
+		<div class="spEntryEdit">
 			<div>
 				<xsl:call-template name="topMenu">
 					<xsl:with-param name="searchbox">false</xsl:with-param>
@@ -109,7 +102,7 @@
 				<button class="btn sobipro-cancel" type="button">
 					<xsl:value-of select="entry/fields/cancel_button/data/button" />
 				</button>
-				<button class="btn btn-sigsiu sobipro-submit" type="button" data-loading-text="Loading...">
+				<button class="btn btn-primary btn-sigsiu sobipro-submit" type="button" data-loading-text="Loading...">
 					<xsl:value-of select="entry/fields/save_button/data/input/@value" />
 				</button>
 			</div>

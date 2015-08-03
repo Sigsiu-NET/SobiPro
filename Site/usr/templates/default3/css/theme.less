@@ -18,7 +18,7 @@
 @corners: angular;
 
 // sobipro, cornfield, malva, meadow, poppyseed, roses, cornflower, blackwidow
-@colour-set: meadow;
+@colour-set: blackwidow;
 
 
 //-------------------------------------------------------------------------------------*/
@@ -30,7 +30,10 @@
 @font-color: #333333;
 @active-color: #000066;
 @alert-color: #CCCCCC;
+
 @inverse: standard;
+@back-color: #FFFFFF;
+
 
 @import "../themes/@{colour-set}.less";
 
@@ -48,16 +51,15 @@
 
 // Overwrite some bootstrap styles
 // ----------------------------------------
+.SobiPro { padding: 4px; }
 .SobiPro a { color: @active-color;}
 .SobiPro a:hover,
 .SobiPro a:focus {
     color: darken(@active-color, 10%);
 }
-.SobiPro .alert {
-    text-shadow: none;
-}
-.SobiPro .modal-body { width: 95% }
-.SobiPro .modal.fade.in { top: 50%; }
+
+.SobiPro .modal-body { padding: 1%; }
+.SobiPro .modal.fade.in { top: 10%; }
 .SobiPro .popover-inner .spclose {
     padding-right: 8px;
     padding-top: 5px;
@@ -72,10 +74,27 @@
     font-weight: 300;
 }
 
+
+// Background for modal windows (outside SobiPro container)
+// ----------------------------------------
+.modal-backdrop,
+.modal-backdrop.fade.in { opacity: 0.2; }
+.modal-backdrop {
+    background-color: @base-color;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1040;
+}
+
+
 .SobiPro h1 { color: @active-color; font-size: 28px; }
 
 
 & when (@corners = angular) {
+    .SobiPro .well,
     .SobiPro .btn,
     .SobiPro .modal,
     .SobiPro .alert,
@@ -138,10 +157,6 @@
 .SobiPro .pagination ul > li > a,
 .SobiPro .pagination ul > li > span {
     border-color: @base-color;
-}
-.SobiPro .pagination ul > li > a,
-.SobiPro .pagination ul > li > span {
-    border-color: lighten(@base-color,10%);
     border-width: 1px;
     margin: 1px;
 }
@@ -157,14 +172,29 @@
 .SobiPro .pagination ul > .active > span {
     color: @hover-color;
     background-color: @active-color;
-    font-weight: bold;
+    border-color: @active-color;
+}
+// color is bright (55-100)
+.makecolor (@a) when (lightness(@a) >= 55%) {
+    background-color: lighten(@base-color,35%);
+    border-color: lighten(@base-color,25%);
+}
+// color is in the middle (41-54)
+.makecolor (@a) when (lightness(@a) < 55%) and (lightness(@a) > 40%) {
+    background-color: lighten(@base-color,45%);
+    border-color: lighten(@base-color,35%);
+}
+// color is dark (0-40)
+.makecolor (@a) when (lightness(@a) <= 40%) {
+    background-color: lighten(@base-color,58%);
+    border-color: lighten(@base-color,50%);
 }
 .SobiPro .pagination ul > .disabled > span,
 .SobiPro .pagination ul > .disabled > a,
 .SobiPro .pagination ul > .disabled > a:hover,
 .SobiPro .pagination ul > .disabled > a:focus {
-    font-weight: normal;
-    background-color: lighten(@base-color,55%);
+    .makecolor(@base-color);
+    color:@base-color;
 }
 
 .SobiPro .dropdown-menu > .active > a,
@@ -201,17 +231,18 @@
 .SobiPro input[type="tel"]:focus,
 .SobiPro input[type="color"]:focus,
 .SobiPro .uneditable-input:focus {
-    border-color: fade(@base-color, 80%)!important;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 0.6);
+    border-color: fade(@base-color,80%)!important;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 60%);
+    & when (@inverse = inverse) {
+          box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 80%);
+    }
 }
 .SobiPro select:focus {
     outline: 0 none;
 }
-
-select option:focus {
+.SobiPro select option:focus {
     background-color: @active-color;
 }
-
 .SobiPro .thumbnail { margin-bottom: 9px; }
 
 .SobiPro .label-info,
@@ -249,6 +280,31 @@ select option:focus {
 .SobiPro .text-sigsiu {
     color: @base-color;
 }
+
+
+// SobiPro alert window
+// ----------------------------------------
+// define bootstrap alert to use it as mixin
+.SobiPro .alert {
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 20px;
+    text-shadow: none;
+}
+.SobiPro .spAlert {
+    margin-bottom: 0;
+    background-color: @alert-color;
+    color: @active-color;
+    border-color: darken(@alert-color,10%);
+    font-weight: bold;
+    font-size: 95%;
+}
+// has to be defined by the template as several apps are using it
+.SobiPro .alert-message {
+    border: 1px solid;
+    .SobiPro .alert;
+    .SobiPro .spAlert;
+}
+
 
 // Topmenu
 // ----------------------------------------
@@ -296,11 +352,11 @@ margin-right: 5px;
 .SobiPro .alpha .pagination ul { box-shadow: none; }
 .SobiPro .alpha .pagination ul li a {
     display: block;
-    width: 15px;
+    width: 13px;
     border-width: 1px;
     margin: 1px;
     text-align: center;
-    letter-spacing:-1px;
+    letter-spacing:-1.2px;
 }
 .SobiPro .alphalist .dropdown-menu { text-align: left; }
 
@@ -336,8 +392,7 @@ margin-right: 5px;
     margin-right: 5px;
 }
 
-
-//Views/DV
+// Views/DV
 // ----------------------------------------
 .SobiPro .spCategoryContainer,
 .SobiPro .spEntryContainer {
@@ -347,30 +402,32 @@ margin-right: 5px;
 .SobiPro .spEntryCats { font-size: 80%; }
 .SobiPro .spDetails { font-size: 14px;}
 
+
 // Entry detail
 // ----------------------------------------
-.spDetailEntry .spManage {
+.SobiPro .spDetailEntry .spManage {
     margin-right: 7px;
     margin-top: 7px;
 }
-.spDetails .alert-success {
+.SobiPro .spDetails .alert-success {
     background-color: @alert-color;
     color: @active-color;
     border-color: darken(@alert-color,10%);
 }
+.SobiPro span.spDetailSuffix { font-size: 80%; }
 
 
 // Entry Status
 // ----------------------------------------
-.entry-status i {
+.SobiPro .entry-status i {
     font-size: 70%;
     color: #A90000;
     padding-left: 5px;
 }
-a.entry-status:hover,
-a.entry-status:active,
-a.entry-status:focus { text-decoration: none; }
-.popover {
+.SobiPro a.entry-status:hover,
+.SobiPro a.entry-status:active,
+.SobiPro a.entry-status:focus { text-decoration: none; }
+.SobiPro .popover {
     font-size: 12px;
     line-height: 16px;
     font-weight: normal;
@@ -379,39 +436,136 @@ a.entry-status:focus { text-decoration: none; }
 
 // Add entry form
 // ----------------------------------------
-.SobiPro .spAlert {
-    margin-bottom: 0;
-    background-color: @alert-color;
-    color: @active-color;
-    border-color: darken(@alert-color,10%);
-    font-weight: bold;
-    font-size: 95%;
-}
-.SobiPro .SPEntryEdit .required { border-color: darken(@alert-color,15%); }
-.SobiPro .SPEntryEdit .progress {
+// Core
+.SobiPro .spEntryEdit .required { border-color: darken(@alert-color,15%); }
+.SobiPro .spEntryEdit .progress {
     min-width: 100px;
     width: 50%;
 }
-.SobiPro .editor { overflow: visible; }
-.SobiPro .form-horizontal { margin-right: 20px; }
 
-.SobiPro .form-horizontal .spFieldUrl { display: inline; }
-.SobiPro .form-horizontal .spFieldUrlLabel {
-    margin-bottom: 5px;
-}
+
+.SobiPro .spClassEditText textarea,
+.SobiPro .spClassEditInbox input { width: 97%; }
+
+.SobiPro .spEntryEdit .message-lightbulb { margin-left: 15px; }
+.SobiPro .editor { overflow: visible; }
+//.SobiPro .form-horizontal { margin-right: 20px; }
+
+// URL and Email Fields
+.SobiPro .form-horizontal .spFieldUrlLabel { margin-bottom: 5px; }
+.SobiPro .form-horizontal .spClassEmailTitle { min-width: 100px; }
+.SobiPro .form-horizontal .spFieldEmail label,
+.SobiPro .form-horizontal .spFieldEmailLabel label,
 .SobiPro .form-horizontal .spFieldUrlLabel label {
     padding-right: 5px;
     color: #666666;
     margin-top: 5px;
     float: left;
 }
+.SobiPro .form-horizontal .spFieldEmail { margin-top: 5px; }
+.SobiPro .form-horizontal .spFieldUrl { display: inline; margin-top: 10px; }
+.SobiPro .form-horizontal .spFieldUrl select { width: 80px; }
+
+// Image Field
+.SobiPro .spEditImagePreview { float: left; }
+.SobiPro .spEditImagePreview img {
+    padding: 4px;
+    background-color: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 0 5px 5px 0;
+}
+.SobiPro .spImageField input[type='checkbox'] { margin: 1px 5px 5px 0; }
+.SobiPro .spImageField label { display: inline-block; }
+.SobiPro .spImageUpload input { height: 21px; }
+.SobiPro .spImageUpload .span1 { margin-left: 10px; }
+.SobiPro .spImageUpload .progress-message {
+    margin-top: 15px;
+    margin-left: 10px;
+    clear: left;
+}
+.SobiPro .spImageUpload .alert { margin-top: 5px; }
+
+// Calendar Field
+.SobiPro .input-append.date.spDatePicker { width: 86%; }
+
+
+// Aggregation Field
+.SobiPro .form-horizontal .bootstrap-tagsinput {
+    width: 97%;
+    & when (@inverse = inverse) {
+        background-color: @hover-color;
+    }
+}
+.SobiPro .form-horizontal .bootstrap-tagsinput .tag { color: @text-color; }
+.SobiPro .form-horizontal .bootstrap-tagsinput .tag [data-role="remove"] {
+    color: darken(@text-color,10%);
+}
+
+// Download Field
+.SobiPro .form-horizontal .spFieldDNPermission,
+.SobiPro .form-horizontal .spFieldDNLicense {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.SobiPro .form-horizontal .spFieldDNLicense label {
+    padding-right: 5px;
+    color: #666666;
+    margin-top: 5px;
+    float: left;
+}
+.SobiPro .form-horizontal .spFieldDNPermission > label {
+    color: #666666;
+    margin-top: 20px;
+}
+.SobiPro .form-horizontal .spFieldDNPermission .spFieldCheckbox label { margin-right: 10px; }
+
+.SobiPro .spEditDownloadPreview { margin-top: 6px; }
+.SobiPro .spEditDownloadPreview p {
+    color: #666666;
+    font-size: 14px;
+}
+.SobiPro .spEditDownloadPreview div { float: left; }
+.SobiPro .spEditDownloadPreview input[type='checkbox'] { margin: 0px 5px 6px 0px; }
+.SobiPro .spEditDownloadPreview label,
+.SobiPro .spdFileUpload input { height: 21px; }
+.SobiPro .spdFileUpload .span1 { margin-left: 10px; }
+.SobiPro .spdFileUpload .progress-message {
+    margin-top: 10px;
+    margin-left: 20px;
+    clear: left;
+}
+.SobiPro .spdFileUpload .alert { margin-top: 5px; }
+
+// Sigsiu Tree
+.SigsiuTree .selected {
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.SigsiuTree .selected select { min-height: 200px; }
+.SigsiuTree .buttons {
+    clear: both;
+    padding: 10px;
+}
+.SigsiuTree .buttons button { margin: 5px; }
+.SigsiuTree .tree {
+    float: left;
+    overflow: auto;
+    width: 50%;
+    max-height: 250px;
+}
+
 
 // special adjustments for inverse template colors
 // -----------------------------------------------
 & when (@inverse = inverse) {
     .SobiPro .spDetails { font-size: 110%;}
+    .SobiPro,
+    .SobiPro .modal { background-color: @back-color; }
+    .SobiPro .modal-footer { background-color: @hover-color; }
 
-    .SobiPro .SPEntryEdit label,
+    .SobiPro .spEntryEdit label,
     .SobiPro .spSearch label,
     .SobiPro .SPSearchSelectRangeFrom span,
     .SobiPro .SPSearchSelectRangeTo span,
@@ -449,74 +603,6 @@ a.entry-status:focus { text-decoration: none; }
         border-color: #444444;
     }
 }
-.SobiPro .form-horizontal .spFieldUrl { margin-top: 10px; }
-.SobiPro .form-horizontal .spFieldUrl select { width: 80px; }
-
-.SobiPro .spEditImagePreview { float: left; }
-.SobiPro .spEditImagePreview img {
-    padding: 4px;
-    background-color: #FFF;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    margin: 0 5px 5px 0;
-}
-.SobiPro .spImageField input[type='checkbox'] { margin: 5px; }
-.SobiPro .spImageField label { display: inline-block; }
-.SobiPro .spImageUpload input { height: 21px; }
-
-.SobiPro .spdFileUpload .span1,
-.SobiPro .spImageUpload .span1 { margin-left: 10px; }
-.SobiPro .spdFileUpload .progress-message,
-.SobiPro .spImageUpload .progress-message {
-    margin-top: 10px;
-    margin-left: 20px;
-    clear: left;
-}
-.SobiPro .spImageUpload .progress-message {
-    margin-top: 15px;
-    margin-left: 10px;
-}
-.SobiPro .spdFileUpload .alert,
-.SobiPro .spImageUpload .alert { margin-top: 5px; }
-
-.SigsiuTree .selected {
-    float: left;
-    margin-left: 10px;
-    margin-top: 10px;
-}
-.SigsiuTree .selected select {
-    min-height: 200px;
-}
-.SigsiuTree .buttons {
-    clear: both;
-    padding: 10px;
-}
-.SigsiuTree .buttons button {
-    margin: 5px;
-}
-.SigsiuTree .tree {
-    float: left;
-    overflow: auto;
-    width: 50%;
-    max-height: 250px;
-}
-
-.SobiPro .SPEntryEdit .message-lightbulb { margin-left: 15px; }
-.SobiPro .bootstrap-tagsinput .tag { color: @text-color; }
-
-.modal-backdrop,
-.modal-backdrop.fade.in {
-    opacity: 0.2;
-}
-.modal-backdrop {
-    background-color: #000000;
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 1040;
-}
 
 // Search and Edit form
 // ----------------------------------------
@@ -535,7 +621,7 @@ a.entry-status:focus { text-decoration: none; }
     margin-right: 5px;
     float: left;
 }
-.SobiPro .spFieldCheckbox input { margin-top: 6px }
+.SobiPro .spFieldCheckbox input { margin-top: 5px }
 .SobiPro .spFieldRadio input { margin-top: 10px }
 
 .SobiPro .form-horizontal .control-label input[type="checkbox"] { margin: 0; }
@@ -549,10 +635,11 @@ a.entry-status:focus { text-decoration: none; }
     padding-top: 10px;
 }
 
+
 // Search
 // ----------------------------------------
-.SPSearchInputRangeFrom,
-.SPSearchInputRangeTo {
+.SobiPro .SPSearchInputRangeFrom,
+.SobiPro .SPSearchInputRangeTo {
     float: left;
     margin: 3px;
 }
@@ -561,19 +648,19 @@ a.entry-status:focus { text-decoration: none; }
     padding-bottom: 3px;
     padding-top: 3px;
 }
-.SPSearchSelectRangeFrom span,
-.SPSearchSelectRangeTo span {
+.SobiPro .SPSearchSelectRangeFrom span,
+.SobiPro .SPSearchSelectRangeTo span {
     display: inline-block;
     min-width: 34px;
 }
-.spSearch .alert-info {
+.SobiPro .spSearch .alert-info {
     background-color: @alert-color;
     color: @active-color;
     border-color: darken(@alert-color,10%);
 }
 
 
-// Calendar Field
+// Calendar
 // ----------------------------------------
 .SobiPro .bootstrap-datetimepicker-widget td span.active:hover,
 .SobiPro .bootstrap-datetimepicker-widget td span.active:active,
@@ -629,23 +716,31 @@ a.entry-status:focus { text-decoration: none; }
 // (don't work if you change the field CSS classes in the Fields Manager)
 // ----------------------------------------
 // Core Fields
-div.spClassViewUrl { padding-top: 10px; }
-div.spClassViewImage img {
+.SobiPro div.spClassViewUrl { padding-top: 10px; }
+.SobiPro div.spClassViewImage img {
     padding: 4px;
     background-color: #FFF;
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin: 5px;
 }
-div.spClassViewMap { padding-top: 10px; padding-bottom: 10px; } // SP-GeoMap Field
-div.spClassViewAggregation { padding-top: 15px; font-size: 80%; }
-div.spClassViewAggregation strong { font-weight: 400; }
+.SobiPro div.spClassViewMap { padding-top: 10px; padding-bottom: 10px; } // SP-GeoMap Field
+.SobiPro div.spClassViewAggregation { padding-top: 15px; font-size: 80%; }
+.SobiPro div.spClassViewAggregation strong { font-weight: 400; }
 
-// Calendar Field
-.report,
-.contact { margin: 10px 0 10px 0;}
-.report { text-align: right;
+// Contact Form
+.SobiPro div.spClassViewContact { margin: 10px 0 10px 0; }
+.SobiPro .contactform { margin-top: 20px; color: @active-color; }
+.SobiPro .contactform h3 {
+    font-size: 22px;
+    color: @base-color;
 }
+.SobiPro .contactform .contactmessage { width: 100%; }
+.SobiPro .modal.contactform .form-horizontal textarea { width: 97%; }
+.SobiPro .modal.contactform .form-horizontal { margin-right: 10px; margin-left: 20px; }
+.SobiPro .modal.contactform .form-horizontal .controls { margin-left: 0; }
+.SobiPro .modal.contactform .form-horizontal .control-label { float: none; width: 100%; text-align: left; }
+.SobiPro .modal .form-horizontal .control-group { margin-bottom: 6px; }
 
 
 
@@ -672,19 +767,18 @@ div.spClassViewAggregation strong { font-weight: 400; }
     .SobiPro .form-horizontal input[type="text"],
     .SobiPro .form-horizontal textarea,
     .SobiPro .form-horizontal select {
-        width: 96%!important;
+        width: 95%!important;
     }
 }
 // Landscape phone to portrait tablet
 @media (max-width: 768px) {
-    .spClassEditCategory select { height: 100px !important; }
     .SobiPro .topmenu ul.nav { width: 100%; }
 
     .SobiPro .form-horizontal .uneditable-input,
     .SobiPro .form-horizontal input[type="text"],
     .SobiPro .form-horizontal textarea,
     .SobiPro .form-horizontal select {
-        width: 96%!important;
+        width: 95%!important;
     }
 
     .SobiPro .navbar .nav > li { float: none; }
@@ -704,6 +798,7 @@ div.spClassViewAggregation strong { font-weight: 400; }
         margin-bottom: 3px;
         width: 80px!important;
     }
+
     .SobiPro .form-horizontal .bootstrap-tagsinput input { width: 70%!important; }
     .SobiPro .spCaticon i { font-size: 2.8em; }
 }
@@ -715,16 +810,6 @@ div.spClassViewAggregation strong { font-weight: 400; }
     .SobiPro .spCategoryContainer > .row-fluid > [class*='span'] {
         width: 100%;
         float: none;
-        margin-left: 0;
-    }
-
-    // Edit entry form / Search
-    .SobiPro .form-horizontal .control-label {
-        float: none;
-        width: 100%;
-        text-align: left;
-    }
-    .SobiPro .form-horizontal .controls {
         margin-left: 0;
     }
     .SobiPro .spEditImagePreview { float: none; }
@@ -752,8 +837,9 @@ div.spClassViewAggregation strong { font-weight: 400; }
     .SobiPro .form-horizontal input[type="text"],
     .SobiPro .form-horizontal textarea,
     .SobiPro .form-horizontal select {
-        width: 98%!important;
+        width: 95%!important;
     }
+    .SobiPro .form-horizontal .bootstrap-tagsinput { width: 95%; }
     .SobiPro .form-horizontal .bootstrap-tagsinput input { width: 90%!important; }
 
     .SobiPro input[name="sp_search_for"] {
@@ -767,9 +853,11 @@ div.spClassViewAggregation strong { font-weight: 400; }
     }
     .SobiPro .spCaticon i { font-size: 3em; }
 }
+
 // Landscape phones and down
 @media (max-width: 480px) {
     .SobiPro .spCaticon i { font-size: 2.5em; }
+    .SobiPro .modal .form-horizontal .control-group { margin-bottom: 6px; }
 }
 
 

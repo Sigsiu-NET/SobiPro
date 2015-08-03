@@ -1,6 +1,5 @@
 <?php
 /**
- * @version: $Id: template.php 4420 2015-03-26 09:09:27Z Radek Suski $
  * @package: SobiPro Component for Joomla!
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
@@ -13,9 +12,6 @@
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
- * $Date: 2015-03-26 10:09:27 +0100 (Thu, 26 Mar 2015) $
- * $Revision: 4420 $
- * $Author: Radek Suski $
  */
 
 /* Warning:
