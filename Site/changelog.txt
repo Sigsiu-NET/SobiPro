@@ -75,6 +75,7 @@ Legend:
     (#) Checking for width and height size in image field when crop or resize is enabled (Issue #1445)
     (#) Image handler is adding transparency to images that originally don't have it and removes the background
     (#) Permission "to access any unpublished entry" is being overriden by the permission to access own unpublished entries (Issue #1439)
+    (#) Information messages don't appear on redirection to non-SobiPro URLs (Issue #1366)
 
 
 -------------------

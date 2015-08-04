@@ -557,9 +557,12 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		else {
 			if ( $message ) {
-				SPFactory::message()->setMessage( $message, false, $type );
+				if ( strstr( $url, 'com_sobipro' ) ) {
+					SPFactory::message()->setMessage( $message, false, $type );
+					$message = null;
+				}
 			}
-			Sobi::Redirect( $url, null, null, $redirect );
+			Sobi::Redirect( $url, $message, null, $redirect );
 		}
 	}
 
