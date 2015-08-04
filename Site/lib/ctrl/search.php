@@ -373,7 +373,7 @@ class SPSearchCtrl extends SPSectionCtrl
 					}
 					elseif ( Sobi::Cfg( 'search.entries_ordering' ) == 'counter.asc' || Sobi::Cfg( 'search.entries_ordering' ) == 'counter.desc' ) {
 						$this->_resultsByPriority[ $prio ] = SPFactory::db()
-								->select( 'id', 'spdb_counter', array( 'id' => $ids ), Sobi::Cfg( 'search.entries_ordering' ) )
+								->select( 'sid', 'spdb_counter', array( 'sid' => $ids ), Sobi::Cfg( 'search.entries_ordering' ) )
 								->loadResultArray();
 					}
 					else {
