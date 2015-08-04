@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?><!--
- @version: $Id: manage.xsl 4387 2015-02-19 12:24:35Z Radek Suski $
  @package: SobiPro Component for Joomla!
 
  @author
@@ -15,11 +14,6 @@
 
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
- $Date: 2015-02-19 13:24:35 +0100 (Thu, 19 Feb 2015) $
- $Revision: 4387 $
- $Author: Radek Suski $
- File location: components/com_sobipro/usr/templates/default2/common/manage.xsl $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
@@ -27,7 +21,7 @@
 	<xsl:template name="manage">
 		<xsl:if test="entry/approve_url or entry/edit_url or entry/publish_url or entry/delete_url">
 			<div class="btn-group spManage pull-left">
-				<a class="btn btn-sigsiu dropdown-toggle btn-small" data-toggle="dropdown" href="#">
+				<a class="btn btn-primary btn-sigsiu dropdown-toggle btn-small" data-toggle="dropdown" href="#">
 					<i class="icon-edit"></i>
 				</a>
 				<ul class="dropdown-menu">

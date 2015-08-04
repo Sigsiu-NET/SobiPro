@@ -1,5 +1,4 @@
 /**
- * @version: $Id: autosuggest.js 4387 2015-02-19 12:24:35Z Radek Suski $
  * @package: SobiPro Component for Joomla!
 
  * @author
@@ -15,11 +14,6 @@
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
- * $Date: 2015-02-19 13:24:35 +0100 (Thu, 19 Feb 2015) $
- * $Revision: 4387 $
- * $Author: Radek Suski $
- * File location: components/com_sobipro/usr/templates/default2/js/autosuggest.js $
  */
 
 SobiPro.jQuery( document ).ready( function ()

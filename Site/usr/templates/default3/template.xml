@@ -7,9 +7,9 @@
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2015 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License</license>
-	<creationDate>2015-09-01</creationDate>
+	<creationDate>2015-08-28</creationDate>
 	<version>3.0</version>
-	<description>Default SobiPro Template for SobiPro 1.1</description>
+	<description>Default SobiPro Template for SobiPro since 1.2</description>
 	<files>
 		<file path="category/view.xsl">
 			Default category view template with top menu, navigation, entries and categories.
@@ -86,6 +86,30 @@
 		<file path="section/view.xsl">
 			Template for the section main view.
 		</file>
+        <file path="themes/blackwidow.less">
+            Blackwidow color theme (black; light on dark).
+        </file>
+        <file path="themes/cornfield.less">
+            Cornfield color theme (yellow/orange/brown).
+        </file>
+        <file path="themes/cornflower.less">
+            Cornflower color theme (blue).
+        </file>
+        <file path="themes/malva.less">
+            Malva color theme (violett).
+        </file>
+        <file path="themes/meadow.less">
+            Meadow color theme (green).
+        </file>
+        <file path="themes/poppyseed.less">
+            Poppyseed color theme (shades of grey).
+        </file>
+        <file path="themes/roses.less">
+            Roses color theme (red/rose).
+        </file>
+        <file path="themes/sobipro.less">
+            SobiPro color theme (SobiPro colors; default).
+        </file>
 		<file path="template.php">
 			PHP file with additional functions to use within templates.
 		</file>

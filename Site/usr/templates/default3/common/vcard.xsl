@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
- @version: $Id: vcard.xsl 4420 2015-03-26 09:09:27Z Radek Suski $
+<?xml version="1.0" encoding="UTF-8"?><!--
  @package: SobiPro Component for Joomla!
 
  @author
@@ -16,11 +14,6 @@
 
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
- $Date: 2015-03-26 10:09:27 +0100 (Thu, 26 Mar 2015) $
- $Revision: 4420 $
- $Author: Radek Suski $
- File location: components/com_sobipro/usr/templates/default2/common/vcard.xsl $
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
