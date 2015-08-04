@@ -18,7 +18,7 @@
 @corners: angular;
 
 // sobipro, cornfield, malva, meadow, poppyseed, roses, cornflower, blackwidow
-@colour-set: blackwidow;
+@colour-set: sobipro;
 
 
 //-------------------------------------------------------------------------------------*/
@@ -452,19 +452,18 @@ margin-right: 5px;
 //.SobiPro .form-horizontal { margin-right: 20px; }
 
 // URL and Email Fields
-.SobiPro .form-horizontal .spFieldUrlLabel { margin-bottom: 5px; }
-.SobiPro .form-horizontal .spClassEmailTitle { min-width: 100px; }
-.SobiPro .form-horizontal .spFieldEmail label,
-.SobiPro .form-horizontal .spFieldEmailLabel label,
-.SobiPro .form-horizontal .spFieldUrlLabel label {
-    padding-right: 5px;
-    color: #666666;
-    margin-top: 5px;
-    float: left;
-}
-.SobiPro .form-horizontal .spFieldEmail { margin-top: 5px; }
-.SobiPro .form-horizontal .spFieldUrl { display: inline; margin-top: 10px; }
-.SobiPro .form-horizontal .spFieldUrl select { width: 80px; }
+.SobiPro .spFieldUrlLabel { margin-bottom: 5px; }
+//.SobiPro .spClassEmailTitle { min-width: 100px; }
+//.SobiPro .spFieldEmail label,
+//.SobiPro .spFieldEmailLabel label {
+//    padding-right: 5px;
+//    color: #666666;
+//    margin-top: 5px;
+//    float: left;
+//}
+.SobiPro .spFieldEmail { margin-top: 5px; }
+.SobiPro .spFieldUrl { display: inline; margin-top: 10px; }
+.SobiPro .spFieldUrl select { width: 80px; }
 
 // Image Field
 .SobiPro .spEditImagePreview { float: left; }
@@ -491,34 +490,34 @@ margin-right: 5px;
 
 
 // Aggregation Field
-.SobiPro .form-horizontal .bootstrap-tagsinput {
-    width: 97%;
+.SobiPro .bootstrap-tagsinput {
+    width: 96%;
     & when (@inverse = inverse) {
         background-color: @hover-color;
     }
 }
-.SobiPro .form-horizontal .bootstrap-tagsinput .tag { color: @text-color; }
-.SobiPro .form-horizontal .bootstrap-tagsinput .tag [data-role="remove"] {
+.SobiPro .bootstrap-tagsinput .tag { color: @text-color; }
+.SobiPro .bootstrap-tagsinput .tag [data-role="remove"] {
     color: darken(@text-color,10%);
 }
 
 // Download Field
-.SobiPro .form-horizontal .spFieldDNPermission,
-.SobiPro .form-horizontal .spFieldDNLicense {
+.SobiPro .spFieldDNPermission,
+.SobiPro .spFieldDNLicense {
     margin-top: 5px;
     margin-bottom: 10px;
 }
-.SobiPro .form-horizontal .spFieldDNLicense label {
+.SobiPro .spFieldDNLicense label {
     padding-right: 5px;
     color: #666666;
     margin-top: 5px;
     float: left;
 }
-.SobiPro .form-horizontal .spFieldDNPermission > label {
+.SobiPro .spFieldDNPermission > label {
     color: #666666;
     margin-top: 20px;
 }
-.SobiPro .form-horizontal .spFieldDNPermission .spFieldCheckbox label { margin-right: 10px; }
+.SobiPro .spFieldDNPermission .spFieldCheckbox label { margin-right: 10px; }
 
 .SobiPro .spEditDownloadPreview { margin-top: 6px; }
 .SobiPro .spEditDownloadPreview p {
@@ -577,8 +576,7 @@ margin-right: 5px;
     .SobiPro .spEntryContainer div,
     .SobiPro .spDetailEntry div,
     .SobiPro .spFieldRadio label,
-    .SobiPro .spFieldCheckbox label,
-    .SobiPro .form-horizontal .spFieldUrlLabel label {
+    .SobiPro .spFieldCheckbox label {
         color: @font-color!important;
     }
     .SobiPro textarea,
@@ -624,13 +622,15 @@ margin-right: 5px;
 .SobiPro .spFieldCheckbox input { margin-top: 5px }
 .SobiPro .spFieldRadio input { margin-top: 10px }
 
-.SobiPro .form-horizontal .control-label input[type="checkbox"] { margin: 0; }
-.SobiPro .form-horizontal .control-label div.paybox span {
+.SobiPro .control-label input[type="checkbox"] { margin: 0; }
+.SobiPro .control-label div.paybox span {
     border: 1px solid darken(@alert-color,10%);;
     border-radius: 45px;
     padding: 5px 9px 9px 9px;
     background-color: @alert-color;
 }
+.SobiPro .form-inline .control-label div.paybox { margin-bottom: 12px; }
+
 .SobiPro .control-group.payment-message {
     padding-top: 10px;
 }
@@ -736,11 +736,11 @@ margin-right: 5px;
     color: @base-color;
 }
 .SobiPro .contactform .contactmessage { width: 100%; }
-.SobiPro .modal.contactform .form-horizontal textarea { width: 97%; }
-.SobiPro .modal.contactform .form-horizontal { margin-right: 10px; margin-left: 20px; }
-.SobiPro .modal.contactform .form-horizontal .controls { margin-left: 0; }
-.SobiPro .modal.contactform .form-horizontal .control-label { float: none; width: 100%; text-align: left; }
-.SobiPro .modal .form-horizontal .control-group { margin-bottom: 6px; }
+.SobiPro .modal.contactform textarea { width: 97%; }
+.SobiPro .modal.contactform { margin-right: 10px; margin-left: 20px; }
+.SobiPro .modal.contactform .controls { margin-left: 0; }
+.SobiPro .modal.contactform .control-label { float: none; width: 100%; text-align: left; }
+.SobiPro .modal .control-group { margin-bottom: 6px; }
 
 
 
@@ -763,10 +763,10 @@ margin-right: 5px;
 @media (min-width: 769px) and (max-width: 980px) {
     .SobiPro .topmenu ul.nav { width: 100%; }
 
-    .SobiPro .form-horizontal .uneditable-input,
-    .SobiPro .form-horizontal input[type="text"],
-    .SobiPro .form-horizontal textarea,
-    .SobiPro .form-horizontal select {
+    .SobiPro .uneditable-input,
+    .SobiPro input[type="text"],
+    .SobiPro textarea,
+    .SobiPro  select {
         width: 95%!important;
     }
 }
@@ -774,10 +774,10 @@ margin-right: 5px;
 @media (max-width: 768px) {
     .SobiPro .topmenu ul.nav { width: 100%; }
 
-    .SobiPro .form-horizontal .uneditable-input,
-    .SobiPro .form-horizontal input[type="text"],
-    .SobiPro .form-horizontal textarea,
-    .SobiPro .form-horizontal select {
+    .SobiPro .uneditable-input,
+    .SobiPro input[type="text"],
+    .SobiPro textarea,
+    .SobiPro select {
         width: 95%!important;
     }
 
@@ -790,16 +790,16 @@ margin-right: 5px;
     }
 
     // Edit entry form
-    .SobiPro .form-horizontal .spImageUpload input {
+    .SobiPro .spImageUpload input {
         width: 70px!important;
         height: 31px;
     }
-    .SobiPro .form-horizontal .spFieldUrl select {
+    .SobiPro .spFieldUrl select {
         margin-bottom: 3px;
         width: 80px!important;
     }
 
-    .SobiPro .form-horizontal .bootstrap-tagsinput input { width: 70%!important; }
+    .SobiPro .bootstrap-tagsinput input { width: 70%!important; }
     .SobiPro .spCaticon i { font-size: 2.8em; }
 }
 
@@ -813,7 +813,7 @@ margin-right: 5px;
         margin-left: 0;
     }
     .SobiPro .spEditImagePreview { float: none; }
-    .SobiPro .form-horizontal .spImageUpload input {
+    .SobiPro .spImageUpload input {
         width: 100%!important;
         height: 31px;
     }
@@ -824,23 +824,23 @@ margin-right: 5px;
         padding: 2px 10px;
         font-size: 12px;
     }
-    .SobiPro .form-horizontal .control-label {
+    .SobiPro .control-label {
         float: none;
         width: 100%;
         text-align: left;
     }
-    .SobiPro .form-horizontal .control-label div.paybox { margin-bottom: 12px; }
-    .SobiPro .form-horizontal .controls {
+    .SobiPro .control-label div.paybox { margin-bottom: 12px; }
+    .SobiPro .controls {
         margin-left: 0;
     }
     .SobiPro input[name="sp_search_for"],
-    .SobiPro .form-horizontal input[type="text"],
-    .SobiPro .form-horizontal textarea,
-    .SobiPro .form-horizontal select {
+    .SobiPro input[type="text"],
+    .SobiPro textarea,
+    .SobiPro select {
         width: 95%!important;
     }
-    .SobiPro .form-horizontal .bootstrap-tagsinput { width: 95%; }
-    .SobiPro .form-horizontal .bootstrap-tagsinput input { width: 90%!important; }
+    .SobiPro .bootstrap-tagsinput { width: 95%; }
+    .SobiPro .bootstrap-tagsinput input { width: 90%!important; }
 
     .SobiPro input[name="sp_search_for"] {
         margin-bottom: 10px;
@@ -857,7 +857,7 @@ margin-right: 5px;
 // Landscape phones and down
 @media (max-width: 480px) {
     .SobiPro .spCaticon i { font-size: 2.5em; }
-    .SobiPro .modal .form-horizontal .control-group { margin-bottom: 6px; }
+    .SobiPro .modal .control-group { margin-bottom: 6px; }
 }
 
 

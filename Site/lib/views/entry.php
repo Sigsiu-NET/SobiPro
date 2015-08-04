@@ -94,7 +94,7 @@ class SPEntryView extends SPFrontView implements SPView
 								'label' => array(
 									'_complex' => 1,
 									'_data' => $field->get( 'name' ),
-									'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
+									'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->__get( 'showEditLabel' ) )
 								),
 								'data' => array( '_complex' => 1, '_xml' => 1, '_data' => $field->field( true ) ),
 								'description' => array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ), ),

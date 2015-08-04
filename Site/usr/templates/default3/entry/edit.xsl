@@ -50,18 +50,20 @@
 							</div>
 						</xsl:if>
 						<div class="control-group {@css-edit}" id="{$fieldId}-container">
-							<label class="control-label" for="{$fieldId}-input-container">
-								<xsl:choose>
-									<xsl:when test="string-length( description )">
-										<a href="#" rel="popover" data-placement="top" data-content="{description}" data-original-title="{label}">
-											<xsl:value-of select="label" />
-										</a>
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:value-of select="label" />
-									</xsl:otherwise>
-								</xsl:choose>
-							</label>
+                            <xsl:if test="label/@show = 1">
+                                <label class="control-label" for="{$fieldId}-input-container">
+                                    <xsl:choose>
+                                        <xsl:when test="string-length( description )">
+                                            <a href="#" rel="popover" data-placement="top" data-content="{description}" data-original-title="{label}">
+                                                <xsl:value-of select="label" />
+                                            </a>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="label" />
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </label>
+							</xsl:if>
 							<div class="controls" id="{$fieldId}-input-container">
 								<div>
 									<xsl:if test="string-length( @suffix )">
@@ -93,7 +95,13 @@
 										<i class="icon-lightbulb icon-large text-error" />
 									</span>
 								</xsl:if>
-							</div>
+                                <xsl:if test="label/@show = 0 and string-length( description ) > 0">
+                                    <div class="help-block">
+                                        <xsl:value-of select="description" />
+                                    </div>
+                                </xsl:if>
+
+                            </div>
 						</div>
 					</xsl:if>
 				</xsl:for-each>

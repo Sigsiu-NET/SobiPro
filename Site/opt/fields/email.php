@@ -1,20 +1,20 @@
 <?php
 /**
- * @version: $Id$
  * @package: SobiPro Component for Joomla!
+
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+
+ * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
+
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -69,7 +69,6 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			$raw = SPConfig::unserialize( $this->getRaw() );
 		}
 
-
 		if ( $this->ownLabel ) {
 			$fieldTitle = null;
 			$params = array( 'id' => $this->nid, 'size' => $this->labelWidth, 'class' => $this->cssClass . 'Title' );
@@ -81,7 +80,8 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			}
 			if ( strlen( $this->labelsLabel ) ) {
 				$this->labelsLabel = SPLang::clean( $this->labelsLabel );
-				$fieldTitle .= "<label for=\"{$this->nid}\" class=\"{$this->cssClass}Title\">{$this->labelsLabel}</label>\n";
+				//$fieldTitle .= "<label for=\"{$this->nid}\" class=\"{$this->cssClass}Title\">{$this->labelsLabel}</label>\n";
+				$params['placeholder'] = $this->labelsLabel;
 			}
 			$fieldTitle .= SPHtml_Input::text( $this->nid, ( ( is_array( $raw ) && isset( $raw[ 'label' ] ) ) ? SPLang::clean( $raw[ 'label' ] ) : null ), $params );
 		}
@@ -94,11 +94,15 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
+		$label = Sobi::Txt('FD.MAIL_EMAIL_ADDRESS');
+		if ( (!$this->ownLabel) && ($this->labelAsPlaceholder)) { // the field label will be shown only if labelAsPlaceholder is true and no own label for the email is selected
+			$label = $this->__get('name');  //get the field's label from the model
+		}
+		$params['placeholder'] = $label;
 		$field .= SPHtml_Input::text( $this->nid, ( ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null ), $params );
 
 		if ( $this->ownLabel ) {
-			$label = Sobi::Txt( 'FD.MAIL_EMAIL_ADDRESS' );
-			$field = "\n<div class=\"spFieldEmailLabel\">{$fieldTitle}</div>\n<div class=\"spFieldEmail\"><label for=\"{$this->nid}_url\" class=\"{$this->cssClass}Title\">{$label}</label>\n{$field}</div>";
+			$field = "\n<div class=\"spFieldEmailLabel\">{$fieldTitle}</div><div class=\"spFieldEmail\">{$field}</div>";
 		}
 		if ( !$return ) {
 			echo $field;
