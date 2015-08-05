@@ -80,16 +80,82 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			case 'list':
 				$this->getTemplateFiles();
 				break;
+			case 'settings':
+				$this->templateSettings();
+				break;
+			case 'saveConfig':
+				$this->saveConfig();
+				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
 				if ( !( parent::execute() ) ) {
 					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}
-				else {
-					$r = true;
-				}
 				break;
 		}
+	}
+
+	protected function saveConfig()
+	{
+		if ( !( SPFactory::mainframe()->checkToken() ) ) {
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+		}
+		$settings = SPRequest::arr( 'settings' );
+		$store = json_encode( $settings );
+		$templateName = SPRequest::cmd( 'templateName' );
+		if ( !( strlen( $templateName ) ) ) {
+			$templateName = SPC::DEFAULT_TEMPLATE;
+		}
+		try {
+			SPFs::write( Sobi::FixPath( $this->dir( $templateName ) . '/config.json' ), $store );
+			$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_SAVED' ), false, SPC::SUCCESS_MSG );
+		} catch ( SPException $x ) {
+			$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
+		}
+	}
+
+	protected function templateSettings()
+	{
+		$templateName = SPRequest::cmd( 'template' );
+		$templateSettings = array();
+		if ( !( strlen( $templateName ) ) ) {
+			$templateName = SPC::DEFAULT_TEMPLATE;
+		}
+
+		$dir = $this->dir( $templateName );
+		/** @var $view SPAdmTemplateView */
+		$view = SPFactory::View( 'template', true );
+		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == SPC::DEFAULT_TEMPLATE ) {
+			SPFactory::message()
+					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
+					->setSystemMessage();
+		}
+		if ( SPFs::exists( $dir . '/template.xml' ) ) {
+			$file = $this->getTemplateData( $dir, $view, $templateName );
+		}
+		else {
+			SPFactory::message()
+					->warning( Sobi::Txt( 'TP.MISSING_DEFINITION_FILE' ), false )
+					->setSystemMessage();
+		}
+		if ( SPFs::exists( $dir . '/config.json' ) ) {
+			$templateSettings = json_decode( SPFs::read( $dir . '/config.json' ) );
+		}
+		$menu = $this->createMenu();
+		if ( Sobi::Section() ) {
+			$menu->setOpen( 'AMN.APPS_SECTION_TPL' );
+		}
+		else {
+			$menu->setOpen( 'GB.CFG.GLOBAL_TEMPLATES' );
+		}
+		$view->assign( $menu, 'menu' )
+				->assign( $this->_task, 'task' )
+				->assign( Sobi::Section(), 'sid' )
+				->assign( $templateSettings, 'settings' )
+				->addHidden( $templateName, 'templateName' )
+				->determineTemplate( 'template', 'config', $dir );
+		Sobi::Trigger( 'Settings', $this->name(), array( &$file, &$view ) );
+		$view->display();
 	}
 
 	protected function compile( $outputMessage = true )
@@ -224,7 +290,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$file->content( $def->saveXML() );
 			$file->save();
 		}
-		$this->response( Sobi::Url( array( 'task' => 'template.info', 'template' => str_replace( SOBI_PATH . DS . 'usr' . DS . 'templates' . DS, null, $dirName ) ) ), Sobi::Txt( 'TP.DUPLICATED' ), false, 'success' );
+		$this->response( Sobi::Url( array( 'task' => 'template.info', 'template' => str_replace( SOBI_PATH . '/usr/templates/', null, $dirName ) ) ), Sobi::Txt( 'TP.DUPLICATED' ), false, 'success' );
 	}
 
 	private function info()
@@ -244,46 +310,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 
 		if ( SPFs::exists( $dir . '/template.xml' ) ) {
-			$info = new DOMDocument();
-			$info->load( $dir . '/template.xml' );
-			$xinfo = new DOMXPath( $info );
-			$template = array();
-			$template[ 'name' ] = $xinfo->query( '/template/name' )->item( 0 )->nodeValue;
-			$view->assign( $template[ 'name' ], 'template_name' );
-			$template[ 'author' ] = array(
-					'name' => $xinfo->query( '/template/authorName' )->item( 0 )->nodeValue,
-					'email' => $xinfo->query( '/template/authorEmail' )->item( 0 )->nodeValue,
-					'url' => $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue ? $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue : null,
-			);
-			$template[ 'copyright' ] = $xinfo->query( '/template/copyright' )->item( 0 )->nodeValue;
-			$template[ 'license' ] = $xinfo->query( '/template/license' )->item( 0 )->nodeValue;
-			$template[ 'date' ] = $xinfo->query( '/template/creationDate' )->item( 0 )->nodeValue;
-			$template[ 'version' ] = $xinfo->query( '/template/version' )->item( 0 )->nodeValue;
-			$template[ 'description' ] = $xinfo->query( '/template/description' )->item( 0 )->nodeValue;
-			$template[ 'id' ] = $xinfo->query( '/template/id' )->item( 0 )->nodeValue;
-			if ( $xinfo->query( '/template/previewImage' )->length && $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue ) {
-				$template[ 'preview' ] = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . str_replace( '\\', '/', str_replace( SOBI_ROOT . DS, null, $dir ) ) . '/' . $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue );
-			}
-			if ( $xinfo->query( '/template/files/file' )->length ) {
-				$files = array();
-				foreach ( $xinfo->query( '/template/files/file' ) as $file ) {
-					$filePath = $dir . '/' . $file->attributes->getNamedItem( 'path' )->nodeValue;
-					if ( $filePath && is_file( $filePath ) ) {
-						$filePath = $templateName . '.' . str_replace( '/', '.', $file->attributes->getNamedItem( 'path' )->nodeValue );
-					}
-					else {
-						$filePath = null;
-					}
-					$files[ ] = array(
-							'file' => $file->attributes->getNamedItem( 'path' )->nodeValue,
-							'description' => $file->nodeValue,
-							'filepath' => $filePath
-					);
-				}
-				$template[ 'files' ] = $files;
-				$view->assign( $files, 'files' );
-			}
-			$view->assign( $template, 'template' );
+			$file = $this->getTemplateData( $dir, $view, $templateName );
 		}
 		else {
 			SPFactory::message()
@@ -416,5 +443,56 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				->determineTemplate( 'template', 'edit' );
 		Sobi::Trigger( 'Edit', $this->name(), array( &$file, &$view ) );
 		$view->display();
+	}
+
+	/**
+	 * @param $dir
+	 * @param $view
+	 * @param $templateName
+	 * @return mixed
+	 */
+	protected function getTemplateData( $dir, $view, $templateName )
+	{
+		$info = new DOMDocument();
+		$info->load( $dir . '/template.xml' );
+		$xinfo = new DOMXPath( $info );
+		$template = array();
+		$template[ 'name' ] = $xinfo->query( '/template/name' )->item( 0 )->nodeValue;
+		$view->assign( $template[ 'name' ], 'template_name' );
+		$template[ 'author' ] = array(
+				'name' => $xinfo->query( '/template/authorName' )->item( 0 )->nodeValue,
+				'email' => $xinfo->query( '/template/authorEmail' )->item( 0 )->nodeValue,
+				'url' => $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue ? $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue : null,
+		);
+		$template[ 'copyright' ] = $xinfo->query( '/template/copyright' )->item( 0 )->nodeValue;
+		$template[ 'license' ] = $xinfo->query( '/template/license' )->item( 0 )->nodeValue;
+		$template[ 'date' ] = $xinfo->query( '/template/creationDate' )->item( 0 )->nodeValue;
+		$template[ 'version' ] = $xinfo->query( '/template/version' )->item( 0 )->nodeValue;
+		$template[ 'description' ] = $xinfo->query( '/template/description' )->item( 0 )->nodeValue;
+		$template[ 'id' ] = $xinfo->query( '/template/id' )->item( 0 )->nodeValue;
+		if ( $xinfo->query( '/template/previewImage' )->length && $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue ) {
+			$template[ 'preview' ] = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . str_replace( '\\', '/', str_replace( SOBI_ROOT . DS, null, $dir ) ) . '/' . $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue );
+		}
+		if ( $xinfo->query( '/template/files/file' )->length ) {
+			$files = array();
+			foreach ( $xinfo->query( '/template/files/file' ) as $file ) {
+				$filePath = $dir . '/' . $file->attributes->getNamedItem( 'path' )->nodeValue;
+				if ( $filePath && is_file( $filePath ) ) {
+					$filePath = $templateName . '.' . str_replace( '/', '.', $file->attributes->getNamedItem( 'path' )->nodeValue );
+				}
+				else {
+					$filePath = null;
+				}
+				$files[ ] = array(
+						'file' => $file->attributes->getNamedItem( 'path' )->nodeValue,
+						'description' => $file->nodeValue,
+						'filepath' => $filePath
+				);
+			}
+			$template[ 'files' ] = $files;
+			$view->assign( $files, 'files' );
+		}
+		$view->assign( $template, 'template' );
+		return $file;
 	}
 }

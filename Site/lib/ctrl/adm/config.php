@@ -364,7 +364,7 @@ class SPConfigAdmCtrl extends SPController
 			$realName = Sobi::Txt( 'TP.INFO' );
 			$iTask = Sobi::Url( array( 'task' => 'template.info', 'template' => basename( $tpl ), 'sid' => Sobi::Section() ) );
 			$nodes .= "spTpl.add( -123, 0,'{$realName}','{$iTask}', '', '', '{$ls}/info.png' );\n";
-			if ( file_exists( "{$tpl}/settings.xml" ) ) {
+			if ( file_exists( "{$tpl}/config.xml" ) ) {
 				$realName = Sobi::Txt( 'TP.SETTINGS' );
 				$iTask = Sobi::Url( array( 'task' => 'template.settings', 'template' => basename( $tpl ), 'sid' => Sobi::Section() ) );
 				$nodes .= "spTpl.add( -120, 0,'{$realName}','{$iTask}', '', '', '{$ls}/globe.gif' );\n";
@@ -443,10 +443,14 @@ class SPConfigAdmCtrl extends SPController
 		if ( !( $root ) ) {
 			$root = new SPFile( SOBI_PATH );
 		}
+		$exceptions = array( 'config.xml', 'config.json' );
 		foreach ( $dir as $file ) {
 			$task = null;
 			$fileName = $file->getFilename();
-			if ( $file->isDot() || $fileName == 'settings.xml' ) {
+			if ( in_array( $fileName, $exceptions ) ) {
+				continue;
+			}
+			if ( $file->isDot() ) {
 				continue;
 			}
 			$count++;

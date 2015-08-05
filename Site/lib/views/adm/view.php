@@ -109,17 +109,22 @@ class SPAdmView extends SPObject implements SPView
 	/**
 	 * @param string $path
 	 */
-	public function loadDefinition( $path )
+	public function loadDefinition( $path, $absolute = false )
 	{
-		$path = SPLoader::translatePath( $path, 'adm', true, 'xml', false );
+		if ( !( $absolute ) ) {
+			$path = SPLoader::translatePath( $path, 'adm', true, 'xml', false );
+		}
+		else {
+			$path = SPLoader::translatePath( $path, 'absolute', true, 'xml', false );
+		}
 		$this->_xml = new DOMDocument( Sobi::Cfg( 'xml.version', '1.0' ), Sobi::Cfg( 'xml.encoding', 'UTF-8' ) );
 		$this->_xml->load( $path );
 		$this->parseDefinition( $this->_xml->getElementsByTagName( 'definition' ) );
 	}
 
-	public function & determineTemplate( $type, $template )
+	public function & determineTemplate( $type, $template, $absolutePath = null )
 	{
-		if ( SPLoader::translatePath( "{$type}.{$template}", 'adm', true, 'xml' ) ) {
+		if ( SPLoader::translatePath( "{$type}.{$template}", 'adm', true, 'xml' ) || $absolutePath ) {
 			$this->assign( $this->sections(), 'sections-list' );
 			$nid = Sobi::Section( 'nid' );
 			$groups = Sobi::My( 'groups' );
@@ -131,6 +136,9 @@ class SPAdmView extends SPObject implements SPView
 			if ( !( $disableOverrides ) && SPLoader::translatePath( "{$type}.{$nid}.{$template}", 'adm', true, 'xml' ) ) {
 				$this->loadDefinition( "{$type}.{$nid}.{$template}" );
 			}
+			elseif ( $absolutePath ) {
+				$this->loadDefinition( "{$absolutePath}.{$template}", true );
+			}
 			else {
 				$this->loadDefinition( "{$type}.{$template}" );
 			}
@@ -140,6 +148,9 @@ class SPAdmView extends SPObject implements SPView
 			else {
 				$this->setTemplate( 'default' );
 			}
+		}
+		elseif ( $absolutePath ) {
+
 		}
 		else {
 			$this->loadConfig( "{$type}.{$template}" );
@@ -1402,7 +1413,7 @@ class SPAdmView extends SPObject implements SPView
 					SPLang::load( $node->nodeValue );
 					break;
 				case 'file':
-					switch( $node->attributes->getNamedItem( 'type' )->nodeValue ) {
+					switch ( $node->attributes->getNamedItem( 'type' )->nodeValue ) {
 						case 'style':
 							$this->loadCSSFile( $node->attributes->getNamedItem( 'filename' )->nodeValue, false );
 							break;
@@ -1884,9 +1895,14 @@ class SPAdmView extends SPObject implements SPView
 	{
 		$tpl = SPLoader::path( $this->_template . '_override', 'adm.template' );
 		if ( !( $tpl ) ) {
-			$tpl = SPLoader::path( $this->_template, 'adm.template' );
+			if ( strstr( $this->_template, 'absolute://' ) ) {
+				$tpl = Sobi::FixPath( str_replace( 'absolute://', null, $this->_template ) );
+			}
+			else {
+				$tpl = SPLoader::path( $this->_template, 'adm.template' );
+			}
 		}
-		if ( !$tpl ) {
+		if ( !( $tpl ) ) {
 			$tpl = SPLoader::translatePath( $this->_template, 'adm.template', false );
 			Sobi::Error( $this->name(), SPLang::e( 'TEMPLATE_DOES_NOT_EXISTS', $tpl ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			exit();
