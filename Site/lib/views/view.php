@@ -257,6 +257,9 @@ abstract class SPFrontView extends SPObject implements SPView
 		if ( SPRequest::cmd( 'format' ) == 'json' && Sobi::Cfg( 'output.json_enabled', false ) ) {
 			return $this->jsonDisplay();
 		}
+		if ( SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ) {
+			$this->templateSettings();
+		}
 		$type = $this->key( 'template_type', 'xslt' );
 		$f = null;
 		$task = SPRequest::task();
@@ -776,12 +779,12 @@ abstract class SPFrontView extends SPObject implements SPView
 								'data' => $struct,
 						),
 						'_attributes' => array( 'id' => $field->get( 'id' ),
-												'itemprop' => $field->get( 'itemprop' ),
-												'type' => $field->get( 'type' ),
-												'suffix' => $field->get( 'suffix' ),
-												'position' => $field->get( 'position' ),
-												'css_view' => $field->get ('cssClassView'),
-												'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
+								'itemprop' => $field->get( 'itemprop' ),
+								'type' => $field->get( 'type' ),
+								'suffix' => $field->get( 'suffix' ),
+								'position' => $field->get( 'position' ),
+								'css_view' => $field->get( 'cssClassView' ),
+								'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
 						)
 				);
 				if ( Sobi::Cfg( 'entry.field_description', false ) ) {
@@ -866,6 +869,39 @@ abstract class SPFrontView extends SPObject implements SPView
 						'_data' => Sobi::Txt( 'MN.ADD_ENTRY' ),
 						'_attributes' => array(
 								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'task' => 'entry.add', 'sid' => SPRequest::sid() ) )
+						)
+				);
+			}
+		}
+	}
+
+	/**
+	 * @return void
+	 */
+	protected function templateSettings()
+	{
+		$config = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ), true );
+		$task = SPRequest::task() == 'entry.add' ? 'entry.edit' : SPRequest::task();
+		$settings = array();
+		foreach ( $config as $section => $setting ) {
+			$settings[ str_replace( '-', '.', $section ) ] = $setting;
+		}
+		if ( isset( $settings[ 'general' ] ) ) {
+			foreach ( $settings[ 'general' ] as $k => $v ) {
+				$this->_attr[ 'config' ][ $k ] = array(
+						'_complex' => 1,
+						'_attributes' => array(
+								'value' => $v
+						)
+				);
+			}
+		}
+		if ( isset( $settings[ $task ] ) ) {
+			foreach ( $settings[ $task ] as $k => $v ) {
+				$this->_attr[ 'config' ][ $k ] = array(
+						'_complex' => 1,
+						'_attributes' => array(
+								'value' => $v
 						)
 				);
 			}

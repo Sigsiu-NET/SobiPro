@@ -27,33 +27,19 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 abstract class SPController extends SPObject implements SPControl
 {
 
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_task = null;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_defTask = null;
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	protected $_tCfg = null;
-	/**
-	 * @var SPDataModel
-	 */
+	/*** @var SPDataModel */
 	protected $_model = null;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_type = null;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $templateType = null;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $template = null;
 
 	/**
