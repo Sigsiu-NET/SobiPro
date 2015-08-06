@@ -1,4 +1,3 @@
-// @version: $Id: theme.css 4387 2015-02-19 12:24:35Z Radek Suski $
 /* @package: SobiPro Component for Joomla! */
 /**/
 // @author
@@ -33,6 +32,7 @@
 
 @inverse: standard;
 @back-color: #FFFFFF;
+@important-color: #a83000;
 
 
 @import "../themes/@{colour-set}.less";
@@ -356,7 +356,7 @@ margin-right: 5px;
     border-width: 1px;
     margin: 1px;
     text-align: center;
-    letter-spacing:-1.2px;
+    letter-spacing:-1.3px;
 }
 .SobiPro .alphalist .dropdown-menu { text-align: left; }
 
@@ -437,12 +437,19 @@ margin-right: 5px;
 // Add entry form
 // ----------------------------------------
 // Core
-.SobiPro .spEntryEdit .required { border-color: darken(@alert-color,15%); }
+.SobiPro .spEntryEdit .required { border: 1px solid @important-color; }
+.SobiPro .spEntryEdit .spClassRadio.required,
+.SobiPro .spEntryEdit .spClassCheckbox.required { border: none; }
 .SobiPro .spEntryEdit .progress {
     min-width: 100px;
     width: 50%;
 }
-
+.SobiPro .spEntryEdit .required-message { margin: 25px 0 10px 0; }
+.SobiPro .spEntryEdit .star {
+    color: @important-color;
+    padding-left: 2px;
+    font-size: 14px;
+}
 
 .SobiPro .spClassEditText textarea,
 .SobiPro .spClassEditInbox input { width: 97%; }
@@ -639,14 +646,10 @@ margin-right: 5px;
 // Search
 // ----------------------------------------
 .SobiPro .SPSearchInputRangeFrom,
-.SobiPro .SPSearchInputRangeTo {
-    float: left;
-    margin: 3px;
-}
+.SobiPro .SPSearchInputRangeTo,
 .SobiPro .SPSearchSelectRangeFrom,
 .SobiPro .SPSearchSelectRangeTo {
-    padding-bottom: 3px;
-    padding-top: 3px;
+    padding-bottom: 5px;
 }
 .SobiPro .SPSearchSelectRangeFrom span,
 .SobiPro .SPSearchSelectRangeTo span {
@@ -844,12 +847,6 @@ margin-right: 5px;
 
     .SobiPro input[name="sp_search_for"] {
         margin-bottom: 10px;
-    }
-    .SPSearchInputRangeFrom,
-    .SPSearchInputRangeTo {
-        float: none;
-        margin: 0;
-        width: 80%;
     }
     .SobiPro .spCaticon i { font-size: 3em; }
 }

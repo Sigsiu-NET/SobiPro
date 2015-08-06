@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ @author
+ Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ Email: sobi[at]sigsiu.net
+ Url: http://www.Sigsiu.NET
+
+ @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @license GNU/GPL Version 3
+ This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
+
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+-->
+
+<definition>
+	<header>
+		<title value="TP.CONFIG_SITE_TITLE" />
+		<file type="script" filename="bootstrap.tabs" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiTemplate">
+		<button type="apply" task="template.saveConfig" />
+		<divider />
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
+		<divider />
+		<buttons type="options" dropdown-class="pull-right">
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="acl" />
+			<button type="url" task="extensions.installed" />
+            <button type="url" task="template.info" />
+			<button type="help" target="_blank" />
+		</buttons>
+	</toolbar>
+	<body>
+		<div class="row-fluid">
+			<div class="span2" id="SPRightMenu">
+				<menu />
+			</div>
+			<div class="span10">
+				<message id="spMessage" />
+				<div class="row-fluid">
+					<div class="span12">
+						<fieldset label="TP.SETTINGS">
+                            <field type="toggle" name="settings[general][something-class]" value="settings.general.something-class" label="Something" prefix="yes_no" />
+						</fieldset>
+                        <fieldset label="TP.SETTINGS_ENTRY">
+                            <field type="select" label="TP.CONFIG.ENTRY_CSS_CLASS" name="settings[entry-edit][form-class]" selected="settings.entry-edit.form-class" class="input-large">
+                                <values>
+                                    <option value="inline" label="TP.CONFIG.ENTRY_CSS_CLASS_INLINE" />
+                                    <option value="horizontal" label="TP.CONFIG.ENTRY_CSS_CLASS_HORIZONTAL" />
+                                </values>
+                            </field>
+                            <field type="toggle" name="settings[entry-edit][required-star]" value="settings.entry-edit.required-star" label="TP.CONFIG.ENTRY_STAR" prefix="yes_no" />
+                        </fieldset>
+                        <fieldset label="TP.SETTINGS_SEARCH">
+                        </fieldset>
+                        <fieldset label="TP.SETTINGS_DETAILS">
+                        </fieldset>
+                        <fieldset label="TP.SETTINGS_LISTING">
+                        </fieldset>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
+			<field name="method" default="xhr" />
+			<field name="format" default="raw" />
+			<field name="pid" value="pid" />
+		</hidden>
+	</config>
+</definition>
