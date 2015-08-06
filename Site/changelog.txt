@@ -52,6 +52,7 @@ Legend:
     (!) Removed MYISAM setting from the tables where it is not necessary
     (!) Curl test URL changed
     (!) Bootstrap responsive CSS file added by default
+    (!) Layout improvements for range search
 
     (-) Category icons removed
 

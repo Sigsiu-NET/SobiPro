@@ -284,7 +284,8 @@
 }
 
 .SobiPro .bootstrap-datetimepicker-widget a [class^="icon-"] {
-	font-size: 20px;
+	font-size: 25px;
+	padding-left: 10px;
 	color: #08c;
 }
 
