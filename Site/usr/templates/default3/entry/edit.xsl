@@ -30,7 +30,10 @@
 			</div>
 			<xsl:apply-templates select="messages" />
 
-			<div class="form-horizontal">
+            <xsl:variable name="form-orientation">
+                <xsl:value-of select="//config/form-class/@value" />
+            </xsl:variable>
+			<div class="form-{$form-orientation}">
 				<xsl:for-each select="entry/fields/*">
 					<xsl:if test="( name() != 'save_button' ) and ( name() != 'cancel_button' )">
 						<xsl:variable name="fieldId" select="name(.)" />
@@ -62,6 +65,9 @@
                                             <xsl:value-of select="label" />
                                         </xsl:otherwise>
                                     </xsl:choose>
+                                    <xsl:if test="@required = 1 and //config/required-star/@value = 1">
+                                        <sup><span class="star"><i class="icon-star"></i></span></sup>
+                                    </xsl:if>
                                 </label>
 							</xsl:if>
 							<div class="controls" id="{$fieldId}-input-container">
@@ -106,6 +112,12 @@
 					</xsl:if>
 				</xsl:for-each>
 			</div>
+            <xsl:if test="//config/required-star/@value = 1">
+                <div class="required-message">
+                    <sup><span class="star"><i class="icon-star"></i></span></sup>
+                    <xsl:text>Fields marked with a star have to be filled in!</xsl:text>
+                </div>
+            </xsl:if>
 			<div class="pull-right">
 				<button class="btn sobipro-cancel" type="button">
 					<xsl:value-of select="entry/fields/cancel_button/data/button" />

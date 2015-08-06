@@ -44,8 +44,7 @@ Legend:
     (+) Nofollow attribute for url field
     (+) Possibility to switch the field label off in entry form
     (+) Possibility to add the label as placeholder into the input element for inbox, textarea (not Wysiwyg), email and url fields
-    (+) Language installer for templates
-    (+) Configuration screen for templates with free definable set of settings
+    (+) Template specific settings
 
     (!) Template styles from SobiPro.css moved to template's css file
     (!) New tree icons
@@ -53,6 +52,7 @@ Legend:
     (!) Removed MYISAM setting from the tables where it is not necessary
     (!) Curl test URL changed
     (!) Bootstrap responsive CSS file added by default
+    (!) Layout improvements for range search
 
     (-) Category icons removed
 
