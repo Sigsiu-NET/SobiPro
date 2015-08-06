@@ -21,13 +21,38 @@
 				<xs:element name="version" type="xs:string" minOccurs="1" maxOccurs="1"/>
 				<xs:element name="description" type="xs:string" minOccurs="0" maxOccurs="1"/>
 				<xs:element name="previewImage" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="language" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="file" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="langFile">
+											<xs:attribute name="lang" use="required">
+												<xs:simpleType>
+													<xs:restriction base="xs:string">
+														<xs:pattern value="[a-z]{2}_[A-Z]{2}"/>
+														<xs:whiteSpace value="preserve"/>
+													</xs:restriction>
+												</xs:simpleType>
+											</xs:attribute>
+											<xs:attribute name="admin" default="false"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="folder" use="optional">
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
 				<xs:element name="files" minOccurs="0" maxOccurs="1">
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="file" maxOccurs="unbounded">
 								 <xs:complexType>
 								 	<xs:simpleContent>
-								 		<xs:extension base="xs:string">								 
+								 		<xs:extension base="xs:string">
 								 			<xs:attribute name="path" use="required" type="xs:string"/>
 								 		</xs:extension>
 								 	</xs:simpleContent>
@@ -53,7 +78,7 @@
 							<xs:element name="php" type="requirement" minOccurs="0" maxOccurs="unbounded"/>
 						</xs:choice>
 					</xs:complexType>
-				</xs:element>				
+				</xs:element>
 	            <xs:element name="install" minOccurs="0" maxOccurs="1">
 	            	<xs:complexType>
 	            		<xs:sequence>
@@ -68,17 +93,17 @@
             							<xs:element name="showCategoryDesc" type="xs:boolean" default="true"/>
             							<xs:element name="showCategoryMeta" type="xs:boolean" default="true"/>
             							<xs:element name="showCategorySubcats" type="xs:boolean" default="true"/>
-        								<xs:element name="entriesInLine" type="xs:int" minOccurs="1" maxOccurs="1" default="1"/>	   
+        								<xs:element name="entriesInLine" type="xs:int" minOccurs="1" maxOccurs="1" default="1"/>
         								<xs:element name="entriesOnPage" type="xs:int" minOccurs="1" maxOccurs="1" default="5"/>
             							<xs:element name="showEntryMeta" type="xs:boolean" default="false"/>
             							<xs:element name="showEntryCategories" type="xs:boolean" default="true"/>
 										<xs:element name="options" minOccurs="0" maxOccurs="1">
 											<xs:complexType>
-												<xs:choice maxOccurs="unbounded">																		
+												<xs:choice maxOccurs="unbounded">
 													<xs:element name="option" maxOccurs="unbounded">
 														 <xs:complexType>
 														 	<xs:simpleContent>
-														 		<xs:extension base="xs:string">								 
+														 		<xs:extension base="xs:string">
 														 			<xs:attribute name="attribute" use="required" type="xs:string"/>
 														 		</xs:extension>
 														 	</xs:simpleContent>
@@ -99,7 +124,7 @@
 																			<xs:pattern value="field_[a-zA-Z0-9_]{2,50}"/>
 																			<xs:whiteSpace value="preserve"/>
 																		</xs:restriction>
-																	</xs:simpleType>																
+																	</xs:simpleType>
 																</xs:element>
 																<xs:element name="label" minOccurs="1" maxOccurs="1">
 																	<xs:complexType>
@@ -119,16 +144,16 @@
 														    				<xs:enumeration value="details"/>
 														    				<xs:enumeration value="vcard"/>
 														    				<xs:enumeration value="hidden"/>
-														  				</xs:restriction> 
-														  			</xs:simpleType>          																							 	
+														  				</xs:restriction>
+														  			</xs:simpleType>
 																</xs:element>
 																<xs:element name="options" minOccurs="0" maxOccurs="1">
 																	<xs:complexType>
-																		<xs:choice maxOccurs="unbounded">																		
+																		<xs:choice maxOccurs="unbounded">
 																			<xs:element name="option" maxOccurs="unbounded">
 																				 <xs:complexType>
 																				 	<xs:simpleContent>
-																				 		<xs:extension base="xs:string">								 
+																				 		<xs:extension base="xs:string">
 																				 			<xs:attribute name="attribute" use="required" type="xs:string"/>
 																				 		</xs:extension>
 																				 	</xs:simpleContent>
@@ -139,8 +164,8 @@
 																					<xs:sequence>
 																				 		<xs:element name="value" maxOccurs="unbounded">
 																				 			<xs:complexType>
-																				 				<xs:simpleContent> 
-																				 					<xs:extension base="xs:string"> 
+																				 				<xs:simpleContent>
+																				 					<xs:extension base="xs:string">
 																				 						<xs:attribute name="name" use="optional" type="xs:string"/>
 																				 						<xs:attribute name="group" use="optional" type="xs:string"/>
 																				 						<xs:attribute name="lang" use="optional" type="xs:string"/>
@@ -161,29 +186,29 @@
 																				 	</xs:sequence>
 																				 	<xs:attribute name="attribute" use="required" type="xs:string"/>
 																				 </xs:complexType>
-																			</xs:element>																		
+																			</xs:element>
 																		</xs:choice>
 																	</xs:complexType>
-																</xs:element>						
+																</xs:element>
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
 												</xs:sequence>
 											</xs:complexType>
-										</xs:element>		
+										</xs:element>
 										<xs:element name="categories" minOccurs="0" maxOccurs="1">
 											<xs:complexType>
 												<xs:sequence>
-													<xs:element name="category" maxOccurs="unbounded">	
+													<xs:element name="category" maxOccurs="unbounded">
 														<xs:complexType>
 															<xs:complexContent>
 																<xs:extension base="category"/>
 															</xs:complexContent>
-														</xs:complexType>						
-													</xs:element>												
+														</xs:complexType>
+													</xs:element>
 												</xs:sequence>
 											</xs:complexType>
-										</xs:element>				
+										</xs:element>
 	            					</xs:all>
 	            				</xs:complexType>
 	            			</xs:element>
@@ -201,18 +226,18 @@
 				      <xs:minLength value="2"/>
 				      <xs:maxLength value="100"/>
 				    </xs:restriction>
-				  </xs:simpleType>			
+				  </xs:simpleType>
 			</xs:element>
 			<xs:element name="introtext" minOccurs="0" maxOccurs="1" type="xs:string"/>
 			<xs:element name="description" minOccurs="0" maxOccurs="1" type="xs:string"/>
 			<xs:element name="icon" minOccurs="0" maxOccurs="1" type="xs:string"/>
 			<xs:element name="options" minOccurs="0" maxOccurs="1">
 				<xs:complexType>
-					<xs:choice maxOccurs="unbounded">																		
+					<xs:choice maxOccurs="unbounded">
 						<xs:element name="option" maxOccurs="unbounded">
 							 <xs:complexType>
 							 	<xs:simpleContent>
-							 		<xs:extension base="xs:string">								 
+							 		<xs:extension base="xs:string">
 							 			<xs:attribute name="attribute" use="required" type="xs:string"/>
 							 		</xs:extension>
 							 	</xs:simpleContent>
@@ -220,19 +245,19 @@
 						</xs:element>
 					</xs:choice>
 				</xs:complexType>
-			</xs:element>			
+			</xs:element>
 			<xs:element name="childs" minOccurs="0" maxOccurs="1">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="category" maxOccurs="unbounded">	
+						<xs:element name="category" maxOccurs="unbounded">
 							<xs:complexType>
 								<xs:complexContent>
 									<xs:extension base="category"/>
 								</xs:complexContent>
-							</xs:complexType>						
+							</xs:complexType>
 						</xs:element>
 					</xs:sequence>
-				</xs:complexType>				
+				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
@@ -240,7 +265,7 @@
 		<xs:attribute name="version" use="optional">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
-					<xs:pattern value="(\d+\.)?(\d+\.)?(\d+)?(\.)?(\d+)?"/>						
+					<xs:pattern value="(\d+\.)?(\d+\.)?(\d+)?(\.)?(\d+)?"/>
 					<xs:whiteSpace value="preserve"/>
 				</xs:restriction>
 			</xs:simpleType>
@@ -248,10 +273,16 @@
 		<xs:attribute name="type" use="optional">
 			<xs:simpleType>
 				<xs:restriction base="xs:string">
-					<xs:pattern value="function|class"/>						
+					<xs:pattern value="function|class"/>
 					<xs:whiteSpace value="preserve"/>
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:complexType>
+	<xs:simpleType name="langFile">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-zA-Z0-9\.\-_]{3,100}\.(ini|mo|po)"/>
+			<xs:whiteSpace value="preserve"/>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>

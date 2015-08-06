@@ -81,11 +81,9 @@ class SPAppInstaller extends SPInstaller
 		if ( $language && ( $language instanceof DOMNodeList ) && $language->length ) {
 			$langFiles = array();
 			foreach ( $language as $file ) {
+				$adm = false;
 				if ( $file->attributes->getNamedItem( 'admin' ) ) {
-					$adm = $file->attributes->getNamedItem( 'admin' )->nodeValue;
-				}
-				else {
-					$adm = false;
+					$adm = $file->attributes->getNamedItem( 'admin' )->nodeValue == 'true' ? true : false;
 				}
 				$langFiles[ $file->attributes->getNamedItem( 'lang' )->nodeValue ][ ] =
 						array(

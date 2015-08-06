@@ -144,9 +144,10 @@ class SPJoomlaCMSHelper
 	 * Install language file
 	 * @param string $lang
 	 * @param bool $force
+	 * @param bool $move
 	 * @return array
 	 */
-	public static function installLang( $lang, $force = true )
+	public static function installLang( $lang, $force = true, $move = false )
 	{
 		$log = array();
 		if ( count( $lang ) ) {
@@ -154,11 +155,11 @@ class SPJoomlaCMSHelper
 				$language = str_replace( '_', '-', $language );
 				if ( count( $files ) ) {
 					foreach ( $files as $file ) {
-						$target = $file[ 'adm' ] ? implode( DS, array( JPATH_ADMINISTRATOR, 'language', $language ) ) : implode( DS, array( SOBI_ROOT, 'language', $language ) );
+						$target = $file[ 'adm' ] ? implode( '/', array( JPATH_ADMINISTRATOR, 'language', $language ) ) : implode( '/', array( SOBI_ROOT, 'language', $language ) );
 						if ( $force || SPFs::exists( $target ) ) {
 							$iFile = $target . '/' . trim( $file[ 'name' ] );
 							$log[ ] = $iFile;
-							SPFs::copy( Sobi::FixPath( $file[ 'path' ] ), $iFile );
+							$move ? SPFs::move( Sobi::FixPath( $file[ 'path' ] ), $iFile ) : SPFs::copy( Sobi::FixPath( $file[ 'path' ] ), $iFile );
 						}
 					}
 				}

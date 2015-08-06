@@ -1400,6 +1400,9 @@ class SPAdmView extends SPObject implements SPView
 	{
 		foreach ( $xml as $node ) {
 			/** @var DOMNode $node */
+			if ( strstr( $node->nodeName, '#' ) ) {
+				continue;
+			}
 			switch ( $node->nodeName ) {
 				case 'script':
 					SPFactory::header()

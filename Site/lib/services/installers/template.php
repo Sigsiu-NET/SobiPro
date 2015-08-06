@@ -42,6 +42,25 @@ class SPTemplateInstaller extends SPInstaller
 					->check( $requirements );
 		}
 
+		$language = $this->xGetChilds( 'language/file' );
+		$folder = @$this->xGetChilds( 'language/@folder' )->item( 0 )->nodeValue;
+		if ( $language && ( $language instanceof DOMNodeList ) && $language->length ) {
+			$langFiles = array();
+			foreach ( $language as $file ) {
+				$adm = false;
+				if ( $file->attributes->getNamedItem( 'admin' ) ) {
+					$adm = $file->attributes->getNamedItem( 'admin' )->nodeValue == 'true' ? true : false;
+				}
+				$langFiles[ $file->attributes->getNamedItem( 'lang' )->nodeValue ][ ] =
+						array(
+								'path' => Sobi::FixPath( "{$this->root}/{$folder}/" . trim( $file->nodeValue ) ),
+								'name' => $file->nodeValue,
+								'adm' => $adm
+						);
+			}
+			SPFactory::CmsHelper()->installLang( $langFiles, false, true );
+		}
+
 		$path = SPLoader::dirPath( 'usr.templates.' . $id, 'front', false );
 		if ( SPRequest::bool( 'force' ) ) {
 			/** @var $from SPDirectory */
@@ -63,8 +82,9 @@ class SPTemplateInstaller extends SPInstaller
 
 		$exec = $this->xGetString( 'exec' );
 		if ( $exec && SPFs::exists( $this->root . DS . $exec ) ) {
-			include_once( "{$this->root}/{$exec}");
+			include_once( "{$this->root}/{$exec}" );
 		}
+
 		/** @var $dir SPDirectory */
 		$dir =& SPFactory::Instance( 'base.fs.directory', $path );
 		$zip = array_keys( $dir->searchFile( '.zip', false ) );

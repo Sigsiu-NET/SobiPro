@@ -25,6 +25,7 @@
 	<header>
 		<title value="TP.CONFIG_SITE_TITLE" />
 		<file type="script" filename="bootstrap.tabs" />
+		<file type="language" filename="SpTpl.vehicles_cars"/>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiTemplate">
 		<button type="apply" task="template.saveConfig" />
@@ -49,7 +50,7 @@
 				<message id="spMessage" />
 				<div class="row-fluid">
 					<div class="span12">
-						<fieldset label="TP.SETTINGS">
+						<fieldset label="TPL.BLA">
 							<field type="toggle" name="settings[general][something-class]" value="settings.general.something-class" label="Something" prefix="yes_no" />
 							<field type="select" label="TP.CONFIG.ENTRY_FORM_CSS_CLASS" name="settings[entry-edit][form-class]" selected="settings.entry-edit.form-class" class="input-large">
 								<values>
