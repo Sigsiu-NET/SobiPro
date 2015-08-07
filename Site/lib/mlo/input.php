@@ -147,10 +147,10 @@ abstract class SPHtml_Input
 		}
 		$f .= '<div class="btn-group">';
 		if ( !( $stupidInternetExplorer ) ) {
-			$f .= '<button class="btn select" type="button"><i class="icon-eye-open"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
+			$f .= '<button class="btn select" type="button"><i class="' . Sobi::Ico( 'upload-field.search-button' ) . '"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
 		}
 		$f .= '<button class="btn upload hide" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
-		$f .= '<button class="btn remove" disabled="disabled" type="button">' . '&nbsp;<i class="icon-remove"></i></button>';
+		$f .= '<button class="btn remove" disabled="disabled" type="button">' . '&nbsp;<i class="' . Sobi::Ico( 'upload-field.remove-button' ) . '"></i></button>';
 		$f .= '</div>';
 		$f .= '<div class="hide progress-container row">';
 		$f .= '<div class="span1">';
@@ -972,7 +972,8 @@ abstract class SPHtml_Input
 		$filter = '<input type="text" placeholder="' . Sobi::Txt( 'FILTER' ) . '" class="search pull-right spDisableEnter" name="q">';
 		$id = $params[ 'id' ];
 		$params = self::params( $params );
-		$f.= '<div class="spUserSelector">';
+		$f = null;
+		$f .= '<div class="spUserSelector">';
 		$f .= '<div class="input-append">';
 		$f .= '<input type="text" value="' . $userData . '" ' . $params . ' name="' . $name . 'Holder" readonly="readonly" class="trigger user-name"/>';
 		$f .= '<span class="add-on trigger"><i class="icon-' . $icon . '"></i></span>';

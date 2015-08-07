@@ -1,0 +1,12 @@
+{
+	"general": {},
+
+	"upload-field": {
+		"search-button": "icon-eye-open",
+		"remove-button": "icon-remove"
+	},
+
+	"calendar-field": {
+		"select-button": "icon-th"
+	}
+}

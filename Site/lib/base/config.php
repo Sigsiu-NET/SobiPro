@@ -28,21 +28,37 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  */
 class SPConfig
 {
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $_store = array();
-	/**
-	 * @var bool
-	 */
+	/*** @var bool */
 	static $cs = false;
-
+	/** @var array */
 	private static $fields = array();
+	/** @var array */
+	private $_icons = array();
 
 	private function __construct()
 	{
 		SPLoader::loadClass( 'cms.base.fs' );
 		SPLoader::loadClass( 'base.registry' );
+	}
+
+	public function icon( $icon, $def = null, $section = 'general' )
+	{
+		if ( strstr( $icon, '.' ) ) {
+			$icon = explode( '.', $icon );
+			$section = $icon[ 0 ];
+			$icon = $icon[ 1 ];
+		}
+		if ( !( count( $this->_icons ) ) ) {
+			if ( Sobi::Reg( 'current_template' ) && SPFs::exists( Sobi::Reg( 'current_template' ) . '/js/icons.json' ) ) {
+				$this->_icons = json_decode( Sobi::Reg( 'current_template' ) . '/js/icons.json', true );
+			}
+			else {
+				$this->_icons = json_decode( SPFs::read( SOBI_PATH . '/etc/icons.json' ), true );
+			}
+		}
+		return isset( $this->_icons[ $section ][ $icon ] ) ? $this->_icons[ $section ][ $icon ] : $def;
 	}
 
 	/**

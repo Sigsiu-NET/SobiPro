@@ -329,6 +329,12 @@ abstract class Sobi
 		return SPFactory::config()->key( $key, $def, $section );
 	}
 
+
+	public static function Ico( $icon, $def = null, $section = 'general' )
+	{
+		return SPFactory::config()->icon( $icon, $def, $section );
+	}
+
 	/**
 	 * Returns copy of stored registry value key
 	 *
