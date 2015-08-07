@@ -66,6 +66,7 @@
 									<message label="FM.INI_WARNING" type="error" dismiss-button="false" class="spConfigAlert" />
 									<field type="textarea" name="field.options" value="options" label="FMN.OPTIONS" editor="false" class="input-splarge" rows="20" style="" />
 									<!-- List Options -->
+                                    <field type="text" name="field.defaultValue" value="field.defaultValue" label="FM.DEFAULT_VALUE" class="input-medium" />
 								</fieldset>
 
 								<fieldset label="FM.FIELD_TYPE">

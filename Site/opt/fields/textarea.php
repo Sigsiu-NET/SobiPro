@@ -88,7 +88,10 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		if ($this->labelAsPlaceholder) {
 			$params['placeholder'] = $this->__get('name');
 		}
-		$field = SPHtml_Input::textarea( $this->nid, $this->getRaw(), $this->editor, $this->width, $this->height, $params );
+		$value = $this->getRaw();
+		$value = strlen( $value )? $value : $this->defaultValue;
+
+		$field = SPHtml_Input::textarea( $this->nid, $value, $this->editor, $this->width, $this->height, $params );
 		if ( !$return ) {
 			echo $field;
 		}
@@ -201,7 +204,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'height', 'editor', 'allowHtml', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder' );
+		return array( 'maxLength', 'width', 'height', 'editor', 'allowHtml', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue' );
 	}
 
 	/**

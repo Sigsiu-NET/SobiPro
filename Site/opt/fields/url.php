@@ -129,7 +129,14 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			$label = $this->__get('name');
 		}
 		$params['placeholder'] = $label;
-		$field .= SPHtml_Input::text( $this->nid . '_url', ( ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null ), $params );
+		$value =  ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null;
+		if ($value == null) {
+			if ($this->defaultValue) {
+				$value = $this->defaultValue;
+			}
+		}
+
+		$field .= SPHtml_Input::text( $this->nid . '_url',$value, $params );
 
 
 		if ( $this->ownLabel ) {
@@ -222,7 +229,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit', 'noFollow', 'showEditLabel', 'labelAsPlaceholder' );
+		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit', 'noFollow', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue' );
 	}
 
 	/**

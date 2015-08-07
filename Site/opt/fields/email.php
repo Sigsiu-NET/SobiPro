@@ -99,7 +99,14 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			$label = $this->__get('name');  //get the field's label from the model
 		}
 		$params['placeholder'] = $label;
-		$field .= SPHtml_Input::text( $this->nid, ( ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null ), $params );
+		$value = ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null ;
+		if ($value == null) {
+			if ($this->defaultValue) {
+				$value = $this->defaultValue;
+			}
+		}
+
+		$field .= SPHtml_Input::text( $this->nid, $value, $params );
 
 		if ( $this->ownLabel ) {
 			$field = "\n<div class=\"spFieldEmailLabel\">{$fieldTitle}</div><div class=\"spFieldEmail\">{$field}</div>";

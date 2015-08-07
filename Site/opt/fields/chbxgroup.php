@@ -65,6 +65,10 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 		if ( is_array( $selected ) && !( is_string( $selected ) ) && count( $selected ) ) {
 			$selected = array_merge( $selected, array_keys( $selected ) );
 		}
+		if (($selected == null) && ($this->defaultValue)) {
+			$selected = explode(',', $this->defaultValue);
+			$selected = array_map('trim', $selected);
+		}
 		$list = SPHtml_Input::checkBoxGroup( $this->nid, $values, $this->nid, $selected, $params, $this->labelSite, true );
 		$field = null;
 		if ( count( $list ) ) {
@@ -262,6 +266,6 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel' );
+		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue' );
 	}
 }

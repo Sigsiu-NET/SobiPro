@@ -49,6 +49,7 @@
 									<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
                                     <field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-large" />
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
+                                    <field type="text" name="field.defaultValue" value="field.defaultValue" label="FM.DEFAULT_VALUE" class="input-xxlarge" />
 								</fieldset>
 
 								<fieldset label="FM.FIELD_TYPE">

@@ -74,7 +74,11 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		if ($this->labelAsPlaceholder) {
 			$params['placeholder'] = $this->__get('name');
 		}
-		$field = SPHtml_Input::text( $this->nid, $this->getRaw(), $params );
+
+		$value = $this->getRaw();
+		$value = strlen( $value )? $value : $this->defaultValue;
+
+		$field = SPHtml_Input::text( $this->nid, $value, $params );
 		if ( !$return ) {
 			echo $field;
 		}
@@ -89,7 +93,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder' );
+		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue' );
 	}
 
 	/**

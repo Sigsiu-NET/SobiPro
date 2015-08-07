@@ -114,6 +114,15 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( is_array( $selected ) && count( $selected ) && !( isset( $selected[ 0 ] ) ) ) {
 			$selected = array_keys( $selected );
 		}
+		if (($selected == null) && ($this->defaultValue)) {
+			if ($this->multi) {
+				$selected = explode(',', $this->defaultValue);
+				$selected = array_map('trim', $selected);
+			}
+			else {
+				$selected = $this->defaultValue;
+			}
+		}
 		if ( !( $this->dependency ) ) {
 			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
 		}
@@ -328,7 +337,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel' );
+		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue' );
 	}
 
 	protected function fetchData( $data, $request = 'post' )

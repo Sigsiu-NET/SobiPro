@@ -39,7 +39,7 @@ Legend:
     (+) Possibility to select font icons for categories
     (+) Possibility to add condition attributes into toolbar's elements in administrator area
     (+) LESS compiler for SobiPro templates
-    (+) New default template (default3)
+    (+) New default template (default3) with different colour themes
     (+) Different default class selectors for fields
     (+) Nofollow attribute for url field
     (+) Possibility to switch the field label off in entry form
@@ -47,6 +47,7 @@ Legend:
     (+) Template specific settings
     (+) Language installer for templates
     (+) Definition file for used icons
+    (+) Default values for inbox, textarea, select list, multiple select list, checkbox group, email and url fields
 
     (!) Template styles from SobiPro.css moved to template's css file
     (!) New tree icons
