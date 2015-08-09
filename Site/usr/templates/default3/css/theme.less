@@ -32,7 +32,8 @@
 
 @inverse: standard;
 @back-color: #FFFFFF;
-@important-color: #a83000;
+@important-color: #fec1af;
+@error-color: #A30000;
 
 
 @import "../themes/@{colour-set}.less";
@@ -64,6 +65,7 @@
     padding-right: 8px;
     padding-top: 5px;
     font-size: 15px;
+    & when (@inverse = inverse) { opacity: 0.8; }
 }
 .SobiPro .input-prepend .alert,
 .SobiPro .input-append .alert { font-size: 14px; }
@@ -73,6 +75,8 @@
     font-size: 22px;
     font-weight: 300;
 }
+
+.SobiPro .help-block { color: @font-color; }
 
 
 // Background for modal windows (outside SobiPro container)
@@ -88,7 +92,20 @@
     top: 0;
     z-index: 1040;
 }
-
+.SobiPro .text-error,
+.SobiPro .control-group.error .checkbox,
+.SobiPro .control-group.error .radio,
+.SobiPro .control-group.error input,
+.SobiPro .control-group.error select,
+.SobiPro .control-group.error textarea,
+.SobiPro .control-group.error .control-label,
+.SobiPro .control-group.error .help-block,
+.SobiPro .control-group.error .help-inline {
+    color: @error-color;
+}
+.SobiPro .control-group.error input, .SobiPro .control-group.error select, .SobiPro .control-group.error textarea {
+    border-color: @error-color;
+}
 
 .SobiPro h1 { color: @active-color; font-size: 28px; }
 
@@ -129,6 +146,8 @@
     .SobiPro .uneditable-input,
     .SobiPro .topmenu .navbar-search .search-query {
         border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
     }
     .SobiPro .btn-group > .btn:first-child,
     .SobiPro .pagination ul > li:first-child > a,
@@ -150,6 +169,9 @@
     .SobiPro .pagination-small ul > li:last-child > span {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+    }
+    .SobiPro select {
+     //   -webkit-appearance: none;
     }
 }
 
@@ -194,7 +216,10 @@
 .SobiPro .pagination ul > .disabled > a:hover,
 .SobiPro .pagination ul > .disabled > a:focus {
     .makecolor(@base-color);
-    color:@base-color;
+    color: @base-color;
+    & when (@inverse = inverse) {
+        color: darken(@base-color,15%);
+    }
 }
 
 .SobiPro .dropdown-menu > .active > a,
@@ -236,6 +261,7 @@
     & when (@inverse = inverse) {
           box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 80%);
     }
+    border: 1px solid;
 }
 .SobiPro select:focus {
     outline: 0 none;
@@ -385,7 +411,10 @@ margin-right: 5px;
 .SobiPro .spCatintro {
     font-size: 90%;
     line-height: 15px;
-    color: #808080;
+    color: lighten(@font-color,15%);
+    & when (@inverse = inverse) {
+        color: darken(@font-color,15%);
+    }
     overflow:hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -400,7 +429,7 @@ margin-right: 5px;
     margin-top: 15px;
 }
 .SobiPro .spEntryCats { font-size: 80%; }
-.SobiPro .spDetails { font-size: 14px;}
+.SobiPro .spDetails { font-size: 14px; }
 
 
 // Entry detail
@@ -409,11 +438,6 @@ margin-right: 5px;
     margin-right: 7px;
     margin-top: 7px;
 }
-.SobiPro .spDetails .alert-success {
-    background-color: @alert-color;
-    color: @active-color;
-    border-color: darken(@alert-color,10%);
-}
 .SobiPro span.spDetailSuffix { font-size: 80%; }
 
 
@@ -421,7 +445,7 @@ margin-right: 5px;
 // ----------------------------------------
 .SobiPro .entry-status i {
     font-size: 70%;
-    color: #A90000;
+    color: @important-color;
     padding-left: 5px;
 }
 .SobiPro a.entry-status:hover,
@@ -460,14 +484,6 @@ margin-right: 5px;
 
 // URL and Email Fields
 .SobiPro .spFieldUrlLabel { margin-bottom: 5px; }
-//.SobiPro .spClassEmailTitle { min-width: 100px; }
-//.SobiPro .spFieldEmail label,
-//.SobiPro .spFieldEmailLabel label {
-//    padding-right: 5px;
-//    color: #666666;
-//    margin-top: 5px;
-//    float: left;
-//}
 .SobiPro .spFieldEmail { margin-top: 5px; }
 .SobiPro .spFieldUrl { display: inline; margin-top: 10px; }
 .SobiPro .spFieldUrl select { width: 80px; }
@@ -562,53 +578,6 @@ margin-right: 5px;
     max-height: 250px;
 }
 
-
-// special adjustments for inverse template colors
-// -----------------------------------------------
-& when (@inverse = inverse) {
-    .SobiPro .spDetails { font-size: 110%;}
-    .SobiPro,
-    .SobiPro .modal { background-color: @back-color; }
-    .SobiPro .modal-footer { background-color: @hover-color; }
-
-    .SobiPro .spEntryEdit label,
-    .SobiPro .spSearch label,
-    .SobiPro .SPSearchSelectRangeFrom span,
-    .SobiPro .SPSearchSelectRangeTo span,
-    .SobiPro .SPSearchInputRangeFrom span,
-    .SobiPro .SPSearchInputRangeTo span,
-    .SobiPro .spSectionDesc p,
-    .SobiPro .spCategoryDesc p,
-    .SobiPro .spEntryContainer p,
-    .SobiPro .spEntryContainer div,
-    .SobiPro .spDetailEntry div,
-    .SobiPro .spFieldRadio label,
-    .SobiPro .spFieldCheckbox label {
-        color: @font-color!important;
-    }
-    .SobiPro textarea,
-    .SobiPro select,
-    .SobiPro input[type="text"],
-    .SobiPro input[type="password"],
-    .SobiPro input[type="datetime"],
-    .SobiPro input[type="datetime-local"],
-    .SobiPro input[type="date"],
-    .SobiPro input[type="month"],
-    .SobiPro input[type="time"],
-    .SobiPro input[type="week"],
-    .SobiPro input[type="number"],
-    .SobiPro input[type="email"],
-    .SobiPro input[type="url"],
-    .SobiPro input[type="search"],
-    .SobiPro input[type="tel"],
-    .SobiPro input[type="color"],
-    .SobiPro .uneditable-input {
-        background-color: #444444;
-        color: @font-color;
-        border-color: #444444;
-    }
-}
-
 // Search and Edit form
 // ----------------------------------------
 .SobiPro .spFieldCheckbox,
@@ -656,6 +625,10 @@ margin-right: 5px;
     display: inline-block;
     min-width: 34px;
 }
+
+// Alert windows
+// ----------------------------------------
+.SobiPro .spDetails .alert-success,
 .SobiPro .spSearch .alert-info {
     background-color: @alert-color;
     color: @active-color;
@@ -690,6 +663,9 @@ margin-right: 5px;
 }
 .SobiPro .bootstrap-datetimepicker-widget a [class^="icon-"] {
     color: @base-color;
+    & when (@inverse = inverse) {
+        color: @text-color;
+    }
 }
 .SobiPro .bootstrap-datetimepicker-widget li > a:focus,
 .SobiPro .bootstrap-datetimepicker-widget li > a:hover {
@@ -740,11 +716,61 @@ margin-right: 5px;
 }
 .SobiPro .contactform .contactmessage { width: 100%; }
 .SobiPro .modal.contactform textarea { width: 97%; }
-.SobiPro .modal.contactform { margin-right: 10px; margin-left: 20px; }
-.SobiPro .modal.contactform .controls { margin-left: 0; }
-.SobiPro .modal.contactform .control-label { float: none; width: 100%; text-align: left; }
-.SobiPro .modal .control-group { margin-bottom: 6px; }
+.SobiPro .modal.contactform form { margin-right: 10px; margin-left: 20px; }
 
+
+
+// special adjustments for inverse template colors
+// -----------------------------------------------
+& when (@inverse = inverse) {
+    .SobiPro { font-size: 110%;}
+    .SobiPro,
+    .SobiPro .modal { background-color: @back-color; }
+    .SobiPro .modal-footer { background-color: @hover-color; }
+
+    .SobiPro .spEntryEdit label,
+    .SobiPro .spSearch label,
+    .SobiPro .spSectionDesc p,
+    .SobiPro .spCategoryDesc p,
+    .SobiPro .spEntryContainer p,
+    .SobiPro .spEntryContainer div,
+    .SobiPro .spEntryEdit .required-message,
+    .SobiPro .spDetailEntry div,
+    .SobiPro .spFieldRadio label,
+    .SobiPro .spFieldCheckbox label {
+        color: @font-color;
+    }
+    .SobiPro textarea,
+    .SobiPro select,
+    .SobiPro input[type="text"],
+    .SobiPro input[type="password"],
+    .SobiPro input[type="datetime"],
+    .SobiPro input[type="datetime-local"],
+    .SobiPro input[type="date"],
+    .SobiPro input[type="month"],
+    .SobiPro input[type="time"],
+    .SobiPro input[type="week"],
+    .SobiPro input[type="number"],
+    .SobiPro input[type="email"],
+    .SobiPro input[type="url"],
+    .SobiPro input[type="search"],
+    .SobiPro input[type="tel"],
+    .SobiPro input[type="color"],
+    .SobiPro .uneditable-input {
+        background-color: #444444;
+        color: @font-color;
+        border-color: #444444;
+    }
+    .SobiPro .spEntryContainer .popover-inner,
+    .SobiPro .spDetails .popover-inner { background-color: @back-color; color: @text-color; }
+
+    .SobiPro .spDetails .alert-success,
+    .SobiPro .spSearch .alert-info {
+        background-color: @active-color;
+        color: @text-color;
+        border-color: darken(@active-color,10%);
+    }
+}
 
 
 // Custom Media Queries

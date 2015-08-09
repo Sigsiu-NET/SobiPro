@@ -57,5 +57,8 @@
     <term value="ALPHALIST_SELECT">
         <value lang="en-GB">Select</value>
     </term>
+    <term value="ENTRY_REQUIRED_MESSAGE">
+        <value lang="en-GB">Fields marked with a star have to be filled in!</value>
+    </term>
 
 </translation>

@@ -4,13 +4,13 @@
  @author
  Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  Email: sobi[at]sigsiu.net
- Url: http://www.Sigsiu.NET
+ Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+ See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
@@ -56,7 +56,7 @@
                             <xsl:if test="label/@show = 1">
                                 <label class="control-label" for="{$fieldId}-input-container">
                                     <xsl:choose>
-                                        <xsl:when test="string-length( description )">
+                                        <xsl:when test="string-length( description ) and //config/help-position/@value = 'popup'">
                                             <a href="#" rel="popover" data-placement="top" data-content="{description}" data-original-title="{label}">
                                                 <xsl:value-of select="label" />
                                             </a>
@@ -71,6 +71,11 @@
                                 </label>
 							</xsl:if>
 							<div class="controls" id="{$fieldId}-input-container">
+                                <xsl:if test="string-length( description ) and //config/help-position/@value = 'above'">
+                                    <div class="help-block">
+                                        <xsl:value-of select="description" />
+                                    </div>
+                                </xsl:if>
 								<div>
 									<xsl:if test="string-length( @suffix )">
 										<xsl:attribute name="class">input-append</xsl:attribute>
@@ -101,12 +106,11 @@
 										<i class="icon-lightbulb icon-large text-error" />
 									</span>
 								</xsl:if>
-                                <xsl:if test="label/@show = 0 and string-length( description ) > 0">
+                                <xsl:if test="string-length( description ) and //config/help-position/@value = 'below'">
                                     <div class="help-block">
                                         <xsl:value-of select="description" />
                                     </div>
                                 </xsl:if>
-
                             </div>
 						</div>
 					</xsl:if>
@@ -115,7 +119,7 @@
             <xsl:if test="//config/required-star/@value = 1">
                 <div class="required-message">
                     <sup><span class="star"><i class="icon-star"></i></span></sup>
-                    <xsl:text>Fields marked with a star have to be filled in!</xsl:text>
+                    <xsl:value-of select="php:function( 'SobiPro::Txt', 'ENTRY_REQUIRED_MESSAGE' )" />
                 </div>
             </xsl:if>
 			<div class="pull-right">

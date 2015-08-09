@@ -52,3 +52,4 @@ if( preg_match( '/\.php$/', SPRequest::task() ) || strlen( SPRequest::task() ) >
 $class = SPLoader::loadController( 'sobipro' );
 $sobi = new $class( SPRequest::task() );
 $sobi->execute();
+//echo "";

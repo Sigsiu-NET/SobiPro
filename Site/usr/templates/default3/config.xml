@@ -2,7 +2,7 @@
  @author
  Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  Email: sobi[at]sigsiu.net
- Url: http://www.Sigsiu.NET
+ Url: https://www.Sigsiu.NET
 
  @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
@@ -18,6 +18,7 @@
 	<header>
 		<title value="TP.CONFIG_SITE_TITLE" />
 		<file type="script" filename="bootstrap.tabs" />
+        <file type="language" filename="SpTpl.default3"/>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiTemplate">
 		<button type="apply" task="template.saveConfig" />
@@ -53,12 +54,46 @@
                                 </values>
                             </field>
                             <field type="toggle" name="settings[entry-edit][required-star]" value="settings.entry-edit.required-star" label="TP.CONFIG.ENTRY_STAR" prefix="yes_no" />
+                            <field type="select" label="TP.CONFIG.ENTRY_HELPPOSITION" name="settings[entry-edit][help-position]" selected="settings.entry-edit.help-position" class="input-medium">
+                                <values>
+                                    <option value="popup" label="TP.CONFIG.ENTRY_HELPPOSITION_POPUP" />
+                                    <option value="above" label="TP.CONFIG.ENTRY_HELPPOSITION_ABOVE" />
+                                    <option value="below" label="TP.CONFIG.ENTRY_HELPPOSITION_BELOW" />
+                                </values>
+                            </field>
                         </fieldset>
                         <fieldset label="TP.SETTINGS_SEARCH">
                         </fieldset>
                         <fieldset label="TP.SETTINGS_DETAILS">
                         </fieldset>
-                        <fieldset label="TP.SETTINGS_LISTING">
+                        <fieldset label="TP.SETTINGS_SECTION">
+                            <field type="toggle" name="settings[section-view][entries_recursive]" value="settings.section-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
+                        </fieldset>
+                        <fieldset label="TP.SETTINGS_CATEGORY">
+                            <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[category-view][entries_limit]" selected="settings.category-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
+                            <values>
+                                <option value="1" label="1" />
+                                <option value="2" label="2" />
+                                <option value="3" label="3" />
+                                <option value="4" label="4" />
+                                <option value="5" label="5" />
+                                <option value="6" label="6" />
+                                <option value="8" label="8" />
+                                <option value="10" label="10" />
+                                <option value="15" label="15" />
+                                <option value="20" label="20 (not recommended)" />
+                            </values>
+                            </field>
+                            <field type="select" label="TP.CONFIG.LST_ENTRIESINLINE" name="settings[category-view][entries_in_line]" selected="settings.category-view.entries_in_line" class="input-mini">
+                                <values>
+                                    <option value="1" label="1" />
+                                    <option value="2" label="2" />
+                                    <option value="3" label="3" />
+                                    <option value="4" label="4" />
+                                    <option value="5" label="5" />
+                                </values>
+                            </field>
+                            <field type="toggle" name="settings[category-view][entries_recursive]" value="settings.category-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
                         </fieldset>
 					</div>
 				</div>

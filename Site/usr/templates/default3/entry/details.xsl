@@ -4,7 +4,7 @@
  @author
  Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  Email: sobi[at]sigsiu.net
- Url: http://www.Sigsiu.NET
+ Url: https://www.Sigsiu.NET
 
  @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3

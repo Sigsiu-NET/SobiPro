@@ -7,9 +7,10 @@
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2015 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License</license>
-	<creationDate>2015-08-28</creationDate>
+	<creationDate>2015-09-28</creationDate>
 	<version>3.0</version>
-	<description>Default SobiPro Template for SobiPro since 1.2</description>
+	<description>Default SobiPro Template for SobiPro since 1.2.
+	This template makes use of Bootstrap 2 and Font Awesome 3 elements and styles.</description>
 	<files>
 		<file path="category/view.xsl">
 			Default category view template with top menu, navigation, entries and categories.
@@ -118,6 +119,9 @@
         </file>
         <file path="config.ini">
             Main template configuration file.
+        </file>
+        <file path="config.xml">
+            Template settings file.
         </file>
 	</files>
 </template>
