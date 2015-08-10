@@ -367,7 +367,7 @@ class SPConfigAdmCtrl extends SPController
 			if ( file_exists( "{$tpl}/config.xml" ) ) {
 				$realName = Sobi::Txt( 'TP.SETTINGS' );
 				$iTask = Sobi::Url( array( 'task' => 'template.settings', 'template' => basename( $tpl ), 'sid' => Sobi::Section() ) );
-				$nodes .= "spTpl.add( -120, 0,'{$realName}','{$iTask}', '', '', '{$ls}/globe.gif' );\n";
+				$nodes .= "spTpl.add( -120, 0,'{$realName}','{$iTask}', '', '', '{$ls}/settings.png' );\n";
 			}
 		}
 		$this->travelTpl( new SPDirectoryIterator( $tpl ), $nodes, 0, $count );
