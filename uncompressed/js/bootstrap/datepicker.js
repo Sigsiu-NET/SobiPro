@@ -30,7 +30,6 @@
 $ = SobiPro.jQuery;
 (function ()
 {
-
 	// Picker object
 	var smartPhone = (window.orientation != undefined);
 	var SpDateTimePicker = function ( element, options )
@@ -77,12 +76,12 @@ $ = SobiPro.jQuery;
 			}
 			if ( this.pickTime ) {
 				if ( icon && icon.length ) this.timeIcon = icon.data( 'time-icon' );
-				if ( !this.timeIcon ) this.timeIcon = 'icon-time';
+				if ( !this.timeIcon ) this.timeIcon = SobiPro.Ico('calendar-field.time-icon', 'icon-time');
 				icon.addClass( this.timeIcon );
 			}
 			if ( this.pickDate ) {
 				if ( icon && icon.length ) this.dateIcon = icon.data( 'date-icon' );
-				if ( !this.dateIcon ) this.dateIcon = 'icon-calendar';
+				if ( !this.dateIcon ) this.dateIcon = SobiPro.Ico('calendar-field.calendar-icon', 'icon-calendar');
 				icon.removeClass( this.timeIcon );
 				icon.addClass( this.dateIcon );
 			}
@@ -1345,8 +1344,8 @@ $ = SobiPro.jQuery;
 			'</div>' +
 			'</li>' +
 			'<li class="picker-switch">' +
-			'   <a class="ctrl-reset-date"><i class="icon-remove-circle"></i></a>' +
-			'   <a class="ctrl-set-now"><i class="icon-ok-sign"></i></a>' +
+			'   <a class="ctrl-reset-date"><i class="'+ SobiPro.Ico('calendar-field.reset-icon', 'icon-remove-circle')+'"></i></a>' +
+			'   <a class="ctrl-set-now"><i class="'+ SobiPro.Ico('calendar-field.now-icon', 'icon-ok-sign')+'"></i></a>' +
 			'   <a class="accordion-toggle"><i class="' + timeIcon + '"></i></a>' +
 			'</li>' +
 			'<li' + (collapse ? ' class="collapse"' : '') + '>' +
@@ -1376,8 +1375,8 @@ $ = SobiPro.jQuery;
 			'</div>' +
 			'</li>' +
 			'<li class="picker-switch">' +
-			'   <a class="ctrl-reset-date"><i class="icon-remove-circle"></i></a>' +
-			'   <a class="ctrl-set-now"><i class="icon-ok-sign"></i></a>' +
+			'   <a class="ctrl-reset-date"><i class="'+ SobiPro.Ico('calendar-field.reset-icon', 'icon-remove-circle')+'"></i></a>' +
+			'   <a class="ctrl-set-now"><i class="'+ SobiPro.Ico('calendar-field.now-icon', 'icon-ok-sign')+'"></i></a>' +
 			'</li>' +
 			'</ul>' +
 			'</div>'
@@ -1457,12 +1456,12 @@ $ = SobiPro.jQuery;
 		(is12Hours ? ' data-hour-format="12"' : '') +
 		'>' +
 		'<tr>' +
-		'<td><a href="#" class="btn" data-action="incrementHours"><i class="icon-chevron-up"></i></a></td>' +
+		'<td><a href="#" class="btn" data-action="incrementHours"><i class="'+ SobiPro.Ico('calendar-field.increase-icon', 'icon-chevron-up')+'"></i></a></td>' +
 		'<td class="separator"></td>' +
-		'<td><a href="#" class="btn" data-action="incrementMinutes"><i class="icon-chevron-up"></i></a></td>' +
+		'<td><a href="#" class="btn" data-action="incrementMinutes"><i class="'+ SobiPro.Ico('calendar-field.increase-icon', 'icon-chevron-up')+'"></i></a></td>' +
 		(showSeconds ?
 		'<td class="separator"></td>' +
-		'<td><a href="#" class="btn" data-action="incrementSeconds"><i class="icon-chevron-up"></i></a></td>' : '') +
+		'<td><a href="#" class="btn" data-action="incrementSeconds"><i class="'+ SobiPro.Ico('calendar-field.increase-icon', 'icon-chevron-up')+'"></i></a></td>' : '') +
 		(is12Hours ? '<td class="separator"></td>' : '') +
 		'</tr>' +
 		'<tr>' +
@@ -1479,12 +1478,12 @@ $ = SobiPro.jQuery;
 		'</td>' : '') +
 		'</tr>' +
 		'<tr>' +
-		'<td><a href="#" class="btn" data-action="decrementHours"><i class="icon-chevron-down"></i></a></td>' +
+		'<td><a href="#" class="btn" data-action="decrementHours"><i class="'+ SobiPro.Ico('calendar-field.decrease-icon', 'icon-chevron-down')+'"></i></a></td>' +
 		'<td class="separator"></td>' +
-		'<td><a href="#" class="btn" data-action="decrementMinutes"><i class="icon-chevron-down"></i></a></td>' +
+		'<td><a href="#" class="btn" data-action="decrementMinutes"><i class="'+ SobiPro.Ico('calendar-field.decrease-icon', 'icon-chevron-down')+'"></i></a></td>' +
 		(showSeconds ?
 		'<td class="separator"></td>' +
-		'<td><a href="#" class="btn" data-action="decrementSeconds"><i class="icon-chevron-down"></i></a></td>' : '') +
+		'<td><a href="#" class="btn" data-action="decrementSeconds"><i class="'+ SobiPro.Ico('calendar-field.decrease-icon', 'icon-chevron-down')+'"></i></a></td>' : '') +
 		(is12Hours ? '<td class="separator"></td>' : '') +
 		'</tr>' +
 		'</table>' +

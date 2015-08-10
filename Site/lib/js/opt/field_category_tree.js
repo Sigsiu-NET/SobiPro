@@ -96,7 +96,7 @@ function SigsiuTreeEdit( options )
 		}
 		if ( proxy.loading ) {
 			this.addBtn = button.html();
-			var wait = '<i class="icon-spinner icon-spin"></i>&nbsp;&nbsp;';
+			var wait = '<i class="' + SobiPro.Ico( 'category-field.spinner', 'icon-spinner icon-spin' ) + '"></i>&nbsp;&nbsp;';
 			button.attr( 'disabled', 'disabled' );
 			button.html( wait + this.addBtn );
 			proxy.canvas.find( '.sigsiuTree' )

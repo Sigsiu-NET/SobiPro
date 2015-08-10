@@ -50,15 +50,14 @@ class SPConfig
 			$section = $icon[ 0 ];
 			$icon = $icon[ 1 ];
 		}
-		if ( !( count( $this->_icons ) ) ) {
-			if ( Sobi::Reg( 'current_template' ) && SPFs::exists( Sobi::Reg( 'current_template' ) . '/js/icons.json' ) ) {
-				$this->_icons = json_decode( Sobi::Reg( 'current_template' ) . '/js/icons.json', true );
-			}
-			else {
-				$this->_icons = json_decode( SPFs::read( SOBI_PATH . '/etc/icons.json' ), true );
-			}
-		}
+		$this->initIcons();
 		return isset( $this->_icons[ $section ][ $icon ] ) ? $this->_icons[ $section ][ $icon ] : $def;
+	}
+
+	public function icons()
+	{
+		$this->initIcons();
+		return $this->_icons;
 	}
 
 	/**
@@ -772,5 +771,17 @@ class SPConfig
 		$path = array_reverse( $path );
 		SPFactory::cache()->addVar( $path, $ident, $cid );
 		return $path;
+	}
+
+	protected function initIcons()
+	{
+		if ( !( count( $this->_icons ) ) ) {
+			if ( Sobi::Reg( 'current_template' ) && SPFs::exists( Sobi::Reg( 'current_template' ) . '/js/icons.json' ) ) {
+				$this->_icons = json_decode( Sobi::Reg( 'current_template' ) . '/js/icons.json', true );
+			}
+			else {
+				$this->_icons = json_decode( SPFs::read( SOBI_PATH . '/etc/icons.json' ), true );
+			}
+		}
 	}
 }

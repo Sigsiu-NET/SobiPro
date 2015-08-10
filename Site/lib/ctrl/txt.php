@@ -96,6 +96,7 @@ class SPJsTxt extends SPController
 			header( 'Content-type: text/javascript' );
 		}
 		echo 'SobiPro.setLang( ' . json_encode( $lang ) . ' );';
-		exit;
+		echo "\n";
+		exit( 'SobiPro.setIcons( ' . json_encode( SPFactory::config()->icons() ) . ' );' );
 	}
 }

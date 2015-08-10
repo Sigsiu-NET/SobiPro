@@ -34,6 +34,38 @@ function SobiPro()
 		}
 	};
 
+	this.Ico = function ( icon, section, def )
+	{
+		if ( !(this.icons.length) ) {
+			SobiPro.jQuery.ajax( {
+				url: 'index.php',
+				data: {
+					'option': 'com_sobipro',
+					'task': 'icons',
+					'sid': SobiProSection,
+					'format': 'json'
+				},
+				type: 'post',
+				dataType: 'json',
+				async: false
+			} ).done( function ( icons )
+			{
+				this.icons = icons;
+			} );
+		}
+		if ( icon.indexOf( '.' ) != -1 ) {
+			icon = icon.split( '.' );
+			section = icon[1];
+			icon = icon[0];
+		}
+		if( this.icons[section][icon] != undefined) {
+			return this.icons[section][icon];
+		}
+		else {
+			return def;
+		}
+	};
+
 	this.Json = function ( url, options )
 	{
 		try {
@@ -79,7 +111,7 @@ function SobiPro()
 	this.Ready = function ()
 	{
 		for ( var i = 0, j = this.fns.length; i < j; i++ ) {
-			f = this.fns[ i ];
+			f = this.fns[i];
 			f();
 		}
 	};
@@ -89,8 +121,8 @@ function SobiPro()
 		string = text.toUpperCase();
 		string = string.replace( / /g, '_' );
 		string = string.replace( /[^A-Z0-9_]/g, '' );
-		if ( this.lang != null && this.lang[ string ] ) {
-			return this.lang[ string ].replace( '{newline}', "\n" );
+		if ( this.lang != null && this.lang[string] ) {
+			return this.lang[string].replace( '{newline}', "\n" );
 		}
 		else {
 			return this.Translate( text );
@@ -115,7 +147,7 @@ function SobiPro()
 			success: function ( data )
 			{
 				if ( data.translation ) {
-					proxy.lang[ text ] = data.translation;
+					proxy.lang[text] = data.translation;
 					text = data.translation;
 				}
 			}
@@ -198,8 +230,8 @@ function SP_class( name, node )
 	var filter = new RegExp( '\\b' + name + '\\b' );
 	var e = SP_node( node ).getElementsByTagName( "*" );
 	for ( var i = 0, j = e.length; i < j; i++ ) {
-		if ( filter.test( e[ i ].className ) ) {
-			elements.push( e[ i ] );
+		if ( filter.test( e[i].className ) ) {
+			elements.push( e[i] );
 		}
 	}
 	return elements;
@@ -212,15 +244,15 @@ function SPForm()
 	{
 		string = '';
 		for ( i = 0; i < this.values.length; i++ ) {
-			string = string + this.values[ i ][ 0 ] + '=' + encodeURI( this.values[ i ][ 1 ] ) + '&';
+			string = string + this.values[i][0] + '=' + encodeURI( this.values[i][1] ) + '&';
 		}
 		return string;
 	};
 	this.parse = function ( el )
 	{
 		for ( var i = 0; i < el.childNodes.length; i++ ) {
-			tagName = new String( el.childNodes[ i ].tagName ).toLowerCase();
-			var e = el.childNodes[ i ];
+			tagName = new String( el.childNodes[i].tagName ).toLowerCase();
+			var e = el.childNodes[i];
 			if ( tagName == 'input' ) {
 				tagName = e.type;
 			}
@@ -239,14 +271,14 @@ function SPForm()
 					var opt = e.options;
 					var selected = false;
 					for ( var j = 0; j < opt.length; j++ ) {
-						if ( ( opt[ j ].value != 0 && opt[ j ].value != '' ) && opt[ j ].selected == true ) {
-							this.values.push( new Array( e.name, opt[ j ].value ) );
+						if ( ( opt[j].value != 0 && opt[j].value != '' ) && opt[j].selected == true ) {
+							this.values.push( new Array( e.name, opt[j].value ) );
 							break;
 						}
 					}
 					break;
 				default:
-					if ( el.childNodes[ i ].childNodes.length > 0 ) {
+					if ( el.childNodes[i].childNodes.length > 0 ) {
 						r = this.parse( e );
 					}
 					break;
@@ -292,8 +324,8 @@ function SPValidator()
 	{
 		var ElName = SobiPro.Txt( 'RED_HIGHLIGHTED_FIELD' );
 		for ( var j = 0; j < this.labels.length; j++ ) {
-			if ( this.labels[ j ].getAttribute( 'for' ) == field ) {
-				temp = SobiPro.htmlEntities( this.labels[ j ].innerHTML ).replace( /\s\s/g, '' );
+			if ( this.labels[j].getAttribute( 'for' ) == field ) {
+				temp = SobiPro.htmlEntities( this.labels[j].innerHTML ).replace( /\s\s/g, '' );
 				if ( temp != '' ) {
 					ElName = temp;
 				}
@@ -307,12 +339,12 @@ function SPValidator()
 		r = true;
 		try {
 			for ( var f = 0; f <= SPFilter.length; f++ ) {
-				if ( e.name == SPFilter[ f ].name ) {
-					val = SP_id( SPFilter[ f ].name ).value;
-					var filter = eval( "new RegExp(" + SPFilter[ f ].filter + ")" );
+				if ( e.name == SPFilter[f].name ) {
+					val = SP_id( SPFilter[f].name ).value;
+					var filter = eval( "new RegExp(" + SPFilter[f].filter + ")" );
 					if ( val != '' && ( filter.test( val ) == false ) ) {
 						this.highlight( e );
-						alert( SPFilter[ f ].msg.replace( '$field', '"' + this.label( e.id ) + '"' ) );
+						alert( SPFilter[f].msg.replace( '$field', '"' + this.label( e.id ) + '"' ) );
 						r = false;
 						break;
 					}
@@ -328,9 +360,9 @@ function SPValidator()
 		this.labels = SP_tag( 'label' );
 		var r = true;
 		for ( var i = 0; i < el.childNodes.length; i++ ) {
-			tagName = new String( el.childNodes[ i ].tagName );
+			tagName = new String( el.childNodes[i].tagName );
 			tagName = tagName.toLowerCase();
-			var e = el.childNodes[ i ];
+			var e = el.childNodes[i];
 			if ( tagName == 'input' ) {
 				tagName = e.type;
 			}
@@ -350,14 +382,14 @@ function SPValidator()
 				case 'checkbox':
 					if ( e.className.indexOf( 'required' ) != -1 ) {
 						if ( !( this.radio.some( function ( a )
-						{
-							return a == e.name;
-						} ) ) ) {
+							{
+								return a == e.name;
+							} ) ) ) {
 							r = false;
 							index = SP_name( e.name ).length;
 							re = SP_name( e.name );
 							for ( var i = 0; i < index; i++ ) {
-								if ( re[ i ].checked == true ) {
+								if ( re[i].checked == true ) {
 									r = true;
 									break;
 								}
@@ -384,7 +416,7 @@ function SPValidator()
 						var opt = e.options;
 						var selected = false;
 						for ( var j = 0; j < opt.length; j++ ) {
-							if ( ( opt[ j ].value != 0 && opt[ j ].value != '' ) && opt[ j ].selected == true ) {
+							if ( ( opt[j].value != 0 && opt[j].value != '' ) && opt[j].selected == true ) {
 								selected = true;
 								break;
 							}
@@ -396,7 +428,7 @@ function SPValidator()
 					}
 					break;
 				default:
-					if ( el.childNodes[ i ].childNodes.length > 0 ) {
+					if ( el.childNodes[i].childNodes.length > 0 ) {
 						r = this.validate( e );
 					}
 					break;

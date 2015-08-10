@@ -47,7 +47,7 @@ SobiPro.jQuery( document ).ready( function ()
 		} );
 		Selected[Proxy.attr( 'data-order' )] = Proxy.val();
 		Path.val( JSON.stringify( Selected ) );
-		Spinner = SobiPro.jQuery( '<i class="icon-spinner icon-spin icon-large"></i>' );
+		Spinner = SobiPro.jQuery( '<i class="' + SobiPro.Ico( 'select-field.spinner', 'icon-spinner icon-spin icon-large' ) + '"></i>' );
 		Spinner.insertAfter( Proxy );
 		Proxy.css( 'opacity', 0.5 );
 		SobiPro.jQuery.ajax( {

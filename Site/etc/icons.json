@@ -7,6 +7,20 @@
 	},
 
 	"calendar-field": {
-		"select-button": "icon-th"
+		"select-button": "icon-th",
+		"now-icon": "icon-ok-sign",
+		"time-icon": "icon-time",
+		"calendar-icon": "icon-calendar",
+		"reset-icon": "icon-remove-circle",
+		"increase-icon" : "icon-chevron-up",
+		"decrease-icon" : "icon-chevron-down"
+	},
+
+	"category-field":{
+		"spinner": "icon-spinner icon-spin"
+	},
+
+	"select-field":{
+		"spinner": "icon-spinner icon-spin"
 	}
 }
