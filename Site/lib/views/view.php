@@ -257,9 +257,8 @@ abstract class SPFrontView extends SPObject implements SPView
 		if ( SPRequest::cmd( 'format' ) == 'json' && Sobi::Cfg( 'output.json_enabled', false ) ) {
 			return $this->jsonDisplay();
 		}
-		if ( SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ) {
-			$this->templateSettings();
-		}
+
+		$this->templateSettings();
 		$type = $this->key( 'template_type', 'xslt' );
 		$f = null;
 		$task = SPRequest::task();
@@ -880,30 +879,32 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	protected function templateSettings()
 	{
-		$config = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ), true );
-		$task = SPRequest::task() == 'entry.add' ? 'entry.edit' : SPRequest::task();
-		$settings = array();
-		foreach ( $config as $section => $setting ) {
-			$settings[ str_replace( '-', '.', $section ) ] = $setting;
-		}
-		if ( isset( $settings[ 'general' ] ) ) {
-			foreach ( $settings[ 'general' ] as $k => $v ) {
-				$this->_attr[ 'config' ][ $k ] = array(
-						'_complex' => 1,
-						'_attributes' => array(
-								'value' => $v
-						)
-				);
+		if ( !( count( $this->_attr[ 'config' ] ) ) && SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ) {
+			$config = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ), true );
+			$task = SPRequest::task() == 'entry.add' ? 'entry.edit' : SPRequest::task();
+			$settings = array();
+			foreach ( $config as $section => $setting ) {
+				$settings[ str_replace( '-', '.', $section ) ] = $setting;
 			}
-		}
-		if ( isset( $settings[ $task ] ) ) {
-			foreach ( $settings[ $task ] as $k => $v ) {
-				$this->_attr[ 'config' ][ $k ] = array(
-						'_complex' => 1,
-						'_attributes' => array(
-								'value' => $v
-						)
-				);
+			if ( isset( $settings[ 'general' ] ) ) {
+				foreach ( $settings[ 'general' ] as $k => $v ) {
+					$this->_attr[ 'config' ][ $k ] = array(
+							'_complex' => 1,
+							'_attributes' => array(
+									'value' => $v
+							)
+					);
+				}
+			}
+			if ( isset( $settings[ $task ] ) ) {
+				foreach ( $settings[ $task ] as $k => $v ) {
+					$this->_attr[ 'config' ][ $k ] = array(
+							'_complex' => 1,
+							'_attributes' => array(
+									'value' => $v
+							)
+					);
+				}
 			}
 		}
 	}

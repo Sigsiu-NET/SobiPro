@@ -24,6 +24,7 @@ function SobiPro()
 	this.fns = new Array();
 	this.jQuery = null;
 	this.lang = null;
+	this.icons = [];
 
 	this.DebOut = function ( object )
 	{
@@ -34,31 +35,14 @@ function SobiPro()
 		}
 	};
 
-	this.Ico = function ( icon, section, def )
+	this.Ico = function ( icon, def, section )
 	{
-		if ( !(this.icons.length) ) {
-			SobiPro.jQuery.ajax( {
-				url: 'index.php',
-				data: {
-					'option': 'com_sobipro',
-					'task': 'icons',
-					'sid': SobiProSection,
-					'format': 'json'
-				},
-				type: 'post',
-				dataType: 'json',
-				async: false
-			} ).done( function ( icons )
-			{
-				this.icons = icons;
-			} );
-		}
 		if ( icon.indexOf( '.' ) != -1 ) {
 			icon = icon.split( '.' );
-			section = icon[1];
-			icon = icon[0];
+			section = icon[0];
+			icon = icon[1];
 		}
-		if( this.icons[section][icon] != undefined) {
+		if ( this.icons[section] != undefined && this.icons[section][icon] != undefined ) {
 			return this.icons[section][icon];
 		}
 		else {
@@ -91,6 +75,11 @@ function SobiPro()
 			};
 			return r;
 		}
+	};
+
+	this.setIcons = function ( obj )
+	{
+		this.icons = obj;
 	};
 
 	this.setLang = function ( obj )
@@ -460,3 +449,5 @@ function SPcancelEdit()
 	SP_id( 'SP_task' ).value = 'entry.cancel';
 	SP_id( 'spEntryForm' ).submit();
 }
+
+

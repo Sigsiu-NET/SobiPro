@@ -479,6 +479,25 @@ abstract class SPController extends SPObject implements SPControl
 			}
 			SPFactory::registry()->set( 'template_config', $files );
 		}
+		if ( SPLoader::translatePath( "{$path}.config", 'absolute', true, 'json' ) ) {
+			$config = json_decode( SPFs::read( SPLoader::translatePath( "{$path}.config", 'absolute', true, 'json' ) ), true );
+			$settings = array();
+			foreach ( $config as $section => $setting ) {
+				$settings[ str_replace( '-', '.', $section ) ] = $setting;
+			}
+			if ( isset( $settings[ 'general' ] ) ) {
+				foreach ( $settings[ 'general' ] as $k => $v ) {
+					$this->_tCfg[ 'general' ][ $k ] = $v;
+				}
+			}
+			$task = SPRequest::task() == 'entry.add' ? 'entry.edit' : SPRequest::task();
+			if ( isset( $settings[ $task ] ) ) {
+				foreach ( $settings[ $task ] as $k => $v ) {
+					$this->_tCfg[ 'general' ][ $k ] = $v;
+				}
+			}
+		}
+
 		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_tCfg ) );
 		SPFactory::registry()->set( 'current_template', $path );
 	}

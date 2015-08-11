@@ -1,0 +1,6 @@
+{
+	"entry-edit":
+		{"form-class": "horizontal"},
+	"general":
+		{"entries_limit": "1"}
+}
