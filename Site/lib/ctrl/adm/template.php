@@ -177,7 +177,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		try {
 			Less_Autoloader::register();
 			$parser = new Less_Parser();
-			$parser->parseFile( $file, SPFactory::config()->get( 'live_site' ) );
+			$parser->parseFile( $file );
 			$css = $parser->getCss();
 			if ( SPFs::exists( $output ) ) {
 				SPFs::delete( $output );

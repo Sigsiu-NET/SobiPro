@@ -25,14 +25,14 @@
 	<xsl:include href="../common/navigation.xsl" />
 	<xsl:include href="../common/messages.xsl" />
 	<xsl:template match="/listing">
-		<div class="SPListing">
-			<div>
-                <xsl:call-template name="topMenu">
-                    <xsl:with-param name="searchbox">true</xsl:with-param>
-                </xsl:call-template>
-				<xsl:apply-templates select="alphaMenu" />
-			</div>
-			<xsl:apply-templates select="messages" />
+		<div class="spListing">
+            <xsl:call-template name="topMenu">
+                <xsl:with-param name="searchbox">true</xsl:with-param>
+            </xsl:call-template>
+            <xsl:apply-templates select="messages" />
+
+            <xsl:apply-templates select="alphaMenu" />
+
 			<xsl:call-template name="entriesLoop" />
 			<xsl:apply-templates select="navigation" />
 		</div>
