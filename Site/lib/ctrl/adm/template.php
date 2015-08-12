@@ -106,6 +106,26 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		if ( !( strlen( $templateName ) ) ) {
 			$templateName = SPC::DEFAULT_TEMPLATE;
 		}
+
+		if ( isset( $settings[ 'less' ] ) && count( $settings[ 'less' ] ) ) {
+			foreach ( $settings[ 'less' ] as $file => $variables ) {
+				$lessFile = Sobi::FixPath( $this->dir( $templateName ) . '/css/' . $file . '.less' );
+				if ( SPFs::exists( $lessFile ) ) {
+					$lessContent = SPFs::read( $lessFile );
+					foreach ( $variables as $variable => $value ) {
+						// @colour-set: sobipro;
+						$lessContent = preg_replace( "/@{$variable}:[^\n]*\;/", "@{$variable}: {$value};", $lessContent );
+					}
+				}
+				try {
+					SPFs::write( $lessFile, $lessContent );
+					$this->compileLessFile( $lessFile, str_replace( 'less', 'css', $lessFile ), Sobi::Url( 'template.settings' ) );
+				} catch ( SPException $x ) {
+					$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
+				}
+			}
+		}
+
 		try {
 			SPFs::write( Sobi::FixPath( $this->dir( $templateName ) . '/config.json' ), $store );
 			$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_SAVED' ), false, SPC::SUCCESS_MSG );
@@ -173,19 +193,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		if ( !( $file ) ) {
 			$this->response( Sobi::Url( $u ), SPLang::e( 'Missing file to compile %s', SPRequest::cmd( 'fileName' ) ), false, SPC::ERROR_MSG );
 		}
-		include( 'phar://' . SOBI_PATH . '/lib/services/third-party/less/less.phar.tar.gz/Autoloader.php' );
-		try {
-			Less_Autoloader::register();
-			$parser = new Less_Parser();
-			$parser->parseFile( $file );
-			$css = $parser->getCss();
-			if ( SPFs::exists( $output ) ) {
-				SPFs::delete( $output );
-			}
-			SPFs::write( $output, $css );
-		} catch ( Exception $x ) {
-			$this->response( Sobi::Url( $u ), SPLang::e( 'TP.LESS_FILE_NOT_COMPILED', $x->getMessage() ), false, SPC::ERROR_MSG );
-		}
+		$this->compileLessFile( $file, $output, $u );
 		if ( $outputMessage ) {
 			$this->response( Sobi::Url( $u ), Sobi::Txt( 'TP.LESS_FILE_COMPILED', str_replace( SOBI_PATH, null, $output ) ), false, SPC::SUCCESS_MSG );
 		}
@@ -494,5 +502,27 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		$view->assign( $template, 'template' );
 		return $file;
+	}
+
+	/**
+	 * @param $file
+	 * @param $output
+	 * @param $u
+	 */
+	protected function compileLessFile( $file, $output, $u )
+	{
+		include( 'phar://' . SOBI_PATH . '/lib/services/third-party/less/less.phar.tar.gz/Autoloader.php' );
+		try {
+			Less_Autoloader::register();
+			$parser = new Less_Parser();
+			$parser->parseFile( $file );
+			$css = $parser->getCss();
+			if ( SPFs::exists( $output ) ) {
+				SPFs::delete( $output );
+			}
+			SPFs::write( $output, $css );
+		} catch ( Exception $x ) {
+			$this->response( Sobi::Url( $u ), SPLang::e( 'TP.LESS_FILE_NOT_COMPILED', $x->getMessage() ), false, SPC::ERROR_MSG );
+		}
 	}
 }
