@@ -59,7 +59,22 @@
     color: darken(@active-color, 10%);
 }
 
+// Modal windows
+.SobiPro .modal { margin-top: 20px; color: @active-color; }
+.SobiPro .modal-header h3 {
+    font-size: 22px;
+    color: @base-color;
+}
+.SobiPro .modal-header .close {
+    text-shadow: none;
+    & when (@inverse = inverse) {
+        opacity: 0.8;
+        color: @base-color;
+    }
+}
 .SobiPro .modal-body { padding: 1%; }
+.SobiPro .modal textarea { width: 97%; }
+.SobiPro .modal form { margin-right: 10px; margin-left: 20px; }
 .SobiPro .modal.fade.in { top: 10%; }
 .SobiPro .popover-inner .spclose {
     padding-right: 8px;
@@ -67,6 +82,8 @@
     font-size: 15px;
     & when (@inverse = inverse) { opacity: 0.8; }
 }
+
+
 .SobiPro .input-prepend .alert,
 .SobiPro .input-append .alert { font-size: 14px; }
 
@@ -77,6 +94,24 @@
 }
 
 .SobiPro .help-block { color: @font-color; }
+
+.SobiPro .well {
+    box-shadow: none;
+    border: 1px solid;
+}
+
+// seems that is missed in bootstrap??
+.SobiPro .input-medium {
+    min-height:30px;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing: border-box;
+}
+
+// will be changed by Joomla template
+[class^="icon-"], [class*=" icon-"] {
+    margin-right: 0;
+}
 
 
 // Background for modal windows (outside SobiPro container)
@@ -144,7 +179,11 @@
     .SobiPro input[type="tel"],
     .SobiPro input[type="color"],
     .SobiPro .uneditable-input,
-    .SobiPro .topmenu .navbar-search .search-query {
+    .SobiPro .topmenu .navbar-search .search-query,
+    .SobiPro input#review-positives_tag,
+    .SobiPro input#review-negatives_tag,
+    .SobiPro div.tagsinput,
+    .SobiPro div.tagsinput span.tag {
         border-radius: 0;
         -webkit-border-radius: 0;
         -moz-border-radius: 0;
@@ -174,6 +213,17 @@
      //   -webkit-appearance: none;
     }
 }
+//tag corners are angular by default; Bootstrap corners are rounded by default
+& when (@corners = rounded) {
+    .SobiPro input#review-positives_tag,
+    .SobiPro input#review-negatives_tag,
+    .SobiPro div.tagsinput,
+    .SobiPro div.tagsinput span.tag {
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+    }
+}
 
 // Pagination
 .SobiPro .pagination ul > li > a,
@@ -198,8 +248,8 @@
 }
 // color is bright (55-100)
 .makecolor (@a) when (lightness(@a) >= 55%) {
-    background-color: lighten(@base-color,35%);
-    border-color: lighten(@base-color,25%);
+    background-color: lighten(@base-color,40%);
+    border-color: lighten(@base-color,28%);
 }
 // color is in the middle (41-54)
 .makecolor (@a) when (lightness(@a) < 55%) and (lightness(@a) > 40%) {
@@ -211,14 +261,23 @@
     background-color: lighten(@base-color,58%);
     border-color: lighten(@base-color,50%);
 }
+.SobiPro .well,
 .SobiPro .pagination ul > .disabled > span,
 .SobiPro .pagination ul > .disabled > a,
 .SobiPro .pagination ul > .disabled > a:hover,
 .SobiPro .pagination ul > .disabled > a:focus {
     .makecolor(@base-color);
-    color: @base-color;
+    color: darken(@base-color, 10%);
     & when (@inverse = inverse) {
-        color: darken(@base-color,15%);
+        color: darken(@base-color,35%);
+    }
+}
+& when (@inverse = inverse) {
+    .SobiPro .well.rating-summary,
+    .SobiPro .review-container .well {
+        background-color: darken(@base-color,35%);
+        border-color: darken(@base-color,28%);
+        color: lighten(@base-color,50%);
     }
 }
 
@@ -329,6 +388,15 @@
     border: 1px solid;
     .SobiPro .alert;
     .SobiPro .spAlert;
+}
+
+// Looks as a normal text
+.SobiPro.alert-error.review-box,
+.SobiPro.alert-success.review-box {
+    background-color: #FFF;
+    border-color: #FFF;
+    color: @active-color;
+    font-size: 15px;
 }
 
 
@@ -703,21 +771,28 @@ margin-right: 5px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin: 5px;
 }
-.SobiPro div.spClassViewMap { padding-top: 10px; padding-bottom: 10px; } // SP-GeoMap Field
+
+// SP-GeoMap Field
+.SobiPro div.spClassViewMap { padding-top: 10px; padding-bottom: 10px; }
+
+// Aggregation Field
 .SobiPro div.spClassViewAggregation { padding-top: 15px; font-size: 80%; }
 .SobiPro div.spClassViewAggregation strong { font-weight: 400; }
 
 // Contact Form
 .SobiPro div.spClassViewContact { margin: 10px 0 10px 0; }
-.SobiPro .contactform { margin-top: 20px; color: @active-color; }
-.SobiPro .contactform h3 {
-    font-size: 22px;
-    color: @base-color;
-}
 .SobiPro .contactform .contactmessage { width: 100%; }
-.SobiPro .modal.contactform textarea { width: 97%; }
-.SobiPro .modal.contactform form { margin-right: 10px; margin-left: 20px; }
 
+
+
+// Review and Rating App
+// -----------------------------------------------
+.SobiPro .review-ajax-navigation:hover,
+.SobiPro .review-ajax-navigation,
+.SobiPro .review-ajax-navigation .icon-chevron-down {
+    color: @base-color;
+        & when (@inverse = inverse) { color: @text-color; }
+    }
 
 
 // special adjustments for inverse template colors
@@ -770,6 +845,7 @@ margin-right: 5px;
         color: @text-color;
         border-color: darken(@active-color,10%);
     }
+    .SobiPro div.tagsinput input { background-color: @base-color; }
 }
 
 
@@ -781,8 +857,6 @@ margin-right: 5px;
 // Desktop
 @media (min-width: 993px) and (max-width: 1199px) {
 }
-
-
 // Portrait tablet to landscape and desktop
 @media (min-width: 781px) and (max-width: 992px) {
 }
@@ -795,9 +869,7 @@ margin-right: 5px;
     .SobiPro .uneditable-input,
     .SobiPro input[type="text"],
     .SobiPro textarea,
-    .SobiPro  select {
-        width: 95%!important;
-    }
+    .SobiPro  select { width: 95%!important; }
 }
 // Landscape phone to portrait tablet
 @media (max-width: 768px) {
@@ -806,9 +878,7 @@ margin-right: 5px;
     .SobiPro .uneditable-input,
     .SobiPro input[type="text"],
     .SobiPro textarea,
-    .SobiPro select {
-        width: 95%!important;
-    }
+    .SobiPro select { width: 95%!important; }
 
     .SobiPro .navbar .nav > li { float: none; }
     .SobiPro .topmenu li { line-height: 20px; }
@@ -830,6 +900,11 @@ margin-right: 5px;
 
     .SobiPro .bootstrap-tagsinput input { width: 70%!important; }
     .SobiPro .spCaticon i { font-size: 2.8em; }
+    .SobiPro .spCaticon {
+        margin-top: 10px;
+        padding-left: 0;
+        text-align: left;
+    }
 }
 
 // form switch to label above input
@@ -853,15 +928,8 @@ margin-right: 5px;
         padding: 2px 10px;
         font-size: 12px;
     }
-    .SobiPro .control-label {
-        float: none;
-        width: 100%;
-        text-align: left;
-    }
     .SobiPro .control-label div.paybox { margin-bottom: 12px; }
-    .SobiPro .controls {
-        margin-left: 0;
-    }
+    .SobiPro .controls { margin-left: 0; }
     .SobiPro input[name="sp_search_for"],
     .SobiPro input[type="text"],
     .SobiPro textarea,
@@ -881,6 +949,7 @@ margin-right: 5px;
 @media (max-width: 480px) {
     .SobiPro .spCaticon i { font-size: 2.5em; }
     .SobiPro .modal .control-group { margin-bottom: 6px; }
+    .SobiPro div.spClassViewImage img { width: 97%; margin: 0 0 10px 0; }
 }
 
 
