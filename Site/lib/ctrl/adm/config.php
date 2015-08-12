@@ -469,7 +469,7 @@ class SPConfigAdmCtrl extends SPController
 						$count2 = $count * -100;
 						$fileName = Sobi::Txt( 'TP.INFO' );
 						$nodes .= "spTpl.add( {$count2}, {$count},'{$fileName}','{$insertTask}', '', '', '{$ls}/info.png' );\n";
-						if ( file_exists( $file->getPathname() . "/settings.xml" ) ) {
+						if ( file_exists( $file->getPathname() . "/config.xml" ) ) {
 							$fileName = Sobi::Txt( 'TP.SETTINGS' );
 							$count2--;
 							$insertTask = Sobi::Url( array( 'task' => 'template.settings', 'template' => $filePath ) );
