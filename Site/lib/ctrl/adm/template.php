@@ -162,6 +162,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$templateSettings = json_decode( SPFs::read( $dir . '/config.json' ) );
 		}
 		$menu = $this->createMenu();
+		$plugins = SPFactory::db()
+				->select( 'pid', 'spdb_plugins' )
+				->loadAssocList( 'pid' );
 		if ( Sobi::Section() ) {
 			$menu->setOpen( 'AMN.APPS_SECTION_TPL' );
 		}
@@ -172,6 +175,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				->assign( $this->_task, 'task' )
 				->assign( Sobi::Section(), 'sid' )
 				->assign( $templateSettings, 'settings' )
+				->assign( $plugins, 'apps' )
 				->addHidden( $templateName, 'templateName' )
 				->determineTemplate( 'template', 'config', $dir );
 		Sobi::Trigger( 'Settings', $this->name(), array( &$file, &$view ) );
