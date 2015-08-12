@@ -511,7 +511,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	 */
 	protected function compileLessFile( $file, $output, $u )
 	{
-		include( 'phar://' . SOBI_PATH . '/lib/services/third-party/less/less.phar.tar.gz/Autoloader.php' );
+		include_once( 'phar://' . SOBI_PATH . '/lib/services/third-party/less/less.phar.tar.gz/Autoloader.php' );
 		try {
 			Less_Autoloader::register();
 			$parser = new Less_Parser();
