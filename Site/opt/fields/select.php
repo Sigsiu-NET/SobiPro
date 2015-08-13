@@ -1,18 +1,15 @@
 <?php
 /**
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
  * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
@@ -114,10 +111,10 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( is_array( $selected ) && count( $selected ) && !( isset( $selected[ 0 ] ) ) ) {
 			$selected = array_keys( $selected );
 		}
-		if (($selected == null) && ($this->defaultValue)) {
-			if ($this->multi) {
-				$selected = explode(',', $this->defaultValue);
-				$selected = array_map('trim', $selected);
+		if ( ( $selected == null ) && ( $this->defaultValue ) ) {
+			if ( $this->multi ) {
+				$selected = explode( ',', $this->defaultValue );
+				$selected = array_map( 'trim', $selected );
 			}
 			else {
 				$selected = $this->defaultValue;
@@ -936,9 +933,6 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$type = null;
 		$selected = $options[ 'options' ];
 		foreach ( $path as $option ) {
-			if ( !( strlen( $option ) ) ) {
-				continue;
-			}
 			$type = isset( $selected[ $option ][ 'child-type' ] ) ? Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $selected[ $option ][ 'child-type' ] ) ) : null;
 			$selected = $selected[ $option ][ 'childs' ];
 		}

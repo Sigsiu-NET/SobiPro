@@ -31,6 +31,9 @@ class SPField_SelectAdm extends SPField_Select
 	{
 		static $lang = null;
 		static $defLang = null;
+		if ( $attr[ 'searchMethod' ] == 'mselect' && $attr[ 'dependency' ] ) {
+			throw new SPException( SPLang::e( 'SELECT_FIELD_MULTIPLE_DEPENDENCY' ) );
+		}
 		if ( !( $lang ) ) {
 			$lang = Sobi::Lang();
 			$defLang = Sobi::DefLang();
