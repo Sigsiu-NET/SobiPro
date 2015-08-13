@@ -120,10 +120,12 @@ abstract class SPFrontView extends SPObject implements SPView
 	 *
 	 * @param var
 	 * @param label
+	 * @return $this
 	 */
-	public function addHidden( $var, $label )
+	public function & addHidden( $var, $label )
 	{
 		$this->_hidden[ $label ] = $var;
+		return $this;
 	}
 
 	/**
@@ -879,7 +881,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	protected function templateSettings()
 	{
-		if ( !( count( $this->_attr[ 'config' ] ) ) && SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ) {
+		if ( !( isset( $this->_attr[ 'config' ] ) && count( $this->_attr[ 'config' ] ) ) && SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ) {
 			$config = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ), true );
 			$task = SPRequest::task() == 'entry.add' ? 'entry.edit' : SPRequest::task();
 			$settings = array();

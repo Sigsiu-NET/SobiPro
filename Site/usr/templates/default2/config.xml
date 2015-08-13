@@ -58,6 +58,7 @@
 									<option value="horizontal" label="TP.CONFIG.ENTRY_FORM_CSS_CLASS_HORIZONTAL" />
 								</values>
 							</field>
+							<field type="toggle" name="settings[search-results][highlight-search]" value="settings.search-results.highlight-search" label="TP.SETTINGS_SEARCH_HIGHLIGHT" prefix="yes_no" />
 						</fieldset>
 					</div>
 				</div>

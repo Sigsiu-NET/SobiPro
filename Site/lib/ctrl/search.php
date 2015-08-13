@@ -28,45 +28,25 @@ SPLoader::loadController( 'section' );
  */
 class SPSearchCtrl extends SPSectionCtrl
 {
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_type = 'search';
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_defTask = 'view';
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	protected $_request = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	protected $_fields = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	protected $_results = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	protected $_resultsByPriority = array();
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	protected $_resultsCount = 0;
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	protected $_categoriesResults = array();
-	/**
-	 * @var SPDb
-	 */
+	/*** @var SPDb */
 	protected $_db = array();
-	/**
-	 * @var bool
-	 */
+	/*** @var bool */
 	protected $_narrowing = true;
 
 	public function __construct()
@@ -405,7 +385,6 @@ class SPSearchCtrl extends SPSectionCtrl
 			try {
 				$results = $this->_db->select( 'id', 'spdb_object', $conditions )
 						->loadResultArray();
-				SPFactory::db()->getQuery();
 				foreach ( $this->_results as $i => $sid ) {
 					if ( !( in_array( $sid, $results ) ) ) {
 						unset( $this->_results[ $i ] );
@@ -511,9 +490,12 @@ class SPSearchCtrl extends SPSectionCtrl
 		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'SH.PATH_TITLE' ), Sobi::Url( 'current' ) );
 		SPFactory::mainframe()->setTitle( Sobi::Txt( 'SH.TITLE', array( 'section' => $this->_model->get( 'name' ) ) ) );
 
-
+		if ( $this->tKey( $this->template, 'highlight-search' ) ) {
+			SPFactory::header()->addJsFile( array( 'jquery-highlight', 'search-highlight' ) );
+		}
 		Sobi::Trigger( 'OnFormStart', 'Search' );
 		SPLoader::loadClass( 'mlo.input' );
+		/** @var SPSearchView $view */
 		$view = SPFactory::View( 'search' );
 
 		/* if we cannot transfer the search id in cookie */
@@ -527,13 +509,13 @@ class SPSearchCtrl extends SPSectionCtrl
 			/* get the site to display */
 			$site = SPRequest::int( 'site', 1 );
 			$eLimStart = ( ( $site - 1 ) * $eLimit );
-			$view->assign( $eLimit, '$eLimit' );
-			$view->assign( $eLimStart, '$eLimStart' );
-			$view->assign( $eInLine, '$eInLine' );
+			$view->assign( $eLimit, '$eLimit' )
+					->assign( $eLimStart, '$eLimStart' )
+					->assign( $eInLine, '$eInLine' );
 			$entries = $this->getResults( $ssid, $this->template );
-			$view->assign( count( $this->_results ), '$eCount' );
-			$view->assign( $this->_resultsByPriority, 'priorities' );
-			$view->assign( $entries, 'entries' );
+			$view->assign( count( $this->_results ), '$eCount' )
+					->assign( $this->_resultsByPriority, 'priorities' )
+					->assign( $entries, 'entries' );
 			/* create page navigation */
 			$pnc = SPLoader::loadClass( 'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ) );
 			$url = array( 'task' => 'search.results', 'sid' => SPRequest::sid() );
@@ -558,16 +540,16 @@ class SPSearchCtrl extends SPSectionCtrl
 		/* load all fields */
 		$fields = $this->loadFields();
 		if ( isset( $this->_request[ 'search_for' ] ) ) {
-			$view->assign( $this->_request[ 'search_for' ], 'search_for' );
-			$view->assign( $this->_request[ 'phrase' ], 'search_phrase' );
+			$view->assign( $this->_request[ 'search_for' ], 'search_for' )
+					->assign( $this->_request[ 'phrase' ], 'search_phrase' );
 		}
-		$view->assign( $fields, 'fields' );
-		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
-		$view->assign( $this->_task, 'task' );
-		$view->addHidden( Sobi::Section(), 'sid' );
-		$view->addHidden( 'search.search', 'task' );
-		$view->setConfig( $this->_tCfg, $this->template );
-		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );
+		$view->assign( $fields, 'fields' )
+				->assign( SPFactory::user()->getCurrent(), 'visitor' )
+				->assign( $this->_task, 'task' )
+				->addHidden( Sobi::Section(), 'sid' )
+				->addHidden( 'search.search', 'task' )
+				->setConfig( $this->_tCfg, $this->template )
+				->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );
 		Sobi::Trigger( 'OnCreateView', 'Search', array( &$view ) );
 		$view->display();
 	}
