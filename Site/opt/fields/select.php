@@ -666,7 +666,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$request = json_decode( SPLang::clean( SPRequest::raw( $this->nid . '_path', null, 'requestcache' ) ), true );
 			$params[ 'class' ] .= ' ctrl-dependency-field';
 			$hidden = $this->travelDependencyPath( $request, $params );
-			$this->_selected = $request[ 1 ];
+			$this->_selected = isset( $request[ 1 ] ) ? $request[ 1 ] : null;
 			$hiddenValue = str_replace( '"', "'", json_encode( (object)$request ) );
 			$hidden .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'selected' => '', 'section' => Sobi::Section() ) ) );
 			$params[ 'data' ] = array( 'order' => '1' );

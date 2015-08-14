@@ -490,7 +490,7 @@ class SPSearchCtrl extends SPSectionCtrl
 		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'SH.PATH_TITLE' ), Sobi::Url( 'current' ) );
 		SPFactory::mainframe()->setTitle( Sobi::Txt( 'SH.TITLE', array( 'section' => $this->_model->get( 'name' ) ) ) );
 
-		if ( $this->tKey( $this->template, 'highlight-search' ) ) {
+		if ( Sobi::Cfg( 'search.highlight-search' ) ) {
 			SPFactory::header()->addJsFile( array( 'jquery-highlight', 'search-highlight' ) );
 		}
 		Sobi::Trigger( 'OnFormStart', 'Search' );
