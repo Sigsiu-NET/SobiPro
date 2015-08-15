@@ -180,7 +180,6 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				$order[ ++$c ] = $sid;
 			}
 		}
-		$c = 0;
 		foreach ( $order as $sid ) {
 			try {
 				$db->update( 'spdb_relations', array( 'position' => ++$LimStart ), array( 'id' => $sid, 'oType' => 'category' ) );

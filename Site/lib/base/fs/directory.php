@@ -104,7 +104,7 @@ class SPDirectory extends SPFile
 	public function deleteFiles()
 	{
 		$this->iterator();
-		$log = array();
+//		$log = array();
 		foreach ( $this->_dirIterator as $child ) {
 			if( !( $child->isDot() ) ) {
 				SPFs::delete( $child->getPathname() );

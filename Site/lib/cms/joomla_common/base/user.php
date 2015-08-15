@@ -56,7 +56,7 @@ class SPJoomlaUser extends JUser
 	/* get all parent groups */
 	protected function parentGids()
 	{
-		$hold = array();
+//		$hold = array();
 		if ( count( $this->gid ) ) {
 			foreach ( $this->gid as $gid ) {
 				if ( $gid >= 5000 ) {

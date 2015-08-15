@@ -102,7 +102,6 @@ class SPPaymentPP extends SPConfigAdmCtrl
 			$ppsubj = SPLang::getValue( 'ppsubject', 'application' );
 		}
 		$this->getView( 'paypal' )
-				->assign( $tile, 'title' )
 				->assign( $data[ 'ppurl' ][ 'value' ], 'ppurl' )
 				->assign( $data[ 'ppemail' ][ 'value' ], 'ppemail' )
 				->assign( $data[ 'pprurl' ][ 'value' ], 'pprurl' )

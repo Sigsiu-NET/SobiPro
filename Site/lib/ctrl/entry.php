@@ -523,7 +523,7 @@ class SPEntryCtrl extends SPController
 			$this->authorise( $this->_task, 'own' );
 			$this->_model = null;
 			$sid = SPRequest::int( 'pid' );
-			$section = SPFactory::Section( Sobi::Section() );
+//			$section = SPFactory::Section( Sobi::Section() );
 		}
 
 		if ( $this->_model && $this->_model->isCheckedOut() ) {

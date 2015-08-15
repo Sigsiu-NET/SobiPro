@@ -672,7 +672,6 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$ptype = $plugin[ 0 ];
 		$plugin = $plugin[ 1 ];
 		$message = null;
-		$messageType = 'warning';
 
 		if ( SPRequest::sid() ) {
 			try {

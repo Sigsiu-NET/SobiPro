@@ -769,7 +769,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			return parent::searchSuggest( $data, $section, $startWith );
 		}
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
+//		$db =& SPFactory::db();
 		$terms = array();
 		$data = $startWith ? "{$data}%" : "%{$data}%";
 		try {

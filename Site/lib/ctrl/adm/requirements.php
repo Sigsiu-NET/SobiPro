@@ -425,7 +425,6 @@ class SPRequirements extends SPController
 	{
 		$v = function_exists( 'exif' ) ? true : false;
 		if ( $v ) {
-			$ver = gd_info();
 			echo $this->ok( $this->txt( 'REQ.EXIF_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
@@ -460,7 +459,6 @@ class SPRequirements extends SPController
 	{
 		$v = function_exists( 'gd_info' ) ? true : false;
 		if ( $v ) {
-			$ver = gd_info();
 			echo $this->ok( $this->txt( 'REQ.GD_AVAILABLE' ), __FUNCTION__ );
 		}
 		else {
@@ -522,7 +520,7 @@ class SPRequirements extends SPController
 		}
 		else {
 			$minVer = array( 'major' => 2, 'minor' => 0, 'build' => 0 );
-			$rVer = array( 'major' => 2, 'minor' => 2, 'build' => 0 );
+//			$rVer = array( 'major' => 2, 'minor' => 2, 'build' => 0 );
 			if ( !( isset( $ver[ 0 ] ) && isset( $ver[ 1 ] ) && isset( $ver[ 2 ] ) ) || !( $ver[ 0 ] && $ver[ 1 ] ) ) {
 				echo $this->warning( $this->txt( 'REQ.WS_NO_APACHE_VER', array( 'required' => implode( '.', $minVer ), 'sapi' => $sapi ) ), __FUNCTION__ );
 				exit;
@@ -636,7 +634,7 @@ class SPRequirements extends SPController
 		$cont = null;
 		$settings = array();
 		$settings[ 'SobiPro' ] = array( 'Version' => SPFactory::CmsHelper()->myVersion( true ), 'Version_Num' => implode( '.', SPFactory::CmsHelper()->myVersion() ) );
-		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
+//		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
 //		if ( SPFs::exists( $file ) ) {
 //			$cont = SPFs::read( $file );
 //		}

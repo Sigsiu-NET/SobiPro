@@ -355,7 +355,7 @@ class SPJoomlaDb
 				}
 				/* see SPDb#valid() */
 				elseif ( $col == '@VALID' ) {
-					$col = '';
+//					$col = '';
 					$w[ ] = $val;
 				}
 				elseif ( is_numeric( $col ) ) {

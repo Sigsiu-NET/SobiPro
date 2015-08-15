@@ -105,13 +105,13 @@ final class SPPayment
 					if ( $vatsub ) {
 						$netto = $payment[ 'amount' ] / ( 1 + ( $vat / 100 ) );
 						$svat = $payment[ 'amount' ] - $netto;
-						$sumvat = +$svat;
+//						$sumvat = +$svat;
 						$brutto = $payment[ 'amount' ];
 					}
 					else {
 						$netto = $payment[ 'amount' ];
 						$svat = $netto * $vat;
-						$sumvat = +$svat;
+//						$sumvat = +$svat;
 						$brutto = $netto * ( 1 + ( $vat / 100 ) );
 					}
 					$sumnetto += $netto;
