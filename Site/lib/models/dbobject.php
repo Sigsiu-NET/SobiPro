@@ -417,9 +417,10 @@ abstract class SPDBObject extends SPObject
 		}
 		if ( count( $r ) ) {
 			foreach ( $r as $id => $rs ) {
-				if ( $rs[ 'oType' ] == 'entry' ) {
-					continue;
-				}
+				/** Mon, Aug 17, 2015 14:13:13 - WTF I was thinking. Same as above */
+//				if ( $rs[ 'oType' ] == 'entry' ) {
+//					continue;
+//				}
 				$results[ $id ] = $rs;
 				$this->rGetChilds( $results, $id, $type );
 			}
