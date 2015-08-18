@@ -51,6 +51,7 @@ abstract class SobiPro
 	{
 		SPLang::load( $lang );
 	}
+
 	/**
 	 * @return string
 	 */
@@ -198,8 +199,10 @@ abstract class SobiPro
 	public static function Url( $var = null, $js = false, $sef = true, $live = false, $forceItemId = false )
 	{
 		$url = json_decode( $var, true );
-		foreach ( $url as $k => $v ) {
-			$url[ $k ] = trim( $v );
+		if ( count( $url ) ) {
+			foreach ( $url as $k => $v ) {
+				$url[ $k ] = trim( $v );
+			}
 		}
 		return Sobi::Url( $url, $js, $sef, $live, $forceItemId );
 	}

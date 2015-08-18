@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -24,55 +23,67 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
-    <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
-    <xsl:template name="topMenu">
-        <xsl:param name="searchbox" />
-        <xsl:if test="count(//menu/*)">
-            <div class="navbar topmenu">
-                <div class="navbar-inner">
-                    <div class="container-fluid">
-                        <ul class="nav">
-                            <xsl:if test="//menu/front">
-                                <li>
-                                    <a href="{//menu/front/@url}">
-                                        <i class="icon-th-list"></i>
-                                        <xsl:text> </xsl:text>
-                                        <xsl:value-of select="//menu/front" />
-                                    </a>
-                                </li>
-                            </xsl:if>
-                            <xsl:if test="//menu/add">
-                                <li>
-                                    <a href="{//menu/add/@url}">
-                                        <i class="icon-plus-sign"></i>
-                                        <xsl:text> </xsl:text>
-                                        <xsl:value-of select="//menu/add" />
-                                    </a>
-                                </li>
-                            </xsl:if>
-                            <xsl:if test="//menu/search">
-                                <li>
-                                    <a href="{//menu/search/@url}">
-                                        <i class="icon-search"></i>
-                                        <xsl:text> </xsl:text>
-                                        <xsl:value-of select="//menu/search" />
-                                    </a>
-                                </li>
-                            </xsl:if>
-                        </ul>
-                        <xsl:if test="//menu/search and $searchbox = 'true'">
-                            <div class="nav-collapse">
-                                <form class="navbar-search pull-right">
-                                    <input type="text" name="sp_search_for" autocomplete="off" class="search-query" placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}" />
-                                    <input type="hidden" name="task" value="search.search" />
-                                    <input type="hidden" name="option" value="com_sobipro" />
-                                    <input type="hidden" name="sid" value="{//@id}" />
-                                </form>
-                            </div>
-                        </xsl:if>
-                    </div>
-                </div>
-            </div>
-        </xsl:if>
-    </xsl:template>
+	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
+	<xsl:template name="topMenu">
+		<xsl:param name="searchbox" />
+		<xsl:if test="count(//menu/*)">
+			<xsl:variable name="currentUrl">
+				<xsl:value-of select="php:function( 'SobiPro::Url', 'current' )" />
+			</xsl:variable>
+			<div class="navbar topmenu">
+				<div class="navbar-inner">
+					<div class="container-fluid">
+						<ul class="nav">
+							<xsl:if test="//menu/front">
+								<li>
+									<xsl:if test="$currentUrl = //menu/front/@url">
+										<xsl:attribute name="class">active</xsl:attribute>
+									</xsl:if>
+									<a href="{//menu/front/@url}">
+										<i class="icon-th-list"></i>
+										<xsl:text> </xsl:text>
+										<xsl:value-of select="//menu/front" />
+									</a>
+								</li>
+							</xsl:if>
+							<xsl:if test="//menu/add">
+								<li>
+									<xsl:if test="$currentUrl = //menu/add/@url">
+										<xsl:attribute name="class">active</xsl:attribute>
+									</xsl:if>
+									<a href="{//menu/add/@url}">
+										<i class="icon-plus-sign"></i>
+										<xsl:text> </xsl:text>
+										<xsl:value-of select="//menu/add" />
+									</a>
+								</li>
+							</xsl:if>
+							<xsl:if test="//menu/search">
+								<li>
+									<xsl:if test="$currentUrl = //menu/search/@url">
+										<xsl:attribute name="class">active</xsl:attribute>
+									</xsl:if>
+									<a href="{//menu/search/@url}">
+										<i class="icon-search"></i>
+										<xsl:text> </xsl:text>
+										<xsl:value-of select="//menu/search" />
+									</a>
+								</li>
+							</xsl:if>
+						</ul>
+						<xsl:if test="//menu/search and $searchbox = 'true'">
+							<div class="nav-collapse">
+								<form class="navbar-search pull-right">
+									<input type="text" name="sp_search_for" autocomplete="off" class="search-query" placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}" />
+									<input type="hidden" name="task" value="search.search" />
+									<input type="hidden" name="option" value="com_sobipro" />
+									<input type="hidden" name="sid" value="{//@id}" />
+								</form>
+							</div>
+						</xsl:if>
+					</div>
+				</div>
+			</div>
+		</xsl:if>
+	</xsl:template>
 </xsl:stylesheet>
