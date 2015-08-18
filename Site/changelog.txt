@@ -87,6 +87,7 @@ Legend:
     (#) Second search ordering by counter doesn't work (Issue #1495)
     (#) Preventing "multiple select list" as a search method while dependency option is enabled
     (#) rGetChilds method limited to entries only
+    (#) Static call into JSite::getMenu() has been removed
 
 
 -------------------

@@ -243,7 +243,7 @@ function SobiProIsLinked( $id, $sid, $task = null )
 {
 	static $menu = null;
 	if ( !( $menu ) ) {
-		$menu = &JSite::getMenu();
+		$menu = JFactory::getApplication()->getMenu();
 	}
 	$sid = explode( ':', $sid );
 	$sid = $sid[ 0 ];

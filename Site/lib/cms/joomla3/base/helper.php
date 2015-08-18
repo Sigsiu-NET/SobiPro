@@ -64,7 +64,7 @@ class SPCMSHelper3 extends SPCMSHelper
 	public static function cmsVersion( $version = null )
 	{
 		if ( ( $version ) ) {
-			return 'Joomla 3.[1/2/3]';
+			return 'Joomla 3.x';
 		}
 		$version = new JVersion();
 		$v = explode( '.', $version->RELEASE );
