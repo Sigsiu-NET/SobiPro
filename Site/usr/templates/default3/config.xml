@@ -63,6 +63,7 @@
                             </field>
                         </fieldset>
                         <fieldset label="TP.SETTINGS_SEARCH">
+                            <field type="toggle" name="settings[search-results][highlight-search]" value="settings.search-results.highlight-search" label="TP.SETTINGS_SEARCH_HIGHLIGHT" prefix="yes_no" />
                         </fieldset>
                         <fieldset label="TP.SETTINGS_DETAILS">
                         </fieldset>
@@ -148,7 +149,7 @@
                             <field type="select" label="Colour theme" name="settings[less][theme][colour-set]" selected="settings.less.theme.colour-set" class="input-medium">
                                 <values>
                                     <option value="sobipro" />
-                                    <option value="confield" />
+                                    <option value="cornfield" />
                                     <option value="cornflower" />
                                     <option value="malva" />
                                     <option value="meadow" />
@@ -163,7 +164,7 @@
                                     <option value="angular" />
                                 </values>
                             </field>
-                            <field type="select" label="Star colour" name="settings[less][review][stars]" selected="settings.less.review.stars" class="input-medium">
+                            <field type="select" condition="apps.review_rating" label="Star colour" name="settings[less][review][stars]" selected="settings.less.review.stars" class="input-medium">
                                 <values>
                                     <option value="gold-grey" />
                                     <option value="gold-black" />
@@ -179,8 +180,8 @@
                                     <option value="blue-black" />
                                     <option value="darkblue-grey" />
                                     <option value="darkblue-black" />
-                                    <option value="magento-grey" />
-                                    <option value="magento-black" />
+                                    <option value="magenta-grey" />
+                                    <option value="magenta-black" />
                                     <option value="cyan-grey" />
                                     <option value="cyan-black" />
                                 </values>

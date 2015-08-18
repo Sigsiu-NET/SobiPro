@@ -17,59 +17,64 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
-	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
+    <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 
-	<xsl:include href="../common/topmenu.xsl" />
-	<xsl:include href="../common/manage.xsl" />
-	<xsl:include href="../common/alphamenu.xsl" />
-	<xsl:include href="../common/messages.xsl" />
+    <xsl:include href="../common/topmenu.xsl" />
+    <xsl:include href="../common/manage.xsl" />
+    <xsl:include href="../common/alphamenu.xsl" />
+    <xsl:include href="../common/messages.xsl" />
+    <!--<xsl:include href="../common/review.xsl" />-->
 
-	<xsl:template match="/entry_details">
-		<div class="spDetails">
-			<div>
-				<xsl:call-template name="topMenu">
-					<xsl:with-param name="searchbox">true</xsl:with-param>
-				</xsl:call-template>
-				<xsl:apply-templates select="alphaMenu" />
-			</div>
-			<xsl:apply-templates select="messages" />
-			<div class="clearfix" />
-			<div class="spDetailEntry">
-				<xsl:call-template name="manage" />
-				<h1>
-					<xsl:value-of select="entry/name" />
-					<xsl:call-template name="status">
-						<xsl:with-param name="entry" select="entry" />
-					</xsl:call-template>
-				</h1>
+    <xsl:template match="/entry_details">
+        <div class="spDetails">
+            <div>
+                <xsl:call-template name="topMenu">
+                    <xsl:with-param name="searchbox">true</xsl:with-param>
+                </xsl:call-template>
+                <xsl:apply-templates select="alphaMenu" />
+            </div>
+            <xsl:apply-templates select="messages" />
+            <div class="clearfix" />
+            <div class="spDetailEntry">
+                <xsl:call-template name="manage" />
+                <!--<xsl:call-template name="ratingStars" />-->
+                <h1>
+                    <xsl:value-of select="entry/name" />
+                    <xsl:call-template name="status">
+                        <xsl:with-param name="entry" select="entry" />
+                    </xsl:call-template>
+                </h1>
+                <!--<xsl:call-template name="ratingSummary" />-->
 
-				<xsl:for-each select="entry/fields/*">
+                <xsl:for-each select="entry/fields/*">
                     <xsl:if test="count(./data/*) or string-length(./data)">
                         <xsl:call-template name="showfield">
                             <xsl:with-param name="fieldname" select="." />
                         </xsl:call-template>
                     </xsl:if>
-				</xsl:for-each>
+                </xsl:for-each>
 
-				<xsl:if test="count(entry/categories)">
-					<div class="spEntryCats">
-						<xsl:value-of select="php:function( 'SobiPro::Txt' , 'ENTRY_LOCATED_IN' )" /><xsl:text> </xsl:text>
-						<xsl:for-each select="entry/categories/category">
-							<a href="{@url}">
-								<xsl:value-of select="." />
-							</a>
-							<xsl:if test="position() != last()">
-								<xsl:text> | </xsl:text>
-							</xsl:if>
-						</xsl:for-each>
-					</div>
-				</xsl:if>
-			</div>
-			<div class="clearfix" />
-		</div>
-	</xsl:template>
+                <xsl:if test="count(entry/categories)">
+                    <div class="spEntryCats">
+                        <xsl:value-of select="php:function( 'SobiPro::Txt' , 'ENTRY_LOCATED_IN' )" /><xsl:text> </xsl:text>
+                        <xsl:for-each select="entry/categories/category">
+                            <a href="{@url}">
+                                <xsl:value-of select="." />
+                            </a>
+                            <xsl:if test="position() != last()">
+                                <xsl:text> | </xsl:text>
+                            </xsl:if>
+                        </xsl:for-each>
+                    </div>
+                </xsl:if>
+            </div>
+            <div class="clearfix" />
+            <!--<xsl:call-template name="reviewForm"/>-->
+            <!--<xsl:call-template name="reviews"/>-->
+        </div>
+    </xsl:template>
 
-	<xsl:template name="showfield">
+    <xsl:template name="showfield">
         <xsl:param name="fieldname" />
         <div>
             <xsl:if test="string-length($fieldname/@css-view)">
@@ -106,5 +111,5 @@
                 </xsl:if>
             </xsl:if>
         </div>
-	</xsl:template>
+    </xsl:template>
 </xsl:stylesheet>

@@ -17,26 +17,29 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
-	<xsl:template name="vcard">
+   <!--<xsl:import href="review.xsl" />-->
+    <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
 
-		<h2 class="lead page-header">
-			<a href="{url}">
-				<xsl:value-of select="name" />
-				<xsl:call-template name="status">
-					<xsl:with-param name="entry" select="." />
-				</xsl:call-template>
-			</a>
-		</h2>
-		
-		<xsl:for-each select="fields/*">
+    <xsl:template name="vcard">
+        <!--<xsl:call-template name="ratingStars" />-->
+
+        <h2 class="lead page-header">
+            <a href="{url}">
+                <xsl:value-of select="name" />
+                <xsl:call-template name="status">
+                    <xsl:with-param name="entry" select="." />
+                </xsl:call-template>
+            </a>
+        </h2>
+
+        <xsl:for-each select="fields/*">
             <xsl:if test="count(./data/*) or string-length(./data)">
                 <xsl:call-template name="showfield">
                     <xsl:with-param name="fieldname" select="." />
                 </xsl:call-template>
             </xsl:if>
-		</xsl:for-each>
-	</xsl:template>
+        </xsl:for-each>
+    </xsl:template>
 
     <xsl:template name="showfield">
         <xsl:param name="fieldname" />

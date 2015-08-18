@@ -21,6 +21,9 @@
     <xsl:template name="topMenu">
         <xsl:param name="searchbox" />
         <xsl:if test="count(//menu/*)">
+            <xsl:variable name="currentUrl">
+                <xsl:value-of select="php:function( 'SobiPro::Url', 'current' )" />
+            </xsl:variable>
             <div class="navbar topmenu">
                 <div class="navbar-inner">
                     <div class="container-fluid">
@@ -28,6 +31,9 @@
                             <xsl:if test="//menu/front">
                                 <li>
                                     <a href="{//menu/front/@url}">
+                                        <xsl:if test="$currentUrl != //menu/add/@url and $currentUrl != //menu/search/@url">
+                                            <xsl:attribute name="class">active</xsl:attribute>
+                                        </xsl:if>
                                         <i class="icon-th-list"></i>
                                         <xsl:text> </xsl:text>
                                         <xsl:value-of select="//menu/front" />
@@ -37,6 +43,9 @@
                             <xsl:if test="//menu/add">
                                 <li>
                                     <a href="{//menu/add/@url}">
+                                        <xsl:if test="$currentUrl = //menu/add/@url">
+                                            <xsl:attribute name="class">active</xsl:attribute>
+                                        </xsl:if>
                                         <i class="icon-plus-sign"></i>
                                         <xsl:text> </xsl:text>
                                         <xsl:value-of select="//menu/add" />
@@ -45,7 +54,10 @@
                             </xsl:if>
                             <xsl:if test="//menu/search">
                                 <li>
-                                    <a href="{//menu/search/@url}" class="active">
+                                    <a href="{//menu/search/@url}">
+                                        <xsl:if test="$currentUrl = //menu/search/@url">
+                                            <xsl:attribute name="class">active</xsl:attribute>
+                                        </xsl:if>
                                         <i class="icon-search"></i>
                                         <xsl:text> </xsl:text>
                                         <xsl:value-of select="//menu/search" />
