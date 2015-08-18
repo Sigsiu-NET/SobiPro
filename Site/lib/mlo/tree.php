@@ -215,8 +215,8 @@ final class SigsiuTree extends SPObject
             $head->addCssFile( 'tree', true );
         }
         else {
-            if ( Sobi::Reg( 'current_template_path', null ) && SPFs::exists( Sobi::Reg( 'current_template_path' ) . 'css' . DS . 'tree.css' ) ) {
-                $head->addCssFile( 'absolute.' . Sobi::Reg( 'current_template_path' ) . 'css' . DS . 'tree.css' );
+            if ( Sobi::Reg( 'current_template_path', null ) && SPFs::exists( Sobi::Reg( 'current_template_path' ) . 'css/tree.css' ) ) {
+                $head->addCssFile( 'absolute.' . Sobi::Reg( 'current_template_path' ) . 'css/tree.css' );
             }
             else {
                 $head->addCssFile( 'tree' );

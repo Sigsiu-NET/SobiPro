@@ -157,7 +157,7 @@ function SobiProParseRoute( $segments )
 {
 	$cfg = SobiProRouterCfg();
 	$vars = array();
-	$return = JSite::getMenu()->getActive()->query;
+	$return = JFactory::getApplication()->getMenu()->getActive()->query;
 	$tasks = array_flip( $cfg[ 'tasks' ] );
 	$taskEnhancement = array_flip( $cfg[ 'segments_to_task' ] );
 	$key = false;
@@ -204,7 +204,7 @@ function SobiProParseRoute( $segments )
 	$sid = explode( ':', $sid );
 	$sid = $sid[ 0 ];
 	if ( !( ( int )$sid ) ) {
-		$vars[ 'sid' ] = JSite::getMenu()->getActive()->query[ 'sid' ];
+		$vars[ 'sid' ] = JFactory::getApplication()->getMenu()->getActive()->query[ 'sid' ];
 		if ( count( $segments ) && !( isset( $vars[ 'task' ] ) ) ) {
 			$vars[ 'task' ] = implode( '.', $segments );
 		}

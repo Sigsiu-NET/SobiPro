@@ -27,10 +27,47 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  */
 abstract class SPHtml_Input
 {
+	public static function __callStatic( $name, $args )
+	{
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			return call_user_func_array( array( 'self', '_' . $name ), $args );
+		}
+		else {
+			static $className = false;
+			if ( !( $className ) ) {
+				$package = Sobi::Reg( 'current_template' );
+				if ( SPFs::exists( Sobi::FixPath( $package . '/input.php' ) ) ) {
+					$path = Sobi::FixPath( $package . '/input.php' );
+					ob_start();
+					$content = file_get_contents( $path );
+					$class = array();
+					preg_match( '/\s*(class)\s+(\w+)/', $content, $class );
+					if ( isset( $class[ 2 ] ) ) {
+						$className = $class[ 2 ];
+					}
+					else {
+						Sobi::Error( 'Custom Input Class', SPLang::e( 'Cannot determine class name in file %s.', str_replace( SOBI_ROOT, null, $path ) ), SPC::WARNING, 0 );
+						return false;
+					}
+					require_once( $path );
+				}
+				else {
+					$className = true;
+				}
+			}
+			if ( is_string( $className ) && method_exists( $className, $name ) ) {
+				return call_user_func_array( array( $className, $name ), $args );
+			}
+			else {
+				return call_user_func_array( array( 'self', '_' . $name ), $args );
+			}
+		}
+	}
+
 	/**
 	 * @param mixed $params
 	 */
-	private static function checkArray( &$params )
+	protected static function checkArray( &$params )
 	{
 		if ( $params && is_string( $params ) && strstr( $params, ',' ) ) {
 			$class = SPLoader::loadClass( 'types.array' );
@@ -51,7 +88,7 @@ abstract class SPHtml_Input
 	 * @param string $txt
 	 * @return string
 	 */
-	private static function translate( $txt )
+	protected static function _translate( $txt )
 	{
 		if ( strstr( $txt, 'translate:' ) ) {
 			$matches = array();
@@ -65,7 +102,7 @@ abstract class SPHtml_Input
 	 * @param array $params
 	 * @return string
 	 */
-	private static function params( $params )
+	protected static function params( $params )
 	{
 		$add = null;
 		self::checkArray( $params );
@@ -91,7 +128,7 @@ abstract class SPHtml_Input
 	 * @param string $accept - accepted file types
 	 * @return string
 	 */
-	public static function file( $name, $size = 50, $params = null, $accept = '*' )
+	public static function _file( $name, $size = 50, $params = null, $accept = '*' )
 	{
 		$params = self::params( $params );
 		$f = "<input name=\"{$name}\" type=\"file\" size=\"{$size}\" value=\"\" accept=\"{$accept}\"{$params}/>";
@@ -113,7 +150,7 @@ abstract class SPHtml_Input
 	 * @param array $request - custom request
 	 * @return string
 	 */
-	public static function fileUpload( $name, $accept = '*', $value = null, $class = 'spFileUpload', $task = 'file.upload', $scripts = array( 'jquery', 'jquery-form', 'fileupload' ), $request = null )
+	public static function _fileUpload( $name, $accept = '*', $value = null, $class = 'spFileUpload', $task = 'file.upload', $scripts = array( 'jquery', 'jquery-form', 'fileupload' ), $request = null )
 	{
 		if ( is_string( $scripts ) ) {
 			$scripts = SPFactory::config()->structuralData( $scripts );
@@ -172,7 +209,7 @@ abstract class SPHtml_Input
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @return string
 	 */
-	public static function text( $name, $value = null, $params = null )
+	public static function _text( $name, $value = null, $params = null )
 	{
 		$params = self::params( $params );
 		$value = strlen( $value ) ? str_replace( '"', '&quot;', SPLang::entities( $value, true ) ) : null;
@@ -190,7 +227,7 @@ abstract class SPHtml_Input
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @return string
 	 */
-	public static function submit( $name, $value = null, $params = null )
+	public static function _submit( $name, $value = null, $params = null )
 	{
 		$params = self::params( $params );
 		$value = self::translate( $value );
@@ -206,7 +243,7 @@ abstract class SPHtml_Input
 	 * Displays a hidden token field
 	 * @return    string
 	 */
-	public static function token()
+	public static function _token()
 	{
 		return '<input type="hidden" name="' . SPFactory::mainframe()->token() . '" value="1" />';
 	}
@@ -221,7 +258,7 @@ abstract class SPHtml_Input
 	 * @param null $icon
 	 * @return string
 	 */
-	public static function button( $name, $value = null, $params = null, $class = null, $icon = null )
+	public static function _button( $name, $value = null, $params = null, $class = null, $icon = null )
 	{
 		self::checkArray( $params );
 		$f = null;
@@ -229,7 +266,7 @@ abstract class SPHtml_Input
 		// bootstrap modal needs an href
 		if ( isset( $params[ 'href' ] ) && !( strstr( $params[ 'href' ], '#' ) ) ) {
 			SPFactory::header()->addJsCode( "
-				function {$name}Redirect()
+				function _{$name}Redirect()
 				{
 					window.location ='{$params['href']}';
 					return false;
@@ -271,7 +308,7 @@ abstract class SPHtml_Input
 	 * @param string | array $editorParams
 	 * @return string
 	 */
-	public static function textarea( $name, $value = null, $editor = false, $width = '', $height = 350, $params = '', $editorParams = null )
+	public static function _textarea( $name, $value = null, $editor = false, $width = '', $height = 350, $params = '', $editorParams = null )
 	{
 		if ( !( is_array( $editorParams ) ) && strlen( $editorParams ) ) {
 			$editorParams = SPFactory::config()->structuralData( $editorParams );
@@ -316,7 +353,7 @@ abstract class SPHtml_Input
 	 * @param string $image - url of an image
 	 * @return string
 	 */
-	public static function radio( $name, $value, $label = null, $id = null, $checked = false, $params = null, $order = array( 'field', 'image', 'label' ), $image = null )
+	public static function _radio( $name, $value, $label = null, $id = null, $checked = false, $params = null, $order = array( 'field', 'image', 'label' ), $image = null )
 	{
 		$params = self::params( $params );
 		if ( !( is_bool( $checked ) ) ) {
@@ -373,7 +410,7 @@ abstract class SPHtml_Input
 	 * @internal param string $field - on which site from the label the field should be displayed
 	 * @return string
 	 */
-	public static function checkBoxGroup( $name, $values, $id, $selected = null, $params = null, $order = array( 'field', 'image', 'label' ), $asArray = false )
+	public static function _checkBoxGroup( $name, $values, $id, $selected = null, $params = null, $order = array( 'field', 'image', 'label' ), $asArray = false )
 	{
 		self::checkArray( $values );
 		if ( $selected !== null && !( is_array( $selected ) ) ) {
@@ -417,7 +454,7 @@ abstract class SPHtml_Input
 	 * @param null $image
 	 * @return string
 	 */
-	public static function checkbox( $name, $value, $label = null, $id = null, $checked = false, $params = null, $order = array( 'field', 'image', 'label' ), $image = null )
+	public static function _checkbox( $name, $value, $label = null, $id = null, $checked = false, $params = null, $order = array( 'field', 'image', 'label' ), $image = null )
 	{
 		$params = self::params( $params );
 		if ( !( is_bool( $checked ) ) ) {
@@ -474,7 +511,7 @@ abstract class SPHtml_Input
 	 * @param bool $asArray - returns array instead of a string
 	 * @return string
 	 */
-	public static function radioList( $name, $values, $id, $checked = null, $params = null, $field = 'left', $asArray = false )
+	public static function _radioList( $name, $values, $id, $checked = null, $params = null, $field = 'left', $asArray = false )
 	{
 		self::checkArray( $values );
 		$list = array();
@@ -529,7 +566,7 @@ abstract class SPHtml_Input
 	 * @return string
 	 * @internal param string $title - language section for the title tags. If given, the options/optgroup will get a title tag. The title will be search in the language file under the given section
 	 */
-	public static function select( $name, $values, $selected = null, $multi = false, $params = null )
+	public static function _select( $name, $values, $selected = null, $multi = false, $params = null )
 	{
 		if ( is_array( $params ) && ( isset( $params[ 'size' ] ) && $params[ 'size' ] == 1 ) ) {
 			unset( $params[ 'size' ] );
@@ -630,12 +667,12 @@ abstract class SPHtml_Input
 		return "\n{$f}\n\n";
 	}
 
-	private static function cleanOpt( $opt )
+	protected static function cleanOpt( $opt )
 	{
 		return preg_replace( '/(&)([^a-zA-Z0-9#]+)/', '&amp;\2', self::translate( $opt ) );
 	}
 
-	private function optGrp( &$cells, $selected, $grp, $title )
+	protected function optGrp( &$cells, $selected, $grp, $title )
 	{
 		$cells[ ] = "\n\t<optgroup label=\"{$title}\">";
 		foreach ( $grp as $v => $l ) {
@@ -654,7 +691,7 @@ abstract class SPHtml_Input
 	}
 
 	/**
-	 * Special function to create enabled/disabled states radio list
+	 * Special function _to create enabled/disabled states radio list
 	 *
 	 * @param string $name - name of the html field
 	 * @param array $value - selected value
@@ -665,13 +702,13 @@ abstract class SPHtml_Input
 	 * @return string
 	 * @deprecated
 	 */
-	public static function states( $name, $value, $id, $label, $params = null, $side = 'right' )
+	public static function _states( $name, $value, $id, $label, $params = null, $side = 'right' )
 	{
 		return self::radioList( $name, array( '0' => "translate:[{$label}_no]", '1' => "translate:[{$label}_yes]" ), $id, ( int )$value, $params, $side );
 	}
 
 	/**
-	 * Special function to create enabled/disabled states radio list
+	 * Special function _to create enabled/disabled states radio list
 	 *
 	 * @param string $name - name of the html field
 	 * @param array $value - selected value
@@ -681,7 +718,7 @@ abstract class SPHtml_Input
 	 * @internal param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @return string
 	 */
-	public static function toggle( $name, $value, $id, $prefix /*, $params = null*/ )
+	public static function _toggle( $name, $value, $id, $prefix /*, $params = null*/ )
 	{
 		$value = (int)$value;
 		$field = '<div class="btn-group buttons-radio" data-toggle="buttons-radio" id="' . $id . '">';
@@ -701,7 +738,7 @@ abstract class SPHtml_Input
 	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @return string
 	 */
-	public static function calendar( $name, $value, $id = null, $params = null )
+	public static function _calendar( $name, $value, $id = null, $params = null )
 	{
 		self::loadCalendar();
 		self::checkArray( $params );
@@ -720,7 +757,7 @@ abstract class SPHtml_Input
 	/**
 	 * @return bool
 	 */
-	private static function loadCalendar()
+	protected static function _loadCalendar()
 	{
 		static $loaded = false;
 		if ( $loaded ) {
@@ -750,7 +787,7 @@ abstract class SPHtml_Input
 	 * @param null $timeOffset
 	 * @return string
 	 */
-	public static function datePicker( $name, $value, $dateFormat = 'Y-m-d H:i:s', $params = null, $icon = 'th', $addOffset = false, $timeOffset = null )
+	public static function _datePicker( $name, $value, $dateFormat = 'Y-m-d H:i:s', $params = null, $icon = 'th', $addOffset = false, $timeOffset = null )
 	{
 		self::createLangFile();
 		$timeOffset = strlen( $timeOffset ) ? $timeOffset : Sobi::Cfg( 'time_offset' );
@@ -846,7 +883,7 @@ abstract class SPHtml_Input
 	 * @param array $data
 	 * @return string
 	 */
-	private static function createDataTag( &$data )
+	protected static function createDataTag( &$data )
 	{
 		if ( is_array( $data ) && isset( $data[ 'data' ] ) && count( $data[ 'data' ] ) ) {
 			$tag = ' ';
@@ -869,7 +906,7 @@ abstract class SPHtml_Input
 	 * @internal param string $icon - field icon
 	 * @return string
 	 */
-	public static function dateGetter( $name, $value, $class = null, $dateFormat = 'Y-m-d H:i:s', $params = null )
+	public static function _dateGetter( $name, $value, $class = null, $dateFormat = 'Y-m-d H:i:s', $params = null )
 	{
 		self::createLangFile();
 		$value = strtotime( $value );
@@ -892,7 +929,7 @@ abstract class SPHtml_Input
 		return "\n{$f}\n\n";
 	}
 
-	private static function createLangFile()
+	protected static function _createLangFile()
 	{
 		static $loaded = false;
 		if ( !( $loaded ) ) {
@@ -918,7 +955,7 @@ abstract class SPHtml_Input
 		$loaded = true;
 	}
 
-	public static function userSelector( $name, $value, $groups = null, $params = null, $icon = 'user', $header = 'USER_SELECT_HEADER', $format = '%user', $orderBy = 'id' )
+	public static function _userSelector( $name, $value, $groups = null, $params = null, $icon = 'user', $header = 'USER_SELECT_HEADER', $format = '%user', $orderBy = 'id' )
 	{
 		static $count = 0;
 		static $session = null;
@@ -989,7 +1026,7 @@ abstract class SPHtml_Input
 		return "\n{$f}\n\n";
 	}
 
-	public static function userGetter( $name, $value, $params = null, $class = null, $format = '%user' )
+	public static function _userGetter( $name, $value, $params = null, $class = null, $format = '%user' )
 	{
 		$params = self::checkArray( $params );
 		if ( !( isset( $params[ 'id' ] ) ) ) {
@@ -1029,7 +1066,7 @@ abstract class SPHtml_Input
 	}
 
 
-	public static function modalWindow( $header, $id = null, $content = null, $classes = 'modal hide', $closeText = 'CLOSE', $saveText = 'SAVE', $style = null )
+	public static function _modalWindow( $header, $id = null, $content = null, $classes = 'modal hide', $closeText = 'CLOSE', $saveText = 'SAVE', $style = null )
 	{
 		$html = null;
 		if ( $style ) {
@@ -1054,7 +1091,7 @@ abstract class SPHtml_Input
 		return $html;
 	}
 
-	public static function hidden( $name, $value = null, $id = null, $params = array() )
+	public static function _hidden( $name, $value = null, $id = null, $params = array() )
 	{
 		$data = self::createDataTag( $params );
 		$id = $id ? $id : SPLang::nid( $name );
