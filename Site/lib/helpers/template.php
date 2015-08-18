@@ -198,6 +198,9 @@ abstract class SobiPro
 	 */
 	public static function Url( $var = null, $js = false, $sef = true, $live = false, $forceItemId = false )
 	{
+		if ( $var == 'current' ) {
+			return Sobi::Url( $var, $js, $sef, $live, $forceItemId );
+		}
 		$url = json_decode( $var, true );
 		if ( count( $url ) ) {
 			foreach ( $url as $k => $v ) {
