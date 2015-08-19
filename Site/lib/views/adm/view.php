@@ -1267,8 +1267,8 @@ class SPAdmView extends SPObject implements SPView
 				}
 				break;
 			default:
-				if ( method_exists( 'SPHtml_input', $args[ 'type' ] ) ) {
-					$method = new ReflectionMethod( 'SPHtml_input', $args[ 'type' ] );
+				if ( method_exists( 'SPHtml_input', $args[ 'type' ] ) || method_exists( 'SPHtml_input', '_' . $args[ 'type' ] ) ) {
+					$method = new ReflectionMethod( 'SPHtml_input', '_' . $args[ 'type' ] );
 					$methodArgs = array();
 					$methodParams = $method->getParameters();
 					foreach ( $methodParams as $param ) {

@@ -27,6 +27,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  */
 abstract class SPHtml_Input
 {
+
 	public static function __callStatic( $name, $args )
 	{
 		if ( defined( 'SOBIPRO_ADM' ) ) {
