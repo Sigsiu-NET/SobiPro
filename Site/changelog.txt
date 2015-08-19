@@ -48,7 +48,7 @@ Legend:
     (+) Language installer for templates
     (+) Definition file for used icons
     (+) Default values for inbox, textarea, select list, multiple select list, checkbox group, email and url fields
-    (+) Highlighting search keywords in the search results
+    (+) Highlighting search keywords in search results
     (+) Possibility to override input fields renderer in the template
 
     (!) Template styles from SobiPro.css moved to template's css file

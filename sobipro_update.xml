@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade" overwrite="true">
 	<name>SobiPro</name>
-	<creationDate>10 July 2015</creationDate>
+	<creationDate>18 August 2015</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2015 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.2.B</version>
+	<version>1.2.C</version>
 	<codename>Budgie</codename>
 	<description>SobiPro directory component for Joomla!</description>
 	<version_number>1.2</version_number>
@@ -90,6 +90,7 @@
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.about.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.messages.ini</language>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.check.ini</language>
+            <language tag="en-GB">Site/usr/locale/adm/en-GB.SpTpl.default3.ini</language>
 		</languages>
 	</administration>
 	<updateservers>
