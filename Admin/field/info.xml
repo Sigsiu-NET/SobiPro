@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ @package: SobiPro Component for Joomla!
+
+ @author
+ Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ Email: sobi[at]sigsiu.net
+ Url: http://www.Sigsiu.NET
+
+ @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @license GNU/GPL Version 3
+ This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
+
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+-->
+
+<definition>
+	<header>
+		<title value="FM.EDIT_FIELD" />
+		<file type="script" filename="bootstrap.tabs" />
+	</header>
+	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
+        <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
+        <divider />
+		<button task="field.apply" type="apply">
+			<button type="save" task="field.save" />
+			<button type="duplicate" task="field.clone" />
+		</button>
+		<divider />
+		<button type="exit" task="field.cancel" />
+		<divider />
+		<button type="help" target="_blank" />
+	</toolbar>
+	<body disable-menu="true">
+		<div class="row-fluid">
+			<div class="span12">
+				<message id="spMessage" />
+				<tabs>
+					<tab label="FMN.FIELD_GENERAL">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="toggle" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no" />
+								</fieldset>
+								<fieldset>
+									<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true" />
+									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" />
+									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-large" />
+									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
+								</fieldset>
+
+								<fieldset label="FM.FIELD_TYPE">
+									<field type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span3" />
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+					<tab label="FMN.FIELD_ENTRYINPUT">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+                                    <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
+                                    <field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
+                                    <field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />
+								</fieldset>
+                                <fieldset label="FM.INFORMATION">
+                                    <field type="textarea" name="field.entryInfo" value="field.entryInfo" label="FM.INFORMATION_OUT" editor="false" class="input-splarge" rows="4" style="" />
+                                    </fieldset>
+							</div>
+						</div>
+					</tab>
+					<tab label="FMN.FIELD_ENTRYVIEW">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset>
+									<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
+										<values>
+											<option value="both" label="FM.BOTH_OPT" />
+											<option value="details" label="FM.DETAILS_VIEW_OPT" />
+											<option value="vcard" label="FM.V_CARD_OPT" />
+											<option value="hidden" label="FMN.HIDDEN_OPT" />
+										</values>
+									</field>
+									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
+                                    <field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-large" />
+								</fieldset>
+                                <fieldset label="FM.INFORMATION">
+                                    <field type="textarea" name="field.viewInfo" value="field.viewInfo" label="FM.INFORMATION_OUT" editor="false" class="input-splarge" rows="4" style="" />
+                                </fieldset>
+							</div>
+						</div>
+					</tab>
+				</tabs>
+			</div>
+		</div>
+	</body>
+	<config>
+		<action value="index.php" />
+		<hidden>
+			<field name="option" default="com_sobipro" />
+			<field name="sp-language" default="" />
+			<field name="task" default="" />
+			<field name="method" default="xhr" />
+			<field name="format" default="raw" />
+		</hidden>
+	</config>
+</definition>

@@ -50,6 +50,7 @@ Legend:
     (+) Default values for inbox, textarea, select list, multiple select list, checkbox group, email and url fields
     (+) Highlighting search keywords in search results
     (+) Possibility to override input fields renderer in the template
+    (+) New core field 'Information' to output HTML text in entry form and/or DV and/or vCard
 
     (!) Template styles from SobiPro.css moved to template's css file
     (!) New tree icons
