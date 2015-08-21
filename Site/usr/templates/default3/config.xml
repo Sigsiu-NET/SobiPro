@@ -43,10 +43,10 @@
 				<message id="spMessage" />
 
                 <tabs>
-                    <tab  label="Less">>
+                    <tab label="FMN.CONFIG_GENERAL">>
                         <div class="row-fluid">
                             <div class="span12">
-                                <fieldset label="Less/CSS">
+                                <fieldset label="FMN.FIELD_CSS">
                                     <field type="select" label="Colour theme" name="settings[less][theme][colour-set]" selected="settings.less.theme.colour-set" class="input-medium">
                                         <values>
                                             <option value="sobipro" />
@@ -65,6 +65,8 @@
                                             <option value="angular" />
                                         </values>
                                     </field>
+                                </fieldset>
+                                <fieldset label="FMN.FIELD_APPS" condition="apps.review_rating">
                                     <field type="select" condition="apps.review_rating" label="Star colour" name="settings[less][review][stars]" selected="settings.less.review.stars" class="input-medium">
                                         <values>
                                             <option value="gold-grey" />
@@ -91,12 +93,22 @@
                             </div>
                         </div>
                     </tab>
+                <!--
                     <tab label="FMN.FIELD_GENERAL">
                         <div class="row-fluid">
                             <div class="span12">
                                 <fieldset label="TP.SETTINGS">
                                     <field type="toggle" name="settings[general][something-class]" value="settings.general.something-class" label="Something" prefix="yes_no" />
                                 </fieldset>
+
+                            </div>
+                        </div>
+                    </tab>
+                -->
+                    <tab label="TP.SETTINGS_ENTRY">
+                        <div class="row-fluid">
+                            <div class="span12">
+
                                 <fieldset label="TP.SETTINGS_ENTRY">
                                     <field type="select" label="TP.CONFIG.ENTRY_CSS_CLASS" name="settings[entry-edit][form-class]" selected="settings.entry-edit.form-class" class="input-large">
                                         <values>
@@ -113,12 +125,36 @@
                                         </values>
                                     </field>
                                 </fieldset>
-                                <fieldset label="TP.SETTINGS_SEARCH">
-                                    <field type="toggle" name="settings[search-results][highlight-search]" value="settings.search-results.highlight-search" label="TP.SETTINGS_SEARCH_HIGHLIGHT" prefix="yes_no" />
-                                </fieldset>
+                            </div>
+                        </div>
+                    </tab>
+
+<!--
+                    <tab label="TP.SETTINGS_SEARCH">
+                        <div class="row-fluid">
+                            <div class="span12">
                                 <fieldset label="TP.SETTINGS_DETAILS">
                                 </fieldset>
-                                <fieldset label="TP.SETTINGS_SECTION">
+                            </div>
+                        </div>
+                    </tab>
+-->
+<!--
+                    <tab label="TP.SETTINGS_DETAILS">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <fieldset label="TP.SETTINGS_DETAILS">
+                                </fieldset>
+                            </div>
+                        </div>
+                    </tab>
+-->
+
+                    <tab label="FMN.FIELD_VIEW">
+                        <div class="row-fluid">
+                            <div class="span12">
+
+                            <fieldset label="FMN.FIELD_SEC">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[section-view][entries_limit]" selected="settings.section-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
                                         <values>
                                             <option value="1" label="1" />
@@ -144,7 +180,7 @@
                                     </field>
                                     <field type="toggle" name="settings[section-view][entries_recursive]" value="settings.section-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
                                 </fieldset>
-                                <fieldset label="TP.SETTINGS_CATEGORY">
+                                <fieldset label="FMN.FIELD_CAT">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[category-view][entries_limit]" selected="settings.category-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
                                         <values>
                                             <option value="1" label="1" />
@@ -170,7 +206,7 @@
                                     </field>
                                     <field type="toggle" name="settings[category-view][entries_recursive]" value="settings.category-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
                                 </fieldset>
-                                <fieldset label="Listings">
+                                <fieldset label="FMN.FIELD_LIST">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[general][entries_limit]" selected="settings.general.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
                                         <values>
                                             <option value="1" label="1" />
