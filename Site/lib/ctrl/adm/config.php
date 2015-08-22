@@ -473,7 +473,7 @@ class SPConfigAdmCtrl extends SPController
 							$fileName = Sobi::Txt( 'TP.SETTINGS' );
 							$count2--;
 							$insertTask = Sobi::Url( array( 'task' => 'template.settings', 'template' => $filePath ) );
-							$nodes .= "spTpl.add( {$count2}, {$count},'{$fileName}','{$insertTask}', '', '', '{$ls}/globe.gif' );\n";
+							$nodes .= "spTpl.add( {$count2}, {$count},'{$fileName}','{$insertTask}', '', '', '{$ls}/settings.png' );\n";
 						}
 					}
 				}

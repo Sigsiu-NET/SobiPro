@@ -485,6 +485,16 @@ abstract class SPController extends SPObject implements SPControl
 			foreach ( $config as $section => $setting ) {
 				$settings[ str_replace( '-', '.', $section ) ] = $setting;
 			}
+			if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'json' ) ) {
+				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'json' ) ), true );
+				if ( count( $subConfig ) ) {
+					foreach ( $subConfig as $section => $subSettings ) {
+						foreach ( $subSettings as $k => $v ) {
+							$settings[ str_replace( '-', '.', $section ) ][ $k ] = $v;
+						}
+					}
+				}
+			}
 			if ( isset( $settings[ 'general' ] ) ) {
 				foreach ( $settings[ 'general' ] as $k => $v ) {
 					$this->_tCfg[ 'general' ][ $k ] = $v;

@@ -100,38 +100,39 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$settings = SPRequest::arr( 'settings' );
-		$store = json_encode( $settings );
+		$config = SPRequest::arr( 'settings' );
+
 		$templateName = SPRequest::cmd( 'templateName' );
 		if ( !( strlen( $templateName ) ) ) {
 			$templateName = SPC::DEFAULT_TEMPLATE;
 		}
-
-		if ( isset( $settings[ 'less' ] ) && count( $settings[ 'less' ] ) ) {
-			foreach ( $settings[ 'less' ] as $file => $variables ) {
-				$lessFile = Sobi::FixPath( $this->dir( $templateName ) . '/css/' . $file . '.less' );
-				if ( SPFs::exists( $lessFile ) ) {
-					$lessContent = SPFs::read( $lessFile );
-					foreach ( $variables as $variable => $value ) {
-						// @colour-set: sobipro;
-						$lessContent = preg_replace( "/@{$variable}:[^\n]*\;/", "@{$variable}: {$value};", $lessContent );
+		foreach ( $config as $configFile => $settings ) {
+			$store = json_encode( $settings );
+			if ( isset( $settings[ 'less' ] ) && count( $settings[ 'less' ] ) ) {
+				foreach ( $settings[ 'less' ] as $file => $variables ) {
+					$lessFile = Sobi::FixPath( $this->dir( $templateName ) . '/css/' . $file . '.less' );
+					if ( SPFs::exists( $lessFile ) ) {
+						$lessContent = SPFs::read( $lessFile );
+						foreach ( $variables as $variable => $value ) {
+							// @colour-set: sobipro;
+							$lessContent = preg_replace( "/@{$variable}:[^\n]*\;/", "@{$variable}: {$value};", $lessContent );
+						}
+					}
+					try {
+						SPFs::write( $lessFile, $lessContent );
+						$this->compileLessFile( $lessFile, str_replace( 'less', 'css', $lessFile ), Sobi::Url( 'template.settings' ) );
+					} catch ( SPException $x ) {
+						$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
 					}
 				}
-				try {
-					SPFs::write( $lessFile, $lessContent );
-					$this->compileLessFile( $lessFile, str_replace( 'less', 'css', $lessFile ), Sobi::Url( 'template.settings' ) );
-				} catch ( SPException $x ) {
-					$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
-				}
+			}
+			try {
+				SPFs::write( Sobi::FixPath( $this->dir( $templateName ) . str_replace( '.', '/', $configFile ) . '.json' ), $store );
+			} catch ( SPException $x ) {
+				$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
 			}
 		}
-
-		try {
-			SPFs::write( Sobi::FixPath( $this->dir( $templateName ) . '/config.json' ), $store );
-			$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_SAVED' ), false, SPC::SUCCESS_MSG );
-		} catch ( SPException $x ) {
-			$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
-		}
+		$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_SAVED' ), false, SPC::SUCCESS_MSG );
 	}
 
 	protected function templateSettings()
@@ -158,8 +159,15 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 					->warning( Sobi::Txt( 'TP.MISSING_DEFINITION_FILE' ), false )
 					->setSystemMessage();
 		}
-		if ( SPFs::exists( $dir . '/config.json' ) ) {
-			$templateSettings = json_decode( SPFs::read( $dir . '/config.json' ) );
+		/** search for all json files */
+		/** @var  SPDirectoryIterator $directory */
+		$directory = SPFactory::Instance( 'base.fs.directory', $dir );
+		$configs = array_keys( $directory->searchFile( '.json', false, 2 ) );
+		if ( count( $configs ) ) {
+			foreach ( $configs as $file ) {
+				$index = str_replace( array( $dir, '/', '.json' ), array( null, '-', null ), $file );
+				$templateSettings[ $index ] = json_decode( SPFs::read( $file ), true );
+			}
 		}
 		$menu = $this->createMenu();
 		$plugins = SPFactory::db()

@@ -888,6 +888,16 @@ abstract class SPFrontView extends SPObject implements SPView
 			foreach ( $config as $section => $setting ) {
 				$settings[ str_replace( '-', '.', $section ) ] = $setting;
 			}
+			if ( SPLoader::translatePath( "{$this->_templatePath}.{$task}", 'absolute', true, 'json' ) ) {
+				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.{$task}", 'absolute', true, 'json' ) ), true );
+				if ( count( $subConfig ) ) {
+					foreach ( $subConfig as $section => $subSettings ) {
+						foreach ( $subSettings as $k => $v ) {
+							$settings[ str_replace( '-', '.', $section ) ][ $k ] = $v;
+						}
+					}
+				}
+			}
 			if ( isset( $settings[ 'general' ] ) ) {
 				foreach ( $settings[ 'general' ] as $k => $v ) {
 					$this->_attr[ 'config' ][ $k ] = array(
