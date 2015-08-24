@@ -214,7 +214,7 @@ class SPMenuAdm extends SPController
 								e.preventDefault();
 								e.stopPropagation();
 								alert( "' . Sobi::Txt( 'MENU_CAT_FUNCTION_SELECT_CAT_FIRST' ) . '" );
-								SobiPro.jQuery( "#SobiProSelectedFunction", window.parent.document ).html( "'.Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' ).'" );
+								SobiPro.jQuery( "#SobiProSelectedFunction", window.parent.document ).html( "' . Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' ) . '" );
 						}
 					} ); '
 		);
@@ -232,6 +232,10 @@ class SPMenuAdm extends SPController
 				$functions[ $path[ 'filename' ] ] = $this->functionDetails( $file );
 			}
 		}
+		/** Mon, Aug 24, 2015 10:24:24 - put the section ink on the top */
+		$section = $functions[ 'section' ];
+		unset( $functions[ 'section' ] );
+		$functions = array_merge( array( 'section' => $section ), $functions );
 		$functions = array_merge( array( 'null' => Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' ) ), $functions );
 		SPFactory::View( 'joomla-menu', true )
 				->assign( $functions, 'functions' )
@@ -309,6 +313,7 @@ class SPMenuAdm extends SPController
 
 	protected function listTemplates( &$arr, $path, $type )
 	{
+		$stdTemplates = array( 'view.xsl', 'details.xsl', 'edit.xsl' );
 		switch ( $type ) {
 			case 'entry':
 			case 'entry.add':
@@ -331,6 +336,9 @@ class SPMenuAdm extends SPController
 			$files = scandir( $path );
 			if ( count( $files ) ) {
 				foreach ( $files as $file ) {
+					if ( in_array( $file, $stdTemplates ) ) {
+						continue;
+					}
 					$stack = explode( '.', $file );
 					if ( array_pop( $stack ) == 'xsl' ) {
 						$arr[ $stack[ 0 ] ] = $file;

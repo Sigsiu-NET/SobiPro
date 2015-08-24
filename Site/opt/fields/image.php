@@ -194,15 +194,15 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 	}
 
-	private function parseName( $entry, $name, $pattern, $addExt = false )
+	protected function parseName( $entry, $name, $pattern, $addExt = false )
 	{
 		$nameArray = explode( '.', $name );
 		$ext = strtolower( array_pop( $nameArray ) );
 		$name = implode( '.', $nameArray );
 		$user = SPUser::getBaseData( ( int )$entry->get( 'owner' ) );
 		// @todo change to the global method
-		$placeHolders = array( '/{id}/', '/{orgname}/', '/{entryname}/', '/{oid}/', '/{ownername}/', '/{uid}/', '/{username}/' );
-		$replacements = array( $entry->get( 'id' ), $name, $entry->get( 'nid' ), ( isset( $user->id ) ? $user->id : null ), ( isset( $user->name ) ? SPLang::nid( $user->name ) : 'guest' ), Sobi::My( 'id' ), SPLang::nid( Sobi::My( 'name' ) ) );
+		$placeHolders = array( '/{id}/', '/{orgname}/', '/{entryname}/', '/{oid}/', '/{ownername}/', '/{uid}/', '/{username}/', '/{nid}/' );
+		$replacements = array( $entry->get( 'id' ), $name, $entry->get( 'nid' ), ( isset( $user->id ) ? $user->id : null ), ( isset( $user->name ) ? SPLang::nid( $user->name ) : 'guest' ), Sobi::My( 'id' ), SPLang::nid( Sobi::My( 'name' ) ), $this->nid );
 		$fileName = preg_replace( $placeHolders, $replacements, $pattern );
 		return $addExt ? $fileName . '.' . $ext : $fileName;
 	}
