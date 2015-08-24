@@ -48,7 +48,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	public function execute()
 	{
-		$this->_task = strlen( $this->_task ) ? $this->_task : $this->_defTask;
+ 		$this->_task = strlen( $this->_task ) ? $this->_task : $this->_defTask;
 		switch ( $this->_task ) {
 			case 'installed':
 				$this->installed();

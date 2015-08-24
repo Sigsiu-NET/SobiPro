@@ -744,8 +744,8 @@ class SPAdmView extends SPObject implements SPView
 		if ( $node->attributes->getNamedItem( 'type' ) && $node->attributes->getNamedItem( 'type' )->nodeValue == 'fields' ) {
 			$fields = $this->get( $subject );
 			foreach ( $fields as $field ) {
-				if ( method_exists( 'SPHtml_input', $field[ 'type' ] ) ) {
-					$method = new ReflectionMethod( 'SPHtml_input', $field[ 'type' ] );
+				if ( method_exists( 'SPHtml_input', '_' . $field[ 'type' ] ) ) {
+					$method = new ReflectionMethod( 'SPHtml_input', '_' .$field[ 'type' ] );
 					$methodArgs = array();
 					$methodParams = $method->getParameters();
 					foreach ( $methodParams as $param ) {
