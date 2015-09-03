@@ -222,7 +222,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$selector = '<div class="SigsiuTree" id="' . $this->nid . '_canvas">' . $selector . '</div>';
 		if ( $this->modal ) {
 			$selector = SPHtml_Input::modalWindow( Sobi::Txt( 'EN.SELECT_CAT_PATH' ), $this->nid . '_modal', $selector, 'modaltree modal hide', 'CLOSE', null );
-			$field = SPHtml_Input::button( 'select-category', Sobi::Txt( 'EN.SELECT_CAT_PATH' ), array( 'class' => 'btn btn-primary', 'href' => '#' . $this->nid . '_modal', 'data-toggle' => 'modal', 'id' => $this->nid . '_modal_fire' ) );
+			$field = SPHtml_Input::button( 'select-category', Sobi::Txt( 'EN.SELECT_CAT_PATH' ), array( 'class' => 'btn btn-primary btn-sigsiu', 'href' => '#' . $this->nid . '_modal', 'data-toggle' => 'modal', 'id' => $this->nid . '_modal_fire' ) );
 			return $field . $selector;
 		}
 		else {

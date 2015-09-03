@@ -1075,7 +1075,7 @@ abstract class SPHtml_Input
 		}
 		$bid = strlen( $id ) ? $id : md5( rand( 0, 10000 ) );
 		$id = strlen( $id ) ? '" id="' . $id . '"' : null;
-		$save = $saveText ? '<a href="#" id="' . $bid . '-save" class="btn btn-primary save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>' : null;
+		$save = $saveText ? '<a href="#" id="' . $bid . '-save" class="btn btn-primary btn-sigsiu save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>' : null;
 		$html .= '<div class="' . $classes . $id . $style . '>
 					<div class="modal-header">
 						<h3>' . ( $header ) . '</h3>
