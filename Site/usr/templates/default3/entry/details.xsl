@@ -23,7 +23,13 @@
     <xsl:include href="../common/manage.xsl" />
     <xsl:include href="../common/alphamenu.xsl" />
     <xsl:include href="../common/messages.xsl" />
+    <xsl:include href="../common/showfields.xsl" />
+
+    <!-- Uncomment only if Review & Ratings App is installed -->
     <!--<xsl:include href="../common/review.xsl" />-->
+
+    <!-- Uncomment only if Collection App is installed -->
+    <!--<xsl:include href="../common/collection.xsl" />-->
 
     <xsl:template match="/entry_details">
         <div class="spDetails">
@@ -37,6 +43,7 @@
             <div class="clearfix" />
             <div class="spDetailEntry">
                 <xsl:call-template name="manage" />
+                <!-- Uncomment only if Review & Ratings App is installed -->
                 <!--<xsl:call-template name="ratingStars" />-->
                 <h1>
                     <xsl:value-of select="entry/name" />
@@ -44,15 +51,32 @@
                         <xsl:with-param name="entry" select="entry" />
                     </xsl:call-template>
                 </h1>
-                <!--<xsl:call-template name="ratingSummary" />-->
+
+                <!-- Uncomment only if Collection App is installed -->
+                <!--<xsl:call-template name="collection"><xsl:with-param name="entry" select="entry"/></xsl:call-template>-->
 
                 <xsl:for-each select="entry/fields/*">
-                    <xsl:if test="count(./data/*) or string-length(./data)">
-                        <xsl:call-template name="showfield">
-                            <xsl:with-param name="fieldname" select="." />
-                        </xsl:call-template>
-                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="count(./data/*) or string-length(./data)">
+                            <xsl:call-template name="showfield">
+                                <xsl:with-param name="fieldname" select="." />
+                                <xsl:with-param name="view" as="dv" />
+                            </xsl:call-template>
+                        </xsl:when>
+                        <xsl:otherwise>
+                        <xsl:if test="@type = 'image'">
+                            <xsl:if test="//config/noimage/@value = 1">
+                                <div class="spNoImage">
+                                    <i class="icon icon-ban-circle"></i>
+                                </div>
+                            </xsl:if>
+                        </xsl:if>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:for-each>
+
+                <!-- Uncomment only if Review & Ratings App is installed -->
+                <!--<xsl:call-template name="ratingSummary" />-->
 
                 <xsl:if test="count(entry/categories)">
                     <div class="spEntryCats">
@@ -69,47 +93,10 @@
                 </xsl:if>
             </div>
             <div class="clearfix" />
+
+            <!-- Uncomment only if Review & Ratings App is installed -->
             <!--<xsl:call-template name="reviewForm"/>-->
             <!--<xsl:call-template name="reviews"/>-->
-        </div>
-    </xsl:template>
-
-    <xsl:template name="showfield">
-        <xsl:param name="fieldname" />
-        <div>
-            <xsl:if test="string-length($fieldname/@css-view)">
-                <xsl:attribute name="class">
-                    <xsl:value-of select="$fieldname/@css-view" />
-                </xsl:attribute>
-            </xsl:if>
-            <xsl:if test="string-length($fieldname/@itemprop)">
-                <xsl:attribute name="itemprop"><xsl:value-of select="$fieldname/@itemprop"/></xsl:attribute>
-            </xsl:if>
-            <xsl:if test="count($fieldname/data/*) or string-length($fieldname/data)">
-                <xsl:if test="$fieldname/label/@show = 1">
-                    <strong>
-                        <xsl:value-of select="$fieldname/label" /><xsl:text>: </xsl:text>
-                    </strong>
-                </xsl:if>
-            </xsl:if>
-
-            <xsl:choose>
-                <xsl:when test="count($fieldname/data/*)">
-                    <xsl:copy-of select="$fieldname/data/*" />
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:if test="string-length($fieldname/data)">
-                        <xsl:value-of select="$fieldname/data" disable-output-escaping="yes" />
-                    </xsl:if>
-                </xsl:otherwise>
-            </xsl:choose>
-
-            <xsl:if test="count($fieldname/data/*) or string-length($fieldname/data)">
-                <xsl:if test="string-length($fieldname/@suffix)">
-                    <xsl:text> </xsl:text>
-                    <span class="spDetailSuffix"><xsl:value-of select="$fieldname/@suffix" /></span>
-                </xsl:if>
-            </xsl:if>
         </div>
     </xsl:template>
 </xsl:stylesheet>

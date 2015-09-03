@@ -43,11 +43,12 @@
 				<message id="spMessage" />
 
                 <tabs>
-                    <tab label="FMN.CONFIG_GENERAL">
+                    <tab label="TP.SETTINGS_GENERAL">
                         <div class="row-fluid">
                             <div class="span12">
-                                <fieldset label="FMN.FIELD_CSS">
-                                    <field type="select" label="Colour theme" name="settings[config][less][theme][colour-set]" selected="settings.config.less.theme.colour-set" class="input-medium">
+                                <fieldset label="TP.CONFIG.CSS">
+                                    <!-- name="settings[folder.configfile][less=compile][lessfile][variable]" -->
+                                    <field type="select" label="TP.CONFIG.CSS_COLOUR" name="settings[config][less][theme][colour-set]" selected="settings.config.less.theme.colour-set" class="input-medium">
                                         <values>
                                             <option value="sobipro" />
                                             <option value="cornfield" />
@@ -59,15 +60,15 @@
                                             <option value="blackwidow" />
                                         </values>
                                     </field>
-                                    <field type="select" label="Edge design" name="settings[config][less][theme][corners]" selected="settings.config.less.theme.corners" class="input-medium">
+                                    <field type="select" label="TP.CONFIG.CSS_EDGE" name="settings[config][less][theme][corners]" selected="settings.config.less.theme.corners" class="input-medium">
                                         <values>
                                             <option value="rounded" />
                                             <option value="angular" />
                                         </values>
                                     </field>
                                 </fieldset>
-                                <fieldset label="FMN.FIELD_APPS" condition="apps.review_rating">
-                                    <field type="select" condition="apps.review_rating" label="Star colour" name="settings[config][less][review][stars]" selected="settings.config.less.review.stars" class="input-medium">
+                                <fieldset label="TP.CONFIG.APPS" condition="apps.review_rating">
+                                    <field type="select" condition="apps.review_rating" label="TP.CONFIG.APPS_REVIEWSTAR" name="settings[config][less][review][stars]" selected="settings.config.less.review.stars" class="input-medium">
                                         <values>
                                             <option value="gold-grey" />
                                             <option value="gold-black" />
@@ -90,34 +91,57 @@
                                         </values>
                                     </field>
                                 </fieldset>
-                            </div>
-                        </div>
-                    </tab>
-                <!--
-                    <tab label="FMN.FIELD_GENERAL">
-                        <div class="row-fluid">
-                            <div class="span12">
-                                <fieldset label="TP.SETTINGS">
-                                    <field type="toggle" name="settings[config][general][something-class]" value="settings.config.general.something-class" label="Something" prefix="yes_no" />
+                                <fieldset label="TP.CONFIG.RSS">
+                                    <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[feeds.rss][section-view][entries_limit]" selected="settings.feeds-rss.section-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
+                                        <values>
+                                            <option value="1" label="1" />
+                                            <option value="3" label="3" />
+                                            <option value="5" label="5" />
+                                            <option value="10" label="10" />
+                                            <option value="15" label="15" />
+                                        </values>
+                                    </field>
+                                    <field type="toggle" name="settings[feeds.rss][section-view][entries_recursive]" value="settings.feeds-rss.section-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
+                                    <field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[feeds.rss][section-view][entries-ordering]" selected="settings.feeds-rss.section-view.entries-ordering" class="input-large"> <!-- SobiPro setting! -->
+                                        <values>
+                                            <option value="createdTime.desc" label="EMN_ORDER_BY_CREATION_DATE_DESC" />
+                                            <option value="updatedTime.desc" label="EMN_ORDER_BY_UPDATE_DATE_DESC" />
+                                        </values>
+                                    </field>
                                 </fieldset>
-
+                                <fieldset label="TP.CONFIG.ENTRIES">
+                                    <field type="toggle" name="settings[config][general][noimage]" value="settings.config.general.noimage" label="TP.CONFIG.ENTRIES_NOIMG" prefix="yes_no" />
+                                    <field type="select" label="TP.CONFIG.ENTRIES_IMGSIZESMALL" name="settings[config][less][theme][small-image]" selected="settings.config.less.theme.small-image" class="input-medium">
+                                        <values>
+                                            <option value="inherit" label="inherit" />
+                                            <option value="80px" label="80px" />
+                                            <option value="100px" label="100px" />
+                                            <option value="120px" label="120px" />
+                                            <option value="150px" label="150px" />
+                                            <option value="180px" label="180px" />
+                                            <option value="200px" label="200px" />
+                                            <option value="250px" label="250px" />
+                                        </values>
+                                    </field>
+                                </fieldset>
                             </div>
                         </div>
                     </tab>
-                -->
+
                     <tab label="TP.SETTINGS_ENTRY">
                         <div class="row-fluid">
                             <div class="span12">
 
-                                <fieldset label="TP.SETTINGS_ENTRY">
-                                    <field type="select" label="TP.CONFIG.ENTRY_CSS_CLASS" name="settings[config][entry-edit][form-class]" selected="settings.config.entry-edit.form-class" class="input-large">
+                                <fieldset>
+                                    <!-- name="settings[folder.configfile][task][setting]" value="settings.folder-configfile.task.setting" -->
+                                    <field type="select" label="TP.CONFIG.ENTRY_CSS_CLASS" name="settings[entry.edit][entry-edit][form-class]" selected="settings.entry-edit.entry-edit.form-class" class="input-large">
                                         <values>
                                             <option value="inline" label="TP.CONFIG.ENTRY_CSS_CLASS_INLINE" />
                                             <option value="horizontal" label="TP.CONFIG.ENTRY_CSS_CLASS_HORIZONTAL" />
                                         </values>
                                     </field>
-                                    <field type="toggle" name="settings[entry.edit][entry-edit][required-star]" value="settings.config.entry-edit.entry-edit.required-star" label="TP.CONFIG.ENTRY_STAR" prefix="yes_no" />
-                                    <field type="select" label="TP.CONFIG.ENTRY_HELPPOSITION" name="settings[config][entry-edit][help-position]" selected="settings.config.entry-edit.help-position" class="input-medium">
+                                    <field type="toggle" name="settings[entry.edit][entry-edit][required-star]" value="settings.entry-edit.entry-edit.required-star" label="TP.CONFIG.ENTRY_STAR" prefix="yes_no" />
+                                    <field type="select" label="TP.CONFIG.ENTRY_HELPPOSITION" name="settings[entry.edit][entry-edit][help-position]" selected="settings.entry-edit.entry-edit.help-position" class="input-medium">
                                         <values>
                                             <option value="popup" label="TP.CONFIG.ENTRY_HELPPOSITION_POPUP" />
                                             <option value="above" label="TP.CONFIG.ENTRY_HELPPOSITION_ABOVE" />
@@ -133,7 +157,7 @@
                     <tab label="TP.SETTINGS_SEARCH">
                         <div class="row-fluid">
                             <div class="span12">
-                                <fieldset label="TP.SETTINGS_DETAILS">
+                                <fieldset>
                                 </fieldset>
                             </div>
                         </div>
@@ -143,18 +167,18 @@
                     <tab label="TP.SETTINGS_DETAILS">
                         <div class="row-fluid">
                             <div class="span12">
-                                <fieldset label="TP.SETTINGS_DETAILS">
+                                <fieldset>
                                 </fieldset>
                             </div>
                         </div>
                     </tab>
 -->
 
-                    <tab label="FMN.FIELD_VIEW">
+                    <tab label="TP.SETTINGS_VIEW">
                         <div class="row-fluid">
                             <div class="span12">
 
-                            <fieldset label="FMN.FIELD_SEC">
+                            <fieldset label="TP.CONFIG.SECTION">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][section-view][entries_limit]" selected="settings.config.section-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
                                         <values>
                                             <option value="1" label="1" />
@@ -180,7 +204,7 @@
                                     </field>
                                     <field type="toggle" name="settings[config][section-view][entries_recursive]" value="settings.config.section-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
                                 </fieldset>
-                                <fieldset label="FMN.FIELD_CAT">
+                                <fieldset label="TP.CONFIG.CAT">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][category-view][entries_limit]" selected="settings.config.category-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
                                         <values>
                                             <option value="1" label="1" />
@@ -205,8 +229,23 @@
                                         </values>
                                     </field>
                                     <field type="toggle" name="settings[config][category-view][entries_recursive]" value="settings.config.category-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
+                                    <field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][category-view][entries_ordering]" selected="settings.config.category-view.entries_ordering" class="input-large"> <!-- SobiPro setting! -->
+                                        <values>
+                                            <option value="position.asc" label="SECN.CFG.ENTRY_ORDER_BY_POSITION_ASCENDING" />
+                                            <option value="position.desc" label="SECN.CFG.ENTRY_ORDER_BY_POSITION_DESCENDING" />
+                                            <option value="counter.asc" label="SECN.CFG.ENTRY_ORDER_BY_POPULARITY_ASCENDING" />
+                                            <option value="counter.desc" label="SECN.CFG.ENTRY_ORDER_BY_POPULARITY_DESCENDING" />
+                                            <option value="createdTime.asc" label="SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_ASC" />
+                                            <option value="createdTime.desc" label="SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_DESC" />
+                                            <option value="updatedTime.asc" label="SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_ASC" />
+                                            <option value="updatedTime.desc" label="SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_DESC" />
+                                            <option value="validUntil.asc" label="SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_ASC" />
+                                            <option value="validUntil.desc" label="SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_DESC" />
+                                            <option value="RAND()" label="Random" />
+                                        </values>
+                                    </field>
                                 </fieldset>
-                                <fieldset label="FMN.FIELD_LIST">
+                                <fieldset label="TP.CONFIG.LIST">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][general][entries_limit]" selected="settings.config.general.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
                                         <values>
                                             <option value="1" label="1" />
@@ -231,6 +270,22 @@
                                         </values>
                                     </field>
                                     <field type="toggle" name="settings[config][general][entries_recursive]" value="settings.config.general.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
+                                    <field type="toggle" name="settings[config][category-view][entries_recursive]" value="settings.config.category-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
+                                    <field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][general][entries_ordering]" selected="settings.config.general.entries_ordering" class="input-large"> <!-- SobiPro setting! -->
+                                        <values>
+                                            <option value="position.asc" label="SECN.CFG.ENTRY_ORDER_BY_POSITION_ASCENDING" />
+                                            <option value="position.desc" label="SECN.CFG.ENTRY_ORDER_BY_POSITION_DESCENDING" />
+                                            <option value="counter.asc" label="SECN.CFG.ENTRY_ORDER_BY_POPULARITY_ASCENDING" />
+                                            <option value="counter.desc" label="SECN.CFG.ENTRY_ORDER_BY_POPULARITY_DESCENDING" />
+                                            <option value="createdTime.asc" label="SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_ASC" />
+                                            <option value="createdTime.desc" label="SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_DESC" />
+                                            <option value="updatedTime.asc" label="SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_ASC" />
+                                            <option value="updatedTime.desc" label="SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_DESC" />
+                                            <option value="validUntil.asc" label="SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_ASC" />
+                                            <option value="validUntil.desc" label="SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_DESC" />
+                                            <option value="RAND()" label="Random" />
+                                        </values>
+                                    </field>
                                 </fieldset>
                             </div>
                         </div>

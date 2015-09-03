@@ -25,7 +25,7 @@
                 <xsl:if test="count( fields/* )">
                     <div class="alphalist">
                         <div class="btn-group">
-                            <a class="btn dropdown-toggle btn-mini btn-primary btn-sigsiu" data-toggle="dropdown" href="#">
+                            <a class="btn dropdown-toggle btn-mini btn-sigsiu" data-toggle="dropdown" href="#">
                                 <xsl:value-of select="php:function( 'SobiPro::Txt', 'ALPHALIST_SELECT' )" /><xsl:text> </xsl:text>
                                 <span class="caret"></span>
                             </a>

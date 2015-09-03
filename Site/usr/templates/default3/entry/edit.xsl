@@ -122,6 +122,7 @@
                     <xsl:value-of select="php:function( 'SobiPro::Txt', 'ENTRY_REQUIRED_MESSAGE' )" />
                 </div>
             </xsl:if>
+            <div class="clearfix" />
 			<div class="pull-right">
 				<button class="btn sobipro-cancel" type="button">
 					<xsl:value-of select="entry/fields/cancel_button/data/button" />

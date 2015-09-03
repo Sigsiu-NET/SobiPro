@@ -24,7 +24,7 @@
 	<xsl:include href="../common/alphamenu.xsl" />
 	<xsl:include href="../common/entries.xsl" />
 	<xsl:include href="../common/categories.xsl" />
-	<xsl:include href="../common/messages.xsl" />
+    <xsl:include href="../common/messages.xsl" />
 	<xsl:template match="/category">
 		<xsl:variable name="rssUrlSection">{"sid":"<xsl:value-of select="section/@id" />","sptpl":"feeds.rss","out":"raw"}
 		</xsl:variable>
