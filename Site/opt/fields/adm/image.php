@@ -32,5 +32,6 @@ class SPField_ImageAdm extends SPField_Image
 		if ( ( $attr[ 'resize' ] || $attr[ 'crop' ] ) && !( $attr[ 'resizeWidth' ] && $attr[ 'resizeHeight' ] ) ) {
 			throw new SPException( SPLang::e( 'IMG_FIELD_RESIZE_NO_SIZE' ) );
 		}
+		parent::save($attr);
 	}
 }

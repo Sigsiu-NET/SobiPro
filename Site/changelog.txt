@@ -59,6 +59,8 @@ Legend:
     (!) Curl test URL changed
     (!) Bootstrap responsive CSS file added by default
     (!) Layout improvements for range search
+    (!) Default view templates of SobiPro functionality not longer selectable in Joomla! menu manager
+    (!) SobiPro section view functionality in Joomla! menu manager moved to first position
 
     (-) Category icons removed
 
