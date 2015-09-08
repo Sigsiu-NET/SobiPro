@@ -62,6 +62,7 @@ Legend:
     (!) Default view templates of SobiPro functionality not longer selectable in Joomla! menu manager
     (!) SobiPro section view functionality in Joomla! menu manager moved to first position
     (!) Set image crop function off by default
+    (!) Header plugin version updated
 
     (-) Category icons removed
 
