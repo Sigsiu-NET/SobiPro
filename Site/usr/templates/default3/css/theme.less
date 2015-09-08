@@ -147,7 +147,7 @@
     }
 }
 .SobiPro .table-striped tbody > tr:nth-child(2n+1) > td,
-.SobiPro .table-vstriped tbody > tr > td:nth-child(2n) {
+.SobiPro .table-vstriped tbody > tr > td:nth-child(2n+1) {
     .lightBackground;
 }
 .SobiPro .table.table-vstriped th,
@@ -505,6 +505,31 @@
     .lightBackground;
 }
 
+// Define widths to use as classes
+// ----------------------------------------
+.SobiPro .collwidth2 {
+    width: 50%;
+}
+.SobiPro .collwidth3 {
+    width: 33.33%;
+}
+.SobiPro .collwidth4 {
+    width: 25%;
+}
+.SobiPro .collwidth5 {
+    width: 20%;
+}
+.SobiPro .collwidth6 {
+    width: 16.66%;
+}
+.SobiPro .collwidth8 {
+    width: 12.5%;
+}
+.SobiPro .collwidth10 {
+    width: 10%;
+}
+
+
 // Alert windows and error messages
 // ----------------------------------------
 // define bootstrap alert to use it as mixin
@@ -738,8 +763,10 @@
         color: @font-color;
     }
 }
-.SobiPro .spDetailEntry .spNoImage,
-.SobiPro .spEntryContainer .spNoImage {
+
+// NoImge Setting
+// ----------------------------------------
+.SobiPro .spNoImage {
     width: 100px;
     height: 75px;
     font-size: 500%;
@@ -749,7 +776,6 @@
         @fs: 400%, 500%, 700%, 1000%, 1200%;
         font-size: extract(@fs, @small-image*2/100);
     }
-    float: right;
     text-align: center;
     padding: 4px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -762,21 +788,33 @@
     height: 150px;
     font-size: 900%;
 }
-.SobiPro .spDetailEntry .spNoImage i,
-.SobiPro .spEntryContainer .spNoImage i {
-    top: 36%;
-    & when (isnumber(@small-image)) {
-        @top: 34%, 36%, 41%, 42%, 44%;
-        top: extract(@top, @small-image*2/100);;
-    }
-    position: relative;
+.SobiPro .spNoImage i {
     color: fade(@base-color, 40%);
     & when (@inverse = inverse) {
         color: fade(@active-color, 40%);
     }
 }
-.SobiPro .spDetailEntry .spNoImage i {
-    top: 42%;
+.SobiPro .spNoImageContainer {
+    display: flex;
+    display: -webkit-flex;
+}
+.SobiPro .spNoImageContainer.right {
+    float: right;
+    display: inline;
+}
+.SobiPro .spNoImage {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+}
+.SobiPro .spNoImage.stretch {
+    align-self: stretch;
+    -webkit-align-self: stretch;
+    flex: 1;
+    -webkit-flex: 1;
 }
 
 // Entry details view
@@ -1285,6 +1323,7 @@
 .SobiPro .collection-entry-container.spClassViewImage img {
    float: none!important;
    margin-left: 0;
+   width: 95%;
 }
 .SobiPro .collection-entry-container.spClassViewText {
     text-align: justify;
@@ -1292,8 +1331,18 @@
 .SobiPro .collection-entry-container .page-header {
     border-bottom: none;
     margin-bottom: 0;
+    padding-bottom: 0;
+    font-size: 17px;
 }
-
+.SobiPro th.collection-entry-container {
+    padding-left: 0;
+}
+.SobiPro .collection-entry-container td {
+    min-width: 100px;
+}
+.SobiPro .collection-entry-container td.remove {
+    min-width: 20px;
+}
 
 // Custom Media Queries
 // ==============================================

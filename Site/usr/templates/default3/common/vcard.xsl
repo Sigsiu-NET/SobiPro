@@ -50,9 +50,11 @@
                 <xsl:otherwise>
                     <xsl:if test="@type = 'image'">
                         <xsl:if test="//config/noimage/@value = 1">
+                        <div class="spNoImageContainer right">
                             <div class="spNoImage">
                                 <i class="icon icon-ban-circle"></i>
                             </div>
+                        </div>
                         </xsl:if>
                     </xsl:if>
                 </xsl:otherwise>
