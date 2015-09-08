@@ -38,7 +38,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * @var bool
 	 */
-	protected $crop = true;
+	protected $crop = false;
 	/**
 	 * @var double
 	 */
