@@ -84,7 +84,7 @@
 									<div class="hide ctrl-add-font-class">
 										<field type="text" name="category.params[icon-font-add-class]" value="category.params.icon-font-add-class" label="CAT.ICON_FONT_ADD_CLASS" class="input" />
 									</div>
-									<field type="button" label="CATN.SELECT_CATEGORY_ICON" name="cat_ico" class="btn" id="catIcoChooser" rel="var:[icon_chooser_url]" />
+									<field type="button" label="CATN.SELECT_CATEGORY_ICON" name="cat_ico" class="btn" id="catIcoChooser" rel="var:[icon_chooser_url]" style="min-height:80px;padding-bottom:0px;" />
 									<field type="select" label="CAT.SHOW_INTROTEXT" name="category.showIntrotext" selected="category.showIntrotext" class="input-small">
 										<values>
 											<option value="2" label="OPT_GLOBAL" />
