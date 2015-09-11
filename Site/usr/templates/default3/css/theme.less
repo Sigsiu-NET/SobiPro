@@ -30,7 +30,7 @@
 
 //-------------------------------------------------------------------------------------*/
 
-// fallback to sobipro
+// fallback to sobipro layout
 @base-color: #993333;
 @text-color: #FFFFFF;
 @hover-color: #FFFFFF;
@@ -189,7 +189,7 @@
 }
 .SobiPro .modal {
     margin-top: 20px;
-    color: @active-color;
+    //color: @active-color;
 }
 .SobiPro .modal-header h3 {
     .headertext;
@@ -540,7 +540,7 @@
 }
 .SobiPro .spAlert {
     margin-bottom: 0;
-    margin-top: 20px;
+    margin-top: 0;
     background-color: @alert-color;
     color: @active-color;
     border-color: darken(@alert-color, 10%);
@@ -913,6 +913,10 @@
 .SobiPro .editor {
     overflow: visible;
 }
+.SobiPro .spClassEditInfo {
+    margin-top: 10px;
+}
+
 
 // URL and Email Fields
 // ----------------------------------------
@@ -1030,6 +1034,9 @@
 .SobiPro .control-label input[type="checkbox"] {
     margin: 0;
 }
+
+// Edit entry payment control
+// ----------------------------------------
 .SobiPro .control-label div.paybox span {
     border: 1px solid darken(@alert-color, 10%);;
     border-radius: 45px;
@@ -1111,7 +1118,7 @@
     padding-top: 25px;
 }
 .SobiPro table.payment tbody tr.info > td {
-    background-color: lighten(@active-color, 60%);
+    .mediumBackground;
 }
 .SobiPro table.payment tbody tr.success > td {
     background-color: lighten(@alert-color, 20%);
@@ -1175,7 +1182,7 @@
 }
 .SobiPro div.spClassViewAggregation {
     padding-top: 15px;
-    font-size: 80%;
+    font-size: 90%;
 }
 .SobiPro div.spClassViewAggregation strong {
     font-weight: 400;
@@ -1199,6 +1206,9 @@
     & when (@inverse = inverse) {
         color: @text-color;
     }
+}
+.SobiPro .review-first i {
+    color: @base-color;
 }
 
 // Download Field
@@ -1344,6 +1354,31 @@
     min-width: 20px;
 }
 
+// Profile Field
+// -----------------------------------------------
+.SobiPro .spProfile.striped > blockquote:nth-child(2n+1) {
+    .lightBackground;
+}
+.SobiPro .spProfile.striped > blockquote:nth-child(2n) {
+    .mediumBackground;
+}
+.SobiPro .spProfileSection {
+    margin-top: 30px;
+    font-size: 19px;
+    font-weight: 300;
+    color: @base-color;
+    padding-top: 10px;
+}
+.SobiPro .spProfileEntries {
+    margin-top: 0;
+    padding-bottom: 10px;
+}
+.SobiPro .spProfileEntries .page-header {
+    font-size: 17px;
+    padding-bottom: 5px;
+}
+
+
 // Custom Media Queries
 // ==============================================
 // Large desktop
@@ -1457,6 +1492,7 @@
 
     .SobiPro input[name="sp_search_for"],
     .SobiPro input[type="text"],
+    .SobiPro input[type="password"],
     .SobiPro textarea,
     .SobiPro select {
         width: 100% !important;

@@ -34,7 +34,7 @@
 					<a href="#" class="btn back" data-dismiss="modal">
 						<xsl:value-of select="php:function( 'SobiPro::Txt', 'EN.PAYMENT_BACK_BT' )" />
 					</a>
-					<a href="{/payment_details/save_url}" class="btn btn-primary">
+					<a href="{/payment_details/save_url}" class="btn btn-sigsiu">
 						<xsl:value-of select="php:function( 'SobiPro::Txt', 'EN.PAYMENT_SAVE_ENTRY_BT' )" />
 					</a>
 				</div>

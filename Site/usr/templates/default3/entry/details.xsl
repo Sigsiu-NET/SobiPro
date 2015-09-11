@@ -25,6 +25,9 @@
     <xsl:include href="../common/messages.xsl" />
     <xsl:include href="../common/showfields.xsl" />
 
+    <!-- Uncomment only if >Profile Field is installed -->
+    <!--<xsl:include href="../common/profile.xsl" />-->
+
     <!-- Uncomment only if Review & Ratings App is installed -->
     <!--<xsl:include href="../common/review.xsl" />-->
 
@@ -99,6 +102,9 @@
             <!-- Uncomment only if Review & Ratings App is installed -->
             <!--<xsl:call-template name="reviewForm"/>-->
             <!--<xsl:call-template name="reviews"/>-->
+
+            <!-- Uncomment only if >Profile Field is installed -->
+            <!--<xsl:call-template name="UserContributions" />-->
         </div>
     </xsl:template>
 </xsl:stylesheet>

@@ -246,7 +246,6 @@
                                         </values>
                                     </field>
                                     <field type="toggle" name="settings[config][general][entries_recursive]" value="settings.config.general.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
-                                    <field type="toggle" name="settings[config][category-view][entries_recursive]" value="settings.config.category-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
                                     <field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][general][entries_ordering]" selected="settings.config.general.entries_ordering" class="input-large"> <!-- SobiPro setting! -->
                                         <values>
                                             <option value="position.asc" label="SECN.CFG.ENTRY_ORDER_BY_POSITION_ASCENDING" />
@@ -302,6 +301,17 @@
                                     <option value="6" label="6" />
                                     <option value="8" label="8" />
                                     <option value="10" label="10" />
+                                </values>
+                            </field>
+                        </fieldset>
+                        <fieldset label="Profile Field" condition="apps.profile_field">
+                            <field type="select" label="TP.CONFIG.APPPROFILE_DV" name="settings[config][entry-details][entries_in_line]" selected="settings.config.entry-details.entries_in_line" class="input-mini">
+                                <values>
+                                    <option value="1" label="1" />
+                                    <option value="2" label="2" />
+                                    <option value="3" label="3" />
+                                    <option value="4" label="4" />
+                                    <option value="5" label="5" />
                                 </values>
                             </field>
                         </fieldset>
