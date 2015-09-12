@@ -201,7 +201,7 @@ abstract class SPJoomlaFs
 		if ( strstr( $name, str_replace( '\\', '/', SOBI_PATH ) ) ) {
 			return self::move( $name, $destination );
 		}
-		return Jfile::upload( $name, $destination );
+		return Jfile::upload( $name, $destination, false, true );
 	}
 
 	/**

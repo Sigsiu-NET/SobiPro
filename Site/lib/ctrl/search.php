@@ -246,7 +246,6 @@ class SPSearchCtrl extends SPSectionCtrl
 				}
 			}
 		}
-		$this->verify();
 		/** @since 1.1 - a method to narrow the search results down */
 		if ( count( $this->_fields ) ) {
 			// If we have any results already - the we are limiting results down
@@ -288,6 +287,7 @@ class SPSearchCtrl extends SPSectionCtrl
 		/* finally save */
 		try {
 			Sobi::Trigger( 'OnSave', 'Search', array( &$attr, &$ssid ) );
+			$this->verify( $attr[ 'entriesResults' ][ 'results' ] );
 			$this->_db->update( 'spdb_search', $attr, array( 'ssid' => $ssid ) );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_CREATE_SESSION_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -370,9 +370,10 @@ class SPSearchCtrl extends SPSectionCtrl
 		}
 	}
 
-	protected function verify()
+	protected function verify( &$entries )
 	{
-		if ( $this->_results ) {
+		if ( $entries ) {
+			$entries = explode( ',', $entries );
 			$conditions = array();
 			if ( Sobi::My( 'id' ) ) {
 				$this->userPermissionsQuery( $conditions, null );
@@ -380,20 +381,20 @@ class SPSearchCtrl extends SPSectionCtrl
 			else {
 				$conditions = array( 'state' => '1', '@VALID' => $this->_db->valid( 'validUntil', 'validSince' ) );
 			}
-			$conditions[ 'id' ] = $this->_results;
+			$conditions[ 'id' ] = $entries;
 			$conditions[ 'oType' ] = 'entry';
 			try {
 				$results = $this->_db->select( 'id', 'spdb_object', $conditions )
 						->loadResultArray();
-				foreach ( $this->_results as $i => $sid ) {
+				foreach ( $entries as $i => $sid ) {
 					if ( !( in_array( $sid, $results ) ) ) {
-						unset( $this->_results[ $i ] );
+						unset( $entries[ $i ] );
 					}
 				}
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
-			Sobi::Trigger( 'OnVerify', 'Search', array( &$this->_results ) );
+			Sobi::Trigger( 'OnVerify', 'Search', array( &$entries ) );
 		}
 	}
 
@@ -575,7 +576,7 @@ class SPSearchCtrl extends SPSectionCtrl
 			if ( strlen( $r[ 0 ][ 'entriesResults' ] ) ) {
 				$store = SPConfig::unserialize( $r[ 0 ][ 'entriesResults' ] );
 				if ( $store[ 'results' ] ) {
-					$this->_results = array_unique( explode( ',', $store[ 'results' ] ) );
+					$this->_results = array_unique( $store[ 'results' ] );
 					$this->_resultsByPriority = $store[ 'resultsByPriority' ];
 				}
 				$this->_resultsCount = count( $this->_results );
