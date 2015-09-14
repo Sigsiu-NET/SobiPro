@@ -62,7 +62,7 @@
                                     <xsl:for-each select="/search/fields/phrase/data/*">
                                         <button type="button" class="btn spsearchphrase" name="{./input/@name}" value="{./input/@value}" checked="checked">
                                             <xsl:if test="./input/@checked = 'checked'">
-                                                <xsl:attribute name="class">btn active</xsl:attribute>
+                                                <xsl:attribute name="class">btn spsearchphrase active</xsl:attribute>
                                             </xsl:if>
                                             <xsl:value-of select="./label" />
                                         </button>

@@ -16,7 +16,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
     <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
     <xsl:template name="category">
         <xsl:variable name="subcatsNumber">
@@ -49,20 +49,29 @@
                     <a href="{url}">
                         <xsl:value-of select="name" />
                     </a>
+                    <xsl:if test="//config/countentries/@value = 1">
+                        <span class="spEntryCount">
+                            <xsl:text> (</xsl:text>
+                            <xsl:value-of select="php:function( 'SobiPro::Count', string( @id ), 'entry' )" />
+                            <xsl:text>)</xsl:text>
+                        </span>
+                    </xsl:if>
                 </p>
                 <div class="spCatintro">
                     <xsl:value-of select="introtext" disable-output-escaping="yes" />
                 </div>
-                <xsl:for-each select="subcategories/subcategory">
-                    <xsl:if test="position() &lt; ( $subcatsNumber + 1 )">
-                        <a href="{@url}">
-                            <small><xsl:value-of select="." /></small>
-                        </a>
-                        <xsl:if test="position() != last() and position() &lt; $subcatsNumber">
-                            <xsl:text>, </xsl:text>
+                <div class="spSubcats">
+                    <xsl:for-each select="subcategories/subcategory">
+                        <xsl:if test="position() &lt; ( $subcatsNumber + 1 )">
+                            <a href="{@url}">
+                                <small><xsl:value-of select="." /></small>
+                            </a>
+                            <xsl:if test="position() != last() and position() &lt; $subcatsNumber">
+                                <xsl:text>, </xsl:text>
+                            </xsl:if>
                         </xsl:if>
-                    </xsl:if>
-                </xsl:for-each>
+                    </xsl:for-each>
+                </div>
             </div>
         </div>
 

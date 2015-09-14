@@ -153,6 +153,10 @@
                     <tab label="TP.SETTINGS_VIEW">
                         <div class="row-fluid">
                             <div class="span12">
+                            <fieldset>
+                                <field type="toggle" name="settings[config][general][countentries]" value="settings.config.general.countentries" label="TP.CONFIG.LST_COUNT" prefix="yes_no" />
+
+                            </fieldset>
 
                             <fieldset label="TP.CONFIG.SECTION">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][section-view][entries_limit]" selected="settings.config.section-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
