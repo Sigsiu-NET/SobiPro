@@ -40,6 +40,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	/** @var int */
 	protected $width = 350;
 	/** @var string */
+	protected $bsWidth = 4;
+	/** @var string */
 	protected $cssClass = 'spClassUrl';
 	/** * @var string */
 	protected $cssClassView = 'spClassViewUrl';
@@ -120,6 +122,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
+
+		//for compatibility reason still there
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
@@ -229,7 +233,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit', 'noFollow', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue' );
+		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit', 'noFollow', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth' );
 	}
 
 	/**

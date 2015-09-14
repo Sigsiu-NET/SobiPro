@@ -96,6 +96,7 @@
 									</div>
 									<div class="hide spCcMethod" id="spCc-select">
 										<fieldset label="FMN.CC_SELECT_LIST">
+
 											<field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
 												<add where="after">
 													<text>px</text>

@@ -68,7 +68,7 @@ abstract class SPHtml_Input
 	/**
 	 * @param mixed $params
 	 */
-	protected static function checkArray( &$params )
+	public static function checkArray( &$params )
 	{
 		if ( $params && is_string( $params ) && strstr( $params, ',' ) ) {
 			$class = SPLoader::loadClass( 'types.array' );
@@ -103,7 +103,7 @@ abstract class SPHtml_Input
 	 * @param array $params
 	 * @return string
 	 */
-	protected static function params( $params )
+	public static function params( $params )
 	{
 		$add = null;
 		self::checkArray( $params );
@@ -175,26 +175,37 @@ abstract class SPHtml_Input
 			$classes = array( 'class' => '' );
 			$stupidInternetExplorer = true;
 		}
+
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+			$column = "col-sm-";
+		}
+		else {
+			$column = "span";
+		}
 		$f = null;
 		$f .= "<div class=\"{$class}\" data-section=" . Sobi::Section() . ">";
 		$f .= '<div class="file">';
 		$f .= self::file( $name . '-file', 0, $classes, $accept );
 		$f .= '</div>';
+		$b3class = '';
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+			$b3class = ' form-control';
+		}
 		if ( !( $stupidInternetExplorer ) ) {
-			$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-large selected pull-left\" value=\"{$value}\"/>";
+			$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-large selected pull-left{$b3class}\" value=\"{$value}\"/>";
 		}
 		$f .= '<div class="btn-group">';
 		if ( !( $stupidInternetExplorer ) ) {
-			$f .= '<button class="btn select" type="button"><i class="' . Sobi::Ico( 'upload-field.search-button' ) . '"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
+			$f .= '<button class="btn btn-default select" type="button"><i class="' . Sobi::Ico( 'upload-field.search-button' ) . '"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
 		}
-		$f .= '<button class="btn upload hide" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
-		$f .= '<button class="btn remove" disabled="disabled" type="button">' . '&nbsp;<i class="' . Sobi::Ico( 'upload-field.remove-button' ) . '"></i></button>';
+		$f .= '<button class="btn btn-default upload hide" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
+		$f .= '<button class="btn btn-default remove" disabled="disabled" type="button">' . '&nbsp;<i class="' . Sobi::Ico( 'upload-field.remove-button' ) . '"></i></button>';
 		$f .= '</div>';
 		$f .= '<div class="hide progress-container row">';
-		$f .= '<div class="span1">';
+		$f .= '<div class="'. $column . '1">';
 		$f .= '<span class="progress-message badge badge-success">0%</span>';
 		$f .= '</div>';
-		$f .= '<div class="progress progress-success span6"><div class="bar"></div></div>';
+		$f .= '<div class="progress progress-success '. $column . '6"><div class="bar"></div></div>';
 		$f .= '</div>';
 		$f .= '<div class="alert hide"><button type="button" class="close" data-dismiss="alert">×</button><div>&nbsp;</div></div>';
 		$f .= "<input type=\"hidden\" name=\"{$name}\" value=\"\" class='idStore'/>";
@@ -212,6 +223,14 @@ abstract class SPHtml_Input
 	 */
 	public static function _text( $name, $value = null, $params = null )
 	{
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+			SPHtml_Input::checkArray($params);
+			if (isset($params['class'])) {
+				$params['class'] .= ' form-control';
+			} else {
+				$params['class'] = ' form-control';
+			}
+		}
 		$params = self::params( $params );
 		$value = strlen( $value ) ? str_replace( '"', '&quot;', SPLang::entities( $value, true ) ) : null;
 		$f = "<input type=\"text\" name=\"{$name}\" value=\"{$value}\"{$params}/>";
@@ -316,7 +335,7 @@ abstract class SPHtml_Input
 		}
 		self::checkArray( $params );
 		if ( !isset( $params[ 'style' ] ) ) {
-			$params[ 'style' ] = "width: {$width}px; height: {$height}px;";
+			$params[ 'style' ] = "height: {$height}px;";
 		}
 		Sobi::Trigger( 'BeforeCreateField', ucfirst( __FUNCTION__ ), array( &$name, &$value, &$editor, &$width, &$height, &$params ) );
 		$value = SPLang::entities( $value );
@@ -329,6 +348,14 @@ abstract class SPHtml_Input
 			}
 		}
 		else {
+			if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+				SPHtml_Input::checkArray($params);
+				if (isset($params['class'])) {
+					$params['class'] .= ' form-control';
+				} else {
+					$params['class'] = ' form-control';
+				}
+			}
 			$params = self::params( $params );
 			$area = "<textarea name=\"{$name}\" {$params}>{$value}</textarea>";
 		}
@@ -431,7 +458,15 @@ abstract class SPHtml_Input
 				else {
 					$image = null;
 				}
-				$list[ ] = '<span>' . self::checkbox( $name . '[]', $value, $label, $id . '_' . $value, $checked, $params, $order, $image ) . '</span>';
+				if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+					$container = '<div class="checkbox">';
+					$containerend = '</div>';
+				}
+				else {
+					$container = '<span>';
+					$containerend = '</span>';
+				}
+				$list[ ] = $container . self::checkbox( $name . '[]', $value, $label, $id . '_' . $value, $checked, $params, $order, $image ) . $containerend;
 			}
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$list ) );
@@ -467,7 +502,12 @@ abstract class SPHtml_Input
 		$$name = self::cleanOpt( $name );
 		$value = self::cleanOpt( $value );
 		$f = "<input type=\"checkbox\" name=\"{$name}\" {$ids}value=\"{$value}\"{$checked}{$params}/>";
+
 		$l = $label ? "\n<label for=\"{$id}\">{$label}</label>" : null;
+		$lstart = $label ? "\n<label for=\"{$id}\">" : null;
+		$lend = $label ? "</label>" : null;
+		$lcontent = $label ? $label : null;
+
 		if ( $image ) {
 			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
 		}
@@ -479,6 +519,7 @@ abstract class SPHtml_Input
 						$field .= $f;
 						break;
 					case 'label':
+						//does not comply with BS3 style
 						$field .= $l;
 						break;
 					case 'image':
@@ -489,7 +530,12 @@ abstract class SPHtml_Input
 			$f = $field;
 		}
 		else {
-			$f = ( $order == 'left' ) ? $l . $f : $f . $l;
+			if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+				$f = ($order == 'left') ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
+			}
+			else {
+				$f = ( $order == 'left' ) ? $l . $f : $f . $l;
+			}
 		}
 //		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
 ////		return "\n<!-- CheckBox '{$name}' Output -->{$f}\n<!-- CheckBox '{$name}' End -->\n";
@@ -531,6 +577,81 @@ abstract class SPHtml_Input
 		return $asArray ? $list : ( count( $list ) ? implode( "\n", $list ) : null );
 	}
 
+
+	public static function createOptions($values, $selected = null)
+	{
+		$cells = array();
+		$t = null;
+		$gt = null;
+		if (is_array($values) && count($values)) {
+			foreach ($values as $v => $l) {
+				/* if one of both values was an array - it is a group */
+				if ((is_array($l) || is_array($v)) && !(isset($l['label']))) {
+					$cells[] = "<optgroup label=\"{$v}\"{$gt}>";
+					if (count($l)) {
+						foreach ($l as $ov => $ol) {
+							/** when there is a group */
+							if (is_array($ol) && !(isset($ol['label']))) {
+								self::optGrp($cells, $selected, $ol, $ov);
+							} else {
+								/** when we have special params */
+								if (is_array($ol) && (isset($ol['label']))) {
+									$sel = in_array(( string )$ol['value'], $selected, true) ? ' selected="selected" ' : null;
+									$ol = self::cleanOpt($ol['label']);
+									$ov = self::cleanOpt($ol['value']);
+									$p = null;
+									$oParams = array();
+									if (isset($ol['params']) && count($ol['params'])) {
+										foreach ($ol['params'] as $param => $value) {
+											$oParams[] = "{$param}=\"{$value}\"";
+										}
+									}
+									if (count($oParams)) {
+										$p = implode(' ', $oParams);
+										$p = " {$p} ";
+									}
+									$cells[] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
+								} else {
+									$sel = in_array(( string )$ov, $selected, true) ? ' selected="selected" ' : null;
+									$ol = self::cleanOpt($ol);
+									$ov = self::cleanOpt($ov);
+									$cells[] = "\t<option {$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
+								}
+							}
+						}
+					}
+					$cells[] = "</optgroup>";
+				} else {
+					/** when we have special params */
+					if (is_array($l) && (isset($l['label']))) {
+						$sel = in_array(( string )$l['value'], $selected, true) ? ' selected="selected" ' : null;
+						$ol = self::cleanOpt($l['label']);
+						$ov = self::cleanOpt($l['value']);
+						$p = null;
+						$oParams = array();
+						if (isset($l['params']) && count($l['params'])) {
+							foreach ($l['params'] as $param => $value) {
+								$oParams[] = "{$param}=\"{$value}\"";
+							}
+						}
+						if (count($oParams)) {
+							$p = implode(' ', $oParams);
+							$p = " {$p} ";
+						}
+						$cells[] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
+					} else {
+						$sel = in_array(( string )$v, $selected, true) ? ' selected="selected" ' : null;
+						$v = self::cleanOpt($v);
+						$l = self::cleanOpt(self::translate($l));
+						$cells[] = "<option {$sel}value=\"{$v}\"{$t}>{$l}</option>";
+
+					}
+				}
+			}
+		}
+		return $cells;
+	}
+
 	/**
 	 * Creates a select list
 	 *
@@ -569,6 +690,14 @@ abstract class SPHtml_Input
 	 */
 	public static function _select( $name, $values, $selected = null, $multi = false, $params = null )
 	{
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+			SPHtml_Input::checkArray($params);
+			if (isset($params['class'])) {
+				$params['class'] .= ' form-control';
+			} else {
+				$params['class'] = ' form-control';
+			}
+		}
 		if ( is_array( $params ) && ( isset( $params[ 'size' ] ) && $params[ 'size' ] == 1 ) ) {
 			unset( $params[ 'size' ] );
 		}
@@ -584,79 +713,9 @@ abstract class SPHtml_Input
 		elseif ( !( is_array( $selected ) ) ) {
 			$selected = array();
 		}
-		$cells = array();
-		$t = null;
-		$gt = null;
-		if ( is_array( $values ) && count( $values ) ) {
-			foreach ( $values as $v => $l ) {
-				/* if one of both values was an array - it is a group */
-				if ( ( is_array( $l ) || is_array( $v ) ) && !( isset( $l[ 'label' ] ) ) ) {
-					$cells[ ] = "<optgroup label=\"{$v}\"{$gt}>";
-					if ( count( $l ) ) {
-						foreach ( $l as $ov => $ol ) {
-							/** when there is a group */
-							if ( is_array( $ol ) && !( isset( $ol[ 'label' ] ) ) ) {
-								self::optGrp( $cells, $selected, $ol, $ov );
-							}
-							else {
-								/** when we have special params */
-								if ( is_array( $ol ) && ( isset( $ol[ 'label' ] ) ) ) {
-									$sel = in_array( ( string )$ol[ 'value' ], $selected, true ) ? ' selected="selected" ' : null;
-									$ol = self::cleanOpt( $ol[ 'label' ] );
-									$ov = self::cleanOpt( $ol[ 'value' ] );
-									$p = null;
-									$oParams = array();
-									if ( isset( $ol[ 'params' ] ) && count( $ol[ 'params' ] ) ) {
-										foreach ( $ol[ 'params' ] as $param => $value ) {
-											$oParams[ ] = "{$param}=\"{$value}\"";
-										}
-									}
-									if ( count( $oParams ) ) {
-										$p = implode( ' ', $oParams );
-										$p = " {$p} ";
-									}
-									$cells[ ] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
-								}
-								else {
-									$sel = in_array( ( string )$ov, $selected, true ) ? ' selected="selected" ' : null;
-									$ol = self::cleanOpt( $ol );
-									$ov = self::cleanOpt( $ov );
-									$cells[ ] = "\t<option {$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
-								}
-							}
-						}
-					}
-					$cells[ ] = "</optgroup>";
-				}
-				else {
-					/** when we have special params */
-					if ( is_array( $l ) && ( isset( $l[ 'label' ] ) ) ) {
-						$sel = in_array( ( string )$l[ 'value' ], $selected, true ) ? ' selected="selected" ' : null;
-						$ol = self::cleanOpt( $l[ 'label' ] );
-						$ov = self::cleanOpt( $l[ 'value' ] );
-						$p = null;
-						$oParams = array();
-						if ( isset( $l[ 'params' ] ) && count( $l[ 'params' ] ) ) {
-							foreach ( $l[ 'params' ] as $param => $value ) {
-								$oParams[ ] = "{$param}=\"{$value}\"";
-							}
-						}
-						if ( count( $oParams ) ) {
-							$p = implode( ' ', $oParams );
-							$p = " {$p} ";
-						}
-						$cells[ ] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
-					}
-					else {
-						$sel = in_array( ( string )$v, $selected, true ) ? ' selected="selected" ' : null;
-						$v = self::cleanOpt( $v );
-						$l = self::cleanOpt( self::translate( $l ) );
-						$cells[ ] = "<option {$sel}value=\"{$v}\"{$t}>{$l}</option>";
 
-					}
-				}
-			}
-		}
+		$cells = self::createOptions( $values, $selected );
+
 		if ( $multi ) {
 			$multi = ' multiple="multiple" ';
 			$name .= '[]';
@@ -668,7 +727,7 @@ abstract class SPHtml_Input
 		return "\n{$f}\n\n";
 	}
 
-	protected static function cleanOpt( $opt )
+	public static function cleanOpt( $opt )
 	{
 		return preg_replace( '/(&)([^a-zA-Z0-9#]+)/', '&amp;\2', self::translate( $opt ) );
 	}
@@ -884,7 +943,7 @@ abstract class SPHtml_Input
 	 * @param array $data
 	 * @return string
 	 */
-	protected static function createDataTag( &$data )
+	public static function createDataTag( &$data )
 	{
 		if ( is_array( $data ) && isset( $data[ 'data' ] ) && count( $data[ 'data' ] ) ) {
 			$tag = ' ';

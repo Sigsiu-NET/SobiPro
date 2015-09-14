@@ -35,6 +35,9 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	protected $cssClassView = 'spClassViewInfo';
 	protected $viewInfo = '';
 	protected $entryInfo = '';
+	/** * @var int */
+	protected $bsWidth = 10;
+
 
 
 	public function __construct ( &$field ) {
@@ -124,7 +127,7 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'cssClassView', 'cssClassEdit', 'showEditLabel' );
+		return array( 'cssClassView', 'cssClassEdit', 'showEditLabel', 'bsWidth' );
 	}
 
 	/**

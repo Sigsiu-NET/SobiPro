@@ -30,6 +30,8 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	protected $maxLength = 150;
 	/** * @var int */
 	protected $width = 350;
+	/** * @var int */
+	protected $bsWidth = 10;
 	/** * @var string */
 	protected $cssClass = 'spClassInbox';
 	/** * @var string */
@@ -68,6 +70,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
+		//for compatibility reason still there
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
@@ -93,7 +96,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue' );
+		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth' );
 	}
 
 	/**

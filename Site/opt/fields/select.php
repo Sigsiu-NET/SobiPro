@@ -23,10 +23,10 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  */
 class SPField_Select extends SPFieldType implements SPFieldInterface
 {
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	protected $width = 350;
+	/** * @var int */
+	protected $bsWidth = 10;
 	/**
 	 * @var int
 	 */
@@ -96,6 +96,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$class = $this->dependency ? $class . ' ctrl-dependency-field' : $class;
 
 		$params = array( 'id' => $this->nid, 'size' => $this->size, 'class' => $class );
+		//for compatibility reason still there
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
@@ -334,7 +335,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue' );
+		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsWidth' );
 	}
 
 	protected function fetchData( $data, $request = 'post' )

@@ -100,6 +100,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	/** * @var string */
 	protected $dType = 'special';
 
+	/** * @var int */
+	protected $bsWidth = 10;
+
 	/**
 	 * Returns the parameter list
 	 * @return array

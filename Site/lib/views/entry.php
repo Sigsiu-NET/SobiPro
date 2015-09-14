@@ -107,6 +107,7 @@ class SPEntryView extends SPFrontView implements SPView
 													'position' => $field->get( 'position' ),
 													'required' => $field->get( 'required' ),
 													'css_edit' => $field->get ('cssClassEdit'),
+													'width' => $field->get ('bsWidth'),
 								'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
 							)
 						);

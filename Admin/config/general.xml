@@ -80,6 +80,7 @@
 									<field type="toggle" name="spcfg[general.top_menu]" value="general.top_menu" label="SECN.CFG.SHOW_TOP_MENU" prefix="show" />
 									<field type="toggle" name="spcfg[general.parse_template_content]" value="general.parse_template_content" label="SECN.CFG.PARSE_TPL_CONTENT" prefix="yes_no" />
 									<field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled" label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="yes_no" />
+                                    <field type="toggle" name="spcfg[template.bootstrap3-styles]" value="template.bootstrap3-styles" label="SECN.CFG.SETTINGS_BOOTSTRAP3STYLES" prefix="yes_no" />
 
 									<field type="checkBoxGroup" label="SECN.CFG.LOAD_ICONS_FONTS" name="spcfg[template.icon_fonts_arr]" selected="template.icon_fonts_arr" class="input-xlarge">
 										<values>

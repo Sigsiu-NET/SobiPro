@@ -62,11 +62,27 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
+<!--
 									<field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
 										<add where="after">
 											<text>px</text>
 										</add>
 									</field>
+-->
+                                    <field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
+                                        <values>
+                                            <option value="1" label="1" />
+                                            <option value="2" label="2" />
+                                            <option value="3" label="3" />
+                                            <option value="4" label="4" />
+                                            <option value="5" label="5" />
+                                            <option value="6" label="6" />
+                                            <option value="7" label="7" />
+                                            <option value="8" label="8" />
+                                            <option value="9" label="9" />
+                                            <option value="10" label="10" />
+                                        </values>
+                                    </field>
 									<field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
 										<add where="after">
 											<text>px</text>
