@@ -169,7 +169,21 @@
 											<option value="range" label="FM.RANGE_LIST_OPT" />
 										</values>
 									</field>
-									<field type="textarea" name="field.searchRangeValues" value="field.searchRangeValues" label="FM.SEARCH_RANGE_SETTINGS" editor="false" class="input-splarge" rows="4" style="" />
+                                    <field type="select" name="field.bsSearchWidth" selected="field.bsSearchWidth" label="FMN.FIELD_WIDTH" class="input-mini">
+                                        <values>
+                                            <option value="1" label="1" />
+                                            <option value="2" label="2" />
+                                            <option value="3" label="3" />
+                                            <option value="4" label="4" />
+                                            <option value="5" label="5" />
+                                            <option value="6" label="6" />
+                                            <option value="7" label="7" />
+                                            <option value="8" label="8" />
+                                            <option value="9" label="9" />
+                                        </values>
+                                    </field>
+
+                                    <field type="textarea" name="field.searchRangeValues" value="field.searchRangeValues" label="FM.SEARCH_RANGE_SETTINGS" editor="false" class="input-splarge" rows="4" style="" />
 									<field type="toggle" name="field.freeRange" value="field.freeRange" label="FMN.FREE_RANGE" prefix="yes_no" />
                                     <field type="text" name="field.cssClassSearch" value="field.cssClassSearch" label="FM.CSS_CLASS" class="input-large" />
 								</fieldset>

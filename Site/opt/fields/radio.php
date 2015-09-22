@@ -26,17 +26,11 @@ SPLoader::loadClass( 'opt.fields.select' );
  */
 class SPField_Radio extends SPField_Select implements SPFieldInterface
 {
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	protected $optInLine = 3;
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	protected $optWidth = 150;
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $labelSite = 'right';
 	/** * @var string */
 	protected $cssClass = 'spClassRadio';
@@ -46,17 +40,11 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	protected $cssClassEdit = 'spClassEditRadio';
 	/** * @var string */
 	protected $cssClassSearch = 'spClassSearchRadio';
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $searchMethod = 'general';
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $dType = 'predefined_multi_data_single_choice';
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $defSel = '';
 	/** * @var string */
 	protected $itemprop = '';
@@ -100,8 +88,6 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
                 }
                 $field = $field . '>' . $radio . '</div>';
                 $field .= "\n";
-
-
 
                 //$radio = '<div style="width:'.$this->optWidth.'px;" class="spFieldRadio">'.$radio.'</div>';
 				//$field .= "\n".$radio;

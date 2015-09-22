@@ -31,7 +31,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	/** * @var int */
 	protected $width = 350;
 	/** * @var int */
-	protected $bsWidth = 10;
+	protected $bsWidth = 4;
 	/** * @var string */
 	protected $cssClass = 'spClassInbox';
 	/** * @var string */
@@ -46,6 +46,8 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	protected $freeRange = false;
 	/** * @var string */
 	protected $searchMethod = 'general';
+	/** * @var int */
+	protected $bsSearchWidth = 4;
 	/** * @var string */
 	protected $itemprop = '';
 	/** * @var string */
@@ -96,7 +98,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth' );
+		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth', 'bsSearchWidth' );
 	}
 
 	/**

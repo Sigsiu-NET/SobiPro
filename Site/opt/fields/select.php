@@ -27,21 +27,13 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	protected $width = 350;
 	/** * @var int */
 	protected $bsWidth = 10;
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	protected $size = 1;
-	/**
-	 * @var array
-	 */
+	/** * @var array */
 	protected $options = array();
-	/**
-	 * @var array
-	 */
+	/** * @var array */
 	protected $optionsById = array();
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $selectLabel = 'Select %s';
 	/** * @var string */
 	protected $cssClass = 'spClassSelect';
@@ -51,25 +43,17 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	protected $cssClassEdit = 'spClassEditSelect';
 	/** * @var string */
 	protected $cssClassSearch = 'spClassSearchSelect';
-	/**
-	 * @var bool
-	 */
+	/** * @var bool */
 	protected $multi = false;
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $searchMethod = 'general';
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	protected $swidth = 350;
-	/**
-	 * @var int
-	 */
+	/** * @var int */
+	protected $bsSearchWidth = 9;
+	/** * @var int */
 	protected $ssize = 1;
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $dType = 'predefined_multi_data_single_choice';
 	/** * @var string */
 	protected $itemprop = '';
@@ -335,7 +319,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsWidth' );
+		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsWidth', 'bsSearchWidth' );
 	}
 
 	protected function fetchData( $data, $request = 'post' )
@@ -658,6 +642,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$data[ $k ] = $v;
 		}
 		$params = array( 'id' => $this->nid, 'size' => $this->ssize, 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) );
+
+		//still there for compatibility reason
 		if ( $this->swidth ) {
 			$params[ 'style' ] = "width: {$this->swidth}px;";
 		}

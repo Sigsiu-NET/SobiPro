@@ -281,6 +281,7 @@
     .SobiPro .bootstrap-tagsinput,
     .SobiPro .navbar.topmenu,
     .SobiPro .navbar,
+    .SobiPro .input-group-addon,
     .SobiPro input[type="text"],
     .SobiPro input[type="password"],
     .SobiPro input[type="datetime"],
@@ -944,10 +945,6 @@
 .SobiPro .spFieldEmail {
     margin-top: 5px;
 }
-.SobiPro .spFieldUrl {
-    display: inline;
-    margin-top: 10px;
-}
 .SobiPro .spFieldUrl select {
     width: 100px;
 }
@@ -973,7 +970,7 @@
     display: inline-block;
 }
 .SobiPro .spImageUpload input {
-    //height: 21px;
+    height: 35px;
 }
 .SobiPro .spImageUpload .span1 {
     margin-left: 10px;
@@ -1054,7 +1051,7 @@
     margin: 0;
 }
 .SobiPro .spClassEditImage .form-control {
-    width: 220px;
+    //width: 220px;
 }
 
 
@@ -1426,8 +1423,8 @@
 }
 
 /* Small devices (tablets, 768px and up) */
-@screen-sm-min: 768;
-@media (min-width: @screen-sm-min) {
+@screen-sm-min: 768px;
+@media (max-width: @screen-sm-min) {
     .SobiPro .topmenu .nav > li a {
         line-height: 20px;
     }
@@ -1442,12 +1439,13 @@
 
     // Edit entry form
     .SobiPro .spImageUpload input {
-        width: 70px !important;
-        height: 31px;
+        //width: 70px !important;
+        height: 35px;
     }
     .SobiPro .spFieldUrl select {
         margin-bottom: 3px;
-        width: 80px !important;
+//        width: 80px !important;
+        float: none;
     }
     .SobiPro .bootstrap-tagsinput input {
         width: 70% !important;
@@ -1471,7 +1469,7 @@
     }
     .SobiPro .spImageUpload input {
         width: 100%;
-        height: 31px;
+        height: 35px;
     }
     .SobiPro .sp-search-controls .btn {
         width: 100%;

@@ -85,7 +85,15 @@
                                     <label class="col-sm-3 control-label" for="{name(.)}">
                                         <xsl:value-of select="label" />
                                     </label>
-                                    <div class="col-sm-9">
+                                    <xsl:variable name="colwidth">
+                                        <xsl:choose>
+                                            <xsl:when test="string-length( @width )">
+                                                <xsl:value-of select="@width" />
+                                            </xsl:when>
+                                            <xsl:otherwise>9</xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:variable>
+                                    <div class="col-sm-{$colwidth}">
                                         <div>
                                             <xsl:if test="string-length( @suffix )">
                                                 <xsl:attribute name="class">input-append</xsl:attribute>

@@ -159,6 +159,7 @@ class SPSearchView extends SPSectionView implements SPView
 													'suffix' => $suffix,
 													'position' => $field->get( 'position' ),
 													'css_search' => $field->get ('cssClassSearch'),
+													'width' => $field->get ('bsSearchWidth'),
 													'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
 							)
 						);

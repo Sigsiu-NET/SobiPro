@@ -115,7 +115,11 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			$protocols = array( 'http' => 'http://', 'https' => 'https://' );
 		}
 		$params = array( 'id' => $this->nid . '_protocol', 'size' => 1, 'class' => $this->cssClass . 'Protocol' );
-		$field .= SPHtml_Input::select( $this->nid . '_protocol', $protocols, ( ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : 'http' ), false, $params );
+
+		$protofield = '<div class="input-group"><div class="input-group-btn">';
+		$protofield .= SPHtml_Input::select( $this->nid . '_protocol', $protocols, ( ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : 'http' ), false, $params );
+		$protofield .= '</div>';
+
 		//$field .= '<span class="spFieldUrlProtocol">://</span>';
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 		$params = array( 'id' => $this->nid . '_url', 'class' => $class );
@@ -140,8 +144,9 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			}
 		}
 
+		$field .= $protofield;
 		$field .= SPHtml_Input::text( $this->nid . '_url',$value, $params );
-
+		$field .= '</div>';
 
 		if ( $this->ownLabel ) {
 			$field = "\n<div class=\"spFieldUrlLabel\">{$fieldTitle}</div>\n<div class=\"spFieldUrl\">{$field}</div>";

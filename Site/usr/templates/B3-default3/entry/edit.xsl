@@ -58,7 +58,7 @@
                         <xsl:variable name="offset">
                         <xsl:choose>
                             <xsl:when test="label/@show = 1"> </xsl:when>
-                            <xsl:otherwise>col-sm-offset-2</xsl:otherwise>
+                            <xsl:otherwise> col-sm-offset-2</xsl:otherwise>
                         </xsl:choose>
                         </xsl:variable>
 
@@ -88,7 +88,7 @@
                                     <xsl:otherwise>10</xsl:otherwise>
                                 </xsl:choose>
 							</xsl:variable>
-							<div class="col-sm-{$colwidth} {$offset}" id="{$fieldId}-input-container">
+							<div class="col-sm-{$colwidth}{$offset}" id="{$fieldId}-input-container">
                                 <xsl:if test="string-length( description ) and //config/help-position/@value = 'above'">
                                     <div class="help-block">
                                         <xsl:value-of select="description" />

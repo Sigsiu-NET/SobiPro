@@ -106,11 +106,13 @@
 								<fieldset label="FMN.FIELD_ENTRYINPUT_URLTITLE">
 									<field type="toggle" name="field.ownLabel" value="field.ownLabel" label="FMN.URL.OWN_TITLE" prefix="yes_no" />
 									<field type="text" name="field.labelsLabel" value="field.labelsLabel" label="FMN.URL.LABEL_TITLE" maxlength="150" class="input-medium" />
+<!--
 									<field type="text" name="field.labelWidth" value="field.labelWidth" label="FMN.URL.TITLE_FIELD_WIDTH" maxlength="10" class="input-mini">
 										<add where="after">
 											<text>px</text>
 										</add>
 									</field>
+-->
 									<field type="text" name="field.labelMaxLength" value="field.labelMaxLength" label="FMN.URL.TITLE_MAX_LENGTH" maxlength="10" class="input-mini">
 										<add where="after">
 											<call function="Sobi::Txt">

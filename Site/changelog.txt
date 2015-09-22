@@ -51,6 +51,8 @@ Legend:
     (+) Highlighting search keywords in search results
     (+) Possibility to override input fields renderer in the template
     (+) New core field 'Information' to output HTML text in entry form and/or DV and/or vCard
+    (+) Setting to switch HTML output format from Bootstrap 2 to Bootstrap 3
+    (+) Adjustable search field width for category, select, multiselect and inbox fields
 
     (!) Template styles from SobiPro.css moved to template's css file
     (!) New tree icons
@@ -63,6 +65,7 @@ Legend:
     (!) SobiPro section view functionality in Joomla! menu manager moved to first position
     (!) Set image crop function off by default
     (!) Header plugin version updated
+    (!) Field width settings changed from px to Bootstrap classes (span, col)
 
     (-) Category icons removed
 

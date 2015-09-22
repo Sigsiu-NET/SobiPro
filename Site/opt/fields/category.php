@@ -31,6 +31,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	protected $cssClass = 'spClassCategory';
 	/** * @var string */
 	protected $cssClassEdit = 'spClassEditCategory';
+	/** * @var string */
+	protected $cssClassSearch = 'spClassSearchCategory';
 	/** @var string */
 	protected $method = 'mselect';
 	/** @var bool */
@@ -41,6 +43,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	protected $catsWithChilds = true;
 	/** @var int */
 	protected $width = 200;
+	/** * @var int */
+	protected $bsWidth = 4;
 	/** @var int */
 	protected $height = 150;
 	/** @var string */
@@ -55,6 +59,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	protected $searchMethod = 'select';
 	/** @var int */
 	protected $searchWidth = 200;
+	/** * @var int */
+	protected $bsSearchWidth = 4;
 	/** @var int */
 	protected $searchHeight = 100;
 
@@ -238,6 +244,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 					'id' => $this->nid,
 					'class' => 'required ' . $this->cssClass
 			);
+			//still there for compatibility reason
 			if ( $this->width ) {
 				$params[ 'style' ] = "width: {$this->width}px;";
 			}
@@ -261,8 +268,12 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 					'id' => $this->nid,
 					'class' => 'required ' . $this->cssClass
 			);
-			if ( $this->width && $this->height ) {
-				$params[ 'style' ] = "width: {$this->width}px; height: {$this->height}px";
+
+//			if ( $this->width && $this->height ) {
+//				$params[ 'style' ] = "width: {$this->width}px; height: {$this->height}px";
+//			}
+			if ($this->height ) {
+				$params[ 'style' ] = "height: {$this->height}px";
 			}
 			$this->createValues( $this->_cats, $values, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) );
 			$selected = $this->_selectedCats;
@@ -366,6 +377,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 					'id' => $this->nid,
 					'class' => $this->cssClass
 			);
+			//still there for compatibility reason
 			if ( $this->searchWidth ) {
 				$params[ 'style' ] = "width: {$this->searchWidth}px;";
 			}
@@ -376,8 +388,11 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 					'id' => $this->nid,
 					'class' => $this->cssClass
 			);
-			if ( $this->searchWidth && $this->searchHeight ) {
-				$params[ 'style' ] = "width: {$this->searchWidth}px; height: {$this->searchHeight}px";
+//			if ( $this->searchWidth && $this->searchHeight ) {
+//				$params[ 'style' ] = "width: {$this->searchWidth}px; height: {$this->searchHeight}px";
+//			}
+			if ($this->searchHeight ) {
+				$params[ 'style' ] = "height: {$this->searchHeight}px";
 			}
 			$field = SPHtml_Input::select( $this->nid, $values, $selected, true, $params );
 		}
