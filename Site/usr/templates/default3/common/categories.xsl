@@ -35,7 +35,8 @@
 		</xsl:variable>
 
 		<xsl:comment> categories loop - start </xsl:comment>
-        <div class="spCategoryContainer">
+        <xsl:if test="$catsCount > 0">
+            <div class="spCategoryContainer">
                 <xsl:for-each select="categories/category">
                     <xsl:if test="($catsInLine > 1 and (position() = 1 or (position() mod $catsInLine) = 1)) or $catsInLine = 1">
                         <!-- opening the "table" row -->
@@ -49,7 +50,8 @@
                         <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
                     </xsl:if>
                 </xsl:for-each>
-        </div>
+            </div>
+        </xsl:if>
 		<xsl:comment> categories loop - end </xsl:comment>
 	</xsl:template>
 </xsl:stylesheet>

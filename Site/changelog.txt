@@ -52,6 +52,7 @@ Legend:
     (+) Possibility to override input fields renderer in the template
     (+) New core field 'Information' to output HTML text in entry form and/or DV and/or vCard
     (+) Setting to switch HTML output format from Bootstrap 2 to Bootstrap 3
+    (+) Implementation of Bootstrap 3 HTML output (e.g. modals, grids, forms, input fields)
     (+) Adjustable search field width for category, select, multiselect and inbox fields
 
     (!) Template styles from SobiPro.css moved to template's css file
@@ -66,6 +67,7 @@ Legend:
     (!) Set image crop function off by default
     (!) Header plugin version updated
     (!) Field width settings changed from px to Bootstrap classes (span, col)
+    (!) SigsiuTree is responsive now
 
     (-) Category icons removed
 

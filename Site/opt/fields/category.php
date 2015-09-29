@@ -183,17 +183,20 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params[ 'maxcats' ] = $this->catsMaxLimit;
 		$params[ 'field' ] = $this->nid;
 		$params[ 'preventParents' ] = !( $this->catsWithChilds );
-		$setheight = '';
-		if ( $this->height > 0 ) {
-			$setheight = " style=\"height: {$this->height}px;\"";
-		}
-		$addBtParams = array( 'class' => 'btn' );
-		$delBtParams = array( 'class' => 'btn' );
+		$setheight = " style=\"max-height: {$this->height}px;\"";
+		$addBtParams = array( 'class' => 'btn btn-sm btn-small btn-default' );
+		$delBtParams = array( 'class' => 'btn btn-sm btn-small btn-default' );
 		$selectParams = array();
 		SPFactory::header()
 				->addJsFile( 'opt.field_category_tree' )
 				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { new SigsiuTreeEdit( ' . json_encode( $params ) . '); } );' );
-		$selector = $selector . '<div class="tree"' . $setheight . '>' . $tree->display( true ) . '</div>';
+
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			$selector = $selector . '<div class="row"><div class="tree col-sm-6"' . $setheight . '>' . $tree->display(true) . '</div>';
+		}
+		else {
+			$selector = $selector . '<div class="row-fluid"><div class="tree span6"' . $setheight . '>' . $tree->display(true) . '</div>';
+		}
 		if ( count( $this->_selectedCats ) ) {
 			$selected = SPLang::translateObject( $this->_selectedCats, 'name', 'category' );
 			if ( count( $selected ) ) {
@@ -217,17 +220,39 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		elseif ( !( count( $selectedCategories ) ) ) {
 			$delBtParams[ 'disabled' ] = 'disabled';
 		}
-		$selector .= '<div class="selected">';
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			$selector .= '<div class="selected col-sm-6">';
+			$treeclass= 'SigsiuTree container-fluid';
+		}
+		else {
+			$selector .= '<div class="selected span6">';
+			$treeclass= 'SigsiuTree';
+		}
+		if ( $this->height > 100 ) {
+			$selectParams[ 'style' ] = "min-height: {$this->height}px";
+		}
 		$selector .= SPHtml_Input::select( $this->nid . '_list', $selectedCategories, null, true, $selectParams );
 		$selector .= SPHtml_Input::hidden( $this->nid, 'json://' . json_encode( array_keys( $selectedCategories ) ) );
-		$selector .= '</div>';
-		$selector .= '<div class="buttons">';
-		$selector .= SPHtml_Input::button( 'addCategory', Sobi::Txt( 'CC.ADD_BT' ), $addBtParams );
-		$selector .= SPHtml_Input::button( 'removeCategory', Sobi::Txt( 'CC.DEL_BT' ), $delBtParams );
-		$selector .= '</div>';
-		$selector = '<div class="SigsiuTree" id="' . $this->nid . '_canvas">' . $selector . '</div>';
+		$selector .= '</div></div>';
+
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			$selector .= '<div class="row"><div class="buttons col-sm-12">';
+		}
+		else {
+			$selector .= '<div class="row-fluid"><div class="buttons span12">';
+		}
+		$selector .= SPHtml_Input::button( 'addCategory', '<i class="icon-plus" />' . Sobi::Txt( 'CC.ADD_BT' ), $addBtParams );
+		$selector .= SPHtml_Input::button( 'removeCategory', '<i class="icon-minus-sign" />' . Sobi::Txt( 'CC.DEL_BT' ), $delBtParams );
+		$selector .= '</div></div>';
+		$selector = '<div class="' . $treeclass . '" id="' . $this->nid . '_canvas">' . $selector . '</div>';
+
 		if ( $this->modal ) {
-			$selector = SPHtml_Input::modalWindow( Sobi::Txt( 'EN.SELECT_CAT_PATH' ), $this->nid . '_modal', $selector, 'modaltree modal hide', 'CLOSE', null );
+			$modalclass = 'modaltree modal hide';
+			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+				$modalclass = 'modaltree modal fade';
+			}
+
+			$selector = SPHtml_Input::modalWindow( Sobi::Txt( 'EN.SELECT_CAT_PATH' ), $this->nid . '_modal', $selector, $modalclass, 'CLOSE', null );
 			$field = SPHtml_Input::button( 'select-category', Sobi::Txt( 'EN.SELECT_CAT_PATH' ), array( 'class' => 'btn btn-primary btn-sigsiu', 'href' => '#' . $this->nid . '_modal', 'data-toggle' => 'modal', 'id' => $this->nid . '_modal_fire' ) );
 			return $field . $selector;
 		}

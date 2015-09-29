@@ -184,10 +184,15 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$js = true;
 		}
 		if ( $this->crop ) {
+			$modalclass = 'modal hide';
+			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+				$modalclass = 'modal fade';
+			}
+
 			SPFactory::header()
 					->addJsFile( 'cropper' )
 					->addCssFile( 'cropper' );
-			$field .= SPHtml_Input::modalWindow( Sobi::Txt( 'IMAGE_CROP_HEADER' ), $this->nid . '_modal', null, 'modal hide', 'CLOSE', 'SAVE' );
+			$field .= SPHtml_Input::modalWindow( Sobi::Txt( 'IMAGE_CROP_HEADER' ), $this->nid . '_modal', null, $modalclass, 'CLOSE', 'SAVE' );
 		}
 		if ( !$return ) {
 			echo $field;

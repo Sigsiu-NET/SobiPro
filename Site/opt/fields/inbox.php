@@ -31,7 +31,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	/** * @var int */
 	protected $width = 350;
 	/** * @var int */
-	protected $bsWidth = 4;
+	protected $bsWidth = 6;
 	/** * @var string */
 	protected $cssClass = 'spClassInbox';
 	/** * @var string */
@@ -47,7 +47,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	/** * @var string */
 	protected $searchMethod = 'general';
 	/** * @var int */
-	protected $bsSearchWidth = 4;
+	protected $bsSearchWidth = 6;
 	/** * @var string */
 	protected $itemprop = '';
 	/** * @var string */

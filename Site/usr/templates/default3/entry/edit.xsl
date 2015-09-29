@@ -76,7 +76,15 @@
                                         <xsl:value-of select="description" />
                                     </div>
                                 </xsl:if>
-								<div>
+                                <xsl:variable name="colwidth">
+                                    <xsl:choose>
+                                        <xsl:when test="string-length( @width )">
+                                            <xsl:value-of select="@width" />
+                                        </xsl:when>
+                                        <xsl:otherwise>10</xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:variable>
+                                <div class="span{$colwidth}">
 									<xsl:if test="string-length( @suffix )">
 										<xsl:attribute name="class">input-append</xsl:attribute>
 									</xsl:if>
@@ -94,18 +102,10 @@
 												<xsl:value-of select="@suffix" />
 											</span>
 										</xsl:when>
-										<xsl:otherwise>
-											<span id="{$fieldId}-message" class="hide message-lightbulb">
-												<i class="icon-lightbulb icon-large text-error" />
-											</span>
-										</xsl:otherwise>
 									</xsl:choose>
+                                    <div id="{$fieldId}-message" class="hide message-lightbulb"></div>
 								</div>
-								<xsl:if test="string-length( @suffix )">
-									<span id="{$fieldId}-message" class="hide message-lightbulb">
-										<i class="icon-lightbulb icon-large text-error" />
-									</span>
-								</xsl:if>
+								<div class="clearfix" />
                                 <xsl:if test="string-length( description ) and //config/help-position/@value = 'below'">
                                     <div class="help-block">
                                         <xsl:value-of select="description" />

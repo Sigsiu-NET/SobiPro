@@ -83,6 +83,17 @@
                                                     <text>px</text>
                                                 </add>
                                             </field>
+                                            <field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
+                                                <values>
+                                                    <option value="4" label="4" />
+                                                    <option value="5" label="5" />
+                                                    <option value="6" label="6" />
+                                                    <option value="7" label="7" />
+                                                    <option value="8" label="8" />
+                                                    <option value="9" label="9" />
+                                                    <option value="10" label="10" />
+                                                </values>
+                                            </field>
 											<field type="text" name="field.catsMaxLimit" value="field.catsMaxLimit" label="FMN.CC_CATS_LIMIT" class="input-mini">
 												<add where="after">
 													<call function="Sobi::Txt">

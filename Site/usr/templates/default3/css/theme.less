@@ -271,6 +271,7 @@
     .SobiPro .input-append .add-on:last-child,
     .SobiPro .input-append .btn:last-child,
     .SobiPro .input-append .btn-group:last-child > .dropdown-toggle,
+    .SobiPro .input-prepend select,
     .SobiPro .bootstrap-datetimepicker-widget td,
     .SobiPro .bootstrap-datetimepicker-widget th,
     .SobiPro .bootstrap-datetimepicker-widget td span,
@@ -323,9 +324,11 @@
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
     }
-    .SobiPro select {
-        //   -webkit-appearance: none;
-    }
+}
+
+.SobiPro input,
+.SobiPro select {
+    width: inherit;
 }
 
 //tag corners are angular by default; Bootstrap corners are rounded by default
@@ -910,18 +913,40 @@
     padding-left: 2px;
     font-size: 14px;
 }
+
+.SobiPro .spClassEditUrl input,
 .SobiPro .spClassEditText textarea,
 .SobiPro .spClassEditInbox input {
     width: 97%;
 }
+.SobiPro .spFieldUrl select {
+    width: auto;
+}
 .SobiPro .spEntryEdit .message-lightbulb {
-    margin-left: 15px;
+//    margin-left: 15px;
+}
+.SobiPro .spEntryEdit .message-lightbulb {
+    left: 0%;
+    position: relative;
+}
+.SobiPro .spEntryEdit .message-lightbulb .popover.bottom {
+    margin-top: 0;
 }
 .SobiPro .editor {
     overflow: visible;
 }
 .SobiPro .spClassEditInfo {
     margin-top: 10px;
+}
+.SobiPro .spEntryEdit .popover-title {
+    color: @error-color;
+    font-size: 17px;
+    font-weight: 400;
+}
+.SobiPro .spEntryEdit .popover-title::before {
+    font-family: FontAwesome;
+    content: "";
+    padding-right: 5px;
 }
 
 
@@ -930,15 +955,26 @@
 .SobiPro .spFieldUrlLabel {
     margin-bottom: 5px;
 }
+/*
+.SobiPro .spFieldUrl input {
+    width: -moz-calc(100% - 100px);
+    width: -webkit-calc(100% - 100px);
+    width: -o-calc(100% - 100px);
+    width: calc(100% - 100px));
+}
+*/
+.SobiPro .spFieldUrl .input-prepend {
+    width: 100%;
+}
+.SobiPro .spFieldUrl .btn-group {
+    width: 17%;
+}
+.SobiPro .spClassEditUrl .spClassUrl {
+    width: 80%;
+}
+
 .SobiPro .spFieldEmail {
     margin-top: 5px;
-}
-.SobiPro .spFieldUrl {
-    display: inline;
-    margin-top: 10px;
-}
-.SobiPro .spFieldUrl select {
-    width: 80px;
 }
 
 // Image Field
@@ -976,30 +1012,30 @@
     margin-top: 5px;
 }
 
-
 // Sigsiu Tree
 // ----------------------------------------
 .SigsiuTree .selected {
-    float: left;
-    margin-left: 10px;
     margin-top: 10px;
 }
-
 .SigsiuTree .selected select {
-    min-height: 200px;
+    min-height: 100px;
+    width: 100%;
 }
 .SigsiuTree .buttons {
-    clear: both;
-    padding: 10px;
+    text-align: right;
+    margin-top: 12px;
 }
 .SigsiuTree .buttons button {
-    margin: 5px;
+    margin: 3px 0 10px 3px;
+}
+.SigsiuTree .buttons button i::after {
+    content: ' ';
 }
 .SigsiuTree .tree {
-    float: left;
     overflow: auto;
-    width: 50%;
     max-height: 250px;
+    min-height: 100px!important;
+    margin-top: 10px;
 }
 
 // Search and Edit form
@@ -1406,10 +1442,6 @@
     .SobiPro .topmenu ul.nav {
         width: 100%;
     }
-    .SobiPro .spFieldUrl select {
-        margin-bottom: 3px;
-        width: 80px !important;
-    }
 }
 
 // Landscape phone to portrait tablet
@@ -1420,15 +1452,12 @@
     .SobiPro .navbar .nav > li {
         float: none;
     }
-
     .SobiPro .topmenu li {
         line-height: 20px;
     }
-
     .SobiPro .navbar .nav > li > a {
         padding-left: 15px;
     }
-
     .SobiPro .topmenu .navbar-inner {
         min-height: 20px;
         padding-left: 0;
@@ -1442,8 +1471,8 @@
     }
 
     .SobiPro .spFieldUrl select {
-        margin-bottom: 3px;
-        width: 80px !important;
+        //margin-bottom: 3px;
+        //width: 80px !important;
     }
 
     .SobiPro .bootstrap-tagsinput input {
@@ -1498,11 +1527,12 @@
     }
 
     .SobiPro input[name="sp_search_for"],
-    .SobiPro input[type="text"],
+//    .SobiPro input[type="text"],
     .SobiPro input[type="password"],
     .SobiPro textarea,
-    .SobiPro select {
-        width: 100% !important;
+    .SobiPro select
+    {
+        width: 100%;
     }
 
     .SobiPro .bootstrap-tagsinput {
@@ -1525,6 +1555,9 @@
         float: none;
         width: 90%;
     }
+    .SobiPro .spEntryEdit .message-lightbulb {
+        left: 49%;
+    }
 }
 
 // Landscape phones and down
@@ -1545,7 +1578,9 @@
     .SobiPro .spNoImage {
         display: none;
     }
-
+    .SigsiuTree .buttons {
+        text-align: center;
+    }
 }
 
 

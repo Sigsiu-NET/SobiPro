@@ -116,7 +116,12 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		}
 		$params = array( 'id' => $this->nid . '_protocol', 'size' => 1, 'class' => $this->cssClass . 'Protocol' );
 
-		$protofield = '<div class="input-group"><div class="input-group-btn">';
+		if (Sobi::Cfg( 'template.bootstrap3-styles' )) {
+			$protofield = '<div class="input-group"><div class="input-group-btn">';
+		}
+		else {
+			$protofield = '<div class="input-prepend"><div class="btn-group">';
+		}
 		$protofield .= SPHtml_Input::select( $this->nid . '_protocol', $protocols, ( ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : 'http' ), false, $params );
 		$protofield .= '</div>';
 

@@ -1134,20 +1134,27 @@ abstract class SPHtml_Input
 		}
 		$bid = strlen( $id ) ? $id : md5( rand( 0, 10000 ) );
 		$id = strlen( $id ) ? '" id="' . $id . '"' : null;
+
 		$save = $saveText ? '<a href="#" id="' . $bid . '-save" class="btn btn-primary btn-sigsiu save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>' : null;
-		$html .= '<div class="' . $classes . $id . $style . '>
-					<div class="modal-header">
-						<h3>' . ( $header ) . '</h3>
+
+		$html .= '<div class="' . $classes . $id . $style . '>';
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			$html .= '<div class="modal-dialog"><div class="modal-content">';
+		}
+		$html .= '  <div class="modal-header">
+						<h3 class="modal-title">' . ( $header ) . '</h3>
 					</div>
 					<div class="modal-body">
 					' . $content . '
 					</div>
 					<div class="modal-footer">
-						<a href="#" class="btn" data-dismiss="modal">' . Sobi::Txt( $closeText ) . '</a>
+						<a href="#" class="btn btn-default" data-dismiss="modal">' . Sobi::Txt( $closeText ) . '</a>
 						' . $save . '
-					</div>
-				</div>
-		';
+					</div>';
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			$html .= '</div></div>';
+		}
+		$html .= '</div>';
 		return $html;
 	}
 
