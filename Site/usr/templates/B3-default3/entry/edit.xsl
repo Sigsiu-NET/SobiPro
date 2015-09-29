@@ -119,17 +119,11 @@
                                                     <xsl:copy-of select="data/*" />
                                                 </xsl:otherwise>
                                             </xsl:choose>
-                                            <span id="{$fieldId}-message" class="hide message-lightbulb">
-                                                <i class="icon-lightbulb icon-large text-error" />
-                                            </span>
                                         </xsl:otherwise>
                                     </xsl:choose>
+                                    <div id="{$fieldId}-message" class="hide message-lightbulb"></div>
                                 </div>
-								<xsl:if test="string-length( @suffix )">
-									<span id="{$fieldId}-message" class="hide message-lightbulb">
-										<i class="icon-lightbulb icon-large text-error" />
-									</span>
-								</xsl:if>
+
                                 <xsl:if test="string-length( description ) and //config/help-position/@value = 'below'">
                                     <div class="help-block">
                                         <xsl:value-of select="description" />

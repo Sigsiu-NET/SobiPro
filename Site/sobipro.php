@@ -53,5 +53,4 @@ $class = SPLoader::loadController( 'sobipro' );
 $sobi = new $class( SPRequest::task() );
 $sobi->execute();
 
-SPConfig::debOut( SPRequest::task() );
-//echo "";
+//SPConfig::debOut( SPRequest::task() );

@@ -36,42 +36,46 @@
 			</p>
 			<div class="payment-details row">
 				<xsl:for-each select="payment_methods/*">
-					<div class="thumbnail col-sm-12 hidden-xs">
-						<xsl:value-of select="@title" />
-						<xsl:choose>
-							<xsl:when test="@escaped">
-								<xsl:value-of select="." disable-output-escaping="yes" />
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:choose>
-									<xsl:when test="count(./*)">
-										<xsl:copy-of select="./*" />
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:value-of select="." disable-output-escaping="yes" />
-									</xsl:otherwise>
-								</xsl:choose>
-							</xsl:otherwise>
-						</xsl:choose>
-					</div>
-					<div class="thumbnail col-xs-12 visible-xs-*">
-						<xsl:value-of select="@title" />
-						<xsl:choose>
-							<xsl:when test="@escaped">
-								<xsl:value-of select="." disable-output-escaping="yes" />
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:choose>
-									<xsl:when test="count(./*)">
-										<xsl:copy-of select="./*" />
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:value-of select="." disable-output-escaping="yes" />
-									</xsl:otherwise>
-								</xsl:choose>
-							</xsl:otherwise>
-						</xsl:choose>
-					</div>
+					<div class="col-sm-6 hidden-xs">
+                        <div class="thumbnail">
+                            <xsl:value-of select="@title" />
+                            <xsl:choose>
+                                <xsl:when test="@escaped">
+                                    <xsl:value-of select="." disable-output-escaping="yes" />
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:choose>
+                                        <xsl:when test="count(./*)">
+                                            <xsl:copy-of select="./*" />
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="." disable-output-escaping="yes" />
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </div>
+                    </div>
+					<div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+                        <div class="thumbnail">
+                            <xsl:value-of select="@title" />
+                            <xsl:choose>
+                                <xsl:when test="@escaped">
+                                    <xsl:value-of select="." disable-output-escaping="yes" />
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:choose>
+                                        <xsl:when test="count(./*)">
+                                            <xsl:copy-of select="./*" />
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="." disable-output-escaping="yes" />
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </div>
+                    </div>
 				</xsl:for-each>
 			</div>
 		</div>

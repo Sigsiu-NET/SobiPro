@@ -23,7 +23,7 @@
 		<div class="spMessage">
             <xsl:for-each select="./*">
                 <div class="alert alert-{name()}">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <xsl:for-each select="./*">
                         <xsl:value-of select="." />
                         <div class="clearfix" />
@@ -31,7 +31,7 @@
                 </div>
             </xsl:for-each>
             <div class="alert hide" id="sobipro-message">
-                <button type="button" class="close" data-dismiss="alert">×</button>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
         </div>
 	</xsl:template>

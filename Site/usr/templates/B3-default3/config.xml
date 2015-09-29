@@ -100,6 +100,13 @@
                                         </values>
                                     </field>
                                 </fieldset>
+                                <fieldset>
+                                    <field type="select" label="BS" name="settings[config][general][bs]" selected="settings.config.general.bs" class="input-medium">
+                                        <values>
+                                            <option value="bs3" label="BS3" />
+                                        </values>
+                                    </field>
+                                </fieldset>
                             </div>
                         </div>
                     </tab>

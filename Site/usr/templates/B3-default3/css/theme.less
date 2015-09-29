@@ -103,16 +103,13 @@
     color: darken(@active-color, 10%);
 }
 
-.SobiPro select {
-//    width: 220px;
-}
-
 .SobiPro .input-prepend .alert,
 .SobiPro .input-append .alert {
     font-size: 14px;
 }
 .SobiPro .page-header {
     margin-bottom: 10px;
+    margin-top: 10px;
     font-size: 22px;
     font-weight: 300;
 }
@@ -199,7 +196,10 @@
     .headertext;
 }
 .SobiPro .modal-header .close {
-    text-shadow: none;
+    margin-top: 3px;
+}
+
+.SobiPro .modal-header .close {
     & when (@inverse = inverse) {
         opacity: 0.8;
         color: @base-color;
@@ -207,9 +207,6 @@
 }
 .SobiPro .modal-body {
     padding: 1%;
-}
-.SobiPro .modal textarea {
-    width: 97%;
 }
 .SobiPro .modal form {
     margin-right: 10px;
@@ -236,16 +233,10 @@
     }
 }
 .modal-backdrop {
-    background-color: @base-color;
+    background-color: @base-color!important;
     & when (@inverse = inverse) {
-        background-color: grey;
+        background-color: grey!important;
     }
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 1040;
 }
 
 // Headers
@@ -263,6 +254,7 @@
     .SobiPro .btn,
     .SobiPro .modal,
     .SobiPro .modal-footer,
+    .SobiPro .modal-content,
     .SobiPro .alert,
     .SobiPro .label,
     .SobiPro .thumbnail,
@@ -546,7 +538,7 @@
 // ----------------------------------------
 // define bootstrap alert to use it as mixin
 .SobiPro .alert {
-    padding: 8px 35px 8px 14px;
+    padding: 8px 15px 8px 14px;
     margin-bottom: 20px;
     text-shadow: none;
 }
@@ -602,26 +594,26 @@
 }
 
 .SobiPro .text-error,
-.SobiPro .control-group.error .checkbox,
-.SobiPro .control-group.error .radio,
-.SobiPro .control-group.error input,
-.SobiPro .control-group.error select,
-.SobiPro .control-group.error textarea,
-.SobiPro .control-group.error .control-label,
-.SobiPro .control-group.error .help-block,
-.SobiPro .control-group.error .help-inline {
+.SobiPro .form-group.error .checkbox,
+.SobiPro .form-group.error .radio,
+.SobiPro .form-group.error input,
+.SobiPro .form-group.error select,
+.SobiPro .form-group.error textarea,
+.SobiPro .form-group.error .control-label,
+.SobiPro .form-group.error .help-block,
+.SobiPro .form-group.error .help-inline {
     color: @error-color;
 }
-.SobiPro .control-group.error input:focus,
-.SobiPro .control-group.error select:focus,
-.SobiPro .control-group.error textarea:focus {
+.SobiPro .form-group.error input:focus,
+.SobiPro .form-group.error select:focus,
+.SobiPro .form-group.error textarea:focus {
     border-color: fade(@error-color, 80%) !important;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
 }
 
-.SobiPro .control-group.error input,
-.SobiPro .control-group.error select,
-.SobiPro .control-group.error textarea {
+.SobiPro .form-group.error input,
+.SobiPro .form-group.error select,
+.SobiPro .form-group.error textarea {
     border-color: @error-color;
 }
 
@@ -840,7 +832,6 @@
 }
 .SobiPro .spDetailEntry .spManage {
     margin-right: 7px;
-    margin-top: 7px;
 }
 .SobiPro span.spDetailSuffix {
     font-size: 80%;
@@ -927,13 +918,27 @@
     //width: 450px;
 }
 .SobiPro .spEntryEdit .message-lightbulb {
-    margin-left: 15px;
+    left: 0%;
+    position: relative;
+}
+.SobiPro .spEntryEdit .message-lightbulb .popover.bottom {
+    margin-top: 0;
 }
 .SobiPro .editor {
     overflow: visible;
 }
 .SobiPro .spClassEditInfo {
     margin-top: 10px;
+}
+.SobiPro .spEntryEdit .popover-title {
+    color: @error-color;
+    font-size: 17px;
+    font-weight: 400;
+}
+.SobiPro .spEntryEdit .popover-title::before {
+    font-family: FontAwesome;
+    content: "";
+    padding-right: 5px;
 }
 
 
@@ -987,27 +992,28 @@
 
 // Sigsiu Tree
 // ----------------------------------------
+
 .SigsiuTree .selected {
-    float: left;
-    margin-left: 10px;
     margin-top: 10px;
 }
-
 .SigsiuTree .selected select {
-    min-height: 200px;
+    min-height: 100px;
 }
 .SigsiuTree .buttons {
-    clear: both;
-    padding: 10px;
+    text-align: right;
+    margin-top: 12px;
 }
 .SigsiuTree .buttons button {
-    margin: 5px;
+    margin: 3px 0 10px 3px;
+}
+.SigsiuTree .buttons button i::after {
+    content: ' ';
 }
 .SigsiuTree .tree {
-    float: left;
     overflow: auto;
-    width: 50%;
     max-height: 250px;
+    min-height: 100px;
+    margin-top: 10px;
 }
 
 // Search and Edit form
@@ -1037,21 +1043,11 @@
     float: left;
 }
 .SobiPro .spEntryEdit .spFieldCheckbox input {
-    //margin-top: 5px
     margin-top: -3px;
 }
-.SobiPro .spSearch .spFieldCheckbox input {
-    //margin-top: 8px
-}
 
-.SobiPro .spFieldRadio input {
-    //margin-top: 10px
-}
 .SobiPro .control-label input[type="checkbox"] {
     margin: 0;
-}
-.SobiPro .spClassEditImage .form-control {
-    //width: 220px;
 }
 
 
@@ -1066,6 +1062,8 @@
 .SobiPro .form-inline .control-label div.paybox {
     margin-bottom: 12px;
 }
+
+.SobiPro .form-group.payment-message,
 .SobiPro .control-group.payment-message {
     padding-top: 10px;
 }
@@ -1507,6 +1505,9 @@
         float: none;
         width: 90%;
     }
+    .SobiPro .spEntryEdit .message-lightbulb {
+        left: 49%;
+    }
 }
 
 // Landscape phones and down
@@ -1514,6 +1515,7 @@
     .SobiPro .spCaticon i {
         font-size: 2.5em;
     }
+    .SobiPro .modal .form-group,
     .SobiPro .modal .control-group {
         margin-bottom: 6px;
     }
@@ -1524,6 +1526,9 @@
     }
     .SobiPro .spNoImage {
         display: none;
+    }
+    .SigsiuTree .buttons {
+        text-align: center;
     }
 
 }
