@@ -1025,29 +1025,33 @@ input.sp-input-micro[type="text"] {
   float: left;
 }
 
+// Tree
+.SigsiuTree.AdminEntry {
+  width: 530px;
+}
 .SigsiuTree .selected {
-  float: left;
-  margin-left: 30px;
+  margin-top: 10px;
 }
-
 .SigsiuTree .selected select {
-  min-height: 200px;
+  min-height: 100px;
 }
-
 .SigsiuTree .buttons {
-  clear: both;
-  padding: 10px;
+  text-align: right;
+  margin-top: 12px;
 }
-
 .SigsiuTree .buttons button {
-	margin: 5px;
+  margin: 3px 0 10px 3px;
+}
+.SigsiuTree .buttons button i::after {
+  content: ' ';
+}
+.SigsiuTree .tree {
+  overflow: auto;
+  max-height: 250px;
+  min-height: 100px;
+  margin-top: 10px;
 }
 
-.SigsiuTree .tree {
-  float: left;
-  overflow: auto;
-  width: 350px;
-}
 .sobiCatsSigsiuTree,
 .SobiPro .sobiCatsSigsiuTree {
   margin-left: 0px;

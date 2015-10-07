@@ -34,6 +34,12 @@
     line-height: 17px;
     max-height: 650px;
 }
+.AdminEntry .sigsiuTree {
+	margin-left: inherit;
+	margin-right: inherit;
+	line-height: inherit;
+	max-height: inherit;
+}
 
 .sigsiuTree img {
 	border: 0px;
@@ -83,3 +89,4 @@ a.treeNode:focus {
     background-color: #C0D2EC;
 /*	background-color: #c0d2ec; */
 }
+

@@ -176,7 +176,7 @@ abstract class SPHtml_Input
 			$stupidInternetExplorer = true;
 		}
 
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
 			$column = "col-sm-";
 		}
 		else {
@@ -188,7 +188,7 @@ abstract class SPHtml_Input
 		$f .= self::file( $name . '-file', 0, $classes, $accept );
 		$f .= '</div>';
 		$b3class = '';
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
 			$b3class = ' form-control';
 		}
 		if ( !( $stupidInternetExplorer ) ) {
@@ -223,7 +223,7 @@ abstract class SPHtml_Input
 	 */
 	public static function _text( $name, $value = null, $params = null )
 	{
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )){
 			SPHtml_Input::checkArray($params);
 			if (isset($params['class'])) {
 				$params['class'] .= ' form-control';
@@ -337,6 +337,10 @@ abstract class SPHtml_Input
 		if ( !isset( $params[ 'style' ] ) ) {
 			$params[ 'style' ] = "height: {$height}px;";
 		}
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			$editorParams[ 'class' ] = "form-control";
+		}
+
 		Sobi::Trigger( 'BeforeCreateField', ucfirst( __FUNCTION__ ), array( &$name, &$value, &$editor, &$width, &$height, &$params ) );
 		$value = SPLang::entities( $value );
 		if ( $editor ) {
@@ -348,7 +352,7 @@ abstract class SPHtml_Input
 			}
 		}
 		else {
-			if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
 				SPHtml_Input::checkArray($params);
 				if (isset($params['class'])) {
 					$params['class'] .= ' form-control';
@@ -458,7 +462,7 @@ abstract class SPHtml_Input
 				else {
 					$image = null;
 				}
-				if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+				if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
 					$container = '<div class="checkbox">';
 					$containerend = '</div>';
 				}
@@ -530,7 +534,7 @@ abstract class SPHtml_Input
 			$f = $field;
 		}
 		else {
-			if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
 				$f = ($order == 'left') ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 			}
 			else {
@@ -690,7 +694,7 @@ abstract class SPHtml_Input
 	 */
 	public static function _select( $name, $values, $selected = null, $multi = false, $params = null )
 	{
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' )) {
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
 			SPHtml_Input::checkArray($params);
 			if (isset($params['class'])) {
 				$params['class'] .= ' form-control';

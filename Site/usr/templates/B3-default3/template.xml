@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://xml.sigsiu.net/SobiPro/template.xsd">
-	<name>B3-Default SobiPro Template V3</name>
+	<name>B3-Default Template V3</name>
 	<id>b3-default3</id>
 	<authorName>Sigrid Suski and Radek Suski</authorName>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2015 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License</license>
-	<creationDate>2015-09-28</creationDate>
+	<creationDate>2015-10-28</creationDate>
 	<version>3.0</version>
-	<description>Default SobiPro Template for SobiPro since 1.2.
-	This template makes use of Bootstrap 3 and Font Awesome 4 elements and styles.</description>
+	<description>Default Template for SobiPro since 1.2 with Bootstrap 3 support.
+	This template makes use of Bootstrap 3 and Font Awesome 3 elements and styles.</description>
 	<files>
 		<file path="category/view.xsl">
 			Default category view template with top menu, navigation, entries and categories.

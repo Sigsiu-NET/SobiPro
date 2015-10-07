@@ -226,7 +226,10 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 		else {
 			$selector .= '<div class="selected span6">';
-			$treeclass= 'SigsiuTree';
+			$treeclass = 'SigsiuTree';
+			if (defined( 'SOBIPRO_ADM' )) {
+				$treeclass = 'SigsiuTree AdminEntry';
+			}
 		}
 		if ( $this->height > 100 ) {
 			$selectParams[ 'style' ] = "min-height: {$this->height}px";
@@ -241,8 +244,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		else {
 			$selector .= '<div class="row-fluid"><div class="buttons span12">';
 		}
-		$selector .= SPHtml_Input::button( 'addCategory', '<i class="icon-plus" />' . Sobi::Txt( 'CC.ADD_BT' ), $addBtParams );
-		$selector .= SPHtml_Input::button( 'removeCategory', '<i class="icon-minus-sign" />' . Sobi::Txt( 'CC.DEL_BT' ), $delBtParams );
+		$selector .= SPHtml_Input::button( 'addCategory', '<i class="icon-plus" ></i>' . Sobi::Txt( 'CC.ADD_BT' ), $addBtParams );
+		$selector .= SPHtml_Input::button( 'removeCategory', '<i class="icon-minus-sign" ></i>' . Sobi::Txt( 'CC.DEL_BT' ), $delBtParams );
 		$selector .= '</div></div>';
 		$selector = '<div class="' . $treeclass . '" id="' . $this->nid . '_canvas">' . $selector . '</div>';
 

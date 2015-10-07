@@ -89,6 +89,7 @@
 .SobiPro {
     padding: 4px;
     font-size: 14px;
+    line-height: inherit;
     & when (@inverse = inverse) {
         font-size: 110%;
     }
@@ -1203,6 +1204,12 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.SobiPro .mapSearch {
+    display: inline-block;
+}
+.SobiPro .input-append input.spClassMap {
+    height: 21px;
+}
 
 // Aggregation Field
 // -----------------------------------------------
@@ -1488,6 +1495,9 @@
         padding-left: 0;
         text-align: left;
     }
+    .SobiPro .input-append input.spClassMap {
+        height: 31px;
+    }
 }
 
 // form switch to label above input
@@ -1503,29 +1513,20 @@
     .SobiPro .spEditImagePreview {
         float: none;
     }
-
     .SobiPro .spImageUpload input {
         width: 100% !important;
         height: 31px;
     }
-
-    .SobiPro .sp-search-controls .btn {
-        width: 100%;
-    }
-
     .SobiPro .btn[name="spsearchphrase"] {
         padding: 2px 10px;
         font-size: 12px;
     }
-
     .SobiPro .control-label div.paybox {
         margin-bottom: 12px;
     }
-
     .SobiPro .controls {
         margin-left: 0;
     }
-
     .SobiPro input[name="sp_search_for"],
 //    .SobiPro input[type="text"],
     .SobiPro input[type="password"],
@@ -1534,23 +1535,18 @@
     {
         width: 100%;
     }
-
     .SobiPro .bootstrap-tagsinput {
         width: 95%;
     }
-
     .SobiPro .bootstrap-tagsinput input {
         width: 90% !important;
     }
-
     .SobiPro input[name="sp_search_for"] {
         margin-bottom: 10px;
     }
-
     .SobiPro .spCaticon i {
         font-size: 3em;
     }
-
     .SobiPro .input-append.date.spDatePicker {
         float: none;
         width: 90%;
@@ -1565,11 +1561,9 @@
     .SobiPro .spCaticon i {
         font-size: 2.5em;
     }
-
     .SobiPro .modal .control-group {
         margin-bottom: 6px;
     }
-
     .SobiPro div.spClassViewImage img,
     .SobiPro .spEntryContainer .spClassViewImage img {
         width: 97%;
@@ -1580,6 +1574,24 @@
     }
     .SigsiuTree .buttons {
         text-align: center;
+    }
+    .SobiPro .spClassViewImage img {
+        float:none!important;
+    }
+
+    .SobiPro .ctrl-locate-me.btn {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .SobiPro input[type="text"] {
+        width: 97%;
+        max-width: 97%;
+    }
+
+    .SobiPro .ctrl-locate-me.btn,
+    .SobiPro .sp-search-controls .btn,
+    .SobiPro .input-small {
+        width: 100%;
     }
 }
 

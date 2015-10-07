@@ -526,7 +526,11 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		include_once( 'phar://' . SOBI_PATH . '/lib/services/third-party/less/less.phar.tar.gz/Autoloader.php' );
 		try {
 			Less_Autoloader::register();
-			$parser = new Less_Parser();
+
+			$options = array( 'compress' => true,
+				'strictMath' => true );
+
+			$parser = new Less_Parser($options);
 			$parser->parseFile( $file );
 			$css = $parser->getCss();
 			if ( SPFs::exists( $output ) ) {
