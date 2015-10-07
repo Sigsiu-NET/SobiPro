@@ -768,6 +768,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 		elseif ( !( count( $this->categories ) ) ) {
 			throw new SPException( SPLang::e( 'MISSING_CAT' ) );
 		}
+		if( $preState[ 'new' ] ) {
+			$this->countVisit( true );
+		}
 		/* trigger possible state changes */
 		if ( $preState[ 'approved' ] != $this->approved ) {
 			if ( $this->approved ) {
