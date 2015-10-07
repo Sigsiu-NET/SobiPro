@@ -80,9 +80,10 @@ class SPTemplateInstaller extends SPInstaller
 			}
 		}
 
+		//05 Oct 2015 Kishore
 		$exec = $this->xGetString( 'exec' );
-		if ( $exec && SPFs::exists( $this->root . DS . $exec ) ) {
-			include_once( "{$this->root}/{$exec}" );
+		if ( $exec && SPFs::exists( $path . DS . $exec ) ) {
+			include_once( "{$path}/{$exec}");
 		}
 
 		/** @var $dir SPDirectory */
