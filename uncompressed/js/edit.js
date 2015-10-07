@@ -168,6 +168,19 @@ SobiPro.jQuery( document ).ready( function ()
 } );
 function SPTriggerFrakingWYSIWYGEditors()
 {
+	try {
+		var Editors = Object.keys( tinyMCE.editors );
+		SobiPro.jQuery.each( Editors, function ( i, eid )
+		{
+			if ( eid != 0 ) {
+				// facepalm - mceAddControl is simply not working
+				tinyMCE.execCommand( 'mceToggleEditor', false, eid );
+				tinyMCE.execCommand( 'mceToggleEditor', false, eid );
+			}
+		} );
+	}
+	catch ( e ) {
+	}
     var events = [ 'unload', 'onbeforeunload', 'onunload' ];
     for ( var i = 0; i < events.length; i++ ) {
         try {

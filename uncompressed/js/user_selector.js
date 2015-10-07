@@ -25,6 +25,7 @@ SobiPro.jQuery( document ).ready( function ()
 	new SpUserSelector();
 } );
 
+
 function SpUserSelector()
 {
 	"use strict";
