@@ -386,8 +386,13 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	{
 		$sids = array();
 		try {
-			SPFactory::db()->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ) );
-			$sids = SPFactory::db()->loadResultArray();
+			$sids = SPFactory::db()
+					/** Fri, Oct 9, 2015 15:10:42
+					 * We do not need the enabled / copy check as all entries are being verified in the search controller anyway
+					->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ) )
+					 */
+					->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'baseData' => $data, 'section' => $section ) )
+					->loadResultArray();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SEARCH_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
