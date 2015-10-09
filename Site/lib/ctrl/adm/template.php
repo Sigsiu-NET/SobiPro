@@ -120,7 +120,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 					}
 					try {
 						SPFs::write( $lessFile, $lessContent );
-						$this->compileLessFile( $lessFile, str_replace( 'less', 'css', $lessFile ), Sobi::Url( 'template.settings' ) );
+						$this->compileLessFile( $lessFile, str_replace( 'less', 'css', $lessFile ), Sobi::Url( 'template.settings' ), true );
 					} catch ( SPException $x ) {
 						$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
 					}
@@ -521,16 +521,22 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	 * @param $output
 	 * @param $u
 	 */
-	protected function compileLessFile( $file, $output, $u )
+	protected function compileLessFile( $file, $output, $u, $compress = false )
 	{
 		include_once( 'phar://' . SOBI_PATH . '/lib/services/third-party/less/less.phar.tar.gz/Autoloader.php' );
 		try {
 			Less_Autoloader::register();
 
-			$options = array( 'compress' => true,
-				'strictMath' => true );
-
-			$parser = new Less_Parser($options);
+			if ( $compress ) {
+				$options = array(
+						'compress' => true,
+						'strictMath' => true
+				);
+			}
+			else {
+				$options = array();
+			}
+			$parser = new Less_Parser( $options );
 			$parser->parseFile( $file );
 			$css = $parser->getCss();
 			if ( SPFs::exists( $output ) ) {
