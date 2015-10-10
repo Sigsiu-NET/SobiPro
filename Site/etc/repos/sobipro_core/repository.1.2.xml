@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- @version: $Id$
  @package: SobiPro Component for Joomla!
 
  @author
  Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  Email: sobi[at]sigsiu.net
- Url: http://www.Sigsiu.NET
+ Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+ See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
- $Date$
- $Revision$
- $Author$
- $HeadURL$
 -->
 
 <repository>
     <name>SobiPro Repository</name>
     <id>sobipro_core</id>
-    <url>https://repository.sobi-pro.eu/repository.php</url>
-    <token></token>
+    <url>https://repository.sigsiu.net/repository.php</url>
+    <token>1b9ad91f216fe4bf14189d9cf50f62a7</token>
     <certificate>
-        <serialnumber>148177</serialnumber>
-        <validfrom>2014-06-17 23:51:05</validfrom>
-        <validto>2016-06-18 15:45:16</validto>
+        <serialnumber>2279966459648044</serialnumber>
+        <validfrom>2015-09-29 20:58:35</validfrom>
+        <validto>2017-09-30 04:09:58</validto>
         <subject>
             <c>DE</c>
             <st>Hessen</st>
             <l>Schaafheim</l>
             <o>Sigsiu.NET GmbH</o>
-            <cn>code.sigsiu.net</cn>
-            <emailaddress>postmaster@sobi-pro.eu</emailaddress>
+            <cn>*.sigsiu.net</cn>
+            <emailaddress>postmaster@sigsiu.net</emailaddress>
         </subject>
         <issuer>
             <c>IL</c>
@@ -44,15 +38,15 @@
             <ou>Secure Digital Certificate Signing</ou>
             <cn>StartCom Class 2 Primary Intermediate Server CA</cn>
         </issuer>
-        <hash>b214a8c5</hash>
+        <hash>30dab8ba</hash>
     </certificate>
     <description>
-        SobiPro Repository at https://repository.sobi-pro.eu
+        SobiPro Repository at https://repository.sigsiu.net
     </description>
     <maintainer>
         <name>Sigsiu.NET GmbH</name>
         <email>sobi[at]sigsiu.net</email>
-        <url>http://www.sigsiu.net/</url>
-        <supporturl>https://forum.sigsiu.net/</supporturl>
+        <url>https://www.sigsiu.net/</url>
+        <supporturl>https://www.sigsiu.net/support/</supporturl>
     </maintainer>
 </repository>
