@@ -98,6 +98,7 @@ Legend:
     (#) rGetChilds method limited to entries only
     (#) Static call into JSite::getMenu() has been removed
     (#) Leveraging Joomla! files' protection (Issue #1506)
+    (#) New typeahead library for Bootstrap 3 (Issue #xxx)
 
 
 -------------------
