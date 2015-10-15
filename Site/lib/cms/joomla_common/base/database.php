@@ -228,7 +228,7 @@ class SPJoomlaDb
 				foreach ( $o as $p ) {
 					if ( strstr( $p, '.' ) ) {
 						$p = explode( '.', $p );
-						$order[ ] = $p[ 0 ] . ' ' . strtoupper( $p[ 1 ] );
+						$order[ ] = $p[ 0 ] . '.' . strtoupper( $p[ 1 ] );
 					}
 					else {
 						$order[ ] = $p;
