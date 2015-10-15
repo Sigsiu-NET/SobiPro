@@ -175,13 +175,6 @@ abstract class SPHtml_Input
 			$classes = array( 'class' => '' );
 			$stupidInternetExplorer = true;
 		}
-
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
-			$column = "col-sm-";
-		}
-		else {
-			$column = "span";
-		}
 		$f = null;
 		$f .= "<div class=\"{$class}\" data-section=" . Sobi::Section() . ">";
 		$f .= '<div class="file">';
@@ -201,17 +194,21 @@ abstract class SPHtml_Input
 		$f .= '<button class="btn btn-default upload hide" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
 		$f .= '<button class="btn btn-default remove" disabled="disabled" type="button">' . '&nbsp;<i class="' . Sobi::Ico( 'upload-field.remove-button' ) . '"></i></button>';
 		$f .= '</div>';
-		$f .= '<div class="hide progress-container row">';
-		$f .= '<div class="'. $column . '1">';
-		$f .= '<span class="progress-message badge badge-success">0%</span>';
+
+		$f .= '<div class="hide progress-container">';
+		$f .= '<div class="progress progress-success">';
+		$f .= '<div class="bar progress-bar progress-bar-success"><span class="progress-message">0%</span></div>';
 		$f .= '</div>';
-		$f .= '<div class="progress progress-success '. $column . '6"><div class="bar"></div></div>';
 		$f .= '</div>';
-		$f .= '<div class="alert hide"><button type="button" class="close" data-dismiss="alert">×</button><div>&nbsp;</div></div>';
+		//no close button as it won't open again without reload -> no further messages
+//		$f .= '<div class="alert hide"><button type="button" class="close" data-dismiss="alert">×</button><div>&nbsp;</div></div>';
+		$f .= '<div class="alert hide"><div>&nbsp;</div></div>';
 		$f .= "<input type=\"hidden\" name=\"{$name}\" value=\"\" class='idStore'/>";
 		$f .= '</div>';
+
 		return $f;
 	}
+
 
 	/**
 	 * Creates a HTML file box
@@ -917,8 +914,14 @@ abstract class SPHtml_Input
 		SPFactory::header()
 				->addCssFile( 'bootstrap.datepicker' )
 				->addJsFile( array( 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ) );
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			$f = '<div class="input-group date spDatePicker">';
+			$params[ 'class' ] .= ' form-control';
+		}
+		else {
+			$f = '<div class="input-append date spDatePicker">';
+		}
 		$params = self::params( $params );
-		$f = '<div class="input-append date spDatePicker">';
 		$f .= '<input type="text" disabled="disabled" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" ' . $data . '/>';
 		/**
 		 * Mon, Nov 17, 2014 11:39:34 So here I am a bit baffled: we initially changed it to integer (unfortunately I do not remember why)
@@ -936,7 +939,14 @@ abstract class SPHtml_Input
 		$f .= '<input type="hidden" value="' . $value . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? (int)( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null ) . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? ( $value + SPFactory::config()->getTimeOffset() ) * 1000 : null ) . '" name="' . $name . '"/>';
-		$f .= '<span class="add-on"><i data-date-icon="icon-' . $icon . '" class="icon-' . $icon . '"></i></span>';
+
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			$f .= '<span class="input-group-addon add-on">';
+		}
+		else {
+			$f .= '<span class="add-on">';
+		}
+		$f .= '<i data-date-icon="icon-' . $icon . '" class="icon-' . $icon . '"></i></span>';
 		$f .= '</div>';
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
 //		return "\n<!-- Date Picker '{$name}' Output -->{$f}<!-- Date Picker '{$name}' End -->\n\n";

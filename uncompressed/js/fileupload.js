@@ -28,7 +28,7 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 	this.settings = {
 		'hideProgressBar': true,
 		'styles': {
-			'.progress': { /*'clear': 'left', 'float': 'left', */'margin': '10px 10px 10px 10px' },
+			'.progress': { /*'clear': 'left', 'float': 'left', */'margin': '10px 0 10px 0' },
 			'.alert': {'clear': 'both' },
 			'.file input': { 'margin-bottom': '10px'},
 			'.progress-message': { }
@@ -62,6 +62,8 @@ SobiPro.jQuery.fn.SobiProFileUploader = function ( options )
 		}
 		else {
 			responseMsg.removeClass( 'hide' );
+			responseMsg.removeClass( 'alert-error' );
+			responseMsg.removeClass( 'alert-success' );
 			responseMsg.addClass( 'alert-' + response.type );
 			responseMsg.find( 'div' ).html( response.text );
 			idStore.val( response.id );
