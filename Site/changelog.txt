@@ -99,6 +99,7 @@ Legend:
     (#) Static call into JSite::getMenu() has been removed
     (#) Leveraging Joomla! files' protection (Issue #1506)
     (#) New typeahead library for Bootstrap 3 (Issue #xxx)
+    (#) White screen in SobiPro panel if news couldn't be fetched
 
 
 -------------------
