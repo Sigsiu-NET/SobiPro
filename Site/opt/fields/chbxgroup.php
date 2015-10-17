@@ -204,7 +204,7 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 				if ( !( isset( $this->optionsById[ $opt ] ) ) ) {
 					throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $opt, $this->name ) );
 				}
-				$selected[ ] = preg_replace( '/^[a-z0-9]\.\-\_/ei', null, $opt );
+				$selected[ ] = preg_replace( '/^[a-z0-9]\.\-\_/i', null, $opt );
 			}
 			return $selected;
 		}

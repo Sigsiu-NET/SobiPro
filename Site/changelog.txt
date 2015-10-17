@@ -66,6 +66,7 @@ Legend:
     (!) Field width settings changed from px to Bootstrap classes (span, col)
     (!) SigsiuTree is responsive now
     (!) New repository server and certificate
+    (!) preg_replace /e changed to be PHP7 compatible
 
     (-) Category icons removed
 
