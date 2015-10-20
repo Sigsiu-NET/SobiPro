@@ -1,3 +1,4 @@
+
 Changelog for SobiPro Component
 ===================================================
 @package: SobiPro Component for Joomla!
@@ -15,6 +16,7 @@ See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
 
 Legend:
  (*) - Security Fix
@@ -52,6 +54,7 @@ Legend:
     (+) Implementation of Bootstrap 3 HTML output (e.g. modals, grids, forms, input fields)
     (+) Adjustable search field width for category, select, multiselect and inbox fields (span, col)
     (+) APC cache in front of SQLite in SobiPro Accelerator
+    (+) Bootbox for Bootstrap 3
 
     (!) Template styles from SobiPro.css moved to template's css file
     (!) New tree icons
