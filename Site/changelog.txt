@@ -51,6 +51,7 @@ Legend:
     (+) Setting to switch HTML output format from Bootstrap 2 to Bootstrap 3
     (+) Implementation of Bootstrap 3 HTML output (e.g. modals, grids, forms, input fields)
     (+) Adjustable search field width for category, select, multiselect and inbox fields (span, col)
+    (+) APC cache in front of SQLite in SobiPro Accelerator
 
     (!) Template styles from SobiPro.css moved to template's css file
     (!) New tree icons

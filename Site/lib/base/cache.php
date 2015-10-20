@@ -33,6 +33,7 @@ final class SPCache
 	protected $_db = null;
 	protected $_driver = '';
 	protected $_enabled = true;
+	protected $_apc = true;
 	protected $_store = null;
 	protected $_check = null;
 	protected $_section = -1;
@@ -139,6 +140,9 @@ final class SPCache
 			}
 			if ( $init && $this->_enabled ) {
 				$this->init();
+				if ( Sobi::Cfg( 'cache.apc_enabled', true ) ) {
+					$this->_apc = extension_loaded( 'apc' );
+				}
 			}
 		}
 	}
@@ -231,6 +235,7 @@ final class SPCache
 			SPFactory::message()->resetSystemMessages();
 		}
 		$this->cleanSectionXML( $this->_section );
+		$this->cleanApc();
 		return $this;
 	}
 
@@ -248,6 +253,7 @@ final class SPCache
 			$this->Exec( "BEGIN; DELETE FROM vars WHERE( section = '{$section}' ); COMMIT;" );
 		}
 		$this->cleanXMLLists( $section );
+		$this->cleanApc();
 		return $this;
 	}
 
@@ -348,6 +354,9 @@ final class SPCache
 			$sid = $sid ? $sid : $section;
 			$lang = $lang ? $lang : Sobi::Lang();
 			$checksum = null; //md5( serialize( $var ) );
+			if ( $this->_apc ) {
+				apc_store( "com_sobipro_var_{$sid}_{$id}_{$lang}", $var );
+			}
 			$var = SPConfig::serialize( $var );
 			$schecksum = md5( $var );
 			$this->Exec( "BEGIN; REPLACE INTO vars ( name, validtime, section, sid, lang, params, checksum, schecksum, data ) VALUES( '{$id}', '0', '{$section}', '{$sid}', '{$lang}', NULL, '{$checksum}', '{$schecksum}', '{$var}' ); COMMIT;" );
@@ -370,15 +379,21 @@ final class SPCache
 			$lang = $lang ? $lang : Sobi::Lang( false );
 			$sid = ( int )$sid;
 			$sid = $sid ? $sid : $section;
-			$result = $this->Query( "SELECT * FROM vars WHERE( name = '{$id}' AND lang = '{$lang}' AND section = '{$section}' AND sid = '{$sid}' )" );
-			if ( !( is_array( $result ) ) || !( count( $result ) ) || !( strlen( $result[ 'data' ] ) ) ) {
-				return false;
+			$apc = false;
+			if ( $this->_apc ) {
+				$var = apc_fetch( "com_sobipro_var_{$sid}_{$id}_{$lang}", $apc );
 			}
-			if ( $result[ 'schecksum' ] != md5( $result[ 'data' ] ) ) {
-				Sobi::Error( 'cache', SPLang::e( 'Checksum of the encoded variable does not match' ), SPC::WARNING, 0, __LINE__, __FILE__ );
-				return false;
+			if ( !( $apc ) ) {
+				$result = $this->Query( "SELECT * FROM vars WHERE( name = '{$id}' AND lang = '{$lang}' AND section = '{$section}' AND sid = '{$sid}' )" );
+				if ( !( is_array( $result ) ) || !( count( $result ) ) || !( strlen( $result[ 'data' ] ) ) ) {
+					return false;
+				}
+				if ( $result[ 'schecksum' ] != md5( $result[ 'data' ] ) ) {
+					Sobi::Error( 'cache', SPLang::e( 'Checksum of the encoded variable does not match' ), SPC::WARNING, 0, __LINE__, __FILE__ );
+					return false;
+				}
+				$var = SPConfig::unserialize( $result[ 'data' ] );
 			}
-			$var = SPConfig::unserialize( $result[ 'data' ] );
 			return $var;
 		}
 		else {
@@ -429,6 +444,10 @@ final class SPCache
 			$loaded = serialize( SPLoader::getLoaded() );
 			$lang = Sobi::Lang( false );
 			$checksum = null; //md5( serialize( $obj ) );
+			if ( $this->_apc ) {
+				$var = array( 'obj' => $obj, 'classes' => $loaded );
+				apc_store( "com_sobipro_{$sid}_{$id}_{$type}_{$lang}", $var );
+			}
 			$obj = SPConfig::serialize( $obj );
 			$schecksum = md5( $obj );
 			// the command is a "REPLACE" so there is actually no reason for deleting it anyway
@@ -513,18 +532,30 @@ final class SPCache
 			$id = ( int )$id;
 			$sid = ( int )$sid;
 			$lang = Sobi::Lang( false );
-			$result = $this->Query( "SELECT * FROM objects WHERE( type = '{$type}' AND id = '{$id}' AND lang = '{$lang}' AND sid = '{$sid}' )" );
-			if ( !( is_array( $result ) ) || !( count( $result ) ) ) {
-				return false;
+			$apc = false;
+			if ( $this->_apc ) {
+				$var = apc_fetch( "com_sobipro_{$sid}_{$id}_{$type}_{$lang}", $apc );
+				if ( isset( $var[ 'classes' ] ) ) {
+					SPLoader::wakeUp( unserialize( $var[ 'classes' ] ) );
+				}
 			}
-			if ( $result[ 'classes' ] ) {
-				SPLoader::wakeUp( unserialize( $result[ 'classes' ] ) );
+			if ( !( $apc ) ) {
+				$result = $this->Query( "SELECT * FROM objects WHERE( type = '{$type}' AND id = '{$id}' AND lang = '{$lang}' AND sid = '{$sid}' )" );
+				if ( !( is_array( $result ) ) || !( count( $result ) ) ) {
+					return false;
+				}
+				if ( $result[ 'classes' ] ) {
+					SPLoader::wakeUp( unserialize( $result[ 'classes' ] ) );
+				}
+				if ( $result[ 'schecksum' ] != md5( $result[ 'data' ] ) ) {
+					Sobi::Error( 'cache', SPLang::e( 'Checksum of the encoded data does not match' ), SPC::WARNING, 0, __LINE__, __FILE__ );
+					return false;
+				}
+				$var = SPConfig::unserialize( $result[ 'data' ] );
 			}
-			if ( $result[ 'schecksum' ] != md5( $result[ 'data' ] ) ) {
-				Sobi::Error( 'cache', SPLang::e( 'Checksum of the encoded data does not match' ), SPC::WARNING, 0, __LINE__, __FILE__ );
-				return false;
+			else {
+				$var = $var[ 'obj' ];
 			}
-			$var = SPConfig::unserialize( $result[ 'data' ] );
 			$this->_check[ $type ][ $id ] = false;
 			return $var;
 		}
@@ -765,7 +796,7 @@ final class SPCache
 			}
 			if ( count( $_REQUEST ) ) {
 				foreach ( $_REQUEST as $k => $v ) {
-					if( !( isset( $this->requestStore[$k]))) {
+					if ( !( isset( $this->requestStore[ $k ] ) ) ) {
 						$data[ 'request' ][ $k ] = SPRequest::string( $k );
 					}
 				}
@@ -811,6 +842,7 @@ final class SPCache
 			$request[ 'created' ] = 'FUNCTION:NOW()';
 			$fileName = md5( serialize( $request ) );
 			$request[ 'fileName' ] = $fileName;
+
 			$filePath = SPLoader::path( 'var.xml.' . $fileName, 'front', false, 'xml' );
 			$content = $xml->saveXML();
 			$content = str_replace( '&nbsp;', '&#160;', $content );
@@ -853,6 +885,16 @@ final class SPCache
 	{
 		if ( SOBI_CMS != 'joomla15' ) {
 			JFactory::getCache()->cache->clean();
+		}
+	}
+
+	protected function cleanApc()
+	{
+		if ( $this->_apc ) {
+			$toDelete = new APCIterator( 'user', '/^com_sobipro/', APC_ITER_VALUE );
+			foreach ( $toDelete AS $key => $value ) {
+				apc_delete( $key );
+			}
 		}
 	}
 }
