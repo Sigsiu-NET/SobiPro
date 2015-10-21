@@ -230,12 +230,12 @@ final class SPCache
 		}
 		if ( $sid > 0 ) {
 			$this->cleanSection( -1 );
+			$this->cleanApc();
 		}
 		if ( $system ) {
 			SPFactory::message()->resetSystemMessages();
 		}
 		$this->cleanSectionXML( $this->_section );
-		$this->cleanApc();
 		return $this;
 	}
 
@@ -891,9 +891,11 @@ final class SPCache
 	protected function cleanApc()
 	{
 		if ( $this->_apc ) {
-			$toDelete = new APCIterator( 'user', '/^com_sobipro/', APC_ITER_VALUE );
-			foreach ( $toDelete AS $key => $value ) {
-				apc_delete( $key );
+			$info = apc_cache_info( 'user' );
+			foreach ( $info[ 'cache_list' ] as $obj ) {
+				if ( strstr( $obj[ 'key' ], 'com_sobipro' ) ) {
+					apc_delete( $obj[ 'key' ] );
+				}
 			}
 		}
 	}

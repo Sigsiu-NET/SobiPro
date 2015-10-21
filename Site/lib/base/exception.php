@@ -206,6 +206,12 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 			SPLoader::loadClass( 'cms.base.mainframe' );
 			SPFactory::mainframe()->runAway( $errString, $retCode, $backTrace );
 		}
+		else {
+			if ( $errNumber == E_USER_ERROR || $errNumber == E_ERROR ) {
+				throw new ErrorException( $errString, $retCode, $errNumber, $errFile, $errLine );
+			}
+
+		}
 		$cs = 0;
 		/** do not display our internal errors because this is an array */
 		if ( $error ) {

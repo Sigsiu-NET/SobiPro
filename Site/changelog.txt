@@ -71,6 +71,7 @@ Legend:
     (!) SigsiuTree is responsive now
     (!) New repository server and certificate
     (!) preg_replace /e changed to be PHP7 compatible
+    (!) Throwing ErrorException on fatal errors
 
     (-) Category icons removed
 
