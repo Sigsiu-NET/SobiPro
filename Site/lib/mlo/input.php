@@ -176,7 +176,7 @@ abstract class SPHtml_Input
 			$stupidInternetExplorer = true;
 		}
 		$f = null;
-		$f .= "<div class=\"{$class}\" data-section=" . Sobi::Section() . ">";
+		$f .= "<div class=\"{$class} spUpload\" data-section=" . Sobi::Section() . ">";
 		$f .= '<div class="file">';
 		$f .= self::file( $name . '-file', 0, $classes, $accept );
 		$f .= '</div>';
@@ -513,22 +513,28 @@ abstract class SPHtml_Input
 			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
 		}
 		if ( is_array( $order ) ) {
-			$field = null;
-			foreach ( $order as $position ) {
-				switch ( $position ) {
-					case 'field':
-						$field .= $f;
-						break;
-					case 'label':
-						//does not comply with BS3 style
-						$field .= $l;
-						break;
-					case 'image':
-						$field .= $image;
-						break;
-				}
+			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+				//im Moment weiss ich nichts besseres hierfür
+				$f = ($order == 'left') ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 			}
-			$f = $field;
+			else {
+				$field = null;
+				foreach ($order as $position) {
+					switch ($position) {
+						case 'field':
+							$field .= $f;
+							break;
+						case 'label':
+							//does not comply with BS3 style
+							$field .= $l;
+							break;
+						case 'image':
+							$field .= $image;
+							break;
+					}
+				}
+				$f = $field;
+			}
 		}
 		else {
 			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
@@ -915,7 +921,7 @@ abstract class SPHtml_Input
 				->addCssFile( 'bootstrap.datepicker' )
 				->addJsFile( array( 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ) );
 		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
-			$f = '<div class="input-group date spDatePicker">';
+			$f = '<div class="input-group input-append date spDatePicker">';
 			$params[ 'class' ] .= ' form-control';
 		}
 		else {
@@ -1151,6 +1157,10 @@ abstract class SPHtml_Input
 
 		$save = $saveText ? '<a href="#" id="' . $bid . '-save" class="btn btn-primary btn-sigsiu save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>' : null;
 
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			//remove hide from modal windows as BS3 modals aren't controlled via hide
+			$classes = str_replace('hide',null,$classes);
+		}
 		$html .= '<div class="' . $classes . $id . $style . '>';
 		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
 			$html .= '<div class="modal-dialog"><div class="modal-content">';

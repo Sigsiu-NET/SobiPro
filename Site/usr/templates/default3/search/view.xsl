@@ -39,6 +39,7 @@
                             <xsl:value-of select="/search/fields/searchbox/label" />
                         </label>
                         <div class="controls sp-search-controls">
+                            <div class="span9">
                                 <input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}" class="input-medium" id="SPSearchBox" />
                                 <xsl:if test="/search/fields/top_button/label">
                                     <button type="submit" class="btn btn-primary btn-sigsiu">
@@ -50,6 +51,7 @@
                                     <xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )" />
                                 </button>
                             </xsl:if>
+                            </div>
                         </div>
                     </div>
 					<xsl:if test="count( /search/fields/phrase/* )">
@@ -57,18 +59,20 @@
                             <label class="control-label" for="SPSearchBox">
                                 <xsl:value-of select="/search/fields/phrase/label" />
                             </label>
-                            <div class="controls">
-                                <div class="btn-group" data-toggle="buttons-radio">
-                                    <xsl:for-each select="/search/fields/phrase/data/*">
-                                        <button type="button" class="btn spsearchphrase" name="{./input/@name}" value="{./input/@value}" checked="checked">
-                                            <xsl:if test="./input/@checked = 'checked'">
-                                                <xsl:attribute name="class">btn spsearchphrase active</xsl:attribute>
-                                            </xsl:if>
-                                            <xsl:value-of select="./label" />
-                                        </button>
-                                    </xsl:for-each>
+                            <div class="controls sp-search-phrases">
+                                <div class="span9">
+                                    <div class="btn-group" data-toggle="buttons-radio">
+                                        <xsl:for-each select="/search/fields/phrase/data/*">
+                                            <button type="button" class="btn spsearchphrase" name="{./input/@name}" value="{./input/@value}" checked="checked">
+                                                <xsl:if test="./input/@checked = 'checked'">
+                                                    <xsl:attribute name="class">btn spsearchphrase active</xsl:attribute>
+                                                </xsl:if>
+                                                <xsl:value-of select="./label" />
+                                            </button>
+                                        </xsl:for-each>
+                                    </div>
+                                    <input type="hidden" name="spsearchphrase" id="spsearchphrase" value=""/>
                                 </div>
-                                <input type="hidden" name="spsearchphrase" id="spsearchphrase" value=""/>
                             </div>
                         </div>
 					</xsl:if>

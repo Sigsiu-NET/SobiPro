@@ -161,13 +161,13 @@ class SPFieldType extends SPObject
 			$to = SPHtml_Input::select( $this->nid . '[to]', $data2, $request[ 'to' ], false, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1' ) );
 
 //			return '<div class="SPSearchSelectRangeFrom"><span>' . Sobi::Txt( 'SH.RANGE_FROM' ) . '</span> ' . $from . ' ' . $this->suffix . '</div><div class="SPSearchSelectRangeTo"><span>' . Sobi::Txt( 'SH.RANGE_TO' ) . '</span> ' . $to . ' ' . $this->suffix . '</div>';
-			return '<div class="SPSearchSelectRangeFrom">' . $from . ' ' . $this->suffix . '</div><div class="SPSearchSelectRangeTo">' . $to . ' ' . $this->suffix . '</div>';
+			return '<div class="spSelectRangeFrom">' . $from . ' ' . $this->suffix . '</div><div class="spSelectRangeTo">' . $to . ' ' . $this->suffix . '</div>';
 		}
 		else {
 			$from = SPHtml_Input::text( $this->nid . '[from]', $request[ 'from' ], array( 'size' => '1', 'placeholder' => Sobi::Txt( 'SH.RANGE_FROM' ) ) );
 			$to = SPHtml_Input::text( $this->nid . '[to]', $request[ 'to' ], array( 'size' => '1', 'placeholder' => Sobi::Txt( 'SH.RANGE_TO' ) ) );
 //			return '<div class="SPSearchInputRangeFrom"><span>' . Sobi::Txt( 'SH.RANGE_FROM' ) . '</span> ' . $from . ' ' . $this->suffix . '</div><div class="SPSearchInputRangeTo"><span>' . Sobi::Txt( 'SH.RANGE_TO' ) . '</span> ' . $to . ' ' . $this->suffix . '</div>';
-			return '<div class="SPSearchInputRangeFrom">' . $from . ' ' . $this->suffix . '</div><div class="SPSearchInputRangeTo">' . $to . ' ' . $this->suffix . '</div>';
+			return '<div class="spInputRangeFrom">' . $from . ' ' . $this->suffix . '</div><div class="spInputRangeTo">' . $to . ' ' . $this->suffix . '</div>';
 		}
 	}
 

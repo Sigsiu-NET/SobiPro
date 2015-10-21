@@ -13,9 +13,10 @@
 // This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-@corners: angular;
+@corners: rounded;
 @colour-set: sobipro;
 @small-image: 100px;
+
 
 
 //-------------------------------------------------------------------------------------*/
@@ -88,7 +89,7 @@
 .SobiPro {
     padding: 4px;
     font-size: 14px;
-    line-height: 1.42857;
+    //line-height: 1.42857;
 
     & when (@inverse = inverse) {
         font-size: 110%;
@@ -115,6 +116,7 @@
     font-weight: 300;
 }
 .SobiPro .help-block {
+    font-size: 13px;
     color: @font-color;
 }
 .SobiPro .well {
@@ -174,7 +176,7 @@
 // Implement B2 styles
 // -----------------------------------------
 .SobiPro .input-large {
-    width: 210px;
+    width: 200px;
 }
 
 // Modal windows
@@ -189,10 +191,7 @@
         background-color: @hover-color;
     }
 }
-.SobiPro .modal {
-    margin-top: 20px;
-    //color: @active-color;
-}
+
 .SobiPro .modal-header h3 {
     .headertext;
 }
@@ -206,15 +205,9 @@
         color: @base-color;
     }
 }
-.SobiPro .modal-body {
-    padding: 1%;
-}
 .SobiPro .modal form {
     margin-right: 10px;
     margin-left: 20px;
-}
-.SobiPro .modal.fade.in {
-    top: 10%;
 }
 
 .SobiPro .ctrl-spinner {
@@ -244,7 +237,7 @@
 // -----------------------------------------------
 .SobiPro h1 {
     color: @active-color;
-    font-size: 28px;
+    font-size: 26px;
 }
 .SobiPro h2 input[type="checkbox"] {
     margin: 0 0 5px 0;
@@ -265,9 +258,6 @@
     .SobiPro .nav-pills > li > a,
     .SobiPro select,
     .SobiPro textarea,
-    .SobiPro .input-append .add-on:last-child,
-    .SobiPro .input-append .btn:last-child,
-    .SobiPro .input-append .btn-group:last-child > .dropdown-toggle,
     .SobiPro .bootstrap-datetimepicker-widget td,
     .SobiPro .bootstrap-datetimepicker-widget th,
     .SobiPro .bootstrap-datetimepicker-widget td span,
@@ -432,10 +422,8 @@
         color: @font-color;
         border-color: lighten(@text-color, 25%);
     }
-    .SobiPro .input-append .add-on,
-    .SobiPro .input-prepend .add-on {
+    .SobiPro .input-group .input-group-addon {
         color: @text-color;
-        cursor: pointer;
     }
 }
 
@@ -457,9 +445,9 @@
 .SobiPro input[type="color"]:focus,
 .SobiPro .uneditable-input:focus {
     border-color: fade(@base-color, 80%) !important;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 60%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 60%);
     & when (@inverse = inverse) {
-        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 80%);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 80%);
     }
     border: 1px solid;
 }
@@ -473,9 +461,8 @@
     margin-bottom: 9px;
 }
 
-.SobiPro .input-append .add-on,
-.SobiPro .input-prepend .add-on {
-    text-shadow: none;
+.SobiPro .input-group .input-group-addon {
+    cursor: pointer;
 }
 
 // New button colour
@@ -537,6 +524,16 @@
 
 // Alert windows and error messages
 // ----------------------------------------
+// Alert messages outside SobiPro without given color class
+.alert {
+    background-color: @alert-color;
+    border: 1px solid darken(@alert-color, 10%);
+}
+.alert,
+.alert h4 {
+    color: @active-color;
+}
+
 // define bootstrap alert to use it as mixin
 .SobiPro .alert {
     padding: 8px 15px 8px 14px;
@@ -560,6 +557,27 @@
 }
 .SobiPro .spMessage {
     margin-top: 10px;
+}
+//simulate alert-danger
+.alert-error {
+    color: #A94442;
+    background-color: #F2DEDE;
+    border-color: #EBCCD1;
+}
+.SobiPro .bootbox-alert i.error {
+    color: #A94442;
+    font-size: 30px;
+}
+.SobiPro .bootbox-alert i.success {
+    color: #449D44;
+    font-size: 30px;
+}
+.SobiPro .bootbox-alert div.signal {
+    float: left;
+    padding-right: 10px;
+}
+.SobiPro .bootbox-body {
+    padding-bottom: 10px;
 }
 .SobiPro .spMessage .alert-error,
 .SobiPro .spMessage .alert-danger {
@@ -586,8 +604,10 @@
 }
 
 // Looks as a normal text (removal of the message design)
+.SobiPro .alert-normal,
 .SobiPro.alert-error.review-box,
 .SobiPro.alert-success.review-box {
+    padding: 10px 0 10px 0;
     font-size: 15px;
     color: @font-color;
     background-color: @back-color;
@@ -609,7 +629,7 @@
 .SobiPro .form-group.error select:focus,
 .SobiPro .form-group.error textarea:focus {
     border-color: fade(@error-color, 80%) !important;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
 }
 
 .SobiPro .form-group.error input,
@@ -645,11 +665,11 @@
 }
 .SobiPro .navbar.topmenu {
     background-color: @base-color;
-//    min-height: 60px;
-//    border: none;
     font-size: 15px;
-//    padding-left: 0;
-//    padding-right: 0;
+    border: none;
+    & when (@corners = rounded) {
+        border-radius: 4px;
+    }
 }
 .SobiPro .topmenu .navbar-search {
     margin-top: 15px;
@@ -661,12 +681,6 @@
 }
 .SobiPro .topmenu .navbar-search input {
     width: 115px;
-}
-.SobiPro .topmenu .nav {
-   // margin-right: 5px;
-}
-.SobiPro .topmenu .navbar .nav > li {
-   // list-style: none;
 }
 .SobiPro .navbar .nav > li > a {
     padding-left: 10px;
@@ -702,7 +716,6 @@
     box-shadow: 0 0 0 0;
     display: block;
     line-height: 25px;
-    //padding: 4px;
 }
 .SobiPro .spCatname p {
     margin: 5px 0 0 0;
@@ -722,7 +735,6 @@
 .SobiPro .spCaticon {
     text-align: center;
     margin-top: 15px;
-    //padding-left: 12px;
 }
 .SobiPro .spCaticon a {
     color: @base-color;
@@ -778,12 +790,11 @@
 .SobiPro .spNoImage {
     width: 100px;
     height: 75px;
-    font-size: 500%;
+    font-size: 60px;
     & when (isnumber(@small-image)) {
         width: @small-image;
-        height: @small-image/4*3;
-        @fs: 400%, 500%, 700%, 1000%, 1200%;
-        font-size: extract(@fs, @small-image*2/100);
+        height: calc((@small-image / 4) * 3);
+        font-size: calc((@small-image * 6)/10);
     }
     text-align: center;
     padding: 4px;
@@ -898,7 +909,15 @@
 }
 .SobiPro .spEntryEdit .progress {
     min-width: 100px;
-    width: 50%;
+}
+.SobiPro .spUpload input {
+   // height: 21px;
+}
+.SobiPro .spUpload .span1 {
+    margin-left: 10px;
+}
+.SobiPro .spUpload .alert {
+    margin-top: 5px;
 }
 .SobiPro .spEntryEdit .required-message {
     margin: 25px 0 10px 0;
@@ -911,15 +930,12 @@
     padding-left: 2px;
     font-size: 14px;
 }
-.SobiPro .spClassEditInbox .input-group,
-.SobiPro .spClassEditInbox input {
-    //width: 220px;
-}
-.SobiPro .spClassEditText textarea {
-    //width: 450px;
+
+.SobiPro .input-append input {
+//    width: calc(100% - 42px);
 }
 .SobiPro .spEntryEdit .message-lightbulb {
-    left: 0%;
+    left: 0;
     position: relative;
 }
 .SobiPro .spEntryEdit .message-lightbulb .popover.bottom {
@@ -945,11 +961,14 @@
 
 // URL and Email Fields
 // ----------------------------------------
+.SobiPro .spFieldEmailLabel,
 .SobiPro .spFieldUrlLabel {
     margin-bottom: 5px;
 }
-.SobiPro .spFieldEmail {
-    margin-top: 5px;
+& when (@corners = rounded) {
+    .SobiPro .spFieldUrl .input-group-btn select {
+        border-radius: 4px 0 0 4px;
+    }
 }
 .SobiPro .spFieldUrl select {
     width: 100px;
@@ -968,6 +987,9 @@
     margin: 0 5px 5px 0;
     min-width: 50px;
     min-height: 50px;
+    & when (@corners = rounded) {
+        border-radius: 4px;
+    }
 }
 .SobiPro .spImageField input[type='checkbox'] {
     margin: 1px 5px 5px 0;
@@ -982,9 +1004,7 @@
     margin-left: 10px;
 }
 .SobiPro .spImageUpload .progress-message {
-    margin-top: 15px;
-    margin-left: 10px;
-    clear: left;
+//    clear: left;
 }
 .SobiPro .spImageUpload .alert {
     margin-top: 5px;
@@ -993,12 +1013,12 @@
 
 // Sigsiu Tree
 // ----------------------------------------
-
 .SigsiuTree .selected {
     margin-top: 10px;
 }
 .SigsiuTree .selected select {
     min-height: 100px;
+    width: 100%;
 }
 .SigsiuTree .buttons {
     text-align: right;
@@ -1043,16 +1063,26 @@
     margin-right: 5px;
     float: left;
 }
+.SobiPro .spSelectRangeFrom .input-group,
+.SobiPro .spSelectRangeTo .input-group {
+    float: left;
+    width: calc(100% / 2 - 5px);
+}
+.SobiPro .spSelectRangeFrom .input-group {
+    margin: 0 5px 10px 0;
+}
+.SobiPro .spSelectRangeTo .input-group {
+    margin: 0 0 10px 5px;
+}
+
 .SobiPro .spEntryEdit .spFieldCheckbox input {
     margin-top: -3px;
 }
-
 .SobiPro .control-label input[type="checkbox"] {
     margin: 0;
 }
 
-
-    // Edit entry payment control
+// Edit entry payment control
 // ----------------------------------------
 .SobiPro .control-label div.paybox span {
     border: 1px solid darken(@alert-color, 10%);;
@@ -1071,18 +1101,12 @@
 
 // Search
 // ----------------------------------------
-.SobiPro .SPSearchInputRangeFrom,
-.SobiPro .SPSearchInputRangeTo,
-.SobiPro .SPSearchSelectRangeFrom,
-.SobiPro .SPSearchSelectRangeTo {
-    //padding-bottom: 5px;
-}
-.SobiPro .SPSearchSelectRangeFrom span,
-.SobiPro .SPSearchSelectRangeTo span {
-    display: inline-block;
+.SobiPro .spSelectRangeFrom span,
+.SobiPro .spSelectRangeTo span {
+    //display: inline-block;
     min-width: 34px;
 }
-.SobiPro .SPSearch .highlight {
+.SPSearch .highlight {
     background-color: yellow;
 }
 
@@ -1122,10 +1146,6 @@
     text-decoration: none;
     background-color: #fff;
 }
-.SobiPro .input-append.date.spDatePicker {
-    float: left;
-    margin: 0 10px 10px 0
-}
 
 // Payment popup
 // ----------------------------------------
@@ -1154,6 +1174,8 @@
     cursor: progress;
 }
 
+
+
 // Common fields styling via variable CSS classes
 // (don't work if you change the field CSS classes in the Fields Manager)
 // ----------------------------------------
@@ -1168,6 +1190,9 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin: 5px;
+    & when (@corners = rounded) {
+        border-radius: 4px;
+    }
 }
 .SobiPro .spEntryContainer .spClassViewImage img {
     width: @small-image;
@@ -1175,19 +1200,19 @@
 
 // SP-GeoMap Field
 // -----------------------------------------------
-.SobiPro div.spClassViewMap {
-    padding-top: 10px;
-    padding-bottom: 10px;
+& when (@corners = rounded) {
+    .SobiPro .ctrl-geomap {
+        border-radius: 4px;
+    }
 }
-.SobiPro .mapSearch .btn {
-    height: 34px;   //Buttons mit Icon sind ein Pixel zu hoch
+.SobiPro .mapSearch input {
+    height: 35px;
 }
 
 
 // Aggregation Field
 // -----------------------------------------------
 .SobiPro .bootstrap-tagsinput {
-    width: 96%;
     & when (@inverse = inverse) {
         background-color: @hover-color;
     }
@@ -1202,22 +1227,6 @@
     .SobiPro div.tagsinput input {
         background-color: @base-color;
     }
-}
-.SobiPro div.spClassViewAggregation {
-    padding-top: 15px;
-    font-size: 90%;
-}
-.SobiPro div.spClassViewAggregation strong {
-    font-weight: 400;
-}
-
-// Contact Form
-// -----------------------------------------------
-.SobiPro div.spClassViewContact {
-    margin: 10px 0 10px 0;
-}
-.SobiPro .contactform .contactmessage {
-    width: 100%;
 }
 
 // Review and Rating App
@@ -1234,54 +1243,6 @@
     color: @base-color;
 }
 
-// Download Field
-// -----------------------------------------------
-.SobiPro .spFieldDNPermission,
-.SobiPro .spFieldDNLicense {
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-.SobiPro .spFieldDNLicense label {
-    padding-right: 5px;
-    color: #666666;
-    margin-top: 5px;
-    float: left;
-}
-.SobiPro .spFieldDNPermission > label {
-    color: #666666;
-    margin-top: 20px;
-}
-.SobiPro .spFieldDNPermission .spFieldCheckbox label {
-    margin-right: 10px;
-}
-.SobiPro .spEditDownloadPreview {
-    margin-top: 6px;
-}
-.SobiPro .spEditDownloadPreview p {
-    color: #666666;
-    font-size: 14px;
-}
-.SobiPro .spEditDownloadPreview div {
-    float: left;
-}
-.SobiPro .spEditDownloadPreview input[type='checkbox'] {
-    margin: 0px 5px 6px 0px;
-}
-.SobiPro .spEditDownloadPreview label,
-.SobiPro .spdFileUpload input {
-    height: 21px;
-}
-.SobiPro .spdFileUpload .span1 {
-    margin-left: 10px;
-}
-.SobiPro .spdFileUpload .progress-message {
-    margin-top: 10px;
-    margin-left: 20px;
-    clear: left;
-}
-.SobiPro .spdFileUpload .alert {
-    margin-top: 5px;
-}
 
 // Calendar Field
 // -----------------------------------------------
@@ -1303,9 +1264,7 @@
     background-color: @alert-color;
     color: @text-color;
 }
-.SobiPro .spClassCalendarRepeat select {
-    width: 150px;
-}
+
 
 // Collection App
 // -----------------------------------------------
@@ -1356,7 +1315,7 @@
 .SobiPro .collection-entry-container.spClassViewImage img {
    float: none!important;
    margin-left: 0;
-   width: 95%;
+   width: calc(100% - 8px);
 }
 .SobiPro .collection-entry-container.spClassViewText {
     text-align: justify;
@@ -1386,21 +1345,13 @@
     .mediumBackground;
 }
 .SobiPro .spProfileSection {
-    margin-top: 30px;
-    font-size: 19px;
-    font-weight: 300;
     color: @base-color;
-    padding-top: 10px;
-}
-.SobiPro .spProfileEntries {
-    margin-top: 0;
-    padding-bottom: 10px;
-}
-.SobiPro .spProfileEntries .page-header {
-    font-size: 17px;
-    padding-bottom: 5px;
 }
 
+// Firefox-specific table hack
+@-moz-document url-prefix() {
+    fieldset { display: table-cell; }
+}
 
 // Custom Media Queries
 // ==============================================
@@ -1420,8 +1371,8 @@
 //@media (min-width: 768px) and (max-width: 979px) {
 @media (min-width: 769px) and (max-width: 980px) {
     .SobiPro .spFieldUrl select {
-        margin-bottom: 3px;
-        width: 80px !important;
+        //margin-bottom: 3px;
+        //width: 80px !important;
     }
 }
 
@@ -1440,21 +1391,11 @@
         padding-right: 0;
     }
 
-    // Edit entry form
-    .SobiPro .spImageUpload input {
-        //width: 70px !important;
-        height: 35px;
-    }
-    .SobiPro .spFieldUrl select {
-        margin-bottom: 3px;
-//        width: 80px !important;
-        float: none;
-    }
-    .SobiPro .bootstrap-tagsinput input {
-        width: 70% !important;
-    }
     .SobiPro .spCaticon i {
         font-size: 2.8em;
+    }
+    .SobiPro .control-label div.paybox {
+        margin-bottom: 8px;
     }
 }
 
@@ -1470,45 +1411,26 @@
     .SobiPro .spEditImagePreview {
         float: none;
     }
-    .SobiPro .spImageUpload input {
+    .SobiPro .spUpload input {
         width: 100%;
         height: 35px;
     }
-    .SobiPro .btn[name="spsearchphrase"] {
-        padding: 2px 10px;
-        font-size: 12px;
-    }
-    .SobiPro .control-label div.paybox {
-        margin-bottom: 12px;
+    .SobiPro .spUpload button.btn.select {
+        width: calc(100% - 44px);
     }
     .SobiPro .controls {
         margin-left: 0;
     }
-    .SobiPro input[name="sp_search_for"],
-    .SobiPro input[type="text"],
-    .SobiPro input[type="password"],
-    .SobiPro textarea,
-    .SobiPro select {
-        width: 100%;
-    }
-    .SobiPro .bootstrap-tagsinput {
-        width: 95%;
-    }
-    .SobiPro .bootstrap-tagsinput input {
-        width: 90%;
-    }
-    .SobiPro input[name="sp_search_for"] {
-        margin-bottom: 10px;
-    }
     .SobiPro .spCaticon i {
         font-size: 3em;
     }
-    .SobiPro .input-append.date.spDatePicker {
-        float: none;
-        width: 90%;
-    }
     .SobiPro .spEntryEdit .message-lightbulb {
         left: 49%;
+    }
+    .SobiPro .input-medium,
+    .SobiPro .sp-search-phrases .btn-group,
+    .SobiPro .spUpload .btn-group {
+        width: 100%;
     }
 }
 
@@ -1523,7 +1445,7 @@
     }
     .SobiPro div.spClassViewImage img,
     .SobiPro .spEntryContainer .spClassViewImage img {
-        width: 97%;
+        width: calc(100% - 8px);
         margin: 0 0 10px 0;
     }
     .SobiPro .spNoImage {
@@ -1535,12 +1457,22 @@
     .SobiPro .spClassViewImage img {
         float:none!important;
     }
-    .SobiPro .ctrl-locate-me.btn,
+    .SobiPro .input-large,
+    .SobiPro .input-medium,
     .SobiPro .sp-search-controls .btn {
         width: 100%;
     }
+    .SobiPro .spSelectRangeFrom .input-group,
+    .SobiPro .spSelectRangeTo .input-group {
+        margin: 0 10px 10px 0;
+        width: 100%;
+    }
+    .SobiPro .sp-search-phrases .btn {
+        //PhpStorm meldet hier fälschlicherweise einen Fehler
+        width: calc(100% / 3);
+        font-size: 13px;
+    }
+    .SobiPro input[name="sp_search_for"] {
+        margin-bottom: 10px;
+    }
 }
-.test {
-    width: 60% + 10px;
-}
-

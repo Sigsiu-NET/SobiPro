@@ -61,7 +61,7 @@
                             <label class="col-sm-3 control-label" for="SPSearchBox">
                                 <xsl:value-of select="/search/fields/phrase/label" />
                             </label>
-                            <div class="col-sm-9">
+                            <div class="col-sm-9 sp-search-phrases">
                                 <div class="btn-group" data-toggle="buttons">
                                     <xsl:for-each select="/search/fields/phrase/data/*">
                                         <label class="btn btn-default">

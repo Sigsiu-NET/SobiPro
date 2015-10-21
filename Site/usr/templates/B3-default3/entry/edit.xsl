@@ -121,8 +121,8 @@
                                             </xsl:choose>
                                         </xsl:otherwise>
                                     </xsl:choose>
-                                    <div id="{$fieldId}-message" class="hide message-lightbulb"></div>
                                 </div>
+                                <div id="{$fieldId}-message" class="hide message-lightbulb"></div>
 
                                 <xsl:if test="string-length( description ) and //config/help-position/@value = 'below'">
                                     <div class="help-block">

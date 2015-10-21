@@ -46,9 +46,11 @@
                                         </span>
                                     </div>
 								</div>
-								<div class="alert spAlert controls">
-									<xsl:value-of select="fee_msg" /><xsl:text> </xsl:text>
-									<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )" />
+								<div class="controls">
+									<div class="alert spAlert span10">
+										<xsl:value-of select="fee_msg" /><xsl:text> </xsl:text>
+										<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )" />
+									</div>
 								</div>
 							</div>
 						</xsl:if>
@@ -70,47 +72,50 @@
                                     </xsl:if>
                                 </label>
 							</xsl:if>
+
+							<xsl:variable name="colwidth">
+								<xsl:choose>
+									<xsl:when test="string-length( @width )">
+										<xsl:value-of select="@width" />
+									</xsl:when>
+									<xsl:otherwise>10</xsl:otherwise>
+								</xsl:choose>
+							</xsl:variable>
+
 							<div class="controls" id="{$fieldId}-input-container">
-                                <xsl:if test="string-length( description ) and //config/help-position/@value = 'above'">
-                                    <div class="help-block">
-                                        <xsl:value-of select="description" />
-                                    </div>
-                                </xsl:if>
-                                <xsl:variable name="colwidth">
-                                    <xsl:choose>
-                                        <xsl:when test="string-length( @width )">
-                                            <xsl:value-of select="@width" />
-                                        </xsl:when>
-                                        <xsl:otherwise>10</xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:variable>
-                                <div class="span{$colwidth}">
+								<div class="span{$colwidth}">
 									<xsl:if test="string-length( @suffix )">
-										<xsl:attribute name="class">input-append</xsl:attribute>
+										<xsl:attribute name="class">span<xsl:value-of select="$colwidth" /> input-append</xsl:attribute>
 									</xsl:if>
-									<xsl:choose>
-										<xsl:when test="data/@escaped">
-											<xsl:value-of select="data" disable-output-escaping="yes" />
-										</xsl:when>
-										<xsl:otherwise>
-											<xsl:copy-of select="data/*" />
-										</xsl:otherwise>
-									</xsl:choose>
-									<xsl:choose>
-										<xsl:when test="string-length( @suffix )">
-											<span class="add-on">
-												<xsl:value-of select="@suffix" />
-											</span>
-										</xsl:when>
-									</xsl:choose>
-                                    <div id="{$fieldId}-message" class="hide message-lightbulb"></div>
+									<xsl:if test="string-length( description ) and //config/help-position/@value = 'above'">
+										<div class="help-block">
+											<xsl:value-of select="description" />
+										</div>
+									</xsl:if>
+									<div>
+										<xsl:choose>
+											<xsl:when test="data/@escaped">
+												<xsl:value-of select="data" disable-output-escaping="yes" />
+											</xsl:when>
+											<xsl:otherwise>
+												<xsl:copy-of select="data/*" />
+											</xsl:otherwise>
+										</xsl:choose>
+										<xsl:choose>
+											<xsl:when test="string-length( @suffix )">
+												<span class="add-on">
+													<xsl:value-of select="@suffix" />
+												</span>
+											</xsl:when>
+										</xsl:choose>
+									</div>
+									<div id="{$fieldId}-message" class="hide message-lightbulb"></div>
+									<xsl:if test="string-length( description ) and //config/help-position/@value = 'below'">
+										<div class="help-block">
+											<xsl:value-of select="description" />
+										</div>
+									</xsl:if>
 								</div>
-								<div class="clearfix" />
-                                <xsl:if test="string-length( description ) and //config/help-position/@value = 'below'">
-                                    <div class="help-block">
-                                        <xsl:value-of select="description" />
-                                    </div>
-                                </xsl:if>
                             </div>
 						</div>
 					</xsl:if>

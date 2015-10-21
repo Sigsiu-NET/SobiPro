@@ -33,6 +33,7 @@
 
             <xsl:apply-templates select="alphaMenu" />
 
+            <h1><xsl:value-of select="name" /></h1>
 			<xsl:call-template name="entriesLoop" />
 			<xsl:apply-templates select="navigation" />
 		</div>

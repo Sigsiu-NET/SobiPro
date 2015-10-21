@@ -39,7 +39,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	protected $maxLength = 150;
 	/** @var int */
 	protected $width = 350;
-	/** @var string */
+	/** @var int */
 	protected $bsWidth = 4;
 	/** @var string */
 	protected $cssClass = 'spClassUrl';

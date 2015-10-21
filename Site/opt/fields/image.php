@@ -182,9 +182,6 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 		if ( $this->crop ) {
 			$modalclass = 'modal hide';
-			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
-				$modalclass = 'modal fade';
-			}
 
 			SPFactory::header()
 					->addJsFile( 'cropper' )

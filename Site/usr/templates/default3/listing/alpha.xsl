@@ -24,6 +24,7 @@
 	<xsl:include href="../common/entries.xsl" />
 	<xsl:include href="../common/navigation.xsl" />
 	<xsl:include href="../common/messages.xsl" />
+
 	<xsl:template match="/listing">
 		<div class="spListing">
             <xsl:call-template name="topMenu">
@@ -33,6 +34,7 @@
 
 			<xsl:apply-templates select="alphaMenu" />
 
+            <h1><xsl:value-of select="name" /></h1>
 			<xsl:call-template name="entriesLoop" />
 			<xsl:apply-templates select="navigation" />
 		</div>
