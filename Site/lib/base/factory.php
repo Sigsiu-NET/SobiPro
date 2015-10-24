@@ -190,7 +190,6 @@ abstract class SPFactory
 	/**
 	 * @param $class
 	 * @throws SPException
-	 * @internal param string $classPath - class path
 	 * @return stdClass
 	 */
 	public static function & Instance( $class )

@@ -228,7 +228,6 @@ final class SPHeader
 	 * @param string $params
 	 * @param bool $force
 	 * @param string $ext
-	 * @internal param string $file
 	 * @return SPHeader
 	 */
 	public function & addJsFile( $script, $adm = false, $params = null, $force = false, $ext = 'js' )
