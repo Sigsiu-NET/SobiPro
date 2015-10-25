@@ -332,6 +332,7 @@
 			<field name="method" default="xhr" />
 			<field name="format" default="raw" />
 			<field name="pid" value="pid" />
-		</hidden>
+            <field condition="apps.review_rating" name="settings[config][less][review][bsversion]" default="bs2" />
+        </hidden>
 	</config>
 </definition>

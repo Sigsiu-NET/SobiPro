@@ -72,7 +72,7 @@ Legend:
     (!) New repository server and certificate
     (!) preg_replace /e changed to be PHP7 compatible
     (!) Throwing ErrorException on fatal errors
-    (!) Intelligence test refined. Was to hard to get it.
+    (!) Intelligence test refined. Was too hard to get it.
 
     (-) Category icons removed
 

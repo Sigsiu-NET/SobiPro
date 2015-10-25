@@ -29,7 +29,7 @@
     <!--<xsl:include href="../common/profile.xsl" />-->
 
     <!-- Uncomment only if Review & Ratings App is installed -->
-    <!--<xsl:include href="../common/review.xsl" />-->
+    <!--<xsl:include href="../review-rating/review.xsl" />-->
 
     <!-- Uncomment only if Collection App is installed -->
     <!--<xsl:include href="../common/collection.xsl" />-->

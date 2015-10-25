@@ -100,13 +100,6 @@
                                         </values>
                                     </field>
                                 </fieldset>
-                                <fieldset>
-                                    <field type="select" label="BS" name="settings[config][general][bs]" selected="settings.config.general.bs" class="input-medium">
-                                        <values>
-                                            <option value="bs3" label="BS3" />
-                                        </values>
-                                    </field>
-                                </fieldset>
                             </div>
                         </div>
                     </tab>
@@ -339,6 +332,8 @@
 			<field name="method" default="xhr" />
 			<field name="format" default="raw" />
 			<field name="pid" value="pid" />
+            <field name="settings[config][general][bs]" default="bs3" />
+            <field condition="apps.review_rating" name="settings[config][less][review][bsversion]" default="bs3" />
 		</hidden>
 	</config>
 </definition>
