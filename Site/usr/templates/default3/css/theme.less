@@ -214,7 +214,7 @@
     margin-left: 20px;
 }
 .SobiPro .modal.fade.in {
-    top: 10%;
+    //top: 10%;
 }
 
 .SobiPro .ctrl-spinner {
@@ -624,9 +624,7 @@
 }
 
 // Looks as a normal text (removal of the message design)
-.SobiPro .alert-normal,
-.SobiPro.alert-error.review-box,
-.SobiPro.alert-success.review-box {
+.SobiPro .alert-normal {
     padding: 10px 0 10px 0;
     font-size: 15px;
     color: @font-color;
@@ -649,7 +647,7 @@
 .SobiPro .control-group.error select:focus,
 .SobiPro .control-group.error textarea:focus {
     border-color: fade(@error-color, 80%) !important;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
 }
 
 .SobiPro .control-group.error input,
@@ -1287,6 +1285,7 @@
     color: @base-color;
 }
 
+
 // Calendar Field
 // -----------------------------------------------
 .SobiPro .spListing h3 {
@@ -1308,7 +1307,6 @@
     color: @text-color;
 }
 
-
 .SobiPro .spClassCalendarRepeat select {
     width: 150px;
 }
@@ -1316,38 +1314,16 @@
 
 // Collection App
 // -----------------------------------------------
-.SobiPro .btnCollection {
-    margin-bottom: 15px;
-}
 & when (@inverse = inverse) {
     .SobiPro .spEntryContainer div.btnCollection .btn,
     .SobiPro .spDetailEntry div.btnCollection .btn {
         color: #333;
     }
 }
-.SobiPro .btnCollection .btn {
-    height: 20px;
-}
-.SobiPro .ctrl-collection-remove-item {
-    margin-top: 5px;
-}
-.SobiPro .ctrl-collection-remove-item i {
-    font-size: 14px;
-}
-.SobiPro .btn.ctrl-collection-visibility i,
-.SobiPro .btn.ctrl-collection-contact i,
-.SobiPro .btn.ctrl-collection-share i,
-.SobiPro .btn.ctrl-collection-delete i,
-.SobiPro a.ctrl-collection i {
-    padding-right: 5px;
-}
 .SobiPro .spCollection {
-    border: 1px solid;
-    padding: 10px;
     .lightBackground;
 }
 .SobiPro .spCollection .nav > li > a {
-    border: 1px solid;
     border-color: fade(#ffffff, 0%);
 }
 .SobiPro .spCollection .nav > li > a:hover,
@@ -1356,33 +1332,7 @@
     background-color: @hover-color;
     color: @active-color;
 }
-.SobiPro .collection-entry-container input[type="checkbox"] {
-    margin-top: 0;
-    margin-bottom: 3px;
-}
-.SobiPro .collection-entry-container.spClassViewImage img {
-   float: none!important;
-   margin-left: 0;
-   width: calc(100% - 8px);
-}
-.SobiPro .collection-entry-container.spClassViewText {
-    text-align: justify;
-}
-.SobiPro .collection-entry-container .page-header {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    font-size: 17px;
-}
-.SobiPro th.collection-entry-container {
-    padding-left: 0;
-}
-.SobiPro .collection-entry-container td {
-    min-width: 100px;
-}
-.SobiPro .collection-entry-container td.remove {
-    min-width: 20px;
-}
+
 
 // Profile Field
 // -----------------------------------------------

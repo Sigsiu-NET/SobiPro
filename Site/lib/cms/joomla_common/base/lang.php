@@ -192,7 +192,6 @@ class SPJoomlaLang
 	/**
 	 * Error messages
 	 *
-	 * @internal param string $msg
 	 * @return string
 	 */
 	public static function e()

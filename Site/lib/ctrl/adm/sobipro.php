@@ -303,19 +303,19 @@ final class SobiProAdmCtrl
 						}
 						if ( !( count( $this->_ctrl ) ) ) {
 							Sobi::Error( 'CoreCtrl', SPLang::e( 'IDENTIFIER_EXPECTED' ), SPC::WARNING, 0, __LINE__, __FILE__ );
-							Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ), SPC::ERROR_MSG );
+							Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ) . ' ' . SPLang::e('IDENTIFIER_EXPECTED_DESC'), SPC::ERROR_MSG );
 						}
 					}
 					else {
 						Sobi::Error( 'CoreCtrl', SPLang::e( 'IDENTIFIER_EXPECTED' ), SPC::WARNING, 0, __LINE__, __FILE__ );
-						Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ), SPC::ERROR_MSG );
+						Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ) . ' ' . SPLang::e('IDENTIFIER_EXPECTED_DESC'), SPC::ERROR_MSG );
 						$r = false;
 						//break;
 					}
 				}
 				else {
 					Sobi::Error( 'CoreCtrl', SPLang::e( 'IDENTIFIER_EXPECTED' ), SPC::WARNING, 0, __LINE__, __FILE__ );
-					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ), SPC::ERROR_MSG );
+					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ) . ' ' . SPLang::e('IDENTIFIER_EXPECTED_DESC'), SPC::ERROR_MSG );
 					$r = false;
 					//break;
 				}

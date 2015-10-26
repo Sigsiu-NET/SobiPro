@@ -53,8 +53,7 @@ abstract class Sobi
 	 * @param int $code - error code
 	 * @param int $line - file line
 	 * @param string $file - file name
-	 * @param null $sMsg
-	 * @internal param string $smsg - additional message
+	 * @param null $sMsg - additional message
 	 * @return null
 	 */
 	public static function Error( $section, $msg, $type = SPC::NOTICE, $code = 0, $line = null, $file = null, $sMsg = null )

@@ -43,7 +43,6 @@ abstract class SPLoader
 	 * @param string $type
 	 * @param bool $raiseErr
 	 * @throws SPException
-	 * @internal param bool $redirect
 	 * @return string
 	 */
 	public static function loadClass( $name, $adm = false, $type = null, $raiseErr = true )
@@ -307,7 +306,6 @@ abstract class SPLoader
 	 * @param bool $checkExist
 	 * @param string $ext
 	 * @param bool $count
-	 * @internal param bool $existCheck
 	 * @return string
 	 */
 	public static function path( $path, $root = 'front', $checkExist = true, $ext = 'php', $count = true )
