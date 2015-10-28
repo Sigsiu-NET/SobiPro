@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -893,8 +891,11 @@ final class SPCache
 		if ( $this->_apc ) {
 			$info = apc_cache_info( 'user' );
 			foreach ( $info[ 'cache_list' ] as $obj ) {
-				if ( strstr( $obj[ 'key' ], 'com_sobipro' ) ) {
+				if ( isset( $obj[ 'key' ] ) && strstr( $obj[ 'key' ], 'com_sobipro' ) ) {
 					apc_delete( $obj[ 'key' ] );
+				}
+				elseif ( isset( $obj[ 'info' ] ) && strstr( $obj[ 'info' ], 'com_sobipro' ) ) {
+					apc_delete( $obj[ 'info' ] );
 				}
 			}
 		}
