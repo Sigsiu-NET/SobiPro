@@ -49,12 +49,11 @@
 
 	<media folder="Site/media" destination="sobipro">
 		<folder>css</folder>
+		<folder>less</folder>
 		<folder>images</folder>
 		<folder>adm</folder>
 		<folder>browser</folder>
 		<folder>tree</folder>
-		<folder>styles</folder>
-		<folder>progress</folder>
 		<folder>icons</folder>
 		<filename>donate.png</filename>
 		<filename>jointheclub.png</filename>
