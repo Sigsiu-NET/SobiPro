@@ -471,7 +471,8 @@ abstract class Sobi
 		static $loaded = false;
 		if ( !( $loaded ) ) {
 			if ( !( defined( 'SOBI_CMS' ) ) ) {
-				define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
+				//define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
+				define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : 'joomla16' );
 			}
 			defined( 'SOBIPRO' ) || define( 'SOBIPRO', true );
 			defined( 'SOBI_TASK' ) || define( 'SOBI_TASK', 'task' );

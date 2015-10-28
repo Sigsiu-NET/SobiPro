@@ -76,6 +76,7 @@ Legend:
     (!) Intelligence test refined. Was too hard to get it.
 
     (-) Category icons removed
+    (-) Joomla! 1.5 code completely removed
     (-) Joomla! 2.5 support dropped
 
     (#) Fixed issues in SigsiuTree and Internet Explorer (Issue #1469)

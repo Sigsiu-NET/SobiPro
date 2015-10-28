@@ -1,42 +1,37 @@
 <?php
 /**
- * @version: $Id$
  * @package: SobiPro Component for Joomla!
 
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
- * Url: http://www.Sigsiu.NET
+ * Url: https://www.Sigsiu.NET
 
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+ * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
  */
 
 defined( '_JEXEC' ) || exit( 'Restricted access' );
 define( 'SOBI_TESTS', false );
 defined( 'DS' ) || define( 'DS', DIRECTORY_SEPARATOR );
-define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15'  ) );
+//define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15'  ) );
+define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : 'joomla16' );
 define( 'SOBIPRO', true );
 define( 'SOBIPRO_ADM', true );
 define( 'SOBI_TASK', 'task' );
-if( SOBI_CMS == 'joomla15') {
-	define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', JFactory::getConfig()->getValue( 'config.language' ) ) );
-}
-else {
+//if( SOBI_CMS == 'joomla15') {
+//	define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', JFactory::getConfig()->getValue( 'config.language' ) ) );
+//}
+//else {
 	define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', 'en-GB' ) );
 //	define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', JFactory::getConfig()->get( 'language', JFactory::getConfig()->get( 'config.language' ) ) ) );
-}
+//}
 define( 'SOBI_ACL', 'adm' );
 define( 'SOBI_ROOT', JPATH_ROOT );
 define( 'SOBI_MEDIA', implode( DS, array( JPATH_ROOT, 'media', 'sobipro' ) ) );
