@@ -208,7 +208,7 @@ class com_sobiproInstallerScript
 //
 //			}
 //		}
-		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.1.9.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
+		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.2.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px;"></iframe>';
 	}
 
@@ -239,7 +239,7 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) ) ) {
 			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
 		}
-		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.1.9.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
+		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.2.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$db = JFactory::getDBO();
 		$db->setQuery( 'SHOW COLUMNS FROM #__sobipro_field_data' );
 		$cols = $db->loadAssocList( 'Field' );
