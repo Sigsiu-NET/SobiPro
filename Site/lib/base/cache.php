@@ -87,6 +87,9 @@ final class SPCache
 		$this->_section = $sid;
 		$this->_enabled = Sobi::Cfg( 'cache.l3_enabled', true );
 		$this->requestStore = $_REQUEST;
+		if ( Sobi::Cfg( 'cache.apc_enabled', true ) ) {
+			$this->_apc = extension_loaded( 'apc' ) && function_exists( 'apc_fetch' );
+		}
 		$this->initialise();
 	}
 
@@ -140,9 +143,6 @@ final class SPCache
 			}
 			if ( $init && $this->_enabled ) {
 				$this->init();
-				if ( Sobi::Cfg( 'cache.apc_enabled', true ) ) {
-					$this->_apc = extension_loaded( 'apc' );
-				}
 			}
 		}
 	}
@@ -872,11 +872,11 @@ final class SPCache
 	public function & setJoomlaCaching( $enabled )
 	{
 		//if ( SOBI_CMS != 'joomla15' ) {
-			JFactory::getCache()->cache->setCaching( $enabled );
-			if ( !( $enabled ) && SOBI_CMS == 'joomla3' ) {
-				JEventDispatcher::getInstance()
-						->detach( 'PlgSystemCache' );
-			}
+		JFactory::getCache()->cache->setCaching( $enabled );
+		if ( !( $enabled ) && SOBI_CMS == 'joomla3' ) {
+			JEventDispatcher::getInstance()
+					->detach( 'PlgSystemCache' );
+		}
 		//}
 		return $this;
 	}
@@ -884,7 +884,7 @@ final class SPCache
 	protected function cleanJCache()
 	{
 		//if ( SOBI_CMS != 'joomla15' ) {
-			JFactory::getCache()->cache->clean();
+		JFactory::getCache()->cache->clean();
 		//}
 	}
 
