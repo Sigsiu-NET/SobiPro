@@ -26,7 +26,7 @@ Legend:
  (!) - Change
 
 -------------------
-1.2 ()
+1.2 (28 October 2015)
 -------------------
 
     (+) Possibility to define a separator sign for meta descriptions from fields
@@ -108,7 +108,7 @@ Legend:
     (#) rGetChilds method limited to entries only
     (#) Static call into JSite::getMenu() has been removed
     (#) Leveraging Joomla! files' protection (Issue #1506)
-    (#) New typeahead library for Bootstrap 3 (Issue #xxx)
+    (#) New typeahead library for Bootstrap 3 (Issue #1500)
     (#) White screen in SobiPro panel if news couldn't be fetched
 
 
