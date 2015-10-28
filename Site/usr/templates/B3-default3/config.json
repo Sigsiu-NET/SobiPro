@@ -1,1 +1,39 @@
-{"less":{"theme":{"colour-set":"sobipro","corners":"angular","small-image":"100px"},"review":{"bsversion":"bs3","stars":"red-grey"}},"general":{"bs":"bs3","entries_limit":"6","entries_in_line":"2","entries_ordering":"RAND()","noimage":"1","countentries":"0","entries_recursive":"1"},"section-view":{"entries_limit":"2","entries_in_line":"2","entries_recursive":"0"},"category-view":{"entries_limit":"6","entries_in_line":"2","entries_ordering":"RAND()","entries_recursive":"1"},"entry-details":{"entries_in_line":"1"}}
+{
+  "less": {
+    "theme": {
+      "colour-set": "sobipro",
+      "corners": "angular",
+      "small-image": "100px"
+    },
+    "review": {
+      "stars": "red-grey",
+      "bsversion": "bs3"
+    }
+  },
+  "section-view": {
+    "entries_limit": "2",
+    "entries_in_line": "2",
+    "entries_recursive": "0"
+  },
+  "category-view": {
+    "entries_limit": "6",
+    "entries_in_line": "2",
+    "entries_ordering": "RAND()",
+    "entries_recursive": "1"
+  },
+  "general": {
+    "entries_limit": "6",
+    "entries_in_line": "2",
+    "entries_ordering": "RAND()",
+    "bs": "bs3",
+    "noimage": "1",
+    "countentries": "0",
+    "entries_recursive": "1"
+  },
+  "collection": {
+    "entries_limit": "4"
+  },
+  "entry-details": {
+    "entries_in_line": "1"
+  }
+}

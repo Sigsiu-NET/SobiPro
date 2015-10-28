@@ -393,29 +393,45 @@ abstract class SPHtml_Input
 		$$name = self::cleanOpt( $name );
 		$value = self::cleanOpt( $value );
 		$f = "<input type=\"radio\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\"{$checked}{$params}/>";
+
 		$l = $label ? "\n<label for=\"{$id}\">{$label}</label>" : null;
+		$lstart = $label ? "\n<label for=\"{$id}\">" : null;
+		$lend = $label ? "</label>" : null;
+		$lcontent = $label ? $label : null;
+
 		if ( $image ) {
 			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
 		}
 		if ( is_array( $order ) ) {
-			$field = null;
-			foreach ( $order as $position ) {
-				switch ( $position ) {
-					case 'field':
-						$field .= $f;
-						break;
-					case 'label':
-						$field .= $l;
-						break;
-					case 'image':
-						$field .= $image;
-						break;
-				}
+			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+				//im Moment weiss ich nichts besseres hierfür
+				$f = ($order == 'left') ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 			}
-			$f = $field;
+			else {
+				$field = null;
+				foreach ($order as $position) {
+					switch ($position) {
+						case 'field':
+							$field .= $f;
+							break;
+						case 'label':
+							$field .= $l;
+							break;
+						case 'image':
+							$field .= $image;
+							break;
+					}
+				}
+				$f = $field;
+			}
 		}
 		else {
-			$f = ( $order == 'left' ) ? $l . $f : $f . $l;
+			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+				$f = ($order == 'left') ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
+			}
+			else {
+				$f = ($order == 'left') ? $l . $f : $f . $l;
+			}
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
 //		return "\n<!-- RadioButton '{$name}' Output -->{$f}\n<!-- RadioButton '{$name}' End -->\n";
@@ -460,7 +476,7 @@ abstract class SPHtml_Input
 					$image = null;
 				}
 				if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
-					$container = '<div class="checkbox">';
+					$container = '<div class="checkbox-inline ' . $order . '">';
 					$containerend = '</div>';
 				}
 				else {
@@ -568,6 +584,16 @@ abstract class SPHtml_Input
 	public static function _radioList( $name, $values, $id, $checked = null, $params = null, $field = 'left', $asArray = false )
 	{
 		self::checkArray( $values );
+
+		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			$container = '<div class="radio-inline ' . $field . '">';
+			$containerend = '</div>';
+		}
+		else {
+			$container = '<span>';
+			$containerend = '</span>';
+		}
+
 		$list = array();
 		if ( count( $values ) ) {
 			foreach ( $values as $value => $label ) {
@@ -577,7 +603,7 @@ abstract class SPHtml_Input
 				else {
 					$Id = $id . '_' . $value;
 				}
-				$list[ ] = '<span>' . self::radio( $name, $value, $label, $Id, $checked, $params, $field ) . '</span>';
+				$list[ ] = $container . self::radio( $name, $value, $label, $Id, $checked, $params, $field ) . $containerend;
 			}
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$list ) );

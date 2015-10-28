@@ -39,6 +39,7 @@ Legend:
     (+) Possibility to add condition attributes into toolbar's elements in administrator area
     (+) LESS compiler for SobiPro templates
     (+) New default template (default3) with different colour themes
+    (+) New default template for Bootstrap 3 (B3-default3) with different colour themes
     (+) Different default class selectors for fields
     (+) Nofollow attribute for url field
     (+) Possibility to switch the field label off in entry form
@@ -75,6 +76,7 @@ Legend:
     (!) Intelligence test refined. Was too hard to get it.
 
     (-) Category icons removed
+    (-) Joomla! 2.5 support dropped
 
     (#) Fixed issues in SigsiuTree and Internet Explorer (Issue #1469)
     (#) Passing comma separated values to the SPHtml_Input::select (Issue #1481)

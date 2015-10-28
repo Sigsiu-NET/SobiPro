@@ -21,20 +21,24 @@
 	<xsl:template match="navigation" name="navigation">
 		<xsl:if test="count( sites/* ) &gt; 0">
 			<div class="clearfix" />
-			<div class="pagination pagination-centered hidden-phone">
+			<nav class="hidden-xs text-center">
                 <xsl:call-template name="showpagination">
+                    <xsl:with-param name="psize"></xsl:with-param>
                 </xsl:call-template>
-			</div>
-            <div class="pagination pagination-midi pagination-centered visible-phone">
+			</nav>
+			<nav class="hidden-sm hidden-md hidden-lg text-center">
                 <xsl:call-template name="showpagination">
+                    <xsl:with-param name="psize">pagination-xs</xsl:with-param>
                 </xsl:call-template>
-            </div>
+            </nav>
 			<div class="clearfix" />
 		</xsl:if>
 	</xsl:template>
 
+
     <xsl:template name="showpagination">
-        <ul>
+        <xsl:param name="psize" />
+        <ul class="pagination {$psize}">
             <xsl:for-each select="sites/site">
                 <xsl:variable name="limit">
                     <xsl:choose>

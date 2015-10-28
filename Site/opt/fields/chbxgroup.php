@@ -54,7 +54,8 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 			return false;
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
-		$params = array( 'class' => $class . ' checkbox' );
+		$params = array( 'class' => $class . ' checkbox-inline ' . $this->labelSite );
+
 		$values = array();
 		if ( count( $this->options ) ) {
 			foreach ( $this->options as $option ) {

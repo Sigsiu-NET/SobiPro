@@ -13,7 +13,7 @@
 // This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-@corners: rounded;
+@corners: angular;
 @colour-set: sobipro;
 @small-image: 100px;
 
@@ -157,7 +157,9 @@
     border-right: 1px solid;
     border-color: fade(@base-color, 20%);
 }
-
+.SobiPro .table.table-vstriped > thead > tr > th {
+    border-bottom: none;
+}
 
 // seems that is missed in bootstrap??
 .SobiPro .input-medium {
@@ -465,6 +467,13 @@
 .SobiPro .input-group .input-group-addon {
    // cursor: pointer;
 }
+
+
+// Firefox-specific table hack
+@-moz-document url-prefix() {
+    fieldset { display: table-cell; }
+}
+
 
 // New button colour
 // ----------------------------------------
@@ -798,6 +807,9 @@
     text-align: center;
     padding: 4px;
     border: 1px solid rgba(0, 0, 0, 0.2);
+    & when (@corners = rounded) {
+        border-radius: 4px;
+    }
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin: 5px;
     .lightBackground;
@@ -1050,18 +1062,26 @@
         color: @font-color;
     }
 }
-.SobiPro .spFieldCheckbox label {
-    //margin-top: 5px;
+
+//BS3 does not have the option of label right of input box -> simulate
+.SobiPro .radio.left input[type="radio"],
+.SobiPro .radio-inline.left input[type="radio"],
+.SobiPro .checkbox.left input[type="checkbox"],
+.SobiPro .checkbox-inline.left input[type="checkbox"] {
+    margin-left: 10px;
 }
-.SobiPro .spFieldRadio label {
-    //margin-top: 5px
+.SobiPro .radio-inline.left,
+.SobiPro .checkbox-inline.left {
+    padding-left: 0;
 }
-.SobiPro .spFieldCheckbox input,
-.SobiPro .spFieldRadio input {
-    margin-left: 5px;
-    margin-right: 5px;
-    float: left;
+.checkbox + .checkbox, .radio + .radio {
+    margin-top: -5px;
 }
+.SobiPro .spFieldRadio input,
+.SobiPro .spFieldCheckbox input {
+    margin-top: 3px;
+}
+// Range inputs
 .SobiPro .spSelectRangeFrom .input-group,
 .SobiPro .spSelectRangeTo .input-group {
     float: left;
@@ -1072,13 +1092,6 @@
 }
 .SobiPro .spSelectRangeTo .input-group {
     margin: 0 0 10px 5px;
-}
-
-.SobiPro .spEntryEdit .spFieldCheckbox input {
-    margin-top: -3px;
-}
-.SobiPro .control-label input[type="checkbox"] {
-    margin: 0;
 }
 
 // Edit entry payment control
@@ -1274,6 +1287,9 @@
     }
 }
 .SobiPro .spCollection {
+    & when (@corners = rounded) {
+        border-radius: 4px;
+    }
     .lightBackground;
 }
 .SobiPro .spCollection .nav > li > a {
@@ -1297,11 +1313,6 @@
 }
 .SobiPro .spProfileSection {
     color: @base-color;
-}
-
-// Firefox-specific table hack
-@-moz-document url-prefix() {
-    fieldset { display: table-cell; }
 }
 
 

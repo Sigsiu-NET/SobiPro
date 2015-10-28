@@ -4,6 +4,10 @@
       "colour-set": "sobipro",
       "corners": "angular",
       "small-image": "100px"
+    },
+    "review": {
+      "stars": "red-grey",
+      "bsversion": "bs2"
     }
   },
   "section-view": {
@@ -24,5 +28,11 @@
     "noimage": "1",
     "countentries": "0",
     "entries_recursive": "1"
+  },
+  "collection": {
+    "entries_limit": "4"
+  },
+  "entry-details": {
+    "entries_in_line": "1"
   }
 }

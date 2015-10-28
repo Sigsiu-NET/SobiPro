@@ -13,7 +13,7 @@
 // This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-@corners: rounded;
+@corners: angular;
 @colour-set: sobipro;
 @small-image: 100px;
 
@@ -831,6 +831,9 @@
     text-align: center;
     padding: 4px;
     border: 1px solid rgba(0, 0, 0, 0.2);
+    & when (@corners = rounded) {
+        border-radius: 4px;
+    }
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin: 5px;
     .lightBackground;
@@ -1321,6 +1324,9 @@
     }
 }
 .SobiPro .spCollection {
+    & when (@corners = rounded) {
+        border-radius: 4px;
+    }
     .lightBackground;
 }
 .SobiPro .spCollection .nav > li > a {
@@ -1332,7 +1338,9 @@
     background-color: @hover-color;
     color: @active-color;
 }
-
+.SobiPro .ctrl-collection-remove-item {
+    margin-top: 5px;
+}
 
 // Profile Field
 // -----------------------------------------------
