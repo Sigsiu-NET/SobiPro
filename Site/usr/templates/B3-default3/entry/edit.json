@@ -1,0 +1,7 @@
+{
+  "entry-edit": {
+    "form-class": "horizontal",
+    "help-position": "below",
+    "required-star": "1"
+  }
+}
