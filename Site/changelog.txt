@@ -30,6 +30,8 @@ Legend:
 -------------------
 
     (#) Missing default template configuration files added
+    (#) Duplicate icons from Font Awesome 4 removed
+
 
 -------------------
 1.2 (28 October 2015)
