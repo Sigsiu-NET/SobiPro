@@ -22,6 +22,7 @@
     "entries_recursive": "1"
   },
   "general": {
+    "hidecategories": "show",
     "entries_limit": "6",
     "entries_in_line": "2",
     "entries_ordering": "RAND()",

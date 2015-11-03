@@ -32,6 +32,9 @@
 			<xsl:value-of select="name" />
 		</xsl:variable>
 		<xsl:value-of select="php:function( 'SobiPro::AlternateLink', $rssUrl, 'application/atom+xml', $sectionName )" />
+        <xsl:variable name="showCategoriesLabel">
+            <xsl:value-of select="php:function( 'SobiPro::Txt', 'Show Categories' )" />
+        </xsl:variable>
 
         <!-- for proper work a container is needed, we assume that the component area is placed into a container by the template.
         If not, you need to add a container around the SobiPro output here -->
@@ -44,6 +47,9 @@
         <div class="spSectionDesc">
             <xsl:value-of select="description" disable-output-escaping="yes" />
         </div>
+        <xsl:if test="//config/hidecategories/@value = 'hide'">
+            <input id="spCategoryShow" class="btn btn-sigsiu" name="spCategoryShow" value="{$showCategoriesLabel}" type="button"/>
+        </xsl:if>
         <xsl:call-template name="categoriesLoop" />
         <xsl:call-template name="entriesLoop" />
         <xsl:apply-templates select="navigation" />

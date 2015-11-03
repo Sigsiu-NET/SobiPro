@@ -66,6 +66,12 @@
                                             <option value="angular" />
                                         </values>
                                     </field>
+                                    <field type="select" label="TP.CONFIG.HIDECATEGORIES" name="settings[config][general][hidecategories]" selected="settings.config.general.hidecategories" class="input-medium">
+                                        <values>
+                                            <option value="show" label="SHOW_YES" />
+                                            <option value="hide" label="SHOW_NO" />
+                                        </values>
+                                    </field>
                                 </fieldset>
                                 <fieldset label="TP.CONFIG.RSS">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[feeds.rss][section-view][entries_limit]" selected="settings.feeds-rss.section-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->

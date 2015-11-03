@@ -43,5 +43,12 @@ SobiPro.jQuery( document ).ready( function ()
 	}
 	catch ( e ) {
 	}
+
+	try {
+		SobiPro.jQuery( '#spCategoryContainer-hide' ).slideToggle( 'fast' );
+		SobiPro.jQuery( '#spCategoryShow' ).bind( 'click', function() {
+			SobiPro.jQuery( '#spCategoryContainer-hide' ).slideToggle( 'fast' );
+		} );
+	} catch( e ) {}
 } );
 

@@ -31,6 +31,9 @@
 		<xsl:variable name="sectionName">
 			<xsl:value-of select="section" />
 		</xsl:variable>
+		<xsl:variable name="showCategoriesLabel">
+			<xsl:value-of select="php:function( 'SobiPro::Txt', 'Show Categories' )" />
+		</xsl:variable>
 
 		<xsl:value-of select="php:function( 'SobiPro::AlternateLink', $rssUrlSection, 'application/atom+xml', $sectionName )" />
 		<xsl:variable name="rssUrl">{"sid":"<xsl:value-of select="id" />","sptpl":"feeds.rss","out":"raw"}
@@ -52,6 +55,9 @@
     		<xsl:value-of select="description" disable-output-escaping="yes" />
     	</div>
 
+		<xsl:if test="count (categories/category) and //config/hidecategories/@value = 'hide'">
+			<input id="spCategoryShow" class="btn btn-sigsiu" name="spCategoryShow" value="{$showCategoriesLabel}" type="button"/>
+		</xsl:if>
 		<xsl:call-template name="categoriesLoop" />
 		<xsl:call-template name="entriesLoop" />
 		<xsl:apply-templates select="navigation" />

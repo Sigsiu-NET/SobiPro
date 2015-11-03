@@ -37,7 +37,7 @@
 		<xsl:comment> categories loop - start </xsl:comment>
 		<xsl:if test="$catsCount > 0">
             <div class="row">
-                <div class="col-md-12 spCategoryContainer">
+                <div id="spCategoryContainer-{//config/hidecategories/@value}" fclass="col-md-12 spCategoryContainer">
                         <xsl:for-each select="categories/category">
                             <xsl:if test="($catsInLine > 1 and (position() = 1 or (position() mod $catsInLine) = 1)) or $catsInLine = 1">
                                 <!-- opening the "table" row -->

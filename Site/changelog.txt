@@ -28,6 +28,7 @@ Legend:
 -------------------
 1.2.1 ()
 -------------------
+    (+) Template setting to show/hide categories
 
     (!) Less influences of Joomla! template to Theme template
 
