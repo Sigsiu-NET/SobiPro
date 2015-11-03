@@ -29,6 +29,8 @@ Legend:
 1.2.1 ()
 -------------------
 
+    (!) Less influences of Joomla! template to Theme template
+
     (#) Missing default template configuration files added
     (#) Duplicate icons from Font Awesome 4 removed
 

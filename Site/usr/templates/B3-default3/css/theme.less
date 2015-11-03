@@ -84,6 +84,24 @@
 }
 
 
+//otherwise buttons are a bit too hight to align with input boxes
+.SobiPro .btn i {
+    font-size: 0.97em;
+}
+
+// Removal of template interferences
+// ----------------------------------------
+.SobiPro li {
+    line-height: inherit;
+}
+.SobiPro p {
+    font-size: inherit;
+    line-height: inherit;
+}
+.SobiPro input[type="checkbox"] {
+    width: inherit;
+}
+
 // Overwrite some bootstrap styles
 // ----------------------------------------
 .SobiPro {
@@ -240,6 +258,8 @@
 .SobiPro h1 {
     color: @active-color;
     font-size: 26px;
+    line-height: 1.1;
+    margin-top: 0.67em;
 }
 .SobiPro h2 input[type="checkbox"] {
     margin: 0 0 5px 0;
@@ -647,16 +667,11 @@
 }
 
 
-// Topmenu, Navigation bars
+// Navigation bars
 // ----------------------------------------
 .SobiPro .navbar-default .navbar-collapse,
 .SobiPro .navbar-default .navbar-form {
     border-color: @base-color;
-}
-.SobiPro .topmenu .nav > li,
-.SobiPro .topmenu .nav > li a {
-    color: @text-color;
-    line-height: 40px;
 }
 .SobiPro .nav-tabs,
 .SobiPro .nav-pills {
@@ -664,14 +679,26 @@
 }
 .SobiPro .nav-pills > .active > a,
 .SobiPro .nav-pills > .active > a:hover,
-.SobiPro .nav-pills > .active > a:focus,
-.SobiPro .topmenu .nav > li a.active,
-.SobiPro .topmenu .nav > li a:focus,
-.SobiPro .topmenu .nav > li a:hover {
+.SobiPro .nav-pills > .active > a:focus {
     background-color: @active-color;
     color: @hover-color;
 }
-.SobiPro .navbar.topmenu {
+.SobiPro .navbar .nav > li > a {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+// Topmenu
+// ----------------------------------------
+.SobiPro .topmenu.navbar {
+    border: 1px solid transparent;
+    box-shadow: none;
+    margin-bottom: 20px;
+    min-height: inherit;
+    position: inherit;
+    width: inherit;
+    z-index: auto;
+
     background-color: @base-color;
     font-size: 15px;
     border: none;
@@ -679,21 +706,47 @@
         border-radius: 4px;
     }
 }
+.SobiPro .topmenu .nav {
+    background: inherit;
+}
+.SobiPro .topmenu .nav > li,
+.SobiPro .topmenu .nav > li a {
+    color: @text-color;
+    line-height: 40px;
+    border-bottom: inherit;
+    text-align: inherit;
+}
+.SobiPro .topmenu .nav > li a.active,
+.SobiPro .topmenu .nav > li a:focus,
+.SobiPro .topmenu .nav > li a:hover {
+    background-color: @active-color;
+    color: @hover-color;
+}
+.SobiPro .topmenu .navbar-nav > li {
+    margin-left: inherit;
+}
+.SobiPro .topmenu .navbar-nav > li > a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: inherit;
+}
 .SobiPro .topmenu .navbar-search {
     margin-top: 15px;
+}
+.SobiPro .topmenu .navbar-search input {
+    width: 115px;
 }
 & when (@inverse = no) {
     .SobiPro .topmenu input[type="text"] {
         border-color: darken(@base-color, 5%);
     }
 }
-.SobiPro .topmenu .navbar-search input {
-    width: 115px;
+.SobiPro .topmenu input[type="text"] {
+    height: inherit;
+    margin-bottom: inherit;
 }
-.SobiPro .navbar .nav > li > a {
-    padding-left: 10px;
-    padding-right: 10px;
-}
+
+
 
 // Alphalist
 // ----------------------------------------
@@ -701,20 +754,39 @@
     float: left;
     margin: 5px 10px 2px 1px;
 }
+.SobiPro .alphalist .dropdown-menu {
+    text-align: left;
+}
+.SobiPro .alphalist .btn.btn-xs {
+    padding: 1px 5px;
+    font-weight: inherit;
+    font-size: inherit;
+    margin-bottom: inherit;
+    border: inherit;
+    margin-right: inherit;
+    text-transform: none;
+}
+
 .SobiPro .alpha .pagination {
     margin-top: 5px;
+    width: inherit;
+    display: inline-block;
 }
 .SobiPro .alpha .pagination li a {
     min-width: 27px;
     text-align: center;
     letter-spacing: -1.3px;
 }
-.SobiPro .alphalist .dropdown-menu {
-    text-align: left;
-}
 .SobiPro .alpha .pagination > li:first-child > a,
 .SobiPro .alpha .pagination > li:first-child > span {
     margin-left: 1px;
+}
+.SobiPro .alpha .pagination ul > li > a,
+.SobiPro .alpha .pagination ul > li > span {
+    padding: inherit;
+}
+.SobiPro .alpha .pagination ul > li {
+    margin-right: inherit;
 }
 
 // Category images and icons
@@ -918,17 +990,12 @@
 .SobiPro .spEntryEdit .spClassCheckbox.required {
     border: none;
 }
+.SobiPro .spEntryEdit textarea,
+.SobiPro .spEntryEdit input[type="text"] {
+    margin-bottom: inherit;
+}
 .SobiPro .spEntryEdit .progress {
     min-width: 100px;
-}
-.SobiPro .spUpload input {
-   // height: 21px;
-}
-.SobiPro .spUpload .span1 {
-    margin-left: 10px;
-}
-.SobiPro .spUpload .alert {
-    margin-top: 5px;
 }
 .SobiPro .spEntryEdit .required-message {
     margin: 25px 0 10px 0;
@@ -941,22 +1008,12 @@
     padding-left: 2px;
     font-size: 14px;
 }
-
-.SobiPro .input-append input {
-//    width: calc(100% - 42px);
-}
 .SobiPro .spEntryEdit .message-lightbulb {
     left: 0;
     position: relative;
 }
 .SobiPro .spEntryEdit .message-lightbulb .popover.bottom {
     margin-top: 0;
-}
-.SobiPro .editor {
-    overflow: visible;
-}
-.SobiPro .spClassEditInfo {
-    margin-top: 10px;
 }
 .SobiPro .spEntryEdit .popover-title {
     color: @error-color;
@@ -967,6 +1024,21 @@
     font-family: FontAwesome;
     content: "";
     padding-right: 5px;
+}
+.SobiPro .editor {
+    overflow: visible;
+}
+.SobiPro .spUpload input {
+    // height: 21px;
+}
+.SobiPro .spUpload .span1 {
+    margin-left: 10px;
+}
+.SobiPro .spUpload .alert {
+    margin-top: 5px;
+}
+.SobiPro .spClassEditInfo {
+    margin-top: 10px;
 }
 
 
@@ -1009,7 +1081,7 @@
     display: inline-block;
 }
 .SobiPro .spImageUpload input {
-    height: 35px;
+    //height: 35px;
 }
 .SobiPro .spImageUpload .span1 {
     margin-left: 10px;
@@ -1218,7 +1290,7 @@
     }
 }
 .SobiPro .mapSearch input {
-    height: 35px;
+    //height: 35px;
 }
 
 
@@ -1376,7 +1448,7 @@
     }
     .SobiPro .spUpload input {
         width: 100%;
-        height: 35px;
+        //height: 35px;
     }
     .SobiPro .spUpload button.btn.select {
         width: calc(100% - 44px);

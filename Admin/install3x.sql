@@ -278,7 +278,6 @@ INSERT IGNORE INTO `#__sobipro_field` (`fid`, `nid`, `adminField`, `admList`, `d
   (15, 'field_category', 0, 0, 0, 1, 0, 'category', '', 1, 2, 10, 1, 1, 0, 0, 0, 0, 0, -1, 1, 'hidden', '', '', '', 1, 0, 'spClassCategory', 0, '', '', 'ZZHdasMwDIXfxU9Qp23WuZdh0It2FDroZVBiLzYkpESGtoy9++T/jV3q6Fj6jgyiqsUXip1gPWIzAiLbo+BbwfDmywasGubl6eWq2N6ksV57zVYn/bFviv2iYOm1UyueHwTx95NasElZPUtXvFCBalS9X0RI0yxhZPv3hAIWT/A4mimgkMRXeTE1r8bqRptRhlDUjoPuRlodBtGSjoy+9p515NDKDNrPXQtWbf1gOtOneSjZGBkxqNcGRlJpZZBpRdvnii5k8LyYCVzIRI8+/CmnrZ2UwnKeDNeC6pZ18Wj/iMvIQwZfCRYDt2DtkmkycaaVH8+bChVxtIsEC9mOer4foVNjwXCS++4ol+NuHEUKvnO/iQiD8sL3Dw==', '', 31),
   (16, 'field_contact_information', 0, 0, 0, 1, 0, 'info', '', 1, 9, 0, 0, 1, 0, 0, 0, 0, 0, -1, 0, 'details', '', '', '', 0, 0, 'spClassInfo', 0, '', '', 'YTo0OntzOjEyOiJjc3NDbGFzc1ZpZXciO3M6MTU6InNwQ2xhc3NWaWV3SW5mbyI7czoxMjoiY3NzQ2xhc3NFZGl0IjtzOjE1OiJzcENsYXNzRWRpdEluZm8iO3M6MTM6InNob3dFZGl0TGFiZWwiO3M6MToiMCI7czo3OiJic1dpZHRoIjtzOjE6IjUiO30=', '', 1);
 
-
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
 	`publishUp`   DATETIME DEFAULT NULL,
 	`publishDown` DATETIME DEFAULT NULL,

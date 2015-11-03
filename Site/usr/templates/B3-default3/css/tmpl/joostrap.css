@@ -13,7 +13,7 @@
 /* To activate the correction styles, add 'tmpl/joostrap' to the main template configuration file */
 
 .SobiPro {
-    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    /*font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;*/
 }
 .SobiPro .pull-right {
     background-color: inherit;
