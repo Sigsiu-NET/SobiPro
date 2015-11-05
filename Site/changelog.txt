@@ -34,6 +34,7 @@ Legend:
 
     (#) Missing default template configuration files added
     (#) Duplicate icons from Font Awesome 4 removed
+    (#) Only one information field in a section works correctly
 
 
 -------------------

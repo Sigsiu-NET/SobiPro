@@ -388,7 +388,7 @@ class SPJoomlaLang
 	 * @param null $lang
 	 * @return string
 	 */
-	public static function getValue( $key, $type, $sid = 0, $select = 'sValue', $lang = null )
+	public static function getValue( $key, $type, $sid = 0, $select = 'sValue', $lang = null, $fid = 0 )
 	{
 		$select = $select ? $select : 'sValue';
 		$lang = $lang ? $lang : Sobi::Lang( false );
@@ -407,6 +407,9 @@ class SPJoomlaLang
 			);
 			if ( $sid ) {
 				$params[ 'section' ] = $sid;
+			}
+			if ( $fid ) {
+				$params[ 'fid' ] = $fid;
 			}
 			$r = SPFactory::db()->select( $toSselect, 'spdb_language', $params )->loadAssocList( 'language' );
 			if ( isset( $r[ $lang ] ) ) {

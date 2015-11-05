@@ -42,8 +42,8 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 
 	public function __construct ( &$field ) {
 		parent::__construct( $field );
-		$this->viewInfo = SPLang::getValue( $this->nid . '-viewInfo', 'field_information', Sobi::Section() );
-		$this->entryInfo = SPLang::getValue( $this->nid . '-entryInfo', 'field_information', Sobi::Section() );
+		$this->viewInfo = SPLang::getValue( $this->nid . '-viewInfo', 'field_information', Sobi::Section(), null, null, $this->fid );
+		$this->entryInfo = SPLang::getValue( $this->nid . '-entryInfo', 'field_information', Sobi::Section(),  null, null, $this->fid );
 	}
 
 
@@ -57,7 +57,7 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$data = SPLang::getValue( $this->nid . '-entryInfo', 'field_information', Sobi::Section() );
+		$data = SPLang::getValue( $this->nid . '-entryInfo', 'field_information', Sobi::Section(), null, null, $this->fid );
 
 		$class = $this->cssClass . (strlen($this->cssClassEdit) ? ' ' . $this->cssClassEdit : '');
 		$field = '<div class="' . $class . '">' . $data . '</div>';
@@ -75,7 +75,7 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	 */
 	public function struct()
 	{
-		$data = SPLang::getValue( $this->nid . '-viewInfo', 'field_information', Sobi::Section() );
+		$data = SPLang::getValue( $this->nid . '-viewInfo', 'field_information', Sobi::Section(), null, null, $this->fid );
 
 		$attributes = array();
 		if ( strlen( $data ) ) {
