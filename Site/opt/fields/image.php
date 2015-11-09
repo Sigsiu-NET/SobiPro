@@ -702,7 +702,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 						'_data' => null,
 						'_attributes' => array(
 								'class' => $this->cssClass,
-								'src' => Sobi::Cfg( 'live_site' ) . $show,
+								'src' => Sobi::FixPath( Sobi::Cfg( 'live_site' ) . $show ),
 								'alt' => ''
 						)
 				);
@@ -713,10 +713,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 						'_complex' => 1,
 						'_data' => array( 'img' => $data ),
 						'_attributes' => array(
-								'icon' => isset( $files[ 'ico' ] ) ? $files[ 'ico' ] : null,
-								'image' => isset( $files[ 'image' ] ) ? $files[ 'image' ] : null,
-								'thumbnail' => isset( $files[ 'thumb' ] ) ? $files[ 'thumb' ] : null,
-								'original' => isset( $files[ 'original' ] ) ? $files[ 'original' ] : null,
+								'icon' => isset( $files[ 'ico' ] ) ? Sobi::FixPath( $files[ 'ico' ] ) : null,
+								'image' => isset( $files[ 'image' ] ) ? Sobi::FixPath( $files[ 'image' ] ) : null,
+								'thumbnail' => isset( $files[ 'thumb' ] ) ? Sobi::FixPath( $files[ 'thumb' ] ) : null,
+								'original' => isset( $files[ 'original' ] ) ? Sobi::FixPath( $files[ 'original' ] ) : null,
 								'class' => $this->cssClass
 						),
 						'_options' => array( 'exif' => $exifToPass ),
