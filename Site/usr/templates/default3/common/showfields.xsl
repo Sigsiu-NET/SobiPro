@@ -51,7 +51,7 @@
                 <xsl:if test="string-length($fieldname/@suffix)">
                     <xsl:text> </xsl:text>
                     <xsl:choose>
-                    <xsl:when test="$view = dv">
+                    <xsl:when test="$view = 'dv'">
                         <span class="spDetailSuffix"><xsl:value-of select="$fieldname/@suffix" /></span>
                     </xsl:when>
                     <xsl:otherwise>

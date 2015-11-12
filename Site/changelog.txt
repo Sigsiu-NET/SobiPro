@@ -29,9 +29,11 @@ Legend:
 1.2.1 ()
 -------------------
     (+) Template setting to show/hide categories
+    (+) Fallback for wrong path setting in image field
+    (+) B2 input size styles implemented in B3 template
+
 
     (!) Less influences of Joomla! template to Theme template
-    (+) Failback for wrong path in the image field
 
     (#) Missing default template configuration files added
     (#) Duplicate icons from Font Awesome 4 removed
