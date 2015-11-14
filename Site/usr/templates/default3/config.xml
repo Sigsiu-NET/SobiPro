@@ -66,12 +66,38 @@
                                             <option value="angular" />
                                         </values>
                                     </field>
+                                </fieldset>
+                                <fieldset label="TP.CONFIG.FEATURE">
                                     <field type="select" label="TP.CONFIG.HIDECATEGORIES" name="settings[config][general][hidecategories]" selected="settings.config.general.hidecategories" class="input-medium">
                                         <values>
                                             <option value="show" label="SHOW_YES" />
                                             <option value="hide" label="SHOW_NO" />
                                         </values>
                                     </field>
+                                    <field type="select" label="TP.CONFIG.TEXTLENGTH" name="settings[config][general][textlength]" selected="settings.config.general.textlength" class="input-medium">
+                                        <values>
+                                            <option value="no" label="YES_NO_NO" />
+                                            <option value="50" label="50 characters" />
+                                            <option value="100" label="100 characters" />
+                                            <option value="150" label="150 characters" />
+                                            <option value="200" label="200 characters" />
+                                            <option value="300" label="300 characters" />
+                                            <option value="500" label="500 characters" />
+                                        </values>
+                                    </field>
+                                    <field type="select" label="TP.CONFIG.CAROUSELIMG" name="settings[config][less][theme][carousel-image]" selected="settings.config.less.theme.carousel-image" class="input-medium">
+                                        <values>
+                                            <option value="inherit" label="inherit" />
+                                            <option value="150px" label="150px" />
+                                            <option value="200px" label="200px" />
+                                            <option value="300px" label="300px" />
+                                            <option value="400px" label="400px" />
+                                            <option value="500px" label="500px" />
+                                            <option value="600px" label="600px" />
+                                            <option value="750px" label="750px" />
+                                        </values>
+                                    </field>
+
                                 </fieldset>
                                 <fieldset label="TP.CONFIG.RSS">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[feeds.rss][section-view][entries_limit]" selected="settings.feeds-rss.section-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
@@ -327,6 +353,7 @@
                         </fieldset>
                     </tab>
                 </tabs>
+                <div><message label="TP.CONFIG.DOCUMENTATION" type="warning" dismiss-button="false" class="spConfigAlert alert-info" /></div>
             </div>
 		</div>
 	</body>

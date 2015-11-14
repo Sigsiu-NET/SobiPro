@@ -32,6 +32,7 @@ Legend:
     (+) Fallback for wrong path setting in image field
     (+) B2 input size styles implemented in B3 default template
     (+) Carousel support in default templates
+    (+) Several features added to the default template (e.g. shorten text, hiding categories)
 
     (!) Less influences of Joomla! template to Theme template
 
