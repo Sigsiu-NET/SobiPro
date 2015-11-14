@@ -16,7 +16,10 @@
 @corners: angular;
 @colour-set: sobipro;
 @small-image: 100px;
+@big-image: 300px;
+@image-ratio: 0.75;
 @carousel-image: 500px;
+
 
 
 //-------------------------------------------------------------------------------------*/
@@ -825,7 +828,7 @@
     font-size: 60px;
     & when (isnumber(@small-image)) {
         width: @small-image;
-        height: calc((@small-image / 4) * 3);
+        height: calc(@small-image * @image-ratio);
         font-size: calc((@small-image * 6)/10);
     }
     text-align: center;
@@ -839,9 +842,9 @@
     .lightBackground;
 }
 .SobiPro .spDetailEntry .spNoImage {
-    width: 200px;
-    height: 150px;
-    font-size: 900%;
+    width: @big-image;
+    height:calc(@big-image * @image-ratio);
+    font-size: calc((@big-image * 6)/10);
 }
 .SobiPro .spNoImage i {
     color: fade(@base-color, 40%);
@@ -1222,6 +1225,8 @@
     cursor: progress;
 }
 
+
+
 // Common fields styling via variable CSS classes
 // (don't work if you change the field CSS classes in the Fields Manager)
 // ----------------------------------------
@@ -1330,7 +1335,6 @@
         background-color: @base-color;
     }
 }
-
 
 // Review and Rating App
 // -----------------------------------------------

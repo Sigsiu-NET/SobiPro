@@ -67,38 +67,7 @@
                                         </values>
                                     </field>
                                 </fieldset>
-                                <fieldset label="TP.CONFIG.FEATURE">
-                                    <field type="select" label="TP.CONFIG.HIDECATEGORIES" name="settings[config][general][hidecategories]" selected="settings.config.general.hidecategories" class="input-medium">
-                                        <values>
-                                            <option value="show" label="SHOW_YES" />
-                                            <option value="hide" label="SHOW_NO" />
-                                        </values>
-                                    </field>
-                                    <field type="select" label="TP.CONFIG.TEXTLENGTH" name="settings[config][general][textlength]" selected="settings.config.general.textlength" class="input-medium">
-                                        <values>
-                                            <option value="no" label="YES_NO_NO" />
-                                            <option value="50" label="50 characters" />
-                                            <option value="100" label="100 characters" />
-                                            <option value="150" label="150 characters" />
-                                            <option value="200" label="200 characters" />
-                                            <option value="300" label="300 characters" />
-                                            <option value="500" label="500 characters" />
-                                        </values>
-                                    </field>
-                                    <field type="select" label="TP.CONFIG.CAROUSELIMG" name="settings[config][less][theme][carousel-image]" selected="settings.config.less.theme.carousel-image" class="input-medium">
-                                        <values>
-                                            <option value="inherit" label="inherit" />
-                                            <option value="150px" label="150px" />
-                                            <option value="200px" label="200px" />
-                                            <option value="300px" label="300px" />
-                                            <option value="400px" label="400px" />
-                                            <option value="500px" label="500px" />
-                                            <option value="600px" label="600px" />
-                                            <option value="750px" label="750px" />
-                                        </values>
-                                    </field>
 
-                                </fieldset>
                                 <fieldset label="TP.CONFIG.RSS">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[feeds.rss][section-view][entries_limit]" selected="settings.feeds-rss.section-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
                                         <values>
@@ -114,21 +83,6 @@
                                         <values>
                                             <option value="createdTime.desc" label="EMN_ORDER_BY_CREATION_DATE_DESC" />
                                             <option value="updatedTime.desc" label="EMN_ORDER_BY_UPDATE_DATE_DESC" />
-                                        </values>
-                                    </field>
-                                </fieldset>
-                                <fieldset label="TP.CONFIG.ENTRIES">
-                                    <field type="toggle" name="settings[config][general][noimage]" value="settings.config.general.noimage" label="TP.CONFIG.ENTRIES_NOIMG" prefix="yes_no" />
-                                    <field type="select" label="TP.CONFIG.ENTRIES_IMGSIZESMALL" name="settings[config][less][theme][small-image]" selected="settings.config.less.theme.small-image" class="input-medium">
-                                        <values>
-                                            <option value="inherit" label="inherit" />
-                                            <option value="80px" label="80px" />
-                                            <option value="100px" label="100px" />
-                                            <option value="120px" label="120px" />
-                                            <option value="150px" label="150px" />
-                                            <option value="180px" label="180px" />
-                                            <option value="200px" label="200px" />
-                                            <option value="250px" label="250px" />
                                         </values>
                                     </field>
                                 </fieldset>
@@ -171,11 +125,66 @@
                         </div>
                     </tab>
 -->
-<!--
-                    <tab label="TP.SETTINGS_DETAILS">
+
+                    <tab label="TP.SETTINGS_ENTRIES">
                         <div class="row-fluid">
                             <div class="span12">
-                                <fieldset>
+                                <fieldset label="TP.SETTINGS_FEATURES">
+                                    <field type="toggle" name="settings[config][general][noimage]" value="settings.config.general.noimage" label="TP.CONFIG.ENTRIES_NOIMG" prefix="yes_no" />
+                                </fieldset>
+                                <fieldset label="TP.SETTINGS_DETAILS">
+                                    <field type="select" label="TP.CONFIG.ENTRIES_IMGSIZESMALL" name="settings[config][less][theme][big-image]" selected="settings.config.less.theme.big-image" class="input-medium">
+                                        <values>
+                                            <option value="inherit" label="inherit" />
+                                            <option value="100px" label="100px" />
+                                            <option value="150px" label="150px" />
+                                            <option value="180px" label="180px" />
+                                            <option value="200px" label="200px" />
+                                            <option value="250px" label="250px" />
+                                            <option value="300px" label="300px" />
+                                            <option value="350px" label="350px" />
+                                            <option value="400px" label="400px" />
+                                            <option value="500px" label="500px" />
+                                        </values>
+                                    </field>
+                                    <field type="select" label="TP.CONFIG.CAROUSELIMG" name="settings[config][less][theme][carousel-image]" selected="settings.config.less.theme.carousel-image" class="input-medium">
+                                        <values>
+                                            <option value="inherit" label="inherit" />
+                                            <option value="150px" label="150px" />
+                                            <option value="200px" label="200px" />
+                                            <option value="300px" label="300px" />
+                                            <option value="400px" label="400px" />
+                                            <option value="500px" label="500px" />
+                                            <option value="600px" label="600px" />
+                                            <option value="750px" label="750px" />
+                                        </values>
+                                    </field>
+                                </fieldset>
+
+                                <fieldset label="TP.SETTINGS_VCARD">
+                                    <field type="select" label="TP.CONFIG.ENTRIES_IMGSIZESMALL" name="settings[config][less][theme][small-image]" selected="settings.config.less.theme.small-image" class="input-medium">
+                                        <values>
+                                            <option value="inherit" label="inherit" />
+                                            <option value="80px" label="80px" />
+                                            <option value="100px" label="100px" />
+                                            <option value="120px" label="120px" />
+                                            <option value="150px" label="150px" />
+                                            <option value="180px" label="180px" />
+                                            <option value="200px" label="200px" />
+                                            <option value="250px" label="250px" />
+                                        </values>
+                                    </field>
+                                    <field type="select" label="TP.CONFIG.TEXTLENGTH" name="settings[config][general][textlength]" selected="settings.config.general.textlength" class="input-medium">
+                                        <values>
+                                            <option value="no" label="YES_NO_NO" />
+                                            <option value="50" label="50 characters" />
+                                            <option value="100" label="100 characters" />
+                                            <option value="150" label="150 characters" />
+                                            <option value="200" label="200 characters" />
+                                            <option value="300" label="300 characters" />
+                                            <option value="500" label="500 characters" />
+                                        </values>
+                                    </field>
                                 </fieldset>
                             </div>
                         </div>
@@ -185,7 +194,13 @@
                     <tab label="TP.SETTINGS_VIEW">
                         <div class="row-fluid">
                             <div class="span12">
-                            <fieldset>
+                                <fieldset label="TP.SETTINGS_VIEWFEATURE">
+                                    <field type="select" label="TP.CONFIG.HIDECATEGORIES" name="settings[config][general][hidecategories]" selected="settings.config.general.hidecategories" class="input-medium">
+                                        <values>
+                                            <option value="show" label="SHOW_YES" />
+                                            <option value="hide" label="SHOW_NO" />
+                                        </values>
+                                    </field>
                                 <field type="toggle" name="settings[config][general][countentries]" value="settings.config.general.countentries" label="TP.CONFIG.LST_COUNT" prefix="yes_no" />
 
                             </fieldset>

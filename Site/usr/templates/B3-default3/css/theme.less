@@ -16,6 +16,8 @@
 @corners: angular;
 @colour-set: sobipro;
 @small-image: 100px;
+@big-image: 300px;
+@image-ratio: 0.75;
 @carousel-image: 500px;
 
 
@@ -893,7 +895,7 @@
     font-size: 60px;
     & when (isnumber(@small-image)) {
         width: @small-image;
-        height: calc((@small-image / 4) * 3);
+        height: calc(@small-image * @image-ratio);
         font-size: calc((@small-image * 6)/10);
     }
     text-align: center;
@@ -907,9 +909,9 @@
     .lightBackground;
 }
 .SobiPro .spDetailEntry .spNoImage {
-    width: 200px;
-    height: 150px;
-    font-size: 900%;
+    width: @big-image;
+    height:calc(@big-image * @image-ratio);
+    font-size: calc((@big-image * 6)/10);
 }
 .SobiPro .spNoImage i {
     color: fade(@base-color, 40%);
@@ -954,6 +956,9 @@
 }
 .SobiPro span.spDetailSuffix {
     font-size: 80%;
+}
+.SobiPro .spDetailEntry .spClassViewImage img {
+    width: @big-image;
 }
 
 // Entry Status
@@ -1362,7 +1367,6 @@
     margin-top: -10px;
 }
 
-
 // SP-GeoMap Field
 // -----------------------------------------------
 & when (@corners = rounded) {
@@ -1373,7 +1377,6 @@
 .SobiPro .mapSearch input {
     //height: 35px;
 }
-
 
 // Aggregation Field
 // -----------------------------------------------
