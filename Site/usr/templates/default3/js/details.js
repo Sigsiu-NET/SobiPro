@@ -1,15 +1,10 @@
 SobiPro.jQuery( function ()
 {
-	SobiPro.jQuery( '.spHasTip' ).tooltip();
+	// initialize tooltips
+	SobiPro.jQuery('[data-toggle="tooltip"]').tooltip();
 
-	// carousel slider
-	SobiPro.jQuery( '#spCarousel' ).carousel(); //Initialisation
-	SobiPro.jQuery( '#spCarousel' ).on( 'slid.bs.carousel', function ()
-	{
-	} );
-	SobiPro.jQuery( '.spCarousel-target' ).on( 'click', function ()
-	{
-	} );
+	// initialize carousel slider
+	SobiPro.jQuery( '#spCarousel' ).carousel();
 
 	//resize the map, necessary if the map is in a tab
 	SobiPro.jQuery( '#tab_map' ).on( 'shown.bs.tab', function ( e )
