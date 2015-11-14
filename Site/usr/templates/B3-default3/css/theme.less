@@ -1305,6 +1305,63 @@
     width: @small-image;
 }
 
+// Carousel Slider Settings
+// -----------------------------------------------
+.SobiPro .carousel-inner {
+    height: @carousel-image;
+}
+.SobiPro .carousel-inner > .item > img,
+.SobiPro .carousel-inner > .item > a > img {
+    height: @carousel-image;
+}
+.SobiPro .carousel-inner img.sp-carousel-image {
+    margin-left: auto;
+    margin-right: auto;
+}
+.SobiPro .carousel-control.right {
+    background-image: linear-gradient(to right, transparent 0, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 100%);
+}
+.SobiPro .carousel-control.left {
+    background-image: linear-gradient(to right, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 0, transparent 100%);
+}
+
+// Support for Font Awesome 3 and 4
+.SobiPro .carousel-control .fa-chevron-right,
+.SobiPro .carousel-control .icon-chevron-right,
+.SobiPro .carousel-control .icon-next {
+    margin-right: -15px;
+}
+.SobiPro .carousel-control .fa-chevron-left,
+.SobiPro .carousel-control .fa-chevron-right,
+.SobiPro .carousel-control .icon-chevron-left,
+.SobiPro .carousel-control .icon-chevron-right,
+.SobiPro .carousel-control .icon-next,
+.SobiPro .carousel-control .icon-prev {
+    width: 30px;
+    height: 30px;
+    margin-top: -15px;
+    font-size: 30px;
+}
+.SobiPro .carousel-control .fa-chevron-right,
+.SobiPro .carousel-control .icon-chevron-right,
+.SobiPro .carousel-control .icon-next {
+    right: 50%;
+    margin-right: -10px;
+}
+.SobiPro .carousel-control .fa-chevron-left,
+.SobiPro .carousel-control .fa-chevron-right,
+.SobiPro .carousel-control .icon-chevron-left,
+.SobiPro .carousel-control .icon-chevron-right,
+.SobiPro .carousel-control .icon-next,
+.SobiPro .carousel-control .icon-prev {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    display: inline-block;
+    margin-top: -10px;
+}
+
+
 // SP-GeoMap Field
 // -----------------------------------------------
 & when (@corners = rounded) {
@@ -1454,6 +1511,23 @@
     }
     .SobiPro .control-label div.paybox {
         margin-bottom: 8px;
+    }
+
+    .SobiPro .input-mini,
+    .SobiPro .input-small,
+    .SobiPro .input-medium,
+    .SobiPro .input-large,
+    .SobiPro .input-xlarge,
+    .SobiPro .input-xxlarge,
+    .SobiPro .input-xxxlarge {
+        width: 100%;
+    }
+
+    // Carousel
+    .SobiPro .carousel-inner,
+    .SobiPro .carousel-inner > .item > img,
+    .SobiPro .carousel-inner > .item > a > img {
+        height: auto;
     }
 }
 
