@@ -90,7 +90,7 @@
     }
 }
 .lightborders() {
-    @border-color: lighten(@base-color, 36%);
+    border-color: lighten(@base-color, 36%);
     & when (@colour-set = cornflower) {
         border-color: lighten(@base-color, 26%);
     }
@@ -208,9 +208,11 @@
     box-shadow: none;
     border: 1px solid;
 }
-.SobiPro label,
-.SobiPro .badge {
-//    text-shadow: none;
+.SobiPro label {
+    font-weight: 500;
+    & when (@inverse = inverse) {
+        font-weight: 400;
+    }
 }
 .SobiPro .label-info,
 .SobiPro .badge-info {
@@ -263,16 +265,6 @@
 
 // Modal windows
 // -----------------------------------------
-& when (@inverse = inverse) {
-    .SobiPro,
-    .SobiPro .modal {
-        background-color: @back-color;
-        border-color: darken(@active-color, 30%);
-    }
-    .SobiPro .modal-footer {
-        background-color: @hover-color;
-    }
-}
 .SobiPro .modal {
     margin-top: 20px;
     //color: @active-color;
@@ -297,8 +289,21 @@
     margin-right: 10px;
     margin-left: 20px;
 }
-.SobiPro .modal.fade.in {
-    //top: 10%;
+& when (@inverse = inverse) {
+    .SobiPro,
+    .SobiPro .modal {
+        background-color: @back-color;
+        border-color: darken(@active-color, 30%);
+    }
+    .SobiPro .modal-body {
+        .lightbackground();
+    }
+    .SobiPro .modal-body label {
+        color: #fff;
+    }
+    .SobiPro .modal-footer {
+        background-color: @hover-color;
+    }
 }
 
 .SobiPro .ctrl-spinner {
@@ -463,6 +468,7 @@
 .SobiPro .pagination ul > .disabled > a:hover,
 .SobiPro .pagination ul > .disabled > a:focus {
     .lightbackground();
+    .lightborders();
     color: saturate(darken(@base-color, 12%), 20%);
     & when (@inverse = inverse) {
         color: lighten(@base-color, 50%);
@@ -491,6 +497,7 @@
 // special adjustments for inverse template colors
 // -----------------------------------------------
 & when (@inverse = inverse) {
+    .SobiPro .bootstrap-tagsinput,
     .SobiPro textarea,
     .SobiPro select,
     .SobiPro input[type="text"],
@@ -508,13 +515,17 @@
     .SobiPro input[type="tel"],
     .SobiPro input[type="color"],
     .SobiPro .uneditable-input {
-        background-color: lighten(@text-color, 30%);
-        color: @font-color;
-        border-color: lighten(@text-color, 25%);
+        background-color: #eeeeee;
+//        color: @font-color;
+//        border-color: lighten(@text-color, 25%);
+    }
+    .SobiPro ul,
+    .SobiPro ol {
+        color: #fff;
     }
     .SobiPro .input-append .add-on,
     .SobiPro .input-prepend .add-on {
-        color: @text-color;
+        //color: @text-color;
     }
 }
 
@@ -536,9 +547,9 @@
 .SobiPro input[type="color"]:focus,
 .SobiPro .uneditable-input:focus {
     border-color: fade(@base-color, 80%) !important;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 60%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 60%);
     & when (@inverse = inverse) {
-        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 80%);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px 4px rgba(red(@base-color), green(@base-color), blue(@base-color), 80%)
     }
     border: 1px solid;
 }
@@ -654,6 +665,11 @@
     background-color: @alert-color;
     color: @active-color;
     border-color: darken(@alert-color, 10%);
+    & when (@inverse = inverse) {
+        background-color: @base-color;
+        color: @text-color;
+        border-color: lighten(@base-color, 10%);
+    }
     font-weight: bold;
     font-size: 95%;
 }
@@ -694,7 +710,6 @@
     & when (@inverse = inverse) {
         border-color: lighten(@error-color, 28%);
         background-color: lighten(@error-color, 32%);
-
     }
 }
 .SobiPro .spMessage .alert-success,
@@ -733,10 +748,12 @@
 .SobiPro .control-group.error input:focus,
 .SobiPro .control-group.error select:focus,
 .SobiPro .control-group.error textarea:focus {
-    border-color: fade(@error-color, 80%) !important;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+	border-color: fade(@error-color, 80%) !important;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+	& when (@inverse = inverse) {
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px 4px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+	}
 }
-
 .SobiPro .control-group.error input,
 .SobiPro .control-group.error select,
 .SobiPro .control-group.error textarea {
@@ -928,9 +945,14 @@
     .lightborders();
 }
 .SobiPro .spDetailEntry .spNoImage {
-    width: @big-image;
-    height: calc(@big-image * @image-ratio);
-    font-size: calc((@big-image * 6)/10);
+    width: 300px;
+    height: 300px;
+    font-size: 180px;
+    & when (isnumber(@big-image)) {
+        width: @big-image;
+        height: calc(@big-image * @image-ratio);
+        font-size: calc((@big-image * 6) / 10);
+    }
 }
 .SobiPro .spNoImage i {
     color: lighten(@base-color, 30%);
@@ -1013,20 +1035,27 @@
 .SobiPro .popover .popover-title {
     text-shadow: none;
     font-weight: bold;
-    & when (@inverse = inverse) {
-        background-color: darken(@alert-color, 30%);
-    }
 }
-& when (@inverse = inverse) {
-    .SobiPro .popover .popover-content {
-        color: @active-color;
-        background-color: @hover-color;
-    }
 
+& when (@inverse = inverse) {
+    .SobiPro .popover {
+        background-color: transparent;
+    }
+    .SobiPro .popover.bottom > .arrow {
+        border-bottom-color: darken(@alert-color, 50%);
+        opacity: 0.25;
+    }
+    .SobiPro .popover .popover-title {
+        background-color: darken(@alert-color, 50%);
+    }
     .SobiPro .spEntryContainer .popover-inner,
     .SobiPro .spDetails .popover-inner {
         background-color: @back-color;
         color: @text-color;
+    }
+    .SobiPro .popover .popover-content {
+        color: @active-color;
+        background-color: @hover-color;
     }
 }
 
@@ -1070,6 +1099,12 @@
 .SobiPro .spEntryEdit .message-lightbulb {
     left: 0;
     position: relative;
+}
+& when (@corners = rounded) {
+    .SobiPro .spEntryEdit .message-lightbulb .popover-content {
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
 }
 .SobiPro .spEntryEdit .message-lightbulb .popover.bottom {
     margin-top: 0;
@@ -1427,6 +1462,9 @@
 & when (@inverse = inverse) {
     .SobiPro div.tagsinput input {
         background-color: @base-color;
+    }
+    .SobiPro .bootstrap-tagsinput {
+        background-color: #eeeeee;
     }
 }
 
