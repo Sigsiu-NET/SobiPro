@@ -33,6 +33,7 @@ Legend:
     (+) B2 input size styles implemented in B3 default template
     (+) Carousel support in default templates
     (+) Tooltip support in default templates
+    (+) Coloured tabs support in default templates
     (+) Several features added to the default template (e.g. shorten text, hiding categories, image ratio)
 
     (!) Less influences of Joomla! template to Theme template

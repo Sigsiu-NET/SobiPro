@@ -65,20 +65,100 @@
 
 // Mixins
 // ----------------------------------------
-.lightBackground {
-    border-color: fade(@base-color, 20%);
-    background-color: fade(saturate(@base-color, 25%), 4%);
-    & when (@inverse = inverse) {
-        border-color: fade(darken(@active-color, 20%), 40%);
-        background-color: fade(darken(@active-color,45%), 35%);
+.lightbackground() {
+    background-color: lighten(saturate(@base-color, 15%), 57%);
+    & when (@colour-set = cornflower) {
+        background-color: lighten(saturate(@base-color, 15%), 45%);
+    }
+    & when (@colour-set = cornfield) {
+        background-color: lighten(saturate(@base-color, 15%), 40%);
+    }
+    & when (@colour-set = malva) {
+        background-color: lighten(saturate(@base-color, 15%), 50%);
+    }
+    & when (@colour-set = meadow) {
+        background-color: lighten(saturate(@base-color, 15%), 60%);
+    }
+    & when (@colour-set = poppyseed) {
+        background-color: lighten(saturate(@base-color, 5%), 62%);
+    }
+    & when (@colour-set = roses) {
+        background-color: lighten(saturate(@base-color, 28%), 48%);
+    }
+    & when (@colour-set = blackwidow) {
+        background-color: darken(@active-color, 65%);
     }
 }
-.mediumBackground {
-    border-color: fade(@base-color, 25%);
-    background-color: fade(saturate(@base-color, 25%), 17%);
-    & when (@inverse = inverse) {
+.lightborders() {
+    @border-color: lighten(@base-color, 36%);
+    & when (@colour-set = cornflower) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = cornfield) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = malva) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = meadow) {
+        border-color: lighten(@base-color, 36%);
+    }
+    & when (@colour-set = poppyseed) {
+        border-color: lighten(@base-color, 36%);
+    }
+    & when (@colour-set = roses) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = blackwidow) {
         border-color: darken(@active-color, 50%);
-        background-color: fade(darken(@active-color, 35%), 90%);
+    }
+}
+.mediumbackground() {
+    background-color: lighten(saturate(@base-color, 15%), 47%);
+    & when (@colour-set = cornflower) {
+        background-color: lighten(saturate(@base-color, 15%), 45%);
+    }
+    & when (@colour-set = cornfield) {
+        background-color: lighten(saturate(@base-color, 15%), 30%);
+    }
+    & when (@colour-set = malva) {
+        background-color: lighten(saturate(@base-color, 15%), 40%);
+    }
+    & when (@colour-set = meadow) {
+        background-color: lighten(saturate(@base-color, 5%), 50%);
+    }
+    & when (@colour-set = poppyseed) {
+        background-color: lighten(saturate(@base-color, 5%), 52%);
+    }
+    & when (@colour-set = roses) {
+        background-color: lighten(saturate(@base-color, 28%), 42%);
+    }
+    & when (@colour-set = blackwidow) {
+        background-color: darken(@active-color, 75%);
+    }
+}
+.mediumborders() {
+    border-color: lighten(@base-color, 26%);
+    & when (@colour-set = cornflower) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = cornfield) {
+        border-color: lighten(@base-color, 16%);
+    }
+    & when (@colour-set = malva) {
+        border-color: lighten(@base-color, 16%);
+    }
+    & when (@colour-set = meadow) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = poppyseed) {
+        border-color: lighten(@base-color, 16%);
+    }
+    & when (@colour-set = roses) {
+        border-color: lighten(@base-color, 25%);
+    }
+    & when (@colour-set = blackwidow) {
+        border-color: darken(@active-color, 60%);
     }
 }
 .headertext {
@@ -146,14 +226,13 @@
 
 .SobiPro .table th,
 .SobiPro .table td {
-    border-color: fade(@base-color, 20%);
-    & when (@inverse = inverse) {
-        border-color: fade(darken(@active-color, 20%), 40%);
-    }
+    .lightborders();
+
 }
 .SobiPro .table-striped tbody > tr:nth-child(2n+1) > td,
 .SobiPro .table-vstriped tbody > tr > td:nth-child(2n+1) {
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
 }
 .SobiPro .table.table-vstriped th,
 .SobiPro .table.table-vstriped td {
@@ -161,9 +240,11 @@
 }
 .SobiPro .table.table-vstriped td {
     border-right: 1px solid;
-    border-color: fade(@base-color, 20%);
+    .lightborders();
 }
-
+.SobiPro .table.table-vstriped > thead > tr > th {
+    border-bottom: none;
+}
 
 // seems that is missed in bootstrap??
 .SobiPro .input-medium {
@@ -381,7 +462,7 @@
 .SobiPro .pagination ul > .disabled > a,
 .SobiPro .pagination ul > .disabled > a:hover,
 .SobiPro .pagination ul > .disabled > a:focus {
-    .lightBackground;
+    .lightbackground();
     color: saturate(darken(@base-color, 12%), 20%);
     & when (@inverse = inverse) {
         color: lighten(@base-color, 50%);
@@ -512,10 +593,13 @@
     color: saturate(darken(@base-color, 5%), 25%);
 }
 .SobiPro .bg-sigsiu {
-    .mediumBackground;
+    .mediumborders();
+    .mediumbackground();
+
 }
 .SobiPro .bg-sigsiu-light {
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
 }
 
 // Define widths to use as classes
@@ -839,17 +923,19 @@
     }
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin: 5px;
-    .lightBackground;
+
+    .lightbackground();
+    .lightborders();
 }
 .SobiPro .spDetailEntry .spNoImage {
     width: @big-image;
-    height:calc(@big-image * @image-ratio);
+    height: calc(@big-image * @image-ratio);
     font-size: calc((@big-image * 6)/10);
 }
 .SobiPro .spNoImage i {
-    color: fade(@base-color, 40%);
+    color: lighten(@base-color, 30%);
     & when (@inverse = inverse) {
-        color: fade(@active-color, 40%);
+        color: lighten(@active-color, 60%);
     }
 }
 .SobiPro .spNoImageContainer {
@@ -890,6 +976,9 @@
 }
 .SobiPro span.spDetailSuffix {
     font-size: 80%;
+}
+.SobiPro .spDetailEntry .spClassViewImage img {
+    width: @big-image;
 }
 
 // Entry Status
@@ -1030,6 +1119,11 @@
 }
 .SobiPro .spFieldUrl .btn-group {
     width: 100px;
+}
+.SobiPro .spUrlCounterValue {
+    font-size: 85%;
+    color: grey;
+    padding-left: 18px;
 }
 
 // Image Field
@@ -1208,7 +1302,8 @@
     padding-top: 25px;
 }
 .SobiPro table.payment tbody tr.info > td {
-    .mediumBackground;
+    .mediumborders();
+    .mediumbackground();
 }
 .SobiPro table.payment tbody tr.success > td {
     background-color: lighten(@alert-color, 20%);
@@ -1224,7 +1319,6 @@
 .SobiPro .disabledArea a {
     cursor: progress;
 }
-
 
 
 // Common fields styling via variable CSS classes
@@ -1266,7 +1360,7 @@
     background-image: linear-gradient(to right, transparent 0, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 100%);
 }
 .SobiPro .carousel-control.left {
-    background-image: linear-gradient(to right, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 0, transparent 100%);
+	background-image: linear-gradient(to right, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 0, transparent 100%);
 }
 
 // Support for Font Awesome 3 and 4
@@ -1359,10 +1453,12 @@
 .SobiPro table.SpCalendar th,
 .SobiPro table.SpCalendar td,
 .SobiPro table.SpCalendar {
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
 }
 .SobiPro table.SpCalendar td.SpCalSun {
-    .mediumBackground;
+    .mediumborders();
+    .mediumbackground();
 }
 .SobiPro table.SpCalendar th {
     color: @base-color;
@@ -1389,7 +1485,8 @@
     & when (@corners = rounded) {
         border-radius: 4px;
     }
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
 }
 .SobiPro .spCollection .nav > li > a {
     border-color: fade(#ffffff, 0%);
@@ -1407,10 +1504,12 @@
 // Profile Field
 // -----------------------------------------------
 .SobiPro .spProfile.striped > blockquote:nth-child(2n+1) {
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
 }
 .SobiPro .spProfile.striped > blockquote:nth-child(2n) {
-    .mediumBackground;
+    .mediumborders();
+    .mediumbackground();
 }
 .SobiPro .spProfileSection {
     margin-top: 30px;
@@ -1552,13 +1651,11 @@
     .SobiPro .modal .control-group {
         margin-bottom: 6px;
     }
+    .SobiPro .spDetailEntry .spClassViewImage img,
     .SobiPro div.spClassViewImage img,
     .SobiPro .spEntryContainer .spClassViewImage img {
         width: calc(100% - 8px);
         margin: 0 0 10px 0;
-    }
-    .SobiPro .spClassViewImage img {
-        float:none!important;
     }
     .SobiPro .spNoImage {
         display: none;
@@ -1566,6 +1663,11 @@
     .SigsiuTree .buttons {
         text-align: center;
     }
+    .SobiPro .spDetailEntry .spClassViewImage img,
+    .SobiPro .spClassViewImage img {
+        float:none!important;
+    }
+    .SobiPro .input-large,
     .SobiPro .input-medium,
     .SobiPro .sp-search-controls .btn {
         width: 100%;
