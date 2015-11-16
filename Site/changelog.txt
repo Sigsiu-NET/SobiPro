@@ -35,6 +35,7 @@ Legend:
     (+) Tooltip support in default templates
     (+) Coloured tabs support in default B3 template
     (+) Several features added to the default template (e.g. shorten text, hiding categories, image ratio)
+    (+) Possibility to load Bootstrap 3 from CDN
 
     (!) Less influences of Joomla! template to Theme template
 
