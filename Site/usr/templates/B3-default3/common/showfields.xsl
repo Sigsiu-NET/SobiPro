@@ -43,7 +43,14 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:if test="string-length($fieldname/data)">
-                        <xsl:value-of select="$fieldname/data" disable-output-escaping="yes" />
+                        <xsl:choose>
+                            <xsl:when test="($fieldname/@css-class = 'spClassText shorten') and ($view = 'vcard') and //config/textlength/@value != 'no'">
+                                <xsl:value-of select="substring ($fieldname/data,1,//config/textlength/@value)" disable-output-escaping="yes" />...
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="$fieldname/data" disable-output-escaping="yes" />
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:if>
                 </xsl:otherwise>
             </xsl:choose>
@@ -51,7 +58,7 @@
                 <xsl:if test="string-length($fieldname/@suffix)">
                     <xsl:text> </xsl:text>
                     <xsl:choose>
-                    <xsl:when test="$view = dv">
+                    <xsl:when test="$view = 'dv'">
                         <span class="spDetailSuffix"><xsl:value-of select="$fieldname/@suffix" /></span>
                     </xsl:when>
                     <xsl:otherwise>

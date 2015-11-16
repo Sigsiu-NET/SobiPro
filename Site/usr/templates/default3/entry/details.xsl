@@ -63,7 +63,7 @@
                         <xsl:when test="count(./data/*) or string-length(./data)">
                             <xsl:call-template name="showfield">
                                 <xsl:with-param name="fieldname" select="." />
-                                <xsl:with-param name="view" as="dv" />
+                                <xsl:with-param name="view" select="'dv'" />
                             </xsl:call-template>
                         </xsl:when>
                         <xsl:otherwise>

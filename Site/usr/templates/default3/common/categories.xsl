@@ -22,7 +22,7 @@
 
     <xsl:template name="categoriesLoop">
 
-		<xsl:variable name="catsInLine">t
+		<xsl:variable name="catsInLine">
 			<xsl:value-of select="categories_in_line" />
 		</xsl:variable>
 

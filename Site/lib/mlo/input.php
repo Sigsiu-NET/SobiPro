@@ -1044,7 +1044,7 @@ abstract class SPHtml_Input
 		return "\n{$f}\n\n";
 	}
 
-	protected static function _createLangFile()
+	public static function _createLangFile()
 	{
 		static $loaded = false;
 		if ( !( $loaded ) ) {

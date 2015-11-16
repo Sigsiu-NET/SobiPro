@@ -16,6 +16,9 @@
 @corners: angular;
 @colour-set: sobipro;
 @small-image: 100px;
+@big-image: 300px;
+@image-ratio: 0.75;
+@carousel-image: 500px;
 
 
 
@@ -62,20 +65,100 @@
 
 // Mixins
 // ----------------------------------------
-.lightBackground {
-    border-color: fade(@base-color, 20%);
-    background-color: fade(saturate(@base-color, 25%), 4%);
-    & when (@inverse = inverse) {
-        border-color: fade(darken(@active-color, 20%), 40%);
-        background-color: fade(darken(@active-color,45%), 35%);
+.lightbackground() {
+    background-color: lighten(saturate(@base-color, 15%), 57%);
+    & when (@colour-set = cornflower) {
+        background-color: lighten(saturate(@base-color, 15%), 45%);
+    }
+    & when (@colour-set = cornfield) {
+        background-color: lighten(saturate(@base-color, 15%), 40%);
+    }
+    & when (@colour-set = malva) {
+        background-color: lighten(saturate(@base-color, 15%), 50%);
+    }
+    & when (@colour-set = meadow) {
+        background-color: lighten(saturate(@base-color, 15%), 60%);
+    }
+    & when (@colour-set = poppyseed) {
+        background-color: lighten(saturate(@base-color, 5%), 62%);
+    }
+    & when (@colour-set = roses) {
+        background-color: lighten(saturate(@base-color, 28%), 48%);
+    }
+    & when (@colour-set = blackwidow) {
+        background-color: darken(@active-color, 65%);
     }
 }
-.mediumBackground {
-    border-color: fade(@base-color, 25%);
-    background-color: fade(saturate(@base-color, 25%), 17%);
-    & when (@inverse = inverse) {
+.lightborders() {
+    border-color: lighten(@base-color, 36%);
+    & when (@colour-set = cornflower) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = cornfield) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = malva) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = meadow) {
+        border-color: lighten(@base-color, 36%);
+    }
+    & when (@colour-set = poppyseed) {
+        border-color: lighten(@base-color, 36%);
+    }
+    & when (@colour-set = roses) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = blackwidow) {
         border-color: darken(@active-color, 50%);
-        background-color: fade(darken(@active-color, 35%), 90%);
+    }
+}
+.mediumbackground() {
+    background-color: lighten(saturate(@base-color, 15%), 47%);
+    & when (@colour-set = cornflower) {
+        background-color: lighten(saturate(@base-color, 15%), 45%);
+    }
+    & when (@colour-set = cornfield) {
+        background-color: lighten(saturate(@base-color, 15%), 30%);
+    }
+    & when (@colour-set = malva) {
+        background-color: lighten(saturate(@base-color, 15%), 40%);
+    }
+    & when (@colour-set = meadow) {
+        background-color: lighten(saturate(@base-color, 5%), 50%);
+    }
+    & when (@colour-set = poppyseed) {
+        background-color: lighten(saturate(@base-color, 5%), 52%);
+    }
+    & when (@colour-set = roses) {
+        background-color: lighten(saturate(@base-color, 28%), 42%);
+    }
+    & when (@colour-set = blackwidow) {
+        background-color: darken(@active-color, 75%);
+    }
+}
+.mediumborders() {
+    border-color: lighten(@base-color, 26%);
+    & when (@colour-set = cornflower) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = cornfield) {
+        border-color: lighten(@base-color, 16%);
+    }
+    & when (@colour-set = malva) {
+        border-color: lighten(@base-color, 16%);
+    }
+    & when (@colour-set = meadow) {
+        border-color: lighten(@base-color, 26%);
+    }
+    & when (@colour-set = poppyseed) {
+        border-color: lighten(@base-color, 16%);
+    }
+    & when (@colour-set = roses) {
+        border-color: lighten(@base-color, 25%);
+    }
+    & when (@colour-set = blackwidow) {
+        border-color: darken(@active-color, 60%);
     }
 }
 .headertext {
@@ -125,9 +208,11 @@
     box-shadow: none;
     border: 1px solid;
 }
-.SobiPro label,
-.SobiPro .badge {
-//    text-shadow: none;
+.SobiPro label {
+    font-weight: 500;
+    & when (@inverse = inverse) {
+        font-weight: 400;
+    }
 }
 .SobiPro .label-info,
 .SobiPro .badge-info {
@@ -143,14 +228,13 @@
 
 .SobiPro .table th,
 .SobiPro .table td {
-    border-color: fade(@base-color, 20%);
-    & when (@inverse = inverse) {
-        border-color: fade(darken(@active-color, 20%), 40%);
-    }
+    .lightborders();
+
 }
 .SobiPro .table-striped tbody > tr:nth-child(2n+1) > td,
 .SobiPro .table-vstriped tbody > tr > td:nth-child(2n+1) {
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
 }
 .SobiPro .table.table-vstriped th,
 .SobiPro .table.table-vstriped td {
@@ -158,9 +242,11 @@
 }
 .SobiPro .table.table-vstriped td {
     border-right: 1px solid;
-    border-color: fade(@base-color, 20%);
+    .lightborders();
 }
-
+.SobiPro .table.table-vstriped > thead > tr > th {
+    border-bottom: none;
+}
 
 // seems that is missed in bootstrap??
 .SobiPro .input-medium {
@@ -179,16 +265,6 @@
 
 // Modal windows
 // -----------------------------------------
-& when (@inverse = inverse) {
-    .SobiPro,
-    .SobiPro .modal {
-        background-color: @back-color;
-        border-color: darken(@active-color, 30%);
-    }
-    .SobiPro .modal-footer {
-        background-color: @hover-color;
-    }
-}
 .SobiPro .modal {
     margin-top: 20px;
     //color: @active-color;
@@ -213,8 +289,21 @@
     margin-right: 10px;
     margin-left: 20px;
 }
-.SobiPro .modal.fade.in {
-    //top: 10%;
+& when (@inverse = inverse) {
+    .SobiPro,
+    .SobiPro .modal {
+        background-color: @back-color;
+        border-color: darken(@active-color, 30%);
+    }
+    .SobiPro .modal-body {
+        .lightbackground();
+    }
+    .SobiPro .modal-body label {
+        color: #fff;
+    }
+    .SobiPro .modal-footer {
+        background-color: @hover-color;
+    }
 }
 
 .SobiPro .ctrl-spinner {
@@ -378,7 +467,8 @@
 .SobiPro .pagination ul > .disabled > a,
 .SobiPro .pagination ul > .disabled > a:hover,
 .SobiPro .pagination ul > .disabled > a:focus {
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
     color: saturate(darken(@base-color, 12%), 20%);
     & when (@inverse = inverse) {
         color: lighten(@base-color, 50%);
@@ -407,6 +497,7 @@
 // special adjustments for inverse template colors
 // -----------------------------------------------
 & when (@inverse = inverse) {
+    .SobiPro .bootstrap-tagsinput,
     .SobiPro textarea,
     .SobiPro select,
     .SobiPro input[type="text"],
@@ -424,13 +515,17 @@
     .SobiPro input[type="tel"],
     .SobiPro input[type="color"],
     .SobiPro .uneditable-input {
-        background-color: lighten(@text-color, 30%);
-        color: @font-color;
-        border-color: lighten(@text-color, 25%);
+        background-color: #eeeeee;
+//        color: @font-color;
+//        border-color: lighten(@text-color, 25%);
+    }
+    .SobiPro ul,
+    .SobiPro ol {
+        color: #fff;
     }
     .SobiPro .input-append .add-on,
     .SobiPro .input-prepend .add-on {
-        color: @text-color;
+        //color: @text-color;
     }
 }
 
@@ -452,9 +547,9 @@
 .SobiPro input[type="color"]:focus,
 .SobiPro .uneditable-input:focus {
     border-color: fade(@base-color, 80%) !important;
-    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 60%);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 60%);
     & when (@inverse = inverse) {
-        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 80%);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px 4px rgba(red(@base-color), green(@base-color), blue(@base-color), 80%)
     }
     border: 1px solid;
 }
@@ -509,10 +604,13 @@
     color: saturate(darken(@base-color, 5%), 25%);
 }
 .SobiPro .bg-sigsiu {
-    .mediumBackground;
+    .mediumborders();
+    .mediumbackground();
+
 }
 .SobiPro .bg-sigsiu-light {
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
 }
 
 // Define widths to use as classes
@@ -567,6 +665,11 @@
     background-color: @alert-color;
     color: @active-color;
     border-color: darken(@alert-color, 10%);
+    & when (@inverse = inverse) {
+        background-color: @base-color;
+        color: @text-color;
+        border-color: lighten(@base-color, 10%);
+    }
     font-weight: bold;
     font-size: 95%;
 }
@@ -607,7 +710,6 @@
     & when (@inverse = inverse) {
         border-color: lighten(@error-color, 28%);
         background-color: lighten(@error-color, 32%);
-
     }
 }
 .SobiPro .spMessage .alert-success,
@@ -646,10 +748,12 @@
 .SobiPro .control-group.error input:focus,
 .SobiPro .control-group.error select:focus,
 .SobiPro .control-group.error textarea:focus {
-    border-color: fade(@error-color, 80%) !important;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+	border-color: fade(@error-color, 80%) !important;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+	& when (@inverse = inverse) {
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px 4px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+	}
 }
-
 .SobiPro .control-group.error input,
 .SobiPro .control-group.error select,
 .SobiPro .control-group.error textarea {
@@ -825,7 +929,7 @@
     font-size: 60px;
     & when (isnumber(@small-image)) {
         width: @small-image;
-        height: calc((@small-image / 4) * 3);
+        height: calc(@small-image * @image-ratio);
         font-size: calc((@small-image * 6)/10);
     }
     text-align: center;
@@ -836,17 +940,24 @@
     }
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin: 5px;
-    .lightBackground;
+
+    .lightbackground();
+    .lightborders();
 }
 .SobiPro .spDetailEntry .spNoImage {
-    width: 200px;
-    height: 150px;
-    font-size: 900%;
+    width: 300px;
+    height: 300px;
+    font-size: 180px;
+    & when (isnumber(@big-image)) {
+        width: @big-image;
+        height: calc(@big-image * @image-ratio);
+        font-size: calc((@big-image * 6) / 10);
+    }
 }
 .SobiPro .spNoImage i {
-    color: fade(@base-color, 40%);
+    color: lighten(@base-color, 30%);
     & when (@inverse = inverse) {
-        color: fade(@active-color, 40%);
+        color: lighten(@active-color, 60%);
     }
 }
 .SobiPro .spNoImageContainer {
@@ -855,6 +966,10 @@
 }
 .SobiPro .spNoImageContainer.right {
     float: right;
+    display: inline;
+}
+.SobiPro .spNoImageContainer.left {
+    float: left;
     display: inline;
 }
 .SobiPro .spNoImage {
@@ -883,6 +998,9 @@
 }
 .SobiPro span.spDetailSuffix {
     font-size: 80%;
+}
+.SobiPro .spDetailEntry .spClassViewImage img {
+    width: @big-image;
 }
 
 // Entry Status
@@ -917,20 +1035,27 @@
 .SobiPro .popover .popover-title {
     text-shadow: none;
     font-weight: bold;
-    & when (@inverse = inverse) {
-        background-color: darken(@alert-color, 30%);
-    }
 }
-& when (@inverse = inverse) {
-    .SobiPro .popover .popover-content {
-        color: @active-color;
-        background-color: @hover-color;
-    }
 
+& when (@inverse = inverse) {
+    .SobiPro .popover {
+        background-color: transparent;
+    }
+    .SobiPro .popover.bottom > .arrow {
+        border-bottom-color: darken(@alert-color, 50%);
+        opacity: 0.25;
+    }
+    .SobiPro .popover .popover-title {
+        background-color: darken(@alert-color, 50%);
+    }
     .SobiPro .spEntryContainer .popover-inner,
     .SobiPro .spDetails .popover-inner {
         background-color: @back-color;
         color: @text-color;
+    }
+    .SobiPro .popover .popover-content {
+        color: @active-color;
+        background-color: @hover-color;
     }
 }
 
@@ -974,6 +1099,12 @@
 .SobiPro .spEntryEdit .message-lightbulb {
     left: 0;
     position: relative;
+}
+& when (@corners = rounded) {
+    .SobiPro .spEntryEdit .message-lightbulb .popover-content {
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
 }
 .SobiPro .spEntryEdit .message-lightbulb .popover.bottom {
     margin-top: 0;
@@ -1023,6 +1154,11 @@
 }
 .SobiPro .spFieldUrl .btn-group {
     width: 100px;
+}
+.SobiPro .spUrlCounterValue {
+    font-size: 85%;
+    color: grey;
+    padding-left: 18px;
 }
 
 // Image Field
@@ -1201,7 +1337,8 @@
     padding-top: 25px;
 }
 .SobiPro table.payment tbody tr.info > td {
-    .mediumBackground;
+    .mediumborders();
+    .mediumbackground();
 }
 .SobiPro table.payment tbody tr.success > td {
     background-color: lighten(@alert-color, 20%);
@@ -1217,7 +1354,6 @@
 .SobiPro .disabledArea a {
     cursor: progress;
 }
-
 
 
 // Common fields styling via variable CSS classes
@@ -1240,6 +1376,62 @@
 }
 .SobiPro .spEntryContainer .spClassViewImage img {
     width: @small-image;
+}
+
+// Carousel Slider Settings
+// -----------------------------------------------
+.SobiPro .carousel-inner {
+    height: @carousel-image;
+}
+.SobiPro .carousel-inner > .item > img,
+.SobiPro .carousel-inner > .item > a > img {
+    height: @carousel-image;
+}
+.SobiPro .carousel-inner img.sp-carousel-image {
+    margin-left: auto;
+    margin-right: auto;
+}
+.SobiPro .carousel-control.right {
+    background-image: linear-gradient(to right, transparent 0, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 100%);
+}
+.SobiPro .carousel-control.left {
+	background-image: linear-gradient(to right, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 0, transparent 100%);
+}
+
+// Support for Font Awesome 3 and 4
+.SobiPro .carousel-control .fa-chevron-right,
+.SobiPro .carousel-control .icon-chevron-right,
+.SobiPro .carousel-control .icon-next {
+    margin-right: -15px;
+}
+.SobiPro .carousel-control .fa-chevron-left,
+.SobiPro .carousel-control .fa-chevron-right,
+.SobiPro .carousel-control .icon-chevron-left,
+.SobiPro .carousel-control .icon-chevron-right,
+.SobiPro .carousel-control .icon-next,
+.SobiPro .carousel-control .icon-prev {
+    width: 30px;
+    height: 30px;
+    margin-top: -15px;
+    font-size: 30px;
+}
+.SobiPro .carousel-control .fa-chevron-right,
+.SobiPro .carousel-control .icon-chevron-right,
+.SobiPro .carousel-control .icon-next {
+    right: 50%;
+    margin-right: -10px;
+}
+.SobiPro .carousel-control .fa-chevron-left,
+.SobiPro .carousel-control .fa-chevron-right,
+.SobiPro .carousel-control .icon-chevron-left,
+.SobiPro .carousel-control .icon-chevron-right,
+.SobiPro .carousel-control .icon-next,
+.SobiPro .carousel-control .icon-prev {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    display: inline-block;
+    margin-top: -10px;
 }
 
 // SP-GeoMap Field
@@ -1271,8 +1463,10 @@
     .SobiPro div.tagsinput input {
         background-color: @base-color;
     }
+    .SobiPro .bootstrap-tagsinput {
+        background-color: #eeeeee;
+    }
 }
-
 
 // Review and Rating App
 // -----------------------------------------------
@@ -1297,10 +1491,12 @@
 .SobiPro table.SpCalendar th,
 .SobiPro table.SpCalendar td,
 .SobiPro table.SpCalendar {
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
 }
 .SobiPro table.SpCalendar td.SpCalSun {
-    .mediumBackground;
+    .mediumborders();
+    .mediumbackground();
 }
 .SobiPro table.SpCalendar th {
     color: @base-color;
@@ -1327,7 +1523,8 @@
     & when (@corners = rounded) {
         border-radius: 4px;
     }
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
 }
 .SobiPro .spCollection .nav > li > a {
     border-color: fade(#ffffff, 0%);
@@ -1345,10 +1542,12 @@
 // Profile Field
 // -----------------------------------------------
 .SobiPro .spProfile.striped > blockquote:nth-child(2n+1) {
-    .lightBackground;
+    .lightbackground();
+    .lightborders();
 }
 .SobiPro .spProfile.striped > blockquote:nth-child(2n) {
-    .mediumBackground;
+    .mediumborders();
+    .mediumbackground();
 }
 .SobiPro .spProfileSection {
     margin-top: 30px;
@@ -1424,6 +1623,13 @@
     .SobiPro .input-small {
         width: calc(100% - 12px);
     }
+
+    // Carousel
+    .SobiPro .carousel-inner,
+    .SobiPro .carousel-inner > .item > img,
+    .SobiPro .carousel-inner > .item > a > img {
+        height: auto;
+    }
 }
 
 // form switch to label above input
@@ -1483,13 +1689,11 @@
     .SobiPro .modal .control-group {
         margin-bottom: 6px;
     }
+    .SobiPro .spDetailEntry .spClassViewImage img,
     .SobiPro div.spClassViewImage img,
     .SobiPro .spEntryContainer .spClassViewImage img {
         width: calc(100% - 8px);
         margin: 0 0 10px 0;
-    }
-    .SobiPro .spClassViewImage img {
-        float:none!important;
     }
     .SobiPro .spNoImage {
         display: none;
@@ -1497,6 +1701,11 @@
     .SigsiuTree .buttons {
         text-align: center;
     }
+    .SobiPro .spDetailEntry .spClassViewImage img,
+    .SobiPro .spClassViewImage img {
+        float:none!important;
+    }
+    .SobiPro .input-large,
     .SobiPro .input-medium,
     .SobiPro .sp-search-controls .btn {
         width: 100%;
