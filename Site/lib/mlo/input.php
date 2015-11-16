@@ -181,7 +181,7 @@ abstract class SPHtml_Input
 		$f .= self::file( $name . '-file', 0, $classes, $accept );
 		$f .= '</div>';
 		$b3class = '';
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$b3class = ' form-control';
 		}
 		if ( !( $stupidInternetExplorer ) ) {
@@ -220,12 +220,13 @@ abstract class SPHtml_Input
 	 */
 	public static function _text( $name, $value = null, $params = null )
 	{
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )){
-			SPHtml_Input::checkArray($params);
-			if (isset($params['class'])) {
-				$params['class'] .= ' form-control';
-			} else {
-				$params['class'] = ' form-control';
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+			SPHtml_Input::checkArray( $params );
+			if ( isset( $params[ 'class' ] ) ) {
+				$params[ 'class' ] .= ' form-control';
+			}
+			else {
+				$params[ 'class' ] = ' form-control';
 			}
 		}
 		$params = self::params( $params );
@@ -334,7 +335,7 @@ abstract class SPHtml_Input
 		if ( !isset( $params[ 'style' ] ) ) {
 			$params[ 'style' ] = "height: {$height}px;";
 		}
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$editorParams[ 'class' ] = "form-control";
 		}
 
@@ -349,12 +350,13 @@ abstract class SPHtml_Input
 			}
 		}
 		else {
-			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
-				SPHtml_Input::checkArray($params);
-				if (isset($params['class'])) {
-					$params['class'] .= ' form-control';
-				} else {
-					$params['class'] = ' form-control';
+			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+				SPHtml_Input::checkArray( $params );
+				if ( isset( $params[ 'class' ] ) ) {
+					$params[ 'class' ] .= ' form-control';
+				}
+				else {
+					$params[ 'class' ] = ' form-control';
 				}
 			}
 			$params = self::params( $params );
@@ -403,14 +405,14 @@ abstract class SPHtml_Input
 			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
 		}
 		if ( is_array( $order ) ) {
-			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 				//im Moment weiss ich nichts besseres hierfür
-				$f = ($order == 'left') ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
+				$f = ( $order == 'left' ) ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 			}
 			else {
 				$field = null;
-				foreach ($order as $position) {
-					switch ($position) {
+				foreach ( $order as $position ) {
+					switch ( $position ) {
 						case 'field':
 							$field .= $f;
 							break;
@@ -426,11 +428,11 @@ abstract class SPHtml_Input
 			}
 		}
 		else {
-			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
-				$f = ($order == 'left') ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
+			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+				$f = ( $order == 'left' ) ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 			}
 			else {
-				$f = ($order == 'left') ? $l . $f : $f . $l;
+				$f = ( $order == 'left' ) ? $l . $f : $f . $l;
 			}
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
@@ -475,7 +477,7 @@ abstract class SPHtml_Input
 				else {
 					$image = null;
 				}
-				if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+				if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 					$container = '<div class="checkbox-inline ' . $order . '">';
 					$containerend = '</div>';
 				}
@@ -529,14 +531,14 @@ abstract class SPHtml_Input
 			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
 		}
 		if ( is_array( $order ) ) {
-			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 				//im Moment weiss ich nichts besseres hierfür
-				$f = ($order == 'left') ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
+				$f = ( $order == 'left' ) ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 			}
 			else {
 				$field = null;
-				foreach ($order as $position) {
-					switch ($position) {
+				foreach ( $order as $position ) {
+					switch ( $position ) {
 						case 'field':
 							$field .= $f;
 							break;
@@ -553,8 +555,8 @@ abstract class SPHtml_Input
 			}
 		}
 		else {
-			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
-				$f = ($order == 'left') ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
+			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+				$f = ( $order == 'left' ) ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 			}
 			else {
 				$f = ( $order == 'left' ) ? $l . $f : $f . $l;
@@ -585,7 +587,7 @@ abstract class SPHtml_Input
 	{
 		self::checkArray( $values );
 
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$container = '<div class="radio-inline ' . $field . '">';
 			$containerend = '</div>';
 		}
@@ -611,72 +613,76 @@ abstract class SPHtml_Input
 	}
 
 
-	public static function createOptions($values, $selected = null)
+	public static function createOptions( $values, $selected = null )
 	{
 		$cells = array();
 		$t = null;
 		$gt = null;
-		if (is_array($values) && count($values)) {
-			foreach ($values as $v => $l) {
+		if ( is_array( $values ) && count( $values ) ) {
+			foreach ( $values as $v => $l ) {
 				/* if one of both values was an array - it is a group */
-				if ((is_array($l) || is_array($v)) && !(isset($l['label']))) {
-					$cells[] = "<optgroup label=\"{$v}\"{$gt}>";
-					if (count($l)) {
-						foreach ($l as $ov => $ol) {
+				if ( ( is_array( $l ) || is_array( $v ) ) && !( isset( $l[ 'label' ] ) ) ) {
+					$cells[ ] = "<optgroup label=\"{$v}\"{$gt}>";
+					if ( count( $l ) ) {
+						foreach ( $l as $ov => $ol ) {
 							/** when there is a group */
-							if (is_array($ol) && !(isset($ol['label']))) {
-								self::optGrp($cells, $selected, $ol, $ov);
-							} else {
+							if ( is_array( $ol ) && !( isset( $ol[ 'label' ] ) ) ) {
+								self::optGrp( $cells, $selected, $ol, $ov );
+							}
+							else {
 								/** when we have special params */
-								if (is_array($ol) && (isset($ol['label']))) {
-									$sel = in_array(( string )$ol['value'], $selected, true) ? ' selected="selected" ' : null;
-									$ol = self::cleanOpt($ol['label']);
-									$ov = self::cleanOpt($ol['value']);
+								if ( is_array( $ol ) && ( isset( $ol[ 'label' ] ) ) ) {
+									$sel = in_array( ( string )$ol[ 'value' ], $selected, true ) ? ' selected="selected" ' : null;
+									$ol = self::cleanOpt( $ol[ 'label' ] );
+									$ov = self::cleanOpt( $ol[ 'value' ] );
 									$p = null;
 									$oParams = array();
-									if (isset($ol['params']) && count($ol['params'])) {
-										foreach ($ol['params'] as $param => $value) {
-											$oParams[] = "{$param}=\"{$value}\"";
+									if ( isset( $ol[ 'params' ] ) && count( $ol[ 'params' ] ) ) {
+										foreach ( $ol[ 'params' ] as $param => $value ) {
+											$oParams[ ] = "{$param}=\"{$value}\"";
 										}
 									}
-									if (count($oParams)) {
-										$p = implode(' ', $oParams);
+									if ( count( $oParams ) ) {
+										$p = implode( ' ', $oParams );
 										$p = " {$p} ";
 									}
-									$cells[] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
-								} else {
-									$sel = in_array(( string )$ov, $selected, true) ? ' selected="selected" ' : null;
-									$ol = self::cleanOpt($ol);
-									$ov = self::cleanOpt($ov);
-									$cells[] = "\t<option {$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
+									$cells[ ] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
+								}
+								else {
+									$sel = in_array( ( string )$ov, $selected, true ) ? ' selected="selected" ' : null;
+									$ol = self::cleanOpt( $ol );
+									$ov = self::cleanOpt( $ov );
+									$cells[ ] = "\t<option {$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
 								}
 							}
 						}
 					}
-					$cells[] = "</optgroup>";
-				} else {
+					$cells[ ] = "</optgroup>";
+				}
+				else {
 					/** when we have special params */
-					if (is_array($l) && (isset($l['label']))) {
-						$sel = in_array(( string )$l['value'], $selected, true) ? ' selected="selected" ' : null;
-						$ol = self::cleanOpt($l['label']);
-						$ov = self::cleanOpt($l['value']);
+					if ( is_array( $l ) && ( isset( $l[ 'label' ] ) ) ) {
+						$sel = in_array( ( string )$l[ 'value' ], $selected, true ) ? ' selected="selected" ' : null;
+						$ol = self::cleanOpt( $l[ 'label' ] );
+						$ov = self::cleanOpt( $l[ 'value' ] );
 						$p = null;
 						$oParams = array();
-						if (isset($l['params']) && count($l['params'])) {
-							foreach ($l['params'] as $param => $value) {
-								$oParams[] = "{$param}=\"{$value}\"";
+						if ( isset( $l[ 'params' ] ) && count( $l[ 'params' ] ) ) {
+							foreach ( $l[ 'params' ] as $param => $value ) {
+								$oParams[ ] = "{$param}=\"{$value}\"";
 							}
 						}
-						if (count($oParams)) {
-							$p = implode(' ', $oParams);
+						if ( count( $oParams ) ) {
+							$p = implode( ' ', $oParams );
 							$p = " {$p} ";
 						}
-						$cells[] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
-					} else {
-						$sel = in_array(( string )$v, $selected, true) ? ' selected="selected" ' : null;
-						$v = self::cleanOpt($v);
-						$l = self::cleanOpt(self::translate($l));
-						$cells[] = "<option {$sel}value=\"{$v}\"{$t}>{$l}</option>";
+						$cells[ ] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
+					}
+					else {
+						$sel = in_array( ( string )$v, $selected, true ) ? ' selected="selected" ' : null;
+						$v = self::cleanOpt( $v );
+						$l = self::cleanOpt( self::translate( $l ) );
+						$cells[ ] = "<option {$sel}value=\"{$v}\"{$t}>{$l}</option>";
 
 					}
 				}
@@ -723,12 +729,13 @@ abstract class SPHtml_Input
 	 */
 	public static function _select( $name, $values, $selected = null, $multi = false, $params = null )
 	{
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
-			SPHtml_Input::checkArray($params);
-			if (isset($params['class'])) {
-				$params['class'] .= ' form-control';
-			} else {
-				$params['class'] = ' form-control';
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+			SPHtml_Input::checkArray( $params );
+			if ( isset( $params[ 'class' ] ) ) {
+				$params[ 'class' ] .= ' form-control';
+			}
+			else {
+				$params[ 'class' ] = ' form-control';
 			}
 		}
 		if ( is_array( $params ) && ( isset( $params[ 'size' ] ) && $params[ 'size' ] == 1 ) ) {
@@ -942,11 +949,12 @@ abstract class SPHtml_Input
 			$params[ 'data' ][ 'time-offset' ] = SPFactory::config()->getTimeOffset();
 //			$offset = $params[ 'data' ][ 'time-offset' ];
 		}
+		$bs3 = ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) );
 		$data = self::createDataTag( $params );
 		SPFactory::header()
 				->addCssFile( 'bootstrap.datepicker' )
 				->addJsFile( array( 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ) );
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+		if ( $bs3 ) {
 			$f = '<div class="input-group input-append date spDatePicker">';
 			$params[ 'class' ] .= ' form-control';
 		}
@@ -954,7 +962,8 @@ abstract class SPHtml_Input
 			$f = '<div class="input-append date spDatePicker">';
 		}
 		$params = self::params( $params );
-		$f .= '<input type="text" disabled="disabled" value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" ' . $data . '/>';
+		$append = $bs3 ? ' data-append-to="body"' : null;
+		$f .= '<input type="text" disabled="disabled"' . $append . ' value="' . $valueDisplay . '" ' . $params . ' name="' . $name . 'Holder" ' . $data . '/>';
 		/**
 		 * Mon, Nov 17, 2014 11:39:34 So here I am a bit baffled: we initially changed it to integer (unfortunately I do not remember why)
 		 * but it seems that it may be overwriting the 32 bit (why a 64-bit machine limits integer to 32 bit is another story).
@@ -972,7 +981,7 @@ abstract class SPHtml_Input
 //		$f .= '<input type="hidden" value="' . ( $value ? (int)( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null ) . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? ( $value + SPFactory::config()->getTimeOffset() ) * 1000 : null ) . '" name="' . $name . '"/>';
 
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$f .= '<span class="input-group-addon add-on">';
 		}
 		else {
@@ -1183,12 +1192,12 @@ abstract class SPHtml_Input
 
 		$save = $saveText ? '<a href="#" id="' . $bid . '-save" class="btn btn-primary btn-sigsiu save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>' : null;
 
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 			//remove hide from modal windows as BS3 modals aren't controlled via hide
-			$classes = str_replace('hide',null,$classes);
+			$classes = str_replace( 'hide', null, $classes );
 		}
 		$html .= '<div class="' . $classes . $id . $style . '>';
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$html .= '<div class="modal-dialog"><div class="modal-content">';
 		}
 		$html .= '  <div class="modal-header">
@@ -1201,7 +1210,7 @@ abstract class SPHtml_Input
 						<a href="#" class="btn btn-default" data-dismiss="modal">' . Sobi::Txt( $closeText ) . '</a>
 						' . $save . '
 					</div>';
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$html .= '</div></div>';
 		}
 		$html .= '</div>';
