@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -91,7 +89,7 @@ final class SobiProAdmCtrl
 		/* authorise access */
 		$this->checkAccess();
 		/* initialise mainframe interface to CMS */
-		$this->_mainframe = & SPFactory::mainframe();
+		$this->_mainframe = &SPFactory::mainframe();
 
 		/* get sid if any */
 		$this->_sid = SPRequest::sid();
@@ -155,21 +153,9 @@ final class SobiProAdmCtrl
 	 */
 	private function checkAccess()
 	{
-		$this->_user = & SPFactory::user();
 		/* authorise access permissions */
-		if ( !$this->_user->can( 'panel' ) ) {
-			Sobi::Error( 'CoreCtrl', /*SPLang::e*/
-				( 'UNAUTHORIZED_ACCESS' ), SPC::ERROR, 403, __LINE__, __FILE__ );
-			exit();
-		}
-		/* authorise task permissions */
-		if ( SPRequest::task() ) {
-			if ( !$this->_user->can( SPRequest::task() ) ) {
-				Sobi::Error( 'CoreCtrl', /*SPLang::e*/
-					( 'UNAUTHORIZED_ACCESS' ), SPC::ERROR, 403, __LINE__, __FILE__ );
-				//				Sobi::Error( 'CoreCtrl', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
-				exit();
-			}
+		if ( !( Sobi::Can( 'cms.manage' ) ) ) {
+			Sobi::Error( 'CoreCtrl', ( 'Unauthorised Access.' ), SPC::WARNING, 403, __LINE__, __FILE__ );
 		}
 	}
 
@@ -179,7 +165,7 @@ final class SobiProAdmCtrl
 	 */
 	private function createConfig()
 	{
-		$this->_config = & SPFactory::config();
+		$this->_config = &SPFactory::config();
 		/* load basic configuration settings */
 		$this->_config->addIniFile( 'etc.config', true );
 		$this->_config->addIniFile( 'etc.adm.config', true );
@@ -303,19 +289,19 @@ final class SobiProAdmCtrl
 						}
 						if ( !( count( $this->_ctrl ) ) ) {
 							Sobi::Error( 'CoreCtrl', SPLang::e( 'IDENTIFIER_EXPECTED' ), SPC::WARNING, 0, __LINE__, __FILE__ );
-							Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ) . ' ' . SPLang::e('IDENTIFIER_EXPECTED_DESC'), SPC::ERROR_MSG );
+							Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ) . ' ' . SPLang::e( 'IDENTIFIER_EXPECTED_DESC' ), SPC::ERROR_MSG );
 						}
 					}
 					else {
 						Sobi::Error( 'CoreCtrl', SPLang::e( 'IDENTIFIER_EXPECTED' ), SPC::WARNING, 0, __LINE__, __FILE__ );
-						Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ) . ' ' . SPLang::e('IDENTIFIER_EXPECTED_DESC'), SPC::ERROR_MSG );
+						Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ) . ' ' . SPLang::e( 'IDENTIFIER_EXPECTED_DESC' ), SPC::ERROR_MSG );
 						$r = false;
 						//break;
 					}
 				}
 				else {
 					Sobi::Error( 'CoreCtrl', SPLang::e( 'IDENTIFIER_EXPECTED' ), SPC::WARNING, 0, __LINE__, __FILE__ );
-					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ) . ' ' . SPLang::e('IDENTIFIER_EXPECTED_DESC'), SPC::ERROR_MSG );
+					Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), SPLang::e( 'IDENTIFIER_EXPECTED' ) . ' ' . SPLang::e( 'IDENTIFIER_EXPECTED_DESC' ), SPC::ERROR_MSG );
 					$r = false;
 					//break;
 				}
@@ -335,7 +321,7 @@ final class SobiProAdmCtrl
 					Sobi::Error( 'CoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 				}
 				if ( $this->_sid ) {
-					$this->_model = & SPFactory::object( $this->_sid );
+					$this->_model = &SPFactory::object( $this->_sid );
 				}
 				/* if the basic object we got from the #getSection method is the same one ... */
 				if ( ( $this->_model instanceof stdClass ) && ( $this->_model->oType == $obj ) ) {
@@ -466,6 +452,6 @@ final class SobiProAdmCtrl
 	 */
 	public function setController( &$ctrl )
 	{
-		$this->_ctrl = & $ctrl;
+		$this->_ctrl = &$ctrl;
 	}
 }

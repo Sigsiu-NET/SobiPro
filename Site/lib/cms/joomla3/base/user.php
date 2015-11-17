@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -19,6 +17,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 require_once dirname( __FILE__ ) . '/../../joomla_common/base/user.php';
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -149,7 +148,7 @@ class SPUser extends SPJoomlaUser
 	 */
 	public function isAdmin()
 	{
-		return ( $this->id && JFactory::getUser()->authorise( 'core.login.admin' ) );
+		return ( $this->id && JFactory::getUser()->authorise( 'core.admin', 'com_users' ) );
 	}
 
 	/**
@@ -171,8 +170,8 @@ class SPUser extends SPJoomlaUser
 
 		/* first thing we need is all rules id for the group where the user is assigned to */
 		$join = array(
-			array( 'table' => 'spdb_permissions_groups', 'as' => 'spgr', 'key' => 'rid' ),
-			array( 'table' => 'spdb_permissions_rules', 'as' => 'sprl', 'key' => 'rid' )
+				array( 'table' => 'spdb_permissions_groups', 'as' => 'spgr', 'key' => 'rid' ),
+				array( 'table' => 'spdb_permissions_rules', 'as' => 'sprl', 'key' => 'rid' )
 		);
 		$gids = implode( ', ', $this->gid );
 		$valid = $db->valid( 'sprl.validUntil', 'sprl.validSince', 'state' );

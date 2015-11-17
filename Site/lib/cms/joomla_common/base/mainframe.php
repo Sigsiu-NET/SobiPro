@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -172,6 +170,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	 * @param int $code The application-internal error code for this error
 	 * @param mixed $info Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database DSN).
 	 * @param bool $translate
+	 * @throws Exception
 	 * @return object    $error    The configured JError object
 	 */
 	public function runAway( $msg, $code = 500, $info = null, $translate = false )
@@ -179,7 +178,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$msg = $translate ? JText::_( $msg ) : $msg;
 		$msg = str_replace( SOBI_PATH, null, $msg );
 		$msg = str_replace( SOBI_ROOT, null, $msg );
-		return JError::raiseError( $code, $msg, $info );
+		throw new Exception( $msg, $code );
 	}
 
 	/**

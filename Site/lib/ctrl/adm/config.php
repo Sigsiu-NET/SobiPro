@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -41,6 +39,18 @@ class SPConfigAdmCtrl extends SPController
 	{
 		$registry =& SPFactory::registry();
 		$registry->loadDBSection( 'config' );
+		$this->_task = strlen( $this->_task ) ? $this->_task : $this->_defTask;
+		if ( !( Sobi::Reg( 'current_section' ) ) && $this->_task == 'general' ) {
+			$this->_task = 'global';
+			if ( !( Sobi::Can( 'cms.admin' ) ) ) {
+				Sobi::Error( 'ACL', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 403, __LINE__, __FILE__ );
+			}
+		}
+		else {
+			if ( !( Sobi::Can( 'section.configure' ) ) ) {
+				Sobi::Error( 'ACL', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 403, __LINE__, __FILE__ );
+			}
+		}
 		parent::__construct();
 	}
 
@@ -48,10 +58,6 @@ class SPConfigAdmCtrl extends SPController
 	 */
 	public function execute()
 	{
-		$this->_task = strlen( $this->_task ) ? $this->_task : $this->_defTask;
-		if ( !( Sobi::Reg( 'current_section' ) ) && $this->_task == 'general' ) {
-			$this->_task = 'global';
-		}
 		switch ( $this->_task ) {
 			case 'clean':
 				SPFactory::cache()->cleanSection();

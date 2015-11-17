@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -18,6 +16,7 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -95,8 +94,8 @@ class SPJoomlaUser extends JUser
 			$db =& SPFactory::db();
 			$valid = $db->valid( 'rel.validUntil', 'rel.validSince', 'grp.enabled' );
 			$join = array(
-				array( 'table' => 'spdb_user_group', 'as' => 'grp', 'key' => 'gid' ),
-				array( 'table' => 'spdb_users_relation', 'as' => 'rel', 'key' => 'gid' )
+					array( 'table' => 'spdb_user_group', 'as' => 'grp', 'key' => 'gid' ),
+					array( 'table' => 'spdb_users_relation', 'as' => 'rel', 'key' => 'gid' )
 			);
 			$gids = $db->select( 'rel.gid', $db->join( $join ), array( '@VALID' => $valid, 'uid' => $this->id ) )->loadResultArray();
 			if ( count( $gids ) ) {
@@ -197,6 +196,10 @@ class SPJoomlaUser extends JUser
 		if ( $this->isAdmin() ) {
 			return true;
 		}
+		// native joomla ACL
+		if ( $subject == 'cms' ) {
+			return JFactory::getUser()->authorise( 'core.' . $action, 'com_sobipro' );
+		}
 		/* translate automatic created request */
 		switch ( $action ) {
 			case 'cancel':
@@ -273,10 +276,10 @@ class SPJoomlaUser extends JUser
 	 * Checks if the current user is an admin
 	 * @return bool
 	 */
-	public function isAdmin()
-	{
-		return ( ( $this->usertype == 'Super Administrator' || $this->usertype == 'Administrator' ) && $this->id );
-	}
+//	public function isAdmin()
+//	{
+//		return ( ( $this->usertype == 'Super Administrator' || $this->usertype == 'Administrator' ) && $this->id );
+//	}
 
 	/**
 	 * Enter description here...
@@ -297,8 +300,8 @@ class SPJoomlaUser extends JUser
 
 		/* first thing we need is all rules id for the group where the user is assigned to */
 		$join = array(
-			array( 'table' => 'spdb_permissions_groups', 'as' => 'spgr', 'key' => 'rid' ),
-			array( 'table' => 'spdb_permissions_rules', 'as' => 'sprl', 'key' => 'rid' )
+				array( 'table' => 'spdb_permissions_groups', 'as' => 'spgr', 'key' => 'rid' ),
+				array( 'table' => 'spdb_permissions_rules', 'as' => 'sprl', 'key' => 'rid' )
 		);
 		$gids = implode( ', ', $this->gid );
 		$valid = $db->valid( 'sprl.validUntil', 'sprl.validSince', 'state' );
@@ -309,7 +312,7 @@ class SPJoomlaUser extends JUser
 		} catch ( SPException $x ) {
 			Sobi::Error( 'permissions', SPLang::e( 'CANNOT_GET_PERMISSIONS', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __CLASS__ );
 		}
-		/* if we have the rules ids we need to get permission for this section and global permsion */
+		/* if we have the rules ids we need to get permission for this section and global permission */
 		if ( count( $this->_prules ) ) {
 			try {
 				$db->select( 'pid', 'spdb_permissions_map', array( 'sid' => $sid, 'rid' => $this->_prules ) );
@@ -387,8 +390,8 @@ class SPJoomlaUser extends JUser
 
 	/**
 	 * Sets the value of a user state variable.
-	 * @param    string $key     - The path of the state.
-	 * @param    string $value     - The value of the variable.
+	 * @param    string $key - The path of the state.
+	 * @param    string $value - The value of the variable.
 	 * @return    mixed    The previous state, if one existed.
 	 */
 	public function setUserState( $key, &$value )
@@ -398,10 +401,10 @@ class SPJoomlaUser extends JUser
 
 	/**
 	 * Gets the value of a user state variable.
-	 * @param    string $key     - The key of the user state variable.
+	 * @param    string $key - The key of the user state variable.
 	 * @param    string $request - The name of the variable passed in a request.
 	 * @param    string $default - The default value for the variable if not found. Optional.
-	 * @param    string $type    - Filter for the variable.
+	 * @param    string $type - Filter for the variable.
 	 * @return    mixed
 	 */
 	public function & getUserState( $key, $request, $default = null, $type = 'none' )
@@ -413,8 +416,8 @@ class SPJoomlaUser extends JUser
 
 	/**
 	 * Sets the value of a user data.
-	 * @param    string $key     - The path of the state.
-	 * @param    string $value     - The value of the variable.
+	 * @param    string $key - The path of the state.
+	 * @param    string $value - The value of the variable.
 	 * @return    mixed    The previous state, if one existed.
 	 */
 	public function setUserData( $key, &$value )

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <access component="com_sobipro">
 	<section name="component">
-		<action name="sobipro.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
-		<action name="sobipro.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
+		<action name="core.admin" title="JACTION_ADMIN" description="JACTION_ADMIN_COMPONENT_DESC" />
+		<action name="core.manage" title="JACTION_MANAGE" description="JACTION_MANAGE_COMPONENT_DESC" />
+		<action name="core.apps" title="SP.MANAGE_APPS" description="SP.MANAGE_APPS_DESC" />
 	</section>
 </access>

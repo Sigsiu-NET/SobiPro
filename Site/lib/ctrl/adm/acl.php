@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -20,6 +18,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'config', true );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -42,7 +41,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 */
 	public function __construct()
 	{
-		if ( !Sobi::Can( 'acl.manage' ) ) {
+		if ( !( Sobi::Can( 'cms.admin' ) ) ) {
 			Sobi::Error( 'ACL', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 403, __LINE__, __FILE__ );
 			exit();
 		}
@@ -129,9 +128,9 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			$this->loadPermissions();
 		}
 		if (
-			isset( $this->_perms[ $site ][ $subject ] )
-			&& isset( $this->_perms[ $site ][ $subject ][ $action ] )
-			&& in_array( $value, $this->_perms[ $site ][ $subject ][ $action ] )
+				isset( $this->_perms[ $site ][ $subject ] )
+				&& isset( $this->_perms[ $site ][ $subject ][ $action ] )
+				&& in_array( $value, $this->_perms[ $site ][ $subject ][ $action ] )
 		) {
 			return true;
 		}
@@ -439,12 +438,12 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		}
 		else {
 			$rule = array(
-				'validUntil' => null,
-				'validSince' => null,
-				'name' => '',
-				'nid' => '',
-				'note' => '',
-				'permissions' => array()
+					'validUntil' => null,
+					'validSince' => null,
+					'name' => '',
+					'nid' => '',
+					'note' => '',
+					'permissions' => array()
 			);
 			$view->assign( $rule, 'set' );
 		}

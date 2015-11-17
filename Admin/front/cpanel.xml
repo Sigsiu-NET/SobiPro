@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  @version: $Id$
  @package: SobiPro Component for Joomla!
 
@@ -31,7 +30,7 @@
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiPro">
 		<divider />
-		<buttons type="actions">
+		<buttons type="actions" condition="acl.config">
 			<button type="new" task="section.add" label="TB.ADD_NEW" icon="file" />
 			<button type="delete" task="section.delete" confirm="TB.JS_DELETE_SECTION_WARN" />
 			<nav-header label="TB.PUBLISHING" />
@@ -40,10 +39,10 @@
 		</buttons>
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">
-			<button type="url" task="config" />
-			<button type="url" task="acl" />
-			<button type="url" task="extensions.installed" />
-			<button type="url" task="template.info" />
+			<button type="url" task="config" condition="acl.config" />
+			<button type="url" task="acl" condition="acl.config" />
+			<button type="url" task="extensions.installed" condition="acl.apps" />
+			<button type="url" task="template.info" condition="acl.apps" />
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
@@ -234,26 +233,25 @@
 
 			<div class="span6">
 				<ul class="thumbnails">
-					<li class="spBox">
+					<li class="spBox" condition="acl.config">
 						<url type="intern" label="CPANEL.GCONF" image="../media/sobipro/adm/folder-configuration.png">
 							<param name="task" value="config" />
 						</url>
 					</li>
-					<li class="spBox">
+					<li class="spBox" condition="acl.config">
 						<url type="intern" label="CPANEL.ACL" image="../media/sobipro/adm/sobipro-acl-edit.png">
 							<param name="task" value="acl" />
 						</url>
 					</li>
-					<li class="spBox">
+					<li class="spBox" condition="acl.apps">
 						<url type="intern" label="CPANEL.SAM" image="../media/sobipro/adm/folder-application.png">
 							<param name="task" value="extensions.installed" />
 						</url>
 					</li>
-					<li class="spBox">
+					<li class="spBox" condition="acl.apps">
 						<url type="intern" label="CPANEL.TMPL" image="../media/sobipro/adm/folder-templates.png">
 							<param name="task" value="template.info" />
 						</url>
-
 					</li>
 				</ul>
 
@@ -304,7 +302,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="accordion-group">
+					<div class="accordion-group" condition="acl.apps">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProUpdates">
 								<text value="ABOUT.UPDATES_PANE" />
@@ -334,9 +332,9 @@
 								<div class="spNews">
 									<loop subject="news.feeds" table="false">
 										<cell class="SpCellContainer">
-                                            <cell type="image" value="title" class="SpCellNewsImage">
-                                                <url type="extern" host="image" />
-                                            </cell>
+											<cell type="image" value="title" class="SpCellNewsImage">
+												<url type="extern" host="image" />
+											</cell>
 											<cell type="link" value="title" class="SpCellNewsTitle">
 												<url type="extern" host="url" />
 											</cell>

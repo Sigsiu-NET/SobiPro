@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -20,6 +18,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'config', true );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -38,7 +37,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	public function __construct()
 	{
-		if ( !Sobi::Can( 'extensions.manage' ) ) {
+		if ( !( Sobi::Can( 'cms.apps' ) ) ) {
 			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 403, __LINE__, __FILE__ );
 			exit();
 		}
@@ -46,7 +45,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	public function execute()
 	{
- 		$this->_task = strlen( $this->_task ) ? $this->_task : $this->_defTask;
+		$this->_task = strlen( $this->_task ) ? $this->_task : $this->_defTask;
 		switch ( $this->_task ) {
 			case 'installed':
 				$this->installed();
@@ -515,8 +514,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$msg->progress( $progress, $def->toXML( $extensions, 'extensionsList' ) );
 			try {
 				$file->save();
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				$msg->progress( $progress, $x->getMessage() );
 			}
 //			sleep( 1 );
@@ -808,14 +806,14 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$connection = SPFactory::Instance( 'services.remote' );
 		$def = "https://{$repositoryId}/repository.xml";
 		$connection->setOptions(
-			array(
-				'url' => $def,
-				'connecttimeout' => 10,
-				'header' => false,
-				'returntransfer' => true,
-				'ssl_verifypeer' => false,
-				'ssl_verifyhost' => 2,
-			)
+				array(
+						'url' => $def,
+						'connecttimeout' => 10,
+						'header' => false,
+						'returntransfer' => true,
+						'ssl_verifypeer' => false,
+						'ssl_verifyhost' => 2,
+				)
 		);
 		$path = SPLoader::path( 'etc.repos.' . str_replace( '.', '_', $repositoryId ), 'front', false, 'xml' );
 		$file = SPFactory::Instance( 'base.fs.file', $path );
@@ -903,14 +901,14 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$connection = SPFactory::Instance( 'services.remote' );
 		$def = 'https://xml.sigsiu.net/SobiPro/repository.xsd';
 		$connection->setOptions(
-			array(
-				'url' => $def,
-				'connecttimeout' => 10,
-				'header' => false,
-				'returntransfer' => true,
-				'ssl_verifypeer' => false,
-				'ssl_verifyhost' => 2,
-			)
+				array(
+						'url' => $def,
+						'connecttimeout' => 10,
+						'header' => false,
+						'returntransfer' => true,
+						'ssl_verifypeer' => false,
+						'ssl_verifyhost' => 2,
+				)
 		);
 		$schema =& SPFactory::Instance( 'base.fs.file', SPLoader::path( 'lib.services.installers.schemas.repository', 'front', false, 'xsd' ) );
 		$file = $connection->exec();
@@ -1119,10 +1117,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				SPFactory::message()->setMessage( $message, false, $type );
 			}
 			$response = array(
-				'type' => $type,
-				'text' => $message,
-				'redirect' => $redirect ? Sobi::Url( 'extensions.installed' ) : false,
-				'callback' => $type == SPC::SUCCESS_MSG ? $callback : false
+					'type' => $type,
+					'text' => $message,
+					'redirect' => $redirect ? Sobi::Url( 'extensions.installed' ) : false,
+					'callback' => $type == SPC::SUCCESS_MSG ? $callback : false
 			);
 			SPFactory::mainframe()
 					->cleanBuffer()
@@ -1178,7 +1176,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 		$cl = count( $list );
 		for ( $i = 0; $i < $cl; $i++ ) {
-			$list[ $i ][ 'locked' ] = SPLoader::path( "etc.installed.{$list[ $i ]['type']}s.{$list[ $i ]['pid']}", 'front', true, 'xml' ) ? false : true;
+			$list[ $i ][ 'locked' ] = SPLoader::path( "etc.installed.{$list[$i]['type']}s.{$list[$i]['pid']}", 'front', true, 'xml' ) ? false : true;
 			$list[ $i ][ 'eid' ] = $list[ $i ][ 'type' ] . '.' . $list[ $i ][ 'pid' ];
 			if ( ( $list[ $i ][ 'pid' ] == 'router' ) || ( in_array( $list[ $i ][ 'type' ], array( 'field', 'language', 'module', 'plugin' ) ) ) ) {
 				$list[ $i ][ 'enabled' ] = -1;
