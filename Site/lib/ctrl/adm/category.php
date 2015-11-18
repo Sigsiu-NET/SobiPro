@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -40,6 +38,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			case 'add':
 				SPLoader::loadClass( 'html.input' );
 				$this->editForm();
+				$this->authorise( $this->_task );
 				break;
 			case 'view':
 				Sobi::ReturnPoint();
@@ -47,6 +46,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				$this->view();
 				break;
 			case 'clone':
+				$this->authorise( 'edit' );
 				$r = true;
 				$this->_model = null;
 				SPRequest::set( 'category_id', 0, 'post' );
@@ -54,26 +54,31 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				$this->save( false, true );
 				break;
 			case 'reorder':
+				$this->authorise( 'edit' );
 				$r = true;
 				$this->reorder();
 				break;
 			case 'up':
 			case 'down':
+				$this->authorise( 'edit' );
 				$r = true;
 				$this->singleReorder( $this->_task == 'up' );
 				break;
 			case 'approve':
 			case 'unapprove':
+				$this->authorise( 'edit' );
 				$r = true;
 				$this->approval( $this->_task == 'approve' );
 				break;
 			case 'hide':
 			case 'publish':
+				$this->authorise( 'edit' );
 				$r = true;
 				$this->state( $this->_task == 'publish' );
 				break;
 			case 'toggle.enabled':
 			case 'toggle.approval':
+				$this->authorise( 'edit' );
 				$r = true;
 				$this->toggleState();
 				break;
@@ -106,7 +111,6 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		if ( $this->_model->get( 'id' ) ) {
 			$this->authorise( $this->_task );
 			$this->_model->changeState( $state );
-//			$state = ( int )( $this->_task == 'publish' );
 			SPFactory::cache()
 					->purgeSectionVars()
 					->deleteObj( 'category', $this->_model->get( 'id' ) )
@@ -272,8 +276,13 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if ( count( $cfg ) ) {
+			$i = 0;
 			foreach ( $cfg as $section => $keys ) {
+				$i++;
 				$menu->addSection( $section, $keys );
+				if ( $i && !( Sobi::Can( 'section.configure' ) ) ) {
+					break;
+				}
 			}
 		}
 		/* create new SigsiuTree */
@@ -456,8 +465,8 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			}
 			else {
 				$join = array(
-					array( 'table' => 'spdb_field', 'as' => 'def', 'key' => 'fid' ),
-					array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' )
+						array( 'table' => 'spdb_field', 'as' => 'def', 'key' => 'fid' ),
+						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' )
 				);
 				$db->select( 'sid', $db->join( $join ), array( 'def.nid' => $ord, 'lang' => Sobi::Lang() ), 'baseData.' . $dir );
 				$fields = $db->loadResultArray();

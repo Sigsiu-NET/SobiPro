@@ -34,6 +34,10 @@ class SPConfigAdmCtrl extends SPController
 	 * @var string
 	 */
 	protected $_defTask = 'general';
+	/**
+	 * @var string
+	 */
+	protected $_aclCheck = 'section.configure';
 
 	public function __construct()
 	{
@@ -47,7 +51,7 @@ class SPConfigAdmCtrl extends SPController
 			}
 		}
 		else {
-			if ( !( Sobi::Can( 'section.configure' ) ) ) {
+			if ( !( $this->_aclCheck ) ) {
 				Sobi::Error( 'ACL', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 403, __LINE__, __FILE__ );
 			}
 		}

@@ -38,7 +38,7 @@
 	<toolbar title="var:[site_title]" icon="SobiEdit">
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
 		<divider />
-		<button task="entry.apply" type="apply">
+		<button task="entry.apply" type="apply" condition="acl.entry.edit">
 			<button type="save" task="entry.save" />
 			<button type="save" task="entry.saveWithRevision" label="TB.SAVE_WITH_REVISION" invert-condition="history-behaviour" icon="comment"/>
             <button task="entry.saveAndNew" label="TB.SAVE_AND_NEW" icon="file-text" />

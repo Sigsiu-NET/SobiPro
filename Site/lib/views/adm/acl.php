@@ -64,18 +64,19 @@ class SPAclView extends SPAdmView
 			}
 		}
 		$this->set( $put, 'sections' );
-//		$put = array();
-//		$get = $this->get( 'adm_permissions' );
-//		if ( is_array( $get ) && count( $get ) ) {
-//			foreach ( $get as $permission ) {
-//				if ( !isset( $put[ $permission->subject ] ) ) {
-//					$put[ $permission->subject ] = array();
-//				}
-//				$k = $permission->action . '_' . $permission->value;
-//				$put[ $permission->subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
-//			}
-//		}
-//		$this->set( $put, 'adm_permissions' );
+		$put = array();
+		$get = $this->get( 'adm_permissions' );
+		if ( is_array( $get ) && count( $get ) ) {
+			foreach ( $get as $permission ) {
+				$subject = ucfirst( $permission->subject );
+				if ( !isset( $put[ $subject ] ) ) {
+					$put[ $subject ] = array();
+				}
+				$k = $permission->action . '_' . $permission->value;
+				$put[ $subject ][ $permission->pid ] = Sobi::Txt( 'adm_permissions.' . $k );
+			}
+		}
+		$this->set( $put, 'adm_permissions' );
 		$put = array();
 		$rule = $this->get( 'set' );
 		$get = $this->get( 'permissions' );

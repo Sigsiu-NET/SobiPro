@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -176,7 +174,11 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if ( count( $cfg ) ) {
 			foreach ( $cfg as $section => $keys ) {
+				$i++;
 				$menu->addSection( $section, $keys );
+				if ( $i && !( Sobi::Can( 'section.configure' ) ) ) {
+					break;
+				}
 			}
 		}
 		Sobi::Trigger( 'AfterCreate', 'AdmMenu', array( &$menu ) );
@@ -324,8 +326,8 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			}
 			else {
 				$join = array(
-					array( 'table' => 'spdb_field', 'as' => 'def', 'key' => 'fid' ),
-					array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' )
+						array( 'table' => 'spdb_field', 'as' => 'def', 'key' => 'fid' ),
+						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' )
 				);
 				$db->select( 'sid', $db->join( $join ), array( 'def.nid' => $ord, 'lang' => Sobi::Lang() ), 'baseData.' . $dir );
 				$fields = $db->loadResultArray();

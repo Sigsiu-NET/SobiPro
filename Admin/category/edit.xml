@@ -31,7 +31,7 @@
 	<toolbar title="var:[site_title]" icon="SobiEdit">
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
 		<divider />
-		<button task="category.apply" type="apply">
+		<button task="category.apply" type="apply" condition="acl.category.edit">
 			<button type="save" task="category.save" />
 			<button task="category.saveAndNew" label="TB.SAVE_AND_NEW" icon="file-text" />
 			<button type="duplicate" task="category.clone" />

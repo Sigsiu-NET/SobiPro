@@ -37,8 +37,14 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 	public function __construct()
 	{
-		if ( !( Sobi::Can( 'cms.apps' ) ) ) {
-			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 403, __LINE__, __FILE__ );
+		if ( Sobi::Section() ) {
+			if ( !( Sobi::Can( 'section.configure' ) ) ) {
+				Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+				exit();
+			}
+		}
+		elseif ( !( Sobi::Can( 'cms.apps' ) ) ) {
+			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			exit();
 		}
 	}

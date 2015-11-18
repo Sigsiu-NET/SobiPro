@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -43,14 +41,17 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			case 'approve':
 			case 'unapprove':
 				$r = true;
+				$this->authorise( 'approve' );
 				$this->approval( $this->_task == 'approve' );
 				break;
 			case 'up':
 			case 'down':
+				$this->authorise( 'edit' );
 				$r = true;
 				$this->singleReorder( $this->_task == 'up' );
 				break;
 			case 'clone':
+				$this->authorise( 'edit' );
 				$r = true;
 				$this->_model = null;
 				SPRequest::set( 'entry_id', 0, 'post' );
@@ -58,13 +59,16 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				$this->save( false, true );
 				break;
 			case 'saveWithRevision':
+				$this->authorise( 'edit' );
 				$this->save( true );
 				break;
 			case 'reorder':
+				$this->authorise( 'edit' );
 				$r = true;
 				$this->reorder();
 				break;
 			case 'reject':
+				$this->authorise( 'approve' );
 				$r = true;
 				$this->reject();
 				break;

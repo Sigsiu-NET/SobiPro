@@ -1,4 +1,4 @@
-5z<?php
+<?php
 /**
  * @package: SobiPro Library
 

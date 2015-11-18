@@ -38,7 +38,6 @@ final class SPAdmSiteMenu
 		SPFactory::header()
 				->addCSSFile( 'menu', true )
 				->addJsFile( 'menu', true );
-		Sobi::LoadLangFile( 'menu', true, true );
 		$this->_task = $task ? $task : SPRequest::task();
 		$this->_sid = $sid;
 		SPFactory::registry()->set( 'adm_menu', $this );
@@ -140,9 +139,6 @@ final class SPAdmSiteMenu
 		if ( count( $section ) ) {
 			$v .= "\n\t\t\t<ul>";
 			foreach ( $section as $pos => $label ) {
-				if ( !( SPFactory::user()->can( $pos ) ) ) {
-					continue;
-				}
 				if ( strlen( $label ) < 3 ) {
 					$label = str_replace( '.', '_', $pos );
 				}

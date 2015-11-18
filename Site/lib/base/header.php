@@ -105,7 +105,7 @@ final class SPHeader
 		else {
 			$this->addCssFile( array( 'sobipro' ) )
 					->addJsFile( array( 'sobipro', 'jquery', 'jqnc' ) );
-			if ( Sobi::Cfg( 'template.bootstrap3-load', false ) ) {
+			if ( Sobi::Cfg( 'template.bootstrap3-load', false ) && !defined( 'SOBIPRO_ADM' ) ) {
 				$this->addHeadLink( Sobi::Cfg( 'template.bs3_css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css' ), null, null, 'stylesheet' )
 						->addJsUrl( Sobi::Cfg( 'template.bs3_js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js' ) );
 			}

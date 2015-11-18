@@ -280,8 +280,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		}
 
 		try {
-			$db->select( '*', 'spdb_permissions', array( 'site' => 'adm', 'value' => 'global' ) );
-			$admPermissions = $db->loadResultArray();
+			$admPermissions = $db->select( '*', 'spdb_permissions', array( 'site' => 'adm' ) )
+					->loadResultArray();
 		} catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'CANNOT_GET_PERMISSIONS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
@@ -293,7 +293,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			foreach ( $sids as $sid ) {
 				foreach ( $perms as $pid ) {
 					if ( in_array( $pid, $admPermissions ) ) {
-						$map[ ] = array( 'rid' => $rid, 'sid' => 0, 'pid' => $pid );
+						$map[ ] = array( 'rid' => $rid, 'sid' => $sid, 'pid' => $pid );
 					}
 					else {
 						$map[ ] = array( 'rid' => $rid, 'sid' => $sid, 'pid' => $pid );

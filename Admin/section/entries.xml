@@ -28,25 +28,25 @@
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSection">
 		<divider />
-		<buttons type="actions">
-			<button type="url" sid="true" task="entry.add" label="AMN.ADD_ENTRY" icon="file-text" />
-			<button type="delete" task="entry.delete" confirm="TB.JS_DELETE_ENTRIES_WARN" />
+		<buttons type="actions" condition="acl.entry.visible">
+			<button type="url" sid="true" task="entry.add" label="AMN.ADD_ENTRY" icon="file-text" condition="acl.entry.add" />
+			<button type="delete" task="entry.delete" confirm="TB.JS_DELETE_ENTRIES_WARN" condition="acl.entry.delete" />
 			<nav-header label="TB.PUBLISHING" />
-			<button type="publish" task="entry.publish" />
-			<button type="hide" task="entry.hide" />
+			<button type="publish" task="entry.publish" condition="acl.entry.publish" />
+			<button type="hide" task="entry.hide" condition="acl.entry.publish" />
 			<nav-header label="TB.APPROVAL" />
-			<button type="approve" task="entry.approve" />
-			<button type="revoke" task="entry.unapprove" />
+			<button type="approve" task="entry.approve" condition="acl.entry.approve" />
+			<button type="revoke" task="entry.unapprove" condition="acl.entry.approve" />
 		</buttons>
 		<divider />
 		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
 		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
-			<button type="url" task="config" />
-			<button type="url" task="acl" />
-			<button type="url" task="extensions.installed" />
-			<button type="url" task="template.info" />
+			<button type="url" task="config" condition="acl.config" />
+			<button type="url" task="acl" condition="acl.config" />
+			<button type="url" task="extensions.installed" condition="acl.apps" />
+			<button type="url" task="template.info" condition="acl.apps" />
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
@@ -90,10 +90,10 @@
 						<cell type="checkbox" rel="e_sid" class="SpCellCenter" />
 						<cell label="HEADER_ENTRIES_NAME" type="text" />
 						<cells value="customHeader" class="SpCellCenter" type="text" />
-						<cell label="HEADER_ENTRIES_STATE" type="text" class="SpCellCenter" />
-						<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="SpCellCenter" />
+						<cell label="HEADER_ENTRIES_STATE" condition="acl.entry.header" type="text" class="SpCellCenter" />
+						<cell label="HEADER_ENTRIES_APPROVAL" condition="acl.entry.approve" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter" />
-                        <cell label="HEADER_ENTRIES_REJECT" type="text" class="SpCellCenter" />
+						<cell label="HEADER_ENTRIES_REJECT" type="text" condition="acl.entry.approve" class="SpCellCenter" />
 					</head>
 					<loop subject="entries">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -109,25 +109,25 @@
 						</cell>
 						<!--<cell type="text" value="field_price"/>-->
 						<cells value="customFields" class="SpCellCenter" />
-						<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+						<cell condition="acl.entry.publish" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="entry.toggle.enabled" />
 								<param name="sid" value="id" parse="true" />
 							</url>
 						</cell>
-						<cell type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
+						<cell condition="acl.entry.approve" type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
 							<url type="intern">
 								<param name="task" value="entry.toggle.approval" />
 								<param name="sid" value="id" parse="true" />
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
-                        <cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'undo','1':'undo'}">
-                            <url type="intern" class="btn btn-mini ctrl-entry-reject">
-                                <param name="task" value="entry.edit" />
-                                <param name="sid" value="id" parse="true" />
-                            </url>
-                        </cell>
+						<cell condition="acl.entry.approve" type="ticker" value="state" class="SpCellCenter" icons="{'0':'undo','1':'undo'}">
+							<url type="intern" class="btn btn-mini ctrl-entry-reject">
+								<param name="task" value="entry.edit" />
+								<param name="sid" value="id" parse="true" />
+							</url>
+						</cell>
 					</loop>
 				</table>
 				<pagination set="eSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
@@ -151,14 +151,14 @@
 				</h3>
 			</div>
 			<div class="modal-body">
-				<fieldset >
-					<field type="select" name="template"  label="ENTRY_REJECT_TPLS" class="input-large" />
+				<fieldset>
+					<field type="select" name="template" label="ENTRY_REJECT_TPLS" class="input-large" />
 					<field type="textarea" name="reason" label="ENTRY_REJECT_REASON" editor="false" class="input-splarge" rows="10" style="" />
 					<field type="toggle" name="trigger.unpublish" value="1" label="ENTRY_REJECT_TRIGGER_UNPUBLISH" prefix="yes_no" />
 					<field type="toggle" name="trigger.unapprove" label="ENTRY_REJECT_TRIGGER_UNAPPROVE" prefix="yes_no" />
 					<field type="toggle" name="unpublish" value="0" label="ENTRY_REJECT_UNPUBLISH" prefix="yes_no" />
 					<field type="toggle" name="discard" value="0" label="ENTRY_REJECT_DISCARD" prefix="yes_no" />
-					<field type="token"/>
+					<field type="token" />
 				</fieldset>
 			</div>
 			<div class="modal-footer">
@@ -168,7 +168,7 @@
 				<a href="#" class="btn" data-dismiss="modal">
 					<text value="CLOSE" />
 				</a>
-				<a href="#" class="btn btn-primary ctrl-reject" >
+				<a href="#" class="btn btn-primary ctrl-reject">
 					<text value="ENTRY_REJECT" />
 				</a>
 			</div>

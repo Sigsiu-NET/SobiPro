@@ -236,7 +236,7 @@ class SPJoomlaUser extends JUser
 		$auth = false;
 		/* if not initialised */
 		if ( !( isset( $this->_permissions[ $section ] ) ) || !count( $this->_permissions[ $section ] ) ) {
-			$this->getPermissions();
+			$this->getPermissions( $section );
 		}
 
 		/* if already requested, return the answer */

@@ -56,7 +56,7 @@ class SPAdminPanel extends SPController
 			SPLoader::loadClass( 'models.dbobject' );
 			SPLoader::loadModel( 'section' );
 			foreach ( $sections as $section ) {
-				if ( Sobi::Can( 'section', 'access', 'valid', $section->id ) ) {
+				if ( Sobi::Can( 'section', 'access', 'any', $section->id ) ) {
 					$s = new SPSection();
 					$s->extend( $section );
 					$this->_sections[ ] = $s;
@@ -116,10 +116,6 @@ class SPAdminPanel extends SPController
 		switch ( $this->_task ) {
 			case 'panel':
 				$this->getSections();
-				$acl = array(
-						'config' => Sobi::Can( 'cms.admin' ),
-						'apps' => Sobi::Can( 'cms.apps' )
-				);
 				/** @var $view SPAdmPanelView */
 				$view = SPFactory::View( 'front', true )
 						->assign( $acl, 'acl' )

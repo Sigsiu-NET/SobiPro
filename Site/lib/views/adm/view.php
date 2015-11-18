@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -122,6 +120,28 @@ class SPAdmView extends SPObject implements SPView
 
 	public function & determineTemplate( $type, $template, $absolutePath = null )
 	{
+		$acl = array(
+				'config' => Sobi::Can( 'cms.admin' ),
+				'apps' => Sobi::Can( 'cms.apps' ),
+				'section' => array(
+						'config' => Sobi::Can( 'section.configure' )
+				),
+				'category' => array(
+						'add' => Sobi::Can( 'category.add' ),
+						'edit' => Sobi::Can( 'category.edit' ),
+						'delete' => Sobi::Can( 'category.delete' ),
+						'visible' => Sobi::Can( 'category.delete' ) || Sobi::Can( 'category.add' ),
+				),
+				'entry' => array(
+						'add' => Sobi::Can( 'entry.add' ),
+						'delete' => Sobi::Can( 'entry.delete' ),
+						'approve' => Sobi::Can( 'entry.approve' ),
+						'publish' => Sobi::Can( 'entry.publish' ),
+						'visible' => Sobi::Can( 'entry.delete' ) || Sobi::Can( 'entry.add' ),
+				)
+		);
+		$this->assign( $acl, 'acl' );
+
 		if ( SPLoader::translatePath( "{$type}.{$template}", 'adm', true, 'xml' ) || $absolutePath ) {
 			$this->assign( $this->sections(), 'sections-list' );
 			$nid = Sobi::Section( 'nid' );
@@ -172,14 +192,16 @@ class SPAdmView extends SPObject implements SPView
 			$sections = SPLang::translateObject( $sections, 'name' );
 			$subMenu = array();
 			foreach ( $sections as $section ) {
-				$subMenu[ ] = array(
-						'type' => 'url',
-						'task' => '',
-						'url' => array( 'sid' => $section[ 'id' ] ),
-						'label' => SPLang::clean( strlen( $section[ 'value' ] ) < $sectionLength ? $section[ 'value' ] : substr( $section[ 'value' ], 0, $sectionLength - 3 ) . ' ...' ),
-						'icon' => 'file',
-						'element' => 'button'
-				);
+				if ( Sobi::Can( 'section', 'access', 'any', $section[ 'id' ] ) ) {
+					$subMenu[ ] = array(
+							'type' => 'url',
+							'task' => '',
+							'url' => array( 'sid' => $section[ 'id' ] ),
+							'label' => SPLang::clean( strlen( $section[ 'value' ] ) < $sectionLength ? $section[ 'value' ] : substr( $section[ 'value' ], 0, $sectionLength - 3 ) . ' ...' ),
+							'icon' => 'file',
+							'element' => 'button'
+					);
+				}
 			}
 		}
 		return $subMenu;
@@ -743,7 +765,7 @@ class SPAdmView extends SPObject implements SPView
 			$fields = $this->get( $subject );
 			foreach ( $fields as $field ) {
 				if ( method_exists( 'SPHtml_input', '_' . $field[ 'type' ] ) ) {
-					$method = new ReflectionMethod( 'SPHtml_input', '_' .$field[ 'type' ] );
+					$method = new ReflectionMethod( 'SPHtml_input', '_' . $field[ 'type' ] );
 					$methodArgs = array();
 					$methodParams = $method->getParameters();
 					foreach ( $methodParams as $param ) {
