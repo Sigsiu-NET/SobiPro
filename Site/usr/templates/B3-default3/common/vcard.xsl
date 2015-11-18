@@ -25,8 +25,9 @@
     <!--<xsl:include href="collection.xsl" />-->
 
     <xsl:template name="vcard">
-        <!-- Uncomment only if Review & Ratings App is installed -->
-        <!--<xsl:call-template name="ratingStars" />-->
+        <xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:import[@href='../review-rating/review.xsl']" >
+            <xsl:call-template name="ratingStars" />
+        </xsl:if>
 
         <h2 class="lead page-header">
             <a href="{url}">

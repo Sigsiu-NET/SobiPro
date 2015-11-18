@@ -49,8 +49,9 @@
             <div class="clearfix" />
             <div class="spDetailEntry">
                 <xsl:call-template name="manage" />
-                <!-- Uncomment only if Review & Ratings App is installed -->
-                <!--<xsl:call-template name="ratingStars" />-->
+                <xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../review-rating/review.xsl'] ">
+                    <xsl:call-template name="ratingStars" />
+                </xsl:if>
                 <h1>
                     <xsl:value-of select="entry/name" />
                     <xsl:call-template name="status">
@@ -83,8 +84,9 @@
                     </xsl:choose>
                 </xsl:for-each>
 
-                <!-- Uncomment only if Review & Ratings App is installed -->
-                <!--<xsl:call-template name="ratingSummary" />-->
+                <xsl:if test="( //review_form/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../review-rating/review.xsl'] ">
+                    <xsl:call-template name="ratingSummary" />
+                </xsl:if>
 
                 <xsl:if test="count(entry/categories)">
                     <div class="spEntryCats">
@@ -102,10 +104,10 @@
             </div>
             <div class="clearfix" />
 
-            <!-- Uncomment only if Review & Ratings App is installed -->
-            <!--<xsl:call-template name="reviewForm"/>-->
-            <!--<xsl:call-template name="reviews"/>-->
-
+            <xsl:if test="( count(/entry_details/review_form/*) or count(/entry_details/reviews/*) ) and document('')/*/xsl:include[@href='../review-rating/review.xsl'] ">
+                <xsl:call-template name="reviewForm"/>
+                <xsl:call-template name="reviews"/>
+            </xsl:if>
             <!-- Uncomment only if >Profile Field is installed -->
             <!--<xsl:call-template name="UserContributions" />-->
         </div>
