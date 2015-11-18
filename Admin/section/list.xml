@@ -114,9 +114,9 @@
 						<cell label="HEADER_CATS_STATE" type="text" class="SpCellCenter" condition="acl.category.edit" />
 						<cell label="HEADER_CATS_APPROVAL" type="text" class="SpCellCenter" condition="acl.category.edit" />
 						<cell label="HEADER_CATS_AUTHOR" type="text" class="SpCellCenter" />
-						<cell condition="acl.category.edit">
+						<div condition="acl.category.edit">
 							<cell label="HEADER_CATS_POSITION" type="ordering" class="SpCellArrowCol" rel="category" condition="corder.contains(position)" />
-						</cell>
+						</div>
 					</head>
 					<loop subject="categories">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -204,9 +204,9 @@
 						<cell label="HEADER_ENTRIES_STATE" type="text" class="SpCellCenter" condition="acl.entry.publish" />
 						<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="SpCellCenter" condition="acl.entry.approve" />
 						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter" />
-						<cell condition="acl.entry.edit">
+						<div condition="acl.entry.edit">
 							<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="entry" condition="eorder.contains(position)" />
-						</cell>
+						</div>
 					</head>
 					<loop subject="entries">
 						<cell type="text" value="id" class="SpCellCenter" />
@@ -221,20 +221,20 @@
 							</cell>
 						</cell>
 						<cells value="customFields" class="SpCellCenter" />
-						<cell condition="acl.entry.publish" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+						<cell condition="/acl.entry.publish" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="entry.toggle.enabled" />
 								<param name="sid" value="id" parse="true" />
 							</url>
 						</cell>
-						<cell condition="acl.entry.approve" type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
+						<cell condition="/acl.entry.approve" type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
 							<url type="intern">
 								<param name="task" value="entry.toggle.approval" />
 								<param name="sid" value="id" parse="true" />
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
-						<cell condition="acl.entry.edit">
+						<cell condition="/acl.entry.edit">
 							<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellArrowCol" condition="/eorder.contains(position)">
 								<cell type="text" class="SpCellArrow">
 									<cell type="link" icon="chevron-up">

@@ -134,6 +134,7 @@ class SPAdmView extends SPObject implements SPView
 				),
 				'entry' => array(
 						'add' => Sobi::Can( 'entry.add' ),
+						'edit' => Sobi::Can( 'entry.edit' ),
 						'delete' => Sobi::Can( 'entry.delete' ),
 						'approve' => Sobi::Can( 'entry.approve' ),
 						'publish' => Sobi::Can( 'entry.publish' ),

@@ -109,20 +109,20 @@
 						</cell>
 						<!--<cell type="text" value="field_price"/>-->
 						<cells value="customFields" class="SpCellCenter" />
-						<cell condition="acl.entry.publish" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+						<cell condition="/acl.entry.publish" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="entry.toggle.enabled" />
 								<param name="sid" value="id" parse="true" />
 							</url>
 						</cell>
-						<cell condition="acl.entry.approve" type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
+						<cell condition="/acl.entry.approve" type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
 							<url type="intern">
 								<param name="task" value="entry.toggle.approval" />
 								<param name="sid" value="id" parse="true" />
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
-						<cell condition="acl.entry.approve" type="ticker" value="state" class="SpCellCenter" icons="{'0':'undo','1':'undo'}">
+						<cell condition="/acl.entry.approve" type="ticker" value="state" class="SpCellCenter" icons="{'0':'undo','1':'undo'}">
 							<url type="intern" class="btn btn-mini ctrl-entry-reject">
 								<param name="task" value="entry.edit" />
 								<param name="sid" value="id" parse="true" />

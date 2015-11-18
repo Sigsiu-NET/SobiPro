@@ -38,7 +38,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			case 'add':
 				SPLoader::loadClass( 'html.input' );
 				$this->editForm();
-				$this->authorise( $this->_task );
+//				$this->authorise( $this->_task );
 				break;
 			case 'view':
 				Sobi::ReturnPoint();
