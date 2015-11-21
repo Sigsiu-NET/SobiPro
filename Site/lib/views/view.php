@@ -137,7 +137,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		Sobi::Trigger( 'loadCSSFile', $this->name(), array( &$path ) );
 		if ( SPFs::exists( $this->tplPath() . DS . 'css' . DS . $path . '.css' ) ) {
 			$path = 'absolute.' . $this->tplPath() . '.css.' . $path;
-			SPFactory::header()->addCSSFile( $path );
+			SPFactory::header()->addCSSFile( $path, false, 'all' );
 		}
 		else {
 			SPFactory::header()->addCSSFile( $path );

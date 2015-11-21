@@ -86,6 +86,25 @@
                                         </values>
                                     </field>
                                 </fieldset>
+
+	                            <fieldset label="TP.SETTINGS_PRINT">
+		                            <field type="select" label="TP.CONFIG.GALLERY" name="settings[config][less][theme][print-gallery]" selected="settings.config.less.theme.print-gallery" class="input-medium">
+			                            <values>
+				                            <option value="inherit" label="inherit" />
+				                            <option value="100px" label="100px" />
+				                            <option value="120px" label="120px" />
+				                            <option value="140px" label="140px" />
+				                            <option value="160px" label="160px" />
+				                            <option value="180px" label="180px" />
+				                            <option value="200px" label="200px" />
+				                            <option value="250px" label="250px" />
+				                            <option value="300px" label="300px" />
+				                            <option value="400px" label="400px" />
+			                            </values>
+		                            </field>
+		                            <field type="toggle" name="settings[config][general][printimage]" value="settings.settings.config.general.printimage" label="TP.CONFIG.PRINTIMG" prefix="yes_no" />
+
+	                            </fieldset>
                             </div>
                         </div>
                     </tab>
@@ -131,6 +150,14 @@
                             <div class="span12">
                                 <fieldset label="TP.SETTINGS_FEATURES">
                                     <field type="toggle" name="settings[config][general][noimage]" value="settings.config.general.noimage" label="TP.CONFIG.ENTRIES_NOIMG" prefix="yes_no" />
+                                    <field type="select" label="TP.CONFIG.ENTRIES_IMGRATIO" name="settings[config][less][theme][image-ratio]" selected="settings.config.less.theme.image-ratio" class="input-medium">
+                                        <values>
+                                            <option value="1" label="1:1" />
+                                            <option value="0.75" label="4:3" />
+                                            <option value="1.33" label="3:4" />
+                                            <option value="0.67" label="9:6" />
+                                        </values>
+                                    </field>
                                 </fieldset>
                                 <fieldset label="TP.SETTINGS_DETAILS">
                                     <field type="select" label="TP.CONFIG.ENTRIES_IMGSIZESMALL" name="settings[config][less][theme][big-image]" selected="settings.config.less.theme.big-image" class="input-medium">

@@ -18,14 +18,14 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <!-- Uncomment only if Review & Ratings App is installed -->
-    <!--<xsl:import href="../review-rating/review.xsl" />-->
+    <!--<xsl:import href="review.xsl" />-->
     <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
     <xsl:include href="showfields.xsl" />
     <!-- Uncomment only if Collection App is installed -->
     <!--<xsl:include href="collection.xsl" />-->
 
     <xsl:template name="vcard">
-        <xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:import[@href='../review-rating/review.xsl']" >
+        <xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:import[@href='review.xsl']" >
             <xsl:call-template name="ratingStars" />
         </xsl:if>
 

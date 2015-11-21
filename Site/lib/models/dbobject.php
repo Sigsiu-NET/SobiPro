@@ -665,7 +665,7 @@ abstract class SPDBObject extends SPObject
 	/**
 	 * @param int $id
 	 * @return \SPDBObject
-	 * @internal param \stdClass $obj
+	 * stdClass $obj
 	 */
 	public function & init( $id = 0 )
 	{

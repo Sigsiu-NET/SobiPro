@@ -181,7 +181,7 @@ class SPJoomlaDb
 	 * @param int $limitStart
 	 * @param null $group
 	 * @return \SPDb
-	 * @internal param string $groupBy - column to group by
+	 * param string $groupBy - column to group by
 	 */
 	public function dselect( $toSelect, $tables, $where = null, $order = null, $limit = 0, $limitStart = 0, $group = null )
 	{

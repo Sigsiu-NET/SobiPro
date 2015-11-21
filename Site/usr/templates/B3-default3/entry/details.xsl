@@ -29,7 +29,7 @@
     <!--<xsl:include href="../common/profile.xsl" />-->
 
     <!-- Uncomment only if Review & Ratings App is installed -->
-    <!--<xsl:include href="../review-rating/review.xsl" />-->
+    <!--<xsl:include href="../common/review.xsl" />-->
 
     <!-- Uncomment only if Collection App is installed -->
     <!--<xsl:include href="../common/collection.xsl" />-->
@@ -49,7 +49,7 @@
             <div class="clearfix" />
             <div class="spDetailEntry">
                 <xsl:call-template name="manage" />
-                <xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../review-rating/review.xsl'] ">
+                <xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../common/review.xsl'] ">
                     <xsl:call-template name="ratingStars" />
                 </xsl:if>
                 <h1>
@@ -84,7 +84,7 @@
                     </xsl:choose>
                 </xsl:for-each>
 
-                <xsl:if test="( //review_form/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../review-rating/review.xsl'] ">
+                <xsl:if test="( //review_form/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../common/review.xsl'] ">
                     <xsl:call-template name="ratingSummary" />
                 </xsl:if>
 
@@ -104,7 +104,7 @@
             </div>
             <div class="clearfix" />
 
-            <xsl:if test="( count(/entry_details/review_form/*) or count(/entry_details/reviews/*) ) and document('')/*/xsl:include[@href='../review-rating/review.xsl'] ">
+            <xsl:if test="( count(/entry_details/review_form/*) or count(/entry_details/reviews/*) ) and document('')/*/xsl:include[@href='../common/review.xsl'] ">
                 <xsl:call-template name="reviewForm"/>
                 <xsl:call-template name="reviews"/>
             </xsl:if>

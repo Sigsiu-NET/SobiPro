@@ -20,6 +20,7 @@
 @big-image: 300px;
 @image-ratio: 0.75;
 @carousel-image: 500px;
+@print-gallery: 150px;
 
 //-------------------------------------------------------------------------------------*/
 
@@ -1161,6 +1162,7 @@
 	padding: 10px;
 	margin-bottom: 15px;
 	margin-top: 10px;
+	min-height: 200px;
 }
 
 .SobiPro .tab-pane.tabs.coloured {
@@ -1673,12 +1675,10 @@
 .SobiPro .carousel-inner {
 	height: @carousel-image;
 }
-
 .SobiPro .carousel-inner > .item > img,
 .SobiPro .carousel-inner > .item > a > img {
 	height: @carousel-image;
 }
-
 .SobiPro .carousel-inner img.sp-carousel-image {
 	margin-left: auto;
 	margin-right: auto;
@@ -1693,42 +1693,53 @@
 }
 
 // Support for Font Awesome 3 and 4
-.SobiPro .carousel-control .fa-chevron-right,
-.SobiPro .carousel-control .icon-chevron-right,
-.SobiPro .carousel-control .icon-next {
-	margin-right: -15px;
+.SobiPro .carousel-control {
+	.fa-chevron-right,
+	.icon-chevron-right,
+	.icon-next {
+		margin-right: -15px;
+	}
+
+	.fa-chevron-left,
+	.fa-chevron-right,
+	.icon-chevron-left,
+	.icon-chevron-right,
+	.icon-next,
+	.icon-prev {
+		width: 30px;
+		height: 30px;
+		margin-top: -15px;
+		font-size: 30px;
+	}
+
+	.fa-chevron-right,
+	.icon-chevron-right,
+	.icon-next {
+		right: 50%;
+		margin-right: -10px;
+	}
+
+	.fa-chevron-left,
+	.fa-chevron-right,
+	.icon-chevron-left,
+	.icon-chevron-right,
+	.icon-next,
+	.icon-prev {
+		position: absolute;
+		top: 50%;
+		z-index: 5;
+		display: inline-block;
+		margin-top: -10px;
+	}
 }
 
-.SobiPro .carousel-control .fa-chevron-left,
-.SobiPro .carousel-control .fa-chevron-right,
-.SobiPro .carousel-control .icon-chevron-left,
-.SobiPro .carousel-control .icon-chevron-right,
-.SobiPro .carousel-control .icon-next,
-.SobiPro .carousel-control .icon-prev {
-	width: 30px;
-	height: 30px;
-	margin-top: -15px;
-	font-size: 30px;
-}
 
-.SobiPro .carousel-control .fa-chevron-right,
-.SobiPro .carousel-control .icon-chevron-right,
-.SobiPro .carousel-control .icon-next {
-	right: 50%;
-	margin-right: -10px;
-}
-
-.SobiPro .carousel-control .fa-chevron-left,
-.SobiPro .carousel-control .fa-chevron-right,
-.SobiPro .carousel-control .icon-chevron-left,
-.SobiPro .carousel-control .icon-chevron-right,
-.SobiPro .carousel-control .icon-next,
-.SobiPro .carousel-control .icon-prev {
-	position: absolute;
-	top: 50%;
-	z-index: 5;
-	display: inline-block;
-	margin-top: -10px;
+// Contact Form Field
+// -----------------------------------------------
+.SobiPro .restaraReservation .contactform {
+	background: transparent none repeat scroll 0 0;
+	border: none;
+	margin-top: 0;
 }
 
 // SP-GeoMap Field
@@ -1973,6 +1984,7 @@
 		margin-bottom: 6px;
 	}
 
+	.SobiPro .spPrint .spClassViewImage img,
 	.SobiPro .spDetailEntry .spClassViewImage img,
 	.SobiPro div.spClassViewImage img,
 	.SobiPro .spEntryContainer .spClassViewImage img {

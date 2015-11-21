@@ -13,14 +13,14 @@
 // This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-@corners: angular;
+//Default values
+@corners: rounded;
 @colour-set: sobipro;
 @small-image: 100px;
 @big-image: 300px;
 @image-ratio: 0.75;
 @carousel-image: 500px;
-
-
+@print-gallery: 150px;
 
 //-------------------------------------------------------------------------------------*/
 
@@ -89,6 +89,7 @@
         background-color: darken(@active-color, 65%);
     }
 }
+
 .lightborders() {
     border-color: lighten(@base-color, 36%);
     & when (@colour-set = cornflower) {
@@ -113,6 +114,7 @@
         border-color: darken(@active-color, 50%);
     }
 }
+
 .mediumbackground() {
     background-color: lighten(saturate(@base-color, 15%), 47%);
     & when (@colour-set = cornflower) {
@@ -137,6 +139,7 @@
         background-color: darken(@active-color, 75%);
     }
 }
+
 .mediumborders() {
     border-color: lighten(@base-color, 26%);
     & when (@colour-set = cornflower) {
@@ -161,6 +164,7 @@
         border-color: darken(@active-color, 60%);
     }
 }
+
 .headertext {
     font-size: 22px;
     color: @base-color;
@@ -987,6 +991,94 @@
     -webkit-flex: 1;
 }
 
+// Tabs/Coloured Tabs
+// ----------------------------------------
+.SobiPro .tab-pane {
+	border: 1px solid;
+	.lightbackground();
+	.lightborders();
+	& when (@corners = rounded) {
+		border-radius: 4px;
+	}
+	padding: 10px;
+	margin-bottom: 15px;
+	margin-top: 10px;
+	min-height: 200px;
+}
+
+.SobiPro .tab-pane.tabs.coloured {
+	margin-top: 0;
+}
+
+.SobiPro .tab-pane.tabs.coloured.active {
+	border-top-left-radius: 0;
+}
+
+.SobiPro .spTablist {
+	margin-top: 20px;
+}
+
+.SobiPro .nav-tabs.coloured > li.active > a,
+.SobiPro .nav-tabs.coloured > li.active > a:hover,
+.SobiPro .nav-tabs.coloured > li.active > a:focus {
+	border: 1px solid;
+	.lightbackground();
+	.lightborders();
+
+	border-bottom-color: lighten(saturate(@base-color, 15%), 57%);
+	& when (@colour-set = cornflower) {
+		border-bottom-color: lighten(saturate(@base-color, 15%), 45%);
+	}
+	& when (@colour-set = cornfield) {
+		border-bottom-color: lighten(saturate(@base-color, 15%), 40%);
+	}
+	& when (@colour-set = malva) {
+		border-bottom-color: lighten(saturate(@base-color, 15%), 50%);
+	}
+	& when (@colour-set = meadow) {
+		border-bottom-color: lighten(saturate(@base-color, 15%), 60%);
+	}
+	& when (@colour-set = poppyseed) {
+		border-bottom-color: lighten(saturate(@base-color, 5%), 62%);
+	}
+	& when (@colour-set = roses) {
+		border-bottom-color: lighten(saturate(@base-color, 28%), 48%);
+	}
+	& when (@colour-set = blackwidow) {
+		border-bottom-color: darken(@active-color, 65%);
+		color: @font-color;
+	}
+}
+
+.SobiPro .nav-tabs > li > a {
+	& when (@corners = angular) {
+		border-radius: 0;
+	}
+}
+
+.SobiPro .nav-tabs > li > a:hover {
+	& when (@colour-set = blackwidow) {
+		border-color: darken(@active-color, 50%) darken(@active-color, 50%) darken(@active-color, 65%);;
+	}
+}
+
+.SobiPro .nav.nav-tabs > li > a:hover,
+.SobiPro .nav.nav-tabs > li > a:focus {
+	& when (@colour-set = blackwidow) {
+		color: @font-color;
+		background-color: darken(@active-color, 55%);;
+	}
+}
+
+.SobiPro .nav-tabs.coloured {
+	border-bottom: none;
+}
+
+.SobiPro .nav-pills a:focus,
+.SobiPro .nav-tabs a:focus {
+	outline: none;
+}
+
 // Entry details view
 // ----------------------------------------
 .SobiPro .spDetails {
@@ -1689,6 +1781,8 @@
     .SobiPro .modal .control-group {
         margin-bottom: 6px;
     }
+
+	.SobiPro .spPrint .spClassViewImage img,
     .SobiPro .spDetailEntry .spClassViewImage img,
     .SobiPro div.spClassViewImage img,
     .SobiPro .spEntryContainer .spClassViewImage img {

@@ -34,8 +34,11 @@ Legend:
     (+) Carousel support in default templates
     (+) Tooltip support in default templates
     (+) Coloured tabs support in default B3 template
+    (+) Carousel support in default B3 template
     (+) Several features added to the default template (e.g. shorten text, hiding categories, image ratio)
     (+) Possibility to load Bootstrap 3 from CDN
+    (+) Support for printing
+    (+) Backend ACL support
 
     (-) jQuery-UI library removed
 
