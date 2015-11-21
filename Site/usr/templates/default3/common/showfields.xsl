@@ -34,7 +34,7 @@
             </xsl:if>
             <xsl:if test="count($fieldname/data/*) or string-length($fieldname/data)">
                 <xsl:if test="$fieldname/label/@show = 1">
-                    <strong><xsl:value-of select="$fieldname/label" /><xsl:text>: </xsl:text></strong>
+	                <span class="spLabel"><xsl:value-of select="$fieldname/label" /><xsl:text>: </xsl:text></span>
                 </xsl:if>
             </xsl:if>
             <xsl:choose>

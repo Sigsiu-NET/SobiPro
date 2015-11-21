@@ -95,15 +95,32 @@
                                     </xsl:variable>
                                     <div class="col-sm-{$colwidth}">
                                         <div>
-                                            <xsl:if test="string-length( @suffix )">
-                                                <xsl:attribute name="class">input-append</xsl:attribute>
-                                            </xsl:if>
-                                            <xsl:copy-of select="data/*" />
-                                            <xsl:if test="string-length( @suffix )">
-                                                <span class="add-on">
-                                                    <xsl:value-of select="@suffix" />
-                                                </span>
-                                            </xsl:if>
+	                                        <xsl:choose>
+		                                        <xsl:when test="string-length( @suffix )">
+			                                        <xsl:attribute name="class">input-group</xsl:attribute>
+			                                        <xsl:choose>
+				                                        <xsl:when test="data/@escaped">
+					                                        <xsl:value-of select="data" disable-output-escaping="yes" />
+				                                        </xsl:when>
+				                                        <xsl:otherwise>
+					                                        <xsl:copy-of select="data/*" />
+				                                        </xsl:otherwise>
+			                                        </xsl:choose>
+			                                        <div class="input-group-addon">
+				                                        <xsl:value-of select="@suffix" />
+			                                        </div>
+		                                        </xsl:when>
+		                                        <xsl:otherwise>
+			                                        <xsl:choose>
+				                                        <xsl:when test="data/@escaped">
+					                                        <xsl:value-of select="data" disable-output-escaping="yes" />
+				                                        </xsl:when>
+				                                        <xsl:otherwise>
+					                                        <xsl:copy-of select="data/*" />
+				                                        </xsl:otherwise>
+			                                        </xsl:choose>
+		                                        </xsl:otherwise>
+	                                        </xsl:choose>
                                         </div>
     								</div>
                                 </div>

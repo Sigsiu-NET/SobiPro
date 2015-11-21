@@ -1077,6 +1077,11 @@
 	line-height: 15px;
 }
 
+.SobiPro .spLabel {
+	font-weight: 700;
+}
+
+
 // NoImge Setting
 // ----------------------------------------
 .SobiPro .spNoImage {
@@ -1578,39 +1583,43 @@
 
 // Calendar/Datepicker
 // ----------------------------------------
-.bootstrap-datetimepicker-widget td span.active:hover,
-.bootstrap-datetimepicker-widget td span.active:active,
-.bootstrap-datetimepicker-widget td span.active.active,
-.bootstrap-datetimepicker-widget td span.active.disabled,
-.bootstrap-datetimepicker-widget td span.active[disabled],
-.bootstrap-datetimepicker-widget td.active:hover,
-.bootstrap-datetimepicker-widget td.active:hover:hover,
-.bootstrap-datetimepicker-widget td.active:active,
-.bootstrap-datetimepicker-widget td.active:hover:active,
-.bootstrap-datetimepicker-widget td.active.active,
-.bootstrap-datetimepicker-widget td.active.active:hover,
-.bootstrap-datetimepicker-widget td.active.disabled,
-.bootstrap-datetimepicker-widget td.active.disabled:hover,
-.bootstrap-datetimepicker-widget td.active[disabled],
-.bootstrap-datetimepicker-widget td.active[disabled]:hover {
-	color: @text-color;
-	background-color: @base-color;
-}
-.bootstrap-datetimepicker-widget td span.active,
-.bootstrap-datetimepicker-widget td.active,
-.bootstrap-datetimepicker-widget td.active:hover {
-	background-image: linear-gradient(to bottom, darken(@base-color, 5%), lighten(@base-color, 5%));
-}
-.bootstrap-datetimepicker-widget a [class^="icon-"] {
-	color: @base-color;
-	& when (@inverse = inverse) {
+.bootstrap-datetimepicker-widget {
+	td span.active:hover,
+	td span.active:active,
+	td span.active.active,
+	td span.active.disabled,
+	td span.active[disabled],
+	td.active:hover,
+	td.active:hover:hover,
+	td.active:active,
+	td.active:hover:active,
+	td.active.active,
+	td.active.active:hover,
+	td.active.disabled,
+	td.active.disabled:hover,
+	td.active[disabled],
+	td.active[disabled]:hover {
 		color: @text-color;
+		background-color: @base-color;
 	}
-}
-.bootstrap-datetimepicker-widget li > a:focus,
-.bootstrap-datetimepicker-widget li > a:hover {
-	text-decoration: none;
-	background-color: #fff;
+	td span.active,
+	td.active,
+	td.active:hover {
+		background-image: linear-gradient(to bottom, darken(@base-color, 5%), lighten(@base-color, 5%));
+	}
+
+	a [class^="icon-"] {
+		color: @base-color;
+		& when (@inverse = inverse) {
+			color: @text-color;
+		}
+	}
+
+	li > a:focus,
+	li > a:hover {
+		text-decoration: none;
+		background-color: #fff;
+	}
 }
 
 // Payment popup

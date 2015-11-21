@@ -45,11 +45,13 @@ Legend:
     (!) Less influences of Joomla! template to Theme template
     (!) Local Font-Awesome 3 icons without SobiPro scope
     (!) Datepicker attached to body for Bootstrap 3 compatibility
+    (!) Field labels now within CSS class
 
     (#) Missing default template configuration files added
     (#) Duplicate icons from Font Awesome 4 removed
     (#) Only one information field in a section works correctly
     (#) Small bux fixes in default template files
+    (#) Suffix layout in search view in B3-default3 template wrong
 
 
 -------------------
