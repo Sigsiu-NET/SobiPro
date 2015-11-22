@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -266,8 +264,8 @@ class SPConfigAdmView extends SPAdmView implements SPView
 					try {
 						$fData = $field->setCustomOrdering( $fData );
 					} catch ( SPException $x ) {
-						$fData[ $field->get( 'nid' ) . '.asc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt('EMN.ORDER_BY_FIELD_ASC');
-	                    $fData[ $field->get( 'nid' ) . '.desc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt('EMN.ORDER_BY_FIELD_DESC');
+						$fData[ $field->get( 'nid' ) . '.asc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt( 'EMN.ORDER_BY_FIELD_ASC' );
+						$fData[ $field->get( 'nid' ) . '.desc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt( 'EMN.ORDER_BY_FIELD_DESC' );
 					}
 				}
 				else {
@@ -278,17 +276,18 @@ class SPConfigAdmView extends SPAdmView implements SPView
 		if ( $ordering ) {
 			unset( $fData[ 0 ] );
 			$fData = array(
-				'position.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POSITION_ASCENDING' ),
-				'position.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POSITION_DESCENDING' ),
-				'counter.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POPULARITY_ASCENDING' ),
-				'counter.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POPULARITY_DESCENDING' ),
-				'createdTime.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_ASC' ),
-				'createdTime.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_DESC' ),
-				'updatedTime.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_ASC' ),
-				'updatedTime.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_DESC' ),
-				'validUntil.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_ASC' ),
-				'validUntil.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_DESC' ),
-				Sobi::Txt( 'SEC.CFG.ENTRY_ORDER_BY_FIELDS' ) => $fData
+					'position.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POSITION_ASCENDING' ),
+					'position.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POSITION_DESCENDING' ),
+					'counter.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POPULARITY_ASCENDING' ),
+					'counter.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POPULARITY_DESCENDING' ),
+					'createdTime.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_ASC' ),
+					'createdTime.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_DESC' ),
+					'updatedTime.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_ASC' ),
+					'updatedTime.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_DESC' ),
+					'validUntil.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_ASC' ),
+					'validUntil.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_DESC' ),
+					'RAND()' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_RANDOM' ),
+					Sobi::Txt( 'SEC.CFG.ENTRY_ORDER_BY_FIELDS' ) => $fData
 			);
 		}
 		if ( $params ) {
