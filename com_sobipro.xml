@@ -80,6 +80,8 @@
 			<filename>sobipro.php</filename>
 			<filename>install3x.sql</filename>
 			<filename>default.php</filename>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
 		</files>
 		<languages>
 			<language tag="en-GB">Site/usr/locale/adm/en-GB.com_sobipro.ini</language>

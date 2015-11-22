@@ -387,7 +387,7 @@ INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`
 (88, 'section', '*', '*', 'adm', 1),
 (89, 'section', 'access', '*', 'adm', 1),
 (90, 'section', 'configure', '*', 'adm', 1),
-(91, 'section', 'delete', '*', 'adm', 1),
+(91, 'section', 'delete', '*', 'adm', 0),
 (92, 'category', 'edit', '*', 'adm', 1),
 (93, 'category', 'add', '*', 'adm', 1),
 (94, 'category', 'delete', '*', 'adm', 1),

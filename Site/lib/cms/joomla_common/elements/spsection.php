@@ -234,7 +234,6 @@ class JElementSPSection extends JElement
 			$head->addCSSCode( '.SobiProCalendar .chzn-container {width: 100px!important; } ' );
 			$head->addCSSCode( '.SobiProCalendar select {width: inherit;} ' );
 		}
-		$head->send();
 		parent::__construct();
 		$loaded = true;
 	}

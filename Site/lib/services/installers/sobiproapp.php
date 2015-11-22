@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -76,21 +74,27 @@ class SPAppInstaller extends SPInstaller
 			}
 		}
 
-		$language = $this->xGetChilds( 'language/file' );
-		$folder = @$this->xGetChilds( 'language/@folder' )->item( 0 )->nodeValue;
-		if ( $language && ( $language instanceof DOMNodeList ) && $language->length ) {
+		$languages = $this->xGetChilds( 'language' );
+		if ( $languages->length ) {
 			$langFiles = array();
-			foreach ( $language as $file ) {
-				$adm = false;
-				if ( $file->attributes->getNamedItem( 'admin' ) ) {
-					$adm = $file->attributes->getNamedItem( 'admin' )->nodeValue == 'true' ? true : false;
+			foreach ( $languages as $language ) {
+				$folder = $language->attributes->getNamedItem( 'folder' )->nodeValue;
+				foreach ( $language->childNodes as $file ) {
+					$adm = false;
+					if ( strstr( $file->nodeName, '#' ) ) {
+						continue;
+					}
+					if ( $file->attributes->getNamedItem( 'admin' ) ) {
+						$adm = $file->attributes->getNamedItem( 'admin' )->nodeValue == 'true' ? true : false;
+					}
+					$langFiles[ $file->attributes->getNamedItem( 'lang' )->nodeValue ][ ] =
+							array(
+									'path' => Sobi::FixPath( "{$this->root}/{$folder}/" . trim( $file->nodeValue ) ),
+									'name' => $file->nodeValue,
+									'adm' => $adm
+							);
+
 				}
-				$langFiles[ $file->attributes->getNamedItem( 'lang' )->nodeValue ][ ] =
-						array(
-							'path' => Sobi::FixPath( "{$this->root}/{$folder}/" . trim( $file->nodeValue ) ),
-							'name' => $file->nodeValue,
-							'adm' => $adm
-						);
 			}
 			$log[ 'files' ][ 'created' ] = array_merge( $log[ 'files' ][ 'created' ], SPFactory::CmsHelper()->installLang( $langFiles, false ) );
 		}
@@ -160,8 +164,7 @@ class SPAppInstaller extends SPInstaller
 			$install = $this->definition->createElement( 'installLog' );
 			foreach ( $log as $section => $values ) {
 				switch ( $section ) {
-					case 'files':
-					{
+					case 'files': {
 						if ( isset( $values[ 'modified' ] ) ) {
 							$mfiles = $this->definition->createElement( 'modified' );
 							foreach ( $values[ 'modified' ] as $i => $file ) {
@@ -192,8 +195,7 @@ class SPAppInstaller extends SPInstaller
 						}
 						break;
 					}
-					case 'actions':
-					{
+					case 'actions': {
 						$actions = $this->definition->createElement( 'actions' );
 						if ( count( $values ) ) {
 							foreach ( $values as $i => $action ) {
@@ -203,13 +205,11 @@ class SPAppInstaller extends SPInstaller
 						}
 						break;
 					}
-					case 'field':
-					{
+					case 'field': {
 						$install->appendChild( $this->definition->createElement( 'field', $values ) );
 						break;
 					}
-					case 'permissions':
-					{
+					case 'permissions': {
 						$permission = $this->definition->createElement( 'permissions' );
 						if ( count( $values ) ) {
 							foreach ( $values as $i => $action ) {
@@ -219,8 +219,7 @@ class SPAppInstaller extends SPInstaller
 						}
 						break;
 					}
-					case 'sql':
-					{
+					case 'sql': {
 						if ( count( $values ) ) {
 							$queries = $this->definition->createElement( 'sql' );
 							/* first find all created tables */
@@ -405,8 +404,7 @@ class SPAppInstaller extends SPInstaller
 					}
 				}
 				switch ( $child->nodeName ) {
-					case 'folder':
-					{
+					case 'folder': {
 						/*
 							   * the directory iterator is a nice thing but it need lot of time and memory
 							   *  - so let's simplify it
@@ -445,8 +443,7 @@ class SPAppInstaller extends SPInstaller
 						}
 						break;
 					}
-					case 'file':
-					{
+					case 'file': {
 						$bPath = null;
 						$tfile = $child->nodeValue;
 						// remove the install path

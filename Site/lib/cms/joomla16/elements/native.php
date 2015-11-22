@@ -37,7 +37,7 @@ class JFormFieldNative extends JFormField
 	{
 		static $loaded = false;
 		if ( !( $loaded ) || true ) {
-			defined( 'DS' ) || define( 'DS', DIRECTORY_SEPARATOR );
+			defined( 'DS' ) || define( 'DS', '/' );
 			require_once( JPATH_SITE . '/components/com_sobipro/lib/sobi.php' );
 			Sobi::Initialise();
 			if ( SOBI_CMS == 'joomla3' ) {

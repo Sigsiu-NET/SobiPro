@@ -52,6 +52,7 @@ Legend:
     (#) Only one information field in a section works correctly
     (#) Small bux fixes in default template files
     (#) Suffix layout in search view in B3-default3 template wrong
+    (#) Multiple language nodes in SobiPro App definition were ignored
 
 
 -------------------
