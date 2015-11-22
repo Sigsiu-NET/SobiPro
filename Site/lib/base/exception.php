@@ -124,6 +124,9 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 	 * @param string $errFile
 	 * @param int $errLine
 	 * @param string $errContext
+	 * @throws ErrorException
+	 * @throws Exception
+	 * @throws SPException
 	 * @return bool
 	 */
 	function SPExceptionHandler( $errNumber, $errString, $errFile, $errLine, $errContext )

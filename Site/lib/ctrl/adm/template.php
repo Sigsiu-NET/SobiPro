@@ -183,10 +183,13 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		else {
 			$menu->setOpen( 'GB.CFG.GLOBAL_TEMPLATES' );
 		}
+		$view->setCtrl( $this );
+		$entriesOrdering = $view->namesFields( null, true );
 		$view->assign( $menu, 'menu' )
 				->assign( $this->_task, 'task' )
 				->assign( Sobi::Section(), 'sid' )
 				->assign( $templateSettings, 'settings' )
+				->assign( $entriesOrdering, 'entriesOrdering' )
 				->assign( $plugins, 'apps' )
 				->addHidden( $templateName, 'templateName' )
 				->determineTemplate( 'template', 'config', $dir );

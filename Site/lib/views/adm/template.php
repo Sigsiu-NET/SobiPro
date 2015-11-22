@@ -18,14 +18,14 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-SPLoader::loadView( 'view', true );
+SPLoader::loadView( 'config', true );
 
 /**
  * @author Radek Suski
  * @version 1.0
  * @created 10-Jun-2010 17:09:48
  */
-class SPAdmTemplateView extends SPAdmView
+class SPAdmTemplateView extends SPConfigAdmView
 {
 	public function display()
 	{
