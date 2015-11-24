@@ -56,7 +56,7 @@
                     </div>
 					<xsl:if test="count( /search/fields/phrase/* )">
                         <div class="control-group">
-                            <label class="control-label" for="SPSearchBox">
+                            <label class="control-label" for="sp-search-phrases">
                                 <xsl:value-of select="/search/fields/phrase/label" />
                             </label>
                             <div class="controls sp-search-phrases">

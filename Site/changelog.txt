@@ -31,14 +31,14 @@ Legend:
     (+) Template setting to show/hide categories
     (+) Fallback for wrong path setting in image field
     (+) B2 input size styles implemented in B3 default template
-    (+) Carousel support in default templates
     (+) Tooltip support in default templates
-    (+) Coloured tabs support in default B3 template
+    (+) Coloured tabs and staple tabs support in default B3 template
     (+) Carousel support in default B3 template
     (+) Several features added to the default template (e.g. shorten text, hiding categories, image ratio)
     (+) Possibility to load Bootstrap 3 from CDN
     (+) Support for printing
-    (+) Backend ACL support
+    (+) Backend ACL
+    (+) New template theme 'terra'
 
     (-) jQuery-UI library removed
 

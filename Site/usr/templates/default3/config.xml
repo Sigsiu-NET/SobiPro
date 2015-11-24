@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--
+ @package: SobiPro Component for Joomla!
+
  @author
  Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  Email: sobi[at]sigsiu.net
@@ -57,6 +59,7 @@
                                             <option value="meadow" />
                                             <option value="poppyseed" />
                                             <option value="roses" />
+	                                        <option value="terra" />
                                             <option value="blackwidow" />
                                         </values>
                                     </field>
@@ -86,8 +89,10 @@
                                         </values>
                                     </field>
                                 </fieldset>
-
+								<!--
 	                            <fieldset label="TP.SETTINGS_PRINT">
+		                            <field type="toggle" name="settings[config][general][showprint]" value="settings.settings.config.general.showprint" label="TP.CONFIG.SHOWPRT" prefix="yes_no" />
+		                            <field type="toggle" name="settings[config][general][printimage]" value="settings.settings.config.general.printimage" label="TP.CONFIG.PRINTIMG" prefix="yes_no" />
 		                            <field type="select" label="TP.CONFIG.GALLERY" name="settings[config][less][theme][print-gallery]" selected="settings.config.less.theme.print-gallery" class="input-medium">
 			                            <values>
 				                            <option value="inherit" label="inherit" />
@@ -102,9 +107,8 @@
 				                            <option value="400px" label="400px" />
 			                            </values>
 		                            </field>
-		                            <field type="toggle" name="settings[config][general][printimage]" value="settings.settings.config.general.printimage" label="TP.CONFIG.PRINTIMG" prefix="yes_no" />
-
 	                            </fieldset>
+	                            -->
                             </div>
                         </div>
                     </tab>
@@ -257,6 +261,8 @@
                                         </values>
                                     </field>
                                     <field type="toggle" name="settings[config][section-view][entries_recursive]" value="settings.config.section-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
+	                            <field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][section-view][entries_ordering]" values="entriesOrdering" selected="settings.config.section-view.entries_ordering" class="input-large"/> <!-- SobiPro setting! -->
+
                                 </fieldset>
                                 <fieldset label="TP.CONFIG.CAT">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][category-view][entries_limit]" selected="settings.config.category-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
@@ -283,21 +289,9 @@
                                         </values>
                                     </field>
                                     <field type="toggle" name="settings[config][category-view][entries_recursive]" value="settings.config.category-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
-                                    <field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][category-view][entries_ordering]" selected="settings.config.category-view.entries_ordering" class="input-large"> <!-- SobiPro setting! -->
-                                        <values>
-                                            <option value="position.asc" label="SECN.CFG.ENTRY_ORDER_BY_POSITION_ASCENDING" />
-                                            <option value="position.desc" label="SECN.CFG.ENTRY_ORDER_BY_POSITION_DESCENDING" />
-                                            <option value="counter.asc" label="SECN.CFG.ENTRY_ORDER_BY_POPULARITY_ASCENDING" />
-                                            <option value="counter.desc" label="SECN.CFG.ENTRY_ORDER_BY_POPULARITY_DESCENDING" />
-                                            <option value="createdTime.asc" label="SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_ASC" />
-                                            <option value="createdTime.desc" label="SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_DESC" />
-                                            <option value="updatedTime.asc" label="SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_ASC" />
-                                            <option value="updatedTime.desc" label="SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_DESC" />
-                                            <option value="validUntil.asc" label="SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_ASC" />
-                                            <option value="validUntil.desc" label="SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_DESC" />
-                                            <option value="RAND()" label="Random" />
-                                        </values>
-                                    </field>
+
+	                                <field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][category-view][entries_ordering]" values="entriesOrdering" selected="settings.config.category-view.entries_ordering" class="input-large"/> <!-- SobiPro setting! -->
+
                                 </fieldset>
                                 <fieldset label="TP.CONFIG.LIST">
                                     <field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][general][entries_limit]" selected="settings.config.general.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
@@ -324,21 +318,7 @@
                                         </values>
                                     </field>
                                     <field type="toggle" name="settings[config][general][entries_recursive]" value="settings.config.general.entries_recursive" label="TP.CONFIG.LST_RECURSIVE" prefix="yes_no" /> <!-- SobiPro setting! -->
-                                    <field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][general][entries_ordering]" selected="settings.config.general.entries_ordering" class="input-large"> <!-- SobiPro setting! -->
-                                        <values>
-                                            <option value="position.asc" label="SECN.CFG.ENTRY_ORDER_BY_POSITION_ASCENDING" />
-                                            <option value="position.desc" label="SECN.CFG.ENTRY_ORDER_BY_POSITION_DESCENDING" />
-                                            <option value="counter.asc" label="SECN.CFG.ENTRY_ORDER_BY_POPULARITY_ASCENDING" />
-                                            <option value="counter.desc" label="SECN.CFG.ENTRY_ORDER_BY_POPULARITY_DESCENDING" />
-                                            <option value="createdTime.asc" label="SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_ASC" />
-                                            <option value="createdTime.desc" label="SECN.CFG.ENTRY_ORDER_BY_CREATION_DATE_DESC" />
-                                            <option value="updatedTime.asc" label="SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_ASC" />
-                                            <option value="updatedTime.desc" label="SECN.CFG.ENTRY_ORDER_BY_UPDATE_DATE_DESC" />
-                                            <option value="validUntil.asc" label="SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_ASC" />
-                                            <option value="validUntil.desc" label="SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_DESC" />
-                                            <option value="RAND()" label="Random" />
-                                        </values>
-                                    </field>
+                                    <field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][general][entries_ordering]" values="entriesOrdering" selected="settings.config.general.entries_ordering" class="input-large" /> <!-- SobiPro setting! -->
                                 </fieldset>
                             </div>
                         </div>

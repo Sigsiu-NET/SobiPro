@@ -83,6 +83,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:for-each>
+	            <div class="clearfix"></div>
 
                 <xsl:if test="( //review_form/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../common/review.xsl'] ">
                     <xsl:call-template name="ratingSummary" />

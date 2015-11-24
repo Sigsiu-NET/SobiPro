@@ -69,7 +69,7 @@
                     </ul>
                     <xsl:if test="//menu/search and $searchbox = 'true'">
                         <div class="collapse navbar-collapse">
-                            <form class="navbar-form navbar-right navbar-search" role="search">
+                            <form class="navbar-form navbar-right navbar-search">
                                 <div class="form-group">
                                     <input type="text" name="sp_search_for" autocomplete="off" class="search-query form-control" placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}" />
                                     <input type="hidden" name="task" value="search.search" />

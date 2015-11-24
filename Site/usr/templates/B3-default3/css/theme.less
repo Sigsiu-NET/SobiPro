@@ -28,10 +28,14 @@
 // and defines the following new classes based on the used colour theme:
 // .btn-sigsiu = a new button colour
 // .text-sigsiu = a new text colour
+// .text-sigsiu-active
+// .text-sigsiu-important
 // .bg-sigsiu = a new background colour
 // .bg-sigsiu-light = a lighter new background colour
+// .bg-sigsiu-alert
 
 //-------------------------------------------------------------------------------------*/
+
 
 // fallback to sobipro layout
 @base-color: #993333;
@@ -65,103 +69,140 @@
 
 // Mixins
 // ----------------------------------------
-.lightbackground() {
-	background-color: lighten(saturate(@base-color, 15%), 57%);
+.background(medium) {
+	background-color: lighten(saturate(@base-color, 20%), 48%);
+	& when (@colour-set = cornflower) {
+		background-color: lighten(saturate(@base-color, 15%), 35%);
+	}
+	& when (@colour-set = cornfield) {
+		background-color: lighten(saturate(@base-color, 24%), 25%);
+	}
+	& when (@colour-set = malva) {
+		background-color: lighten(saturate(@base-color, 15%), 40%);
+	}
+	& when (@colour-set = meadow) {
+		background-color: lighten(desaturate(@base-color,10%), 46%);
+	}
+	& when (@colour-set = poppyseed) {
+		background-color: lighten(@base-color, 48%);
+	}
+	& when (@colour-set = roses) {
+		background-color: lighten(saturate(@base-color, 28%), 40%);
+	}
+	& when (@colour-set = blackwidow) {
+		background-color: darken(@active-color, 65%);
+	}
+	& when (@colour-set = terra) {
+		background-color: lighten(saturate(@base-color, 3%), 42%);
+	}
+}
+.borders(medium) {
+	border-color: lighten(@base-color, 33%);
+	& when (@colour-set = cornflower) {
+		border-color: lighten(@base-color, 22%);
+	}
+	& when (@colour-set = cornfield) {
+		border-color: lighten(@base-color, 12%);
+	}
+	& when (@colour-set = malva) {
+		border-color: lighten(@base-color, 24%);
+	}
+	& when (@colour-set = meadow) {
+		border-color: lighten(desaturate(@base-color,15%), 28%);
+	}
+	& when (@colour-set = poppyseed) {
+		border-color: lighten(@base-color, 35%);
+	}
+	& when (@colour-set = roses) {
+		border-color: lighten(@base-color, 32%);
+	}
+	& when (@colour-set = blackwidow) {
+		border-color: darken(@active-color, 55%);
+	}
+	& when (@colour-set = terra) {
+		border-color: lighten(@base-color, 27%);
+	}
+}
+.borders(light) {
+	border-color: lighten(@base-color, 48%);
+	& when (@colour-set = cornflower) {
+		border-color: lighten(@base-color, 36%);
+	}
+	& when (@colour-set = cornfield) {
+		border-color: lighten(@base-color, 28%);
+	}
+	& when (@colour-set = malva) {
+		border-color: lighten(@base-color, 40%);
+	}
+	& when (@colour-set = meadow) {
+		border-color: lighten(@base-color, 48%);
+	}
+	& when (@colour-set = poppyseed) {
+		border-color: lighten(@base-color, 50%);
+	}
+	& when (@colour-set = roses) {
+		border-color: lighten(@base-color, 40%);
+	}
+	& when (@colour-set = blackwidow) {
+		border-color: darken(@active-color, 40%);
+	}
+	& when (@colour-set = terra) {
+		border-color: lighten(@base-color, 50%);
+	}
+}
+.background(light) {
+	background-color: lighten(saturate(@base-color, 15%), 56%);
 	& when (@colour-set = cornflower) {
 		background-color: lighten(saturate(@base-color, 15%), 45%);
 	}
 	& when (@colour-set = cornfield) {
-		background-color: lighten(saturate(@base-color, 15%), 40%);
+		background-color: lighten(saturate(@base-color, 17%), 40%);
 	}
 	& when (@colour-set = malva) {
 		background-color: lighten(saturate(@base-color, 15%), 50%);
 	}
 	& when (@colour-set = meadow) {
-		background-color: lighten(saturate(@base-color, 15%), 60%);
+		background-color: lighten(saturate(@base-color, 10%), 59%);
 	}
 	& when (@colour-set = poppyseed) {
-		background-color: lighten(saturate(@base-color, 5%), 62%);
+		background-color: lighten(saturate(@base-color, 2%), 60%);
 	}
 	& when (@colour-set = roses) {
-		background-color: lighten(saturate(@base-color, 28%), 48%);
+		background-color: lighten(saturate(@base-color, 28%), 47%);
 	}
 	& when (@colour-set = blackwidow) {
-		background-color: darken(@active-color, 65%);
+		background-color: darken(@active-color, 55%);
+	}
+	& when (@colour-set = terra) {
+		background-color: lighten(saturate(@base-color, 25%), 62%);
 	}
 }
-
-.lightborders() {
-	border-color: lighten(@base-color, 36%);
+.bottomborder(lightbackground) {
+	border-bottom-color: lighten(saturate(@base-color, 15%), 56%);
 	& when (@colour-set = cornflower) {
-		border-color: lighten(@base-color, 26%);
+		border-bottom-color: lighten(saturate(@base-color, 15%), 45%);
 	}
 	& when (@colour-set = cornfield) {
-		border-color: lighten(@base-color, 26%);
+		border-bottom-color: lighten(saturate(@base-color, 17%), 40%);
 	}
 	& when (@colour-set = malva) {
-		border-color: lighten(@base-color, 26%);
+		border-bottom-color: lighten(saturate(@base-color, 15%), 50%);
 	}
 	& when (@colour-set = meadow) {
-		border-color: lighten(@base-color, 36%);
+		border-bottom-color: lighten(saturate(@base-color, 10%), 59%);
 	}
 	& when (@colour-set = poppyseed) {
-		border-color: lighten(@base-color, 36%);
+		border-bottom-color: lighten(saturate(@base-color, 2%), 60%);
 	}
 	& when (@colour-set = roses) {
-		border-color: lighten(@base-color, 26%);
+		border-bottom-color: lighten(saturate(@base-color, 28%), 47%);
 	}
 	& when (@colour-set = blackwidow) {
-		border-color: darken(@active-color, 50%);
+		border-bottom-color: darken(@active-color, 55%);
+		color: @font-color;
 	}
-}
-
-.mediumbackground() {
-	background-color: lighten(saturate(@base-color, 15%), 47%);
-	& when (@colour-set = cornflower) {
-		background-color: lighten(saturate(@base-color, 15%), 45%);
-	}
-	& when (@colour-set = cornfield) {
-		background-color: lighten(saturate(@base-color, 15%), 30%);
-	}
-	& when (@colour-set = malva) {
-		background-color: lighten(saturate(@base-color, 15%), 40%);
-	}
-	& when (@colour-set = meadow) {
-		background-color: lighten(saturate(@base-color, 5%), 50%);
-	}
-	& when (@colour-set = poppyseed) {
-		background-color: lighten(saturate(@base-color, 5%), 52%);
-	}
-	& when (@colour-set = roses) {
-		background-color: lighten(saturate(@base-color, 28%), 42%);
-	}
-	& when (@colour-set = blackwidow) {
-		background-color: darken(@active-color, 75%);
-	}
-}
-
-.mediumborders() {
-	border-color: lighten(@base-color, 26%);
-	& when (@colour-set = cornflower) {
-		border-color: lighten(@base-color, 26%);
-	}
-	& when (@colour-set = cornfield) {
-		border-color: lighten(@base-color, 16%);
-	}
-	& when (@colour-set = malva) {
-		border-color: lighten(@base-color, 16%);
-	}
-	& when (@colour-set = meadow) {
-		border-color: lighten(@base-color, 26%);
-	}
-	& when (@colour-set = poppyseed) {
-		border-color: lighten(@base-color, 16%);
-	}
-	& when (@colour-set = roses) {
-		border-color: lighten(@base-color, 25%);
-	}
-	& when (@colour-set = blackwidow) {
-		border-color: darken(@active-color, 60%);
+	& when (@colour-set = terra) {
+		border-bottom-color: lighten(saturate(@base-color, 25%), 62%);
 	}
 }
 
@@ -180,12 +221,10 @@
 .SobiPro li {
 	line-height: inherit;
 }
-
 .SobiPro p {
 	font-size: inherit;
 	line-height: inherit;
 }
-
 .SobiPro input[type="checkbox"] {
 	width: inherit;
 }
@@ -195,16 +234,19 @@
 .SobiPro {
 	padding: 4px;
 	font-size: 14px;
-	//line-height: 1.42857;
 
 	& when (@inverse = inverse) {
 		font-size: 110%;
+		border-color: darken(@active-color, 30%);
 	}
 	background-color: @back-color;
-}
 
-.SobiPro a {
-	color: @active-color;
+	a {
+		color: @active-color;
+	}
+	& when (@inverse = inverse) {
+		color: @font-color;
+	}
 }
 
 //will be overwritten otherwise
@@ -213,17 +255,14 @@
 	background-color: #FFF;
 	border-color: #CCC;
 }
-
 .SobiPro a:hover,
 .SobiPro a:focus {
 	color: darken(@active-color, 10%);
 }
-
 .SobiPro .input-prepend .alert,
 .SobiPro .input-append .alert {
 	font-size: 14px;
 }
-
 .SobiPro .page-header {
 	margin-bottom: 10px;
 	margin-top: 10px;
@@ -231,29 +270,25 @@
 	font-weight: 300;
 	border-bottom: 1px solid lighten(@base-color, 50%);
 }
-
 .SobiPro .help-block {
 	font-size: 13px;
 	color: @font-color;
 }
-
 .SobiPro .well {
 	box-shadow: none;
-	border: 1px solid;
+	border-style: solid;
+	border-width: 1px;
 }
-
 .SobiPro label {
 	font-weight: 500;
 	& when (@inverse = inverse) {
 		font-weight: 400;
 	}
 }
-
 .SobiPro .label-info,
 .SobiPro .badge-info {
 	background-color: @base-color;
 }
-
 .SobiPro .label-info i,
 .SobiPro .badge-info i,
 .SobiPro .label-info a,
@@ -261,29 +296,26 @@
 	color: @text-color;
 	text-shadow: none;
 }
-
 .SobiPro .table th,
 .SobiPro .table td {
-	.lightborders();
-
+	.borders(light);
 }
 
+// Vertical striped tables
 .SobiPro .table-striped tbody > tr:nth-child(2n+1) > td,
 .SobiPro .table-vstriped tbody > tr > td:nth-child(2n+1) {
-	.lightbackground();
-	.lightborders();
+	.background(light);
+	.borders(light);
 }
-
 .SobiPro .table.table-vstriped th,
 .SobiPro .table.table-vstriped td {
 	border-top: none;
 }
-
 .SobiPro .table.table-vstriped td {
-	border-right: 1px solid;
-	.lightborders();
+	border-right-style: solid;
+	border-right-width: 1px;
+	.borders(light);
 }
-
 .SobiPro .table.table-vstriped > thead > tr > th {
 	border-bottom: none;
 }
@@ -307,27 +339,21 @@
 .SobiPro .input-mini {
 	width: 60px;
 }
-
 .SobiPro .input-small {
 	width: 90px;
 }
-
 .SobiPro .input-medium {
 	width: 150px;
 }
-
 .SobiPro .input-large {
 	width: 210px;
 }
-
 .SobiPro .input-xlarge {
 	width: 270px;
 }
-
 .SobiPro .input-xxlarge {
 	width: 400px;
 }
-
 .SobiPro .input-xxxlarge {
 	width: 530px;
 }
@@ -337,40 +363,43 @@
 .SobiPro .modal-header h3 {
 	.headertext;
 }
-
 .SobiPro .modal-header .close {
 	margin-top: 3px;
 }
-
 .SobiPro .modal-header .close {
 	& when (@inverse = inverse) {
 		opacity: 0.8;
 		color: @base-color;
 	}
 }
-
 .SobiPro .modal form {
 	margin-right: 10px;
 	margin-left: 20px;
 }
-
 & when (@inverse = inverse) {
-	.SobiPro,
-	.SobiPro .modal {
-		background-color: @back-color;
-		border-color: darken(@active-color, 30%);
-	}
-	.SobiPro .modal-content {
-		.lightbackground();
+	.SobiPro .modal-body{
+		background-color: @active-color;
+		border-top-color: @active-color;
+		color: @text-color;
 	}
 	.SobiPro .modal-content label {
 		color: #fff;
 	}
+	.SobiPro .modal-header,
 	.SobiPro .modal-footer {
 		background-color: @hover-color;
 	}
 }
-
+& when (@corners = rounded) {
+	.SobiPro .modal-header {
+		border-top-left-radius: 6px;
+		border-top-right-radius: 6px;
+	}
+	.SobiPro .modal-footer {
+		border-bottom-left-radius: 6px;
+		border-bottom-right-radius: 6px;
+	}
+}
 .SobiPro .ctrl-spinner {
 	position: absolute;
 	left: 50%;
@@ -383,10 +412,9 @@
 .modal-backdrop.fade.in {
 	opacity: 0.2;
 	& when (@inverse = inverse) {
-		opacity: 0.6;
+		opacity: 0.4;
 	}
 }
-
 .modal-backdrop {
 	background-color: @base-color !important;
 	& when (@inverse = inverse) {
@@ -402,7 +430,6 @@
 	line-height: 1.1;
 	margin-top: 0.67em;
 }
-
 .SobiPro h2 input[type="checkbox"] {
 	margin: 0 0 5px 0;
 }
@@ -501,13 +528,11 @@
 	border-width: 1px;
 	margin: 1px;
 }
-
 .SobiPro .pagination > li > a {
 	color: @text-color;
 	background-color: @base-color;
 	font-weight: bold;
 }
-
 .SobiPro .pagination > li > a.active,
 .SobiPro .pagination > li > a:hover,
 .SobiPro .pagination > li > a:focus,
@@ -517,14 +542,13 @@
 	background-color: @active-color;
 	border-color: @active-color;
 }
-
 .SobiPro .well,
 .SobiPro .pagination > .disabled > span,
 .SobiPro .pagination > .disabled > a,
 .SobiPro .pagination > .disabled > a:hover,
 .SobiPro .pagination > .disabled > a:focus {
-	.lightbackground();
-	.lightborders();
+	.background(light);
+	.borders(light);
 	color: saturate(darken(@base-color, 12%), 20%);
 	& when (@inverse = inverse) {
 		color: lighten(@base-color, 50%);
@@ -538,7 +562,6 @@
 	padding: 2px 9px;
 	font-size: 12px;
 }
-
 .SobiPro .pagination-xs > li > a,
 .SobiPro .pagination-xs > li > span {
 	font-size: 10.5px;
@@ -587,15 +610,10 @@
 	.SobiPro input[type="color"],
 	.SobiPro .uneditable-input {
 		background-color: #eeeeee;
-		//        color: @font-color;
-		//        border-color: lighten(@text-color, 25%);
 	}
 	.SobiPro ul,
 	.SobiPro ol {
 		color: #fff;
-	}
-	.SobiPro .input-group .input-group-addon {
-		//        color: @text-color;
 	}
 }
 
@@ -621,24 +639,17 @@
 	& when (@inverse = inverse) {
 		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px 4px rgba(red(@base-color), green(@base-color), blue(@base-color), 80%)
 	}
-	border: 1px solid;
+	border-style: solid;
+	border-width: 1px;
 }
-
 .SobiPro select:focus {
 	outline: 0 none;
 }
-
 .SobiPro select option:focus {
 	background-color: @active-color;
 }
-
 .SobiPro .thumbnail {
 	margin-bottom: 9px;
-}
-
-//spezifizieren wo gebraucht wird
-.SobiPro .input-group .input-group-addon {
-	// cursor: pointer;
 }
 
 // Firefox-specific table hack
@@ -655,7 +666,6 @@
 	background-color: lighten(@base-color, 5%);
 	border-color: darken(@base-color, 5%);
 }
-
 .SobiPro .btn-group.open .btn-sigsiu.dropdown-toggle,
 .SobiPro .btn-sigsiu:hover,
 .SobiPro .btn-sigsiu:focus,
@@ -665,7 +675,6 @@
 	color: @text-color;
 	border-color: darken(@base-color, 10%);
 }
-
 .SobiPro .btn-sigsiu .caret {
 	border-top-color: @text-color;
 }
@@ -673,46 +682,61 @@
 // New text and background  color
 // ----------------------------------------
 .SobiPro .text-sigsiu {
-	color: saturate(darken(@base-color, 5%), 25%);
+	color: @base-color;
 }
-
+.SobiPro .text-sigsiu-active {
+	color: @active-color;
+}
+.SobiPro .text-sigsiu-important {
+	color: @important-color;
+}
 .SobiPro .bg-sigsiu {
-	.mediumborders();
-	.mediumbackground();
+	border-style: solid;
+	border-width: 1px;
+	.borders(medium);
+	.background(medium);
 
 }
-
 .SobiPro .bg-sigsiu-light {
-	.lightbackground();
-	.lightborders();
+	border-style: solid;
+	border-width: 1px;
+	.background(light);
+	.borders(light);
 }
+.SobiPro .bg-sigsiu-alert {
+	border-style: solid;
+	border-width: 1px;
+	background-color: @alert-color;
+	color: @active-color;
+	border-color: darken(@alert-color, 10%);
+	& when (@inverse = inverse) {
+		background-color: @base-color;
+		color: @text-color;
+		border-color: lighten(@base-color, 10%);
+	}
+}
+
 
 // Define widths to use as classes
 // ----------------------------------------
 .SobiPro .collwidth2 {
 	width: 50%;
 }
-
 .SobiPro .collwidth3 {
 	width: 33.33%;
 }
-
 .SobiPro .collwidth4 {
 	width: 25%;
 }
-
 .SobiPro .collwidth5 {
 	width: 20%;
 }
-
 .SobiPro .collwidth6 {
 	width: 16.66%;
 }
-
 .SobiPro .collwidth8 {
 	width: 12.5%;
 }
-
 .SobiPro .collwidth10 {
 	width: 10%;
 }
@@ -724,7 +748,6 @@
 	background-color: @alert-color;
 	border: 1px solid darken(@alert-color, 10%);
 }
-
 .alert,
 .alert h4 {
 	color: @active-color;
@@ -736,7 +759,6 @@
 	margin-bottom: 20px;
 	text-shadow: none;
 }
-
 .SobiPro .spAlert {
 	margin-bottom: 0;
 	margin-top: 0;
@@ -754,11 +776,11 @@
 
 // has to be defined by the template as several apps are using it
 .SobiPro .alert-message {
-	border: 1px solid;
+	border-style: solid;
+	border-width: 1px;
 	.SobiPro .alert;
 	.SobiPro .spAlert;
 }
-
 .SobiPro .spMessage {
 	margin-top: 10px;
 }
@@ -769,24 +791,25 @@
 	background-color: #F2DEDE;
 	border-color: #EBCCD1;
 }
-
+// Bootbox
 .SobiPro .bootbox-alert i.error {
 	color: #A94442;
 	font-size: 30px;
 }
-
 .SobiPro .bootbox-alert i.success {
 	color: #449D44;
 	font-size: 30px;
 }
-
 .SobiPro .bootbox-alert div.signal {
 	float: left;
 	padding-right: 10px;
 }
-
 .SobiPro .bootbox-body {
 	padding-bottom: 10px;
+	& when (@inverse = inverse) {
+		background-color: @active-color;
+		color: @text-color;
+	}
 }
 
 .SobiPro .spMessage .alert-error,
@@ -799,7 +822,6 @@
 		background-color: lighten(@error-color, 32%);
 	}
 }
-
 .SobiPro .spMessage .alert-success,
 .SobiPro .spSearch .alert-info {
 	border-color: @alert-color;
@@ -821,34 +843,32 @@
 	background-color: @back-color;
 	border-color: @back-color;
 }
-
 .SobiPro .text-error,
-.SobiPro .form-group.error .checkbox,
-.SobiPro .form-group.error .radio,
-.SobiPro .form-group.error input,
-.SobiPro .form-group.error select,
-.SobiPro .form-group.error textarea,
-.SobiPro .form-group.error .control-label,
-.SobiPro .form-group.error .help-block,
-.SobiPro .form-group.error .help-inline {
-	color: @error-color;
-}
-
-.SobiPro .form-group.error input:focus,
-.SobiPro .form-group.error select:focus,
-.SobiPro .form-group.error textarea:focus {
-	border-color: fade(@error-color, 80%) !important;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
-	& when (@inverse = inverse) {
-		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px 4px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+.SobiPro .form-group.error {
+	.checkbox,
+	.radio,
+	input,
+	select,
+	textarea,
+	.control-label,
+	.help-block,
+	.help-inline {
+		color: @error-color;
 	}
-
-}
-
-.SobiPro .form-group.error input,
-.SobiPro .form-group.error select,
-.SobiPro .form-group.error textarea {
-	border-color: @error-color;
+	input:focus,
+	select:focus,
+	textarea:focus {
+		border-color: fade(@error-color, 80%) !important;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+		& when (@inverse = inverse) {
+			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px 4px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
+		}
+	}
+	input,
+	select,
+	textarea {
+		border-color: @error-color;
+	}
 }
 
 // Navigation bars
@@ -857,19 +877,20 @@
 .SobiPro .navbar-default .navbar-form {
 	border-color: @base-color;
 }
-
 .SobiPro .nav-tabs,
 .SobiPro .nav-pills {
 	font-size: 15px;
 }
-
 .SobiPro .nav-pills > .active > a,
 .SobiPro .nav-pills > .active > a:hover,
 .SobiPro .nav-pills > .active > a:focus {
 	background-color: @active-color;
 	color: @hover-color;
+	& when (@inverse = inverse) {
+		background-color: @base-color;
+		color: @text-color;
+	}
 }
-
 .SobiPro .navbar .nav > li > a {
 	padding-left: 10px;
 	padding-right: 10px;
@@ -893,11 +914,9 @@
 		border-radius: 4px;
 	}
 }
-
 .SobiPro .topmenu .nav {
 	background: inherit;
 }
-
 .SobiPro .topmenu .nav > li,
 .SobiPro .topmenu .nav > li a {
 	color: @text-color;
@@ -905,38 +924,31 @@
 	border-bottom: inherit;
 	text-align: inherit;
 }
-
 .SobiPro .topmenu .nav > li a.active,
 .SobiPro .topmenu .nav > li a:focus,
 .SobiPro .topmenu .nav > li a:hover {
 	background-color: @active-color;
 	color: @hover-color;
 }
-
 .SobiPro .topmenu .navbar-nav > li {
-	margin-left: inherit;
+//	margin-left: inherit;
 }
-
 .SobiPro .topmenu .navbar-nav > li > a {
 	padding-top: 15px;
 	padding-bottom: 15px;
 	font-size: inherit;
 }
-
 .SobiPro .topmenu .navbar-search {
 	margin-top: 15px;
 }
-
 .SobiPro .topmenu .navbar-search input {
 	width: 115px;
 }
-
 & when (@inverse = no) {
 	.SobiPro .topmenu input[type="text"] {
 		border-color: darken(@base-color, 5%);
 	}
 }
-
 .SobiPro .topmenu input[type="text"] {
 	height: inherit;
 	margin-bottom: inherit;
@@ -948,11 +960,9 @@
 	float: left;
 	margin: 5px 10px 2px 1px;
 }
-
 .SobiPro .alphalist .dropdown-menu {
 	text-align: left;
 }
-
 .SobiPro .alphalist .btn.btn-xs {
 	padding: 1px 5px;
 	font-weight: inherit;
@@ -962,29 +972,27 @@
 	margin-right: inherit;
 	text-transform: none;
 }
-
 .SobiPro .alpha .pagination {
 	margin-top: 5px;
 	width: inherit;
 	display: inline-block;
 }
-
 .SobiPro .alpha .pagination li a {
 	min-width: 27px;
 	text-align: center;
 	letter-spacing: -1.3px;
+	& when (@corners = rounded) {
+		border-radius: 4px;
 }
-
+}
 .SobiPro .alpha .pagination > li:first-child > a,
 .SobiPro .alpha .pagination > li:first-child > span {
 	margin-left: 1px;
 }
-
 .SobiPro .alpha .pagination ul > li > a,
 .SobiPro .alpha .pagination ul > li > span {
 	padding: inherit;
 }
-
 .SobiPro .alpha .pagination ul > li {
 	margin-right: inherit;
 }
@@ -997,40 +1005,32 @@
 	display: block;
 	line-height: 25px;
 }
-
 .SobiPro .spCatname p {
 	margin: 5px 0 0 0;
 	font-size: 15px;
 }
-
 .SobiPro .spCaticon i {
 	color: @base-color;
 }
-
 .SobiPro .spCaticon [class^="fa-"],
 .SobiPro .spCaticon [class*=" fa-"] {
 	margin-right: 0;
 }
-
 .SobiPro .spCaticon [class^="icon-"],
 .SobiPro .spCaticon [class*=" icon-"] {
 	margin-right: 0;
 }
-
 .SobiPro .spCaticon {
 	text-align: center;
 	margin-top: 15px;
 }
-
 .SobiPro .spCaticon a {
 	color: @base-color;
 }
-
 .SobiPro .spCaticon a:hover {
 	color: @base-color;
 	text-decoration: none;
 }
-
 .SobiPro .spCatintro {
 	font-size: 90%;
 	line-height: 15px;
@@ -1051,36 +1051,19 @@
 	margin-bottom: 15px;
 	margin-top: 15px;
 }
-
 .SobiPro .spEntryCats {
 	font-size: 80%;
 }
-
-& when (@inverse = inverse) {
-	.SobiPro .spEntryEdit label,
-	.SobiPro .spSearch label,
-	.SobiPro .spSectionDesc p,
-	.SobiPro .spCategoryDesc p,
-	.SobiPro .spEntryContainer p,
-	.SobiPro .spEntryContainer div,
-	.SobiPro .spDetailEntry div {
-		color: @font-color;
-	}
-}
-
 .SobiPro .spEntryCount {
 	font-size: 12px;
 	color: @font-color;
 }
-
 .SobiPro .spSubcats {
 	line-height: 15px;
 }
-
 .SobiPro .spLabel {
 	font-weight: 700;
 }
-
 
 // NoImge Setting
 // ----------------------------------------
@@ -1095,17 +1078,17 @@
 	}
 	text-align: center;
 	padding: 4px;
-	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-style: solid;
+	border-width: 1px;
 	& when (@corners = rounded) {
 		border-radius: 4px;
 	}
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	margin: 5px;
 
-	.lightbackground();
-	.lightborders();
+	.background(light);
+	.borders(light);
 }
-
 .SobiPro .spDetailEntry .spNoImage {
 	width: 300px;
 	height: 200px;
@@ -1116,29 +1099,21 @@
 		font-size: calc((@big-image * 6) / 10);
 	}
 }
-
 .SobiPro .spNoImage i {
 	color: lighten(@base-color, 30%);
-	& when (@inverse = inverse) {
-		color: lighten(@active-color, 60%);
-	}
 }
-
 .SobiPro .spNoImageContainer {
 	display: flex;
 	display: -webkit-flex;
 }
-
 .SobiPro .spNoImageContainer.right {
 	float: right;
 	display: inline;
 }
-
 .SobiPro .spNoImageContainer.left {
 	float: left;
 	display: inline;
 }
-
 .SobiPro .spNoImage {
 	display: flex;
 	display: -webkit-flex;
@@ -1147,7 +1122,6 @@
 	justify-content: space-around;
 	-webkit-justify-content: space-around;
 }
-
 .SobiPro .spNoImage.stretch {
 	align-self: stretch;
 	-webkit-align-self: stretch;
@@ -1155,12 +1129,13 @@
 	-webkit-flex: 1;
 }
 
-// Tabs/Coloured Tabs
+// Tabs / Pills / Coloured Tabs / Staples
 // ----------------------------------------
 .SobiPro .tab-pane {
-	border: 1px solid;
-	.lightbackground();
-	.lightborders();
+	.background(light);
+	border-style: solid;
+	border-width: 1px;
+	.borders(light);
 	& when (@corners = rounded) {
 		border-radius: 4px;
 	}
@@ -1169,63 +1144,23 @@
 	margin-top: 10px;
 	min-height: 200px;
 }
-
-.SobiPro .tab-pane.tabs.coloured {
-	margin-top: 0;
-}
-
-.SobiPro .tab-pane.tabs.coloured.active {
-	border-top-left-radius: 0;
-}
-
 .SobiPro .spTablist {
 	margin-top: 20px;
 }
-
-.SobiPro .nav-tabs.coloured > li.active > a,
-.SobiPro .nav-tabs.coloured > li.active > a:hover,
-.SobiPro .nav-tabs.coloured > li.active > a:focus {
-	border: 1px solid;
-	.lightbackground();
-	.lightborders();
-
-	border-bottom-color: lighten(saturate(@base-color, 15%), 57%);
-	& when (@colour-set = cornflower) {
-		border-bottom-color: lighten(saturate(@base-color, 15%), 45%);
-	}
-	& when (@colour-set = cornfield) {
-		border-bottom-color: lighten(saturate(@base-color, 15%), 40%);
-	}
-	& when (@colour-set = malva) {
-		border-bottom-color: lighten(saturate(@base-color, 15%), 50%);
-	}
-	& when (@colour-set = meadow) {
-		border-bottom-color: lighten(saturate(@base-color, 15%), 60%);
-	}
-	& when (@colour-set = poppyseed) {
-		border-bottom-color: lighten(saturate(@base-color, 5%), 62%);
-	}
-	& when (@colour-set = roses) {
-		border-bottom-color: lighten(saturate(@base-color, 28%), 48%);
-	}
-	& when (@colour-set = blackwidow) {
-		border-bottom-color: darken(@active-color, 65%);
-		color: @font-color;
-	}
+.SobiPro .nav-pills a:focus,
+.SobiPro .nav-tabs a:focus {
+	outline: none;
 }
-
 .SobiPro .nav-tabs > li > a {
 	& when (@corners = angular) {
 		border-radius: 0;
 	}
 }
-
 .SobiPro .nav-tabs > li > a:hover {
 	& when (@colour-set = blackwidow) {
 		border-color: darken(@active-color, 50%) darken(@active-color, 50%) darken(@active-color, 65%);;
 	}
 }
-
 .SobiPro .nav.nav-tabs > li > a:hover,
 .SobiPro .nav.nav-tabs > li > a:focus {
 	& when (@colour-set = blackwidow) {
@@ -1234,13 +1169,80 @@
 	}
 }
 
+// Coloured tabs
+.SobiPro .tab-content.tabs.coloured .tab-pane {
+	margin-top: 0;
+}
+.SobiPro .tab-content.tabs.coloured .tab-pane.active {
+	border-top-left-radius: 0;
+}
+.SobiPro .nav-tabs.coloured > li.active > a,
+.SobiPro .nav-tabs.coloured > li.active > a:hover,
+.SobiPro .nav-tabs.coloured > li.active > a:focus {
+	border-style: solid;
+	border-width: 1px;
+	.background(light);
+	.borders(light);
+	.bottomborder(lightbackground);
+}
 .SobiPro .nav-tabs.coloured {
 	border-bottom: none;
 }
 
-.SobiPro .nav-pills a:focus,
-.SobiPro .nav-tabs a:focus {
-	outline: none;
+// Staples
+.SobiPro .tab-content.pills.staples {
+	margin-top: -20px;
+}
+.SobiPro .nav-pills.staples {
+	margin-top: 0;
+}
+.SobiPro .nav-pills.staples > .active > a,
+.SobiPro .nav-pills.staples > .active > a:focus,
+.SobiPro .nav-pills.staples > .active > a:hover {
+	.background(medium);
+	color: @active-color;
+	border-bottom: 2px solid @active-color;
+	top: 20px;
+}
+.SobiPro .tab-content.pills.staples .tab-pane {
+	padding-top: 36px;
+}
+.SobiPro .nav-pills.staples > li {
+	opacity: 0.5;
+}
+.SobiPro .nav-pills.staples > li > a:hover,
+.SobiPro .nav-pills.staples > li > a:focus {
+	background: none;
+}
+.SobiPro .nav-pills.staples > li:hover,
+.SobiPro .nav-pills.staples > li.active {
+	opacity: 1.0;
+}
+.SobiPro ul.nav-pills.staples {
+	margin-left: 10px;
+}
+.SobiPro .nav-pills.staples > li > a {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+.SobiPro .nav-pills.staples > li.active::before,
+.SobiPro .nav-pills.staples > li.active::after {
+	top: 20px;
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-bottom: 14px solid #cdcdcd;
+}
+.SobiPro .nav-pills.staples > li.active::before {
+	left: -9px;
+	border-left: 10px solid transparent;
+	border-right: 0 solid transparent;
+}
+.SobiPro .nav-pills.staples > li.active::after {
+	right: -9px;
+	border-left: 0 solid transparent;
+	border-right: 10px solid transparent;
 }
 
 // Entry details view
@@ -1248,15 +1250,12 @@
 .SobiPro .spDetails {
 	font-size: 14px;
 }
-
 .SobiPro .spDetailEntry .spManage {
 	margin-right: 7px;
 }
-
 .SobiPro span.spDetailSuffix {
 	font-size: 80%;
 }
-
 .SobiPro .spDetailEntry .spClassViewImage img {
 	width: @big-image;
 }
@@ -1268,7 +1267,6 @@
 	color: @important-color;
 	padding-left: 5px;
 }
-
 .SobiPro a.entry-status:hover,
 .SobiPro a.entry-status:active,
 .SobiPro a.entry-status:focus {
@@ -1282,7 +1280,6 @@
 	font-weight: normal;
 	line-height: 20px;
 }
-
 .SobiPro .popover-inner .spclose {
 	padding-right: 8px;
 	padding-top: 5px;
@@ -1292,12 +1289,10 @@
 		opacity: 0.8;
 	}
 }
-
 .SobiPro .popover .popover-title {
 	text-shadow: none;
 	font-weight: bold;
 }
-
 & when (@inverse = inverse) {
 	.SobiPro .popover {
 		background-color: transparent;
@@ -1325,78 +1320,60 @@
 .SobiPro .spEntryEdit .required {
 	border: 1px solid @important-color;
 }
-
 .SobiPro .spEntryEdit .spClassRadio.required,
 .SobiPro .spEntryEdit .spClassCheckbox.required {
 	border: none;
 }
-
 .SobiPro .spEntryEdit textarea,
 .SobiPro .spEntryEdit input[type="text"] {
 	margin-bottom: inherit;
 }
-
 .SobiPro .spEntryEdit .progress {
 	min-width: 100px;
 }
-
 .SobiPro .spEntryEdit .required-message {
 	margin: 25px 0 10px 0;
 	& when (@inverse = inverse) {
 		color: @font-color;
 	}
 }
-
 .SobiPro .spEntryEdit .star {
 	color: @important-color;
 	padding-left: 2px;
 	font-size: 14px;
 }
-
 .SobiPro .spEntryEdit .message-lightbulb {
 	left: 0;
 	position: relative;
 }
-
 & when (@corners = rounded) {
 	.SobiPro .spEntryEdit .message-lightbulb .popover-content {
 		border-bottom-left-radius: 6px;
 		border-bottom-right-radius: 6px;
 	}
 }
-
 .SobiPro .spEntryEdit .message-lightbulb .popover.bottom {
 	margin-top: 0;
 }
-
 .SobiPro .spEntryEdit .popover-title {
 	color: @error-color;
 	font-size: 17px;
 	font-weight: 400;
 }
-
 .SobiPro .spEntryEdit .popover-title::before {
 	font-family: FontAwesome;
 	content: "";
 	padding-right: 5px;
 }
-
 .SobiPro .editor {
 	overflow: visible;
 }
-
-.SobiPro .spUpload input {
-	// height: 21px;
-}
-
 .SobiPro .spUpload .span1 {
 	margin-left: 10px;
 }
-
 .SobiPro .spUpload .alert {
 	margin-top: 5px;
 }
-
 .SobiPro .spClassEditInfo {
 	margin-top: 10px;
 }
@@ -1407,17 +1384,14 @@
 .SobiPro .spFieldUrlLabel {
 	margin-bottom: 5px;
 }
-
 & when (@corners = rounded) {
 	.SobiPro .spFieldUrl .input-group-btn select {
 		border-radius: 4px 0 0 4px;
 	}
 }
-
 .SobiPro .spFieldUrl select {
 	width: 100px;
 }
-
 .SobiPro .spUrlCounterValue {
 	font-size: 85%;
 	color: grey;
@@ -1429,7 +1403,6 @@
 .SobiPro .spEditImagePreview {
 	float: left;
 }
-
 .SobiPro .spEditImagePreview img {
 	padding: 4px;
 	background-color: #FFF;
@@ -1442,27 +1415,15 @@
 		border-radius: 4px;
 	}
 }
-
 .SobiPro .spImageField input[type='checkbox'] {
 	margin: 1px 5px 5px 0;
 }
-
 .SobiPro .spImageField label {
 	display: inline-block;
 }
-
-.SobiPro .spImageUpload input {
-	//height: 35px;
-}
-
 .SobiPro .spImageUpload .span1 {
 	margin-left: 10px;
 }
-
-.SobiPro .spImageUpload .progress-message {
-	//    clear: left;
-}
-
 .SobiPro .spImageUpload .alert {
 	margin-top: 5px;
 }
@@ -1472,25 +1433,20 @@
 .SigsiuTree .selected {
 	margin-top: 10px;
 }
-
 .SigsiuTree .selected select {
 	min-height: 100px;
 	width: 100%;
 }
-
 .SigsiuTree .buttons {
 	text-align: right;
 	margin-top: 12px;
 }
-
 .SigsiuTree .buttons button {
 	margin: 3px 0 10px 3px;
 }
-
 .SigsiuTree .buttons button i::after {
 	content: ' ';
 }
-
 .SigsiuTree .tree {
 	overflow: auto;
 	max-height: 250px;
@@ -1504,7 +1460,6 @@
 .SobiPro .spFieldRadio {
 	float: left;
 }
-
 .SobiPro .spFieldRadio label,
 .SobiPro .spFieldCheckbox label {
 	float: left;
@@ -1521,16 +1476,13 @@
 .SobiPro .checkbox-inline.left input[type="checkbox"] {
 	margin-left: 10px;
 }
-
 .SobiPro .radio-inline.left,
 .SobiPro .checkbox-inline.left {
 	padding-left: 0;
 }
-
 .checkbox + .checkbox, .radio + .radio {
 	margin-top: -5px;
 }
-
 .SobiPro .spFieldRadio input,
 .SobiPro .spFieldCheckbox input {
 	margin-top: 3px;
@@ -1542,11 +1494,9 @@
 	float: left;
 	width: calc(100% / 2 - 5px);
 }
-
 .SobiPro .spSelectRangeFrom .input-group {
 	margin: 0 5px 10px 0;
 }
-
 .SobiPro .spSelectRangeTo .input-group {
 	margin: 0 0 10px 5px;
 }
@@ -1554,16 +1504,19 @@
 // Edit entry payment control
 // ----------------------------------------
 .SobiPro .control-label div.paybox span {
-	border: 1px solid darken(@alert-color, 10%);;
 	border-radius: 45px;
 	padding: 5px 9px 9px 9px;
+	border: 1px solid darken(@alert-color, 10%);;
 	background-color: @alert-color;
+	& when (@inverse = inverse) {
+		background-color: @base-color;
+		color: @text-color;
+		border-color: lighten(@base-color, 10%);
+	}
 }
-
 .SobiPro .form-inline .control-label div.paybox {
 	margin-bottom: 12px;
 }
-
 .SobiPro .form-group.payment-message,
 .SobiPro .control-group.payment-message {
 	padding-top: 10px;
@@ -1573,12 +1526,16 @@
 // ----------------------------------------
 .SobiPro .spSelectRangeFrom span,
 .SobiPro .spSelectRangeTo span {
-	//display: inline-block;
 	min-width: 34px;
 }
-
-.SPSearch .highlight {
+.SPSearch .highlight,
+.spSearch .highlight {
 	background-color: yellow;
+}
+& when (@inverse = inverse) {
+	.SobiPro .sp-search-phrases label {
+		color: #333;
+	}
 }
 
 // Calendar/Datepicker
@@ -1607,14 +1564,12 @@
 	td.active:hover {
 		background-image: linear-gradient(to bottom, darken(@base-color, 5%), lighten(@base-color, 5%));
 	}
-
 	a [class^="icon-"] {
 		color: @base-color;
 		& when (@inverse = inverse) {
 			color: @text-color;
 		}
 	}
-
 	li > a:focus,
 	li > a:hover {
 		text-decoration: none;
@@ -1627,30 +1582,24 @@
 .SobiPro table.payment td {
 	line-height: 10px;
 }
-
 .SobiPro table tr.summary td {
 	background-color: #ffffff !important;
 	padding-top: 25px;
 }
-
 .SobiPro table.payment tbody tr.info > td {
-	.mediumborders();
-	.mediumbackground();
+	.borders(medium);
+	.background(medium);
 }
-
 .SobiPro table.payment tbody tr.success > td {
 	background-color: lighten(@alert-color, 20%);
 }
-
 .SobiPro table tr.sum td {
 	font-weight: bold;
 }
-
 .SobiPro .disabledArea {
 	opacity: 0.3;
 	cursor: progress;
 }
-
 .SobiPro .disabledArea a {
 	cursor: progress;
 }
@@ -1662,7 +1611,6 @@
 .SobiPro div.spClassViewUrl {
 	padding-top: 10px;
 }
-
 .SobiPro .popover img,
 .SobiPro .spClassViewImage img {
 	padding: 4px;
@@ -1674,7 +1622,6 @@
 		border-radius: 4px;
 	}
 }
-
 .SobiPro .spEntryContainer .spClassViewImage img {
 	width: @small-image;
 }
@@ -1692,11 +1639,9 @@
 	margin-left: auto;
 	margin-right: auto;
 }
-
 .SobiPro .carousel-control.right {
 	background-image: linear-gradient(to right, transparent 0, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 100%);
 }
-
 .SobiPro .carousel-control.left {
 	background-image: linear-gradient(to right, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 0, transparent 100%);
 }
@@ -1708,7 +1653,6 @@
 	.icon-next {
 		margin-right: -15px;
 	}
-
 	.fa-chevron-left,
 	.fa-chevron-right,
 	.icon-chevron-left,
@@ -1720,14 +1664,12 @@
 		margin-top: -15px;
 		font-size: 30px;
 	}
-
 	.fa-chevron-right,
 	.icon-chevron-right,
 	.icon-next {
 		right: 50%;
 		margin-right: -10px;
 	}
-
 	.fa-chevron-left,
 	.fa-chevron-right,
 	.icon-chevron-left,
@@ -1742,15 +1684,6 @@
 	}
 }
 
-
-// Contact Form Field
-// -----------------------------------------------
-.SobiPro .restaraReservation .contactform {
-	background: transparent none repeat scroll 0 0;
-	border: none;
-	margin-top: 0;
-}
-
 // SP-GeoMap Field
 // -----------------------------------------------
 & when (@corners = rounded) {
@@ -1758,9 +1691,7 @@
 		border-radius: 4px;
 	}
 }
-
 .SobiPro .mapSearch input {
-	//height: 35px;
 }
 
 // Aggregation Field
@@ -1770,15 +1701,12 @@
 		background-color: @hover-color;
 	}
 }
-
 .SobiPro .bootstrap-tagsinput .tag {
 	color: @text-color;
 }
-
 .SobiPro .bootstrap-tagsinput .tag [data-role="remove"] {
 	color: darken(@text-color, 10%);
 }
-
 & when (@inverse = inverse) {
 	.SobiPro div.tagsinput input {
 		background-color: @base-color;
@@ -1786,6 +1714,10 @@
 	.SobiPro .bootstrap-tagsinput {
 		background-color: #eeeeee;
 	}
+}
+.SobiPro div.spClassViewAggregation,
+.SobiPro div.spClassViewAggregation a {
+	color: @active-color;
 }
 
 // Review and Rating App
@@ -1798,36 +1730,50 @@
 		color: @text-color;
 	}
 }
-
 .SobiPro .review-first i {
 	color: @base-color;
 }
+.SobiPro .rating-criteria,
+.SobiPro .rating-summary {
+	line-height: 1.428571429;
+}
+
 
 // Calendar Field
 // -----------------------------------------------
 .SobiPro .spListing h3 {
 	color: @base-color;
 }
-
 .SobiPro table.SpCalendar th,
 .SobiPro table.SpCalendar td,
 .SobiPro table.SpCalendar {
-	.lightbackground();
-	.lightborders();
+	.background(light);
+	.borders(light);
 }
-
 .SobiPro table.SpCalendar td.SpCalSun {
-	.mediumborders();
-	.mediumbackground();
+	.borders(medium);
+	.background(medium);
 }
-
 .SobiPro table.SpCalendar th {
 	color: @base-color;
 }
-
 .SobiPro .spCalDayHead .navbar-inner {
 	background-color: @alert-color;
 	color: @text-color;
+}
+.SobiPro .SpCalDay.badge {
+	background-color: @alert-color;
+	color: @active-color;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-color: darken(@alert-color,8%);
+	& when (@inverse = inverse) {
+		background-color: @base-color;
+		color: @text-color;
+		border-color: lighten(@base-color, 10%);
+	}
 }
 
 // Collection App
@@ -1838,19 +1784,16 @@
 		color: #333;
 	}
 }
-
 .SobiPro .spCollection {
 	& when (@corners = rounded) {
 		border-radius: 4px;
 	}
-	.lightbackground();
-	.lightborders();
+	.background(light);
+	.borders(light);
 }
-
 .SobiPro .spCollection .nav > li > a {
 	border-color: fade(#ffffff, 0%);
 }
-
 .SobiPro .spCollection .nav > li > a:hover,
 .SobiPro .spCollection .nav > li > a:focus {
 	border-color: darken(@hover-color, 10%);
@@ -1861,18 +1804,17 @@
 // Profile Field
 // -----------------------------------------------
 .SobiPro .spProfile.striped > blockquote:nth-child(2n+1) {
-	.lightbackground();
-	.lightborders();
+	.background(light);
+	.borders(light);
 }
-
 .SobiPro .spProfile.striped > blockquote:nth-child(2n) {
-	.mediumborders();
-	.mediumbackground();
+	.borders(medium);
+	.background(medium);
 }
-
 .SobiPro .spProfileSection {
 	color: @base-color;
 }
+
 
 // Custom Media Queries
 // ==============================================
@@ -1890,11 +1832,7 @@
 
 //Navigation Collapse
 //@media (min-width: 768px) and (max-width: 979px) {
-@media (min-width: 769px) and (max-width: 980px) {
-	.SobiPro .spFieldUrl select {
-		//margin-bottom: 3px;
-		//width: 80px !important;
-	}
+@media (min-width: 769px) and (max-width: 991px) {
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -1903,21 +1841,14 @@
 	.SobiPro .topmenu .nav > li a {
 		line-height: 20px;
 	}
-
 	.SobiPro .navbar .nav > li > a {
 		padding-left: 15px;
 	}
-
 	.SobiPro .navbar.topmenu {
 		min-height: 20px;
 		padding-left: 0;
 		padding-right: 0;
 	}
-
-	.SobiPro .spCaticon i {
-		//font-size: 2.8em;
-	}
-
 	.SobiPro .control-label div.paybox {
 		margin-bottom: 8px;
 	}
@@ -1931,50 +1862,87 @@
 	.SobiPro .input-xxxlarge {
 		width: 100%;
 	}
-
 	// Carousel
 	.SobiPro .carousel-inner,
 	.SobiPro .carousel-inner > .item > img,
 	.SobiPro .carousel-inner > .item > a > img {
 		height: auto;
 	}
+	// Pills/Tabs
+	.SobiPro .spTablist.nav-pills > li,
+	.SobiPro .spTablist.nav-pills.staples > li,
+	.SobiPro .spTablist.nav-tabs > li,
+	.SobiPro .spTablist.nav-tabs.coloured > li {
+		float: none;
+	}
+	// Staples: reset Styles
+	.SobiPro .nav-pills.staples > li.active::after,
+	.SobiPro .nav-pills.staples > li.active::before {
+		content: unset;
+		border-bottom: none;
+	}
+	& when (@corners = rounded) {
+		.SobiPro .nav-tabs > li > a,
+		.SobiPro .nav-pills.staples > li > a,
+		.SobiPro .nav-pills > li > a {
+			border-radius: 4px;
+		}
+	}
+	.SobiPro .nav-pills.staples > li.active > a,
+	.SobiPro .nav-pills.staples > li.active > a:focus,
+	.SobiPro .nav-pills.staples > li.active > a:hover {
+		top: 0;
+	}
+	.SobiPro ul.nav-pills.staples {
+		margin-left: 0;
+	}
+	.SobiPro .tab-content.pills.staples {
+		margin-top: 0;
+	}
+	.SobiPro .tab-content.pills.staples .tab-pane {
+		padding-top: 17px;
+	}
+	// Coloured Tabs: reset Styles
+	.SobiPro .nav-tabs.coloured > li.active > a,
+	.SobiPro .nav-tabs.coloured > li.active > a:hover,
+	.SobiPro .nav-tabs.coloured > li.active > a:focus {
+		.borders(light);
+	}
+	// Standard Tabs: reset Styles
+	.nav-tabs > li.active > a,
+	.nav-tabs > li.active > a:hover,
+	.nav-tabs > li.active > a:focus {
+		border: 1px solid #ddd;
+	}
+	// Pills: reset Styles
+	.nav-pills > li + li {
+		margin-left: 0;
+	}
 }
 
 // form switch to label above input
 @media (max-width: 599px) {
-
 	.SobiPro .spEntryContainer > .row-fluid > [class*='span'],
 	.SobiPro .spCategoryContainer > .row-fluid > [class*='span'] {
 		width: 100%;
 		float: none;
 		margin-left: 0;
 	}
-
 	.SobiPro .spEditImagePreview {
 		float: none;
 	}
-
 	.SobiPro .spUpload input {
 		width: 100%;
-		//height: 35px;
 	}
-
 	.SobiPro .spUpload button.btn.select {
 		width: calc(100% - 44px);
 	}
-
 	.SobiPro .controls {
 		margin-left: 0;
 	}
-
-	.SobiPro .spCaticon i {
-		//font-size: 3em;
-	}
-
 	.SobiPro .spEntryEdit .message-lightbulb {
 		left: 49%;
 	}
-
 	.SobiPro .input-medium,
 	.SobiPro .sp-search-phrases .btn-group,
 	.SobiPro .spUpload .btn-group {
@@ -1984,15 +1952,10 @@
 
 // Landscape phones and down
 @media (max-width: 480px) {
-	.SobiPro .spCaticon i {
-		//font-size: 2.5em;
-	}
-
 	.SobiPro .modal .form-group,
 	.SobiPro .modal .control-group {
 		margin-bottom: 6px;
 	}
-
 	.SobiPro .spPrint .spClassViewImage img,
 	.SobiPro .spDetailEntry .spClassViewImage img,
 	.SobiPro div.spClassViewImage img,
@@ -2000,39 +1963,35 @@
 		width: calc(100% - 8px);
 		margin: 0 0 10px 0;
 	}
-
 	.SobiPro .spNoImage {
 		display: none;
 	}
-
 	.SigsiuTree .buttons {
 		text-align: center;
 	}
-
 	.SobiPro .spDetailEntry .spClassViewImage img,
 	.SobiPro .spClassViewImage img {
 		float: none !important;
 	}
-
 	.SobiPro .input-large,
 	.SobiPro .input-medium,
 	.SobiPro .sp-search-controls .btn {
 		width: 100%;
 	}
-
 	.SobiPro .spSelectRangeFrom .input-group,
 	.SobiPro .spSelectRangeTo .input-group {
 		margin: 0 10px 10px 0;
 		width: 100%;
 	}
-
 	.SobiPro .sp-search-phrases .btn {
 		//PhpStorm meldet hier fälschlicherweise einen Fehler
 		width: calc(100% / 3);
 		font-size: 13px;
 	}
-
 	.SobiPro input[name="sp_search_for"] {
 		margin-bottom: 10px;
+	}
+	.SobiPro .tab-pane {
+		min-height: inherit;
 	}
 }
