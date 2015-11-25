@@ -129,13 +129,13 @@
 								</url>
 							</cell>
 						</cell>
-						<cell condition="acl.category.edit" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+						<cell condition="/acl.category.edit" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="category.toggle.enabled" />
 								<param name="sid" value="id" parse="true" />
 							</url>
 						</cell>
-						<cell condition="acl.category.edit" type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
+						<cell condition="/acl.category.edit" type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
 							<url type="intern">
 								<param name="task" value="category.toggle.approval" />
 								<param name="sid" value="id" parse="true" />

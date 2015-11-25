@@ -115,6 +115,7 @@ class SPAdmView extends SPObject implements SPView
 		}
 		$this->_xml = new DOMDocument( Sobi::Cfg( 'xml.version', '1.0' ), Sobi::Cfg( 'xml.encoding', 'UTF-8' ) );
 		$this->_xml->load( $path );
+		Sobi::Trigger( 'AfterLoadDefinition', $this->name(), array( &$this, &$this->_xml ) );
 		$this->parseDefinition( $this->_xml->getElementsByTagName( 'definition' ) );
 	}
 
@@ -248,6 +249,7 @@ class SPAdmView extends SPObject implements SPView
 	 */
 	protected function parseDefinition( DOMNodeList $xml )
 	{
+		Sobi::Trigger( 'beforeParseDefinition', $this->name(), array( &$this, &$xml ) );
 		/** @var DOMNode $node */
 		foreach ( $xml as $node ) {
 			if ( strstr( $node->nodeName, '#' ) ) {
@@ -282,6 +284,7 @@ class SPAdmView extends SPObject implements SPView
 
 	public function getData()
 	{
+		Sobi::Trigger( 'beforeReturnData', $this->name(), array( &$this->_output ) );
 		return $this->_output;
 	}
 
