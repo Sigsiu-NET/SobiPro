@@ -267,6 +267,10 @@ final class SPAdmField extends SPField
 			$base[ 'section' ] = ( int )$attr[ 'section' ];
 		$base[ 'version' ] = 1;
 
+		if ( $this->_type && method_exists( $this->_type, 'saveNew' ) ) {
+			$this->_type->saveNew( $base );
+		}
+
 		/* determine the right position */
 		try {
 			$db->select( 'MAX( position )', 'spdb_field', array( 'section' => SPRequest::sid() ) );

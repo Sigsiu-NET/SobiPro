@@ -27,28 +27,44 @@ class SPField_InfoAdm extends SPField_Info
 	//Speichern der übersetzbaren Elemente
 	public function save( &$attr )
 	{
+		$attr = $this->saveAttr( $attr );
+		parent::save($attr);
+	}
+
+	public function saveNew ( &$attr )
+	{
+		$attr = $this->saveAttr( $attr );
+	}
+
+	/**
+	 * @param $attr
+	 * @return mixed
+	 * @throws SPException
+	 */
+	protected function saveAttr( &$attr )
+	{
 		$data = array(
-			'key' => $this->nid . '-viewInfo',
-			'value' => $attr[ 'viewInfo' ],
-			'type' => 'field_information',
-			'fid' => $this->fid,
-            'id' => Sobi::Section(),
-            'section' => Sobi::Section()
-        );
-        SPLang::saveValues( $data );
+				'key' => $this->nid . '-viewInfo',
+				'value' => $attr[ 'viewInfo' ],
+				'type' => 'field_information',
+				'fid' => $this->fid,
+				'id' => Sobi::Section(),
+				'section' => Sobi::Section()
+		);
+		SPLang::saveValues( $data );
 		$data = array(
-			'key' => $this->nid . '-entryInfo',
-			'value' => $attr[ 'entryInfo' ],
-			'type' => 'field_information',
-			'fid' => $this->fid,
-			'id' => Sobi::Section(),
-			'section' => Sobi::Section()
+				'key' => $this->nid . '-entryInfo',
+				'value' => $attr[ 'entryInfo' ],
+				'type' => 'field_information',
+				'fid' => $this->fid,
+				'id' => Sobi::Section(),
+				'section' => Sobi::Section()
 		);
 		SPLang::saveValues( $data );
 
 		$attr[ 'required' ] = 0;
 		$attr[ 'fee' ] = 0;
 		$attr[ 'isFree' ] = 1;
-		parent::save($attr);
+		return $attr;
 	}
 }
