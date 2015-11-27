@@ -54,6 +54,7 @@ Legend:
     (#) Multiple language nodes in SobiPro App definition were ignored
     (#) Information field isn't installed during update (Issue #1535)
     (#) Information field does not duplicate output data
+    (#) Less file 'Compile & Save' now 'Save & Compile'
 
 
 -------------------

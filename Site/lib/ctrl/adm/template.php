@@ -378,12 +378,14 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		$File = SPFactory::Instance( 'base.fs.file', $file );
 		$File->content( stripslashes( $content ) );
-		$message = Sobi::Txt( 'TP.FILE_SAVED' );
-		if ( $compile ) {
-			$message .= "\n" . $this->compile( false );
-		}
 		try {
 			$File->save();
+
+			$message = Sobi::Txt( 'TP.FILE_SAVED' );
+			if ( $compile ) {
+				$message .= "\n" . $this->compile( false );
+			}
+
 			$u = array( 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) );
 			if ( Sobi::Section() ) {
 				$u[ 'sid' ] = Sobi::Section();
