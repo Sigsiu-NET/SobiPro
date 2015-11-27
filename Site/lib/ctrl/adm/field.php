@@ -426,6 +426,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		if ( $clone || !( $fid ) ) {
 			try {
 				$fid = $field->saveNew( $this->attr );
+				//warum nochmal save??
 				$field->save( $this->attr );
 			} catch ( SPException $x ) {
 				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $x->getMessage(), false, SPC::ERROR_MSG );

@@ -31,9 +31,12 @@ class SPField_InfoAdm extends SPField_Info
 		parent::save($attr);
 	}
 
-	public function saveNew ( &$attr )
+	public function saveNew ( &$attr, $fid = 0 )
 	{
 		$attr = $this->saveAttr( $attr );
+		if( $fid ) {
+			$this->fid = $fid;
+		}
 	}
 
 	/**
@@ -43,6 +46,13 @@ class SPField_InfoAdm extends SPField_Info
 	 */
 	protected function saveAttr( &$attr )
 	{
+		if( $this->nid ) {
+			$this->nid = SPRequest::int('nid');
+		}
+		if(!(isset($attr['viewInfo']))) {
+			$attr['viewInfo'] = $this->viewInfo;
+			$attr['entryInfo'] = $this->entryInfo;
+		}
 		$data = array(
 				'key' => $this->nid . '-viewInfo',
 				'value' => $attr[ 'viewInfo' ],

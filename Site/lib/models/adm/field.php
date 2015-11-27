@@ -214,6 +214,8 @@ final class SPAdmField extends SPField
 		/* cast all needed data and clean - it is possible just in admin panel but "strzeżonego pan Bóg strzeże" ;-) */
 		$base = array();
 		$base[ 'section' ] = ( isset( $attr[ 'section' ] ) && $attr[ 'section' ] ) ? $attr[ 'section' ] : SPRequest::sid();
+		$this->loadType();
+
 		if ( isset( $attr[ 'name' ] ) )
 			$base[ 'name' ] = $db->escape( $attr[ 'name' ] );
 		if ( isset( $attr[ 'description' ] ) )
@@ -267,10 +269,6 @@ final class SPAdmField extends SPField
 			$base[ 'section' ] = ( int )$attr[ 'section' ];
 		$base[ 'version' ] = 1;
 
-		if ( $this->_type && method_exists( $this->_type, 'saveNew' ) ) {
-			$this->_type->saveNew( $base );
-		}
-
 		/* determine the right position */
 		try {
 			$db->select( 'MAX( position )', 'spdb_field', array( 'section' => SPRequest::sid() ) );
@@ -296,6 +294,10 @@ final class SPAdmField extends SPField
 			$this->fid = $db->insertid();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), $x->getMessage(), SPC::ERROR, 500, __LINE__, __FILE__ );
+		}
+
+		if ( $this->_type && method_exists( $this->_type, 'saveNew' ) ) {
+			$this->_type->saveNew( $base, $this->fid );
 		}
 
 		/* save language depend properties */

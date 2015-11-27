@@ -28,7 +28,6 @@ Legend:
 -------------------
 1.2.1 ()
 -------------------
-    (+) Template setting to show/hide categories
     (+) Fallback for wrong path setting in image field
     (+) B2 input size styles implemented in B3 default template
     (+) Tooltip support in default templates
@@ -54,6 +53,7 @@ Legend:
     (#) Suffix layout in search view in B3-default3 template wrong
     (#) Multiple language nodes in SobiPro App definition were ignored
     (#) Information field isn't installed during update (Issue #1535)
+    (#) Information field does not duplicate output data
 
 
 -------------------
