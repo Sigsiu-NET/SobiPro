@@ -61,7 +61,7 @@
 									<field type="toggle" name="section.state" value="section.state" label="ENABLED" prefix="yes_no" />
 									<field type="text" name="section.name" value="section.name" label="SECN.CFG.SECTION_NAME" class="input-xlarge" required="true" />
 									<field type="text" name="section.nid" value="section.nid" readonly="readonly" label="SECN.ADD_SECTION_ALIAS" class="input-xlarge" />
-									<field type="textarea" name="section.description" value="section.description" editor="true" label="SECN.CFG.SECTION_DESCRIPTION" />
+									<field type="textarea" name="section.description" value="section.description" class="input-xxlarge" editor="true" label="SECN.CFG.SECTION_DESCRIPTION" />
 								</fieldset>
 								<fieldset label="SECN.CFG.PUBLISHING">
 									<field type="datePicker" label="CREATED_AT" name="section.createdTime" value="section.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="calendar" addOffset="true" />
@@ -164,6 +164,8 @@
 											</field>
 										</fieldset>
 										<fieldset label="SECN.CFG.ENTRY_SETTINGS">
+											<message label="SECN.DEPRECATED" type="danger" dismiss-button="false" class="spConfigAlert" />
+
 											<field type="select" label="ORDER_BY" name="spcfg[list.entries_ordering]" selected="list.entries_ordering" values="entriesOrdering" class="input-xlarge" />
 											<field type="select" label="SECN.CFG.NUMBER_ENTRIES_PAGE" name="spcfg[list.entries_limit]" selected="list.entries_limit" class="input-mini">
 												<values>
