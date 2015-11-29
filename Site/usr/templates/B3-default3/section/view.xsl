@@ -53,5 +53,7 @@
         <xsl:call-template name="categoriesLoop" />
         <xsl:call-template name="entriesLoop" />
         <xsl:apply-templates select="navigation" />
+
+		<input type="hidden" id="hidetext" value="{php:function( 'SobiPro::Txt', 'Hide Categories' )}" />
 	</xsl:template>
 </xsl:stylesheet>

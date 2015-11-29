@@ -46,7 +46,18 @@ SobiPro.jQuery( document ).ready( function ()
 
 	try {
 		SobiPro.jQuery( '#spCategoryContainer-hide' ).slideToggle( 'fast' );
+		SobiPro.jQuery( '#spCategoryShow').attr('data-visible', false);
+
 		SobiPro.jQuery( '#spCategoryShow' ).bind( 'click', function() {
+			if (SobiPro.jQuery( '#spCategoryShow').attr('data-visible') == 'false') {
+				SobiPro.jQuery( '#spCategoryShow').attr('data-showtext', SobiPro.jQuery( '#spCategoryShow').val()); //save the origin
+				SobiPro.jQuery( '#spCategoryShow').val(SobiPro.jQuery('#hidetext').val());  //set new
+				SobiPro.jQuery( '#spCategoryShow').attr('data-visible', true);
+			}
+			else {
+				SobiPro.jQuery( '#spCategoryShow').attr('data-visible', false);
+				SobiPro.jQuery( '#spCategoryShow').val(SobiPro.jQuery( '#spCategoryShow').attr('data-showtext'));
+			}
 			SobiPro.jQuery( '#spCategoryContainer-hide' ).slideToggle( 'fast' );
 		} );
 	} catch( e ) {}
