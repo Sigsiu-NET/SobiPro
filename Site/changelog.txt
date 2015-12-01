@@ -57,6 +57,8 @@ Legend:
     (#) Information field does not duplicate output data
     (#) Less file 'Compile & Save' now 'Save & Compile'
 
+    (*) Unregistered user with permission to edit "own" entry can access the edit form of an entries without assigned owner
+
 
 -------------------
 1.2 (28 October 2015)

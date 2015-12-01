@@ -224,7 +224,7 @@ class SPEntryView extends SPFrontView implements SPView
 		}
 		$en[ 'url' ] = Sobi::Url( array( 'pid' => $entry->get( 'parent' ), 'sid' => $entry->get( 'id' ), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ) ), true, true, true );
 
-		if ( Sobi::Can( 'entry', 'edit', '*' ) || ( ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) && Sobi::Can( 'entry', 'edit', 'own' ) ) ) {
+		if ( Sobi::Can( 'entry', 'edit', '*' ) || ( ( Sobi::My( 'id' ) && Sobi::My( 'id' ) == $entry->get( 'owner' ) ) && Sobi::Can( 'entry', 'edit', 'own' ) ) ) {
 			$en[ 'edit_url' ] = Sobi::Url( array( 'task' => 'entry.edit', 'sid' => $entry->get( 'id' ) ) );
 		}
 		if ( Sobi::Can( 'entry', 'manage', '*' ) ) {

@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -20,6 +18,7 @@
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'controller' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -384,9 +383,9 @@ class SPEntryCtrl extends SPController
 			}
 		}
 		$preState = array(
-			'approved' => $this->_model->get( 'approved' ),
-			'state' => $this->_model->get( 'state' ),
-			'new' => !( $this->_model->get( 'id' ) )
+				'approved' => $this->_model->get( 'approved' ),
+				'state' => $this->_model->get( 'state' ),
+				'new' => !( $this->_model->get( 'id' ) )
 		);
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 
@@ -515,15 +514,19 @@ class SPEntryCtrl extends SPController
 	 */
 	private function editForm()
 	{
+		if ( Sobi::My( 'id' ) ) {
+			$this->authorise( $this->_task, 'own' );
+		}
+		else {
+			$this->authorise( $this->_task, 'any' );
+		}
 		if ( $this->_task != 'add' ) {
 			$sid = SPRequest::sid();
 			$sid = $sid ? $sid : SPRequest::int( 'pid' );
 		}
 		else {
-			$this->authorise( $this->_task, 'own' );
 			$this->_model = null;
 			$sid = SPRequest::int( 'pid' );
-//			$section = SPFactory::Section( Sobi::Section() );
 		}
 
 		if ( $this->_model && $this->_model->isCheckedOut() ) {

@@ -249,6 +249,11 @@ class SPFieldType extends SPObject
 		$vals[ 'params' ] = $properties;
 	}
 
+	public function properties()
+	{
+		return $this->getAttr();
+	}
+
 	protected function getAttr()
 	{
 		return array( 'itemprop' );
