@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -160,6 +158,20 @@ class SPTemplateInstaller extends SPInstaller
 		$settings[ 'list' ][ 'entries_limit' ] = ( int )$this->xGetString( $path . 'entriesOnPage' );
 		$settings[ 'list' ][ 'entry_meta' ] = $this->xGetString( $path . 'showEntryMeta' ) == 'true' ? true : false;
 		$settings[ 'list' ][ 'entry_cats' ] = $this->xGetString( $path . 'showEntryCategories' ) == 'true' ? true : false;
+
+		/**  Wed, Dec 2, 2015 12:58:24
+		 *  New way to determine (variable) settings
+		 */
+		$options = $this->xGetChilds( $path . 'settings/*' );
+		if ( ( $options instanceof DOMNodeList ) && $options->length ) {
+			foreach ( $options as $option ) {
+				$v = $option->getAttribute( 'value' );
+				if ( in_array( $v, array( 'true', 'false' ) ) ) {
+					$v = $v == 'true' ? true : false;
+				}
+				$settings[ $option->getAttribute( 'section' ) ][ $option->getAttribute( 'key' ) ] = $v;
+			}
+		}
 
 		$values = array();
 		foreach ( $settings as $section => $setting ) {

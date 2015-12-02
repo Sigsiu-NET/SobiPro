@@ -87,7 +87,8 @@ final class SPCache
 		$this->_section = $sid;
 		$this->_enabled = Sobi::Cfg( 'cache.l3_enabled', true );
 		$this->requestStore = $_REQUEST;
-		if ( Sobi::Cfg( 'cache.apc_enabled', true ) ) {
+		$this->_apc = Sobi::Cfg( 'cache.apc_enabled', true );
+		if ( $this->_apc ) {
 			$this->_apc = extension_loaded( 'apc' ) && function_exists( 'apc_fetch' );
 		}
 		$this->initialise();

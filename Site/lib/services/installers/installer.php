@@ -81,9 +81,9 @@ class SPInstaller extends SPObject
 	{
 		$type = ( $this->type == 'SobiProApp' ) ? 'application' : $this->type;
 		$schemaDef = SPLoader::path( 'lib.services.installers.schemas.' . $type, 'front', false, 'xsd' );
+		$def = "https://xml.sigsiu.net/SobiPro/{$type}.xsd";
 		if ( !( SPFs::exists( $schemaDef ) ) || ( time() - filemtime( $schemaDef ) > ( 60 * 60 * 24 * 7 ) ) ) {
 			$connection = SPFactory::Instance( 'services.remote' );
-			$def = "https://xml.sigsiu.net/SobiPro/{$type}.xsd";
 			$connection->setOptions(
 				array(
 					'url' => $def,
@@ -104,7 +104,7 @@ class SPInstaller extends SPObject
 			$schemaDef = $schema->filename();
 		}
 		if ( !( $this->definition->schemaValidate( $schemaDef ) ) ) {
-			throw new SPException( SPLang::e( 'CANNOT_VALIDATE_SCHEMA_DEF_AT', str_replace( SOBI_ROOT . DS, null, $this->xmlFile ), $def ) );
+			throw new SPException( SPLang::e( 'CANNOT_VALIDATE_SCHEMA_DEF_AT', str_replace( SOBI_ROOT , null, $this->xmlFile ), $def ) );
 		}
 	}
 }

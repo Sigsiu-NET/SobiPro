@@ -431,7 +431,7 @@ class SPEntryCtrl extends SPController
 		if ( $new ) {
 			if ( $this->_model->get( 'state' ) || Sobi::Can( 'entry.see_unpublished.own' ) ) {
 				$msg = $this->_model->get( 'state' ) ? Sobi::Txt( 'EN.ENTRY_SAVED' ) : Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
-				$url = Sobi::Url( array( 'sid' => $sid, 'pid' => $pid ) );
+				$url = Sobi::Url( array( 'sid' => $sid, 'pid' => $pid ), false, false );
 			}
 			else {
 				// determine if there is a custom redirect
@@ -444,7 +444,7 @@ class SPEntryCtrl extends SPController
 				}
 				else {
 					$msg = Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
-					$url = Sobi::Url( array( 'sid' => $pid ) );
+					$url = Sobi::Url( array( 'sid' => $pid ), false, false );
 				}
 			}
 		}
@@ -460,7 +460,7 @@ class SPEntryCtrl extends SPController
 			else {
 				$msg = Sobi::Txt( 'EN.ENTRY_SAVED_NA' );
 			}
-			$url = Sobi::Url( array( 'sid' => $sid, 'pid' => $pid ) );
+			$url = Sobi::Url( array( 'sid' => $sid, 'pid' => $pid ), false, false );
 		}
 		if ( $pCount && !( Sobi::Can( 'entry.payment.free' ) ) ) {
 			$ident = md5( microtime() . $tsId . $sid . time() );

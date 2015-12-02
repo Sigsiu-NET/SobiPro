@@ -56,6 +56,7 @@ Legend:
     (#) Information field isn't installed during update (Issue #1535)
     (#) Information field does not duplicate output data
     (#) Less file 'Compile & Save' now 'Save & Compile'
+    (#) Missing message type after entry has been saved
 
     (*) Unregistered user with permission to edit "own" entry can access the edit form of an entries without assigned owner
 
