@@ -33,7 +33,7 @@ Legend:
     (+) Tooltip support in default templates
     (+) Coloured tabs and staple tabs support in default B3 template
     (+) Carousel support in default B3 template
-    (+) Several features added to the default template (e.g. shorten text, hiding categories, image ratio)
+    (+) Several features added to the default template (e.g. shorten text, hiding categories, image ratio, hiding extended search button)
     (+) Possibility to load Bootstrap 3 from CDN
     (+) Support for printing
     (+) Backend ACL
@@ -58,7 +58,7 @@ Legend:
     (#) Less file 'Compile & Save' now 'Save & Compile'
     (#) Missing message type after entry has been saved
 
-    (*) Unregistered user with permission to edit "own" entry can access the edit form of an entries without assigned owner
+    (*) Unregistered user with permission to edit "own" entry can access the edit form of entries without assigned owner
 
 
 -------------------

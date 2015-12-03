@@ -22,7 +22,7 @@
 		<div class="clearfix" />
 		<div class="spMessage">
             <xsl:for-each select="./*">
-                <div class="alert alert-{name()}">
+                <div class="alert alert-sigsiu alert-{name()}">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <xsl:for-each select="./*">
                         <xsl:value-of select="." />

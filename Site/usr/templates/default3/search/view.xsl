@@ -46,7 +46,7 @@
                                         <xsl:value-of select="/search/fields/top_button/label" />
                                     </button>
                                 </xsl:if>
-                            <xsl:if test="count( /search/fields/* ) &gt; 3">
+	                            <xsl:if test="count( /search/fields/* ) &gt; 3 and //config/extendedsearch/@value = 'show'">
                                 <button type="button" class="btn" name="SPExOptBt" id="SPExOptBt">
                                     <xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )" />
                                 </button>
@@ -78,7 +78,10 @@
 					</xsl:if>
 				</xsl:if>
 				<xsl:if test="count( /search/fields/* ) &gt; 3">
-					<div id="SPExtSearch">
+					<div>
+						<xsl:if test="//config/extendedsearch/@value = 'show'">
+							<xsl:attribute name="id">SPExtSearch</xsl:attribute>
+						</xsl:if>
 						<xsl:for-each select="fields/*">
 							<xsl:if test="position() &gt; 3">
                                 <div class="control-group {@css-search}">

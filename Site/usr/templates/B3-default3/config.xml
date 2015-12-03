@@ -139,16 +139,20 @@
                         </div>
                     </tab>
 
-					<!--
-                    <tab label="TP.SETTINGS_SEARCH">
-                        <div class="row-fluid">
-                            <div class="span12">
-                                <fieldset>
-                                </fieldset>
-                            </div>
-                        </div>
-                    </tab>
-					-->
+	                <tab label="TP.SETTINGS_SEARCH">
+		                <div class="row-fluid">
+			                <div class="span12">
+				                <fieldset label="TP.SETTINGS_SEARCHGENERAL">
+					                <field type="select" label="TP.CONFIG.EXTENDEDSEARCH" name="settings[config][general][extendedsearch]" selected="settings.config.general.extendedsearch" class="input-medium">
+						                <values>
+							                <option value="show" label="SHOW_YES" />
+							                <option value="hide" label="SHOW_NO" />
+						                </values>
+					                </field>
+				                </fieldset>
+			                </div>
+		                </div>
+	                </tab>
 
                     <tab label="TP.SETTINGS_ENTRIES">
                         <div class="row-fluid">

@@ -56,6 +56,11 @@
 	line-height: inherit;
 }
 
+/* overcome the fixed header */
+.SobiPro .modal-dialog {
+	margin: 110px auto; /* header-size + 30px */
+}
+
 .SobiPro a.modal-button.btn,
 .SobiPro div.btn-toolbar a.btn,
 .SobiPro body.contentpane button {
@@ -66,4 +71,11 @@
 
 	color: #333;
 	background-color: #FFF;
+}
+
+.SobiPro .payment-details input {
+	width: inherit;
+}
+.SobiPro .form .form-group .form-control {
+	display: block;
 }
