@@ -335,6 +335,7 @@ class SPEntryCtrl extends SPController
 		$view->setTemplate( $tplPackage . '.payment.' . $this->_task );
 		Sobi::Trigger( ucfirst( $this->_task ), $this->name(), array( &$view, &$this->_model ) );
 		if ( SPRequest::cmd( 'method', null, 'post' ) == 'xhr' ) {
+			SPFactory::mainframe()->cleanBuffer();
 			$view->display();
 			$response = ob_get_contents();
 			$this->response( Sobi::Back(), $response, false, SPC::INFO_MSG );
@@ -514,7 +515,7 @@ class SPEntryCtrl extends SPController
 	 */
 	private function editForm()
 	{
-		if ( Sobi::My( 'id' ) ) {
+		if ( Sobi::My( 'id' ) || $this->_task == 'add' ) {
 			$this->authorise( $this->_task, 'own' );
 		}
 		else {

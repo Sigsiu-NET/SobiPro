@@ -281,7 +281,6 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 		$this->_attr[ 'template_path' ] = Sobi::FixPath( str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), $this->_templatePath ) );
 		$messages = SPFactory::message()->getMessages();
-		SPConfig::debOut($messages);
 		if ( count( $messages ) ) {
 			foreach ( $messages as $type => $content ) {
 				$this->_attr[ 'messages' ][ $type ] = array_values( $content );
