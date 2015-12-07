@@ -974,19 +974,26 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	{
 		$orgName = basename( isset( $files[ 'original' ] ) ? $files[ 'original' ] : $files[ 'image' ] );
 		$sPath = $this->parseName( $entry, $orgName, $this->savePath );
-		if ( isset( $files[ 'original' ] ) ) {
+		if ( isset( $files[ 'original' ] ) && SPFs::exists( SOBI_ROOT . '/' . $files[ 'original' ] ) ) {
 			$cloneFiles[ 'original' ] = $sPath . $this->parseName( $entry, $orgName, '{orgname}', true );
 			SPFs::copy( SOBI_ROOT . '/' . $files[ 'original' ], SOBI_ROOT . '/' . $cloneFiles[ 'original' ] );
 		}
 
-		$cloneFiles[ 'image' ] = $sPath . $this->parseName( $entry, $orgName, $this->imageName, true );
-		SPFs::copy( SOBI_ROOT . '/' . $files[ 'image' ], SOBI_ROOT . '/' . $cloneFiles[ 'image' ] );
+		if ( isset( $files[ 'image' ] ) && SPFs::exists( SOBI_ROOT . '/' . $files[ 'image' ] ) ) {
+			$cloneFiles[ 'image' ] = $sPath . $this->parseName( $entry, $orgName, $this->imageName, true );
+			SPFs::copy( SOBI_ROOT . '/' . $files[ 'image' ], SOBI_ROOT . '/' . $cloneFiles[ 'image' ] );
+		}
 
-		$cloneFiles[ 'thumb' ] = $sPath . $this->parseName( $entry, $orgName, $this->thumbName, true );
-		SPFs::copy( SOBI_ROOT . '/' . $files[ 'thumb' ], SOBI_ROOT . '/' . $cloneFiles[ 'thumb' ] );
+		if ( isset( $files[ 'thumb' ] ) && SPFs::exists( SOBI_ROOT . '/' . $files[ 'thumb' ] ) ) {
+			$cloneFiles[ 'thumb' ] = $sPath . $this->parseName( $entry, $orgName, $this->thumbName, true );
+			SPFs::copy( SOBI_ROOT . '/' . $files[ 'thumb' ], SOBI_ROOT . '/' . $cloneFiles[ 'thumb' ] );
+		}
 
-		$cloneFiles[ 'ico' ] = $sPath . $this->parseName( $entry, strtolower( $orgName ), 'ico_{orgname}', true );
-		SPFs::copy( SOBI_ROOT . '/' . $files[ 'ico' ], SOBI_ROOT . '/' . $cloneFiles[ 'ico' ] );
+		if ( isset( $files[ 'ico' ] ) && SPFs::exists( SOBI_ROOT . '/' . $files[ 'ico' ] ) ) {
+			$cloneFiles[ 'ico' ] = $sPath . $this->parseName( $entry, strtolower( $orgName ), 'ico_{orgname}', true );
+			SPFs::copy( SOBI_ROOT . '/' . $files[ 'ico' ], SOBI_ROOT . '/' . $cloneFiles[ 'ico' ] );
+		}
+
 		return $this->storeData( $entry, $request, $cloneFiles );
 	}
 }
