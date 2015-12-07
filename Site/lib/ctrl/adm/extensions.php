@@ -279,7 +279,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	{
 		$links = array();
 		$db =& SPFactory::db();
-		$all = $db->select( 'pid', 'spdb_plugin_task', array( 'onAction' => 'adm_menu' ) )->loadResultArray();
+		$enabled = $db->select( 'pid', 'spdb_plugins', array( 'enabled' => 1 ) )
+				->loadResultArray();
+		$all = $db->select( 'pid', 'spdb_plugin_task', array( 'onAction' => 'adm_menu', 'pid' => $enabled ) )->loadResultArray();
 		if ( count( $all ) ) {
 			if ( Sobi::Section() ) {
 				$list = $db->select( 'pid', 'spdb_plugin_section', array( 'section' => Sobi::Section(), 'pid' => $all, 'enabled' => 1 ) )->loadResultArray();

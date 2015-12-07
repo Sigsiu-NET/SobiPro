@@ -62,6 +62,7 @@ Legend:
     (#) Missing existence check while copying files in image field (cloning) (Issue #1534)
     (#) Removing double quotes from user names (Issue #1516)
     (#) Issue with non-latin aliases (Issue #1515)
+    (#) Globally disabled application still enabled in sections (Issue #1514)
 
     (*) Unregistered user with permission to edit "own" entry can access the edit form of entries without assigned owner
 
