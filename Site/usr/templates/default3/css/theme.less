@@ -719,16 +719,16 @@
 // Alert windows and error messages
 // ----------------------------------------
 // Alert messages outside SobiPro without given color class
-.alert {
+.alert-sigsiu {
 	background-color: @alert-color;
 	border: 1px solid darken(@alert-color, 10%);
 }
-.alert,
-.alert h4 {
+.alert-sigsiu,
+.alert-sigsiu h4 {
 	color: @active-color;
 }
 .alert-message {
-	margin-bottom: 0px;
+	margin-bottom: 0;
 }
 
 // define bootstrap alert to use it as mixin
@@ -1236,6 +1236,9 @@
 	font-size: 85%;
 	color: grey;
 	padding-left: 18px;
+}
+.SobiPro .spCountableReset {
+	margin-top: 5px;
 }
 
 // Image Field

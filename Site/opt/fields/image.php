@@ -286,6 +286,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$directory = $store[ $this->nid ];
 			}
 		}
+		$fileSize = SPRequest::file( $this->nid, 'size' );
 		if ( $directory && strstr( $directory, 'directory://' ) ) {
 			list( $data, $dirName, $files ) = $this->getAjaxFiles( $directory );
 			if ( count( $files ) ) {
@@ -313,7 +314,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			}
 		}
 		else {
-			$fileSize = SPRequest::file( $this->nid, 'size' );
+//			$fileSize = SPRequest::file( $this->nid, 'size' );
 		}
 		$del = SPRequest::bool( $this->nid . '_delete', false, $request );
 		$dexs = strlen( $data );
@@ -375,7 +376,11 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				return $this->cloneFiles( $entry, $request, $files, $cloneFiles );
 			}
 		}
+
+		//initializations
 		$fileSize = SPRequest::file( $this->nid, 'size' );
+		$data = null;
+
 		$cropped = null;
 		static $store = null;
 		$cache = false;
@@ -400,11 +405,13 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 		$sPath = $this->parseName( $entry, $orgName, $this->savePath );
 		$path = SPLoader::dirPath( $sPath, 'root', false );
+
 		/** Wed, Oct 15, 2014 13:51:03
 		 * Implemented a cropper with Ajax checker.
 		 * This is the actual method to get those files
 		 * Other methods left for BC
 		 * */
+
 		if ( !( $data ) ) {
 			$directory = SPRequest::string( $this->nid, $store[ $this->nid ], false, $request );
 			if ( strlen( $directory ) ) {
