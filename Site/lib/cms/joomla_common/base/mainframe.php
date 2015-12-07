@@ -316,7 +316,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		switch ( $action ) {
 			case 'ParseContent':
 				if ( !( defined( 'SOBIPRO_ADM' ) ) ) {
-					$params[ 0 ] =& JHTML::_( 'content.prepare', $params[ 0 ] );
+					$params[ 0 ] = JHTML::_( 'content.prepare', $params[ 0 ] );
 				}
 				break;
 			default:

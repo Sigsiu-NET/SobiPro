@@ -20,10 +20,11 @@
  * $HeadURL$
  */
 
-var SobiProUrl = '';
+var SobiProSelectedUrl = '';
 SobiPro.jQuery( document ).ready( function ()
 {
 	var modal = SobiPro.jQuery( '#SobiProModal' );
+	SobiProSelectedUrl = SobiPro.jQuery( '#jform_link' ).val();
 	SobiPro.jQuery( '#jform_link' ).css( 'min-width', '400px' );
 	modal.find( '.ctrl-save' ).click( function ( e )
 	{
@@ -68,7 +69,7 @@ SobiPro.jQuery( document ).ready( function ()
 					}
 				}
 			} );
-			SobiProUrl = link;
+			SobiProSelectedUrl = link;
 			SPUpdateUrl();
 		}
 		SobiPro.jQuery( '.SobiProSettings' ).val( SobiPro.jQuery.base64.encode( JSON.stringify( setting ) ) );
@@ -76,7 +77,7 @@ SobiPro.jQuery( document ).ready( function ()
 
 	modal.find( '.ctrl-clear' ).click( function ( e )
 	{
-		SobiProUrl = '';
+		SobiProSelectedUrl = '';
 		SPUpdateUrl();
 		SobiPro.jQuery( '#SobiProSelectedFunction' ).html( SpStrings.buttonLabel )
 	} );
@@ -210,12 +211,12 @@ function SPUpdateUrl()
 	if ( !( SobiPro.jQuery( '#selectedSid' ).val() ) ) {
 		SobiPro.jQuery( '#selectedSid' ).val( SobiPro.jQuery( '#SobiSection' ).val() );
 	}
-	if ( SobiProUrl == '' ) {
-		SobiProUrl = 'index.php?option=com_sobipro&sid=' + SobiPro.jQuery( '#selectedSid' ).val();
+	if ( SobiProSelectedUrl == '' ) {
+		SobiProSelectedUrl = 'index.php?option=com_sobipro&sid=' + SobiPro.jQuery( '#selectedSid' ).val();
 		/** Sat, Feb 7, 2015 18:16:22 - what the heck? */
 		//SobiPro.jQuery( '.SobiProSettings' ).val( '' );
 	}
-	SobiPro.jQuery( '#jform_link' ).val( SobiProUrl );
+	SobiPro.jQuery( '#jform_link' ).val( SobiProSelectedUrl );
 }
 
 function SPValidate()
