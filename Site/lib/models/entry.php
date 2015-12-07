@@ -660,7 +660,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		$clone = SPRequest::task() == 'entry.clone';
 
 		if ( !( $this->nid ) || $clone ) {
-			$this->nid = strtolower( SPLang::nid( SPRequest::string( $this->nameField, null, false, $request ) ) );
+			$this->nid = strtolower( SPLang::nid( SPRequest::string( $this->nameField, null, false, $request ), true ) );
 			$this->nid = $this->createAlias();
 			/** Thu, Jul 30, 2015 12:15:25 - what the hell was that? */
 //			$this->name = $this->nid;
