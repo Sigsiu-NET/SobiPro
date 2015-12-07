@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -1117,7 +1115,7 @@ abstract class SPHtml_Input
 						$format = str_replace( '%' . $attribute, $user->$attribute, $format );
 					}
 				}
-				$userData = $format;
+				$userData = str_replace( '"', null, $format );
 			}
 		}
 		$modal = '<div class="response btn-group" data-toggle="buttons-radio"></div><br/><button class="btn btn-block hide more" type="button">' . Sobi::Txt( 'LOAD_MORE' ) . '</button>';

@@ -60,6 +60,7 @@ Legend:
     (#) Buffer output not cleared for the payment screen when submitting an entry
     (#) URL reverted while changing menu settings (Issue #1538)
     (#) Missing existence check while copying files in image field (cloning) (Issue #1534)
+    (#) Removing double quotes from user names (Issue #1516)
 
     (*) Unregistered user with permission to edit "own" entry can access the edit form of entries without assigned owner
 
