@@ -75,7 +75,7 @@ final class SPAdmSiteMenu
 		$this->_view[ ] = "\n <!-- Sobi Pro - admin side menu start -->";
 		$this->_view[ ] = "\n<div id=\"SPaccordionTabs\" class=\"SPmenuTabs\">";
 		$this->_view[ ] = '<div id="SPMenuCtrl">';
-		$this->_view[ ] = ' <button class="btn btn-mini btn-sobipro" id="SPMenuCtrlBt" type="button">-</button>';
+		$this->_view[ ] = ' <button class="btn btn-mini btn-sobipro" id="SPMenuCtrlBt" type="button"><i class="icon-minus"></i></button>';
 		$this->_view[ ] = '</div>';
 		$media = Sobi::Cfg( 'img_folder_live' );
 		$this->_view[ ] = "\n<div class='well well-small'><a href=\"http://www.Sigsiu.NET\" target=\"_blank\" title=\"Sigsiu.NET Software Development\"><img src=\"{$media}/sp.png\" alt=\"Sigsiu.NET Software Development\" style=\"border-style:none;\" /></a></div>\n";
@@ -118,7 +118,7 @@ final class SPAdmSiteMenu
 			$this->_view[ ] = '</div>';
 		}
 		$this->_view[ ] = "\n</div>\n";
-		$this->_view[ ] = '<div class="brand" style="display: inherit;">© <a href="http://www.sigsiu.net">Sigsiu.NET GmbH</a></div>';
+		$this->_view[ ] = '<div class="brand" style="display: inherit;">© <a href="https://www.sigsiu.net">Sigsiu.NET GmbH</a></div>';
 		$this->_view[ ] = "\n<!-- Sobi Pro - admin side menu end -->\n";
 		return implode( "\n", $this->_view );
 	}

@@ -245,7 +245,7 @@ class SPTplParser
 					$this->_out[ ] = '<tbody>';
 				}
 				$formType = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? $data[ 'attributes' ][ 'type' ] : 'horizontal';
-				$this->_out[ ] = '<fieldset class="form-' . $formType . ' control-group">';
+				$this->_out[ ] = '<div class="form-' . $formType . '">';
 				if ( isset( $data[ 'label' ] ) && $data[ 'label' ] ) {
 					$this->_out[ ] = '<div class="control-group spFieldGroup"><label class="control-label">' . $data[ 'label' ] . '</label></div>';
 				}
@@ -409,7 +409,7 @@ class SPTplParser
 					$this->_out[ ] = '</tbody>';
 					$this->_out[ ] = '</table>';
 				}
-				$this->_out[ ] = '</fieldset>';
+				$this->_out[ ] = '</div>';
 				break;
 			case 'head':
 				$this->thTd = 'td';

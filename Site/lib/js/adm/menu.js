@@ -42,7 +42,7 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( '#SPRightMenu' ).show( 'slide' );
 			SobiPro.jQuery( '#SPMenuCtrl' ).html( SobiPro.jQuery( '#SPRightMenuHold' ).html() );
 			SobiPro.jQuery( '#SPRightMenuHold' ).html( '' );
-			SobiPro.jQuery( '#SPMenuCtrlBt' ).html( '-' );
+			SobiPro.jQuery( '#SPMenuCtrlBt' ).html( '<i class="icon-minus"></i>' );
 			SobiPro.jQuery( '#SPRightMenu' )
 				.siblings( 'div' )
 				.removeClass( 'span12' )

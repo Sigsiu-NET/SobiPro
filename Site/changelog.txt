@@ -46,6 +46,7 @@ Legend:
     (!) Datepicker attached to body for Bootstrap 3 compatibility
     (!) Field labels now within CSS class
     (!) Font Awesome 4 updated to version 4.5.0
+    (!) Small CSS improvements in backend
 
     (#) Missing default template configuration files added
     (#) Duplicate icons from Font Awesome 4 removed
