@@ -41,7 +41,7 @@
 			<div class="span2" id="SPRightMenu">
 				<menu />
 			</div>
-			<div class="span10">
+			<div class="span10 spMainArea">
 				<message id="spMessage" />
 
                 <tabs>

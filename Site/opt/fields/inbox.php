@@ -67,6 +67,13 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 			return false;
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			if ($this->bsWidth) {
+				$width = SPHtml_Input::_translateWidth($this->bsWidth);
+				$class .=  ' ' . $width;
+			}
+		}
+
 		$params = array( 'id' => $this->nid, /*'size' => $this->width,*/
 			'class' => $class );
 		if ( $this->maxLength ) {
@@ -79,6 +86,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		if ($this->labelAsPlaceholder) {
 			$params['placeholder'] = $this->__get('name');
 		}
+
 
 		$value = $this->getRaw();
 		$value = strlen( $value )? $value : $this->defaultValue;

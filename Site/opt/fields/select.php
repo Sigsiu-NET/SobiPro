@@ -78,6 +78,12 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 		$class = $this->dependency ? $class . ' ctrl-dependency-field' : $class;
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			if ($this->bsWidth) {
+				$width = SPHtml_Input::_translateWidth($this->bsWidth);
+				$class .=  ' ' . $width;
+			}
+		}
 
 		$params = array( 'id' => $this->nid, 'size' => $this->size, 'class' => $class );
 		//for compatibility reason still there

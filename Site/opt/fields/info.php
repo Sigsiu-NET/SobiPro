@@ -60,6 +60,12 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 		$data = SPLang::getValue( $this->nid . '-entryInfo', 'field_information', Sobi::Section(), null, null, $this->fid );
 
 		$class = $this->cssClass . (strlen($this->cssClassEdit) ? ' ' . $this->cssClassEdit : '');
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			if ($this->bsWidth) {
+				$width = SPHtml_Input::_translateWidth($this->bsWidth);
+				$class .=  ' ' . $width;
+			}
+		}
 		$field = '<div class="' . $class . '">' . $data . '</div>';
 		if ( !$return ) {
 			echo $field;

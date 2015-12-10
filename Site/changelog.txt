@@ -64,6 +64,7 @@ Legend:
     (#) Removing double quotes from user names (Issue #1516)
     (#) Issue with non-latin aliases (Issue #1515)
     (#) Globally disabled application still enabled in sections (Issue #1514)
+    (#) All fields in backend entry form don't get the set width
 
     (*) Unregistered user with permission to edit "own" entry can access the edit form of entries without assigned owner
 

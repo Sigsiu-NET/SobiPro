@@ -54,6 +54,12 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 			return false;
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			if ($this->bsWidth) {
+				$width = SPHtml_Input::_translateWidth($this->bsWidth);
+				$class .=  ' ' . $width;
+			}
+		}
 		$params = array( 'class' => $class . ' checkbox-inline ' . $this->labelSite );
 
 		$values = array();

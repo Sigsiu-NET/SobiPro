@@ -91,7 +91,14 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		}
 		if ( $this->ownLabel ) {
 			$fieldTitle = null;
-			$params = array( 'id' => $this->nid, 'class' => $this->cssClass . 'Title' );
+			$class = $this->cssClass . 'Title';
+			if ( defined( 'SOBIPRO_ADM' ) ) {
+				if ($this->bsWidth) {
+					$width = SPHtml_Input::_translateWidth($this->bsWidth);
+					$class .=  ' ' . $width;
+				}
+			}
+			$params = array( 'id' => $this->nid, 'class' => $class);
 			if ( $this->labelMaxLength ) {
 				$params[ 'maxlength' ] = $this->labelMaxLength;
 			}
@@ -127,6 +134,13 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 
 		//$field .= '<span class="spFieldUrlProtocol">://</span>';
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			if ($this->bsWidth) {
+				$width = SPHtml_Input::_translateWidth($this->bsWidth);
+				$class .=  ' ' . $width;
+			}
+		}
+
 		$params = array( 'id' => $this->nid . '_url', 'class' => $class );
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;

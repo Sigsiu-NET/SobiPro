@@ -256,6 +256,33 @@ abstract class SPHtml_Input
 	}
 
 	/**
+	 * Creates a HTML file box
+	 *
+	 * @param string $name - name of the html field
+	 * @param string $value - selected value
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @return string
+	 */
+	public static function _translateWidth( $width )
+	{
+
+		switch ($width) {
+			case 1: $newwidth = 'input-small'; break;
+			case 2:
+			case 3: $newwidth = 'input-medium'; break;
+			case 4: $newwidth = 'input-large'; break;
+			case 5:
+			case 6: $newwidth = 'input-xlarge'; break;
+			case 7:
+			case 8: $newwidth = 'input-splarge'; break;
+			case 9:
+			case 10:
+			default: $newwidth = 'input-xxlarge'; break;
+		}
+		return $newwidth;
+	}
+
+	/**
 	 * Displays a hidden token field
 	 * @return    string
 	 */

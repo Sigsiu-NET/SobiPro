@@ -71,7 +71,15 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 
 		if ( $this->ownLabel ) {
 			$fieldTitle = null;
-			$params = array( 'id' => $this->nid, 'size' => $this->labelWidth, 'class' => $this->cssClass . 'Title' );
+
+			$class = $this->cssClass . 'Title';
+			if ( defined( 'SOBIPRO_ADM' ) ) {
+				if ($this->bsWidth) {
+					$width = SPHtml_Input::_translateWidth($this->bsWidth);
+					$class .=  ' ' . $width;
+				}
+			}
+			$params = array( 'id' => $this->nid, 'size' => $this->labelWidth, 'class' => $class );
 			if ( $this->labelMaxLength ) {
 				$params[ 'maxlength' ] = $this->labelMaxLength;
 			}
@@ -86,6 +94,12 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			$fieldTitle .= SPHtml_Input::text( $this->nid, ( ( is_array( $raw ) && isset( $raw[ 'label' ] ) ) ? SPLang::clean( $raw[ 'label' ] ) : null ), $params );
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			if ($this->bsWidth) {
+				$width = SPHtml_Input::_translateWidth($this->bsWidth);
+				$class .=  ' ' . $width;
+			}
+		}
 		$this->nid .= '_url';
 		$params = array( 'id' => $this->nid, 'size' => $this->width, 'class' => $class );
 		if ( $this->maxLength ) {

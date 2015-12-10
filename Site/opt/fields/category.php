@@ -268,9 +268,16 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	{
 		if ( count( $this->_cats ) ) {
 			$values = array();
+			$class = $this->cssClass;
+			if ( defined( 'SOBIPRO_ADM' ) ) {
+				if ($this->bsWidth) {
+					$width = SPHtml_Input::_translateWidth($this->bsWidth);
+					$class .=  ' ' . $width;
+				}
+			}
 			$params = array(
 					'id' => $this->nid,
-					'class' => 'required ' . $this->cssClass
+					'class' => 'required ' . $class
 			);
 			//still there for compatibility reason
 			if ( $this->width ) {
@@ -292,9 +299,16 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	{
 		if ( count( $this->_cats ) ) {
 			$values = array();
+			$class = $this->cssClass;
+			if ( defined( 'SOBIPRO_ADM' ) ) {
+				if ($this->bsWidth) {
+					$width = SPHtml_Input::_translateWidth($this->bsWidth);
+					$class .=  ' ' . $width;
+				}
+			}
 			$params = array(
 					'id' => $this->nid,
-					'class' => 'required ' . $this->cssClass
+					'class' => 'required ' . $class
 			);
 
 //			if ( $this->width && $this->height ) {

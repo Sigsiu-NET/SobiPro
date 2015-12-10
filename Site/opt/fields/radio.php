@@ -63,6 +63,12 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 			return false;
 		}
 		$class =  $this->required ? $this->cssClass.' required' : $this->cssClass;
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			if ($this->bsWidth) {
+				$width = SPHtml_Input::_translateWidth($this->bsWidth);
+				$class .=  ' ' . $width;
+			}
+		}
 		$field = $this->getField( $class );
 		if( !$return ) {
 			echo $field;

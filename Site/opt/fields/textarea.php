@@ -60,6 +60,12 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		}
 		$class = $this->cssClass . (strlen($this->cssClassEdit) ? ' ' . $this->cssClassEdit : '');
 		$class = $this->required ? $class . ' required' : $class;
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			if ($this->bsWidth) {
+				$width = SPHtml_Input::_translateWidth($this->bsWidth);
+				$class .=  ' ' . $width;
+			}
+		}
 
 // Switched to Ajax validation
 //		if( $this->maxLength ) {
