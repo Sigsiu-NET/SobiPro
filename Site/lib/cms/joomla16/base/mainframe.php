@@ -65,7 +65,7 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 			else {
 				$title = 'SobiPro - ' . $title;
 			}
-			JToolbarHelper::title( $title );
+			JToolbarHelper::title( $title, 'sobipro' );
 		}
 		else {
 			parent::setTitle( $title, $forceAdd );

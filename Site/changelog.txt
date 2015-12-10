@@ -38,6 +38,7 @@ Legend:
     (+) Support for printing
     (+) Backend ACL
     (+) New template theme 'terra'
+    (+) Specific SobiPro Icon for Administrator Header
 
     (-) jQuery-UI library removed
 

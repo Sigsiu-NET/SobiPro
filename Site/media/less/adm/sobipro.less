@@ -39,6 +39,19 @@ body.contentpane {
 		//color: @font-a;
 	}
 }
+/* Editor in J!3.0 */
+.toggle-editor {
+	float: none !important;
+}
+
+// Backend Page-title image
+.icon-sobipro {
+	background-image: url('../../sobipro.png');
+	width: 20px;
+	height: 20px;
+	background-repeat: no-repeat;
+}
+
 // Backdrop
 .modal-backdrop {
 	background-color: #000000;
@@ -57,7 +70,7 @@ body.contentpane {
 // Modals
 .SobiPro .modal-body {
 	max-height: 420px;
-	padding: 1%;
+	//padding: 1%;
 	margin-top: 10px;
 }
 
@@ -151,6 +164,17 @@ input[type='radio'] {
 	.firstspan {
 		margin-left: 0 !important;
 	}
+	.brand {
+		color: #7f7f7f;
+		font-size: 9px;
+		margin-left: 4px;
+		margin-top: -15px;
+		margin-bottom: 20px;
+		a {
+			color: #7f7f7f;
+			text-decoration: none;
+		}
+	}
 }
 
 /* Changes to work with Bootstrap CSS v2.3.2 */
@@ -165,11 +189,6 @@ input[type='radio'] {
 /* Compatibility Styles */
 .SobiPro table.mceLayout {
 	border-radius: 3px;
-}
-
-/* Editor in J!3.0 */
-.toggle-editor {
-	float: none !important;
 }
 
 // Controls
@@ -207,7 +226,6 @@ input[type='radio'] {
 	//-webkit-box-shadow: inset 0 1px 0 white;
 	//-moz-box-shadow: inset 0 1px 0 #ffffff;
 	//box-shadow: inset 0 1px 0 white;
-
 	.btn-group {
 		//float: left;
 	}
@@ -307,9 +325,9 @@ input[type='radio'] {
 }
 #SPAdmToolbar .container-fluid {
 	padding: 0;
-}
-#SPAdmToolbar .container-fluid [class*="span"] {
-	margin-left: 0;
+	[class*="span"] {
+		margin-left: 0;
+	}
 }
 #SPAdmToolbar .nav-pills > .active > a,
 #SPAdmToolbar .SobiPro .nav-pills > .active > a:hover {
@@ -330,59 +348,90 @@ input[type='radio'] {
 	.spScreenSubHead:first-child {
 		padding-left: 55px;
 	}
-
 	.control-group {
 		float: left;
 		padding-left: 12px;
 	}
 }
 
-.SobiPro .sp-mini-bt {
-	width: 25px;
-	height: 22px;
-	padding: 0 !important;
+.spicon-48-SobiPro {
+	background-image: url('@{admIcons}/folder-sobipro.png');
+}
+.spicon-48-SobiFields {
+	background-image: url('@{admIcons}/folder-fieldsmanager.png');
+}
+.spicon-48-SobiSection {
+	background-image: url('@{admIcons}/folder-section.png');
+}
+.spicon-48-SobiFieldEdit {
+	background-image: url('@{admIcons}/edit-rename.png');
+}
+.spicon-48-SobiEntries {
+	background-image: url('@{admIcons}/entries.png');
+}
+.spicon-48-SobiCatList {
+	background-image: url('@{admIcons}/folder-categories.png');
+}
+.spicon-48-SobiEdit {
+	background-image: url('@{admIcons}/editor.png');
+}
+.spicon-48-SobiFieldList {
+	background-image: url('@{admIcons}/fields.png');
+}
+.spicon-48-SobiSectionCfg {
+	background-image: url('@{admIcons}/folder-section-cfg.png');
+}
+.spicon-48-SobiApplicationSection {
+	background-image: url('@{admIcons}/folder-application-section.png');
+}
+.spicon-48-SobiApplication {
+	background-image: url('@{admIcons}/folder-application.png');
+}
+.spicon-48-SobiTemplate {
+	background-image: url('@{admIcons}/folder-templates.png');
+}
+.spicon-48-SobiConfig {
+	background-image: url('@{admIcons}/folder-configuration.png');
+}
+.spicon-48-SobiUser {
+	background-image: url('@{admIcons}/sobipro-acl-edit.png');
 }
 
-
 .SobiPro .table {
-	th.SpCellHeader {
-		padding-top: 25px;
-	}
-	.table th.SpCellCenter,
-	.table td.SpCellCenter {
+	.SpCellCenterSmall,
+	.SpCellCenter {
 		text-align: center;
 		vertical-align: middle;
+		a {
+			text-decoration: none;
+		}
 	}
-
-	th.SpCellMiddle,
-	td.SpCellMiddle {
-		vertical-align: middle;
-	}
-
-	th.SpCellCenterSmall,
-	td.SpCellCenterSmall {
-		text-align: center;
-		vertical-align: middle;
+	.SpCellCenterSmall {
 		max-width: 100px;
 	}
-
-	th.SpCellArrowCol,
-	td.SpCellArrowCol,
-	th.SpCellLeft,
-	td.SpCellLeft {
+	.SpCellHeader {
+		padding-top: 25px;
+	}
+	.SpCellMiddle {
+		vertical-align: middle;
+	}
+	.SpCellArrowCol,
+	.SpCellLeft {
 		text-align: left;
 		vertical-align: middle;
 		padding-top: 5px;
 		padding-bottom: 4px;
 	}
-	th.SpCellArrowCol,
-	td.SpCellArrowCol {
+	.SpCellArrowCol {
 		width: 90px;
-	}
-	.SpCellArrowCol .sp-mini-bt {
-		margin-left: 4px;
-		i {
-			margin-right: 0;
+		a {
+			text-decoration: none;
+		}
+		.btn-mini {
+			margin-left: 4px;
+			i {
+				margin-right: 0;
+			}
 		}
 	}
 }
@@ -400,6 +449,25 @@ input[type='radio'] {
 	}
 }
 
+// Alerts
+.SobiPro .spConfigAlert {
+	max-width: 600px;
+	margin-left: 20px;
+}
+.SobiPro .spAppAlert {
+	max-width: 700px;
+	margin-left: 20px;
+}
+.SobiPro .spSystemAlert a {
+	color: inherit;
+	text-decoration: underline;
+}
+.SobiPro .spStatusAlert {
+	margin-bottom: 5px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
 
 .SobiPro .SpCellContainer {
 	clear: both;
@@ -412,10 +480,6 @@ input[type='radio'] {
 .SpCloudInstall .SpExtInstall {
 	float: left;
 	padding-left: 8px;
-}
-
-.SobiPro .SpExtName .tooltip-inner {
-	text-align: left;
 }
 
 #SPAdminForm table .control-label {
@@ -488,18 +552,6 @@ fieldset label {
 .SobiPro .input-prepend .alert,
 .SobiPro .input-append .alert {
 	//font-size: 14px;
-}
-
-.SobiPro .brand {
-	color: #7f7f7f;
-	font-size: 9px;
-	margin-left: 4px;
-	margin-top: -15px;
-	margin-bottom: 20px;
-	a {
-		color: #7f7f7f;
-		text-decoration: none;
-	}
 }
 
 .SobiPro .btn-danger,
@@ -618,9 +670,6 @@ fieldset label {
 	input[type="checkbox"] {
 		margin-top: 0;
 	}
-	.sp-mini-bt {
-		padding: 4px 4px !important;
-	}
 }
 
 .SobiPro .SpCellArrow {
@@ -697,52 +746,32 @@ fieldset label {
 	background-color: #000066;
 }
 
-.SobiPro .SpExtName .tooltip-inner {
-	min-width: 350px;
-	color: #202020;
-	background-color: #eeeeee;
+.SobiPro .SpExtName {
+	.tooltip-inner {
+		text-align: left;
+		min-width: 350px;
+		color: #202020;
+		background-color: #eeeeee;
+	}
+	.tooltip.in {
+		opacity: 0.9;
+		filter: alpha(opacity=90);
+	}
 }
 
-.SobiPro .SpExtName .tooltip.in {
-	opacity: 0.9;
-	filter: alpha(opacity=90);
-}
-
-.SobiPro .tooltip.top .tooltip-arrow {
-	border-top-color: #000066;
-}
-
-.SobiPro .tooltip.right .tooltip-arrow {
-	border-right-color: #000066;
-}
-
-.SobiPro .tooltip.left .tooltip-arrow {
-	border-left-color: #000066;
-}
-
-.SobiPro .tooltip.bottom .tooltip-arrow {
-	border-bottom-color: #000066;
-}
-
-.SobiPro .spConfigAlert {
-	max-width: 600px;
-	margin-left: 20px;
-}
-
-.SobiPro .spAppAlert {
-	max-width: 700px;
-	margin-left: 20px;
-}
-
-.SobiPro .spSystemAlert a {
-	color: inherit;
-	text-decoration: underline;
-}
-
-.SobiPro .spStatusAlert {
-	margin-bottom: 5px;
-	padding-top: 4px;
-	padding-bottom: 4px;
+.SobiPro {
+	.tooltip.top .tooltip-arrow {
+		border-top-color: #000066;
+	}
+	.tooltip.right .tooltip-arrow {
+		border-right-color: #000066;
+	}
+	.tooltip.left .tooltip-arrow {
+		border-left-color: #000066;
+	}
+	.tooltip.bottom .tooltip-arrow {
+		border-bottom-color: #000066;
+	}
 }
 
 .SobiPro .spStatusIssues {
@@ -801,12 +830,10 @@ fieldset label {
 	min-height: 90px;
 	padding: 5px;
 	overflow: hidden;
+	img {
+		padding-right: 10px;
+	}
 }
-
-.SobiPro .spNews .SpCellContainer img {
-	padding-right: 10px;
-}
-
 .SpCellNewsImage {
 	float: left;
 }
@@ -895,62 +922,6 @@ fieldset label {
 		text-decoration: none;
 	}
 }
-.spicon-48-SobiPro {
-	background-image: url('@{admIcons}/folder-sobipro.png');
-}
-
-.spicon-48-SobiFields {
-	background-image: url('@{admIcons}/folder-fieldsmanager.png');
-}
-
-.spicon-48-SobiSection {
-	background-image: url('@{admIcons}/folder-section.png');
-}
-
-.spicon-48-SobiFieldEdit {
-	background-image: url('@{admIcons}/edit-rename.png');
-}
-
-.spicon-48-SobiEntries {
-	background-image: url('@{admIcons}/entries.png');
-}
-
-.spicon-48-SobiCatList {
-	background-image: url('@{admIcons}/folder-categories.png');
-}
-
-.spicon-48-SobiEdit {
-	background-image: url('@{admIcons}/editor.png');
-}
-
-.spicon-48-SobiFieldList {
-	background-image: url('@{admIcons}/fields.png');
-}
-
-.spicon-48-SobiSectionCfg {
-	background-image: url('@{admIcons}/folder-section-cfg.png');
-}
-
-.spicon-48-SobiApplicationSection {
-	background-image: url('@{admIcons}/folder-application-section.png');
-}
-
-.spicon-48-SobiApplication {
-	background-image: url('@{admIcons}/folder-application.png');
-}
-
-.spicon-48-SobiTemplate {
-	background-image: url('@{admIcons}/folder-templates.png');
-}
-
-.spicon-48-SobiConfig {
-	background-image: url('@{admIcons}/folder-configuration.png');
-}
-
-.spicon-48-SobiUser {
-	background-image: url('@{admIcons}/sobipro-acl-edit.png');
-}
-
 .SobiPro .spDatePicker .add-on,
 .SobiPro .spUserSelector .add-on {
 	background-color: #FFFFFF;
