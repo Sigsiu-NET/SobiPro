@@ -99,7 +99,7 @@ final class SPHeader
 	public function & initBase( $adm = false )
 	{
 		if ( $adm ) {
-			$this->addCssFile( array( 'bootstrap.bootstrap', 'icons', 'adm.sobipro' ) )
+			$this->addCssFile( array( 'bootstrap.bootstrap', 'admicons', 'adm.sobipro' ) )
 					->addJsFile( array( 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface' ) );
 		}
 		else {
