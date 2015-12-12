@@ -181,9 +181,10 @@ class SPError extends SPConfigAdmCtrl
 		$err->errBacktrace = unserialize( gzuncompress( base64_decode( $err->errBacktrace ) ) );
 		$l = $this->levels();
 		/** @var $view SPAdmView */
+		$menu = $this->createMenu( 'error' );
 		SPFactory::View( 'error', true )
 				->assign( $this->_task, 'task' )
-				->assign( $this->createMenu( 'error' ), 'menu' )
+				->assign( $menu, 'menu' )
 				->assign( $l, 'levels' )
 				->assign( $err, 'error' )
 				->display();

@@ -91,7 +91,8 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$view->assign( $f, 'filters' );
 		$view->assign( $field, 'field' );
 		$view->assign( $this->_task, 'task' );
-		$view->assign( $view->languages(), 'languages-list' );
+		$languages = $view->languages();
+		$view->assign( $languages, 'languages-list' );
 		$field->onFieldEdit( $view );
 		/*
 		 * 1.1 native - config and view in xml
@@ -535,13 +536,15 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				);
 			}
 		}
+		$sectionName = Sobi::Section( true );
+		$userState = Sobi::GetUserState( 'fields.order', 'forder', 'position.asc' );
 		SPFactory::View( 'field', true )
 				->addHidden( $sid, 'sid' )
 				->assign( $fields, 'fields' )
 				->assign( $subMenu, 'fieldTypes' )
-				->assign( Sobi::Section( true ), 'section' )
+				->assign( $sectionName, 'section' )
 				->assign( $menu, 'menu' )
-				->assign( Sobi::GetUserState( 'fields.order', 'forder', 'position.asc' ), 'ordering' )
+				->assign( $userState, 'ordering' )
 				->assign( $this->_task, 'task' )
 				->determineTemplate( 'field', 'list' )
 				->display();

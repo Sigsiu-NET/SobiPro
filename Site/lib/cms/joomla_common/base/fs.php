@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -98,7 +96,7 @@ abstract class SPJoomlaFs
 		$part = SOBI_ROOT;
 		$i = count( $path );
 		// yeah I know ... shame on me :(
-		while ( !( @$path[ $i ] ) ) {
+		while ( isset( $path[ $i ] ) && !( @$path[ $i ] ) ) {
 			unset( $path[ $i-- ] );
 		}
 		array_pop( $path );
@@ -128,7 +126,7 @@ abstract class SPJoomlaFs
 	{
 		$file = self::fixPath( $file );
 		if ( is_dir( $file ) ) {
-			if( $file == SOBI_ROOT || dirname( $file ) == SOBI_ROOT ) {
+			if ( $file == SOBI_ROOT || dirname( $file ) == SOBI_ROOT ) {
 				throw new SPException( SPLang::e( 'Fatal error. Trying to delete not allowed path "%s"', $file ) );
 			}
 			return Jfolder::delete( $file );
@@ -173,9 +171,9 @@ abstract class SPJoomlaFs
 	 */
 	public static function write( $file, &$buffer, $append = false )
 	{
-		if( $append ) {
+		if ( $append ) {
 			$content = self::read( $file );
-			$buffer = $content.$buffer;
+			$buffer = $content . $buffer;
 		}
 		$return = Jfile::write( $file, $buffer );
 		if ( $return === false ) {

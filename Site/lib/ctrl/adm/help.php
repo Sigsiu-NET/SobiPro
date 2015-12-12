@@ -52,18 +52,21 @@ class SPHelp extends SPController
 				$repository->connect();
 			}
 			catch ( SPException $x ) {
-				$view->assign( SPLang::e( 'REPO_ERR', $x->getMessage() ), 'message' );
+				$errorMessage = SPLang::e( 'REPO_ERR', $x->getMessage() );
+				$view->assign( $errorMessage, 'message' );
 			}
 			try {
 				$response = $repository->help( $repository->get( 'token' ), SPRequest::cmd( 'mid' ) );
 				$view->assign( $response, 'message' );
 			}
 			catch ( SPException $x ) {
-				$view->assign( SPLang::e( 'REPO_ERR', $x->getMessage() ), 'message' );
+				$errorMessage = SPLang::e( 'REPO_ERR', $x->getMessage() );
+				$view->assign( $errorMessage, 'message' );
 			}
 		}
 		else {
-			$view->assign( Sobi::Txt( 'MSG.HELP_ADD_CORE_REPO' ), 'message' );
+			$message = Sobi::Txt( 'MSG.HELP_ADD_CORE_REPO' );
+			$view->assign( $message, 'message' );
 		}
 		$view->display();
 	}

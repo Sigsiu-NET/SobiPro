@@ -327,7 +327,8 @@ class SPEntryCtrl extends SPController
 		$view = SPFactory::View( 'payment', $this->template );
 		$view->assign( $this->_model, 'entry' );
 		$view->assign( $data, 'pdata' );
-		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
+		$visitor = SPFactory::user()->getCurrent();
+		$view->assign( $visitor, 'visitor' );
 		$view->assign( $this->_task, 'task' );
 		$view->addHidden( $tsId, 'speditentry' );
 		$view->addHidden( $tsId, 'ssid' );
@@ -615,14 +616,17 @@ class SPEntryCtrl extends SPController
 				}
 			}
 			if ( count( $tCats ) ) {
-				$view->assign( implode( "\n", $tCats ), 'parent_path' );
+				$path = implode( "\n", $tCats );
+				$view->assign( $path, 'parent_path' );
 			}
-			$view->assign( implode( ", ", $cats ), 'parents' );
+			$parents = implode( ", ", $cats );
+			$view->assign( $parents, 'parents' );
 		}
 		else {
 			$parent = ( ( $sid == Sobi::Reg( 'current_section' ) ) ? 0 : $sid );
 			if ( $parent ) {
-				$view->assign( implode( Sobi::Cfg( 'string.path_separator', ' > ' ), SPFactory::config()->getParentPath( $parent, true ) ), 'parent_path' );
+				$imploded = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), SPFactory::config()->getParentPath( $parent, true ) );
+				$view->assign( $imploded, 'parent_path' );
 			}
 			$view->assign( $parent, 'parents' );
 		}
@@ -630,7 +634,8 @@ class SPEntryCtrl extends SPController
 		$view->assign( $fields, 'fields' );
 		$view->assign( $id, 'id' );
 		$view->assign( $id, 'sid' );
-		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
+		$visitor = SPFactory::user()->getCurrent();
+		$view->assign( $visitor, 'visitor' );
 		$view->setConfig( $this->_tCfg, $this->template );
 		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . ( $this->template == 'add' ? 'edit' : $this->template ) );
 		$view->addHidden( ( $sid ? $sid : SPRequest::sid() ), 'pid' );
@@ -665,7 +670,8 @@ class SPEntryCtrl extends SPController
 		$class = SPLoader::loadView( 'entry' );
 		$view = new $class( $this->template );
 		$view->assign( $this->_model, 'entry' );
-		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
+		$visitor = SPFactory::user()->getCurrent();
+		$view->assign( $visitor, 'visitor' );
 		$view->assign( $this->_task, 'task' );
 		$view->setConfig( $this->_tCfg, $this->template );
 		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );

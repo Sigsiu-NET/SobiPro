@@ -75,7 +75,8 @@ class SPProgressCtrl extends SPController
 		$this->interval = $interval;
 		$this->type = $type;
 		$typeText = Sobi::Txt( 'STATUS_' . $type );
-		SPFs::write( $this->file, json_encode( array( 'progress' => $progress, 'message' => $message, 'interval' => $interval, 'type' => $type, 'typeText' => $typeText ) ) );
+		$out = json_encode( array( 'progress' => $progress, 'message' => $message, 'interval' => $interval, 'type' => $type, 'typeText' => $typeText ) );
+		SPFs::write( $this->file, $out );
 	}
 
 	public function message( $message, $type = SPC::INFO_MSG )

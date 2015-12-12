@@ -299,26 +299,34 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 
 		/* get view class */
 		$view = SPFactory::View( 'category', true );
+		$eSite = SPRequest::int( 'eSite', 1 );
+		$cSite = SPRequest::int( 'cSite', 1 );
+		$customCols = $this->customCols();
+		$userStateEOrder = Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' );
+		$userStateCOrder = Sobi::GetUserState( 'categories.corder', 'corder', 'position.asc' );
+		$catName = $this->_model->get( 'name' );
+		$pid = Sobi::Section();
+		$sid = SPRequest::sid();
 		$view->assign( $eLimit, '$eLimit' )
 				->assign( $eLimit, 'entries-limit' )
 				->assign( $cLimit, 'categories-limit' )
-				->assign( SPRequest::int( 'eSite', 1 ), 'entries-site' )
-				->assign( SPRequest::int( 'cSite', 1 ), 'categories-site' )
+				->assign( $eSite, 'entries-site' )
+				->assign( $cSite, 'categories-site' )
 				->assign( $cCount, 'categories-count' )
 				->assign( $eCount, 'entries-count' )
 				->assign( $this->_task, 'task' )
 				->assign( $this->_model, 'category' )
 				->assign( $categories, 'categories' )
 				->assign( $entries, 'entries' )
-				->assign( $this->customCols(), 'fields' )
+				->assign( $customCols, 'fields' )
 				->assign( $entriesName, 'entries_name' )
 				->assign( $entriesField, 'entries_field' )
 				->assign( $menu, 'menu' )
-				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'position.asc' ), 'eorder' )
-				->assign( Sobi::GetUserState( 'categories.corder', 'corder', 'position.asc' ), 'corder' )
-				->assign( $this->_model->get( 'name' ), 'category_name' )
-				->addHidden( Sobi::Section(), 'pid' )
-				->addHidden( SPRequest::sid(), 'sid' );
+				->assign( $userStateEOrder, 'eorder' )
+				->assign( $userStateCOrder, 'corder' )
+				->assign( $catName, 'category_name' )
+				->addHidden( $pid, 'pid' )
+				->addHidden( $sid, 'sid' );
 		Sobi::Trigger( 'Category', 'View', array( &$view ) );
 		$view->display();
 	}

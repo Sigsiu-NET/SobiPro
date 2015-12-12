@@ -107,8 +107,10 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 		$view->assign( $this->_model, 'section' );
 		$view->setConfig( $this->_tCfg, $this->template );
 		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );
-		$view->assign( $pn->get(), 'navigation' );
-		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
+		$navigation = $pn->get();
+		$view->assign( $navigation, 'navigation' );
+		$visitor = SPFactory::user()->getCurrent();
+		$view->assign( $visitor, 'visitor' );
 		$view->assign( $entries, 'entries' );
 		Sobi::Trigger( 'UserListing', 'View', array( &$view ) );
 		$view->display();

@@ -185,9 +185,10 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		$view->setCtrl( $this );
 		$entriesOrdering = $view->namesFields( null, true );
+		$sid = Sobi::Section();
 		$view->assign( $menu, 'menu' )
 				->assign( $this->_task, 'task' )
-				->assign( Sobi::Section(), 'sid' )
+				->assign( $sid, 'sid' )
 				->assign( $templateSettings, 'settings' )
 				->assign( $entriesOrdering, 'entriesOrdering' )
 				->assign( $plugins, 'apps' )
@@ -351,9 +352,10 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		else {
 			$menu->setOpen( 'GB.CFG.GLOBAL_TEMPLATES' );
 		}
+		$sid = Sobi::Section();
 		$view->assign( $menu, 'menu' )
 				->assign( $this->_task, 'task' )
-				->assign( Sobi::Section(), 'sid' )
+				->assign( $sid, 'sid' )
 				->addHidden( $templateName, 'templateName' )
 				->determineTemplate( 'template', 'info' );
 		Sobi::Trigger( 'Info', $this->name(), array( &$file, &$view ) );
@@ -460,13 +462,14 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$menu->setOpen( 'GB.CFG.GLOBAL_TEMPLATES' );
 		}
 		/** @var $view SPAdmTemplateView */
+		$sid = Sobi::Section();
 		$view = SPFactory::View( 'template', true )
 				->assign( $fileContent, 'file_content' )
 				->assign( $filename, 'file_name' )
 				->assign( $ext, 'file_ext' )
 				->assign( $menu, 'menu' )
 				->assign( $this->_task, 'task' )
-				->assign( Sobi::Section(), 'sid' )
+				->assign( $sid, 'sid' )
 				->addHidden( SPRequest::cmd( 'file' ), 'fileName' )
 				->addHidden( $filename, 'filePath' )
 				->determineTemplate( 'template', 'edit' );

@@ -418,7 +418,7 @@ class SPAppInstaller extends SPInstaller
 						if ( count( $files ) ) {
 							$this->_d( sprintf( 'List %s', print_r( $files, true ) ) );
 							foreach ( $files as $file ) {
-								$this->_d( sprintf( 'Parsing %s', $files ) );
+								$this->_d( sprintf( 'Parsing %s', $file ) );
 								$tfile = Sobi::FixPath( str_replace( $this->root, null, $file ) );
 								$bPath = Sobi::FixPath( $backup . $tfile );
 								if ( $remove && strstr( $tfile, $remove ) && strpos( $tfile, $remove ) < 2 ) {

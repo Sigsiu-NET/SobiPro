@@ -217,8 +217,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 
 	/**
 	 * Save a rule
-	 *
 	 * @param bool $apply
+	 * @param bool $clone
 	 */
 	protected function save( $apply,$clone = false )
 	{

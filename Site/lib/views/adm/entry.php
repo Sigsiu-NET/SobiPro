@@ -49,7 +49,8 @@ class SPEntryAdmView extends SPAdmView
 		SPLoader::loadClass( 'html.tooltip' );
 		switch ( $this->get( 'task' ) ) {
 			case 'edit':
-				$this->assign( $this->languages(), 'languages-list' );
+				$languages = $this->languages();
+				$this->assign( $languages, 'languages-list' );
 			case 'add':
 				$this->edit();
 				break;
@@ -66,6 +67,7 @@ class SPEntryAdmView extends SPAdmView
 			$this->addHidden( $id, 'entry.id' );
 		}
 		$sid = SPRequest::int( 'pid' ) ? SPRequest::int( 'pid' ) : SPRequest::sid();
-		$this->assign( Sobi::Url( array( 'task' => 'category.chooser', 'sid' => $sid, 'out' => 'html', 'multiple' => 1 ), true ), 'cat_chooser_url' );
+		$catChooserUrl = Sobi::Url( array( 'task' => 'category.chooser', 'sid' => $sid, 'out' => 'html', 'multiple' => 1 ), true );
+		$this->assign( $catChooserUrl, 'cat_chooser_url' );
 	}
 }

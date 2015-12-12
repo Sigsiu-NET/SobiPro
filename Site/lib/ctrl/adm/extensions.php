@@ -267,9 +267,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 		/** @var $view SPExtensionsView */
 		$view = SPFactory::View( 'extensions', true );
+		$sid = Sobi::Section();
 		$view->assign( $this->_task, 'task' )
 				->assign( $menu, 'menu' )
-				->assign( Sobi::Section(), 'sid' )
+				->assign( $sid, 'sid' )
 				->assign( $all, 'applications' );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
 		$view->display();
@@ -777,7 +778,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$callback = $response[ 'callback' ];
 		unset( $response[ 'callback' ] );
 		if ( isset( $response[ 'message' ] ) ) {
-			$view->assign( Sobi::Txt( $response[ 'message' ] ), 'message' );
+			$message = Sobi::Txt( $response[ 'message' ] );
+			$view->assign( $message, 'message' );
 			unset( $response[ 'message' ] );
 		}
 		$fields = array();

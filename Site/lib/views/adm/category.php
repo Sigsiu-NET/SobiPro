@@ -110,7 +110,8 @@ class SPCategoryAdmView extends SPSectionAdmView
 			$this->assign( $catChooserURL, 'cat_chooser_url' );
 		}
 		elseif ( SPRequest::int( 'pid' ) ) {
-			$this->assign( Sobi::Url( array( 'task' => 'category.chooser', 'pid' => SPRequest::int( 'pid' ), 'out' => 'html' ), true ), 'cat_chooser_url' );
+			$catUrl = Sobi::Url( array( 'task' => 'category.chooser', 'pid' => SPRequest::int( 'pid' ), 'out' => 'html' ), true );
+			$this->assign( $catUrl, 'cat_chooser_url' );
 		}
 		$iconChooserUrl = Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html' ), true );
 		$this->assign( $iconChooserUrl, 'icon_chooser_url' );
@@ -130,6 +131,7 @@ class SPCategoryAdmView extends SPSectionAdmView
 			$path = $this->parentPath( $id );
 		}
 		$this->assign( $path, 'parent_path' );
-		$this->assign( Sobi::Url( array( 'task' => 'category.parents', 'out' => 'json', 'format' => 'raw' ), true ), 'parent_ajax_url' );
+		$ajaxUrl = Sobi::Url( array( 'task' => 'category.parents', 'out' => 'json', 'format' => 'raw' ), true );
+		$this->assign( $ajaxUrl, 'parent_ajax_url' );
 	}
 }

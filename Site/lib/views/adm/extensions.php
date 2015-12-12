@@ -51,7 +51,8 @@ class SPExtensionsView extends SPAdmView
 			}
 		}
 		$this->assign( $plugins, 'applications' );
-		$this->assign( Sobi::Section( true ), 'section' );
+		$sectionName = Sobi::Section( true );
+		$this->assign( $sectionName, 'section' );
 	}
 
 	/**

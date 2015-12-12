@@ -348,7 +348,8 @@ class SPConfigAdmCtrl extends SPController
 			$view->assign( $templateList, 'templatesList' );
 			$view->assign( $entriesOrdering, 'entriesOrdering' );
 			$view->assign( $alphaFields, 'alphaMenuFields' );
-			$view->assign( $view->languages(), 'languages-list' );
+			$languages = $view->languages();
+			$view->assign( $languages, 'languages-list' );
 		}
 		$view->addHidden( $IP, 'current-ip' );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );

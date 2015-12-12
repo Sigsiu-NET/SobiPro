@@ -514,7 +514,8 @@ class SPSearchCtrl extends SPSectionCtrl
 					->assign( $eLimStart, '$eLimStart' )
 					->assign( $eInLine, '$eInLine' );
 			$entries = $this->getResults( $ssid, $this->template );
-			$view->assign( count( $this->_results ), '$eCount' )
+			$count = count( $this->_results );
+			$view->assign( $count, '$eCount' )
 					->assign( $this->_resultsByPriority, 'priorities' )
 					->assign( $entries, 'entries' );
 			/* create page navigation */
@@ -525,7 +526,8 @@ class SPSearchCtrl extends SPSectionCtrl
 			}
 			/* @var SPPageNavXSLT $pn */
 			$pn = new $pnc( $eLimit, $this->_resultsCount, $site, $url );
-			$view->assign( $pn->get(), 'navigation' );
+			$nav = $pn->get();
+			$view->assign( $nav, 'navigation' );
 			/**
 			 * this is te special case:
 			 * no matter what task we currently have - if someone called this we need the data for the V-Card
@@ -544,10 +546,12 @@ class SPSearchCtrl extends SPSectionCtrl
 			$view->assign( $this->_request[ 'search_for' ], 'search_for' )
 					->assign( $this->_request[ 'phrase' ], 'search_phrase' );
 		}
+		$visitor = SPFactory::user()->getCurrent();
+		$sid = Sobi::Section();
 		$view->assign( $fields, 'fields' )
-				->assign( SPFactory::user()->getCurrent(), 'visitor' )
+				->assign( $visitor, 'visitor' )
 				->assign( $this->_task, 'task' )
-				->addHidden( Sobi::Section(), 'sid' )
+				->addHidden( $sid, 'sid' )
 				->addHidden( 'search.search', 'task' )
 				->setConfig( $this->_tCfg, $this->template )
 				->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );

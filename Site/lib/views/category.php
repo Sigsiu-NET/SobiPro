@@ -42,7 +42,8 @@ class SPCategoryView extends SPSectionView implements SPView
 			$path = $this->parentPath( $id );
 		}
 		$this->assign( $path, 'parent_path' );
-		$this->assign( Sobi::Url( array( 'task' => 'category.parents', 'out' => 'json', 'format' => 'raw' ), true ), 'parent_ajax_url' );
+		$url = Sobi::Url( array( 'task' => 'category.parents', 'out' => 'json', 'format' => 'raw' ), true );
+		$this->assign( $url, 'parent_ajax_url' );
 		/* @TODO  */
 		$tpl = str_replace( implode( '/', array( 'usr', 'templates', 'category' ) ), 'views/tpl/', $this->_template.'.php' );
 		Sobi::Trigger( 'Display', $this->name(), array( &$this ) );

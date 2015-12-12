@@ -124,7 +124,8 @@ class SPCategoryCtrl extends SPSectionCtrl
 		$view->assign( $this->_task, 'task' );
 		$view->assign( $callback, 'callback' );
 		$view->assign( $files, 'files' );
-		$view->assign( Sobi::Cfg( 'images.folder_ico' ), 'folder' );
+		$directory = Sobi::Cfg( 'images.folder_ico' );
+		$view->assign( $directory, 'folder' );
 		$view->assign( $dirs, 'directories' );
 		$view->icon();
 	}
