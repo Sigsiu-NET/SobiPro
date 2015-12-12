@@ -78,7 +78,7 @@ class SPAppInstaller extends SPInstaller
 		if ( $languages->length ) {
 			$langFiles = array();
 			foreach ( $languages as $language ) {
-				$folder = $language->attributes->getNamedItem( 'folder' )->nodeValue;
+				$folder =  $language->attributes->getNamedItem( 'folder' ) ? $language->attributes->getNamedItem( 'folder' )->nodeValue : null;
 				foreach ( $language->childNodes as $file ) {
 					$adm = false;
 					if ( strstr( $file->nodeName, '#' ) ) {

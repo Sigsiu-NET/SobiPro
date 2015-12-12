@@ -486,7 +486,8 @@ abstract class SPDBObject extends SPObject
 				continue;
 			}
 			/* now we get it ;) */
-			$this->$property = SPRequest::$types[ $property ]( $prefix . $property, null, $request );
+			$method = $types[ $property ];
+			$this->$property = SPRequest::$method( $prefix . $property, null, $request );
 		}
 		/* trigger plugins */
 		Sobi::Trigger( 'getRequest', $this->name(), array( &$this ) );

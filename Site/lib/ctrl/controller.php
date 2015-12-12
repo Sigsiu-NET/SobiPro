@@ -276,8 +276,8 @@ abstract class SPController extends SPObject implements SPControl
 				'new' => !( $this->_model->get( 'id' ) )
 		);
 		SPFactory::registry()->set( 'object_previous_state', $preState );
-
 		$this->_model->getRequest( $this->_type );
+
 		if ( $this->_model->get( 'id' ) ) {
 			if ( Sobi::My( 'id' ) && Sobi::My( 'id' ) == $this->_model->get( 'owner' ) ) {
 				$this->authorise( 'edit', 'own' );
