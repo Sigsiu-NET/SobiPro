@@ -220,7 +220,7 @@ final class SPSection extends SPDBObject implements SPDataModel
 		return self::$types;
 	}
 
-	public function & getInstance( $id = 0 )
+	public static function & getInstance( $id = 0 )
 	{
 		static $instances = array();
 		$id = $id ? $id : Sobi::Reg( 'current_section' );

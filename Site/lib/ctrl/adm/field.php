@@ -382,7 +382,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$type = SPRequest::cmd( 'field_fieldType' );
 		$definition = SPLoader::path( 'field.' . $type, 'adm', true, 'xml' );
 		if ( $definition ) {
-			$xdef = new DOMXPath( DOMdocument::load( $definition ) );
+			$xdef = new DOMXPath( SPFactory::LoadXML( $definition ) );
 			$required = $xdef->query( '//field[@required="true"]' );
 			if ( $required->length ) {
 				for ( $i = 0; $i < $required->length; $i++ ) {

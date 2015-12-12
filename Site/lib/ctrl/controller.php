@@ -593,7 +593,7 @@ abstract class SPController extends SPObject implements SPControl
 			else {
 				$errorUrl = Sobi::Url( array( 'task' => $type . '.edit', 'sid' => SPRequest::sid() ) );
 			}
-			$xdef = new DOMXPath( DOMdocument::load( $definition ) );
+			$xdef = new DOMXPath( SPFactory::LoadXML( $definition ) );
 			$required = $xdef->query( '//field[@required="true"]' );
 			if ( $required->length ) {
 				for ( $i = 0; $i < $required->length; $i++ ) {

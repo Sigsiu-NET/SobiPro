@@ -196,7 +196,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$file = SPLoader::path( 'etc.updates', 'front', true, 'xml' );
 		if ( $file ) {
 			$def = SPFactory::Instance( 'types.array' );
-			$list = $def->fromXML( DOMDocument::load( SPLoader::path( 'etc.updates', 'front', true, 'xml' ) ), 'updateslist' );
+			$doc = new DOMDocument();
+			$doc->load( SPLoader::path( 'etc.updates', 'front', true, 'xml' ) );
+			$list = $def->fromXML( $doc, 'updateslist' );
 			if ( count( $list[ 'updateslist' ][ 'updates' ] ) ) {
 				foreach ( $list[ 'updateslist' ][ 'updates' ] as $id => $upd ) {
 					if ( $upd[ 'update' ] == 'true' ) {
@@ -540,7 +542,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$list = null;
 		$apps = array();
 		if ( SPFs::exists( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) ) ) {
-			$list = $def->fromXML( DOMDocument::load( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) ), 'extensionslist' );
+			$list = $def->fromXML( SPFactory::LoadXML( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) ), 'extensionslist' );
 		}
 		if ( !( count( $list ) ) ) {
 			SPFactory::message()->warning( 'EX.MSG_UPDATE_FIRST' );

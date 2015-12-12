@@ -1,10 +1,12 @@
 <?php
 /**
  * @package: SobiPro Library
+
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
+
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -16,7 +18,6 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-
 /**
  * @author Radek Suski
  * @version 1.0
@@ -48,7 +49,7 @@ class SPJoomlaCMSHelper
 			//$def = SOBI_CMS == 'joomla15' ? 'sobipro.xml' : 'com_sobipro.xml';
 			$def = 'com_sobipro.xml';
 			$doc = new DOMDocument();
-			$doc->load( Sobi::FixPath( SOBI_ADM_PATH . '/' . $def ) );
+			$doc->load(Sobi::FixPath( SOBI_ADM_PATH . '/' . $def ));
 			if ( $str ) {
 				$ver[ $str ] = $doc->getElementsByTagName( 'version' )->item( 0 )->nodeValue;
 				$codename = $doc->getElementsByTagName( 'codename' )->item( 0 )->nodeValue;
@@ -116,7 +117,7 @@ class SPJoomlaCMSHelper
 	public static function installerFile( $files )
 	{
 		foreach ( $files as $file ) {
-			$def = DOMDocument::load( $file, LIBXML_NOERROR );
+			$def = SPFactory::LoadXML( $file, LIBXML_NOERROR );
 			if ( in_array( trim( $def->documentElement->tagName ), array( 'install', 'extension' ) ) ) {
 				if ( $def->getElementsByTagName( 'SobiPro' )->length ) {
 					if ( in_array( trim( $def->documentElement->getAttribute( 'type' ) ), array( 'language', 'module', 'plugin', 'component' ) ) ) {

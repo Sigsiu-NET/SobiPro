@@ -245,7 +245,7 @@ class JElementSPSection extends JElement
 		parse_str( $link, $query );
 		$this->task = isset( $query[ 'task' ] ) ? $query[ 'task' ] : null;
 		if ( $this->task ) {
-			$def = DOMDocument::load( SOBI_PATH . '/metadata.xml' );
+			$def = SPFactory::LoadXML( SOBI_PATH . '/metadata.xml' );
 			$xdef = new DOMXPath( $def );
 			$nodes = $xdef->query( "//option[@value='{$this->task}']" );
 			if ( count( $nodes ) ) {
