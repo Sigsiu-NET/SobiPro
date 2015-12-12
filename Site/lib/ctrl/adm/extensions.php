@@ -613,8 +613,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$repository->loadDefinition( $def );
 			$repos[ ] = $repository->getDef();
 		}
+		$menu = $this->menu();
 		$view->assign( $this->_task, 'task' )
-				->assign( $this->menu(), 'menu' )
+				->assign( $menu, 'menu' )
 				->assign( $apps, 'extensions' )
 				->assign( $repos, 'repositories' )
 				->assign( $list, 'full-list' )
@@ -1192,8 +1193,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 		/** @var $view SPExtensionsView */
 		$view = SPFactory::View( 'extensions', true );
+		$menu = $this->menu();
 		$view->assign( $this->_task, 'task' )
-				->assign( $this->menu(), 'menu' )
+				->assign( $menu, 'menu' )
 				->assign( $list, 'applications' )
 				->determineTemplate( 'extensions', $this->_task );
 		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );

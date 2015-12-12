@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -19,6 +17,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadController( 'config', true );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -76,7 +75,7 @@ class SPFilter extends SPConfigAdmCtrl
 		}
 	}
 
-	protected function save()
+	protected function save( $apply, $clone = false )
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
@@ -96,11 +95,11 @@ class SPFilter extends SPConfigAdmCtrl
 				$custom = null;
 			}
 			$filters[ $id ] = array(
-				'params' => $regex,
-				'key' => $id,
-				'value' => $name,
-				'description' => $msg,
-				'options' => $custom
+					'params' => $regex,
+					'key' => $id,
+					'value' => $name,
+					'description' => $msg,
+					'options' => $custom
 			);
 			SPFactory::registry()->saveDBSection( $filters, 'fields_filter' );
 			$this->response( Sobi::Url( 'filter' ), Sobi::Txt( 'FLR.MSG_FILTER_SAVED' ), false, 'success' );
@@ -118,11 +117,11 @@ class SPFilter extends SPConfigAdmCtrl
 		$f = array();
 		foreach ( $filters as $fid => $filter ) {
 			$f[ $fid ] = array(
-				'params' => $filter[ 'params' ],
-				'key' => $fid,
-				'value' => $filter[ 'value' ],
-				'description' => $filter[ 'description' ],
-				'options' => $filter[ 'options' ]
+					'params' => $filter[ 'params' ],
+					'key' => $fid,
+					'value' => $filter[ 'value' ],
+					'description' => $filter[ 'description' ],
+					'options' => $filter[ 'options' ]
 			);
 		}
 		ksort( $f );
@@ -135,12 +134,12 @@ class SPFilter extends SPConfigAdmCtrl
 		$filters = $this->getFilters();
 		if ( count( $filters ) && isset( $filters[ $id ] ) ) {
 			$Filter = array(
-				'id' => $id,
-				'regex' => str_replace( '\"' . "\'", '[:apostrophes:]', base64_decode( $filters[ $id ][ 'params' ] ) ),
-				'name' => $filters[ $id ][ 'value' ],
-				'message' => $filters[ $id ][ 'description' ],
-				'editable' => strlen( $filters[ $id ][ 'options' ] ),
-				'readonly' => !( strlen( $filters[ $id ][ 'options' ] ) )
+					'id' => $id,
+					'regex' => str_replace( '\"' . "\'", '[:apostrophes:]', base64_decode( $filters[ $id ][ 'params' ] ) ),
+					'name' => $filters[ $id ][ 'value' ],
+					'message' => $filters[ $id ][ 'description' ],
+					'editable' => strlen( $filters[ $id ][ 'options' ] ),
+					'readonly' => !( strlen( $filters[ $id ][ 'options' ] ) )
 			);
 		}
 		else {
@@ -161,20 +160,22 @@ class SPFilter extends SPConfigAdmCtrl
 		if ( count( $filters ) ) {
 			foreach ( $filters as $name => $filter ) {
 				$Filters[ ] = array(
-					'id' => $name,
-					'regex' => str_replace( '\"' . "\'", '[:apostrophes:]', base64_decode( $filter[ 'params' ] ) ),
-					'name' => $filter[ 'value' ],
-					'message' => $filter[ 'description' ],
-					'editable' => strlen( $filter[ 'options' ] )
+						'id' => $name,
+						'regex' => str_replace( '\"' . "\'", '[:apostrophes:]', base64_decode( $filter[ 'params' ] ) ),
+						'name' => $filter[ 'value' ],
+						'message' => $filter[ 'description' ],
+						'editable' => strlen( $filter[ 'options' ] )
 				);
 			}
 		}
 		$menu = $this->createMenu( 'filter' );
 		/** @var $view  SPAdmView */
 		$view = SPFactory::View( 'view', true );
+		$menuOut = $this->createMenu();
+		$url = Sobi::Url( array( 'task' => 'filter.edit', 'out' => 'html' ), true );
 		$view->assign( $this->_task, 'task' )
-				->assign( $this->createMenu(), 'menu' )
-				->assign( Sobi::Url( array( 'task' => 'filter.edit', 'out' => 'html' ), true ), 'edit_url' )
+				->assign( $menuOut, 'menu' )
+				->assign( $url, 'edit_url' )
 				->assign( $Filters, 'filters' )
 				->assign( $menu, 'menu' )
 				->determineTemplate( 'field', 'filters' );

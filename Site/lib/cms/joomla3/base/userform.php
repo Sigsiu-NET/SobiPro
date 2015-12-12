@@ -25,7 +25,7 @@ JFormHelper::loadFieldClass( 'user' );
  */
 class SPFormFieldUser extends JFormFieldUser
 {
-	public function setup( $data )
+	public function setupData(  $data )
 	{
 		foreach ( $data as $k => $v ) {
 			$this->$k = $v;

@@ -145,7 +145,8 @@ class SPAdmView extends SPObject implements SPView
 		$this->assign( $acl, 'acl' );
 
 		if ( SPLoader::translatePath( "{$type}.{$template}", 'adm', true, 'xml' ) || $absolutePath ) {
-			$this->assign( $this->sections(), 'sections-list' );
+			$sections = $this->sections();
+			$this->assign( $sections, 'sections-list' );
 			$nid = Sobi::Section( 'nid' );
 			$groups = Sobi::My( 'groups' );
 			$disableOverrides = null;
@@ -874,7 +875,7 @@ class SPAdmView extends SPObject implements SPView
 				'content' => null,
 				'attributes' => null,
 		);
-		@$type = $cell->attributes->getNamedItem( 'type' )->nodeValue;
+		@$type = $cell->attributes->getNamedItem( 'type' ) ? $cell->attributes->getNamedItem( 'type' )->nodeValue : null;
 		$this->cellAttributes( $cell, $element, $subject, $i );
 		if ( $cell->nodeName == 'cells' ) {
 			$customCells = $this->get( $subject . '.' . $cell->attributes->getNamedItem( 'value' )->nodeValue, $i );
@@ -1838,9 +1839,10 @@ class SPAdmView extends SPObject implements SPView
 	 * @internal param int $index
 	 * @return mixed
 	 */
-	public function set( $attr, $name )
+	public function & set( $attr, $name )
 	{
 		$this->_attr[ $name ] = $attr;
+		return $this;
 	}
 
 	/**

@@ -353,7 +353,7 @@ class SPEntryCtrl extends SPController
 	 *
 	 * @param bool $apply
 	 */
-	protected function save( $apply )
+	protected function save( $apply, $clone = false )
 	{
 		$new = true;
 		if ( !$this->_model ) {

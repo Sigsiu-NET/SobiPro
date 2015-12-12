@@ -575,7 +575,7 @@ abstract class SPController extends SPObject implements SPControl
 					$message = null;
 				}
 			}
-			Sobi::Redirect( Sobi::Url( $url ), $message, null, $redirect );
+			Sobi::Redirect( is_array( $url ) || strstr( 'index.php', $url ) ? Sobi::Url( $url ) : $url, $message, null, $redirect );
 		}
 	}
 

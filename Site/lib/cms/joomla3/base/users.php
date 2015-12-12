@@ -28,7 +28,7 @@ class SPUsers
 
 	public static function getGroupsField ()
 	{
-		$db = &JFactory::getDbo();
+		$db = JFactory::getDbo();
 		$db->setQuery( '
 				 SELECT a.id AS value, a.title AS text, COUNT(DISTINCT b.id) AS level
 				 FROM #__usergroups AS a
@@ -38,10 +38,6 @@ class SPUsers
 		);
 		$options = $db->loadObjectList();
 		// Check for a database error.
-		if ( $db->getErrorNum() ) {
-			JError::raiseNotice( 500, $db->getErrorMsg() );
-			return null;
-		}
 		for ( $i = 0, $n = count( $options ); $i < $n; $i ++ ) {
 			$options[ $i ]->text = str_repeat( '- ', $options[ $i ]->level ) . $options[ $i ]->text;
 		}

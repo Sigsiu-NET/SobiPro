@@ -228,7 +228,7 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 
 	/**
 	 * Static function to create the right SQL-Query if a entries list should be sorted by this field
-	 * @return void
+	 * @return bool
 	 */
 	public static function sortBy()
 	{

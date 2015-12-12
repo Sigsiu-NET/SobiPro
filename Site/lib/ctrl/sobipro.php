@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -143,8 +141,9 @@ final class SobiProCtrl
 		SPFactory::header()->initBase();
 
 		$sectionName = SPLang::translateObject( $this->_section, 'name', 'section' );
-		if( $this->_section ) {
-			SPFactory::registry()->set( 'current_section_name', SPLang::clean( $sectionName[ $this->_section ][ 'value' ] ) );
+		if ( $this->_section ) {
+			$set = SPLang::clean( $sectionName[ $this->_section ][ 'value' ] );
+			SPFactory::registry()->set( 'current_section_name', $set );
 		}
 
 		$start = array( $this->_mem, $this->_time );
@@ -172,7 +171,7 @@ final class SobiProCtrl
 	 */
 	private function createConfig()
 	{
-		$this->_config = & SPFactory::config();
+		$this->_config = &SPFactory::config();
 		/* load basic configuration settings */
 		$this->_config->addIniFile( 'etc.config', true );
 		$this->_config->addTable( 'spdb_config', $this->_section );
@@ -184,7 +183,7 @@ final class SobiProCtrl
 
 	/**
 	 * get the right section
-	 * @return void
+	 * @return bool
 	 */
 	private function getSection()
 	{
@@ -192,7 +191,7 @@ final class SobiProCtrl
 		$db =& SPFactory::db();
 		$section = null;
 		if ( $sid ) {
-			$section = & SPFactory::object( $sid );
+			$section = &SPFactory::object( $sid );
 			if ( $section && $section->oType == 'section' ) {
 				$this->_section = $section->id;
 				$state = $section->state;
@@ -214,7 +213,7 @@ final class SobiProCtrl
 				if ( count( $path ) ) {
 					$path = array_reverse( $path );
 					$this->_section = $path[ 0 ];
-					$section = & SPFactory::object( $this->_section );
+					$section = &SPFactory::object( $this->_section );
 					$state = $section->state;
 				}
 				else {
@@ -248,7 +247,7 @@ final class SobiProCtrl
 			$this->_model = $section;
 		}
 		elseif ( SPRequest::sid() ) {
-			$this->_model = & SPFactory::object( SPRequest::sid() );
+			$this->_model = &SPFactory::object( SPRequest::sid() );
 		}
 		return true;
 	}
@@ -410,7 +409,7 @@ final class SobiProCtrl
 					Sobi::Error( 'CoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 				}
 				if ( $this->_sid ) {
-					$this->_model = & SPFactory::object( $this->_sid );
+					$this->_model = &SPFactory::object( $this->_sid );
 				}
 
 				/* if the basic object we got from the #getSection method is the same one ... */
@@ -570,6 +569,6 @@ final class SobiProCtrl
 	 */
 	public function setController( &$ctrl )
 	{
-		$this->_ctrl = & $ctrl;
+		$this->_ctrl = &$ctrl;
 	}
 }

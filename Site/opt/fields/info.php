@@ -119,7 +119,7 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	 * @param SPEntry $entry
 	 * @param string $tsId
 	 * @param string $request
-	 * @return void
+	 * @return array
 	 */
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{

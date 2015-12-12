@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -57,7 +55,6 @@ class SPException extends Exception
 		if ( !( self::$_cs ) && ( self::$_trigger && $number < self::$_trigger ) ) {
 			self::$_cs = true;
 			throw new SPException( $errStr );
-			return false;
 		}
 		SPLoader::loadClass( 'base.factory' );
 		SPLoader::loadClass( 'base.database' );
@@ -92,7 +89,7 @@ class SPException extends Exception
 		$number = ( int )$number;
 		$errCode = ( int )$errCode;
 		$errLine = ( int )$errLine;
-//		$is = ini_set( 'display_errors', 0 );
+//		$is = ini_set( 'display_errors', true );
 //		@file_put_contents( SOBI_PATH.DS.'var'.DS.'log'.DS.'error.log', strip_tags( stripslashes( "\n=========\n[ {$date} ][ {$errsection}:{$errno} ][ {$errcode} ]\n{$errstr}\nIn: {$errfile}:{$errline}" ) ), SPC::FS_APP );
 //		ini_set( 'display_errors', $is );
 		try {
@@ -185,16 +182,18 @@ if ( !function_exists( 'SPExceptionHandler' ) ) {
 				$cs = 0;
 				return false;
 			}
-			if ( strstr( $errString, 'domdocument.loadxml' ) ) {
+			/** Fri, Dec 11, 2015 11:21:02
+			 * No idea why but Domdocument reports bullshit errors in completely valid nodes.*/
+			if ( strstr( $errString, 'domdocument.loadxml' ) || strstr( $errString, 'DOMDocument::loadXML()' ) ) {
 				$cs = 0;
 				return false;
 			}
 			/** This really sucks - why do I have the possibility to override a method when I cannot change its parameters :(
 			 * A small design flaw - has to be changed later */
-			if ( strstr( $errString, 'should be compatible with' ) ) {
-				$cs = 0;
-				return false;
-			}
+//			if ( strstr( $errString, 'should be compatible with' ) ) {
+//				$cs = 0;
+//				return false;
+//			}
 			/* output of errors / call stack causes sometimes it - it's not really important */
 			if ( strstr( $errString, 'Property access is not allowed yet' ) ) {
 				$cs = 0;

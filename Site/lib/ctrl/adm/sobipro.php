@@ -117,7 +117,8 @@ final class SobiProAdmCtrl
 		/** @noinspection PhpParamsInspection */
 		if ( $this->_section ) {
 			$sectionName = SPLang::translateObject( $this->_section, 'name', 'section' );
-			SPFactory::registry()->set( 'current_section_name', SPLang::clean( $sectionName[ $this->_section ][ 'value' ] ) );
+			$SectionName = SPLang::clean( $sectionName[ $this->_section ][ 'value' ] );
+			SPFactory::registry()->set( 'current_section_name', $SectionName );
 		}
 		if ( $this->_section && !( Sobi::Cfg( 'section.template' ) ) ) {
 			SPFactory::config()->set( 'template', SPC::DEFAULT_TEMPLATE, 'section' );

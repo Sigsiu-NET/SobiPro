@@ -193,7 +193,7 @@ final class SPPayment
 	 * @param string $reference - just a text to save in the db
 	 * @param int $sid - id of the entry
 	 * @param string $fid - field id or unique reference identifier
-	 * @return void
+	 * @return bool
 	 */
 	public function add( $amount, $reference, $sid = 0, $fid = null )
 	{

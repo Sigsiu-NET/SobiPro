@@ -119,7 +119,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 * @param $value
 	 * @param $site
 	 * @param $published
-	 * @return void
+	 * @return bool
 	 */
 	public function addPermission( $subject, $action, $value, $site = 'front', $published = 1 )
 	{
@@ -220,7 +220,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 *
 	 * @param bool $apply
 	 */
-	protected function save( $apply )
+	protected function save( $apply,$clone = false )
 	{
 		Sobi::Trigger( 'Save', 'Acl', array( &$this ) );
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {

@@ -808,7 +808,7 @@ abstract class SPDBObject extends SPObject
 	 * @param mixed $val
 	 * @return \SPObject|void
 	 */
-	public function set( $var, $val )
+	public function & set( $var, $val )
 	{
 		static $types = array();
 		if ( !count( $types ) ) {
@@ -824,6 +824,7 @@ abstract class SPDBObject extends SPObject
 			}
 			$this->$var = $val;
 		}
+		return $this;
 	}
 
 	/**

@@ -180,7 +180,6 @@ abstract class SPJoomlaFs
 		$return = Jfile::write( $file, $buffer );
 		if ( $return === false ) {
 			throw new SPException( SPLang::e( 'CANNOT_WRITE_TO_FILE_AT', $file ) );
-			return false;
 		}
 		else {
 			return $return;

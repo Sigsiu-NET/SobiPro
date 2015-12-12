@@ -142,7 +142,7 @@ class SPJoomlaDb
 	 * Sets the SQL query string for later execution.
 	 *
 	 * @param string $sql
-	 * @return void
+	 * @return $this
 	 */
 	public function setQuery( $sql )
 	{

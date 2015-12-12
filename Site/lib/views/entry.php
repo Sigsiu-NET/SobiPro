@@ -130,7 +130,7 @@ class SPEntryView extends SPFrontView implements SPView
 					'data' => array(
 						'_complex' => 1,
 						'_xml' => 1,
-						'_data' => SPHtml_Input::button( 'cancel', Sobi::Txt( 'EN.CANCEL_BT' ), array( 'onclick' => 'SPcancelEdit();' ) ),
+						'_data' => SPHtml_Input::button( 'cancel', Sobi::Txt( 'EN.CANCEL_BT' ), array( 'data-role' => 'cancel', 'class' => 'sobipro-cancel' ) ),
 					),
 				)
 			);

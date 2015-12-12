@@ -453,7 +453,8 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			$this->_model->set( 'approved', 1 );
 		}
 		else {
-			$view->assign( $view->languages(), 'languages-list' );
+			$languages = $view->languages();
+			$view->assign( $languages, 'languages-list' );
 		}
 		$this->_model->loadFields( Sobi::Reg( 'current_section' ), true );
 		$this->_model->formatDatesToEdit();
@@ -540,14 +541,17 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				}
 			}
 			if ( count( $tCats ) ) {
-				$view->assign( implode( "\n", $tCats ), 'parent_path' );
+				$parentPath = implode( "\n", $tCats );
+				$view->assign( $parentPath, 'parent_path' );
 			}
-			$view->assign( implode( ", ", $cats ), 'parents' );
+			$parents = implode( ", ", $cats );
+			$view->assign( $parents, 'parents' );
 		}
 		elseif ( $this->_model->get( 'valid' ) ) {
 			$parent = ( ( $sid == Sobi::Reg( 'current_section' ) ) ? 0 : $sid );
 			if ( $parent ) {
-				$view->assign( implode( Sobi::Cfg( 'string.path_separator', ' > ' ), SPFactory::config()->getParentPath( $parent, true ) ), 'parent_path' );
+				$parentPathParsed = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), SPFactory::config()->getParentPath( $parent, true ) );
+				$view->assign( $parentPathParsed, 'parent_path' );
 			}
 			$view->assign( $parent, 'parents' );
 		}
@@ -578,6 +582,8 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( "[rel=\'entry.saveWithRevision\']" ).parent().css( "display", "none" ); } );
 			' );
 		}
+		$reg = Sobi::Reg( 'current_section' );
+		$owner = SPFactory::CmsHelper()->userSelect( 'entry.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true );
 		$view->assign( $this->_task, 'task' )
 				->assign( $f, 'fields' )
 				->assign( $id, 'id' )
@@ -585,8 +591,8 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				->assign( $revisionChange, 'revision-change' )
 				->assign( $revisionsDelta, 'revision' )
 				->assign( $versioningAdminBehaviour, 'history-behaviour' )
-				->assign( SPFactory::CmsHelper()->userSelect( 'entry.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true ), 'owner' )
-				->assign( Sobi::Reg( 'current_section' ), 'sid' )
+				->assign( $owner, 'owner' )
+				->assign( $reg, 'sid' )
 				->determineTemplate( 'entry', 'edit' )
 				->addHidden( $rev, 'revision' )
 				->addHidden( $sid, 'pid' );

@@ -372,9 +372,10 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		// we need it for the icons' fonts
 		SPFactory::header()->initBase();
 		$view = SPFactory::View( 'category', true );
+		$owner = SPFactory::CmsHelper()->userSelect( 'category.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true );
 		$view->assign( $this->_model, 'category' )
 				->assign( $this->_task, 'task' )
-				->assign( SPFactory::CmsHelper()->userSelect( 'category.owner', ( $this->_model->get( 'owner' ) ? $this->_model->get( 'owner' ) : ( $this->_model->get( 'id' ) ? 0 : Sobi::My( 'id' ) ) ), true ), 'owner' )
+				->assign( $owner, 'owner' )
 				->assign( $id, 'cid' )
 //				->assign( SPFactory::registry()->get( 'current_section' ), 'sid' )
 				->addHidden( Sobi::Section(), 'pid' );

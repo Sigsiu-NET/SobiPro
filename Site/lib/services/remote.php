@@ -84,7 +84,7 @@ final class SPRemote
 		'upload' => CURLOPT_UPLOAD,
 		'verbose' => CURLOPT_VERBOSE,
 		'buffersize' => CURLOPT_BUFFERSIZE,
-		'closepolicy' => CURLOPT_CLOSEPOLICY,
+//		'closepolicy' => CURLOPT_CLOSEPOLICY,
 		'connecttimeout' => CURLOPT_CONNECTTIMEOUT,
 		'dns_cache_timeout' => CURLOPT_DNS_CACHE_TIMEOUT,
 		'ftpsslauth' => CURLOPT_FTPSSLAUTH,
@@ -238,7 +238,7 @@ final class SPRemote
 	}
 
 	/**
-	 * @return void
+	 * @return mixed
 	 */
 	public function __destruct()
 	{
@@ -247,7 +247,7 @@ final class SPRemote
 
 	/**
 	 * Closes a cURL session and frees all resources
-	 * @return void
+	 * @return mixed
 	 */
 	public function close()
 	{

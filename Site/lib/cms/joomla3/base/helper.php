@@ -107,7 +107,7 @@ class SPCMSHelper3 extends SPCMSHelper
 		require_once 'userform.php';
 		$s = array( 'id' => str_replace( '.', '_', $name ), 'name' => $name, 'value' => $active );
 		$f = new SPFormFieldUser();
-		$f->setup( $s );
+		$f->setupData( $s );
 		return $f->input;
 	}
 }

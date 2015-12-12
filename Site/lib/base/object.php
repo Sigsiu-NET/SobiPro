@@ -51,11 +51,6 @@ class SPObject
 		}
 		return $this;
 	}
-	/**
-	 */
-	public function toXML()
-	{
-	}
 
 	/**
 	 * Converts array to attributes

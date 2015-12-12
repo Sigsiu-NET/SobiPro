@@ -812,7 +812,7 @@ class SPRequirements extends SPController
 	{
 		$this->store( $key, __FUNCTION__, $msg );
 		if ( !( $storeOnly ) ) {
-			return $this->response( $msg );
+			return $this->out( $msg );
 		}
 	}
 
@@ -820,7 +820,7 @@ class SPRequirements extends SPController
 	{
 		$this->store( $key, __FUNCTION__, $msg );
 		if ( !( $storeOnly ) ) {
-			return $this->response( $msg, SPC::WARN_MSG );
+			return $this->out( $msg, SPC::WARN_MSG );
 		}
 	}
 
@@ -828,11 +828,11 @@ class SPRequirements extends SPController
 	{
 		$this->store( $key, __FUNCTION__, $msg );
 		if ( !( $storeOnly ) ) {
-			return $this->response( $msg, SPC::ERROR_MSG );
+			return $this->out( $msg, SPC::ERROR_MSG );
 		}
 	}
 
-	protected function response( $message, $type = SPC::SUCCESS_MSG )
+	protected function out( $message, $type = SPC::SUCCESS_MSG )
 	{
 		return json_encode( array( 'type' => $type, 'message' => $message[ 'current' ], 'textType' => Sobi::Txt( 'STATUS_' . $type ) ) );
 	}
@@ -846,8 +846,9 @@ class SPRequirements extends SPController
 		/** @var $view SPAdmView */
 //		header( 'Cache-Control: no-cache, must-revalidate' );
 //		header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+		$init = SPRequest::int( 'init' );
 		SPFactory::View( 'view', true )
-				->assign( SPRequest::int( 'init' ), 'init' )
+				->assign( $init, 'init' )
 				->addHidden( $home, 'redirect' )
 				->determineTemplate( 'config', 'requirements' )
 				->display();

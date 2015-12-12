@@ -197,7 +197,7 @@ class SPFile
 	/**
 	 * Set file content
 	 * @param $content - string
-	 * @return void
+	 * @return SPFile
 	 */
 	public function content( $content )
 	{

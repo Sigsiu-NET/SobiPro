@@ -141,7 +141,8 @@ class SPJoomlaLang
 				$template = SPLoader::translatePath( 'usr.templates.' . Sobi::Cfg( 'section.template' ) . '.translation', 'front', true, 'xml' );
 				/* if the template provide it */
 				if ( $template ) {
-					$xml = DOMDocument::load( $template );
+					$xml = new DOMDocument();
+					$xml->load( $template );
 					$xdef = new DOMXPath( $xml );
 				}
 				$lang = Sobi::Lang( false );

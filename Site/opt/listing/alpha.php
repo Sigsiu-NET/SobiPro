@@ -187,8 +187,8 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		/* get the site to display */
 		$site = SPRequest::int( 'site', 1 );
 		$eLimStart = ( ( $site - 1 ) * $eLimit );
-		$eCount = count( $this->getEntries( 0, 0, true ) );
-		$entries = $this->getEntries( $eLimit, $site );
+		$eCount = count( $this->getAlphaEntries( 0, 0, true ) );
+		$entries = $this->getAlphaEntries( $eLimit, $site );
 		$compare = $this->_field ? $this->_field : $this->_nid;
 		if ( strlen( $compare ) && $compare != Sobi::Cfg( 'alphamenu.primary_field' ) ) {
 			$t = 'list.alpha.' . strtolower( $this->_letter ) . '.' . $this->_nid;
@@ -224,19 +224,22 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		}
 
 		/* get view class */
-		$view = SPFactory::View( 'listing' );
-		$view->assign( $eLimit, '$eLimit' );
-		$view->assign( $eLimStart, '$eLimStart' );
-		$view->assign( $eCount, '$eCount' );
-		$view->assign( $eInLine, '$eInLine' );
-		$view->assign( $this->_task, 'task' );
-		$view->assign( $this->_model, 'section' );
-		$view->assign( Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $this->_letter ) ), 'listing_name' );
-		$view->setConfig( $this->_tCfg, $this->template );
-		$view->setTemplate( $tplPckg . '.' . $this->templateType . '.' . $this->template );
-		$view->assign( $pn->get(), 'navigation' );
-		$view->assign( SPFactory::user()->getCurrent(), 'visitor' );
-		$view->assign( $entries, 'entries' );
+		$listingName = Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $this->_letter ) );
+		$visitor = SPFactory::user()->getCurrent();
+		$navigation = $pn->get();
+		$view = SPFactory::View( 'listing' )
+				->assign( $eLimit, '$eLimit' )
+				->assign( $eLimStart, '$eLimStart' )
+				->assign( $eCount, '$eCount' )
+				->assign( $eInLine, '$eInLine' )
+				->assign( $this->_task, 'task' )
+				->assign( $this->_model, 'section' )
+				->assign( $listingName, 'listing_name' )
+				->setConfig( $this->_tCfg, $this->template )
+				->setTemplate( $tplPckg . '.' . $this->templateType . '.' . $this->template )
+				->assign( $navigation, 'navigation' )
+				->assign( $visitor, 'visitor' )
+				->assign( $entries, 'entries' );
 		Sobi::Trigger( 'AlphaListing', 'View', array( &$view ) );
 		$view->display();
 	}
@@ -249,10 +252,10 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		else {
 			$this->_field = Sobi::Cfg( 'alphamenu.primary_field', SPFactory::config()->nameField()->get( 'id' ) );
 		}
-		return $this->getEntries( 0, 0, true );
+		return $this->getAlphaEntries( 0, 0, true );
 	}
 
-	public function getEntries( $eLimit, $site, $ids = false )
+	public function getAlphaEntries( $eLimit, $site, $ids = false )
 	{
 		$conditions = array();
 		$entries = array();

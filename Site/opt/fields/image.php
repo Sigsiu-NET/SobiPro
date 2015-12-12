@@ -194,6 +194,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					->addCssFile( 'cropper' );
 			$field .= SPHtml_Input::modalWindow( Sobi::Txt( 'IMAGE_CROP_HEADER' ), $this->nid . '_modal', null, $modalclass, 'CLOSE', 'SAVE' );
 		}
+		// avoiding multiple roots
+//		$field = "<div>{$field}</div>";
 		if ( !$return ) {
 			echo $field;
 		}
@@ -236,7 +238,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 * @param SPEntry $entry
 	 * @param string $tsId
 	 * @param string $request
-	 * @return void
+	 * @return mixed
 	 */
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{

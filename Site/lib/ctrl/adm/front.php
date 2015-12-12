@@ -43,7 +43,7 @@ class SPAdminPanel extends SPController
 	 */
 	private function getSections()
 	{
-		$order = $this->parseOrdering();
+		$order = $this->getOrdering();
 		try {
 			$sections = SPFactory::db()
 					->select( '*', 'spdb_object', array( 'oType' => 'section' ), $order )
@@ -67,7 +67,7 @@ class SPAdminPanel extends SPController
 
 	/**
 	 */
-	protected function parseOrdering()
+	protected function getOrdering()
 	{
 		$order = Sobi::GetUserState( 'sections.order', 'order', 'name.asc' );
 		$ord = $order;
@@ -117,16 +117,22 @@ class SPAdminPanel extends SPController
 			case 'panel':
 				$this->getSections();
 				/** @var $view SPAdmPanelView */
+				$news = $this->getNews();
+				$ordering = Sobi::GetUserState( 'sections.order', 'order', 'name.asc' );
+				$myVersion = SPFactory::CmsHelper()->myVersion( true );
+				$cfg = Sobi::Cfg( 'cpanel.show_entries', false );
+				$state = $this->getState();
 				$view = SPFactory::View( 'front', true )
 						->assign( $acl, 'acl' )
 						->assign( $this->_sections, 'sections' )
-						->assign( $this->getNews(), 'news' )
-						->assign( Sobi::GetUserState( 'sections.order', 'order', 'name.asc' ), 'order' )
-						->assign( SPFactory::CmsHelper()->myVersion( true ), 'version' )
-						->assign( Sobi::Cfg( 'cpanel.show_entries', false ), 'show-entries' )
-						->assign( $this->getState(), 'system-state' );
+						->assign( $news, 'news' )
+						->assign( $ordering, 'order' )
+						->assign( $myVersion, 'version' )
+						->assign( $cfg, 'show-entries' )
+						->assign( $state, 'system-state' );
 				if ( Sobi::Cfg( 'cpanel.show_entries', false ) ) {
-					$view->assign( $this->getEntries(), 'entries' );
+					$entries = $this->getEntries();
+					$view->assign( $entries, 'entries' );
 				}
 				SPLang::load( 'com_sobipro.about' );
 				$view->determineTemplate( 'front', 'cpanel' );
@@ -175,7 +181,9 @@ class SPAdminPanel extends SPController
 		}
 		try {
 			if ( strlen( $content ) ) {
-				$news = new DOMXPath( DOMDocument::loadXML( $content ) );
+				$document = new DOMDocument();
+				$document->loadXML( $content );
+				$news = new DOMXPath( $document );
 
 				$atom = false;
 				if ( $atom ) {    //Atom

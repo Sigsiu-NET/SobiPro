@@ -28,11 +28,9 @@ SPLoader::loadClass( 'services.installers.installer' );
 class SPRepository extends SPInstaller
 {
 
-	/**
-	 * @var SPSoapClient
-	 */
+	/*** @var SPSoapClient */
 	private $_server = null;
-
+	/** @var array  */
 	protected $_repoDefArr = array();
 
 	public function __construct()
@@ -85,7 +83,7 @@ class SPRepository extends SPInstaller
 		return $this->_repoDefArr;
 	}
 
-	public function get( $attr )
+	public function get( $attr, $default = null )
 	{
 		return $this->xGetString( $attr );
 	}

@@ -202,7 +202,7 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	/* (non-PHPdoc)
 	 * @see Site/opt/fields/SPField_Select#fetchData($request)
 	 */
-	protected function fetchData( $data )
+	protected function fetchData( $data, $request = 'post' )
 	{
 		if ( is_array( $data ) && count( $data ) ) {
 			$selected = array();

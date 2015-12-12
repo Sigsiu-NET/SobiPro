@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -18,6 +16,7 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -48,7 +47,8 @@ class SPJoomlaCMSHelper
 		if ( !isset( $ver[ $str ] ) ) {
 			//$def = SOBI_CMS == 'joomla15' ? 'sobipro.xml' : 'com_sobipro.xml';
 			$def = 'com_sobipro.xml';
-			$doc = DOMDocument::load( Sobi::FixPath( SOBI_ADM_PATH . DS . $def ) );
+			$doc = new DOMDocument();
+			$doc->load( Sobi::FixPath( SOBI_ADM_PATH . '/' . $def ) );
 			if ( $str ) {
 				$ver[ $str ] = $doc->getElementsByTagName( 'version' )->item( 0 )->nodeValue;
 				$codename = $doc->getElementsByTagName( 'codename' )->item( 0 )->nodeValue;

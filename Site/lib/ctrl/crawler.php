@@ -66,7 +66,7 @@ class SPCrawler extends SPController
 		if ( !( count( $sites ) ) && !( in_array( $task, array( 'crawler.init', 'crawler.restart' ) ) ) ) {
 			$message = Sobi::Txt( 'CRAWL_URL_PARSED_DONE', SPFactory::db()->select( 'count(*)', self::DB_TABLE )->loadResult() );
 			SPFactory::db()->truncate( self::DB_TABLE );
-			$this->response( array( 'status' => 'done', 'data' => array(), 'message' => $message ) );
+			$this->out( array( 'status' => 'done', 'data' => array(), 'message' => $message ) );
 		}
 		if ( count( $sites ) ) {
 			$i = 0;
@@ -83,10 +83,10 @@ class SPCrawler extends SPController
 			}
 			$message = Sobi::Txt( 'CRAWL_URL_PARSED_WORKING', $i, count( $sites ) );
 		}
-		$this->response( array( 'status' => $status, 'data' => $responses, 'message' => $message ) );
+		$this->out( array( 'status' => $status, 'data' => $responses, 'message' => $message ) );
 	}
 
-	protected function response( $status )
+	protected function out( $status )
 	{
 		SPFactory::mainframe()
 				->cleanBuffer()

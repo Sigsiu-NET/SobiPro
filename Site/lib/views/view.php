@@ -527,9 +527,10 @@ abstract class SPFrontView extends SPObject implements SPView
 	 * @internal param int $index
 	 * @return mixed
 	 */
-	public function set( $attr, $name )
+	public function & set( $attr, $name )
 	{
 		$this->_attr[ $name ] = $attr;
+		return $this;
 	}
 
 	/**

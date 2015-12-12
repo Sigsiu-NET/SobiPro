@@ -90,9 +90,9 @@ class SPSectionCtrl extends SPController
 
 		$this->_model->countVisit();
 		/* get view class */
-//		$class = SPLoader::loadView( $this->_type );
 		$view = SPFactory::View( $this->_type );
-//		$view = new $class( $this->template );
+		$visitor = SPFactory::user()->getCurrent();
+		$nav = $pn->get();
 		$view->assign( $eLimit, '$eLimit' )
 				->assign( $eLimStart, '$eLimStart' )
 				->assign( $eCount, '$eCount' )
@@ -103,8 +103,8 @@ class SPSectionCtrl extends SPController
 				->setConfig( $this->_tCfg, $this->template )
 				->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template )
 				->assign( $categories, 'categories' )
-				->assign( $pn->get(), 'navigation' )
-				->assign( SPFactory::user()->getCurrent(), 'visitor' )
+				->assign( $nav, 'navigation' )
+				->assign( $visitor, 'visitor' )
 				->assign( $entries, 'entries' )
 				->assign( $orderings, 'orderings' );
 		Sobi::Trigger( $this->name(), 'View', array( &$view ) );

@@ -173,10 +173,10 @@ class SPJoomlaUser extends JUser
 			}
 			$subject = $subject[ 0 ];
 		}
-		if ( !$section ) {
-			$section = SPFactory::registry()->get( 'current_section', 0 );
+		if ( !( $section ) ) {
+			$section = Sobi::Section();
 		}
-		$can = $this->authorise( $section, $subject, $action, $value );
+		$can = $this->authorisePermission( $section, $subject, $action, $value );
 		if ( SPFactory::registry()->__isset( 'plugins' ) ) {
 			Sobi::Trigger( 'Authorise', 'Permission', array( &$can, $section, $subject, $action, $value ) );
 		}
@@ -191,7 +191,7 @@ class SPJoomlaUser extends JUser
 	 * @param string $value
 	 * @return bool
 	 */
-	public function authorise( $section, $subject, $action, $value )
+	public function authorisePermission( $section, $subject, $action, $value )
 	{
 		if ( $this->isAdmin() ) {
 			return true;

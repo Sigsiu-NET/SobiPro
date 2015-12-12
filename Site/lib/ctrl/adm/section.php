@@ -42,7 +42,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			case 'view':
 			case 'entries':
 				Sobi::ReturnPoint();
-				$this->view( $this->_task == 'entries', Sobi::GetUserState( 'entries_filter', 'sp_entries_filter', null ) );
+				$this->viewSection( $this->_task == 'entries', Sobi::GetUserState( 'entries_filter', 'sp_entries_filter', null ) );
 				break;
 			case 'toggle.enabled':
 			case 'toggle.approval':
@@ -59,7 +59,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 
 	/**
 	 */
-	protected function view( $allEntries, $term = null )
+	protected function viewSection( $allEntries, $term = null )
 	{
 		if ( $allEntries ) {
 			SPRequest::set( 'task', 'section.entries' );
@@ -138,7 +138,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			try {
 				$Limit = $eLimit > 0 ? $eLimit : 0;
 				$LimStart = $eLimStart ? ( ( $eLimStart - 1 ) * $eLimit ) : $eLimStart;
-				$eOrder = $this->parseOrdering( 'entries', 'eorder', 'position.asc', $Limit, $LimStart, $e );
+				$eOrder = $this->sectionOrdering( 'entries', 'eorder', 'position.asc', $Limit, $LimStart, $e );
 				$results = $db
 						->select( 'id', 'spdb_object', array( 'id' => $e, 'oType' => 'entry' ), $eOrder, $Limit, $LimStart )
 						->loadResultArray();
@@ -155,7 +155,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			try {
 				$LimStart = $cLimStart ? ( ( $cLimStart - 1 ) * $cLimit ) : $cLimStart;
 				$Limit = $cLimit > 0 ? $cLimit : 0;
-				$cOrder = $this->parseOrdering( 'categories', 'corder', 'order.asc', $Limit, $LimStart, $c );
+				$cOrder = $this->sectionOrdering( 'categories', 'corder', 'order.asc', $Limit, $LimStart, $c );
 				$results = $db
 						->select( 'id', 'spdb_object', array( 'id' => $c, 'oType' => 'category' ), $cOrder, $Limit, $LimStart )
 						->loadResultArray();
@@ -197,27 +197,36 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$entriesName = SPFactory::config()->nameField()->get( 'name' );
 		$entriesField = SPFactory::config()->nameField()->get( 'nid' );
 		$view = SPFactory::View( 'section', true );
+		$eSite = SPRequest::int( 'eSite', 1 );
+		$cSite = SPRequest::int( 'cSite', 1 );
+		$customCols = $this->customCols();
+		$nameField = SPFactory::config()->nameField()->get( 'name' );
+		$eUserOrder = Sobi::GetUserState( 'entries.eorder', 'eorder', 'order.asc' );
+		$cUserOrder = Sobi::GetUserState( 'categories.corder', 'corder', 'order.asc' );
+		$sectionName = Sobi::Section( true );
+		$sectionId = Sobi::Section();
+		$sid = SPRequest::sid();
 		$view->assign( $entriesName, 'entries_name' )
 				->assign( $entriesField, 'entries_field' )
 				->assign( $eLimit, 'entries-limit' )
 				->assign( $cLimit, 'categories-limit' )
-				->assign( SPRequest::int( 'eSite', 1 ), 'entries-site' )
-				->assign( SPRequest::int( 'cSite', 1 ), 'categories-site' )
+				->assign( $eSite, 'entries-site' )
+				->assign( $cSite, 'categories-site' )
 				->assign( $cCount, 'categories-count' )
 				->assign( $eCount, 'entries-count' )
 				->assign( $this->_task, 'task' )
 				->assign( $term, 'filter' )
-				->assign( $this->customCols(), 'fields' )
+				->assign( $customCols, 'fields' )
 				->assign( $this->_model, 'section' )
 				->assign( $categories, 'categories' )
 				->assign( $entries, 'entries' )
-				->assign( SPFactory::config()->nameField()->get( 'name' ), 'entries_name' )
+				->assign( $nameField, 'entries_name' )
 				->assign( $menu, 'menu' )
-				->assign( Sobi::GetUserState( 'entries.eorder', 'eorder', 'order.asc' ), 'ordering' )
-				->assign( Sobi::GetUserState( 'categories.corder', 'corder', 'order.asc' ), 'corder' )
-				->assign( Sobi::Section( true ), 'category' )
-				->addHidden( Sobi::Section(), 'pid' )
-				->addHidden( SPRequest::sid(), 'sid' );
+				->assign( $eUserOrder, 'ordering' )
+				->assign( $cUserOrder, 'corder' )
+				->assign( $sectionName, 'category' )
+				->addHidden( $sectionId, 'pid' )
+				->addHidden( $sid, 'sid' );
 		Sobi::Trigger( 'Section', 'View', array( &$view ) );
 		$view->display();
 	}
@@ -255,7 +264,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	 * @param $sids
 	 * @return string
 	 */
-	protected function parseOrdering( $subject, $col, $def, &$lim, &$lStart, &$sids )
+	protected function sectionOrdering( $subject, $col, $def, &$lim, &$lStart, &$sids )
 	{
 		$ord = Sobi::GetUserState( $subject . '.order', $col, Sobi::Cfg( 'admin.' . $subject . '-order', $def ) );
 		$ord = str_replace( array( 'e_s', 'c_s' ), null, $ord );

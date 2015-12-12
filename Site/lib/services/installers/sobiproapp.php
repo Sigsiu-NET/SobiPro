@@ -307,8 +307,11 @@ class SPAppInstaller extends SPInstaller
 	}
 
 	/**
-	 * @param DOMNodeList $folders
-	 * @return void
+	 * @param $action
+	 * @param $id
+	 * @throws SPException
+	 * @internal param DOMNodeList $folders
+	 * @return mixed
 	 */
 	private function actions( $action, $id )
 	{

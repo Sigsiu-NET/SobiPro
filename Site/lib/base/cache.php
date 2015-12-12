@@ -27,23 +27,35 @@ defined( 'SQLITE_ASSOC' ) || define( 'SQLITE_ASSOC', null );
  */
 final class SPCache
 {
-	/**
-	 * @var SQLiteDatabase
-	 */
+	/*** @var SQLiteDatabase */
 	protected $_db = null;
+	/** @var string  */
 	protected $_driver = '';
+	/** @var bool|string  */
 	protected $_enabled = true;
+	/** @var bool  */
 	protected $_apc = true;
+	/** @var null  */
 	protected $_store = null;
+	/** @var null  */
 	protected $_check = null;
+	/** @var int  */
 	protected $_section = -1;
+	/** @var int  */
 	protected $_sid = 0;
+	/** @var array  */
 	protected $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', '.publish', '.icon' );
+	/** @var array  */
 	protected $requestStore = array();
+	/** @var array  */
 	protected $view = array( 'xml' => null, 'template' => null );
+	/** @var array  */
 	protected $_disableViewCache = array( 'entry.add', 'entry.edit', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
+	/** @var bool  */
 	protected $_cachedView = false;
+	/** @var array  */
 	protected $cacheViewQuery = array();
+	/** @var array  */
 	protected $cacheViewRequest = array();
 
 	/**
@@ -688,7 +700,7 @@ final class SPCache
 			$query = $this->viewRequest();
 			/** here comes an exception for the linked entries */
 			$link = array();
-			parse_str( JSite::getMenu()->getActive()->link, $link );
+			parse_str( JFactory::getApplication()->getMenu()->getActive()->link, $link );
 			/** now we know that it is directly linked but not if it is an entry link */
 			if ( isset( $link[ 'sid' ] ) && $link[ 'sid' ] == SPRequest::sid() ) {
 				$request = $this->cacheViewRequest;

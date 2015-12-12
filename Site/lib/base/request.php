@@ -107,7 +107,7 @@ abstract class SPRequest
 	 * Sets the tagsAllowed option
 	 *
 	 * @param array $tags
-	 * @return void
+	 * @return mixed
 	 */
 	public static function setTagsAllowed( $tags )
 	{
@@ -119,7 +119,7 @@ abstract class SPRequest
 	 * Sets the attributesAllowed option
 	 *
 	 * @param array $attributes
-	 * @return void
+	 * @return mixed
 	 */
 	public static function setAttributesAllowed( $attributes )
 	{

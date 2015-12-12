@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -115,7 +113,8 @@ class SPTemplateXSLT implements SPTemplate
 		}
 		if ( $template ) {
 			try {
-				if ( !( $style = DOMDocument::load( $template ) ) ) {
+				$tplDoc = new DOMDocument();
+				if ( !( $style = $tplDoc->load( $template ) ) ) {
 					Sobi::Error( 'template', SPLang::e( 'CANNOT_PARSE_TEMPLATE_FILE', $template ), SPC::ERROR, 500, __LINE__, __FILE__ );
 				}
 			} catch ( DOMException $x ) {
@@ -127,7 +126,7 @@ class SPTemplateXSLT implements SPTemplate
 			$processor->registerPHPFunctions( $functions );
 			SPException::catchErrors( SPC::WARNING );
 			try {
-				$processor->importStylesheet( $style );
+				$processor->importStylesheet( $tplDoc );
 			} catch ( SPException $x ) {
 				Sobi::Error( 'template', SPLang::e( 'CANNOT_PARSE_TEMPLATE_FILE', $template ) . $x->getMessage(), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
@@ -198,8 +197,8 @@ class SPTemplateXSLT implements SPTemplate
 			foreach ( $entities as $ent => $repl ) {
 				$txt[ 2 ] = preg_replace( '/&' . $ent . ';?/m', $repl, $txt[ 2 ] );
 			}
+			return $txt[ 1 ] . $txt[ 2 ];
 		}
-		return $txt[ 1 ] . $txt[ 2 ] . $txt[ 3 ];
 	}
 
 	public function XML()
@@ -264,7 +263,7 @@ class SPTemplateXSLT implements SPTemplate
 				try {
 					/* im trying to catch this damn error already :( */
 					/* assuming the XML-Structure was ok */
-					if ( @$_t->loadXML( '<span>' . $data[ '_data' ] . '</span>' ) ) {
+					if ( @$_t->loadXML( '<span>' . $this->entities( $data[ '_data' ] ) . '</span>' ) ) {
 						$nodes = $_t->firstChild->childNodes;
 					}
 					/* if not; try to repair with tidy */

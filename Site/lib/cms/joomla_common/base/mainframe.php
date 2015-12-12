@@ -288,7 +288,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				$url = $query[ 'path' ];
 			}
 		}
-		$menu = isset( JSite::getMenu()->getActive()->link ) ? JSite::getMenu()->getActive()->link : null;
+		$menu = isset( JFactory::getApplication()->getMenu()->getActive()->link ) ? JFactory::getApplication()->getMenu()->getActive()->link : null;
 		$a = preg_replace( '/&Itemid=\d+/', null, str_replace( '/', null, $url ) );
 		if ( $menu != $a ) {
 			JFactory::getApplication()
@@ -330,14 +330,15 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	 * Adds object to the pathway
 	 * @param SPDBObject $obj
 	 * @param array $site
-	 * @return void
+	 * @return mixed
 	 */
 	public function & addObjToPathway( $obj, $site = array() )
 	{
 		if ( defined( 'SOBI_ADM_PATH' ) ) {
 			return true;
 		}
-		$menu = JSite::getMenu()->getActive()->query;
+		$active = JFactory::getApplication()->getMenu()->getActive();
+		$menu = isset( $active->query ) ? $active->query : array();
 		$sid = isset( $menu[ 'sid' ] ) ? $menu[ 'sid' ] : 0;
 		$resetPathway = false;
 		if ( $obj->get( 'oType' ) == 'entry' ) {
@@ -360,7 +361,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				$mid = true;
 				SPFactory::registry()
 						->set( 'cache_view_recreate_request', $mid )
-						->set( 'cache_view_add_itemid', JSite::getMenu()->getActive()->id );
+						->set( 'cache_view_add_itemid', JFactory::getApplication()->getMenu()->getActive()->id );
 				return $this;
 
 			}

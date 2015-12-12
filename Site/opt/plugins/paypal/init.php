@@ -116,7 +116,7 @@ class SPPPaypal extends SPPlugin
             $v[ ] = $field . '=' . urlencode( SPLang::replacePlaceHolders( $value, $values ) );
         }
         $out .= implode( '&', $v );
-        return SPLang::clean($out);;
+        return SPLang::clean($out);
     }
 
     /**

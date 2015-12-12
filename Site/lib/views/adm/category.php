@@ -52,7 +52,8 @@ class SPCategoryAdmView extends SPSectionAdmView
 //				$this->listSection();
 //				break;
 			case 'edit':
-				$this->assign( $this->languages(), 'languages-list' );
+				$languages = $this->languages();
+				$this->assign( $languages, 'languages-list' );
 			case 'add':
 				$this->edit();
 				$this->determineTemplate( 'category', 'edit' );
@@ -105,12 +106,14 @@ class SPCategoryAdmView extends SPSectionAdmView
 		$this->assign( $path, 'parent_path' );
 		$this->assign( $parentCat, 'parent_cat' );
 		if ( SPRequest::sid() ) {
-			$this->assign( Sobi::Url( array( 'task' => 'category.chooser', 'sid' => SPRequest::sid(), 'out' => 'html' ), true ), 'cat_chooser_url' );
+			$catChooserURL = Sobi::Url( array( 'task' => 'category.chooser', 'sid' => SPRequest::sid(), 'out' => 'html' ), true );
+			$this->assign( $catChooserURL, 'cat_chooser_url' );
 		}
 		elseif ( SPRequest::int( 'pid' ) ) {
 			$this->assign( Sobi::Url( array( 'task' => 'category.chooser', 'pid' => SPRequest::int( 'pid' ), 'out' => 'html' ), true ), 'cat_chooser_url' );
 		}
-		$this->assign( Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html' ), true ), 'icon_chooser_url' );
+		$iconChooserUrl = Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html' ), true );
+		$this->assign( $iconChooserUrl, 'icon_chooser_url' );
 	}
 
 	private function chooser()
