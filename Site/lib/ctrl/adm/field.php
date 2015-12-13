@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -211,25 +209,25 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			$groups = $this->getFieldTypes();
 			/* create dummy field with initial values */
 			$field = array(
-				'name' => '',
-				'nid' => '',
-				'notice' => '',
-				'description' => '',
-				'adminField' => 0,
-				'enabled' => 1,
-				'fee' => 0,
-				'isFree' => 1,
-				'withLabel' => 1,
-				'version' => 1,
-				'editable' => 1,
-				'required' => 0,
-				'priority' => 5,
-				'showIn' => 'details',
-				'editLimit' => '',
-				'version' => 1,
-				'inSearch' => 0,
-				'cssClass' => '',
-				'fieldType' => $this->_fieldType,
+					'name' => '',
+					'nid' => '',
+					'notice' => '',
+					'description' => '',
+					'adminField' => 0,
+					'enabled' => 1,
+					'fee' => 0,
+					'isFree' => 1,
+					'withLabel' => 1,
+					'version' => 1,
+					'editable' => 1,
+					'required' => 0,
+					'priority' => 5,
+					'showIn' => 'details',
+					'editLimit' => '',
+					'version' => 1,
+					'inSearch' => 0,
+					'cssClass' => '',
+					'fieldType' => $this->_fieldType,
 			);
 		}
 
@@ -374,11 +372,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 	}
 
-	public function checkIn()
-	{
-	}
-
-	protected function validate( $field )
+	protected function validateRequest( $field )
 	{
 		$type = SPRequest::cmd( 'field_fieldType' );
 		$definition = SPLoader::path( 'field.' . $type, 'adm', true, 'xml' );
@@ -399,8 +393,10 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 
 	/**
 	 * Save existing field
+	 * @param bool $clone
+	 * @param bool $apply
 	 */
-	protected function save( $clone = false )
+	protected function save( $clone = false, $apply = false )
 	{
 		$sets = array();
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
@@ -422,7 +418,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			SPRequest::set( 'field_nid', $nid );
 		}
 		$this->getRequest();
-		$this->validate( $field );
+		$this->validateRequest( $field );
 
 		if ( $clone || !( $fid ) ) {
 			try {
@@ -523,16 +519,16 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		foreach ( $fieldTypes as $type => $group ) {
 			asort( $group );
 			$subMenu[ ] = array(
-				'label' => $type,
-				'element' => 'nav-header'
+					'label' => $type,
+					'element' => 'nav-header'
 			);
 			foreach ( $group as $t => $l ) {
 				$subMenu[ ] = array(
-					'type' => null,
-					'task' => 'field.add.' . $t,
-					'label' => $l,
-					'icon' => 'tasks',
-					'element' => 'button'
+						'type' => null,
+						'task' => 'field.add.' . $t,
+						'label' => $l,
+						'icon' => 'tasks',
+						'element' => 'button'
 				);
 			}
 		}
@@ -758,7 +754,6 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				break;
 			case 'cancel':
 				$r = true;
-				$this->checkIn();
 				$this->response( Sobi::Back() );
 				break;
 			case 'addNew':

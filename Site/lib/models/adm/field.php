@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -63,7 +61,7 @@ final class SPAdmField extends SPField
 			$base[ 'required' ] = ( int )$attr[ 'required' ];
 		if ( isset( $attr[ 'adminField' ] ) )
 			$base[ 'adminField' ] = ( int )$attr[ 'adminField' ];
-		if ( $attr[ 'adminField' ] ) {
+		if ( isset( $attr[ 'adminField' ] ) && $attr[ 'adminField' ] ) {
 			$attr[ 'required' ] = false;
 		}
 		if ( isset( $attr[ 'editable' ] ) )

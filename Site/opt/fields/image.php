@@ -817,7 +817,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$path = $orgImage->getPathname();
 			$type = $this->check( $path );
 			$properties[ 'tmp_name' ] = $path;
-			SPFs::write( SPLoader::dirPath( "tmp.files.{$secret}", 'front', false ) . '/' . $orgFileName . '.var', SPConfig::serialize( $properties ) );
+			$out = SPConfig::serialize( $properties );
+			SPFs::write( SPLoader::dirPath( "tmp.files.{$secret}", 'front', false ) . '/' . $orgFileName . '.var', $out );
 
 			$response = array(
 					'type' => 'success',

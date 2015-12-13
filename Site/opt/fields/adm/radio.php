@@ -47,7 +47,7 @@ class SPField_RadioAdm extends SPField_Radio
 		if ( count( $options ) ) {
 			unset( $attr[ 'options' ] );
 		}
-		if ( count( $attr[ 'options' ] ) ) {
+		if ( isset( $attr[ 'options' ] ) && count( $attr[ 'options' ] ) ) {
 			$p = 0;
 			foreach ( $attr[ 'options' ] as $o ) {
 				if ( isset( $o[ 'id' ] ) ) {

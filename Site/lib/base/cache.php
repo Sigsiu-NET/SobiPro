@@ -29,33 +29,33 @@ final class SPCache
 {
 	/*** @var SQLiteDatabase */
 	protected $_db = null;
-	/** @var string  */
+	/** @var string */
 	protected $_driver = '';
-	/** @var bool|string  */
+	/** @var bool|string */
 	protected $_enabled = true;
-	/** @var bool  */
+	/** @var bool */
 	protected $_apc = true;
-	/** @var null  */
+	/** @var null */
 	protected $_store = null;
-	/** @var null  */
+	/** @var null */
 	protected $_check = null;
-	/** @var int  */
+	/** @var int */
 	protected $_section = -1;
-	/** @var int  */
+	/** @var int */
 	protected $_sid = 0;
-	/** @var array  */
+	/** @var array */
 	protected $_disableObjectCache = array( '.save', '.clone', '.payment', '.submit', '.approve', '.publish', '.icon' );
-	/** @var array  */
+	/** @var array */
 	protected $requestStore = array();
-	/** @var array  */
+	/** @var array */
 	protected $view = array( 'xml' => null, 'template' => null );
-	/** @var array  */
+	/** @var array */
 	protected $_disableViewCache = array( 'entry.add', 'entry.edit', 'search.search', 'search.results', 'entry.disable', 'txt.js' );
-	/** @var bool  */
+	/** @var bool */
 	protected $_cachedView = false;
-	/** @var array  */
+	/** @var array */
 	protected $cacheViewQuery = array();
-	/** @var array  */
+	/** @var array */
 	protected $cacheViewRequest = array();
 
 	/**
@@ -700,7 +700,10 @@ final class SPCache
 			$query = $this->viewRequest();
 			/** here comes an exception for the linked entries */
 			$link = array();
-			parse_str( JFactory::getApplication()->getMenu()->getActive()->link, $link );
+			if ( isset( JFactory::getApplication()->getMenu()->getActive()->link ) ) {
+				parse_str( JFactory::getApplication()->getMenu()->getActive()->link, $link );
+			}
+
 			/** now we know that it is directly linked but not if it is an entry link */
 			if ( isset( $link[ 'sid' ] ) && $link[ 'sid' ] == SPRequest::sid() ) {
 				$request = $this->cacheViewRequest;

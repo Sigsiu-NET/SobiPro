@@ -27,20 +27,12 @@ SPLoader::loadClass( 'opt.fields.url' );
  */
 class SPField_Email extends SPField_Url implements SPFieldInterface
 {
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $labelsLabel = "Email Label";
-
-	/**
-	 * @var bool
-	 */
+	/*** @var bool */
 	protected $botProtection = true;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $dType = 'special';
-
 	/** @var string */
 	protected $cssClass = 'spClassEmail';
 	/** * @var string */
@@ -201,7 +193,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	 */
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{
-		if ( count( $this->verify( $entry, $request ) ) ) {
+		if ( count( $this->verifyEmail( $entry, $request ) ) ) {
 			return SPRequest::search( $this->nid, $request );
 		}
 		else {
@@ -246,7 +238,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 		}
 		/* @var SPdb $db */
 		$db = SPFactory::db();
-		$save = $this->verify( $entry, $request );
+		$save = $this->verifyEmail( $entry, $request );
 		$time = SPRequest::now();
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
 		$uid = Sobi::My( 'id' );
@@ -309,7 +301,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	 * @throws SPException
 	 * @return array
 	 */
-	protected function verify( $entry, $request )
+	protected function verifyEmail( $entry, $request )
 	{
 		$save = array();
 		$data = SPRequest::raw( $this->nid . '_url', null, $request );
@@ -401,7 +393,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	 */
 	public function validate( $entry, $request )
 	{
-		return $this->verify( $entry, $request );
+		return $this->verifyEmail( $entry, $request );
 	}
 
 }

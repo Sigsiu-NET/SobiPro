@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -19,6 +17,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadController( 'config', true );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -40,7 +39,7 @@ class SPPaymentPP extends SPConfigAdmCtrl
 				Sobi::ReturnPoint();
 				break;
 			case 'save':
-				$this->save();
+				$this->save( false );
 				break;
 			default:
 				Sobi::Error( 'SPPaymentBt', 'Task not found', SPC::WARNING, 404, __LINE__, __FILE__ );
@@ -48,26 +47,26 @@ class SPPaymentPP extends SPConfigAdmCtrl
 		}
 	}
 
-	protected function save()
+	protected function save( $apply, $clone = false )
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$this->validate( 'extensions.paypal', array( 'task' => 'paypal', 'pid' => Sobi::Section() ) );
 		SPFactory::registry()->saveDBSection(
-			array(
-				array( 'key' => 'ppurl', 'value' => SPRequest::string( 'ppurl' ) ),
-				array( 'key' => 'ppemail', 'value' => SPRequest::string( 'ppemail' ) ),
-				array( 'key' => 'ppcc', 'value' => SPRequest::string( 'ppcc' ) ),
-				array( 'key' => 'pprurl', 'value' => SPRequest::string( 'pprurl' ) ),
-			), 'paypal_' . Sobi::Section()
+				array(
+						array( 'key' => 'ppurl', 'value' => SPRequest::string( 'ppurl' ) ),
+						array( 'key' => 'ppemail', 'value' => SPRequest::string( 'ppemail' ) ),
+						array( 'key' => 'ppcc', 'value' => SPRequest::string( 'ppcc' ) ),
+						array( 'key' => 'pprurl', 'value' => SPRequest::string( 'pprurl' ) ),
+				), 'paypal_' . Sobi::Section()
 		);
 		$data = array(
-			'key' => 'ppexpl',
-			'value' => SPRequest::string( 'ppexpl', null, true ),
-			'type' => 'application',
-			'id' => Sobi::Section(),
-			'section' => Sobi::Section()
+				'key' => 'ppexpl',
+				'value' => SPRequest::string( 'ppexpl', null, true ),
+				'type' => 'application',
+				'id' => Sobi::Section(),
+				'section' => Sobi::Section()
 		);
 		try {
 			SPLang::saveValues( $data );

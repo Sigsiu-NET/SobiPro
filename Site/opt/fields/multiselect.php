@@ -1,24 +1,22 @@
 <?php
 /**
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.select' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -26,19 +24,12 @@ SPLoader::loadClass( 'opt.fields.select' );
  */
 class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 {
-	/**
-	 * @var bool
-	 */
+	/*** @var bool */
 	protected $multi = true;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	protected $size = 10;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $dType = 'predefined_multi_data_multi_choice';
-
 	/** * @var string */
 	protected $cssClass = 'spClassMSelect';
 	/** * @var string */
@@ -47,8 +38,6 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	protected $cssClassEdit = 'spClassEditMSelect';
 	/** * @var string */
 	protected $cssClassSearch = 'spClassSearchMSelect';
-
-
 
 	/**
 	 * Get field specific values if these are in an other table
@@ -67,24 +56,24 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 			$lang = Sobi::Lang( false );
 		}
 		$table = $db->join(
-			array(
-				array( 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ),
-				array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
-				array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue', 'ldata.sKey' ) ),
-			)
+				array(
+						array( 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ),
+						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
+						array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue', 'ldata.sKey' ) ),
+				)
 		);
 		try {
 			$db->select(
-				'*, sdata.copy as scopy',
-				$table,
-				array(
-					'sdata.fid' => $this->id,
-					'sdata.sid' => $sid,
-					'fdata.sid' => $sid,
-					'ldata.oType' => 'field_option',
-					'ldata.fid' => $this->id,
-				),
-				'scopy', 0, 0, true /*, 'sdata.optValue' */
+					'*, sdata.copy as scopy',
+					$table,
+					array(
+							'sdata.fid' => $this->id,
+							'sdata.sid' => $sid,
+							'fdata.sid' => $sid,
+							'ldata.oType' => 'field_option',
+							'ldata.fid' => $this->id,
+					),
+					'scopy', 0, 0, true /*, 'sdata.optValue' */
 			);
 			$data = $db->loadObjectList();
 			$order = SPFactory::cache()->getVar( 'order_' . $this->nid );
@@ -170,9 +159,9 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 			if ( isset( $opt[ 'options' ] ) && is_array( $opt[ 'options' ] ) ) {
 				foreach ( $opt[ 'options' ] as $sub ) {
 					$struct[ ] = array(
-						'_complex' => 1,
-						'_data' => $sub[ 'label' ],
-						'_attributes' => array( 'group' => $opt[ 'id' ], 'selected' => ( isset( $baseData[ $sub [ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
+							'_complex' => 1,
+							'_data' => $sub[ 'label' ],
+							'_attributes' => array( 'group' => $opt[ 'id' ], 'selected' => ( isset( $baseData[ $sub [ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
 					);
 //						$group[ ] = array(
 //							'_complex' => 1,
@@ -184,23 +173,23 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 			}
 			else {
 				$struct[ ] = array(
-					'_complex' => 1,
-					'_data' => $opt[ 'label' ],
-					'_attributes' => array( 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
+						'_complex' => 1,
+						'_data' => $opt[ 'label' ],
+						'_attributes' => array( 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
 				);
 			}
 		}
 		$data = array(
-			'ul'  => array(
-				'_complex' => 1,
-				'_data' => $list,
-				'_attributes' => array( 'class' => $this->cssClass ) )
+				'ul' => array(
+						'_complex' => 1,
+						'_data' => $list,
+						'_attributes' => array( 'class' => $this->cssClass ) )
 		);
 		return array(
-			'_complex' => 1,
-			'_data' => count( $list ) ? $data : null,
-			'_attributes' => array( 'lang' => $this->lang, 'class' => $this->cssClass ),
-			'_options' => $struct,
+				'_complex' => 1,
+				'_data' => count( $list ) ? $data : null,
+				'_attributes' => array( 'lang' => $this->lang, 'class' => $this->cssClass ),
+				'_options' => $struct,
 		);
 
 	}
@@ -208,7 +197,7 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	/* (non-PHPdoc)
 	 * @see Site/opt/fields/SPField_Select#fetchData($request)
 	 */
-	protected function fetchData( $data )
+	protected function fetchData( $data, $request = 'post' )
 	{
 		if ( is_array( $data ) && count( $data ) ) {
 			$selected = array();
@@ -230,7 +219,7 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	 * Static function to create the right SQL-Query if a entries list should be sorted by this field
 	 * @return bool
 	 */
-	public static function sortBy()
+	public static function sortBy( &$tables, &$conditions, &$oPrefix, &$eOrder, $eDir )
 	{
 		return false;
 	}

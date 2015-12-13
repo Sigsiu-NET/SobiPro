@@ -173,6 +173,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if ( count( $cfg ) ) {
+			$i = 0;
 			foreach ( $cfg as $section => $keys ) {
 				$i++;
 				$menu->addSection( $section, $keys );

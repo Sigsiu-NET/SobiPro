@@ -1780,6 +1780,9 @@ class SPAdmView extends SPObject implements SPView
 		$params = func_get_args();
 		$field = null;
 		if ( isset( $params[ 0 ] ) ) {
+			if ( !( method_exists( 'SPHtml_input', $params[ 0 ] ) ) ) {
+				$params[ 0 ] = '_' . $params[ 0 ];
+			}
 			if ( method_exists( 'SPHtml_input', $params[ 0 ] ) ) {
 				foreach ( $params as $i => $param ) {
 					if ( is_string( $param ) && strstr( $param, 'value:' ) ) {
