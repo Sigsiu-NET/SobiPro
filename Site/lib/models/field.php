@@ -404,7 +404,7 @@ class SPField extends SPObject
 	 * @param mixed $val
 	 * @return \SPObject|void
 	 */
-	public function set( $var, $val )
+	public function & set( $var, $val )
 	{
 		if ( isset( $this->$var ) ) {
 			$this->$var = $val;
@@ -412,6 +412,7 @@ class SPField extends SPObject
 		if ( $this->_type && method_exists( $this->_type, 'set' ) ) {
 			$this->_type->set( $var, $val );
 		}
+		return $this;
 	}
 
 	public function delete()

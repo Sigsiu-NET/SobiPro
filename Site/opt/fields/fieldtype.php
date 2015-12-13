@@ -116,11 +116,12 @@ class SPFieldType extends SPObject
 	 * @param mixed $val
 	 * @return \SPObject|void
 	 */
-	public function set( $var, $val )
+	public function & set( $var, $val )
 	{
 		if ( isset( $this->$var ) ) {
 			$this->$var = $val;
 		}
+		return $this;
 	}
 
 	/**

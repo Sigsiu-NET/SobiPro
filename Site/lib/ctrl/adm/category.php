@@ -237,7 +237,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			try {
 				$LimStart = $cLimStart ? ( ( $cLimStart - 1 ) * $cLimit ) : $cLimStart;
 				$Limit = $cLimit > 0 ? $cLimit : 0;
-				$cOrder = $this->parseOrdering( 'categories', 'corder', 'position.asc', $Limit, $LimStart, $c );
+				$cOrder = $this->parseCategoryOrdering( 'categories', 'corder', 'position.asc', $Limit, $LimStart, $c );
 				$db->select( '*', 'spdb_object', array( 'id' => $c, 'oType' => 'category' ), $cOrder, $Limit, $LimStart );
 				$results = $db->loadResultArray();
 			} catch ( SPException $x ) {
@@ -254,7 +254,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			try {
 				$LimStart = $eLimStart ? ( ( $eLimStart - 1 ) * $eLimit ) : $eLimStart;
 				$Limit = $eLimit > 0 ? $eLimit : 0;
-				$eOrder = $this->parseOrdering( 'entries', 'eorder', 'position.asc', $Limit, $LimStart, $e );
+				$eOrder = $this->parseCategoryOrdering( 'entries', 'eorder', 'position.asc', $Limit, $LimStart, $e );
 				$entries = $db
 						->select( '*', 'spdb_object', array( 'id' => $e, 'oType' => 'entry' ), $eOrder, $Limit, $LimStart )
 						->loadResultArray();
@@ -400,7 +400,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 	 * @param $sids
 	 * @return string
 	 */
-	protected function parseOrdering( $subject, $col, $def, &$lim, &$lStart, &$sids )
+	protected function parseCategoryOrdering( $subject, $col, $def, &$lim, &$lStart, &$sids )
 	{
 		$ord = Sobi::GetUserState( $subject . '.order', $col, Sobi::Cfg( 'admin.' . $subject . '-order', $def ) );
 		/** legacy - why the hell I called it order?! */

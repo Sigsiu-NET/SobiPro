@@ -474,7 +474,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	private function listFields()
 	{
 		/* @var SPdb $db */
-		$ord = $this->parseOrdering( 'forder', 'position.asc' );
+		$ord = $this->parseFieldsOrdering( 'forder', 'position.asc' );
 		SPLoader::loadClass( 'html.input' );
 		Sobi::ReturnPoint();
 
@@ -555,7 +555,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 * @param string $def
 	 * @return string
 	 */
-	protected function parseOrdering( $col, $def )
+	protected function parseFieldsOrdering( $col, $def )
 	{
 		$order = Sobi::GetUserState( 'fields.order', $col, Sobi::Cfg( 'admin.fields-order', $def ) );
 		$ord = $order;
