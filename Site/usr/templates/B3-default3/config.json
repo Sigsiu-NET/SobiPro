@@ -3,6 +3,9 @@
     "theme": {
       "colour-set": "sobipro",
       "corners": "angular",
+      "image-ratio": "0.75",
+      "big-image": "inherit",
+      "carousel-image": "inherit",
       "small-image": "100px"
     },
     "review": {
@@ -11,6 +14,8 @@
     }
   },
   "general": {
+    "extendedsearch": "show",
+    "textlength": "no",
     "hidecategories": "show",
     "entries_limit": "6",
     "entries_in_line": "2",
@@ -23,6 +28,7 @@
   "section-view": {
     "entries_limit": "2",
     "entries_in_line": "2",
+    "entries_ordering": "position.asc",
     "entries_recursive": "0"
   },
   "category-view": {
