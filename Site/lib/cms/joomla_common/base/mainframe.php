@@ -379,7 +379,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			$rpath = array_reverse( $path );
 			$path = array();
 			foreach ( $rpath as $part ) {
-				if ( $part[ 'id' ] == $sid ) {
+				if ( isset( $part[ 'id' ] ) && $part[ 'id' ] == $sid ) {
 					break;
 				}
 				$path[ ] = $part;

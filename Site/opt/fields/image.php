@@ -132,9 +132,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 		if ( defined( 'SOBIPRO_ADM' ) ) {
-			if ($this->bsWidth) {
-				$width = SPHtml_Input::_translateWidth($this->bsWidth);
-				$class .=  ' ' . $width;
+			if ( $this->bsWidth ) {
+				$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+				$class .= ' ' . $width;
 			}
 		}
 		$show = null;
@@ -421,7 +421,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		 * */
 
 		if ( !( $data ) ) {
-			$directory = SPRequest::string( $this->nid, $store[ $this->nid ], false, $request );
+			$directory = null;
+			if ( isset( $store[ $this->nid ] ) ) {
+				$directory = SPRequest::string( $this->nid, $store[ $this->nid ], false, $request );
+			}
 			if ( strlen( $directory ) ) {
 				list( $data, $dirName, $files, $coordinates ) = $this->getAjaxFiles( $directory );
 				if ( count( $files ) ) {

@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -768,7 +766,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		elseif ( !( count( $this->categories ) ) ) {
 			throw new SPException( SPLang::e( 'MISSING_CAT' ) );
 		}
-		if( $preState[ 'new' ] ) {
+		if ( $preState[ 'new' ] ) {
 			$this->countVisit( true );
 		}
 		/* trigger possible state changes */
@@ -789,7 +787,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 				SPFactory::cache()->deleteObj( 'category', $cat );
 			}
 		}
-		Sobi::Trigger( $this->name(), 'After' . ucfirst( $preState[ 'new' ] ? __FUNCTION__ : 'Update' ), array( &$this ) );
+		Sobi::Trigger( $this->name(), 'After' . ucfirst( __FUNCTION__ ), array( &$this ) );
+		if ( !( $preState[ 'new' ] ) ) {
+			Sobi::Trigger( $this->name(), 'AfterUpdate', array( &$this ) );
+		}
 	}
 
 	/**

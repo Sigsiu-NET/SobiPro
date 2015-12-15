@@ -81,10 +81,10 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 		$eLimStart = ( ( $site - 1 ) * $eLimit );
 
 		$eOrder = $this->parseOrdering( 'entries', 'eorder', $this->tKey( $this->template, 'entries_ordering', Sobi::Cfg( 'list.entries_ordering', 'name.asc' ) ) );
-		$eCount = count( $this->getUserEntries( $eOrder, 0, 0, true, array( 'spo.owner' => $this->uid ), true, Sobi::Section() ) );
-		$entries = $this->getUserEntries( $eOrder, $eLimit, $eLimStart, true, array( 'spo.owner' => $this->uid ), true, Sobi::Section() );
-//		$eCount = count( $this->_getUserEntries( 0, 0, true ) );
-//		$entries = $this->_getUserEntries( $eLimit, $site );
+		$eCount = count( $this->getEntries( $eOrder, 0, 0, true, array( 'spo.owner' => $this->uid ), true, Sobi::Section() ) );
+		$entries = $this->getEntries( $eOrder, $eLimit, $eLimStart, true, array( 'spo.owner' => $this->uid ), true, Sobi::Section() );
+//		$eCount = count( $this->_getEntries( 0, 0, true ) );
+//		$entries = $this->_getEntries( $eLimit, $site );
 
 		$pn = SPFactory::Instance( 'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ), $eLimit, $eCount, $site, $url );
 		if ( SPRequest::int( 'site', 0 ) ) {
@@ -118,10 +118,10 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 
 	public function entries( $field = null )
 	{
-		return $this->getUserEntries( 0, 0, true );
+		return $this->getEntries( 0, 0, true );
 	}
 
-//	public function _getUserEntries( $eLimit, $site, $ids = false )
+//	public function _getEntries( $eLimit, $site, $ids = false )
 //	{
 //		$conditions = array( 'owner' => $this->uid );
 //		$entries = array();
