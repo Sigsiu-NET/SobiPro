@@ -51,6 +51,7 @@ Legend:
     (!) Font Awesome 4 updated to version 4.5.0
     (!) Small CSS improvements in backend
     (!) Editing the fields in default templates moved to a separate template (editfields.xsl)
+    (!) jQuery updated to 1.11.3
 
     (#) Missing default template configuration files added
     (#) Duplicate icons from Font Awesome 4 removed
