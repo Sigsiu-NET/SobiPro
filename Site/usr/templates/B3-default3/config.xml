@@ -248,6 +248,12 @@
                                         </values>
                                     </field>
                                 <field type="toggle" name="settings[config][general][countentries]" value="settings.config.general.countentries" label="TP.CONFIG.LST_COUNT" prefix="yes_no" />
+	                                <field type="select" label="TP.CONFIG.PAGINATION" name="settings[config][general][pagination]" selected="settings.config.general.pagination" class="input-medium">
+		                                <values>
+			                                <option value="ajax" label="TP.CONFIG.PAG_AJAX" />
+			                                <option value="std" label="TP.CONFIG.PAG_STD" />
+		                                </values>
+	                                </field>
 
                             </fieldset>
 

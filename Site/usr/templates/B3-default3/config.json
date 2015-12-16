@@ -17,9 +17,10 @@
     "extendedsearch": "show",
     "textlength": "no",
     "hidecategories": "show",
+    "pagination": "std",
     "entries_limit": "6",
     "entries_in_line": "2",
-    "entries_ordering": "RAND()",
+    "entries_ordering": "updatedTime.desc",
     "bs": "bs3",
     "noimage": "1",
     "countentries": "0",
@@ -34,7 +35,7 @@
   "category-view": {
     "entries_limit": "6",
     "entries_in_line": "2",
-    "entries_ordering": "RAND()",
+    "entries_ordering": "updatedTime.desc",
     "entries_recursive": "1"
   },
   "collection": {

@@ -42,6 +42,7 @@ Legend:
     (+) PHP 7 compatibility
     (+) Joomla! 3.5 compatibility
     (+) Selection if the user may delete the click counter of web links (URL field)
+    (+) Ajax navigation in listing views
 
     (-) jQuery-UI library removed
 
@@ -71,6 +72,7 @@ Legend:
     (#) Issue with non-latin aliases (Issue #1515)
     (#) Globally disabled application still enabled in sections (Issue #1514)
     (#) All fields in backend entry form don't get the set width
+    (#) Payment notifications aren't sent after entry edition (Issue #1507)
 
     (*) Unregistered user with permission to edit "own" entry can access the edit form of entries without assigned owner
 

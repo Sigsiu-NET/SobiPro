@@ -487,20 +487,36 @@ input[type='radio'] {
 	color: @font-a;
 }
 
-#SPAdminForm fieldset .control-label {
-	width: 200px;
+.SobiPro .form-horizontal {
+	.control-label {
+		padding-right: 0;
+		width: 200px;
+	}
+	label {
+		margin: 0;
+		clear: none;
+	}
+	.controls {
+		margin-left: 220px;
+	}
+	img {
+		float: left;
+	}
+	// Try to get the checkbox inline with the label without hurting anything else
+	input[type="checkbox"] {
+		float: left;
+		margin-right: 5px;
+	}
 }
 
-fieldset label {
-	margin: 0;
-}
-
-#SPAdminForm fieldset .controls {
-	margin-left: 220px;
-}
-
-#SPAdminForm fieldset img {
-	float: left;
+.SobiPro .SpSoap {
+	margin-top: 15px;
+	.control-label {
+		width: 140px;
+	}
+	.controls {
+		margin-left: 160px;
+	}
 }
 
 #SPAdminForm .spFieldGroup {
@@ -523,10 +539,6 @@ fieldset label {
 
 .spEditImage img {
 	border-radius: 5px 5px 5px 5px;
-}
-
-#SPAdminForm fieldset.form-horizontal label {
-	clear: none;
 }
 
 #SPAdminForm div.spFilterModal .control-label {
@@ -697,23 +709,6 @@ fieldset label {
 
 .SobiPro .SpCertificate .form-horizontal .control-group {
 	margin-bottom: 0;
-}
-
-.SobiPro .form-horizontal .control-label {
-	padding-right: 0;
-}
-
-#SPAdminForm .SpSoap fieldset {
-	.control-label {
-		width: 140px;
-	}
-	.controls {
-		margin-left: 160px;
-	}
-}
-
-.SobiPro .SpSoap {
-	margin-top: 15px;
 }
 
 .SobiPro .SpCloudInstall {
@@ -1104,12 +1099,6 @@ fieldset label {
 
 .SobiPro .spClassCalendarRepeat {
 	margin-top: 5px;
-}
-
-// Try to get the checkbox inline with the label without hurting anything else
-.SobiPro .form-horizontal input[type="checkbox"] {
-	float: left;
-	margin-right: 5px;
 }
 
 @media (max-width: 767px) {
