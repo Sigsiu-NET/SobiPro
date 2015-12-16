@@ -60,6 +60,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	/** @var bool */
 	protected $countClicks = false;
 	/** @var bool */
+	protected $deleteClicks = true;
+	/** @var bool */
 	protected $counterToLabel = false;
 	/** @var bool */
 	protected $labelAsPlaceholder = false;
@@ -174,12 +176,12 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			$field = "\n<div class=\"spFieldUrl\">{$field}</div>";
 		}
 
-		if ( $this->countClicks && $this->sid ) {
+		if ( $this->countClicks && $this->sid && ($this->deleteClicks || SPFactory::user()->isAdmin() )) {
 			$counter = $this->getCounter();
 			if ( $counter ) {
 				SPFactory::header()->addJsFile( 'opt.field_url_edit' );
 			}
-			$classes = 'btn spCountableReset';
+			$classes = 'btn btn-default spCountableReset';
 			$attr = array();
 			if ( !( $counter ) ) {
 				$attr[ 'disabled' ] = 'disabled';
@@ -214,6 +216,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			return $dUrl;
 		}
 	}
+
 
 	private
 	function fromCache( $cache )
@@ -257,7 +260,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit', 'noFollow', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth' );
+		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit', 'noFollow', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth', 'deleteClicks' );
 	}
 
 	/**

@@ -41,6 +41,7 @@ Legend:
     (+) Specific SobiPro Icon for Administrator Header
     (+) PHP 7 compatibility
     (+) Joomla! 3.5 compatibility
+    (+) Selection if the user may delete the click counter of web links (URL field)
 
     (-) jQuery-UI library removed
 
