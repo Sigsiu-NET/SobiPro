@@ -68,6 +68,7 @@ class SPJoomlaUser extends JUser
 							Sobi::Error( 'permissions', SPLang::e( 'Cannot load additional gids. %s', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
 						}
 					}
+					/** */
 					$cgids = JFactory::getACL()->get_group_parents( $gid, 'ARO', 'RECURSE' );
 					$gids = array_merge( $gids, $cgids );
 				}

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  @package: SobiPro Component for Joomla!
 
  @author
@@ -23,13 +22,14 @@
 	<toolbar title="var:[site_title]" icon="SobiSectionCfg">
 		<button type="apply" task="config.save" />
 		<divider />
-        <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-        <divider />
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
+		<divider />
 		<buttons type="options" dropdown-class="pull-right">
 			<button type="url" task="panel" />
-			<button type="url" task="acl" />
-			<button type="url" task="extensions.installed" />
-            <button type="url" task="template.info" />
+			<button type="url" task="config" condition="acl.config" />
+			<button type="url" task="acl" condition="acl.config" />
+			<button type="url" task="extensions.installed" condition="acl.apps" />
+			<button type="url" task="template.info" />
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
@@ -87,8 +87,8 @@
 										<values>
 											<option value="%number%sign" label="GB.CFG.PMN_PRC_FORMAT_NS" />
 											<option value="%number %sign" label="GB.CFG.PMN_PRC_FORMAT_NSS" />
-                                            <option value="%sign%number" label="GB.CFG.PMN_PRC_FORMAT_SN" />
-                                            <option value="%sign %number" label="GB.CFG.PMN_PRC_FORMAT_SSN" />
+											<option value="%sign%number" label="GB.CFG.PMN_PRC_FORMAT_SN" />
+											<option value="%sign %number" label="GB.CFG.PMN_PRC_FORMAT_SSN" />
 										</values>
 									</field>
 								</fieldset>
@@ -102,10 +102,10 @@
 									<message label="GBN.CFG.ACCEL" type="error" dismiss-button="false" class="spConfigAlert" />
 									<field type="toggle" name="spcfg[cache.l3_enabled]" value="cache.l3_enabled" label="GB.CFG.DATA_ACCELERATOR" prefix="onoff" />
 								</fieldset>
-                                <fieldset label="GB.CFG.XML_ACCELERATOR">
-                                    <field type="toggle" name="spcfg[cache.xml_enabled]" value="cache.xml_enabled" label="GB.CFG.XML_ACCELERATOR_YES" prefix="yes_no" />
-                                    <field type="toggle" name="spcfg[cache.xml_no_reg]" value="cache.xml_no_reg" label="GB.CFG.XML_ACCELERATOR_NO_REG" prefix="yes_no" />
-                                </fieldset>
+								<fieldset label="GB.CFG.XML_ACCELERATOR">
+									<field type="toggle" name="spcfg[cache.xml_enabled]" value="cache.xml_enabled" label="GB.CFG.XML_ACCELERATOR_YES" prefix="yes_no" />
+									<field type="toggle" name="spcfg[cache.xml_no_reg]" value="cache.xml_no_reg" label="GB.CFG.XML_ACCELERATOR_NO_REG" prefix="yes_no" />
+								</fieldset>
 								<fieldset label="GB.CFG.CACHE">
 									<field type="toggle" name="spcfg[cache.include_js_files]" value="cache.include_js_files" label="GBN.CFG.INCLUDE_JS_FILES_CACHE" prefix="onoff" />
 									<field type="toggle" name="spcfg[cache.include_css_files]" value="cache.include_css_files" label="GBN.CFG.INCLUDE_CSS_FILES_CACHE" prefix="onoff" />
@@ -132,7 +132,7 @@
 											<option value="30719" label="GB.CFG.DEB_LEVEL_ALL" />
 										</values>
 									</field>
-                                    <field type="toggle" name="spcfg[debug.display_errors]" value="debug.display_errors" label="GBN.CFG.DEB_DISPLAY_ERRORS" prefix="yes_no" />
+									<field type="toggle" name="spcfg[debug.display_errors]" value="debug.display_errors" label="GBN.CFG.DEB_DISPLAY_ERRORS" prefix="yes_no" />
 								</fieldset>
 							</div>
 						</div>

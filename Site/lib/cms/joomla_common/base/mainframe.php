@@ -320,7 +320,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				}
 				break;
 			default:
-				$dispatcher = JDispatcher::getInstance();
+				$dispatcher = JEventDispatcher::getInstance();
 				$dispatcher->trigger( $action, $params );
 				break;
 		}

@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -18,6 +16,7 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -260,16 +259,16 @@ class SPJoomlaLang
 			$values[ 'type' ] = 'application';
 		}
 		$data = array(
-			'sKey' => $values[ 'key' ],
-			'sValue' => $values[ 'value' ],
-			'section' => isset( $values[ 'section' ] ) ? $values[ 'section' ] : null,
-			'language' => $lang,
-			'oType' => $values[ 'type' ],
-			'fid' => isset( $values[ 'fid' ] ) ? $values[ 'fid' ] : 0,
-			'id' => isset( $values[ 'id' ] ) ? $values[ 'id' ] : 0,
-			'params' => isset( $values[ 'params' ] ) ? $values[ 'params' ] : null,
-			'options' => isset( $values[ 'options' ] ) ? $values[ 'options' ] : null,
-			'explanation' => isset( $values[ 'explanation' ] ) ? $values[ 'explanation' ] : null,
+				'sKey' => $values[ 'key' ],
+				'sValue' => $values[ 'value' ],
+				'section' => isset( $values[ 'section' ] ) ? $values[ 'section' ] : null,
+				'language' => $lang,
+				'oType' => $values[ 'type' ],
+				'fid' => isset( $values[ 'fid' ] ) ? $values[ 'fid' ] : 0,
+				'id' => isset( $values[ 'id' ] ) ? $values[ 'id' ] : 0,
+				'params' => isset( $values[ 'params' ] ) ? $values[ 'params' ] : null,
+				'options' => isset( $values[ 'options' ] ) ? $values[ 'options' ] : null,
+				'explanation' => isset( $values[ 'explanation' ] ) ? $values[ 'explanation' ] : null,
 		);
 		try {
 			SPFactory::db()->replace( 'spdb_language', $data );
@@ -402,9 +401,9 @@ class SPJoomlaLang
 		try {
 			$toSselect[ ] = 'language';
 			$params = array(
-				'sKey' => $key,
-				'oType' => $type,
-				'language' => array_unique( array( $lang, Sobi::DefLang(), 'en-GB' ) )
+					'sKey' => $key,
+					'oType' => $type,
+					'language' => array_unique( array( $lang, Sobi::DefLang(), 'en-GB' ) )
 			);
 			if ( $sid ) {
 				$params[ 'section' ] = $sid;
@@ -681,6 +680,7 @@ class SPJoomlaLang
 		// we won't have any label for this certain object
 		// Wed, Dec 18, 2013 09:57:04
 		//$params = array( 'id' => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );
+		static $store = array();
 		$params = array( $ident => $sids );
 		$result = array();
 		if ( $type ) {
@@ -692,7 +692,11 @@ class SPJoomlaLang
 		if ( $fields && count( $fields ) ) {
 			$params[ 'sKey' ] = $fields;
 		}
+		if ( isset( $store[ $lang ][ json_encode( $params ) ][ $ident ] ) ) {
+			return $store[ $lang ][ json_encode( $params ) ][ $ident ];
+		}
 		try {
+
 			$labels = SPFactory::db()
 					->select( $ident . ' AS id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
 					->loadAssocList();
@@ -719,6 +723,7 @@ class SPJoomlaLang
 					}
 				}
 			}
+			$store[ $lang ][ json_encode( $params ) ][ $ident ] = $result;
 		} catch ( SPError $x ) {
 			Sobi::Error( 'language', SPLang::e( 'CANNOT_TRANSLATE_OBJECT', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __CLASS__ );
 		}

@@ -24,18 +24,10 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  */
 final class SPPlugins
 {
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $_actions;
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $_plugins;
-	/**
-	 * @var string
-	 */
-	private $_section;
 
 	private function __construct()
 	{
@@ -63,7 +55,7 @@ final class SPPlugins
 			$condition[ ] = $adm . $t[ 0 ] . '.*';
 			$task = $t[ 0 ] . '.' . $t[ 1 ];
 		}
-		$this->_actions[ $task ] = null;
+		$this->_actions[ $task ] = true;
 		try {
 			$pids = $db->select( 'pid', 'spdb_plugin_task', array( 'onAction' => $condition, 'pid' => $enabled ) )
 					->loadResultArray();
@@ -176,7 +168,6 @@ final class SPPlugins
 				}
 			}
 		}
-//	    SPConfig::debOut( $action, true, false, true );
 		unset( $actions[ $count ] );
 		$count--;
 		return true;

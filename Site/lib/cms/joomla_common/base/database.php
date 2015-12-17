@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -63,7 +61,7 @@ class SPJoomlaDb
 
 	/**
 	 * Returns the error number
-	 *
+	 * @deprecated
 	 * @return int
 	 */
 	public function getErrorNum()
@@ -73,7 +71,7 @@ class SPJoomlaDb
 
 	/**
 	 * Returns the error message
-	 *
+	 * @deprecated
 	 * @return string
 	 */
 	public function getErrorMsg()
@@ -273,9 +271,7 @@ class SPJoomlaDb
 		try {
 			$this->exec( "DELETE FROM {$table} WHERE {$where} {$limit}" );
 		} catch ( Exception $e ) {
-		}
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
+			throw new SPException( $e->getMessage() );
 		}
 		return $this;
 	}
@@ -294,9 +290,7 @@ class SPJoomlaDb
 		try {
 			$this->exec( "DROP TABLE {$ifExists} {$table}" );
 		} catch ( Exception $e ) {
-		}
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
+			throw new SPException( $e->getMessage() );
 		}
 		return $this;
 	}
@@ -313,9 +307,7 @@ class SPJoomlaDb
 		try {
 			$this->exec( "TRUNCATE TABLE {$table}" );
 		} catch ( Exception $e ) {
-		}
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
+			throw new SPException( $e->getMessage() );
 		}
 		return $this;
 	}
@@ -623,9 +615,7 @@ class SPJoomlaDb
 		try {
 			$this->exec( "REPLACE INTO {$table} VALUES ({$v})" );
 		} catch ( Exception $e ) {
-		}
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
+			throw new SPException( $e->getMessage() );
 		}
 	}
 
@@ -662,9 +652,7 @@ class SPJoomlaDb
 		try {
 			$this->exec( "INSERT {$ignore} INTO {$table} VALUES ({$v})" );
 		} catch ( Exception $e ) {
-		}
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
+			throw new SPException( $e->getMessage() );
 		}
 		return $this;
 	}
@@ -726,9 +714,7 @@ class SPJoomlaDb
 		try {
 			$this->exec( "INSERT {$ignore} INTO {$table} ( `{$k}` ) VALUES ({$rows}) {$update}" );
 		} catch ( Exception $e ) {
-		}
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
+			throw new SPException( $e->getMessage() );
 		}
 		return $this;
 	}
@@ -769,9 +755,7 @@ class SPJoomlaDb
 		try {
 			$this->exec( "INSERT INTO {$table} ({$k}) VALUES ({$v}) ON DUPLICATE KEY UPDATE {$c}" );
 		} catch ( Exception $e ) {
-		}
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
+			throw new SPException( $e->getMessage() );
 		}
 		return $this;
 	}
@@ -783,7 +767,6 @@ class SPJoomlaDb
 	 */
 	public function getQuery()
 	{
-
 		return str_replace( $this->prefix, $this->db->getPrefix(), $this->db->getQuery() );
 	}
 
@@ -805,7 +788,7 @@ class SPJoomlaDb
 	public function query()
 	{
 		$this->count++;
-		return $this->db->query();
+		return $this->db->exec();
 	}
 
 	/**
@@ -820,14 +803,9 @@ class SPJoomlaDb
 			$r = $this->db->loadResult();
 			$this->count++;
 		} catch ( Exception $e ) {
+			throw new SPException( $e->getMessage() );
 		}
-
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
-		}
-		else {
-			return $r;
-		}
+		return $r;
 	}
 
 	/**
@@ -842,14 +820,9 @@ class SPJoomlaDb
 			$r = $this->db->loadResultArray();
 			$this->count++;
 		} catch ( Exception $e ) {
+			throw new SPException( $e->getMessage() );
 		}
-
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
-		}
-		else {
-			return $r;
-		}
+		return $r;
 	}
 
 	/**
@@ -865,14 +838,9 @@ class SPJoomlaDb
 			$r = $this->db->loadAssocList( $key );
 			$this->count++;
 		} catch ( Exception $e ) {
+			throw new SPException( $e->getMessage() );
 		}
-
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
-		}
-		else {
-			return $r;
-		}
+		return $r;
 	}
 
 	/**
@@ -887,18 +855,13 @@ class SPJoomlaDb
 			$r = $this->db->loadObject();
 			$this->count++;
 		} catch ( Exception $e ) {
+			throw new SPException( $e->getMessage() );
 		}
-
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
-		}
-		else {
-			if ( $r && is_object( $r ) ) {
-				$attr = get_object_vars( $r );
-				foreach ( $attr as $property => $value ) {
-					if ( is_string( $value ) && strstr( $value, '"' ) ) {
-						$r->$property = class_exists( 'SPLang' ) ? SPLang::clean( $value ) : $value;
-					}
+		if ( $r && is_object( $r ) ) {
+			$attr = get_object_vars( $r );
+			foreach ( $attr as $property => $value ) {
+				if ( is_string( $value ) && strstr( $value, '"' ) ) {
+					$r->$property = class_exists( 'SPLang' ) ? SPLang::clean( $value ) : $value;
 				}
 			}
 			return $r;
@@ -918,14 +881,9 @@ class SPJoomlaDb
 			$r = $this->db->loadObjectList( $key );
 			$this->count++;
 		} catch ( Exception $e ) {
+			throw new SPException( $e->getMessage() );
 		}
-
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
-		}
-		else {
-			return $r;
-		}
+		return $r;
 	}
 
 	/**
@@ -940,14 +898,9 @@ class SPJoomlaDb
 			$r = $this->db->loadRow();
 			$this->count++;
 		} catch ( Exception $e ) {
+			throw new SPException( $e->getMessage() );
 		}
-
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
-		}
-		else {
-			return $r;
-		}
+		return $r;
 	}
 
 	/**
@@ -963,19 +916,14 @@ class SPJoomlaDb
 			$r = $this->db->loadRowList( $key );
 			$this->count++;
 		} catch ( Exception $e ) {
+			throw new SPException( $e->getMessage() );
 		}
-
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
-		}
-		else {
-			return $r;
-		}
+		return $r;
 	}
 
 	/**
 	 * Returns an error statement
-	 *
+	 * @deprecated
 	 * @return string
 	 */
 	public function stderr()
@@ -1006,13 +954,9 @@ class SPJoomlaDb
 		try {
 			$r = $this->query();
 		} catch ( Exception $e ) {
+			throw new SPException( $e->getMessage() );
 		}
-		if ( $this->db->getErrorNum() ) {
-			throw new SPException( $this->db->stderr() );
-		}
-		else {
-			return $r;
-		}
+		return $r;
 	}
 
 	/**
@@ -1029,9 +973,7 @@ class SPJoomlaDb
 			try {
 				$cache[ $table ] = $this->loadResultArray();
 			} catch ( Exception $e ) {
-			}
-			if ( $this->db->getErrorNum() ) {
-				throw new SPException( $this->db->stderr() );
+				throw new SPException( $e->getMessage() );
 			}
 		}
 		return $cache[ $table ];
@@ -1143,7 +1085,7 @@ class SPJoomlaDb
 				$ex[ ] = "{$subject} = '{$value}'";
 			}
 			$exception = implode( 'OR', $ex );
-			$exception = 'OR '.$exception;
+			$exception = 'OR ' . $exception;
 		}
 		//		return " ( ( {$until} > '{$now}' OR {$until} IN ( '{$null}', '{$stamp}' ) ) {$since} {$pub} ) ";
 		return "( ( {$until} > NOW() OR {$until} IN ( '{$null}', '{$stamp}' ) ) {$since} {$pub} ) {$exception} ";

@@ -651,7 +651,10 @@ class SPConfigAdmCtrl extends SPController
 	protected function save( $apply, $clone = false )
 	{
 		$sid = Sobi::Section();
-		$this->authorise( $sid );
+		if ( $sid ) {
+			$this->_type = 'section';
+		}
+		$this->authorise( 'configure' );
 		if ( $sid ) {
 			$this->validate( 'config.general', array( 'task' => 'config.general', 'sid' => $sid ) );
 		}
