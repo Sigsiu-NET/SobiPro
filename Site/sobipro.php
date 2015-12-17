@@ -17,7 +17,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
-define( 'SOBI_TESTS', true );
+define( 'SOBI_TESTS', false );
 defined( '_JEXEC' ) || exit( 'Restricted access' );
 defined( 'DS' ) || define( 'DS', DIRECTORY_SEPARATOR );
 //define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15'  ) );

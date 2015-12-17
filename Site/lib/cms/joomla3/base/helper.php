@@ -68,7 +68,6 @@ class SPCMSHelper3 extends SPCMSHelper
 		}
 		$version = new JVersion();
 		$v = explode( '.', $version->RELEASE );
-		return array( 'major' => 3, 'minor' => 4, 'build' => 5, 'rev' => 0 );
 		return array( 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => $version->DEV_LEVEL, 'rev' => 0 );
 	}
 
