@@ -39,6 +39,10 @@ Legend:
     (+) Backend ACL
     (+) New template theme 'terra'
     (+) Specific SobiPro Icon for Administrator Header
+    (+) PHP 7 compatibility
+    (+) Joomla! 3.5 compatibility
+    (+) Selection if the user may delete the click counter of web links (URL field)
+    (+) Ajax navigation in listing views
 
     (-) jQuery-UI library removed
 
@@ -48,6 +52,8 @@ Legend:
     (!) Field labels now within CSS class
     (!) Font Awesome 4 updated to version 4.5.0
     (!) Small CSS improvements in backend
+    (!) Editing the fields in default templates moved to a separate template (editfields.xsl)
+    (!) jQuery updated to 1.11.3
 
     (#) Missing default template configuration files added
     (#) Duplicate icons from Font Awesome 4 removed
@@ -66,6 +72,7 @@ Legend:
     (#) Issue with non-latin aliases (Issue #1515)
     (#) Globally disabled application still enabled in sections (Issue #1514)
     (#) All fields in backend entry form don't get the set width
+    (#) Payment notifications aren't sent after entry edition (Issue #1507)
 
     (*) Unregistered user with permission to edit "own" entry can access the edit form of entries without assigned owner
 

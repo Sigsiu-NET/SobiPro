@@ -20,6 +20,7 @@
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
 	<xsl:include href="../common/topmenu.xsl" />
 	<xsl:include href="../common/messages.xsl" />
+	<xsl:include href="../common/editfields.xsl" />
 
 	<xsl:template match="/entry_form">
         <div>
@@ -35,103 +36,9 @@
             </xsl:variable>
 			<div class="form-{$form-orientation}">
 				<xsl:for-each select="entry/fields/*">
-					<xsl:if test="( name() != 'save_button' ) and ( name() != 'cancel_button' )">
-						<xsl:variable name="fieldId" select="name(.)" />
-						<xsl:if test="string-length( fee )">
-							<div class="form-group payment-message">
-								<label class="col-sm-2 control-label">
-	    							<div class="paybox">
-	    							    <span>
-    									    <input name="{$fieldId}Payment" id="{$fieldId}-payment" value="" type="checkbox" class="payment-box" />
-                                        </span>
-                                    </div>
-								</label>
-								<div class="col-sm-10">
-                                    <div class="alert spAlert">
-                                        <xsl:value-of select="fee_msg" /><xsl:text> </xsl:text>
-                                        <xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )" />
-                                    </div>
-                                </div>
-							</div>
-						</xsl:if>
-
-                        <xsl:variable name="offset">
-                        <xsl:choose>
-                            <xsl:when test="label/@show = 1"> </xsl:when>
-                            <xsl:otherwise> col-sm-offset-2</xsl:otherwise>
-                        </xsl:choose>
-                        </xsl:variable>
-
-                        <div class="form-group {@css-edit}" id="{$fieldId}-container">
-                            <xsl:if test="label/@show = 1">
-                                <label class="col-sm-2 control-label" for="{$fieldId}-input-container">
-                                    <xsl:choose>
-                                        <xsl:when test="string-length( description ) and //config/help-position/@value = 'popup'">
-                                            <a href="#" rel="popover" data-placement="top" data-content="{description}" data-original-title="{label}">
-                                                <xsl:value-of select="label" />
-                                            </a>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="label" />
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                    <xsl:if test="@required = 1 and //config/required-star/@value = 1">
-                                        <sup><span class="star"><i class="icon-star"></i></span></sup>
-                                    </xsl:if>
-                                </label>
-							</xsl:if>
-							<xsl:variable name="colwidth">
-                                <xsl:choose>
-                                    <xsl:when test="string-length( @width )">
-                                        <xsl:value-of select="@width" />
-                                    </xsl:when>
-                                    <xsl:otherwise>10</xsl:otherwise>
-                                </xsl:choose>
-							</xsl:variable>
-							<div class="col-sm-{$colwidth}{$offset}" id="{$fieldId}-input-container">
-                                <xsl:if test="string-length( description ) and //config/help-position/@value = 'above'">
-                                    <div class="help-block">
-                                        <xsl:value-of select="description" />
-                                    </div>
-                                </xsl:if>
-								<div>
-								    <xsl:choose>
-                                        <xsl:when test="string-length( @suffix )">
-                                            <xsl:attribute name="class">input-group</xsl:attribute>
-                                            <xsl:choose>
-                                                <xsl:when test="data/@escaped">
-                                                    <xsl:value-of select="data" disable-output-escaping="yes" />
-                                                </xsl:when>
-                                                <xsl:otherwise>
-                                                    <xsl:copy-of select="data/*" />
-                                                </xsl:otherwise>
-                                            </xsl:choose>
-                                            <div class="input-group-addon">
-                                                <xsl:value-of select="@suffix" />
-                                            </div>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:choose>
-                                                <xsl:when test="data/@escaped">
-                                                    <xsl:value-of select="data" disable-output-escaping="yes" />
-                                                </xsl:when>
-                                                <xsl:otherwise>
-                                                    <xsl:copy-of select="data/*" />
-                                                </xsl:otherwise>
-                                            </xsl:choose>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </div>
-                                <div id="{$fieldId}-message" class="hide message-lightbulb"></div>
-
-                                <xsl:if test="string-length( description ) and //config/help-position/@value = 'below'">
-                                    <div class="help-block">
-                                        <xsl:value-of select="description" />
-                                    </div>
-                                </xsl:if>
-                            </div>
-						</div>
-					</xsl:if>
+					<xsl:call-template name="editfield">
+						<xsl:with-param name="fieldname" select="." />
+					</xsl:call-template>
 				</xsl:for-each>
 			</div>
             <xsl:if test="//config/required-star/@value = 1">
