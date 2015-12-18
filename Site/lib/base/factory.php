@@ -16,6 +16,15 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+SPLoader::loadClass( 'base.registry' );
+SPLoader::loadClass( 'base.mainframe' );
+SPLoader::loadClass( 'base.config' );
+SPLoader::loadClass( 'base.cache' );
+SPLoader::loadClass( 'base.database' );
+SPLoader::loadClass( 'base.user' );
+SPLoader::loadClass( 'cms.base.user' );
+SPLoader::loadClass( 'cms.base.lang' );
+SPLoader::loadClass( 'base.header' );
 
 /**
  * @author Radek Suski
@@ -29,8 +38,10 @@ abstract class SPFactory
 	 */
 	public static function & mainframe()
 	{
-		SPLoader::loadClass( 'base.mainframe' );
-		$class = SPLoader::loadClass( 'cms.base.mainframe' );
+		static $class = null;
+		if ( !( $class ) ) {
+			$class = SPLoader::loadClass( 'cms.base.mainframe' );
+		}
 		return $class::getInstance();
 	}
 
@@ -60,7 +71,6 @@ abstract class SPFactory
 			}
 			SPFactory::registry()->set( 'current_section', $path[ 0 ] );
 		}
-		SPLoader::loadClass( 'base.cache' );
 		return SPCache::getInstance( $sid );
 	}
 
@@ -69,7 +79,10 @@ abstract class SPFactory
 	 */
 	public static function CmsHelper()
 	{
-		$class = SPLoader::loadClass( 'cms.base.helper' );
+		static $class = null;
+		if ( !( $class ) ) {
+			$class = SPLoader::loadClass( 'cms.base.helper' );
+		}
 		return $class::getInstance();
 	}
 
@@ -78,7 +91,6 @@ abstract class SPFactory
 	 */
 	public static function & config()
 	{
-		SPLoader::loadClass( 'base.config' );
 		return SPConfig::getInstance();
 	}
 
@@ -87,7 +99,6 @@ abstract class SPFactory
 	 */
 	public static function & db()
 	{
-		SPLoader::loadClass( 'base.database' );
 		$class = SPLoader::loadClass( 'cms.base.database' );
 		return $class::getInstance();
 	}
@@ -97,8 +108,6 @@ abstract class SPFactory
 	 */
 	public static function & user()
 	{
-		SPLoader::loadClass( 'base.user' );
-		SPLoader::loadClass( 'cms.base.user' );
 		return SPUser::getCurrent();
 	}
 
@@ -107,7 +116,6 @@ abstract class SPFactory
 	 */
 	public static function & registry()
 	{
-		SPLoader::loadClass( 'base.registry' );
 		return SPRegistry::getInstance();
 	}
 
@@ -134,7 +142,6 @@ abstract class SPFactory
 	 */
 	public static function & lang()
 	{
-		SPLoader::loadClass( 'cms.base.lang' );
 		return SPLang::getInstance();
 	}
 
@@ -143,7 +150,6 @@ abstract class SPFactory
 	 */
 	public static function & header()
 	{
-		SPLoader::loadClass( 'base.header' );
 		return SPHeader::getInstance();
 	}
 

@@ -788,7 +788,7 @@ class SPJoomlaDb
 	public function query()
 	{
 		$this->count++;
-		return $this->db->exec();
+		return $this->db->execute();
 	}
 
 	/**

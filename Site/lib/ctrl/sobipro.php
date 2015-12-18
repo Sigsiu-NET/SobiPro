@@ -53,10 +53,6 @@ final class SobiProCtrl
 	 */
 	private $_sid = 0;
 	/**
-	 * @var SPUser
-	 */
-	private $_user = null;
-	/**
 	 * @var SPController - can be also array of
 	 */
 	private $_ctrl = null;
