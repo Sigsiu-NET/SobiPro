@@ -155,7 +155,7 @@ final class SPPlugins
 			}
 
 			/* if there were any plugin for this action, check if these are loaded */
-			if ( count( $this->_actions[ $task ] ) ) {
+			if ( is_array( $this->_actions[ $task ] ) && count( $this->_actions[ $task ] ) ) {
 				foreach ( $this->_actions[ $task ] as $plugin ) {
 					/* in case this plugin wasn't initialised */
 					if ( !( isset( $this->_plugins[ $plugin ] ) ) ) {
