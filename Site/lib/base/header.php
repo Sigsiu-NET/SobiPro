@@ -471,7 +471,7 @@ final class SPHeader
 					else {
 						$cssFile = SPLoader::CssFile( $file, $adm, true, true, $ext );
 					}
-					if ( Sobi::Cfg( 'cache.include_css_files', false ) && !( $media || $params || $force || $adm || defined( 'SOBIPRO_ADM' ) ) ) {
+					if ( Sobi::Cfg( 'cache.include_css_files', false ) && !( $params || $force || $adm || defined( 'SOBIPRO_ADM' ) ) ) {
 						if ( !( $override ) ) {
 							$cssFile = SPLoader::CssFile( $file, $adm, true, false, $ext );
 						}
@@ -781,7 +781,7 @@ final class SPHeader
 					SPFs::write( SOBI_PATH . "/var/css/{$check}.css", $cssContent );
 				}
 				$cfile = SPLoader::CssFile( 'front.var.css.' . $check, false, true, true );
-				$this->cssFiles[ ++$this->count ] = "<link rel=\"stylesheet\" href=\"{$cfile}\" type=\"text/css\" />";
+				$this->cssFiles[ ++$this->count ] = "<link rel=\"stylesheet\" href=\"{$cfile}\" media=\"all\" type=\"text/css\" />";
 			}
 		}
 		return $this->cssFiles;
