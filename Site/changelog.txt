@@ -27,7 +27,7 @@ Legend:
 
 
 -------------------
-1.2.1 (21 Dezember 2015)
+1.2.1 (22 Dezember 2015)
 -------------------
     (+) Fallback for wrong path setting in image field
     (+) B2 input size styles implemented in B3 default template
@@ -74,6 +74,7 @@ Legend:
     (#) Globally disabled application still enabled in sections (Issue #1514)
     (#) All fields in backend entry form don't get the set width
     (#) Payment notifications aren't sent after entry edition (Issue #1507)
+    (#) New template was loaded before Bootstrap with CSS cache on (styling issues)
 
     (*) Unregistered user with permission to edit "own" entry can access the edit form of entries without assigned owner
 
