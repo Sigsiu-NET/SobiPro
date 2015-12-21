@@ -55,7 +55,7 @@ final class SPPlugins
 			$condition[ ] = $adm . $t[ 0 ] . '.*';
 			$task = $t[ 0 ] . '.' . $t[ 1 ];
 		}
-		$this->_actions[ $task ] = true;
+		$this->_actions[ $task ] = array();
 		try {
 			$pids = $db->select( 'pid', 'spdb_plugin_task', array( 'onAction' => $condition, 'pid' => $enabled ) )
 					->loadResultArray();
@@ -150,7 +150,7 @@ final class SPPlugins
 		if ( $count < 2 || substr( $action, 0, 3 ) == 'App' ) {
 
 			/* load all plugins having method for this action */
-			if ( !( isset( $this->_actions[ $task ] ) ) ) {
+			if ( !( isset( $this->_actions[ $task ] ) ) || !( count( $this->_actions[ $task ] ) ) ) {
 				$this->load( $task );
 			}
 

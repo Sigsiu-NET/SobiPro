@@ -627,7 +627,7 @@ class SPField extends SPObject
 				}
 			}
 		}
-		if ( SPRequest::task() == 'entry.edit' ) {
+		if ( in_array( SPRequest::task(), array( 'entry.save', 'entry.edit', 'entry.submit' ) ) ) {
 			if ( !( $this->isFree ) && SPRequest::task() == 'entry.edit' ) {
 				/* in case we are editing - check if this field wasn't paid already */
 				SPLoader::loadClass( 'services.payment' );

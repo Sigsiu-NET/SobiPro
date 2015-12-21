@@ -797,7 +797,8 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			case 'setFree':
 			case 'toggle':
 				$r = true;
-				$this->authorise( $this->_task );
+				$this->_type = 'section';
+				$this->authorise( 'configure' );
 				SPFactory::cache()->cleanSection();
 				$this->response( Sobi::Back(), $this->changeState( $task ), true );
 				break;

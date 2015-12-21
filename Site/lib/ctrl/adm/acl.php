@@ -41,7 +41,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 */
 	public function __construct()
 	{
-		if ( !( Sobi::Can( 'cms.admin' ) ) ) {
+		if ( !( Sobi::Can( 'cms.admin' ) ) && !( Sobi::Can( 'cms.apps' ) ) ) {
 			Sobi::Error( 'ACL', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 403, __LINE__, __FILE__ );
 			exit();
 		}
@@ -220,7 +220,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 * @param bool $apply
 	 * @param bool $clone
 	 */
-	protected function save( $apply,$clone = false )
+	protected function save( $apply, $clone = false )
 	{
 		Sobi::Trigger( 'Save', 'Acl', array( &$this ) );
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
