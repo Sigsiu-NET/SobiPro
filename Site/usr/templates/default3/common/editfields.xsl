@@ -34,7 +34,7 @@
 						</div>
 					</div>
 					<div class="controls">
-						<div class="alert spAlert span10">
+						<div class="alert spAlert span5">
 							<xsl:value-of select="$fieldname/fee_msg" /><xsl:text> </xsl:text>
 							<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )" />
 						</div>
