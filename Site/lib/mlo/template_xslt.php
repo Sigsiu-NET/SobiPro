@@ -114,13 +114,13 @@ class SPTemplateXSLT implements SPTemplate
 		if ( $template ) {
 			try {
 				$tplDoc = new DOMDocument();
-				if ( !( $style = $tplDoc->load( $template ) ) ) {
+				if ( !( $tplDoc->load( $template ) ) ) {
 					Sobi::Error( 'template', SPLang::e( 'CANNOT_PARSE_TEMPLATE_FILE', $template ), SPC::ERROR, 500, __LINE__, __FILE__ );
 				}
 			} catch ( DOMException $x ) {
 				Sobi::Error( 'template', SPLang::e( 'CANNOT_LOAD_TEMPLATE_FILE', $template, $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
-			Sobi::Trigger( 'TemplateEngine', 'LoadStyle', array( &$style ) );
+			Sobi::Trigger( 'TemplateEngine', 'LoadStyle', array( &$tplDoc ) );
 			$processor = new XSLTProcessor();
 			$processor->setParameter( 'block', 'xmlns', 'http://www.w3.org/1999/xhtml' );
 			$processor->registerPHPFunctions( $functions );
