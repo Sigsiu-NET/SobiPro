@@ -122,7 +122,7 @@
                                     <!-- name="settings[folder.configfile][task][setting]" value="settings.folder-configfile.task.setting" -->
                                     <field type="select" label="TP.CONFIG.ENTRY_CSS_CLASS" name="settings[entry.edit][entry-edit][form-class]" selected="settings.entry-edit.entry-edit.form-class" class="input-large">
                                         <values>
-                                            <option value="inline" label="TP.CONFIG.ENTRY_CSS_CLASS_INLINE" />
+                                            <!--<option value="inline" label="TP.CONFIG.ENTRY_CSS_CLASS_INLINE" />-->
                                             <option value="horizontal" label="TP.CONFIG.ENTRY_CSS_CLASS_HORIZONTAL" />
                                         </values>
                                     </field>
