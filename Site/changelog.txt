@@ -27,7 +27,7 @@ Legend:
 
 
 -------------------
-1.2.1 (22 Dezember 2015)
+1.2.1 (22 December 2015)
 -------------------
     (+) Fallback for wrong path setting in image field
     (+) B2 input size styles implemented in B3 default template
