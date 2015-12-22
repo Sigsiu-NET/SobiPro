@@ -653,12 +653,14 @@ class SPConfigAdmCtrl extends SPController
 		$sid = Sobi::Section();
 		if ( $sid ) {
 			$this->_type = 'section';
-		}
-		$this->authorise( 'configure' );
-		if ( $sid ) {
+			$this->authorise( 'configure' );
 			$this->validate( 'config.general', array( 'task' => 'config.general', 'sid' => $sid ) );
 		}
 		else {
+			if ( !( Sobi::Can( 'cms.admin' ) ) ) {
+				Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+				exit;
+			}
 			$this->validate( 'config.global', array( 'task' => 'config.global' ) );
 		}
 		$fields = array();
