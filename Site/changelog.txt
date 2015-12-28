@@ -26,6 +26,11 @@ Legend:
  (!) - Change
 
 
+1.2.2 ()
+-------------------
+    (#) Visibility problem with datepicker in modal window
+
+
 -------------------
 1.2.1 (22 December 2015)
 -------------------
