@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
@@ -73,21 +73,28 @@
 									<field type="select" label="SECN.CFG.SECTION_TEMPLATE" name="spcfg[section.template]" selected="section.template" values="templatesList" class="input-xlarge" />
 									<field type="toggle" name="spcfg[general.top_menu]" value="general.top_menu" label="SECN.CFG.SHOW_TOP_MENU" prefix="show" />
 									<field type="toggle" name="spcfg[general.parse_template_content]" value="general.parse_template_content" label="SECN.CFG.PARSE_TPL_CONTENT" prefix="yes_no" />
-									<field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled" label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="yes_no" />
-                                    <field type="toggle" name="spcfg[template.bootstrap3-styles]" value="template.bootstrap3-styles" label="SECN.CFG.SETTINGS_BOOTSTRAP3STYLES" prefix="yes_no" />
-									<field type="toggle" name="spcfg[template.bootstrap3-load]" value="template.bootstrap3-load" label="SECN.CFG.SETTINGS_BOOTSTRAP3STYLES_LOAD" prefix="yes_no" />
-
-									<field type="checkBoxGroup" label="SECN.CFG.LOAD_ICONS_FONTS" name="spcfg[template.icon_fonts_arr]" selected="template.icon_fonts_arr" class="input-xlarge">
-										<values>
-											<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4" />
-											<option value="font-google-materials" label="SECN.CFG.ICONS_MATERIAL" />
-											<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3" />
-											<option value="font-awesome-3-local" label="SECN.CFG.ICONS_FONT_AWESOME_3_LOCAL" />
-										</values>
-									</field>
 								</fieldset>
+
 								<div style="margin-top:40px;"></div>
 								<tabs>
+									<tab label="SECN.CFG.GENERAL_SETTINGS">
+										<fieldset label="SECN.CFG.SETTINGS_BS">
+											<field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled" label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="noload" />
+											<field type="toggle" name="spcfg[template.bootstrap3-load]" value="template.bootstrap3-load" label="SECN.CFG.SETTINGS_BOOTSTRAP3_LOAD" prefix="load" />
+											<field type="toggle" name="spcfg[template.bootstrap3-source]" value="template.bootstrap3-source" label="SECN.CFG.SETTINGS_BOOTSTRAP3SOURCE" prefix="source" />
+											<field type="toggle" name="spcfg[template.bootstrap3-styles]" value="template.bootstrap3-styles" label="SECN.CFG.SETTINGS_BOOTSTRAP3STYLES" prefix="bootstrap" />
+										</fieldset>
+										<fieldset label="SECN.CFG.SETTINGS_FONTS">
+											<field type="checkBoxGroup" label="SECN.CFG.LOAD_ICONS_FONTS" name="spcfg[template.icon_fonts_arr]" selected="template.icon_fonts_arr" class="input-xlarge">
+												<values>
+													<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4" />
+													<option value="font-google-materials" label="SECN.CFG.ICONS_MATERIAL" />
+													<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3" />
+													<option value="font-awesome-3-local" label="SECN.CFG.ICONS_FONT_AWESOME_3_LOCAL" />
+												</values>
+											</field>
+										</fieldset>
+									</tab>
 									<tab label="SECN.CFG.CLISTING_SETTINGS">
 										<fieldset>
 											<field type="toggle" name="spcfg[category.show_desc]" value="category.show_desc" label="SECN.CFG.SHOW_CATEGORY_DESC" prefix="show" />
@@ -158,6 +165,7 @@
 											</field>
 										</fieldset>
 										<fieldset label="SECN.CFG.ENTRY_SETTINGS">
+											<div style="margin-top:20px;"></div>
 											<message label="SECN.DEPRECATED" type="danger" dismiss-button="false" class="spConfigAlert" />
 
 											<field type="select" label="ORDER_BY" name="spcfg[list.entries_ordering]" selected="list.entries_ordering" values="entriesOrdering" class="input-xlarge" />

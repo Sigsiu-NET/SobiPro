@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -106,8 +108,14 @@ final class SPHeader
 			$this->addCssFile( array( 'sobipro' ) )
 					->addJsFile( array( 'sobipro', 'jquery', 'jqnc' ) );
 			if ( Sobi::Cfg( 'template.bootstrap3-load', false ) && !defined( 'SOBIPRO_ADM' ) ) {
-				$this->addHeadLink( Sobi::Cfg( 'template.bs3_css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css' ), null, null, 'stylesheet' )
-						->addJsUrl( Sobi::Cfg( 'template.bs3_js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js' ) );
+				if ( Sobi::Cfg( 'template.bootstrap3-source', true )) { //true=local, false=CDN
+					$this->addCssFile('b3bootstrap.b3bootstrap')
+						->addJsFile('b3bootstrap');
+				}
+				else {
+					$this->addHeadLink(Sobi::Cfg('template.bs3_css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'), null, null, 'stylesheet')
+						->addJsUrl(Sobi::Cfg('template.bs3_js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'));
+				}
 			}
 			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
 			if ( count( $fonts ) ) {
