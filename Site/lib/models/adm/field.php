@@ -131,6 +131,9 @@ final class SPAdmField extends SPField
 			}
 		}
 
+		$baseIndexes = array_keys( $base );
+		$attrIndexes = array_keys( $attr );
+		$additionalInfo = array_diff( $attrIndexes, $baseIndexes );
 		if ( $this->_type && method_exists( $this->_type, 'save' ) ) {
 			$this->_type->save( $base );
 		}

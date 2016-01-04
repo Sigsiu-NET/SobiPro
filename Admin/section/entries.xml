@@ -84,7 +84,7 @@
 						<cell type="checkbox" rel="e_sid" class="SpCellCenter" />
 						<cell label="HEADER_ENTRIES_NAME" type="text" />
 						<cells value="customHeader" class="SpCellCenter" type="text" />
-						<cell label="HEADER_ENTRIES_STATE" condition="acl.entry.header" type="text" class="SpCellCenter" />
+						<cell label="HEADER_ENTRIES_STATE" condition="acl.entry.edit" type="text" class="SpCellCenter" />
 						<cell label="HEADER_ENTRIES_APPROVAL" condition="acl.entry.approve" type="text" class="SpCellCenter" />
 						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter" />
 						<cell label="HEADER_ENTRIES_REJECT" type="text" condition="acl.entry.approve" class="SpCellCenter" />

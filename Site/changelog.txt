@@ -37,6 +37,7 @@ Legend:
     (#) Visibility problem with datepicker in modal window
     (#) Wrong condition for while loop in SPJoomlaFs::copy
     (#) Images aren't saved from the back-end (Issue #1552)
+    (#) 'State' header text is missing in 'All entries' screen (Issue #1559)
 
 
 -------------------
