@@ -30,6 +30,7 @@ Legend:
 1.2.2 ()
 -------------------
     (+) Possibility to load a local version of Bootstrap 3 with 'SobiPro' namespace
+    (+) Information box when install/update SobiPro
 
     (!) Bootstrap 3 updated to version 3.3.6
 

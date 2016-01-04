@@ -41,18 +41,19 @@ SobiPro.jQuery().ready( function ()
 	} );
 	SobiPro.jQuery( '#SobiPro' ).find( '.next' ).click( function ()
 	{
-		if ( (SPWarnings || SPErrors) && (( new Date().getTime() - SPStartTime ) < 3000 ) ) {
-			alert( SobiPro.Txt( 'REQUIREMENT_READ_PLEASE' ).replace( '%d', Math.ceil( ( new Date().getTime() - SPStartTime ) / 1000 ) ) );
-			SPStartTime = 0;
-		}
-		else {
+		//it is annoying
+		//if ( (SPWarnings || SPErrors) && (( new Date().getTime() - SPStartTime ) < 3000 ) ) {
+		//	alert( SobiPro.Txt( 'REQUIREMENT_READ_PLEASE' ).replace( '%d', Math.ceil( ( new Date().getTime() - SPStartTime ) / 1000 ) ) );
+		//	SPStartTime = 0;
+		//}
+		//else {
 			try {
 				window.top.location.href = SobiPro.jQuery( '#SP_redirect' ).val();
 			}
 			catch ( e ) {
 			}
 			document.location = SobiPro.jQuery( '#SP_redirect' ).val();
-		}
+		//}
 		return false;
 	} );
 } );

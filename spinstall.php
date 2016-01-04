@@ -1,22 +1,20 @@
 <?php
 /**
- * @version: $Id$
  * @package: SobiPro Component for Joomla!
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
- * Url: http://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * Url: https://www.Sigsiu.NET
+ *
+ * @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+ * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
  */
 
 defined( '_JEXEC' ) || exit( 'Restricted access' );
@@ -42,7 +40,7 @@ class com_sobiproInstallerScript
 		// Installing component manifest file version
 		$this->release = $adapter->get( 'manifest' )->version;
 		// Show the essential information at the install/update back-end
-		echo '<h3>Installing SobiPro version ' . $this->release . ' ...';
+		echo '<h2>Installing SobiPro version ' . $this->release . ' ...</h2>';
 	}
 
 	/**
@@ -215,7 +213,11 @@ class com_sobiproInstallerScript
 //			}
 //		}
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.2.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
-		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px;"></iframe>';
+
+		echo '<div class="alert alert-info" style="margin-top: 20px;"><h3>Thank you for updating SobiPro!</h3><p>SobiPro is checking your system now, please see if there are errors or warnings. If the system check reports errors, your SobiPro installation will probably not work. If you see warnings, some functionality of SobiPro can be disturbed or malfunction. In this case you should take a look to the <a href="https://www.sigsiu.net/sobipro/requirements"><strong>Requirements for SobiPro</strong></a> page on our website.</p>
+<p>You can install languages directly from our <a href="index.php?option=com_sobipro&task=extensions.browse"><strong>Repository</strong></a> or download them from our <a href="https://www.sigsiu.net/download/languages"><strong>website</strong></a> and install it in the <a href="index.php?option=com_sobipro&task=extensions.installed"><strong>SobiPro Application Manager</strong></a>.</p></div>';
+
+		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px; padding-top: 10px;"></iframe>';
 	}
 
 	/**
@@ -253,7 +255,10 @@ class com_sobiproInstallerScript
 			$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD  `editLimit` INT( 11 );' );
 			$db->execute();
 		}
-		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px;"></iframe>';
+		echo '<div class="alert alert-info" style="margin-top: 20px;"><h3>Welcome to SobiPro!</h3><p>SobiPro is checking your system now, please see if there are errors or warnings. If the system check reports errors, your SobiPro installation will probably not work. If you see warnings, some functionality of SobiPro can be disturbed or malfunction. In this case you should take a look to the <a href="https://www.sigsiu.net/sobipro/requirements"><strong>Requirements for SobiPro</strong></a> page on our website.</p>
+<p>You can install languages directly from our <a href="index.php?option=com_sobipro&task=extensions.browse"><strong>Repository</strong></a> or download them from our <a href="https://www.sigsiu.net/download/languages"><strong>website</strong></a> and install it in the <a href="index.php?option=com_sobipro&task=extensions.installed"><strong>SobiPro Application Manager</strong></a>.</p></div>';
+
+		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px; padding-top: 10px;"></iframe>';
 	}
 
 	protected function installPlugins( $source )
@@ -289,3 +294,5 @@ class com_sobiproInstallerScript
 		JFolder::delete( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) );
 	}
 }
+
+
