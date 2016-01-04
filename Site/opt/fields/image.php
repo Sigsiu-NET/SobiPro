@@ -421,10 +421,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		 * */
 
 		if ( !( $data ) ) {
-			$directory = null;
-			if ( isset( $store[ $this->nid ] ) ) {
-				$directory = SPRequest::string( $this->nid, $store[ $this->nid ], false, $request );
-			}
+			$directory = SPRequest::string( $this->nid, null, false, $request );
 			if ( strlen( $directory ) ) {
 				list( $data, $dirName, $files, $coordinates ) = $this->getAjaxFiles( $directory );
 				if ( count( $files ) ) {
