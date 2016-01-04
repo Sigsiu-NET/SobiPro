@@ -34,6 +34,7 @@ Legend:
     (!) Bootstrap 3 updated to version 3.3.6
 
     (#) Visibility problem with datepicker in modal window
+    (#) Wrong condition for while loop in SPJoomlaFs::copy
 
 
 -------------------

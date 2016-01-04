@@ -95,9 +95,11 @@ abstract class SPJoomlaFs
 		$path = explode( '/', str_replace( array( SOBI_ROOT, str_replace( '\\', '/', SOBI_ROOT ) ), null, $destination ) );
 		$part = SOBI_ROOT;
 		$i = count( $path );
-		// yeah I know ... shame on me :(
-		while ( isset( $path[ $i ] ) && !( @$path[ $i ] ) ) {
-			unset( $path[ $i-- ] );
+		/** clean the path */
+		for ( $i; $i != 0; $i-- ) {
+			if( isset( $path[ $i ] ) && !( $path[ $i ] ) ) {
+				unset( $path[ $i ] );
+			}
 		}
 		array_pop( $path );
 		if ( !( is_string( $path ) ) && count( $path ) ) {
