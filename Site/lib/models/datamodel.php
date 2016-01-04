@@ -39,7 +39,6 @@ interface SPDataModel
 	public function isCheckedOut();
 	public function loadTable();
 	public function save();
-	public function & set( $var, $val );
 	public function type();
 	public function update();
 }
