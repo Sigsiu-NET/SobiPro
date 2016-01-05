@@ -48,6 +48,7 @@
 
 @inverse: standard;
 @back-color: #FFFFFF;
+@fontsize: 14px;
 
 // same for all themes if not set
 @error-color: #A30000;
@@ -233,7 +234,7 @@
 // ----------------------------------------
 .SobiPro {
 	padding: 4px;
-	font-size: 14px;
+	font-size: @fontsize;
 
 	& when (@inverse = inverse) {
 		font-size: 110%;
@@ -246,6 +247,10 @@
 	}
 	& when (@inverse = inverse) {
 		color: @font-color;
+	}
+	//without that the topmenu items are not selectable
+	.navbar-collapse.collapse {
+		overflow: hidden!important;
 	}
 }
 /* form-inline mode needs to be checked
@@ -282,7 +287,7 @@
 }
 .SobiPro .input-prepend .alert,
 .SobiPro .input-append .alert {
-	font-size: 14px;
+	font-size: @fontsize;
 }
 .SobiPro .page-header {
 	margin-bottom: 10px;
@@ -292,7 +297,7 @@
 	border-bottom: 1px solid lighten(@base-color, 50%);
 }
 .SobiPro .help-block {
-	font-size: 13px;
+	font-size: calc(@fontsize - 1px);
 	color: @font-color;
 }
 .SobiPro .well {
@@ -305,6 +310,7 @@
 	& when (@inverse = inverse) {
 		font-weight: 400;
 	}
+	font-size: @fontsize;
 }
 .SobiPro .label-info,
 .SobiPro .badge-info {
@@ -859,7 +865,7 @@
 // Looks as a normal text (removal of the message design)
 .SobiPro .alert-normal {
 	padding: 10px 0 10px 0;
-	font-size: 15px;
+	font-size:calc(@fontsize + 1px);
 	color: @font-color;
 	background-color: @back-color;
 	border-color: @back-color;
@@ -900,7 +906,7 @@
 }
 .SobiPro .nav-tabs,
 .SobiPro .nav-pills {
-	font-size: 15px;
+	font-size: calc(@fontsize + 1px);
 }
 .SobiPro .nav-pills > .active > a,
 .SobiPro .nav-pills > .active > a:hover,
@@ -929,7 +935,7 @@
 	z-index: auto;
 
 	background-color: @base-color;
-	font-size: 15px;
+	font-size: calc(@fontsize + 1px);
 	border: none;
 	& when (@corners = rounded) {
 		border-radius: 4px;
@@ -1028,7 +1034,7 @@
 }
 .SobiPro .spCatname p {
 	margin: 5px 0 0 0;
-	font-size: 15px;
+	font-size: calc(@fontsize + 1px);
 }
 .SobiPro .spCaticon i {
 	color: @base-color;
@@ -1281,7 +1287,7 @@
 // Entry details view
 // ----------------------------------------
 .SobiPro .spDetails {
-	font-size: 14px;
+	font-size: @fontsize;
 }
 .SobiPro .spDetailEntry .spManage {
 	margin-right: 7px;
@@ -1309,14 +1315,14 @@
 // Popover in General
 // ----------------------------------------
 .SobiPro .popover {
-	font-size: 13px;
+	font-size: calc(@fontsize - 1px);
 	font-weight: normal;
 	line-height: 20px;
 }
 .SobiPro .popover-inner .spclose {
 	padding-right: 8px;
 	padding-top: 5px;
-	font-size: 15px;
+	font-size: calc(@fontsize + 1px);
 	text-shadow: none;
 	& when (@inverse = inverse) {
 		opacity: 0.8;
@@ -1373,7 +1379,7 @@
 .SobiPro .spEntryEdit .star {
 	color: @important-color;
 	padding-left: 2px;
-	font-size: 14px;
+	font-size: @fontsize;
 }
 .SobiPro .spEntryEdit .message-lightbulb {
 	left: 0;
@@ -1755,6 +1761,9 @@
 .SobiPro div.spClassViewAggregation a {
 	color: @active-color;
 }
+.SobiPro .bootstrap-tagsinput input {
+	width: initial;
+}
 
 // Review and Rating App
 // -----------------------------------------------
@@ -2025,7 +2034,7 @@
 	.SobiPro .sp-search-phrases .btn {
 		//PhpStorm meldet hier fälschlicherweise einen Fehler
 		width: calc(100% / 3);
-		font-size: 13px;
+		font-size: calc(@fontsize - 1px);
 	}
 	.SobiPro input[name="sp_search_for"] {
 		margin-bottom: 10px;
