@@ -68,8 +68,8 @@
 	<xsl:template name="status">
 		<xsl:param name="entry"/>
 		<xsl:if test="$entry/approved = 0 or $entry/state = 'unpublished'">
-			<xsl:value-of select="php:function( 'SobiPro::AddJsFile', 'bootstrap,sobipro.tooltip' )"/>
-			<xsl:value-of select="php:function( 'SobiPro::AddCSSFile', 'bootstrap.bootstrap' )"/>
+			<xsl:value-of select="php:function( 'SobiPro::AddJsFile', 'sobipro.tooltip' )"/>
+			<!--<xsl:value-of select="php:function( 'SobiPro::AddCSSFile', 'bootstrap.bootstrap' )"/>-->
 		</xsl:if>
 		<xsl:if test="$entry/approved = 0">
 			<a class="entry-status" href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNAPPROVED' )}" title="" >

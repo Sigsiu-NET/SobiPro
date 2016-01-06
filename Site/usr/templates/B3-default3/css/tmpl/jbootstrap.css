@@ -1,0 +1,69 @@
+.SobiPro select,
+.SobiPro textarea,
+.SobiPro input[type="text"],
+.SobiPro input[type="password"],
+.SobiPro input[type="datetime"],
+.SobiPro input[type="datetime-local"],
+.SobiPro input[type="date"],
+.SobiPro input[type="month"],
+.SobiPro input[type="time"],
+.SobiPro input[type="week"],
+.SobiPro input[type="number"],
+.SobiPro input[type="email"],
+.SobiPro input[type="url"],
+.SobiPro input[type="search"],
+.SobiPro input[type="tel"],
+.SobiPro input[type="color"],
+.SobiPro .uneditable-input {
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+}
+.SobiPro .btn {
+	text-shadow: none;
+}
+.SobiPro .navbar .nav > li > a {
+	text-shadow: none;
+}
+.SobiPro input[type="checkbox"] {
+	vertical-align: top;
+}
+.SobiPro div.modal {
+	left: inherit;
+	width: 100%;
+	background-color: transparent;
+	border: none;
+	box-shadow: none;
+}
+.SobiPro .modal-body {
+	width: inherit;
+	max-height: inherit;
+}
+.SobiPro .alert .close {
+	position: inherit;
+	top: inherit;
+	right: inherit;
+}
+.SobiPro .carousel-control {
+	height: inherit;
+	margin-top: 0;
+	line-height: inherit;
+	border: none;
+	border-radius: 0;
+}
+.SobiPro .navbar-collapse.collapse {
+	overflow: hidden!important;
+}
+
+@media (max-width: 768px) {
+	.SobiPro .form-horizontal .control-label {
+		float: none;
+		width: 100%;
+		padding-top: 0;
+		text-align: left;
+	}
+	.SobiPro .navbar .nav > li,
+	.SobiPro .navbar .nav {
+		float: none;
+	}
+}
