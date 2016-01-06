@@ -188,6 +188,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	public function __construct( &$field )
 	{
 		parent::__construct( $field );
+		$this->getSelectLabel();
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		$options = array();
@@ -1004,5 +1005,13 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			}
 		}
 		return $subFields;
+	}
+
+	protected function getSelectLabel()
+	{
+		$data = SPLang::getValue( $this->nid . '-select-label', 'field_select', Sobi::Section(), null, null, $this->fid );
+		if ( $data ) {
+			$this->selectLabel = $data;
+		}
 	}
 }

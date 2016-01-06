@@ -40,6 +40,9 @@ Legend:
     (#) Images aren't saved from the back-end (Issue #1552)
     (#) 'State' header text is missing in 'All entries' screen (Issue #1559)
     (#) Bootstrap 2 loaded in B3-default3 template
+    (#) Firing "AfterSave" trigger on after update (Issue #1561)
+    (#) Several fixes in template installer
+    (#) No possibility to translate the "select option" label in select list (Issue #1562)
 
 
 -------------------

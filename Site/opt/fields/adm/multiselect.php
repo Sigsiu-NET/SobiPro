@@ -138,5 +138,6 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 		$attr[ 'params' ] = $properties;
 		$this->sets[ 'field.options' ] = SPFactory::Instance( 'types.array' )
 				->toINIString( $data );
+		$this->saveSelectLabel( $attr );
 	}
 }
