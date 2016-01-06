@@ -38,6 +38,8 @@ Legend:
     (#) Wrong condition for while loop in SPJoomlaFs::copy
     (#) Images aren't saved from the back-end (Issue #1552)
     (#) 'State' header text is missing in 'All entries' screen (Issue #1559)
+    (#) Firing "AfterSave" trigger on after update (Issue #1561)
+    (#) Several fixes in template installer
 
 
 -------------------

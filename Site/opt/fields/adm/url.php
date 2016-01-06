@@ -34,7 +34,7 @@ class SPField_UrlAdm extends SPField_Url
 
 	public function save( &$attr )
 	{
-		if ( isset( $attr[ 'allowedProtocols' ] ) && $attr[ 'allowedProtocols' ] ) {
+		if ( isset( $attr[ 'allowedProtocols' ] ) && $attr[ 'allowedProtocols' ] && is_string( $attr[ 'allowedProtocols' ] ) ) {
 			$attr[ 'allowedProtocols' ] = explode( ',', $attr[ 'allowedProtocols' ] );
 			if ( count( $attr[ 'allowedProtocols' ] ) ) {
 				foreach ( $attr[ 'allowedProtocols' ] as $ap => $apvalue ) {
@@ -42,7 +42,7 @@ class SPField_UrlAdm extends SPField_Url
 				}
 			}
 		}
-		else {
+		elseif ( !( is_array( $attr[ 'allowedProtocols' ] ) ) ) {
 			$attr[ 'allowedProtocols' ] = array();
 		}
 		$myAttr = $this->getAttr();

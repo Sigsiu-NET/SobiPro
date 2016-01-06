@@ -787,9 +787,11 @@ class SPEntry extends SPDBObject implements SPDataModel
 				SPFactory::cache()->deleteObj( 'category', $cat );
 			}
 		}
-		Sobi::Trigger( $this->name(), 'After' . ucfirst( __FUNCTION__ ), array( &$this ) );
 		if ( !( $preState[ 'new' ] ) ) {
 			Sobi::Trigger( $this->name(), 'AfterUpdate', array( &$this ) );
+		}
+		else {
+			Sobi::Trigger( $this->name(), 'After' . ucfirst( __FUNCTION__ ), array( &$this ) );
 		}
 	}
 
