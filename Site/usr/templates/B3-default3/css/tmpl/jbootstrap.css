@@ -1,3 +1,21 @@
+/* @package: SobiPro Component for Joomla! */
+/* Styles Correction file for Joomla's Bootstrap 2 templates */
+
+/* Authors: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH */
+/* Url: https://www.Sigsiu.NET */
+
+/* @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved. */
+/* @license GNU/GPL Version 3 */
+/* This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 */
+/* as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3. */
+/* See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses. */
+
+/* To activate the correction styles, add 'tmpl/jbootstrap' to the main template configuration file */
+
+body {
+	-moz-osx-font-smoothing: unset;
+}
+
 .SobiPro select,
 .SobiPro textarea,
 .SobiPro input[type="text"],
@@ -17,7 +35,6 @@
 .SobiPro .uneditable-input {
 	height: 34px;
 	padding: 6px 12px;
-	font-size: 14px;
 }
 .SobiPro .btn {
 	text-shadow: none;
@@ -54,6 +71,21 @@
 .SobiPro .navbar-collapse.collapse {
 	overflow: hidden!important;
 }
+.SobiPro .editor a.btn {
+	color: #333;
+	background-color: #FFF;
+	border-color: #CCC;
+}
+.SobiPro .editor a.btn:active,
+.SobiPro .editor a.btn:hover {
+	background-color: #e6e6e6;
+	border-color: #adadad;
+}
+.SobiPro .btn-group {
+	font-size: inherit;
+	white-space: inherit;
+}
+
 
 @media (max-width: 768px) {
 	.SobiPro .form-horizontal .control-label {

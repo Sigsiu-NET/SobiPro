@@ -60,6 +60,7 @@
                                             <option value="poppyseed" />
                                             <option value="roses" />
 	                                        <option value="terra" />
+	                                        <option value="waterfall" />
                                             <option value="blackwidow" />
                                         </values>
                                     </field>
@@ -69,6 +70,16 @@
                                             <option value="angular" />
                                         </values>
                                     </field>
+	                                <field type="select" label="TP.CONFIG.FONTSIZE" name="settings[config][less][theme][fontsize]" selected="settings.config.less.theme.fontsize" class="input-medium"> <!-- SobiPro setting! -->
+		                                <values>
+			                                <option value="11px" label="11px" />
+			                                <option value="12px" label="12px" />
+			                                <option value="13px" label="13px" />
+			                                <option value="14px" label="14px" />
+			                                <option value="15px" label="15px" />
+			                                <option value="16px" label="16px" />
+		                                </values>
+	                                </field>
                                 </fieldset>
 
                                 <fieldset label="TP.CONFIG.RSS">

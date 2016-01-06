@@ -32,6 +32,7 @@ Legend:
     (+) Possibility to load a local version of Bootstrap 3 with 'SobiPro' namespace
     (+) Information box when install/update SobiPro
     (+) Bootstrap 2 overwrite file for Bootstrap 3 template
+    (+) New template theme 'waterfall'
 
     (!) Bootstrap 3 updated to version 3.3.6
 
@@ -44,6 +45,7 @@ Legend:
     (#) Several fixes in template installer
     (#) No possibility to translate the "select option" label in select list (Issue #1562)
     (#) Wrong selector for search highlighter (Issue #1563)
+
 
 -------------------
 1.2.1 (22 December 2015)

@@ -21,6 +21,8 @@
 @image-ratio: 0.75;
 @carousel-image: 500px;
 @print-gallery: 150px;
+@fontsize: 14px;
+
 
 //-------------------------------------------------------------------------------------*/
 
@@ -48,6 +50,7 @@
 
 @inverse: standard;
 @back-color: #FFFFFF;
+@fontsize: 14px;
 
 // same for all themes if not set
 @error-color: #A30000;
@@ -95,6 +98,9 @@
 	& when (@colour-set = terra) {
 		background-color: lighten(saturate(@base-color, 3%), 42%);
 	}
+	& when (@colour-set = waterfall) {
+		background-color: lighten(desaturate(@base-color,25%), 43%);
+	}
 }
 .borders(medium) {
 	border-color: lighten(@base-color, 33%);
@@ -121,6 +127,9 @@
 	}
 	& when (@colour-set = terra) {
 		border-color: lighten(@base-color, 27%);
+	}
+	& when (@colour-set = waterfall) {
+		border-color: lighten(desaturate(@base-color,25%), 30%);
 	}
 }
 .borders(light) {
@@ -149,6 +158,9 @@
 	& when (@colour-set = terra) {
 		border-color: lighten(@base-color, 50%);
 }
+	& when (@colour-set = waterfall) {
+		border-color: lighten(desaturate(@base-color, 20%), 45%);
+	}
 }
 .background(light) {
 	background-color: lighten(saturate(@base-color, 15%), 56%);
@@ -176,6 +188,9 @@
 	& when (@colour-set = terra) {
 		background-color: lighten(saturate(@base-color, 25%), 62%);
 }
+	& when (@colour-set = waterfall) {
+		background-color: lighten(desaturate(@base-color,10%), 56%);
+	}
 }
 .bottomborder(lightbackground) {
 	border-bottom-color: lighten(saturate(@base-color, 15%), 56%);
@@ -204,6 +219,9 @@
 	& when (@colour-set = terra) {
 		border-bottom-color: lighten(saturate(@base-color, 25%), 62%);
 	}
+	& when (@colour-set = waterfall) {
+		border-bottom-color: lighten(desaturate(@base-color,10%), 56%);
+	}
 }
 
 .headertext {
@@ -215,7 +233,7 @@
 // ----------------------------------------
 .SobiPro {
 	padding: 4px;
-	font-size: 14px;
+	font-size: @fontsize;
 	line-height: inherit;
 	& when (@inverse = inverse) {
 		font-size: 110%;
@@ -235,6 +253,11 @@
 
 .SobiPro .btn {
 	text-shadow: none;
+	font-size: @fontsize;
+}
+.SobiPro .btn-group > .btn,
+.SobiPro .btn-group > .dropdown-menu {
+	font-size: @fontsize;
 }
 
 /*
@@ -245,16 +268,16 @@
 
 .SobiPro .input-prepend .alert,
 .SobiPro .input-append .alert {
-	font-size: 14px;
+	font-size: @fontsize;
 }
 .SobiPro .page-header {
 	margin-bottom: 10px;
-	font-size: 22px;
+	font-size: calc(@fontsize + 8px);
 	font-weight: 300;
 	border-bottom: 1px solid lighten(@base-color, 50%);
 }
 .SobiPro .help-block {
-	font-size: 13px;
+	font-size: calc(@fontsize - 1px);
 	color: @font-color;
 }
 .SobiPro .well {
@@ -267,6 +290,7 @@
 	& when (@inverse = inverse) {
 		font-weight: 400;
 	}
+	font-size: @fontsize;
 }
 .SobiPro .label-info,
 .SobiPro .badge-info {
@@ -406,7 +430,7 @@
 // -----------------------------------------------
 .SobiPro h1 {
 	color: @active-color;
-	font-size: 26px;
+	font-size: calc(@fontsize + 12px);
 }
 
 .SobiPro h2 input[type="checkbox"] {
@@ -512,13 +536,11 @@
 	border-width: 1px;
 	margin: 1px;
 }
-
 .SobiPro .pagination ul > li > a {
 	color: @text-color;
 	background-color: @base-color;
 	font-weight: bold;
 }
-
 .SobiPro .pagination ul > li > a.active,
 .SobiPro .pagination ul > li > a:hover,
 .SobiPro .pagination ul > li > a:focus,
@@ -539,6 +561,9 @@
 	& when (@inverse = inverse) {
 		color: lighten(@base-color, 50%);
 	}
+}
+.SobiPro .pagination-mini ul > li > a {
+	font-size: calc(@fontsize - 3.5px);
 }
 
 // Dropdown
@@ -587,6 +612,26 @@
 	.SobiPro ol {
 		color: #fff;
 	}
+}
+
+.SobiPro textarea,
+.SobiPro select,
+.SobiPro input[type="text"],
+.SobiPro input[type="password"],
+.SobiPro input[type="datetime"],
+.SobiPro input[type="datetime-local"],
+.SobiPro input[type="date"],
+.SobiPro input[type="month"],
+.SobiPro input[type="time"],
+.SobiPro input[type="week"],
+.SobiPro input[type="number"],
+.SobiPro input[type="email"],
+.SobiPro input[type="url"],
+.SobiPro input[type="search"],
+.SobiPro input[type="tel"],
+.SobiPro input[type="color"],
+.SobiPro .uneditable-input {
+	font-size: @fontsize;
 }
 
 .SobiPro textarea:focus,
@@ -754,7 +799,7 @@
 		color: @text-color;
 		border-color: lighten(@base-color, 10%);
 	}
-	font-weight: bold;
+	font-weight: 500;
 	font-size: 95%;
 }
 
@@ -771,11 +816,11 @@
 // Bootbox
 .SobiPro .SobiProBootBox i.error {
 	color: #A94442;
-	font-size: 30px;
+	font-size: calc(@fontsize + 16px);
 }
 .SobiPro .SobiProBootBox i.success {
 	color: #449D44;
-	font-size: 30px;
+	font-size: calc(@fontsize + 16px);
 }
 .SobiPro .SobiProBootBox div.signal {
 	float: left;
@@ -820,7 +865,7 @@
 // Looks as a normal text (removal of the message design)
 .SobiPro .alert-normal {
 	padding: 10px 0 10px 0;
-	font-size: 15px;
+	font-size:calc(@fontsize + 1px);
 	color: @font-color;
 	background-color: @back-color;
 	border-color: @back-color;
@@ -862,7 +907,7 @@
 }
 .SobiPro .nav-tabs,
 .SobiPro .nav-pills {
-	font-size: 15px;
+	font-size: calc(@fontsize + 1px);
 }
 .SobiPro .nav-pills > .active > a,
 .SobiPro .nav-pills > .active > a:hover,
@@ -885,7 +930,7 @@
 	background-image: none;
 	min-height: 60px;
 	border: none;
-	font-size: 15px;
+	font-size: calc(@fontsize + 1px);
 	padding-left: 0;
 	padding-right: 0;
 }
@@ -949,7 +994,7 @@
 }
 .SobiPro .spCatname p {
 	margin: 5px 0 0 0;
-	font-size: 15px;
+	font-size: calc(@fontsize + 1px);
 }
 .SobiPro .spCaticon i {
 	color: @base-color;
@@ -1009,7 +1054,7 @@
 	font-size: 80%;
 }
 .SobiPro .spEntryCount {
-	font-size: 12px;
+	font-size: calc(@fontsize - 2px);
 	color: @font-color;
 }
 .SobiPro .spSubcats {
@@ -1045,7 +1090,7 @@
 }
 .SobiPro .spDetailEntry .spNoImage {
 	width: 300px;
-	height: 300px;
+	height: 200px;
 	font-size: 180px;
 	& when (isnumber(@big-image)) {
 		width: @big-image;
@@ -1086,7 +1131,7 @@
 // Entry details view
 // ----------------------------------------
 .SobiPro .spDetails {
-	font-size: 14px;
+	font-size: @fontsize;
 }
 .SobiPro .spDetailEntry .spManage {
 	margin-right: 7px;
@@ -1115,14 +1160,14 @@
 // Popover in General
 // ----------------------------------------
 .SobiPro .popover {
-	font-size: 13px;
+	font-size: calc(@fontsize - 1px);
 	font-weight: normal;
 	line-height: 20px;
 }
 .SobiPro .popover-inner .spclose {
 	padding-right: 8px;
 	padding-top: 5px;
-	font-size: 15px;
+	font-size: calc(@fontsize + 1px);
 	text-shadow: none;
 	& when (@inverse = inverse) {
 		opacity: 0.8;
@@ -1185,7 +1230,7 @@
 .SobiPro .spEntryEdit .star {
 	color: @important-color;
 	padding-left: 2px;
-	font-size: 14px;
+	font-size: @fontsize;
 }
 .SobiPro .input-append input {
 	width: calc(100% - 42px);
@@ -1520,7 +1565,7 @@
 		width: 30px;
 		height: 30px;
 		margin-top: -15px;
-		font-size: 30px;
+		font-size: calc(@fontsize + 16px);
 	}
 	.fa-chevron-right,
 	.icon-chevron-right,
@@ -1630,6 +1675,7 @@
 		color: @text-color;
 		border-color: lighten(@base-color, 10%);
 	}
+	font-weight: 400;
 }
 .SobiPro .spClassCalendarRepeat select {
 	width: 150px;
