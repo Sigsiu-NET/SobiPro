@@ -23,7 +23,7 @@ SobiPro.jQuery( document ).ready( function ()
 	if ( Words.length ) {
 		SobiPro.jQuery.each( Words, function ( i, word )
 		{
-			SobiPro.jQuery( '.entry-container' ).highlight( word );
+			SobiPro.jQuery( '.spEntryContainer' ).highlight( word );
 		} );
 	}
 } );

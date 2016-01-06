@@ -43,7 +43,7 @@ Legend:
     (#) Firing "AfterSave" trigger on after update (Issue #1561)
     (#) Several fixes in template installer
     (#) No possibility to translate the "select option" label in select list (Issue #1562)
-
+    (#) Wrong selector for search highlighter (Issue #1563)
 
 -------------------
 1.2.1 (22 December 2015)
