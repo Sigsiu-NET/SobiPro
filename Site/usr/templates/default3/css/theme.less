@@ -225,7 +225,7 @@
 }
 
 .headertext {
-	font-size: 22px;
+	font-size: calc(@fontsize + 8px);
 	color: @base-color;
 }
 
@@ -350,6 +350,7 @@
 
 .SobiPro .modal-header h3 {
 	.headertext;
+	font-size: 22px;
 }
 .SobiPro .modal-header .close {
 	text-shadow: none;
@@ -432,9 +433,14 @@
 	color: @active-color;
 	font-size: calc(@fontsize + 12px);
 }
-
 .SobiPro h2 input[type="checkbox"] {
 	margin: 0 0 5px 0;
+}
+.SobiPro h2 {
+	font-size:  calc(@fontsize + 11px);
+}
+.SobiPro h3 {
+	font-size:  calc(@fontsize + 10px);
 }
 
 & when (@corners = angular) {
@@ -1635,10 +1641,41 @@
 		color: @text-color;
 	}
 }
-.SobiPro .review-first i {
-	color: @base-color;
+.SobiPro .review-first {
+	font-size: calc(@fontsize + 2px);
+	i {
+		color: @base-color;
+	}
 }
-
+.SobiPro .star-rating-control {
+	font-size: 14px;
+}
+.SobiPro .review-container {
+	.rating-criteria,
+	.rating-summary {
+		line-height: 1.428571429;
+	}
+	.rating-criteria {
+		font-size: calc(@fontsize + 1px);
+	}
+	.review-author {
+		font-size: calc(@fontsize - 1px);
+	}
+	.iv.rating-cancel i,
+	.review-title {
+		font-size: calc(@fontsize + 2px);
+	}
+	.summary-header {
+		font-size: calc(@fontsize + 4px);
+	}
+	.tags_desc,
+	.criteria-value {
+		font-size: calc(@fontsize - 3px);;
+	}
+	.summary-criteria-value {
+		font-size: @fontsize;
+	}
+}
 
 // Calendar Field
 // -----------------------------------------------
@@ -1661,6 +1698,12 @@
 .SobiPro .spCalDayHead .navbar-inner {
 	background-color: @alert-color;
 	color: @text-color;
+	font-size: calc(@fontsize + 1px);;
+}
+.SobiPro .spCalendarDayHead .navbar-text,
+.SobiPro .spCalNavPhone a,
+.SobiPro .spcalNav a {
+	font-size: calc(@fontsize + 1px);;
 }
 .SobiPro .SpCalDay.badge {
 	background-color: @alert-color;
@@ -1681,6 +1724,13 @@
 	width: 150px;
 	margin-top: 5px;
 }
+
+// Download Field
+// -----------------------------------------------
+.SobiPro .spEditDownloadPreview p {
+	font-size: @fontsize;
+}
+
 
 // Collection App
 // -----------------------------------------------
@@ -1708,7 +1758,15 @@
 }
 .SobiPro .ctrl-collection-remove-item {
 	margin-top: 5px;
+	i {
+		font-size: @fontsize;
+	}
 }
+.SobiPro .collection-entry-container .page-header,
+.SobiPro .btnCollection i {
+	font-size: calc(@fontsize + 3px);
+}
+
 
 // Profile Field
 // -----------------------------------------------
@@ -1734,6 +1792,43 @@
 .SobiPro .spProfileEntries .page-header {
 	font-size: 17px;
 	padding-bottom: 5px;
+}
+
+//restore font size in modal
+.SobiPro .modal-body {
+	padding: 1%;
+	font-size: 14px;
+
+	label,
+	textarea,
+	select,
+	input[type="text"],
+	input[type="password"],
+	input[type="datetime"],
+	input[type="datetime-local"],
+	input[type="date"],
+	input[type="month"],
+	input[type="time"],
+	input[type="week"],
+	input[type="number"],
+	input[type="email"],
+	input[type="url"],
+	input[type="search"],
+	input[type="tel"],
+	input[type="color"],
+	.uneditable-input {
+		font-size: 14px;
+	}
+}
+.SobiPro .modal-footer {
+	.btn {
+		font-size: 14px;
+	}
+}
+.SobiPro .modal-header {
+	.spMessage {
+		font-size: 14px;
+	}
 }
 
 // Custom Media Queries
