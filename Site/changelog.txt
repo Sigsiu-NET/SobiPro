@@ -36,6 +36,7 @@ Legend:
     (+) base font size adjustable via template settings
 
     (!) Bootstrap 3 updated to version 3.3.6
+    (!) SobiPro menu link selection layout improved
 
     (#) Visibility problem with datepicker in modal window
     (#) Wrong condition for while loop in SPJoomlaFs::copy

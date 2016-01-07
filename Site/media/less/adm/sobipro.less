@@ -6,7 +6,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
 
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -44,6 +44,13 @@ body.contentpane {
 	float: none !important;
 }
 
+//correct the dark font on dark background from joomla
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+	color: #ffffff;
+}
+
 // Backend Page-title image
 .icon-sobipro {
 	background-image: url('../../sobipro.png');
@@ -52,6 +59,24 @@ body.contentpane {
 	background-repeat: no-repeat;
 }
 
+//Menu
+.SobiPro {
+	.menuTitle {
+		font-size: 18px;
+	}
+	.menuContinue {
+		margin-top: 20px;
+	}
+	.menuExpanation {
+		margin-bottom: 20px;
+	}
+	.menuTemplate {
+		margin-top: -5px;
+		margin-left: 3px;
+		color: grey;
+		font-size: 11px;
+	}
+}
 // Backdrop
 .modal-backdrop {
 	background-color: #000000;
@@ -122,6 +147,7 @@ input[type='radio'] {
 .submenu-box, div.m {
 	background-color: @background;
 }
+
 
 .SobiPro {
 	color: @font;

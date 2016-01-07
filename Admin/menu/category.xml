@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
@@ -21,15 +21,20 @@
 		<!--<file type="language" filename="SpApp.notifications" />-->
 	</header>
 	<body>
-		<h4>
+		<p class="menuTitle menuExplanation">
 			<text value="MENU_LINK_TO_CATEGORY" />
-		</h4>
+		</p>
 		<call function="tree.display">
 			<param>TRUE</param>
 		</call>
-		<fieldset type="horizontal">
+		<div style="margin-top:20px"></div>
+		<fieldset type="inline">
 			<field type="select" name="request[sptpl]" selected="template" multi="false" values="templates" label="SOBI_TPL_OVERRIDE" class="span2" />
 		</fieldset>
+		<p class="menuTemplate"><text value="SOBI_TPL_OVERRIDE_EXPL" /></p>
+		<p class="menuContinue">
+			<text value="MENU_LINK_CONTINUE" />
+		</p>
 		<div class="hide" id="categoryName">
 			<text value="MENU_LINK_TO_SELECTED_CATEGORY" />
 		</div>
