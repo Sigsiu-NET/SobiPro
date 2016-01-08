@@ -25,11 +25,18 @@
 		<p class="menuExplanation">
 			<text value="MENU_LINK_TO_SEARCH_FUNCTION_SELECTED" />
 		</p>
+		<fieldset type="inline">
+			<field type="select" name="request[sptpl]" selected="template" multi="false" values="templates" label="SOBI_TPL_OVERRIDE" class="span2" />
+		</fieldset>
+		<p class="menuTemplate"><text value="SOBI_TPL_OVERRIDE_EXPL" /></p>
 		<p class="menuContinue">
 			<text value="MENU_LINK_CONTINUE" />
 		</p>
 	</body>
 	<config>
+		<calls>
+			<call file="ctrl.adm.menu" method="search" />
+		</calls>
 		<hidden>
 			<field name="params[text]" const="MENU_LINK_TO_SEARCH_FUNCTION" />
 			<field name="function-name" translate="MENU_LINK_TO_SEARCH_FUNCTION" />

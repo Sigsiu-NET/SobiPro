@@ -1,7 +1,7 @@
 <?php
 /**
  * @package: SobiPro Library
-
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
@@ -179,6 +179,17 @@ class SPMenuAdm extends SPController
 					} ); '
 		);
 	}
+
+
+	/**
+	 * @param SPAdmJoomlaMenuView $view
+	 * @param stdClass $menu
+	 */
+	public function search( &$view, $menu )
+	{
+		$this->addTemplates( $view, $menu, 'search' );
+	}
+
 
 	/**
 	 * @param SPAdmJoomlaMenuView $view
