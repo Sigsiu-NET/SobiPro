@@ -47,7 +47,7 @@
 			<field name="params[text]" const="SOBI_DATE_LISTING" />
 			<field name="function-name" translate="SOBI_DATE_LISTING" />
 			<field name="request[task]" const="list.date" />
-			<field name="request[date]" const="2013.01" />
+			<field name="request[date]" const="2015.01" />
 		</hidden>
 	</config>
 </definition>

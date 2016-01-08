@@ -6,8 +6,8 @@
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -131,6 +131,19 @@ class SPMenuAdm extends SPController
 				->assign( $selected, 'date' )
 				->assign( $days, 'days' );
 		$this->addTemplates( $view, $menu, 'list.date' );
+
+		SPFactory::header()->addJsCode(
+			'SobiPro.jQuery( ".ctrl-save", window.parent.document )
+					.click( function( e )
+						{
+							if( SobiPro.jQuery( "#date-year" ).val() == "" ) {
+								e.preventDefault();
+								e.stopPropagation();
+								alert( "' . Sobi::Txt( 'SOBI_DATE_LISTING_MISSING' ) . '" );
+								SobiPro.jQuery( "#SobiProSelectedFunction", window.parent.document ).html( "' . Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' ) . '" );
+						}
+					} ); '
+		);
 	}
 
 	/**
@@ -153,6 +166,18 @@ class SPMenuAdm extends SPController
 	public function entry( &$view, $menu )
 	{
 		$this->addTemplates( $view, $menu, 'entry' );
+		SPFactory::header()->addJsCode(
+			'SobiPro.jQuery( ".ctrl-save", window.parent.document )
+					.click( function( e )
+						{
+							if( SobiPro.jQuery( "#SP_function-name" ).val() == "MENU_LINK_TO_SELECTED_ENTRY" ) {
+								e.preventDefault();
+								e.stopPropagation();
+								alert( "' . Sobi::Txt( 'MENU_LINK_TO_ENTRY_MISSING' ) . '" );
+								SobiPro.jQuery( "#SobiProSelectedFunction", window.parent.document ).html( "' . Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' ) . '" );
+						}
+					} ); '
+		);
 	}
 
 	/**
