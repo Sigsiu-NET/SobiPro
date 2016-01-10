@@ -5,10 +5,10 @@
 	<authorName>Sigrid Suski and Radek Suski</authorName>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
-	<copyright>Copyright (C) 2006-2015 Sigsiu.NET GmbH</copyright>
+	<copyright>Copyright (C) 2006-2016 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License</license>
-	<creationDate>2015-10-28</creationDate>
-	<version>3.0</version>
+	<creationDate>2016-01-10</creationDate>
+	<version>3.1</version>
 	<description>Default Template for SobiPro since 1.2 with Bootstrap 3 support.
 	This template makes use of Bootstrap 3 and Font Awesome 3 elements and styles.</description>
 	<files>
@@ -27,6 +27,9 @@
 		<file path="common/category.xsl">
 			Template for a single category in the categories list.
 		</file>
+		<file path="common/editfields.xsl">
+			Template to output one field in entry form. Called from default loop in edit.xsl.
+		</file>
 		<file path="common/entries.xsl">
 			Template to display all entries (entriesLoop) within a category or the search function. Build the structure of all entries and calls the "vCard" template while displaying single entry.
 		</file>
@@ -39,20 +42,29 @@
 		<file path="common/navigation.xsl">
 			Template for the site navigation.
 		</file>
+		<file path="common/showfields.xsl">
+			Template to output one field in vCard and details view. Called from default loop.
+		</file>
 		<file path="common/topmenu.xsl">
 			Template for the top menu.
 		</file>
 		<file path="common/vcard.xsl">
-			Template to display single entry within a category or the search function.
+			Template to display single entry within a category, any listing view or the search function.
+		</file>
+		<file path="css/tmpl/jbootstrap.css">
+			CSS classes to restore changes made by Joomla Bootstrap 2 template.
+		</file>
+		<file path="css/tmpl/joostrap.css">
+			CSS classes to restore changes made by Joostrap templates.
 		</file>
 		<file path="css/default.css">
-			Default CSS file.
+			Default CSS file. Your own CSS changes goes in here.
 		</file>
         <file path="css/default.less">
-            LESS file for the default CSS file.
+            LESS file for the default CSS file. Your own CSS changes goes in here.
         </file>
         <file path="css/theme.css">
-            The theme CSS file.
+            The theme CSS file. Automatically generated!
         </file>
         <file path="css/theme.less">
             LESS file for the theme CSS file.
@@ -63,38 +75,74 @@
 		<file path="entry/details.xsl">
 			Template for the entry details view page.
 		</file>
+		<file path="entry/details.ini">
+			Configuration file to load JS files in details view.
+		</file>
 		<file path="entry/edit.xsl">
 			Template for the add/edit entry page.
 		</file>
+		<file path="entry/edit.ini">
+			Configuration file to load JS files in entry form.
+		</file>
+		<file path="entry/edit.json">
+			Configuration file for the entry form. Automatically generated!
+		</file>
 		<file path="feeds/rss.xsl">
 			Template for Atom/RSS feeds.
+		</file>
+		<file path="feeds/rss.ini">
+			Configuration file for RSS feeds.
+		</file>
+		<file path="feeds/rss.json">
+			Configuration file for RSS feeds. Automatically generated!
 		</file>
 		<file path="js/alpha.js">
 			JavaScript functions for the alpha menu.
 		</file>
 		<file path="js/autosuggest.js">
-            JavaScript functions for the auto-suggest feature used in search and add/edit entry page.
+            JavaScript functions for the auto-suggest feature used in search and entry form.
+		</file>
+		<file path="js/details.js">
+			JavaScript functions for the details view.
+		</file>
+		<file path="js/navigation.js">
+			JavaScript functions for AJAX navigation.
 		</file>
 		<file path="js/search.js">
-			JavaScript functions for the search page.
+			JavaScript functions for the search form.
 		</file>
 		<file path="listing/alpha.xsl">
 			Alpha listings template.
 		</file>
+		<file path="listing/date.xsl">
+			Date listings template.
+		</file>
+		<file path="listing/user.xsl">
+			User listings template.
+		</file>
+		<file path="payment/list.xsl">
+			List of payments on the payment page.
+		</file>
 		<file path="payment/payment.xsl">
 			Payment page after an entry has been added.
 		</file>
-        <file path="payment/list.xsl">
-            List of payments on the payment page.
-        </file>
 		<file path="payment/submit.xsl">
 			Template for the preview of the payment.
 		</file>
 		<file path="search/view.xsl">
-			Template for the search function.
+			Template for the search form.
+		</file>
+		<file path="search/search.ini">
+			Configuration file to load JS files in search form.
 		</file>
 		<file path="section/view.xsl">
 			Template for the section main view.
+		</file>
+		<file path="section/ajax.xsl">
+			Template for AJAX navigation.
+		</file>
+		<file path="section/ajax.ini">
+			Configuration file for AJAX navigation.
 		</file>
         <file path="themes/blackwidow.less">
             Blackwidow color theme (black; light on dark).
@@ -120,6 +168,12 @@
         <file path="themes/sobipro.less">
             SobiPro color theme (SobiPro colors; default).
         </file>
+		<file path="themes/terra.less">
+			Terra color theme (brown).
+		</file>
+		<file path="themes/waterfall.less">
+			Waterfall color theme (aquamarine).
+		</file>
 		<file path="template.php">
 			PHP file with additional functions to use within templates.
 		</file>
@@ -132,5 +186,8 @@
         <file path="config.xml">
             Template settings file.
         </file>
+		<file path="config.json">
+			Template settings configuration file. Automatically generated!
+		</file>
 	</files>
 </template>

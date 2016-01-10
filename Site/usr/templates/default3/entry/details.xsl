@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -60,30 +60,17 @@
                 <!-- Uncomment only if Collection App is installed -->
                 <!--<xsl:call-template name="collection"><xsl:with-param name="entry" select="entry"/></xsl:call-template>-->
 
+	            <!-- Loop to show all enabled fields from fields manager -->
                 <xsl:for-each select="entry/fields/*">
-                    <xsl:choose>
-                        <xsl:when test="count(./data/*) or string-length(./data)">
-                            <xsl:call-template name="showfield">
-                                <xsl:with-param name="fieldname" select="." />
-                                <xsl:with-param name="view" select="'dv'" />
-                            </xsl:call-template>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:if test="@type = 'image'">
-                                <xsl:if test="//config/noimage/@value = 1">
-                                    <div class="spNoImageContainer right">
-                                        <div class="spNoImage">
-                                            <i class="icon icon-ban-circle"></i>
-                                        </div>
-                                    </div>
-                                </xsl:if>
-                            </xsl:if>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:call-template name="showfield">
+                        <xsl:with-param name="fieldname" select="." />
+                        <xsl:with-param name="view" select="'dv'" />
+                    </xsl:call-template>
                 </xsl:for-each>
 	            <div class="clearfix"></div>
 
-                <xsl:if test="( //review_form/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../common/review.xsl'] ">
+
+                <xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../common/review.xsl'] ">
                     <xsl:call-template name="ratingSummary" />
                 </xsl:if>
 

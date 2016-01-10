@@ -39,6 +39,7 @@ Legend:
     (!) Bootstrap 3 updated to version 3.3.6
     (!) SobiPro menu link selection layout improved
     (!) Warning if no year is selected when adding menu link to a listing by date
+    (!) Template for display fields now includes the default image
 
     (#) Visibility problem with datepicker in modal window
     (#) Wrong condition for while loop in SPJoomlaFs::copy

@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -23,80 +23,95 @@
         <xsl:param name="fieldname" />
         <xsl:param name="view" />
 
-        <div>
-            <xsl:if test="string-length($fieldname/@css-view)">
-                <xsl:attribute name="class">
-                    <xsl:value-of select="$fieldname/@css-view" />
-                </xsl:attribute>
-            </xsl:if>
-			<xsl:if test="count($fieldname/data/*) or string-length($fieldname/data)">  <!-- field label -->
-                <xsl:if test="$fieldname/label/@show = 1">
-					<span class="spLabel">
-						<xsl:value-of select="$fieldname/label"/><xsl:text>: </xsl:text>
-					</span>
-                </xsl:if>
-            </xsl:if>
+	     <xsl:choose>
+		     <xsl:when test="count($fieldname/data/*) or string-length($fieldname/data)">
+			     <div>
+				     <xsl:if test="string-length($fieldname/@css-view)">
+					     <xsl:attribute name="class">
+						     <xsl:value-of select="$fieldname/@css-view" />
+					     </xsl:attribute>
+				     </xsl:if>
+				     <xsl:if test="count($fieldname/data/*) or string-length($fieldname/data)">  <!-- field label -->
+					     <xsl:if test="$fieldname/label/@show = 1">
+						     <span class="spLabel">
+							     <xsl:value-of select="$fieldname/label"/><xsl:text>: </xsl:text>
+						     </span>
+					     </xsl:if>
+				     </xsl:if>
 
-            <xsl:choose>
-				<xsl:when test="count($fieldname/data/*)">  <!-- complex data -->
-					<xsl:if test="string-length($fieldname/@itemprop)"> <!-- itemprop attached to div container -->
-						<xsl:attribute name="itemprop">
-							<xsl:value-of select="$fieldname/@itemprop"/>
-						</xsl:attribute>
-					</xsl:if>
-                    <xsl:copy-of select="$fieldname/data/*"/>
-                </xsl:when>
-				<xsl:otherwise> <!-- no complex data -->
-                    <xsl:if test="string-length($fieldname/data)">
-                        <xsl:choose>
-							<xsl:when test="contains($fieldname/@css-class,'spClassText')"> <!-- is textarea -->
-								<xsl:if test="string-length($fieldname/@itemprop)"> <!-- itemprop attached to div container -->
-									<xsl:attribute name="itemprop">
-										<xsl:value-of select="$fieldname/@itemprop"/>
-									</xsl:attribute>
-								</xsl:if>
-								<xsl:choose>
-									<xsl:when
-											test="contains($fieldname/@css-class,'shorten') and ($view = 'vcard') and //config/textlength/@value != 'no'">
-										<xsl:value-of select="substring ($fieldname/data,1,//config/textlength/@value)"
-										              disable-output-escaping="yes"/>...
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="$fieldname/data" disable-output-escaping="yes" />
-                            </xsl:otherwise>
-                        </xsl:choose>
-							</xsl:when>
-							<xsl:otherwise> <!-- no textarea -->
-								<span>  <!-- add surroundig span -->
-									<xsl:if test="string-length($fieldname/@itemprop)"> <!-- attach itemprop to span -->
-										<xsl:attribute name="itemprop">
-											<xsl:value-of select="$fieldname/@itemprop"/>
-										</xsl:attribute>
-                    </xsl:if>
-									<xsl:value-of select="$fieldname/data" disable-output-escaping="yes"/>
-								</span>
-                </xsl:otherwise>
-            </xsl:choose>
-					</xsl:if>
-				</xsl:otherwise>
-			</xsl:choose>
+				     <xsl:choose>
+					     <xsl:when test="count($fieldname/data/*)">  <!-- complex data -->
+						     <xsl:if test="string-length($fieldname/@itemprop)"> <!-- itemprop attached to div container -->
+							     <xsl:attribute name="itemprop">
+								     <xsl:value-of select="$fieldname/@itemprop"/>
+							     </xsl:attribute>
+						     </xsl:if>
+						     <xsl:copy-of select="$fieldname/data/*"/>
+					     </xsl:when>
+					     <xsl:otherwise> <!-- no complex data -->
+						     <xsl:if test="string-length($fieldname/data)">
+							     <xsl:choose>
+								     <xsl:when test="contains($fieldname/@css-class,'spClassText')"> <!-- is textarea -->
+									     <xsl:if test="string-length($fieldname/@itemprop)"> <!-- itemprop attached to div container -->
+										     <xsl:attribute name="itemprop">
+											     <xsl:value-of select="$fieldname/@itemprop"/>
+										     </xsl:attribute>
+									     </xsl:if>
+									     <xsl:choose>
+										     <xsl:when
+												     test="contains($fieldname/@css-class,'shorten') and ($view = 'vcard') and //config/textlength/@value != 'no'">
+											     <xsl:value-of select="substring ($fieldname/data,1,//config/textlength/@value)"
+											                   disable-output-escaping="yes"/>...
+										     </xsl:when>
+										     <xsl:otherwise>
+											     <xsl:value-of select="$fieldname/data" disable-output-escaping="yes" />
+										     </xsl:otherwise>
+									     </xsl:choose>
+								     </xsl:when>
+								     <xsl:otherwise> <!-- no textarea -->
+									     <span>  <!-- add surroundig span -->
+										     <xsl:if test="string-length($fieldname/@itemprop)"> <!-- attach itemprop to span -->
+											     <xsl:attribute name="itemprop">
+												     <xsl:value-of select="$fieldname/@itemprop"/>
+											     </xsl:attribute>
+										     </xsl:if>
+										     <xsl:value-of select="$fieldname/data" disable-output-escaping="yes"/>
+									     </span>
+								     </xsl:otherwise>
+							     </xsl:choose>
+						     </xsl:if>
+					     </xsl:otherwise>
+				     </xsl:choose>
 
-			<xsl:if test="count($fieldname/data/*) or string-length($fieldname/data)">  <!-- suffix -->
-                <xsl:if test="string-length($fieldname/@suffix)">
-                    <xsl:text> </xsl:text>
-                    <xsl:choose>
-                    <xsl:when test="$view = 'dv'">
-							<span class="spDetailSuffix">
-								<xsl:value-of select="$fieldname/@suffix"/>
-							</span>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$fieldname/@suffix"/>
-                    </xsl:otherwise>
-                    </xsl:choose>
-                </xsl:if>
-            </xsl:if>
-        </div>
+				     <xsl:if test="count($fieldname/data/*) or string-length($fieldname/data)">  <!-- suffix -->
+					     <xsl:if test="string-length($fieldname/@suffix)">
+						     <xsl:text> </xsl:text>
+						     <xsl:choose>
+							     <xsl:when test="$view = 'dv'">
+								     <span class="spDetailSuffix">
+									     <xsl:value-of select="$fieldname/@suffix"/>
+								     </span>
+							     </xsl:when>
+							     <xsl:otherwise>
+								     <xsl:value-of select="$fieldname/@suffix"/>
+							     </xsl:otherwise>
+						     </xsl:choose>
+					     </xsl:if>
+				     </xsl:if>
+			     </div>
+		     </xsl:when>
+		     <xsl:otherwise>
+			     <xsl:if test="$fieldname/@type = 'image'">
+				     <xsl:if test="//config/noimage/@value = 1">
+					     <div class="spNoImageContainer right">
+						     <div class="spNoImage">
+							     <i class="icon icon-ban-circle"></i>
+						     </div>
+					     </div>
+				     </xsl:if>
+			     </xsl:if>
+		     </xsl:otherwise>
+	     </xsl:choose>
     </xsl:template>
 
 </xsl:stylesheet>
