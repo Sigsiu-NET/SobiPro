@@ -49,8 +49,8 @@
                             <field type="textarea" name="set.note" label="ACL.NOTES" editor="false" class="input-splarge" rows="2" style="" />
 							<field type="select" name="set.groups" values="groups" label="ACL.AFFECTED_USER_GROUPS" multi="true" selected="set.groups" class="input-xlarge" size="10"  required="true"/>
 							<field type="select" name="set.sections" values="sections" label="ACL.AFFECTED_SECTIONS" multi="true" selected="set.sections" class="input-splarge" size="8"  required="true"/>
-							<field type="select" name="set.permissions" values="permissions" label="ACL.FRONTEND_PERMISSIONS" multi="true" selected="set.permissions" class="input-xlarge" size="25" required="false"/>
-							<field type="select" name="set.adm_permissions" values="adm_permissions" label="ACL.BACKEND_PERMISSIONS" multi="true" selected="set.permissions" class="input-xlarge" size="25" required="false"/>
+							<field type="select" name="set.permissions" values="permissions" label="ACL.FRONTEND_PERMISSIONS" multi="true" selected="set.permissions" class="input-xlarge" size="28" required="false"/>
+							<field type="select" name="set.adm_permissions" values="adm_permissions" label="ACL.BACKEND_PERMISSIONS" multi="true" selected="set.permissions" class="input-xlarge" size="17" required="false"/>
 						</fieldset>
 					</div>
 				</tab>
