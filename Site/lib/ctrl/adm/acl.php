@@ -198,7 +198,11 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		$map = array();
 		foreach ( $perms as $perm ) {
 			$perm = explode( '.', $perm );
-			$pid = $db->select( 'pid', 'spdb_permissions', array( 'subject' => $perm[ 0 ], 'action' => $perm[ 1 ], 'value' => $perm[ 2 ] ) )->loadResult();
+			$site = ( isset( $perm[ 3 ] ) ) ? $perm[ 3 ] : 'front';
+			$pid = $db
+					->select( 'pid', 'spdb_permissions', array( 'subject' => $perm[ 0 ], 'action' => $perm[ 1 ], 'value' => $perm[ 2 ], 'site' => $site ) )
+					->loadResult();
+			$db->getQuery();
 			if ( $pid ) {
 				foreach ( $sections as $sid ) {
 					$map[ ] = array( 'rid' => $rid, 'sid' => $sid, 'pid' => $pid );
@@ -388,6 +392,10 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 */
 	private function edit()
 	{
+		if ( !( Sobi::Can( 'cms.admin' ) ) && !( Sobi::Can( 'cms.apps' ) ) ) {
+			Sobi::Error( 'ACL', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 403, __LINE__, __FILE__ );
+			exit();
+		}
 		$rid = SPRequest::int( 'rid' );
 		SPLoader::loadClass( 'cms.base.users' );
 		$db = SPFactory::db();
@@ -541,6 +549,10 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 */
 	private function listRules()
 	{
+		if ( !( Sobi::Can( 'cms.admin' ) ) && !( Sobi::Can( 'cms.apps' ) ) ) {
+			Sobi::Error( 'ACL', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 403, __LINE__, __FILE__ );
+			exit();
+		}
 		Sobi::ReturnPoint();
 		$order = SPFactory::user()
 				->getUserState( 'acl.order', 'position', 'rid.asc' );

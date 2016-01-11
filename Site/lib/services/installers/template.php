@@ -328,6 +328,11 @@ class SPTemplateInstaller extends SPInstaller
 				$f->saveNew( $attr );
 				$f->loadType( $ftype );
 				$f->save( $attr );
+				if ( method_exists( $f, 'importField' ) ) {
+					$data[ 'privateData' ] = array();
+					$f->importField( $data[ 'privateData' ] );
+				}
+
 				$fids[ $attr[ 'nid' ] ] = $f->get( 'id' );
 			}
 		}

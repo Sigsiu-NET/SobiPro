@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -151,49 +149,65 @@ final class SPSection extends SPDBObject implements SPDataModel
 		if ( !$update && $init ) {
 			$field = SPFactory::Model( 'field', true );
 			$fid = $field->saveNew(
-				array(
-					'name' => 'Name',
-					'nid' => 'field_name',
-					'showIn' => 'both',
-					'fieldType' => 'inbox',
-					'enabled' => 1,
-					'required' => 1,
-					'editable' => 1,
-					'section' => $this->id,
-					'inSearch' => 1,
-					'searchMethod' => 'general',
-					'isFree' => 1,
-					'editLimit' => -1,
-					'withLabel' => 1
-				)
+					array(
+							'name' => 'Name',
+							'nid' => 'field_name',
+							'showIn' => 'both',
+							'fieldType' => 'inbox',
+							'enabled' => 1,
+							'required' => 1,
+							'editable' => 1,
+							'section' => $this->id,
+							'inSearch' => 1,
+							'searchMethod' => 'general',
+							'isFree' => 1,
+							'editLimit' => -1,
+							'withLabel' => 1
+					)
 			);
 			$field = SPFactory::Model( 'field', true );
 			$field->saveNew(
-				array(
-					'name' => 'Category',
-					'nid' => 'field_category',
-					'showIn' => 'hidden',
-					'fieldType' => 'category',
-					'enabled' => 1,
-					'required' => 1,
-					'editable' => 1,
-					'section' => $this->id,
-					'inSearch' => 1,
-					'searchMethod' => 'select',
-					'isFree' => 1,
-					'editLimit' => -1,
-					'withLabel' => 1,
-					'method' => 'select',
-					'isPrimary' => true
-				)
+					array(
+							'name' => 'Category',
+							'nid' => 'field_category',
+							'showIn' => 'hidden',
+							'fieldType' => 'category',
+							'enabled' => 1,
+							'required' => 1,
+							'editable' => 1,
+							'section' => $this->id,
+							'inSearch' => 1,
+							'searchMethod' => 'select',
+							'isFree' => 1,
+							'editLimit' => -1,
+							'withLabel' => 1,
+							'method' => 'select',
+							'isPrimary' => true
+					)
 			);
 			SPFactory::config()
 					->saveCfg( 'entry.name_field', $fid )
 					->saveCfg( 'list.entries_ordering', 'field_name' )
-					->saveCfg( 'template.icon_fonts_arr', array('font-awesome-3-local') );
+					->saveCfg( 'template.icon_fonts_arr', array( 'font-awesome-3-local' ) );
 
+			$permissions = array(
+					'section.access.valid',
+					'category.access.valid',
+					'entry.access.valid',
+					'entry.add.own',
+					'section.search.*',
+					'section.*.*.adm',
+					'category.*.*.adm',
+					'entry.*.*.adm',
+			);
+			$myGroups = Sobi::My( 'groups' );
+			$gids = SPUser::availableGroups();
+			$userGroups = array( 'visitor', 'registered' );
+			foreach ( $myGroups as $gid ) {
+				$userGroups[ ] = $gids[ $gid ];
+			}
 			SPFactory::Controller( 'acl', true )
-					->addNewRule( $this->get( 'name' ), array( $this->id ), array( 'section.access.valid', 'category.access.valid', 'entry.access.valid', 'entry.add.own', 'section.search.*' ), array( 'visitor', 'registered' ), 'Default permissions for the section "' . $this->get( 'name' ) . '"' );
+					->addNewRule( $this->get( 'name' ), array( $this->id ), $permissions, $userGroups, 'Default permissions for the section "' . $this->get( 'name' ) . '"' );
 		}
 		/* insert relation */
 		try {

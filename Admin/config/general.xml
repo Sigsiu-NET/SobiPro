@@ -36,7 +36,7 @@
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
 			<button type="url" task="extensions.installed" condition="acl.apps" />
-			<button type="url" task="template.info" />
+			<button type="url" task="template.info"  condition="acl.apps"/>
 			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>

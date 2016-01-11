@@ -371,4 +371,12 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				->determineTemplate( 'section', 'edit' )
 				->display();
 	}
+
+	protected function authorise( $action = 'access', $ownership = 'valid' )
+	{
+		if( $action == 'add' && Sobi::Can( 'cms.admin' ) ){
+			return true;
+		}
+		parent::authorise( $action, $ownership );
+	}
 }

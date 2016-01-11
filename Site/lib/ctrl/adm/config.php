@@ -580,7 +580,15 @@ class SPConfigAdmCtrl extends SPController
 		}
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if ( count( $cfg ) ) {
+			$i = 0;
 			foreach ( $cfg as $section => $keys ) {
+				$i++;
+				if ( $i < 3 && !( Sobi::Can( 'cms.admin' )  ) ) {
+					continue;
+				}
+				elseif( $i > 2 && !( Sobi::Can( 'cms.apps' )  )) {
+					continue;
+				}
 				$menu->addSection( $section, $keys );
 			}
 		}

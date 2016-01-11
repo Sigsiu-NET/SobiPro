@@ -80,4 +80,10 @@ class SPField_InfoAdm extends SPField_Info
 		$attr[ 'isFree' ] = 1;
 		return $attr;
 	}
+
+	public function exportField( &$data )
+	{
+		$data[ ] = array( 'attributes' => array( 'name' => 'viewInfo' ), 'value' => $this->viewInfo );
+		$data[ ] = array( 'attributes' => array( 'name' => 'entryInfo' ), 'value' => $this->entryInfo );
+	}
 }
