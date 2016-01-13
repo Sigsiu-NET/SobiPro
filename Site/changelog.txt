@@ -42,6 +42,7 @@ Legend:
     (!) Warning if no year is selected when adding menu link to a listing by date
     (!) Template for display fields now includes the default image
     (!) Layout of back-end ACL settings improved
+    (!) Alpha menu title contains now select field name
 
     (#) Visibility problem with datepicker in modal window
     (#) Wrong condition for while loop in SPJoomlaFs::copy

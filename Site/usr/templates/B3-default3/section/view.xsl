@@ -33,7 +33,7 @@
 		</xsl:variable>
 		<xsl:value-of select="php:function( 'SobiPro::AlternateLink', $rssUrl, 'application/atom+xml', $sectionName )" />
         <xsl:variable name="showCategoriesLabel">
-            <xsl:value-of select="php:function( 'SobiPro::Txt', 'Show Categories' )" />
+            <xsl:value-of select="php:function( 'SobiPro::Txt', 'CATEGORIES_SHOW' )" />
         </xsl:variable>
 
         <!-- for proper work a container is needed, we assume that the component area is placed into a container by the template.
@@ -54,6 +54,6 @@
         <xsl:call-template name="entriesLoop" />
         <xsl:apply-templates select="navigation" />
 
-		<input type="hidden" id="hidetext" value="{php:function( 'SobiPro::Txt', 'Hide Categories' )}" />
+		<input type="hidden" id="hidetext" value="{php:function( 'SobiPro::Txt', 'CATEGORIES_HIDE' )}" />
 	</xsl:template>
 </xsl:stylesheet>
