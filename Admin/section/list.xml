@@ -136,7 +136,7 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter" />
-						<cell condition="acl.category.edit">
+						<cell condition="/acl.category.edit">
 							<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellArrowCol" condition="/corder.contains(position)">
 								<cell type="text" class="SpCellArrow">
 									<cell type="link" icon="chevron-up">
