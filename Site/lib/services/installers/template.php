@@ -252,6 +252,7 @@ class SPTemplateInstaller extends SPInstaller
 		$c = 0;
 		$fids = array();
 		foreach ( $fields as $field ) {
+			$specificSetting = array();
 			if ( $field->nodeName == 'field' ) {
 				$c++;
 				$attr = array();
@@ -266,6 +267,21 @@ class SPTemplateInstaller extends SPInstaller
 							$v = $option->nodeValue == 'true' ? true : false;
 						}
 						$attr[ $option->getAttribute( 'attribute' ) ] = $v;
+					}
+				}
+				/** @var $specials DOMNodeList */
+				$specials = $field->getElementsByTagName( 'specific' );
+				if ( ( $specials instanceof DOMNodeList ) && $specials->length ) {
+					$index = 0;
+					foreach ( $specials->item( 0 )->childNodes as $setting ) {
+						if ( $setting->nodeName == 'data' ) {
+							$index++;
+							/** @var $setting DOMNode */
+							foreach ( $setting->attributes as $attribute ) {
+								$specificSetting[ $index ][ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+							}
+							$specificSetting[ $index ][ 'value' ] = $setting->nodeValue;
+						}
 					}
 				}
 				/** @var $options DOMNodeList */
@@ -327,12 +343,14 @@ class SPTemplateInstaller extends SPInstaller
 				$f =& SPFactory::Instance( 'models.adm.field' );
 				$f->saveNew( $attr );
 				$f->loadType( $ftype );
-				$f->save( $attr );
-				if ( method_exists( $f, 'importField' ) ) {
-					$data[ 'privateData' ] = array();
-					$f->importField( $data[ 'privateData' ] );
-				}
+				if ( count( $specificSetting ) ) {
+					try {
+						$f->importField( $specificSetting, $attr[ 'nid' ] );
+					} catch ( SPException $x ) {
 
+					}
+				}
+				$f->save( $attr );
 				$fids[ $attr[ 'nid' ] ] = $f->get( 'id' );
 			}
 		}

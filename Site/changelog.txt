@@ -35,6 +35,7 @@ Legend:
     (+) New template theme 'waterfall'
     (+) base font size adjustable via template settings
     (+) Template override for search form
+    (+) Possibility to implement fields' specific settings while installing new templates
 
     (!) Bootstrap 3 updated to version 3.3.6
     (!) SobiPro menu link selection layout improved

@@ -81,9 +81,39 @@ class SPField_InfoAdm extends SPField_Info
 		return $attr;
 	}
 
-	public function exportField( &$data )
+	public function exportField()
 	{
+		$data = array();
 		$data[ ] = array( 'attributes' => array( 'name' => 'viewInfo' ), 'value' => $this->viewInfo );
 		$data[ ] = array( 'attributes' => array( 'name' => 'entryInfo' ), 'value' => $this->entryInfo );
+		return $data;
+	}
+
+	public function importField( $data, $nid )
+	{
+		if ( count( $data ) ) {
+			$this->nid = $nid;
+			foreach ( $data as $set ) {
+				$this->$set[ 'attributes' ][ 'name' ] = $set[ 'value' ];
+			}
+			$viewInfo = array(
+					'key' => $this->nid . '-viewInfo',
+					'value' => $this->viewInfo,
+					'type' => 'field_information',
+					'fid' => $this->fid,
+					'id' => Sobi::Section(),
+					'section' => Sobi::Section()
+			);
+			SPLang::saveValues( $viewInfo );
+			$entryInfo = array(
+					'key' => $this->nid . '-entryInfo',
+					'value' => $this->entryInfo,
+					'type' => 'field_information',
+					'fid' => $this->fid,
+					'id' => Sobi::Section(),
+					'section' => Sobi::Section()
+			);
+			SPLang::saveValues( $entryInfo );
+		}
 	}
 }

@@ -86,15 +86,15 @@
 										<xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1" />
 										<xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1" />
 										<xs:element name="nameField" type="xs:string" minOccurs="1" maxOccurs="1" />
-										<xs:element name="showTopMenu" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="showTopMenu" type="xs:boolean" minOccurs="0" maxOccurs="1" />
 										<xs:element name="catsInLine" type="xs:int" minOccurs="0" maxOccurs="1" />
-										<xs:element name="showCategoryDesc" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
-										<xs:element name="showCategoryMeta" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
-										<xs:element name="showCategorySubcats" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="showCategoryDesc" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+										<xs:element name="showCategoryMeta" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+										<xs:element name="showCategorySubcats" type="xs:boolean" minOccurs="0" maxOccurs="1" />
 										<xs:element name="entriesInLine" type="xs:int" minOccurs="0" maxOccurs="1" />
 										<xs:element name="entriesOnPage" type="xs:int" minOccurs="0" maxOccurs="1" />
-										<xs:element name="showEntryMeta" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
-										<xs:element name="showEntryCategories" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
+										<xs:element name="showEntryMeta" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+										<xs:element name="showEntryCategories" type="xs:boolean" minOccurs="0" maxOccurs="1" />
 										<xs:element name="options" minOccurs="0" maxOccurs="1">
 											<xs:complexType>
 												<xs:choice maxOccurs="unbounded">
@@ -193,16 +193,32 @@
 																										<xs:attribute name="type" use="optional" type="xs:string" />
 																										<xs:attribute name="position" use="optional" type="xs:int" />
 																										<xs:attribute name="params" use="optional" type="xs:string" />
-																										<xs:anyAttribute />
+																										<xs:attribute name="parent" use="optional" type="xs:string" />
 																									</xs:extension>
 																								</xs:simpleContent>
 																							</xs:complexType>
 																						</xs:element>
 																					</xs:sequence>
-																					<xs:attribute name="attribute" use="required" type="xs:string" />
+																					<xs:attribute name="attribute" use="optional" type="xs:string" />
 																				</xs:complexType>
 																			</xs:element>
 																		</xs:choice>
+																	</xs:complexType>
+																</xs:element>
+																<xs:element name="specific" minOccurs="0" maxOccurs="1">
+																	<xs:complexType>
+																		<xs:sequence>
+																			<xs:element name="data" maxOccurs="unbounded">
+																				<xs:complexType>
+																					<xs:simpleContent>
+																						<xs:extension base="xs:string">
+																							<!--<xs:attribute name="name" use="optional" type="xs:string" />-->
+																							<xs:anyAttribute processContents="skip" />
+																						</xs:extension>
+																					</xs:simpleContent>
+																				</xs:complexType>
+																			</xs:element>
+																		</xs:sequence>
 																	</xs:complexType>
 																</xs:element>
 															</xs:sequence>
