@@ -54,7 +54,7 @@ Legend:
     (#) No possibility to translate the "select option" label in select list (Issue #1562)
     (#) Wrong selector for search highlighter (Issue #1563)
     (#) No warning if no entry is selected when adding menu link to entry
-    (#) Several issue with backend ACL (Issues #1567, #1568, #1569)
+    (#) Several issues with backend ACL (Issues #1567, #1568, #1569)
     (#) Missing fields to change position of categories (Issue #1570)
 
 

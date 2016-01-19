@@ -69,9 +69,6 @@
         <file path="css/theme.less">
             LESS file for the theme CSS file.
         </file>
-		<file path="css/tmpl/joostrap.css">
-			LESS file for the theme CSS file.
-		</file>
 		<file path="entry/details.xsl">
 			Template for the entry details view page.
 		</file>
