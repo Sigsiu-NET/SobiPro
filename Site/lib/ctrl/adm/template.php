@@ -167,10 +167,14 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		/** @var  SPDirectoryIterator $directory */
 		$directory = SPFactory::Instance( 'base.fs.directory', $dir );
 		$configs = array_keys( $directory->searchFile( '.json', false, 2 ) );
+
 		if ( count( $configs ) ) {
 			foreach ( $configs as $file ) {
-				$index = str_replace( array( $dir, '/', '.json' ), array( null, '-', null ), $file );
+				//does not work on Windows
+				//$index = str_replace( array( $dir, '/', '.json' ), array( null, '-', null ), $file );
+				$index = basename( $file, '.json' );
 				$templateSettings[ $index ] = json_decode( SPFs::read( $file ), true );
+
 			}
 		}
 		$menu = $this->createMenu();

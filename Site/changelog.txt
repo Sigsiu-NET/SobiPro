@@ -56,6 +56,7 @@ Legend:
     (#) No warning if no entry is selected when adding menu link to entry
     (#) Several issues with backend ACL (Issues #1567, #1568, #1569)
     (#) Missing fields to change position of categories (Issue #1570)
+    (#) Template configuration shows always default settings on Windows servers (Issue #1573)
 
 
 -------------------
