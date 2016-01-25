@@ -167,14 +167,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		/** @var  SPDirectoryIterator $directory */
 		$directory = SPFactory::Instance( 'base.fs.directory', $dir );
 		$configs = array_keys( $directory->searchFile( '.json', false, 2 ) );
-
 		if ( count( $configs ) ) {
 			foreach ( $configs as $file ) {
-				//does not work on Windows
-				//$index = str_replace( array( $dir, '/', '.json' ), array( null, '-', null ), $file );
-				$index = basename( $file, '.json' );
-				$templateSettings[ $index ] = json_decode( SPFs::read( $file ), true );
-
+				$templateSettings[ basename( $file, '.json' ) ] = json_decode( SPFs::read( $file ), true );
 			}
 		}
 		$menu = $this->createMenu();
@@ -539,8 +534,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	 */
 	protected function compileLessFile( $file, $output, $u, $compress = false )
 	{
-		include_once( 'phar://' . SOBI_PATH . '/lib/services/third-party/less/less.phar.tar.gz/Autoloader.php' );
 		try {
+			include_once( 'phar://' . SOBI_PATH . '/lib/services/third-party/less/less.phar.tar.gz/Autoloader.php' );
 			Less_Autoloader::register();
 
 			if ( $compress ) {
