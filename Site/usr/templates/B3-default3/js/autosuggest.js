@@ -1,53 +1,51 @@
 /**
- * @package: SobiPro Component for Joomla!
-
+ * @package: SobiRestara SobiPro Template
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
- * @license GNU/GPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
- * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
-
+ *
+ * @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @license Released under Sigsiu.NET Template License V1.
+ * You may use this SobiPro template on an unlimited number of SobiPro installations and may modify it for your needs.
+ * You are not allowed to distribute modified or unmodified versions of this template for free or paid.
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
-
+// Autosuggest script for B3-Typeahead.js
 SobiPro.jQuery( document ).ready( function ()
 {
 	SobiPro.jQuery( '.search-query' ).typeahead( {
-		source:function ( typeahead, query )
+		source: function ( query, typeahead )
 		{
-			var request = { 'option':'com_sobipro', 'task':'search.suggest', 'sid':SobiProSection, 'term':query, 'format':'raw' };
+			var request = {
+				'option': 'com_sobipro',
+				'task': 'search.suggest',
+				'sid': SobiProSection,
+				'term': query,
+				'format': 'raw'
+			};
 			var proxy = this;
 			return SobiPro.jQuery.ajax( {
-				'type':'post',
-				'url':'index.php',
-				'data':request,
-				'dataType':'json',
-				success:function ( response )
+				'type': 'post',
+				'url': 'index.php',
+				'data': request,
+				'dataType': 'json',
+				success: function ( response )
 				{
 					responseData = [];
 					if ( response.length ) {
-						for ( var i = 0; i < response.length; i++ ) {
-							responseData[ i ] = { 'name':response[ i ] };
+						for ( var i = 0; i < response.length; i ++ ) {
+							responseData[ i ] = { 'name': response[ i ] };
 						}
-						typeahead.process( responseData );
-						SobiPro.jQuery( proxy.$element ).after( SobiPro.jQuery( proxy.$menu ) );
+						typeahead( responseData );
 					}
 				}
 			} );
 		},
-//		onselect:function ( obj )
-//		{
-//			SobiPro.DebOut( this )
-//			this.$element.value( obj.name );
-//			SobiPro.DebOut(SobiPro.jQuery( this.$element ).find( 'form' ))
-//		},
-		property:"name"
+		property: 'name'
 	} );
 } );
