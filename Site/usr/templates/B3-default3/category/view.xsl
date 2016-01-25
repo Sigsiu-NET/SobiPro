@@ -32,7 +32,7 @@
 			<xsl:value-of select="section" />
 		</xsl:variable>
         <xsl:variable name="showCategoriesLabel">
-            <xsl:value-of select="php:function( 'SobiPro::Txt', 'Show Categories' )" />
+            <xsl:value-of select="php:function( 'SobiPro::Txt', 'CATEGORIES_SHOW' )" />
         </xsl:variable>
 
 		<xsl:value-of select="php:function( 'SobiPro::AlternateLink', $rssUrlSection, 'application/atom+xml', $sectionName )" />
@@ -69,6 +69,6 @@
         <xsl:call-template name="entriesLoop" />
         <xsl:apply-templates select="navigation" />
 
-		<input type="hidden" id="hidetext" value="{php:function( 'SobiPro::Txt', 'Hide Categories' )}" />
+		<input type="hidden" id="hidetext" value="{php:function( 'SobiPro::Txt', 'CATEGORIES_HIDE' )}" />
 	</xsl:template>
 </xsl:stylesheet>

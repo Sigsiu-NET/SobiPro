@@ -42,6 +42,7 @@ Legend:
     (!) Warning if no year is selected when adding menu link to a listing by date
     (!) Template for display fields now includes the default image
     (!) Layout of back-end ACL settings improved
+    (!) Alpha menu title contains now select field name
 
     (#) Visibility problem with datepicker in modal window
     (#) Wrong condition for while loop in SPJoomlaFs::copy
@@ -53,8 +54,9 @@ Legend:
     (#) No possibility to translate the "select option" label in select list (Issue #1562)
     (#) Wrong selector for search highlighter (Issue #1563)
     (#) No warning if no entry is selected when adding menu link to entry
-    (#) Several issue with backend ACL (Issues #1567, #1568, #1569)
+    (#) Several issues with backend ACL (Issues #1567, #1568, #1569)
     (#) Missing fields to change position of categories (Issue #1570)
+    (#) Template configuration shows always default settings on Windows servers (Issue #1573)
 
 
 -------------------

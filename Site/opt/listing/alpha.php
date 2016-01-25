@@ -224,7 +224,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		}
 
 		/* get view class */
-		$listingName = Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $this->_letter ) );
+		$listingName = Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $this->_letter , 'field' => $field->get( 'name' ) ) );
 		$visitor = SPFactory::user()->getCurrent();
 		$navigation = $pn->get();
 		$view = SPFactory::View( 'listing' )
