@@ -27,7 +27,7 @@ Legend:
 
 
 -------------------
-1.2.2 ()
+1.2.2 (28 January 2016)
 -------------------
     (+) Possibility to load a local version of Bootstrap 3 with 'SobiPro' namespace
     (+) Information box when install/update SobiPro
