@@ -27,6 +27,12 @@ Legend:
 
 
 -------------------
+1.2.3 ()
+-------------------
+    (#) Forcing template installation doesn't work
+
+
+-------------------
 1.2.2 (28 January 2016)
 -------------------
     (+) Possibility to load a local version of Bootstrap 3 with 'SobiPro' namespace

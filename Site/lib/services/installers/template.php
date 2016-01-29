@@ -63,7 +63,7 @@ class SPTemplateInstaller extends SPInstaller
 		if ( SPRequest::bool( 'force' ) ) {
 			/** @var $from SPDirectory */
 			$from = SPFactory::Instance( 'base.fs.directory', $this->root );
-			$from->moveFiles( $path );
+			$from->moveFiles( $path, true );
 		}
 		else {
 			if ( !( SPFs::move( $this->root, $path ) ) ) {

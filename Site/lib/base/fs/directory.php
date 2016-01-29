@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -35,17 +33,17 @@ class SPDirectory extends SPFile
 	private $_files = array();
 	private $_struct = array();
 
-	 /**
-     * @param string $string - part or full name of the file to search for
-     * @param bool $exact - search for exact string or the file nam can contain this string
-     * @param $recLevel - recursion level
-     * @return array
-     */
+	/**
+	 * @param string $string - part or full name of the file to search for
+	 * @param bool $exact - search for exact string or the file nam can contain this string
+	 * @param $recLevel - recursion level
+	 * @return array
+	 */
 	public function searchFile( $string, $exact = true, $recLevel = 1 )
 	{
 		$this->iterator();
 		$results = array();
-		if( !( is_array( $string ) ) ) {
+		if ( !( is_array( $string ) ) ) {
 			$string = array( $string );
 		}
 		foreach ( $string as $search ) {
@@ -68,7 +66,7 @@ class SPDirectory extends SPFile
 	 */
 	public function iterator()
 	{
-		if( !$this->_dirIterator ) {
+		if ( !$this->_dirIterator ) {
 			$this->_dirIterator =& SPFactory::Instance( 'base.fs.directory_iterator', $this->_filename );
 		}
 		return $this->_dirIterator;
@@ -77,16 +75,24 @@ class SPDirectory extends SPFile
 	/**
 	 * Move files from directory to given path
 	 * @param string $target - target path
+	 * @param bool $forece
 	 * @return array
 	 */
-	public function moveFiles( $target )
+	public function moveFiles( $target, $force = false )
 	{
 		$this->iterator();
 		$log = array();
 		foreach ( $this->_dirIterator as $child ) {
-			if( !( $child->isDot() ) && !( SPFs::exists( Sobi::FixPath( $target.DS.$child->getFileName() ) ) ) ) {
-				if( SPFs::move( $child->getPathname(), Sobi::FixPath( $target.DS.$child->getFileName() ) ) ) {
-					$log[] = Sobi::FixPath( $target.DS.$child->getFileName() );
+			if ( !( $child->isDot() ) ) {
+				if ( ( !( SPFs::exists( Sobi::FixPath( $target . '/' . $child->getFileName() ) ) ) ) ) {
+					if ( SPFs::move( $child->getPathname(), Sobi::FixPath( $target . '/' . $child->getFileName() ) ) ) {
+						$log[ ] = Sobi::FixPath( $target . '/' . $child->getFileName() );
+					}
+				}
+				elseif ( $force && !( is_dir( $child->getPathname() ) ) ) {
+					if ( SPFs::move( $child->getPathname(), Sobi::FixPath( $target . '/' . $child->getFileName() ) ) ) {
+						$log[ ] = Sobi::FixPath( $target . '/' . $child->getFileName() );
+					}
 				}
 			}
 		}
@@ -102,7 +108,7 @@ class SPDirectory extends SPFile
 		$this->iterator();
 //		$log = array();
 		foreach ( $this->_dirIterator as $child ) {
-			if( !( $child->isDot() ) ) {
+			if ( !( $child->isDot() ) ) {
 				SPFs::delete( $child->getPathname() );
 			}
 		}
@@ -120,13 +126,13 @@ class SPDirectory extends SPFile
 	private function searchRecursive( $dir, $string, $exact, $recLevel, &$results, $level = 0 )
 	{
 		$level++;
-		if( $level > $recLevel ) {
+		if ( $level > $recLevel ) {
 			return true;
 		}
 		$r = $dir->searchFile( $string, $exact );
 		$results = array_merge( $results, $r );
 		foreach ( $dir as $file ) {
-			if( $file->isDir() && !( $file->isDot() ) ) {
+			if ( $file->isDir() && !( $file->isDot() ) ) {
 				$this->searchRecursive( SPFactory::Instance( 'base.fs.directory_iterator', $file->getPathname() ), $string, $exact, $recLevel, $results, $level );
 			}
 		}
