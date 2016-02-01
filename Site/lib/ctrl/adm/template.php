@@ -169,7 +169,11 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$configs = array_keys( $directory->searchFile( '.json', false, 2 ) );
 		if ( count( $configs ) ) {
 			foreach ( $configs as $file ) {
-				$templateSettings[ basename( $file, '.json' ) ] = json_decode( SPFs::read( $file ), true );
+				$prefix = null;
+				if ( basename( dirname( $file ) ) != $templateName ) {
+					$prefix = basename( dirname( $file ) ) . '-';
+				};
+				$templateSettings[ $prefix . basename( $file, '.json' ) ] = json_decode( SPFs::read( $file ), true );
 			}
 		}
 		$menu = $this->createMenu();

@@ -30,6 +30,7 @@ Legend:
 1.2.3 ()
 -------------------
     (#) Forcing template installation doesn't work
+    (#) Wrong setting displayed for separate JSON files in template settings
 
 
 -------------------
