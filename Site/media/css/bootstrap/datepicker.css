@@ -87,6 +87,9 @@
 .bootstrap-datetimepicker-widget .picker-switch {
 	text-align: center;
 }
+.picker-switch i {
+	font-size: 24px;
+}
 .bootstrap-datetimepicker-widget table {
 	width: 100%;
 	margin: 0;

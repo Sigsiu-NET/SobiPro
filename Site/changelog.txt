@@ -29,6 +29,8 @@ Legend:
 -------------------
 1.2.3 ()
 -------------------
+	(+) Added unpublished sign to unpublished categories
+
     (#) Forcing template installation doesn't work
     (#) Wrong setting displayed for separate JSON files in template settings
 

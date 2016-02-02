@@ -56,6 +56,9 @@
                             <xsl:text>)</xsl:text>
                         </span>
                     </xsl:if>
+	                <xsl:call-template name="cat-status">
+		                <xsl:with-param name="entry" select="."/>
+	                </xsl:call-template>
                 </p>
                 <div class="spCatintro">
                     <xsl:value-of select="introtext" disable-output-escaping="yes" />
@@ -74,6 +77,15 @@
                 </div>
             </div>
         </div>
-
     </xsl:template>
+
+	<xsl:template name="cat-status">
+		<xsl:param name="entry"/>
+		<xsl:if test="$entry/state = 'unpublished'">
+			<a class="entry-status" href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'CATEGORY_STATUS_UNPUBLISHED' )}" title="" >
+				<i class="icon-remove-sign" />
+			</a>
+		</xsl:if>
+	</xsl:template>
+
 </xsl:stylesheet>
