@@ -692,7 +692,8 @@ abstract class SPDBObject extends SPObject
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_OBJECT_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
-			$this->loadTable();
+			/** Wed, Feb 3, 2016 14:24:09 The extend method calls already the loadTable method */
+//			$this->loadTable();
 		}
 		return $this;
 	}

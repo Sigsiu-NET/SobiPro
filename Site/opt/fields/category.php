@@ -191,11 +191,11 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				->addJsFile( 'opt.field_category_tree' )
 				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { new SigsiuTreeEdit( ' . json_encode( $params ) . '); } );' );
 
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
-			$selector = $selector . '<div class="row"><div class="tree col-sm-6"' . $setheight . '>' . $tree->display(true) . '</div>';
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+			$selector = $selector . '<div class="row"><div class="tree col-sm-6"' . $setheight . '>' . $tree->display( true ) . '</div>';
 		}
 		else {
-			$selector = $selector . '<div class="row-fluid"><div class="tree span6"' . $setheight . '>' . $tree->display(true) . '</div>';
+			$selector = $selector . '<div class="row-fluid"><div class="tree span6"' . $setheight . '>' . $tree->display( true ) . '</div>';
 		}
 		if ( count( $this->_selectedCats ) ) {
 			$selected = SPLang::translateObject( $this->_selectedCats, 'name', 'category' );
@@ -220,14 +220,14 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		elseif ( !( count( $selectedCategories ) ) ) {
 			$delBtParams[ 'disabled' ] = 'disabled';
 		}
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$selector .= '<div class="selected col-sm-6">';
-			$treeclass= 'SigsiuTree container-fluid';
+			$treeclass = 'SigsiuTree container-fluid';
 		}
 		else {
 			$selector .= '<div class="selected span6">';
 			$treeclass = 'SigsiuTree';
-			if (defined( 'SOBIPRO_ADM' )) {
+			if ( defined( 'SOBIPRO_ADM' ) ) {
 				$treeclass = 'SigsiuTree AdminEntry';
 			}
 		}
@@ -238,7 +238,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$selector .= SPHtml_Input::hidden( $this->nid, 'json://' . json_encode( array_keys( $selectedCategories ) ) );
 		$selector .= '</div></div>';
 
-		if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$selector .= '<div class="row"><div class="buttons col-sm-12">';
 		}
 		else {
@@ -251,7 +251,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 		if ( $this->modal ) {
 			$modalclass = 'modaltree modal hide';
-			if (Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' )) {
+			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
 				$modalclass = 'modaltree modal fade';
 			}
 
@@ -270,9 +270,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$values = array();
 			$class = $this->cssClass;
 			if ( defined( 'SOBIPRO_ADM' ) ) {
-				if ($this->bsWidth) {
-					$width = SPHtml_Input::_translateWidth($this->bsWidth);
-					$class .=  ' ' . $width;
+				if ( $this->bsWidth ) {
+					$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+					$class .= ' ' . $width;
 				}
 			}
 			$params = array(
@@ -301,9 +301,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$values = array();
 			$class = $this->cssClass;
 			if ( defined( 'SOBIPRO_ADM' ) ) {
-				if ($this->bsWidth) {
-					$width = SPHtml_Input::_translateWidth($this->bsWidth);
-					$class .=  ' ' . $width;
+				if ( $this->bsWidth ) {
+					$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+					$class .= ' ' . $width;
 				}
 			}
 			$params = array(
@@ -314,7 +314,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 //			if ( $this->width && $this->height ) {
 //				$params[ 'style' ] = "width: {$this->width}px; height: {$this->height}px";
 //			}
-			if ($this->height ) {
+			if ( $this->height ) {
 				$params[ 'style' ] = "height: {$this->height}px";
 			}
 			$this->createValues( $this->_cats, $values, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) );
@@ -358,21 +358,25 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 	protected function loadCategories()
 	{
-		if ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
+		if ( !( $this->_cats ) || !( count( $this->_cats ) ) && file_exists( SPLoader::path( 'etc.categories', 'front', false, 'json' ) ) ) {
+			$this->_cats = json_decode( SPFs::read( SPLoader::path( 'etc.categories', 'front', false, 'json' ) ), true );
+		}
+		elseif ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
 			$this->_cats = SPFactory::cache()
 					->getVar( 'categories_tree', Sobi::Section() );
 			if ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
 				$this->travelCats( Sobi::Section(), $this->_cats, true );
 				SPFactory::cache()
 						->addVar( $this->_cats, 'categories_tree', Sobi::Section() );
+				$cache = json_encode( $this->_cats );
+				SPFs::write( SPLoader::path( 'etc.categories', 'front', false, 'json' ), $cache );
 			}
 		}
 	}
 
 	private function travelCats( $sid, &$cats, $init = false )
 	{
-		$category = SPFactory::Model( $init == true ? 'section' : 'category' );
-		$category->init( $sid );
+		$category = $init == true ? SPFactory::Section( $sid ) : SPFactory::Category( $sid );
 		$cats[ $sid ] = array(
 				'sid' => $sid,
 				'state' => $category->get( 'state' ),
@@ -433,7 +437,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 //			if ( $this->searchWidth && $this->searchHeight ) {
 //				$params[ 'style' ] = "width: {$this->searchWidth}px; height: {$this->searchHeight}px";
 //			}
-			if ($this->searchHeight ) {
+			if ( $this->searchHeight ) {
 				$params[ 'style' ] = "height: {$this->searchHeight}px";
 			}
 			$field = SPHtml_Input::select( $this->nid, $values, $selected, true, $params );

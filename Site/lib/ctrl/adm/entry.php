@@ -529,37 +529,37 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$this->createValidationScript( $fields );
 		$view->assign( $this->_model, 'entry' );
 
-		/* get the categories */
-		$cats = $this->_model->getCategories( true );
-		if ( count( $cats ) ) {
-			$tCats = array();
-			foreach ( $cats as $cid ) {
-				/* ROTFL ... damn I like arrays ;-) */
-				$tCats2 = SPFactory::config()->getParentPath( $cid, true );
-				if ( is_array( $tCats2 ) && count( $tCats2 ) ) {
-					$tCats[ ] = implode( Sobi::Cfg( 'string.path_separator' ), $tCats2 );
-				}
-			}
-			if ( count( $tCats ) ) {
-				$parentPath = implode( "\n", $tCats );
-				$view->assign( $parentPath, 'parent_path' );
-			}
-			$parents = implode( ", ", $cats );
-			$view->assign( $parents, 'parents' );
-		}
-		elseif ( $this->_model->get( 'valid' ) ) {
-			$parent = ( ( $sid == Sobi::Reg( 'current_section' ) ) ? 0 : $sid );
-			if ( $parent ) {
-				$parentPathParsed = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), SPFactory::config()->getParentPath( $parent, true ) );
-				$view->assign( $parentPathParsed, 'parent_path' );
-			}
-			$view->assign( $parent, 'parents' );
-		}
-		else {
-			$n = null;
-			$view->assign( $n, 'parents' );
-			$view->assign( $n, 'parent_path' );
-		}
+		/* get the categories Wed, Feb 3, 2016 11:58:17 - We are not using it anymore */
+//		$cats = $this->_model->getCategories( true );
+//		if ( count( $cats ) ) {
+//			$tCats = array();
+//			foreach ( $cats as $cid ) {
+//				/* ROTFL ... damn I like arrays ;-) */
+//				$tCats2 = SPFactory::config()->getParentPath( $cid, true );
+//				if ( is_array( $tCats2 ) && count( $tCats2 ) ) {
+//					$tCats[ ] = implode( Sobi::Cfg( 'string.path_separator' ), $tCats2 );
+//				}
+//			}
+//			if ( count( $tCats ) ) {
+//				$parentPath = implode( "\n", $tCats );
+//				$view->assign( $parentPath, 'parent_path' );
+//			}
+//			$parents = implode( ", ", $cats );
+//			$view->assign( $parents, 'parents' );
+//		}
+//		elseif ( $this->_model->get( 'valid' ) ) {
+//			$parent = ( ( $sid == Sobi::Reg( 'current_section' ) ) ? 0 : $sid );
+//			if ( $parent ) {
+//				$parentPathParsed = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), SPFactory::config()->getParentPath( $parent, true ) );
+//				$view->assign( $parentPathParsed, 'parent_path' );
+//			}
+//			$view->assign( $parent, 'parents' );
+//		}
+//		else {
+//			$n = null;
+//			$view->assign( $n, 'parents' );
+//			$view->assign( $n, 'parent_path' );
+//		}
 
 		$history = array();
 		$messages = SPFactory::message()->getHistory( $id );

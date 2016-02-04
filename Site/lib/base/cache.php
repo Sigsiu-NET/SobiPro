@@ -252,6 +252,15 @@ final class SPCache
 		return $this;
 	}
 
+	public function & cleanCategories()
+	{
+		$file = SPLoader::path( 'etc.categories', 'front', true, 'json' );
+		if ( $file ) {
+			SPFs::delete( $file );
+		}
+		return $this;
+	}
+
 	/**
 	 * Clean cached variables of a section
 	 * @param $section - section id. If not given, current section will be used

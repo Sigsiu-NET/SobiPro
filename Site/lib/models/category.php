@@ -140,6 +140,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 
 		SPFactory::cache()
 				->purgeSectionVars()
+				->cleanCategories()
 				->deleteObj( 'category', $this->id )
 				->deleteObj( 'category', $this->parent );
 		/* trigger plugins */
@@ -181,8 +182,10 @@ class SPCategory extends SPDBObject implements SPDataModel
 	public function delete( $childs = true )
 	{
 		parent::delete();
-		SPFactory::cache()->cleanSection();
-		SPFactory::cache()->deleteObj( 'category', $this->id );
+		SPFactory::cache()
+				->cleanSection()
+				->deleteObj( 'category', $this->id )
+				->cleanCategories();
 		try {
 			/* get all child cats and delete these too */
 			$childs = $this->getChilds( 'category', true );
