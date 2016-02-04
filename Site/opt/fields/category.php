@@ -361,7 +361,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		if ( !( $this->_cats ) || !( count( $this->_cats ) ) && file_exists( SPLoader::path( 'etc.categories', 'front', false, 'json' ) ) ) {
 			$this->_cats = json_decode( SPFs::read( SPLoader::path( 'etc.categories', 'front', false, 'json' ) ), true );
 		}
-		elseif ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
+		if ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
 			$this->_cats = SPFactory::cache()
 					->getVar( 'categories_tree', Sobi::Section() );
 			if ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
