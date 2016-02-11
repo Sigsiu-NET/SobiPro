@@ -33,6 +33,7 @@ Legend:
 
     (#) Forcing template installation doesn't work
     (#) Wrong setting displayed for separate JSON files in template settings
+    (#) Not possible to save multi select list (Issue #1591)
 
 
 -------------------

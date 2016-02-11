@@ -103,7 +103,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			}
 		}
 		if ( !( $this->_selectedCats ) ) {
-			if ( SPRequest::task() == 'entry.add' ) {
+			if ( SPRequest::task() == 'entry.add' && SPRequest::sid() != Sobi::Section() ) {
 				$this->_selectedCats = array( SPRequest::sid() );
 			}
 		}

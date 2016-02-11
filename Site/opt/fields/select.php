@@ -1018,4 +1018,20 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$this->selectLabel = $data;
 		}
 	}
+
+	/**
+	 * @param $attr
+	 */
+	protected function saveSelectLabel( &$attr )
+	{
+		$data = array(
+				'key' => $this->nid . '-select-label',
+				'value' => $attr[ 'selectLabel' ],
+				'type' => 'field_select',
+				'fid' => $this->fid,
+				'id' => Sobi::Section(),
+				'section' => Sobi::Section()
+		);
+		SPLang::saveValues( $data );
+	}
 }

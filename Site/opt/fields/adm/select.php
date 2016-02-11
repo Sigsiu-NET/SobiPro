@@ -223,21 +223,4 @@ class SPField_SelectAdm extends SPField_Select
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 	}
-
-	/**
-	 * @param $attr
-	 * @throws SPException
-	 */
-	protected function saveSelectLabel( &$attr )
-	{
-		$data = array(
-				'key' => $this->nid . '-select-label',
-				'value' => $attr[ 'selectLabel' ],
-				'type' => 'field_select',
-				'fid' => $this->fid,
-				'id' => Sobi::Section(),
-				'section' => Sobi::Section()
-		);
-		SPLang::saveValues( $data );
-	}
 }
