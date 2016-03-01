@@ -173,7 +173,7 @@ class SPFile
 	 */
 	public function move( $target )
 	{
-		$f = explode( DS, $target );
+		$f = explode( '/', $target );
 		$path = str_replace( $f[ count( $f ) - 1 ], null, $target );
 		if ( !( SPFs::exists( $path ) ) ) {
 			SPFs::mkdir( $path );

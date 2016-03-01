@@ -224,11 +224,25 @@ abstract class SPFactory
 		$args = func_get_args();
 		unset( $args[ 0 ] );
 		try {
+			$refMethod = new ReflectionMethod( $loaded[ $class ], '__construct' );
+			$params = $refMethod->getParameters();
+			$argsProcessed = array();
+			foreach ( $params as $key => $param ) {
+				if ( $param->isPassedByReference() ) {
+					// + 1 because after unset @225 the index isn't changed
+					$argsProcessed[ $key ] = &$args[ $key + 1 ];
+				}
+				else {
+					$argsProcessed[ $key ] = $args[ $key + 1 ];
+				}
+			}
 			$obj = new ReflectionClass( $loaded[ $class ] );
-			$instance = $obj->newInstanceArgs( $args );
+			$instance = $obj->newInstanceArgs( $argsProcessed );
 		} catch ( LogicException $Exception ) {
 			throw new SPException( SPLang::e( 'Cannot create instance of "%s". Class file does not exist. Error %s', $class, $Exception->getMessage() ) );
 		} catch ( ReflectionException $Exception ) {
+			throw new SPException( SPLang::e( 'Cannot create instance of "%s". Class file does not exist. Error %s', $class, $Exception->getMessage() ) );
+		} catch ( Exception $Exception ) {
 			throw new SPException( SPLang::e( 'Cannot create instance of "%s". Class file does not exist. Error %s', $class, $Exception->getMessage() ) );
 		}
 		return $instance;

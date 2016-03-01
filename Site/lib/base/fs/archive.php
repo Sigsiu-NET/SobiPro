@@ -46,7 +46,7 @@ class SPArchive extends SPFile
 						$r = true;
 					}
 					catch( SPException $x ) {
-						$t = Sobi::FixPath( Sobi::Cfg( 'fs.temp' ).DS.md5( microtime() ) );
+						$t = Sobi::FixPath( Sobi::Cfg( 'fs.temp' ).'/'.md5( microtime() ) );
 						SPFs::mkdir( $t, 0777 );
 						$dir = SPFactory::Instance( 'base.fs.directory', $t );
 						if( $zip->extractTo( $t ) ) {
