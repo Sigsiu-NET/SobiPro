@@ -699,7 +699,7 @@ class SPJoomlaLang
 
 			$labels = SPFactory::db()
 					->select( $ident . ' AS id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
-					->loadAssocList();
+					->loadAssocList( 'label' );
 			if ( count( $labels ) ) {
 				$aliases = array();
 				if ( in_array( 'alias', $fields ) ) {
@@ -720,6 +720,11 @@ class SPJoomlaLang
 						if ( !( isset( $result[ $label[ 'id' ] ][ 'alias' ] ) ) ) {
 							$result[ $label[ 'id' ] ][ 'alias' ] = isset( $aliases[ $label[ 'id' ] ] ) ? $aliases[ $label[ 'id' ] ][ 'nid' ] : null;
 						}
+					}
+				}
+				foreach ( $labels as $label ) {
+					if ( !( isset( $result[ $label[ 'id' ] ][ $label[ 'label' ] ] ) ) || $label[ 'language' ] == Sobi::Lang() ) {
+						$result[ $label[ 'id' ] ][ $label[ 'label' ] ] = $label[ 'value' ];
 					}
 				}
 			}

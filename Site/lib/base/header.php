@@ -123,7 +123,7 @@ final class SPHeader
 					if ( $font == 'font-awesome-3-local' ) {
 						$this->addCssFile( 'icons' );
 					}
-					else {
+					elseif( Sobi::Cfg( 'icon-fonts.' . $font ) ) {
 						$this->addHeadLink( Sobi::Cfg( 'icon-fonts.' . $font ), null, null, 'stylesheet' );
 					}
 				}

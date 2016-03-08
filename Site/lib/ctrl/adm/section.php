@@ -374,7 +374,8 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 
 	protected function authorise( $action = 'access', $ownership = 'valid' )
 	{
-		if( $action == 'add' && Sobi::Can( 'cms.admin' ) ){
+		$manage = array( 'add' => true, 'manage' => true, 'delete' => true );
+		if ( isset( $manage[ $action ] ) && Sobi::Can( 'cms.admin' ) ) {
 			return true;
 		}
 		parent::authorise( $action, $ownership );

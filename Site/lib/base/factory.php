@@ -223,17 +223,21 @@ abstract class SPFactory
 		}
 		$args = func_get_args();
 		unset( $args[ 0 ] );
+		$args = array_values( $args );
 		try {
 			$refMethod = new ReflectionMethod( $loaded[ $class ], '__construct' );
 			$params = $refMethod->getParameters();
 			$argsProcessed = array();
-			foreach ( $params as $key => $param ) {
-				if ( $param->isPassedByReference() ) {
-					// + 1 because after unset @225 the index isn't changed
-					$argsProcessed[ $key ] = &$args[ $key + 1 ];
-				}
-				else {
-					$argsProcessed[ $key ] = $args[ $key + 1 ];
+			if ( count( $args ) ) {
+				foreach ( $params as $key => $param ) {
+					if ( isset( $args[ $key ] ) ) {
+						if ( $param->isPassedByReference() ) {
+							$argsProcessed[ $key ] = &$args[ $key ];
+						}
+						else {
+							$argsProcessed[ $key ] = $args[ $key ];
+						}
+					}
 				}
 			}
 			$obj = new ReflectionClass( $loaded[ $class ] );

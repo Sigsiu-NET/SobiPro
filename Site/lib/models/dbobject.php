@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -741,32 +739,40 @@ abstract class SPDBObject extends SPObject
 	{
 		$attributes = array_merge( $this->translatable(), self::$translatable );
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', array( &$attributes ) );
-		$db =& SPFactory::db();
-		try {
-			$labels = $db
-					->select( 'sValue, sKey', 'spdb_language', array( 'id' => $this->id, 'sKey' => $attributes, 'language' => Sobi::Lang(), 'oType' => $this->type() ) )
-					->loadAssocList( 'sKey' );
-			/* get labels in the default lang first */
-			if ( Sobi::Lang( false ) != Sobi::DefLang() ) {
-				$dlabels = $db
-						->select( 'sValue, sKey', 'spdb_language', array( 'id' => $this->id, 'sKey' => $attributes, 'language' => Sobi::DefLang(), 'oType' => $this->type() ) )
-						->loadAssocList( 'sKey' );
-				if ( count( $dlabels ) ) {
-					foreach ( $dlabels as $k => $v ) {
-						if ( !( isset( $labels[ $k ] ) ) || !( $labels[ $k ] ) ) {
-							$labels[ $k ] = $v;
-						}
-					}
-				}
-			}
-		} catch ( SPException $x ) {
-			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
-		}
-		if ( count( $labels ) ) {
-			foreach ( $labels as $k => $v ) {
-				$this->_set( $k, $v[ 'sValue' ] );
+		$labels = SPLang::translateObject( $this->id, $attributes );
+		foreach ( $labels[ $this->id ] as $k => $label ) {
+			if ( in_array( $k, $attributes ) ) {
+				$this->_set( $k, $label );
 			}
 		}
+
+//		$db =& SPFactory::db();
+//		try {
+//			$labels = $db
+//					->select( 'sValue, sKey', 'spdb_language', array( 'id' => $this->id, 'sKey' => $attributes, 'language' => Sobi::Lang(), 'oType' => $this->type() ) )
+//					->loadAssocList( 'sKey' );
+//			/* get labels in the default lang first */
+//			if ( Sobi::Lang( false ) != Sobi::DefLang() ) {
+//				$dlabels = $db
+//						->select( 'sValue, sKey', 'spdb_language', array( 'id' => $this->id, 'sKey' => $attributes, 'language' => Sobi::DefLang(), 'oType' => $this->type() ) )
+//						->loadAssocList( 'sKey' );
+//				if ( count( $dlabels ) ) {
+//					foreach ( $dlabels as $k => $v ) {
+//					foreach ( $dlabels as $k => $v ) {
+//						if ( !( isset( $labels[ $k ] ) ) || !( $labels[ $k ] ) ) {
+//							$labels[ $k ] = $v;
+//						}
+//					}
+//				}
+//			}
+//		} catch ( SPException $x ) {
+//			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+//		}
+//		if ( count( $labels ) ) {
+//			foreach ( $labels as $k => $v ) {
+//				$this->_set( $k, $v[ 'sValue' ] );
+//			}
+//		}
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$labels ) );
 	}
 

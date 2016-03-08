@@ -30,11 +30,17 @@ Legend:
 1.2.3 ()
 -------------------
 	(+) Added unpublished sign to unpublished categories
+	(+) Additional cache for categories relation in category field
 
     (#) Forcing template installation doesn't work
     (#) Wrong setting displayed for separate JSON files in template settings
     (#) Not possible to save multi select list (Issue #1591)
     (#) SPFactory::Instance PHP 5.6 compatibility
+    (#) Missing method "saveSelectLabel" moved to parent class (Issue #1591)
+    (#) SobiPro cache not deleted when edit new template settings (Issue #1588)
+    (#) Wrong ACL permission check for managing sections (Issue #1586)
+    (#) Empty head ling when no font icons selected (Issue # #1593)
+    (#) Missing language as a selector in category field cache (Issue #1579)
 
 
 -------------------

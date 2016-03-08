@@ -254,7 +254,7 @@ final class SPCache
 
 	public function & cleanCategories()
 	{
-		$file = SPLoader::path( 'etc.categories', 'front', true, 'json' );
+		$file = SPLoader::dirPath( 'etc.categories' );
 		if ( $file ) {
 			SPFs::delete( $file );
 		}
@@ -294,7 +294,7 @@ final class SPCache
 		}
 	}
 
-	protected function cleanSectionXML( $section )
+	public function cleanSectionXML( $section )
 	{
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
 			$xml = SPFactory::db()
