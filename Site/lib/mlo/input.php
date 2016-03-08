@@ -266,18 +266,30 @@ abstract class SPHtml_Input
 	public static function _translateWidth( $width )
 	{
 
-		switch ($width) {
-			case 1: $newwidth = 'input-small'; break;
+		switch ( $width ) {
+			case 1:
+				$newwidth = 'input-small';
+				break;
 			case 2:
-			case 3: $newwidth = 'input-medium'; break;
-			case 4: $newwidth = 'input-large'; break;
+			case 3:
+				$newwidth = 'input-medium';
+				break;
+			case 4:
+				$newwidth = 'input-large';
+				break;
 			case 5:
-			case 6: $newwidth = 'input-xlarge'; break;
+			case 6:
+				$newwidth = 'input-xlarge';
+				break;
 			case 7:
-			case 8: $newwidth = 'input-splarge'; break;
+			case 8:
+				$newwidth = 'input-splarge';
+				break;
 			case 9:
 			case 10:
-			default: $newwidth = 'input-xxlarge'; break;
+			default:
+				$newwidth = 'input-xxlarge';
+				break;
 		}
 		return $newwidth;
 	}
@@ -415,16 +427,16 @@ abstract class SPHtml_Input
 		if ( !( is_bool( $checked ) ) ) {
 			$checked = ( ( string )$checked == ( string )$value ) ? true : false;
 		}
-		$label = $label !== null ? self::translate( $label ) : null;
+		$label = strlen( $label ) ? self::translate( $label ) : null;
 		$checked = $checked ? " checked=\"checked\" " : null;
 		$$name = self::cleanOpt( $name );
 		$value = self::cleanOpt( $value );
 		$f = "<input type=\"radio\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\"{$checked}{$params}/>";
 
-		$l = $label ? "\n<label for=\"{$id}\">{$label}</label>" : null;
-		$lstart = $label ? "\n<label for=\"{$id}\">" : null;
-		$lend = $label ? "</label>" : null;
-		$lcontent = $label ? $label : null;
+		$l = strlen( $label ) ? "\n<label for=\"{$id}\">{$label}</label>" : null;
+		$lstart = strlen( $label ) ? "\n<label for=\"{$id}\">" : null;
+		$lend = strlen( $label ) ? "</label>" : null;
+		$lcontent = strlen( $label ) ? $label : null;
 
 		if ( $image ) {
 			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
@@ -540,15 +552,16 @@ abstract class SPHtml_Input
 		if ( !( is_bool( $checked ) ) ) {
 			$checked = ( ( string )$checked == ( string )$value ) ? true : false;
 		}
-		$label = $label ? self::cleanOpt( self::translate( $label ) ) : null;
+		$label = (string)$label;
+		$label = strlen( $label ) ? self::cleanOpt( self::translate( $label ) ) : null;
 		$checked = $checked ? " checked=\"checked\" " : null;
 		$ids = $id ? "id=\"{$id}\" " : $id;
 		$$name = self::cleanOpt( $name );
 		$value = self::cleanOpt( $value );
 		$f = "<input type=\"checkbox\" name=\"{$name}\" {$ids}value=\"{$value}\"{$checked}{$params}/>";
 
-		$l = $label ? "\n<label for=\"{$id}\">{$label}</label>" : null;
-		$lstart = $label ? "\n<label for=\"{$id}\">" : null;
+		$l = strlen( $label ) ? "\n<label for=\"{$id}\">{$label}</label>" : null;
+ 		$lstart = $label ? "\n<label for=\"{$id}\">" : null;
 		$lend = $label ? "</label>" : null;
 		$lcontent = $label ? $label : null;
 

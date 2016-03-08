@@ -41,6 +41,7 @@ Legend:
     (#) Wrong ACL permission check for managing sections (Issue #1586)
     (#) Empty head ling when no font icons selected (Issue # #1593)
     (#) Missing language as a selector in category field cache (Issue #1579)
+    (#) Forcing string handling of labels in checkbox and radio buttons (Issue ##1578)
 
 
 -------------------
