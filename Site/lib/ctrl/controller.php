@@ -200,7 +200,7 @@ abstract class SPController extends SPObject implements SPControl
 	protected function checkTranslation()
 	{
 		$lang = SPRequest::cmd( 'sp-language', false, 'get' );
-		if ( $lang && $lang != Sobi::DefLang() ) {
+		if ( $lang && $lang != Sobi::Cfg( 'language' ) ) {
 			$languages = SPFactory::CmsHelper()->availableLanguages();
 			SPFactory::message()
 					->info( Sobi::Txt( 'INFO_DIFFERENT_LANGUAGE', $this->_type, $languages[ $lang ][ 'name' ] ), false );

@@ -1171,7 +1171,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if ( count( $cfg ) ) {
 			foreach ( $cfg as $section => $keys ) {
-				if ( $section == 'GB.CFG.GLOBAL_CONFIG' || $section == 'GB.ACL' && !( Sobi::Can( 'cms.admin' ) ) ) {
+				if ( ( $section == 'GB.CFG.GLOBAL_CONFIG' || $section == 'GB.ACL' ) && !( Sobi::Can( 'cms.admin' ) ) ) {
 					continue;
 				}
 				$menu->addSection( $section, $keys );
