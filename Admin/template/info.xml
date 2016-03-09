@@ -63,7 +63,7 @@
 								</fieldset>
 							</div>
 							<div class="span6" condition="template.preview">
-								<img src="var:[template.preview]" alt="" />
+								<img class="img-rounded img-polaroid" width="95%" src="var:[template.preview]" alt="" />
 							</div>
 						</div>
 					</tab>

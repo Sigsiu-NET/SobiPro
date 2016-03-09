@@ -344,7 +344,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				$time = microtime( true ) - $time;
 				SPConfig::debOut( "Memory: {$mem}<br/>Time: {$time}<br/> Queries: {$queries}" );
 			}
-			echo "\n<!-- Start of SobiPro component-->\n<div id=\"SobiPro\" class=\"SobiPro\">\n{$out}\n</div>\n<!-- End of SobiPro component Copyright (C) 2011-2015 Sigsiu.NET GmbH -->\n";
+			echo "\n<!-- Start of SobiPro component 1.2.x -->\n<div id=\"SobiPro\" class=\"SobiPro\">\n{$out}\n</div>\n<!-- End of SobiPro component; Copyright (C) 2011-2016 Sigsiu.NET GmbH -->\n";
 		}
 		else {
 			$this->customOutput( $out );
