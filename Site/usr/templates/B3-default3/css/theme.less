@@ -246,7 +246,7 @@
 	width: inherit;
 }
 
-// Overwrite some bootstrap styles
+// Overwrite some bootstrap styles resp. template changes
 // ----------------------------------------
 .SobiPro {
 	padding: 4px;
@@ -268,13 +268,32 @@
 	.collapse {
 		position: inherit;
 	}
-	.btn {
+	.btn,
+	.btn-submit {
 		font-weight: 500;
+		text-shadow: none;
 		font-size: @fontsize;
+		padding: 6px 12px;
+	}
+	.btn-sm,
+	.btn-group-sm > .btn {
+		padding: 5px 10px;
+		font-size: calc(@fontsize - 2px);
+	}
+	.btn-xs,
+	.btn-group-xs > .btn {
+		padding: 1px 5px;
+		font-size: calc(@fontsize - 2px);
 	}
 	.dropdown-menu,
 	.form-control {
 		font-size: @fontsize;
+	}
+	.input-sm,
+	.form-horizontal .form-group-sm .form-control {
+		padding: 5px 10px;
+		font-size: calc(@fontsize - 2px);
+		line-height: 1.5;
 	}
 }
 /* form-inline mode needs to be checked
@@ -789,6 +808,7 @@
 	.background(light);
 	.borders(light);
 }
+.alert.alert-,
 .SobiPro .bg-sigsiu-alert {
 	border-style: solid;
 	border-width: 1px;
@@ -799,6 +819,11 @@
 		background-color: @base-color;
 		color: @text-color;
 		border-color: lighten(@base-color, 10%);
+	}
+	& when (@corners = angular) {
+		border-radius: 0;
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
 	}
 }
 
@@ -983,12 +1008,12 @@
 .SobiPro .navbar .nav > li > a {
 	padding-left: 10px;
 	padding-right: 10px;
+	text-shadow: none;
 }
 
 // Topmenu
 // ----------------------------------------
 .SobiPro .topmenu.navbar {
-	border: 1px solid transparent;
 	box-shadow: none;
 	margin-bottom: 20px;
 	min-height: inherit;
@@ -1111,7 +1136,7 @@
 }
 .SobiPro .spCaticon {
 	text-align: center;
-	margin-top: 15px;
+	margin-top: 5px;
 }
 .SobiPro .spCaticon a {
 	color: @base-color;
@@ -1847,11 +1872,12 @@
 		color: @base-color;
 	}
 }
+.SobiPro .rating-summary .criteria,
+.SobiPro .review-container .criteria {
+	line-height: 1.428571429;
+	min-height: 22px;
+}
 .SobiPro .review-container {
-	.rating-criteria,
-	.rating-summary {
-		line-height: 1.428571429;
-	}
 	.rating-criteria {
 		font-size: calc(@fontsize + 1px);
 	}
