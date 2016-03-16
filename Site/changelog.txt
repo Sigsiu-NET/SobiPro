@@ -43,6 +43,7 @@ Legend:
     (#) Missing language as a selector in category field cache (Issue #1579)
     (#) Forcing string handling of labels in checkbox and radio buttons (Issue ##1578)
     (#) Wrong languages selected as current while translating (Issue #1572)
+    (#) Missing some settings due to ACL implementation (Issue #1575)
 
 
 -------------------
