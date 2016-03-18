@@ -1456,12 +1456,12 @@ $ = SobiPro.jQuery;
 		(is12Hours ? ' data-hour-format="12"' : '') +
 		'>' +
 		'<tr>' +
-		'<td><a href="#" class="btn" data-action="incrementHours"><i class="'+ SobiPro.Ico('calendar-field.increase-icon', 'icon-chevron-up')+'"></i></a></td>' +
+		'<td><a href="#" class="btn btn-calendar-chevron" data-action="incrementHours"><i class="'+ SobiPro.Ico('calendar-field.increase-icon', 'icon-chevron-up')+'"></i></a></td>' +
 		'<td class="separator"></td>' +
-		'<td><a href="#" class="btn" data-action="incrementMinutes"><i class="'+ SobiPro.Ico('calendar-field.increase-icon', 'icon-chevron-up')+'"></i></a></td>' +
+		'<td><a href="#" class="btn btn-calendar-chevron" data-action="incrementMinutes"><i class="'+ SobiPro.Ico('calendar-field.increase-icon', 'icon-chevron-up')+'"></i></a></td>' +
 		(showSeconds ?
 		'<td class="separator"></td>' +
-		'<td><a href="#" class="btn" data-action="incrementSeconds"><i class="'+ SobiPro.Ico('calendar-field.increase-icon', 'icon-chevron-up')+'"></i></a></td>' : '') +
+		'<td><a href="#" class="btn btn-calendar-chevron" data-action="incrementSeconds"><i class="'+ SobiPro.Ico('calendar-field.increase-icon', 'icon-chevron-up')+'"></i></a></td>' : '') +
 		(is12Hours ? '<td class="separator"></td>' : '') +
 		'</tr>' +
 		'<tr>' +
@@ -1478,12 +1478,12 @@ $ = SobiPro.jQuery;
 		'</td>' : '') +
 		'</tr>' +
 		'<tr>' +
-		'<td><a href="#" class="btn" data-action="decrementHours"><i class="'+ SobiPro.Ico('calendar-field.decrease-icon', 'icon-chevron-down')+'"></i></a></td>' +
+		'<td><a href="#" class="btn btn-calendar-chevron" data-action="decrementHours"><i class="'+ SobiPro.Ico('calendar-field.decrease-icon', 'icon-chevron-down')+'"></i></a></td>' +
 		'<td class="separator"></td>' +
-		'<td><a href="#" class="btn" data-action="decrementMinutes"><i class="'+ SobiPro.Ico('calendar-field.decrease-icon', 'icon-chevron-down')+'"></i></a></td>' +
+		'<td><a href="#" class="btn btn-calendar-chevron" data-action="decrementMinutes"><i class="'+ SobiPro.Ico('calendar-field.decrease-icon', 'icon-chevron-down')+'"></i></a></td>' +
 		(showSeconds ?
 		'<td class="separator"></td>' +
-		'<td><a href="#" class="btn" data-action="decrementSeconds"><i class="'+ SobiPro.Ico('calendar-field.decrease-icon', 'icon-chevron-down')+'"></i></a></td>' : '') +
+		'<td><a href="#" class="btn btn-calendar-chevron" data-action="decrementSeconds"><i class="'+ SobiPro.Ico('calendar-field.decrease-icon', 'icon-chevron-down')+'"></i></a></td>' : '') +
 		(is12Hours ? '<td class="separator"></td>' : '') +
 		'</tr>' +
 		'</table>' +

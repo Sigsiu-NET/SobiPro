@@ -10,6 +10,16 @@
 .clearfix:after {
 	clear: both;
 }
+.btn.btn-calendar-chevron {
+	padding: 3px 3px;
+	margin: 0;
+	background-color: transparent;
+}
+.bootstrap-datetimepicker-widget a.btn-calendar-chevron [class^="icon-"] {
+	font-size: 20px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
 .hide-text {
 	font: 0/0 a;
 	color: transparent;
@@ -35,6 +45,7 @@
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
+	padding-top: 10px;
 }
 .bootstrap-datetimepicker-widget:before {
 	content: '';
@@ -72,9 +83,9 @@
 }
 .bootstrap-datetimepicker-widget .timepicker-hour,
 .bootstrap-datetimepicker-widget .timepicker-minute, .bootstrap-datetimepicker-widget .timepicker-second {
-	width: 100%;
+	/*width: 100%;*/
 	font-weight: bold;
-	font-size: 1.2em;
+	font-size: 1.1em;
 }
 .bootstrap-datetimepicker-widget table[data-hour-format="12"] .separator {
 	width: 4px;
@@ -174,8 +185,8 @@
 .bootstrap-datetimepicker-widget td span {
 	display: block;
 	width: 47px;
-	height: 54px;
-	line-height: 54px;
+	/*height: 54px;*/
+	/*line-height: 54px;*/
 	float: left;
 	margin: 2px;
 	cursor: pointer;
@@ -220,8 +231,9 @@
 	right: 7px;
 }
 .bootstrap-datetimepicker-widget a [class^="icon-"] {
-	font-size: 25px;
-	padding-left: 10px;
+	font-size: 22px;
+	padding-left: 15px;
+	padding-right: 15px;
 	color: #08c;
 }
 

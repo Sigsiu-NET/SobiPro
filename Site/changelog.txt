@@ -31,6 +31,7 @@ Legend:
 -------------------
 	(+) Added unpublished sign to unpublished categories
 	(+) Additional cache for categories relation in category field
+	(+) datepicker CSS improvements (against template overwrites)
 
     (#) Forcing template installation doesn't work
     (#) Wrong setting displayed for separate JSON files in template settings
