@@ -937,7 +937,7 @@
 .SobiPro .spSearch .alert-info {
 	border-color: @alert-color;
 	background-color: lighten(@alert-color, 5%);
-	color: desaturate(lighten(@active-color, 20%), 10%);
+	color: @active-color;
 	& when (@inverse = inverse) {
 		border-color: darken(@active-color, 10%);
 		background-color: @active-color;
