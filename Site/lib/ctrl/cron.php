@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -18,7 +16,7 @@
  */
 
 define( '_JEXEC', 1 );
-
+//error_reporting( E_ALL );
 require dirname( __FILE__ ) . '/../../../../libraries/import.php';
 if ( !( defined( 'JPATH_BASE' ) ) ) {
 	define( 'JPATH_BASE', realpath( dirname( __FILE__ ) . '/../../../../' ) );
@@ -36,6 +34,10 @@ if ( !( defined( 'JVERSION' ) ) ) {
 	$jVersion = new JVersion;
 	define( 'JVERSION', $jVersion->getShortVersion() );
 }
+
+if ( version_compare( JVERSION, '3.4.9999', 'ge' ) ) {
+	JFactory::getConfig( JPATH_CONFIGURATION . '/configuration.php' );
+}
 require_once( JPATH_ROOT . '/components/com_sobipro/lib/sobi.php' );
 
 class SobiProCrawler extends JApplicationCli
@@ -49,11 +51,18 @@ class SobiProCrawler extends JApplicationCli
 	protected $cleanCache = true;
 	protected $liveURL = '';
 	protected $loopTimeLimit = 15;
+	protected $args = array();
 
-	public function execute( $argv )
+	public function & setArgs( $args )
+	{
+		$this->args = $args;
+		return $this;
+	}
+
+	public function execute()
 	{
 		Sobi::Initialise();
-		$continue = $this->parseParameters( $argv );
+		$continue = $this->parseParameters( $this->args );
 		if ( $continue ) {
 			if ( !( $this->section ) ) {
 				$this->sections = SPFactory::db()
@@ -78,6 +87,7 @@ class SobiProCrawler extends JApplicationCli
 				$this->out( '[ERROR] No valid sections found' );
 			}
 		}
+		exit( 1 );
 	}
 
 	protected function crawlSobiSection( $sid )
@@ -87,7 +97,7 @@ class SobiProCrawler extends JApplicationCli
 		$connection = SPFactory::Instance( 'services.remote' );
 		while ( !( $done ) && ( time() - $this->start ) < $this->timeLimit ) {
 			$url = $this->liveURL . "/index.php?option=com_sobipro&task={$task}&sid={$sid}&format=raw&tmpl=component&timeLimit={$this->loopTimeLimit}&fullFormat=1";
-			list( $content, $response ) = $this->SpConnect( $connection, $url );
+			list( $content, $response ) = $this->SpConnect( $connection, trim( $url ) );
 			$task = 'crawler';
 			if ( $response[ 'http_code' ] == 303 ) {
 				preg_match( '/Location: (http.*)/', $content, $newUrl );
@@ -109,6 +119,8 @@ class SobiProCrawler extends JApplicationCli
 			else {
 				$done = true;
 				$this->out( '[ERROR] Invalid return code: ' . $response[ 'http_code' ] );
+				$this->out( '[ERROR] Returned Error : ' . $connection->error() );
+				$this->out( '[ERROR] While accessing following URL : |' . $url .'|' );
 			}
 		}
 	}
@@ -183,4 +195,6 @@ class SobiProCrawler extends JApplicationCli
 	}
 }
 
-JApplicationCli::getInstance( 'SobiProCrawler' )->execute( $argv );
+JApplicationCli::getInstance( 'SobiProCrawler' )
+		->setArgs( $argv )
+		->execute();

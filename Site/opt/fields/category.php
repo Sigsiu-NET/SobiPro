@@ -377,18 +377,19 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	private function travelCats( $sid, &$cats, $init = false )
 	{
 		$category = $init == true ? SPFactory::Section( $sid ) : SPFactory::Category( $sid );
-//		$category->loadTable();
-		$cats[ $sid ] = array(
-				'sid' => $sid,
-				'state' => $category->get( 'state' ),
-				'name' => $category->get( 'name' ),
-				'type' => $category->get( 'oType' ),
-				'childs' => array(),
-		);
-		$childs = $category->getChilds( 'category' );
-		if ( count( $childs ) ) {
-			foreach ( $childs as $id => $name ) {
-				$this->travelCats( $id, $cats[ $sid ][ 'childs' ] );
+		if ( $category->get( 'state' ) ) {
+			$cats[ $sid ] = array(
+					'sid' => $sid,
+					'state' => $category->get( 'state' ),
+					'name' => $category->get( 'name' ),
+					'type' => $category->get( 'oType' ),
+					'childs' => array(),
+			);
+			$childs = $category->getChilds( 'category' );
+			if ( count( $childs ) ) {
+				foreach ( $childs as $id => $name ) {
+					$this->travelCats( $id, $cats[ $sid ][ 'childs' ] );
+				}
 			}
 		}
 	}
