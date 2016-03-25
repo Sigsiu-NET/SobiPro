@@ -32,6 +32,7 @@ Legend:
 	(+) Added unpublished sign to unpublished categories
 	(+) Additional cache for categories relation in category field
 	(+) datepicker CSS improvements (against template overwrites)
+	(+) System Report now informs user to scroll down to read all results of the system check
 
     (#) Forcing template installation doesn't work
     (#) Wrong setting displayed for separate JSON files in template settings
@@ -48,6 +49,7 @@ Legend:
 
     (!) Improvements in Cron CLI script
     (!) PNG compression increased
+
 
 -------------------
 1.2.2 (28 January 2016)
