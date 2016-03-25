@@ -47,6 +47,7 @@ Legend:
     (#) Missing some settings due to ACL implementation (Issue #1575)
 
     (!) Improvements in Cron CLI script
+    (!) PNG compression increased
 
 -------------------
 1.2.2 (28 January 2016)
