@@ -210,7 +210,7 @@ class SPImage extends SPFile
 				imagejpeg( $this->image, $this->temp, Sobi::Cfg( 'image.jpeg_quality', 75 ) );
 				break;
 			case IMAGETYPE_PNG:
-				imagepng( $this->image, $this->temp, Sobi::Cfg( 'image.png_compression', 0 ) );
+				imagepng( $this->image, $this->temp, Sobi::Cfg( 'image.png_compression', 9 ) );
 				break;
 		}
 		$this->_content = file_get_contents( $this->temp );
