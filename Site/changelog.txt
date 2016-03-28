@@ -27,7 +27,7 @@ Legend:
 
 
 -------------------
-1.2.3 (28 March 2016)
+1.2.3 (29 March 2016)
 -------------------
 	(+) Added unpublished sign to unpublished categories
 	(+) Additional cache for categories relation in category field
