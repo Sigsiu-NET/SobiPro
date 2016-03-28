@@ -230,7 +230,7 @@ abstract class SPFactory
 			$argsProcessed = array();
 			if ( count( $args ) ) {
 				foreach ( $params as $key => $param ) {
-					if ( isset( $args[ $key ] ) ) {
+					if ( array_key_exists( $key, $args ) ) {
 						if ( $param->isPassedByReference() ) {
 							$argsProcessed[ $key ] = &$args[ $key ];
 						}
