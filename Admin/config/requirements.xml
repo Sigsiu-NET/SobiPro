@@ -26,10 +26,11 @@
 				<message id="spMessage" />
 				<div class="row-fluid">
 					<div class="span6">
+						<div><message label="REQ.MOREINFO" type="info" class="message" /></div>
                         <div>
-                            <message label="REQ.CHECKING_REQUIREMENTS" type="info" class="smallmessage" />
+                            <message label="REQ.CHECKING_REQUIREMENTS" type="success" class="smallmessage checkstatus" />
                         </div>
-                        <div class="progress progress-striped">
+                        <div class="progress progress-success progress-striped">
                             <div class="bar" style="width: 2%;"></div>
                         </div>
                     </div>
