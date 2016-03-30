@@ -35,7 +35,7 @@ Legend:
 	(+) System Report now informs user to scroll down to read all results of the system check
 	(+) Possibility to switch off shown categories in front-end (section and category view)
 
-    (!) Improvements in Cron CLI script
+    (!) Improvements in Crawler Cron CLI script
     (!) PNG compression increased
 
     (#) Forcing template installation doesn't work
@@ -50,6 +50,7 @@ Legend:
     (#) Forcing string handling of labels in checkbox and radio buttons (Issue ##1578)
     (#) Wrong languages selected as current while translating (Issue #1572)
     (#) Missing some settings due to ACL implementation (Issue #1575)
+	(#) Directory menu item in template's topmenu not set to active if search not available
 
 
 -------------------

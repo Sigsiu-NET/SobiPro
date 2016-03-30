@@ -31,9 +31,18 @@
                             <xsl:if test="//menu/front">
                                 <li>
                                     <a href="{//menu/front/@url}">
-                                        <xsl:if test="$currentUrl != //menu/add/@url and $currentUrl != //menu/search/@url">
-                                            <xsl:attribute name="class">active</xsl:attribute>
-                                        </xsl:if>
+	                                    <xsl:choose>
+		                                    <xsl:when test="//menu/search">
+			                                    <xsl:if test="$currentUrl != //menu/add/@url and $currentUrl != //menu/search/@url">
+				                                    <xsl:attribute name="class">active</xsl:attribute>
+			                                    </xsl:if>
+		                                    </xsl:when>
+		                                    <xsl:otherwise>
+			                                    <xsl:if test="$currentUrl != //menu/add/@url">
+				                                    <xsl:attribute name="class">active</xsl:attribute>
+			                                    </xsl:if>
+		                                    </xsl:otherwise>
+	                                    </xsl:choose>
                                         <i class="icon-th-list"></i>
                                         <xsl:text> </xsl:text>
                                         <xsl:value-of select="//menu/front" />
