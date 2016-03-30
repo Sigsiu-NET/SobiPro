@@ -46,11 +46,12 @@
 		<div class="spSectionDesc">
 			<xsl:value-of select="description" disable-output-escaping="yes" />
 		</div>
-		<xsl:if test="//config/hidecategories/@value = 'hide'">
-			<input id="spCategoryShow" class="btn btn-sigsiu" name="spCategoryShow" value="{$showCategoriesLabel}" type="button"/>
+		<xsl:if test="//config/hidecategories/@value != 'none'">
+			<xsl:if test="//config/hidecategories/@value = 'hide'">
+				<input id="spCategoryShow" class="btn btn-sigsiu" name="spCategoryShow" value="{$showCategoriesLabel}" type="button"/>
+			</xsl:if>
+			<xsl:call-template name="categoriesLoop" />
 		</xsl:if>
-
-		<xsl:call-template name="categoriesLoop" />
 		<xsl:call-template name="entriesLoop" />
 		<xsl:apply-templates select="navigation" />
 

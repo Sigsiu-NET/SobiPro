@@ -27,12 +27,13 @@ Legend:
 
 
 -------------------
-1.2.3 (29 March 2016)
+1.2.3 (30 March 2016)
 -------------------
 	(+) Added unpublished sign to unpublished categories
 	(+) Additional cache for categories relation in category field
 	(+) datepicker CSS improvements (against template overwrites)
 	(+) System Report now informs user to scroll down to read all results of the system check
+	(+) Possibility to switch off shown categories in front-end (section and category view)
 
     (!) Improvements in Cron CLI script
     (!) PNG compression increased

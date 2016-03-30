@@ -62,10 +62,12 @@
             </div>
         </div>
 
-        <xsl:if test="count (categories/category) and //config/hidecategories/@value = 'hide'">
-            <input id="spCategoryShow" class="btn btn-sigsiu" name="spCategoryShow" value="{$showCategoriesLabel}" type="button"/>
-        </xsl:if>
-        <xsl:call-template name="categoriesLoop" />
+		<xsl:if test="//config/hidecategories/@value != 'none'">
+	        <xsl:if test="count (categories/category) and //config/hidecategories/@value = 'hide'">
+	            <input id="spCategoryShow" class="btn btn-sigsiu" name="spCategoryShow" value="{$showCategoriesLabel}" type="button"/>
+	        </xsl:if>
+	        <xsl:call-template name="categoriesLoop" />
+		</xsl:if>
         <xsl:call-template name="entriesLoop" />
         <xsl:apply-templates select="navigation" />
 

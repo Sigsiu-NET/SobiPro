@@ -246,6 +246,7 @@
                                         <values>
                                             <option value="show" label="SHOW_YES" />
                                             <option value="hide" label="SHOW_NO" />
+	                                        <option value="none" label="TP.CONFIG.SHOW_NONE" />
                                         </values>
                                     </field>
                                 <field type="toggle" name="settings[config][general][countentries]" value="settings.config.general.countentries" label="TP.CONFIG.LST_COUNT" prefix="yes_no" />

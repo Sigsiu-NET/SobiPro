@@ -38,6 +38,7 @@ body {
 }
 .SobiPro .btn {
 	text-shadow: none;
+	box-shadow: none;
 }
 .SobiPro .navbar .nav > li > a {
 	text-shadow: none;
