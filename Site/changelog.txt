@@ -29,6 +29,8 @@ Legend:
 -------------------
 1.2.4 ()
 -------------------
+    (+) Category field: new category selector (populated select list)
+
 	(#) Warnings/notices in SobiPro panel, if no news available from our server
 
 

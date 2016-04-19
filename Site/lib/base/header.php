@@ -515,7 +515,6 @@ final class SPHeader
 	 * @param string $rel
 	 * @param string $relType
 	 * @param array $params
-	 * @internal param string $relation
 	 * @return SPHeader
 	 */
 	public function & addHeadLink( $href, $type = null, $title = null, $rel = 'alternate', $relType = 'rel', $params = null )

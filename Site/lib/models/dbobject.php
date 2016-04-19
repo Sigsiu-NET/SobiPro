@@ -406,6 +406,10 @@ abstract class SPDBObject extends SPObject
 //			if ( $type ) {
 //				$cond[ 'oType' ] = $type;
 //			}
+			/** Mon, Apr 18, 2016 13:10:03  but if we are looking for categories only that's perfectly OK */
+			if ( $type == 'category' ) {
+				$cond[ 'oType' ] = $type;
+			}
 			$r = $db->select( array( 'id', 'oType' ), 'spdb_relations', $cond )
 					->loadAssocList( 'id' );
 		} catch ( SPException $x ) {
@@ -413,10 +417,6 @@ abstract class SPDBObject extends SPObject
 		}
 		if ( count( $r ) ) {
 			foreach ( $r as $id => $rs ) {
-				/** Mon, Aug 17, 2015 14:13:13 - WTF I was thinking. Same as above */
-//				if ( $rs[ 'oType' ] == 'entry' ) {
-//					continue;
-//				}
 				$results[ $id ] = $rs;
 				$this->rGetChilds( $results, $id, $type );
 			}
