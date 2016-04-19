@@ -27,6 +27,12 @@ Legend:
 
 
 -------------------
+1.2.4 ()
+-------------------
+	(#) Warnings/notices in SobiPro panel, if no news available from our server
+
+
+-------------------
 1.2.3 (30 March 2016)
 -------------------
 	(+) Added unpublished sign to unpublished categories
@@ -45,7 +51,7 @@ Legend:
     (#) Missing method "saveSelectLabel" moved to parent class (Issue #1591)
     (#) SobiPro cache not deleted when edit new template settings (Issue #1588)
     (#) Wrong ACL permission check for managing sections (Issue #1586)
-    (#) Empty head ling when no font icons selected (Issue # #1593)
+    (#) Empty head line when no font icons selected (Issue # #1593)
     (#) Missing language as a selector in category field cache (Issue #1579)
     (#) Forcing string handling of labels in checkbox and radio buttons (Issue ##1578)
     (#) Wrong languages selected as current while translating (Issue #1572)

@@ -180,6 +180,10 @@ class SPAdminPanel extends SPController
 			}
 		}
 		try {
+			$open = false;
+			if ((strpos("DOCTYPE html", $content) == false) or (strpos("?xml", $content) == false)) { // wenn kein XML format (passiert z.B. bei SSL Fehler)
+				$content = "";
+			}
 			if ( strlen( $content ) ) {
 				$document = new DOMDocument();
 				$document->loadXML( $content );
@@ -191,7 +195,6 @@ class SPAdminPanel extends SPController
 					$out[ 'title' ] = $news->query( '/atom:feed/atom:title' )->item( 0 )->nodeValue;
 					$items = $news->query( '/atom:feed/atom:entry[*]' );
 					$c = 5;
-					$open = false;
 					foreach ( $items as $item ) {
 						$date = $item->getElementsByTagName( 'updated' )->item( 0 )->nodeValue;
 						if ( !( $open ) && time() - strtotime( $date ) < ( 60 * 60 * 24 ) ) {
