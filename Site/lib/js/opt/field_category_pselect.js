@@ -34,7 +34,7 @@ SobiPro.jQuery( document ).ready( function ()
 		if ( ! ( this.Categories.length ) ) {
 			SobiPro.jQuery.ajax( {
 				'type': 'post',
-				'url': SPLiveSite + SobiProUrl.replace( '%task%', this.data( 'task' ) ),
+				'url': SobiProUrl.replace( '%task%', this.data( 'task' ) ),
 				'dataType': 'json',
 				'data': {
 					'sid': SobiProSection,
