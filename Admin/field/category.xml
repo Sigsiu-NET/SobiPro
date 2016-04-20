@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  @package: SobiPro Component for Joomla!
 
  @author
@@ -22,13 +21,13 @@
 		<file type="script" filename="adm.fields.category" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
-        <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
-        <divider />
+		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
+		<divider />
 		<button task="field.apply" type="apply">
 			<button type="save" task="field.save" />
 			<button type="duplicate" task="field.clone" />
 		</button>
-        <divider />
+		<divider />
 		<button type="exit" task="field.cancel" />
 		<divider />
 		<button type="help" target="_blank" />
@@ -62,13 +61,14 @@
 							<div class="span12">
 								<fieldset>
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
-                                    <field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
-                                    <field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />
-                                    <field type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
+									<field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
+									<field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />
+									<field type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
 									<field type="select" name="field.method" selected="field.method" label="FMN.CC_METHOD" class="input-large">
 										<values>
 											<option value="tree" label="FMN.CC_TREE" />
 											<option value="select" label="FMN.CC_SELECT_LIST" />
+											<option value="pselect" label="FMN.CC_POPULATED_SELECT_LIST" />
 											<option value="mselect" label="FMN.CC_MSELECT" />
 											<option value="fixed" label="FMN.CC_FIXED" />
 										</values>
@@ -76,22 +76,22 @@
 									<div class="hide spCcMethod" id="spCc-tree">
 										<fieldset label="FMN.CC_TREE">
 											<field type="toggle" name="field.modal" value="field.modal" label="FMN.CC_TREE_MODAL" prefix="fmn.cc_modal" />
-                                            <field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
-                                                <add where="after">
-                                                    <text>px</text>
-                                                </add>
-                                            </field>
-                                            <field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
-                                                <values>
-                                                    <option value="4" label="4" />
-                                                    <option value="5" label="5" />
-                                                    <option value="6" label="6" />
-                                                    <option value="7" label="7" />
-                                                    <option value="8" label="8" />
-                                                    <option value="9" label="9" />
-                                                    <option value="10" label="10" />
-                                                </values>
-                                            </field>
+											<field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
+												<add where="after">
+													<text>px</text>
+												</add>
+											</field>
+											<field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
+												<values>
+													<option value="4" label="4" />
+													<option value="5" label="5" />
+													<option value="6" label="6" />
+													<option value="7" label="7" />
+													<option value="8" label="8" />
+													<option value="9" label="9" />
+													<option value="10" label="10" />
+												</values>
+											</field>
 											<field type="text" name="field.catsMaxLimit" value="field.catsMaxLimit" label="FMN.CC_CATS_LIMIT" class="input-mini">
 												<add where="after">
 													<call function="Sobi::Txt">
@@ -100,61 +100,91 @@
 												</add>
 											</field>
 											<field type="toggle" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
-                                            <field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+											<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 										</fieldset>
 									</div>
 									<div class="hide spCcMethod" id="spCc-select">
 										<fieldset label="FMN.CC_SELECT_LIST">
-
-											<!--
-											<field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
-												<add where="after">
-													<text>px</text>
-												</add>
-											</field>
-											-->
 											<field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
-               <values>
-                   <option value="1" label="1" />
-                   <option value="2" label="2" />
-                   <option value="3" label="3" />
-                   <option value="4" label="4" />
-                   <option value="5" label="5" />
-                   <option value="6" label="6" />
-                   <option value="7" label="7" />
-                   <option value="8" label="8" />
-				   <option value="9" label="9" />
-				   <option value="10" label="10" />
-               </values>
-           </field>
+												<values>
+													<option value="1" label="1" />
+													<option value="2" label="2" />
+													<option value="3" label="3" />
+													<option value="4" label="4" />
+													<option value="5" label="5" />
+													<option value="6" label="6" />
+													<option value="7" label="7" />
+													<option value="8" label="8" />
+													<option value="9" label="9" />
+													<option value="10" label="10" />
+												</values>
+											</field>
+											<field type="select" name="field.orderCatsBy" selected="field.orderCatsBy" label="ORDER_BY" class="input-large">
+												<values>
+													<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
+													<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
+													<option value="position.asc" label="CATN.ORDER_BY_ORDER_ASC" />
+													<option value="position.desc" label="CATN.ORDER_BY_ORDER_DESC" />
+												</values>
+											</field>
 											<field type="toggle" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
 											<field type="toggle" name="field.isPrimary" value="field.isPrimary" label="FMN.CC_IS_PRIMARY" prefix="yes_no" />
-                                            <field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+											<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+										</fieldset>
+									</div>
+									<div class="hide spCcMethod" id="spCc-pselect">
+										<fieldset label="FMN.CC_POPULATED_SELECT_LIST">
+											<field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
+												<values>
+													<option value="1" label="1" />
+													<option value="2" label="2" />
+													<option value="3" label="3" />
+													<option value="4" label="4" />
+													<option value="5" label="5" />
+													<option value="6" label="6" />
+													<option value="7" label="7" />
+													<option value="8" label="8" />
+													<option value="9" label="9" />
+													<option value="10" label="10" />
+												</values>
+											</field>
+											<field type="select" name="field.orderCatsBy" selected="field.orderCatsBy" label="ORDER_BY" class="input-large">
+												<values>
+													<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
+													<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
+													<option value="position.asc" label="CATN.ORDER_BY_ORDER_ASC" />
+													<option value="position.desc" label="CATN.ORDER_BY_ORDER_DESC" />
+												</values>
+											</field>
+											<field type="toggle" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
+											<field type="toggle" name="field.isPrimary" value="field.isPrimary" label="FMN.CC_IS_PRIMARY" prefix="yes_no" />
+											<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 										</fieldset>
 									</div>
 									<div class="hide spCcMethod" id="spCc-mselect">
 										<fieldset label="FMN.CC_MSELECT">
-											<!--
-											<field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
-												<add wherewidth="after">
-													<text>px</text>
-												</add>
+											<field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
+												<values>
+													<option value="1" label="1" />
+													<option value="2" label="2" />
+													<option value="3" label="3" />
+													<option value="4" label="4" />
+													<option value="5" label="5" />
+													<option value="6" label="6" />
+													<option value="7" label="7" />
+													<option value="8" label="8" />
+													<option value="9" label="9" />
+													<option value="10" label="10" />
+												</values>
 											</field>
-											-->
-                                            <field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
-                                                <values>
-                                                    <option value="1" label="1" />
-                                                    <option value="2" label="2" />
-                                                    <option value="3" label="3" />
-                                                    <option value="4" label="4" />
-                                                    <option value="5" label="5" />
-                                                    <option value="6" label="6" />
-                                                    <option value="7" label="7" />
-                                                    <option value="8" label="8" />
-                                                    <option value="9" label="9" />
-                                                    <option value="10" label="10" />
-                                                </values>
-                                            </field>
+											<field type="select" name="field.orderCatsBy" selected="field.orderCatsBy" label="ORDER_BY" class="input-large">
+												<values>
+													<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
+													<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
+													<option value="position.asc" label="CATN.ORDER_BY_ORDER_ASC" />
+													<option value="position.desc" label="CATN.ORDER_BY_ORDER_DESC" />
+												</values>
+											</field>
 											<field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
 												<add where="after">
 													<text>px</text>
@@ -168,7 +198,7 @@
 												</add>
 											</field>
 											<field type="toggle" name="field.catsWithChilds" value="field.catsWithChilds" label="FMN.CC_ALLOW_CATS_WITH_CHILDS" prefix="yes_no" />
-                                            <field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+											<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 										</fieldset>
 									</div>
 									<div class="hide spCcMethod" id="spCc-fixed">
@@ -196,27 +226,6 @@
 							</div>
 						</div>
 					</tab>
-					<!--<tab label="FMN.FIELD_ENTRYVIEW">-->
-					<!--<div class="row-fluid">-->
-					<!--<div class="span12">-->
-					<!--<fieldset>-->
-					<!--<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">-->
-					<!--<values>-->
-					<!--<option value="both" label="FM.BOTH_OPT" />-->
-					<!--<option value="details" label="FM.DETAILS_VIEW_OPT" />-->
-					<!--<option value="vcard" label="FM.V_CARD_OPT" />-->
-					<!--<option value="hidden" label="FMN.HIDDEN_OPT" />-->
-					<!--</values>-->
-					<!--</field>-->
-					<!--<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />-->
-					<!--</fieldset>-->
-					<!--<fieldset label="FMN.FIELD_ENTRYVIEW_META">-->
-					<!--<field type="toggle" name="field.addToMetaKeys" value="field.addToMetaKeys" label="FM.ADD_META_KEYS" prefix="yes_no" />-->
-					<!--<field type="toggle" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />-->
-					<!--</fieldset>-->
-					<!--</div>-->
-					<!--</div>-->
-					<!--</tab>-->
 					<tab label="FMN.FIELD_SEARCH">
 						<div class="row-fluid">
 							<div class="span12">
@@ -226,34 +235,36 @@
 										<values>
 											<option value="select" label="FMN.SELECT_LIST_OPT" />
 											<option value="mselect" label="FM.MSELECT_LIST_OPT" />
+											<option value="pselect" label="FMN.CC_POPULATED_SELECT_LIST" />
 										</values>
 									</field>
-<!--
-									<field type="text" name="field.searchWidth" value="field.searchWidth" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
-										<add where="after">
-											<text>px</text>
-										</add>
+									<field type="select" name="field.bsSearchWidth" selected="field.bsSearchWidth" label="FMN.FIELD_WIDTH" class="input-mini">
+										<values>
+											<option value="1" label="1" />
+											<option value="2" label="2" />
+											<option value="3" label="3" />
+											<option value="4" label="4" />
+											<option value="5" label="5" />
+											<option value="6" label="6" />
+											<option value="7" label="7" />
+											<option value="8" label="8" />
+											<option value="9" label="9" />
+										</values>
 									</field>
--->
-                                    <field type="select" name="field.bsSearchWidth" selected="field.bsSearchWidth" label="FMN.FIELD_WIDTH" class="input-mini">
-                                        <values>
-                                            <option value="1" label="1" />
-                                            <option value="2" label="2" />
-                                            <option value="3" label="3" />
-                                            <option value="4" label="4" />
-                                            <option value="5" label="5" />
-                                            <option value="6" label="6" />
-                                            <option value="7" label="7" />
-                                            <option value="8" label="8" />
-                                            <option value="9" label="9" />
-                                        </values>
-                                    </field>
+									<field type="select" name="field.searchOrderCatsBy" selected="field.searchOrderCatsBy" label="ORDER_BY" class="input-large">
+										<values>
+											<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
+											<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
+											<option value="position.asc" label="CATN.ORDER_BY_ORDER_ASC" />
+											<option value="position.desc" label="CATN.ORDER_BY_ORDER_DESC" />
+										</values>
+									</field>
 									<field type="text" name="field.searchHeight" value="field.searchHeight" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
 										<add where="after">
 											<text>px</text>
 										</add>
 									</field>
-                                    <field type="text" name="field.cssClassSearch" value="field.cssClassSearch" label="FM.CSS_CLASS" class="input-large" />
+									<field type="text" name="field.cssClassSearch" value="field.cssClassSearch" label="FM.CSS_CLASS" class="input-large" />
 								</fieldset>
 							</div>
 						</div>
