@@ -279,7 +279,9 @@
                                             <option value="5" label="5" />
                                             <option value="6" label="6" />
                                             <option value="8" label="8" />
+	                                        <option value="9" label="9" />
                                             <option value="10" label="10" />
+	                                        <option value="12" label="12" />
                                             <option value="15" label="15" />
                                             <option value="20" label="20 (not recommended)" />
                                         </values>

@@ -31,6 +31,8 @@ Legend:
 -------------------
     (+) Category field: new category selector (populated select list)
     (+) Category field: sorting of categories in entry form adjustable
+    (+) Tooltip colours now correspond to base colour for B3-default3 template
+	(+) general distance classes for distances on top and bottom in B3-default3 template
 
 	(#) Warnings/notices in SobiPro panel, if no news available from our server
 
