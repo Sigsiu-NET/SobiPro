@@ -23,7 +23,6 @@
 @print-gallery: 150px;
 @fontsize: 14px;
 
-
 //-------------------------------------------------------------------------------------*/
 
 // This template is based on Bootstrap 2
@@ -38,22 +37,21 @@
 
 //-------------------------------------------------------------------------------------*/
 
-
 // fallback to sobipro layout
 @base-color: #993333;
-@text-color: #FFFFFF;
-@hover-color: #FFFFFF;
+@text-color: #ffffff;
+@hover-color: #ffffff;
 @font-color: #333333;
 @active-color: #000066;
-@alert-color: #CCCCCC;
+@alert-color: #cccccc;
 @important-color: #fec1af;
 
 @inverse: standard;
-@back-color: #FFFFFF;
+@back-color: #ffffff;
 @fontsize: 14px;
 
 // same for all themes if not set
-@error-color: #A30000;
+@error-color: #a30000;
 
 @import "../themes/@{colour-set}.less";
 
@@ -84,7 +82,7 @@
 		background-color: lighten(saturate(@base-color, 15%), 40%);
 	}
 	& when (@colour-set = meadow) {
-		background-color: lighten(desaturate(@base-color,10%), 46%);
+		background-color: lighten(desaturate(@base-color, 10%), 46%);
 	}
 	& when (@colour-set = poppyseed) {
 		background-color: lighten(@base-color, 48%);
@@ -99,9 +97,10 @@
 		background-color: lighten(saturate(@base-color, 3%), 42%);
 	}
 	& when (@colour-set = waterfall) {
-		background-color: lighten(desaturate(@base-color,25%), 43%);
+		background-color: lighten(desaturate(@base-color, 25%), 43%);
 	}
 }
+
 .borders(medium) {
 	border-color: lighten(@base-color, 33%);
 	& when (@colour-set = cornflower) {
@@ -114,7 +113,7 @@
 		border-color: lighten(@base-color, 24%);
 	}
 	& when (@colour-set = meadow) {
-		border-color: lighten(desaturate(@base-color,15%), 28%);
+		border-color: lighten(desaturate(@base-color, 15%), 28%);
 	}
 	& when (@colour-set = poppyseed) {
 		border-color: lighten(@base-color, 35%);
@@ -129,9 +128,10 @@
 		border-color: lighten(@base-color, 27%);
 	}
 	& when (@colour-set = waterfall) {
-		border-color: lighten(desaturate(@base-color,25%), 30%);
+		border-color: lighten(desaturate(@base-color, 25%), 30%);
 	}
 }
+
 .borders(light) {
 	border-color: lighten(@base-color, 48%);
 	& when (@colour-set = cornflower) {
@@ -157,11 +157,12 @@
 	}
 	& when (@colour-set = terra) {
 		border-color: lighten(@base-color, 50%);
-}
+	}
 	& when (@colour-set = waterfall) {
 		border-color: lighten(desaturate(@base-color, 20%), 45%);
 	}
 }
+
 .background(light) {
 	background-color: lighten(saturate(@base-color, 15%), 56%);
 	& when (@colour-set = cornflower) {
@@ -187,11 +188,12 @@
 	}
 	& when (@colour-set = terra) {
 		background-color: lighten(saturate(@base-color, 25%), 62%);
-}
+	}
 	& when (@colour-set = waterfall) {
-		background-color: lighten(desaturate(@base-color,10%), 56%);
+		background-color: lighten(desaturate(@base-color, 10%), 56%);
 	}
 }
+
 .bottomborder(lightbackground) {
 	border-bottom-color: lighten(saturate(@base-color, 15%), 56%);
 	& when (@colour-set = cornflower) {
@@ -220,7 +222,7 @@
 		border-bottom-color: lighten(saturate(@base-color, 25%), 62%);
 	}
 	& when (@colour-set = waterfall) {
-		border-bottom-color: lighten(desaturate(@base-color,10%), 56%);
+		border-bottom-color: lighten(desaturate(@base-color, 10%), 56%);
 	}
 }
 
@@ -258,6 +260,7 @@
 	text-shadow: none;
 	font-size: @fontsize;
 }
+
 .SobiPro .btn-group > .btn,
 .SobiPro .btn-group > .dropdown-menu {
 	font-size: @fontsize;
@@ -273,21 +276,25 @@
 .SobiPro .input-append .alert {
 	font-size: @fontsize;
 }
+
 .SobiPro .page-header {
 	margin-bottom: 10px;
 	font-size: calc(@fontsize + 8px);
 	font-weight: 300;
 	border-bottom: 1px solid lighten(@base-color, 50%);
 }
+
 .SobiPro .help-block {
 	font-size: calc(@fontsize - 1px);
 	color: @font-color;
 }
+
 .SobiPro .well {
 	box-shadow: none;
 	border-style: solid;
 	border-width: 1px;
 }
+
 .SobiPro label {
 	font-weight: 500;
 	& when (@inverse = inverse) {
@@ -295,10 +302,12 @@
 	}
 	font-size: @fontsize;
 }
+
 .SobiPro .label-info,
 .SobiPro .badge-info {
 	background-color: @base-color;
 }
+
 .SobiPro .label-info i,
 .SobiPro .badge-info i,
 .SobiPro .label-info a,
@@ -306,6 +315,7 @@
 	color: @text-color;
 	text-shadow: none;
 }
+
 .SobiPro .table th,
 .SobiPro .table td {
 	.borders(light);
@@ -317,15 +327,18 @@
 	.background(light);
 	.borders(light);
 }
+
 .SobiPro .table.table-vstriped th,
 .SobiPro .table.table-vstriped td {
 	border-top: none;
 }
+
 .SobiPro .table.table-vstriped td {
 	border-right-style: solid;
 	border-right-width: 1px;
 	.borders(light);
 }
+
 .SobiPro .table.table-vstriped > thead > tr > th {
 	border-bottom: none;
 }
@@ -355,6 +368,7 @@
 	.headertext;
 	font-size: 22px;
 }
+
 .SobiPro .modal-header .close {
 	text-shadow: none;
 	& when (@inverse = inverse) {
@@ -362,16 +376,20 @@
 		color: @base-color;
 	}
 }
+
 .SobiPro .modal-body {
 	padding: 1%;
 }
+
 .SobiPro .modal textarea {
 	width: 97%;
 }
+
 .SobiPro .modal form {
 	margin-right: 10px;
 	margin-left: 20px;
 }
+
 & when (@inverse = inverse) {
 	.SobiPro .modal {
 		//background-color: @back-color;
@@ -390,6 +408,7 @@
 		background-color: @hover-color;
 	}
 }
+
 & when (@corners = rounded) {
 	.SobiPro .modal-header {
 		border-top-left-radius: 6px;
@@ -400,6 +419,7 @@
 		border-bottom-right-radius: 6px;
 	}
 }
+
 .SobiPro .ctrl-spinner {
 	position: absolute;
 	left: 50%;
@@ -417,6 +437,7 @@
 		filter: alpha(opacity=40);
 	}
 }
+
 .modal-backdrop {
 	background-color: @base-color;
 	& when (@inverse = inverse) {
@@ -436,14 +457,17 @@
 	color: @active-color;
 	font-size: calc(@fontsize + 12px);
 }
+
 .SobiPro h2 input[type="checkbox"] {
 	margin: 0 0 5px 0;
 }
+
 .SobiPro h2 {
-	font-size:  calc(@fontsize + 11px);
+	font-size: calc(@fontsize + 11px);
 }
+
 .SobiPro h3 {
-	font-size:  calc(@fontsize + 10px);
+	font-size: calc(@fontsize + 10px);
 }
 
 & when (@corners = angular) {
@@ -517,10 +541,12 @@
 		border-bottom-right-radius: 0;
 	}
 }
+
 .SobiPro input,
 .SobiPro textarea {
 	width: calc(100% - 12px);
 }
+
 .SobiPro select {
 	width: 100%;
 }
@@ -545,11 +571,13 @@
 	border-width: 1px;
 	margin: 1px;
 }
+
 .SobiPro .pagination ul > li > a {
 	color: @text-color;
 	background-color: @base-color;
 	font-weight: bold;
 }
+
 .SobiPro .pagination ul > li > a.active,
 .SobiPro .pagination ul > li > a:hover,
 .SobiPro .pagination ul > li > a:focus,
@@ -559,6 +587,7 @@
 	background-color: @active-color;
 	border-color: @active-color;
 }
+
 .SobiPro .well,
 .SobiPro .pagination ul > .disabled > span,
 .SobiPro .pagination ul > .disabled > a,
@@ -571,6 +600,7 @@
 		color: lighten(@base-color, 50%);
 	}
 }
+
 .SobiPro .pagination-mini ul > li > a {
 	font-size: calc(@fontsize - 3.5px);
 }
@@ -668,12 +698,15 @@
 	border-style: solid;
 	border-width: 1px;
 }
+
 .SobiPro select:focus {
 	outline: 0 none;
 }
+
 .SobiPro select option:focus {
 	background-color: @active-color;
 }
+
 .SobiPro .thumbnail {
 	margin-bottom: 9px;
 }
@@ -710,6 +743,7 @@
 	background-color: lighten(@base-color, 5%);
 	color: @text-color;
 }
+
 .SobiPro .btn-sigsiu .caret {
 	border-top-color: @text-color;
 }
@@ -719,12 +753,15 @@
 .SobiPro .text-sigsiu {
 	color: @base-color;
 }
+
 .SobiPro .text-sigsiu-active {
 	color: @active-color;
 }
+
 .SobiPro .text-sigsiu-important {
 	color: @important-color;
 }
+
 .SobiPro .bg-sigsiu {
 	border-style: solid;
 	border-width: 1px;
@@ -732,12 +769,14 @@
 	.background(medium);
 
 }
+
 .SobiPro .bg-sigsiu-light {
 	border-style: solid;
 	border-width: 1px;
 	.background(light);
 	.borders(light);
 }
+
 .SobiPro .bg-sigsiu-alert {
 	border-style: solid;
 	border-width: 1px;
@@ -751,27 +790,32 @@
 	}
 }
 
-
 // Define widths to use as classes
 // ----------------------------------------
 .SobiPro .collwidth2 {
 	width: 50%;
 }
+
 .SobiPro .collwidth3 {
 	width: 33.33%;
 }
+
 .SobiPro .collwidth4 {
 	width: 25%;
 }
+
 .SobiPro .collwidth5 {
 	width: 20%;
 }
+
 .SobiPro .collwidth6 {
 	width: 16.66%;
 }
+
 .SobiPro .collwidth8 {
 	width: 12.5%;
 }
+
 .SobiPro .collwidth10 {
 	width: 10%;
 }
@@ -783,10 +827,12 @@
 	background-color: @alert-color;
 	border: 1px solid darken(@alert-color, 10%);
 }
+
 .alert-sigsiu,
 .alert-sigsiu h4 {
 	color: @active-color;
 }
+
 .alert-message {
 	margin-bottom: 0;
 }
@@ -797,6 +843,7 @@
 	//    margin-bottom: 20px;
 	text-shadow: none;
 }
+
 .SobiPro .spAlert {
 	margin-bottom: 0;
 	margin-top: 0;
@@ -819,23 +866,28 @@
 	.SobiPro .alert;
 	.SobiPro .spAlert;
 }
+
 .SobiPro .spMessage {
 	margin-top: 10px;
 }
+
 // Bootbox
 .SobiPro .SobiProBootBox i.error {
-	color: #A94442;
+	color: #a94442;
 	font-size: calc(@fontsize + 16px);
 }
+
 .SobiPro .SobiProBootBox i.success {
-	color: #449D44;
+	color: #449d44;
 	font-size: calc(@fontsize + 16px);
 }
+
 .SobiPro .SobiProBootBox div.signal {
 	float: left;
 	padding-right: 10px;
 	margin-top: 10px;
 }
+
 .SobiPro .SobiProBootBox .modal-body {
 	padding: 20px;
 	& when (@inverse = inverse) {
@@ -843,6 +895,7 @@
 		color: @text-color;
 	}
 }
+
 .SobiPro .SobiProBootBox .modal-footer {
 	padding: 10px 15px 15px;
 	background-color: #fff;
@@ -858,6 +911,7 @@
 		background-color: lighten(@error-color, 32%);
 	}
 }
+
 .SobiPro .spMessage .alert-success,
 .SobiPro .spSearch .alert-info {
 	border-color: @alert-color;
@@ -874,11 +928,12 @@
 // Looks as a normal text (removal of the message design)
 .SobiPro .alert-normal {
 	padding: 10px 0 10px 0;
-	font-size:calc(@fontsize + 1px);
+	font-size: calc(@fontsize + 1px);
 	color: @font-color;
 	background-color: @back-color;
 	border-color: @back-color;
 }
+
 .SobiPro .text-error,
 .SobiPro .control-group.error .checkbox,
 .SobiPro .control-group.error .radio,
@@ -914,10 +969,12 @@
 	text-shadow: none;
 	color: @text-color;
 }
+
 .SobiPro .nav-tabs,
 .SobiPro .nav-pills {
 	font-size: calc(@fontsize + 1px);
 }
+
 .SobiPro .nav-pills > .active > a,
 .SobiPro .nav-pills > .active > a:hover,
 .SobiPro .nav-pills > .active > a:focus,
@@ -931,9 +988,11 @@
 		border-radius: 4px;
 	}
 }
+
 .SobiPro .topmenu li {
 	line-height: 40px;
 }
+
 .SobiPro .topmenu .navbar-inner {
 	background-color: @base-color;
 	background-image: none;
@@ -943,23 +1002,29 @@
 	padding-left: 0;
 	padding-right: 0;
 }
+
 .SobiPro .topmenu .navbar-search {
 	margin-top: 15px;
 }
+
 & when (@inverse = no) {
 	.SobiPro .topmenu input[type="text"] {
 		border-color: darken(@base-color, 5%);
 	}
 }
+
 .SobiPro .topmenu .navbar-search input {
 	width: 95px;
 }
+
 .SobiPro .topmenu .nav {
 	margin-right: 5px;
 }
+
 .SobiPro .topmenu .navbar .nav > li {
 	list-style: none;
 }
+
 .SobiPro .navbar .nav > li > a {
 	padding-left: 10px;
 	padding-right: 10px;
@@ -971,12 +1036,15 @@
 	float: left;
 	margin: 5px 10px 2px 1px;
 }
+
 .SobiPro .alpha .pagination {
 	margin-top: 5px;
 }
+
 .SobiPro .alpha .pagination ul {
 	box-shadow: none;
 }
+
 .SobiPro .alpha .pagination ul li a {
 	display: block;
 	width: 13px;
@@ -988,6 +1056,7 @@
 		border-radius: 4px;
 	}
 }
+
 .SobiPro .alphalist .dropdown-menu {
 	text-align: left;
 }
@@ -1001,33 +1070,41 @@
 	line-height: 20px;
 	padding: 4px;
 }
+
 .SobiPro .spCatname p {
 	margin: 5px 0 0 0;
 	font-size: calc(@fontsize + 1px);
 }
+
 .SobiPro .spCaticon i {
 	color: @base-color;
 }
+
 .SobiPro .spCaticon [class^="fa-"],
 .SobiPro .spCaticon [class*=" fa-"] {
 	margin-right: 0;
 }
+
 .SobiPro .spCaticon [class^="icon-"],
 .SobiPro .spCaticon [class*=" icon-"] {
 	margin-right: 0;
 }
+
 .SobiPro .spCaticon {
 	text-align: center;
 	margin-top: 5px;
 	padding-left: 12px;
 }
+
 .SobiPro .spCaticon a {
 	color: @base-color;
 }
+
 .SobiPro .spCaticon a:hover {
 	color: @base-color;
 	text-decoration: none;
 }
+
 .SobiPro .spCatintro {
 	font-size: 90%;
 	line-height: 15px;
@@ -1048,29 +1125,41 @@
 	margin-bottom: 15px;
 	margin-top: 15px;
 }
+
 .SobiPro .spNavigationContainer .spEntryContainer {
 	margin-top: 0;
 }
+
 .SobiPro .spNavigationContainer {
 	margin-top: -15px;
 	padding-top: 15px;
 }
+
 .SobiPro .btn-navigation {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+
 .SobiPro .spEntryCats {
 	font-size: 80%;
 }
+
 .SobiPro .spEntryCount {
 	font-size: calc(@fontsize - 2px);
 	color: @font-color;
 }
+
 .SobiPro .spSubcats {
 	line-height: 15px;
 }
+
 .SobiPro .spLabel {
 	font-weight: 700;
+}
+
+.SobiPro .spSectionDesc {
+	margin-bottom: 30px;
+	margin-top: 20px;
 }
 
 // NoImge Setting
@@ -1097,6 +1186,7 @@
 	.background(light);
 	.borders(light);
 }
+
 .SobiPro .spDetailEntry .spNoImage {
 	width: 300px;
 	height: 200px;
@@ -1107,21 +1197,26 @@
 		font-size: calc((@big-image * 6) / 10);
 	}
 }
+
 .SobiPro .spNoImage i {
 	color: lighten(@base-color, 30%);
 }
+
 .SobiPro .spNoImageContainer {
 	display: flex;
 	display: -webkit-flex;
 }
+
 .SobiPro .spNoImageContainer.right {
 	float: right;
 	display: inline;
 }
+
 .SobiPro .spNoImageContainer.left {
 	float: left;
 	display: inline;
 }
+
 .SobiPro .spNoImage {
 	display: flex;
 	display: -webkit-flex;
@@ -1130,6 +1225,7 @@
 	justify-content: space-around;
 	-webkit-justify-content: space-around;
 }
+
 .SobiPro .spNoImage.stretch {
 	align-self: stretch;
 	-webkit-align-self: stretch;
@@ -1142,13 +1238,16 @@
 .SobiPro .spDetails {
 	font-size: @fontsize;
 }
+
 .SobiPro .spDetailEntry .spManage {
 	margin-right: 7px;
 	margin-top: 7px;
 }
+
 .SobiPro span.spDetailSuffix {
 	font-size: 80%;
 }
+
 .SobiPro .spDetailEntry .spClassViewImage img {
 	width: @big-image;
 }
@@ -1160,6 +1259,7 @@
 	color: @important-color;
 	padding-left: 5px;
 }
+
 .SobiPro a.entry-status:hover,
 .SobiPro a.entry-status:active,
 .SobiPro a.entry-status:focus {
@@ -1173,6 +1273,7 @@
 	font-weight: normal;
 	line-height: 20px;
 }
+
 .SobiPro .popover-inner .spclose {
 	padding-right: 8px;
 	padding-top: 5px;
@@ -1182,10 +1283,12 @@
 		opacity: 0.8;
 	}
 }
+
 .SobiPro .popover .popover-title {
 	text-shadow: none;
 	font-weight: bold;
 }
+
 & when (@inverse = inverse) {
 	.SobiPro .popover {
 		background-color: transparent;
@@ -1213,19 +1316,24 @@
 .SobiPro .spEntryEdit .required {
 	border: 1px solid @important-color;
 }
+
 .SobiPro .spEntryEdit .spClassRadio.required,
 .SobiPro .spEntryEdit .spClassCheckbox.required {
 	border: none;
 }
+
 .SobiPro .spEntryEdit .progress {
 	min-width: 100px;
 }
+
 .SobiPro .spUpload input {
 	height: 21px;
 }
+
 .SobiPro .spUpload .span1 {
 	margin-left: 10px;
 }
+
 .SobiPro .spUpload .alert {
 	margin-top: 5px;
 }
@@ -1236,46 +1344,57 @@
 		color: @font-color;
 	}
 }
+
 .SobiPro .spEntryEdit .star {
 	color: @important-color;
 	padding-left: 2px;
 	font-size: @fontsize;
 }
+
 .SobiPro .input-append input {
 	width: calc(100% - 42px);
 }
+
 .SobiPro .spEntryEdit .message-lightbulb {
 	left: 0;
 	position: relative;
 }
+
 & when (@corners = rounded) {
 	.SobiPro .spEntryEdit .message-lightbulb .popover-content {
 		border-bottom-left-radius: 6px;
 		border-bottom-right-radius: 6px;
 	}
 }
+
 .SobiPro .spEntryEdit .message-lightbulb .popover.bottom {
 	margin-top: 0;
 }
+
 .SobiPro .spEntryEdit select.spClassCategory {
 	margin-bottom: 3px;
 }
+
 .SobiPro .editor {
 	overflow: visible;
 }
+
 .SobiPro .spClassEditInfo {
 	margin-top: 10px;
 }
+
 .SobiPro .spEntryEdit .popover-title {
 	color: @error-color;
 	font-size: 17px;
 	font-weight: 400;
 }
+
 .SobiPro .spEntryEdit .popover-title::before {
 	font-family: FontAwesome;
 	content: "";
 	padding-right: 5px;
 }
+
 .SobiPro .spEntryEdit select.spClassCategory {
 	margin-bottom: 3px;
 }
@@ -1296,24 +1415,29 @@
 		border-radius: 4px 0 0 4px;
 	}
 }
+
 .SobiPro .spFieldUrl input {
 	width: -moz-calc(100% - 113px);
 	width: -webkit-calc(100% - 113px);
 	width: -o-calc(100% - 113px);
 	width: calc(100% - 113px);
 }
+
 .SobiPro .spFieldUrl select,
 .SobiPro .spFieldUrl .input-prepend {
 	width: 100%;
 }
+
 .SobiPro .spFieldUrl .btn-group {
 	width: 100px;
 }
+
 .SobiPro .spUrlCounterValue {
 	font-size: 85%;
 	color: grey;
 	padding-left: 18px;
 }
+
 .SobiPro .spCountableReset {
 	margin-top: 5px;
 }
@@ -1323,9 +1447,10 @@
 .SobiPro .spEditImagePreview {
 	float: left;
 }
+
 .SobiPro .spEditImagePreview img {
 	padding: 4px;
-	background-color: #FFF;
+	background-color: #fff;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	margin: 0 5px 5px 0;
@@ -1335,9 +1460,11 @@
 		border-radius: 4px;
 	}
 }
+
 .SobiPro .spImageField input[type='checkbox'] {
 	margin: 1px 5px 5px 0;
 }
+
 .SobiPro .spImageField label {
 	display: inline-block;
 }
@@ -1347,20 +1474,25 @@
 .SigsiuTree .selected {
 	margin-top: 10px;
 }
+
 .SigsiuTree .selected select {
 	min-height: 100px;
 	width: 100%;
 }
+
 .SigsiuTree .buttons {
 	text-align: right;
 	margin-top: 12px;
 }
+
 .SigsiuTree .buttons button {
 	margin: 3px 0 10px 3px;
 }
+
 .SigsiuTree .buttons button i::after {
 	content: ' ';
 }
+
 .SigsiuTree .tree {
 	overflow: auto;
 	max-height: 250px;
@@ -1374,6 +1506,7 @@
 .SobiPro .spFieldRadio {
 	float: left;
 }
+
 .SobiPro .spFieldRadio label,
 .SobiPro .spFieldCheckbox label {
 	float: left;
@@ -1382,6 +1515,7 @@
 		color: @font-color;
 	}
 }
+
 .SobiPro .spFieldCheckbox label {
 	margin-top: 5px;
 }
@@ -1389,34 +1523,42 @@
 .SobiPro .spFieldRadio label {
 	margin-top: 5px
 }
+
 .SobiPro .spFieldCheckbox input,
 .SobiPro .spFieldRadio input {
 	margin-left: 5px;
 	margin-right: 5px;
 	float: left;
 }
+
 .SobiPro .spEntryEdit .spFieldCheckbox input {
 	margin-top: 5px;
 }
+
 .SobiPro .spFieldRadio input {
 	margin-top: 10px;
 }
+
 .SobiPro .spSelectRangeFrom span,
 .SobiPro .spSelectRangeTo span {
 	display: inline-block;
 	min-width: 34px;
 }
+
 .SobiPro .spSelectRangeFrom .input-append,
 .SobiPro .spSelectRangeTo .input-append {
 	float: left;
 	width: calc(100% / 2 - 5px);
 }
+
 .SobiPro .spSelectRangeFrom .input-append {
 	margin: 0 5px 5px 0;
 }
+
 .SobiPro .spSelectRangeTo .input-append {
 	margin: 0 0 5px 5px;
 }
+
 .SobiPro .control-label input[type="checkbox"] {
 	margin: 0;
 }
@@ -1434,9 +1576,11 @@
 		border-color: lighten(@base-color, 10%);
 	}
 }
+
 .SobiPro .form-inline .control-label div.paybox {
 	margin-bottom: 12px;
 }
+
 .SobiPro .control-group.payment-message {
 	padding-top: 10px;
 }
@@ -1446,10 +1590,12 @@
 .SobiPro .spSearch .spFieldCheckbox input {
 	margin-top: 8px
 }
+
 .SPSearch .highlight,
 .spSearch .highlight {
 	background-color: yellow;
 }
+
 & when (@inverse = inverse) {
 	.SobiPro .sp-search-phrases label {
 		color: #333;
@@ -1500,24 +1646,30 @@
 .SobiPro table.payment td {
 	line-height: 10px;
 }
+
 .SobiPro table tr.summary td {
 	background-color: #ffffff !important;
 	padding-top: 25px;
 }
+
 .SobiPro table.payment tbody tr.info > td {
 	.borders(medium);
 	.background(medium);
 }
+
 .SobiPro table.payment tbody tr.success > td {
 	background-color: lighten(@alert-color, 20%);
 }
+
 .SobiPro table tr.sum td {
 	font-weight: bold;
 }
+
 .SobiPro .disabledArea {
 	opacity: 0.3;
 	cursor: progress;
 }
+
 .SobiPro .disabledArea a {
 	cursor: progress;
 }
@@ -1529,10 +1681,11 @@
 .SobiPro div.spClassViewUrl {
 	padding-top: 10px;
 }
+
 .SobiPro .popover img,
 .SobiPro .spClassViewImage img {
 	padding: 4px;
-	background-color: #FFF;
+	background-color: #fff;
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	margin: 5px;
@@ -1540,8 +1693,37 @@
 		border-radius: 4px;
 	}
 }
+
 .SobiPro .spEntryContainer .spClassViewImage img {
 	width: @small-image;
+}
+
+// Navigation Link Bar
+// -----------------------------------------------
+.SobiPro .alert-navigationlinks {
+	background-color: @back-color;
+	color: @base-color;
+	margin-top: 20px;
+	height: 30px;
+	padding: 4px 15px 4px 14px;
+	a {
+		color: @base-color;
+		&:hover {
+			color: darken(@base-color, 10%);
+			text-decoration: none;
+		}
+	}
+}
+
+.SobiPro ul.spNavigationLinks {
+	text-align: right;
+	border-bottom: 1px solid;
+	border-bottom-color: @base-color;
+	li {
+		display: inline;
+		margin-left: 20px;
+		font-size: calc(@fontsize - 2px);
+	}
 }
 
 // Carousel Slider Settings
@@ -1549,17 +1731,21 @@
 .SobiPro .carousel-inner {
 	height: @carousel-image;
 }
+
 .SobiPro .carousel-inner > .item > img,
 .SobiPro .carousel-inner > .item > a > img {
 	height: @carousel-image;
 }
+
 .SobiPro .carousel-inner img.sp-carousel-image {
 	margin-left: auto;
 	margin-right: auto;
 }
+
 .SobiPro .carousel-control.right {
 	background-image: linear-gradient(to right, transparent 0, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 100%);
 }
+
 .SobiPro .carousel-control.left {
 	background-image: linear-gradient(to right, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 0, transparent 100%);
 }
@@ -1609,6 +1795,7 @@
 		border-radius: 4px;
 	}
 }
+
 .SobiPro .mapSearch {
 	display: inline-block;
 }
@@ -1621,12 +1808,15 @@
 	}
 	width: calc(100% - 12px);
 }
+
 .SobiPro .bootstrap-tagsinput .tag {
 	color: @text-color;
 }
+
 .SobiPro .bootstrap-tagsinput .tag [data-role="remove"] {
 	color: darken(@text-color, 10%);
 }
+
 & when (@inverse = inverse) {
 	.SobiPro div.tagsinput input {
 		background-color: @base-color;
@@ -1635,6 +1825,7 @@
 		background-color: #eeeeee;
 	}
 }
+
 .SobiPro div.spClassViewAggregation,
 .SobiPro div.spClassViewAggregation a {
 	color: @active-color;
@@ -1650,15 +1841,18 @@
 		color: @text-color;
 	}
 }
+
 .SobiPro .review-first {
 	font-size: calc(@fontsize + 2px);
 	i {
 		color: @base-color;
 	}
 }
+
 .SobiPro .star-rating-control {
 	font-size: 14px;
 }
+
 .SobiPro .review-container {
 	.rating-criteria,
 	.rating-summary {
@@ -1691,29 +1885,35 @@
 .SobiPro .spListing h3 {
 	color: @base-color;
 }
+
 .SobiPro table.SpCalendar th,
 .SobiPro table.SpCalendar td,
 .SobiPro table.SpCalendar {
 	.background(light);
 	.borders(light);
 }
+
 .SobiPro table.SpCalendar td.SpCalSun {
 	.borders(medium);
 	.background(medium);
 }
+
 .SobiPro table.SpCalendar th {
 	color: @base-color;
 }
+
 .SobiPro .spCalDayHead .navbar-inner {
 	background-color: @alert-color;
 	color: @text-color;
 	font-size: calc(@fontsize + 1px);;
 }
+
 .SobiPro .spCalendarDayHead .navbar-text,
 .SobiPro .spCalNavPhone a,
 .SobiPro .spcalNav a {
 	font-size: calc(@fontsize + 1px);;
 }
+
 .SobiPro .SpCalDay.badge {
 	background-color: @alert-color;
 	color: @active-color;
@@ -1721,7 +1921,7 @@
 	border-left-width: 1px;
 	border-bottom-style: solid;
 	border-left-style: solid;
-	border-color: darken(@alert-color,8%);
+	border-color: darken(@alert-color, 8%);
 	& when (@inverse = inverse) {
 		background-color: @base-color;
 		color: @text-color;
@@ -1729,6 +1929,7 @@
 	}
 	font-weight: 400;
 }
+
 .SobiPro .spClassCalendarRepeat select {
 	width: 150px;
 	margin-top: 5px;
@@ -1740,7 +1941,6 @@
 	font-size: @fontsize;
 }
 
-
 // Collection App
 // -----------------------------------------------
 & when (@inverse = inverse) {
@@ -1749,6 +1949,7 @@
 		color: #333;
 	}
 }
+
 .SobiPro .spCollection {
 	& when (@corners = rounded) {
 		border-radius: 4px;
@@ -1756,26 +1957,29 @@
 	.background(light);
 	.borders(light);
 }
+
 .SobiPro .spCollection .nav > li > a {
 	border-color: fade(#ffffff, 0%);
 }
+
 .SobiPro .spCollection .nav > li > a:hover,
 .SobiPro .spCollection .nav > li > a:focus {
 	border-color: darken(@hover-color, 10%);
 	background-color: @hover-color;
 	color: @active-color;
 }
+
 .SobiPro .ctrl-collection-remove-item {
 	margin-top: 5px;
 	i {
 		font-size: @fontsize;
 	}
 }
+
 .SobiPro .collection-entry-container .page-header,
 .SobiPro .btnCollection i {
 	font-size: calc(@fontsize + 3px);
 }
-
 
 // Profile Field
 // -----------------------------------------------
@@ -1783,10 +1987,12 @@
 	.background(light);
 	.borders(light);
 }
+
 .SobiPro .spProfile.striped > blockquote:nth-child(2n) {
 	.borders(medium);
 	.background(medium);
 }
+
 .SobiPro .spProfileSection {
 	margin-top: 30px;
 	font-size: 19px;
@@ -1794,10 +2000,12 @@
 	color: @base-color;
 	padding-top: 10px;
 }
+
 .SobiPro .spProfileEntries {
 	margin-top: 0;
 	padding-bottom: 10px;
 }
+
 .SobiPro .spProfileEntries .page-header {
 	font-size: 17px;
 	padding-bottom: 5px;
@@ -1829,11 +2037,13 @@
 		font-size: 14px;
 	}
 }
+
 .SobiPro .modal-footer {
 	.btn {
 		font-size: 14px;
 	}
 }
+
 .SobiPro .modal-header {
 	.spMessage {
 		font-size: 14px;
@@ -1867,29 +2077,36 @@
 	.SobiPro .topmenu ul.nav {
 		width: 100%;
 	}
+
 	.SobiPro .navbar .nav > li {
 		float: none;
 	}
+
 	.SobiPro .topmenu li {
 		line-height: 20px;
 	}
+
 	.SobiPro .navbar .nav > li > a {
 		padding-left: 15px;
 	}
+
 	.SobiPro .topmenu .navbar-inner {
 		min-height: 20px;
 		padding-left: 0;
 		padding-right: 0;
 	}
+
 	.SobiPro .spCaticon {
 		margin-top: 10px;
 		padding-left: 0;
 		text-align: left;
 	}
+
 	.SobiPro .spUpload input,
 	.SobiPro .input-append input.spClassMap {
 		height: 31px;
 	}
+
 	.SobiPro .input-small {
 		width: calc(100% - 12px);
 	}
@@ -1910,39 +2127,50 @@
 		float: none;
 		margin-left: 0;
 	}
+
 	.SobiPro .spEditImagePreview {
 		float: none;
 	}
+
 	.SobiPro .spUpload button.btn.select {
 		width: calc(100% - 44px);
 	}
+
 	.SobiPro .btn[name="spsearchphrase"] {
 		padding: 2px 10px;
 		font-size: 12px;
 	}
+
 	.SobiPro .control-label div.paybox {
 		margin-bottom: 12px;
 	}
+
 	.SobiPro .controls {
 		margin-left: 0;
 	}
+
 	.SobiPro input[name="sp_search_for"] {
 		margin-bottom: 10px;
 	}
+
 	.SobiPro button.btn.spsearchphrase {
 		//PhpStorm meldet hier fälschlicherweise einen Fehler
 		width: calc(100% / 3);
 	}
+
 	.SobiPro .input-append.date.spDatePicker {
 		margin: 0 10px 10px 0;
 		width: 100%;
 	}
+
 	.SobiPro .spCaticon i {
 		//font-size: 3em;
 	}
+
 	.SobiPro .spEntryEdit .message-lightbulb {
 		left: 49%;
 	}
+
 	.SobiPro .input-medium,
 	.SobiPro .sp-search-phrases .btn-group,
 	.SobiPro .spUpload .btn-group {
@@ -1955,6 +2183,7 @@
 	.SobiPro .modal .control-group {
 		margin-bottom: 6px;
 	}
+
 	.SobiPro .spPrint .spClassViewImage img,
 	.SobiPro .spDetailEntry .spClassViewImage img,
 	.SobiPro div.spClassViewImage img,
@@ -1962,23 +2191,51 @@
 		width: calc(100% - 8px);
 		margin: 0 0 10px 0;
 	}
+
 	.SobiPro .spNoImage {
 		display: none;
 	}
+
 	.SigsiuTree .buttons {
 		text-align: center;
 	}
+
 	.SobiPro .spDetailEntry .spClassViewImage img,
 	.SobiPro .spClassViewImage img {
 		float: none !important;
 	}
+
 	.SobiPro .input-large,
 	.SobiPro .input-medium,
 	.SobiPro .sp-search-controls .btn {
 		width: 100%;
 	}
+
 	.SobiPro .tab-pane {
 		min-height: inherit;
 	}
+
+	// Navigation Link Bar
+	// -----------------------------------------------
+	.SobiPro .alert-navigationlinks {
+		height: auto;
+		margin-bottom: 0;
+		margin-top: 0;
 }
 
+	.SobiPro ul.spNavigationLinks {
+		border-bottom: none;
+		text-align: center;
+		margin: 0;
+
+		li {
+			display: block;
+			font-size: calc(@fontsize + 1px);
+			font-weight: 500;
+			line-height: 24px;
+		}
+	}
+	.SobiPro .lead {
+		text-align: center;
+	}
+}

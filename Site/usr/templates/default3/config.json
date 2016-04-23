@@ -15,6 +15,9 @@
     }
   },
   "general": {
+    "navigationlinks": "topmenu",
+    "basefont": "none",
+    "specialfont": "none",
     "extendedsearch": "show",
     "textlength": "no",
     "hidecategories": "show",
@@ -37,5 +40,8 @@
     "entries_in_line": "2",
     "entries_ordering": "updatedTime.desc",
     "entries_recursive": "1"
+  },
+  "entry-details": {
+    "entries_in_line": "1"
   }
 }
