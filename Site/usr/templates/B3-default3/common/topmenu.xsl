@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -18,9 +18,16 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
     <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
+
     <xsl:template name="topMenu">
         <xsl:param name="searchbox" />
-        <xsl:if test="count(//menu/*)">
+
+		<!-- Show the Directory name and description -->
+		<div class="pageheader lead">
+			<xsl:value-of select="section"/>
+		</div>
+
+	    <xsl:if test="count(//menu/*)">
             <xsl:variable name="currentUrl">
                 <xsl:value-of select="php:function( 'SobiPro::Url', 'current' )" />
             </xsl:variable>
@@ -91,6 +98,11 @@
                 </div>
             </div>
         </xsl:if>
-    </xsl:template>
+
+	</xsl:template>
+
+	<xsl:template name="bottomHook">
+	</xsl:template>
+
 </xsl:stylesheet>
 
