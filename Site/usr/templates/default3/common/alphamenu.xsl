@@ -22,6 +22,7 @@
     <xsl:template match="alphaMenu">
         <div class="row-fluid">
             <div class="span12">
+	            <div class="spAlphamenu text-center">
                 <xsl:if test="count( fields/* )">
                     <div class="alphalist">
                         <div class="btn-group">
@@ -43,6 +44,7 @@
                 </xsl:if>
                 <div id="alpha-index" class="alpha">
                     <xsl:apply-templates select="letters" />
+					</div>
                 </div>
             </div>
         </div>

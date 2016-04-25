@@ -6,7 +6,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
 
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -32,6 +32,20 @@ abstract class TplFunctions
 	public static function Cfg( $key, $def = null, $section = 'general' )
 	{
 		return Sobi::Cfg( $key, $def, $section );
+	}
+	public static function CSS ($src)
+	{
+		SPFactory::header()->addCSSCode(".SobiPro .spImageHeader {background-image:url(" . $src . ");}");
+	}
+	public static function LoadFont ($name)
+	{
+		SPFactory::header()->addHeadLink("//fonts.googleapis.com/css?family=" . $name, "text/css", null, "stylesheet");
+	}
+	public static function ApplyBaseFont ($name) {
+		SPFactory::header()->addCSSCode(".SobiPro {font-family:'". $name ."', sans serif;}");
+	}
+	public static function ApplyFont ($name) {
+		SPFactory::header()->addCSSCode(".SobiPro h1, .SobiPro h2, .SobiPro h3, .SobiPro h4 {font-family:'". $name ."', sans serif;}");
 	}
 
 	/**

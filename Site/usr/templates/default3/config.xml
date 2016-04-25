@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -70,7 +70,25 @@
                                             <option value="angular" />
                                         </values>
                                     </field>
-	                                <field type="select" label="TP.CONFIG.FONTSIZE" name="settings[config][less][theme][fontsize]" selected="settings.config.less.theme.fontsize" class="input-medium"> <!-- SobiPro setting! -->
+
+	                                <field type="select" label="TP.CONFIG.TOPMENU" name="settings[config][general][navigationlinks]" selected="settings.config.general.navigationlinks" class="input-large">
+		                                <values>
+			                                <option value="topmenu" label="TP.CONFIG.TOPMENU_STANDARD" />
+			                                <option value="linkbar" label="TP.CONFIG.TOPMENU_BAR" />
+		                                </values>
+	                                </field>
+	                                </fieldset>
+	                                <fieldset label="TP.CONFIG.FONTS">
+	                                <field type="select" label="TP.CONFIG.FONT" name="settings[config][general][basefont]" selected="settings.config.general.basefont" class="input-xlarge">
+		                                <values>
+			                                <option value="none" label="TP.CONFIG.FEONTSELECTION" />
+			                                <option value="Lato" label="Lato (Google Font)" />
+			                                <option value="Droid Sans" label="Droid Sans (Google Font)" />
+			                                <option value="Raleway" label="Raleway (Google Font)" />
+		                                </values>
+	                                </field>
+
+	                                <field type="select" label="TP.CONFIG.FONTSIZE" name="settings[config][less][theme][fontsize]" selected="settings.config.less.theme.fontsize" class="input-medium">
 		                                <values>
 			                                <option value="11px" label="11px" />
 			                                <option value="12px" label="12px" />
@@ -80,6 +98,21 @@
 			                                <option value="16px" label="16px" />
 		                                </values>
 	                                </field>
+
+	                                <field type="select" label="TP.CONFIG.SPECIALFONT" name="settings[config][general][specialfont]" selected="settings.config.general.specialfont" class="input-xlarge">
+		                                <values>
+			                                <option value="none" label="TP.CONFIG.FEONTSELECTION" />
+			                                <option value="Lato" label="Lato (Google Font)" />
+			                                <option value="Exo" label="Exo (Google Font)" />
+			                                <option value="Denk One" label="Denk One (Google Font)" />
+			                                <option value="Josefin Sans" label="Josefin Sans (Google Font)" />
+			                                <option value="Pacifico" label="Pacifico (Google Font)" />
+			                                <option value="Alegreya Sans SC" label="Alegreya Sans SC (Google Font)" />
+			                                <option value="Ubuntu" label="Ubuntu (Google Font)" />
+		                                </values>
+	                                </field>
+
+
                                 </fieldset>
 
                                 <fieldset label="TP.CONFIG.RSS">
@@ -269,7 +302,9 @@
                                             <option value="5" label="5" />
                                             <option value="6" label="6" />
                                             <option value="8" label="8" />
+	                                        <option value="9" label="9" />
                                             <option value="10" label="10" />
+	                                        <option value="12" label="12" />
                                             <option value="15" label="15" />
                                             <option value="20" label="20 (not recommended)" />
                                         </values>
