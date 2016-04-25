@@ -34,6 +34,8 @@ Legend:
     (+) Tooltip colours now correspond to base colour for B3-default3 template
 	(+) general distance classes for distances on top and bottom in B3-default3 template
 	(+) Template hook added on bottom of all views
+	(+) Google Fonts selectable from template settings
+	(+) Link Bar instead of Top Menu selectable from template settings
 
 	(#) Warnings/notices in SobiPro panel, if no news available from our server
 
