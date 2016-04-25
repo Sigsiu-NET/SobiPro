@@ -50,6 +50,7 @@
 
 @inverse: standard;
 @back-color: #FFFFFF;
+@fontsize: 14px;
 
 // same for all themes if not set
 @error-color: #A30000;
@@ -299,8 +300,37 @@
 		font-size: calc(@fontsize - 2px);
 		line-height: 1.5;
 	}
+	.lead {
+		font-size: 32px;
+		color: @base-color;
+	}
 	.noblock {
 		display: inline;
+	}
+	// general distances on top and bottom
+	.distance-top-xs {
+		margin-top: 5px;
+	}
+	.distance-top-sm {
+		margin-top: 10px;
+	}
+	.distance-top-md {
+		margin-top: 20px;
+	}
+	.distance-top-lg {
+		margin-top: 30px;
+	}
+	.distance-bottom-xs {
+		margin-bottom: 5px;
+	}
+	.distance-bottom-sm {
+		margin-bottom: 10px;
+	}
+	.distance-bottom-md {
+		margin-bottom: 20px;
+	}
+	.distance-bottom-lg {
+		margin-bottom: 30px;
 	}
 }
 /* form-inline mode needs to be checked
@@ -489,6 +519,9 @@
 
 // Background for modal windows (outside SobiPro container)
 // -----------------------------------------------
+body.modal-open {
+	overflow: inherit;  //otherwise the screen moves on modals
+}
 .modal-backdrop,
 .modal-backdrop.fade.in {
 	opacity: 0.2;
@@ -1501,6 +1534,9 @@
 	content: "";
 	padding-right: 5px;
 }
+.SobiPro .spEntryEdit select.spClassCategory {
+	margin-bottom: 3px;
+}
 .SobiPro .editor {
 	overflow: visible;
 }
@@ -1767,6 +1803,26 @@
 }
 .SobiPro .spEntryContainer .spClassViewImage img {
 	width: @small-image;
+	margin-bottom: 5px;
+}
+
+// Tooltip Settings
+// -----------------------------------------------
+.SobiPro .tooltip-inner {
+	background-color: @base-color;
+	color: @text-color;
+}
+.SobiPro .tooltip.top .tooltip-arrow {
+	border-top-color: @base-color;
+}
+.SobiPro .tooltip.bottom .tooltip-arrow {
+	border-bottom-color: @base-color;
+}
+.SobiPro .tooltip.left .tooltip-arrow {
+	border-left-color: @base-color;
+}
+.SobiPro .tooltip.right .tooltip-arrow {
+	border-right-color: @base-color;
 }
 
 // Carousel Slider Settings

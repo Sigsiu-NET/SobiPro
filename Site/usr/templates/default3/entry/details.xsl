@@ -36,17 +36,15 @@
 
     <xsl:template match="/entry_details">
         <div class="spDetails">
-            <div>
                 <xsl:call-template name="topMenu">
                     <xsl:with-param name="searchbox">true</xsl:with-param>
                 </xsl:call-template>
                 <xsl:apply-templates select="alphaMenu" />
-            </div>
             <xsl:apply-templates select="messages" />
             <div class="clearfix" />
+
             <div class="spDetailEntry">
                 <xsl:call-template name="manage" />
-
                 <xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../common/review.xsl'] ">
                     <xsl:call-template name="ratingStars" />
                 </xsl:if>
@@ -97,6 +95,8 @@
 
             <!-- Uncomment only if >Profile Field is installed -->
             <!--<xsl:call-template name="UserContributions" />-->
+
+			<xsl:call-template name="bottomHook"/>
         </div>
     </xsl:template>
 </xsl:stylesheet>

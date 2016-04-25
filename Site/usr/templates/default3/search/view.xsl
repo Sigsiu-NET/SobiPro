@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -17,64 +17,67 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
-	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
-	<xsl:include href="../common/alphamenu.xsl" />
-	<xsl:include href="../common/topmenu.xsl" />
-	<xsl:include href="../common/navigation.xsl" />
-	<xsl:include href="../common/entries.xsl" />
+	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
+
+	<xsl:include href="../common/alphamenu.xsl"/>
+	<xsl:include href="../common/topmenu.xsl"/>
+	<xsl:include href="../common/navigation.xsl"/>
+	<xsl:include href="../common/entries.xsl"/>
 	<xsl:include href="../common/messages.xsl"/>
+
 	<xsl:template match="/search">
 		<div class="spSearch">
-			<div>
-				<xsl:call-template name="topMenu">
-					<xsl:with-param name="searchbox">false</xsl:with-param>
-				</xsl:call-template>
-				<xsl:apply-templates select="alphaMenu" />
-			</div>
+			<xsl:call-template name="topMenu">
+				<xsl:with-param name="searchbox">false</xsl:with-param>
+			</xsl:call-template>
+
+			<xsl:apply-templates select="alphaMenu"/>
 			<xsl:apply-templates select="messages"/>
+
 			<div id="SPSearchForm" class="form-horizontal control-group">
 				<xsl:if test="/search/fields/searchbox">
-                    <div class="control-group">
-                        <label class="control-label" for="SPSearchBox">
-                            <xsl:value-of select="/search/fields/searchbox/label" />
-                        </label>
-                        <div class="controls sp-search-controls">
-                            <div class="span9">
-                                <input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}" class="input-medium" id="SPSearchBox" />
-                                <xsl:if test="/search/fields/top_button/label">
-                                    <button type="submit" class="btn btn-primary btn-sigsiu">
-                                        <xsl:value-of select="/search/fields/top_button/label" />
-                                    </button>
-                                </xsl:if>
-	                            <xsl:if test="count( /search/fields/* ) &gt; 3 and //config/extendedsearch/@value = 'show'">
-                                <button type="button" class="btn" name="SPExOptBt" id="SPExOptBt">
-                                    <xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )" />
-                                </button>
-                            </xsl:if>
-                            </div>
-                        </div>
-                    </div>
+					<div class="control-group">
+						<label class="control-label" for="SPSearchBox">
+							<xsl:value-of select="/search/fields/searchbox/label"/>
+						</label>
+						<div class="controls sp-search-controls">
+							<div class="span9">
+								<input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}" class="input-medium"
+								       id="SPSearchBox"/>
+								<xsl:if test="/search/fields/top_button/label">
+									<button type="submit" class="btn btn-primary btn-sigsiu">
+										<xsl:value-of select="/search/fields/top_button/label"/>
+									</button>
+								</xsl:if>
+								<xsl:if test="count( /search/fields/* ) &gt; 3 and //config/extendedsearch/@value = 'show'">
+									<button type="button" class="btn" name="SPExOptBt" id="SPExOptBt">
+										<xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )"/>
+									</button>
+								</xsl:if>
+							</div>
+						</div>
+					</div>
 					<xsl:if test="count( /search/fields/phrase/* )">
-                        <div class="control-group">
-                            <label class="control-label" for="sp-search-phrases">
-                                <xsl:value-of select="/search/fields/phrase/label" />
-                            </label>
-                            <div class="controls sp-search-phrases">
-                                <div class="span9">
-                                    <div class="btn-group" data-toggle="buttons-radio">
-                                        <xsl:for-each select="/search/fields/phrase/data/*">
-                                            <button type="button" class="btn spsearchphrase" name="{./input/@name}" value="{./input/@value}" checked="checked">
-                                                <xsl:if test="./input/@checked = 'checked'">
-                                                    <xsl:attribute name="class">btn spsearchphrase active</xsl:attribute>
-                                                </xsl:if>
-                                                <xsl:value-of select="./label" />
-                                            </button>
-                                        </xsl:for-each>
-                                    </div>
-                                    <input type="hidden" name="spsearchphrase" id="spsearchphrase" value=""/>
-                                </div>
-                            </div>
-                        </div>
+						<div class="control-group">
+							<label class="control-label" for="sp-search-phrases">
+								<xsl:value-of select="/search/fields/phrase/label"/>
+							</label>
+							<div class="controls sp-search-phrases">
+								<div class="span9">
+									<div class="btn-group" data-toggle="buttons-radio">
+										<xsl:for-each select="/search/fields/phrase/data/*">
+											<button type="button" class="btn spsearchphrase" name="{./input/@name}" value="{./input/@value}" checked="checked">
+												<xsl:if test="./input/@checked = 'checked'">
+													<xsl:attribute name="class">btn spsearchphrase active</xsl:attribute>
+												</xsl:if>
+												<xsl:value-of select="./label"/>
+											</button>
+										</xsl:for-each>
+									</div>
+									<input type="hidden" name="spsearchphrase" id="spsearchphrase" value=""/>
+								</div>
+							</div>
+						</div>
 					</xsl:if>
 				</xsl:if>
 				<xsl:if test="count( /search/fields/* ) &gt; 3">
@@ -84,32 +87,32 @@
 						</xsl:if>
 						<xsl:for-each select="fields/*">
 							<xsl:if test="position() &gt; 3">
-                                <div class="control-group {@css-search}">
-                                    <label class="control-label" for="{name(.)}">
-                                        <xsl:value-of select="label" />
-                                    </label>
-                                    <div class="controls">
-                                        <xsl:variable name="colwidth">
-                                            <xsl:choose>
-                                                <xsl:when test="string-length( @width )">
-                                                    <xsl:value-of select="@width" />
-                                                </xsl:when>
-                                                <xsl:otherwise>9</xsl:otherwise>
-                                            </xsl:choose>
-                                        </xsl:variable>
-                                        <div class="span{$colwidth}">
-                                            <xsl:if test="string-length( @suffix )">
-                                                <xsl:attribute name="class">input-append</xsl:attribute>
-                                            </xsl:if>
-                                            <xsl:copy-of select="data/*" />
-                                            <xsl:if test="string-length( @suffix )">
-                                                <span class="add-on">
-                                                    <xsl:value-of select="@suffix" />
-                                                </span>
-                                            </xsl:if>
-                                        </div>
-    								</div>
-                                </div>
+								<div class="control-group {@css-search}">
+									<label class="control-label" for="{name(.)}">
+										<xsl:value-of select="label"/>
+									</label>
+									<div class="controls">
+										<xsl:variable name="colwidth">
+											<xsl:choose>
+												<xsl:when test="string-length( @width )">
+													<xsl:value-of select="@width"/>
+												</xsl:when>
+												<xsl:otherwise>9</xsl:otherwise>
+											</xsl:choose>
+										</xsl:variable>
+										<div class="span{$colwidth}">
+											<xsl:if test="string-length( @suffix )">
+												<xsl:attribute name="class">input-append</xsl:attribute>
+											</xsl:if>
+											<xsl:copy-of select="data/*"/>
+											<xsl:if test="string-length( @suffix )">
+												<span class="add-on">
+													<xsl:value-of select="@suffix"/>
+												</span>
+											</xsl:if>
+										</div>
+									</div>
+								</div>
 							</xsl:if>
 						</xsl:for-each>
 					</div>
@@ -117,11 +120,14 @@
 			</div>
 			<xsl:if test="message">
 				<div class="alert alert-info">
-					<xsl:value-of select="message" />
+					<xsl:value-of select="message"/>
 				</div>
 			</xsl:if>
-			<xsl:call-template name="entriesLoop" />
-			<xsl:apply-templates select="navigation" />
+			<xsl:call-template name="entriesLoop"/>
+			<xsl:apply-templates select="navigation"/>
+
+			<xsl:call-template name="bottomHook"/>
 		</div>
+
 	</xsl:template>
 </xsl:stylesheet>
