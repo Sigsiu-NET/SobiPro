@@ -433,19 +433,19 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	protected static function reorder( &$from, &$to )
 	{
 		if ( self::$_filter[ 1 ] == 'asc' ) {
-			if ( is_string( $from[ self::$_filter[ 1 ] ] ) ) {
-				return strcmp( $from[ self::$_filter[ 1 ] ], $to[ self::$_filter[ 1 ] ] ) > 0;
+			if ( is_string( $from[ self::$_filter[ 0 ] ] ) ) {
+				return strcmp( $from[ self::$_filter[ 0 ] ], $to[ self::$_filter[ 0 ] ] ) > 0;
 			}
 			else {
 				return $from[ self::$_filter[ 1 ] ] > $to[ self::$_filter[ 1 ] ];
 			}
 		}
 		else {
-			if ( is_string( $from[ self::$_filter[ 1 ] ] ) ) {
-				return ( strcmp( $from[ self::$_filter[ 1 ] ], $to[ self::$_filter[ 1 ] ] ) ) < 0;
+			if ( is_string( $from[ self::$_filter[ 0 ] ] ) ) {
+				return ( strcmp( $from[ self::$_filter[ 0 ] ], $to[ self::$_filter[ 0 ] ] ) ) < 0;
 			}
 			else {
-				return $from[ self::$_filter[ 1 ] ] < $to[ self::$_filter[ 1 ] ];
+				return $from[ self::$_filter[ 0 ] ] < $to[ self::$_filter[ 0 ] ];
 			}
 		}
 	}
