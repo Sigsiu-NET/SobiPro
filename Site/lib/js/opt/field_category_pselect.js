@@ -39,7 +39,8 @@ SobiPro.jQuery( document ).ready( function ()
 				'data': {
 					'sid': SobiProSection,
 					'format': 'raw',
-					'tmpl': 'component'
+					'tmpl': 'component',
+					'method': this.data( 'method' )
 				}
 			} ).done( function ( data )
 			{
@@ -83,6 +84,7 @@ SobiPro.jQuery( document ).ready( function ()
 			if ( Object.keys( options ).length ) {
 				var Select = Proxy.Select.clone();
 				Select.attr( 'name', '' )
+					.removeAttr( 'id' )
 					.find( 'option' )
 					.remove()
 					.end();
