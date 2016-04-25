@@ -308,7 +308,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	public function ProxyLoadCategories()
 	{
 		if ( !( count( $this->_cats ) ) ) {
-			self::$_filter = explode( '.', $this->orderCatsBy );
+			self::$_filter = explode( '.', SPRequest::cmd( 'method' ) == 'search' ? $this->searchOrderCatsBy : $this->orderCatsBy );
 			$this->loadCategories();
 			SPFactory::mainframe()
 					->cleanBuffer()
@@ -336,7 +336,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		);
 		$selected = $this->_selectedCats;
 		$params[ 'data' ][ 'task' ] = str_replace( '_', '.', $this->nid ) . '.loadCategories';
-		$params[ 'data' ][ 'selected' ] = $selected[ 0 ];
+		$params[ 'data' ][ 'selected' ] = isset( $selected[ 0 ] ) ? $selected[ 0 ] : 0;
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
@@ -432,20 +432,20 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 	protected static function reorder( &$from, &$to )
 	{
-		if ( self::$_filter[ 0 ] == 'asc' ) {
-			if ( is_string( $from[ self::$_filter[ 0 ] ] ) ) {
-				return strcmp( $from[ self::$_filter[ 0 ] ], $to[ self::$_filter[ 0 ] ] ) > 0;
+		if ( self::$_filter[ 1 ] == 'asc' ) {
+			if ( is_string( $from[ self::$_filter[ 1 ] ] ) ) {
+				return strcmp( $from[ self::$_filter[ 1 ] ], $to[ self::$_filter[ 1 ] ] ) > 0;
 			}
 			else {
-				return $from[ self::$_filter[ 0 ] ] > $to[ self::$_filter[ 0 ] ];
+				return $from[ self::$_filter[ 1 ] ] > $to[ self::$_filter[ 1 ] ];
 			}
 		}
 		else {
-			if ( is_string( $from[ self::$_filter[ 0 ] ] ) ) {
-				return ( strcmp( $from[ self::$_filter[ 0 ] ], $to[ self::$_filter[ 0 ] ] ) ) < 0;
+			if ( is_string( $from[ self::$_filter[ 1 ] ] ) ) {
+				return ( strcmp( $from[ self::$_filter[ 1 ] ], $to[ self::$_filter[ 1 ] ] ) ) < 0;
 			}
 			else {
-				return $from[ self::$_filter[ 0 ] ] < $to[ self::$_filter[ 0 ] ];
+				return $from[ self::$_filter[ 1 ] ] < $to[ self::$_filter[ 1 ] ];
 			}
 		}
 	}
