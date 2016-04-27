@@ -279,7 +279,7 @@ class JElementSPSection extends JElement
 		return str_replace( 'amp;', null, $link );
 	}
 
-	public function fetchTooltip( $label, $description, &$node, $control_name, $name )
+	public function fetchTooltip( $label, $description, &$node, $control_name = '', $name = '' )
 	{
 		switch ( $label ) {
 			case 'cid':
