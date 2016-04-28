@@ -369,8 +369,6 @@ abstract class SPLoader
 	 * @param bool $toLive
 	 * @param string $ext
 	 * @param bool $count
-	 * @internal param string $root
-	 * @internal param bool $existCheck
 	 * @return string
 	 */
 	public static function CssFile( $path, $adm = false, $checkExist = true, $toLive = true, $ext = 'css', $count = false )

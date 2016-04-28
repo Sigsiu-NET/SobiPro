@@ -52,6 +52,7 @@ Legend:
 
     (!) Improvements in Crawler Cron CLI script
     (!) PNG compression increased
+    (!) no page counter in browser title when on page 1
 
     (#) Forcing template installation doesn't work
     (#) Wrong setting displayed for separate JSON files in template settings
