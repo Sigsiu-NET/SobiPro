@@ -479,6 +479,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	 */
 	public function searchForm( $return = true )
 	{
+		self::$_filter = explode( '.', $this->orderCatsBy );
 		$this->loadCategories( true );
 		if ( count( $this->_cats ) ) {
 			if ( $this->searchMethod == 'select' ) {
