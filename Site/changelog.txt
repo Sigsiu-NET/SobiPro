@@ -27,7 +27,7 @@ Legend:
 
 
 -------------------
-1.2.4 Beta B ()
+1.2.4 Beta C ()
 -------------------
     (+) Category field: new category selector (populated select list)
     (+) Category field: sorting of categories in entry form adjustable
@@ -38,6 +38,7 @@ Legend:
 	(+) Link Bar instead of Top Menu selectable from template settings
 
 	(#) Warnings/notices in SobiPro panel, if no news available from our server
+	(#) Version of information field in fields manager missing
 
 
 -------------------
