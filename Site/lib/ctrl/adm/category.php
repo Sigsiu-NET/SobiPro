@@ -61,10 +61,10 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				break;
 			case 'up':
 			case 'down':
+				SPFactory::cache()->cleanCategories();
 				$this->authorise( 'edit' );
 				$r = true;
 				$this->singleReorder( $this->_task == 'up' );
-				SPFactory::cache()->cleanCategories();
 				break;
 			case 'approve':
 			case 'unapprove':
@@ -76,15 +76,15 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			case 'publish':
 				$this->authorise( 'edit' );
 				$r = true;
-				$this->state( $this->_task == 'publish' );
 				SPFactory::cache()->cleanCategories();
+				$this->state( $this->_task == 'publish' );
 				break;
 			case 'toggle.enabled':
 			case 'toggle.approval':
+				SPFactory::cache()->cleanCategories();
 				$this->authorise( 'edit' );
 				$r = true;
 				$this->toggleState();
-				SPFactory::cache()->cleanCategories();
 				break;
 			case 'delete':
 				/** Wed, Jan 15, 2014 11:05:28
