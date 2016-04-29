@@ -562,7 +562,9 @@ final class SPHeader
 			if ( !( is_array( $title ) ) ) {
 				$title = array( $title );
 			}
-			$title[ ] = Sobi::Txt( 'SITES_COUNTER', $site[ 1 ], $site[ 0 ] );
+			if ($site[1] > 1) { // no page counter when on page 1
+				$title[] = Sobi::Txt('SITES_COUNTER', $site[1], $site[0]);
+			}
 		}
 		if ( is_array( $title ) ) {
 			foreach ( $title as $segment ) {

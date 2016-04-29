@@ -413,7 +413,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				if ( !( isset( $data[ 'name' ] ) || isset( $data[ 'id' ] ) ) || !( $data[ 'id' ] ) ) {
 					continue;
 				}
-				$title[ ] = $data[ 'name' ];
+					$title[] = $data['name'];
 				$this->addToPathway( $data[ 'name' ], ( self::url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
 			}
 		}
@@ -425,6 +425,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 //			$title[ ] = Sobi::Txt( 'SITES_COUNTER', $site[ 1 ], $site[ 0 ] );
 //		}
 		SPFactory::header()->addTitle( $title, $site );
+
 		return $this;
 	}
 

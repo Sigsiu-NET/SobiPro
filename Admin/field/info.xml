@@ -7,7 +7,7 @@
  Email: sobi[at]sigsiu.net
  Url: http://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
@@ -17,41 +17,43 @@
 
 <definition>
 	<header>
-		<title value="FM.EDIT_FIELD" />
-		<file type="script" filename="bootstrap.tabs" />
+		<title value="FM.EDIT_FIELD"/>
+		<file type="script" filename="bootstrap.tabs"/>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
-        <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
-        <divider />
+		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES"/>
+		<divider/>
 		<button task="field.apply" type="apply">
-			<button type="save" task="field.save" />
-			<button type="duplicate" task="field.clone" />
+			<button type="save" task="field.save"/>
+			<button type="duplicate" task="field.clone"/>
 		</button>
-		<divider />
-		<button type="exit" task="field.cancel" />
-		<divider />
-		<button type="help" target="_blank" />
+		<divider/>
+		<button type="exit" task="field.cancel"/>
+		<divider/>
+		<button type="help" target="_blank"/>
 	</toolbar>
 	<body disable-menu="true">
 		<div class="row-fluid">
 			<div class="span12 spMainArea">
-				<message id="spMessage" />
+				<message id="spMessage"/>
 				<tabs>
 					<tab label="FMN.FIELD_GENERAL">
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="toggle" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no" />
+									<field type="toggle" name="field.enabled" value="field.enabled" label="ENABLED" prefix="yes_no"/>
 								</fieldset>
 								<fieldset>
-									<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true" />
-									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" />
-									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-large" />
-									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true"/>
+									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS"/>
+									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-large"/>
+									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge"
+									       rows="2" style=""/>
 								</fieldset>
 
 								<fieldset label="FM.FIELD_TYPE">
-									<field type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span3" />
+									<field type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types"
+									       label="FMN.FIELD_TYPE" class="span3"/>
 								</fieldset>
 							</div>
 						</div>
@@ -60,27 +62,32 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-                                    <field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
-                                        <values>
-                                            <option value="1" label="1" />
-                                            <option value="2" label="2" />
-                                            <option value="3" label="3" />
-                                            <option value="4" label="4" />
-                                            <option value="5" label="5" />
-                                            <option value="6" label="6" />
-                                            <option value="7" label="7" />
-                                            <option value="8" label="8" />
-                                            <option value="9" label="9" />
-                                            <option value="10" label="10" />
-                                        </values>
-                                    </field>
-                                    <field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
-                                    <field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
-                                    <field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />
+									<field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
+										<values>
+											<option value="1" label="1"/>
+											<option value="2" label="2"/>
+											<option value="3" label="3"/>
+											<option value="4" label="4"/>
+											<option value="5" label="5"/>
+											<option value="6" label="6"/>
+											<option value="7" label="7"/>
+											<option value="8" label="8"/>
+											<option value="9" label="9"/>
+											<option value="10" label="10"/>
+										</values>
+									</field>
+									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false"
+									       class="input-splarge" rows="4" style=""/>
+									<field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
+									<field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large"/>
 								</fieldset>
-                                <fieldset label="FM.INFORMATION">
-                                    <field type="textarea" name="field.entryInfo" value="field.entryInfo" label="FM.INFORMATION_OUT" editor="false" class="input-splarge" rows="4" style="" />
-                                    </fieldset>
+								<fieldset label="FM.INFORMATION">
+									<field type="textarea" name="field.entryInfo" value="field.entryInfo" label="FM.INFORMATION_OUT" editor="false"
+									       class="input-splarge" rows="4" style=""/>
+								</fieldset>
+								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
+									<field type="output" value="field.version" label="VERSION" class="badge" />
+								</fieldset>
 							</div>
 						</div>
 					</tab>
@@ -90,18 +97,19 @@
 								<fieldset>
 									<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
 										<values>
-											<option value="both" label="FM.BOTH_OPT" />
-											<option value="details" label="FM.DETAILS_VIEW_OPT" />
-											<option value="vcard" label="FM.V_CARD_OPT" />
-											<option value="hidden" label="FMN.HIDDEN_OPT" />
+											<option value="both" label="FM.BOTH_OPT"/>
+											<option value="details" label="FM.DETAILS_VIEW_OPT"/>
+											<option value="vcard" label="FM.V_CARD_OPT"/>
+											<option value="hidden" label="FMN.HIDDEN_OPT"/>
 										</values>
 									</field>
-									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
-                                    <field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-large" />
+									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
+									<field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-large"/>
 								</fieldset>
-                                <fieldset label="FM.INFORMATION">
-                                    <field type="textarea" name="field.viewInfo" value="field.viewInfo" label="FM.INFORMATION_OUT" editor="false" class="input-splarge" rows="4" style="" />
-                                </fieldset>
+								<fieldset label="FM.INFORMATION">
+									<field type="textarea" name="field.viewInfo" value="field.viewInfo" label="FM.INFORMATION_OUT" editor="false"
+									       class="input-splarge" rows="4" style=""/>
+								</fieldset>
 							</div>
 						</div>
 					</tab>
@@ -110,13 +118,13 @@
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="option" default="com_sobipro" />
-			<field name="sp-language" default="" />
-			<field name="task" default="" />
-			<field name="method" default="xhr" />
-			<field name="format" default="raw" />
+			<field name="option" default="com_sobipro"/>
+			<field name="sp-language" default=""/>
+			<field name="task" default=""/>
+			<field name="method" default="xhr"/>
+			<field name="format" default="raw"/>
 		</hidden>
 	</config>
 </definition>
