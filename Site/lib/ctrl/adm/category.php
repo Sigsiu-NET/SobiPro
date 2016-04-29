@@ -57,12 +57,14 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				$this->authorise( 'edit' );
 				$r = true;
 				$this->reorder();
+				SPFactory::cache()->cleanCategories();
 				break;
 			case 'up':
 			case 'down':
 				$this->authorise( 'edit' );
 				$r = true;
 				$this->singleReorder( $this->_task == 'up' );
+				SPFactory::cache()->cleanCategories();
 				break;
 			case 'approve':
 			case 'unapprove':
@@ -75,12 +77,14 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				$this->authorise( 'edit' );
 				$r = true;
 				$this->state( $this->_task == 'publish' );
+				SPFactory::cache()->cleanCategories();
 				break;
 			case 'toggle.enabled':
 			case 'toggle.approval':
 				$this->authorise( 'edit' );
 				$r = true;
 				$this->toggleState();
+				SPFactory::cache()->cleanCategories();
 				break;
 			case 'delete':
 				/** Wed, Jan 15, 2014 11:05:28
@@ -90,6 +94,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				 */
 				$cids = SPRequest::arr( 'c_sid', array() );
 				if ( count( $cids ) ) {
+					SPFactory::cache()->cleanCategories();
 					parent::execute();
 				}
 				else {
