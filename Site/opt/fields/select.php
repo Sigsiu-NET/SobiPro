@@ -83,9 +83,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 		$class = $this->dependency ? $class . ' ctrl-dependency-field' : $class;
 		if ( defined( 'SOBIPRO_ADM' ) ) {
-			if ($this->bsWidth) {
-				$width = SPHtml_Input::_translateWidth($this->bsWidth);
-				$class .=  ' ' . $width;
+			if ( $this->bsWidth ) {
+				$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+				$class .= ' ' . $width;
 			}
 		}
 
@@ -955,35 +955,37 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	public function struct()
 	{
-		if ( !( $this->dependency ) ) {
-			return parent::struct( true );
-		}
 		$selected = $this->getRaw();
-		if ( isset( $this->_fData->options ) ) {
-			$path = SPConfig::unserialize( $this->_fData->options );
-		}
-		else {
-			return null;
-		}
-		$selectedPath = array();
-		$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
-		if ( isset( $options[ 'translation' ] ) ) {
-			SPLang::load( $options[ 'translation' ] );
-			$selected = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $selected ) );
-		}
-		if ( count( $path ) && isset( $options[ 'translation' ] ) ) {
-			foreach ( $path as $step ) {
-				$selectedPath[ $step ] = $selected = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $step ) );
+		$_options = array();
+		if ( $this->dependency ) {
+			if ( isset( $this->_fData->options ) ) {
+				$path = SPConfig::unserialize( $this->_fData->options );
 			}
+			else {
+				return null;
+			}
+			$selectedPath = array();
+			$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+			if ( isset( $options[ 'translation' ] ) ) {
+				SPLang::load( $options[ 'translation' ] );
+				$selected = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $selected ) );
+			}
+			if ( count( $path ) && isset( $options[ 'translation' ] ) ) {
+				foreach ( $path as $step ) {
+					$selectedPath[ $step ] = $selected = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $step ) );
+				}
+			}
+			$_options = array( 'path' => count( $selectedPath ) ? $selectedPath : $path );
 		}
 		$this->cleanCss();
 		return array(
 				'_complex' => 1,
-				'_data' => $selected,
+				'_data' => $this->data(),
 				'_attributes' => array(
-						'class' => $this->cssClass
+						'class' => $this->cssClass,
+						'selected' => $selected
 				),
-				'_options' => array( 'path' => count( $selectedPath ) ? $selectedPath : $path ),
+				'_options' => $_options,
 		);
 
 	}
