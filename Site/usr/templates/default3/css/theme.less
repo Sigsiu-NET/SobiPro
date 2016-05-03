@@ -236,10 +236,13 @@
 
 // special styles for component only (not modules)
 #SobiPro {
+	padding: 4px;
+	margin-top: 20px;
 	background-color: @back-color;
 }
+
+// these styles concerns also SobiPro modules
 .SobiPro {
-	padding: 4px;
 	font-size: @fontsize;
 	line-height: inherit;
 	& when (@inverse = inverse) {
@@ -1451,6 +1454,7 @@
 // ----------------------------------------
 .SobiPro .spEditImagePreview {
 	float: left;
+	min-height: 65px;
 }
 
 .SobiPro .spEditImagePreview img {
