@@ -27,7 +27,7 @@ Legend:
 
 
 -------------------
-1.2.4 Beta C ()
+1.2.4 Beta E ()
 -------------------
     (+) Category field: new category selector (populated select list)
     (+) Category field: sorting of categories in entry form adjustable

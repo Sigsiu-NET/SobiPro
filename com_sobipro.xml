@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade" overwrite="true">
 	<name>SobiPro</name>
-	<creationDate>29 April 2016</creationDate>
+	<creationDate>02 May 2016</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>https://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2016 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.2.4.D</version>
+	<version>1.2.4.E</version>
 	<codename>Nightingale</codename>
 	<description>SobiPro directory component for Joomla!</description>
-	<version_number>1.2.4.D</version_number>
+	<version_number>1.2.4.E</version_number>
 	<svn>$Revision$</svn>
 	<SobiPro>
 		<requirements>
