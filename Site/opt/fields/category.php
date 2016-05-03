@@ -794,9 +794,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 	private function getChildCategories( $categories, $cid, &$results )
 	{
-		foreach ( $categories as $id => $category ) {
-			if ( $cid == $id ) {
-				$results[ ] = $id;
+		foreach ( $categories as $category ) {
+			if ( $cid == $category[ 'sid' ] ) {
+				$results[ ] = $category[ 'sid' ];
 				$this->categoryChilds( $results, $category[ 'childs' ] );
 				break;
 			}
@@ -808,8 +808,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 	private function categoryChilds( &$results, $categories )
 	{
-		foreach ( $categories as $cid => $category ) {
-			$results[ ] = $cid;
+		foreach ( $categories as $category ) {
+			$results[ ] = $category[ 'sid' ];
 			if ( count( $category[ 'childs' ] ) ) {
 				$this->categoryChilds( $results, $category[ 'childs' ] );
 			}
