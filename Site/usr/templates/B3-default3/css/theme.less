@@ -256,11 +256,13 @@
 
 // special styles for component only (not modules)
 #SobiPro {
+	padding: 4px;
+	margin-top: 10px;
 	background-color: @back-color;
 }
 
+// these styles concerns also SobiPro modules
 .SobiPro {
-	padding: 4px;
 	font-size: @fontsize;
 
 	& when (@inverse = inverse) {
@@ -1735,6 +1737,7 @@ body.modal-open {
 // ----------------------------------------
 .SobiPro .spEditImagePreview {
 	float: left;
+	min-height: 65px;
 }
 
 .SobiPro .spEditImagePreview img {
@@ -1765,6 +1768,7 @@ body.modal-open {
 	.alert {
 		margin-top: 5px;
 	}
+	margin-bottom: 3px;
 }
 
 // Sigsiu Tree
