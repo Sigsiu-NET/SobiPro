@@ -73,6 +73,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	public function __construct( &$field )
 	{
 		parent::__construct( $field );
+		$this->orderCatsBy = $this->orderCatsBy ? $this->orderCatsBy : 'position.asc';
+		$this->searchOrderCatsBy = $this->searchOrderCatsBy ? $this->searchOrderCatsBy : 'position.asc';
 		if ( $this->method == 'fixed' ) {
 			$this->editable = true;
 			$this->editLimit = 5;
