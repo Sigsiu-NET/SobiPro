@@ -17,4 +17,16 @@ SobiPro.jQuery( function ()
 		catch ( e ) {
 		}
 	} );
+
+	//resize the map, necessary if the map is in a collapsable element
+	SobiPro.jQuery( '#address' ).on( 'shown.bs.collapse', function ( e )
+	{
+		try {
+			var handler = SPGeoMapsReg[ jQuery( 'div[id^=field_map_canvas_]' ).attr( 'id' ) ];
+			google.maps.event.trigger( handler.Map, 'resize' );
+			handler.Map.setCenter( handler.Position );
+		}
+		catch ( e ) {
+		}
+	} );
 } );

@@ -31,13 +31,6 @@
 							<xsl:value-of select="$fieldname/@css-view"/>
 						</xsl:attribute>
 					</xsl:if>
-					<xsl:if test="count($fieldname/data/*) or string-length($fieldname/data)">  <!-- field label -->
-						<xsl:if test="$fieldname/label/@show = 1">
-							<span class="spLabel">
-								<xsl:value-of select="$fieldname/label"/><xsl:text>: </xsl:text>
-							</span>
-						</xsl:if>
-					</xsl:if>
 
 					<xsl:choose>
 						<xsl:when test="count($fieldname/data/*)">  <!-- complex data -->
@@ -45,6 +38,11 @@
 								<xsl:attribute name="itemprop">
 									<xsl:value-of select="$fieldname/@itemprop"/>
 								</xsl:attribute>
+							</xsl:if>
+							<xsl:if test="$fieldname/label/@show = 1"> <!-- field label -->
+								<span class="spLabel">
+									<xsl:value-of select="$fieldname/label"/><xsl:text>: </xsl:text>
+								</span>
 							</xsl:if>
 							<xsl:copy-of select="$fieldname/data/*"/>
 						</xsl:when>
@@ -56,6 +54,11 @@
 											<xsl:attribute name="itemprop">
 												<xsl:value-of select="$fieldname/@itemprop"/>
 											</xsl:attribute>
+										</xsl:if>
+										<xsl:if test="$fieldname/label/@show = 1"> <!-- field label -->
+											<span class="spLabel">
+												<xsl:value-of select="$fieldname/label"/><xsl:text>: </xsl:text>
+											</span>
 										</xsl:if>
 										<xsl:choose>
 											<xsl:when
@@ -69,6 +72,11 @@
 										</xsl:choose>
 									</xsl:when>
 									<xsl:otherwise> <!-- no textarea -->
+										<xsl:if test="$fieldname/label/@show = 1"> <!-- field label -->
+											<span class="spLabel">
+												<xsl:value-of select="$fieldname/label"/><xsl:text>: </xsl:text>
+											</span>
+										</xsl:if>
 										<span>  <!-- add surroundig span -->
 											<xsl:if test="string-length($fieldname/@itemprop)"> <!-- attach itemprop to span -->
 												<xsl:attribute name="itemprop">
@@ -83,20 +91,18 @@
 						</xsl:otherwise>
 					</xsl:choose>
 
-					<xsl:if test="count($fieldname/data/*) or string-length($fieldname/data)">  <!-- suffix -->
-						<xsl:if test="string-length($fieldname/@suffix)">
-							<xsl:text> </xsl:text>
-							<xsl:choose>
-								<xsl:when test="$view = 'dv'">
-									<span class="spDetailSuffix">
-										<xsl:value-of select="$fieldname/@suffix"/>
-									</span>
-								</xsl:when>
-								<xsl:otherwise>
+					<xsl:if test="string-length($fieldname/@suffix)"> <!-- suffix -->
+						<xsl:text> </xsl:text>
+						<xsl:choose>
+							<xsl:when test="$view = 'dv'">
+								<span class="spDetailSuffix">
 									<xsl:value-of select="$fieldname/@suffix"/>
-								</xsl:otherwise>
-							</xsl:choose>
-						</xsl:if>
+								</span>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="$fieldname/@suffix"/>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:if>
 				</div>
 			</xsl:when>

@@ -27,7 +27,7 @@ Legend:
 
 
 -------------------
-1.2.4 Beta E ()
+1.2.4 Beta F ()
 -------------------
     (+) Category field: new category selector (populated select list)
     (+) Category field: sorting of categories in entry form adjustable
@@ -40,6 +40,7 @@ Legend:
 
 	(#) Warnings/notices in SobiPro panel, if no news available from our server
 	(#) Version of information field in fields manager missing
+	(#) Label and itemprop set result in template syntax error
 
 
 -------------------
