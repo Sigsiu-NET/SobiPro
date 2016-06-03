@@ -896,21 +896,27 @@ final class SPCache
 
 	public function & setJoomlaCaching( $enabled )
 	{
-		//if ( SOBI_CMS != 'joomla15' ) {
 		JFactory::getCache()->cache->setCaching( $enabled );
 		if ( !( $enabled ) && SOBI_CMS == 'joomla3' ) {
 			JEventDispatcher::getInstance()
 					->detach( 'PlgSystemCache' );
 		}
-		//}
 		return $this;
 	}
 
 	protected function cleanJCache()
 	{
-		//if ( SOBI_CMS != 'joomla15' ) {
-		JFactory::getCache()->cache->clean();
-		//}
+		static $go = true;
+		if ( $go ) {
+			$go = false;
+			$options = array(
+					'defaultgroup' => 'page',
+					'storage' => JFactory::getConfig()->get( 'cache_handler', '' ),
+					'caching' => true,
+					'cachebase' => JFactory::getConfig()->get( 'cache_path', JPATH_SITE . '/cache' )
+			);
+			JCache::getInstance( '', $options )->cache->clean( 'page' );
+		}
 	}
 
 	protected function cleanApc()

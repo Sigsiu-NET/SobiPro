@@ -38,9 +38,12 @@ Legend:
 	(+) Link Bar instead of Top Menu selectable from template settings
 	(+) Selected option id in select list and radio button added as attribute into XML output
 
+	(!) Cleaning Joomla! cache - removing only the "page" group
+
 	(#) Warnings/notices in SobiPro panel, if no news available from our server
 	(#) Version of information field in fields manager missing
 	(#) Label and itemprop set result in template syntax error
+	(#) Changes in SobiPro content doesn't clear Joomla cache (Issue #1639)
 
 
 -------------------
