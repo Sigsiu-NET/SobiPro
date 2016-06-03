@@ -44,6 +44,7 @@ Legend:
 	(#) Version of information field in fields manager missing
 	(#) Label and itemprop set result in template syntax error
 	(#) Changes in SobiPro content doesn't clear Joomla cache (Issue #1639)
+	(#) Compatibility with MySQL 5.7+ (Issue #1638)
 
 
 -------------------

@@ -125,12 +125,12 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
 	`dataType`          INT(11) DEFAULT NULL,
 	`enabled`           TINYINT(1) DEFAULT NULL,
 	`fee`               DOUBLE DEFAULT NULL,
-	`fieldType`         VARCHAR(50) DEFAULT NULL,
+	`fieldType`         VARCHAR(50) NOT NULL,
 	`filter`            VARCHAR(150) DEFAULT NULL,
 	`isFree`            TINYINT(1) DEFAULT NULL,
 	`position`          INT(11) DEFAULT NULL,
 	`priority`          INT(11)                                    NOT NULL,
-	`required`          TINYINT(1) DEFAULT NULL,
+	`required`          TINYINT(1) NOT NULL,
 	`section`           INT(11) DEFAULT NULL,
 	`multiLang`         TINYINT(4) DEFAULT NULL,
 	`uniqueData`        TINYINT(1) DEFAULT NULL,
@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (
 CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
 	`sKey`        VARCHAR(150) NOT NULL DEFAULT '',
 	`sValue`      TEXT,
-	`section`     INT(11) DEFAULT NULL,
+	`section`     INT(11) NOT NULL,
 	`language`    VARCHAR(50)  NOT NULL DEFAULT '',
 	`oType`       VARCHAR(150) NOT NULL,
 	`fid`         INT(11)      NOT NULL,
@@ -301,7 +301,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
 	`metaAuthor`  VARCHAR(150) NOT NULL,
 	`metaRobots`  VARCHAR(150) NOT NULL,
 	`options`     TEXT,
-	`oType`       VARCHAR(50) DEFAULT NULL,
+	`oType`       VARCHAR(50) NOT NULL,
 	`owner`       INT(11) DEFAULT NULL,
 	`ownerIP`     VARCHAR(15) DEFAULT NULL,
 	`params`      TEXT,
@@ -311,8 +311,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
 	`updatedTime` DATETIME DEFAULT NULL,
 	`updater`     INT(11) DEFAULT NULL,
 	`updaterIP`   VARCHAR(15) DEFAULT NULL,
-	`validSince`  DATETIME DEFAULT NULL,
-	`validUntil`  DATETIME DEFAULT NULL,
+	`validSince`  DATETIME NOT NULL,
+	`validUntil`  DATETIME NOT NULL,
 	`version`     INT(11)      NOT NULL DEFAULT '0',
 	PRIMARY KEY (`id`),
 	KEY `name` (`name`),
@@ -348,8 +348,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_payments` (
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions` (
 	`pid`       INT(11)     NOT NULL AUTO_INCREMENT,
-	`subject`   VARCHAR(150) DEFAULT NULL,
-	`action`    VARCHAR(50) DEFAULT NULL,
+	`subject`   VARCHAR(150) NOT NULL,
+	`action`    VARCHAR(50) NOT NULL,
 	`value`     VARCHAR(50) NOT NULL,
 	`site`      VARCHAR(50) NOT NULL,
 	`published` TINYINT(1)  NOT NULL,
@@ -446,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
 	`authorURL`   VARCHAR(250) DEFAULT NULL,
 	`authorMail`  VARCHAR(150) DEFAULT NULL,
 	`enabled`     TINYINT(1) DEFAULT NULL,
-	`type`        VARCHAR(250) DEFAULT NULL,
+	`type`        VARCHAR(250) NOT NULL,
 	`depend`      TEXT        NOT NULL,
 	UNIQUE KEY `pid` (`pid`, `type`)
 )
@@ -480,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_section` (
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_task` (
 	`pid`      VARCHAR(50) NOT NULL DEFAULT '',
-	`onAction` VARCHAR(150) DEFAULT NULL,
+	`onAction` VARCHAR(150) NOT NULL,
 	`type`     VARCHAR(50) NOT NULL,
 	UNIQUE KEY `pid` (`pid`, `onAction`, `type`)
 )
@@ -530,8 +530,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_relations` (
 	`pid`        INT(11)     NOT NULL DEFAULT '0',
 	`oType`      VARCHAR(50) NOT NULL,
 	`position`   INT(11) DEFAULT NULL,
-	`validSince` DATETIME DEFAULT NULL,
-	`validUntil` DATETIME DEFAULT NULL,
+	`validSince` DATETIME NOT NULL,
+	`validUntil` DATETIME NOT NULL,
 	`copy`       TINYINT(1)  NOT NULL,
 	PRIMARY KEY (`id`, `pid`),
 	KEY `oType` (`oType`)
@@ -560,8 +560,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_section` (
 CREATE TABLE IF NOT EXISTS `#__sobipro_users_relation` (
 	`uid`        INT(11) NOT NULL DEFAULT '0',
 	`gid`        INT(11) NOT NULL DEFAULT '0',
-	`validSince` DATETIME DEFAULT NULL,
-	`validUntil` DATETIME DEFAULT NULL,
+	`validSince` DATETIME NOT NULL,
+	`validUntil` DATETIME NOT NULL,
 	PRIMARY KEY (`uid`, `gid`, `validSince`)
 )
 	CHARSET = utf8;
