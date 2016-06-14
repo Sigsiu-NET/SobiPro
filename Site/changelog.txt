@@ -39,6 +39,7 @@ Legend:
 	(+) Selected option id in select list and radio button added as attribute into XML output
 
 	(!) Cleaning Joomla! cache - removing only the "page" group
+	(!) Field version info moved to 'General Field Settings'
 
 	(#) Warnings/notices in SobiPro panel, if no news available from our server
 	(#) Version of information field in fields manager missing

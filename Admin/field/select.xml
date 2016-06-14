@@ -70,6 +70,7 @@
 								</fieldset>
 
 								<fieldset label="FM.FIELD_TYPE">
+									<field type="output" value="field.version" label="VERSION" class="badge" />
 									<field type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FMN.FIELD_TYPE" class="span4" />
 								</fieldset>
 							</div>
@@ -115,7 +116,6 @@
 									<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
-									<field type="output" value="field.version" label="VERSION" class="badge" />
 									<field type="toggle" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
 									<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
 								</fieldset>

@@ -51,6 +51,7 @@
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 								<fieldset label="FM.FIELD_TYPE">
+									<field type="output" value="field.version" label="VERSION" class="badge" />
 									<field type="select" name="field.fieldType" selected="field.fieldType" size="2" multi="false" values="types" label="FMN.FIELD_TYPE" class="span2" />
 								</fieldset>
 							</div>
@@ -208,7 +209,6 @@
 									</div>
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
-									<field type="output" value="field.version" label="VERSION" class="badge" />
 									<field type="toggle" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
 									<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
 								</fieldset>
