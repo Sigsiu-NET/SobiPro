@@ -27,12 +27,12 @@ Legend:
 
 
 -------------------
-1.2.4 Beta F ()
+1.2.4 ()
 -------------------
     (+) Category field: new category selector (populated select list)
     (+) Category field: sorting of categories in entry form adjustable
     (+) Tooltip colours now correspond to base colour for B3-default3 template
-	(+) general distance classes for distances on top and bottom in B3-default3 template
+	(+) General distance classes for distances on top and bottom in B3-default3 template
 	(+) Template hook added on bottom of all views
 	(+) Google Fonts selectable from template settings
 	(+) Link Bar instead of Top Menu selectable from template settings
@@ -46,9 +46,10 @@ Legend:
 	(#) Changes in SobiPro content doesn't clear Joomla cache (Issue #1639)
 	(#) Compatibility with MySQL 5.7+ (Issue #1638)
 	(#) Section selectable in category selector if field is not free (Issue #1633)
-	(#) Fatal error in alpha listing when field isn't defined. (Issue #1628)
+	(#) Fatal error in alpha listing when field isn't defined (Issue #1628)
 	(#) Wrong order of fields in meta data (Issue #1611)
 	(#) Clearing image field data after save in backend (Issue #1641)
+	(#) Height of the SigsiuTree container for menu items corrected (Issue #1640)
 
 
 -------------------

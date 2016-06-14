@@ -154,6 +154,7 @@ class SPMenuAdm extends SPController
 	{
 		$section = SPRequest::int( 'section' );
 		$tree = $this->initialiseTree();
+		$tree->setId( 'menuItemEntry' );
 		$tree->init( $section );
 		$view->assign( $tree, 'tree' );
 		$this->addTemplates( $view, $menu, 'entry' );
@@ -238,6 +239,7 @@ class SPMenuAdm extends SPController
 	{
 		$section = SPRequest::int( 'section' );
 		$tree = $this->initialiseTree();
+		$tree->setId( 'menuItem' );
 		$tree->disable( $section );
 		$tree->init( $section );
 		$view->assign( $tree, 'tree' );

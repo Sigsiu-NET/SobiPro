@@ -195,7 +195,10 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params[ 'maxcats' ] = $this->catsMaxLimit;
 		$params[ 'field' ] = $this->nid;
 		$params[ 'preventParents' ] = !( $this->catsWithChilds );
-		$setheight = " style=\"max-height: {$this->height}px;\"";
+
+		if (strlen($this->height)) {
+			$setheight = " style=\"max-height: {$this->height}px;\"";
+		}
 		$addBtParams = array( 'class' => 'btn btn-sm btn-small btn-default' );
 		$delBtParams = array( 'class' => 'btn btn-sm btn-small btn-default' );
 		$selectParams = array();
