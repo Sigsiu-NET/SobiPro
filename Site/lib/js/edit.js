@@ -53,7 +53,7 @@ SobiPro.jQuery( document ).ready( function ()
         {
             element = SobiPro.jQuery( element );
             element.targetContainer = SobiPro.jQuery( '#' + element.attr( 'id' ).replace( '-payment', '-input-container' ) );
-            element.toggleTarget = element.targetContainer.find( '*' );
+            element.toggleTarget = element.targetContainer.find( '*' ).not('option');
             element.targetIframes = element.targetContainer.find( 'iframe' ).parent();
             element.disableTargets = function ()
             {

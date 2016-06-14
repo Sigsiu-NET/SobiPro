@@ -215,16 +215,16 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		if ( !( $this->_fieldType ) ) {
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $letter ) ), Sobi::Url( 'current' ) );
 			SPFactory::header()->addTitle( Sobi::Txt( 'AL.TITLE', array( 'letter' => $letter, 'section' => $this->_model->get( 'name' ) ) ), array( ceil( $eCount / $eLimit ), $site ) );
+			$listingName = null;
 		}
 		else {
 			$field = SPFactory::Model( 'field' );
 			$field->init( $this->_field );
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'AL.PATH_TITLE_FIELD', array( 'letter' => $letter, 'field' => $field->get( 'name' ) ) ), Sobi::Url( 'current' ) );
 			SPFactory::header()->addTitle( Sobi::Txt( 'AL.TITLE_FIELD', array( 'letter' => $letter, 'section' => $this->_model->get( 'name' ), 'field' => $field->get( 'name' ) ) ), array( ceil( $eCount / $eLimit ), $site ) );
+			$listingName = Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $this->_letter , 'field' => $field->get( 'name' ) ) );
 		}
 
-		/* get view class */
-		$listingName = Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $this->_letter , 'field' => $field->get( 'name' ) ) );
 		$visitor = SPFactory::user()->getCurrent();
 		$navigation = $pn->get();
 		$view = SPFactory::View( 'listing' )

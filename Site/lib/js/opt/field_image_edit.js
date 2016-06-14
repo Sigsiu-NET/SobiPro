@@ -18,6 +18,11 @@
 
 SobiPro.jQuery( document ).ready( function ()
 {
+	SobiPro.jQuery( '#SPAdminForm' ).on( 'AfterAjaxSubmit', function ( e, t, response )
+	{
+		SobiPro.jQuery( '*has(*[data-coordinates])' ).attr( 'data-coordinates', ' ' );
+	} );
+
 	SobiPro.jQuery( '.spImageUpload' ).bind( 'uploadComplete', function ( ev, response )
 	{
 		if ( response.responseJSON.data && response.responseJSON.data.icon && response.responseJSON.data.icon.length ) {
@@ -67,9 +72,9 @@ SobiPro.jQuery( document ).ready( function ()
 					var Store = SobiPro.jQuery( '[name="' + Id + '"]' );
 					var Current = Store.val();
 					if ( Current && SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ).length ) {
-						if ( Current.indexOf( 'coordinates://' ) != -1 ) {
+						if ( Current.indexOf( 'coordinates://' ) != - 1 ) {
 							var currentArray = Current.split( '::coordinates://' );
-							Store.val( currentArray[0] + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );
+							Store.val( currentArray[ 0 ] + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );
 						}
 						else {
 							Store.val( Current + SobiPro.jQuery( '#' + Id + '_modal' ).data( 'coordinates' ) );

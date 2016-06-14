@@ -45,6 +45,10 @@ Legend:
 	(#) Label and itemprop set result in template syntax error
 	(#) Changes in SobiPro content doesn't clear Joomla cache (Issue #1639)
 	(#) Compatibility with MySQL 5.7+ (Issue #1638)
+	(#) Section selectable in category selector if field is not free (Issue #1633)
+	(#) Fatal error in alpha listing when field isn't defined. (Issue #1628)
+	(#) Wrong order of fields in meta data (Issue #1611)
+	(#) Clearing image field data after save in backend (Issue #1641)
 
 
 -------------------

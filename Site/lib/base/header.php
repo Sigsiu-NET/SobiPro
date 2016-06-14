@@ -108,13 +108,13 @@ final class SPHeader
 			$this->addCssFile( array( 'sobipro' ) )
 					->addJsFile( array( 'sobipro', 'jquery', 'jqnc' ) );
 			if ( Sobi::Cfg( 'template.bootstrap3-load', false ) && !defined( 'SOBIPRO_ADM' ) ) {
-				if ( Sobi::Cfg( 'template.bootstrap3-source', true )) { //true=local, false=CDN
-					$this->addCssFile('b3bootstrap.b3bootstrap')
-						->addJsFile('b3bootstrap');
+				if ( Sobi::Cfg( 'template.bootstrap3-source', true ) ) { //true=local, false=CDN
+					$this->addCssFile( 'b3bootstrap.b3bootstrap' )
+							->addJsFile( 'b3bootstrap' );
 				}
 				else {
-					$this->addHeadLink(Sobi::Cfg('template.bs3_css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'), null, null, 'stylesheet')
-						->addJsUrl(Sobi::Cfg('template.bs3_js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'));
+					$this->addHeadLink( Sobi::Cfg( 'template.bs3_css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' ), null, null, 'stylesheet' )
+							->addJsUrl( Sobi::Cfg( 'template.bs3_js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js' ) );
 				}
 			}
 			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
@@ -123,7 +123,7 @@ final class SPHeader
 					if ( $font == 'font-awesome-3-local' ) {
 						$this->addCssFile( 'icons' );
 					}
-					elseif( Sobi::Cfg( 'icon-fonts.' . $font ) ) {
+					elseif ( Sobi::Cfg( 'icon-fonts.' . $font ) ) {
 						$this->addHeadLink( Sobi::Cfg( 'icon-fonts.' . $font ), null, null, 'stylesheet' );
 					}
 				}
@@ -562,8 +562,8 @@ final class SPHeader
 			if ( !( is_array( $title ) ) ) {
 				$title = array( $title );
 			}
-			if ($site[1] > 1) { // no page counter when on page 1
-				$title[] = Sobi::Txt('SITES_COUNTER', $site[1], $site[0]);
+			if ( $site[ 1 ] > 1 ) { // no page counter when on page 1
+				$title[ ] = Sobi::Txt( 'SITES_COUNTER', $site[ 1 ], $site[ 0 ] );
 			}
 		}
 		if ( is_array( $title ) ) {
@@ -650,6 +650,7 @@ final class SPHeader
 		if ( $obj->get( 'oType' ) == 'entry' ) {
 			$fields = $obj->getFields();
 			if ( count( $fields ) ) {
+				$fields = array_reverse( $fields );
 				foreach ( $fields as $field ) {
 					$separator = $field->get( 'metaSeparator' );
 					$desc = $field->metaDesc();
