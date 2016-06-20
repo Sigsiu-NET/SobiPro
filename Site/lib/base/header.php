@@ -117,6 +117,9 @@ final class SPHeader
 							->addJsUrl( Sobi::Cfg( 'template.bs3_js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js' ) );
 				}
 			}
+			else {
+				$this->addJsFile( 'bootstrap.bootstrap' );
+			}
 			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
 			if ( count( $fonts ) ) {
 				foreach ( $fonts as $font ) {
