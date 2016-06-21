@@ -207,9 +207,10 @@ class SPImage extends SPFile
 				break;
 			case IMAGETYPE_JPEG:
 			case IMAGETYPE_JPEG2000:
-				imagejpeg( $this->image, $this->temp, Sobi::Cfg( 'image.jpeg_quality', 75 ) );
+				imagejpeg( $this->image, $this->temp, Sobi::Cfg( 'image.jpeg_quality', 100 ) );
 				break;
 			case IMAGETYPE_PNG:
+				imagealphablending( $this->image, true );
 				imagepng( $this->image, $this->temp, Sobi::Cfg( 'image.png_compression', 9 ) );
 				break;
 		}

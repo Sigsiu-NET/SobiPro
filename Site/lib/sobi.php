@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -92,12 +90,12 @@ abstract class Sobi
 				$sMsg .= ' [ ' . SPRequest::task() . ' ]';
 			}
 			$error = array(
-				'section' => $section,
-				'message' => $msg,
-				'code' => $code,
-				'file' => $file,
-				'line' => $line,
-				'content' => $sMsg
+					'section' => $section,
+					'message' => $msg,
+					'code' => $code,
+					'file' => $file,
+					'line' => $line,
+					'content' => $sMsg
 			);
 			trigger_error( 'json://' . json_encode( $error ), $type );
 		}
@@ -422,6 +420,9 @@ abstract class Sobi
 
 	public static function DefLang()
 	{
+		if ( self::Cfg( 'lang.ignore_default', false ) ) {
+			return self::Lang( false );
+		}
 		return strlen( self::Cfg( 'lang.default_lang', null ) ) ? self::Cfg( 'lang.default_lang' ) : SOBI_DEFLANG;
 	}
 
@@ -524,7 +525,7 @@ abstract class Sobi
 			}
 			/* set current section in the registry */
 			SPFactory::registry()->set( 'current_section', $section->id );
-			$_config = & SPFactory::config();
+			$_config = &SPFactory::config();
 			/* load basic configuration settings */
 			$_config->addIniFile( 'etc.config', true );
 			$_config->addTable( 'spdb_config', $sid );

@@ -154,12 +154,13 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$show = $files[ 'thumb' ];
 			}
 		}
-		$noncropsize = "";
-		$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '80:80' ) );
+		/** Mon, Jun 20, 2016 13:45:41 - we do not need the style for it */
+//		$noncropsize = "";
+//		$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '80:80' ) );
 		if ( $show ) {
 			$img = Sobi::Cfg( 'live_site' ) . $show;
 			if ( !$this->crop ) {
-				$noncropsize = "style=\"width: {$icoSize[0]}px; height: {$icoSize[1]}px;\"";
+//				$noncropsize = "style=\"width: {$icoSize[0]}px; height: {$icoSize[1]}px;\"";
 			}
 		}
 		$field .= "\n<div class=\"spImageField\">";
@@ -167,7 +168,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$field .= "\n<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
 		$field .= "\n<div class=\"spEditImagePreview\" >";
 		if ( $show ) {
-			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\" {$noncropsize} />";
+//			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\" {$noncropsize} />";
+			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\" />";
 		}
 		$field .= "\n</div>";
 		$field .= "\n</div>";

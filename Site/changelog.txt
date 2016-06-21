@@ -37,6 +37,8 @@ Legend:
 	(+) Google Fonts selectable from template settings
 	(+) Link Bar instead of Top Menu selectable from template settings
 	(+) Selected option id in select list and radio button added as attribute into XML output
+	(+) Possibility to ignore storing in default language
+
 
 	(!) Cleaning Joomla! cache - removing only the "page" group
 	(!) Field version info moved to 'General Field Settings'
