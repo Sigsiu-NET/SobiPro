@@ -545,7 +545,7 @@ final class SPCache
 	 * @param $id
 	 * @param int $sid
 	 * @param bool $force
-	 * @return bool
+	 * @return mixed
 	 */
 	public function getObj( $type, $id, $sid = 0, $force = false )
 	{

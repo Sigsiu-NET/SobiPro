@@ -39,7 +39,6 @@ Legend:
 	(+) Selected option id in select list and radio button added as attribute into XML output
 	(+) Possibility to ignore storing in default language
 
-
 	(!) Cleaning Joomla! cache - removing only the "page" group
 	(!) Field version info moved to 'General Field Settings'
 
@@ -53,6 +52,7 @@ Legend:
 	(#) Wrong order of fields in meta data (Issue #1611)
 	(#) Clearing image field data after save in backend (Issue #1641)
 	(#) Height of the SigsiuTree container for menu items corrected (Issue #1640)
+	(#) Wrong order in aliases in multilingual mode (Issue #1627)
 
 
 -------------------
