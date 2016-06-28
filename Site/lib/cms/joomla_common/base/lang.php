@@ -708,7 +708,7 @@ class SPJoomlaLang
 							->loadAssocList( 'id' );
 				}
 				foreach ( $labels as $label ) {
-					if ( $label[ 'label' ] == 'nid' && !( isset( $result[ $label[ 'id' ] ][ 'alias' ] ) ) ) {
+					if ( $label[ 'label' ] == 'nid' && ( !( isset( $result[ $label[ 'id' ] ][ 'alias' ] ) ) || $label[ 'language' == $lang ] ) ) {
 						$result[ $label[ 'id' ] ][ 'alias' ] = $label[ 'value' ];
 					}
 					else {

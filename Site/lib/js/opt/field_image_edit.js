@@ -20,7 +20,13 @@ SobiPro.jQuery( document ).ready( function ()
 {
 	SobiPro.jQuery( '#SPAdminForm' ).on( 'AfterAjaxSubmit', function ( e, t, response )
 	{
-		SobiPro.jQuery( '*has(*[data-coordinates])' ).attr( 'data-coordinates', ' ' );
+		SobiPro.jQuery( '*[data-coordinates]' ).attr( 'data-coordinates', ' ' );
+		SobiPro.jQuery( '.spImageUpload' ).find( ':hidden' ).val( '' );
+		SobiPro.jQuery( '.spImageCrop' )
+			.css( 'cursor', 'default' )
+			.unbind( 'click' )
+			.prop( 'onclick', null )
+			.off( 'click' );
 	} );
 
 	SobiPro.jQuery( '.spImageUpload' ).bind( 'uploadComplete', function ( ev, response )
