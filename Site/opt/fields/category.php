@@ -649,6 +649,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	 * */
 	public function finaliseSave( $entry, $request = 'post' )
 	{
+		if ( !( $this->enabled ) ) {
+			return false;
+		}
 		$cats = SPFactory::registry()->get( 'request_categories', array() );
 		$cats = array_unique( array_merge( $cats, $this->cleanData() ) );
 		SPFactory::registry()->set( 'request_categories', $cats );

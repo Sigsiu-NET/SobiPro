@@ -55,6 +55,7 @@ Legend:
 	(#) Clearing image field data after save in backend (Issue #1641)
 	(#) Height of the SigsiuTree container for menu items corrected (Issue #1640)
 	(#) Wrong order in aliases in multilingual mode (Issue #1627)
+	(#) "finaliseSave" method on category field called even if disabled (Issue #1645)
 
 
 -------------------
