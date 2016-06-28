@@ -143,20 +143,14 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 	protected function determineFid( $nid )
 	{
 		if ( is_numeric( $nid ) ) {
-			$field = SPFactory::db()->select(
-					array( 'fid', 'fieldType', 'nid' ),
-					'spdb_field',
-					array( 'section' => Sobi::Section(), /*'enabled' => 1, */
-							'fid' => $nid )
-			)->loadObject();
+			$field = SPFactory::db()
+					->select( array( 'fid', 'fieldType', 'nid' ), 'spdb_field', array( 'section' => Sobi::Section(), 'fid' => $nid ) )
+					->loadObject();
 		}
 		else {
-			$field = SPFactory::db()->select(
-					array( 'fid', 'fieldType', 'nid' ),
-					'spdb_field',
-					array( 'section' => Sobi::Section(), /*'enabled' => 1, */
-							'nid' => $nid )
-			)->loadObject();
+			$field = SPFactory::db()
+					->select( array( 'fid', 'fieldType', 'nid' ), 'spdb_field', array( 'section' => Sobi::Section(), 'nid' => $nid ) )
+					->loadObject();
 		}
 		$this->_field = $field->fid;
 		$this->_nid = $field->nid;
@@ -222,7 +216,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			$field->init( $this->_field );
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'AL.PATH_TITLE_FIELD', array( 'letter' => $letter, 'field' => $field->get( 'name' ) ) ), Sobi::Url( 'current' ) );
 			SPFactory::header()->addTitle( Sobi::Txt( 'AL.TITLE_FIELD', array( 'letter' => $letter, 'section' => $this->_model->get( 'name' ), 'field' => $field->get( 'name' ) ) ), array( ceil( $eCount / $eLimit ), $site ) );
-			$listingName = Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $this->_letter , 'field' => $field->get( 'name' ) ) );
+			$listingName = Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $this->_letter, 'field' => $field->get( 'name' ) ) );
 		}
 
 		$visitor = SPFactory::user()->getCurrent();

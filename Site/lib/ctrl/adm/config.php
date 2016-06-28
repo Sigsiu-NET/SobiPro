@@ -452,7 +452,7 @@ class SPConfigAdmCtrl extends SPController
 		if ( !( $root ) ) {
 			$root = new SPFile( SOBI_PATH );
 		}
-		$exceptions = array( 'config.xml', 'config.json' );
+		$exceptions = array( 'config.xml', 'config.json', 'tmp' );
 		foreach ( $dir as $file ) {
 			$task = null;
 			$fileName = $file->getFilename();
