@@ -76,7 +76,7 @@
 						</xsl:if>
 						<xsl:if test="string-length( $fieldname/description ) and //config/help-position/@value = 'above'">
 							<div class="help-block">
-								<xsl:value-of select="$fieldname/description" />
+								<xsl:copy-of select="$fieldname/description" />
 							</div>
 						</xsl:if>
 						<div>
@@ -99,7 +99,7 @@
 						<div id="{$fieldId}-message" class="hide message-lightbulb"></div>
 						<xsl:if test="string-length( $fieldname/description ) and //config/help-position/@value = 'below'">
 							<div class="help-block">
-								<xsl:value-of select="$fieldname/description" />
+								<xsl:copy-of select="$fieldname/description" />
 							</div>
 						</xsl:if>
 					</div>

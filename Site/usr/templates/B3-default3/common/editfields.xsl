@@ -79,7 +79,7 @@
 				<div class="col-sm-{$colwidth}{$offset}" id="{$fieldId}-input-container">
 					<xsl:if test="string-length( $fieldname/description ) and //config/help-position/@value = 'above'">
 						<div class="help-block">
-							<xsl:value-of select="$fieldname/description" />
+							<xsl:copy-of select="$fieldname/description" />
 						</div>
 					</xsl:if>
 					<div>
@@ -114,7 +114,7 @@
 
 					<xsl:if test="string-length( $fieldname/description ) and //config/help-position/@value = 'below'">
 						<div class="help-block">
-							<xsl:value-of select="$fieldname/description" />
+							<xsl:copy-of select="$fieldname/description" />
 						</div>
 					</xsl:if>
 				</div>
