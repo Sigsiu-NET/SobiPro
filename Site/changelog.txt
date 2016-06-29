@@ -56,6 +56,7 @@ Legend:
 	(#) Height of the SigsiuTree container for menu items corrected (Issue #1640)
 	(#) Wrong order in aliases in multilingual mode (Issue #1627)
 	(#) "finaliseSave" method on category field called even if disabled (Issue #1645)
+	(#) Removing empty segment from router (Issue #1373)
 
 
 -------------------
