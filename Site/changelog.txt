@@ -27,7 +27,7 @@ Legend:
 
 
 -------------------
-1.2.4 ()
+1.2.4 (28 June 2016)
 -------------------
     (+) Category field: new category selector (populated select list)
     (+) Category field: sorting of categories in entry form adjustable
