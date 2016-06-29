@@ -96,7 +96,7 @@
 				<xsl:call-template name="reviews"/>
 			</xsl:if>
 
-			<!-- Uncomment only if >Profile Field is installed -->
+			<!-- Uncomment only if Profile Field is installed -->
 			<!--<xsl:call-template name="UserContributions" />-->
 
 			<xsl:call-template name="bottomHook"/>
