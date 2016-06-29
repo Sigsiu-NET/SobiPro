@@ -118,7 +118,7 @@ final class SPHeader
 				}
 			}
 			else {
-				$this->addJsFile( 'bootstrap.bootstrap' );
+				$this->addCssFile( 'bootstrap.bootstrap' );
 			}
 			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
 			if ( count( $fonts ) ) {
