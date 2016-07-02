@@ -27,6 +27,12 @@ Legend:
 
 
 -------------------
+1.2.5 ()
+-------------------
+	(#) textarea width in entry form set to 100% if WYSIWYG is used
+
+
+-------------------
 1.2.4 (30 June 2016)
 -------------------
     (+) Category field: new category selector (populated select list)

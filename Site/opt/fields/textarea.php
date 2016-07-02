@@ -97,7 +97,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		$value = $this->getRaw();
 		$value = strlen( $value )? $value : $this->defaultValue;
 
-		$field = SPHtml_Input::textarea( $this->nid, $value, $this->editor, $this->width, $this->height, $params );
+		// textarea width set to 100% if WYSIWYG is used
+		$field = SPHtml_Input::textarea( $this->nid, $value, $this->editor, '100%', $this->height, $params );
 		if ( !$return ) {
 			echo $field;
 		}
