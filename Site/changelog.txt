@@ -30,6 +30,7 @@ Legend:
 1.2.5 ()
 -------------------
 	(#) textarea width in entry form set to 100% if WYSIWYG is used
+	(#) textarea checked for empty height and set default value
 
 
 -------------------
