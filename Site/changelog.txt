@@ -31,10 +31,12 @@ Legend:
 -------------------
 	(+) Image field: original image name without extension used for alt and title tag
 
+	(!) publishing_format set to a more readable format by default
+	(!) B3 template folder renamed to 'b3-default3' as path names have to be lowercase
+
 	(#) textarea width in entry form set to 100% if WYSIWYG is used
 	(#) textarea in entry form checked for empty height and set default value
 
-	(!) publishing_format set to a more readable format by default
 
 
 -------------------
