@@ -696,15 +696,25 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					$img = $this->inDetails;
 					break;
 			}
+			$prefix = 'img_';
 			if ( isset( $files[ $img ] ) ) {
 				$show = $files[ $img ];
+				$prefix = 'img_';
 			}
 			elseif ( isset( $files[ 'thumb' ] ) ) {
 				$show = $files[ 'thumb' ];
+				$prefix = 'thumb_';
 			}
 			elseif ( isset( $files[ 'ico' ] ) ) {
 				$show = $files[ 'ico' ];
+				$prefix = 'ico_';
 			}
+
+			//nur den originalen filenamen ohne extension als alt und title tag
+			$info = pathinfo($show);
+			$fname =  basename($show,'.'.$info['extension']);
+			$fname = str_replace($prefix,"",$fname);
+
 			if ( isset( $show ) ) {
 				switch ( $img ) {
 					case 'thumb':
@@ -720,7 +730,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 						'_attributes' => array(
 								'class' => $this->cssClass,
 								'src' => Sobi::FixPath( Sobi::Cfg( 'live_site' ) . $show ),
-								'alt' => ''
+								'alt' => $fname,
+								'title' => $fname
 						)
 				);
 				if ( $float ) {
