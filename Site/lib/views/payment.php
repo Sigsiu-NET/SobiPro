@@ -7,7 +7,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
 
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -49,10 +49,12 @@ class SPPaymentView extends SPFrontView implements SPView
 	{
 		$this->_type = 'payment_details';
 		$id = $this->get( 'entry' )->get( 'id' );
+
 		$data = $this->get( 'pdata' );
 		if ( !( $data ) ) {
 			$data = SPFactory::payment()->summary( $id );
 		}
+
 		$positions = array();
 		$xml = array();
 		$this->menu( $xml );
@@ -78,6 +80,20 @@ class SPPaymentView extends SPFrontView implements SPView
 			'_complex' => 1,
 			'_attributes' => $data[ 'summary' ]
 		);
+
+		if ( ( $id ) ) {
+			$entry = $this->get('entry');
+			$xml['entry'] = array(
+				'_complex' => 1,
+				'_data' => $entry->get( 'name' ),
+				'_attributes' => array( 'lang' => Sobi::Lang( false ),
+					 'url' => Sobi::Url( array( 'pid' => $entry->get( 'parent' ), 'sid' => $entry->get( 'id' ), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ) ), true, true, true ),
+					 'sid' => $entry->get( 'id' ),
+					 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' )
+				)
+			);
+
+		}
 		Sobi::Trigger( 'PaymentView', ucfirst( __FUNCTION__ ), array( &$xml ) );
 		return $xml;
 	}

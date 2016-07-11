@@ -33,10 +33,11 @@ Legend:
 
 	(!) publishing_format set to a more readable format by default
 	(!) B3 template folder renamed to 'b3-default3' as path names have to be lowercase
+	(!) Payment page shows name of the entry
 
 	(#) textarea width in entry form set to 100% if WYSIWYG is used
 	(#) textarea in entry form checked for empty height and set default value
-
+	(#) Entry history screen malformed if no user given (entry renewal requests)
 
 
 -------------------
