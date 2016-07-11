@@ -147,6 +147,7 @@
 												<param name="id" value="uid" parse="true" />
 											</url>
 										</cell>
+										<cell type="text" value="" invert-condition="uid" />
 										<cell class="SpCellCenter">
 											<cell condition="status">
 												<tooltip>
