@@ -264,6 +264,7 @@
 // these styles concerns also SobiPro modules
 .SobiPro {
 	font-size: @fontsize;
+	-moz-osx-font-smoothing: grayscale;
 
 	& when (@inverse = inverse) {
 		font-size: 110%;
@@ -2386,6 +2387,11 @@ body.modal-open {
 @media (max-width: @screen-sm-min) {
 	.SobiPro .topmenu .nav > li a {
 		line-height: 20px;
+	}
+
+	.SobiPro .navbar .nav,
+	.SobiPro .navbar .nav > li {
+		float: none;
 	}
 
 	.SobiPro .navbar .nav > li > a {
