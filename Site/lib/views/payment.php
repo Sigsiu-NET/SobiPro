@@ -81,6 +81,12 @@ class SPPaymentView extends SPFrontView implements SPView
 			'_attributes' => $data[ 'summary' ]
 		);
 
+		$xml[ 'section' ] = array(
+			'_complex' => 1,
+			'_data' => Sobi::Section( true ),
+			'_attributes' => array( 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) )
+		);
+
 		if ( ( $id ) ) {
 			$entry = $this->get('entry');
 			$xml['entry'] = array(
