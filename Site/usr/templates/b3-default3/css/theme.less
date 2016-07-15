@@ -231,9 +231,9 @@
 	color: @base-color;
 }
 
-//otherwise buttons are a bit too hight to align with input boxes
+//otherwise buttons are a bit too high to align with input boxes
 .SobiPro .btn i {
-	font-size: 0.97em;
+	//font-size: 0.97em; //removes the possibility to resize the icon in a button
 }
 
 // Removal of template interferences
@@ -277,35 +277,50 @@
 	& when (@inverse = inverse) {
 		color: @font-color;
 	}
+	//set the button's text color back to white (good guess)
+	a.btn:hover,
+	a.btn:focus,
+	a.btn.focus,
+	a.btn:active,
+	a.btn.active,
+	.open > .dropdown-toggle.btn,
+	a.btn-info,
+	a.btn-warning,
+	a.btn-danger,
+	a.btn-danger,
+	a.btn-success {
+		color: white;
+	}
+
 	//without that the topmenu items are not selectable
 	.collapse {
 		position: inherit;
 	}
 	.btn,
 	.btn-submit {
-		font-weight: 500;
+//		font-weight: 500;
 		text-shadow: none;
-		font-size: @fontsize;
+//		font-size: @fontsize;
 		padding: 6px 12px;
 	}
 	.btn-sm,
 	.btn-group-sm > .btn {
 		padding: 5px 10px;
-		font-size: calc(@fontsize - 2px);
+//		font-size: calc(@fontsize - 2px);
 	}
 	.btn-xs,
 	.btn-group-xs > .btn {
 		padding: 1px 5px;
-		font-size: calc(@fontsize - 2px);
+//		font-size: calc(@fontsize - 2px);
 	}
 	.dropdown-menu,
 	.form-control {
-		font-size: @fontsize;
+//		font-size: @fontsize;
 	}
 	.input-sm,
 	.form-horizontal .form-group-sm .form-control {
 		padding: 5px 10px;
-		font-size: calc(@fontsize - 2px);
+//		font-size: calc(@fontsize - 2px);
 		line-height: 1.5;
 	}
 	.lead {
