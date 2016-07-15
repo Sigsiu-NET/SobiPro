@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -391,6 +389,7 @@ class SPSectionView extends SPFrontView implements SPView
 					'author' => $current->get( 'metaAuthor' ),
 					'robots' => $current->get( 'metaRobots' ),
 			);
+			$this->categoryFields( $data );
 			$data[ 'entries_in_line' ] = $this->get( '$eInLine' );
 			$data[ 'categories_in_line' ] = $this->get( '$cInLine' );
 			$data[ 'number_of_subcats' ] = Sobi::Cfg( 'list.num_subcats' );
@@ -444,10 +443,56 @@ class SPSectionView extends SPFrontView implements SPView
 		return strcasecmp( $from[ '_data' ][ 'name' ][ '_data' ], $to[ '_data' ][ 'name' ][ '_data' ] );
 	}
 
+	protected function categoryFields( &$data )
+	{
+		$fields = $this->get( 'fields' );
+		if ( count( $fields ) ) {
+			foreach ( $fields as $field ) {
+				$struct = $field->struct();
+				$options = null;
+				if ( isset( $struct[ '_options' ] ) ) {
+					$options = $struct[ '_options' ];
+					unset( $struct[ '_options' ] );
+				}
+				$data[ 'fields' ][ $field->get( 'nid' ) ] = array(
+						'_complex' => 1,
+						'_data' => array(
+								'label' => array(
+										'_complex' => 1,
+										'_data' => $field->get( 'name' ),
+										'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
+								),
+								'data' => $struct,
+						),
+						'_attributes' => array( 'id' => $field->get( 'id' ),
+								'itemprop' => $field->get( 'itemprop' ),
+								'type' => $field->get( 'type' ),
+								'suffix' => $field->get( 'suffix' ),
+								'position' => $field->get( 'position' ),
+								'css_view' => $field->get( 'cssClassView' ),
+								'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
+						)
+				);
+				if ( Sobi::Cfg( 'category.field_description', false ) ) {
+					$data[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
+				}
+				if ( $options ) {
+					$data[ $field->get( 'nid' ) ][ '_data' ][ 'options' ] = $options;
+				}
+				if ( isset( $struct[ '_xml_out' ] ) && count( $struct[ '_xml_out' ] ) ) {
+					foreach ( $struct[ '_xml_out' ] as $k => $v )
+						$data[ $field->get( 'nid' ) ][ '_data' ][ $k ] = $v;
+				}
+
+			}
+		}
+	}
+
 	/**
 	 *
 	 */
-	public function display( $type = 'section', $out = null )
+	public
+	function display( $type = 'section', $out = null )
 	{
 		$this->_type = $type;
 		switch ( $this->get( 'task' ) ) {

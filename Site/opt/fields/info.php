@@ -33,10 +33,14 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	protected $cssClassEdit = 'spClassEditInfo';
 	/** * @var string */
 	protected $cssClassView = 'spClassViewInfo';
+	/** @var string  */
 	protected $viewInfo = '';
+	/** @var string  */
 	protected $entryInfo = '';
 	/** * @var int */
 	protected $bsWidth = 10;
+	/** @var bool  */
+	static $CAT_FIELD = true;
 
 
 

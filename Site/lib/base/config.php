@@ -215,7 +215,7 @@ class SPConfig
 
 	public static function fields( $sid = 0, $types = null )
 	{
-		$params = array( 'section' => $sid );
+		$params = array( 'section' => $sid, 'adminField>' => -1 );
 		if ( $types ) {
 			$params[ 'fieldType' ] = $types;
 		}

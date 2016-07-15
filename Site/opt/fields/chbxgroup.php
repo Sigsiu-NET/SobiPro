@@ -32,16 +32,15 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	protected $cssClassEdit = 'spClassEditCheckbox';
 	/** * @var string */
 	protected $cssClassSearch = 'spClassSearchCheckbox';
-	/**
-	 * @var bool
-	 */
+	/** @var bool */
 	protected $multi = true;
-	/**
-	 * @var string
-	 */
+	/** * @var string */
 	protected $dType = 'predefined_multi_data_multi_choice';
 	/** * @var string */
 	protected $metaSeparator = ' ';
+	/** @var bool  */
+	static $CAT_FIELD = true;
+
 
 	/**
 	 * Shows the field in the edit entry or add entry form

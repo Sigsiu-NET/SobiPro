@@ -54,6 +54,8 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	protected $metaSeparator = ' ';
 	/** @var bool */
 	protected $labelAsPlaceholder = false;
+	/** @var bool  */
+	static $CAT_FIELD = true;
 
 
 	/**

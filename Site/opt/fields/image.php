@@ -99,6 +99,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 	/** * @var int */
 	protected $bsWidth = 10;
+	/** @var bool  */
+	static $CAT_FIELD = true;
 
 	/**
 	 * Returns the parameter list

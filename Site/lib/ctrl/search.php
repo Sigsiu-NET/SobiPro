@@ -646,7 +646,7 @@ class SPSearchCtrl extends SPSectionCtrl
 		$fmod = SPLoader::loadModel( 'field' );
 		/* get fields */
 		try {
-			$this->_db->select( '*', 'spdb_field', array( 'section' => Sobi::Section(), 'inSearch' => 1, 'enabled' => 1 ), 'position' );
+			$this->_db->select( '*', 'spdb_field', array( 'section' => Sobi::Section(), 'inSearch' => 1, 'enabled' => 1, 'adminField>' => -1 ), 'position' );
 			$fields = $this->_db->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELDS_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );

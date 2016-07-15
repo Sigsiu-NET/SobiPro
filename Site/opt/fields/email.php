@@ -39,6 +39,8 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	protected $cssClassView = 'spClassViewEmail';
 	/** * @var string */
 	protected $cssClassEdit = 'spClassEditEmail';
+	/** @var bool  */
+	static $CAT_FIELD = true;
 
 
 	/**

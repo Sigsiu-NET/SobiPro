@@ -632,7 +632,7 @@ class SPConfigAdmCtrl extends SPController
 
 		try {
 			$fids = SPFactory::db()
-					->select( 'fid', 'spdb_field', array( 'fieldType' => $types, 'section' => Sobi::Reg( 'current_section' ) ) )
+					->select( 'fid', 'spdb_field', array( 'fieldType' => $types, 'section' => Sobi::Reg( 'current_section' ), 'adminField>' => -1 ) )
 					->loadResultArray();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_FOR_NAMES', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );

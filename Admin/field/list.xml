@@ -17,21 +17,18 @@
 <definition>
 	<header>
 		<title value="FM.SITE_TITLE" />
+		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="FM.SITE_TITLE" icon="SobiFields">
-		<buttons type="new" buttons="fieldTypes" />
+		<buttons type="new_entry_field" buttons="fieldTypes" />
+		<divider />
+		<buttons type="new_category_field" buttons="categoryFieldTypes" />
 		<divider />
 		<buttons type="actions">
 			<button type="delete" task="field.delete" confirm="TB.JS_DELETE_FIELD_WARN" />
 			<nav-header label="TB.ENABLED" />
 			<button type="enable" task="field.publish" />
 			<button type="disable" task="field.hide" />
-			<!--<nav-header label="TB.REQUIRED"/>-->
-			<!--<button type="custom" task="field.setRequired" label="TB.SET_REQ" icon="asterisk"/>-->
-			<!--<button type="custom" task="field.setNotRequired" label="TB.SET_NOT_REQ" icon="remove-sign"/>-->
-			<!--<nav-header label="TB.EDITABLE_FIELD"/>-->
-			<!--<button type="custom" task="field.setEditable" label="TB.SET_EDITABLE" icon="pencil"/>-->
-			<!--<button type="custom" task="field.setNotEditable" label="TB.SET_NOT_EDITABLE" icon="remove-sign"/>-->
 		</buttons>
 		<divider />
 		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
@@ -80,90 +77,157 @@
 						<field type="button" name="save-ordering" icon="save" class="btn ctrl-default-ordering" data-target="fields" />
 					</div>
 				</header>
-				<table>
-					<head>
-						<cell label="HEADER_ID" type="text" class="SpCellCenter" />
-						<cell type="checkbox" rel="p_fid" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_NAME" type="text" />
-						<cell label="HEADER_FIELD_STATE" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_TYPE" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_SHOW_IN" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_IS_FREE" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="field" condition="ordering.contains(order)" />
-					</head>
-					<loop subject="fields">
-						<cell type="text" value="id" class="SpCellCenter" />
-						<cell type="checkbox" name="p_fid" value="id" class="SpCellCenter" />
-						<cell invert-condition="_off">
-							<cell type="link" value="name">
-								<url type="intern">
-									<param name="task" value="field.edit" />
-									<param name="fid" value="fid" parse="true" />
-									<param name="sid" value="request.sid" parse="true" subject="skip" />
-								</url>
-							</cell>
-							<cell type="text" value="nid" class="subText" />
-						</cell>
-						<cell condition="_off">
-							<cell type="text" value="name" class="invalid" />
-							<cell type="text" value="nid" class="subText invalid" />
-						</cell>
-						<cell type="ticker" value="enabled" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}">
-							<url type="intern">
-								<param name="task" value="field.toggle.enabled" />
-								<param name="fid" value="fid" parse="true" />
-								<param name="sid" value="request.sid" parse="true" subject="skip" />
-							</url>
-						</cell>
-						<cell type="text" value="fieldType" class="SpCellCenter" invert-condition="_off" />
-						<cell type="text" value="fieldType" class="SpCellCenter invalid" condition="_off" />
-						<cell type="text" value="showIn" class="SpCellCenter" />
-						<cell type="ticker" value="required" class="SpCellCenter" icons="{'0':'check-empty','1':'check'}">
-							<url type="intern">
-								<param name="task" value="field.toggle.required" />
-								<param name="fid" value="fid" parse="true" />
-								<param name="sid" value="request.sid" parse="true" subject="skip" />
-							</url>
-						</cell>
-						<cell type="ticker" value="editable" class="SpCellCenter" icons="{'0':'lock','1':'edit'}">
-							<url type="intern">
-								<param name="task" value="field.toggle.editable" />
-								<param name="fid" value="fid" parse="true" />
-								<param name="sid" value="request.sid" parse="true" subject="skip" />
-							</url>
-						</cell>
-						<cell type="ticker" value="isFree" class="SpCellCenter" icons="{'0':'dollar','1':'gift'}">
-							<url type="intern">
-								<param name="task" value="field.toggle.free" />
-								<param name="fid" value="fid" parse="true" />
-								<param name="sid" value="request.sid" parse="true" subject="skip" />
-							</url>
-						</cell>
-						<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellArrowCol" condition="/ordering.contains(order)">
-							<cell type="text" class="SpCellArrow">
-								<cell type="link" icon="chevron-up">
-									<url type="intern">
-										<param name="task" value="field.up" />
-										<param name="fid" value="fid" parse="true" />
-										<param name="sid" value="request.sid" parse="true" subject="skip" />
-									</url>
-								</cell>
-								<cell type="link" icon="chevron-down">
-									<url type="intern">
-										<param name="task" value="field.down" />
-										<param name="fid" value="fid" parse="true" />
-										<param name="sid" value="request.sid" parse="true" subject="skip" />
-									</url>
-								</cell>
-							</cell>
-						</cell>
-					</loop>
-					<foot>
-						<navigation />
-					</foot>
-				</table>
+				<div class="clearfix"/>
+				<div >
+					<tabs>
+						<tab label="FMN.ENTRY_FIELDS">
+							<table>
+								<head>
+									<cell label="HEADER_ID" type="text" class="SpCellCenter" />
+									<cell type="checkbox" rel="p_fid" class="SpCellCenter" />
+									<cell label="HEADER_FIELD_NAME" type="text" />
+									<cell label="HEADER_FIELD_STATE" type="text" class="SpCellCenter" />
+									<cell label="HEADER_FIELD_TYPE" type="text" class="SpCellCenter" />
+									<cell label="HEADER_FIELD_SHOW_IN" type="text" class="SpCellCenter" />
+									<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="SpCellCenter" />
+									<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="SpCellCenter" />
+									<cell label="HEADER_FIELD_IS_FREE" type="text" class="SpCellCenter" />
+									<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="field" condition="ordering.contains(order)" />
+								</head>
+								<loop subject="fields">
+									<cell type="text" value="id" class="SpCellCenter" />
+									<cell type="checkbox" name="p_fid" value="id" class="SpCellCenter" />
+									<cell invert-condition="_off">
+										<cell type="link" value="name">
+											<url type="intern">
+												<param name="task" value="field.edit" />
+												<param name="fid" value="fid" parse="true" />
+												<param name="sid" value="request.sid" parse="true" subject="skip" />
+											</url>
+										</cell>
+										<cell type="text" value="nid" class="subText" />
+									</cell>
+									<cell condition="_off">
+										<cell type="text" value="name" class="invalid" />
+										<cell type="text" value="nid" class="subText invalid" />
+									</cell>
+									<cell type="ticker" value="enabled" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}">
+										<url type="intern">
+											<param name="task" value="field.toggle.enabled" />
+											<param name="fid" value="fid" parse="true" />
+											<param name="sid" value="request.sid" parse="true" subject="skip" />
+										</url>
+									</cell>
+									<cell type="text" value="fieldType" class="SpCellCenter" invert-condition="_off" />
+									<cell type="text" value="fieldType" class="SpCellCenter invalid" condition="_off" />
+									<cell type="text" value="showIn" class="SpCellCenter" />
+									<cell type="ticker" value="required" class="SpCellCenter" icons="{'0':'check-empty','1':'check'}">
+										<url type="intern">
+											<param name="task" value="field.toggle.required" />
+											<param name="fid" value="fid" parse="true" />
+											<param name="sid" value="request.sid" parse="true" subject="skip" />
+										</url>
+									</cell>
+									<cell type="ticker" value="editable" class="SpCellCenter" icons="{'0':'lock','1':'edit'}">
+										<url type="intern">
+											<param name="task" value="field.toggle.editable" />
+											<param name="fid" value="fid" parse="true" />
+											<param name="sid" value="request.sid" parse="true" subject="skip" />
+										</url>
+									</cell>
+									<cell type="ticker" value="isFree" class="SpCellCenter" icons="{'0':'dollar','1':'gift'}">
+										<url type="intern">
+											<param name="task" value="field.toggle.free" />
+											<param name="fid" value="fid" parse="true" />
+											<param name="sid" value="request.sid" parse="true" subject="skip" />
+										</url>
+									</cell>
+									<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellArrowCol" condition="/ordering.contains(order)">
+										<cell type="text" class="SpCellArrow">
+											<cell type="link" icon="chevron-up">
+												<url type="intern">
+													<param name="task" value="field.up" />
+													<param name="fid" value="fid" parse="true" />
+													<param name="sid" value="request.sid" parse="true" subject="skip" />
+												</url>
+											</cell>
+											<cell type="link" icon="chevron-down">
+												<url type="intern">
+													<param name="task" value="field.down" />
+													<param name="fid" value="fid" parse="true" />
+													<param name="sid" value="request.sid" parse="true" subject="skip" />
+												</url>
+											</cell>
+										</cell>
+									</cell>
+								</loop>
+								<foot>
+									<navigation />
+								</foot>
+							</table>
+						</tab>
+						<tab label="FMN.CATEGORIES_FIELDS">
+							<table>
+								<head>
+									<cell label="HEADER_ID" type="text" class="SpCellCenter" />
+									<cell type="checkbox" rel="p_fid" class="SpCellCenter" />
+									<cell label="HEADER_FIELD_NAME" type="text" />
+									<cell label="HEADER_FIELD_STATE" type="text" class="SpCellCenter" />
+									<cell label="HEADER_FIELD_TYPE" type="text" class="SpCellCenter" />
+									<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="field" condition="ordering.contains(order)" />
+								</head>
+								<loop subject="category-fields">
+									<cell type="text" value="id" class="SpCellCenter" />
+									<cell type="checkbox" name="p_fid" value="id" class="SpCellCenter" />
+									<cell invert-condition="_off">
+										<cell type="link" value="name">
+											<url type="intern">
+												<param name="task" value="field.edit" />
+												<param name="fid" value="fid" parse="true" />
+												<param name="sid" value="request.sid" parse="true" subject="skip" />
+											</url>
+										</cell>
+										<cell type="text" value="nid" class="subText" />
+									</cell>
+									<cell condition="_off">
+										<cell type="text" value="name" class="invalid" />
+										<cell type="text" value="nid" class="subText invalid" />
+									</cell>
+									<cell type="ticker" value="enabled" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}">
+										<url type="intern">
+											<param name="task" value="field.toggle.enabled" />
+											<param name="fid" value="fid" parse="true" />
+											<param name="sid" value="request.sid" parse="true" subject="skip" />
+										</url>
+									</cell>
+									<cell type="text" value="fieldType" class="SpCellCenter" invert-condition="_off" />
+									<cell type="text" value="fieldType" class="SpCellCenter invalid" condition="_off" />
+									<cell type="ordering" value="position" name="cfid[var:[id]]" class="SpCellArrowCol" condition="/ordering.contains(order)">
+										<cell type="text" class="SpCellArrow">
+											<cell type="link" icon="chevron-up">
+												<url type="intern">
+													<param name="task" value="field.up" />
+													<param name="cfid" value="fid" parse="true" />
+													<param name="sid" value="request.sid" parse="true" subject="skip" />
+												</url>
+											</cell>
+											<cell type="link" icon="chevron-down">
+												<url type="intern">
+													<param name="task" value="field.down" />
+													<param name="cfid" value="fid" parse="true" />
+													<param name="sid" value="request.sid" parse="true" subject="skip" />
+												</url>
+											</cell>
+										</cell>
+									</cell>
+								</loop>
+								<foot>
+									<navigation />
+								</foot>
+							</table>
+						</tab>
+					</tabs>
+				</div>
 				<pagination set="fSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
 					<param name="count" value="fields-count" parse="true" />
 					<param name="limit" value="fields-limit" parse="true" />

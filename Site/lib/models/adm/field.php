@@ -187,7 +187,7 @@ final class SPAdmField extends SPField
 		while ( $c ) {
 			/* field alias has to be unique */
 			try {
-				$condition = array( 'nid' => $nid . $suffix, 'section' => Sobi::Section() );
+				$condition = array( 'nid' => $nid . $suffix, 'section' => Sobi::Section(), 'adminField>' => -1 );
 				if ( !( $new ) ) {
 					$condition[ '!fid' ] = $this->id;
 				}
@@ -272,8 +272,12 @@ final class SPAdmField extends SPField
 
 		/* determine the right position */
 		try {
-			$db->select( 'MAX( position )', 'spdb_field', array( 'section' => SPRequest::sid() ) );
-			$base[ 'position' ] = ( int )$db->loadResult() + 1;
+			$condition = array( 'section' => SPRequest::sid() );
+			if ( !( SPRequest::int( 'category-field' ) ) ) {
+				$condition[ 'adminField>' ] = -1;
+			}
+			$base[ 'position' ] = ( int )$db->select( 'MAX( position )', 'spdb_field', $condition )
+							->loadResult() + 1;
 			if ( !$base[ 'position' ] ) {
 				$base[ 'position' ] = 1;
 			}

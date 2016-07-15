@@ -758,7 +758,7 @@ class SPAdmView extends SPObject implements SPView
 	{
 		$subject = $node->attributes->getNamedItem( 'subject' )->nodeValue;
 		static $count = 0;
-		if ( $subject == 'entry.fields' ) {
+		if ( $subject == 'entry.fields' || $subject == 'category.fields' ) {
 			return $this->xmlFields( $element );
 		}
 		elseif ( strstr( $subject, '.' ) ) {

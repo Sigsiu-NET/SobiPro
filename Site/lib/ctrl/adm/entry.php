@@ -99,7 +99,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$fid = SPRequest::cmd( 'fid' );
 		if ( strstr( $fid, 'field_' ) ) {
 			$fid = SPFactory::db()
-					->select( 'fid', 'spdb_field', array( 'nid' => $fid, 'section' => Sobi::Section() ) )
+					->select( 'fid', 'spdb_field', array( 'nid' => $fid, 'section' => Sobi::Section(), 'adminField>' => -1 ) )
 					->loadResult();
 			/** @var SPField $field */
 			$field = SPFactory::Model( 'field' );
@@ -456,7 +456,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			$languages = $view->languages();
 			$view->assign( $languages, 'languages-list' );
 		}
-		$this->_model->loadFields( Sobi::Reg( 'current_section' ), true );
+		$this->_model->loadFields( Sobi::Section(), true );
 		$this->_model->formatDatesToEdit();
 
 		if ( $this->_model->isCheckedOut() ) {

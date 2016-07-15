@@ -294,6 +294,9 @@ class SPField extends SPObject
 		else {
 			$r =& $this->_data;
 		}
+		if ( !( $r ) ) {
+			$r =& $this->_rawData;
+		}
 		if ( $this->parse ) {
 			Sobi::Trigger( 'Parse', 'Content', array( &$r ) );
 		}

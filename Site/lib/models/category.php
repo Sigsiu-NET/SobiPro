@@ -26,49 +26,27 @@ SPLoader::loadModel( 'dbobject' );
  */
 class SPCategory extends SPDBObject implements SPDataModel
 {
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $description = null;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $icon = null;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	protected $showIcon = 2;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $introtext = null;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	protected $showIntrotext = 2;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	protected $parseDesc = 2;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	protected $position = 0;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	protected $section = 0;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $oType = 'category';
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	protected $parent = 0;
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private static $types = array(
 			'description' => 'html',
 			'icon' => 'string',
@@ -78,14 +56,12 @@ class SPCategory extends SPDBObject implements SPDataModel
 			'parseDesc' => 'int',
 			'position' => 'int'
 	);
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private static $translatable = array( 'description', 'introtext', 'name', 'metaKeys', 'metaDesc' );
-
-	/**
-	 */
+	/** @var string */
 	protected $_dbTable = 'spdb_category';
+	/** @var array */
+	protected $fields = array();
 
 	/**
 	 */
@@ -134,6 +110,21 @@ class SPCategory extends SPDBObject implements SPDataModel
 			$db->rollback();
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_CATEGORY_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
+		$this->loadFields( Sobi::Section(), true );
+		foreach ( $this->fields as $field ) {
+			/* @var $field SPField */
+			try {
+				if ( $field->enabled( 'form' ) ) {
+					$field->saveData( $this, $request );
+				}
+				else {
+					$field->finaliseSave( $this, $request );
+				}
+			} catch ( SPException $x ) {
+				$db->rollback();
+			}
+		}
+
 
 		/* if there was no errors, commit the database changes */
 		$db->commit();
@@ -220,5 +211,38 @@ class SPCategory extends SPDBObject implements SPDataModel
 	protected function translatable()
 	{
 		return self::$translatable;
+	}
+
+
+	public function loadFields( $sid = 0, $enabled = false )
+	{
+		$sid = $sid ? $sid : $this->section;
+		/* @var SPdb $db */
+		$db = SPFactory::db();
+
+		static $fields = array();
+		if ( !isset( $fields[ $sid ] ) ) {
+			/* get fields */
+			try {
+				if ( $enabled ) {
+					$db->select( '*', 'spdb_field', array( 'section' => $sid, 'enabled' => 1, 'adminField' => -1 ), 'position' );
+				}
+				else {
+					$db->select( '*', 'spdb_field', array( 'section' => $sid, 'adminField' => -1 ), 'position' );
+				}
+				$fields[ $sid ] = $db->loadObjectList();
+				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$fields ) );
+			} catch ( SPException $x ) {
+				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELDS_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
+			}
+		}
+		if ( !( count( $this->fields ) ) ) {
+			foreach ( $fields[ $sid ] as $f ) {
+				$field = SPFactory::Model( 'field', defined( 'SOBIPRO_ADM' ) );
+				$field->extend( $f );
+				$field->loadData( $this->id );
+				$this->fields[ $f->fid ] = $field;
+			}
+		}
 	}
 }

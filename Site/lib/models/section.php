@@ -98,7 +98,7 @@ final class SPSection extends SPDBObject implements SPDataModel
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			try {
-				$fids = $db->select( 'fid', 'spdb_field', array( 'section' => $this->id ) )->loadResultArray();
+				$fids = $db->select( 'fid', 'spdb_field', array( 'section' => $this->id, 'adminField>' => -1 ) )->loadResultArray();
 				if ( count( $fids ) ) {
 					foreach ( $fids as $fid ) {
 						try {

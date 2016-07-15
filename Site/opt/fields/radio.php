@@ -50,6 +50,8 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	protected $itemprop = '';
 	/** * @var string */
 	protected $metaSeparator = ' ';
+	/** @var bool  */
+	static $CAT_FIELD = true;
 
 
 	/**

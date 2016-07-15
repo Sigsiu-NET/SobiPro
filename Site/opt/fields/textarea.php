@@ -47,6 +47,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	protected $allowHtml = 2;
 	/** * @var string */
 	protected $metaSeparator = ' ';
+	/** @var bool  */
+	static $CAT_FIELD = true;
 
 	/**
 	 * Shows the field in the edit entry or add entry form

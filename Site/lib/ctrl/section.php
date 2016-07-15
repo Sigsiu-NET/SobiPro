@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -93,11 +91,17 @@ class SPSectionCtrl extends SPController
 		$view = SPFactory::View( $this->_type );
 		$visitor = SPFactory::user()->getCurrent();
 		$nav = $pn->get();
+		$fields = array();
+		if ( $this->_type == 'category' ) {
+			$this->_model->loadFields( Sobi::Section(), true );
+			$fields = $this->_model->get( 'fields' );
+		}
 		$view->assign( $eLimit, '$eLimit' )
 				->assign( $eLimStart, '$eLimStart' )
 				->assign( $eCount, '$eCount' )
 				->assign( $cInLine, '$cInLine' )
 				->assign( $eInLine, '$eInLine' )
+				->assign( $fields, 'fields' )
 				->assign( $this->_task, 'task' )
 				->assign( $this->_model, $this->_type )
 				->setConfig( $this->_tCfg, $this->template )
@@ -319,7 +323,7 @@ class SPSectionCtrl extends SPController
 			if ( !$field ) {
 				try {
 					$fType = $db
-							->select( 'fieldType', 'spdb_field', array( 'nid' => $eOrder, 'section' => Sobi::Section() ) )
+							->select( 'fieldType', 'spdb_field', array( 'nid' => $eOrder, 'section' => Sobi::Section(), 'adminField>' => -1 ) )
 							->loadResult();
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DETERMINE_FIELD_TYPE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  @package: SobiPro Component for Joomla!
 
  @author
@@ -96,6 +95,13 @@
 									</field>
 								</fieldset>
 							</div>
+						</div>
+					</tab>
+					<tab label="CAT.CATEGORY_CUSTOM_FIELDS" condition="fields">
+						<div class="span12">
+							<fieldset>
+								<loop subject="category.fields" />
+							</fieldset>
 						</div>
 					</tab>
 					<tab label="META_DATA">

@@ -38,6 +38,8 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	protected $cssClassEdit = 'spClassEditMSelect';
 	/** * @var string */
 	protected $cssClassSearch = 'spClassSearchMSelect';
+	/** @var bool  */
+	static $CAT_FIELD = true;
 
 	/**
 	 * Get field specific values if these are in an other table

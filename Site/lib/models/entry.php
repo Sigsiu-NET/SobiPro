@@ -480,10 +480,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 			/* get fields */
 			try {
 				if ( $enabled ) {
-					$db->select( '*', 'spdb_field', array( 'section' => $sid, 'enabled' => 1 ), 'position' );
+					$db->select( '*', 'spdb_field', array( 'section' => $sid, 'enabled' => 1, 'adminField>' => -1 ), 'position' );
 				}
 				else {
-					$db->select( '*', 'spdb_field', array( 'section' => $sid ), 'position' );
+					$db->select( '*', 'spdb_field', array( 'section' => $sid, 'adminField>' => -1 ), 'position' );
 				}
 				$fields[ $sid ] = $db->loadObjectList();
 				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$fields ) );
@@ -510,7 +510,6 @@ class SPEntry extends SPDBObject implements SPDataModel
 						$fdata = $db
 								->select( '*', 'spdb_field_data', array( 'sid' => $this->id ), $ordering )
 								->loadObjectList();
-						$db->getQuery();
 						$fieldsdata = array();
 						if ( count( $fdata ) ) {
 							foreach ( $fdata as $data ) {

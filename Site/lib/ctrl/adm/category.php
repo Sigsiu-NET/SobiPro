@@ -343,7 +343,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$fields = array();
 		try {
 			$fieldsData = SPFactory::db()
-					->select( '*', 'spdb_field', array( '!admList' => 0, 'section' => Sobi::Reg( 'current_section' ) ), 'admList' )
+					->select( '*', 'spdb_field', array( 'adminField>' => -1, 'section' => Sobi::Reg( 'current_section' ) ), 'admList' )
 					->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -382,6 +382,9 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		else {
 			$this->_model->checkOut();
 		}
+		$this->_model->loadFields( Sobi::Section(), true );
+		/* @var SPEntry $this ->_model */
+		$fields = $this->_model->get( 'fields' );
 		// we need it for the icons' fonts
 		SPFactory::header()->initBase();
 		$view = SPFactory::View( 'category', true );
@@ -390,7 +393,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				->assign( $this->_task, 'task' )
 				->assign( $owner, 'owner' )
 				->assign( $id, 'cid' )
-//				->assign( SPFactory::registry()->get( 'current_section' ), 'sid' )
+				->assign( $fields, 'fields' )
 				->addHidden( Sobi::Section(), 'pid' );
 		Sobi::Trigger( 'Category', 'EditView', array( &$view ) );
 		$view->display();

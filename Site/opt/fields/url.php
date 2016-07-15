@@ -65,6 +65,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	protected $counterToLabel = false;
 	/** @var bool */
 	protected $labelAsPlaceholder = false;
+	/** @var bool  */
+	static $CAT_FIELD = true;
 
 	/**
 	 * Shows the field in the edit entry or add entry form
