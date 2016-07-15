@@ -31,6 +31,7 @@
 			</xsl:call-template>
 			<xsl:apply-templates select="messages"/>
 
+			<h2><xsl:value-of select="entry" /></h2>
 			<xsl:call-template name="paymentTable"/>
 			<p class="text-sigsiu">
 				<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_SELECT_PAYMENT' )"/>:

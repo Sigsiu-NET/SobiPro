@@ -39,22 +39,13 @@
 	<term value="ENTRY_MANAGE_DELETE">
 		<value lang="en-GB"></value>
 	</term>
-	<term value="ALPHALIST_SELECT">
-		<value lang="en-GB">Select</value>
-	</term>
 	<term value="ENTRY_REQUIRED_MESSAGE">
-		<value lang="en-GB">Fields marked with a star have to be filled in!</value>
+		<value lang="en-GB"></value>
 	</term>
 	<term value="SH.FIND_ENTRIES_THAT_HAVE">
 		<value lang="en-GB"></value>
 	</term>
 	<term value="MN.ADD_ENTRY">
-		<value lang="en-GB"></value>
-	</term>
-	<term value="AL.TITLE">
-		<value lang="en-GB"></value>
-	</term>
-	<term value="AL.TITLE_FIELD">
 		<value lang="en-GB"></value>
 	</term>
 	<term value="ENTRY_LOCATED_IN">

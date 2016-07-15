@@ -1148,7 +1148,39 @@ input[type='radio'] {
 	}
 }
 
+//restore Codemirror styles, overwritten by Bootstrap loaded by SobiPro
+.SobiPro {
+	.CodeMirror-code pre {
+		border-right: 30px solid transparent;
+		width: -webkit-fit-content;
+		width: -moz-fit-content;
+		width: fit-content;
+	}
+	.CodeMirror-wrap pre {
+		word-wrap: break-word;
+		white-space: pre-wrap;
+		word-break: normal;
+	}
+	.CodeMirror pre {
+		-moz-border-radius: 0;
+		-webkit-border-radius: 0;
+		border-radius: 0;
+		border-width: 0;
+		background: transparent;
+		font-family: inherit;
+		font-size: inherit;
+		margin: 0 !important;
+		white-space: pre;
+		word-wrap: normal;
+		line-height: inherit;
+		color: inherit;
+		z-index: 2;
+		position: relative;
+		overflow: visible;
+	}
+	.CodeMirror pre {
+		padding: 0 4px;
+	}
 
-
-
+}
 
