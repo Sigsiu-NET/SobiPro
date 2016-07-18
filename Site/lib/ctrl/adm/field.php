@@ -308,7 +308,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				if ( $category ) {
 					try {
 						$class = SPLoader::loadClass( 'opt.fields.' . $type->tid );
-						if ( !isset( $class::$CAT_FIELD ) || !( $class::$CAT_FIELD ) ) {
+						if ( !( property_exists( $class, 'CAT_FIELD' ) ) ) {
 							continue;
 						}
 					} catch ( SPException $x ) {

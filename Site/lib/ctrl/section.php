@@ -95,6 +95,7 @@ class SPSectionCtrl extends SPController
 		if ( $this->_type == 'category' ) {
 			$this->_model->loadFields( Sobi::Section(), true );
 			$fields = $this->_model->get( 'fields' );
+			SPFactory::header()->objMeta( $this->_model );
 		}
 		$view->assign( $eLimit, '$eLimit' )
 				->assign( $eLimStart, '$eLimStart' )

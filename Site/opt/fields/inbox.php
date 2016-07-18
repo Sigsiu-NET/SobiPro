@@ -55,7 +55,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	/** @var bool */
 	protected $labelAsPlaceholder = false;
 	/** @var bool  */
-	static $CAT_FIELD = true;
+	static private $CAT_FIELD = true;
 
 
 	/**

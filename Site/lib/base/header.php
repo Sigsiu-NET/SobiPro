@@ -651,7 +651,7 @@ final class SPHeader
 		if ( ( $obj->get( 'oType' ) != 'section' ) && Sobi::Cfg( 'meta.always_add_section' ) ) {
 			$this->objMeta( SPFactory::currentSection() );
 		}
-		if ( $obj->get( 'oType' ) == 'entry' ) {
+		if ( $obj->get( 'oType' ) == 'entry' || $obj->get( 'oType' ) == 'category' ) {
 			$fields = $obj->getFields();
 			if ( count( $fields ) ) {
 				$fields = array_reverse( $fields );

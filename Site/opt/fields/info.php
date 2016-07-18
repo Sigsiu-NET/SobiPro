@@ -40,7 +40,7 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	/** * @var int */
 	protected $bsWidth = 10;
 	/** @var bool  */
-	static $CAT_FIELD = true;
+	static private $CAT_FIELD = true;
 
 
 

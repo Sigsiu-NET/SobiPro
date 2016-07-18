@@ -70,7 +70,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	/** * @var string */
 	protected $metaSeparator = ' ';
 	/** @var bool  */
-	static $CAT_FIELD = true;
+	static private $CAT_FIELD = true;
 
 	/**
 	 * Shows the field in the edit entry or add entry form

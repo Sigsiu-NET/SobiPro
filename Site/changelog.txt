@@ -30,6 +30,7 @@ Legend:
 1.2.5 ()
 -------------------
 	(+) Image field: original image name without extension used for alt and title tag
+	(+) Possibility to add custom fields to a category
 
 	(!) publishing_format set to a more readable format by default
 	(!) B3 template folder renamed to 'b3-default3' as path names have to be lowercase

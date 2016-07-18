@@ -213,6 +213,15 @@ class SPCategory extends SPDBObject implements SPDataModel
 		return self::$translatable;
 	}
 
+	/**
+	 * @param string $by
+	 * @return SPField[]
+	 */
+	public function & getFields( $by = 'name' )
+	{
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fields ) );
+		return $this->fields;
+	}
 
 	public function loadFields( $sid = 0, $enabled = false )
 	{
