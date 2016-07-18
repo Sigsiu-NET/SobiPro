@@ -116,7 +116,7 @@ class SPSectionView extends SPFrontView implements SPView
 						$sc[ ] = array(
 								'_complex' => 1,
 								'_data' => SPLang::clean( $name[ 'name' ] ),
-								'_attributes' => array( 'lang' => Sobi::Lang( false ), 'id' => $id, 'url' => Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $name[ 'alias' ] : $name[ 'name' ], 'sid' => $id, ) ) )
+								'_attributes' => array( 'lang' => Sobi::Lang( false ), 'nid' => $name[ 'alias' ], 'id' => $id, 'url' => Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $name[ 'alias' ] : $name[ 'name' ], 'sid' => $id, ) ) )
 						);
 					}
 				}
@@ -379,6 +379,17 @@ class SPSectionView extends SPFrontView implements SPView
 				$showIcon = Sobi::Cfg( 'category.show_icon', true );
 			}
 			if ( $showIcon && $current->get( 'icon' ) ) {
+				if ( strstr( $current->get( 'icon' ), 'font-' ) ) {
+					$icon = json_decode( str_replace( "'", '"', $current->get( 'icon' ) ), true );
+					if ( $current->param( 'icon-font-add-class' ) ) {
+						$icon[ 'class' ] .= ' ' . $current->param( 'icon-font-add-class' );
+					}
+					$data[ 'icon' ] = array(
+							'_complex' => 1,
+							'_data' => '',
+							'_attributes' => $icon
+					);
+				}
 				if ( SPFs::exists( Sobi::Cfg( 'images.category_icons' ) . '/' . $current->get( 'icon' ) ) ) {
 					$data[ 'icon' ] = Sobi::FixPath( Sobi::Cfg( 'images.category_icons_live' ) . $current->get( 'icon' ) );
 				}

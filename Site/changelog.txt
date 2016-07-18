@@ -27,7 +27,7 @@ Legend:
 
 
 -------------------
-1.2.5 ()
+1.3.0 ()
 -------------------
 	(+) Image field: original image name without extension used for alt and title tag
 	(+) Possibility to add custom fields to a category
@@ -41,6 +41,9 @@ Legend:
 	(#) textarea in entry form checked for empty height and set default value
 	(#) Entry history screen malformed if no user given (entry renewal requests)
 	(#) Codemirror styles in back-end got overwritten by SobiPro
+	(#) Missing icon in category data if using font instead of file (#1647)
+	(#) Added nid to subcategories nodes (Issue #1648)
+	(#) Info field, import method incompatibility with PHP 7 fixed (Issue #1662)
 
 
 -------------------

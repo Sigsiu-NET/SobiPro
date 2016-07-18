@@ -343,7 +343,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$fields = array();
 		try {
 			$fieldsData = SPFactory::db()
-					->select( '*', 'spdb_field', array( 'adminField>' => -1, 'section' => Sobi::Reg( 'current_section' ) ), 'admList' )
+					->select( '*', 'spdb_field', array( 'admList' => 1, 'section' => Sobi::Reg( 'current_section' ) ) )
 					->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );

@@ -94,7 +94,8 @@ class SPField_InfoAdm extends SPField_Info
 		if ( count( $data ) ) {
 			$this->nid = $nid;
 			foreach ( $data as $set ) {
-				$this->$set[ 'attributes' ][ 'name' ] = $set[ 'value' ];
+				$attr = $set[ 'attributes' ][ 'name' ];
+				$this->$attr = $set[ 'value' ];
 			}
 			$viewInfo = array(
 					'key' => $this->nid . '-viewInfo',
