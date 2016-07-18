@@ -44,6 +44,7 @@ Legend:
 	(#) Missing icon in category data if using font instead of file (#1647)
 	(#) Added nid to subcategories nodes (Issue #1648)
 	(#) Info field, import method incompatibility with PHP 7 fixed (Issue #1662)
+	(#) Info field not available when editing an entry (non superuser only)
 
 
 -------------------
