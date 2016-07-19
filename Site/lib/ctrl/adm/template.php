@@ -313,7 +313,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$xdef = new DOMXPath( $def );
 			$oldName = $xdef->query( '/template/name' )->item( 0 )->nodeValue;
 			$oldDesc = $xdef->query( '/template/description' )->item( 0 )->nodeValue;
-			$date = SPFactory::config()->date( time() );
+			$date = SPFactory::config()->date( time(), null, 'Y-m-d' );
 			$xdef->query( '/template/name' )->item( 0 )->nodeValue = $newName;
 			$xdef->query( '/template/creationDate' )->item( 0 )->nodeValue = $date;
 			$xdef->query( '/template/id' )->item( 0 )->nodeValue = $dirName;
