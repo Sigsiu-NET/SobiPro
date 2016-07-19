@@ -47,6 +47,7 @@ Legend:
 	(#) Info field not available when editing an entry (non superuser only)
 	(#) Wrong date format while duplicating a template (Issue #1661)
 	(#) Meta description ordering fixed (Issue #1658)
+	(#) Duplicated robots in header. (Issue #1657)
 
 
 -------------------

@@ -27,63 +27,37 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 final class SPHeader
 {
 
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $head = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $css = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $cssFiles = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $js = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $links = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $jsFiles = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $author = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $title = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $robots = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $description = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $keywords = array();
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $raw = array();
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	private $count = 0;
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $_cache = array( 'js' => array(), 'css' => array() );
+	/** @var array */
 	private $_store = array();
+	/** @var array */
 	private $_checksums = array();
 
 	/**
@@ -670,12 +644,7 @@ final class SPHeader
 
 	public function addRobots( $robots )
 	{
-		$checksum = md5( $robots );
-		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
-			$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
-			$this->store( get_defined_vars(), __FUNCTION__ );
-			$this->robots[ ] = $robots;
-		}
+		$this->robots = array( $robots );
 	}
 
 	public function addAuthor( $author )
