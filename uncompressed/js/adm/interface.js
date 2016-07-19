@@ -356,7 +356,7 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery.each( Joomla.editors.instances, function ()
 		{
 			try {
-				this.toTextArea();
+				this.save();
 			}
 			catch ( e ) {
 			}

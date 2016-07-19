@@ -48,6 +48,7 @@ Legend:
 	(#) Wrong date format while duplicating a template (Issue #1661)
 	(#) Meta description ordering fixed (Issue #1658)
 	(#) Duplicated robots in header. (Issue #1657)
+	(#) Codemirror vanishes after pressing 'Save' (Issue #1659)
 
 
 -------------------
