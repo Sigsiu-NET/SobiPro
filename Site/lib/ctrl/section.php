@@ -80,7 +80,12 @@ class SPSectionCtrl extends SPController
 		/* @var SPPageNavXSLT $pn */
 		$pn = new $pnc( $eLimit, $eCount, $site, array( 'sid' => SPRequest::sid(), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->_model->get( 'nid' ) : $this->_model->get( 'name' ) ) );
 
+		$fields = array();
 		/* handle meta data */
+		if ( $this->_type == 'category' ) {
+			$this->_model->loadFields( Sobi::Section(), true );
+			$fields = $this->_model->get( 'fields' );
+		}
 		SPFactory::header()->objMeta( $this->_model );
 
 		/* add pathway */
@@ -91,12 +96,6 @@ class SPSectionCtrl extends SPController
 		$view = SPFactory::View( $this->_type );
 		$visitor = SPFactory::user()->getCurrent();
 		$nav = $pn->get();
-		$fields = array();
-		if ( $this->_type == 'category' ) {
-			$this->_model->loadFields( Sobi::Section(), true );
-			$fields = $this->_model->get( 'fields' );
-			SPFactory::header()->objMeta( $this->_model );
-		}
 		$view->assign( $eLimit, '$eLimit' )
 				->assign( $eLimStart, '$eLimStart' )
 				->assign( $eCount, '$eCount' )

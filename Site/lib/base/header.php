@@ -602,7 +602,6 @@ final class SPHeader
 				$this->store( get_defined_vars(), __FUNCTION__ );
 				if ( strlen( $desc ) ) {
 					$this->description[ ] = strip_tags( str_replace( '"', "'", SPLang::entities( $desc, true ) ) );
-					//$this->description[ ] = strip_tags( str_replace( '"', "'", SPLang::entities( $desc, true ) ) ) . ' ';
 				}
 			}
 		}
@@ -636,6 +635,9 @@ final class SPHeader
 	 */
 	public function & objMeta( $obj )
 	{
+		if ( ( $obj->get( 'oType' ) != 'section' ) && Sobi::Cfg( 'meta.always_add_section' ) ) {
+			$this->objMeta( SPFactory::currentSection() );
+		}
 		if ( $obj->get( 'metaDesc' ) ) {
 			$this->addDescription( $obj->get( 'metaDesc' ) );
 		}
@@ -647,9 +649,6 @@ final class SPHeader
 		}
 		if ( $obj->get( 'metaRobots' ) ) {
 			$this->addRobots( $obj->get( 'metaRobots' ) );
-		}
-		if ( ( $obj->get( 'oType' ) != 'section' ) && Sobi::Cfg( 'meta.always_add_section' ) ) {
-			$this->objMeta( SPFactory::currentSection() );
 		}
 		if ( $obj->get( 'oType' ) == 'entry' || $obj->get( 'oType' ) == 'category' ) {
 			$fields = $obj->getFields();
