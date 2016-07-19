@@ -118,6 +118,7 @@
 	<config>
 		<action value="index.php"/>
 		<hidden>
+			<field name="field.editable" default="1" />
 			<field name="option" default="com_sobipro"/>
 			<field name="sp-language" default=""/>
 			<field name="task" default=""/>
