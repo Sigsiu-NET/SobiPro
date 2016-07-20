@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -229,6 +227,8 @@ class SPImage extends SPFile
 	 */
 	private function transparency( &$img )
 	{
+		imagealphablending( $img, true );
+		imagesavealpha( $img, true );
 		$index = imagecolortransparent( $img );
 		/* If we have a specific transparent color */
 		if ( $index >= 0 ) {

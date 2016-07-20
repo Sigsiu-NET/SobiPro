@@ -1,24 +1,22 @@
 <?php
 /**
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.select' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -50,7 +48,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	protected $itemprop = '';
 	/** * @var string */
 	protected $metaSeparator = ' ';
-	/** @var bool  */
+	/** @var bool */
 	static private $CAT_FIELD = true;
 
 
@@ -61,18 +59,18 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	 */
 	public function field( $return = false )
 	{
-		if( !( $this->enabled ) ) {
+		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$class =  $this->required ? $this->cssClass.' required' : $this->cssClass;
+		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 		if ( defined( 'SOBIPRO_ADM' ) ) {
-			if ($this->bsWidth) {
-				$width = SPHtml_Input::_translateWidth($this->bsWidth);
-				$class .=  ' ' . $width;
+			if ( $this->bsWidth ) {
+				$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+				$class .= ' ' . $width;
 			}
 		}
 		$field = $this->getField( $class );
-		if( !$return ) {
+		if ( !$return ) {
 			echo $field;
 		}
 		else {
@@ -87,23 +85,23 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 		$selected = $selected ? $selected : $this->defSel;
 		$list = SPHtml_Input::radioList( $this->nid, $this->getValues(), $this->nid, $selected, $params, $this->labelSite, true );
 		$field = null;
-		if( count( $list ) ) {
+		if ( count( $list ) ) {
 			$c = 0;
 			foreach ( $list as $radio ) {
-                $field .= '<div class="spFieldRadio"';
-                if ($this->optWidth) {
-                    $field .= ' style="width:' . $this->optWidth . 'px;"';
-                }
-                $field = $field . '>' . $radio . '</div>';
-                $field .= "\n";
+				$field .= '<div class="spFieldRadio"';
+				if ( $this->optWidth ) {
+					$field .= ' style="width:' . $this->optWidth . 'px;"';
+				}
+				$field = $field . '>' . $radio . '</div>';
+				$field .= "\n";
 
-                //$radio = '<div style="width:'.$this->optWidth.'px;" class="spFieldRadio">'.$radio.'</div>';
+				//$radio = '<div style="width:'.$this->optWidth.'px;" class="spFieldRadio">'.$radio.'</div>';
 				//$field .= "\n".$radio;
-                if ($this->optInLine) {
-                    if( !( ( ++$c ) % $this->optInLine ) ) {
-                        $field .= "\n<div class=\"clearfix\"></div>\n";
-                    }
-                }
+				if ( $this->optInLine ) {
+					if ( !( ( ++$c ) % $this->optInLine ) ) {
+						$field .= "\n<div class=\"clearfix\"></div>\n";
+					}
+				}
 			}
 			$field .= "\n<div class=\"clearfix\"></div>\n"; //another clear at the end
 			$field = "<div id=\"{$this->nid}\" class=\"{$class}\">{$field}</div>";
@@ -114,7 +112,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	private function getValues()
 	{
 		$values = array();
-		if( count( $this->options ) ) {
+		if ( count( $this->options ) ) {
 			foreach ( $this->options as $option ) {
 				$values[ $option[ 'id' ] ] = $option[ 'label' ];
 			}
@@ -137,14 +135,16 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 				$field = false;
 				break;
 			case 'chbx':
-				$list = SPHtml_Input::checkBoxGroup( $this->nid, $data, $this->nid, $this->_selected, array( 'class' => $this->cssClass.' '.Sobi::Cfg( 'search.form_checkbox_def_css', 'SPSearchChbx' ) ), $this->labelSite, true );
-				if( count( $list ) ) {
+				$list = SPHtml_Input::checkBoxGroup( $this->nid, $data, $this->nid, $this->_selected, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_checkbox_def_css', 'SPSearchChbx' ) ), $this->labelSite, true );
+				if ( count( $list ) ) {
 					$c = 0;
 					foreach ( $list as $box ) {
-						$box = '<div class="spFieldCheckbox" style="width:'.$this->optWidth.'px;">'.$box.'</div>';
-						$field .= "\n".$box;
-						if( !( ( ++$c ) % $this->optInLine ) ) {
-							$field .= "\n<div class=\"clearfix\"></div>\n";
+						$box = '<div class="spFieldCheckbox" style="width:' . $this->optWidth . 'px;">' . $box . '</div>';
+						$field .= "\n" . $box;
+						if ( $this->optInLine ) {
+							if ( !( ( ++$c ) % $this->optInLine ) ) {
+								$field .= "\n<div class=\"clearfix\"></div>\n";
+							}
 						}
 					}
 					$field = "<div id=\"{$this->nid}\" >{$field}</div>";
@@ -152,17 +152,17 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 				}
 				break;
 			case 'radio':
-				$field = $this->getField( $this->cssClass.' '.Sobi::Cfg( 'search.form_radio_def_css', 'SPSearchRadio' ), $this->_selected );
+				$field = $this->getField( $this->cssClass . ' ' . Sobi::Cfg( 'search.form_radio_def_css', 'SPSearchRadio' ), $this->_selected );
 				$field .= "\n<div class=\"clearfix\"></div>\n";
 				break;
 			case 'select':
 			case 'mselect':
-				$params = array( 'id' => $this->nid, 'size' => ( $this->searchMethod == 'mselect'  ? $this->optInLine : 1 ), 'class' => $this->cssClass.' '.Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) );
+				$params = array( 'id' => $this->nid, 'size' => ( $this->searchMethod == 'mselect' ? $this->optInLine : 1 ), 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) );
 				$data = array_merge( array( '' => Sobi::Txt( 'FD.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) ), $data );
 				$field = SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params );
 				break;
 		}
-        return $field;
+		return $field;
 	}
 
 	/**

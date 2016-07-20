@@ -49,6 +49,8 @@ Legend:
 	(#) Meta description ordering fixed (Issue #1658)
 	(#) Duplicated robots in header. (Issue #1657)
 	(#) Codemirror vanishes after pressing 'Save' (Issue #1659)
+	(#) "Option in line" causing invalid modulo operation if is set to all (Issue #1666)
+	(#) Cleaning cache when saving template settings
 
 
 -------------------
