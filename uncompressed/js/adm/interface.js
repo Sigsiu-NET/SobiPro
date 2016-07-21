@@ -466,4 +466,16 @@ SobiPro.jQuery( document ).ready( function ()
 			} );
 		}
 	} );
+
+	SobiPro.jQuery( 'a[href="#fmn-categories-fields"]' ).click( function ()
+	{
+		SobiPro.jQuery( '#SobiPro .btn-group' )[ 0 ].hide();
+		SobiPro.jQuery( '#SobiPro .btn-group' )[ 1 ].show();
+	} );
+	SobiPro.jQuery( 'a[href="#fmn-entry-fields"]' ).click( function ()
+	{
+		SobiPro.jQuery( '#SobiPro .btn-group' )[ 1 ].hide();
+		SobiPro.jQuery( '#SobiPro .btn-group' )[ 0 ].show();
+	} );
+	SobiPro.jQuery( '#SobiPro .btn-group' )[ 1 ].hide();
 } );
