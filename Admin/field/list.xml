@@ -20,9 +20,9 @@
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="FM.SITE_TITLE" icon="SobiFields">
-		<buttons type="new_entry_field" buttons="fieldTypes" />
+		<buttons type="new" buttons="fieldTypes" />
 		<divider />
-		<buttons type="new_category_field" buttons="categoryFieldTypes" />
+		<buttons type="new" buttons="categoryFieldTypes"/>
 		<divider />
 		<buttons type="actions">
 			<button type="delete" task="field.delete" confirm="TB.JS_DELETE_FIELD_WARN" />
@@ -63,7 +63,6 @@
 								<option value="fieldType.asc" label="FMN.ORDER_BY_FIELDTYPE_ASC" />
 								<option value="fieldType.desc" label="FMN.ORDER_BY_FIELDTYPE_DESC" />
 								<option value="showIn.asc" label="FMN.ORDER_BY_SHOWIN_ASC" />
-								<!--<option value="showIn.desc" label="FMN.ORDER_BY_SHOWIN_DESC"/>-->
 								<option value="required.desc" label="FMN.ORDER_BY_REQUIRED_DESC" />
 								<option value="required.asc" label="FMN.ORDER_BY_REQUIRED_ASC" />
 								<option value="editable.desc" label="FMN.ORDER_BY_EDITABLE_DESC" />
