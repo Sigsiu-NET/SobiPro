@@ -99,7 +99,7 @@ final class SPHeader
 			if ( count( $fonts ) ) {
 				foreach ( $fonts as $font ) {
 					if ( $font == 'font-awesome-3-local' ) {
-						$this->addCssFile( 'icons' );
+						$this->addCssFile( 'admicons' );
 					}
 					elseif ( Sobi::Cfg( 'icon-fonts.' . $font ) ) {
 						$this->addHeadLink( Sobi::Cfg( 'icon-fonts.' . $font ), null, null, 'stylesheet' );
