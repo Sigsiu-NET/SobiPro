@@ -47,9 +47,10 @@ Legend:
 	(#) Info field not available when editing an entry (non superuser only)
 	(#) Wrong date format while duplicating a template (Issue #1661)
 	(#) Meta description ordering fixed (Issue #1658)
-	(#) Duplicated robots in header. (Issue #1657)
+	(#) Duplicated robots in header (Issue #1657)
 	(#) Codemirror vanishes after pressing 'Save' (Issue #1659)
 	(#) "Option in line" causing invalid modulo operation if is set to all (Issue #1666)
+	(#) Joomla! and SobiPro symbol wrong/missing in category edit screen (Issue #1660)
 
 
 -------------------
