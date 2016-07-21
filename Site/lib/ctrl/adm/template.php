@@ -137,7 +137,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			}
 		}
 		SPFactory::cache()
-				->cleanSection( Sobi::Section() );
+				->cleanSectionXML( Sobi::Section() );
 		$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_SAVED' ), false, SPC::SUCCESS_MSG );
 	}
 

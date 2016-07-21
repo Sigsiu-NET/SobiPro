@@ -579,7 +579,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 
 		$sectionName = Sobi::Section( true );
-		$userState = Sobi::GetUserState( 'fields.order', 'forder', 'position.asc' );
+		$fieldsOrder = Sobi::GetUserState( 'fields.order', 'forder', 'position.asc' );
 		SPFactory::View( 'field', true )
 				->addHidden( $sid, 'sid' )
 				->assign( $fields, 'fields' )
@@ -588,7 +588,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				->assign( $subMenu, 'fieldTypes' )
 				->assign( $sectionName, 'section' )
 				->assign( $menu, 'menu' )
-				->assign( $userState, 'ordering' )
+				->assign( $fieldsOrder, 'ordering' )
 				->assign( $this->_task, 'task' )
 				->determineTemplate( 'field', 'list' )
 				->display();
