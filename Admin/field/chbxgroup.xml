@@ -61,7 +61,7 @@
                                 </fieldset>
 								<fieldset label="FM.FIELD_TYPE">
 									<field type="output" value="field.version" label="VERSION" class="badge" />
-									<field type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span4" />
+									<field invert-condition="category-field" type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span4" />
 								</fieldset>
 							</div>
 						</div>
@@ -97,15 +97,15 @@
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
                                     <field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
                                     <field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />
-									<field type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
-									<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+									<field invert-condition="category-field" type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
+									<field invert-condition="category-field" type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 								</fieldset>
-								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
+								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS" invert-condition="category-field">
 									<field type="toggle" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
 									<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
 								</fieldset>
 
-								<fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
+								<fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT" invert-condition="category-field">
 									<field type="toggle" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no" />
 									<field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
 										<add where="after">
@@ -123,7 +123,7 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
+									<field invert-condition="category-field" type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
 										<values>
 											<option value="both" label="FM.BOTH_OPT" />
 											<option value="details" label="FM.DETAILS_VIEW_OPT" />
@@ -143,7 +143,7 @@
 							</div>
 						</div>
 					</tab>
-					<tab label="FMN.FIELD_SEARCH">
+					<tab label="FMN.FIELD_SEARCH" invert-condition="category-field">
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>

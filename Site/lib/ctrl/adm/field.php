@@ -245,6 +245,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$view->addHidden( $this->_category, 'category-field' );
 		if ( $this->_category ) {
 			$view->addHidden( -1, 'field.adminField' );
+			$view->addHidden( $this->_fieldType, 'field.fieldType' );
 		}
 		$view->assign( $groups, 'types' );
 		$view->assign( $field, 'field' );

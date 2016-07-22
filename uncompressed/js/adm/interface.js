@@ -477,9 +477,4 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery( '#SobiPro .btn-group' )[ 1 ].hide();
 		SobiPro.jQuery( '#SobiPro .btn-group' )[ 0 ].show();
 	} );
-	try {
-		SobiPro.jQuery( '#SobiPro .btn-group' )[ 1 ].hide();
-	}
-	catch ( e ) {
-	}
 } );

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  @package: SobiPro Component for Joomla!
 
  @author
@@ -21,8 +20,8 @@
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
-        <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
-        <divider />
+		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
+		<divider />
 		<button task="field.apply" type="apply">
 			<button type="save" task="field.save" />
 			<button type="duplicate" task="field.clone" />
@@ -47,14 +46,14 @@
 									<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true" />
 									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" />
 									<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
-                                    <field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-large" />
+									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-large" />
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
-                                    <field type="text" name="field.defaultValue" value="field.defaultValue" label="FM.DEFAULT_VALUE" class="input-xxlarge" />
+									<field type="text" name="field.defaultValue" value="field.defaultValue" label="FM.DEFAULT_VALUE" class="input-xxlarge" />
 								</fieldset>
 
 								<fieldset label="FM.FIELD_TYPE">
 									<field type="output" value="field.version" label="VERSION" class="badge" />
-									<field type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span3" />
+									<field invert-condition="category-field" type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span3" />
 								</fieldset>
 							</div>
 						</div>
@@ -63,27 +62,20 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-<!--
-									<field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
-										<add where="after">
-											<text>px</text>
-										</add>
+									<field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
+										<values>
+											<option value="1" label="1" />
+											<option value="2" label="2" />
+											<option value="3" label="3" />
+											<option value="4" label="4" />
+											<option value="5" label="5" />
+											<option value="6" label="6" />
+											<option value="7" label="7" />
+											<option value="8" label="8" />
+											<option value="9" label="9" />
+											<option value="10" label="10" />
+										</values>
 									</field>
--->
-                                    <field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
-                                        <values>
-                                            <option value="1" label="1" />
-                                            <option value="2" label="2" />
-                                            <option value="3" label="3" />
-                                            <option value="4" label="4" />
-                                            <option value="5" label="5" />
-                                            <option value="6" label="6" />
-                                            <option value="7" label="7" />
-                                            <option value="8" label="8" />
-                                            <option value="9" label="9" />
-                                            <option value="10" label="10" />
-                                        </values>
-                                    </field>
 									<field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
 										<add where="after">
 											<text>px</text>
@@ -97,11 +89,11 @@
 										</add>
 									</field>
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
-                                    <field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
-                                    <field type="toggle" name="field.labelAsPlaceholder" value="field.labelAsPlaceholder" label="FM.SHOW_PLACEHOLDER" prefix="yes_no" />
-                                    <field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />
-									<field type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
-									<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+									<field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
+									<field type="toggle" name="field.labelAsPlaceholder" value="field.labelAsPlaceholder" label="FM.SHOW_PLACEHOLDER" prefix="yes_no" />
+									<field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />
+									<field invert-condition="category-field" type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
+									<field invert-condition="category-field" type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 								</fieldset>
 
 								<fieldset label="FMN.FIELD_ENTRYINPUT_HTML">
@@ -118,11 +110,11 @@
 								</fieldset>
 
 								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
-									<field type="toggle" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
-									<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
+									<field invert-condition="category-field" type="toggle" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
+									<field invert-condition="category-field" type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
 								</fieldset>
 
-								<fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
+								<fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT" invert-condition="category-field">
 									<field type="toggle" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no" />
 									<field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
 										<add where="after">
@@ -140,7 +132,7 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
+									<field invert-condition="category-field" type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
 										<values>
 											<option value="both" label="FM.BOTH_OPT" />
 											<option value="details" label="FM.DETAILS_VIEW_OPT" />
@@ -151,16 +143,16 @@
 									<field type="text" name="field.itemprop" label="FMN.ITEMPROP" />
 									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
 									<field type="toggle" name="field.parse" value="field.parse" label="FM.TXT.PARSE_CONTENT" prefix="yes_no" />
-                                    <field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-large" />
+									<field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-large" />
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYVIEW_META">
 									<field type="toggle" name="field.addToMetaDesc" value="field.addToMetaDesc" label="FM.ADD_META_DESC" prefix="yes_no" />
-                                    <field type="text" name="field.metaSeparator" value="field.metaSeparator" label="FM.META_SEPARATOR" class="input-mini" maxlength="6" />
-                                </fieldset>
+									<field type="text" name="field.metaSeparator" value="field.metaSeparator" label="FM.META_SEPARATOR" class="input-mini" maxlength="6" />
+								</fieldset>
 							</div>
 						</div>
 					</tab>
-					<tab label="FMN.FIELD_SEARCH">
+					<tab label="FMN.FIELD_SEARCH" invert-condition="category-field">
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
@@ -179,7 +171,7 @@
 											<option value="10" label="10" />
 										</values>
 									</field>
-                                    <field type="text" name="field.cssClassSearch" value="field.cssClassSearch" label="FM.CSS_CLASS" class="input-large" />
+									<field type="text" name="field.cssClassSearch" value="field.cssClassSearch" label="FM.CSS_CLASS" class="input-large" />
 								</fieldset>
 							</div>
 						</div>

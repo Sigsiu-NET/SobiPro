@@ -56,7 +56,7 @@
 
 								<fieldset label="FM.FIELD_TYPE">
 									<field type="output" value="field.version" label="VERSION" class="badge" />
-									<field type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span3" />
+									<field invert-condition="category-field" type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span3" />
 								</fieldset>
 							</div>
 						</div>
@@ -65,13 +65,6 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-<!--
-									<field type="text" name="field.width" value="field.width" label="FMN.FIELD_WIDTH" maxlength="10" class="input-mini">
-										<add where="after">
-											<text>px</text>
-										</add>
-									</field>
--->
                                     <field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
                                         <values>
                                             <option value="1" label="1" />

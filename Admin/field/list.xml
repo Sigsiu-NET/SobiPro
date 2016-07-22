@@ -18,6 +18,12 @@
 	<header>
 		<title value="FM.SITE_TITLE" />
 		<file type="script" filename="bootstrap.tabs" />
+		<script>
+			SobiPro.jQuery( document ).ready( function ()
+			{
+				SobiPro.jQuery( '#SobiPro .btn-group' )[ 1 ].hide();
+			} );
+		</script>
 	</header>
 	<toolbar title="FM.SITE_TITLE" icon="SobiFields">
 		<buttons type="new" buttons="fieldTypes" />

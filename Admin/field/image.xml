@@ -51,7 +51,7 @@
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 
-								<fieldset label="FM.FIELD_TYPE">
+								<fieldset label="FM.FIELD_TYPE" invert-condition="category-field" >
 									<field type="output" value="field.version" label="VERSION" class="badge" />
 									<field type="select" name="field.fieldType" selected="field.fieldType" size="2" multi="false" values="types" label="FMN.FIELD_TYPE" class="span2" />
 								</fieldset>
@@ -65,8 +65,8 @@
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
                                     <field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
                                     <field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />
-									<field type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
-									<field type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
+									<field invert-condition="category-field" type="toggle" name="field.adminField" value="field.adminField" label="FMN.ADM_FIELD" prefix="yes_no" />
+									<field invert-condition="category-field" type="toggle" name="field.required" value="field.required" label="FMN.IS_REQUIRED" prefix="yes_no" />
 								</fieldset>
 
 								<fieldset label="FMN.FIELD_ENTRYINPUT_IMAGE">
@@ -110,12 +110,12 @@
 									</field>
 								</fieldset>
 
-								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
+								<fieldset invert-condition="category-field" label="FMN.FIELD_ENTRYINPUT_EDITS">
 									<field type="toggle" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
 									<field type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
 								</fieldset>
 
-								<fieldset label="FMN.FIELD_ENTRYINPUT_PAYMENT">
+								<fieldset invert-condition="category-field" label="FMN.FIELD_ENTRYINPUT_PAYMENT">
 									<field type="toggle" name="field.isFree" value="field.isFree" label="FM.FOR_FREE" prefix="yes_no" />
 									<field type="text" name="field.fee" value="field.fee" label="FMN.FIELD_FEE" class="input-mini">
 										<add where="after">
@@ -133,7 +133,7 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
+									<field invert-condition="category-field" type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
 										<values>
 											<option value="both" label="FM.BOTH_OPT" />
 											<option value="details" label="FM.DETAILS_VIEW_OPT" />
@@ -144,14 +144,14 @@
 									<field type="text" name="field.itemprop" label="FMN.ITEMPROP" />
 									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
                                     <field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-large" />
-									<field type="select" name="field.inVcard" selected="field.inVcard" label="FM.IMG.SHOW_IN_V_CARD" class="input-medium">
+									<field invert-condition="category-field" type="select" name="field.inVcard" selected="field.inVcard" label="FM.IMG.SHOW_IN_V_CARD" class="input-medium">
 										<values>
 											<option value="thumb" label="FM.IMG.THUMBAIL_OPT" />
 											<option value="image" label="FM.IMG.IMAGE_OPT" />
 											<option value="original" label="FM.IMG.ORGINAL_OPT" />
 										</values>
 									</field>
-									<field type="select" name="field.inDetails" selected="field.inDetails" label="FM.IMG.SHOW_IN_DETAILS_VIEW" class="input-medium">
+									<field invert-condition="category-field" type="select" name="field.inDetails" selected="field.inDetails" label="FM.IMG.SHOW_IN_DETAILS_VIEW" class="input-medium">
 										<values>
 											<option value="thumb" label="FM.IMG.THUMBAIL_OPT" />
 											<option value="image" label="FM.IMG.IMAGE_OPT" />
