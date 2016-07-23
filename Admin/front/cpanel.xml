@@ -98,133 +98,7 @@
 					</div>
 				</div>
 
-
-				<header label="SECTIONS" icon="SobiCatList">
-					<div class="btn-group pull-right" id="SectionFilterHead">
-						<field type="select" name="order" selected="order" class="input-large spOrdering">
-							<values>
-								<values label="ORDER_BY" />
-								<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
-								<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
-								<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC" />
-								<option value="state.desc" label="CATN.ORDER_BY_STATE_DESC" />
-							</values>
-						</field>
-					</div>
-				</header>
-				<table>
-					<head>
-						<cell type="checkbox" rel="c_sid" class="SpCellCenter" />
-						<cell label="SECTIONS.HEADER_ID" type="text" class="SpCellCenter" />
-						<cell label="SECTIONS.HEADER_NAME" type="text" />
-						<cell label="SECTION.STATE_HEAD" type="text" class="SpCellCenter" />
-					</head>
-					<loop subject="sections">
-						<cell type="checkbox" name="c_sid" value="id" class="SpCellCenter" />
-						<cell type="text" value="id" class="SpCellCenter" />
-						<cell>
-							<cell type="link" value="name">
-								<url type="intern">
-									<param name="sid" value="id" parse="true" />
-								</url>
-							</cell>
-						</cell>
-						<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
-							<url type="intern">
-								<param name="task" value="section.toggle.enabled" />
-								<param name="sid" value="id" parse="true" />
-							</url>
-						</cell>
-					</loop>
-				</table>
-				<tabs condition="show-entries">
-					<tab label="CPANEL_POPULAR_ENTRIES">
-						<table condition="entries.popular.length">
-							<head>
-								<cell label="ENTRY.HEADER_NAME" type="text" />
-								<cell label="ENTRY.HEADER_COUNTER" type="text" class="SpCellCenter" />
-								<cell label="ENTRY.HEADER_SECTION" type="text" />
-							</head>
-							<loop subject="entries.popular">
-								<cell>
-									<cell type="link" value="name">
-										<url type="intern">
-											<param name="task" value="entry.edit" parse="false" />
-											<param name="sid" value="id" parse="true" />
-										</url>
-									</cell>
-								</cell>
-								<cell type="text" value="counter" class="SpCellCenter" />
-								<cell>
-									<cell type="link" value="properties.section.name">
-										<url type="intern">
-											<param name="sid" value="properties.section.id" parse="true" />
-										</url>
-									</cell>
-								</cell>
-							</loop>
-						</table>
-					</tab>
-					<tab label="CPANEL_NEW_ENTRIES">
-						<table condition="entries.latest.length">
-							<head>
-								<cell label="ENTRY.HEADER_NAME" type="text" />
-								<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter" />
-								<cell label="ENTRY.HEADER_SECTION" type="text" />
-							</head>
-							<loop subject="entries.latest">
-								<cell>
-									<cell type="link" value="name">
-										<url type="intern">
-											<param name="task" value="entry.edit" parse="false" />
-											<param name="sid" value="id" parse="true" />
-										</url>
-									</cell>
-								</cell>
-								<cell type="text" value="createdTime" class="SpCellCenter" />
-								<cell>
-									<cell type="link" value="properties.section.name">
-										<url type="intern">
-											<param name="sid" value="properties.section.id" parse="true" />
-										</url>
-									</cell>
-								</cell>
-							</loop>
-						</table>
-					</tab>
-					<tab label="CPANEL_AWAITING_APPROVAL">
-						<table condition="entries.unapproved.length">
-							<head>
-								<cell label="ENTRY.HEADER_NAME" type="text" />
-								<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter" />
-								<cell label="ENTRY.HEADER_SECTION" type="text" />
-							</head>
-							<loop subject="entries.unapproved">
-								<cell>
-									<cell type="link" value="name">
-										<url type="intern">
-											<param name="task" value="entry.edit" parse="false" />
-											<param name="sid" value="id" parse="true" />
-										</url>
-									</cell>
-								</cell>
-								<cell type="text" value="createdTime" class="SpCellCenter" />
-								<cell>
-									<cell type="link" value="properties.section.name">
-										<url type="intern">
-											<param name="sid" value="properties.section.id" parse="true" />
-										</url>
-									</cell>
-								</cell>
-							</loop>
-						</table>
-					</tab>
-				</tabs>
-			</div>
-
-
-			<div class="span6">
-				<ul class="thumbnails">
+				<ul class="cpanel thumbnails">
 					<li class="spBox" condition="acl.config">
 						<url type="intern" label="CPANEL.GCONF" image="../media/sobipro/adm/folder-configuration.png">
 							<param name="task" value="config" />
@@ -247,6 +121,50 @@
 					</li>
 				</ul>
 
+				<header label="SECTIONS" icon="SobiCatList">
+					<div class="btn-group pull-right" id="SectionFilterHead">
+						<field type="select" name="order" selected="order" class="input-large spOrdering">
+							<values>
+								<values label="ORDER_BY" />
+								<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
+								<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
+								<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC" />
+								<option value="state.desc" label="CATN.ORDER_BY_STATE_DESC" />
+							</values>
+						</field>
+					</div>
+				</header>
+				<div class="table-responsive cpanel">
+					<table>
+						<head>
+							<cell type="checkbox" rel="c_sid" class="SpCellCenter" />
+							<cell label="SECTIONS.HEADER_ID" type="text" class="SpCellCenter" />
+							<cell label="SECTIONS.HEADER_NAME" type="text" />
+							<cell label="SECTION.STATE_HEAD" type="text" class="SpCellCenter" />
+						</head>
+						<loop subject="sections">
+							<cell type="checkbox" name="c_sid" value="id" class="SpCellCenter" />
+							<cell type="text" value="id" class="SpCellCenter" />
+							<cell>
+								<cell type="link" value="name">
+									<url type="intern">
+										<param name="sid" value="id" parse="true" />
+									</url>
+								</cell>
+							</cell>
+							<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+								<url type="intern">
+									<param name="task" value="section.toggle.enabled" />
+									<param name="sid" value="id" parse="true" />
+								</url>
+							</cell>
+						</loop>
+					</table>
+				</div>
+			</div>
+
+
+			<div class="span6">
 				<div class="accordion" id="SobiProPanel">
 					<div class="accordion-group">
 						<div class="accordion-heading">
@@ -363,6 +281,93 @@
 						</div>
 					</div>
 				</div>
+
+				<div class="cpanel entries">
+					<tabs condition="show-entries">
+						<tab label="CPANEL_POPULAR_ENTRIES" condition="entries.popular.length">
+							<table>
+								<head>
+									<cell label="ENTRY.HEADER_NAME" type="text" />
+									<cell label="ENTRY.HEADER_COUNTER" type="text" class="SpCellCenter" />
+									<cell label="ENTRY.HEADER_SECTION" type="text" />
+								</head>
+								<loop subject="entries.popular">
+									<cell>
+										<cell type="link" value="name">
+											<url type="intern">
+												<param name="task" value="entry.edit" parse="false" />
+												<param name="sid" value="id" parse="true" />
+											</url>
+										</cell>
+									</cell>
+									<cell type="text" value="counter" class="SpCellCenter" />
+									<cell>
+										<cell type="link" value="properties.section.name">
+											<url type="intern">
+												<param name="sid" value="properties.section.id" parse="true" />
+											</url>
+										</cell>
+									</cell>
+								</loop>
+							</table>
+						</tab>
+						<tab label="CPANEL_NEW_ENTRIES" condition="entries.latest.length">
+							<table>
+								<head>
+									<cell label="ENTRY.HEADER_NAME" type="text" />
+									<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter" />
+									<cell label="ENTRY.HEADER_SECTION" type="text" />
+								</head>
+								<loop subject="entries.latest">
+									<cell>
+										<cell type="link" value="name">
+											<url type="intern">
+												<param name="task" value="entry.edit" parse="false" />
+												<param name="sid" value="id" parse="true" />
+											</url>
+										</cell>
+									</cell>
+									<cell type="text" value="createdTime" class="SpCellCenter" />
+									<cell>
+										<cell type="link" value="properties.section.name">
+											<url type="intern">
+												<param name="sid" value="properties.section.id" parse="true" />
+											</url>
+										</cell>
+									</cell>
+								</loop>
+							</table>
+						</tab>
+						<tab label="CPANEL_AWAITING_APPROVAL" condition="entries.unapproved.length">
+							<table>
+								<head>
+									<cell label="ENTRY.HEADER_NAME" type="text" />
+									<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter" />
+									<cell label="ENTRY.HEADER_SECTION" type="text" />
+								</head>
+								<loop subject="entries.unapproved">
+									<cell>
+										<cell type="link" value="name">
+											<url type="intern">
+												<param name="task" value="entry.edit" parse="false" />
+												<param name="sid" value="id" parse="true" />
+											</url>
+										</cell>
+									</cell>
+									<cell type="text" value="createdTime" class="SpCellCenter" />
+									<cell>
+										<cell type="link" value="properties.section.name">
+											<url type="intern">
+												<param name="sid" value="properties.section.id" parse="true" />
+											</url>
+										</cell>
+									</cell>
+								</loop>
+							</table>
+						</tab>
+					</tabs>
+				</div>
+
 			</div>
 		</div>
 	</body>

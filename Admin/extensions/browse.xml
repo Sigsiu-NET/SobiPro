@@ -82,7 +82,7 @@
 										</cell>
 										<cell type="text" value="version" class="SpCellCenter" />
 										<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}" status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }" />
-										<cell class="SpCloudInstall">
+										<cell class="SpCellLeft SpCloudInstall">
 											<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall" />
 										</cell>
 										<cell type="text" value="author" class="SpCellCenter" />

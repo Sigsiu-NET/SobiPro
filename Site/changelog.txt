@@ -36,6 +36,7 @@ Legend:
 	(!) B3 template folder renamed to 'b3-default3' as path names have to be lowercase
 	(!) Payment page shows name of the entry
 	(!) Payment page shows name of the section
+	(!) Small back-end layout refreshments
 
 	(#) textarea width in entry form set to 100% if WYSIWYG is used
 	(#) textarea in entry form checked for empty height and set default value
@@ -51,6 +52,7 @@ Legend:
 	(#) Codemirror vanishes after pressing 'Save' (Issue #1659)
 	(#) "Option in line" causing invalid modulo operation if is set to all (Issue #1666)
 	(#) Joomla! and SobiPro symbol wrong/missing in category edit screen (Issue #1660)
+	(#) Several small layout issues in back-end fixed
 
 
 -------------------

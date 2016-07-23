@@ -16,7 +16,7 @@
 	background-color: transparent;
 }
 .bootstrap-datetimepicker-widget a.btn-calendar-chevron [class^="icon-"] {
-	font-size: 20px;
+	font-size: 18px;
 	padding-left: 5px;
 	padding-right: 5px;
 }
@@ -81,6 +81,9 @@
 	margin: 0;
 	padding: 0;
 }
+.bootstrap-datetimepicker-widget .timepicker {
+	margin-bottom: 15px;
+}
 .bootstrap-datetimepicker-widget .timepicker-hour,
 .bootstrap-datetimepicker-widget .timepicker-minute, .bootstrap-datetimepicker-widget .timepicker-second {
 	/*width: 100%;*/
@@ -97,8 +100,10 @@
 }
 .bootstrap-datetimepicker-widget .picker-switch {
 	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
-.picker-switch i {
+.bootstrap-datetimepicker-widget .picker-switch i {
 	font-size: 24px;
 }
 .bootstrap-datetimepicker-widget table {
@@ -194,6 +199,15 @@
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
+.bootstrap-datetimepicker-widget td span.year,
+.bootstrap-datetimepicker-widget td span.month {
+	display: inline-block;
+	width: 54px;
+	height: 20px;
+	line-height: 20px;
+	margin: 3px;
+}
+
 .bootstrap-datetimepicker-widget td span:hover {
 	background: #eee;
 }
@@ -231,9 +245,16 @@
 	right: 7px;
 }
 .bootstrap-datetimepicker-widget a [class^="icon-"] {
-	font-size: 22px;
-	padding-left: 15px;
-	padding-right: 15px;
-	color: #08c;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: #0D5FCE;
+	text-decoration: none;
 }
+.bootstrap-datetimepicker-widget.dropdown-menu {
+	padding: 5px 5px;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu li > a {
+	padding: 3px 6px;
+}
+
 
