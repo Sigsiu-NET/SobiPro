@@ -107,13 +107,15 @@
 				</div>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:if test="$fieldname/@type = 'image'">
-					<xsl:if test="//config/noimage/@value = 1">
-						<div class="spNoImageContainer right">
-							<div class="spNoImage">
-								<i class="icon icon-ban-circle"></i>
+				<xsl:if test="$view != 'category'">
+					<xsl:if test="$fieldname/@type = 'image'">
+						<xsl:if test="//config/noimage/@value = 1">
+							<div class="spNoImageContainer right">
+								<div class="spNoImage">
+									<i class="icon icon-ban-circle"></i>
+								</div>
 							</div>
-						</div>
+						</xsl:if>
 					</xsl:if>
 				</xsl:if>
 			</xsl:otherwise>
