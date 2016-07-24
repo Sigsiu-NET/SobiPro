@@ -485,16 +485,15 @@ class SPSectionView extends SPFrontView implements SPView
 						)
 				);
 				if ( Sobi::Cfg( 'category.field_description', false ) ) {
-					$data[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
+					$data[ 'fields' ][ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
 				}
 				if ( $options ) {
-					$data[ $field->get( 'nid' ) ][ '_data' ][ 'options' ] = $options;
+					$data[ 'fields' ][ $field->get( 'nid' ) ][ '_data' ][ 'options' ] = $options;
 				}
 				if ( isset( $struct[ '_xml_out' ] ) && count( $struct[ '_xml_out' ] ) ) {
 					foreach ( $struct[ '_xml_out' ] as $k => $v )
-						$data[ $field->get( 'nid' ) ][ '_data' ][ $k ] = $v;
+						$data[ 'fields' ][ $field->get( 'nid' ) ][ '_data' ][ $k ] = $v;
 				}
-
 			}
 		}
 	}
