@@ -50,6 +50,11 @@
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge"
 									       rows="2" style=""/>
 								</fieldset>
+								<fieldset label="FM.FIELD_TYPE">
+									<field type="output" value="field.version" label="VERSION" class="badge" />
+									<field invert-condition="category-field" type="select" name="field.fieldType" selected="field.fieldType" size="7" multi="false" values="types" label="FMN.FIELD_TYPE" class="span3" />
+								</fieldset>
+
 							</div>
 						</div>
 					</tab>

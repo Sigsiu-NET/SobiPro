@@ -68,9 +68,9 @@
 									<field type="text" name="field.defaultValue" value="field.defaultValue" label="FM.DEFAULT_VALUE" class="input-medium" />
 								</fieldset>
 
-								<fieldset label="FM.FIELD_TYPE" invert-condition="category-field">
+								<fieldset label="FM.FIELD_TYPE">
 									<field type="output" value="field.version" label="VERSION" class="badge" />
-									<field type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FMN.FIELD_TYPE" class="span4" />
+									<field invert-condition="category-field" type="select" name="field.fieldType" selected="field.fieldType" size="5" multi="false" values="types" label="FMN.FIELD_TYPE" class="span4" />
 								</fieldset>
 							</div>
 						</div>

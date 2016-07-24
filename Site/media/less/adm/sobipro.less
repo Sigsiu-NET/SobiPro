@@ -59,6 +59,35 @@ body.contentpane {
 	background-repeat: no-repeat;
 }
 
+//Bootstrap 3 classes
+.SobiPro {
+	.text-left {
+		text-align: left;
+	}
+	.text-center {
+		text-align: center;
+	}
+	.text-right {
+		text-align: right;
+	}
+	.text-justify {
+		text-align: justify;
+	}
+	.text-nowrap {
+		white-space: nowrap;
+	}
+	.text-danger {
+		color: #b94a48;
+	}
+}
+
+//Colours
+.SobiPro {
+	.text-info {
+		color: #0671ab;
+	}
+}
+
 //Menu
 .SobiPro {
 	.menuTitle {
@@ -93,30 +122,31 @@ body.contentpane {
 }
 
 // Modals
-.SobiPro .modal-body {
-	max-height: 420px;
-	//padding: 1%;
-	margin-top: 10px;
-}
-
-.SobiPro .modal-footer {
-	.btn,
-	.btn:hover {
-		color: @font !important;
-	}
-	.btn-primary,
-	.btn-primary:hover,
-	.btn-danger,
-	.btn-danger:hover,
-	.btn-success,
-	.btn-success:hover {
-		color: #ffffff !important;
-	}
-}
 .SobiPro div.modal {
 	width: 520px;
 	//margin: -250px 0 0 -280px;
 	//top: 50%;
+
+	.modal-body {
+		max-height: 420px;
+		padding: 1%;
+		margin-top: 10px;
+	}
+
+	.modal-footer {
+		.btn,
+		.btn:hover {
+			//		color: @font !important;
+		}
+		.btn-primary,
+		.btn-primary:hover,
+		.btn-danger,
+		.btn-danger:hover,
+		.btn-success,
+		.btn-success:hover {
+			//		color: #ffffff !important;
+		}
+	}
 }
 .SobiPro .modal.fade.in {
 	top: 40%;
@@ -201,6 +231,32 @@ input[type='radio'] {
 			text-decoration: none;
 		}
 	}
+	.cpanel {
+		table {
+			margin-bottom: 35px;
+		}
+	}
+	.cpanel.entries {
+		margin-bottom: 20px;
+		margin-top: 40px;
+	}
+	.well,
+	.well-small {
+		border-radius: 0;
+		box-shadow: none;
+	}
+	#SPMenuCtrlBt {
+		text-shadow: none;
+		box-shadow: none;
+		border-top-right-radius: 0;
+		border-top-left-radius: 0;
+		border-bottom-right-radius: 6px;
+		border-bottom-left-radius: 0;
+		border-bottom-color: #890000;
+	}
+	#SPRightMenuHold button {
+		margin-top: -120px;
+	}
 }
 
 /* Changes to work with Bootstrap CSS v2.3.2 */
@@ -226,10 +282,20 @@ input[type='radio'] {
 	textarea,
 	select,
 	.uneditable-input {
-		color: #666666;
+		border-radius: 3px;
+	//	color: #666666;
 	}
 	img {
 		max-width: inherit;
+	}
+	.btn-group > .btn {
+		min-width: 60px;
+	}
+	.editor textarea.mce_editable {
+		width: 600px;
+	}
+	.btn.counter-reset {
+		padding: 4px 22px;
 	}
 }
 
@@ -246,6 +312,7 @@ input[type='radio'] {
 	//background-image: linear-gradient(top, white, whiteSmoke);
 	//background-repeat: repeat-x;
 	border: 1px solid #DDD;
+	border-radius: 2px;
 	//-webkit-border-radius: 3px;
 	//-moz-border-radius: 3px;
 	//border-radius: 6px;
@@ -287,7 +354,7 @@ input[type='radio'] {
 		//margin-bottom: 0;
 	}
 	.icon-remove-sign {
-		font-size: 124%;
+		//font-size: 124%;
 	}
 	h3 {
 		line-height: 20px;
@@ -424,39 +491,114 @@ input[type='radio'] {
 }
 
 .SobiPro .table {
-	.SpCellCenterSmall,
-	.SpCellCenter {
-		text-align: center;
+	a {
+		text-decoration: none;
+	}
+
+	td {
 		vertical-align: middle;
-		a {
-			text-decoration: none;
-		}
 	}
-	.SpCellCenterSmall {
-		max-width: 100px;
-	}
+
 	.SpCellHeader {
 		padding-top: 25px;
 	}
-	.SpCellMiddle {
-		vertical-align: middle;
+
+	.SpCellCenter {
+		text-align: center;
+
+		.ctrl-entry-reject {
+			padding: 0 12px;
+		}
+
+		i {
+			font-size: 130%;
+		}
+
+		.icon-money,
+		.icon-dollar,
+		.icon-check-empty,
+		.icon-lock,
+		.icon-thumbs-down {
+			color: grey;
+		}
+		.icon-check,
+		.icon-edit {
+			color: #3b5e78;
+		}
+		.icon-gift {
+			color: #b42217;
+		}
+		.icon-dollar {
+			color: #3A9613;
+		}
+		.icon-stop {
+			color: orange;
+		}
+		.icon-pause,
+		.icon-ok {
+			color: green;
+		}
+		.icon-remove-sign {
+			color: @font-sobipro;
+			//font-size: 124%;
+		}
+
+		a.checkedout .icon-lock {
+			color: #b22222;
+		}
+		input[type="text"] {
+			margin-bottom: 0;
+		}
+		input[type="radio"],
+		input[type="checkbox"] {
+			margin-top: 0;
+		}
+
+		.btn.filter-edit {
+			padding: 2px 12px;
+			i {
+				font-size: 100%;
+			}
+		}
+
 	}
-	.SpCellArrowCol,
+
+	.SpCellCenterSmall {
+		text-align: center;
+		max-width: 100px;
+	}
+
 	.SpCellLeft {
 		text-align: left;
-		vertical-align: middle;
-		padding-top: 5px;
-		padding-bottom: 4px;
 	}
 	.SpCellArrowCol {
 		width: 90px;
-		a {
-			text-decoration: none;
+		line-height: 16px;
+
+		input {
+			height: 18px;
+			padding: 2px 6px;
+			margin-bottom: 0;
+			margin-top: 5px;
+		}
+		i {
+			font-size: 13px;
 		}
 		.btn-mini {
-			margin-left: 4px;
+			margin-left: 6px;
 			i {
 				margin-right: 0;
+				font-size: 10.5px;
+			}
+		}
+		.SpCellArrow {
+			float: left;
+			margin-right: 10px;
+			margin-left: 10px;
+
+			.icon-chevron-down,
+			.icon-chevron-up {
+				color: #6f6f6f;
 			}
 		}
 	}
@@ -476,36 +618,53 @@ input[type='radio'] {
 }
 
 // Alerts
-.SobiPro .spConfigAlert {
-	max-width: 600px;
-	margin-left: 20px;
+.SobiPro {
+	.alert {
+		color: #9c680e;
+		background-color: #f5e69a;
+		border-color: #f5e69a;
+		border-radius: 0;
+	}
+	.alert-danger,
+	.alert-error {
+		color: #9e0e0e;
+		background-color: #f8b1a9;
+		border-color: #f8b1a9;
+	}
+	.alert-success {
+		color: #1d861f;
+		background-color: #c0e9b0;
+		border-color: #c0e9b0;
+	}
+	.alert-info {
+		color: #0671ab;
+		background-color: #aad9f3;
+		border-color: #aad9f3;
+	}
+	.spConfigAlert {
+		max-width: 600px;
+		margin-left: 20px;
+	}
+	.spAppAlert {
+		max-width: 700px;
+		margin-left: 20px;
+	}
+	.spSystemAlert a {
+		color: inherit;
+		text-decoration: underline;
+	}
+	.spStatusAlert {
+		margin-bottom: 5px;
+		padding-top: 4px;
+		padding-bottom: 4px;
+	}
 }
-.SobiPro .spAppAlert {
-	max-width: 700px;
-	margin-left: 20px;
-}
-.SobiPro .spSystemAlert a {
-	color: inherit;
-	text-decoration: underline;
-}
-.SobiPro .spStatusAlert {
-	margin-bottom: 5px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-}
-
 
 .SobiPro .SpCellContainer {
 	clear: both;
 }
 .SobiPro .SpCellPairLabel {
 	margin-right: 10px;
-}
-
-.SobiPro .SpRemoveRepo,
-.SpCloudInstall .SpExtInstall {
-	float: left;
-	padding-left: 8px;
 }
 
 #SPAdminForm table .control-label {
@@ -579,12 +738,14 @@ input[type='radio'] {
 }
 
 #SPAdminForm .nav-tabs a {
-	color: @font-a; /*#0088cc;*/
+	/*
+	color: @font-a; !*#0088cc;*!
 	text-decoration: none;
+	*/
 }
 
 #SPAdminForm .nav-tabs a:hover {
-	color: @font-a-hover; /*#005580;*/
+	//color: @font-a-hover; /*#005580;*/
 }
 
 .SobiPro .input-prepend .alert,
@@ -658,69 +819,39 @@ input[type='radio'] {
 	color: #808080;
 }
 
-.infoText {
-	color: #909090;
-	background-color: #eeeeee;
-	border-radius: 3px;
-	border: 1px solid #dddddd;
-	display: inline-block;
-	min-height: 18px;
-	min-width: 50px;
-	margin-top: -3px;
-	padding: 2px 5px 0 5px;
 
-	a,
-	a:hover {
-		color: #6699ff !important;
-	}
-}
+.SobiPro .spOutput {
+	margin-top: 4px;
+	line-height: 22px;
 
-.SobiPro .SpCellCenter {
-	.icon-money,
-	.icon-dollar,
-	.icon-check-empty,
-	.icon-lock,
-	.icon-thumbs-down {
-		color: grey;
+	.badge {
+		min-width: 20px;
+		text-align: center;
 	}
-	.icon-stop {
-		color: orange;
-	}
-	.icon-pause,
-	.icon-ok {
-		color: green;
-	}
-	.icon-remove-sign {
-		color: @font-sobipro;
-		font-size: 124%;
-	}
-	a.checkedout .icon-lock {
-		color: #b22222;
-	}
+
 	i {
-		color: @font;
-		font-size: 110%;
+		font-size: 140%;
+		text-decoration: none;
 	}
-	input[type="text"] {
-		margin-bottom: 0;
-	}
-	input[type="radio"],
-	input[type="checkbox"] {
-		margin-top: 0;
+
+	.infoText {
+		color: #909090;
+		background-color: #eeeeee;
+		border-radius: 3px;
+		border: 1px solid #dddddd;
+		display: inline-block;
+		min-height: 18px;
+		padding: 2px 5px 2px;
+		min-width: 140px;
+		text-align: center;
+		a,
+		a:hover {
+			color: #6699ff;
+		}
 	}
 }
 
-.SobiPro .SpCellArrow {
-	float: left;
-	margin-right: 10px;
-	margin-left: 10px;
-
-	.icon-chevron-down,
-	.icon-chevron-up {
-		color: #6f6f6f;
-	}
-}
-
+//Application Manager
 .SobiPro .SpApps {
 	.icon-check {
 		color: green;
@@ -731,17 +862,35 @@ input[type='radio'] {
 	.icon-cloud-download {
 		color: #0480BE;
 	}
+	.SpRemoveRepo,
+	.SpExtInstall {
+		//	float: left;
+		padding: 2px 12px;
+		min-width: 120px;
+	}
+	.SpCloudInstall {
+		//	width: 13%;
+		.progress {
+			margin: 3px 0;
+			width: 146px;
+		}
+	}
+	.SPPbarMessage {
+		padding: 10px;
+	}
+	.SPPbarMessage a{
+		font-weight: bold;
+		color: #333;
+		text-decoration: underline;
+	}
+	.modal-body .label {
+		margin-left: 10px;
+		min-width: 80px;
+	}
 }
 
 .SobiPro .SpCertificate .form-horizontal .control-group {
 	margin-bottom: 0;
-}
-
-.SobiPro .SpCloudInstall {
-	width: 13%;
-	.progress {
-		margin: 5px 0;
-	}
 }
 
 .SobiPro .invalid,
@@ -801,12 +950,14 @@ input[type='radio'] {
 
 .SobiPro .spStatusHeader {
 	font-size: 17px;
-	padding-top: 6px;
+	//padding-top: 6px;
 }
 
 .SobiPro .spStatus {
-	padding-bottom: 5px;
-	padding-top: 8px;
+	box-shadow: none;
+	background-color: white;
+	border: none;
+	padding: 0 0 15px 0;
 }
 
 .SobiPro .spPanelSobiPro {
@@ -868,27 +1019,38 @@ input[type='radio'] {
 	float: left;
 }
 
+//less round corners, to have a fresh insight
+.SobiPro {
+	.spStatus,
+	.accordion-group {
+		border-radius: 0;
+	}
+}
+
 // the violet thumbnails on Control Panel
-.SobiPro .thumbnails {
+.SobiPro .cpanel.thumbnails {
+	margin-bottom: 20px;
+
 	.spBox.li {
 		margin-left: 0;
 		margin-right: 10px;
 	}
 	.spBox {
-		border: 1px solid #ccccff;
-		border-radius: 4px;
+		border: 1px solid #aad9f3;
+		background-color: #aad9f3;
+		color: #0671ab;
 		text-align: center;
-		width: 90px;
-		background-color: #ebebfe;
-		padding: 3px;
-		color: #4b4bcd;
+		min-width: 140px;
+		padding: 15px 4px 4px;
 		min-height: 90px;
+		margin: 0 5px 5px 0;
 
 		a,
 		a:hover,
 		a:focus {
-			color: #4b4bcd;
+			color: #0671ab;
 			text-decoration: none;
+			display: block;
 		}
 		a img {
 			padding-right: 15px;
@@ -902,20 +1064,28 @@ input[type='radio'] {
 	-webkit-box-shadow: 0 0 0 0;
 	-moz-box-shadow: 0 0 0 0;
 	box-shadow: 0 0 0 0;
+
+	li i {
+		font-size: 110%;
+	}
+	.pagination-page input {
+		width: 60px;
+		text-align: right;
+		border-radius: 0;
+		margin-left: -1px;
+	}
 }
 
 .SobiPro .pagination-toolbar a {
 	color: #1337d1;
 }
 
-.SobiPro .pagination-page input {
-	width: 60px;
-	text-align: right;
-}
 
 #SPAdminForm .nav-tabs .active a {
+	/*
 	font-weight: bold;
 	color: #555555;
+	*/
 }
 
 .SobiPro .btn-sobipro.active {
@@ -925,11 +1095,6 @@ input[type='radio'] {
 .SobiPro input.sp-input-micro[type="text"] {
 	width: 25px;
 	text-align: center;
-}
-
-.SobiPro .spOutput {
-	min-height: 23px;
-	padding-top: 6px;
 }
 
 #SobiProPanel .accordion-heading {
@@ -1065,16 +1230,23 @@ input[type='radio'] {
 .SobiPro .spFileUpload {
 	input {
 		float: left;
+		border-bottom-right-radius: 0;
+		border-top-right-radius: 0;
+		height: 21px
+	}
+	button {
+		border-radius: 0!important;
 	}
 	.alert {
-		padding-top: 5px;
-		padding-bottom: 5px;
-		margin-bottom: 0;
-		width: 400px;
-		margin-top: 5px;
+		//padding-top: 5px;
+		//padding-bottom: 5px;
+		//margin-bottom: 0;
+		//width: 400px;
+		//margin-top: 5px;
+		border-radius: 0;
 	}
 	.progress {
-		width: 400px;
+		//width: 400px;
 	}
 }
 
@@ -1140,11 +1312,13 @@ input[type='radio'] {
 
 @media (max-width: 767px) {
 	.SobiPro {
-	}
-	.SobiPro .thumbnails .spBox {
-		width: 100%;
-		min-height: 0;
-		text-align: left;
+		.cpanel.thumbnails .spBox {
+			width: 100%;
+			min-height: 0;
+			text-align: center;
+			padding-right: 0;
+			padding-left: 0;
+		}
 	}
 }
 

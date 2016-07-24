@@ -153,12 +153,12 @@
 												<tooltip>
 													<attribute name="content" value="reason" parse="true" />
 													<attribute name="title" value="" parse="false" />
-													<attribute name="icon" value="info-sign" parse="false" />
+													<attribute name="icon" value="info-sign text-info" parse="false" />
 												</tooltip>
 											</cell>
 										</cell>
 										<cell type="link" label="HISTORY_LOAD" sef="false" live="true" class="SpCellCenter">
-											<url type="intern" class="btn" icon="refresh">
+											<url type="intern" class="btn btn-small" icon="refresh">
 												<param name="task" value="entry.edit" />
 												<param name="sid" value="id" parse="true" subject="skip" />
 												<param name="pid" value="sid" parse="true" subject="skip" />
