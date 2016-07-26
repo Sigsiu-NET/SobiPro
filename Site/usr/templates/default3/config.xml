@@ -62,8 +62,7 @@
 											<option value="roses"/>
 											<option value="terra"/>
 											<option value="waterfall"/>
-											<option value="blackwidow"/>
-										</values>
+a										</values>
 									</field>
 									<field type="select" label="TP.CONFIG.CSS_EDGE" name="settings[config][less][theme][corners]"
 									       selected="settings.config.less.theme.corners" class="input-medium">
