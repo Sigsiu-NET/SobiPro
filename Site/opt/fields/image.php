@@ -68,14 +68,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 * @var string
 	 */
 	protected $thumbName = 'thumb_{orgname}';
-	/**
-	 * @var int
-	 */
-	protected $thumbWidth = 200;
-	/**
-	 * @var int
-	 */
-	protected $thumbHeight = 200;
+	/** @var int */
+	protected $thumbWidth = 400;
+	/** @var int */
+	protected $thumbHeight = 400;
 	/**
 	 * @var string
 	 */
