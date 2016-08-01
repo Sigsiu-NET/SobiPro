@@ -208,6 +208,7 @@ class SPJoomlaDb
 		$distinct = $distinct ? ' DISTINCT ' : null;
 		$tables = is_array( $tables ) ? implode( ', ', $tables ) : $tables;
 		$groupBy = $groupBy ? "GROUP BY {$groupBy}" : null;
+		$limitStart = $limitStart < 0 ? 0 : $limitStart;
 		if ( $limit ) {
 			$limits = "LIMIT {$limitStart}, {$limit}";
 		}

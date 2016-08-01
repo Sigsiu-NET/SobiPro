@@ -213,7 +213,7 @@ class SPTemplateXSLT implements SPTemplate
 	 * @param $data
 	 * @param $parent
 	 * @param $name
-	 * @return unknown_type
+	 * @return void
 	 */
 	private function createNode( $data, &$parent, $name = null )
 	{

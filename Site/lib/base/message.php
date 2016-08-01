@@ -1,12 +1,11 @@
 <?php
+
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -16,7 +15,6 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
-
 class SPMessage
 {
 	/** @var array */
@@ -42,13 +40,21 @@ class SPMessage
 				->loadDBSection( 'messages' )
 				->get( 'messages.queue.params' );
 		if ( $registry ) {
-			$this->store = SPConfig::unserialize( $registry );
+			try {
+				$this->store = SPConfig::unserialize( $registry );
+			} catch ( SPException $x ) {
+				Sobi::Error( 'Message', 'Cannot uncompress messages', SPC::WARNING );
+			}
 		}
 		$reports = SPFactory::registry()
 				->loadDBSection( 'reports' )
 				->get( 'reports.queue.params' );
 		if ( $reports ) {
-			$this->reports = SPConfig::unserialize( $reports );
+			try {
+				$this->reports = SPConfig::unserialize( $reports );
+			} catch ( SPException $x ) {
+				Sobi::Error( 'Message', 'Cannot uncompress reports', SPC::WARNING );
+			}
 		}
 	}
 

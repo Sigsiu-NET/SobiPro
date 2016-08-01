@@ -53,6 +53,7 @@ Legend:
 	(#) "Option in line" causing invalid modulo operation if is set to all (Issue #1666)
 	(#) Joomla! and SobiPro symbol wrong/missing in category edit screen (Issue #1660)
 	(#) Several small layout issues in back-end fixed
+	(#) Ensuring that no negative limitStart can be passed to a query
 
 
 -------------------
