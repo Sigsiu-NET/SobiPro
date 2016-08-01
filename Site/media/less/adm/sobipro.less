@@ -723,7 +723,7 @@ input[type='radio'] {
 }
 
 .spEditImage img {
-	border-radius: 5px 5px 5px 5px;
+//	border-radius: 5px 5px 5px 5px;
 }
 
 #SPAdminForm div.spFilterModal .control-label {
@@ -753,7 +753,7 @@ input[type='radio'] {
 	//font-size: 14px;
 }
 
-.SobiPro .btn-danger,
+//.SobiPro .btn-danger,
 .SobiPro .btn-sobipro {
 	color: #ffffff;
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -766,8 +766,8 @@ input[type='radio'] {
 	background-image: -moz-linear-gradient(top, #a90000, #890000);
 	background-repeat: repeat-x;
 	border-color: #a90000 #a90000 #890000;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-	border-bottom-color: #a2a2a2;
+	//border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	//border-bottom-color: #a2a2a2;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -808,7 +808,7 @@ input[type='radio'] {
 .SobiPro .btn-danger.active,
 .SobiPro .btn-danger.disabled,
 .SobiPro .btn-danger[disabled] {
-	background-color: @font-sobipro;
+//	background-color: @font-sobipro;
 }
 
 .SobiPro .spCcMethod .form-horizontal {
@@ -862,10 +862,9 @@ input[type='radio'] {
 	.icon-cloud-download {
 		color: #0480BE;
 	}
-	.SpRemoveRepo,
 	.SpExtInstall {
 		//	float: left;
-		padding: 2px 12px;
+		padding: 1px 12px;
 		min-width: 120px;
 	}
 	.SpCloudInstall {
@@ -875,10 +874,12 @@ input[type='radio'] {
 			width: 146px;
 		}
 	}
+	.modal-body div,
 	.SPPbarMessage {
 		padding: 10px;
 	}
-	.SPPbarMessage a{
+	.modal-body div a,
+	.SPPbarMessage a {
 		font-weight: bold;
 		color: #333;
 		text-decoration: underline;
@@ -887,6 +888,10 @@ input[type='radio'] {
 		margin-left: 10px;
 		min-width: 80px;
 	}
+}
+.SobiPro .SpRemoveRepo {
+	//	float: left;
+	padding: 1px 12px;
 }
 
 .SobiPro .SpCertificate .form-horizontal .control-group {
@@ -1285,8 +1290,10 @@ input[type='radio'] {
 .SobiPro .spEditImagePreview img {
 	margin-right: 8px;
 	margin-bottom: 5px;
-	min-height: 80px;
-	min-width: 80px;
+	//min-height: 80px;
+	//min-width: 80px;
+	border: 1px solid #ccc;
+	padding: 1px;
 }
 
 .SobiPro .spImageUpDelete input[type='checkbox'] {
@@ -1295,7 +1302,7 @@ input[type='radio'] {
 }
 
 .SobiPro .spEditImage {
-	float: left;
+//	float: left;
 }
 
 // Styles for Apps

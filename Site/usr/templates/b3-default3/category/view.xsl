@@ -66,14 +66,51 @@
 				</div>
 			</div>
 
+			<xsl:if test="//config/fieldsposition/@value = 'above'">
+				<div class="spCategoryFields">
+					<xsl:for-each select="fields/*">
+						<xsl:call-template name="showfield">
+							<xsl:with-param name="fieldname" select="."/>
+							<xsl:with-param name="view" select="'category'"/>
+						</xsl:call-template>
+					</xsl:for-each>
+					<div class="clearfix"></div>
+				</div>
+			</xsl:if>
+
 			<xsl:if test="//config/hidecategories/@value != 'none'">
 				<xsl:if test="count (categories/category) and //config/hidecategories/@value = 'hide'">
 					<input id="spCategoryShow" class="btn btn-sigsiu" name="spCategoryShow" value="{$showCategoriesLabel}" type="button"/>
 				</xsl:if>
 				<xsl:call-template name="categoriesLoop"/>
 			</xsl:if>
+
+			<xsl:if test="//config/fieldsposition/@value = 'between'">
+				<div class="spCategoryFields">
+					<xsl:for-each select="fields/*">
+						<xsl:call-template name="showfield">
+							<xsl:with-param name="fieldname" select="."/>
+							<xsl:with-param name="view" select="'category'"/>
+						</xsl:call-template>
+					</xsl:for-each>
+					<div class="clearfix"></div>
+				</div>
+			</xsl:if>
+
 			<xsl:call-template name="entriesLoop"/>
 			<xsl:apply-templates select="navigation"/>
+
+			<xsl:if test="//config/fieldsposition/@value = 'below'">
+				<div class="spCategoryFields">
+					<xsl:for-each select="fields/*">
+						<xsl:call-template name="showfield">
+							<xsl:with-param name="fieldname" select="."/>
+							<xsl:with-param name="view" select="'category'"/>
+						</xsl:call-template>
+					</xsl:for-each>
+					<div class="clearfix"></div>
+				</div>
+			</xsl:if>
 
 			<xsl:call-template name="bottomHook"/>
 		</div>

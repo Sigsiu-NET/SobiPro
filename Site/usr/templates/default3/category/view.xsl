@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -60,14 +60,51 @@
 				<xsl:value-of select="description" disable-output-escaping="yes"/>
 			</div>
 
+			<xsl:if test="//config/fieldsposition/@value = 'above'">
+				<div class="spCategoryFields">
+					<xsl:for-each select="fields/*">
+						<xsl:call-template name="showfield">
+							<xsl:with-param name="fieldname" select="."/>
+							<xsl:with-param name="view" select="'category'"/>
+						</xsl:call-template>
+					</xsl:for-each>
+					<div class="clearfix"></div>
+				</div>
+			</xsl:if>
+
 			<xsl:if test="//config/hidecategories/@value != 'none'">
 				<xsl:if test="count (categories/category) and //config/hidecategories/@value = 'hide'">
 					<input id="spCategoryShow" class="btn btn-sigsiu" name="spCategoryShow" value="{$showCategoriesLabel}" type="button"/>
 				</xsl:if>
 				<xsl:call-template name="categoriesLoop"/>
 			</xsl:if>
+
+			<xsl:if test="//config/fieldsposition/@value = 'between'">
+				<div class="spCategoryFields">
+					<xsl:for-each select="fields/*">
+						<xsl:call-template name="showfield">
+							<xsl:with-param name="fieldname" select="."/>
+							<xsl:with-param name="view" select="'category'"/>
+						</xsl:call-template>
+					</xsl:for-each>
+					<div class="clearfix"></div>
+				</div>
+			</xsl:if>
+
 			<xsl:call-template name="entriesLoop"/>
 			<xsl:apply-templates select="navigation"/>
+
+			<xsl:if test="//config/fieldsposition/@value = 'below'">
+				<div class="spCategoryFields">
+					<xsl:for-each select="fields/*">
+						<xsl:call-template name="showfield">
+							<xsl:with-param name="fieldname" select="."/>
+							<xsl:with-param name="view" select="'category'"/>
+						</xsl:call-template>
+					</xsl:for-each>
+					<div class="clearfix"></div>
+				</div>
+			</xsl:if>
 
 			<xsl:call-template name="bottomHook"/>
 		</div>
