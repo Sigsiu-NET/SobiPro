@@ -136,7 +136,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 		if ( isset( $data[ 'url' ] ) && strlen( $data[ 'url' ] ) ) {
 			$show = true;
 			if ( !( isset( $data[ 'label' ] ) && strlen( $data[ 'label' ] ) ) ) {
-				$data[ 'label' ] = $data[ 'url' ];
+				$data[ 'label' ] = ($this->labelsLabel == '')?$data[ 'url' ]:$this->labelsLabel;
 			}
 			/* @TODO: add second step */
 			if ( $this->botProtection ) {

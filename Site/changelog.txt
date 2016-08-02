@@ -60,6 +60,7 @@ Legend:
 	(#) Several small layout issues in back-end fixed
 	(#) Ensuring that no negative limitStart can be passed to a query
 	(#) If no custom label for a URL set, but label given in the settings, it wasn't used
+	(#) If no custom label for an email set, but label given in the settings, it wasn't used
 
 
 -------------------
