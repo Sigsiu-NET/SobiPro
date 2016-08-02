@@ -38,6 +38,8 @@ Legend:
 	(!) Payment page shows name of the entry
 	(!) Payment page shows name of the section
 	(!) Small back-end layout refreshments
+    (!) template.xsd schema file updated
+
 
 	(-) SobiPro template theme 'blackwidow' removed
 
@@ -57,6 +59,7 @@ Legend:
 	(#) Joomla! and SobiPro symbol wrong/missing in category edit screen (Issue #1660)
 	(#) Several small layout issues in back-end fixed
 	(#) Ensuring that no negative limitStart can be passed to a query
+	(#) If no custom label for a URL set, but label given in the settings, it wasn't used
 
 
 -------------------
