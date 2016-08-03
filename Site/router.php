@@ -87,7 +87,7 @@ function SobiProBuildRoute( &$query )
 	if ( count( $segments ) && strstr( $segments[ count( $segments ) - 1 ], '.' ) ) {
 		$segments[ ] = '';
 	}
-	if ( $segments[ count( $segments ) - 1 ] == '' ) {
+	if ( isset( $segments[ count( $segments ) - 1 ] ) && $segments[ count( $segments ) - 1 ] == '' ) {
 		unset( $segments[ count( $segments ) - 1 ] );
 	}
 	return $segments;
