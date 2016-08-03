@@ -190,6 +190,7 @@
 											<option value="below" label="TP.CONFIG.ENTRY_HELPPOSITION_BELOW"/>
 										</values>
 									</field>
+									<field type="text" label="TP.CONFIG.ENTRY_REDIRECTLOGIN" name="settings[config][general][redirectlogin]" value="settings.config.general.redirectlogin" class="input-xlarge" />
 								</fieldset>
 							</div>
 						</div>

@@ -280,7 +280,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 				$url = $data[ 'protocol' ] . '://' . $data[ 'url' ];
 			}
 			if ( !( isset( $data[ 'label' ] ) && strlen( $data[ 'label' ] ) ) ) {
-				$data[ 'label' ] = $url;
+				$data[ 'label' ] = ($this->labelsLabel == '')?$url:$this->labelsLabel;
 			}
 			$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData';
 			$this->cssClass = $this->cssClass . ' ' . $this->nid;

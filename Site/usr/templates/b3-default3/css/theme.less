@@ -2342,7 +2342,17 @@ body.modal-open {
 	color: @hover-color;
 	background-color: @active-color;
 }
-
+& when (@corners = rounded) {
+	.SobiPro .pswp__share-tooltip {
+		border-radius: 4px;
+	}
+}
+.SobiPro .pswp__share-modal {
+	background: rgba(red(@base-color), green(@base-color), blue(@base-color), 0.5);
+}
+.SobiPro .pswp__share-modal--fade-in {
+	opacity: 1;
+}
 
 
 // Profile Field

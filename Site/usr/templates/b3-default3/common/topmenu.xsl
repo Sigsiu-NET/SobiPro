@@ -63,18 +63,31 @@
 										</a>
 									</li>
 								</xsl:if>
-								<xsl:if test="//menu/add">
-									<li>
-										<a href="{//menu/add/@url}">
-											<xsl:if test="$currentUrl = //menu/add/@url">
-												<xsl:attribute name="class">active</xsl:attribute>
-											</xsl:if>
-											<i class="icon-plus-sign"></i>
-											<xsl:text> </xsl:text>
-											<xsl:value-of select="//menu/add"/>
-										</a>
-									</li>
-								</xsl:if>
+								<xsl:choose>
+									<xsl:when test="//menu/add">
+										<li>
+											<a href="{//menu/add/@url}">
+												<xsl:if test="$currentUrl = //menu/add/@url">
+													<xsl:attribute name="class">active</xsl:attribute>
+												</xsl:if>
+												<i class="icon-plus-sign"></i>
+												<xsl:text> </xsl:text>
+												<xsl:value-of select="//menu/add"/>
+											</a>
+										</li>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:if test="string-length(//config/redirectlogin/@value) > 0">
+											<li>
+												<a href="{//config/redirectlogin/@value}">
+													<i class="icon-plus-sign"></i>
+													<xsl:text> </xsl:text>
+													<xsl:value-of select="php:function( 'SobiPro::Txt', 'Add Entry' )" />
+												</a>
+											</li>
+										</xsl:if>
+									</xsl:otherwise>
+								</xsl:choose>
 								<xsl:if test="//menu/search">
 									<li>
 										<a href="{//menu/search/@url}">

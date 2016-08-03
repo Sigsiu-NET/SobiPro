@@ -32,12 +32,16 @@ Legend:
 	(+) Image field: original image name without extension used for alt and title tag
 	(+) Possibility to add custom fields to a category
 	(+) Colour styles for Gallery field added
+	(+) Possibility to redirect to login page if only registered users can add entries in B3-default3 template
 
 	(!) publishing_format set to a more readable format by default
 	(!) B3 template folder renamed to 'b3-default3' as path names have to be lowercase
 	(!) Payment page shows name of the entry
 	(!) Payment page shows name of the section
 	(!) Small back-end layout refreshments
+    (!) template.xsd schema file updated
+    (!) SobiPro's default template is now b3-default3 (Bootstrap 3 version)
+
 
 	(-) SobiPro template theme 'blackwidow' removed
 
@@ -57,6 +61,8 @@ Legend:
 	(#) Joomla! and SobiPro symbol wrong/missing in category edit screen (Issue #1660)
 	(#) Several small layout issues in back-end fixed
 	(#) Ensuring that no negative limitStart can be passed to a query
+	(#) If no custom label for a URL set, but label given in the settings, it wasn't used
+	(#) If no custom label for an email set, but label given in the settings, it wasn't used
 
 
 -------------------
