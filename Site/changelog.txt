@@ -40,6 +40,7 @@ Legend:
 	(!) Payment page shows name of the section
 	(!) Small back-end layout refreshments
     (!) template.xsd schema file updated
+    (!) SobiPro's default template is now b3-default3 (Bootstrap 3 version)
 
 
 	(-) SobiPro template theme 'blackwidow' removed
