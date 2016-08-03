@@ -25,7 +25,7 @@
 
 		<xsl:if test="( name($fieldname) != 'save_button' ) and ( name($fieldname) != 'cancel_button' )">
 			<xsl:variable name="fieldId" select="name($fieldname)" />
-			<xsl:if test="string-length( $fieldname/fee )">
+			<xsl:if test="string-length( $fieldname/fee ) > 0 and not(contains($fieldname/@css-edit, 'entryprice') and $fieldname/@type = 'chbxgroup' and $fieldname/@required = '1')">
 				<div class="form-group payment-message">
 					<label class="col-sm-2 control-label">
 						<div class="paybox">

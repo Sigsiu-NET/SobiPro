@@ -33,13 +33,14 @@ Legend:
 	(+) Possibility to add custom fields to a category
 	(+) Colour styles for Gallery field added
 	(+) Possibility to redirect to login page if only registered users can add entries in B3-default3 template
+	(+) Support for base fee for an entry added
 
 	(!) publishing_format set to a more readable format by default
 	(!) B3 template folder renamed to 'b3-default3' as path names have to be lowercase
 	(!) Payment page shows name of the entry
 	(!) Payment page shows name of the section
 	(!) Small back-end layout refreshments
-    (!) template.xsd schema file updated
+    (!) schema file template.xsd updated
     (!) SobiPro's default template is now b3-default3 (Bootstrap 3 version)
 
 
