@@ -124,7 +124,7 @@ final class SPAdmField extends SPField
 		}
 
 		/* bind attributes to this object */
-		foreach ( $attr as $a => $v ) {
+			foreach ( $attr as $a => $v ) {
 			$a = trim( $a );
 			if ( $this->has( $a ) ) {
 				$this->$a = $v;
@@ -135,7 +135,7 @@ final class SPAdmField extends SPField
 		$attrIndexes = array_keys( $attr );
 		$additionalInfo = array_diff( $attrIndexes, $baseIndexes );
 		if ( $this->_type && method_exists( $this->_type, 'save' ) ) {
-			$this->_type->save( $base );
+			$this->_type->save( $base, $additionalInfo );
 		}
 
 		/* get database columns and their ordering */

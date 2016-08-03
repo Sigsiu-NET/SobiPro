@@ -223,7 +223,12 @@ class SPCategory extends SPDBObject implements SPDataModel
 		return $this->fields;
 	}
 
-	public function loadFields( $sid = 0, $enabled = false )
+	/**
+	 * @param int $sid
+	 * @param bool $enabled
+	 * @return $this
+	 */
+	public function & loadFields( $sid = 0, $enabled = false )
 	{
 		$sid = $sid ? $sid : $this->section;
 		/* @var SPdb $db */
@@ -253,5 +258,6 @@ class SPCategory extends SPDBObject implements SPDataModel
 				$this->fields[ $f->fid ] = $field;
 			}
 		}
+		return $this;
 	}
 }

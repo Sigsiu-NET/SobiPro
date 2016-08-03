@@ -501,8 +501,7 @@ class SPSectionView extends SPFrontView implements SPView
 	/**
 	 *
 	 */
-	public
-	function display( $type = 'section', $out = null )
+	public function display( $type = 'section', $out = null )
 	{
 		$this->_type = $type;
 		switch ( $this->get( 'task' ) ) {

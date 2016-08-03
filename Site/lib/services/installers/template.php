@@ -202,6 +202,10 @@ class SPTemplateInstaller extends SPInstaller
 	 */
 	private function categories( $categories, $sid )
 	{
+		static $section = null;
+		if ( !( $section ) ) {
+			$section = $sid;
+		}
 		for ( $i = 0; $i < $categories->length; $i++ ) {
 			$category = $categories->item( $i );
 			if ( $category->nodeName == 'category' ) {
@@ -209,6 +213,10 @@ class SPTemplateInstaller extends SPInstaller
 				$introtext = $this->txt( $category, 'introtext' );
 				$description = $this->txt( $category, 'description' );
 				$icon = $this->txt( $category, 'icon' );
+				$showIcon = $this->txt( $category, 'showIcon' );
+				$showIntrotext = $this->txt( $category, 'showIntrotext' );
+				$parseDesc = $this->txt( $category, 'parseDesc' );
+				/** @var SPCategory $cat */
 				$cat = SPFactory::Model( 'category' );
 				$cat->set( 'state', 1 );
 				/* Additional data */
@@ -229,10 +237,48 @@ class SPTemplateInstaller extends SPInstaller
 				$cat->set( 'introtext', $introtext );
 				$cat->set( 'parent', $sid );
 				$cat->set( 'icon', $icon );
+				$cat->set( 'showIcon', $showIcon );
+				$cat->set( 'showIntrotext', $showIntrotext );
+				$cat->set( 'parseDesc', $parseDesc );
 				/* save the category */
 				$cat->save();
+
+				/** Handle custom fields */
+				$cid = $cat->get( 'id' );
+				$fields = $this->xdef->query( 'fields', $category );
+				if ( $fields && $fields->length ) {
+					$fieldsData = array();
+					if ( ( $fields instanceof DOMNodeList ) && $fields->length ) {
+						foreach ( $fields->item( 0 )->childNodes as $field ) {
+							if ( $field->nodeName == '#text' ) {
+								continue;
+							}
+							$fieldsData[ $field->nodeName ] = array();
+							$this->categoryFieldsData( $field, $fieldsData );
+						}
+					}
+					if ( count( $fieldsData ) ) {
+						static $categoryFields = null;
+						if ( !( $categoryFields ) ) {
+							$categoryFields = $cat->loadFields( $section, true )
+									->getFields();
+						}
+						foreach ( $categoryFields as $field ) {
+							$nid = str_replace( '_', '-', $field->get( 'nid' ) );
+							if ( isset( $fieldsData[ $nid ] ) ) {
+								$field->loadData( $cid );
+								$field->setRawData( $fieldsData[ $nid ] );
+								$a = is_array( $fieldsData[ $nid ] ) ? '[]' : null;
+								/** not really happy about this solution */
+								SPRequest::set( $field->get( 'nid' ) . $a, $fieldsData[ $nid ], 'post' );
+								$field->saveData( $cat, 'post' );
+							}
+						}
+					}
+				}
+
 				/* Handle subcats */
-				$childs = $this->xdef->query( "childs/category", $category );
+				$childs = $this->xdef->query( 'childs/category', $category );
 				if ( $childs && $childs->length ) {
 					if ( ( $childs instanceof DOMNodeList ) && $childs->length ) {
 						$this->categories( $childs, $cat->get( 'id' ) );
@@ -242,12 +288,36 @@ class SPTemplateInstaller extends SPInstaller
 		}
 	}
 
+
+	/**
+	 * @param DOMElement $field
+	 * @param array $data
+	 */
+	protected function categoryFieldsData( $field, &$data )
+	{
+		if ( $field->childNodes->length ) {
+			foreach ( $field->childNodes as $node ) {
+				if ( $node->nodeName == '#text' ) {
+					continue;
+				}
+				$data[ $field->nodeName ][ $node->nodeName ] = array();
+				$this->categoryFieldsData( $node, $data[ $field->nodeName ] );
+				if ( !( count( $data[ $field->nodeName ][ $node->nodeName ] ) ) ) {
+					$data[ $field->nodeName ][ $node->nodeName ] = $node->nodeValue;
+				}
+			}
+		}
+		if ( !( count( $data[ $field->nodeName ] ) ) ) {
+			$data[ $field->nodeName ] = $node->nodeValue;
+		}
+	}
+
 	/**
 	 * @param DOMNodeList $fields
 	 * @param int $sid
 	 * @return array
 	 */
-	private function fields( $fields, $sid )
+	protected function fields( $fields, $sid )
 	{
 		$c = 0;
 		$fids = array();
@@ -256,7 +326,6 @@ class SPTemplateInstaller extends SPInstaller
 			if ( $field->nodeName == 'field' ) {
 				$c++;
 				$attr = array();
-				$attr[ 'adminField' ] = false;
 				$attr[ 'editLimit' ] = -1;
 				$ftype = $this->txt( $field, 'type' );
 				$options = $field->getElementsByTagName( 'option' );
@@ -320,7 +389,7 @@ class SPTemplateInstaller extends SPInstaller
 				// handles multiple selected options in field parameters
 				elseif ( ( $options instanceof DOMNodeList ) && $options->length ) {
 					foreach ( $options as $option ) {
-						if ( strlen( $option->getAttribute( 'name' ) ) ) {
+						if ( strlen( $option->getAttribute( 'name' ) )  ) {
 							$attr[ $option->parentNode->getAttribute( 'attribute' ) ][ $option->getAttribute( 'name' ) ] = $option->nodeValue;
 						}
 						else {
@@ -333,11 +402,16 @@ class SPTemplateInstaller extends SPInstaller
 				$attr[ 'name' ] = $this->txt( $field, 'label' );
 				$attr[ 'required' ] = $this->txt( $field, 'required' ) == 'true' ? true : false;
 				$attr[ 'showIn' ] = $this->txt( $field, 'showIn' );
+				$attr[ 'adminField' ] = $this->txt( $field, 'adminField' );
 				$attr[ 'type' ] = $ftype;
 				$attr[ 'section' ] = $sid;
 				$attr[ 'position' ] = isset( $attr[ 'position' ] ) ? $attr[ 'position' ] : $c;
 				$attr[ 'enabled' ] = isset( $attr[ 'enabled' ] ) ? $attr[ 'enabled' ] : true;
 				$attr[ 'editable' ] = isset( $attr[ 'editable' ] ) ? $attr[ 'editable' ] : true;
+				$attr[ 'metaKeys' ] = $this->txt( $field, 'metaKeys' );
+				$attr[ 'metaAuthor' ] = $this->txt( $field, 'metaAuthor' );
+				$attr[ 'metaRobots' ] = $this->txt( $field, 'metaRobots' );
+				$attr[ 'metaDesc' ] = $this->txt( $field, 'metaDesc' );
 
 				/* let's create the field */
 				$f =& SPFactory::Instance( 'models.adm.field' );
