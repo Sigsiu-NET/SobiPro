@@ -124,7 +124,7 @@ final class SPAdmField extends SPField
 		}
 
 		/* bind attributes to this object */
-			foreach ( $attr as $a => $v ) {
+		foreach ( $attr as $a => $v ) {
 			$a = trim( $a );
 			if ( $this->has( $a ) ) {
 				$this->$a = $v;
@@ -187,7 +187,7 @@ final class SPAdmField extends SPField
 		while ( $c ) {
 			/* field alias has to be unique */
 			try {
-				$condition = array( 'nid' => $nid . $suffix, 'section' => Sobi::Section(), 'adminField>' => -1 );
+				$condition = array( 'nid' => $nid . $suffix, 'section' => Sobi::Section() );
 				if ( !( $new ) ) {
 					$condition[ '!fid' ] = $this->id;
 				}

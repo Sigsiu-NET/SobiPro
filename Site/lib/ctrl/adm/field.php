@@ -65,6 +65,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$field = SPFactory::Model( 'field', true );
 		$field->extend( $f );
 		$groups = $this->getFieldGroup( $f->fieldType, $f->tGroup );
+		$this->_fieldType = $f->fieldType;
 
 		/* get input filters */
 		$registry = SPFactory::registry();
@@ -86,6 +87,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$view->addHidden( $this->_category, 'category-field' );
 		if ( $this->_category ) {
 			$view->addHidden( -1, 'field.adminField' );
+			$view->addHidden( $this->_fieldType, 'field.fieldType' );
 		}
 		$view->assign( $groups, 'types' );
 		$view->assign( $f, 'filters' );
