@@ -405,7 +405,7 @@ class SPAdmView extends SPObject implements SPView
 		if ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'condition' ) && $xml->attributes->getNamedItem( 'condition' )->nodeValue ) {
 			$condition = $subject ? $subject . '.' . $xml->attributes->getNamedItem( 'condition' )->nodeValue : $xml->attributes->getNamedItem( 'condition' )->nodeValue;
 		}
-		elseif ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'invert-condition' ) && $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue ) {
+		if ( $xml->hasAttributes() && $xml->attributes->getNamedItem( 'invert-condition' ) && $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue ) {
 			$condition = $subject ? $subject . '.' . $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue : $xml->attributes->getNamedItem( 'invert-condition' )->nodeValue;
 			$invert = true;
 		}

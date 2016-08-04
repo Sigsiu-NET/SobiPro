@@ -174,9 +174,9 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
 		if ( count( $cfg ) ) {
 			$i = 0;
-			foreach ( $cfg as $section => $keys ) {
+			foreach ( $cfg as $root => $keys ) {
 				$i++;
-				$menu->addSection( $section, $keys );
+				$menu->addSection( $root, $keys );
 				if ( $i && !( Sobi::Can( 'section.configure' ) ) ) {
 					break;
 				}
@@ -207,6 +207,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$sectionName = Sobi::Section( true );
 		$sectionId = Sobi::Section();
 		$sid = SPRequest::sid();
+		$root = $sectionId == $sid ? true : false;
 		$view->assign( $entriesName, 'entries_name' )
 				->assign( $entriesField, 'entries_field' )
 				->assign( $eLimit, 'entries-limit' )
@@ -219,6 +220,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				->assign( $term, 'filter' )
 				->assign( $customCols, 'fields' )
 				->assign( $this->_model, 'section' )
+				->assign( $root, 'root' )
 				->assign( $categories, 'categories' )
 				->assign( $entries, 'entries' )
 				->assign( $nameField, 'entries_name' )
