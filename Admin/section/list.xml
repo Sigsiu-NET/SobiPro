@@ -32,7 +32,7 @@
 		</buttons>
 		<divider />
 		<buttons type="category" condition="acl.category.visible">
-			<button type="edit" sid="true" task="category.edit" label="AMN.EDIT" icon="file-text" condition="acl.category.edit" />
+			<button type="edit" sid="true" task="category.edit" invert-condition="root" label="AMN.EDIT" icon="file-text" condition="acl.category.edit" />
 			<nav-header label="TB.SUBCATEGORY" />
 			<button type="url" sid="true" task="category.add" label="AMN.ADD" icon="plus" condition="acl.category.add" />
 			<button type="delete" task="category.delete" confirm="TB.JS_DELETE_CATEGORIES_WARN" condition="acl.category.delete" />
