@@ -480,9 +480,14 @@ SobiPro.jQuery( document ).ready( function ()
 
 	SobiPro.jQuery( window ).keydown( function ( e )
 	{
-		if ( e.which == 115 ||  e.which == 19 || e.keyCode == 83 ) {
-			e.preventDefault();
-			SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).click();
+		if ( e.which == 115 || e.which == 19 || e.keyCode == 83 ) {
+			try {
+				e.preventDefault();
+				SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).click();
+			}
+			catch ( x ) {
+
+			}
 		}
 	} );
 
