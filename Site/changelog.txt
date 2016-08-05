@@ -34,6 +34,7 @@ Legend:
 	(+) Colour styles for Gallery field added
 	(+) Possibility to redirect to login page if only registered users can add entries in B3-default3 template
 	(+) Support for base fee for an entry added
+	(+) Cmd+S and Ctrl+S shortucts - if applicable will save entry, category, settings
 
 	(!) publishing_format set to a more readable format by default
 	(!) B3 template folder renamed to 'b3-default3' as path names have to be lowercase

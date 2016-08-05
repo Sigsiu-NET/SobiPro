@@ -477,4 +477,13 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery( '#SobiPro .btn-group' )[ 1 ].hide();
 		SobiPro.jQuery( '#SobiPro .btn-group' )[ 0 ].show();
 	} );
+
+	SobiPro.jQuery( window ).keydown( function ( e )
+	{
+		if ( e.which == 115 ||  e.which == 19 || e.keyCode == 83 ) {
+			e.preventDefault();
+			SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).click();
+		}
+	} );
+
 } );
