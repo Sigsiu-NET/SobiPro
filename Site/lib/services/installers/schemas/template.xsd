@@ -274,10 +274,10 @@
 			<xs:element type="xs:byte" name="showIcon" minOccurs="0" maxOccurs="1" />
 			<xs:element type="xs:byte" name="showIntrotext" minOccurs="0" maxOccurs="1" />
 			<xs:element type="xs:byte" name="parseDesc" minOccurs="0" maxOccurs="1" />
-			<xs:element type="xs:string" name="metaKeys" minOccurs="0" />
-			<xs:element type="xs:string" name="metaAuthor" minOccurs="0" />
+			<xs:element type="xs:string" name="metaKeys" minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="metaAuthor" minOccurs="0" maxOccurs="1"/>
 			<xs:element type="xs:string" name="metaRobots" minOccurs="0" maxOccurs="1" />
-			<xs:element name="fields">
+			<xs:element name="fields" minOccurs="0">
 				<xs:complexType mixed="true">
 					<xs:sequence minOccurs="0" maxOccurs="unbounded">
 						<xs:any processContents="skip" minOccurs="0" />
