@@ -339,7 +339,8 @@ final class SobiProAdmCtrl
 			$task = $this->_task;
 			$ctrl = SPLoader::loadController( $task, true );
 			try {
-				$this->setController( new $ctrl() );
+				$ctrl = new $ctrl();
+				$this->setController( $ctrl );
 			} catch ( SPException $x ) {
 				Sobi::Error( 'CoreCtrl', SPLang::e( 'Cannot set controller. %s.', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}

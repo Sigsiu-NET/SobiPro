@@ -480,14 +480,26 @@ SobiPro.jQuery( document ).ready( function ()
 
 	SobiPro.jQuery( window ).keydown( function ( e )
 	{
-		if ( e.which == 115 || e.which == 19 || e.keyCode == 83 ) {
-			try {
+		if ( e.which == 224 || e.which == 17 || e.which == 91 || e.which == 93 ) {
+			SobiPro.cmdKey = true;
+		}
+		else {
+			if ( (e.which == 115 || e.which == 19 || e.keyCode == 83) && (e.ctrlKey || e.cmdKey || SobiPro.cmdKey ) ) {
 				e.preventDefault();
 				SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).click();
+				try {
+					e.preventDefault();
+					if( SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).length ) {
+						SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).click();
+					}
+					else {
+						SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.save"]' ).click();
+					}
+				}
+				catch ( x ) {
+				}
 			}
-			catch ( x ) {
-
-			}
+			SobiPro.cmdKey = false;
 		}
 	} );
 

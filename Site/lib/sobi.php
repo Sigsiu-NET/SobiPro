@@ -230,6 +230,10 @@ abstract class Sobi
 		SPFactory::plugins()->registerHandler( $action, $object );
 	}
 
+	public static function AttachHandler( &$object )
+	{
+		SPFactory::plugins()->registerHandler( null, $object );
+	}
 	/**
 	 * check permission for an action.
 	 * Can be also used like this:

@@ -59,6 +59,33 @@
 						</td>
 					</tr>
 				</xsl:for-each>
+
+
+				<xsl:if test="string-length(discount/@netto)">
+					<tr class="summary">
+						<td colspan="3">
+							<xsl:value-of select="discount/@for" />
+						</td>
+						<td>
+							<div class="pull-right">
+								<xsl:value-of select="discount/@discount" />
+							</div>
+						</td>
+					</tr>
+					<tr class="success sum">
+						<td colspan="3">
+							<div class="pull-right">
+							</div>
+						</td>
+						<td>
+							<div class="pull-right">
+								<xsl:value-of select="discount/@discount_sum" />
+							</div>
+						</td>
+					</tr>
+				</xsl:if>
+
+
 				<tr class="summary">
 					<td colspan="4">
 						<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_SUMMARY' )" />:
@@ -98,6 +125,13 @@
 					<td>
 						<div class="pull-right">
 							<xsl:value-of select="summary/@sum_brutto" />
+						</div>
+					</td>
+				</tr>
+				<tr class="success">
+					<td colspan="4">
+						<div class="pull-right">
+							<xsl:value-of select="summary/@coupon" />
 						</div>
 					</td>
 				</tr>
