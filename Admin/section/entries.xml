@@ -16,45 +16,45 @@
 
 <definition>
 	<header>
-		<title value="SECTION_ALL_ENTRIES_TITLE" />
-		<file type="script" filename="bootstrap.bootbox" />
-		<file type="script" filename="adm.rejection" />
+		<title value="SECTION_ALL_ENTRIES_TITLE"/>
+		<file type="script" filename="bootstrap.bootbox"/>
+		<file type="script" filename="adm.rejection"/>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSection">
-		<divider />
+		<divider/>
 		<buttons type="actions" condition="acl.entry.visible">
-			<button type="url" sid="true" task="entry.add" label="AMN.ADD_ENTRY" icon="file-text" condition="acl.entry.add" />
-			<button type="delete" task="entry.delete" confirm="TB.JS_DELETE_ENTRIES_WARN" condition="acl.entry.delete" />
-			<nav-header label="TB.PUBLISHING" />
-			<button type="publish" task="entry.publish" condition="acl.entry.publish" />
-			<button type="hide" task="entry.hide" condition="acl.entry.publish" />
-			<nav-header label="TB.APPROVAL" />
-			<button type="approve" task="entry.approve" condition="acl.entry.approve" />
-			<button type="revoke" task="entry.unapprove" condition="acl.entry.approve" />
+			<button type="url" sid="true" task="entry.add" label="AMN.ADD_ENTRY" icon="file-text" condition="acl.entry.add"/>
+			<button type="delete" task="entry.delete" confirm="TB.JS_DELETE_ENTRIES_WARN" condition="acl.entry.delete"/>
+			<nav-header label="TB.PUBLISHING"/>
+			<button type="publish" task="entry.publish" condition="acl.entry.publish"/>
+			<button type="hide" task="entry.hide" condition="acl.entry.publish"/>
+			<nav-header label="TB.APPROVAL"/>
+			<button type="approve" task="entry.approve" condition="acl.entry.approve"/>
+			<button type="revoke" task="entry.unapprove" condition="acl.entry.approve"/>
 		</buttons>
-		<divider />
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-		<divider />
+		<divider/>
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<divider/>
 		<buttons type="options" dropdown-class="pull-right">
-			<button type="url" task="panel" />
-			<button type="url" task="config" condition="acl.config" />
-			<button type="url" task="acl" condition="acl.config" />
-			<button type="url" task="extensions.installed" condition="acl.apps" />
-			<button type="url" task="template.info" condition="acl.apps" />
-			<button type="help" target="_blank" />
+			<button type="url" task="panel"/>
+			<button type="url" task="config" condition="acl.config"/>
+			<button type="url" task="acl" condition="acl.config"/>
+			<button type="url" task="extensions.installed" condition="acl.apps"/>
+			<button type="url" task="template.info" condition="acl.apps"/>
+			<button type="help" target="_blank"/>
 		</buttons>
 	</toolbar>
 	<body>
 		<div class="row-fluid">
-			<div class="span2" id="SPRightMenu">
-				<menu />
+			<div class="span3" id="SPRightMenu">
+				<menu/>
 			</div>
-			<div class="span10 spMainArea">
-				<message id="spMessage" />
+			<div class="span9 spMainArea">
+				<message id="spMessage"/>
 				<div class="row-fluid">
 					<div class="hide" id="SpProgress">
 						<div>
-							<message type="info" label="" class="smallmessage" />
+							<message type="info" label="" class="smallmessage"/>
 						</div>
 						<div class="progress progress-striped active" id="SpProgress">
 							<div class="bar" style="width: 0%;"></div>
@@ -63,76 +63,78 @@
 				</div>
 				<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
 					<div class="btn-group pull-right" id="spEntriesFilterHead">
-						<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large spSubmit" />
-						<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-large spOrdering" />
+						<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large spSubmit"/>
+						<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-large spOrdering"/>
 						<field type="select" name="elimit" selected="entries-limit" class="input-mini spOrdering">
 							<values>
-								<values label="LISTING_LIMIT" />
-								<option value="5" />
-								<option value="15" />
-								<option value="25" />
-								<option value="50" />
-								<option value="100" />
+								<values label="LISTING_LIMIT"/>
+								<option value="5"/>
+								<option value="15"/>
+								<option value="25"/>
+								<option value="50"/>
+								<option value="100"/>
 							</values>
 						</field>
-						<field type="button" name="save-ordering" icon="save" class="btn ctrl-default-ordering" data-target="entries" />
+						<field type="button" name="save-ordering" icon="save" class="btn ctrl-default-ordering" data-target="entries"/>
 					</div>
 				</header>
 				<table>
 					<head>
-						<cell label="HEADER_ID" type="text" class="SpCellCenter" />
-						<cell type="checkbox" rel="e_sid" class="SpCellCenter" />
-						<cell label="HEADER_ENTRIES_NAME" type="text" />
-						<cells value="customHeader" class="SpCellCenter" type="text" />
-						<cell label="HEADER_ENTRIES_STATE" condition="acl.entry.edit" type="text" class="SpCellCenter" />
-						<cell label="HEADER_ENTRIES_APPROVAL" condition="acl.entry.approve" type="text" class="SpCellCenter" />
-						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter" />
-						<cell label="HEADER_ENTRIES_REJECT" type="text" condition="acl.entry.approve" class="SpCellCenter" />
+						<cell label="HEADER_ID" type="text" class="SpCellCenter"/>
+						<cell type="checkbox" rel="e_sid" class="SpCellCenter"/>
+						<cell label="HEADER_ENTRIES_NAME" type="text"/>
+						<cells value="customHeader" class="SpCellCenter" type="text"/>
+						<cell label="HEADER_ENTRIES_STATE" condition="acl.entry.edit" type="text" class="SpCellCenter"/>
+						<cell label="HEADER_ENTRIES_APPROVAL" condition="acl.entry.approve" type="text" class="SpCellCenter"/>
+						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter"/>
+						<cell label="HEADER_ENTRIES_REJECT" type="text" condition="acl.entry.approve" class="SpCellCenter"/>
 					</head>
 					<loop subject="entries">
-						<cell type="text" value="id" class="SpCellCenter" />
-						<cell type="checkbox" name="e_sid" value="id" class="SpCellCenter" checked-out-time="coutTime" checked-out-by="cout" />
+						<cell type="text" value="id" class="SpCellCenter"/>
+						<cell type="checkbox" name="e_sid" value="id" class="SpCellCenter" checked-out-time="coutTime" checked-out-by="cout"/>
 						<cell>
 							<cell type="link" value="name" class="var:[valid] entry-name">
 								<url type="intern">
-									<param name="task" value="entry.edit" />
-									<param name="sid" value="id" parse="true" />
-									<param name="pid" value="request.pid" parse="true" subject="skip" />
+									<param name="task" value="entry.edit"/>
+									<param name="sid" value="id" parse="true"/>
+									<param name="pid" value="request.pid" parse="true" subject="skip"/>
 								</url>
 							</cell>
 						</cell>
 						<!--<cell type="text" value="field_price"/>-->
-						<cells value="customFields" class="SpCellCenter" />
-						<cell condition="/acl.entry.publish" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+						<cells value="customFields" class="SpCellCenter"/>
+						<cell condition="/acl.entry.publish" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}"
+						      valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
-								<param name="task" value="entry.toggle.enabled" />
-								<param name="sid" value="id" parse="true" />
+								<param name="task" value="entry.toggle.enabled"/>
+								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell condition="/acl.entry.approve" type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
+						<cell condition="/acl.entry.approve" type="ticker" value="approved" class="SpCellCenter"
+						      icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
 							<url type="intern">
-								<param name="task" value="entry.toggle.approval" />
-								<param name="sid" value="id" parse="true" />
+								<param name="task" value="entry.toggle.approval"/>
+								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell type="text" value="owner" class="SpCellCenter" />
+						<cell type="text" value="owner" class="SpCellCenter"/>
 						<cell condition="/acl.entry.approve" type="ticker" value="state" class="SpCellCenter" icons="{'0':'undo','1':'undo'}">
 							<url type="intern" class="btn btn-mini ctrl-entry-reject">
-								<param name="task" value="entry.edit" />
-								<param name="sid" value="id" parse="true" />
+								<param name="task" value="entry.edit"/>
+								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
 					</loop>
 				</table>
 				<pagination set="eSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
-					<param name="count" value="entries-count" parse="true" />
-					<param name="limit" value="entries-limit" parse="true" />
-					<param name="current" value="entries-site" parse="true" />
+					<param name="count" value="entries-count" parse="true"/>
+					<param name="limit" value="entries-limit" parse="true"/>
+					<param name="current" value="entries-site" parse="true"/>
 					<param name="url">
-						<param name="option" value="com_sobipro" />
-						<param name="task" value="section.entries" />
-						<param name="pid" value="request.pid" parse="true" />
-						<param name="eSite" value="" />
+						<param name="option" value="com_sobipro"/>
+						<param name="task" value="section.entries"/>
+						<param name="pid" value="request.pid" parse="true"/>
+						<param name="eSite" value=""/>
 					</param>
 				</pagination>
 			</div>
@@ -141,38 +143,38 @@
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&amp;times;</button>
 				<h3>
-					<text value="ENTRY_REJECT" />
+					<text value="ENTRY_REJECT"/>
 				</h3>
 			</div>
 			<div class="modal-body">
 				<fieldset>
-					<field type="select" name="template" label="ENTRY_REJECT_TPLS" class="input-large" />
-					<field type="textarea" name="reason" label="ENTRY_REJECT_REASON" editor="false" class="input-splarge" rows="10" style="" />
-					<field type="toggle" name="trigger.unpublish" value="1" label="ENTRY_REJECT_TRIGGER_UNPUBLISH" prefix="yes_no" />
-					<field type="toggle" name="trigger.unapprove" label="ENTRY_REJECT_TRIGGER_UNAPPROVE" prefix="yes_no" />
-					<field type="toggle" name="unpublish" value="0" label="ENTRY_REJECT_UNPUBLISH" prefix="yes_no" />
-					<field type="toggle" name="discard" value="0" label="ENTRY_REJECT_DISCARD" prefix="yes_no" />
-					<field type="token" />
+					<field type="select" name="template" label="ENTRY_REJECT_TPLS" class="input-large"/>
+					<field type="textarea" name="reason" label="ENTRY_REJECT_REASON" editor="false" class="input-splarge" rows="10" style=""/>
+					<field type="toggle" name="trigger.unpublish" value="1" label="ENTRY_REJECT_TRIGGER_UNPUBLISH" prefix="yes_no"/>
+					<field type="toggle" name="trigger.unapprove" label="ENTRY_REJECT_TRIGGER_UNAPPROVE" prefix="yes_no"/>
+					<field type="toggle" name="unpublish" value="0" label="ENTRY_REJECT_UNPUBLISH" prefix="yes_no"/>
+					<field type="toggle" name="discard" value="0" label="ENTRY_REJECT_DISCARD" prefix="yes_no"/>
+					<field type="token"/>
 				</fieldset>
 			</div>
 			<div class="modal-footer">
 				<a href="#" class="btn btn-success pull-left ctrl-save-tpl">
-					<text value="ENTRY_REJECT_SAVE_TPL" />
+					<text value="ENTRY_REJECT_SAVE_TPL"/>
 				</a>
 				<a href="#" class="btn" data-dismiss="modal">
-					<text value="CLOSE" />
+					<text value="CLOSE"/>
 				</a>
 				<a href="#" class="btn btn-primary ctrl-reject">
-					<text value="ENTRY_REJECT" />
+					<text value="ENTRY_REJECT"/>
 				</a>
 			</div>
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="option" default="com_sobipro" />
-			<field name="task" default="section.entries" />
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default="section.entries"/>
 		</hidden>
 	</config>
 </definition>

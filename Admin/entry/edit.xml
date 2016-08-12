@@ -16,43 +16,43 @@
 
 <definition>
 	<header>
-		<title value="{'entry.add':'ADD_NEW_ENTRY','entry.edit':'EDIT_EXISTING_ENTRY'}" />
-		<file type="script" filename="bootstrap.tabs" />
-		<file type="script" filename="adm.revisions" />
+		<title value="{'entry.add':'ADD_NEW_ENTRY','entry.edit':'EDIT_EXISTING_ENTRY'}"/>
+		<file type="script" filename="bootstrap.tabs"/>
+		<file type="script" filename="adm.revisions"/>
 		<style>
 			ins {
-			    background-color: #c6ffc6;
-			    text-decoration: none;
+			background-color: #c6ffc6;
+			text-decoration: none;
 			}
 			del {
-			    background-color: #ffc6c6;
+			background-color: #ffc6c6;
 			}
 		</style>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiEdit">
-		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
-		<divider />
+		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES"/>
+		<divider/>
 		<button task="entry.apply" type="apply" condition="acl.entry.edit">
-			<button type="save" task="entry.save" />
+			<button type="save" task="entry.save"/>
 			<button type="save" task="entry.saveWithRevision" label="TB.SAVE_WITH_REVISION" invert-condition="history-behaviour" icon="comment"/>
-            <button task="entry.saveAndNew" label="TB.SAVE_AND_NEW" icon="file-text" />
-			<button type="duplicate" task="entry.clone" />
+			<button task="entry.saveAndNew" label="TB.SAVE_AND_NEW" icon="file-text"/>
+			<button type="duplicate" task="entry.clone"/>
 		</button>
-		<divider />
-		<button type="exit" task="entry.cancel" />
-		<divider />
-		<button type="help" target="_blank" />
+		<divider/>
+		<button type="exit" task="entry.cancel"/>
+		<divider/>
+		<button type="help" target="_blank"/>
 	</toolbar>
 	<body disable-menu="true">
 		<div class="row-fluid">
 			<div class="span12 spMainArea">
-				<message id="spMessage" />
+				<message id="spMessage"/>
 				<tabs>
 					<tab label="EN.BASE_DATA">
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<loop subject="entry.fields" />
+									<loop subject="entry.fields"/>
 								</fieldset>
 							</div>
 						</div>
@@ -61,7 +61,7 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
+									<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge"/>
 								</fieldset>
 							</div>
 						</div>
@@ -70,16 +70,18 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="textarea" name="entry.metaDesc" value="entry.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="textarea" name="entry.metaKeys" value="entry.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="text" name="entry.metaAuthor" value="entry.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+									<field type="textarea" name="entry.metaDesc" value="entry.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge"
+									       rows="2" style=""/>
+									<field type="textarea" name="entry.metaKeys" value="entry.metaKeys" label="KEYS" editor="false" class="input-splarge"
+									       rows="2" style=""/>
+									<field type="text" name="entry.metaAuthor" value="entry.metaAuthor" label="AUTHOR" class="input-large" maxlength="255"/>
 									<field type="select" label="ROBOTS" name="entry.metaRobots" selected="entry.metaRobots" class="input-large">
 										<values>
-											<option value="" label="ROBOTS_NONE" />
-											<option value="index, follow" label="index, follow" />
-											<option value="index, nofollow" label="index, nofollow" />
-											<option value="noindex, follow" label="noindex, follow" />
-											<option value="noindex, nofollow" label="noindex, nofollow" />
+											<option value="" label="ROBOTS_NONE"/>
+											<option value="index, follow" label="index, follow"/>
+											<option value="index, nofollow" label="index, nofollow"/>
+											<option value="noindex, follow" label="noindex, follow"/>
+											<option value="noindex, nofollow" label="noindex, nofollow"/>
 										</values>
 									</field>
 								</fieldset>
@@ -91,34 +93,39 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="toggle" name="entry.state" value="entry.state" label="PUBLISHED" prefix="yes_no" />
-                                    <field type="toggle" name="entry.approved" value="entry.approved" label="APPROVED" prefix="yes_no" />
-									<field type="datePicker" label="VALID_SINCE" name="entry.validSince" value="entry.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" addOffset="true" />
-									<field type="datePicker" label="VALID_UNTIL" name="entry.validUntil" value="entry.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" addOffset="true" />
+									<field type="toggle" name="entry.state" value="entry.state" label="PUBLISHED" prefix="yes_no"/>
+									<field type="toggle" name="entry.approved" value="entry.approved" label="APPROVED" prefix="yes_no"/>
+									<field type="datePicker" label="VALID_SINCE" name="entry.validSince" value="entry.validSince" class=""
+									       dateFormat="d-m-Y H:i:s" icon="unlock" addOffset="true"/>
+									<field type="datePicker" label="VALID_UNTIL" name="entry.validUntil" value="entry.validUntil" class=""
+									       dateFormat="d-m-Y H:i:s" icon="lock" addOffset="true"/>
 								</fieldset>
 								<fieldset label="CATN.EDIT_DATA">
-									<field type="output" value="entry.version" label="VERSION" class="badge" />
-									<field type="datePicker" label="CREATED_AT" name="entry.createdTime" value="entry.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="calendar" addOffset="true" />
-									<field type="userSelector" label="OWNER" name="entry.owner" value="entry.owner" class="span2" format="%name (%id)" />
+									<field type="output" value="entry.version" label="VERSION" class="badge"/>
+									<field type="datePicker" label="CREATED_AT" name="entry.createdTime" value="entry.createdTime" class=""
+									       dateFormat="d-m-Y H:i:s" icon="calendar" addOffset="true"/>
+									<field type="userSelector" label="OWNER" name="entry.owner" value="entry.owner" class="span2" format="%name (%id)"/>
 									<field type="output" label="CREATED_BY_IP" name="entry.ownerIP" class="infoText">
 										<value>
 											<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="entry.ownerIP" target="_blank">
-												<param name="searchtext" value="entry.ownerIP" parse="true" />
+												<param name="searchtext" value="entry.ownerIP" parse="true"/>
 											</url>
 										</value>
 									</field>
-									<field type="dateGetter" label="MODIFIED_AT" name="entry.updatedTime" value="entry.updatedTime" dateFormat="d-m-Y H:i:s" class="infoText" />
-									<field type="userGetter" label="MODIFIED_BY" name="entry.updater" value="entry.updater" dateFormat="d-m-Y H:i:s" class="infoText" format="%name (%id)" />
+									<field type="dateGetter" label="MODIFIED_AT" name="entry.updatedTime" value="entry.updatedTime" dateFormat="d-m-Y H:i:s"
+									       class="infoText"/>
+									<field type="userGetter" label="MODIFIED_BY" name="entry.updater" value="entry.updater" dateFormat="d-m-Y H:i:s"
+									       class="infoText" format="%name (%id)"/>
 									<field type="output" label="MODIFIED_BY_IP" name="entry.updaterIP" class="infoText">
 										<value>
 											<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="entry.updaterIP" target="_blank">
-												<param name="searchtext" value="entry.updaterIP" parse="true" />
+												<param name="searchtext" value="entry.updaterIP" parse="true"/>
 											</url>
 										</value>
 									</field>
 								</fieldset>
 								<fieldset label="CLICKCOUNTER">
-									<field type="button" label="CAT.RESET_COUNT" value="entry.counter" name="counter" class="btn counter-reset" rel="entry" />
+									<field type="button" label="CAT.RESET_COUNT" value="entry.counter" name="counter" class="btn counter-reset" rel="entry"/>
 								</fieldset>
 							</div>
 						</div>
@@ -126,49 +133,52 @@
 					<tab label="EN.ENTRY_HISTORY" condition="history.length">
 						<div class="row-fluid">
 							<div class="span12">
-								<table>
-									<head>
-										<cell label="HEAD_HISTORY_DATE" type="text" class="SpCellCenter" />
-										<cell label="HEAD_HISTORY_TYPE" type="text" />
-										<cell label="HEAD_HISTORY_CHANGED_BY" type="text" />
-										<cell label="HEAD_HISTORY_NOTE" type="text" class="SpCellCenter" />
-										<cell label="HEAD_HISTORY_LOAD" type="text" class="SpCellCenter" />
-										<cell label="HEAD_HISTORY_SITE" type="text" class="SpCellCenter" />
-									</head>
-									<loop subject="history">
-										<cell class="SpCellCenter">
-											<date value="changedAt" dateFormat="d-m-Y H:i:s" />
-										</cell>
-										<cell type="text" value="change" />
-										<cell type="link" value="userName" condition="uid" target="_blank" sef="false" live="true">
-											<url type="intern">
-												<param name="option" value="com_users" />
-												<param name="task" value="user.edit" />
-												<param name="id" value="uid" parse="true" />
-											</url>
-										</cell>
-										<cell type="text" value="" invert-condition="uid" />
-										<cell class="SpCellCenter">
-											<cell condition="status">
-												<tooltip>
-													<attribute name="content" value="reason" parse="true" />
-													<attribute name="title" value="" parse="false" />
-													<attribute name="icon" value="info-sign text-info" parse="false" />
-												</tooltip>
+								<div class="table-responsive">
+
+									<table>
+										<head>
+											<cell label="HEAD_HISTORY_DATE" type="text" class="SpCellCenter"/>
+											<cell label="HEAD_HISTORY_TYPE" type="text"/>
+											<cell label="HEAD_HISTORY_CHANGED_BY" type="text"/>
+											<cell label="HEAD_HISTORY_NOTE" type="text" class="SpCellCenter"/>
+											<cell label="HEAD_HISTORY_LOAD" type="text" class="SpCellCenter"/>
+											<cell label="HEAD_HISTORY_SITE" type="text" class="SpCellCenter"/>
+										</head>
+										<loop subject="history">
+											<cell class="SpCellCenter">
+												<date value="changedAt" dateFormat="d-m-Y H:i:s"/>
 											</cell>
-										</cell>
-										<cell type="link" label="HISTORY_LOAD" sef="false" live="true" class="SpCellCenter">
-											<url type="intern" class="btn btn-small" icon="refresh">
-												<param name="task" value="entry.edit" />
-												<param name="sid" value="id" parse="true" subject="skip" />
-												<param name="pid" value="sid" parse="true" subject="skip" />
-												<param name="revision" value="revision" parse="true" />
-												<param name="sp-language" value="language" parse="true" />
-											</url>
-										</cell>
-										<cell type="text" value="site" class="SpCellCenter" />
-									</loop>
-								</table>
+											<cell type="text" value="change"/>
+											<cell type="link" value="userName" condition="uid" target="_blank" sef="false" live="true">
+												<url type="intern">
+													<param name="option" value="com_users"/>
+													<param name="task" value="user.edit"/>
+													<param name="id" value="uid" parse="true"/>
+												</url>
+											</cell>
+											<cell type="text" value="" invert-condition="uid"/>
+											<cell class="SpCellCenter">
+												<cell condition="status">
+													<tooltip>
+														<attribute name="content" value="reason" parse="true"/>
+														<attribute name="title" value="" parse="false"/>
+														<attribute name="icon" value="info-sign text-info" parse="false"/>
+													</tooltip>
+												</cell>
+											</cell>
+											<cell type="link" label="HISTORY_LOAD" sef="false" live="true" class="SpCellCenter">
+												<url type="intern" class="btn btn-small" icon="refresh">
+													<param name="task" value="entry.edit"/>
+													<param name="sid" value="id" parse="true" subject="skip"/>
+													<param name="pid" value="sid" parse="true" subject="skip"/>
+													<param name="revision" value="revision" parse="true"/>
+													<param name="sp-language" value="language" parse="true"/>
+												</url>
+											</cell>
+											<cell type="text" value="site" class="SpCellCenter"/>
+										</loop>
+									</table>
+								</div>
 							</div>
 						</div>
 					</tab>
@@ -180,7 +190,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&amp;times;</button>
 					<h3>
-						<text value="HISTORY_REVISION_COMPARE" />
+						<text value="HISTORY_REVISION_COMPARE"/>
 					</h3>
 				</div>
 				<div class="modal-body">
@@ -192,23 +202,23 @@
 				</div>
 				<div class="modal-footer">
 					<!--<a href="#" class="btn btn ctrl-revision-html">-->
-						<!--<text value="HTML" /> <i class="icon-code"></i>-->
+					<!--<text value="HTML" /> <i class="icon-code"></i>-->
 					<!--</a>-->
 					<a href="#" class="btn" data-dismiss="modal">
-						<text value="CLOSE" />
+						<text value="CLOSE"/>
 					</a>
 				</div>
 			</div>
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="option" default="com_sobipro" />
-			<field name="task" default="" />
-			<field name="method" default="xhr" />
-			<field name="sp-language" default="" />
-			<field name="sid" value="entry.sid" />
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+			<field name="method" default="xhr"/>
+			<field name="sp-language" default=""/>
+			<field name="sid" value="entry.sid"/>
 			<field name="history-note" value="history-behaviour" condition="history.length"/>
 		</hidden>
 	</config>

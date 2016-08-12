@@ -33,6 +33,9 @@
 		<file path="common/entries.xsl">
 			Template to display all entries (entriesLoop) within a category or the search function. Build the structure of all entries and calls the "vCard" template while displaying single entry.
 		</file>
+		<file path="common/font.xsl">
+			Template to load Google fonts.
+		</file>
 		<file path="common/manage.xsl">
 			Displays the managing functions like edit entry, approve aso, within an entry.
 		</file>
@@ -141,9 +144,6 @@
 		<file path="section/ajax.ini">
 			Configuration file for AJAX navigation.
 		</file>
-        <file path="themes/blackwidow.less">
-            Blackwidow color theme (black; light on dark).
-        </file>
         <file path="themes/cornfield.less">
             Cornfield color theme (yellow/orange/brown).
         </file>

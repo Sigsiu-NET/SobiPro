@@ -17,69 +17,72 @@
 
 <definition>
 	<header>
-		<title value="MN.ACL" />
+		<title value="MN.ACL"/>
 	</header>
 	<toolbar title="MN.ACL" icon="SobiUser">
-		<button icon="cog" label="TB.JOOMLA_ACL" type="url" url="index.php?option=com_config&amp;amp;view=component&amp;amp;component=com_sobipro" />
-		<divider />
+		<button icon="cog" label="TB.JOOMLA_ACL" type="url" url="index.php?option=com_config&amp;amp;view=component&amp;amp;component=com_sobipro"/>
+		<divider/>
 		<buttons type="actions">
-			<button type="new" task="acl.add" />
+			<button type="new" task="acl.add"/>
 			<button type="delete" task="acl.delete" confirm="ACL.JS_MSG_DELETE_ACL_RULE"/>
-			<nav-header label="TB.PUBLISHING" />
-			<button type="enable" task="acl.enable" />
-			<button type="disable" task="acl.disable" />
+			<nav-header label="TB.PUBLISHING"/>
+			<button type="enable" task="acl.enable"/>
+			<button type="disable" task="acl.disable"/>
 		</buttons>
-        <divider />
-        <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-        <divider />
+		<divider/>
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<divider/>
 		<buttons type="options" dropdown-class="pull-right">
-			<button type="url" task="panel" />
-			<button type="url" task="config" />
-			<button type="url" task="extensions.installed" />
-            <button type="url" task="template.info" />
-			<button type="help" target="_blank" />
+			<button type="url" task="panel"/>
+			<button type="url" task="config"/>
+			<button type="url" task="extensions.installed"/>
+			<button type="url" task="template.info"/>
+			<button type="help" target="_blank"/>
 		</buttons>
 	</toolbar>
 	<body>
 		<div class="row-fluid">
-			<div class="span2" id="SPRightMenu">
-				<menu />
+			<div class="span3" id="SPRightMenu">
+				<menu/>
 			</div>
-			<div class="span10 spMainArea">
-				<message id="spMessage" />
-				<table condition="rules.length">
-					<head>
-                        <cell label="ACL.STATE_HEAD" type="text" class="SpCellCenter SpSmallCol" />
-                        <cell type="checkbox" rel="rid" class="SpCellCenter SpSmallCol" />
-						<cell label="ACL.HEADER_NAME" type="text" class="SpCellLeft" />
-					</head>
-					<loop subject="rules">
-                        <cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
-                            <url type="intern">
-                                <param name="task" value="acl.toggle.enabled" />
-                                <param name="rid" value="rid" parse="true" />
-                            </url>
-                        </cell>
-                        <cell type="checkbox" name="rid" value="rid" class="SpCellCenter" />
-						<cell class="SpCellLeft">
-							<cell type="link" value="name">
+			<div class="span9 spMainArea">
+				<message id="spMessage"/>
+				<div class="table-responsive">
+					<table condition="rules.length">
+						<head>
+							<cell label="ACL.STATE_HEAD" type="text" class="SpCellCenter SpSmallCol"/>
+							<cell type="checkbox" rel="rid" class="SpCellCenter SpSmallCol"/>
+							<cell label="ACL.HEADER_NAME" type="text" class="SpCellLeft"/>
+						</head>
+						<loop subject="rules">
+							<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince"
+							      valid-until="validUntil">
 								<url type="intern">
-									<param name="task" value="acl.edit" />
-									<param name="rid" value="rid" parse="true" />
+									<param name="task" value="acl.toggle.enabled"/>
+									<param name="rid" value="rid" parse="true"/>
 								</url>
 							</cell>
-							<cell type="text" value="note" class="subText" />
-						</cell>
-					</loop>
-				</table>
+							<cell type="checkbox" name="rid" value="rid" class="SpCellCenter"/>
+							<cell class="SpCellLeft">
+								<cell type="link" value="name">
+									<url type="intern">
+										<param name="task" value="acl.edit"/>
+										<param name="rid" value="rid" parse="true"/>
+									</url>
+								</cell>
+								<cell type="text" value="note" class="subText"/>
+							</cell>
+						</loop>
+					</table>
+				</div>
 			</div>
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="option" default="com_sobipro" />
-			<field name="task" default="" />
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
 		</hidden>
 	</config>
 </definition>

@@ -35,6 +35,7 @@ Legend:
 	(+) Possibility to redirect to login page if only registered users can add entries in B3-default3 template
 	(+) Support for base fee for an entry added
 	(+) Cmd+S and Ctrl+S shortucts - if applicable will save entry, category, settings
+	(+) Coupon field support added to the payment template file
 
 	(!) publishing_format set to a more readable format by default
 	(!) B3 template folder renamed to 'b3-default3' as path names have to be lowercase
@@ -43,6 +44,7 @@ Legend:
 	(!) Small back-end layout refreshments
     (!) schema file template.xsd updated
     (!) SobiPro's default template is now b3-default3 (Bootstrap 3 version)
+    (!) Left column more wide
 
 	(-) SobiPro template theme 'blackwidow' removed
 

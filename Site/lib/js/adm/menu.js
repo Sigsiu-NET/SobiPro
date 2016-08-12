@@ -34,7 +34,7 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( '#SPRightMenuHold' ).fadeIn( 'slide' );
 			SobiPro.jQuery( '#SPRightMenu' )
 				.siblings( 'div' )
-				.removeClass( 'span10' )
+				.removeClass( 'span9' )
 				.addClass( 'span12' )
                 .addClass('firstspan');
 		}
@@ -47,7 +47,7 @@ SobiPro.jQuery( document ).ready( function ()
 				.siblings( 'div' )
 				.removeClass( 'span12' )
                 .removeClass('firstspan')
-				.addClass( 'span10' );
+				.addClass( 'span9' );
 		}
 		SobiPro.jQuery( '#SPMenuCtrlBt' ).click( function ()
 		{

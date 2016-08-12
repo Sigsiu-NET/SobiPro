@@ -40,10 +40,10 @@
 	</toolbar>
 	<body>
 		<div class="row-fluid">
-			<div class="span2" id="SPRightMenu">
+			<div class="span3" id="SPRightMenu">
 				<menu />
 			</div>
-			<div class="span10 spMainArea">
+			<div class="span9 spMainArea">
 				<message id="spMessage" />
 				<div class="row-fluid">
 					<div class="span12">

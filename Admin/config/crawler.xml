@@ -17,61 +17,63 @@
 
 <definition>
 	<header>
-		<title value="Directory Crawler" />
-		<file type="script" filename="adm.crawler" />
+		<title value="Directory Crawler"/>
+		<file type="script" filename="adm.crawler"/>
 	</header>
 	<toolbar title="CRAWLER.SITE_TITLE" icon="SobiConfig">
-		<divider />
+		<divider/>
 		<button label="TB.START_CRAWL" task="crawler.init" icon="fighter-jet">
-			<button label="TB.RESTART_CRAWL" task="crawler.restart" icon="refresh" />
+			<button label="TB.RESTART_CRAWL" task="crawler.restart" icon="refresh"/>
 		</button>
-		<divider />
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-		<divider />
+		<divider/>
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<divider/>
 		<buttons type="options" dropdown-class="pull-right">
-			<button type="url" task="panel" />
+			<button type="url" task="panel"/>
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
-			<button type="url" task="extensions.installed" condition="acl.apps" />
-			<button type="url" task="template.info" />
-			<button type="help" target="_blank" />
+			<button type="url" task="extensions.installed" condition="acl.apps"/>
+			<button type="url" task="template.info"/>
+			<button type="help" target="_blank"/>
 		</buttons>
 	</toolbar>
 	<body>
 		<div class="row-fluid">
-			<div class="span2" id="SPRightMenu">
-				<menu />
+			<div class="span3" id="SPRightMenu">
+				<menu/>
 			</div>
-			<div class="span10 spMainArea">
-				<message id="spMessage" />
-                <message label="CRAWL.INFO" class="alert alert-info" type="info" dismiss-button="false" />
-				<message parse="cron" dismiss-button="false" icon="true"  />
+			<div class="span9 spMainArea">
+				<message id="spMessage"/>
+				<message label="CRAWL.INFO" class="alert alert-info" type="info" dismiss-button="false"/>
+				<message parse="cron" dismiss-button="false" icon="true"/>
 				<div id="crawlerResponse" class="hide">
-					<div class="alert alert-info" id="progressMessage" />
-                    <table>
-						<head>
-							<cell label="CRAWL_URL" type="text" class="" />
-							<cell label="CRAWL_CODE" type="text" class="SpCellCenter" />
-							<cell label="CRAWL_LINKS" type="text" class="SpCellCenter" />
-							<cell label="CRAWL_TIME" type="text" class="SpCellCenter" />
-						</head>
-						<tbody id="response-container">
-							<cell class="url" />
-							<cell class="code SpCellCenter" />
-							<cell class="links SpCellCenter" />
-							<cell class="time SpCellCenter" />
-						</tbody>
-					</table>
+					<div class="alert alert-info" id="progressMessage"/>
+					<div class="table-responsive">
+						<table>
+							<head>
+								<cell label="CRAWL_URL" type="text" class=""/>
+								<cell label="CRAWL_CODE" type="text" class="SpCellCenter"/>
+								<cell label="CRAWL_LINKS" type="text" class="SpCellCenter"/>
+								<cell label="CRAWL_TIME" type="text" class="SpCellCenter"/>
+							</head>
+							<tbody id="response-container">
+								<cell class="url"/>
+								<cell class="code SpCellCenter"/>
+								<cell class="links SpCellCenter"/>
+								<cell class="time SpCellCenter"/>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="option" default="com_sobipro" />
-			<field name="task" default="" />
-			<field name="method" default="xhr" />
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+			<field name="method" default="xhr"/>
 		</hidden>
 	</config>
 </definition>

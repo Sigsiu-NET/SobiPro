@@ -16,30 +16,30 @@
 
 <definition>
 	<header>
-		<title value="SEC.SITE_TITLE" />
-		<file type="script" filename="bootstrap.tabs" />
-		<file type="script" filename="adm.front" />
+		<title value="SEC.SITE_TITLE"/>
+		<file type="script" filename="bootstrap.tabs"/>
+		<file type="script" filename="adm.front"/>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiPro">
-		<divider />
+		<divider/>
 		<buttons type="actions" condition="acl.config">
-			<button type="new" task="section.add" label="TB.ADD_NEW" icon="file" />
-			<button type="delete" task="section.delete" confirm="TB.JS_DELETE_SECTION_WARN" />
-			<nav-header label="TB.PUBLISHING" />
-			<button type="publish" task="section.publish" />
-			<button type="hide" task="section.hide" />
+			<button type="new" task="section.add" label="TB.ADD_NEW" icon="file"/>
+			<button type="delete" task="section.delete" confirm="TB.JS_DELETE_SECTION_WARN"/>
+			<nav-header label="TB.PUBLISHING"/>
+			<button type="publish" task="section.publish"/>
+			<button type="hide" task="section.hide"/>
 		</buttons>
-		<divider />
+		<divider/>
 		<buttons type="options" dropdown-class="pull-right">
-			<button type="url" task="config" condition="acl.config" />
-			<button type="url" task="acl" condition="acl.config" />
-			<button type="url" task="extensions.installed" condition="acl.apps" />
-			<button type="url" task="template.info" condition="acl.apps" />
-			<button type="help" target="_blank" />
+			<button type="url" task="config" condition="acl.config"/>
+			<button type="url" task="acl" condition="acl.config"/>
+			<button type="url" task="extensions.installed" condition="acl.apps"/>
+			<button type="url" task="template.info" condition="acl.apps"/>
+			<button type="help" target="_blank"/>
 		</buttons>
 	</toolbar>
 	<body>
-		<message id="spMessage" />
+		<message id="spMessage"/>
 		<div class="row-fluid">
 			<div class="span6">
 
@@ -48,51 +48,53 @@
 						<p condition="system-state.messages.length" class="spStatusIssues">
 							<a href="#ReportedIssues" role="button" class="btn btn-warning" data-toggle="modal">
 								<text value="CPANEL_REPORTED_ISSUES">
-									<param value="system-state.messages.length" parse="true" />
+									<param value="system-state.messages.length" parse="true"/>
 								</text>
 							</a>
 						</p>
 						<p class="spStatusHeader">
-							<text value="CPANEL_SYSTEM_STATUS" />
+							<text value="CPANEL_SYSTEM_STATUS"/>
 						</p>
 					</div>
-					<message parse="system-state.accelerator" dismiss-button="false" icon="true" class="spStatusAlert" />
-					<message parse="system-state.xml-optimiser" dismiss-button="false" icon="true" class="spStatusAlert" />
-					<message parse="system-state.javascript-cache" dismiss-button="false" icon="true" class="spStatusAlert" />
-					<message parse="system-state.css-cache" dismiss-button="false" icon="true" class="spStatusAlert" />
-					<message parse="system-state.display-errors" dismiss-button="false" icon="true" class="spStatusAlert" />
-					<message parse="system-state.debug-level" dismiss-button="false" icon="true" class="spStatusAlert" />
-					<message parse="system-state.debug-xml" dismiss-button="false" icon="true" class="spStatusAlert" />
+					<message parse="system-state.accelerator" dismiss-button="false" icon="true" class="spStatusAlert"/>
+					<message parse="system-state.xml-optimiser" dismiss-button="false" icon="true" class="spStatusAlert"/>
+					<message parse="system-state.javascript-cache" dismiss-button="false" icon="true" class="spStatusAlert"/>
+					<message parse="system-state.css-cache" dismiss-button="false" icon="true" class="spStatusAlert"/>
+					<message parse="system-state.display-errors" dismiss-button="false" icon="true" class="spStatusAlert"/>
+					<message parse="system-state.debug-level" dismiss-button="false" icon="true" class="spStatusAlert"/>
+					<message parse="system-state.debug-xml" dismiss-button="false" icon="true" class="spStatusAlert"/>
 					<div class="modal hide" id="ReportedIssues" style="width: 620px;" condition="system-state.messages.length">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">
-								<text value="CLOSE_X" />
+								<text value="CLOSE_X"/>
 							</button>
 							<h4>
 								<text value="CPANEL_REPORTED_ISSUES">
-									<param value="system-state.messages.length" parse="true" />
+									<param value="system-state.messages.length" parse="true"/>
 								</text>
 							</h4>
 						</div>
 						<div class="modal-body">
-							<table>
-								<head>
-									<cell label="CPANEL_ISSUES_TYPE" type="text" class="SpCellCenter" />
-									<cell label="CPANEL_ISSUES_SECTION" type="text" />
-									<cell label="CPANEL_ISSUES_MESSAGE" type="text" />
-								</head>
-								<loop subject="system-state.messages">
-									<cell type="text" class="SPCellIssueMsg">
-										<cell type="text" value="type-text" class="SpCellLeft label label-var:[type]" />
-									</cell>
-									<cell type="text" value="section.link" />
-									<cell type="text" value="message" />
-								</loop>
-							</table>
+							<div class="table-responsive">
+								<table>
+									<head>
+										<cell label="CPANEL_ISSUES_TYPE" type="text" class="SpCellCenter"/>
+										<cell label="CPANEL_ISSUES_SECTION" type="text"/>
+										<cell label="CPANEL_ISSUES_MESSAGE" type="text"/>
+									</head>
+									<loop subject="system-state.messages">
+										<cell type="text" class="SPCellIssueMsg">
+											<cell type="text" value="type-text" class="SpCellLeft label label-var:[type]"/>
+										</cell>
+										<cell type="text" value="section.link"/>
+										<cell type="text" value="message"/>
+									</loop>
+								</table>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<a href="#" class="btn" data-dismiss="modal">
-								<text value="CLOSE" />
+								<text value="CLOSE"/>
 							</a>
 						</div>
 					</div>
@@ -101,22 +103,22 @@
 				<ul class="cpanel thumbnails">
 					<li class="spBox" condition="acl.config">
 						<url type="intern" label="CPANEL.GCONF" image="../media/sobipro/adm/folder-configuration.png">
-							<param name="task" value="config" />
+							<param name="task" value="config"/>
 						</url>
 					</li>
 					<li class="spBox" condition="acl.config">
 						<url type="intern" label="CPANEL.ACL" image="../media/sobipro/adm/sobipro-acl-edit.png">
-							<param name="task" value="acl" />
+							<param name="task" value="acl"/>
 						</url>
 					</li>
 					<li class="spBox" condition="acl.apps">
 						<url type="intern" label="CPANEL.SAM" image="../media/sobipro/adm/folder-application.png">
-							<param name="task" value="extensions.installed" />
+							<param name="task" value="extensions.installed"/>
 						</url>
 					</li>
 					<li class="spBox" condition="acl.apps">
 						<url type="intern" label="CPANEL.TMPL" image="../media/sobipro/adm/folder-templates.png">
-							<param name="task" value="template.info" />
+							<param name="task" value="template.info"/>
 						</url>
 					</li>
 				</ul>
@@ -125,42 +127,41 @@
 					<div class="btn-group pull-right" id="SectionFilterHead">
 						<field type="select" name="order" selected="order" class="input-large spOrdering">
 							<values>
-								<values label="ORDER_BY" />
-								<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
-								<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
-								<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC" />
-								<option value="state.desc" label="CATN.ORDER_BY_STATE_DESC" />
+								<values label="ORDER_BY"/>
+								<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC"/>
+								<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC"/>
+								<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC"/>
+								<option value="state.desc" label="CATN.ORDER_BY_STATE_DESC"/>
 							</values>
 						</field>
 					</div>
 				</header>
-				<div class="table-responsive cpanel">
-					<table>
-						<head>
-							<cell type="checkbox" rel="c_sid" class="SpCellCenter" />
-							<cell label="SECTIONS.HEADER_ID" type="text" class="SpCellCenter" />
-							<cell label="SECTIONS.HEADER_NAME" type="text" />
-							<cell label="SECTION.STATE_HEAD" type="text" class="SpCellCenter" />
-						</head>
-						<loop subject="sections">
-							<cell type="checkbox" name="c_sid" value="id" class="SpCellCenter" />
-							<cell type="text" value="id" class="SpCellCenter" />
-							<cell>
-								<cell type="link" value="name">
-									<url type="intern">
-										<param name="sid" value="id" parse="true" />
-									</url>
-								</cell>
-							</cell>
-							<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+				<table>
+					<head>
+						<cell type="checkbox" rel="c_sid" class="SpCellCenter"/>
+						<cell label="SECTIONS.HEADER_ID" type="text" class="SpCellCenter"/>
+						<cell label="SECTIONS.HEADER_NAME" type="text"/>
+						<cell label="SECTION.STATE_HEAD" type="text" class="SpCellCenter"/>
+					</head>
+					<loop subject="sections">
+						<cell type="checkbox" name="c_sid" value="id" class="SpCellCenter"/>
+						<cell type="text" value="id" class="SpCellCenter"/>
+						<cell>
+							<cell type="link" value="name">
 								<url type="intern">
-									<param name="task" value="section.toggle.enabled" />
-									<param name="sid" value="id" parse="true" />
+									<param name="sid" value="id" parse="true"/>
 								</url>
 							</cell>
-						</loop>
-					</table>
-				</div>
+						</cell>
+						<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince"
+						      valid-until="validUntil">
+							<url type="intern">
+								<param name="task" value="section.toggle.enabled"/>
+								<param name="sid" value="id" parse="true"/>
+							</url>
+						</cell>
+					</loop>
+				</table>
 			</div>
 
 
@@ -169,23 +170,23 @@
 					<div class="accordion-group">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#collapseOne">
-								<text value="ABOUT.ABOUT_PANE" />
+								<text value="ABOUT.ABOUT_PANE"/>
 							</a>
 						</div>
 						<div id="collapseOne" class="accordion-body collapse in">
 							<div class="accordion-inner spPanelSobiPro">
 								<div style="float: right; margin: 10px 0 0 10px;">
 									<a href="https://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
-										<img src="../media/sobipro/sigsiu.png" alt="Sigsiu.NET Software Development" />
+										<img src="../media/sobipro/sigsiu.png" alt="Sigsiu.NET Software Development"/>
 									</a>
 								</div>
 								<div style="float: left; margin: 0 10px 0 0;">
 									<a href="https://www.Sigsiu.NET" target="_blank" title="Sigsiu.NET Software Development">
-										<img src="../media/sobipro/logo.png" alt="Sigsiu.NET Software Development" />
+										<img src="../media/sobipro/logo.png" alt="Sigsiu.NET Software Development"/>
 									</a>
 								</div>
 								<p class="spText">
-									<text value="ABOUT.SP_DESC" />
+									<text value="ABOUT.SP_DESC"/>
 								</p>
 								<p class="spText">
 									<text value="ABOUT.DEVELOPED_AND_DESIGNED">
@@ -196,7 +197,7 @@
 									</text>
 								</p>
 								<h4 style="clear: both; margin-top: 25px;">
-									<text value="ABOUT.SP_CLUB" />
+									<text value="ABOUT.SP_CLUB"/>
 								</h4>
 								<p class="spText">
 									<text value="ABOUT.SP_CLUBDESC">
@@ -206,8 +207,10 @@
 											<![CDATA[<a href="https://www.Sigsiu.NET/support" target="_blank">SobiPro Support System</a>]]></param>
 									</text>
 								</p>
-								<a href="http://SobiPro.Sigsiu.NET" target="_blank" title="The SobiPro Club - Support, Documentation, Applications and much more .... ">
-									<img src="../media/sobipro/jointheclub.png" alt="The SobiPro Club - Support, Documentation, Applications and much more .... " />
+								<a href="http://SobiPro.Sigsiu.NET" target="_blank"
+								   title="The SobiPro Club - Support, Documentation, Applications and much more .... ">
+									<img src="../media/sobipro/jointheclub.png"
+									     alt="The SobiPro Club - Support, Documentation, Applications and much more .... "/>
 								</a>
 							</div>
 						</div>
@@ -215,15 +218,15 @@
 					<div class="accordion-group" condition="acl.apps">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProUpdates">
-								<text value="ABOUT.UPDATES_PANE" />
+								<text value="ABOUT.UPDATES_PANE"/>
 							</a>
 						</div>
 						<div id="SobiProUpdates" class="accordion-body collapse">
 							<div class="accordion-inner">
 								<text value="ABOUT.UD.YOU_ARE_USING">
-									<param value="version" parse="true" />
+									<param value="version" parse="true"/>
 								</text>
-								<div id="SPVerUpd" class="spVersions" />
+								<div id="SPVerUpd" class="spVersions"/>
 							</div>
 						</div>
 					</div>
@@ -232,7 +235,7 @@
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProNewsPane" id="SobiProNews">
 								<text value="ABOUT.NEWS_PANE">
-									<param value="news.title" parse="true" />
+									<param value="news.title" parse="true"/>
 								</text>
 							</a>
 						</div>
@@ -243,12 +246,12 @@
 									<loop subject="news.feeds" table="false">
 										<cell class="SpCellContainer">
 											<cell type="image" value="title" class="SpCellNewsImage">
-												<url type="extern" host="image" />
+												<url type="extern" host="image"/>
 											</cell>
 											<cell type="link" value="title" class="SpCellNewsTitle">
-												<url type="extern" host="url" />
+												<url type="extern" host="url"/>
 											</cell>
-											<cell type="text" value="content" class="SpCellNewsContent" />
+											<cell type="text" value="content" class="SpCellNewsContent"/>
 										</cell>
 									</loop>
 								</div>
@@ -259,24 +262,24 @@
 					<div class="accordion-group">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProCreditsPane">
-								<text value="ABOUT.CREDITS_PANE" />
+								<text value="ABOUT.CREDITS_PANE"/>
 							</a>
 						</div>
 						<div id="SobiProCreditsPane" class="accordion-body collapse">
 							<div class="accordion-inner spCredits">
-								<file filename="about.credits" type="html" translatable="true" start-path="administrator" />
+								<file filename="about.credits" type="html" translatable="true" start-path="administrator"/>
 							</div>
 						</div>
 					</div>
 					<div class="accordion-group">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProLicensePane">
-								<text value="ABOUT.LICENSE_PANE" />
+								<text value="ABOUT.LICENSE_PANE"/>
 							</a>
 						</div>
 						<div id="SobiProLicensePane" class="accordion-body collapse">
 							<div class="accordion-inner spLicense">
-								<file filename="about.license" type="html" translatable="true" start-path="administrator" />
+								<file filename="about.license" type="html" translatable="true" start-path="administrator"/>
 							</div>
 						</div>
 					</div>
@@ -285,85 +288,91 @@
 				<div class="cpanel entries">
 					<tabs condition="show-entries">
 						<tab label="CPANEL_POPULAR_ENTRIES" condition="entries.popular.length">
-							<table>
-								<head>
-									<cell label="ENTRY.HEADER_NAME" type="text" />
-									<cell label="ENTRY.HEADER_COUNTER" type="text" class="SpCellCenter" />
-									<cell label="ENTRY.HEADER_SECTION" type="text" />
-								</head>
-								<loop subject="entries.popular">
-									<cell>
-										<cell type="link" value="name">
-											<url type="intern">
-												<param name="task" value="entry.edit" parse="false" />
-												<param name="sid" value="id" parse="true" />
-											</url>
+							<div class="table-responsive">
+								<table>
+									<head>
+										<cell label="ENTRY.HEADER_NAME" type="text"/>
+										<cell label="ENTRY.HEADER_COUNTER" type="text" class="SpCellCenter"/>
+										<cell label="ENTRY.HEADER_SECTION" type="text"/>
+									</head>
+									<loop subject="entries.popular">
+										<cell>
+											<cell type="link" value="name">
+												<url type="intern">
+													<param name="task" value="entry.edit" parse="false"/>
+													<param name="sid" value="id" parse="true"/>
+												</url>
+											</cell>
 										</cell>
-									</cell>
-									<cell type="text" value="counter" class="SpCellCenter" />
-									<cell>
-										<cell type="link" value="properties.section.name">
-											<url type="intern">
-												<param name="sid" value="properties.section.id" parse="true" />
-											</url>
+										<cell type="text" value="counter" class="SpCellCenter"/>
+										<cell>
+											<cell type="link" value="properties.section.name">
+												<url type="intern">
+													<param name="sid" value="properties.section.id" parse="true"/>
+												</url>
+											</cell>
 										</cell>
-									</cell>
-								</loop>
-							</table>
+									</loop>
+								</table>
+							</div>
 						</tab>
 						<tab label="CPANEL_NEW_ENTRIES" condition="entries.latest.length">
-							<table>
-								<head>
-									<cell label="ENTRY.HEADER_NAME" type="text" />
-									<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter" />
-									<cell label="ENTRY.HEADER_SECTION" type="text" />
-								</head>
-								<loop subject="entries.latest">
-									<cell>
-										<cell type="link" value="name">
-											<url type="intern">
-												<param name="task" value="entry.edit" parse="false" />
-												<param name="sid" value="id" parse="true" />
-											</url>
+							<div class="table-responsive">
+								<table>
+									<head>
+										<cell label="ENTRY.HEADER_NAME" type="text"/>
+										<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter"/>
+										<cell label="ENTRY.HEADER_SECTION" type="text"/>
+									</head>
+									<loop subject="entries.latest">
+										<cell>
+											<cell type="link" value="name">
+												<url type="intern">
+													<param name="task" value="entry.edit" parse="false"/>
+													<param name="sid" value="id" parse="true"/>
+												</url>
+											</cell>
 										</cell>
-									</cell>
-									<cell type="text" value="createdTime" class="SpCellCenter" />
-									<cell>
-										<cell type="link" value="properties.section.name">
-											<url type="intern">
-												<param name="sid" value="properties.section.id" parse="true" />
-											</url>
+										<cell type="text" value="createdTime" class="SpCellCenter"/>
+										<cell>
+											<cell type="link" value="properties.section.name">
+												<url type="intern">
+													<param name="sid" value="properties.section.id" parse="true"/>
+												</url>
+											</cell>
 										</cell>
-									</cell>
-								</loop>
-							</table>
+									</loop>
+								</table>
+							</div>
 						</tab>
 						<tab label="CPANEL_AWAITING_APPROVAL" condition="entries.unapproved.length">
-							<table>
-								<head>
-									<cell label="ENTRY.HEADER_NAME" type="text" />
-									<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter" />
-									<cell label="ENTRY.HEADER_SECTION" type="text" />
-								</head>
-								<loop subject="entries.unapproved">
-									<cell>
-										<cell type="link" value="name">
-											<url type="intern">
-												<param name="task" value="entry.edit" parse="false" />
-												<param name="sid" value="id" parse="true" />
-											</url>
+							<div class="table-responsive">
+								<table>
+									<head>
+										<cell label="ENTRY.HEADER_NAME" type="text"/>
+										<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter"/>
+										<cell label="ENTRY.HEADER_SECTION" type="text"/>
+									</head>
+									<loop subject="entries.unapproved">
+										<cell>
+											<cell type="link" value="name">
+												<url type="intern">
+													<param name="task" value="entry.edit" parse="false"/>
+													<param name="sid" value="id" parse="true"/>
+												</url>
+											</cell>
 										</cell>
-									</cell>
-									<cell type="text" value="createdTime" class="SpCellCenter" />
-									<cell>
-										<cell type="link" value="properties.section.name">
-											<url type="intern">
-												<param name="sid" value="properties.section.id" parse="true" />
-											</url>
+										<cell type="text" value="createdTime" class="SpCellCenter"/>
+										<cell>
+											<cell type="link" value="properties.section.name">
+												<url type="intern">
+													<param name="sid" value="properties.section.id" parse="true"/>
+												</url>
+											</cell>
 										</cell>
-									</cell>
-								</loop>
-							</table>
+									</loop>
+								</table>
+							</div>
 						</tab>
 					</tabs>
 				</div>
@@ -372,10 +381,10 @@
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="option" default="com_sobipro" />
-			<field name="task" default="" />
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
 		</hidden>
 	</config>
 </definition>

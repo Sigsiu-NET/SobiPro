@@ -16,77 +16,79 @@
 
 <definition>
 	<header>
-		<title value="TP.INFO_SITE_TITLE" />
-		<file type="script" filename="bootstrap.tabs" />
-		<file type="script" filename="adm.template" />
+		<title value="TP.INFO_SITE_TITLE"/>
+		<file type="script" filename="bootstrap.tabs"/>
+		<file type="script" filename="adm.template"/>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiTemplate">
-		<button type="duplicate" task="template.clone" label="TB.CLONE" />
-		<divider />
-		<button type="delete" task="template.delete" confirm="TB.JS_DELETE_TEMPLATE_WARN" />
-		<divider />
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-		<divider />
+		<button type="duplicate" task="template.clone" label="TB.CLONE"/>
+		<divider/>
+		<button type="delete" task="template.delete" confirm="TB.JS_DELETE_TEMPLATE_WARN"/>
+		<divider/>
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<divider/>
 		<buttons type="options" dropdown-class="pull-right">
-			<button type="url" task="panel" />
-			<button type="url" task="config" condition="acl.config" />
-			<button type="url" task="acl" condition="acl.config" />
-			<button type="url" task="extensions.installed" condition="acl.apps" />
-			<button type="url" task="template.info" />
-			<button type="help" target="_blank" />
+			<button type="url" task="panel"/>
+			<button type="url" task="config" condition="acl.config"/>
+			<button type="url" task="acl" condition="acl.config"/>
+			<button type="url" task="extensions.installed" condition="acl.apps"/>
+			<button type="url" task="template.info"/>
+			<button type="help" target="_blank"/>
 		</buttons>
 	</toolbar>
 	<body>
 		<div class="row-fluid">
-			<div class="span2" id="SPRightMenu">
-				<menu />
+			<div class="span3" id="SPRightMenu">
+				<menu/>
 			</div>
-			<div class="span10 spMainArea">
-				<message id="spMessage" />
+			<div class="span9 spMainArea">
+				<message id="spMessage"/>
 				<tabs>
 					<tab label="TP.INFO">
 						<div class="row-fluid">
 							<div class="span6">
 								<fieldset>
-									<field type="output" value="template.name" label="TP.TEMPLATE_NAME" />
+									<field type="output" value="template.name" label="TP.TEMPLATE_NAME"/>
 									<field type="output" value="template.author.url" label="TP.AUTHORURL" condition="template.author.url">
 										<value>
-											<url type="external" target="_blank" content="template.author.name" uri="template.author.url" />
+											<url type="external" target="_blank" content="template.author.name" uri="template.author.url"/>
 										</value>
 									</field>
-									<field type="output" value="template.author.name" label="TP.AUTHORURL" invert-condition="template.author.url" />
-									<field type="output" value="template.copyright" label="TP.COPYR" />
-									<field type="output" value="template.license" label="TP.LIC" />
-									<field type="output" value="template.version" label="TP.VER" />
-									<field type="dateGetter" value="template.date" label="TP.DATE" dateFormat="d-m-Y" />
-									<field type="output" value="template.description" label="TP.DESC" />
+									<field type="output" value="template.author.name" label="TP.AUTHORURL" invert-condition="template.author.url"/>
+									<field type="output" value="template.copyright" label="TP.COPYR"/>
+									<field type="output" value="template.license" label="TP.LIC"/>
+									<field type="output" value="template.version" label="TP.VER"/>
+									<field type="dateGetter" value="template.date" label="TP.DATE" dateFormat="d-m-Y"/>
+									<field type="output" value="template.description" label="TP.DESC"/>
 								</fieldset>
 							</div>
 							<div class="span6" condition="template.preview">
-								<img class="img-rounded img-polaroid" width="95%" src="var:[template.preview]" alt="" />
+								<img class="img-rounded img-polaroid" width="95%" src="var:[template.preview]" alt=""/>
 							</div>
 						</div>
 					</tab>
 					<tab label="TP.FILES_DECS" condition="files.length">
 						<div class="row-fluid">
 							<div class="span12">
-								<table>
-									<head>
-										<cell label="TP.HEAD_FILENAME" type="text" class="SpCellLeft" />
-										<cell label="TP.HEAD_FILE_DESC" type="text" class="SpCellLeft" />
-									</head>
-									<loop subject="files">
-										<cell type="link" value="file" condition="filepath">
-											<url type="intern">
-												<param name="task" value="template.edit" />
-												<param name="file" value="filepath" parse="true" />
-												<param name="sid" value="sid" parse="true" subject="skip" />
-											</url>
-										</cell>
-										<cell type="text" value="file" invert-condition="filepath" />
-										<cell type="text" value="description" class="SpCellLeft" />
-									</loop>
-								</table>
+								<div class="table-responsive">
+									<table>
+										<head>
+											<cell label="TP.HEAD_FILENAME" type="text" class="SpCellLeft"/>
+											<cell label="TP.HEAD_FILE_DESC" type="text" class="SpCellLeft"/>
+										</head>
+										<loop subject="files">
+											<cell type="link" value="file" condition="filepath">
+												<url type="intern">
+													<param name="task" value="template.edit"/>
+													<param name="file" value="filepath" parse="true"/>
+													<param name="sid" value="sid" parse="true" subject="skip"/>
+												</url>
+											</cell>
+											<cell type="text" value="file" invert-condition="filepath"/>
+											<cell type="text" value="description" class="SpCellLeft"/>
+										</loop>
+									</table>
+								</div>
 							</div>
 						</div>
 					</tab>
@@ -95,11 +97,11 @@
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="option" default="com_sobipro" />
-			<field name="task" default="" />
-			<field name="templateNewName" default="" />
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+			<field name="templateNewName" default=""/>
 		</hidden>
 	</config>
 </definition>

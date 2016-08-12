@@ -138,9 +138,6 @@
 		<file path="section/ajax.ini">
 			Configuration file for AJAX navigation.
 		</file>
-		<file path="themes/blackwidow.less">
-			Blackwidow color theme (black; light on dark).
-		</file>
 		<file path="themes/cornfield.less">
 			Cornfield color theme (yellow/orange/brown).
 		</file>

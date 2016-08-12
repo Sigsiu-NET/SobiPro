@@ -17,57 +17,59 @@
 
 <definition>
 	<header>
-		<title value="FLR.SITE_TITLE" />
-		<file type="script" filename="adm.filters" />
+		<title value="FLR.SITE_TITLE"/>
+		<file type="script" filename="adm.filters"/>
 	</header>
 	<toolbar title="FLR.SITE_TITLE" icon="SobiFields">
-		<button type="new" class="filter-edit" />
-		<divider />
-        <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-        <divider />
+		<button type="new" class="filter-edit"/>
+		<divider/>
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<divider/>
 		<buttons type="options" dropdown-class="pull-right">
-			<button type="url" task="panel" />
-			<button type="url" task="config" />
-			<button type="url" task="acl" />
-			<button type="url" task="extensions.installed" />
-            <button type="url" task="template.info" />
-			<button type="help" target="_blank" />
+			<button type="url" task="panel"/>
+			<button type="url" task="config"/>
+			<button type="url" task="acl"/>
+			<button type="url" task="extensions.installed"/>
+			<button type="url" task="template.info"/>
+			<button type="help" target="_blank"/>
 		</buttons>
 	</toolbar>
 	<body>
 		<div class="row-fluid">
-			<div class="span2" id="SPRightMenu">
-				<menu />
+			<div class="span3" id="SPRightMenu">
+				<menu/>
 			</div>
-			<div class="span10 spMainArea">
-				<message id="spMessage" />
-				<table>
-					<head>
-						<cell label="FLR.FILTER_ID" type="text" class="SpCellLeft" />
-						<cell label="FLR.EDIT_FILTER" type="text" class="SpCellCenter" />
-						<cell label="FLR.FILTER_NAME" type="text" class="SpCellLeft" />
-						<cell label="FLR.FILTER_MSG" type="text" class="SpCellLeft" />
-						<cell label="FLR.FILTER_REGEX" type="text" class="SpCellLeft" />
-					</head>
-					<loop subject="filters">
-						<cell type="text" value="id" class="SpCellLeft filterId" />
-						<cell type="text" class="SpCellCenter">
-							<button type="new" class="filter-edit" icon="edit" rel="var:[id]" />
-						</cell>
-						<cell type="text" value="name" class="SpCellLeft" />
-						<cell type="text" value="message" class="SpCellLeft" />
-						<cell type="text" value="regex" class="SpCellLeft" />
-					</loop>
-				</table>
-				<field type="modalWindow" id="filter-edit-window" header="FLR.EDIT_FILTER" />
+			<div class="span9 spMainArea">
+				<message id="spMessage"/>
+				<div class="table-responsive">
+					<table>
+						<head>
+							<cell label="FLR.FILTER_ID" type="text" class="SpCellLeft"/>
+							<cell label="FLR.EDIT_FILTER" type="text" class="SpCellCenter"/>
+							<cell label="FLR.FILTER_NAME" type="text" class="SpCellLeft"/>
+							<cell label="FLR.FILTER_MSG" type="text" class="SpCellLeft"/>
+							<cell label="FLR.FILTER_REGEX" type="text" class="SpCellLeft"/>
+						</head>
+						<loop subject="filters">
+							<cell type="text" value="id" class="SpCellLeft filterId"/>
+							<cell type="text" class="SpCellCenter">
+								<button type="new" class="filter-edit" icon="edit" rel="var:[id]"/>
+							</cell>
+							<cell type="text" value="name" class="SpCellLeft"/>
+							<cell type="text" value="message" class="SpCellLeft"/>
+							<cell type="text" value="regex" class="SpCellLeft"/>
+						</loop>
+					</table>
+				</div>
+				<field type="modalWindow" id="filter-edit-window" header="FLR.EDIT_FILTER"/>
 			</div>
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="option" const="com_sobipro" />
-			<field name="task" default="" />
+			<field name="option" const="com_sobipro"/>
+			<field name="task" default=""/>
 		</hidden>
 	</config>
 </definition>

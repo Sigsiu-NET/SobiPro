@@ -16,57 +16,57 @@
 
 <definition>
 	<header>
-		<title value="{'category.view':'CATEGORY_LIST_HEADER','section.view':''}" />
+		<title value="{'category.view':'CATEGORY_LIST_HEADER','section.view':''}"/>
 		<!--<title value="CATEGORY_LIST_HEADER" />-->
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSection">
 		<buttons type="entry" condition="acl.entry.visible">
-			<button type="url" sid="true" task="entry.add" label="AMN.ADD" icon="plus" condition="acl.entry.add" />
-			<button type="delete" task="entry.delete" confirm="TB.JS_DELETE_ENTRIES_WARN" condition="acl.entry.delete" />
-			<nav-header label="TB.PUBLISHING" />
-			<button type="publish" task="entry.publish" condition="acl.entry.publish" />
-			<button type="hide" task="entry.hide" condition="acl.entry.publish" />
-			<nav-header label="TB.APPROVAL" />
-			<button type="approve" task="entry.approve" condition="acl.entry.approve" />
-			<button type="revoke" task="entry.unapprove" condition="acl.entry.approve" />
+			<button type="url" sid="true" task="entry.add" label="AMN.ADD" icon="plus" condition="acl.entry.add"/>
+			<button type="delete" task="entry.delete" confirm="TB.JS_DELETE_ENTRIES_WARN" condition="acl.entry.delete"/>
+			<nav-header label="TB.PUBLISHING"/>
+			<button type="publish" task="entry.publish" condition="acl.entry.publish"/>
+			<button type="hide" task="entry.hide" condition="acl.entry.publish"/>
+			<nav-header label="TB.APPROVAL"/>
+			<button type="approve" task="entry.approve" condition="acl.entry.approve"/>
+			<button type="revoke" task="entry.unapprove" condition="acl.entry.approve"/>
 		</buttons>
-		<divider />
+		<divider/>
 		<buttons type="category" condition="acl.category.visible">
-			<button type="edit" sid="true" task="category.edit" invert-condition="root" label="AMN.EDIT" icon="file-text" condition="acl.category.edit" />
-			<nav-header label="TB.SUBCATEGORY" />
-			<button type="url" sid="true" task="category.add" label="AMN.ADD" icon="plus" condition="acl.category.add" />
-			<button type="delete" task="category.delete" confirm="TB.JS_DELETE_CATEGORIES_WARN" condition="acl.category.delete" />
-			<nav-header label="TB.PUBLISHING" />
-			<button type="publish" task="category.publish" />
-			<button type="hide" task="category.hide" />
-			<nav-header label="TB.APPROVAL" />
-			<button type="approve" task="category.approve" />
-			<button type="revoke" task="category.unapprove" />
+			<button type="edit" sid="true" task="category.edit" invert-condition="root" label="AMN.EDIT" icon="file-text" condition="acl.category.edit"/>
+			<nav-header label="TB.SUBCATEGORY"/>
+			<button type="url" sid="true" task="category.add" label="AMN.ADD" icon="plus" condition="acl.category.add"/>
+			<button type="delete" task="category.delete" confirm="TB.JS_DELETE_CATEGORIES_WARN" condition="acl.category.delete"/>
+			<nav-header label="TB.PUBLISHING"/>
+			<button type="publish" task="category.publish"/>
+			<button type="hide" task="category.hide"/>
+			<nav-header label="TB.APPROVAL"/>
+			<button type="approve" task="category.approve"/>
+			<button type="revoke" task="category.unapprove"/>
 		</buttons>
-		<divider />
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-		<divider />
+		<divider/>
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<divider/>
 		<buttons type="options" dropdown-class="pull-right">
-			<button type="url" task="panel" />
-			<button type="url" task="config" condition="acl.config" />
-			<button type="url" task="acl" condition="acl.config" />
-			<button type="url" task="extensions.installed" condition="acl.apps" />
-			<button type="url" task="template.info" condition="acl.apps" />
-			<button type="help" target="_blank" />
+			<button type="url" task="panel"/>
+			<button type="url" task="config" condition="acl.config"/>
+			<button type="url" task="acl" condition="acl.config"/>
+			<button type="url" task="extensions.installed" condition="acl.apps"/>
+			<button type="url" task="template.info" condition="acl.apps"/>
+			<button type="help" target="_blank"/>
 		</buttons>
 	</toolbar>
 
 	<body>
 		<div class="row-fluid">
-			<div class="span2" id="SPRightMenu">
-				<menu />
+			<div class="span3" id="SPRightMenu">
+				<menu/>
 			</div>
-			<div class="span10 spMainArea">
-				<message id="spMessage" />
+			<div class="span9 spMainArea">
+				<message id="spMessage"/>
 				<div class="row-fluid">
 					<div class="hide" id="SpProgress">
 						<div>
-							<message type="info" label="" class="smallmessage" />
+							<message type="info" label="" class="smallmessage"/>
 						</div>
 						<div class="progress progress-striped active" id="SpProgress">
 							<div class="bar" style="width: 0%;"></div>
@@ -77,82 +77,85 @@
 					<div class="btn-group pull-right" id="spCategoriesFilterHead">
 						<field type="select" name="corder" selected="corder" class="input-large spOrdering">
 							<values>
-								<values label="ORDER_BY" />
-								<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
-								<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC" />
-								<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC" />
-								<option value="state.desc" label="CATN.ORDER_BY_STATE_DESC" />
-								<option value="approved.asc" label="CATN.ORDER_BY_APPR_ASC" />
-								<option value="approved.desc" label="CATN.ORDER_BY_APPR_DESC" />
-								<option value="position.asc" label="CATN.ORDER_BY_ORDER_ASC" />
-								<option value="position.desc" label="CATN.ORDER_BY_ORDER_DESC" />
-								<option value="owner.desc" label="CATN.ORDER_BY_OWNER" />
+								<values label="ORDER_BY"/>
+								<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC"/>
+								<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC"/>
+								<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC"/>
+								<option value="state.desc" label="CATN.ORDER_BY_STATE_DESC"/>
+								<option value="approved.asc" label="CATN.ORDER_BY_APPR_ASC"/>
+								<option value="approved.desc" label="CATN.ORDER_BY_APPR_DESC"/>
+								<option value="position.asc" label="CATN.ORDER_BY_ORDER_ASC"/>
+								<option value="position.desc" label="CATN.ORDER_BY_ORDER_DESC"/>
+								<option value="owner.desc" label="CATN.ORDER_BY_OWNER"/>
 							</values>
 						</field>
 						<field type="select" name="climit" selected="categories-limit" class="input-mini spOrdering">
 							<values>
-								<values label="LISTING_LIMIT" />
-								<option value="5" />
-								<option value="15" />
-								<option value="25" />
-								<option value="50" />
-								<option value="100" />
+								<values label="LISTING_LIMIT"/>
+								<option value="5"/>
+								<option value="15"/>
+								<option value="25"/>
+								<option value="50"/>
+								<option value="100"/>
 							</values>
 						</field>
-						<field type="button" name="save-ordering" icon="save" class="btn ctrl-default-ordering" data-target="categories" />
+						<field type="button" name="save-ordering" icon="save" class="btn ctrl-default-ordering" data-target="categories"/>
 					</div>
 				</header>
 				<table>
 					<head>
-						<cell label="HEADER_ID" type="text" class="SpCellCenter" />
-						<cell type="checkbox" rel="c_sid" class="SpCellCenter" />
-						<cell label="HEADER_CATS_NAME" type="text" class="SpCellLeft" />
-						<cell label="HEADER_CATS_STATE" type="text" class="SpCellCenter" condition="acl.category.edit" />
-						<cell label="HEADER_CATS_APPROVAL" type="text" class="SpCellCenter" condition="acl.category.edit" />
-						<cell label="HEADER_CATS_AUTHOR" type="text" class="SpCellCenter" />
+						<cell label="HEADER_ID" type="text" class="SpCellCenter"/>
+						<cell type="checkbox" rel="c_sid" class="SpCellCenter"/>
+						<cell label="HEADER_CATS_NAME" type="text" class="SpCellLeft"/>
+						<cell label="HEADER_CATS_STATE" type="text" class="SpCellCenter" condition="acl.category.edit"/>
+						<cell label="HEADER_CATS_APPROVAL" type="text" class="SpCellCenter" condition="acl.category.edit"/>
+						<cell label="HEADER_CATS_AUTHOR" type="text" class="SpCellCenter"/>
 						<div condition="acl.category.edit">
-							<cell label="HEADER_CATS_POSITION" type="ordering" class="SpCellArrowCol" rel="category" condition="corder.contains(position)" />
+							<cell label="HEADER_CATS_POSITION" type="ordering" class="SpCellArrowCol" rel="category" condition="corder.contains(position)"/>
 						</div>
 					</head>
 					<loop subject="categories">
-						<cell type="text" value="id" class="SpCellCenter" />
-						<cell type="checkbox" name="c_sid" value="id" class="SpCellCenter" checked-out-time="coutTime" checked-out-by="cout" checked-out-icon="lock" />
+						<cell type="text" value="id" class="SpCellCenter"/>
+						<cell type="checkbox" name="c_sid" value="id" class="SpCellCenter" checked-out-time="coutTime" checked-out-by="cout"
+						      checked-out-icon="lock"/>
 						<cell class="SpCellLeft">
 							<cell type="link" value="name">
 								<url type="intern">
-									<param name="task" value="category.edit" />
-									<param name="sid" value="id" parse="true" />
+									<param name="task" value="category.edit"/>
+									<param name="sid" value="id" parse="true"/>
 								</url>
 							</cell>
 						</cell>
-						<cell condition="/acl.category.edit" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+						<cell condition="/acl.category.edit" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}"
+						      valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
-								<param name="task" value="category.toggle.enabled" />
-								<param name="sid" value="id" parse="true" />
+								<param name="task" value="category.toggle.enabled"/>
+								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell condition="/acl.category.edit" type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
+						<cell condition="/acl.category.edit" type="ticker" value="approved" class="SpCellCenter"
+						      icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
 							<url type="intern">
-								<param name="task" value="category.toggle.approval" />
-								<param name="sid" value="id" parse="true" />
+								<param name="task" value="category.toggle.approval"/>
+								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell type="text" value="owner" class="SpCellCenter" />
+						<cell type="text" value="owner" class="SpCellCenter"/>
 						<cell condition="/acl.category.edit">
 							<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellArrowCol" condition="/corder.contains(position)">
 								<cell type="text" class="SpCellArrow">
 									<cell type="link" icon="chevron-up">
 										<url type="intern">
-											<param name="task" value="category.up" />
-											<param name="sid" value="id" parse="true" />
-											<param name="pid" value="request.sid" parse="true" subject="skip" />
+											<param name="task" value="category.up"/>
+											<param name="sid" value="id" parse="true"/>
+											<param name="pid" value="request.sid" parse="true" subject="skip"/>
 										</url>
 									</cell>
 									<cell type="link" icon="chevron-down">
 										<url type="intern">
-											<param name="task" value="category.down" />
-											<param name="sid" value="id" parse="true" />
-											<param name="pid" value="request.sid" parse="true" subject="skip" />
+											<param name="task" value="category.down"/>
+											<param name="sid" value="id" parse="true"/>
+											<param name="pid" value="request.sid" parse="true" subject="skip"/>
 										</url>
 									</cell>
 								</cell>
@@ -160,91 +163,93 @@
 						</cell>
 					</loop>
 					<foot>
-						<navigation />
+						<navigation/>
 					</foot>
 				</table>
 				<pagination set="cSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
-					<param name="count" value="categories-count" parse="true" />
-					<param name="limit" value="categories-limit" parse="true" />
-					<param name="current" value="categories-site" parse="true" />
+					<param name="count" value="categories-count" parse="true"/>
+					<param name="limit" value="categories-limit" parse="true"/>
+					<param name="current" value="categories-site" parse="true"/>
 					<param name="url">
-						<param name="option" value="com_sobipro" />
-						<param name="sid" value="request.sid" parse="true" />
+						<param name="option" value="com_sobipro"/>
+						<param name="sid" value="request.sid" parse="true"/>
 					</param>
 				</pagination>
 
-				<div style="padding-top:30px;" />
+				<div style="padding-top:30px;"/>
 				<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries" condition="entries.length">
 					<div class="btn-group pull-right" id="spEntriesFilterHead">
 						<!--<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large spSubmit" />-->
-						<field type="select" name="eorder" selected="eorder" values="entriesOrdering" class="input-large spOrdering" />
+						<field type="select" name="eorder" selected="eorder" values="entriesOrdering" class="input-large spOrdering"/>
 						<field type="select" name="elimit" selected="entries-limit" class="input-mini spOrdering">
 							<values>
-								<values label="LISTING_LIMIT" />
-								<option value="5" />
-								<option value="15" />
-								<option value="25" />
-								<option value="50" />
-								<option value="100" />
+								<values label="LISTING_LIMIT"/>
+								<option value="5"/>
+								<option value="15"/>
+								<option value="25"/>
+								<option value="50"/>
+								<option value="100"/>
 							</values>
 						</field>
-						<field type="button" name="save-ordering" icon="save" class="btn ctrl-default-ordering" data-target="entries" />
+						<field type="button" name="save-ordering" icon="save" class="btn ctrl-default-ordering" data-target="entries"/>
 					</div>
 				</header>
 				<table condition="entries.length">
 					<head>
-						<cell label="HEADER_ID" type="text" class="SpCellCenter" />
-						<cell type="checkbox" rel="e_sid" class="SpCellCenter" />
-						<cell label="HEADER_ENTRIES_NAME" type="text" class="SpCellLeft" />
-						<cells value="customHeader" class="SpCellCenter" type="text" />
-						<cell label="HEADER_ENTRIES_STATE" type="text" class="SpCellCenter" condition="acl.entry.publish" />
-						<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="SpCellCenter" condition="acl.entry.approve" />
-						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter" />
+						<cell label="HEADER_ID" type="text" class="SpCellCenter"/>
+						<cell type="checkbox" rel="e_sid" class="SpCellCenter"/>
+						<cell label="HEADER_ENTRIES_NAME" type="text" class="SpCellLeft"/>
+						<cells value="customHeader" class="SpCellCenter" type="text"/>
+						<cell label="HEADER_ENTRIES_STATE" type="text" class="SpCellCenter" condition="acl.entry.publish"/>
+						<cell label="HEADER_ENTRIES_APPROVAL" type="text" class="SpCellCenter" condition="acl.entry.approve"/>
+						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter"/>
 						<div condition="acl.entry.edit">
-							<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="entry" condition="eorder.contains(position)" />
+							<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="entry" condition="eorder.contains(position)"/>
 						</div>
 					</head>
 					<loop subject="entries">
-						<cell type="text" value="id" class="SpCellCenter" />
-						<cell type="checkbox" name="e_sid" value="id" class="SpCellCenter" />
+						<cell type="text" value="id" class="SpCellCenter"/>
+						<cell type="checkbox" name="e_sid" value="id" class="SpCellCenter"/>
 						<cell class="SpCellLeft">
 							<cell type="link" value="name" class="var:[valid]">
 								<url type="intern">
-									<param name="task" value="entry.edit" />
-									<param name="sid" value="id" parse="true" />
-									<param name="pid" value="request.sid" parse="true" subject="skip" />
+									<param name="task" value="entry.edit"/>
+									<param name="sid" value="id" parse="true"/>
+									<param name="pid" value="request.sid" parse="true" subject="skip"/>
 								</url>
 							</cell>
 						</cell>
-						<cells value="customFields" class="SpCellCenter" />
-						<cell condition="/acl.entry.publish" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince" valid-until="validUntil">
+						<cells value="customFields" class="SpCellCenter"/>
+						<cell condition="/acl.entry.publish" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}"
+						      valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
-								<param name="task" value="entry.toggle.enabled" />
-								<param name="sid" value="id" parse="true" />
+								<param name="task" value="entry.toggle.enabled"/>
+								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell condition="/acl.entry.approve" type="ticker" value="approved" class="SpCellCenter" icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
+						<cell condition="/acl.entry.approve" type="ticker" value="approved" class="SpCellCenter"
+						      icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
 							<url type="intern">
-								<param name="task" value="entry.toggle.approval" />
-								<param name="sid" value="id" parse="true" />
+								<param name="task" value="entry.toggle.approval"/>
+								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell type="text" value="owner" class="SpCellCenter" />
+						<cell type="text" value="owner" class="SpCellCenter"/>
 						<cell condition="/acl.entry.edit">
 							<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellArrowCol" condition="/eorder.contains(position)">
 								<cell type="text" class="SpCellArrow">
 									<cell type="link" icon="chevron-up">
 										<url type="intern">
-											<param name="task" value="entry.up" />
-											<param name="sid" value="id" parse="true" />
-											<param name="pid" value="request.sid" parse="true" subject="skip" />
+											<param name="task" value="entry.up"/>
+											<param name="sid" value="id" parse="true"/>
+											<param name="pid" value="request.sid" parse="true" subject="skip"/>
 										</url>
 									</cell>
 									<cell type="link" icon="chevron-down">
 										<url type="intern">
-											<param name="task" value="entry.down" />
-											<param name="sid" value="id" parse="true" />
-											<param name="pid" value="request.sid" parse="true" subject="skip" />
+											<param name="task" value="entry.down"/>
+											<param name="sid" value="id" parse="true"/>
+											<param name="pid" value="request.sid" parse="true" subject="skip"/>
 										</url>
 									</cell>
 								</cell>
@@ -252,27 +257,27 @@
 						</cell>
 					</loop>
 					<foot>
-						<navigation />
+						<navigation/>
 					</foot>
 				</table>
 				<pagination set="eSite" class="pagination pagination-centered pagination-toolbar" inputbox="right" type="ICON">
-					<param name="count" value="entries-count" parse="true" />
-					<param name="limit" value="entries-limit" parse="true" />
-					<param name="current" value="entries-site" parse="true" />
+					<param name="count" value="entries-count" parse="true"/>
+					<param name="limit" value="entries-limit" parse="true"/>
+					<param name="current" value="entries-site" parse="true"/>
 					<param name="url">
-						<param name="option" value="com_sobipro" />
-						<param name="sid" value="request.sid" parse="true" />
+						<param name="option" value="com_sobipro"/>
+						<param name="sid" value="request.sid" parse="true"/>
 					</param>
 				</pagination>
 			</div>
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="option" default="com_sobipro" />
-			<field name="task" default="" />
-			<field name="sid" default="" />
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+			<field name="sid" default=""/>
 		</hidden>
 	</config>
 </definition>
