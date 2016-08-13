@@ -920,6 +920,18 @@ input[type='radio'] {
 }
 .SobiPro .spText {
 	margin-top: 16px;
+	a {
+		color: #303030;
+		font-weight: 500;
+	}
+}
+.SobiPro .spTextNew {
+	margin-top: 5px;
+	margin-left: 110px;
+	color: #9e0e0e;
+	background-color: #f8b1a9;
+	border-color: #f8b1a9;
+	padding: 5px;
 }
 .SobiPro .spVersions {
 	font-size: 13px;
@@ -1309,6 +1321,13 @@ input[type='radio'] {
 		float: none;
 	}
 }
+
+@media (max-width: 460px) {
+	.SobiPro .spTextNew {
+		margin-left: 0;
+	}
+}
+
 //restore Codemirror styles, overwritten by Bootstrap loaded by SobiPro
 .SobiPro {
 	.CodeMirror-code pre {

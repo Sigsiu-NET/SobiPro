@@ -11,7 +11,7 @@
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- * See http://www.gnu.org/licenses/gpl.html and http://sobipro.sigsiu.net/licenses.
+ * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
@@ -28,8 +28,8 @@ SPFactory::header()->addCSSCode( '.sigsiuTree {height: 330px;}');
 <script language="javascript" type="text/javascript">
     var selectedCat = 0;
     var selectedCatName = '';
-    var selectedCats = new Array();
-    var selectedCatNames = new Array();
+    var selectedCats = [];
+    var selectedCatNames = [];
     var selectedPath = '';
     var selCid = 0;
     if( parent.document.getElementById( 'category.path' ) ) {
@@ -39,7 +39,7 @@ SPFactory::header()->addCSSCode( '.sigsiuTree {height: 330px;}');
     	var SPObjType = 'entry';
     }
     var maxCat = <?php echo Sobi::Cfg( 'legacy.maxCats', '5'  ); ?>;
-    var Cinit = new String( parent.document.getElementById( 'entry.parent' ).value );
+    var Cinit = String( parent.document.getElementById( 'entry.parent' ).value );
     if( Cinit != '' ) {
 		var cats = Cinit.split( ',' );
 		for( var i = 0; i < cats.length; i++ ) {
@@ -55,7 +55,7 @@ SPFactory::header()->addCSSCode( '.sigsiuTree {height: 330px;}');
 		try {
 			SP_id( 'sobiCats_CatUrl' + sid ).focus();
 		} catch( e ) {}
-		var cats = new Array();
+		var cats = [];
 		var request = new SobiPro.Json(
 			"<?php $this->show( 'parent_ajax_url' ); ?>" + '&sid=' + sid,
 			{
