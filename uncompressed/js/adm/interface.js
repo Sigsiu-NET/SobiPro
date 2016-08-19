@@ -486,7 +486,6 @@ SobiPro.jQuery( document ).ready( function ()
 		else {
 			if ( (e.which == 115 || e.which == 19 || e.keyCode == 83) && (e.ctrlKey || e.cmdKey || SobiPro.cmdKey ) ) {
 				e.preventDefault();
-				SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).click();
 				try {
 					e.preventDefault();
 					if( SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).length ) {
