@@ -23,6 +23,7 @@
 	<toolbar title="var:[site_title]" icon="SobiPro">
 		<divider/>
 		<buttons type="actions" condition="acl.config">
+			<nav-header label="TB.SECTION"/>
 			<button type="new" task="section.add" label="TB.ADD_NEW" icon="file"/>
 			<button type="delete" task="section.delete" confirm="TB.JS_DELETE_SECTION_WARN"/>
 			<nav-header label="TB.PUBLISHING"/>
@@ -188,6 +189,9 @@
 								<p class="spText">
 									<text value="ABOUT.SP_DESC"/>
 								</p>
+								<p class="spTextNew">
+									<text value="ABOUT.SP_DESC2"/>
+								</p>
 								<p class="spText">
 									<text value="ABOUT.DEVELOPED_AND_DESIGNED">
 										<param>
@@ -207,10 +211,10 @@
 											<![CDATA[<a href="https://www.Sigsiu.NET/support" target="_blank">SobiPro Support System</a>]]></param>
 									</text>
 								</p>
-								<a href="http://SobiPro.Sigsiu.NET" target="_blank"
-								   title="The SobiPro Club - Support, Documentation, Applications and much more .... ">
+								<a href="https://www.sigsiu.net/subscribe" target="_blank"
+								   title="Join the SobiPro Club and get professional support, an advanced documentation, and additional applications from the makers of SobiPro!">
 									<img src="../media/sobipro/jointheclub.png"
-									     alt="The SobiPro Club - Support, Documentation, Applications and much more .... "/>
+									     alt="Join the SobiPro Club and get professional support, an advanced documentation, and additional applications from the makers of SobiPro!"/>
 								</a>
 							</div>
 						</div>

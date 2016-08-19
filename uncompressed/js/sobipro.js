@@ -10,7 +10,7 @@
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
+ * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
@@ -21,7 +21,7 @@
  */
 function SobiPro()
 {
-	this.fns = new Array();
+	this.fns = [];
 	this.jQuery = null;
 	this.lang = null;
 	this.icons = [];
@@ -228,7 +228,7 @@ function SP_class( name, node )
 
 function SPForm()
 {
-	this.values = new Array();
+	this.values = [];
 	this.request = function ()
 	{
 		string = '';
@@ -240,7 +240,7 @@ function SPForm()
 	this.parse = function ( el )
 	{
 		for ( var i = 0; i < el.childNodes.length; i++ ) {
-			tagName = new String( el.childNodes[i].tagName ).toLowerCase();
+			tagName = String( el.childNodes[i].tagName ).toLowerCase();
 			var e = el.childNodes[i];
 			if ( tagName == 'input' ) {
 				tagName = e.type;
@@ -248,12 +248,12 @@ function SPForm()
 			switch ( tagName ) {
 				case 'text':
 				case 'textarea':
-					this.values.push( new Array( e.name, e.value ) );
+					this.values.push( [e.name, e.value] );
 					break;
 				case 'radio':
 				case 'checkbox':
 					if ( e.checked == true ) {
-						this.values.push( new Array( e.name, e.value ) );
+						this.values.push( [e.name, e.value] );
 					}
 					break;
 				case 'select':
@@ -261,7 +261,7 @@ function SPForm()
 					var selected = false;
 					for ( var j = 0; j < opt.length; j++ ) {
 						if ( ( opt[j].value != 0 && opt[j].value != '' ) && opt[j].selected == true ) {
-							this.values.push( new Array( e.name, opt[j].value ) );
+							this.values.push( [e.name, opt[j].value] );
 							break;
 						}
 					}
@@ -349,7 +349,7 @@ function SPValidator()
 		this.labels = SP_tag( 'label' );
 		var r = true;
 		for ( var i = 0; i < el.childNodes.length; i++ ) {
-			tagName = new String( el.childNodes[i].tagName );
+			tagName = String( el.childNodes[i].tagName );
 			tagName = tagName.toLowerCase();
 			var e = el.childNodes[i];
 			if ( tagName == 'input' ) {

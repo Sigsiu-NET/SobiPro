@@ -10,7 +10,7 @@
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- * See http://www.gnu.org/licenses/lgpl.html and http://sobipro.sigsiu.net/licenses.
+ * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
@@ -68,7 +68,7 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( '#filter-edit-window' ).on( 'hidden', function ()
 			{
 				if ( FilterSaved ) {
-					window.location.replace( new String( window.location ).replace( '#', '' ) );
+					window.location.replace( String( window.location ).replace( '#', '' ) );
 				}
 			} );
 			SobiPro.jQuery( "#filter-edit-window" )
