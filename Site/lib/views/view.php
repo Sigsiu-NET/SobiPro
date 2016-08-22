@@ -396,7 +396,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 			else {
 				if ( $classes[ $className ] != $path ) {
-					Sobi::Error( __CLASS__, 'Class with this name has been already defined but this is not the same class', SPC::WARNING );
+					Sobi::Error( __CLASS__, 'Class with this name has already been defined, but this is not the same class.', SPC::WARNING );
 					return array();
 				}
 			}

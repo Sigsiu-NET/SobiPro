@@ -226,7 +226,7 @@
 }
 
 // these styles concerns also SobiPro modules
-.SobiPro {
+.SobiPro.default3 {
 	font-size: @fontsize;
 	line-height: inherit;
 	& when (@inverse = inverse) {
@@ -242,51 +242,51 @@
 	}
 }
 
-.SobiPro a:hover,
-.SobiPro a:focus {
+.SobiPro.default3 a:hover,
+.SobiPro.default3 a:focus {
 	color: darken(@active-color, 10%);
 }
 
-.SobiPro .btn {
+.SobiPro.default3 .btn {
 	text-shadow: none;
 	font-size: @fontsize;
 }
 
-.SobiPro .btn-group > .btn,
-.SobiPro .btn-group > .dropdown-menu {
+.SobiPro.default3 .btn-group > .btn,
+.SobiPro.default3 .btn-group > .dropdown-menu {
 	font-size: @fontsize;
 }
 
 /*
-.SobiPro .form-inline [class*="span"] {
+.SobiPro.default3 .form-inline [class*="span"] {
 	float: none!important;
 }
 */
 
-.SobiPro .input-prepend .alert,
-.SobiPro .input-append .alert {
+.SobiPro.default3 .input-prepend .alert,
+.SobiPro.default3 .input-append .alert {
 	font-size: @fontsize;
 }
 
-.SobiPro .page-header {
+.SobiPro.default3 .page-header {
 	margin-bottom: 10px;
 	font-size: calc(@fontsize + 8px);
 	font-weight: 300;
 	border-bottom: 1px solid lighten(@base-color, 50%);
 }
 
-.SobiPro .help-block {
+.SobiPro.default3 .help-block {
 	font-size: calc(@fontsize - 1px);
 	color: @font-color;
 }
 
-.SobiPro .well {
+.SobiPro.default3 .well {
 	box-shadow: none;
 	border-style: solid;
 	border-width: 1px;
 }
 
-.SobiPro label {
+.SobiPro.default3 label {
 	font-weight: 500;
 	& when (@inverse = inverse) {
 		font-weight: 400;
@@ -294,48 +294,48 @@
 	font-size: @fontsize;
 }
 
-.SobiPro .label-info,
-.SobiPro .badge-info {
+.SobiPro.default3 .label-info,
+.SobiPro.default3 .badge-info {
 	background-color: @base-color;
 }
 
-.SobiPro .label-info i,
-.SobiPro .badge-info i,
-.SobiPro .label-info a,
-.SobiPro .badge-info a {
+.SobiPro.default3 .label-info i,
+.SobiPro.default3 .badge-info i,
+.SobiPro.default3 .label-info a,
+.SobiPro.default3 .badge-info a {
 	color: @text-color;
 	text-shadow: none;
 }
 
-.SobiPro .table th,
-.SobiPro .table td {
+.SobiPro.default3 .table th,
+.SobiPro.default3 .table td {
 	.borders(light);
 }
 
 // Vertical striped tables
-.SobiPro .table-striped tbody > tr:nth-child(2n+1) > td,
-.SobiPro .table-vstriped tbody > tr > td:nth-child(2n+1) {
+.SobiPro.default3 .table-striped tbody > tr:nth-child(2n+1) > td,
+.SobiPro.default3 .table-vstriped tbody > tr > td:nth-child(2n+1) {
 	.background(light);
 	.borders(light);
 }
 
-.SobiPro .table.table-vstriped th,
-.SobiPro .table.table-vstriped td {
+.SobiPro.default3 .table.table-vstriped th,
+.SobiPro.default3 .table.table-vstriped td {
 	border-top: none;
 }
 
-.SobiPro .table.table-vstriped td {
+.SobiPro.default3 .table.table-vstriped td {
 	border-right-style: solid;
 	border-right-width: 1px;
 	.borders(light);
 }
 
-.SobiPro .table.table-vstriped > thead > tr > th {
+.SobiPro.default3 .table.table-vstriped > thead > tr > th {
 	border-bottom: none;
 }
 
 // seems that is missed in bootstrap??
-.SobiPro .input-medium {
+.SobiPro.default3 .input-medium {
 	min-height: 30px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -343,24 +343,24 @@
 }
 
 // as changed by Joomla template
-.SobiPro [class^="icon-"],
-.SobiPro [class*=" icon-"] {
+.SobiPro.default3 [class^="icon-"],
+.SobiPro.default3 [class*=" icon-"] {
 	margin-right: 0;
 }
 
 // Modal windows
 // -----------------------------------------
-.SobiPro .modal {
+.SobiPro.default3 .modal {
 	margin-top: 20px;
 	//color: @active-color;
 }
 
-.SobiPro .modal-header h3 {
+.SobiPro.default3 .modal-header h3 {
 	.headertext;
 	font-size: 22px;
 }
 
-.SobiPro .modal-header .close {
+.SobiPro.default3 .modal-header .close {
 	text-shadow: none;
 	& when (@inverse = inverse) {
 		opacity: 0.8;
@@ -368,50 +368,50 @@
 	}
 }
 
-.SobiPro .modal-body {
+.SobiPro.default3 .modal-body {
 	padding: 1%;
 }
 
-.SobiPro .modal textarea {
+.SobiPro.default3 .modal textarea {
 	width: 97%;
 }
 
-.SobiPro .modal form {
+.SobiPro.default3 .modal form {
 	margin-right: 10px;
 	margin-left: 20px;
 }
 
 & when (@inverse = inverse) {
-	.SobiPro .modal {
+	.SobiPro.default3 .modal {
 		//background-color: @back-color;
 		border-color: darken(@active-color, 30%);
 	}
-	.SobiPro .modal-body {
+	.SobiPro.default3 .modal-body {
 		background-color: @active-color;
 		border-top-color: @active-color;
 		color: @text-color;
 	}
-	.SobiPro .modal-body label {
+	.SobiPro.default3 .modal-body label {
 		color: #fff;
 	}
-	.SobiPro .modal-header,
-	.SobiPro .modal-footer {
+	.SobiPro.default3 .modal-header,
+	.SobiPro.default3 .modal-footer {
 		background-color: @hover-color;
 	}
 }
 
 & when (@corners = rounded) {
-	.SobiPro .modal-header {
+	.SobiPro.default3 .modal-header {
 		border-top-left-radius: 6px;
 		border-top-right-radius: 6px;
 	}
-	.SobiPro .modal-footer {
+	.SobiPro.default3 .modal-footer {
 		border-bottom-left-radius: 6px;
 		border-bottom-right-radius: 6px;
 	}
 }
 
-.SobiPro .ctrl-spinner {
+.SobiPro.default3 .ctrl-spinner {
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -444,110 +444,110 @@
 
 // Headers
 // -----------------------------------------------
-.SobiPro h1 {
+.SobiPro.default3 h1 {
 	color: @active-color;
 	font-size: calc(@fontsize + 12px);
 }
 
-.SobiPro h2 input[type="checkbox"] {
+.SobiPro.default3 h2 input[type="checkbox"] {
 	margin: 0 0 5px 0;
 }
 
-.SobiPro h2 {
+.SobiPro.default3 h2 {
 	font-size: calc(@fontsize + 11px);
 }
 
-.SobiPro h3 {
+.SobiPro.default3 h3 {
 	font-size: calc(@fontsize + 10px);
 }
 
 & when (@corners = angular) {
-	.SobiPro .well,
-	.SobiPro .btn,
-	.SobiPro .modal,
-	.SobiPro .modal-footer,
-	.SobiPro .alert,
-	.SobiPro .label,
-	.SobiPro .thumbnail,
-	.SobiPro .popover,
-	.SobiPro .popover-title,
-	.SobiPro .dropdown-menu,
-	.SobiPro .nav-pills > li > a,
-	.SobiPro select,
-	.SobiPro textarea,
-	.SobiPro .input-append .add-on:last-child,
-	.SobiPro .input-append .btn:last-child,
-	.SobiPro .input-append .btn-group:last-child > .dropdown-toggle,
-	.SobiPro .input-prepend select,
+	.SobiPro.default3 .well,
+	.SobiPro.default3 .btn,
+	.SobiPro.default3 .modal,
+	.SobiPro.default3 .modal-footer,
+	.SobiPro.default3 .alert,
+	.SobiPro.default3 .label,
+	.SobiPro.default3 .thumbnail,
+	.SobiPro.default3 .popover,
+	.SobiPro.default3 .popover-title,
+	.SobiPro.default3 .dropdown-menu,
+	.SobiPro.default3 .nav-pills > li > a,
+	.SobiPro.default3 select,
+	.SobiPro.default3 textarea,
+	.SobiPro.default3 .input-append .add-on:last-child,
+	.SobiPro.default3 .input-append .btn:last-child,
+	.SobiPro.default3 .input-append .btn-group:last-child > .dropdown-toggle,
+	.SobiPro.default3 .input-prepend select,
 	.bootstrap-datetimepicker-widget td,
 	.bootstrap-datetimepicker-widget th,
 	.bootstrap-datetimepicker-widget td span,
-	.SobiPro .bootstrap-tagsinput,
-	.SobiPro .topmenu .navbar-inner,
-	.SobiPro .navbar-inner,
-	.SobiPro input[type="text"],
-	.SobiPro input[type="password"],
-	.SobiPro input[type="datetime"],
-	.SobiPro input[type="datetime-local"],
-	.SobiPro input[type="date"],
-	.SobiPro input[type="month"],
-	.SobiPro input[type="time"],
-	.SobiPro input[type="week"],
-	.SobiPro input[type="number"],
-	.SobiPro input[type="email"],
-	.SobiPro input[type="url"],
-	.SobiPro input[type="search"],
-	.SobiPro input[type="tel"],
-	.SobiPro input[type="color"],
-	.SobiPro .uneditable-input,
-	.SobiPro .topmenu .navbar-search .search-query,
-	.SobiPro input#review-positives_tag,
-	.SobiPro input#review-negatives_tag,
-	.SobiPro div.tagsinput,
-	.SobiPro div.tagsinput span.tag,
-	.SobiPro .table-bordered {
+	.SobiPro.default3 .bootstrap-tagsinput,
+	.SobiPro.default3 .topmenu .navbar-inner,
+	.SobiPro.default3 .navbar-inner,
+	.SobiPro.default3 input[type="text"],
+	.SobiPro.default3 input[type="password"],
+	.SobiPro.default3 input[type="datetime"],
+	.SobiPro.default3 input[type="datetime-local"],
+	.SobiPro.default3 input[type="date"],
+	.SobiPro.default3 input[type="month"],
+	.SobiPro.default3 input[type="time"],
+	.SobiPro.default3 input[type="week"],
+	.SobiPro.default3 input[type="number"],
+	.SobiPro.default3 input[type="email"],
+	.SobiPro.default3 input[type="url"],
+	.SobiPro.default3 input[type="search"],
+	.SobiPro.default3 input[type="tel"],
+	.SobiPro.default3 input[type="color"],
+	.SobiPro.default3 .uneditable-input,
+	.SobiPro.default3 .topmenu .navbar-search .search-query,
+	.SobiPro.default3 input#review-positives_tag,
+	.SobiPro.default3 input#review-negatives_tag,
+	.SobiPro.default3 div.tagsinput,
+	.SobiPro.default3 div.tagsinput span.tag,
+	.SobiPro.default3 .table-bordered {
 		border-radius: 0;
 		-webkit-border-radius: 0;
 		-moz-border-radius: 0;
 	}
-	.SobiPro .btn-group > .btn:first-child,
-	.SobiPro .pagination ul > li:first-child > a,
-	.SobiPro .pagination ul > li:first-child > span,
-	.SobiPro .pagination-mini ul > li:first-child > a,
-	.SobiPro .pagination-small ul > li:first-child > a,
-	.SobiPro .pagination-mini ul > li:first-child > span,
-	.SobiPro .pagination-small ul > li:first-child > span {
+	.SobiPro.default3 .btn-group > .btn:first-child,
+	.SobiPro.default3 .pagination ul > li:first-child > a,
+	.SobiPro.default3 .pagination ul > li:first-child > span,
+	.SobiPro.default3 .pagination-mini ul > li:first-child > a,
+	.SobiPro.default3 .pagination-small ul > li:first-child > a,
+	.SobiPro.default3 .pagination-mini ul > li:first-child > span,
+	.SobiPro.default3 .pagination-small ul > li:first-child > span {
 		border-bottom-left-radius: 0;
 		border-top-left-radius: 0;
 	}
-	.SobiPro .btn-group > .btn:last-child,
-	.SobiPro .btn-group > .dropdown-toggle,
-	.SobiPro .pagination ul > li:last-child > a,
-	.SobiPro .pagination ul > li:last-child > span,
-	.SobiPro .pagination-mini ul > li:last-child > a,
-	.SobiPro .pagination-small ul > li:last-child > a,
-	.SobiPro .pagination-mini ul > li:last-child > span,
-	.SobiPro .pagination-small ul > li:last-child > span {
+	.SobiPro.default3 .btn-group > .btn:last-child,
+	.SobiPro.default3 .btn-group > .dropdown-toggle,
+	.SobiPro.default3 .pagination ul > li:last-child > a,
+	.SobiPro.default3 .pagination ul > li:last-child > span,
+	.SobiPro.default3 .pagination-mini ul > li:last-child > a,
+	.SobiPro.default3 .pagination-small ul > li:last-child > a,
+	.SobiPro.default3 .pagination-mini ul > li:last-child > span,
+	.SobiPro.default3 .pagination-small ul > li:last-child > span {
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 	}
 }
 
-.SobiPro input,
-.SobiPro textarea {
+.SobiPro.default3 input,
+.SobiPro.default3 textarea {
 	width: calc(100% - 12px);
 }
 
-.SobiPro select {
+.SobiPro.default3 select {
 	width: 100%;
 }
 
 //tag corners are angular by default; Bootstrap corners are rounded by default
 & when (@corners = rounded) {
-	.SobiPro input#review-positives_tag,
-	.SobiPro input#review-negatives_tag,
-	.SobiPro div.tagsinput,
-	.SobiPro div.tagsinput span.tag {
+	.SobiPro.default3 input#review-positives_tag,
+	.SobiPro.default3 input#review-negatives_tag,
+	.SobiPro.default3 div.tagsinput,
+	.SobiPro.default3 div.tagsinput span.tag {
 		border-radius: 4px;
 		-webkit-border-radius: 4px;
 		-moz-border-radius: 4px;
@@ -556,34 +556,34 @@
 
 // Pagination
 // -----------------------------------------------
-.SobiPro .pagination ul > li > a,
-.SobiPro .pagination ul > li > span {
+.SobiPro.default3 .pagination ul > li > a,
+.SobiPro.default3 .pagination ul > li > span {
 	border-color: @base-color;
 	border-width: 1px;
 	margin: 1px;
 }
 
-.SobiPro .pagination ul > li > a {
+.SobiPro.default3 .pagination ul > li > a {
 	color: @text-color;
 	background-color: @base-color;
 	font-weight: bold;
 }
 
-.SobiPro .pagination ul > li > a.active,
-.SobiPro .pagination ul > li > a:hover,
-.SobiPro .pagination ul > li > a:focus,
-.SobiPro .pagination ul > .active > a,
-.SobiPro .pagination ul > .active > span {
+.SobiPro.default3 .pagination ul > li > a.active,
+.SobiPro.default3 .pagination ul > li > a:hover,
+.SobiPro.default3 .pagination ul > li > a:focus,
+.SobiPro.default3 .pagination ul > .active > a,
+.SobiPro.default3 .pagination ul > .active > span {
 	color: @hover-color;
 	background-color: @active-color;
 	border-color: @active-color;
 }
 
-.SobiPro .well,
-.SobiPro .pagination ul > .disabled > span,
-.SobiPro .pagination ul > .disabled > a,
-.SobiPro .pagination ul > .disabled > a:hover,
-.SobiPro .pagination ul > .disabled > a:focus {
+.SobiPro.default3 .well,
+.SobiPro.default3 .pagination ul > .disabled > span,
+.SobiPro.default3 .pagination ul > .disabled > a,
+.SobiPro.default3 .pagination ul > .disabled > a:hover,
+.SobiPro.default3 .pagination ul > .disabled > a:focus {
 	.background(light);
 	.borders(light);
 	color: saturate(darken(@base-color, 12%), 20%);
@@ -592,19 +592,19 @@
 	}
 }
 
-.SobiPro .pagination-mini ul > li > a {
+.SobiPro.default3 .pagination-mini ul > li > a {
 	font-size: calc(@fontsize - 3.5px);
 }
 
 // Dropdown
 // -----------------------------------------------
-.SobiPro .dropdown-menu > .active > a,
-.SobiPro .dropdown-menu > .active > a:hover,
-.SobiPro .dropdown-menu > .active > a:focus,
-.SobiPro .dropdown-menu > li > a:hover,
-.SobiPro .dropdown-menu > li > a:focus,
-.SobiPro .dropdown-submenu:hover > a,
-.SobiPro .dropdown-submenu:focus > a {
+.SobiPro.default3 .dropdown-menu > .active > a,
+.SobiPro.default3 .dropdown-menu > .active > a:hover,
+.SobiPro.default3 .dropdown-menu > .active > a:focus,
+.SobiPro.default3 .dropdown-menu > li > a:hover,
+.SobiPro.default3 .dropdown-menu > li > a:focus,
+.SobiPro.default3 .dropdown-submenu:hover > a,
+.SobiPro.default3 .dropdown-submenu:focus > a {
 	color: @hover-color;
 	background-color: @active-color;
 	background-image: none;
@@ -618,69 +618,69 @@
 // special adjustments for inverse template colors
 // -----------------------------------------------
 & when (@inverse = inverse) {
-	.SobiPro .bootstrap-tagsinput,
-	.SobiPro textarea,
-	.SobiPro select,
-	.SobiPro input[type="text"],
-	.SobiPro input[type="password"],
-	.SobiPro input[type="datetime"],
-	.SobiPro input[type="datetime-local"],
-	.SobiPro input[type="date"],
-	.SobiPro input[type="month"],
-	.SobiPro input[type="time"],
-	.SobiPro input[type="week"],
-	.SobiPro input[type="number"],
-	.SobiPro input[type="email"],
-	.SobiPro input[type="url"],
-	.SobiPro input[type="search"],
-	.SobiPro input[type="tel"],
-	.SobiPro input[type="color"],
-	.SobiPro .uneditable-input {
+	.SobiPro.default3 .bootstrap-tagsinput,
+	.SobiPro.default3 textarea,
+	.SobiPro.default3 select,
+	.SobiPro.default3 input[type="text"],
+	.SobiPro.default3 input[type="password"],
+	.SobiPro.default3 input[type="datetime"],
+	.SobiPro.default3 input[type="datetime-local"],
+	.SobiPro.default3 input[type="date"],
+	.SobiPro.default3 input[type="month"],
+	.SobiPro.default3 input[type="time"],
+	.SobiPro.default3 input[type="week"],
+	.SobiPro.default3 input[type="number"],
+	.SobiPro.default3 input[type="email"],
+	.SobiPro.default3 input[type="url"],
+	.SobiPro.default3 input[type="search"],
+	.SobiPro.default3 input[type="tel"],
+	.SobiPro.default3 input[type="color"],
+	.SobiPro.default3 .uneditable-input {
 		background-color: #eeeeee;
 	}
-	.SobiPro ul,
-	.SobiPro ol {
+	.SobiPro.default3 ul,
+	.SobiPro.default3 ol {
 		color: #fff;
 	}
 }
 
-.SobiPro textarea,
-.SobiPro select,
-.SobiPro input[type="text"],
-.SobiPro input[type="password"],
-.SobiPro input[type="datetime"],
-.SobiPro input[type="datetime-local"],
-.SobiPro input[type="date"],
-.SobiPro input[type="month"],
-.SobiPro input[type="time"],
-.SobiPro input[type="week"],
-.SobiPro input[type="number"],
-.SobiPro input[type="email"],
-.SobiPro input[type="url"],
-.SobiPro input[type="search"],
-.SobiPro input[type="tel"],
-.SobiPro input[type="color"],
-.SobiPro .uneditable-input {
+.SobiPro.default3 textarea,
+.SobiPro.default3 select,
+.SobiPro.default3 input[type="text"],
+.SobiPro.default3 input[type="password"],
+.SobiPro.default3 input[type="datetime"],
+.SobiPro.default3 input[type="datetime-local"],
+.SobiPro.default3 input[type="date"],
+.SobiPro.default3 input[type="month"],
+.SobiPro.default3 input[type="time"],
+.SobiPro.default3 input[type="week"],
+.SobiPro.default3 input[type="number"],
+.SobiPro.default3 input[type="email"],
+.SobiPro.default3 input[type="url"],
+.SobiPro.default3 input[type="search"],
+.SobiPro.default3 input[type="tel"],
+.SobiPro.default3 input[type="color"],
+.SobiPro.default3 .uneditable-input {
 	font-size: @fontsize;
 }
 
-.SobiPro textarea:focus,
-.SobiPro select:focus,
-.SobiPro input[type="text"]:focus,
-.SobiPro input[type="password"]:focus,
-.SobiPro input[type="datetime"]:focus,
-.SobiPro input[type="datetime-local"]:focus,
-.SobiPro input[type="date"]:focus,
-.SobiPro input[type="month"]:focus,
-.SobiPro input[type="time"]:focus,
-.SobiPro input[type="week"]:focus,
-.SobiPro input[type="number"]:focus,
-.SobiPro input[type="email"]:focus,
-.SobiPro input[type="url"]:focus,
-.SobiPro input[type="search"]:focus,
-.SobiPro input[type="tel"]:focus,
-.SobiPro input[type="color"]:focus,
-.SobiPro .uneditable-input:focus {
+.SobiPro.default3 textarea:focus,
+.SobiPro.default3 select:focus,
+.SobiPro.default3 input[type="text"]:focus,
+.SobiPro.default3 input[type="password"]:focus,
+.SobiPro.default3 input[type="datetime"]:focus,
+.SobiPro.default3 input[type="datetime-local"]:focus,
+.SobiPro.default3 input[type="date"]:focus,
+.SobiPro.default3 input[type="month"]:focus,
+.SobiPro.default3 input[type="time"]:focus,
+.SobiPro.default3 input[type="week"]:focus,
+.SobiPro.default3 input[type="number"]:focus,
+.SobiPro.default3 input[type="email"]:focus,
+.SobiPro.default3 input[type="url"]:focus,
+.SobiPro.default3 input[type="search"]:focus,
+.SobiPro.default3 input[type="tel"]:focus,
+.SobiPro.default3 input[type="color"]:focus,
+.SobiPro.default3 .uneditable-input:focus {
 	border-color: fade(@base-color, 80%) !important;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 60%);
 	& when (@inverse = inverse) {
@@ -690,34 +690,34 @@
 	border-width: 1px;
 }
 
-.SobiPro select:focus {
+.SobiPro.default3 select:focus {
 	outline: 0 none;
 }
 
-.SobiPro select option:focus {
+.SobiPro.default3 select option:focus {
 	background-color: @active-color;
 }
 
-.SobiPro .thumbnail {
+.SobiPro.default3 .thumbnail {
 	margin-bottom: 9px;
 }
 
-.SobiPro .input-append .add-on,
-.SobiPro .input-prepend .add-on {
+.SobiPro.default3 .input-append .add-on,
+.SobiPro.default3 .input-prepend .add-on {
 	text-shadow: none;
 }
 
 // new Pagination size between normal and mini
 // ----------------------------------------
-.SobiPro .pagination-midi ul > li > a,
-.SobiPro .pagination-midi ul > li > span {
+.SobiPro.default3 .pagination-midi ul > li > a,
+.SobiPro.default3 .pagination-midi ul > li > span {
 	padding: 2px 9px;
 	font-size: 12px;
 }
 
 // New button colour
 // ----------------------------------------
-.SobiPro .btn-sigsiu {
+.SobiPro.default3 .btn-sigsiu {
 	color: @text-color !important;
 	//    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	background-color: @base-color;
@@ -726,34 +726,34 @@
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
 }
 
-.SobiPro .btn-group.open .btn-sigsiu.dropdown-toggle,
-.SobiPro .btn-sigsiu:hover,
-.SobiPro .btn-sigsiu:focus,
-.SobiPro .btn-sigsiu:active,
-.SobiPro .btn-sigsiu.active {
+.SobiPro.default3 .btn-group.open .btn-sigsiu.dropdown-toggle,
+.SobiPro.default3 .btn-sigsiu:hover,
+.SobiPro.default3 .btn-sigsiu:focus,
+.SobiPro.default3 .btn-sigsiu:active,
+.SobiPro.default3 .btn-sigsiu.active {
 	background-color: lighten(@base-color, 5%);
 	color: @text-color;
 }
 
-.SobiPro .btn-sigsiu .caret {
+.SobiPro.default3 .btn-sigsiu .caret {
 	border-top-color: @text-color;
 }
 
 // New text and background  color
 // ----------------------------------------
-.SobiPro .text-sigsiu {
+.SobiPro.default3 .text-sigsiu {
 	color: @base-color;
 }
 
-.SobiPro .text-sigsiu-active {
+.SobiPro.default3 .text-sigsiu-active {
 	color: @active-color;
 }
 
-.SobiPro .text-sigsiu-important {
+.SobiPro.default3 .text-sigsiu-important {
 	color: @important-color;
 }
 
-.SobiPro .bg-sigsiu {
+.SobiPro.default3 .bg-sigsiu {
 	border-style: solid;
 	border-width: 1px;
 	.borders(medium);
@@ -761,14 +761,14 @@
 
 }
 
-.SobiPro .bg-sigsiu-light {
+.SobiPro.default3 .bg-sigsiu-light {
 	border-style: solid;
 	border-width: 1px;
 	.background(light);
 	.borders(light);
 }
 
-.SobiPro .bg-sigsiu-alert {
+.SobiPro.default3 .bg-sigsiu-alert {
 	border-style: solid;
 	border-width: 1px;
 	background-color: @alert-color;
@@ -783,31 +783,31 @@
 
 // Define widths to use as classes
 // ----------------------------------------
-.SobiPro .collwidth2 {
+.SobiPro.default3 .collwidth2 {
 	width: 50%;
 }
 
-.SobiPro .collwidth3 {
+.SobiPro.default3 .collwidth3 {
 	width: 33.33%;
 }
 
-.SobiPro .collwidth4 {
+.SobiPro.default3 .collwidth4 {
 	width: 25%;
 }
 
-.SobiPro .collwidth5 {
+.SobiPro.default3 .collwidth5 {
 	width: 20%;
 }
 
-.SobiPro .collwidth6 {
+.SobiPro.default3 .collwidth6 {
 	width: 16.66%;
 }
 
-.SobiPro .collwidth8 {
+.SobiPro.default3 .collwidth8 {
 	width: 12.5%;
 }
 
-.SobiPro .collwidth10 {
+.SobiPro.default3 .collwidth10 {
 	width: 10%;
 }
 
@@ -829,13 +829,13 @@
 }
 
 // define bootstrap alert to use it as mixin
-.SobiPro .alert {
+.SobiPro.default3 .alert {
 	padding: 8px 35px 8px 14px;
 	//    margin-bottom: 20px;
 	text-shadow: none;
 }
 
-.SobiPro .spAlert {
+.SobiPro.default3 .spAlert {
 	margin-bottom: 0;
 	margin-top: 0;
 	background-color: @alert-color;
@@ -851,35 +851,35 @@
 }
 
 // has to be defined by the template as several apps are using it
-.SobiPro .alert-message {
+.SobiPro.default3 .alert-message {
 	border-style: solid;
 	border-width: 1px;
-	.SobiPro .alert;
-	.SobiPro .spAlert;
+	.SobiPro.default3 .alert;
+	.SobiPro.default3 .spAlert;
 }
 
-.SobiPro .spMessage {
+.SobiPro.default3 .spMessage {
 	margin-top: 10px;
 }
 
 // Bootbox
-.SobiPro .SobiProBootBox i.error {
+.SobiPro.default3 .SobiPro.default3BootBox i.error {
 	color: #a94442;
 	font-size: calc(@fontsize + 16px);
 }
 
-.SobiPro .SobiProBootBox i.success {
+.SobiPro.default3 .SobiPro.default3BootBox i.success {
 	color: #449d44;
 	font-size: calc(@fontsize + 16px);
 }
 
-.SobiPro .SobiProBootBox div.signal {
+.SobiPro.default3 .SobiPro.default3BootBox div.signal {
 	float: left;
 	padding-right: 10px;
 	margin-top: 10px;
 }
 
-.SobiPro .SobiProBootBox .modal-body {
+.SobiPro.default3 .SobiPro.default3BootBox .modal-body {
 	padding: 20px;
 	& when (@inverse = inverse) {
 		background-color: @active-color;
@@ -887,13 +887,13 @@
 	}
 }
 
-.SobiPro .SobiProBootBox .modal-footer {
+.SobiPro.default3 .SobiPro.default3BootBox .modal-footer {
 	padding: 10px 15px 15px;
 	background-color: #fff;
 }
 
-.SobiPro .spMessage .alert-error,
-.SobiPro .spMessage .alert-danger {
+.SobiPro.default3 .spMessage .alert-error,
+.SobiPro.default3 .spMessage .alert-danger {
 	border-color: lighten(@error-color, 58%);
 	background-color: lighten(@error-color, 62%);
 	color: @error-color;
@@ -903,8 +903,8 @@
 	}
 }
 
-.SobiPro .spMessage .alert-success,
-.SobiPro .spSearch .alert-info {
+.SobiPro.default3 .spMessage .alert-success,
+.SobiPro.default3 .spSearch .alert-info {
 	border-color: @alert-color;
 	background-color: lighten(@alert-color, 5%);
 	color: desaturate(lighten(@active-color, 20%), 10%);
@@ -917,7 +917,7 @@
 }
 
 // Looks as a normal text (removal of the message design)
-.SobiPro .alert-normal {
+.SobiPro.default3 .alert-normal {
 	padding: 10px 0 10px 0;
 	font-size: calc(@fontsize + 1px);
 	color: @font-color;
@@ -925,21 +925,21 @@
 	border-color: @back-color;
 }
 
-.SobiPro .text-error,
-.SobiPro .control-group.error .checkbox,
-.SobiPro .control-group.error .radio,
-.SobiPro .control-group.error input,
-.SobiPro .control-group.error select,
-.SobiPro .control-group.error textarea,
-.SobiPro .control-group.error .control-label,
-.SobiPro .control-group.error .help-block,
-.SobiPro .control-group.error .help-inline {
+.SobiPro.default3 .text-error,
+.SobiPro.default3 .control-group.error .checkbox,
+.SobiPro.default3 .control-group.error .radio,
+.SobiPro.default3 .control-group.error input,
+.SobiPro.default3 .control-group.error select,
+.SobiPro.default3 .control-group.error textarea,
+.SobiPro.default3 .control-group.error .control-label,
+.SobiPro.default3 .control-group.error .help-block,
+.SobiPro.default3 .control-group.error .help-inline {
 	color: @error-color;
 }
 
-.SobiPro .control-group.error input:focus,
-.SobiPro .control-group.error select:focus,
-.SobiPro .control-group.error textarea:focus {
+.SobiPro.default3 .control-group.error input:focus,
+.SobiPro.default3 .control-group.error select:focus,
+.SobiPro.default3 .control-group.error textarea:focus {
 	border-color: fade(@error-color, 80%) !important;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 6px rgba(red(@error-color), green(@error-color), blue(@error-color), 60%);
 	& when (@inverse = inverse) {
@@ -947,31 +947,31 @@
 	}
 }
 
-.SobiPro .control-group.error input,
-.SobiPro .control-group.error select,
-.SobiPro .control-group.error textarea {
+.SobiPro.default3 .control-group.error input,
+.SobiPro.default3 .control-group.error select,
+.SobiPro.default3 .control-group.error textarea {
 	border-color: @error-color;
 }
 
 // Topmenu, Navigation bars
 // ----------------------------------------
-.SobiPro .topmenu .nav > li,
-.SobiPro .topmenu .nav > li a {
+.SobiPro.default3 .topmenu .nav > li,
+.SobiPro.default3 .topmenu .nav > li a {
 	text-shadow: none;
 	color: @text-color;
 }
 
-.SobiPro .nav-tabs,
-.SobiPro .nav-pills {
+.SobiPro.default3 .nav-tabs,
+.SobiPro.default3 .nav-pills {
 	font-size: calc(@fontsize + 1px);
 }
 
-.SobiPro .nav-pills > .active > a,
-.SobiPro .nav-pills > .active > a:hover,
-.SobiPro .nav-pills > .active > a:focus,
-.SobiPro .topmenu .nav > li a.active,
-.SobiPro .topmenu .nav > li a:focus,
-.SobiPro .topmenu .nav > li a:hover {
+.SobiPro.default3 .nav-pills > .active > a,
+.SobiPro.default3 .nav-pills > .active > a:hover,
+.SobiPro.default3 .nav-pills > .active > a:focus,
+.SobiPro.default3 .topmenu .nav > li a.active,
+.SobiPro.default3 .topmenu .nav > li a:focus,
+.SobiPro.default3 .topmenu .nav > li a:hover {
 	background-color: @active-color;
 	text-shadow: none;
 	color: @hover-color;
@@ -980,11 +980,11 @@
 	}
 }
 
-.SobiPro .topmenu li {
+.SobiPro.default3 .topmenu li {
 	line-height: 40px;
 }
 
-.SobiPro .topmenu .navbar-inner {
+.SobiPro.default3 .topmenu .navbar-inner {
 	background-color: @base-color;
 	background-image: none;
 	min-height: 60px;
@@ -994,49 +994,49 @@
 	padding-right: 0;
 }
 
-.SobiPro .topmenu .navbar-search {
+.SobiPro.default3 .topmenu .navbar-search {
 	margin-top: 15px;
 }
 
 & when (@inverse = no) {
-	.SobiPro .topmenu input[type="text"] {
+	.SobiPro.default3 .topmenu input[type="text"] {
 		border-color: darken(@base-color, 5%);
 	}
 }
 
-.SobiPro .topmenu .navbar-search input {
+.SobiPro.default3 .topmenu .navbar-search input {
 	width: 95px;
 }
 
-.SobiPro .topmenu .nav {
+.SobiPro.default3 .topmenu .nav {
 	margin-right: 5px;
 }
 
-.SobiPro .topmenu .navbar .nav > li {
+.SobiPro.default3 .topmenu .navbar .nav > li {
 	list-style: none;
 }
 
-.SobiPro .navbar .nav > li > a {
+.SobiPro.default3 .navbar .nav > li > a {
 	padding-left: 10px;
 	padding-right: 10px;
 }
 
 // Alphalist
 // ----------------------------------------
-.SobiPro .alphalist {
+.SobiPro.default3 .alphalist {
 	float: left;
 	margin: 1px 10px 2px 1px;
 }
 
-.SobiPro .alpha .pagination {
+.SobiPro.default3 .alpha .pagination {
 	margin-top: 5px;
 }
 
-.SobiPro .alpha .pagination ul {
+.SobiPro.default3 .alpha .pagination ul {
 	box-shadow: none;
 }
 
-.SobiPro .alpha .pagination ul li a {
+.SobiPro.default3 .alpha .pagination ul li a {
 	display: block;
 	width: 13px;
 	border-width: 1px;
@@ -1048,13 +1048,13 @@
 	}
 }
 
-.SobiPro .alphalist .dropdown-menu {
+.SobiPro.default3 .alphalist .dropdown-menu {
 	text-align: left;
 }
 
 // Category images and icons
 // ----------------------------------------
-.SobiPro div.spCat {
+.SobiPro.default3 div.spCat {
 	border: none;
 	box-shadow: 0 0 0 0;
 	display: block;
@@ -1062,41 +1062,41 @@
 	padding: 4px;
 }
 
-.SobiPro .spCatname p {
+.SobiPro.default3 .spCatname p {
 	margin: 5px 0 0 0;
 	font-size: calc(@fontsize + 1px);
 }
 
-.SobiPro .spCaticon i {
+.SobiPro.default3 .spCaticon i {
 	color: @base-color;
 }
 
-.SobiPro .spCaticon [class^="fa-"],
-.SobiPro .spCaticon [class*=" fa-"] {
+.SobiPro.default3 .spCaticon [class^="fa-"],
+.SobiPro.default3 .spCaticon [class*=" fa-"] {
 	margin-right: 0;
 }
 
-.SobiPro .spCaticon [class^="icon-"],
-.SobiPro .spCaticon [class*=" icon-"] {
+.SobiPro.default3 .spCaticon [class^="icon-"],
+.SobiPro.default3 .spCaticon [class*=" icon-"] {
 	margin-right: 0;
 }
 
-.SobiPro .spCaticon {
+.SobiPro.default3 .spCaticon {
 	text-align: center;
 	margin-top: 5px;
 	padding-left: 12px;
 }
 
-.SobiPro .spCaticon a {
+.SobiPro.default3 .spCaticon a {
 	color: @base-color;
 }
 
-.SobiPro .spCaticon a:hover {
+.SobiPro.default3 .spCaticon a:hover {
 	color: @base-color;
 	text-decoration: none;
 }
 
-.SobiPro .spCatintro {
+.SobiPro.default3 .spCatintro {
 	font-size: 90%;
 	line-height: 15px;
 	color: lighten(@font-color, 15%);
@@ -1116,51 +1116,51 @@
 
 // Views/DV
 // ----------------------------------------
-.SobiPro .spCategoryContainer,
-.SobiPro .spEntryContainer {
+.SobiPro.default3 .spCategoryContainer,
+.SobiPro.default3 .spEntryContainer {
 	margin-bottom: 15px;
 	margin-top: 15px;
 }
 
-.SobiPro .spNavigationContainer .spEntryContainer {
+.SobiPro.default3 .spNavigationContainer .spEntryContainer {
 	margin-top: 0;
 }
 
-.SobiPro .spNavigationContainer {
+.SobiPro.default3 .spNavigationContainer {
 	margin-top: -15px;
 	padding-top: 15px;
 }
 
-.SobiPro .btn-navigation {
+.SobiPro.default3 .btn-navigation {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
 
-.SobiPro .spEntryCats {
+.SobiPro.default3 .spEntryCats {
 	font-size: 80%;
 }
 
-.SobiPro .spEntryCount {
+.SobiPro.default3 .spEntryCount {
 	font-size: calc(@fontsize - 2px);
 	color: @font-color;
 }
 
-.SobiPro .spSubcats {
+.SobiPro.default3 .spSubcats {
 	line-height: 15px;
 }
 
-.SobiPro .spLabel {
+.SobiPro.default3 .spLabel {
 	font-weight: 700;
 }
 
-.SobiPro .spSectionDesc {
+.SobiPro.default3 .spSectionDesc {
 	margin-bottom: 30px;
 	margin-top: 20px;
 }
 
 // NoImge Setting
 // ----------------------------------------
-.SobiPro .spNoImage {
+.SobiPro.default3 .spNoImage {
 	width: 100px;
 	height: 75px;
 	font-size: 60px;
@@ -1183,7 +1183,7 @@
 	.borders(light);
 }
 
-.SobiPro .spDetailEntry .spNoImage {
+.SobiPro.default3 .spDetailEntry .spNoImage {
 	width: 300px;
 	height: 200px;
 	font-size: 180px;
@@ -1194,26 +1194,26 @@
 	}
 }
 
-.SobiPro .spNoImage i {
+.SobiPro.default3 .spNoImage i {
 	color: lighten(@base-color, 30%);
 }
 
-.SobiPro .spNoImageContainer {
+.SobiPro.default3 .spNoImageContainer {
 	display: flex;
 	display: -webkit-flex;
 }
 
-.SobiPro .spNoImageContainer.right {
+.SobiPro.default3 .spNoImageContainer.right {
 	float: right;
 	display: inline;
 }
 
-.SobiPro .spNoImageContainer.left {
+.SobiPro.default3 .spNoImageContainer.left {
 	float: left;
 	display: inline;
 }
 
-.SobiPro .spNoImage {
+.SobiPro.default3 .spNoImage {
 	display: flex;
 	display: -webkit-flex;
 	align-items: center;
@@ -1222,7 +1222,7 @@
 	-webkit-justify-content: space-around;
 }
 
-.SobiPro .spNoImage.stretch {
+.SobiPro.default3 .spNoImage.stretch {
 	align-self: stretch;
 	-webkit-align-self: stretch;
 	flex: 1;
@@ -1231,46 +1231,46 @@
 
 // Entry details view
 // ----------------------------------------
-.SobiPro .spDetails {
+.SobiPro.default3 .spDetails {
 	font-size: @fontsize;
 }
 
-.SobiPro .spDetailEntry .spManage {
+.SobiPro.default3 .spDetailEntry .spManage {
 	margin-right: 7px;
 	margin-top: 7px;
 }
 
-.SobiPro span.spDetailSuffix {
+.SobiPro.default3 span.spDetailSuffix {
 	font-size: 80%;
 }
 
-.SobiPro .spDetailEntry .spClassViewImage img {
+.SobiPro.default3 .spDetailEntry .spClassViewImage img {
 	width: @big-image;
 }
 
 // Entry Status
 // ----------------------------------------
-.SobiPro .entry-status i {
+.SobiPro.default3 .entry-status i {
 	font-size: 70%;
 	color: @important-color;
 	padding-left: 5px;
 }
 
-.SobiPro a.entry-status:hover,
-.SobiPro a.entry-status:active,
-.SobiPro a.entry-status:focus {
+.SobiPro.default3 a.entry-status:hover,
+.SobiPro.default3 a.entry-status:active,
+.SobiPro.default3 a.entry-status:focus {
 	text-decoration: none;
 }
 
 // Popover in General
 // ----------------------------------------
-.SobiPro .popover {
+.SobiPro.default3 .popover {
 	font-size: calc(@fontsize - 1px);
 	font-weight: normal;
 	line-height: 20px;
 }
 
-.SobiPro .popover-inner .spclose {
+.SobiPro.default3 .popover-inner .spclose {
 	padding-right: 8px;
 	padding-top: 5px;
 	font-size: calc(@fontsize + 1px);
@@ -1280,28 +1280,28 @@
 	}
 }
 
-.SobiPro .popover .popover-title {
+.SobiPro.default3 .popover .popover-title {
 	text-shadow: none;
 	font-weight: bold;
 }
 
 & when (@inverse = inverse) {
-	.SobiPro .popover {
+	.SobiPro.default3 .popover {
 		background-color: transparent;
 	}
-	.SobiPro .popover.bottom > .arrow {
+	.SobiPro.default3 .popover.bottom > .arrow {
 		border-bottom-color: darken(@alert-color, 50%);
 		opacity: 0.25;
 	}
-	.SobiPro .popover .popover-title {
+	.SobiPro.default3 .popover .popover-title {
 		background-color: darken(@alert-color, 50%);
 	}
-	.SobiPro .spEntryContainer .popover-inner,
-	.SobiPro .spDetails .popover-inner {
+	.SobiPro.default3 .spEntryContainer .popover-inner,
+	.SobiPro.default3 .spDetails .popover-inner {
 		background-color: @back-color;
 		color: @text-color;
 	}
-	.SobiPro .popover .popover-content {
+	.SobiPro.default3 .popover .popover-content {
 		color: @active-color;
 		background-color: @hover-color;
 	}
@@ -1309,144 +1309,144 @@
 
 // Add entry form
 // ----------------------------------------
-.SobiPro .spEntryEdit .required {
+.SobiPro.default3 .spEntryEdit .required {
 	border: 1px solid @important-color;
 }
 
-.SobiPro .spEntryEdit .spClassRadio.required,
-.SobiPro .spEntryEdit .spClassCheckbox.required {
+.SobiPro.default3 .spEntryEdit .spClassRadio.required,
+.SobiPro.default3 .spEntryEdit .spClassCheckbox.required {
 	border: none;
 }
 
-.SobiPro .spEntryEdit .progress {
+.SobiPro.default3 .spEntryEdit .progress {
 	min-width: 100px;
 }
 
-.SobiPro .spUpload input {
+.SobiPro.default3 .spUpload input {
 	height: 21px;
 }
 
-.SobiPro .spUpload .span1 {
+.SobiPro.default3 .spUpload .span1 {
 	margin-left: 10px;
 }
 
-.SobiPro .spUpload .alert {
+.SobiPro.default3 .spUpload .alert {
 	margin-top: 5px;
 }
 
-.SobiPro .spEntryEdit .required-message {
+.SobiPro.default3 .spEntryEdit .required-message {
 	margin: 25px 0 10px 0;
 	& when (@inverse = inverse) {
 		color: @font-color;
 	}
 }
 
-.SobiPro .spEntryEdit .star {
+.SobiPro.default3 .spEntryEdit .star {
 	color: @important-color;
 	padding-left: 2px;
 	font-size: @fontsize;
 }
 
-.SobiPro .input-append input {
+.SobiPro.default3 .input-append input {
 	width: calc(100% - 42px);
 }
 
-.SobiPro .spEntryEdit .message-lightbulb {
+.SobiPro.default3 .spEntryEdit .message-lightbulb {
 	left: 0;
 	position: relative;
 }
 
 & when (@corners = rounded) {
-	.SobiPro .spEntryEdit .message-lightbulb .popover-content {
+	.SobiPro.default3 .spEntryEdit .message-lightbulb .popover-content {
 		border-bottom-left-radius: 6px;
 		border-bottom-right-radius: 6px;
 	}
 }
 
-.SobiPro .spEntryEdit .message-lightbulb .popover.bottom {
+.SobiPro.default3 .spEntryEdit .message-lightbulb .popover.bottom {
 	margin-top: 0;
 }
 
-.SobiPro .spSearch select.spClassCategory,
-.SobiPro .spEntryEdit select.spClassCategory {
+.SobiPro.default3 .spSearch select.spClassCategory,
+.SobiPro.default3 .spEntryEdit select.spClassCategory {
 	margin-bottom: 3px;
 }
 
-.SobiPro .editor {
+.SobiPro.default3 .editor {
 	overflow: visible;
 }
 
-.SobiPro .spClassEditInfo {
+.SobiPro.default3 .spClassEditInfo {
 	margin-top: 10px;
 }
 
-.SobiPro .spEntryEdit .popover-title {
+.SobiPro.default3 .spEntryEdit .popover-title {
 	color: @error-color;
 	font-size: 17px;
 	font-weight: 400;
 }
 
-.SobiPro .spEntryEdit .popover-title::before {
+.SobiPro.default3 .spEntryEdit .popover-title::before {
 	font-family: FontAwesome;
 	content: "";
 	padding-right: 5px;
 }
 
-.SobiPro .spEntryEdit select.spClassCategory {
+.SobiPro.default3 .spEntryEdit select.spClassCategory {
 	margin-bottom: 3px;
 }
 
 // URL and Email Fields
 // ----------------------------------------
-.SobiPro .spFieldEmailLabel,
-.SobiPro .spFieldUrlLabel {
+.SobiPro.default3 .spFieldEmailLabel,
+.SobiPro.default3 .spFieldUrlLabel {
 	margin-bottom: 5px;
 }
 
 & when (@corners = rounded) {
-	.SobiPro .spFieldUrl .input-prepend input,
-	.SobiPro .spFieldUrl .input-prepend .uneditable-input {
+	.SobiPro.default3 .spFieldUrl .input-prepend input,
+	.SobiPro.default3 .spFieldUrl .input-prepend .uneditable-input {
 		border-radius: 0 4px 4px 0;
 	}
-	.SobiPro .spFieldUrl .input-prepend select {
+	.SobiPro.default3 .spFieldUrl .input-prepend select {
 		border-radius: 4px 0 0 4px;
 	}
 }
 
-.SobiPro .spFieldUrl input {
+.SobiPro.default3 .spFieldUrl input {
 	width: -moz-calc(100% - 113px);
 	width: -webkit-calc(100% - 113px);
 	width: -o-calc(100% - 113px);
 	width: calc(100% - 113px);
 }
 
-.SobiPro .spFieldUrl select,
-.SobiPro .spFieldUrl .input-prepend {
+.SobiPro.default3 .spFieldUrl select,
+.SobiPro.default3 .spFieldUrl .input-prepend {
 	width: 100%;
 }
 
-.SobiPro .spFieldUrl .btn-group {
+.SobiPro.default3 .spFieldUrl .btn-group {
 	width: 100px;
 }
 
-.SobiPro .spUrlCounterValue {
+.SobiPro.default3 .spUrlCounterValue {
 	font-size: 85%;
 	color: grey;
 	padding-left: 18px;
 }
 
-.SobiPro .spCountableReset {
+.SobiPro.default3 .spCountableReset {
 	margin-top: 5px;
 }
 
 // Image Field
 // ----------------------------------------
-.SobiPro .spEditImagePreview {
+.SobiPro.default3 .spEditImagePreview {
 	float: left;
 	min-height: 65px;
 }
 
-.SobiPro .spEditImagePreview img {
+.SobiPro.default3 .spEditImagePreview img {
 	padding: 4px;
 	background-color: #fff;
 	border: 1px solid rgba(0, 0, 0, 0.2);
@@ -1459,11 +1459,11 @@
 	}
 }
 
-.SobiPro .spImageField input[type='checkbox'] {
+.SobiPro.default3 .spImageField input[type='checkbox'] {
 	margin: 1px 5px 5px 0;
 }
 
-.SobiPro .spImageField label {
+.SobiPro.default3 .spImageField label {
 	display: inline-block;
 }
 
@@ -1500,13 +1500,13 @@
 
 // Search and Edit form
 // ----------------------------------------
-.SobiPro .spFieldCheckbox,
-.SobiPro .spFieldRadio {
+.SobiPro.default3 .spFieldCheckbox,
+.SobiPro.default3 .spFieldRadio {
 	float: left;
 }
 
-.SobiPro .spFieldRadio label,
-.SobiPro .spFieldCheckbox label {
+.SobiPro.default3 .spFieldRadio label,
+.SobiPro.default3 .spFieldCheckbox label {
 	float: left;
 	color: #666666;
 	& when (@inverse = inverse) {
@@ -1514,56 +1514,56 @@
 	}
 }
 
-.SobiPro .spFieldCheckbox label {
+.SobiPro.default3 .spFieldCheckbox label {
 	margin-top: 5px;
 }
 
-.SobiPro .spFieldRadio label {
+.SobiPro.default3 .spFieldRadio label {
 	margin-top: 5px
 }
 
-.SobiPro .spFieldCheckbox input,
-.SobiPro .spFieldRadio input {
+.SobiPro.default3 .spFieldCheckbox input,
+.SobiPro.default3 .spFieldRadio input {
 	margin-left: 5px;
 	margin-right: 5px;
 	float: left;
 }
 
-.SobiPro .spEntryEdit .spFieldCheckbox input {
+.SobiPro.default3 .spEntryEdit .spFieldCheckbox input {
 	margin-top: 5px;
 }
 
-.SobiPro .spFieldRadio input {
+.SobiPro.default3 .spFieldRadio input {
 	margin-top: 10px;
 }
 
-.SobiPro .spSelectRangeFrom span,
-.SobiPro .spSelectRangeTo span {
+.SobiPro.default3 .spSelectRangeFrom span,
+.SobiPro.default3 .spSelectRangeTo span {
 	display: inline-block;
 	min-width: 34px;
 }
 
-.SobiPro .spSelectRangeFrom .input-append,
-.SobiPro .spSelectRangeTo .input-append {
+.SobiPro.default3 .spSelectRangeFrom .input-append,
+.SobiPro.default3 .spSelectRangeTo .input-append {
 	float: left;
 	width: calc(100% / 2 - 5px);
 }
 
-.SobiPro .spSelectRangeFrom .input-append {
+.SobiPro.default3 .spSelectRangeFrom .input-append {
 	margin: 0 5px 5px 0;
 }
 
-.SobiPro .spSelectRangeTo .input-append {
+.SobiPro.default3 .spSelectRangeTo .input-append {
 	margin: 0 0 5px 5px;
 }
 
-.SobiPro .control-label input[type="checkbox"] {
+.SobiPro.default3 .control-label input[type="checkbox"] {
 	margin: 0;
 }
 
 // Edit entry payment control
 // ----------------------------------------
-.SobiPro .control-label div.paybox span {
+.SobiPro.default3 .control-label div.paybox span {
 	border-radius: 45px;
 	padding: 5px 9px 9px 9px;
 	border: 1px solid darken(@alert-color, 10%);;
@@ -1575,17 +1575,17 @@
 	}
 }
 
-.SobiPro .form-inline .control-label div.paybox {
+.SobiPro.default3 .form-inline .control-label div.paybox {
 	margin-bottom: 12px;
 }
 
-.SobiPro .control-group.payment-message {
+.SobiPro.default3 .control-group.payment-message {
 	padding-top: 10px;
 }
 
 // Search
 // ----------------------------------------
-.SobiPro .spSearch .spFieldCheckbox input {
+.SobiPro.default3 .spSearch .spFieldCheckbox input {
 	margin-top: 8px
 }
 
@@ -1595,7 +1595,7 @@
 }
 
 & when (@inverse = inverse) {
-	.SobiPro .sp-search-phrases label {
+	.SobiPro.default3 .sp-search-phrases label {
 		color: #333;
 	}
 }
@@ -1641,34 +1641,34 @@
 
 // Payment popup
 // ----------------------------------------
-.SobiPro table.payment td {
+.SobiPro.default3 table.payment td {
 	line-height: 10px;
 }
 
-.SobiPro table tr.summary td {
+.SobiPro.default3 table tr.summary td {
 	background-color: #ffffff !important;
 	padding-top: 25px;
 }
 
-.SobiPro table.payment tbody tr.info > td {
+.SobiPro.default3 table.payment tbody tr.info > td {
 	.borders(medium);
 	.background(medium);
 }
 
-.SobiPro table.payment tbody tr.success > td {
+.SobiPro.default3 table.payment tbody tr.success > td {
 	background-color: lighten(@alert-color, 20%);
 }
 
-.SobiPro table tr.sum td {
+.SobiPro.default3 table tr.sum td {
 	font-weight: bold;
 }
 
-.SobiPro .disabledArea {
+.SobiPro.default3 .disabledArea {
 	opacity: 0.3;
 	cursor: progress;
 }
 
-.SobiPro .disabledArea a {
+.SobiPro.default3 .disabledArea a {
 	cursor: progress;
 }
 
@@ -1676,12 +1676,12 @@
 // (don't work if you change the field CSS classes in the Fields Manager)
 // ----------------------------------------
 // Core Fields
-.SobiPro div.spClassViewUrl {
+.SobiPro.default3 div.spClassViewUrl {
 	padding-top: 10px;
 }
 
-.SobiPro .popover img,
-.SobiPro .spClassViewImage img {
+.SobiPro.default3 .popover img,
+.SobiPro.default3 .spClassViewImage img {
 	padding: 4px;
 	background-color: #fff;
 	border: 1px solid rgba(0, 0, 0, 0.2);
@@ -1692,13 +1692,13 @@
 	}
 }
 
-.SobiPro .spEntryContainer .spClassViewImage img {
+.SobiPro.default3 .spEntryContainer .spClassViewImage img {
 	width: @small-image;
 }
 
 // Navigation Link Bar
 // -----------------------------------------------
-.SobiPro .alert-navigationlinks {
+.SobiPro.default3 .alert-navigationlinks {
 	background-color: @back-color;
 	color: @base-color;
 	margin-top: 20px;
@@ -1713,7 +1713,7 @@
 	}
 }
 
-.SobiPro ul.spNavigationLinks {
+.SobiPro.default3 ul.spNavigationLinks {
 	text-align: right;
 	border-bottom: 1px solid;
 	border-bottom-color: @base-color;
@@ -1726,30 +1726,30 @@
 
 // Carousel Slider Settings
 // -----------------------------------------------
-.SobiPro .carousel-inner {
+.SobiPro.default3 .carousel-inner {
 	height: @carousel-image;
 }
 
-.SobiPro .carousel-inner > .item > img,
-.SobiPro .carousel-inner > .item > a > img {
+.SobiPro.default3 .carousel-inner > .item > img,
+.SobiPro.default3 .carousel-inner > .item > a > img {
 	height: @carousel-image;
 }
 
-.SobiPro .carousel-inner img.sp-carousel-image {
+.SobiPro.default3 .carousel-inner img.sp-carousel-image {
 	margin-left: auto;
 	margin-right: auto;
 }
 
-.SobiPro .carousel-control.right {
+.SobiPro.default3 .carousel-control.right {
 	background-image: linear-gradient(to right, transparent 0, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 100%);
 }
 
-.SobiPro .carousel-control.left {
+.SobiPro.default3 .carousel-control.left {
 	background-image: linear-gradient(to right, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 0, transparent 100%);
 }
 
 // Support for Font Awesome 3 and 4
-.SobiPro .carousel-control {
+.SobiPro.default3 .carousel-control {
 	.fa-chevron-right,
 	.icon-chevron-right,
 	.icon-next {
@@ -1789,69 +1789,69 @@
 // SP-GeoMap Field
 // -----------------------------------------------
 & when (@corners = rounded) {
-	.SobiPro .ctrl-geomap {
+	.SobiPro.default3 .ctrl-geomap {
 		border-radius: 4px;
 	}
 }
 
-.SobiPro .mapSearch {
+.SobiPro.default3 .mapSearch {
 	display: inline-block;
 }
 
 // Aggregation Field
 // -----------------------------------------------
-.SobiPro .bootstrap-tagsinput {
+.SobiPro.default3 .bootstrap-tagsinput {
 	& when (@inverse = inverse) {
 		background-color: @hover-color;
 	}
 	width: calc(100% - 12px);
 }
 
-.SobiPro .bootstrap-tagsinput .tag {
+.SobiPro.default3 .bootstrap-tagsinput .tag {
 	color: @text-color;
 }
 
-.SobiPro .bootstrap-tagsinput .tag [data-role="remove"] {
+.SobiPro.default3 .bootstrap-tagsinput .tag [data-role="remove"] {
 	color: darken(@text-color, 10%);
 }
 
 & when (@inverse = inverse) {
-	.SobiPro div.tagsinput input {
+	.SobiPro.default3 div.tagsinput input {
 		background-color: @base-color;
 	}
-	.SobiPro .bootstrap-tagsinput {
+	.SobiPro.default3 .bootstrap-tagsinput {
 		background-color: #eeeeee;
 	}
 }
 
-.SobiPro div.spClassViewAggregation,
-.SobiPro div.spClassViewAggregation a {
+.SobiPro.default3 div.spClassViewAggregation,
+.SobiPro.default3 div.spClassViewAggregation a {
 	color: @active-color;
 }
 
 // Review and Rating App
 // -----------------------------------------------
-.SobiPro .review-ajax-navigation:hover,
-.SobiPro .review-ajax-navigation,
-.SobiPro .review-ajax-navigation .icon-chevron-down {
+.SobiPro.default3 .review-ajax-navigation:hover,
+.SobiPro.default3 .review-ajax-navigation,
+.SobiPro.default3 .review-ajax-navigation .icon-chevron-down {
 	color: @base-color;
 	& when (@inverse = inverse) {
 		color: @text-color;
 	}
 }
 
-.SobiPro .review-first {
+.SobiPro.default3 .review-first {
 	font-size: calc(@fontsize + 2px);
 	i {
 		color: @base-color;
 	}
 }
 
-.SobiPro .star-rating-control {
+.SobiPro.default3 .star-rating-control {
 	font-size: 14px;
 }
 
-.SobiPro .review-container {
+.SobiPro.default3 .review-container {
 	.rating-criteria,
 	.rating-summary {
 		line-height: 1.428571429;
@@ -1880,39 +1880,39 @@
 
 // Calendar Field
 // -----------------------------------------------
-.SobiPro .spListing h3 {
+.SobiPro.default3 .spListing h3 {
 	color: @base-color;
 }
 
-.SobiPro table.SpCalendar th,
-.SobiPro table.SpCalendar td,
-.SobiPro table.SpCalendar {
+.SobiPro.default3 table.SpCalendar th,
+.SobiPro.default3 table.SpCalendar td,
+.SobiPro.default3 table.SpCalendar {
 	.background(light);
 	.borders(light);
 }
 
-.SobiPro table.SpCalendar td.SpCalSun {
+.SobiPro.default3 table.SpCalendar td.SpCalSun {
 	.borders(medium);
 	.background(medium);
 }
 
-.SobiPro table.SpCalendar th {
+.SobiPro.default3 table.SpCalendar th {
 	color: @base-color;
 }
 
-.SobiPro .spCalDayHead .navbar-inner {
+.SobiPro.default3 .spCalDayHead .navbar-inner {
 	background-color: @alert-color;
 	color: @text-color;
 	font-size: calc(@fontsize + 1px);;
 }
 
-.SobiPro .spCalendarDayHead .navbar-text,
-.SobiPro .spCalNavPhone a,
-.SobiPro .spcalNav a {
+.SobiPro.default3 .spCalendarDayHead .navbar-text,
+.SobiPro.default3 .spCalNavPhone a,
+.SobiPro.default3 .spcalNav a {
 	font-size: calc(@fontsize + 1px);;
 }
 
-.SobiPro .SpCalDay.badge {
+.SobiPro.default3 .SpCalDay.badge {
 	background-color: @alert-color;
 	color: @active-color;
 	border-bottom-width: 1px;
@@ -1928,33 +1928,33 @@
 	font-weight: 400;
 }
 
-.SobiPro .spClassCalendarRepeat select {
+.SobiPro.default3 .spClassCalendarRepeat select {
 	width: 150px;
 	margin-top: 5px;
 }
 
 // Download Field
 // -----------------------------------------------
-.SobiPro .spEditDownloadPreview p {
+.SobiPro.default3 .spEditDownloadPreview p {
 	font-size: @fontsize;
 }
 
 // QR-Code Field
 // -----------------------------------------------
-.SobiPro .spClassViewQRCode {
+.SobiPro.default3 .spClassViewQRCode {
 	text-align: center;
 }
 
 // Collection App
 // -----------------------------------------------
 & when (@inverse = inverse) {
-	.SobiPro .spEntryContainer div.btnCollection .btn,
-	.SobiPro .spDetailEntry div.btnCollection .btn {
+	.SobiPro.default3 .spEntryContainer div.btnCollection .btn,
+	.SobiPro.default3 .spDetailEntry div.btnCollection .btn {
 		color: #333;
 	}
 }
 
-.SobiPro .spCollection {
+.SobiPro.default3 .spCollection {
 	& when (@corners = rounded) {
 		border-radius: 4px;
 	}
@@ -1962,68 +1962,68 @@
 	.borders(light);
 }
 
-.SobiPro .spCollection .nav > li > a {
+.SobiPro.default3 .spCollection .nav > li > a {
 	border-color: fade(#ffffff, 0%);
 }
 
-.SobiPro .spCollection .nav > li > a:hover,
-.SobiPro .spCollection .nav > li > a:focus {
+.SobiPro.default3 .spCollection .nav > li > a:hover,
+.SobiPro.default3 .spCollection .nav > li > a:focus {
 	border-color: darken(@hover-color, 10%);
 	background-color: @hover-color;
 	color: @active-color;
 }
 
-.SobiPro .ctrl-collection-remove-item {
+.SobiPro.default3 .ctrl-collection-remove-item {
 	margin-top: 5px;
 	i {
 		font-size: @fontsize;
 	}
 }
 
-.SobiPro .collection-entry-container .page-header,
-.SobiPro .btnCollection i {
+.SobiPro.default3 .collection-entry-container .page-header,
+.SobiPro.default3 .btnCollection i {
 	font-size: calc(@fontsize + 3px);
 }
 
 // Gallery Field
 // -----------------------------------------------
-.SobiPro .spGalleryDropArea div.table .file-row {
+.SobiPro.default3 .spGalleryDropArea div.table .file-row {
 	.background(light);
 }
-.SobiPro .spGalleryDropArea,
-.SobiPro .spGalleryDropArea div.table .file-row > div {
+.SobiPro.default3 .spGalleryDropArea,
+.SobiPro.default3 .spGalleryDropArea div.table .file-row > div {
 	.borders(light);
 }
-.SobiPro .pswp__share-tooltip a:hover {
+.SobiPro.default3 .pswp__share-tooltip a:hover {
 	color: @hover-color;
 	background-color: @active-color;
 }
 & when (@corners = rounded) {
-	.SobiPro .pswp__share-tooltip {
+	.SobiPro.default3 .pswp__share-tooltip {
 		border-radius: 4px;
 	}
 }
-.SobiPro .pswp__share-modal {
+.SobiPro.default3 .pswp__share-modal {
 	background: rgba(red(@base-color), green(@base-color), blue(@base-color), 0.5);
 }
-.SobiPro .pswp__share-modal--fade-in {
+.SobiPro.default3 .pswp__share-modal--fade-in {
 	opacity: 1;
 }
 
 
 // Profile Field
 // -----------------------------------------------
-.SobiPro .spProfile.striped > blockquote:nth-child(2n+1) {
+.SobiPro.default3 .spProfile.striped > blockquote:nth-child(2n+1) {
 	.background(light);
 	.borders(light);
 }
 
-.SobiPro .spProfile.striped > blockquote:nth-child(2n) {
+.SobiPro.default3 .spProfile.striped > blockquote:nth-child(2n) {
 	.borders(medium);
 	.background(medium);
 }
 
-.SobiPro .spProfileSection {
+.SobiPro.default3 .spProfileSection {
 	margin-top: 30px;
 	font-size: 19px;
 	font-weight: 300;
@@ -2031,18 +2031,18 @@
 	padding-top: 10px;
 }
 
-.SobiPro .spProfileEntries {
+.SobiPro.default3 .spProfileEntries {
 	margin-top: 0;
 	padding-bottom: 10px;
 }
 
-.SobiPro .spProfileEntries .page-header {
+.SobiPro.default3 .spProfileEntries .page-header {
 	font-size: 17px;
 	padding-bottom: 5px;
 }
 
 //restore font size in modal
-.SobiPro .modal-body {
+.SobiPro.default3 .modal-body {
 	padding: 1%;
 	font-size: 14px;
 
@@ -2068,13 +2068,13 @@
 	}
 }
 
-.SobiPro .modal-footer {
+.SobiPro.default3 .modal-footer {
 	.btn {
 		font-size: 14px;
 	}
 }
 
-.SobiPro .modal-header {
+.SobiPro.default3 .modal-header {
 	.spMessage {
 		font-size: 14px;
 	}
@@ -2097,132 +2097,132 @@
 //Navigation Collapse
 //@media (min-width: 768px) and (max-width: 979px) {
 @media (min-width: 769px) and (max-width: 980px) {
-	.SobiPro .topmenu ul.nav {
+	.SobiPro.default3 .topmenu ul.nav {
 		width: 100%;
 	}
 }
 
 // Landscape phone to portrait tablet
 @media (max-width: 768px) {
-	.SobiPro .topmenu ul.nav {
+	.SobiPro.default3 .topmenu ul.nav {
 		width: 100%;
 	}
 
-	.SobiPro .navbar .nav > li {
+	.SobiPro.default3 .navbar .nav > li {
 		float: none;
 	}
 
-	.SobiPro .topmenu li {
+	.SobiPro.default3 .topmenu li {
 		line-height: 20px;
 	}
 
-	.SobiPro .navbar .nav > li > a {
+	.SobiPro.default3 .navbar .nav > li > a {
 		padding-left: 15px;
 	}
 
-	.SobiPro .topmenu .navbar-inner {
+	.SobiPro.default3 .topmenu .navbar-inner {
 		min-height: 20px;
 		padding-left: 0;
 		padding-right: 0;
 	}
 
-	.SobiPro .spCaticon {
+	.SobiPro.default3 .spCaticon {
 		margin-top: 10px;
 		padding-left: 0;
 		text-align: left;
 	}
 
-	.SobiPro .spUpload input,
-	.SobiPro .input-append input.spClassMap {
+	.SobiPro.default3 .spUpload input,
+	.SobiPro.default3 .input-append input.spClassMap {
 		height: 31px;
 	}
 
-	.SobiPro .input-small {
+	.SobiPro.default3 .input-small {
 		width: calc(100% - 12px);
 	}
 
 	// Carousel
-	.SobiPro .carousel-inner,
-	.SobiPro .carousel-inner > .item > img,
-	.SobiPro .carousel-inner > .item > a > img {
+	.SobiPro.default3 .carousel-inner,
+	.SobiPro.default3 .carousel-inner > .item > img,
+	.SobiPro.default3 .carousel-inner > .item > a > img {
 		height: auto;
 	}
 }
 
 // form switch to label above input
 @media (max-width: 599px) {
-	.SobiPro .spEntryContainer > .row-fluid > [class*='span'],
-	.SobiPro .spCategoryContainer > .row-fluid > [class*='span'] {
+	.SobiPro.default3 .spEntryContainer > .row-fluid > [class*='span'],
+	.SobiPro.default3 .spCategoryContainer > .row-fluid > [class*='span'] {
 		width: 100%;
 		float: none;
 		margin-left: 0;
 	}
 
-	.SobiPro .spEditImagePreview {
+	.SobiPro.default3 .spEditImagePreview {
 		float: none;
 	}
 
-	.SobiPro .spUpload button.btn.select {
+	.SobiPro.default3 .spUpload button.btn.select {
 		width: calc(100% - 44px);
 	}
 
-	.SobiPro .btn[name="spsearchphrase"] {
+	.SobiPro.default3 .btn[name="spsearchphrase"] {
 		padding: 2px 10px;
 		font-size: 12px;
 	}
 
-	.SobiPro .control-label div.paybox {
+	.SobiPro.default3 .control-label div.paybox {
 		margin-bottom: 12px;
 	}
 
-	.SobiPro .controls {
+	.SobiPro.default3 .controls {
 		margin-left: 0;
 	}
 
-	.SobiPro input[name="sp_search_for"] {
+	.SobiPro.default3 input[name="sp_search_for"] {
 		margin-bottom: 10px;
 	}
 
-	.SobiPro button.btn.spsearchphrase {
+	.SobiPro.default3 button.btn.spsearchphrase {
 		//PhpStorm meldet hier fälschlicherweise einen Fehler
 		width: calc(100% / 3);
 	}
 
-	.SobiPro .input-append.date.spDatePicker {
+	.SobiPro.default3 .input-append.date.spDatePicker {
 		margin: 0 10px 10px 0;
 		width: 100%;
 	}
 
-	.SobiPro .spCaticon i {
+	.SobiPro.default3 .spCaticon i {
 		//font-size: 3em;
 	}
 
-	.SobiPro .spEntryEdit .message-lightbulb {
+	.SobiPro.default3 .spEntryEdit .message-lightbulb {
 		left: 49%;
 	}
 
-	.SobiPro .input-medium,
-	.SobiPro .sp-search-phrases .btn-group,
-	.SobiPro .spUpload .btn-group {
+	.SobiPro.default3 .input-medium,
+	.SobiPro.default3 .sp-search-phrases .btn-group,
+	.SobiPro.default3 .spUpload .btn-group {
 		width: 100%;
 	}
 }
 
 // Landscape phones and down
 @media (max-width: 480px) {
-	.SobiPro .modal .control-group {
+	.SobiPro.default3 .modal .control-group {
 		margin-bottom: 6px;
 	}
 
-	.SobiPro .spPrint .spClassViewImage img,
-	.SobiPro .spDetailEntry .spClassViewImage img,
-	.SobiPro div.spClassViewImage img,
-	.SobiPro .spEntryContainer .spClassViewImage img {
+	.SobiPro.default3 .spPrint .spClassViewImage img,
+	.SobiPro.default3 .spDetailEntry .spClassViewImage img,
+	.SobiPro.default3 div.spClassViewImage img,
+	.SobiPro.default3 .spEntryContainer .spClassViewImage img {
 		width: calc(100% - 8px);
 		margin: 0 0 10px 0;
 	}
 
-	.SobiPro .spNoImage {
+	.SobiPro.default3 .spNoImage {
 		display: none;
 	}
 
@@ -2230,30 +2230,30 @@
 		text-align: center;
 	}
 
-	.SobiPro .spDetailEntry .spClassViewImage img,
-	.SobiPro .spClassViewImage img {
+	.SobiPro.default3 .spDetailEntry .spClassViewImage img,
+	.SobiPro.default3 .spClassViewImage img {
 		float: none !important;
 	}
 
-	.SobiPro .input-large,
-	.SobiPro .input-medium,
-	.SobiPro .sp-search-controls .btn {
+	.SobiPro.default3 .input-large,
+	.SobiPro.default3 .input-medium,
+	.SobiPro.default3 .sp-search-controls .btn {
 		width: 100%;
 	}
 
-	.SobiPro .tab-pane {
+	.SobiPro.default3 .tab-pane {
 		min-height: inherit;
 	}
 
 	// Navigation Link Bar
 	// -----------------------------------------------
-	.SobiPro .alert-navigationlinks {
+	.SobiPro.default3 .alert-navigationlinks {
 		height: auto;
 		margin-bottom: 0;
 		margin-top: 0;
 }
 
-	.SobiPro ul.spNavigationLinks {
+	.SobiPro.default3 ul.spNavigationLinks {
 		border-bottom: none;
 		text-align: center;
 		margin: 0;
@@ -2265,7 +2265,7 @@
 			line-height: 24px;
 		}
 	}
-	.SobiPro .lead {
+	.SobiPro.default3 .lead {
 		text-align: center;
 	}
 }

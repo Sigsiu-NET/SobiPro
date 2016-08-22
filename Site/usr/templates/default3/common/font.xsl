@@ -23,13 +23,13 @@
 		<!-- Load and apply the special fonts -->
 		<xsl:variable name="basefont"><xsl:value-of select="//config/basefont/@value" /></xsl:variable>
 		<xsl:if test="//config/basefont/@value != 'none' and //config/basefont/@value != ''">
-			<xsl:value-of select="php:function( 'TplFunctions::LoadFont', $basefont)"/>
-			<xsl:value-of select="php:function( 'TplFunctions::ApplyBaseFont', $basefont)"/>
+			<xsl:value-of select="php:function( 'tplDefault3::LoadFont', $basefont)"/>
+			<xsl:value-of select="php:function( 'tplDefault3::ApplyBaseFont', $basefont)"/>
 		</xsl:if>
 		<xsl:variable name="specialfont"><xsl:value-of select="//config/specialfont/@value" /></xsl:variable>
 		<xsl:if test="$basefont != $specialfont and //config/specialfont/@value != '' and //config/specialfont/@value != 'none'">
-			<xsl:value-of select="php:function( 'TplFunctions::LoadFont', $specialfont)"/>
-			<xsl:value-of select="php:function( 'TplFunctions::ApplyFont', $specialfont)"/>
+			<xsl:value-of select="php:function( 'tplDefault3::LoadFont', $specialfont)"/>
+			<xsl:value-of select="php:function( 'tplDefault3::ApplyFont', $specialfont)"/>
 		</xsl:if>
 
 	</xsl:template>

@@ -26,7 +26,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
-abstract class TplFunctions
+abstract class tplDefault3
 {
 
 	public static function Cfg( $key, $def = null, $section = 'general' )
@@ -35,17 +35,17 @@ abstract class TplFunctions
 	}
 	public static function CSS ($src)
 	{
-		SPFactory::header()->addCSSCode(".SobiPro .spImageHeader {background-image:url(" . $src . ");}");
+		SPFactory::header()->addCSSCode(".SobiPro.default3 .spImageHeader {background-image:url(" . $src . ");}");
 	}
 	public static function LoadFont ($name)
 	{
 		SPFactory::header()->addHeadLink("//fonts.googleapis.com/css?family=" . $name, "text/css", null, "stylesheet");
 	}
 	public static function ApplyBaseFont ($name) {
-		SPFactory::header()->addCSSCode(".SobiPro {font-family:'". $name ."', sans serif;}");
+		SPFactory::header()->addCSSCode(".SobiPro.default3 {font-family:'". $name ."', sans serif;}");
 	}
 	public static function ApplyFont ($name) {
-		SPFactory::header()->addCSSCode(".SobiPro h1, .SobiPro h2, .SobiPro h3, .SobiPro h4 {font-family:'". $name ."', sans serif;}");
+		SPFactory::header()->addCSSCode(".SobiPro.default3 h1, .SobiPro.default3 h2, .SobiPro.default3 h3, .SobiPro.default3 h4 {font-family:'". $name ."', sans serif;}");
 	}
 
 	/**

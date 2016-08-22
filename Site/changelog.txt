@@ -36,6 +36,7 @@ Legend:
 	(+) Support for base fee for an entry added
 	(+) Cmd+S and Ctrl+S shortucts - if applicable will save entry, category, settings
 	(+) Coupon field support added to the payment template file
+	(+) CSS template scope added
 
 	(!) publishing_format set to a more readable format by default
 	(!) B3 template folder renamed to 'b3-default3' as path names have to be lowercase
@@ -45,6 +46,7 @@ Legend:
     (!) schema file template.xsd updated
     (!) SobiPro's default template is now b3-default3 (Bootstrap 3 version)
     (!) Left column more wide
+    (!) Template's abstract class renamed to tplDefault3 to avoid module conflicts
 
 	(-) SobiPro template theme 'blackwidow' removed
 

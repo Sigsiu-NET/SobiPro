@@ -46,16 +46,8 @@ body {
 .SobiPro input[type="checkbox"] {
 	vertical-align: top;
 }
-.SobiPro div.modal {
-	left: inherit;
-	width: 100%;
-	background-color: transparent;
-	border: none;
-	box-shadow: none;
-}
 .SobiPro .modal-body {
 	width: inherit;
-	max-height: inherit;
 }
 .SobiPro .alert .close {
 	position: inherit;
