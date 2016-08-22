@@ -371,7 +371,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 	}
 
-	private function registerFunctions()
+	protected function registerFunctions()
 	{
 		$functions = array();
 		$package = Sobi::Reg( 'current_template' );
