@@ -376,7 +376,10 @@ abstract class SPFrontView extends SPObject implements SPView
 		$package = Sobi::Reg( 'current_template' );
 		if ( SPFs::exists( Sobi::FixPath( $package . '/' . $this->key( 'functions' ) ) ) ) {
 			$path = Sobi::FixPath( $package . '/' . $this->key( 'functions' ) );
-			ob_start();
+			/** Mon, Aug 22, 2016 14:30:49
+			 * Why the hell is the ob_start here and what for?
+			 */
+//			ob_start();
 			$content = file_get_contents( $path );
 			$class = array();
 			preg_match( '/\s*(class)\s+(\w+)/', $content, $class );
@@ -389,6 +392,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 			if ( !( isset( $classes[ $className ] ) ) ) {
 				include_once( $path );
+				$classes[ $className ] = $path;
 			}
 			else {
 				if ( $classes[ $className ] != $path ) {
@@ -396,7 +400,6 @@ abstract class SPFrontView extends SPObject implements SPView
 					return array();
 				}
 			}
-			$classes[ $className ] = $path;
 			$methods = get_class_methods( $className );
 			if ( count( $methods ) ) {
 				foreach ( $methods as $method ) {
