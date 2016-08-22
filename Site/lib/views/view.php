@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -373,6 +371,7 @@ abstract class SPFrontView extends SPObject implements SPView
 
 	protected function registerFunctions()
 	{
+		static $classes = array();
 		$functions = array();
 		$package = Sobi::Reg( 'current_template' );
 		if ( SPFs::exists( Sobi::FixPath( $package . '/' . $this->key( 'functions' ) ) ) ) {
@@ -388,7 +387,16 @@ abstract class SPFrontView extends SPObject implements SPView
 				Sobi::Error( $this->name(), SPLang::e( 'Cannot determine class name in file %s.', str_replace( SOBI_ROOT . DS, null, $path ) ), SPC::WARNING, 0 );
 				return false;
 			}
-			require_once( $path );
+			if ( !( isset( $classes[ $className ] ) ) ) {
+				include_once( $path );
+			}
+			else {
+				if ( $classes[ $className ] != $path ) {
+					Sobi::Error( __CLASS__, 'Class with this name has been already defined but this is not the same class', SPC::WARNING );
+					return array();
+				}
+			}
+			$classes[ $className ] = $path;
 			$methods = get_class_methods( $className );
 			if ( count( $methods ) ) {
 				foreach ( $methods as $method ) {
