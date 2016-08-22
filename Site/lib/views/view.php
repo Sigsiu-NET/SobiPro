@@ -371,7 +371,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 	}
 
-	private function registerFunctions()
+	protected function registerFunctions()
 	{
 		$functions = array();
 		$package = Sobi::Reg( 'current_template' );
@@ -473,7 +473,9 @@ abstract class SPFrontView extends SPObject implements SPView
 		if ( isset( $this->_config[ 'general' ][ 'css_files' ] ) ) {
 			$this->_config[ 'general' ][ 'css_files' ] = explode( ',', $this->_config[ 'general' ][ 'css_files' ] );
 			foreach ( $this->_config[ 'general' ][ 'css_files' ] as $file ) {
-				$this->loadCSSFile( trim( $file ) );
+				if ( trim( $file ) ) {
+					$this->loadCSSFile(trim($file));
+				}
 			}
 		}
 		if ( isset( $this->_config[ 'general' ][ 'js_files' ] ) ) {
