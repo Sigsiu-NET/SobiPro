@@ -47,6 +47,7 @@ Legend:
     (!) SobiPro's default template is now b3-default3 (Bootstrap 3 version)
     (!) Left column more wide
     (!) Template's abstract class renamed to tplDefault3 to avoid module conflicts
+    (!) Tree layout changed
 
 	(-) SobiPro template theme 'blackwidow' removed
 
