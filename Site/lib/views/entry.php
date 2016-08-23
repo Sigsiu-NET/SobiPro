@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -89,76 +87,76 @@ class SPEntryView extends SPFrontView implements SPView
 							$pfm = Sobi::Txt( 'EN.FIELD_NOT_FREE_MSG', array( 'fee' => $pf, 'fieldname' => $field->get( 'name' ) ) );
 						}
 						$f[ $field->get( 'nid' ) ] = array(
-							'_complex' => 1,
-							'_data' => array(
-								'label' => array(
-									'_complex' => 1,
-									'_data' => $field->get( 'name' ),
-									'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->__get( 'showEditLabel' ) )
+								'_complex' => 1,
+								'_data' => array(
+										'label' => array(
+												'_complex' => 1,
+												'_data' => $field->get( 'name' ),
+												'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->__get( 'showEditLabel' ) )
+										),
+										'data' => array( '_complex' => 1, '_xml' => 1, '_data' => $field->field( true ) ),
+										'description' => array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ), ),
+										'fee' => $pf,
+										'fee_msg' => $pfm
 								),
-								'data' => array( '_complex' => 1, '_xml' => 1, '_data' => $field->field( true ) ),
-								'description' => array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ), ),
-								'fee' => $pf,
-								'fee_msg' => $pfm
-							),
-							'_attributes' => array( 'id' => $field->get( 'id' ),
-													'type' => $field->get( 'type' ),
-													'suffix' => $field->get( 'suffix' ),
-													'position' => $field->get( 'position' ),
-													'required' => $field->get( 'required' ),
-													'css_edit' => $field->get ('cssClassEdit'),
-													'width' => $field->get ('bsWidth'),
-								'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
-							)
+								'_attributes' => array( 'id' => $field->get( 'id' ),
+										'type' => $field->get( 'type' ),
+										'suffix' => $field->get( 'suffix' ),
+										'position' => $field->get( 'position' ),
+										'required' => $field->get( 'required' ),
+										'css_edit' => $field->get( 'cssClassEdit' ),
+										'width' => $field->get( 'bsWidth' ),
+										'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
+								)
 						);
 					}
 				}
 			}
 			$f[ 'save_button' ] = array(
-				'_complex' => 1,
-				'_data' => array(
-					'data' => array(
-						'_complex' => 1,
-						'_xml' => 1,
-						'_data' => SPHtml_Input::submit( 'save', Sobi::Txt( 'EN.SAVE_ENTRY_BT' ) ),
-					),
-				)
+					'_complex' => 1,
+					'_data' => array(
+							'data' => array(
+									'_complex' => 1,
+									'_xml' => 1,
+									'_data' => SPHtml_Input::submit( 'save', Sobi::Txt( 'EN.SAVE_ENTRY_BT' ) ),
+							),
+					)
 			);
 			$f[ 'cancel_button' ] = array(
-				'_complex' => 1,
-				'_data' => array(
-					'data' => array(
-						'_complex' => 1,
-						'_xml' => 1,
-						'_data' => SPHtml_Input::button( 'cancel', Sobi::Txt( 'EN.CANCEL_BT' ), array( 'data-role' => 'cancel', 'class' => 'sobipro-cancel' ) ),
-					),
-				)
+					'_complex' => 1,
+					'_data' => array(
+							'data' => array(
+									'_complex' => 1,
+									'_xml' => 1,
+									'_data' => SPHtml_Input::button( 'cancel', Sobi::Txt( 'EN.CANCEL_BT' ), array( 'data-role' => 'cancel', 'class' => 'sobipro-cancel' ) ),
+							),
+					)
 			);
 
 			if ( Sobi::Cfg( 'legacy.sigsiutree', false ) ) {
 				$data[ 'entry' ][ '_data' ][ 'category_chooser' ] = array(
-					'path' => array(
-						'_complex' => 1,
-						'_xml' => 1,
-						'_data' => SPHtml_Input::textarea( 'parent_path', $this->get( 'parent_path' ), false, 500, 60, array( 'id' => 'entry.path', 'class' => 'inputbox required', 'readonly' => 'readonly' ) ),
-					),
-					'selected' => array(
-						'_complex' => 1,
-						'_xml' => 1,
-						'_data' => SPHtml_Input::text( 'entry.parent', $this->get( 'parents' ), array( 'id' => 'entry.parent', 'size' => 15, 'maxlength' => 50, 'class' => 'inputbox required', 'readonly' => 'readonly', 'style' => 'text-align:center;' ) ),
-					),
+						'path' => array(
+								'_complex' => 1,
+								'_xml' => 1,
+								'_data' => SPHtml_Input::textarea( 'parent_path', $this->get( 'parent_path' ), false, 500, 60, array( 'id' => 'entry.path', 'class' => 'inputbox required', 'readonly' => 'readonly' ) ),
+						),
+						'selected' => array(
+								'_complex' => 1,
+								'_xml' => 1,
+								'_data' => SPHtml_Input::text( 'entry.parent', $this->get( 'parents' ), array( 'id' => 'entry.parent', 'size' => 15, 'maxlength' => 50, 'class' => 'inputbox required', 'readonly' => 'readonly', 'style' => 'text-align:center;' ) ),
+						),
 				);
 			}
 			$data[ 'entry' ][ '_data' ][ 'fields' ] = array(
-				'_complex' => 1,
-				'_data' => $f,
-				'_attributes' => array( 'lang' => Sobi::Lang( false ) )
+					'_complex' => 1,
+					'_data' => $f,
+					'_attributes' => array( 'lang' => Sobi::Lang( false ) )
 			);
 			if ( Sobi::Cfg( 'legacy.sigsiutree', false ) ) {
 				$data[ 'tree' ] = array(
-					'_complex' => 1,
-					'_xml' => 1,
-					'_data' => SPLang::entities( $tree->display( true ), true ),
+						'_complex' => 1,
+						'_xml' => 1,
+						'_data' => SPLang::entities( $tree->display( true ), true ),
 				);
 			}
 			$this->_attr = $data;
@@ -187,15 +185,15 @@ class SPEntryView extends SPFrontView implements SPView
 		$visitor = $this->get( 'visitor' );
 		$data = array();
 		$data[ 'section' ] = array(
-			'_complex' => 1,
-			'_data' => Sobi::Section( true ),
-			'_attributes' => array( 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) )
+				'_complex' => 1,
+				'_data' => Sobi::Section( true ),
+				'_attributes' => array( 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) )
 		);
 		$en = array();
 		$en[ 'name' ] = array(
-			'_complex' => 1,
-			'_data' => $entry->get( 'name' ),
-			'_attributes' => array( 'lang' => Sobi::Lang( false ) )
+				'_complex' => 1,
+				'_data' => $entry->get( 'name' ),
+				'_attributes' => array( 'lang' => Sobi::Lang( false ) )
 		);
 		$en[ 'created_time' ] = $entry->get( 'createdTime' );
 		$en[ 'updated_time' ] = $entry->get( 'updatedTime' );
@@ -244,27 +242,27 @@ class SPEntryView extends SPFrontView implements SPView
 		$primaryCat = $entry->get( 'parent' );
 		foreach ( $cats as $cid => $cat ) {
 			$cAttr = array( 'lang' => Sobi::Lang( false ),
-							'id' => $cat[ 'pid' ],
-							'alias' => $cat ['alias'],
-							'position' => $cat[ 'position' ],
-							'url' => Sobi::Url( array( 'sid' => $cat[ 'pid' ],
+					'id' => $cat[ 'pid' ],
+					'alias' => $cat [ 'alias' ],
+					'position' => $cat[ 'position' ],
+					'url' => Sobi::Url( array( 'sid' => $cat[ 'pid' ],
 							'title' => Sobi::Cfg( 'sef.alias', true ) ? $cat[ 'alias' ] : $cat[ 'name' ] ) )
 			);
 			if ( $cat[ 'pid' ] == $primaryCat ) {
 				$cAttr[ 'primary' ] = 'true';
 			}
 			$categories[ ] = array(
-				'_complex' => 1,
-				'_data' => SPLang::clean( $cn[ $cid ][ 'value' ] ),
-				'_attributes' => $cAttr
+					'_complex' => 1,
+					'_data' => SPLang::clean( isset( $cn[ $cid ][ 'value' ] ) ? $cn[ $cid ][ 'value' ] : $cn[ $cid ][ 'name' ] ),
+					'_attributes' => $cAttr
 			);
 		}
 		$en[ 'categories' ] = $categories;
 		$en[ 'meta' ] = array(
-			'description' => $entry->get( 'metaDesc' ),
-			'keys' => $this->metaKeys( $entry ),
-			'author' => $entry->get( 'metaAuthor' ),
-			'robots' => $entry->get( 'metaRobots' ),
+				'description' => $entry->get( 'metaDesc' ),
+				'keys' => $this->metaKeys( $entry ),
+				'author' => $entry->get( 'metaAuthor' ),
+				'robots' => $entry->get( 'metaRobots' ),
 		);
 		if ( $getFields ) {
 			$fields = $entry->getFields();
@@ -275,9 +273,9 @@ class SPEntryView extends SPFrontView implements SPView
 		$this->menu( $data );
 		$this->alphaMenu( $data );
 		$data[ 'entry' ] = array(
-			'_complex' => 1,
-			'_data' => $en,
-			'_attributes' => array( 'id' => $entry->get( 'id' ), 'nid' => $entry->get( 'nid' ), 'version' => $entry->get( 'version' ) )
+				'_complex' => 1,
+				'_data' => $en,
+				'_attributes' => array( 'id' => $entry->get( 'id' ), 'nid' => $entry->get( 'nid' ), 'version' => $entry->get( 'version' ) )
 		);
 		$data[ 'visitor' ] = $this->visitorArray( $visitor );
 		return $data;
