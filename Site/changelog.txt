@@ -70,6 +70,10 @@ Legend:
 	(#) If no custom label for a URL set, but label given in the settings, it wasn't used
 	(#) If no custom label for an email set, but label given in the settings, it wasn't used
 	(#) Notices in router (Issue #1678)
+	(#) Select List -> dependency method: wrong option displayed (Issue #1694)
+	(#) Notices in multilingual mode (Issue #1693)
+	(#) Email and URL field show label value when Custom Title option is disabled (Issue #1689)
+	(#) Loading behavior.core in editor. Causing issue while using CodeMirror (Issue #1687)
 
 
 -------------------

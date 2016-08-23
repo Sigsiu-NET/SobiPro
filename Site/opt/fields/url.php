@@ -309,7 +309,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 				}
 				$data = array(
 						'_complex' => 1,
-						'_data' => SPLang::clean( $data[ 'label' ] ),
+						'_data' => SPLang::clean( $this->ownLabel ? $data[ 'label' ] : $data[ 'url' ] ),
 						'_attributes' => $attributes
 				);
 				return array(

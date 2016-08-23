@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -37,6 +35,7 @@ class SPCMSEditor
 	{
 		if ( SPRequest::cmd( 'format' ) != 'raw' ) {
 			// public function display($name, $html, $width, $height, $col, $row, $buttons = true, $id = null, $asset = null, $author = null, $params = array())
+			JHtml::_( 'behavior.core' );
 			$editor = JEditor::getInstance( JFactory::getConfig()->get( 'editor' ) );
 //			JFactory::getEditor()->display( $name, $html, $width, $height, '75', '20', $buttons, $params );
 			return $editor->display( $name, $html, $width, $height, 75, 20, $buttons, null, null, null, $params );

@@ -1,18 +1,15 @@
 <?php
 /**
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
@@ -39,7 +36,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	protected $cssClassView = 'spClassViewEmail';
 	/** * @var string */
 	protected $cssClassEdit = 'spClassEditEmail';
-	/** @var bool  */
+	/** @var bool */
 	static private $CAT_FIELD = true;
 
 
@@ -68,9 +65,9 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 
 			$class = $this->cssClass . 'Title';
 			if ( defined( 'SOBIPRO_ADM' ) ) {
-				if ($this->bsWidth) {
-					$width = SPHtml_Input::_translateWidth($this->bsWidth);
-					$class .=  ' ' . $width;
+				if ( $this->bsWidth ) {
+					$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+					$class .= ' ' . $width;
 				}
 			}
 			$params = array( 'id' => $this->nid, 'size' => $this->labelWidth, 'class' => $class );
@@ -83,15 +80,15 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			if ( strlen( $this->labelsLabel ) ) {
 				$this->labelsLabel = SPLang::clean( $this->labelsLabel );
 				//$fieldTitle .= "<label for=\"{$this->nid}\" class=\"{$this->cssClass}Title\">{$this->labelsLabel}</label>\n";
-				$params['placeholder'] = $this->labelsLabel;
+				$params[ 'placeholder' ] = $this->labelsLabel;
 			}
 			$fieldTitle .= SPHtml_Input::text( $this->nid, ( ( is_array( $raw ) && isset( $raw[ 'label' ] ) ) ? SPLang::clean( $raw[ 'label' ] ) : null ), $params );
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 		if ( defined( 'SOBIPRO_ADM' ) ) {
-			if ($this->bsWidth) {
-				$width = SPHtml_Input::_translateWidth($this->bsWidth);
-				$class .=  ' ' . $width;
+			if ( $this->bsWidth ) {
+				$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+				$class .= ' ' . $width;
 			}
 		}
 		$this->nid .= '_url';
@@ -102,14 +99,14 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
-		$label = Sobi::Txt('FD.MAIL_EMAIL_ADDRESS');
-		if ( (!$this->ownLabel) && ($this->labelAsPlaceholder)) { // the field label will be shown only if labelAsPlaceholder is true and no own label for the email is selected
-			$label = $this->__get('name');  //get the field's label from the model
+		$label = Sobi::Txt( 'FD.MAIL_EMAIL_ADDRESS' );
+		if ( ( !$this->ownLabel ) && ( $this->labelAsPlaceholder ) ) { // the field label will be shown only if labelAsPlaceholder is true and no own label for the email is selected
+			$label = $this->__get( 'name' );  //get the field's label from the model
 		}
-		$params['placeholder'] = $label;
-		$value = ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null ;
-		if ($value == null) {
-			if ($this->defaultValue) {
+		$params[ 'placeholder' ] = $label;
+		$value = ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null;
+		if ( $value == null ) {
+			if ( $this->defaultValue ) {
 				$value = $this->defaultValue;
 			}
 		}
@@ -136,7 +133,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 		if ( isset( $data[ 'url' ] ) && strlen( $data[ 'url' ] ) ) {
 			$show = true;
 			if ( !( isset( $data[ 'label' ] ) && strlen( $data[ 'label' ] ) ) ) {
-				$data[ 'label' ] = ($this->labelsLabel == '')?$data[ 'url' ]:$this->labelsLabel;
+				$data[ 'label' ] = ( $this->labelsLabel == '' ) ? $data[ 'url' ] : $this->labelsLabel;
 			}
 			/* @TODO: add second step */
 			if ( $this->botProtection ) {
@@ -155,15 +152,15 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 					$attributes[ 'target' ] = '_blank';
 				}
 				$data = array(
-					'_complex' => 1,
-					'_data' => SPLang::clean( $data[ 'label' ] ),
-					'_attributes' => $attributes
+						'_complex' => 1,
+						'_data' => SPLang::clean( $this->ownLabel ? $data[ 'label' ] : $data[ 'url' ] ),
+						'_attributes' => $attributes
 				);
 				return array(
-					'_complex' => 1,
-					'_validate' => array( 'class' => str_replace( str_replace( '\\', '/', SOBI_PATH ), null, str_replace( '\\', '/', __FILE__ ) ), 'method' => 'validateVisibility' ),
-					'_data' => array( 'a' => $data ),
-					'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass )
+						'_complex' => 1,
+						'_validate' => array( 'class' => str_replace( str_replace( '\\', '/', SOBI_PATH ), null, str_replace( '\\', '/', __FILE__ ) ), 'method' => 'validateVisibility' ),
+						'_data' => array( 'a' => $data ),
+						'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass )
 				);
 			}
 		}

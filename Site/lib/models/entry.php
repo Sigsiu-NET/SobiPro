@@ -415,9 +415,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 					}
 					if ( $this->categories ) {
 						$labels = SPLang::translateObject( array_keys( $this->categories ), array( 'name', 'alias' ), 'category' );
-						foreach ( $labels as $t ) {
-							$this->categories[ $t[ 'id' ] ][ 'name' ] = $t[ 'value' ];
-							$this->categories[ $t[ 'id' ] ][ 'alias' ] = $t[ 'alias' ];
+						foreach ( $labels as $id => $t ) {
+							$this->categories[ $id ][ 'name' ] = isset( $t[ 'value' ] ) ? $t[ 'value' ] : $t[ 'name' ];
+							$this->categories[ $id ][ 'alias' ] = $t[ 'alias' ];
 						}
 					}
 					Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->categories ) );
