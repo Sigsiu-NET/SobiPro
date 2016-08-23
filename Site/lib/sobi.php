@@ -529,14 +529,14 @@ abstract class Sobi
 			}
 			/* set current section in the registry */
 			SPFactory::registry()->set( 'current_section', $section->id );
-			$_config = &SPFactory::config();
-			/* load basic configuration settings */
-			$_config->addIniFile( 'etc.config', true );
-			$_config->addTable( 'spdb_config', $sid );
-			/* initialise interface config setting */
-			SPFactory::mainframe()->getBasicCfg();
-			/* initialise config */
-			$_config->init();
 		}
+		$_config = &SPFactory::config();
+		/* load basic configuration settings */
+		$_config->addIniFile( 'etc.config', true );
+		$_config->addTable( 'spdb_config', $sid );
+		/* initialise interface config setting */
+		SPFactory::mainframe()->getBasicCfg();
+		/* initialise config */
+		$_config->init();
 	}
 }
