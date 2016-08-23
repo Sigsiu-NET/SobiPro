@@ -102,6 +102,7 @@ Legend:
 	(#) Wrong order in aliases in multilingual mode (Issue #1627)
 	(#) "finaliseSave" method on category field called even if disabled (Issue #1645)
 	(#) Removing empty segment from router (Issue #1373)
+	(#) Select List -> dependency method: wrong option displayed (Issue #1694)
 
 
 -------------------

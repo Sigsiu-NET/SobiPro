@@ -982,10 +982,10 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$this->cleanCss();
 		return array(
 				'_complex' => 1,
-				'_data' => $this->data(),
+				'_data' => $selected,
 				'_attributes' => array(
 						'class' => $this->cssClass,
-						'selected' => $selected
+						'selected' => $this->getRaw()
 				),
 				'_options' => $_options,
 		);
