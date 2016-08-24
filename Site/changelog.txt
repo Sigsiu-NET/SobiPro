@@ -37,6 +37,7 @@ Legend:
 	(+) Cmd+S and Ctrl+S shortcuts - if applicable will save entry, category, settings
 	(+) Coupon field support added to the payment template file
 	(+) CSS template scope added
+	(+) List of most popular, new and awaiting approval entries in CPanel
 
 	(!) publishing_format set to a more readable format by default
 	(!) B3 template folder renamed to 'b3-default3' as path names have to be lowercase

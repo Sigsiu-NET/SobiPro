@@ -120,7 +120,7 @@ class SPAdminPanel extends SPController
 				$news = $this->getNews();
 				$ordering = Sobi::GetUserState( 'sections.order', 'order', 'name.asc' );
 				$myVersion = SPFactory::CmsHelper()->myVersion( true );
-				$cfg = Sobi::Cfg( 'cpanel.show_entries', false );
+				$cfg = Sobi::Cfg( 'cpanel.show_entries', true );
 				$state = $this->getState();
 				$view = SPFactory::View( 'front', true )
 						->assign( $acl, 'acl' )
@@ -130,7 +130,7 @@ class SPAdminPanel extends SPController
 						->assign( $myVersion, 'version' )
 						->assign( $cfg, 'show-entries' )
 						->assign( $state, 'system-state' );
-				if ( Sobi::Cfg( 'cpanel.show_entries', false ) ) {
+				if ( Sobi::Cfg( 'cpanel.show_entries', true ) ) {
 					$entries = $this->getEntries();
 					$view->assign( $entries, 'entries' );
 				}
@@ -181,7 +181,7 @@ class SPAdminPanel extends SPController
 		}
 		try {
 			$open = false;
-			if ((strpos("DOCTYPE html", $content) == false) or (strpos("?xml", $content) == false)) { // wenn kein XML format (passiert z.B. bei SSL Fehler)
+			if ( ( strpos( "DOCTYPE html", $content ) == false ) or ( strpos( "?xml", $content ) == false ) ) { // wenn kein XML format (passiert z.B. bei SSL Fehler)
 				$content = "";
 			}
 			if ( strlen( $content ) ) {
@@ -267,7 +267,7 @@ class SPAdminPanel extends SPController
 		$entries = array();
 		if ( count( $ids ) ) {
 			foreach ( $ids as $sid ) {
-				$entry = SPFactory::Entry( $sid );
+				$entry = SPFactory::EntryRow( $sid );
 				if ( !( isset( $sections[ $entry->get( 'section' ) ] ) ) ) {
 					$sections[ $entry->get( 'section' ) ] = SPFactory::Section( $entry->get( 'section' ) );
 				}
