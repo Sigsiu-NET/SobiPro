@@ -49,7 +49,7 @@ Legend:
     (!) Left column more wide
     (!) Template's abstract class renamed to tplDefault3 to avoid module conflicts
     (!) Tree layout changed
-    (!) Directory iterator - directories before entries
+    (!) Directory iterator sorts directories before entries now
 
 	(-) SobiPro template theme 'blackwidow' removed
 
