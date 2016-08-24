@@ -121,12 +121,12 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 							// @colour-set: sobipro;
 							$lessContent = preg_replace( "/@{$variable}:[^\n]*\;/", "@{$variable}: {$value};", $lessContent );
 						}
-					}
-					try {
-						SPFs::write( $lessFile, $lessContent );
-						$this->compileLessFile( $lessFile, str_replace( 'less', 'css', $lessFile ), Sobi::Url( 'template.settings' ), true );
-					} catch ( SPException $x ) {
-						$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
+						try {
+							SPFs::write( $lessFile, $lessContent );
+							$this->compileLessFile( $lessFile, str_replace( 'less', 'css', $lessFile ), Sobi::Url( 'template.settings' ), true );
+						} catch ( SPException $x ) {
+							$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
+						}
 					}
 				}
 			}

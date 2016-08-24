@@ -491,6 +491,9 @@ SobiPro.jQuery( document ).ready( function ()
 					if ( SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).length ) {
 						SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).click();
 					}
+					else if ( SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.saveConfig"]' ).length ) {
+						SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.saveConfig"]' ).click();
+					}
 					else {
 						SobiPro.jQuery( '.spIconBar' ).find( '[rel$="\.save"]' ).click();
 					}

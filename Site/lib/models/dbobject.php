@@ -233,6 +233,18 @@ abstract class SPDBObject extends SPObject
 	}
 
 
+	/**
+	 * @param string $attr
+	 * @param $value
+	 * @return mixed
+	 */
+	public function & setParam( $attr, $value )
+	{
+		$this->params[ $attr ] = $value;
+		return $this;
+	}
+
+
 	public function formatDatesToEdit()
 	{
 		if ( $this->validUntil ) {

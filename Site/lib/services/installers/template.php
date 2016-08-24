@@ -212,12 +212,22 @@ class SPTemplateInstaller extends SPInstaller
 				$name = $this->txt( $category, 'name' );
 				$introtext = $this->txt( $category, 'introtext' );
 				$description = $this->txt( $category, 'description' );
+				$useFont = false;
 				$icon = $this->txt( $category, 'icon' );
 				$showIcon = $this->txt( $category, 'showIcon' );
 				$showIntrotext = $this->txt( $category, 'showIntrotext' );
+				$metaKeys = $this->txt( $category, 'metaKeys' );
+				$metaDesc = $this->txt( $category, 'metaDesc' );
+				$metaAuthor = $this->txt( $category, 'metaAuthor' );
+				$metaRobots = $this->txt( $category, 'metaRobots' );
 				$parseDesc = $this->txt( $category, 'parseDesc' );
 				/** @var SPCategory $cat */
 				$cat = SPFactory::Model( 'category' );
+				if ( strstr( $icon, '}' ) ) {
+					$iconFont = json_decode( str_replace( "'", '"', $icon ), true );
+					$useFont = true;
+					$cat->setParam( 'icon-font', $iconFont[ 'class' ] );
+				}
 				$cat->set( 'state', 1 );
 				/* Additional data */
 				$options = $category->getElementsByTagName( 'option' );
@@ -240,6 +250,12 @@ class SPTemplateInstaller extends SPInstaller
 				$cat->set( 'showIcon', $showIcon );
 				$cat->set( 'showIntrotext', $showIntrotext );
 				$cat->set( 'parseDesc', $parseDesc );
+				$cat->set( 'metaKeys', $metaKeys );
+				$cat->set( 'metaDesc', $metaDesc );
+				$cat->set( 'metaAuthor', $metaAuthor );
+				$cat->set( 'metaRobots', $metaRobots );
+
+				$cat->set( 'metaRobots', $metaRobots );
 				/* save the category */
 				$cat->save();
 
@@ -389,7 +405,7 @@ class SPTemplateInstaller extends SPInstaller
 				// handles multiple selected options in field parameters
 				elseif ( ( $options instanceof DOMNodeList ) && $options->length ) {
 					foreach ( $options as $option ) {
-						if ( strlen( $option->getAttribute( 'name' ) )  ) {
+						if ( strlen( $option->getAttribute( 'name' ) ) ) {
 							$attr[ $option->parentNode->getAttribute( 'attribute' ) ][ $option->getAttribute( 'name' ) ] = $option->nodeValue;
 						}
 						else {
