@@ -20,7 +20,7 @@
     <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
     <xsl:template name="category">
         <xsl:variable name="subcatsNumber">
-            <xsl:value-of select="/section/number_of_subcats" />
+            <xsl:value-of select="//./number_of_subcats" />
         </xsl:variable>
         <div class="row">
             <div class="col-xs-3 spCaticon">
