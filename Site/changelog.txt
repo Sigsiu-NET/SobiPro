@@ -34,7 +34,7 @@ Legend:
 	(+) Colour styles for Gallery field added
 	(+) Possibility to redirect to login page if only registered users can add entries in B3-default3 template
 	(+) Support for base fee for an entry added
-	(+) Cmd+S and Ctrl+S shortucts - if applicable will save entry, category, settings
+	(+) Cmd+S and Ctrl+S shortcuts - if applicable will save entry, category, settings
 	(+) Coupon field support added to the payment template file
 	(+) CSS template scope added
 
@@ -47,7 +47,7 @@ Legend:
     (!) SobiPro's default template is now b3-default3 (Bootstrap 3 version)
     (!) Left column more wide
     (!) Template's abstract class renamed to tplDefault3 to avoid module conflicts
-    (!) Directory iterator - directories before entries
+    (!) Tree layout changed
 
 	(-) SobiPro template theme 'blackwidow' removed
 

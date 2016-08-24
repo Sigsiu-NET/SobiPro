@@ -33,16 +33,16 @@ final class SigsiuTree extends SPObject
      */
     private $_images = array(
         'root' => 'base.gif',
-        'join' => 'join.gif',
-        'joinBottom' => 'joinbottom.gif',
-        'plus' => 'plus.gif',
-        'plusBottom' => 'plusbottom.gif',
-        'minus' => 'minus.gif',
-        'minusBottom' => 'minusbottom.gif',
+        'join' => 'empty.gif',
+        'joinBottom' => 'empty.gif',
+        'plus' => 'arrow_close.gif',
+        'plusBottom' => 'arrow_close.gif',
+        'minus' => 'arrow_open.gif',
+        'minusBottom' => 'arrow_open.gif',
         'folder' => 'folder.gif',
         'disabled' => 'disabled.gif',
         'folderOpen' => 'folderopen.gif',
-        'line' => 'line.gif',
+        'line' => 'empty.gif',
         'empty' => 'empty.gif'
     );
     /**
@@ -238,8 +238,8 @@ final class SigsiuTree extends SPObject
         $countNodes = count( $childs, 0 );
         $lastNode = 0;
 
-        $tree .= "\n\t<{$this->_tag} class=\"sigsiuTree {$this->_id}SigsiuTree\">";
-        $tree .= "\n\t\t<{$this->_tag} class=\"sigsiuTreeNode\" id=\"{$this->_id}stNode0\">";
+        $tree .= "<{$this->_tag} class=\"sigsiuTree {$this->_id}SigsiuTree\">";
+        $tree .= "<{$this->_tag} class=\"sigsiuTreeNode\" id=\"{$this->_id}stNode0\">";
         if ( !( in_array( $sid, $this->_disabled ) ) ) {
             $tree .= "<a href=\"{$sectionLink}\" id=\"{$this->_id}_imgFolderUrl0\"><img id=\"{$this->_id}0\" src=\"{$this->_images['root']}\" alt=\"{$sectionName}\"/></a>";
         }
@@ -253,7 +253,7 @@ final class SigsiuTree extends SPObject
             $tree .= $sectionName;
         }
         $tree .= "</{$this->_tag}>";
-        $tree .= "\n\t\t<{$this->_tag} id=\"{$this->_id}\" class=\"clip\" style=\"display: block;\">";
+        $tree .= "<{$this->_tag} id=\"{$this->_id}\" class=\"clip\" style=\"display: block;\">";
 
         if ( count( $childs ) ) {
             foreach ( $childs as $cat ) {
@@ -266,54 +266,54 @@ final class SigsiuTree extends SPObject
                 $url = $this->parseLink( $cat );
                 $disabled = ( in_array( $cid, $this->_disabled ) ) ? true : false;
 
-                $tree .= "\n\t\t\t<{$this->_tag} class=\"sigsiuTreeNode\" id=\"{$this->_id}stNode{$cid}\">";
+                $tree .= "<{$this->_tag} class=\"sigsiuTreeNode\" id=\"{$this->_id}stNode{$cid}\">";
 
                 if ( $hasChilds ) {
                     if ( $countNodes == 0 && !$disabled ) {
                         $lastNode = $cid;
-                        $tree .= "\n\t\t\t\t\t<a href=\"javascript:{$this->_id}_stmExpand( {$cid}, 0, {$this->_pid} );\" id=\"{$this->_id}_imgUrlExpand{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'plusBottom' ]}\" id=\"{$this->_id}_imgExpand{$cid}\"  style=\"border-style:none;\" alt=\"expand\"/>\n\t\t\t\t\t</a>";
-                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plusBottom' );";
+                        $tree .= "<a href=\"javascript:{$this->_id}_stmExpand( {$cid}, 0, {$this->_pid} );\" id=\"{$this->_id}_imgUrlExpand{$cid}\"><img src=\"{$this->_images[ 'plusBottom' ]}\" id=\"{$this->_id}_imgExpand{$cid}\" style=\"border-style:none;\" alt=\"expand\"/></a>";
+                        $matrix .= "{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plusBottom' );";
                     }
                     elseif ( !$disabled ) {
-                        $tree .= "\n\t\t\t\t\t<a href=\"javascript:{$this->_id}_stmExpand( {$cid}, 0, {$this->_pid} );\" id=\"{$this->_id}_imgUrlExpand{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'plus' ]}\" id=\"{$this->_id}_imgExpand{$cid}\"  style=\"border-style:none;\" alt=\"expand\"/>\n\t\t\t\t\t</a>";
-                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plus' );";
+                        $tree .= "<a href=\"javascript:{$this->_id}_stmExpand( {$cid}, 0, {$this->_pid} );\" id=\"{$this->_id}_imgUrlExpand{$cid}\"><img src=\"{$this->_images[ 'plus' ]}\" id=\"{$this->_id}_imgExpand{$cid}\" style=\"border-style:none;\" alt=\"expand\"/></a>";
+                        $matrix .= "{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plus' );";
                     }
                     else {
-                        $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'join' ]}\" id=\"{$this->_id}_imgExpand{$cid}\" style=\"border-style:none;\" alt=\"expand\"/>";
-                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plus' );";
+                        $tree .= "<img src=\"{$this->_images[ 'join' ]}\" id=\"{$this->_id}_imgExpand{$cid}\" style=\"border-style:none;\" alt=\"expand\"/>";
+                        $matrix .= "{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plus' );";
                     }
                 }
                 else {
                     if ( $countNodes == 0 && !$disabled ) {
                         $lastNode = $cid;
-                        $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'joinBottom' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgJoin{$cid}\" alt=\"\"/>";
-                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'join' );";
+                        $tree .= "<img src=\"{$this->_images[ 'joinBottom' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgJoin{$cid}\" alt=\"\"/>";
+                        $matrix .= "{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'join' );";
                     }
                     elseif ( !$disabled ) {
-                        $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'join' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgJoin{$cid}\" alt=\"\"/>";
-                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'joinBottom' );";
+                        $tree .= "<img src=\"{$this->_images[ 'join' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgJoin{$cid}\" alt=\"\"/>";
+                        $matrix .= "{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'joinBottom' );";
                     }
                     else {
-                        $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'joinBottom' ]}\" id=\"{$this->_id}_imgExpand{$cid}\" style=\"border-style:none;\" alt=\"expand\"/>";
-                        $matrix .= "\n{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plus' );";
+                        $tree .= "<img src=\"{$this->_images[ 'joinBottom' ]}\" id=\"{$this->_id}_imgExpand{$cid}\" style=\"border-style:none;\" alt=\"expand\"/>";
+                        $matrix .= "{$this->_id}_stmImgMatrix[ {$cid} ] = new Array( 'plus' );";
                     }
 
                 }
                 if ( !$disabled ) {
-                    $tree .= "\n\t\t\t\t\t<a href=\"{$url}\" id=\"{$this->_id}_imgFolderUrl{$cid}\">\n\t\t\t\t\t\t<img src=\"{$this->_images[ 'folder' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>\n\t\t\t\t\t</a>\n\t\t\t\t\t<a href=\"{$url}\" rel=\"{$cid}\" data-sid=\"{$cid}\" class=\"treeNode\" id=\"{$this->_id}_CatUrl{$cid}\">\n\t\t\t\t\t\t{$catName}\n\t\t\t\t\t</a>";
+                    $tree .= "<a href=\"{$url}\" id=\"{$this->_id}_imgFolderUrl{$cid}\"><img src=\"{$this->_images[ 'folder' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/></a><a href=\"{$url}\" rel=\"{$cid}\" data-sid=\"{$cid}\" class=\"treeNode\" id=\"{$this->_id}_CatUrl{$cid}\">{$catName}</a>";
                 }
                 else {
-                    $tree .= "\n\t\t\t\t\t<img src=\"{$this->_images[ 'disabled' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>\n\t\t\t\t\t{$catName}\n\t\t\t\t\t</a>";
+                    $tree .= "<img src=\"{$this->_images[ 'disabled' ]}\" style=\"border-style:none;\" id=\"{$this->_id}_imgFolder{$cid}\" alt=\"\"/>{$catName}</a>";
                 }
 
-                $tree .= "\n\t\t\t</{$this->_tag}>";
+                $tree .= "</{$this->_tag}>";
                 if ( $hasChilds && !$disabled ) {
-                    $tree .= "\n\t\t\t<{$this->_tag} id=\"{$this->_id}_childsContainer{$cid}\" class=\"clip\" style=\"display: block; display:none;\"></{$this->_tag}>";
+                    $tree .= "<{$this->_tag} id=\"{$this->_id}_childsContainer{$cid}\" class=\"clip\" style=\"display: block; display:none;\"></{$this->_tag}>";
                 }
             }
         }
-        $tree .= "\n\t\t</{$this->_tag}>";
-        $tree .= "\n\t</{$this->_tag}>\n\n";
+        $tree .= "</{$this->_tag}>";
+        $tree .= "</{$this->_tag}>";
         $this->createScript( $lastNode, $childs, $matrix, $head );
         $this->tree = $tree;
     }
@@ -386,7 +386,7 @@ final class SigsiuTree extends SPObject
         $params[ 'IMAGES_ARR' ] = null;
         $params[ 'IMAGES_MATRIX' ] = $matrix;
         foreach ( $this->_images as $img => $loc ) {
-            $params[ 'IMAGES_ARR' ] .= "\n{$this->_id}_stmImgs[ '{$img}' ] = '{$loc}';";
+            $params[ 'IMAGES_ARR' ] .= "{$this->_id}_stmImgs[ '{$img}' ] = '{$loc}';";
         }
         $params[ 'URL' ] = Sobi::Url(
             array(

@@ -18,9 +18,9 @@
 
 var __ID___stmcid = 0;
 var __ID___stmLastNode = __LAST_NODE__;
-var __ID___stmImgs = new Array();
-var __ID___stmImgMatrix = new Array();
-var __ID___stmParents = new Array();
+var __ID___stmImgs = [];
+var __ID___stmImgMatrix = [];
+var __ID___stmParents = [];
 var __ID___stmSemaphor = 0;
 var __ID___stmPid = 0;
 var __ID___stmWait = '__SPINNER__';
@@ -80,7 +80,7 @@ function __ID___stmAddSubcats( XMLDoc, deep, ccatid )
 				image = 'empty';
 			}
 			if( !__ID___stmImgMatrix[ catid ] ) {
-				catArray = new Array();
+				catArray = [];
 				catArray[ j ]  = image;
 				__ID___stmImgMatrix[ catid ] = catArray;
 			}
@@ -181,3 +181,4 @@ function __ID___stmColapse( id, deep )
 	}
 	SP_id( "__ID___imgUrlExpand" + id ).href = "javascript:__ID___stmExpand( " + id + ", " + deep + ", " + __ID___stmPid + " );";
 }
+
