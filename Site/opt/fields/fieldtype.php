@@ -169,7 +169,7 @@ class SPFieldType extends SPObject
 		}
 	}
 
-	protected function searchForRange( $request, $section )
+	protected function searchForRange( &$request, $section )
 	{
 		$sids = array();
 		if ( $request[ 'from' ] || $request[ 'to' ] ) {

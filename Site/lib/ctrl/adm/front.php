@@ -245,19 +245,24 @@ class SPAdminPanel extends SPController
 
 	protected function getEntries()
 	{
+		$entries = SPFactory::cache()->getObj( 'cpanel_entries', -1 );
+		if ( $entries && is_array( $entries ) ) {
+			return $entries;
+		}
 		$entries = array();
 		$popular = SPFactory::db()
-				->select( 'id', 'spdb_object', array( 'oType' => 'entry' ), 'counter.desc', 5 )
+				->select( 'id', 'spdb_object', array( 'oType' => 'entry' ), 'counter.desc', 150 )
 				->loadResultArray();
 		$entries[ 'popular' ] = $this->addEntries( $popular );
 		$latest = SPFactory::db()
-				->select( 'id', 'spdb_object', array( 'oType' => 'entry' ), 'createdTime.desc', 5 )
+				->select( 'id', 'spdb_object', array( 'oType' => 'entry' ), 'createdTime.desc', 150 )
 				->loadResultArray();
 		$entries[ 'latest' ] = $this->addEntries( $latest );
 		$unapproved = SPFactory::db()
-				->select( 'id', 'spdb_object', array( 'oType' => 'entry', 'approved' => 0 ), 'createdTime.desc', 5 )
+				->select( 'id', 'spdb_object', array( 'oType' => 'entry', 'approved' => 0 ), 'createdTime.desc', 150 )
 				->loadResultArray();
 		$entries[ 'unapproved' ] = $this->addEntries( $unapproved );
+		SPFactory::cache()->addObj( $entries, 'cpanel_entries', -1 );
 		return $entries;
 	}
 
@@ -266,7 +271,16 @@ class SPAdminPanel extends SPController
 		static $sections = array();
 		$entries = array();
 		if ( count( $ids ) ) {
+			$c = 0;
 			foreach ( $ids as $sid ) {
+				$labels = SPLang::translateObject( $sid, array( 'name', 'alias' ) );
+				if ( !( $labels ) || !( isset( $labels[ $sid ][ 'name' ] ) ) ) {
+					continue;
+				}
+				$c++;
+				if ( $c > 5 ) {
+					break;
+				}
 				$entry = SPFactory::EntryRow( $sid );
 				if ( !( isset( $sections[ $entry->get( 'section' ) ] ) ) ) {
 					$sections[ $entry->get( 'section' ) ] = SPFactory::Section( $entry->get( 'section' ) );
