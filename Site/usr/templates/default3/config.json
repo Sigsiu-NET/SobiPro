@@ -25,6 +25,8 @@
     "entries_limit": "6",
     "entries_in_line": "2",
     "entries_ordering": "updatedTime.desc",
+    "module_eil": "1",
+    "bs": "bs2",
     "noimage": "1",
     "countentries": "0",
     "entries_recursive": "1"
