@@ -197,6 +197,7 @@ class SPSectionView extends SPFrontView implements SPView
 			$en = $this->cachedEntry( $entry, $manager, $noId );
 		}
 		if ( !( is_array( $en ) ) || !( count( $en ) ) ) {
+			$currentSid = SPRequest::sid();
 			if ( is_numeric( $entry ) ) {
 				$entry = SPFactory::Entry( $entry );
 			}
@@ -207,6 +208,18 @@ class SPSectionView extends SPFrontView implements SPView
 					'_data' => $entry->get( 'name' ),
 					'_attributes' => array( 'lang' => Sobi::Lang( false ) )
 			);
+			$ownership = 'valid';
+			if ( Sobi::My( 'id' ) && Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
+				$ownership = 'own';
+			}
+			// don't ask
+			SPRequest::set( 'sid', $currentSid );
+			$en[ 'acl' ] = array(
+					'_complex' => 1,
+					'_data' => null,
+					'_attributes' => array( 'accessible' => Sobi::Can( 'entry', 'access', $ownership ) ? 'true' : 'false' )
+			);
+			SPRequest::set( 'sid', $entry->get( 'id' ) );
 			$en[ 'url_array' ] = array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) );
 			if ( strstr( SPRequest::task(), 'search' ) || $noId || ( Sobi::Cfg( 'section.force_category_id', false ) && SPRequest::sid() == Sobi::Section() ) ) {
 				$en[ 'url' ] = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) ) );
@@ -271,38 +284,6 @@ class SPSectionView extends SPFrontView implements SPView
 			}
 			$fields = $entry->getFields();
 			if ( count( $fields ) ) {
-//				foreach ( $fields as $field ) {
-//					if ( $field->enabled( 'vcard' ) && $field->get( 'id' ) != Sobi::Cfg( 'entry.name_field' ) ) {
-//						$struct = $field->struct();
-//						$options = null;
-//						if ( isset( $struct[ '_options' ] ) ) {
-//							$options = $struct[ '_options' ];
-//							unset( $struct[ '_options' ] );
-//						}
-//						$f[ $field->get( 'nid' ) ] = array(
-//							'_complex' => 1,
-//							'_data' => array(
-//								'label' => array(
-//									'_complex' => 1,
-//									'_data' => $field->get( 'name' ),
-//									'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
-//								),
-//								'data' => $struct,
-//							),
-//							'_attributes' => array( 'id' => $field->get( 'id' ), 'type' => $field->get( 'type' ), 'suffix' => $field->get( 'suffix' ), 'position' => $field->get( 'position' ), 'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ) )
-//						);
-//						if ( Sobi::Cfg( 'list.field_description', false ) ) {
-//							$f[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
-//						}
-//						if ( $options ) {
-//							$f[ $field->get( 'nid' ) ][ '_data' ][ 'options' ] = $options;
-//						}
-//						if ( isset( $struct[ '_xml_out' ] ) && count( $struct[ '_xml_out' ] ) ) {
-//							foreach ( $struct[ '_xml_out' ] as $k => $v )
-//								$f[ $field->get( 'nid' ) ][ '_data' ][ $k ] = $v;
-//						}
-//					}
-//				}
 				$en[ 'fields' ] = $this->fieldStruct( $fields, 'vcard' );
 			}
 			SPFactory::cache()
