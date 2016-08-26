@@ -227,8 +227,6 @@ class SPImage extends SPFile
 	 */
 	private function transparency( &$img )
 	{
-		imagealphablending( $img, true );
-		imagesavealpha( $img, true );
 		$index = imagecolortransparent( $img );
 		/* If we have a specific transparent color */
 		if ( $index >= 0 ) {
@@ -245,18 +243,22 @@ class SPImage extends SPFile
 		 * It doesn't make much sense. If the uploaded PNG file is not transparent in original
 		 * why do we need to add the transparency?
 		 * Let's see if we screw something with that
+		 *
+		 * * Fri, Aug 26, 2016 10:03:04
+		 * Bringing it back because there is no real way to detect transparency in an image
+		 * We are going to use https://github.com/kosinix/grafika in next version probably
 		 */
 		/* Always make a transparent background color for PNGs that don't have one allocated already */
-//		else {
-//			/* Turn off transparency blending (temporarily) */
-//			imagealphablending( $this->image, false );
-//			/* Create a new transparent color for image */
-//			$color = imagecolorallocatealpha( $this->image, 0, 0, 0, 127 );
-//			/* Completely fill the background of the new image with allocated color. */
-//			imagefill( $this->image, 0, 0, $color );
-//			/* Restore transparency blending */
-//			imagesavealpha( $this->image, true );
-//		}
+		else {
+			/* Turn off transparency blending (temporarily) */
+			imagealphablending( $this->image, false );
+			/* Create a new transparent color for image */
+			$color = imagecolorallocatealpha( $this->image, 0, 0, 0, 127 );
+			/* Completely fill the background of the new image with allocated color. */
+			imagefill( $this->image, 0, 0, $color );
+			/* Restore transparency blending */
+			imagesavealpha( $this->image, true );
+		}
 	}
 
 	/**
