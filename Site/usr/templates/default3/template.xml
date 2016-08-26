@@ -8,8 +8,8 @@
 	<copyright>Copyright (C) 2006-2016 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License</license>
 	<creationDate>2016-06-28</creationDate>
-	<version>3.2</version>
-	<description>Default Template for SobiPro version 1.2+ with Bootstrap 2 support.
+	<version>3.3</version>
+	<description>Default Template for SobiPro 1.2+ with Bootstrap 2 support.
 	This template makes use of Bootstrap 2 and Font Awesome 3 elements and styles.</description>
 	<files>
 		<file path="category/view.xsl">
@@ -32,6 +32,9 @@
 		</file>
 		<file path="common/entries.xsl">
 			Template to display all entries (entriesLoop) within a category or the search function. Build the structure of all entries and calls the "vCard" template while displaying single entry.
+		</file>
+		<file path="common/font.xsl">
+			Template to load Google fonts.
 		</file>
 		<file path="common/manage.xsl">
 			Displays the managing functions like edit entry, approve aso, within an entry.
@@ -61,9 +64,6 @@
 			The theme CSS file. Automatically generated!
 		</file>
 		<file path="css/theme.less">
-			LESS file for the theme CSS file.
-		</file>
-		<file path="css/tmpl/joostrap.css">
 			LESS file for the theme CSS file.
 		</file>
 		<file path="entry/details.xsl">

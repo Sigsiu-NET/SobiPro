@@ -478,9 +478,21 @@
 								</values>
 							</field>
 						</fieldset>
-						<fieldset label="Profile Field" condition="apps.profile_field">
+						<fieldset label="TP.CONFIG.APPPROFILE" condition="apps.profile_field">
 							<field type="select" label="TP.CONFIG.APPPROFILE_DV" name="settings[config][entry-details][entries_in_line]"
 							       selected="settings.config.entry-details.entries_in_line" class="input-mini">
+								<values>
+									<option value="1" label="1"/>
+									<option value="2" label="2"/>
+									<option value="3" label="3"/>
+									<option value="4" label="4"/>
+									<option value="5" label="5"/>
+								</values>
+							</field>
+						</fieldset>
+						<fieldset label="TP.CONFIG.APPEMOD">
+							<field type="select" label="TP.CONFIG.APPEMOD_EIL" name="settings[config][general][module_eil]"
+							       selected="settings.config.general.module_eil" class="input-mini">
 								<values>
 									<option value="1" label="1"/>
 									<option value="2" label="2"/>
