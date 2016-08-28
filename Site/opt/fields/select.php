@@ -178,6 +178,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				}
 			}
 		}
+		SPConfig::debOut($values);
 		return $values;
 	}
 
@@ -958,6 +959,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	public function struct()
 	{
 		$selected = $this->getRaw();
+		$data = $this->data();
 		$_options = array();
 		if ( $this->dependency ) {
 			if ( isset( $this->_fData->options ) ) {
@@ -970,7 +972,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 			if ( isset( $options[ 'translation' ] ) ) {
 				SPLang::load( $options[ 'translation' ] );
-				$selected = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $selected ) );
+				$data = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $selected ) );
 			}
 			if ( count( $path ) && isset( $options[ 'translation' ] ) ) {
 				foreach ( $path as $step ) {
@@ -982,7 +984,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$this->cleanCss();
 		return array(
 				'_complex' => 1,
-				'_data' => $selected,
+				'_data' => $data,
 				'_attributes' => array(
 						'class' => $this->cssClass,
 						'selected' => $this->getRaw()
