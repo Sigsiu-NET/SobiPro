@@ -81,6 +81,7 @@ Legend:
 	(#) Application's LESS file being compiled even if it doesn't exist yet (Issue #1677)
 	(#) Sub-subcategories not visible in category views (Issue #1685)
 	(#) Added Windows 10 to trusted operating systems (Issue #1630)
+	(#) Router: added slash at the end of particular URLs
 
 
 -------------------
