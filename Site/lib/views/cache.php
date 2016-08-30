@@ -41,14 +41,12 @@ class SPCachedView extends SPFrontView implements SPView
 		if ( !( file_exists( $template ) ) ) {
 			if ( file_exists( Sobi::FixPath( $templatePackage . '/' . $template ) ) ) {
 				$template = Sobi::FixPath( $templatePackage . '/' . $template );
-				SPConfig::debOut( $template );
 			}
 			else {
 				$type = SPFactory::db()
 						->select( 'oType', 'spdb_object', array( 'id' => SPRequest::sid() ) )
 						->loadResult();
 				$template = ( $templatePackage . '/' . $type . '/' . $template );
-				SPConfig::debOut( $template );
 			}
 		}
 		SPFactory::registry()->set( 'current_template', $templatePackage );
