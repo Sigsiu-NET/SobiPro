@@ -26,6 +26,12 @@ Legend:
  (!) - Change
 
 
+
+-------------------
+1.3 (30 August 2016)
+-------------------
+	(#) View cache doesn't work with absolute template path
+
 -------------------
 1.3 (28 August 2016)
 -------------------
