@@ -30,7 +30,9 @@ Legend:
 -------------------
 1.3 (30 August 2016)
 -------------------
-        (#) View cache doesn't work with absolute template path
+    (#) View cache doesn't work with absolute template path
+	(#) Select lists show options instead of values
+
 
 -------------------
 1.3 (28 August 2016)

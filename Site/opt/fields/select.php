@@ -178,7 +178,6 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				}
 			}
 		}
-		SPConfig::debOut($values);
 		return $values;
 	}
 
