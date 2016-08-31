@@ -15,7 +15,7 @@
 	</description>
 	<files>
 		<file path="default.xsl">
-			Template for the list of all sections 
+			Template for the list of all sections
 		</file>
 		<file path="default.php">
 			Template for the list of all sections in PHP format - not used at the moment

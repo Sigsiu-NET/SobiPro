@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="https://xml.sigsiu.net/SobiPro/template.xsd">
+	<name>SobiPro Template Storage</name>
+	<id>storage</id>
+	<authorName>Sigrid Suski and Radek Suski</authorName>
+	<authorEmail>sobi[at]sigsiu.net</authorEmail>
+	<authorUrl>http://www.Sigsiu.NET</authorUrl>
+	<copyright>Copyright (C) 2006-2016 Sigsiu.NET GmbH</copyright>
+	<license>GNU General Public License</license>
+	<creationDate>2016-08-31</creationDate>
+	<version>1.0</version>
+	<description>
+		Template Storage. Stores the template files installed with applications.
+	</description>
+	<files />
+	<install />
+</template>

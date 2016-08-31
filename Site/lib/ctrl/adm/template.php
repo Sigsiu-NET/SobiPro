@@ -510,6 +510,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		if ( $xinfo->query( '/template/previewImage' )->length && $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue ) {
 			$template[ 'preview' ] = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . str_replace( '\\', '/', str_replace( SOBI_ROOT . DS, null, $dir ) ) . '/' . $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue );
 		}
+		$file = '';
 		if ( $xinfo->query( '/template/files/file' )->length ) {
 			$files = array();
 			foreach ( $xinfo->query( '/template/files/file' ) as $file ) {
