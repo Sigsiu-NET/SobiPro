@@ -409,7 +409,8 @@ final class SobiProAdmCtrl
 	private function frontpage()
 	{
 		SPLoader::loadController( 'front', true );
-		$this->setController( new SPAdminPanel() );
+		$p = new SPAdminPanel();
+		$this->setController( $p );
 		Sobi::ReturnPoint();
 		$this->_ctrl->setTask( SPRequest::task() );
 	}
