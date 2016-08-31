@@ -237,6 +237,8 @@ class SPField extends SPObject
 	 * @var array
 	 */
 	private $_translatable = array( 'name', 'description', 'suffix' );
+	/** @var bool */
+	private $_rawDataChanged = false;
 
 	/**
 	 * @return mixed
@@ -266,6 +268,7 @@ class SPField extends SPObject
 	public function setRawData( $data )
 	{
 		$this->_rawData = $data;
+		$this->_rawDataChanged = true;
 	}
 
 	public function & revisionChanged()
@@ -294,7 +297,10 @@ class SPField extends SPObject
 		else {
 			$r =& $this->_data;
 		}
-		if ( !( $r ) ) {
+		/** Wed, Aug 31, 2016 10:26:08  - Profile field overrides this data but also expect this data to be serialised
+		 * @todo Need to be fixed in Profile Field and then we can remove it here
+		 * */
+		if ( !( $r ) && !( $this->_rawDataChanged ) ) {
 			$r =& $this->_rawData;
 		}
 		if ( $this->parse ) {

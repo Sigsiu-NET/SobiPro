@@ -32,6 +32,7 @@ Legend:
 -------------------
     (#) View cache doesn't work with absolute template path
 	(#) Select lists show options instead of values
+	(#) B/C with Profile Field (Issue #1699)
 
 
 -------------------
