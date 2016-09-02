@@ -26,6 +26,11 @@ Legend:
  (!) - Change
 
 
+-------------------
+1.3.2 ()
+-------------------
+    (#) Notice in entry form for category field
+
 
 -------------------
 1.3.1 (31 August 2016)
