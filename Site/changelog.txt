@@ -29,6 +29,8 @@ Legend:
 -------------------
 1.3.2 ()
 -------------------
+	(+) Message shown if used template does not longer exist
+
     (#) Notice in entry form for category field
 
 

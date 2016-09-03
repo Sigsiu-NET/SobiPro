@@ -369,7 +369,14 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	public function getTemplateTree( $template )
 	{
-		return $this->listTemplates( SPLoader::dirPath( 'usr.templates.' ) . $template, false );
+		if (SPFs::exists(SPLoader::dirPath('usr.templates.') . $template)) {
+			return $this->listTemplates(SPLoader::dirPath('usr.templates.') . $template, false);
+		}
+		else {
+			SPFactory::message()
+				->error(Sobi::Txt( 'TP.TEMPLATE_MISSING', Sobi::Cfg( 'section.template') ), false);
+			return null;
+		}
 	}
 
 	protected function save( $new = false, $compile = false )
