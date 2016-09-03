@@ -196,6 +196,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params[ 'field' ] = $this->nid;
 		$params[ 'preventParents' ] = !( $this->catsWithChilds );
 
+		$setheight = '';
 		if (strlen($this->height)) {
 			$setheight = " style=\"max-height: {$this->height}px;\"";
 		}
