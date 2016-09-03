@@ -248,12 +248,22 @@ abstract class SPDBObject extends SPObject
 	public function formatDatesToEdit()
 	{
 		if ( $this->validUntil ) {
+			$this->validUntil = SPFactory::config()->date( $this->validUntil, 'date.db_format' );
+		}
+		$this->createdTime = SPFactory::config()->date( $this->createdTime, 'date.db_format' );
+		$this->validSince = SPFactory::config()->date( $this->validSince, 'date.db_format' );
+		$this->updatedTime = SPFactory::config()->date( $this->updatedTime, 'date.db_format' );
+	}
+
+	public function formatDatesToDisplay()
+	{
+		if ( $this->validUntil ) {
 			$this->validUntil = SPFactory::config()->date( $this->validUntil, 'date.publishing_format' );
 		}
 		$this->createdTime = SPFactory::config()->date( $this->createdTime, 'date.publishing_format' );
 		$this->validSince = SPFactory::config()->date( $this->validSince, 'date.publishing_format' );
+		$this->updatedTime = SPFactory::config()->date( $this->updatedTime, 'date.publishing_format' );
 	}
-
 	/**
 	 * @param int $state
 	 * @param string $reason

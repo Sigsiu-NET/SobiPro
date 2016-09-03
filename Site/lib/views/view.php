@@ -847,7 +847,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			$timestamp = strtotime( $data[ $index ] . 'UTC' );
 			$data[ $index ] = array(
 					'_complex' => 1,
-					'_data' => gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $timestamp + $offset ),
+					'_data' => gmdate( Sobi::Cfg( 'db.publishing_format', 'j F Y H:i:s' ), $timestamp + $offset ),
 					'_attributes' => array(
 							'UTC' => $data[ $index ],
 							'timestamp' => $timestamp,

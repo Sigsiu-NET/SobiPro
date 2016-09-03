@@ -602,7 +602,7 @@ class SPConfig
 	 * @param bool $gmt
 	 * @return string
 	 */
-	public function date( $time = null, $formatKey = 'date.publishing_format', $format = null, $gmt = false )
+	public function date( $time = null, $formatKey = 'date.db_format', $format = null, $gmt = false )
 	{
 		if ( $time == SPFactory::db()->getNullDate() ) {
 			return null;
