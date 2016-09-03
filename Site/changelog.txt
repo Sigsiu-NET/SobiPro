@@ -32,6 +32,7 @@ Legend:
 	(+) Message shown if used template does not longer exist
 
     (#) Notice in entry form for category field
+    (#) Wrong label shown in textarea for categories field settings
 
 
 -------------------

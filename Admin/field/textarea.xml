@@ -109,7 +109,7 @@
 									<field type="textarea" name="field.allowedAttributes" value="field.allowedAttributes" label="FM.TXT.ALLOWED_ATTR" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
 
-								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS">
+								<fieldset label="FMN.FIELD_ENTRYINPUT_EDITS" invert-condition="category-field">
 									<field invert-condition="category-field" type="toggle" name="field.editable" value="field.editable" label="FMN.IS_EDITABLE" prefix="yes_no" />
 									<field invert-condition="category-field" type="text" name="field.editLimit" value="field.editLimit" label="FM.EDIT_LIMITS" class="span1" />
 								</fieldset>
