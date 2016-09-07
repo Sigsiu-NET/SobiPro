@@ -43,7 +43,7 @@
 							<div class="span12">
 								<fieldset>
 									<field type="text" name="category.name" value="category.name" label="CATN.CATEGORY_NAME" class="input-xlarge" maxlength="255" required="true" />
-									<field type="text" name="category.nid" value="category.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" />
+									<field type="text" name="category.nid" value="category.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" placeholder="EN.ENTRY_PLACEHOLDER_ALIAS" />
 								</fieldset>
 
 								<fieldset label="CATN.CATEGORY_LOCATION">

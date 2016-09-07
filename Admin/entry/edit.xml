@@ -61,7 +61,7 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge"/>
+									<field type="text" name="entry.nid" value="entry.nid" label="CATN.CATEGORY_ALIAS"  placeholder="EN.ENTRY_PLACEHOLDER_ALIAS" class="input-xlarge"/>
 								</fieldset>
 							</div>
 						</div>

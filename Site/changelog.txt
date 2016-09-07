@@ -30,6 +30,7 @@ Legend:
 1.3.2 ()
 -------------------
 	(+) Message shown if used template does not longer exist
+	(+) Auto-generate placeholders for alias fields (nid)
 
     (#) Notice in entry form for category field
     (#) Wrong label shown in textarea for categories field settings
