@@ -588,6 +588,11 @@ class SPField extends SPObject
 		if ( $this->_off ) {
 			return null;
 		}
+		if ( !( $this->_fData ) ) {
+			$this->_fData = new stdClass();
+			$this->_fData->baseData = new stdClass();
+			$this->lang = Sobi::Lang( false );
+		}
 		$this->sid = $sid;
 		$fdata = Sobi::Reg( 'fields_data_' . $sid, array() );
 		$this->suffix = SPLang::clean( $this->suffix );

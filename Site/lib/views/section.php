@@ -213,13 +213,20 @@ class SPSectionView extends SPFrontView implements SPView
 				$ownership = 'own';
 			}
 			// don't ask
-			SPRequest::set( 'sid', $currentSid );
+			SPRequest::set( 'sid', $entry->get( 'id' ) );
 			$en[ 'acl' ] = array(
 					'_complex' => 1,
 					'_data' => null,
 					'_attributes' => array( 'accessible' => Sobi::Can( 'entry', 'access', $ownership ) ? 'true' : 'false' )
 			);
-			SPRequest::set( 'sid', $entry->get( 'id' ) );
+			SPRequest::set( 'sid', $currentSid );
+//			SPRequest::set( 'sid', $currentSid );
+//			$en[ 'acl' ] = array(
+//					'_complex' => 1,
+//					'_data' => null,
+//					'_attributes' => array( 'accessible' => Sobi::Can( 'entry', 'access', $ownership ) ? 'true' : 'false' )
+//			);
+//			SPRequest::set( 'sid', $entry->get( 'id' ) );
 			$en[ 'url_array' ] = array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) );
 			if ( strstr( SPRequest::task(), 'search' ) || $noId || ( Sobi::Cfg( 'section.force_category_id', false ) && SPRequest::sid() == Sobi::Section() ) ) {
 				$en[ 'url' ] = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) ) );
