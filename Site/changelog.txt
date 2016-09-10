@@ -34,6 +34,7 @@ Legend:
 
     (#) Notice in entry form for category field
     (#) Wrong label shown in textarea for categories field settings
+	(#) Missing settings for inbox in category fields
 
 
 -------------------

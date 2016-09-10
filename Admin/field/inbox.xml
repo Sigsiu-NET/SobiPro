@@ -115,8 +115,8 @@
 					<tab label="FMN.FIELD_ENTRYVIEW">
 						<div class="row-fluid">
 							<div class="span12">
-								<fieldset invert-condition="category-field">
-									<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium">
+								<fieldset>
+									<field type="select" name="field.showIn" selected="field.showIn" label="FMN.AVAILABLE_IN" class="input-medium" invert-condition="category-field">
 										<values>
 											<option value="both" label="FM.BOTH_OPT" />
 											<option value="details" label="FM.DETAILS_VIEW_OPT" />
