@@ -87,12 +87,12 @@
 											<text>px</text>
 										</add>
 									</field>
-									<field type="select" name="field.labelSite" selected="field.labelSite" label="FM.CHBXGR.LABEL_SITE" class="input-medium">
-										<values>
-											<option value="right" label="FM.CHBXGR.RIGHT_SITE_OPT" />
-											<option value="left" label="FM.CHBXGR.LEFT_SITE_OPT" />
-										</values>
-									</field>
+									<!--<field type="select" name="field.labelSite" selected="field.labelSite" label="FM.CHBXGR.LABEL_SITE" class="input-medium">-->
+										<!--<values>-->
+											<!--<option value="right" label="FM.CHBXGR.RIGHT_SITE_OPT" />-->
+											<!--<option value="left" label="FM.CHBXGR.LEFT_SITE_OPT" />-->
+										<!--</values>-->
+									<!--</field>-->
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
 									<field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
 									<field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />

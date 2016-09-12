@@ -32,6 +32,8 @@ Legend:
 	(+) Message shown if used template does not longer exist
 	(+) Auto-generate placeholders for alias fields (nid)
 
+	(-) Option to choose the side of checkbox and radio buttons removed as not supported by Bootstrap
+
     (#) Notice in entry form for category field
     (#) Wrong label shown in textarea for categories field settings
 	(#) Missing settings for inbox in category fields

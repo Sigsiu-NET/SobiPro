@@ -282,7 +282,6 @@
 	margin-top: 20px;
 	background-color: @back-color;
 }
-
 // these styles concerns also SobiPro modules
 .SobiPro.default3 {
 	font-size: @fontsize;
@@ -1385,9 +1384,18 @@
 
 	// Search and Edit form
 	// ----------------------------------------
+	.checkbox,
+	.radio {
+		padding-left: 0;
+	}
 	.spFieldCheckbox,
 	.spFieldRadio {
 		float: left;
+	}
+
+	input[type="radio"],
+	input[type="checkbox"] {
+		width: inherit;
 	}
 
 	.spFieldRadio label,
@@ -1395,29 +1403,33 @@
 		float: left;
 		color: #666666;
 	}
-
-	.spFieldCheckbox label {
+	.spFieldRadio label {
 		margin-top: 5px;
 	}
 
-	.spFieldRadio label {
-		margin-top: 5px
-	}
+	//.spFieldCheckbox label {
+	//	margin-top: 5px;
+	//}
+
+	//.spFieldRadio label {
+	//	margin-top: 5px
+	//}
 
 	.spFieldCheckbox input,
 	.spFieldRadio input {
-		margin-left: 5px;
+		margin-left: 1px;
 		margin-right: 5px;
+		margin-top: 3px;
 		float: left;
 	}
 
-	.spEntryEdit .spFieldCheckbox input {
-		margin-top: 5px;
-	}
+	//.spEntryEdit .spFieldCheckbox input {
+	//	margin-top: 5px;
+	//}
 
-	.spFieldRadio input {
-		margin-top: 10px;
-	}
+	//.spFieldRadio input {
+	//	margin-top: 10px;
+	//}
 
 	.spSelectRangeFrom span,
 	.spSelectRangeTo span {
@@ -1462,9 +1474,9 @@
 
 	// Search
 	// ----------------------------------------
-	.spSearch .spFieldCheckbox input {
-		margin-top: 8px
-	}
+	//.spSearch .spFieldCheckbox input {
+	//	margin-top: 8px
+	//}
 
 	.SPSearch .highlight,
 	.spSearch .highlight {

@@ -438,16 +438,29 @@ body.modal-open {
 		font-weight: 500;
 		font-size: @fontsize;
 	}
+	/*
 	.label-info,
 	.badge-info {
 		background-color: @base-color;
 	}
+	*/
+	.label-sigsiu i,
+	.badge-sigsiu i,
+	.label-sigsiu a,
+	.badge-sigsiu a {
+	/*
 	.label-info i,
 	.badge-info i,
 	.label-info a,
 	.badge-info a {
+	*/
 		color: @text-color;
 		text-shadow: none;
+	}
+	.label-sigsiu,
+	.badge-sigsiu {
+		color: @text-color !important;
+		background-color: lighten(@base-color, 5%);
 	}
 	.table th,
 	.table td {
@@ -1553,7 +1566,7 @@ body.modal-open {
 	// ----------------------------------------
 	.spFieldCheckbox,
 	.spFieldRadio {
-		float: left;
+		display: inline-block;
 	}
 	.spFieldRadio label,
 	.spFieldCheckbox label {
