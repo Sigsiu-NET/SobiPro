@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -213,9 +211,14 @@ class SPConfig
 		return true;
 	}
 
-	public static function fields( $sid = 0, $types = null )
+	public static function fields( $sid = 0, $types = null, $cat = false )
 	{
-		$params = array( 'section' => $sid, 'adminField>' => -1 );
+		if ( !$cat ) {
+			$params = array( 'section' => $sid, 'adminField>' => -1 );
+		}
+		else {
+			$params = array( 'section' => $sid, 'adminField' => -1 );
+		}
 		if ( $types ) {
 			$params[ 'fieldType' ] = $types;
 		}
