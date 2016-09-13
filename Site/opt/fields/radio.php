@@ -83,6 +83,8 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 		$params = array( 'class' => $class );
 		$selected = $selected ? $selected : $this->getRaw();
 		$selected = $selected ? $selected : $this->defSel;
+
+		$this->labelSite = 'right';
 		$list = SPHtml_Input::radioList( $this->nid, $this->getValues(), $this->nid, $selected, $params, $this->labelSite, true );
 		$field = null;
 		if ( count( $list ) ) {
@@ -135,7 +137,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 				$field = false;
 				break;
 			case 'chbx':
-				$list = SPHtml_Input::checkBoxGroup( $this->nid, $data, $this->nid, $this->_selected, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_checkbox_def_css', 'SPSearchChbx' ) ), $this->labelSite, true );
+				$list = SPHtml_Input::checkBoxGroup( $this->nid, $data, $this->nid, $this->_selected, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_checkbox_def_css', 'SPSearchChbx' ) ), 'right', true );
 				if ( count( $list ) ) {
 					$c = 0;
 					foreach ( $list as $box ) {
@@ -171,6 +173,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel' );
+//		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel' );
+		return array( 'optInLine', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel' );
 	}
 }
