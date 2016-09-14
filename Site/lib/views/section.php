@@ -25,9 +25,9 @@ SPLoader::loadView( 'view' );
  */
 class SPSectionView extends SPFrontView implements SPView
 {
-	protected function category( $category )
+	protected function category( $category, $fields = true )
 	{
-		$cat = array();
+		$cat = [ ];
 		if ( is_numeric( $category ) ) {
 			$cat = $this->cachedCategory( $category );
 		}
@@ -107,6 +107,11 @@ class SPSectionView extends SPFrontView implements SPView
 						'robots' => $category->get( 'metaRobots' ),
 				);
 			}
+			if ( $fields ) {
+				$category->loadFields( Sobi::Section(), true );
+				$fields = $category->get( 'fields' );
+				$this->categoryFields( $cat, $fields );
+			}
 			if ( Sobi::Cfg( 'list.subcats', true ) ) {
 				/* @todo we have to change this method in this way that it can be sorted and limited */
 				$subcats = $category->getChilds( 'category', false, 1, true, Sobi::Cfg( 'list.subcats_ordering', 'name' ) );
@@ -122,7 +127,8 @@ class SPSectionView extends SPFrontView implements SPView
 				}
 				$cat[ 'subcategories' ] = $sc;
 			}
-			SPFactory::cache()->addObj( $cat, 'category_struct', $category->get( 'id' ) );
+			$id = $fields ? 'category_full_struct' : 'category_struct';
+			SPFactory::cache()->addObj( $cat, $id, $category->get( 'id' ) );
 			unset( $category );
 		}
 		$cat[ 'counter' ] = $this->getNonStaticData( $cat[ 'id' ], 'counter' );
@@ -130,9 +136,10 @@ class SPSectionView extends SPFrontView implements SPView
 		return $cat;
 	}
 
-	protected function cachedCategory( $category )
+	protected function cachedCategory( $category, $fields = false )
 	{
-		$cat = SPFactory::cache()->getObj( 'category_struct', $category );
+		$id = $fields ? 'category_full_struct' : 'category_struct';
+		$cat = SPFactory::cache()->getObj( $id, $category );
 		if ( count( $cat ) ) {
 			return $cat;
 		}
@@ -442,9 +449,11 @@ class SPSectionView extends SPFrontView implements SPView
 		return strcasecmp( $from[ '_data' ][ 'name' ][ '_data' ], $to[ '_data' ][ 'name' ][ '_data' ] );
 	}
 
-	protected function categoryFields( &$data )
+	protected function categoryFields( &$data, $fields = [ ] )
 	{
-		$fields = $this->get( 'fields' );
+		if ( !( count( $fields ) ) ) {
+			$fields = $this->get( 'fields' );
+		}
 		if ( count( $fields ) ) {
 			foreach ( $fields as $field ) {
 				$struct = $field->struct();

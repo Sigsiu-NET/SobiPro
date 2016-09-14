@@ -32,6 +32,7 @@ Legend:
 	(+) Message shown if used template does not longer exist
 	(+) Auto-generate placeholders for alias fields (nid)
 	(+) Changing class names and CSS scope while duplicating a template
+	(+) Categories field in categories list
 
 	(-) Option to choose the side of checkbox and radio buttons removed as not supported by Bootstrap
 
