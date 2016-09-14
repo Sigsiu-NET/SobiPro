@@ -323,6 +323,64 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$file->content( $def->saveXML() );
 			$file->save();
 		}
+		/** Replace template's prefixes  */
+		$newDir = $this->dir( $dirName );
+		if ( SPFs::exists( $newDir . '/template.php' ) ) {
+			$content = file_get_contents( $newDir . '/template.php' );
+			$class = array();
+			preg_match( '/\s*(class)\s+(\w+)/', $content, $class );
+			$className = $class[ 2 ];
+			$oldTplName = SPRequest::cmd( 'templateName' );
+			// if for example bs3-default
+			if ( strstr( $oldTplName, '-' ) ) {
+				$oldTplName = explode( '-', $oldTplName );
+				// take the longer part - it's most likely the right one
+				$oldTplName = strlen( $oldTplName[ 0 ] > $oldTplName[ 1 ] ) ? $oldTplName[ 0 ] : $oldTplName[ 1 ];
+			}
+			if ( stristr( $className, $oldTplName ) ) {
+				$newClassName = str_ireplace( $oldTplName, ucfirst( $newName ), $className );
+			}
+			else {
+				if ( $className == 'TplFunctions' ) {
+					$newClassName = 'Tpl' . ucfirst( $newName ) . 'Functions';
+				}
+				else {
+					$newClassName = $className . ucfirst( $newName );
+				}
+			}
+			$newClassName = ucfirst( $newClassName );
+			$content = str_replace( 'class ' . $className, 'class ' . $newClassName, $content );
+			SPFs::write( $newDir . '/template.php', $content );
+			// now go through all XSL files
+			/** @var SPDirectory $directory */
+			$directory = SPFactory::Instance( 'base.fs.directory', $newDir );
+			$files = $directory->searchFile( '.xsl', false, 2 );
+			if ( count( $files ) ) {
+				$files = array_keys( $files );
+				foreach ( $files as $file ) {
+					$c = SPFs::read( $file );
+					if ( strstr( $c, "'{$className}::" ) ) {
+						$c = str_replace( "'{$className}::", "'{$newClassName}::", $c );
+						SPFs::write( $file, $c );
+					}
+				}
+			}
+		}
+		// now the namespace
+		/** @var SPDirectory $directory */
+		$directory = SPFactory::Instance( 'base.fs.directory', $newDir );
+		$files = $directory->searchFile( [ '.less', '.css' ], false, 2 );
+		if ( count( $files ) ) {
+			$oldTplName = SPRequest::cmd( 'templateName' );
+			$files = array_keys( $files );
+			foreach ( $files as $file ) {
+				$c = SPFs::read( $file );
+				if ( strstr( $c, $oldTplName ) ) {
+					$c = str_replace( $oldTplName, $newName, $c );
+					SPFs::write( $file, $c );
+				}
+			}
+		}
 		$this->response( Sobi::Url( array( 'task' => 'template.info', 'template' => str_replace( SOBI_PATH . '/usr/templates/', null, $dirName ) ) ), Sobi::Txt( 'TP.DUPLICATED' ), false, 'success' );
 	}
 
@@ -369,12 +427,12 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	public function getTemplateTree( $template )
 	{
-		if (SPFs::exists(SPLoader::dirPath('usr.templates.') . $template)) {
-			return $this->listTemplates(SPLoader::dirPath('usr.templates.') . $template, false);
+		if ( SPFs::exists( SPLoader::dirPath( 'usr.templates.' ) . $template ) ) {
+			return $this->listTemplates( SPLoader::dirPath( 'usr.templates.' ) . $template, false );
 		}
 		else {
 			SPFactory::message()
-				->error(Sobi::Txt( 'TP.TEMPLATE_MISSING', Sobi::Cfg( 'section.template') ), false);
+					->error( Sobi::Txt( 'TP.TEMPLATE_MISSING', Sobi::Cfg( 'section.template' ) ), false );
 			return null;
 		}
 	}

@@ -493,8 +493,8 @@ class SPRequirements extends SPController
 		$phpVer = $ver = preg_replace( '/[^0-9\.]/i', null, substr( PHP_VERSION, 0, 6 ) );
 		$ver = explode( '.', $phpVer );
 		$ver = array( 'major' => $ver[ 0 ], 'minor' => $ver[ 1 ], 'build' => ( isset( $ver[ 2 ] ) ? $ver[ 2 ] : 0 ) );
-		$minVer = array( 'major' => 5, 'minor' => 3, 'build' => 9 );
-		$rVer = array( 'major' => 5, 'minor' => 3, 'build' => 28 );
+		$minVer = array( 'major' => 5, 'minor' => 4, 'build' => 0 );
+		$rVer = array( 'major' => 7, 'minor' => 0, 'build' => 10 );
 		if ( !( $this->compareVersion( $minVer, $ver ) ) ) {
 			echo $this->error( $this->txt( 'REQ.PHP_WRONG_VER', array( 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
 		}
