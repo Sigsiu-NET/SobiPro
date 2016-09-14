@@ -413,7 +413,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				if ( !( isset( $data[ 'name' ] ) || isset( $data[ 'id' ] ) ) || !( $data[ 'id' ] ) ) {
 					continue;
 				}
-					$title[] = $data['name'];
+				$title[ ] = $data[ 'name' ];
 				$this->addToPathway( $data[ 'name' ], ( self::url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
 			}
 		}
@@ -680,8 +680,21 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			$link = 'index.php?option=com_sobipro&task=' . $task . '&sid=' . $sid;
 		}
 		else {
-			$link = 'index.php?option=com_sobipro&sid=' . $sid;
+			if ( isset( $url[ 'sptpl' ] ) ) {
+				$link = 'index.php?option=com_sobipro&sptpl=' . $url[ 'sptpl' ] . '&sid=' . $sid;
+			}
+			else {
+				$link = 'index.php?option=com_sobipro&sid=' . $sid;
+			}
 		}
+		$item = $menu->getItems( 'link', $link, true );
+		if ( $item && count( $item ) ) {
+			if ( isset( $url[ 'sptpl' ] ) ) {
+				unset( $url[ 'sptpl' ] );
+			}
+			$url[ 'Itemid' ] = $item->id;
+		}
+
 		$item = $menu->getItems( 'link', $link, true );
 		if ( $item && count( $item ) ) {
 			$url[ 'Itemid' ] = $item->id;

@@ -40,6 +40,7 @@ Legend:
     (#) Wrong label shown in textarea for categories field settings
     (#) Changes in router for calendar field listing navigation with suffix
 	(#) Missing settings for inbox in category fields
+	(#) Missing template override in navigation
 
 -------------------
 1.3.1 (31 August 2016)

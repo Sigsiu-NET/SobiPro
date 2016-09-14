@@ -78,7 +78,14 @@ class SPSectionCtrl extends SPController
 		}
 		$pnc = SPLoader::loadClass( 'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ) );
 		/* @var SPPageNavXSLT $pn */
-		$pn = new $pnc( $eLimit, $eCount, $site, array( 'sid' => SPRequest::sid(), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->_model->get( 'nid' ) : $this->_model->get( 'name' ) ) );
+
+		if ( SPRequest::cmd( 'sptpl' ) ) {
+			$url = [ 'sptpl' => SPRequest::cmd( 'sptpl' ), 'sid' => SPRequest::sid(), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->_model->get( 'nid' ) : $this->_model->get( 'name' ) ];
+		}
+		else {
+			$url = [ 'sid' => SPRequest::sid(), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->_model->get( 'nid' ) : $this->_model->get( 'name' ) ];
+		}
+		$pn = new $pnc( $eLimit, $eCount, $site, $url );
 
 		$fields = array();
 		/* handle meta data */
