@@ -456,6 +456,7 @@ class SPSectionView extends SPFrontView implements SPView
 		}
 		if ( count( $fields ) ) {
 			foreach ( $fields as $field ) {
+				$field->set('currentView', 'category' );
 				$struct = $field->struct();
 				$options = null;
 				if ( isset( $struct[ '_options' ] ) ) {

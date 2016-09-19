@@ -693,6 +693,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				case 'details':
 					$img = $this->inDetails;
 					break;
+				case 'category':
+					$img = 'image';
 			}
 			$prefix = 'img_';
 			if ( isset( $files[ $img ] ) ) {
@@ -702,6 +704,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			elseif ( isset( $files[ 'thumb' ] ) ) {
 				$show = $files[ 'thumb' ];
 				$prefix = 'thumb_';
+			}
+			elseif ( isset( $files[ 'original' ] ) ) {
+				$show = $files[ 'original' ];
+				$prefix = '';
 			}
 			elseif ( isset( $files[ 'ico' ] ) ) {
 				$show = $files[ 'ico' ];

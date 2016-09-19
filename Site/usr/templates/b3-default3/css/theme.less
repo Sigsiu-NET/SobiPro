@@ -462,9 +462,29 @@ body.modal-open {
 		color: @text-color !important;
 		background-color: lighten(@base-color, 5%);
 	}
+
+	// Tables
+	// ------------------------
 	.table th,
 	.table td {
 		.borders(light);
+	}
+
+	.table > tbody > tr.primary > td,
+	.table > tbody > tr.primary > th,
+	.table > tbody > tr > td.primary,
+	.table > tbody > tr > th.primary,
+	.table > tfoot > tr.primary > td,
+	.table > tfoot > tr.primary > th,
+	.table > tfoot > tr > td.primary,
+	.table > tfoot > tr > th.primary,
+	.table > thead > tr.primary > td,
+	.table > thead > tr.primary > th,
+	.table > thead > tr > td.primary,
+	.table > thead > tr > th.primary {
+		.background(medium);
+		.borders(medium);
+		color: @base-color;
 	}
 
 	// Vertical striped tables

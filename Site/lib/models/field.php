@@ -228,7 +228,7 @@ class SPField extends SPObject
 	/**
 	 * @var string
 	 */
-	protected $currentView = null;
+	protected $currentView = 'undefined';
 	/**
 	 * @var string
 	 */
