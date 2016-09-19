@@ -5,9 +5,9 @@
  @author
  Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  Email: sobi[at]sigsiu.net
- Url: http://www.Sigsiu.NET
+ Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
@@ -144,6 +144,14 @@
 									<field type="text" name="field.itemprop" label="FMN.ITEMPROP" />
 									<field type="toggle" name="field.withLabel" value="field.withLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
                                     <field type="text" name="field.cssClassView" value="field.cssClassView" label="FM.CSS_CLASS" class="input-large" />
+									<field condition="category-field" type="select" name="field.inCategory" selected="field.inCategory" label="FM.IMG.SHOW_IN_CATEGORY" class="input-medium">
+										<values>
+											<option value="thumb" label="FM.IMG.THUMBAIL_OPT" />
+											<option value="image" label="FM.IMG.IMAGE_OPT" />
+											<option value="original" label="FM.IMG.ORGINAL_OPT" />
+										</values>
+									</field>
+
 									<field invert-condition="category-field" type="select" name="field.inVcard" selected="field.inVcard" label="FM.IMG.SHOW_IN_V_CARD" class="input-medium">
 										<values>
 											<option value="thumb" label="FM.IMG.THUMBAIL_OPT" />
@@ -158,14 +166,21 @@
 											<option value="original" label="FM.IMG.ORGINAL_OPT" />
 										</values>
 									</field>
-									<field type="select" name="field.thumbFloat" selected="field.thumbFloat" label="FM.IMG.THUMB_FLOAT" class="input-medium">
+									<field condition="category-field" type="select" name="field.float" selected="field.float" label="FM.IMG.FLOAT" class="input-medium">
 										<values>
 											<option value="" label="FM.IMG.FLOAT_NO_OPT" />
 											<option value="right" label="FM.IMG.FLOAT_RIGHT_OPT" />
 											<option value="left" label="FM.IMG.FLOAT_LEFT_OPT" />
 										</values>
 									</field>
-									<field type="select" name="field.imageFloat" selected="field.imageFloat" label="FM.IMG.IMG_FLOAT" class="input-medium">
+									<field invert-condition="category-field" type="select" name="field.thumbFloat" selected="field.thumbFloat" label="FM.IMG.THUMB_FLOAT" class="input-medium">
+										<values>
+											<option value="" label="FM.IMG.FLOAT_NO_OPT" />
+											<option value="right" label="FM.IMG.FLOAT_RIGHT_OPT" />
+											<option value="left" label="FM.IMG.FLOAT_LEFT_OPT" />
+										</values>
+									</field>
+									<field invert-condition="category-field" type="select" name="field.imageFloat" selected="field.imageFloat" label="FM.IMG.IMG_FLOAT" class="input-medium">
 										<values>
 											<option value="" label="FM.IMG.FLOAT_NO_OPT" />
 											<option value="right" label="FM.IMG.FLOAT_RIGHT_OPT" />

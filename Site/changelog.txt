@@ -42,6 +42,7 @@ Legend:
 	(#) Missing settings for inbox in category fields
 	(#) Missing template override in navigation
 	(#) If image won't be re-sized/cropped but original available, original is used
+	(#) No image type selectable for image field in category view
 
 
 -------------------
