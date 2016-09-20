@@ -84,8 +84,8 @@ class SPDateListing extends SPSectionCtrl implements SPListing
 		}
 
 		$eOrder = 'createdTime';
-		$eCount = count( $this->getDateEntries( $eOrder, 0, 0, true, $conditions, true, Sobi::Section() ) );
-		$entries = $this->getDateEntries( $eOrder, $eLimit, $eLimStart, true, $conditions, true, Sobi::Section() );
+		$eCount = count( $this->getEntries( $eOrder, 0, 0, true, $conditions, true, Sobi::Section() ) );
+		$entries = $this->getEntries( $eOrder, $eLimit, $eLimStart, true, $conditions, true, Sobi::Section() );
 
 		$url = array( 'sid' => SPRequest::sid(), 'task' => 'list.date', 'date' => SPRequest::cmd( 'date' ) );
 		$pn = SPFactory::Instance( 'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ), $eLimit, $eCount, $site, $url );
@@ -122,7 +122,7 @@ class SPDateListing extends SPSectionCtrl implements SPListing
 
 	public function entries( $field = null )
 	{
-		return $this->getDateEntries( 0, 0, true );
+		return $this->getEntries( 0, 0, true );
 	}
 
 	public function setParams( $request )
