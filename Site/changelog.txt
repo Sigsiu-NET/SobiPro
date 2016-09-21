@@ -33,6 +33,7 @@ Legend:
 	(+) Auto-generate placeholders for alias fields (nid)
 	(+) Changing class names and CSS scope while duplicating a template
 	(+) Categories field in categories list
+	(+) Support for panels in Bootstrap 3 default template
 
 	(-) Option to choose the side of checkbox and radio buttons removed as not supported by Bootstrap
 
@@ -41,7 +42,7 @@ Legend:
     (#) Changes in router for calendar field listing navigation with suffix
 	(#) Missing settings for inbox in category fields
 	(#) Missing template override in navigation
-	(#) If image won't be re-sized/cropped but original available, original is used
+	(#) If image won't be re-sized/cropped but original available, original wasn't used
 	(#) No image type selectable for image field in category view
 	(#) Call to undefined method SPDateListing::getDateEntries() (Issue #1707)
 

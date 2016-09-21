@@ -69,6 +69,60 @@
 
 // Mixins
 // ----------------------------------------
+.background(dark) {
+	background-color: lighten(@base-color, 20%);
+	& when (@colour-set = cornflower) {
+		background-color: lighten(@base-color, 22%);
+	}
+	& when (@colour-set = cornfield) {
+		background-color: lighten(@base-color, 8%);
+	}
+	& when (@colour-set = malva) {
+		border-color: lighten(@base-color, 18%);
+	}
+	& when (@colour-set = meadow) {
+		background-color: lighten(desaturate(@base-color, 15%), 20%);
+	}
+	& when (@colour-set = poppyseed) {
+		background-color: lighten(@base-color, 25%);
+	}
+	& when (@colour-set = roses) {
+		background-color: lighten(@base-color, 22%);
+	}
+	& when (@colour-set = terra) {
+		background-color: lighten(@base-color, 21%);
+	}
+	& when (@colour-set = waterfall) {
+		background-color: lighten(desaturate(@base-color, 25%), 20%);
+	}
+}
+.borders(dark) {
+	border-color: lighten(@base-color, 16%);
+	& when (@colour-set = cornflower) {
+		background-color: lighten(@base-color, 22%);
+	}
+	& when (@colour-set = cornfield) {
+		border-color: lighten(@base-color, 4%);
+	}
+	& when (@colour-set = malva) {
+		border-color: lighten(@base-color, 14%);
+	}
+	& when (@colour-set = meadow) {
+		border-color: lighten(desaturate(@base-color, 15%), 16%);
+	}
+	& when (@colour-set = poppyseed) {
+		border-color: lighten(@base-color, 21%);
+	}
+	& when (@colour-set = roses) {
+		border-color: lighten(@base-color, 18%);
+	}
+	& when (@colour-set = terra) {
+		border-color: lighten(@base-color, 17%);
+	}
+	& when (@colour-set = waterfall) {
+		border-color: lighten(desaturate(@base-color, 25%), 16%);
+	}
+}
 .background(medium) {
 	background-color: lighten(saturate(@base-color, 20%), 48%);
 	& when (@colour-set = cornflower) {
@@ -123,31 +177,31 @@
 		border-color: lighten(desaturate(@base-color, 25%), 30%);
 	}
 }
-.borders(light) {
-	border-color: lighten(@base-color, 48%);
+.topborder(medium) {
+	border-top-color: lighten(@base-color, 33%);
 	& when (@colour-set = cornflower) {
-		border-color: lighten(@base-color, 36%);
+		border-top-color: lighten(@base-color, 22%);
 	}
 	& when (@colour-set = cornfield) {
-		border-color: lighten(@base-color, 28%);
+		border-top-color: lighten(@base-color, 12%);
 	}
 	& when (@colour-set = malva) {
-		border-color: lighten(@base-color, 40%);
+		border-top-color: lighten(@base-color, 24%);
 	}
 	& when (@colour-set = meadow) {
-		border-color: lighten(@base-color, 48%);
+		border-top-color: lighten(desaturate(@base-color, 15%), 28%);
 	}
 	& when (@colour-set = poppyseed) {
-		border-color: lighten(@base-color, 50%);
+		border-top-color: lighten(@base-color, 35%);
 	}
 	& when (@colour-set = roses) {
-		border-color: lighten(@base-color, 40%);
+		border-top-color: lighten(@base-color, 32%);
 	}
 	& when (@colour-set = terra) {
-		border-color: lighten(@base-color, 50%);
+		border-top-color: lighten(@base-color, 27%);
 	}
 	& when (@colour-set = waterfall) {
-		border-color: lighten(desaturate(@base-color, 20%), 45%);
+		border-top-color: lighten(desaturate(@base-color, 25%), 30%);
 	}
 }
 .background(light) {
@@ -175,6 +229,87 @@
 	}
 	& when (@colour-set = waterfall) {
 		background-color: lighten(desaturate(@base-color, 10%), 56%);
+	}
+}
+.borders(light) {
+	border-color: lighten(@base-color, 48%);
+	& when (@colour-set = cornflower) {
+		border-color: lighten(@base-color, 36%);
+	}
+	& when (@colour-set = cornfield) {
+		border-color: lighten(@base-color, 28%);
+	}
+	& when (@colour-set = malva) {
+		border-color: lighten(@base-color, 40%);
+	}
+	& when (@colour-set = meadow) {
+		border-color: lighten(@base-color, 48%);
+	}
+	& when (@colour-set = poppyseed) {
+		border-color: lighten(@base-color, 50%);
+	}
+	& when (@colour-set = roses) {
+		border-color: lighten(@base-color, 40%);
+	}
+	& when (@colour-set = terra) {
+		border-color: lighten(@base-color, 50%);
+	}
+	& when (@colour-set = waterfall) {
+		border-color: lighten(desaturate(@base-color, 20%), 45%);
+	}
+}
+.bottomborder(light) {
+	border-bottom-color: lighten(@base-color, 48%);
+	& when (@colour-set = cornflower) {
+		border-bottom-color: lighten(@base-color, 36%);
+	}
+	& when (@colour-set = cornfield) {
+		border-bottom-color: lighten(@base-color, 28%);
+	}
+	& when (@colour-set = malva) {
+		border-bottom-color: lighten(@base-color, 40%);
+	}
+	& when (@colour-set = meadow) {
+		border-bottom-color: lighten(@base-color, 48%);
+	}
+	& when (@colour-set = poppyseed) {
+		border-bottom-color: lighten(@base-color, 50%);
+	}
+	& when (@colour-set = roses) {
+		border-bottom-color: lighten(@base-color, 40%);
+	}
+	& when (@colour-set = terra) {
+		border-bottom-color: lighten(@base-color, 50%);
+	}
+	& when (@colour-set = waterfall) {
+		border-bottom-color: lighten(desaturate(@base-color, 20%), 45%);
+	}
+}
+.topborder(light) {
+	border-top-color: lighten(@base-color, 48%);
+	& when (@colour-set = cornflower) {
+		border-top-color: lighten(@base-color, 36%);
+	}
+	& when (@colour-set = cornfield) {
+		border-top-color: lighten(@base-color, 28%);
+	}
+	& when (@colour-set = malva) {
+		border-top-color: lighten(@base-color, 40%);
+	}
+	& when (@colour-set = meadow) {
+		border-top-color: lighten(@base-color, 48%);
+	}
+	& when (@colour-set = poppyseed) {
+		border-top-color: lighten(@base-color, 50%);
+	}
+	& when (@colour-set = roses) {
+		border-top-color: lighten(@base-color, 40%);
+	}
+	& when (@colour-set = terra) {
+		border-top-color: lighten(@base-color, 50%);
+	}
+	& when (@colour-set = waterfall) {
+		border-top-color: lighten(desaturate(@base-color, 20%), 45%);
 	}
 }
 .bottomborder(lightbackground) {
@@ -448,12 +583,12 @@ body.modal-open {
 	.badge-sigsiu i,
 	.label-sigsiu a,
 	.badge-sigsiu a {
-	/*
-	.label-info i,
-	.badge-info i,
-	.label-info a,
-	.badge-info a {
-	*/
+		/*
+		.label-info i,
+		.badge-info i,
+		.label-info a,
+		.badge-info a {
+		*/
 		color: @text-color;
 		text-shadow: none;
 	}
@@ -469,19 +604,18 @@ body.modal-open {
 	.table td {
 		.borders(light);
 	}
-
-	.table > tbody > tr.primary > td,
-	.table > tbody > tr.primary > th,
-	.table > tbody > tr > td.primary,
-	.table > tbody > tr > th.primary,
-	.table > tfoot > tr.primary > td,
-	.table > tfoot > tr.primary > th,
-	.table > tfoot > tr > td.primary,
-	.table > tfoot > tr > th.primary,
-	.table > thead > tr.primary > td,
-	.table > thead > tr.primary > th,
-	.table > thead > tr > td.primary,
-	.table > thead > tr > th.primary {
+	.table > tbody > tr.sigsiu > td,
+	.table > tbody > tr.sigsiu > th,
+	.table > tbody > tr > td.sigsiu,
+	.table > tbody > tr > th.sigsiu,
+	.table > tfoot > tr.sigsiu > td,
+	.table > tfoot > tr.sigsiu > th,
+	.table > tfoot > tr > td.sigsiu,
+	.table > tfoot > tr > th.sigsiu,
+	.table > thead > tr.sigsiu > td,
+	.table > thead > tr.sigsiu > th,
+	.table > thead > tr > td.sigsiu,
+	.table > thead > tr > th.sigsiu {
 		.background(medium);
 		.borders(medium);
 		color: @base-color;
@@ -504,6 +638,53 @@ body.modal-open {
 	}
 	.table.table-vstriped > thead > tr > th {
 		border-bottom: none;
+	}
+
+	// Panels
+	// ------------------------
+	.panel-sigsiu {
+		.borders(dark);
+
+		.panel-heading {
+			.background(dark);
+			.borders(dark);
+			color: white;
+			font-size: calc(@fontsize + 2px);
+			h1 {
+				font-size: calc(@fontsize + 8px);
+			}
+			h2 {
+				font-size: calc(@fontsize + 6px);
+			}
+			h3 {
+				font-size: calc(@fontsize + 4px);
+			}
+		}
+		.panel-title,
+		.panel-title a:visited,
+		.panel-title a {
+			color: white;
+		}
+		.panel-title a:hover {
+			color: white;
+			text-decoration: underline;
+		}
+		.panel-footer {
+			.background(light);
+			.topborder(light);
+		}
+	}
+	.panel-heading {
+		font-size: calc(@fontsize + 2px);
+		h1 {
+			font-size: calc(@fontsize + 8px);
+		}
+		h2 {
+			font-size: calc(@fontsize + 6px);
+		}
+		h3 {
+			font-size: calc(@fontsize + 4px);
+		}
 	}
 
 	// seems that is missed in bootstrap??
@@ -608,6 +789,8 @@ body.modal-open {
 	}
 
 	& when (@corners = angular) {
+		.panel,
+		.panel-heading,
 		.well,
 		.btn,
 		.modal,
