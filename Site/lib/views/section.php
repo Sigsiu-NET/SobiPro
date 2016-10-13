@@ -50,6 +50,12 @@ class SPSectionView extends SPFrontView implements SPView
 						'_attributes' => array( 'lang' => Sobi::Lang( false ) )
 				);
 			}
+			$cat[ 'created_time' ] = $category->get( 'createdTime' );
+			$cat[ 'updated_time' ] = $category->get( 'updatedTime' );
+			$cat[ 'valid_since' ] = $category->get( 'validSince' );
+			$cat[ 'valid_until' ] = $category->get( 'validUntil' );
+			$this->fixTimes( $cat );
+
 			$showIntro = $category->get( 'showIntrotext' );
 			if ( $showIntro == SPC::GLOBAL_SETTING ) {
 				$showIntro = Sobi::Cfg( 'category.show_intro', true );

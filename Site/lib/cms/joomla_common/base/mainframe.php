@@ -612,9 +612,6 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				$url .= $var;
 			}
 		}
-		elseif ( is_array( $var ) ) {
-
-		}
 		if ( $sef && !( $live ) ) {
 			$url = JRoute::_( $url, false );
 		}
@@ -709,6 +706,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 					}
 				}
 			}
+		}
+		if ( !( $url[ 'Itemid' ] ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
+			$url[ 'Itemid' ] = Sobi::Cfg( 'itemid.' . Sobi::Section( 'nid' ), 0 );
 		}
 		// if we still don't have an Itemid it means that there is no link to SobiPro section
 		if ( !( $url[ 'Itemid' ] ) && !( defined( 'SOBIPRO_ADM' ) ) ) {

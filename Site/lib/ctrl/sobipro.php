@@ -393,7 +393,7 @@ final class SobiProCtrl
 			else {
 				/* set controller and model */
 				try {
-					$ctrl = new $ctrl();
+					$ctrl = new $ctrl( null );
 					$this->setController( $ctrl );
 					if ( $ctrl instanceof SPController ) {
 						$model = SPLoader::loadModel( $obj, false, false );
