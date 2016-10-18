@@ -87,8 +87,8 @@ final class SPHeader
 							->addJsFile( 'b3bootstrap' );
 				}
 				else {
-					$this->addHeadLink( Sobi::Cfg( 'template.bs3_css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' ), null, null, 'stylesheet' )
-							->addJsUrl( Sobi::Cfg( 'template.bs3_js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js' ) );
+					$this->addHeadLink( Sobi::Cfg( 'template.bs3_css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' ), null, null, 'stylesheet' )
+							->addJsUrl( Sobi::Cfg( 'template.bs3_js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' ) );
 				}
 			}
 			else {

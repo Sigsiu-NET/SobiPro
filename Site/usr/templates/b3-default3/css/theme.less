@@ -639,6 +639,15 @@ body.modal-open {
 	.table.table-vstriped > thead > tr > th {
 		border-bottom: none;
 	}
+	.table td a {
+		color: @base-color;
+	}
+	.table td a.active,
+	.table td a:hover,
+	.table td a:focus {
+		color: @base-color;
+		text-decoration: underline;
+	}
 
 	// Panels
 	// ------------------------
