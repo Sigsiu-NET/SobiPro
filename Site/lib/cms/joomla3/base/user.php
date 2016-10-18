@@ -148,7 +148,8 @@ class SPUser extends SPJoomlaUser
 	 */
 	public function isAdmin()
 	{
-		return ( $this->id && JFactory::getUser()->authorise( 'core.manage', 'com_users' ) );
+		return ( $this->id && JFactory::getUser()->authorise( 'core.admin' ) );
+//		return ( $this->id && JFactory::getUser()->authorise( 'core.manage', 'com_users' ) );
 	}
 
 	/**
