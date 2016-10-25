@@ -596,7 +596,12 @@ abstract class SPHtml_Input
 			$lstart = $label ? "\n<label for=\"{$id}\" class=\"checkbox-inline\">" : null;
 		}
 		else {
-			$lstart = $label ? "\n<label for=\"{$id}\" class=\"checkbox inline\">" : null;
+			if (defined('SOBIPRO_ADM')) {
+				$lstart = $label ? "\n<label for=\"{$id}\" class=\"checkbox\">" : null;
+			}
+			else {
+				$lstart = $label ? "\n<label for=\"{$id}\" class=\"checkbox inline\">" : null;
+			}
 		}
 
 		$lend     = $label ? "</label>" : null;

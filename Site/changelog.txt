@@ -36,6 +36,8 @@ Legend:
 	(!) Changed method to determine a super user from authorise( 'core.admin' ) to authorise( 'core.manage', 'com_users' )
 	(!) Checkboxes aligned (b3-default3 template)
 
+	(#) Checkboxes for backend settings are again vertically ordered
+
 
 -------------------
 1.3.2 (11 October 2016)
