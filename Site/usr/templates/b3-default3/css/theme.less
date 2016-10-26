@@ -424,15 +424,6 @@ body.modal-open {
 		color: @active-color;
 	}
 
-	//set the button's text color back to white (good guess)
-	a.btn-info,
-	a.btn-warning,
-	a.btn-danger,
-	a.btn-danger,
-	a.btn-success {
-		color: white;
-	}
-
 	//without that the topmenu items are not selectable
 	.collapse {
 		position: inherit;
@@ -539,28 +530,43 @@ body.modal-open {
 	}
 	*/
 
-	//will be overwritten otherwise
+	a:hover,
+	a:focus {
+		color: darken(@active-color, 10%);
+	}
+
+	//Redefine standard Bootstrap btn link colours
 	a.btn-default {
 		color: #333;
 		background-color: #fff;
 		border-color: #ccc;
 	}
-	a:hover,
-	a:focus {
-		color: darken(@active-color, 10%);
+	.btn-default.focus,
+	.btn-default:active,
+	.btn-default:hover {
+		color: #333;
+		background-color: #e6e6e6;
+		border-color: #adadad;
 	}
-	//Redefine standard Bootstrap btn text colours
+	a.btn-primary,
+	a.btn-primary:hover,
+	a.btn-primary:active,
+	a.btn-primary:focus,
 	a.btn-danger,
 	a.btn-danger:hover,
+	a.btn-danger:active,
 	a.btn-danger:focus,
 	a.btn-info,
 	a.btn-info:hover,
+	a.btn-info:active,
 	a.btn-info:focus,
 	a.btn-success,
 	a.btn-success:hover,
+	a.btn-success:active,
 	a.btn-success:focus,
 	a.btn-warning,
 	a.btn-warning:hover,
+	a.btn-warning:active,
 	a.btn-warning:focus {
 		color: #fff;
 	}
