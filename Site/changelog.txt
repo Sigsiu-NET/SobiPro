@@ -37,6 +37,7 @@ Legend:
 	(!) Checkboxes aligned (b3-default3 template)
 
 	(#) Checkboxes for backend settings are again vertically ordered
+	(#) Redefine standard Bootstrap alert-link colours (b3-default3 only)
 
 
 -------------------
