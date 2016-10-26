@@ -549,6 +549,22 @@ body.modal-open {
 	a:focus {
 		color: darken(@active-color, 10%);
 	}
+	//Redefine standard Bootstrap btn text colours
+	a.btn-danger,
+	a.btn-danger:hover,
+	a.btn-danger:focus,
+	a.btn-info,
+	a.btn-info:hover,
+	a.btn-info:focus,
+	a.btn-success,
+	a.btn-success:hover,
+	a.btn-success:focus,
+	a.btn-warning,
+	a.btn-warning:hover,
+	a.btn-warning:focus {
+		color: #fff;
+	}
+
 	.input-prepend .alert,
 	.input-append .alert {
 		font-size: @fontsize;
