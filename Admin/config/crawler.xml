@@ -17,7 +17,7 @@
 
 <definition>
 	<header>
-		<title value="Directory Crawler"/>
+		<title value="CRAWLER.SITE_TITLE"/>
 		<file type="script" filename="adm.crawler"/>
 	</header>
 	<toolbar title="CRAWLER.SITE_TITLE" icon="SobiConfig">

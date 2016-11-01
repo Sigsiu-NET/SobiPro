@@ -16,7 +16,7 @@
 
 <definition>
 	<header>
-		<title value="SEC.CFG.CONFIGURATION_OF_SECTION" />
+		<title value="AMN.GEN_CFG" />
 		<file type="script" filename="bootstrap.tabs" />
 		<style>
 			input[type=checkbox] { float: left; margin-right: 5px!important; }

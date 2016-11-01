@@ -35,6 +35,7 @@ Legend:
     (!) Font Awesome 4 updated to 4.6.3
 	(!) Changed method to determine a super user from authorise( 'core.admin' ) to authorise( 'core.manage', 'com_users' )
 	(!) Checkboxes aligned (b3-default3 template)
+	(!) Back-end title text revised for some pages
 
 	(#) Checkboxes for backend settings are again vertically ordered
 	(#) Redefine standard Bootstrap alert-link colours (b3-default3 only)
