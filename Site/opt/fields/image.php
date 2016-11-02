@@ -109,6 +109,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if (!($this->enabled)) {
 			return false;
 		}
+		$this->suffix = ''; //clear if any
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 		if (defined('SOBIPRO_ADM')) {
 			if ($this->bsWidth) {

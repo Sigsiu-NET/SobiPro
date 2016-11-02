@@ -29,7 +29,7 @@ Legend:
 -------------------
 1.3.3 ()
 -------------------
-	(+) Category times available in XML data
+	(+) Category dates available in XML data
 
     (!) Bootstrap 3 updated to version 3.3.7 (local and CDN)
     (!) Font Awesome 4 updated to 4.6.3
@@ -42,7 +42,6 @@ Legend:
 	(#) Checkboxes for backend settings are again vertically ordered
 	(#) Redefine standard Bootstrap alert-link colours (b3-default3 only)
 	(#) Redefine standard Bootstrap btn link colours (b3-default3 only)
-
 
 
 -------------------
