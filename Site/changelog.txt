@@ -37,6 +37,7 @@ Legend:
 	(!) Checkboxes aligned (b3-default3 template)
 	(!) Back-end title text revised for some pages
 	(!) Predefined title label texts for email and url fields changed
+	(!) Url field setting 'open in new window' set to 'no' by default
 
 	(-) Suffix setting removed from image field
 

@@ -49,7 +49,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	/** @var array */
 	protected $allowedProtocols = array( 'http', 'https', 'ftp' );
 	/** @var bool */
-	protected $newWindow = true;
+	protected $newWindow = false;
 	/** @var bool */
 	protected $noFollow = false;
 	/** @var string */
