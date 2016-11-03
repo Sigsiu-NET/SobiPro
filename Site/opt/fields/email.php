@@ -25,7 +25,7 @@ SPLoader::loadClass( 'opt.fields.url' );
 class SPField_Email extends SPField_Url implements SPFieldInterface
 {
 	/*** @var string */
-	protected $labelsLabel = "Email Label";
+	protected $labelsLabel = "Contact us by Email";
 	/*** @var bool */
 	protected $botProtection = true;
 	/*** @var string */

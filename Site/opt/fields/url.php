@@ -29,7 +29,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	/** @var int */
 	protected $labelWidth = 350;
 	/**  @var string */
-	protected $labelsLabel = "Website Title";
+	protected $labelsLabel = "Visit our Site";
 	/** @var int */
 	protected $labelMaxLength = 150;
 	/** @var int */

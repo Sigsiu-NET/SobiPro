@@ -36,6 +36,7 @@ Legend:
 	(!) Changed method to determine a super user from authorise( 'core.admin' ) to authorise( 'core.manage', 'com_users' )
 	(!) Checkboxes aligned (b3-default3 template)
 	(!) Back-end title text revised for some pages
+	(!) Predefined title label texts for email and url fields changed
 
 	(-) Suffix setting removed from image field
 
