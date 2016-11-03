@@ -42,6 +42,8 @@ Legend:
 	(#) Checkboxes for backend settings are again vertically ordered
 	(#) Redefine standard Bootstrap alert-link colours (b3-default3 only)
 	(#) Redefine standard Bootstrap btn link colours (b3-default3 only)
+	(#) If no custom label for a URL set, but label given in the settings, it wasn't used (2nd try)
+	(#) If no custom label for an email set, but label given in the settings, it wasn't used (2nd try)
 
 
 -------------------
@@ -120,12 +122,9 @@ Legend:
 	(#) Joomla! and SobiPro symbol wrong/missing in category edit screen (Issue #1660)
 	(#) Several small layout issues in back-end fixed
 	(#) Ensuring that no negative limitStart can be passed to a query
-	(#) If no custom label for a URL set, but label given in the settings, it wasn't used
-	(#) If no custom label for an email set, but label given in the settings, it wasn't used
 	(#) Notices in router (Issue #1678)
 	(#) Select List -> dependency method: wrong option displayed (Issue #1694)
 	(#) Notices in multilingual mode (Issue #1693)
-	(#) Email and URL field show label value even if custom title option is disabled (Issue #1689)
 	(#) Loading behavior.core in editor; causing issue while using CodeMirror (Issue #1687)
 	(#) Application's LESS file being compiled even if it doesn't exist yet (Issue #1677)
 	(#) Sub-subcategories not visible in category views (Issue #1685)

@@ -42,7 +42,9 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 
 	/**
 	 * Shows the field in the edit entry or add entry form
+	 *
 	 * @param bool $return return or display directly
+	 *
 	 * @return string
 	 */
 	public function field( $return = false )
@@ -104,7 +106,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			$label = $this->__get( 'name' );  //get the field's label from the model
 		}
 		$params[ 'placeholder' ] = $label;
-		$value = ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null;
+		$value                   = ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null;
 		if ( $value == null ) {
 			if ( $this->defaultValue ) {
 				$value = $this->defaultValue;
@@ -139,9 +141,9 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			if ( $this->botProtection ) {
 				SPLoader::loadClass( 'env.browser' );
 				$humanity = SPBrowser::getInstance()
-						->get( 'humanity' );
-				$display = Sobi::Cfg( 'mail_protection.show' );
-				$show = ( $humanity >= $display ) ? true : false;
+					->get( 'humanity' );
+				$display  = Sobi::Cfg( 'mail_protection.show' );
+				$show     = ( $humanity >= $display ) ? true : false;
 			}
 			if ( $show && strlen( $data[ 'url' ] ) ) {
 				$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData';
@@ -152,15 +154,17 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 					$attributes[ 'target' ] = '_blank';
 				}
 				$data = array(
-						'_complex' => 1,
-						'_data' => SPLang::clean( $this->ownLabel ? $data[ 'label' ] : $data[ 'url' ] ),
-						'_attributes' => $attributes
+					'_complex'    => 1,
+					'_data'       => SPLang::clean( $data[ 'label' ] ),
+//						'_data' => SPLang::clean( $this->ownLabel ? $data[ 'label' ] : $data[ 'url' ] ),
+					'_attributes' => $attributes
 				);
+
 				return array(
-						'_complex' => 1,
-						'_validate' => array( 'class' => str_replace( str_replace( '\\', '/', SOBI_PATH ), null, str_replace( '\\', '/', __FILE__ ) ), 'method' => 'validateVisibility' ),
-						'_data' => array( 'a' => $data ),
-						'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass )
+					'_complex'    => 1,
+					'_validate'   => array( 'class' => str_replace( str_replace( '\\', '/', SOBI_PATH ), null, str_replace( '\\', '/', __FILE__ ) ), 'method' => 'validateVisibility' ),
+					'_data'       => array( 'a' => $data ),
+					'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass )
 				);
 			}
 		}
@@ -170,8 +174,8 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	{
 		SPLoader::loadClass( 'env.browser' );
 		$humanity = SPBrowser::getInstance()
-				->get( 'humanity' );
-		$display = Sobi::Cfg( 'mail_protection.show' );
+			->get( 'humanity' );
+		$display  = Sobi::Cfg( 'mail_protection.show' );
 		if ( !( $humanity >= $display ) ) {
 			$data[ '_data' ] = array();
 		}
@@ -180,14 +184,17 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	public function cleanData( $html )
 	{
 		$data = SPConfig::unserialize( $this->getRaw() );
+
 		return $data[ 'url' ];
 	}
 
 	/**
 	 * Gets the data for a field, verify it and pre-save it.
+	 *
 	 * @param SPEntry $entry
 	 * @param string $tsId
 	 * @param string $request
+	 *
 	 * @return array
 	 */
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
@@ -206,9 +213,10 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		$attr = parent::getAttr();
-		$attr[ ] = 'botProtection';
-		$attr[ ] = 'itemprop';
+		$attr   = parent::getAttr();
+		$attr[] = 'botProtection';
+		$attr[] = 'itemprop';
+
 		return $attr;
 	}
 
@@ -221,13 +229,16 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 		if ( isset( $cache[ $this->nid . '_url' ] ) ) {
 			$data[ 'url' ] = $cache[ $this->nid . '_url' ];
 		}
+
 		return $data;
 	}
 
 	/**
 	 * Gets the data for a field and save it in the database
+	 *
 	 * @param SPEntry $entry
 	 * @param string $request
+	 *
 	 * @return bool
 	 */
 	public function saveData( &$entry, $request = 'POST' )
@@ -236,34 +247,34 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			return false;
 		}
 		/* @var SPdb $db */
-		$db = SPFactory::db();
+		$db   = SPFactory::db();
 		$save = $this->verifyEmail( $entry, $request );
 		$time = SPRequest::now();
-		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
-		$uid = Sobi::My( 'id' );
+		$IP   = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$uid  = Sobi::My( 'id' );
 
 		/* collect the needed params */
-		$params = array();
-		$params[ 'publishUp' ] = $entry->get( 'publishUp' );
+		$params                  = array();
+		$params[ 'publishUp' ]   = $entry->get( 'publishUp' );
 		$params[ 'publishDown' ] = $entry->get( 'publishDown' );
-		$params[ 'fid' ] = $this->fid;
-		$params[ 'sid' ] = $entry->get( 'id' );
-		$params[ 'section' ] = Sobi::Reg( 'current_section' );
-		$params[ 'lang' ] = Sobi::Lang();
-		$params[ 'enabled' ] = $entry->get( 'state' );
-		$params[ 'baseData' ] = $db->escape( SPConfig::serialize( $save ) );
-		$params[ 'approved' ] = $entry->get( 'approved' );
-		$params[ 'confirmed' ] = $entry->get( 'confirmed' );
+		$params[ 'fid' ]         = $this->fid;
+		$params[ 'sid' ]         = $entry->get( 'id' );
+		$params[ 'section' ]     = Sobi::Reg( 'current_section' );
+		$params[ 'lang' ]        = Sobi::Lang();
+		$params[ 'enabled' ]     = $entry->get( 'state' );
+		$params[ 'baseData' ]    = $db->escape( SPConfig::serialize( $save ) );
+		$params[ 'approved' ]    = $entry->get( 'approved' );
+		$params[ 'confirmed' ]   = $entry->get( 'confirmed' );
 		/* if it is the first version, it is new entry */
 		if ( $entry->get( 'version' ) == 1 ) {
 			$params[ 'createdTime' ] = $time;
-			$params[ 'createdBy' ] = $uid;
-			$params[ 'createdIP' ] = $IP;
+			$params[ 'createdBy' ]   = $uid;
+			$params[ 'createdIP' ]   = $IP;
 		}
 		$params[ 'updatedTime' ] = $time;
-		$params[ 'updatedBy' ] = $uid;
-		$params[ 'updatedIP' ] = $IP;
-		$params[ 'copy' ] = !( $entry->get( 'approved' ) );
+		$params[ 'updatedBy' ]   = $uid;
+		$params[ 'updatedIP' ]   = $IP;
+		$params[ 'copy' ]        = !( $entry->get( 'approved' ) );
 		if ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
 			--$this->editLimit;
 		}
@@ -279,7 +290,8 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 				* " ... " if a copy already exist it is update again
 				* */
 			$db->insertUpdate( 'spdb_field_data', $params );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
@@ -288,7 +300,8 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			$params[ 'lang' ] = Sobi::DefLang();
 			try {
 				$db->insert( 'spdb_field_data', $params, true, true );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
@@ -297,6 +310,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	/**
 	 * @param SPEntry $entry
 	 * @param string $request
+	 *
 	 * @throws SPException
 	 * @return array
 	 */
@@ -314,7 +328,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 				$registry =& SPFactory::registry();
 				$registry->loadDBSection( 'fields_filter' );
 				$filters = $registry->get( 'fields_filter' );
-				$filter = isset( $filters[ $this->filter ] ) ? $filters[ $this->filter ] : null;
+				$filter  = isset( $filters[ $this->filter ] ) ? $filters[ $this->filter ] : null;
 				if ( !( count( $filter ) ) ) {
 					throw new SPException( SPLang::e( 'FIELD_FILTER_ERR', $this->filter ) );
 				}
@@ -382,12 +396,14 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			$save = null;
 		}
 		$this->setData( $save );
+
 		return $save;
 	}
 
 	/**
 	 * @param SPEntry $entry
 	 * @param string $request
+	 *
 	 * @return string
 	 */
 	public function validate( $entry, $request )
