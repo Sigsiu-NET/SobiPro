@@ -232,6 +232,7 @@ INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) V
 ('textarea', 'Text Area', 'free_single_simple_data', 2),
 ('multiselect', 'Multiple Select List', 'predefined_multi_data_multi_choice', 3),
 ('chbxgroup', 'Check Box Group', 'predefined_multi_data_multi_choice', 4),
+('button', 'Button', 'special', 5),
 ('info', 'Information', 'free_single_simple_data', 6),
 ('select', 'Single Select List', 'predefined_multi_data_single_choice', 7),
 ('radio', 'Radio Buttons', 'predefined_multi_data_single_choice', 8),

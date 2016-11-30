@@ -96,6 +96,7 @@
 		background-color: lighten(desaturate(@base-color, 25%), 20%);
 	}
 }
+
 .borders(dark) {
 	border-color: lighten(@base-color, 16%);
 	& when (@colour-set = cornflower) {
@@ -123,6 +124,7 @@
 		border-color: lighten(desaturate(@base-color, 25%), 16%);
 	}
 }
+
 .background(medium) {
 	background-color: lighten(saturate(@base-color, 20%), 48%);
 	& when (@colour-set = cornflower) {
@@ -150,6 +152,7 @@
 		background-color: lighten(desaturate(@base-color, 25%), 43%);
 	}
 }
+
 .borders(medium) {
 	border-color: lighten(@base-color, 33%);
 	& when (@colour-set = cornflower) {
@@ -177,6 +180,7 @@
 		border-color: lighten(desaturate(@base-color, 25%), 30%);
 	}
 }
+
 .topborder(medium) {
 	border-top-color: lighten(@base-color, 33%);
 	& when (@colour-set = cornflower) {
@@ -204,6 +208,7 @@
 		border-top-color: lighten(desaturate(@base-color, 25%), 30%);
 	}
 }
+
 .background(light) {
 	background-color: lighten(saturate(@base-color, 15%), 56%);
 	& when (@colour-set = cornflower) {
@@ -231,6 +236,7 @@
 		background-color: lighten(desaturate(@base-color, 10%), 56%);
 	}
 }
+
 .borders(light) {
 	border-color: lighten(@base-color, 48%);
 	& when (@colour-set = cornflower) {
@@ -258,6 +264,7 @@
 		border-color: lighten(desaturate(@base-color, 20%), 45%);
 	}
 }
+
 .bottomborder(light) {
 	border-bottom-color: lighten(@base-color, 48%);
 	& when (@colour-set = cornflower) {
@@ -285,6 +292,7 @@
 		border-bottom-color: lighten(desaturate(@base-color, 20%), 45%);
 	}
 }
+
 .topborder(light) {
 	border-top-color: lighten(@base-color, 48%);
 	& when (@colour-set = cornflower) {
@@ -312,6 +320,7 @@
 		border-top-color: lighten(desaturate(@base-color, 20%), 45%);
 	}
 }
+
 .bottomborder(lightbackground) {
 	border-bottom-color: lighten(saturate(@base-color, 15%), 56%);
 	& when (@colour-set = cornflower) {
@@ -339,34 +348,41 @@
 		border-bottom-color: lighten(desaturate(@base-color, 10%), 56%);
 	}
 }
+
 .headertext {
 	font-size: calc(@fontsize + 8px);
 	color: @base-color;
 }
+
 // special styles for component only (not modules)
 #SobiPro {
 	padding: 4px;
 	margin-top: 10px;
 	background-color: @back-color;
 }
+
 // Firefox-specific table hack
 @-moz-document url-prefix() {
 	fieldset {
 		display: table-cell;
 	}
 }
+
 // Background for modal windows (outside SobiPro container)
 // ----------------------------------------
 body.modal-open {
 	overflow: inherit; //otherwise the screen moves on modals
 }
+
 .modal-backdrop,
 .modal-backdrop.fade.in {
 	opacity: 0.2;
 }
+
 .modal-backdrop {
 	background-color: @base-color !important;
 }
+
 .alert.alert- {
 	border-style: solid;
 	border-width: 1px;
@@ -379,6 +395,7 @@ body.modal-open {
 		-moz-border-radius: 0;
 	}
 }
+
 // Calendar/Datepicker (outside SobiPro container)
 // ----------------------------------------
 .bootstrap-datetimepicker-widget {
@@ -414,6 +431,7 @@ body.modal-open {
 		background-color: #fff;
 	}
 }
+
 // Styles in this scope concerns also SobiPro modules
 // ----------------------------------------
 .SobiPro.b3-default3 {
@@ -430,10 +448,10 @@ body.modal-open {
 	}
 	.btn,
 	.btn-submit {
-		//		font-weight: 500;
+		//	font-weight: 500;
 		text-shadow: none;
-		//		font-size: @fontsize;
-		padding: 6px 12px;
+		//	font-size: @fontsize;
+		//  padding: 6px 12px;
 	}
 	.btn-sm,
 	.btn-group-sm > .btn {
@@ -622,6 +640,7 @@ body.modal-open {
 
 	// Tables
 	// ------------------------
+	.table { font-size: @fontsize; }
 	.table th,
 	.table td {
 		.borders(light);
@@ -1127,7 +1146,7 @@ body.modal-open {
 	}
 
 	//Redefine standard Bootstrap alert-link colours
-	.alert-info	.alert-link {
+	.alert-info .alert-link {
 		color: #245269;
 	}
 	.alert-danger .alert-link {
@@ -1770,7 +1789,7 @@ body.modal-open {
 		}
 	}
 	.spImageField input[type='checkbox'] {
-//		margin: 1px 5px 5px 0;
+		//		margin: 1px 5px 5px 0;
 		margin: 4px 5px 5px -20px;
 	}
 	.spImageField label {
@@ -2313,21 +2332,26 @@ body.modal-open {
 		.topmenu .nav > li a {
 			line-height: 20px;
 		}
+
 		.navbar .nav,
 		.navbar .nav > li {
 			float: none;
 		}
+
 		.navbar .nav > li > a {
 			padding-left: 15px;
 		}
+
 		.navbar.topmenu {
 			min-height: 20px;
 			padding-left: 0;
 			padding-right: 0;
 		}
+
 		.control-label div.paybox {
 			margin-bottom: 8px;
 		}
+
 		.input-mini,
 		.input-small,
 		.input-medium,
@@ -2337,12 +2361,14 @@ body.modal-open {
 		.input-xxxlarge {
 			width: 100%;
 		}
+
 		// Carousel
 		.carousel-inner,
 		.carousel-inner > .item > img,
 		.carousel-inner > .item > a > img {
 			height: auto;
 		}
+
 		// Pills/Tabs
 		.spTablist.nav-pills > li,
 		.spTablist.nav-pills.staples > li,
@@ -2350,12 +2376,14 @@ body.modal-open {
 		.spTablist.nav-tabs.coloured > li {
 			float: none;
 		}
+
 		// Staples: reset Styles
 		.nav-pills.staples > li.active::after,
 		.nav-pills.staples > li.active::before {
 			content: unset;
 			border-bottom: none;
 		}
+
 		& when (@corners = rounded) {
 			.nav-tabs > li > a,
 			.nav-pills.staples > li > a,
@@ -2363,32 +2391,39 @@ body.modal-open {
 				border-radius: 4px;
 			}
 		}
+
 		.nav-pills.staples > li.active > a,
 		.nav-pills.staples > li.active > a:focus,
 		.nav-pills.staples > li.active > a:hover {
 			top: 0;
 		}
+
 		ul.nav-pills.staples {
 			margin-left: 0;
 		}
+
 		.tab-content.pills.staples {
 			margin-top: 0;
 		}
+
 		.tab-content.pills.staples .tab-pane {
 			padding-top: 17px;
 		}
+
 		// Coloured Tabs: reset Styles
 		.nav-tabs.coloured > li.active > a,
 		.nav-tabs.coloured > li.active > a:hover,
 		.nav-tabs.coloured > li.active > a:focus {
 			.borders(light);
 		}
+
 		// Standard Tabs: reset Styles
 		.nav-tabs > li.active > a,
 		.nav-tabs > li.active > a:hover,
 		.nav-tabs > li.active > a:focus {
 			border: 1px solid #ddd;
 		}
+
 		// Pills: reset Styles
 		.nav-pills > li + li {
 			margin-left: 0;
@@ -2402,21 +2437,27 @@ body.modal-open {
 			float: none;
 			margin-left: 0;
 		}
+
 		.spEditImagePreview {
 			float: none;
 		}
+
 		.spUpload input {
 			width: 100%;
 		}
+
 		.spUpload button.btn.select {
 			width: calc(100% - 44px);
 		}
+
 		.controls {
 			margin-left: 0;
 		}
+
 		.spEntryEdit .message-lightbulb {
 			left: 49%;
 		}
+
 		.input-medium,
 		.sp-search-phrases .btn-group,
 		.spUpload .btn-group {
@@ -2429,9 +2470,11 @@ body.modal-open {
 		.modal .control-group {
 			margin-bottom: 6px;
 		}
+
 		.modal-body {
 			max-height: 300px;
 		}
+
 		.spPrint .spClassViewImage img,
 		.spDetailEntry .spClassViewImage img,
 		div.spClassViewImage img,
@@ -2439,36 +2482,45 @@ body.modal-open {
 			width: calc(100% - 8px);
 			margin: 0 0 10px 0;
 		}
+
 		.spNoImage {
 			display: none;
 		}
+
 		.SigsiuTree .buttons {
 			text-align: center;
 		}
+
 		.spDetailEntry .spClassViewImage img,
 		.spClassViewImage img {
 			float: none !important;
 		}
+
 		.input-large,
 		.input-medium,
 		.sp-search-controls .btn {
 			width: 100%;
 		}
+
 		.spSelectRangeFrom .input-group,
 		.spSelectRangeTo .input-group {
 			margin: 0 10px 10px 0;
 			width: 100%;
 		}
+
 		.sp-search-phrases .btn {
 			width: calc(100% / 3);
 			font-size: calc(@fontsize - 1px);
 		}
+
 		input[name="sp_search_for"] {
 			margin-bottom: 10px;
 		}
+
 		.tab-pane {
 			min-height: inherit;
 		}
+
 		// Navigation Link Bar
 		// -----------------------------------------------
 		.alert-navigationlinks {
@@ -2476,6 +2528,7 @@ body.modal-open {
 			margin-bottom: 0;
 			margin-top: 0;
 		}
+
 		ul.spNavigationLinks {
 			border-bottom: none;
 			text-align: center;
@@ -2488,6 +2541,7 @@ body.modal-open {
 				line-height: 24px;
 			}
 		}
+
 		.lead {
 			text-align: center;
 		}
