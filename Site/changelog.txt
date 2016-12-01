@@ -39,6 +39,7 @@ Legend:
 	(!) Back-end title text revised for some pages
 	(!) Predefined title label texts for email and url fields changed
 	(!) Url field setting 'open in new window' set to 'no' by default
+	(!) First item in protocols list of URL field will be used as default in new entry
 
 	(-) Suffix setting removed from image field
 

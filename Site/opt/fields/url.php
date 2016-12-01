@@ -133,7 +133,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		else {
 			$protofield = '<div class="input-prepend"><div class="btn-group">';
 		}
-		$protofield .= SPHtml_Input::select( $this->nid . '_protocol', $protocols, ( ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : 'http' ), false, $params );
+		$fliped_protocols = array_flip($protocols);
+		$protofield .= SPHtml_Input::select( $this->nid . '_protocol', $protocols, ( ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : $fliped_protocols[0] ), false, $params );
 		$protofield .= '</div>';
 
 		//$field .= '<span class="spFieldUrlProtocol">://</span>';
