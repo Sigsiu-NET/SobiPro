@@ -50,6 +50,142 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 	/** @var bool */
 	static private $CAT_FIELD = true;
 
+
+	/**
+	 * Shows the field in the edit entry or add entry form
+	 *
+	 * @param bool $return return or display directly
+	 *
+	 * @return string
+	 */
+	public function field( $return = false )
+	{
+		if ( !( $this->enabled ) ) {
+			return false;
+		}
+		$field = null;
+		$fdata = Sobi::Reg( 'editcache' );
+		if ( $fdata && is_array( $fdata ) ) {
+			$raw = $this->fromCache( $fdata );
+		}
+		else {
+			$raw = $this->getRaw();
+			if ( !( is_array( $raw ) ) ) {
+				try {
+					$raw = SPConfig::unserialize( $raw );
+				}
+				catch ( SPException $x ) {
+					$raw = null;
+				}
+			}
+		}
+		if ( $this->ownLabel ) {
+			$fieldTitle = null;
+			$class      = $this->cssClass . 'Title';
+			if ( defined( 'SOBIPRO_ADM' ) ) {
+				if ( $this->bsWidth ) {
+					$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+					$class .= ' ' . $width;
+				}
+			}
+			$params = array( 'id' => $this->nid, 'class' => $class );
+			if ( $this->labelMaxLength ) {
+				$params[ 'maxlength' ] = $this->labelMaxLength;
+			}
+			if ( $this->labelWidth ) {
+				$params[ 'style' ] = "width: {$this->labelWidth}px;";
+			}
+			if ( strlen( $this->labelsLabel ) ) {
+				$this->labelsLabel = SPLang::clean( $this->labelsLabel );
+				//$fieldTitle .= "<label for=\"{$this->nid}\" class=\"{$this->cssClass}Title\">{$this->labelsLabel}</label>\n";
+				$params[ 'placeholder' ] = $this->labelsLabel;
+			}
+			$fieldTitle .= SPHtml_Input::text( $this->nid, ( ( is_array( $raw ) && isset( $raw[ 'label' ] ) ) ? SPLang::clean( $raw[ 'label' ] ) : null ), $params );
+		}
+		$protocols = array();
+		if ( count( $this->allowedProtocols ) ) {
+			foreach ( $this->allowedProtocols as $protocol ) {
+				$protocols[ $protocol ] = $protocol . '://';
+			}
+		}
+		else {
+			$protocols = array( 'http' => 'http://', 'https' => 'https://' );
+		}
+		$params = array( 'id' => $this->nid . '_protocol', 'size' => 1, 'class' => $this->cssClass . 'Protocol' );
+
+		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) ) {
+			$protofield = '<div class="input-group"><div class="input-group-btn">';
+		}
+		else {
+			$protofield = '<div class="input-prepend"><div class="btn-group">';
+		}
+
+		$fliped_protocols = array_flip($protocols);
+		$protofield .= SPHtml_Input::select( $this->nid . '_protocol', $protocols, ( ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : $fliped_protocols[0] ), false, $params );
+		$protofield .= '</div>';
+
+		//$field .= '<span class="spFieldUrlProtocol">://</span>';
+		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			if ( $this->bsWidth ) {
+				$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+				$class .= ' ' . $width;
+			}
+		}
+
+		$params = array( 'id' => $this->nid . '_url', 'class' => $class );
+		if ( $this->maxLength ) {
+			$params[ 'maxlength' ] = $this->maxLength;
+		}
+
+		//for compatibility reason still there
+		if ( $this->width ) {
+			$params[ 'style' ] = "width: {$this->width}px;";
+		}
+
+		$label = Sobi::Txt( 'FD.URL_ADDRESS' );
+		if ( ( !$this->ownLabel ) && ( $this->labelAsPlaceholder ) ) { // the field label will be shown only if labelAsPlaceholder is true and no own label for the URL is selected
+			$label = $this->__get( 'name' );
+		}
+		$params[ 'placeholder' ] = $label;
+		$value                   = ( is_array( $raw ) && isset( $raw[ 'url' ] ) ) ? $raw[ 'url' ] : null;
+		if ( $value == null ) {
+			if ( $this->defaultValue ) {
+				$value = $this->defaultValue;
+			}
+		}
+
+		$field .= $protofield;
+		$field .= SPHtml_Input::text( $this->nid . '_url', $value, $params );
+		$field .= '</div>';
+
+		if ( $this->ownLabel ) {
+			$field = "\n<div class=\"spFieldButtonLabel\">{$fieldTitle}</div>\n<div class=\"spFieldButton\">{$field}</div>";
+		}
+		else {
+			$field = "\n<div class=\"spFieldButton\">{$field}</div>";
+		}
+
+		if ( $this->countClicks && $this->sid && ( $this->deleteClicks || SPFactory::user()->isAdmin() ) ) {
+			$counter = $this->getCounter();
+			if ( $counter ) {
+				SPFactory::header()->addJsFile( 'opt.field_url_edit' );
+			}
+			$classes = 'btn btn-default spCountableReset';
+			$attr    = array();
+			if ( !( $counter ) ) {
+				$attr[ 'disabled' ] = 'disabled';
+			}
+			$field .= SPHtml_Input::button( $this->nid . '_reset', Sobi::Txt( 'FM.URL.EDIT_CLICKS', $counter ), null, $classes );
+		}
+		if ( !$return ) {
+			echo $field;
+		}
+		else {
+			return $field;
+		}
+	}
+
 	/**
 	 * Returns the parameter list
 	 * @return array

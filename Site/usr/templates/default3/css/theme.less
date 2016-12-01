@@ -1282,21 +1282,26 @@
 
 	// URL and Email Fields
 	// ----------------------------------------
+	.spFieldUrlButton,
 	.spFieldEmailLabel,
 	.spFieldUrlLabel {
 		margin-bottom: 5px;
 	}
 
 	& when (@corners = rounded) {
+		.spFieldButton .input-prepend input,
+		.spFieldButton .input-prepend .uneditable-input,
 		.spFieldUrl .input-prepend input,
 		.spFieldUrl .input-prepend .uneditable-input {
 			border-radius: 0 4px 4px 0;
 		}
+		.spFieldButton .input-prepend select,
 		.spFieldUrl .input-prepend select {
 			border-radius: 4px 0 0 4px;
 		}
 	}
 
+	.spFieldButton input,
 	.spFieldUrl input {
 		width: -moz-calc(100% - 113px);
 		width: -webkit-calc(100% - 113px);
@@ -1304,11 +1309,14 @@
 		width: calc(100% - 113px);
 	}
 
+	.spFieldButton select,
+	.spFieldButton .input-prepend,
 	.spFieldUrl select,
 	.spFieldUrl .input-prepend {
 		width: 100%;
 	}
 
+	.spFieldButton .btn-group,
 	.spFieldUrl .btn-group {
 		width: 100px;
 	}

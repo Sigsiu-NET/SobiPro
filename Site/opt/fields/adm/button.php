@@ -17,4 +17,32 @@ SPLoader::loadClass( 'opt.fields.button' );
  */
 class SPField_ButtonAdm extends SPField_Button
 {
+	public function onFieldEdit()
+	{
+		$this->allowedProtocols = is_array( $this->allowedProtocols ) ? implode( ',', $this->allowedProtocols ) : null;
+	}
+
+	public function save( &$attr )
+	{
+		if ( isset( $attr[ 'allowedProtocols' ] ) && $attr[ 'allowedProtocols' ] && is_string( $attr[ 'allowedProtocols' ] ) ) {
+			$attr[ 'allowedProtocols' ] = explode( ',', $attr[ 'allowedProtocols' ] );
+			if ( count( $attr[ 'allowedProtocols' ] ) ) {
+				foreach ( $attr[ 'allowedProtocols' ] as $ap => $apvalue ) {
+					$attr[ 'allowedProtocols' ][ $ap ] = trim( $apvalue );
+				}
+			}
+		}
+		elseif ( !( is_array( $attr[ 'allowedProtocols' ] ) ) ) {
+			$attr[ 'allowedProtocols' ] = array();
+		}
+		$myAttr = $this->getAttr();
+		$properties = array();
+		if ( count( $myAttr ) ) {
+			foreach ( $myAttr as $property ) {
+				$properties[ $property ] = isset( $attr[ $property ] ) ? ( $attr[ $property ] ) : null;
+			}
+		}
+		$attr[ 'params' ] = $properties;
+	}
+
 }

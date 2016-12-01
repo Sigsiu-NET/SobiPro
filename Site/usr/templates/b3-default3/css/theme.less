@@ -1748,19 +1748,24 @@ body.modal-open {
 	}
 	// URL and Email Fields
 	// ----------------------------------------
+	.spFieldButtonLabel,
 	.spFieldEmailLabel,
 	.spFieldUrlLabel {
 		margin-bottom: 5px;
 	}
 	& when (@corners = rounded) {
+		.spFieldButton .input-group-btn select,
 		.spFieldUrl .input-group-btn select {
 			border-radius: 4px 0 0 4px;
 		}
 	}
+	.spFieldButton .input-group select.form-control,
+	.spFieldButton select,
 	.spFieldUrl .input-group select.form-control,
 	.spFieldUrl select {
 		width: 100px;
 	}
+	.spButtonCounterValue,
 	.spUrlCounterValue {
 		font-size: 85%;
 		color: grey;
