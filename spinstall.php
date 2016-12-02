@@ -41,6 +41,7 @@ class com_sobiproInstallerScript
 		$this->release = $adapter->get( 'manifest' )->version;
 		// Show the essential information at the install/update back-end
 		echo '<h2>Installing SobiPro version ' . $this->release . ' ...</h2>';
+
 	}
 
 	/**
@@ -276,6 +277,10 @@ class com_sobiproInstallerScript
 			$db->setQuery( "UPDATE #__extensions SET enabled =  '1' WHERE  element = 'sp{$plugin}';" );
 			$db->execute();
 		}
+		if ( !( file_exists( JPATH_ROOT . '/libraries/Sobi' ) ) ) {
+			JFolder::create( JPATH_ROOT . '/libraries/Sobi' );
+		}
+		JFile::move( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/Sobi/Sobi.phar.tar.gz' );
 	}
 
 	/**

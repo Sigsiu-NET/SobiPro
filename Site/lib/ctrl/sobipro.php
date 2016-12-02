@@ -17,6 +17,9 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
+use Sobi\Framework;
+
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -75,10 +78,21 @@ final class SobiProCtrl
 
 	/**
 	 * @param string $task
-	 * @return \SobiProCtrl
+	 * @throws Exception
 	 */
 	function __construct( $task )
 	{
+		// Suppressing warning because the error is being handled
+		@include_once 'phar://' . SOBI_ROOT . '/libraries/Sobi/Sobi.phar.tar.gz/Framework.php';
+		if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
+			if ( file_exists( SOBI_ROOT . '/libraries/Sobi/Framework.php' ) ) {
+				include_once SOBI_ROOT . '/libraries/Sobi/Framework.php';
+			}
+			else {
+				throw new Exception( 'Cannot initialise Framework. Ensure that your server has PHAR support please or install Sobi Framework manually' );
+			}
+		}
+		Framework::Init();
 		$this->_mem = memory_get_usage();
 		$this->_time = microtime( true );
 		SPLoader::loadClass( 'base.exception' );
@@ -95,6 +109,8 @@ final class SobiProCtrl
 		SPLoader::loadClass( 'sobi' );
 		SPLoader::loadClass( 'base.config' );
 		SPLoader::loadClass( 'cms.base.lang' );
+
+		Framework::SetTranslator( [ 'SPlang', '_txt' ] );
 
 		/* get sid if any */
 		$this->_sid = SPRequest::sid();
@@ -200,7 +216,7 @@ final class SobiProCtrl
 						$id = $db->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
 								->loadResult();
 						if ( $id ) {
-							$path[ ] = ( int )$id;
+							$path[] = ( int )$id;
 						}
 					} catch ( SPException $x ) {
 						Sobi::Error( 'CoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -381,7 +397,7 @@ final class SobiProCtrl
 					if ( count( $objects ) ) {
 						$this->_ctrl = array();
 						foreach ( $objects as $object ) {
-							$this->_ctrl[ ] = $this->extendObj( $object, $obj, $ctrl, $task );
+							$this->_ctrl[] = $this->extendObj( $object, $obj, $ctrl, $task );
 						}
 					}
 				}

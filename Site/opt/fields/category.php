@@ -197,7 +197,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params[ 'preventParents' ] = !( $this->catsWithChilds );
 
 		$setheight = '';
-		if (strlen($this->height)) {
+		if ( strlen( $this->height ) ) {
 			$setheight = " style=\"max-height: {$this->height}px;\"";
 		}
 		$addBtParams = array( 'class' => 'btn btn-sm btn-small btn-default' );
@@ -396,7 +396,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 					$params[ 'disabled' ] = 'disabled';
 				}
 			}
-			$result[ ] = array(
+			$result[] = array(
 					'label' => $margin . ' ' . $cat[ 'name' ],
 					'value' => $cat[ 'sid' ],
 					'params' => $params
@@ -421,7 +421,10 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 						->addVar( $this->_cats, 'categories_tree', Sobi::Section() );
 			}
 			$cache = json_encode( $this->_cats );
-			SPFs::write( SPLoader::path( 'etc.categories.' . Sobi::Lang() . '-' . Sobi::Section(), 'front', false, 'json' ), $cache );
+			if ( !( defined( 'SOBIPRO_ADM' ) ) ) {
+				SPFs::write( SPLoader::path( 'etc.categories.' . Sobi::Lang() . '-' . Sobi::Section(), 'front', false, 'json' ), $cache );
+			}
+
 		}
 		$this->sort( $this->_cats );
 	}
@@ -677,7 +680,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$data = array();
 			if ( count( $fixed ) ) {
 				foreach ( $fixed as $cid ) {
-					$data[ ] = trim( $cid );
+					$data[] = trim( $cid );
 				}
 			}
 			if ( !( count( $data ) ) ) {
@@ -805,7 +808,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	{
 		foreach ( $categories as $category ) {
 			if ( $cid == $category[ 'sid' ] ) {
-				$results[ ] = $category[ 'sid' ];
+				$results[] = $category[ 'sid' ];
 				$this->categoryChilds( $results, $category[ 'childs' ] );
 				break;
 			}
@@ -818,7 +821,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	private function categoryChilds( &$results, $categories )
 	{
 		foreach ( $categories as $category ) {
-			$results[ ] = $category[ 'sid' ];
+			$results[] = $category[ 'sid' ];
 			if ( count( $category[ 'childs' ] ) ) {
 				$this->categoryChilds( $results, $category[ 'childs' ] );
 			}

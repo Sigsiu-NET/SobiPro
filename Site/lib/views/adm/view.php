@@ -198,7 +198,7 @@ class SPAdmView extends SPObject implements SPView
 			$subMenu = array();
 			foreach ( $sections as $section ) {
 				if ( Sobi::Can( 'section', 'access', 'any', $section[ 'id' ] ) ) {
-					$subMenu[ ] = array(
+					$subMenu[] = array(
 							'type' => 'url',
 							'task' => '',
 							'url' => array( 'sid' => $section[ 'id' ] ),
@@ -231,7 +231,7 @@ class SPAdmView extends SPObject implements SPView
 				}
 				foreach ( $availableLanguages as $language ) {
 					$url[ 'sp-language' ] = $language[ 'tag' ];
-					$subMenu[ ] = array(
+					$subMenu[] = array(
 							'type' => 'url',
 							'task' => '',
 							'url' => $url,
@@ -331,10 +331,10 @@ class SPAdmView extends SPObject implements SPView
 			/** @var DOMNode $node */
 			switch ( $node->nodeName ) {
 				case 'button':
-					$buttons[ ] = $this->xmlButton( $node );
+					$buttons[] = $this->xmlButton( $node );
 					break;
 				case 'divider':
-					$buttons[ ] = array( 'element' => 'divider' );
+					$buttons[] = array( 'element' => 'divider' );
 					break;
 				case 'group':
 					$group = array( 'element' => 'group', 'buttons' => array() );
@@ -350,9 +350,9 @@ class SPAdmView extends SPObject implements SPView
 						if ( strstr( $bt->nodeName, '#' ) ) {
 							continue;
 						}
-						$group[ 'buttons' ][ ] = $this->xmlButton( $bt );
+						$group[ 'buttons' ][] = $this->xmlButton( $bt );
 					}
-					$buttons[ ] = $group;
+					$buttons[] = $group;
 					break;
 				case 'buttons':
 					$group = array( 'element' => 'buttons', 'buttons' => array(), 'label' => $node->attributes->getNamedItem( 'label' ) ? Sobi::Txt( $node->attributes->getNamedItem( 'label' )->nodeValue ) : '' );
@@ -372,10 +372,10 @@ class SPAdmView extends SPObject implements SPView
 								continue;
 							}
 							if ( $bt->nodeName == 'nav-header' ) {
-								$group[ 'buttons' ][ ] = array( 'element' => 'nav-header', 'label' => Sobi::Txt( $bt->attributes->getNamedItem( 'label' )->nodeValue ) );
+								$group[ 'buttons' ][] = array( 'element' => 'nav-header', 'label' => Sobi::Txt( $bt->attributes->getNamedItem( 'label' )->nodeValue ) );
 							}
 							else {
-								$group[ 'buttons' ][ ] = $this->xmlButton( $bt );
+								$group[ 'buttons' ][] = $this->xmlButton( $bt );
 							}
 						}
 					}
@@ -383,7 +383,7 @@ class SPAdmView extends SPObject implements SPView
 						$group[ 'buttons' ] = $this->get( $node->attributes->getNamedItem( 'buttons' )->nodeValue );
 					}
 					if ( count( $group[ 'buttons' ] ) ) {
-						$buttons[ ] = $group;
+						$buttons[] = $group;
 					}
 					break;
 			}
@@ -474,7 +474,7 @@ class SPAdmView extends SPObject implements SPView
 					if ( !( $this->xmlCondition( $node ) ) ) {
 						continue;
 					}
-					$button[ 'buttons' ][ ] = $this->xmlButton( $node, $attributes );
+					$button[ 'buttons' ][] = $this->xmlButton( $node, $attributes );
 				}
 			}
 		}
@@ -490,6 +490,10 @@ class SPAdmView extends SPObject implements SPView
 		$value = $this->get( $matches[ 1 ], $i );
 		if ( is_string( $value ) ) {
 			$key = str_replace( $matches[ 0 ], $this->get( $matches[ 1 ], $i ), $key );
+		}
+		elseif ( $matches[ 1 ] == 'section' ) {
+			// for keys like: 'var:[section]'
+			$key = str_replace( $matches[ 0 ], Sobi::Section( true ), $key );
 		}
 		return $key;
 	}
@@ -623,7 +627,7 @@ class SPAdmView extends SPObject implements SPView
 						$customCells = $this->get( $node->attributes->getNamedItem( 'value' )->nodeValue );
 						if ( count( $customCells ) ) {
 							foreach ( $customCells as $cell ) {
-								$element[ 'content' ][ ] = array(
+								$element[ 'content' ][] = array(
 										'label' => isset( $cell[ 'label' ] ) ? $cell[ 'label' ] : null,
 										'type' => 'cell',
 										'content' => $cell[ 'content' ],
@@ -635,7 +639,7 @@ class SPAdmView extends SPObject implements SPView
 					break;
 
 			}
-			$output[ ] = $element;
+			$output[] = $element;
 		}
 	}
 
@@ -732,14 +736,14 @@ class SPAdmView extends SPObject implements SPView
 						}
 						if ( $param->attributes->getNamedItem( 'value' ) ) {
 							if ( $param->attributes->getNamedItem( 'parse' ) && $param->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
-								$args[ ] = $this->get( $param->attributes->getNamedItem( 'value' )->nodeValue );
+								$args[] = $this->get( $param->attributes->getNamedItem( 'value' )->nodeValue );
 							}
 							else {
-								$args[ ] = $param->attributes->getNamedItem( 'value' )->nodeValue;
+								$args[] = $param->attributes->getNamedItem( 'value' )->nodeValue;
 							}
 						}
 						else {
-							$args[ ] = $param->nodeValue;
+							$args[] = $param->nodeValue;
 						}
 					}
 				}
@@ -777,16 +781,16 @@ class SPAdmView extends SPObject implements SPView
 					$methodParams = $method->getParameters();
 					foreach ( $methodParams as $param ) {
 						if ( isset( $field[ $param->name ] ) ) {
-							$methodArgs[ ] = $field[ $param->name ];
+							$methodArgs[] = $field[ $param->name ];
 						}
 						elseif ( $param->isDefaultValueAvailable() ) {
-							$methodArgs[ ] = $param->getDefaultValue();
+							$methodArgs[] = $param->getDefaultValue();
 						}
 						else {
-							$methodArgs[ ] = null;
+							$methodArgs[] = null;
 						}
 					}
-					$objects[ ] = array(
+					$objects[] = array(
 							'label' => $field[ 'label' ],
 							'type' => 'field',
 							'content' => call_user_func_array( array( 'SPHtml_input', $field[ 'type' ] ), $methodArgs ),
@@ -816,7 +820,7 @@ class SPAdmView extends SPObject implements SPView
 						$a[ $attribute->nodeName ] = $attribute->nodeValue;
 					}
 				}
-				$objects[ ] = array(
+				$objects[] = array(
 						'label' => null,
 						'type' => 'loop-row',
 						'content' => $row,
@@ -885,7 +889,7 @@ class SPAdmView extends SPObject implements SPView
 				$a = $element[ 'attributes' ];
 				$a[ 'type' ] = 'text';
 				foreach ( $customCells as $customCell ) {
-					$objects[ ] = array(
+					$objects[] = array(
 							'label' => null,
 							'type' => 'cell',
 							'content' => $customCell,
@@ -948,7 +952,7 @@ class SPAdmView extends SPObject implements SPView
 				}
 			}
 		}
-		$objects[ ] = $element;
+		$objects[] = $element;
 	}
 
 	protected function cellAttributes( $cell, &$element, $subject, $i )
@@ -1054,7 +1058,7 @@ class SPAdmView extends SPObject implements SPView
 					$value[ $node->attributes->getNamedItem( 'name' )->nodeValue ] = $this->xmlParams( $node, $subject, $index );
 				}
 				else {
-					$value[ ] = $this->xmlParams( $node, $subject, $index );
+					$value[] = $this->xmlParams( $node, $subject, $index );
 				}
 			}
 		}
@@ -1261,7 +1265,7 @@ class SPAdmView extends SPObject implements SPView
 								elseif ( $value->nodeName == 'button' ) {
 									$v = $this->xmlButton( $value );
 								}
-								$adds[ $child->attributes->getNamedItem( 'where' )->nodeValue ][ ] = $v;
+								$adds[ $child->attributes->getNamedItem( 'where' )->nodeValue ][] = $v;
 							}
 						}
 						break;
@@ -1300,16 +1304,16 @@ class SPAdmView extends SPObject implements SPView
 					$methodParams = $method->getParameters();
 					foreach ( $methodParams as $param ) {
 						if ( isset( $args[ $param->name ] ) ) {
-							$methodArgs[ ] = $args[ $param->name ];
+							$methodArgs[] = $args[ $param->name ];
 						}
 						elseif ( $param->name == 'value' && !( isset( $args[ 'value' ] ) ) && isset( $args[ 'name' ] ) ) {
-							$methodArgs[ ] = $this->get( $args[ 'name' ] );
+							$methodArgs[] = $this->get( $args[ 'name' ] );
 						}
 						elseif ( $param->isDefaultValueAvailable() ) {
-							$methodArgs[ ] = $param->getDefaultValue();
+							$methodArgs[] = $param->getDefaultValue();
 						}
 						else {
-							$methodArgs[ ] = null;
+							$methodArgs[] = null;
 						}
 					}
 					$element[ 'content' ] = call_user_func_array( array( 'SPHtml_input', $args[ 'type' ] ), $methodArgs );
@@ -1335,14 +1339,14 @@ class SPAdmView extends SPObject implements SPView
 					$subject = $subject ? $subject . '.' . $p->attributes->getNamedItem( 'value' )->nodeValue : $p->attributes->getNamedItem( 'value' )->nodeValue;
 					$v = $this->get( $subject, $i );
 					if ( $v ) {
-						$params[ ] = $v;
+						$params[] = $v;
 					}
 					elseif ( $p->attributes->getNamedItem( 'default' ) ) {
-						$params[ ] = $p->attributes->getNamedItem( 'default' )->nodeValue;
+						$params[] = $p->attributes->getNamedItem( 'default' )->nodeValue;
 					}
 				}
 				else {
-					$params[ ] = $p->nodeValue;
+					$params[] = $p->nodeValue;
 				}
 			}
 		}
@@ -1516,7 +1520,7 @@ class SPAdmView extends SPObject implements SPView
 			foreach ( $this->_config[ 'toolbar' ] as $type => $settings ) {
 				$type = preg_replace( '/\_{1}[a-zA-Z0-9]$/', null, $type );
 				$cfg = $this->parseMenu( explode( '|', $settings ) );
-				$menu[ ] = array( 'type' => $type, 'settings' => $cfg );
+				$menu[] = array( 'type' => $type, 'settings' => $cfg );
 			}
 			$this->legacyToolbar( $menu );
 			unset( $this->_config[ 'toolbar' ] );
@@ -1570,17 +1574,17 @@ class SPAdmView extends SPObject implements SPView
 						$button[ 'task' ] = $row[ 'settings' ][ 0 ];
 						$button[ 'label' ] = $row[ 'settings' ][ 1 ];
 						$button[ 'type' ] = $row[ 'type' ];
-						$buttons[ ] = $button;
+						$buttons[] = $button;
 						break;
 					case 'divider':
-						$buttons[ ] = array( 'element' => 'divider' );
+						$buttons[] = array( 'element' => 'divider' );
 						break;
 					case 'custom':
 						$button[ 'task' ] = $row[ 'settings' ][ 0 ];
 						$button[ 'icon' ] = $row[ 'settings' ][ 1 ];
 						$button[ 'label' ] = $row[ 'settings' ][ 3 ];
 						$button[ 'type' ] = $row[ 'settings' ][ 2 ];
-						$buttons[ ] = $button;
+						$buttons[] = $button;
 						break;
 				}
 			}
@@ -1596,12 +1600,12 @@ class SPAdmView extends SPObject implements SPView
 		if ( count( $messages ) ) {
 			foreach ( $messages as $type => $texts ) {
 				if ( count( $texts ) ) {
-					$out[ ] = "<div class=\"alert alert-{$type} spSystemAlert\">";
-					$out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
+					$out[] = "<div class=\"alert alert-{$type} spSystemAlert\">";
+					$out[] = '<button type="button" class="close" data-dismiss="alert">×</button>';
 					foreach ( $texts as $text ) {
-						$out[ ] = "<div>{$text}</div>";
+						$out[] = "<div>{$text}</div>";
 					}
-					$out[ ] = '</div>';
+					$out[] = '</div>';
 				}
 			}
 		}

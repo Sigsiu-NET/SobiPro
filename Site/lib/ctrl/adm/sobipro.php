@@ -14,6 +14,7 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
+use Sobi\Framework;
 
 /**
  * @author Radek Suski
@@ -69,9 +70,21 @@ final class SobiProAdmCtrl
 
 	/**
 	 * @param string $task
+	 * @throws Exception
 	 */
 	function __construct( $task )
 	{
+		// Suppressing warning because the error is being handled
+		@include_once 'phar://' . SOBI_ROOT . '/libraries/Sobi/Sobi.phar.tar.gz/Framework.php';
+		if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
+			if ( file_exists( SOBI_ROOT . '/libraries/Sobi/Framework.php' ) ) {
+				include_once SOBI_ROOT . '/libraries/Sobi/Framework.php';
+			}
+			else {
+				throw new Exception( 'Cannot initialise Framework. Ensure that your server has PHAR support please or install Sobi Framework manually' );
+			}
+		}
+		Framework::Init();
 		SPLoader::loadClass( 'base.exception' );
 		set_error_handler( 'SPExceptionHandler' );
 		$this->_err = ini_set( 'display_errors', 'on' );
@@ -86,6 +99,9 @@ final class SobiProAdmCtrl
 		SPLoader::loadClass( 'base.request' );
 		SPLoader::loadClass( 'sobi' );
 		SPLoader::loadClass( 'base.config' );
+
+		Framework::SetTranslator( [ 'SPlang', '_txt' ] );
+
 		/* authorise access */
 		$this->checkAccess();
 		/* initialise mainframe interface to CMS */
@@ -202,7 +218,7 @@ final class SobiProAdmCtrl
 						$db->select( 'pid', 'spdb_relations', array( 'id' => $id ) );
 						$id = $db->loadResult();
 						if ( $id ) {
-							$path[ ] = ( int )$id;
+							$path[] = ( int )$id;
 						}
 					} catch ( SPException $x ) {
 						Sobi::Error( 'CoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -285,7 +301,7 @@ final class SobiProAdmCtrl
 						foreach ( $objects as $object ) {
 							$o = $this->extendObj( $object, $obj, $ctrl, $task );
 							if ( $o ) {
-								$this->_ctrl[ ] = $o;
+								$this->_ctrl[] = $o;
 							}
 						}
 						if ( !( count( $this->_ctrl ) ) ) {

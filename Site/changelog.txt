@@ -40,6 +40,7 @@ Legend:
 	(!) Predefined title label texts for email and url fields changed
 	(!) Url field setting 'open in new window' set to 'no' by default
 	(!) First item in protocols list of URL field will be used as default in new entry
+	(!) Started moving libraries to Sobi Framework
 
 	(-) Suffix setting removed from image field
 

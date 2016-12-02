@@ -26,6 +26,8 @@ SPLoader::loadClass( 'cms.base.user' );
 SPLoader::loadClass( 'cms.base.lang' );
 SPLoader::loadClass( 'base.header' );
 
+use Sobi\Database\MySQLi;
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -60,7 +62,7 @@ abstract class SPFactory
 							->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
 							->loadResult();
 					if ( $id ) {
-						$path[ ] = ( int )$id;
+						$path[] = ( int )$id;
 					}
 				} catch ( SPException $x ) {
 					Sobi::Error( 'CoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -95,12 +97,13 @@ abstract class SPFactory
 	}
 
 	/**
-	 * @return SPDb
+	 * @return Sobi\Database\MySQLi
 	 */
 	public static function & db()
 	{
-		$class = SPLoader::loadClass( 'cms.base.database' );
-		return $class::getInstance();
+//		$class = SPLoader::loadClass( 'cms.base.database' );
+//		return $class::getInstance();
+		return MySQLi::getInstance();
 	}
 
 	/**
@@ -189,12 +192,12 @@ abstract class SPFactory
 	 */
 	public static function & object( $id )
 	{
-		static $instances = array();
+		static $instances = [];
 		if ( !isset( $instances[ $id ] ) ) {
-			$db = self::db();
 			try {
-				$db->select( '*', 'spdb_object', array( 'id' => $id ) );
-				$instances[ $id ] = $db->loadObject();
+				$instances[ $id ] = self::db()
+						->select( '*', 'spdb_object', array( 'id' => $id ) )
+						->loadObject();
 			} catch ( SPException $x ) {
 				Sobi::Error( 'factory', 'cannot_get_object', SPC::WARNING, 500, __LINE__, __CLASS__, $x->getMessage() );
 				return false;
