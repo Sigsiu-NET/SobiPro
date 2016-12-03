@@ -300,7 +300,12 @@ class SPField extends SPObject
 		/** Wed, Aug 31, 2016 10:26:08  - Profile field overrides this data but also expect this data to be serialised
 		 * @todo Need to be fixed in Profile Field and then we can remove it here
 		 * */
-		if ( !( $r ) && !( $this->_rawDataChanged ) ) {
+		if ( is_string( $r ) ) {
+			if ( !( strlen( $r ) ) && !( $this->_rawDataChanged ) ) {
+				$r =& $this->_rawData;
+			}
+		}
+		elseif ( !( $r ) && !( $this->_rawDataChanged ) ) {
 			$r =& $this->_rawData;
 		}
 		if ( $this->parse ) {
@@ -573,7 +578,7 @@ class SPField extends SPObject
 		$ret = array();
 		foreach ( $attr as $k => $v ) {
 			if ( !( strstr( $k, '_' ) && strpos( $k, '_' ) == 0 ) ) {
-				$ret[ ] = $k;
+				$ret[] = $k;
 			}
 		}
 		return $ret;

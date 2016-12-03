@@ -18,48 +18,14 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
-SPLoader::loadClass( 'base.fs.file' );
 
 /**
  * @author Radek Suski
  * @version 1.0
  * @created 17-Jun-2010 10:13:15
+ * @deprecated Sat, Dec 3, 2016 16:31:37
+ * @see \Sobi\FileSystem\Archive
  */
-class SPArchive extends SPFile
+class SPArchive extends \Sobi\FileSystem\Archive
 {
-	/**
-	 * @param string $to - path where the archive should be extracted to
-	 * @return bool
-	 */
-	public function extract( $to )
-	{
-		$r = false;
-		$ext = SPFs::getExt( $this->_filename );
-		switch ( $ext ) {
-			case 'zip':
-				$zip = new ZipArchive();
-				if ( $zip->open( $this->_filename ) === true ) {
-					SPException::catchErrors( SPC::WARNING );
-					try {
-						$zip->extractTo( $to );
-						$zip->close();
-						$r = true;
-					}
-					catch( SPException $x ) {
-						$t = Sobi::FixPath( Sobi::Cfg( 'fs.temp' ).'/'.md5( microtime() ) );
-						SPFs::mkdir( $t, 0777 );
-						$dir = SPFactory::Instance( 'base.fs.directory', $t );
-						if( $zip->extractTo( $t ) ) {
-							$zip->close();
-							$dir->moveFiles( $to );
-							$r = true;
-						}
-						SPFs::delete( $dir->getPathname() );
-					}
-					SPException::catchErrors( 0 );
-				}
-				break;
-		}
-		return $r;
-	}
 }

@@ -196,7 +196,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		parent::__construct( $field );
 		$this->getSelectLabel();
 		/* @var SPdb $db */
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		$options = array();
 
 		try {
@@ -501,7 +501,6 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-
 		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ), $request );
 		$cdata = $this->verify( $entry, $request, $data );
 		$time = SPRequest::now();

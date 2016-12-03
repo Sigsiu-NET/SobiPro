@@ -50,6 +50,7 @@ Legend:
 	(#) If no custom label for a URL set, but label given in the settings, it wasn't used (2nd try)
 	(#) If no custom label for an email set, but label given in the settings, it wasn't used (2nd try)
 	(#) Double row container for categories list removed (b3-default3 only)
+	(#) Select list and 0 in name (Issue #1723)
 
 
 -------------------

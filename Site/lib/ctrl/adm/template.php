@@ -242,7 +242,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				foreach ( $files as $file ) {
 					$stack = explode( '.', $file );
 					if ( array_pop( $stack ) == 'xsl' ) {
-						$arr[ ] = array( 'name' => $stack[ 0 ], 'filename' => $file );
+						$arr[] = array( 'name' => $stack[ 0 ], 'filename' => $file );
 					}
 				}
 			}
@@ -295,6 +295,12 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	{
 		$dir = $this->dir( SPRequest::cmd( 'templateName' ) );
 		$newName = SPRequest::word( 'templateNewName', 'Duplicated Template', 'post' );
+		$newName = str_replace( [ '-', '_' ], ' ', $newName );
+		$newName = explode( ' ', $newName );
+		foreach ( $newName as $i => $part ) {
+			$newName[ $i ] = ucfirst( $part );
+		}
+		$newName = implode( $newName );
 		$dirName = SPLang::nid( $newName );
 		$dirNameOrg = $dirName;
 		$c = 1;
@@ -586,7 +592,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				else {
 					$filePath = null;
 				}
-				$files[ ] = array(
+				$files[] = array(
 						'file' => $file->attributes->getNamedItem( 'path' )->nodeValue,
 						'description' => $file->nodeValue,
 						'filepath' => $filePath
