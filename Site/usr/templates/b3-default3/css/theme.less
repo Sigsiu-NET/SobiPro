@@ -1146,23 +1146,24 @@ body.modal-open {
 	}
 
 	//Redefine standard Bootstrap alert-link colours
-	.alert-info .alert-link {
-		color: #245269;
-	}
-	.alert-danger .alert-link {
-		color: #843534;
-	}
-	.alert-success .alert-link {
-		color: #2b542c;
-	}
-	.alert-warning .alert-link {
-		color: #66512c;
-	}
+	//.alert-info .alert-link {
+	//	color: #245269;
+	//}
+	//.alert-danger .alert-link {
+	//	color: #843534;
+	//}
+	//.alert-success .alert-link {
+	//	color: #2b542c;
+	//}
+	//.alert-warning .alert-link {
+	//	color: #66512c;
+	//}
 
 	// define bootstrap alert to use it as mixin
 	.alert {
 		padding: 8px 15px 8px 14px;
 		margin-bottom: 20px;
+		margin-top: 5px;
 		text-shadow: none;
 
 		.close {
@@ -1180,17 +1181,18 @@ body.modal-open {
 	}
 
 	// has to be defined by the template as several apps are using it
-	.alert-message {
-		border-style: solid;
-		border-width: 1px;
-		.alert;
-		.spAlert;
-	}
+	// conflicts with Joomla alerts in colour meaning
+	//.alert-message {
+		//border-style: solid;
+		//border-width: 1px;
+		//.alert;
+		//.spAlert;
+	//}
 	.spMessage {
 		margin-top: 10px;
 	}
 
-	//simulate alert-danger
+	//simulate default alert-danger, used by SobiPro apps instead of alert-message
 	.alert-error {
 		color: #a94442;
 		background-color: #f2dede;

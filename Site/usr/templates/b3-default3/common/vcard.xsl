@@ -29,7 +29,7 @@
             <xsl:call-template name="ratingStars" />
         </xsl:if>
 
-        <h2 class="lead page-header">
+        <h2 class="page-header lead">
             <a href="{url}">
                 <xsl:value-of select="name" />
                 <xsl:call-template name="status">

@@ -46,6 +46,9 @@
 			<xsl:apply-templates select="alphaMenu"/>
 			<xsl:apply-templates select="messages"/>
 
+			<h1 class="page-header lead">
+				<xsl:value-of select="name"/>
+			</h1>
 			<div class="spSectionDesc">
 				<xsl:value-of select="description" disable-output-escaping="yes"/>
 			</div>

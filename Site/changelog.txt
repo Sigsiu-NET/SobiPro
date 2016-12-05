@@ -51,7 +51,8 @@ Legend:
 	(#) If no custom label for an email set, but label given in the settings, it wasn't used (2nd try)
 	(#) Double row container for categories list removed (b3-default3 only)
 	(#) Select list and 0 in name (Issue #1723)
-	(#) Dependant list need to be selected on every search (Issue #1703)
+	(#) Dependant list needs to be selected on every search (Issue #1703)
+	(#) Syntax error in example data for information field (Issue #1726)
 
 
 -------------------
