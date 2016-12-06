@@ -449,11 +449,11 @@ abstract class SPController extends SPObject implements SPControl
 			$file = SPFactory::mainframe()->path( implode( '.', $file ) );
 			$path = SPLoader::dirPath( $file, 'root', true );
 			$this->_tCfg = SPLoader::loadIniFile( "{$path}.config", true, false, false, true );
-			$files[ ] = SPLoader::iniStorage();
+			$files[] = SPLoader::iniStorage();
 		}
 		else {
 			$this->_tCfg = SPLoader::loadIniFile( "usr.templates.{$path}.config" );
-			$files[ ] = SPLoader::iniStorage();
+			$files[] = SPLoader::iniStorage();
 			$path = SPLoader::dirPath( 'usr.templates.' . $path, 'front', true );
 		}
 		if ( !$task ) {
@@ -461,7 +461,7 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'ini' ) ) {
 			$taskCfg = SPLoader::loadIniFile( "{$path}.{$this->templateType}.{$task}", true, false, false, true );
-			$files[ ] = SPLoader::iniStorage();
+			$files[] = SPLoader::iniStorage();
 			foreach ( $taskCfg as $section => $keys ) {
 				if ( isset( $this->_tCfg[ $section ] ) ) {
 					$this->_tCfg[ $section ] = array_merge( $this->_tCfg[ $section ], $keys );
@@ -575,7 +575,7 @@ abstract class SPController extends SPObject implements SPControl
 					$message = null;
 				}
 			}
-			Sobi::Redirect( is_array( $url ) || strstr( 'index.php', $url ) ? Sobi::Url( $url ) : $url, $message, null, $redirect );
+			Sobi::Redirect( ( is_array( $url ) || strstr( 'index.php', $url ) ) && trim( $url != 'index.php' ) ? Sobi::Url( $url ) : $url, $message, null, $redirect );
 		}
 	}
 
