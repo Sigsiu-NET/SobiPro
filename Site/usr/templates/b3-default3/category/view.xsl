@@ -55,15 +55,11 @@
 
 			<xsl:apply-templates select="alphaMenu"/>
 
-			<div class="row">
-				<div class="col-md-12">
-					<h1>
-						<xsl:value-of select="name"/>
-					</h1>
-					<div class="spCategoryDesc">
-						<xsl:value-of select="description" disable-output-escaping="yes"/>
-					</div>
-				</div>
+			<h1 class="page-header lead">
+				<xsl:value-of select="name"/>
+			</h1>
+			<div class="spCategoryDesc">
+				<xsl:value-of select="description" disable-output-escaping="yes"/>
 			</div>
 
 			<xsl:if test="//config/fieldsposition/@value = 'above'">
