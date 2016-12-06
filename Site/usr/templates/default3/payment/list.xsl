@@ -35,7 +35,7 @@
 						<div class="pull-right">
 							<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_GROSS' )" />
 						</div>
-					<!--</td>-->
+					</td>
 				</tr>
 			</thead>
 			<tbody>

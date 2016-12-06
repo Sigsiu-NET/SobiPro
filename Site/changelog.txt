@@ -55,6 +55,7 @@ Legend:
 	(#) Syntax error in example data for information field (Issue #1726)
 	(#) Cleaning escaped slashes in autosuggest (Issue #1709)
 	(#) Exception for index.php in redirects URLs (Issue #1737)
+	(#) Missing HTML element in default3 payments template (Issue #1738)
 
 
 -------------------
