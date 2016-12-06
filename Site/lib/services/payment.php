@@ -150,7 +150,7 @@ final class SPPayment
 					$sumbrutto = $sumbrutto - $discount;
 					$sumnetto = $sumnetto / ( 1 + ( $vat / 100 ) );
 				}
-				$dis = array( 'discount_sum' => self::currency( $discount ), 'discount' => $this->discounts[ $id ][ 'discount' ], 'netto' => self::currency( $sumnetto ), 'brutto' => self::currency( $sumbrutto ), 'for' => $this->discounts[ $id ][ 'for' ] );
+				$dis = array( 'discount_sum' => self::currency( $discount ), 'discount' => $this->discounts[ $id ][ 'discount' ], 'netto' => self::currency( $sumnetto ), 'brutto' => self::currency( $sumbrutto ), 'for' => $this->discounts[ $id ][ 'for' ], $this->discounts[ $id ][ 'code' ] );
 			}
 			else {
 				if ( strstr( $this->discounts[ $id ], '%' ) ) {
@@ -161,7 +161,7 @@ final class SPPayment
 				}
 				$sumbrutto = -$discount;
 				$sumnetto = -$discount;
-				$dis = array( 'discount_sum' => self::currency( $discount ), 'discount' => $this->discounts[ $id ], 'amount' => self::currency( $sumbrutto ), 'for' => $this->discounts[ $id ][ 'for' ] );
+				$dis = array( 'discount_sum' => self::currency( $discount ), 'discount' => $this->discounts[ $id ], 'amount' => self::currency( $sumbrutto ), 'for' => $this->discounts[ $id ][ 'for' ], $this->discounts[ $id ][ 'code' ] );
 			}
 		}
 		if ( $vat ) {

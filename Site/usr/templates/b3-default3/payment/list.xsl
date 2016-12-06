@@ -65,6 +65,9 @@
 					<tr class="summary">
 						<td colspan="3">
 							<xsl:value-of select="discount/@for" />
+							<xsl:text> (#</xsl:text>
+							<xsl:value-of select="discount/@code" />
+							<xsl:text>)</xsl:text>
 						</td>
 						<td>
 							<div class="pull-right">
