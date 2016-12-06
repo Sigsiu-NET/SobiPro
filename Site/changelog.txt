@@ -52,6 +52,7 @@ Legend:
 	(#) Double row container for categories list removed (b3-default3 only)
 	(#) Select list and 0 in name (Issue #1723)
 	(#) Dependant list need to be selected on every search (Issue #1703)
+	(#) Cleaning escaped slashes in autosuggest (Issue #1709)
 
 
 -------------------

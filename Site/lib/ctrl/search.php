@@ -140,6 +140,11 @@ class SPSearchCtrl extends SPSectionCtrl
 		}
 		usort( $results, array( 'self', 'sortByLen' ) );
 		Sobi::Trigger( 'AfterSuggest', 'Search', array( &$results ) );
+		if ( count( $results ) ) {
+			foreach ( $results as $i => $term ) {
+				$results[ $i ] = SPLang::clean( $term );
+			}
+		}
 		SPFactory::mainframe()
 				->cleanBuffer()
 				->customHeader();
