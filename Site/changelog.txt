@@ -31,6 +31,7 @@ Legend:
 -------------------
 	(+) Category dates available in XML data
 	(+) New field 'Button'
+	(+) Raw payment/discount values added to XSL nodes
 
     (!) Bootstrap 3 updated to version 3.3.7 (local and CDN)
     (!) Font Awesome 4 updated to 4.6.3
@@ -41,6 +42,7 @@ Legend:
 	(!) Url field setting 'open in new window' set to 'no' by default
 	(!) First item in protocols list of URL field will be used as default in new entry
 	(!) Started moving libraries to Sobi Framework
+	(!) Payment screen layout improved
 
 	(-) Suffix setting removed from image field
 
@@ -57,6 +59,8 @@ Legend:
 	(#) Exception for index.php in redirects URLs (Issue #1737)
 	(#) Missing HTML element in default3 payments template (Issue #1738)
 	(#) Wrong hover colour for datepicker buttons in back-end
+	(#) No prices on payment screen if VAT is 0
+	(#) Discounts not calculated if VAT is 0
 
 
 -------------------
