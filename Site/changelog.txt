@@ -31,7 +31,10 @@ Legend:
 -------------------
 	(+) Category dates available in XML data
 	(+) New field 'Button'
+	(+) Support for discounts in payment messages
 	(+) Raw payment/discount values added to XSL nodes
+	(+) Raw payment values (values without currency) available as email placeholders
+	(+) Absolute discount support
 
     (!) Bootstrap 3 updated to version 3.3.7 (local and CDN)
     (!) Font Awesome 4 updated to 4.6.3

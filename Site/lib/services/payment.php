@@ -85,7 +85,7 @@ final class SPPayment
 		}
 	}
 
-	public function summary( $id = 0 )
+	public function summary( $id = 0, $app = false )
 	{
 		/**
 		 * we have two models here:
@@ -129,8 +129,13 @@ final class SPPayment
 		}
 //		$this->discounts[ $id ][ 'discount' ] = '12%';
 //		$this->discounts[ $id ][ 'for' ] = 'discount for new customer';
-		Sobi::Trigger( 'SetDiscount', ucfirst( __FUNCTION__ ), array( &$this->discounts, $id ) );
 
+		if ($app) {
+			Sobi::Trigger( 'AppSetDiscount', ucfirst( __FUNCTION__ ), array( &$this->discounts, $id ) );
+		}
+		else {
+			Sobi::Trigger( 'SetDiscount', ucfirst( __FUNCTION__ ), array( &$this->discounts, $id ) );
+		}
 		// Discount Calculation
 		if ( isset( $this->discounts[ $id ][ 'discount' ] ) && $this->discounts[ $id ][ 'discount' ] ) {
 			$isPercentage  = strstr( $this->discounts[ $id ][ 'discount' ], '%' );

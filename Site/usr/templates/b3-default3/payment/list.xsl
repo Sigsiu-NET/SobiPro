@@ -27,7 +27,7 @@
 						<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_NAME' )"/>
 					</td>
 					<td>
-						<xsl:if test="summary/@vat > 0">
+						<xsl:if test="summary/@vat-raw > 0">
 							<div class="pull-right">
 								<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_NET' )"/>
 							</div>
@@ -36,7 +36,7 @@
 					<td>
 						<div class="pull-right">
 							<xsl:choose>
-								<xsl:when test="summary/@vat > 0">
+								<xsl:when test="summary/@vat-raw > 0">
 									<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_GROSS' )"/>
 								</xsl:when>
 								<xsl:otherwise>
@@ -57,7 +57,7 @@
 							<xsl:value-of select="."/>
 						</td>
 						<td>
-							<xsl:if test="summary/@vat > 0">
+							<xsl:if test="//summary/@vat-raw > 0">
 								<div class="pull-right">
 									<xsl:value-of select="@netto"/>
 								</div>
@@ -66,10 +66,11 @@
 						<td>
 							<div class="pull-right">
 								<xsl:choose>
-									<xsl:when test="summary/@vat > 0">
+									<xsl:when test="//summary/@vat-raw > 0">
 										<xsl:value-of select="@brutto"/>
 									</xsl:when>
 									<xsl:otherwise>
+										<xsl:value-of select="summary/@vat-raw"/>
 										<xsl:value-of select="@amount"/>
 									</xsl:otherwise>
 								</xsl:choose>
@@ -106,7 +107,7 @@
 					</td>
 				</tr>
 				<xsl:choose>
-					<xsl:when test="summary/@vat > 0">
+					<xsl:when test="summary/@vat-raw > 0">
 						<tr class="info">
 							<td colspan="3">
 								<div class="pull-right">
