@@ -1,13 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
-
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -53,46 +53,48 @@ final class SPPayment
 		if ( !$me || !( $me instanceof SPPayment ) ) {
 			$me = new SPPayment();
 		}
+
 		return $me;
 	}
 
 	public function store( $sid )
 	{
 		if ( count( $this->payments[ $sid ] ) ) {
-			$positions = array();
+			$positions    = array();
 			$this->refNum = time() . '.' . $sid;
 			foreach ( $this->payments[ $sid ] as $position ) {
-				$positions[ ] = array(
-						'refNum' => $this->refNum,
-						'sid' => $sid,
-						'fid' => $position[ 'id' ],
-						'subject' => $position[ 'reference' ],
-						'dateAdded' => 'FUNCTION:NOW()',
-						'datePaid' => null,
-						'validUntil' => '',
-						'paid' => 0,
-						'amount' => $position[ 'amount' ]
+				$positions[] = array(
+					'refNum'     => $this->refNum,
+					'sid'        => $sid,
+					'fid'        => $position[ 'id' ],
+					'subject'    => $position[ 'reference' ],
+					'dateAdded'  => 'FUNCTION:NOW()',
+					'datePaid'   => null,
+					'validUntil' => '',
+					'paid'       => 0,
+					'amount'     => $position[ 'amount' ]
 				);
 			}
 			try {
 				Sobi::Trigger( 'Payment', ucfirst( __FUNCTION__ ), array( &$positions ) );
 				SPFactory::db()->insertArray( 'spdb_payments', $positions );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( 'Payment', SPLang::e( 'CANNOT_SAVE_PAYMENT_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
 		}
 	}
 
-	public function summary( $id = 0 )
+	public function summary( $id = 0, $app = false )
 	{
 		/**
 		 * we have two models here:
-		 *  - the german alike is that all prices including VAT allready
+		 *  - the german alike is that all prices including VAT already
 		 *  - the USA alike is that all prices are netto
 		 */
-		$vat = Sobi::Cfg( 'payments.vat', 0 );
-		$vatsub = Sobi::Cfg( 'payments.vat_brutto', true );
-		$sumnetto = 0;
+		$vat       = Sobi::Cfg( 'payments.vat', 0 );
+		$vatsub    = Sobi::Cfg( 'payments.vat_brutto', true );
+		$sumnetto  = 0;
 		$sumbrutto = 0;
 //		$sumvat = 0;
 		$pos = array();
@@ -104,87 +106,138 @@ final class SPPayment
 				if ( $vat ) {
 					if ( $vatsub ) {
 						$netto = $payment[ 'amount' ] / ( 1 + ( $vat / 100 ) );
-						$svat = $payment[ 'amount' ] - $netto;
+						$svat  = $payment[ 'amount' ] - $netto;
 //						$sumvat = +$svat;
 						$brutto = $payment[ 'amount' ];
 					}
 					else {
 						$netto = $payment[ 'amount' ];
-						$svat = $netto * $vat;
+						$svat  = $netto * $vat;
 //						$sumvat = +$svat;
 						$brutto = $netto * ( 1 + ( $vat / 100 ) );
 					}
 					$sumnetto += $netto;
 					$sumbrutto += $brutto;
-					$pos[ ] = array( 'reference' => $payment[ 'reference' ], 'netto' => self::currency( $netto ), 'brutto' => self::currency( $brutto ), 'vat' => self::percent( $vat ), 'fid' => $payment[ 'id' ] );
+					$pos[] = array( 'reference' => $payment[ 'reference' ], 'netto' => self::currency( $netto ), 'brutto' => self::currency( $brutto ), 'vat' => self::percent( $vat ), 'fid' => $payment[ 'id' ] );
 				}
 				else {
 					$sumnetto += $payment[ 'amount' ];
 					$sumbrutto += $payment[ 'amount' ];
-					$pos[ ] = array( 'reference' => $payment[ 'reference' ], 'amount' => self::currency( $payment[ 'amount' ] ), 'fid' => $payment[ 'id' ] );
+					$pos[] = array( 'reference' => $payment[ 'reference' ], 'amount' => self::currency( $payment[ 'amount' ] ), 'fid' => $payment[ 'id' ] );
 				}
 			}
 		}
 //		$this->discounts[ $id ][ 'discount' ] = '12%';
 //		$this->discounts[ $id ][ 'for' ] = 'discount for new customer';
-		Sobi::Trigger( 'SetDiscount', ucfirst( __FUNCTION__ ), array( &$this->discounts, $id ) );
+
+		if ($app) {
+			Sobi::Trigger( 'AppSetDiscount', ucfirst( __FUNCTION__ ), array( &$this->discounts, $id ) );
+		}
+		else {
+			Sobi::Trigger( 'SetDiscount', ucfirst( __FUNCTION__ ), array( &$this->discounts, $id ) );
+		}
+		// Discount Calculation
 		if ( isset( $this->discounts[ $id ][ 'discount' ] ) && $this->discounts[ $id ][ 'discount' ] ) {
+			$isPercentage  = strstr( $this->discounts[ $id ][ 'discount' ], '%' );
+			$discountValue = str_replace( '%', '', $this->discounts[ $id ][ 'discount' ] );
+
+			// with VAT
 			if ( $vat ) {
 				if ( Sobi::Cfg( 'payments.discount_to_netto', false ) ) {
-					if ( strstr( $this->discounts[ $id ][ 'discount' ], '%' ) ) {
-						$discount = $sumnetto * ( double )( $this->discounts[ $id ][ 'discount' ] / 100 );
+					if ( $isPercentage ) {
+						$discount = $sumnetto * ( double ) ( $discountValue / 100 );
 					}
 					else {
-						$discount = $this->discounts[ $id ][ 'discount' ];
+						$discount = $discountValue;
 					}
-					$sumnetto = $sumnetto - $discount;
+					$sumnetto  = ( ( $sumnetto - $discount ) < 0.0 ) ? 0.0 : $sumnetto - $discount;
 					$sumbrutto = $sumnetto * ( 1 + ( $vat / 100 ) );
 				}
 				else {
-					if ( strstr( $this->discounts[ $id ][ 'discount' ], '%' ) ) {
-						$discount = $sumbrutto * ( double )( $this->discounts[ $id ][ 'discount' ] / 100 );
+					//percental discount
+					if ( $isPercentage ) {
+						$discount = $sumbrutto * ( double ) ( $discountValue / 100 );
 					}
+					//absolute discount
 					else {
-						$discount = $this->discounts[ $id ][ 'discount' ];
+						$discount = $discountValue;
 					}
 					$sumbrutto = $sumbrutto - $discount;
-					$sumnetto = $sumnetto / ( 1 + ( $vat / 100 ) );
+					$sumnetto  = $sumnetto / ( 1 + ( $vat / 100 ) );
 				}
-				$dis = array( 'discount_sum' => self::currency( $discount ), 'discount' => $this->discounts[ $id ][ 'discount' ], 'netto' => self::currency( $sumnetto ), 'brutto' => self::currency( $sumbrutto ), 'for' => $this->discounts[ $id ][ 'for' ], $this->discounts[ $id ][ 'code' ] );
+				$dis = array( 'discount_sum'     => self::currency( $discount ),
+				              'discount_sum_raw' => $discount,
+				              'discount'         => $isPercentage ? $this->discounts[ $id ][ 'discount' ] : self::currency( $discountValue ),
+				              'discount_raw'     => $discountValue,
+				              'is_percentage'    => $isPercentage ? 'true' : 'false',
+				              'netto'            => self::currency( $sumnetto ),
+				              'netto_raw'        => $sumnetto,
+				              'brutto'           => self::currency( $sumbrutto ),
+				              'brutto_raw'       => $sumbrutto,
+				              'for'              => $this->discounts[ $id ][ 'for' ],
+				);
+				if ( isset ( $this->discounts[ $id ][ 'code' ] ) ) {
+					$dis[ 'code' ] = $this->discounts[ $id ][ 'code' ];
+				}
 			}
+
+			// without VAT
 			else {
-				if ( strstr( $this->discounts[ $id ], '%' ) ) {
-					$discount = $sumbrutto * ( double )( $this->discounts[ $id ] / 100 );
+				if ( $isPercentage ) {
+					$discount = $sumbrutto * ( double ) ( $discountValue / 100 );
 				}
 				else {
-					$discount = $this->discounts[ $id ];
+					$discount = $discountValue;
 				}
-				$sumbrutto = -$discount;
-				$sumnetto = -$discount;
-				$dis = array( 'discount_sum' => self::currency( $discount ), 'discount' => $this->discounts[ $id ], 'amount' => self::currency( $sumbrutto ), 'for' => $this->discounts[ $id ][ 'for' ], $this->discounts[ $id ][ 'code' ] );
+				$sumbrutto = $sumbrutto - $discount;
+				$sumnetto  = $sumbrutto;
+
+				$dis = array( 'discount_sum'     => self::currency( $discount ),
+				              'discount_sum_raw' => $discount,
+				              'discount'         => $isPercentage ? $this->discounts[ $id ][ 'discount' ] : self::currency( $discountValue ),
+				              'discount_raw'     => $discountValue,
+				              'is_percentage'    => $isPercentage ? 'true' : 'false',
+				              'amount'           => self::currency( $sumbrutto ),
+				              'amount_raw'       => $sumbrutto,
+				              'for'              => $this->discounts[ $id ][ 'for' ],
+				);
+				if ( isset ( $this->discounts[ $id ][ 'code' ] ) ) {
+					$dis[ 'code' ] = $this->discounts[ $id ][ 'code' ];
+				}
+
 			}
 		}
+
+		// Calculation of total sums
 		if ( $vat ) {
-			if ( $vatsub ) {
+			if ( $vatsub ) {    // all prices are brutto
 				$sumnetto = $sumbrutto / ( 1 + ( $vat / 100 ) );
-				$sumvat = $sumbrutto - $sumnetto;
+				$sumvat   = $sumbrutto - $sumnetto;
 			}
-			else {
+			else {      // all prices are netto
 				$sumbrutto = $sumnetto * ( 1 + ( $vat / 100 ) );
-				$sumvat = $sumnetto * ( $vat / 100 );
+				$sumvat    = $sumnetto * ( $vat / 100 );
 			}
 			$sum = array(
-					'sum_netto' => self::currency( $sumnetto ),
-					'sum_brutto' => self::currency( $sumbrutto ),
-					'sum_vat' => self::currency( $sumvat ),
-					'vat' => self::percent( $vat )
+				'sum_netto'      => self::currency( $sumnetto ),
+				'sum_netto_raw'  => $sumnetto,
+				'sum_brutto'     => self::currency( $sumbrutto ),
+				'sum_brutto_raw' => $sumbrutto,
+				'sum_vat'        => self::currency( $sumvat ),
+				'sum_vat_raw'    => $sumvat,
+				'vat'            => self::percent( $vat ),
+				'vat_raw'        => $vat,
 			);
 		}
+		//total sums without VAT
 		else {
-			$sum = array( 'sum_brutto' => self::currency( $sumbrutto ) );
+			$sum = array( 'sum_amount'     => self::currency( $sumbrutto ),
+			              'sum_amount_raw' => $sumbrutto
+			);
 		}
 		$r = array( 'positions' => $pos, 'discount' => $dis, 'summary' => $sum, 'refNum' => $this->refNum );
 		Sobi::Trigger( 'Payment', 'AfterSummary', array( &$r, $id ) );
+
 		return $r;
 	}
 
@@ -193,6 +246,7 @@ final class SPPayment
 	 * @param string $reference - just a text to save in the db
 	 * @param int $sid - id of the entry
 	 * @param string $fid - field id or unique reference identifier
+	 *
 	 * @return bool
 	 */
 	public function add( $amount, $reference, $sid = 0, $fid = null )
@@ -200,7 +254,7 @@ final class SPPayment
 		if ( ( $sid && $this->check( $sid, $fid ) ) || ( Sobi::Can( 'entry.payment.free' ) ) ) {
 			return true;
 		}
-		$this->payments[ $sid ][ ] = array( 'reference' => $reference, 'amount' => $amount, 'id' => $fid );
+		$this->payments[ $sid ][] = array( 'reference' => $reference, 'amount' => $amount, 'id' => $fid );
 		Sobi::Trigger( 'Payment', ucfirst( __FUNCTION__ ), array( &$this->payments, $sid ) );
 	}
 
@@ -212,20 +266,23 @@ final class SPPayment
 				$payment += $position[ 'amount' ];
 			}
 		}
+
 		return $payment;
 	}
 
 	public static function check( $sid, $fid )
 	{
 		$db =& SPFactory::db();
-		$c = false;
+		$c  = false;
 		/* try to save */
 		try {
 			$db->select( 'COUNT( pid )', 'spdb_payments', array( 'sid' => $sid, 'fid' => $fid ) );
 			$c = $db->loadResult();
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'Payment', SPLang::e( 'CANNOT_GET_PAYMENTS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
+
 		return $c;
 	}
 
@@ -236,6 +293,7 @@ final class SPPayment
 	{
 		$methods = array();
 		Sobi::Trigger( 'Payment', 'MethodView', array( &$methods, $entry, &$data ) );
+
 		return $methods;
 	}
 
@@ -243,11 +301,12 @@ final class SPPayment
 	 * @param double $amount
 	 * @param string $reference
 	 * @param int $sid
+	 *
 	 * @return void
 	 */
 	public function addDiscount( $amount, $reference, $sid = 0 )
 	{
-		$this->discounts[ $sid ][ ] = array( 'reference' => $reference, 'amount' => $amount );
+		$this->discounts[ $sid ][] = array( 'reference' => $reference, 'amount' => $amount );
 	}
 
 	public static function currency( $value )
@@ -263,7 +322,7 @@ final class SPPayment
 	public function deletePayments( $sid )
 	{
 		SPFactory::db()
-				->delete( 'spdb_payments', array( 'sid' => $sid ) )
-				->delete( 'spdb_payments', array( 'sid' => ( $sid * -1 ) ) );
+			->delete( 'spdb_payments', array( 'sid' => $sid ) )
+			->delete( 'spdb_payments', array( 'sid' => ( $sid * -1 ) ) );
 	}
 }

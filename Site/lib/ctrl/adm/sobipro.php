@@ -81,7 +81,7 @@ final class SobiProAdmCtrl
 				include_once SOBI_ROOT . '/libraries/Sobi/Framework.php';
 			}
 			else {
-				throw new Exception( 'Cannot initialise Framework. Ensure that your server has PHAR support please or install Sobi Framework manually' );
+				throw new Exception( 'Cannot initialise Sobi Framework. Ensure that your server has PHAR support or install the Sobi Framework manually.' );
 			}
 		}
 		Framework::Init();

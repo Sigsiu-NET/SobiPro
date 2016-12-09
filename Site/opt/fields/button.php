@@ -195,6 +195,20 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit', 'noFollow', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth', 'deleteClicks', 'useIcon', 'cssIconClass', 'cssButtonClass' );
 	}
 
+	private function fromCache( $cache )
+	{
+		$data = array();
+		if ( isset( $cache[ $this->nid ] ) ) {
+			$data[ 'label' ] = $cache[ $this->nid ];
+		}
+		if ( isset( $cache[ $this->nid . '_url' ] ) ) {
+			$data[ 'url' ] = $cache[ $this->nid . '_url' ];
+		}
+
+		return $data;
+	}
+
+
 	/**
 	 * @return array
 	 */
