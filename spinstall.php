@@ -46,7 +46,9 @@ class com_sobiproInstallerScript
 
 	/**
 	 * method to update the component
+	 *
 	 * @param JAdapterInstance $adapter
+	 *
 	 * @return void
 	 */
 	function update( JAdapterInstance $adapter )
@@ -112,7 +114,8 @@ class com_sobiproInstallerScript
 		try {
 			$db->setQuery( 'DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;' );
 			$db->execute();
-		} catch ( Exception $x ) {
+		}
+		catch ( Exception $x ) {
 		}
 
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES (89, 'section', 'access', '*', 'adm', 1), (90, 'section', 'configure', '*', 'adm', 1), (91, 'section', 'delete', '*', 'adm', 0), (92, 'category', 'edit', '*', 'adm', 1), (93, 'category', 'add', '*', 'adm', 1), (94, 'category', 'delete', '*', 'adm', 1), (95, 'entry', 'edit', '*', 'adm', 1), (96, 'entry', 'add', '*', 'adm', 1), (97, 'entry', 'delete', '*', 'adm', 1), (98, 'entry', 'approve', '*', 'adm', 1), (99, 'entry', 'publish', '*', 'adm', 1), (86, 'entry', '*', '*', 'adm', 1), (87, 'category', '*', '*', 'adm', 1), (88, 'section', '*', '*', 'adm', 1);" );
@@ -146,12 +149,14 @@ class com_sobiproInstallerScript
 				try {
 					$db->setQuery( 'ALTER TABLE #__sobipro_field_data ENGINE = MYISAM;;' );
 					$db->execute();
-				} catch ( Exception $x ) {
+				}
+				catch ( Exception $x ) {
 				}
 				$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD FULLTEXT  `baseData` (`baseData`);' );
 				$db->execute();
 			}
-		} catch ( Exception $x ) {
+		}
+		catch ( Exception $x ) {
 		}
 
 		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_language' );
@@ -167,7 +172,8 @@ class com_sobiproInstallerScript
 			try {
 				$db->setQuery( 'ALTER TABLE #__sobipro_language ENGINE = MYISAM;;' );
 				$db->execute();
-			} catch ( Exception $x ) {
+			}
+			catch ( Exception $x ) {
 			}
 			$db->setQuery( 'ALTER TABLE  `#__sobipro_language` ADD FULLTEXT  `sValue` (`sValue`);' );
 			$db->execute();
@@ -237,8 +243,8 @@ class com_sobiproInstallerScript
 		}
 		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ) ) ) ) {
 			JFolder::move(
-					implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ) ),
-					implode( '/', array( JPATH_ROOT, 'images', 'sobipro', 'entries' ) )
+				implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ) ),
+				implode( '/', array( JPATH_ROOT, 'images', 'sobipro', 'entries' ) )
 			);
 		}
 		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) ) ) {
@@ -266,11 +272,11 @@ class com_sobiproInstallerScript
 
 	protected function installPlugins( $source )
 	{
-		$source = $source[ 'source' ];
-		$plugins = array( 'Header' );
-		$path = $source . '/Plugins';
+		$source    = $source[ 'source' ];
+		$plugins   = array( 'Header' );
+		$path      = $source . '/Plugins';
 		$installer = new JInstaller;
-		$db = JFactory::getDBO();
+		$db        = JFactory::getDBO();
 		foreach ( $plugins as $plugin ) {
 			$dir = $path . '/' . $plugin;
 			$installer->install( $dir );
@@ -283,7 +289,7 @@ class com_sobiproInstallerScript
 			JFolder::create( JPATH_ROOT . '/libraries/sobi' );
 		}
 		if ( file_exists( JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' ) ) {
-				JFile::delete(JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
+			JFile::delete( JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
 		}
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
 	}
@@ -295,7 +301,7 @@ class com_sobiproInstallerScript
 	 */
 	public function uninstall( JAdapterInstance $adapter )
 	{
-		$db = JFactory::getDBO();
+		$db    = JFactory::getDBO();
 		$query = "show tables like '" . $db->getPrefix() . "sobipro_%'";
 		$db->setQuery( $query );
 		$tables = $db->loadColumn();
