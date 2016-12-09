@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="2.5" method="upgrade" overwrite="true">
 	<name>SobiPro</name>
-	<creationDate>21 October 2016</creationDate>
+	<creationDate>9 December 2016</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>https://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2016 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.3.3.B</version>
+	<version>1.3.3.C</version>
 	<codename>Eagle</codename>
 	<description>SobiPro directory component for Joomla!</description>
 	<version_number>1.3.3</version_number>
@@ -39,6 +39,7 @@
 		<filename>gplv3.txt</filename>
 		<filename>gplv3addterms.txt</filename>
 		<filename>.htaccess</filename>
+		<filename>Sobi.phar.tar.gz</filename>
 	</files>
 	<languages>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.ini</language>
