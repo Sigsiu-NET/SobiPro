@@ -277,10 +277,15 @@ class com_sobiproInstallerScript
 			$db->setQuery( "UPDATE #__extensions SET enabled =  '1' WHERE  element = 'sp{$plugin}';" );
 			$db->execute();
 		}
-		if ( !( file_exists( JPATH_ROOT . '/libraries/Sobi' ) ) ) {
-			JFolder::create( JPATH_ROOT . '/libraries/Sobi' );
+
+		//Sobi Framework installation
+		if ( !( file_exists( JPATH_ROOT . '/libraries/sobi' ) ) ) {
+			JFolder::create( JPATH_ROOT . '/libraries/sobi' );
 		}
-		JFile::move( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/Sobi/Sobi.phar.tar.gz' );
+		if ( !( file_exists( JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' ) ) ) {
+				JFile::delete(JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
+		}
+		JFile::move( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
 	}
 
 	/**
