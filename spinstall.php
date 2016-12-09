@@ -282,7 +282,7 @@ class com_sobiproInstallerScript
 		if ( !( file_exists( JPATH_ROOT . '/libraries/sobi' ) ) ) {
 			JFolder::create( JPATH_ROOT . '/libraries/sobi' );
 		}
-		if ( !( file_exists( JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' ) ) ) {
+		if ( file_exists( JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' ) ) {
 				JFile::delete(JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
 		}
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
