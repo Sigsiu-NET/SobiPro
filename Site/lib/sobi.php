@@ -466,10 +466,11 @@ abstract class Sobi
 
 	/**
 	 * @deprecated since 1.1 replaced by {@link #Initialise()}
-	 * @param int $sid - section id
 	 * @param null $root - root of Joomla!
 	 * @param null $lang - language
+	 * @param int $sid - section id
 	 * @return null
+	 * @throws Exception
 	 */
 	public static function Init( $root = null, $lang = null, $sid = 0 )
 	{
@@ -479,6 +480,20 @@ abstract class Sobi
 				//define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
 				define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : 'joomla16' );
 			}
+			if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
+				// Suppressing warning because the error is being handled
+				@include_once 'phar://' . SOBI_ROOT . '/libraries/sobi/Sobi.phar.tar.gz/Framework.php';
+				if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
+					if ( file_exists( SOBI_ROOT . '/libraries/sobi/Framework.php' ) ) {
+						include_once SOBI_ROOT . '/libraries/sobi/Framework.php';
+					}
+					else {
+						throw new Exception( 'Cannot initialise Sobi Framework. Ensure that your server has PHAR support or install the Sobi Framework manually.' );
+					}
+				}
+				Framework::Init();
+			}
+
 			defined( 'SOBIPRO' ) || define( 'SOBIPRO', true );
 			defined( 'SOBI_TASK' ) || define( 'SOBI_TASK', 'task' );
 			defined( 'SOBI_DEFLANG' ) || define( 'SOBI_DEFLANG', $lang );

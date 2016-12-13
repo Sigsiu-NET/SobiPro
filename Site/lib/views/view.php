@@ -365,6 +365,11 @@ abstract class SPFrontView extends SPObject implements SPView
 		if ( SPRequest::int( 'crawl' ) ) {
 			header( 'SobiPro: ' . Sobi::Section() );
 		}
+		if ( SPRequest::cmd( 'xhr' ) == 1 ) {
+			SPFactory::mainframe()
+					->cleanBuffer()
+					->customHeader();
+		}
 		echo $output;
 		if ( $this->key( 'output.close', false ) ) {
 			exit;
@@ -405,7 +410,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			$methods = get_class_methods( $className );
 			if ( count( $methods ) ) {
 				foreach ( $methods as $method ) {
-					$functions[ ] = $className . '::' . $method;
+					$functions[] = $className . '::' . $method;
 				}
 			}
 		}
@@ -487,7 +492,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			$this->_config[ 'general' ][ 'css_files' ] = explode( ',', $this->_config[ 'general' ][ 'css_files' ] );
 			foreach ( $this->_config[ 'general' ][ 'css_files' ] as $file ) {
 				if ( trim( $file ) ) {
-					$this->loadCSSFile(trim($file));
+					$this->loadCSSFile( trim( $file ) );
 				}
 			}
 		}
@@ -676,7 +681,7 @@ abstract class SPFrontView extends SPObject implements SPView
 						}
 						$le[ '_attributes' ] = array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => $task ) ) );
 					}
-					$l[ ] = $le;
+					$l[] = $le;
 				}
 			}
 			else {
@@ -686,7 +691,7 @@ abstract class SPFrontView extends SPObject implements SPView
 									->toLower()
 									->trim()
 									->get();
-					$l[ ] = array(
+					$l[] = array(
 							'_complex' => 1,
 							'_data' => trim( $letter ),
 							'_attributes' => array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => 'list.alpha.' . $urlLetter ) ) )

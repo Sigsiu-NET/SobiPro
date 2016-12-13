@@ -106,6 +106,10 @@ SobiPro.jQuery( document ).ready( function ()
                             {
                                 SobiPro.jQuery( '#SpPaymentModal' ).remove();
                             } );
+                            modal.on( 'hidden.bs.modal', function ()
+                            {
+                                SobiPro.jQuery( '#SpPaymentModal' ).remove();
+                            } );
                         }
                     }
                 }

@@ -65,6 +65,7 @@ Legend:
 	(#) Wrong hover colour for datepicker buttons in back-end
 	(#) No prices on payment screen if VAT is 0
 	(#) Discounts not calculated if VAT is 0
+	(#) Payment information is not being refreshed after user changes selected options
 
 
 -------------------
