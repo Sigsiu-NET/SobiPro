@@ -303,10 +303,16 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 			}
-			$groups = array();
+			$groups = [];
 		}
 		if ( count( $fTypes ) ) {
 			$pre = 'FIELD.TYPE_OPTG_';
+			$groups = [
+					Sobi::Txt( $pre . 'free_single_simple_data' ) => [],
+					Sobi::Txt( $pre . 'predefined_multi_data_single_choice' ) => [],
+					Sobi::Txt( $pre . 'predefined_multi_data_multi_choice' ) => [],
+					Sobi::Txt( $pre . 'special' ) => [],
+			];
 			foreach ( $fTypes as $type ) {
 				if ( $category ) {
 					try {
@@ -319,6 +325,9 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 					}
 				}
 				$groups[ str_replace( $pre, null, Sobi::Txt( $pre . $type->tGroup ) ) ][ $type->tid ] = $type->fType;
+			}
+			foreach ( $groups as &$group ) {
+				sort( $group );
 			}
 			return $groups;
 		}
@@ -359,11 +368,11 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$fields = array();
 		$m = array();
 		if ( $id ) {
-			$fields[ ] = $id;
+			$fields[] = $id;
 		}
 		else {
 			if ( SPRequest::int( 'fid', 0 ) ) {
-				$fields[ ] = SPRequest::int( 'fid', 0 );
+				$fields[] = SPRequest::int( 'fid', 0 );
 			}
 			else {
 				$fields = SPRequest::arr( 'p_fid', array() );
@@ -376,7 +385,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$msg = $field->delete();
 				SPFactory::message()
 						->setMessage( $msg, false, SPC::SUCCESS_MSG );
-				$m[ ] = $msg;
+				$m[] = $msg;
 			}
 		}
 		else {
@@ -537,10 +546,10 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$field = SPFactory::Model( 'field', true );
 				$field->extend( $result );
 				if ( $field->get( 'adminField' ) == -1 ) {
-					$categoryFields[ ] = $field;
+					$categoryFields[] = $field;
 				}
 				else {
-					$fields[ ] = $field;
+					$fields[] = $field;
 				}
 			}
 		}
@@ -548,12 +557,12 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$subMenu = array();
 		foreach ( $fieldTypes as $type => $group ) {
 			asort( $group );
-			$subMenu[ ] = array(
+			$subMenu[] = array(
 					'label' => $type,
 					'element' => 'nav-header'
 			);
 			foreach ( $group as $t => $l ) {
-				$subMenu[ ] = array(
+				$subMenu[] = array(
 						'type' => null,
 						'task' => 'field.add.' . $t,
 						'label' => $l,
@@ -566,12 +575,12 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$cateSubMenu = array();
 		foreach ( $categoryFieldsTypes as $type => $group ) {
 			asort( $group );
-			$cateSubMenu[ ] = array(
+			$cateSubMenu[] = array(
 					'label' => $type,
 					'element' => 'nav-header'
 			);
 			foreach ( $group as $t => $l ) {
-				$cateSubMenu[ ] = array(
+				$cateSubMenu[] = array(
 						'type' => null,
 						'task' => 'field.add.' . $t . '.category',
 						'label' => $l,
@@ -769,10 +778,10 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				try {
 					SPFactory::db()
 							->update( 'spdb_field', array( $col => $state ), array( 'fid' => $fid ), 1 );
-					$msg[ ] = array( 'text' => Sobi::Txt( 'FM.STATE_CHANGED', array( 'fid' => $fid ) ), 'type' => 'success' );
+					$msg[] = array( 'text' => Sobi::Txt( 'FM.STATE_CHANGED', array( 'fid' => $fid ) ), 'type' => 'success' );
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
-					$msg[ ] = array( 'text' => Sobi::Txt( 'FM.STATE_NOT_CHANGED', array( 'fid' => $fid ) ), 'type' => 'error' );
+					$msg[] = array( 'text' => Sobi::Txt( 'FM.STATE_NOT_CHANGED', array( 'fid' => $fid ) ), 'type' => 'error' );
 				}
 			}
 		}

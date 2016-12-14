@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Framework;
+
 defined( 'SOBIPRO' ) || defined( '_JEXEC' ) || exit( 'Restricted access' );
 
 /**
@@ -234,6 +236,7 @@ abstract class Sobi
 	{
 		SPFactory::plugins()->registerHandler( null, $object );
 	}
+
 	/**
 	 * check permission for an action.
 	 * Can be also used like this:
@@ -480,6 +483,7 @@ abstract class Sobi
 				//define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
 				define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : 'joomla16' );
 			}
+			defined( 'SOBI_ROOT' ) || define( 'SOBI_ROOT', $root );
 			if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
 				// Suppressing warning because the error is being handled
 				@include_once 'phar://' . SOBI_ROOT . '/libraries/sobi/Sobi.phar.tar.gz/Framework.php';
@@ -498,7 +502,6 @@ abstract class Sobi
 			defined( 'SOBI_TASK' ) || define( 'SOBI_TASK', 'task' );
 			defined( 'SOBI_DEFLANG' ) || define( 'SOBI_DEFLANG', $lang );
 			defined( 'SOBI_ACL' ) || define( 'SOBI_ACL', 'front' );
-			defined( 'SOBI_ROOT' ) || define( 'SOBI_ROOT', $root );
 			defined( 'SOBI_MEDIA' ) || define( 'SOBI_MEDIA', implode( '/', array( $root, 'media', 'sobipro' ) ) );
 			defined( 'SOBI_PATH' ) || define( 'SOBI_PATH', SOBI_ROOT . '/components/com_sobipro' );
 			defined( 'SOBI_LIVE_PATH' ) || define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );
@@ -526,14 +529,14 @@ abstract class Sobi
 			if ( $sid ) {
 				$path = array();
 				$id = $sid;
-				$path[ ] = ( int )$id;
+				$path[] = ( int )$id;
 				while ( $id > 0 ) {
 					try {
 						$id = SPFactory::db()
 								->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
 								->loadResult();
 						if ( $id ) {
-							$path[ ] = ( int )$id;
+							$path[] = ( int )$id;
 						}
 					} catch ( SPException $x ) {
 						Sobi::Error( 'ExtCoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
