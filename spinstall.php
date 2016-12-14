@@ -283,7 +283,6 @@ class com_sobiproInstallerScript
 			$db->setQuery( "UPDATE #__extensions SET enabled =  '1' WHERE  element = 'sp{$plugin}';" );
 			$db->execute();
 		}
-
 		//Sobi Framework installation
 		if ( !( file_exists( JPATH_ROOT . '/libraries/sobi' ) ) ) {
 			JFolder::create( JPATH_ROOT . '/libraries/sobi' );
