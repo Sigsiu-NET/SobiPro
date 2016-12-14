@@ -130,7 +130,7 @@ final class SPPayment
 //		$this->discounts[ $id ][ 'discount' ] = '12%';
 //		$this->discounts[ $id ][ 'for' ] = 'discount for new customer';
 
-		if ($app) {
+		if ($app) { // triggered by Notifications app
 			Sobi::Trigger( 'AppSetDiscount', ucfirst( __FUNCTION__ ), array( &$this->discounts, $id ) );
 		}
 		else {

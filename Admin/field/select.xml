@@ -49,10 +49,13 @@
 									<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
 									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-large" />
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
+								</fieldset>
+
+								<fieldset label="FM.SEL.LIST_DEPENDENCY">
 									<field type="toggle" name="field.dependency" value="field.dependency" label="FMN.LIST_DEPENDENCY" prefix="yes_no" />
 								</fieldset>
 
-								<fieldset label="FM.SEL.LIST_DEPENDENCY" id="dependency">
+								<fieldset id="dependency">
 									<field type="select" name="field.dependencyDefinition" selected="field.dependencyDefinition" values="dependencyDefinition" label="FMN.LIST_DEPENDENCY_FILE" class="input-medium" />
 									<field type="fileUpload" name="select-list-dependency" label="FM.UPLOAD_DEPENDENCY_FILE" accept="application/zip|text/xml" />
 									<field type="toggle" name="field.allowParents" value="field.allowParents" label="FM.UPLOAD_DEPENDENCY_PREVENT_PARENTS" prefix="yes_no" />
