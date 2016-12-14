@@ -130,9 +130,11 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				$selected = $path[ 1 ];
 				$hiddenValue = str_replace( '"', "'", json_encode( (object)$path ) );
 			}
-			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
+			$field = "<div class=\"spFieldSelect\">" . SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
+//			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
 			$field .= $subFields;
 			$field .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'section' => Sobi::Section() ) ) );
+			$field .= "</div>";
 		}
 		if ( !$return ) {
 			echo $field;

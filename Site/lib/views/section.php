@@ -352,7 +352,10 @@ class SPSectionView extends SPFrontView implements SPView
 			SPFactory::header()->addCanonical( Sobi::Url( $cUrl, true, true, true ) );
 			$data = array();
 			$data[ 'id' ] = $current->get( 'id' );
-			$data[ 'counter' ] = $current->get( 'counter' );
+
+			if ($current->get( 'oType' ) != 'section') {
+				$data[ 'counter' ] = $current->get( 'counter' );
+			}
 			$data[ 'section' ] = array(
 					'_complex' => 1,
 					'_data' => Sobi::Section( true ),
