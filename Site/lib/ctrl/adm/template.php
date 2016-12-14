@@ -301,7 +301,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$newName[ $i ] = ucfirst( $part );
 		}
 		$newName = implode( $newName );
-		$dirName = SPLang::nid( $newName );
+		$dirName = ( $newName );
 		$dirNameOrg = $dirName;
 		$c = 1;
 		while ( SPFs::exists( SPLoader::dirPath( 'usr.templates.' . $dirName, 'front', false ) ) ) {
