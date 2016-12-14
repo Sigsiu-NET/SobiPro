@@ -672,7 +672,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$hidden .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'selected' => '', 'section' => Sobi::Section() ) ) );
 			$params[ 'data' ] = array( 'order' => '1' );
 		}
-		return SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params ) . $hidden;
+		return "<div class=\"spFieldSelect\">" . SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params ) . $hidden . "</div>";
 	}
 
 	/**
