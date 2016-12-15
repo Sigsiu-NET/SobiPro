@@ -450,7 +450,7 @@ final class SPHeader
 						$ext = $cssFile[ count( $cssFile ) - 1 ];
 						unset( $cssFile[ count( $cssFile ) - 1 ] );
 						$f = implode( '.', $cssFile );
-						$cssFile = SPLoader::CssFile( 'absolute.' . Sobi::Reg( 'current_template' ) . '/css/' . $f, $adm, true, true, $ext );
+						$cssFile = SPLoader::CssFile( 'absolute.' . Sobi::Reg( 'current_template' ) . '/css/' . $f, $adm, true, false, $ext );
 						$override = true;
 						$index *= 100;
 					}
