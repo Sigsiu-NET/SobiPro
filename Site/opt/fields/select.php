@@ -651,7 +651,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 		$hidden = null;
 		$d = $this->getValues( false );
-		$data = array( '' => Sobi::Txt( 'FD.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) );
+		if (!$this->dependency ) {
+			$data = array( '' => Sobi::Txt( 'FD.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) );
+		}
 		foreach ( $d as $k => $v ) {
 			$data[ $k ] = $v;
 		}
