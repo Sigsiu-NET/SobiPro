@@ -327,7 +327,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$groups[ str_replace( $pre, null, Sobi::Txt( $pre . $type->tGroup ) ) ][ $type->tid ] = $type->fType;
 			}
 			foreach ( $groups as &$group ) {
-				sort( $group );
+				asort( $group );
 			}
 			return $groups;
 		}
