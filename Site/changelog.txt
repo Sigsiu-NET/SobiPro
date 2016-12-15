@@ -67,6 +67,7 @@ Legend:
 	(#) Discounts not calculated if VAT is 0
 	(#) Payment information is not being refreshed after user changes selected options
 	(#) Missing distance for dependency list in entry and search forms
+	(#) Dependency error message if selecting parents is not allowed, is truncated
 
 
 -------------------
