@@ -47,6 +47,7 @@ Legend:
 	(!) First item in protocols list of URL field will be used as default in new entry
 	(!) Started moving libraries to Sobi Framework
 	(!) Payment screen layout improved
+	(!) Select label option of single select lists moved to general settings
 
 	(-) Suffix setting removed from image field
 

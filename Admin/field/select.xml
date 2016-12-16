@@ -49,6 +49,7 @@
 									<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
 									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-large" />
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="text" name="field.selectLabel" value="field.selectLabel" label="FM.SEL.SELECT_LABEL" maxlength="150" class="input-medium" />
 								</fieldset>
 
 								<fieldset label="FM.SEL.LIST_DEPENDENCY">
@@ -103,7 +104,6 @@
 											</call>
 										</add>
 									</field>
-									<field type="text" name="field.selectLabel" value="field.selectLabel" label="FM.SEL.SELECT_LABEL" maxlength="150" class="input-medium" />
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false" class="input-splarge" rows="4" style="" />
 									<field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no" />
 									<field type="text" name="field.cssClassEdit" value="field.cssClassEdit" label="FM.CSS_CLASS" class="input-large" />
