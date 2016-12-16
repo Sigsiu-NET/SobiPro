@@ -28,15 +28,15 @@ class SPUser extends SPJoomlaUser
 	public function __construct( $id = 0 )
 	{
 		parent::__construct( $id );
-		$this->gid[ ] = 0;
+		$this->gid[] = 0;
 		// this array is really a bad joke :(
 		foreach ( $this->groups as $index => $value ) {
 			if ( is_string( $index ) && !( is_numeric( $index ) ) ) {
-				$this->gid[ ] = $value;
+				$this->gid[] = $value;
 				$this->usertype = $index;
 			}
 			else {
-				$this->gid[ ] = $index;
+				$this->gid[] = $index;
 				$this->usertype = $value;
 			}
 		}
@@ -65,22 +65,22 @@ class SPUser extends SPJoomlaUser
 					while ( $gid > 5000 ) {
 						try {
 							$gid = SPFactory::db()->select( 'pid', 'spdb_user_group', array( 'gid' => $gid, 'enabled' => 1 ) )->loadResult();
-							$gids[ ] = $gid;
+							$gids[] = $gid;
 						} catch ( SPException $x ) {
 							Sobi::Error( 'permissions', SPLang::e( 'Cannot load additional gids. %s', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
 						}
 					}
 					$cgids = SAccess::parentGroups( $gid );
-					$cgids[ ] = $gid;
+					$cgids[] = $gid;
 					$gids = array_merge( $gids, $cgids );
 				}
 				else {
 					$gids = SAccess::parentGroups( $gid );
-					$gids[ ] = $gid;
+					$gids[] = $gid;
 				}
 				if ( is_array( $gids ) && count( $gids ) ) {
 					foreach ( $gids as $gid ) {
-						$this->gid[ ] = $gid;
+						$this->gid[] = $gid;
 					}
 				}
 			}
@@ -148,8 +148,7 @@ class SPUser extends SPJoomlaUser
 	 */
 	public function isAdmin()
 	{
-		return JFactory::getUser()->get( 'isRoot' );
-//		return ( $this->id && JFactory::getUser()->authorise( 'core.manage', 'com_users' ) );
+		return defined( 'SOBIPRO_ADM' ) && JFactory::getUser()->get( 'isRoot' ) !== null ? JFactory::getUser()->get( 'isRoot' ) : JUser::authorise( 'core.admin' );
 	}
 
 	/**
