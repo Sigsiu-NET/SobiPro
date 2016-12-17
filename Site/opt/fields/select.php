@@ -34,9 +34,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	/** * @var int */
 	protected $size = 1;
 	/** * @var array */
-	protected $options = array();
+	protected $options = [];
 	/** * @var array */
-	protected $optionsById = array();
+	protected $optionsById = [];
 	/** * @var string */
 	protected $selectLabel = 'Select %s';
 	/** * @var string */
@@ -69,6 +69,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	protected $dependencyDefinition = '';
 	/** * @var string */
 	protected $metaSeparator = ' ';
+	/** @var array */
+	protected $path = [];
 	/** @var bool */
 	static private $CAT_FIELD = true;
 
@@ -294,11 +296,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			if ($this->dependency) {
 				$where['ldata.sKey'] = $rawData;
 			}
-			$db->select(
-				'*, sdata.copy as scopy',
-				$table,
-				$where,
-				$order, 0, 0, true /*, 'sdata.copy' */ );
+			$db->select( '*, sdata.copy as scopy', $table, $where, $order, 0, 0, true /*, 'sdata.copy' */ );
 			$data = $db->loadObjectList( 'language' );
 			if ( $data ) {
 				if ( isset( $data[ Sobi::Lang() ] ) ) {
@@ -352,17 +350,17 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 
 	protected function fetchData( $data, $request = 'post' )
 	{
-		if ( $data && strlen( $data ) || $this->dependency ) {
+		if ( ( $data !== null ) && strlen( $data ) || $this->dependency ) {
 			if ( $this->dependency ) {
 				$path = json_decode( str_replace( "'", '"', Sobi::Clean( SPRequest::string( $this->nid . '_path', null, false, $request ) ) ), true );
 				if ( count( $path ) ) {
-					$options  = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+					$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 					$selected = $options[ 'options' ];
 					foreach ( $path as $part ) {
-						if ( isset( $selected[ $part ] ) ) {
+						if ( isset( $selected[ $part ] ) && isset( $selected[ $part ][ 'childs' ] ) && count( $selected[ $part ][ 'childs' ] ) ) {
 							$selected = $selected[ $part ][ 'childs' ];
 						}
-						else {
+						elseif ( $part != 0 && count( $selected ) ) {
 							throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $data, $this->name ) );
 						}
 					}
@@ -370,7 +368,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 						throw new SPException( SPLang::e( 'SELECT_FIELD_NO_PARENT', $this->name ) );
 					}
 				}
-
+				$this->path = $path;
 				return $path;
 			}
 			/* check if such option exist at all */
@@ -478,7 +476,11 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$params[ 'updatedIP' ]   = $IP;
 		$params[ 'options' ]     = $data;
 		$params[ 'copy' ]        = 0;
-		$params[ 'baseData' ]    = SPRequest::string( $this->nid, null, false, $request );
+		foreach ( $this->path as $element ) {
+			if ( $element ) {
+				$params[ 'baseData' ] = $element;
+			}
+		}
 		$params[ 'copy' ]        = ( int ) !( $entry->get( 'approved' ) );
 		if ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
 			--$this->editLimit;
