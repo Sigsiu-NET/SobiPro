@@ -284,16 +284,21 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		try {
 			//$order = $this->checkCopy() ? 'scopy.desc' : 'scopy.asc';
 			$order = $this->checkCopy() ? 'scopy.asc' : 'scopy.desc';
+			$where = array(
+				'sdata.fid'   => $this->id,
+				'sdata.sid'   => $sid,
+				'fdata.sid'   => $sid,
+				'ldata.oType' => 'field_option',
+				'ldata.fid'   => $this->id
+			);
+			if ($this->dependency) {
+				$where['ldata.sKey'] = $rawData;
+			}
 			$db->select(
 				'*, sdata.copy as scopy',
 				$table,
-				array(
-					'sdata.fid'   => $this->id,
-					'sdata.sid'   => $sid,
-					'fdata.sid'   => $sid,
-					'ldata.oType' => 'field_option',
-					'ldata.fid'   => $this->id
-				), $order, 0, 0, true /*, 'sdata.copy' */ );
+				$where,
+				$order, 0, 0, true /*, 'sdata.copy' */ );
 			$data = $db->loadObjectList( 'language' );
 			if ( $data ) {
 				if ( isset( $data[ Sobi::Lang() ] ) ) {
@@ -623,7 +628,6 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 * @param string $oPrefix
 	 * @param string $eOrder
 	 * @param string $eDir
-	 *
 	 * @return void
 	 */
 	public static function sortBy( &$tables, &$conditions, &$oPrefix, &$eOrder, $eDir )
@@ -682,7 +686,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 
 		$hidden = null;
-		$d      = $this->getValues( false, true );
+		$d      = $this->getValues( false);
 		if ( !$this->dependency ) {
 			$data = array( '' => Sobi::Txt( 'FD.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) );
 //			$data = array( '' => Sobi::Txt( $this->selectLabel, $this->name ) );
@@ -1003,6 +1007,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 
 			return $values;
 		}
+
 		return $values;
 	}
 
@@ -1054,7 +1059,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 *
 	 * @return string
 	 */
-	protected function travelDependencyPath( $path, $subParams)
+	protected function travelDependencyPath( $path, $subParams )
 	{
 		$subFields = null;
 		if ( count( $path ) ) {
@@ -1065,7 +1070,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				$subParams[ 'data' ][ 'order' ] = $index + 1;
 				$subParams[ 'id' ]              = $this->nid . '_' . $index;
 
-				$lists = $this->loadDependencyDefinition( $progress);
+				$lists = $this->loadDependencyDefinition( $progress );
 				if ( count( $lists ) ) {
 					$subFields .= SPHtml_Input::select( $this->nid, $lists, $path[ $index + 1 ], false, $subParams );
 				}

@@ -71,6 +71,7 @@ Legend:
 	(#) Dependency error message if selecting parents is not allowed, is truncated
 	(#) Double select label for dependency select lists in search form
 	(#) CSS cache is trying to load CSS files over URL (Issue #1745)
+	(#) Dependency Select List: wrong option displayed in views
 
 
 -------------------

@@ -210,7 +210,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$data = null;
 			}
 		}
-		// legacy for ImEx - did you learned a lesson Radek?
+		// legacy for ImEx - have you learned a lesson Radek?
 		if (isset($data['data']) && defined('SOBIPRO_ADM')) {
 			unset($data['data']);
 		}
