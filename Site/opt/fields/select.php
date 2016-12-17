@@ -493,10 +493,12 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
+		$selectedOption = null;
 		foreach ( $data as $selected ) {
 			/* collect the needed params */
 			$params[ 'baseData' ] = strip_tags( SPFactory::db()->escape( $selected ) );
 			$options[]            = array( 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'optValue' => $selected, 'copy' => $params[ 'copy' ], 'params' => null );
+			$selectedOption = $selected;
 		}
 
 		/* delete old selected values */
@@ -509,7 +511,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 
 		/* insert new selected value */
 		try {
-			SPFactory::db()->insertArray( 'spdb_field_option_selected', $options );
+			if ($selectedOption) {
+				SPFactory::db()->insertArray( 'spdb_field_option_selected', $options );
+			}
 		}
 		catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_SELECTED_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
