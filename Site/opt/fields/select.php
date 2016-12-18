@@ -38,7 +38,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	/** * @var array */
 	protected $optionsById = [];
 	/** * @var string */
-	protected $selectLabel = 'Select %s';
+	protected $selectLabel = '--- select %s ---';
 	/** * @var string */
 	protected $cssClass = 'spClassSelect';
 	/** * @var string */
@@ -694,8 +694,14 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$hidden = null;
 		$d      = $this->getValues( false);
 		if ( !$this->dependency ) {
-//			$data = array( '' => Sobi::Txt( 'FD.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) );
-			$data = array( '' => Sobi::Txt( $this->selectLabel, $this->name ) );
+			if ($this->selectLabel) {
+				$data = array( '' => Sobi::Txt( $this->selectLabel, $this->name ) );
+			}
+			else {
+				if (($this->searchMethod == 'select')) {
+					$data = array( '' => Sobi::Txt( 'FD.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) );
+				}
+			}
 		}
 		foreach ( $d as $k => $v ) {
 			$data[ $k ] = $v;

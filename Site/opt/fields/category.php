@@ -492,7 +492,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$this->loadCategories( true );
 		if ( count( $this->_cats ) ) {
 			if ( $this->searchMethod == 'select' ) {
-				$values = array( '' => Sobi::Txt( 'FMN.CC_SEARCH_SELECT_CAT' ) );
+				$values = array( '' => Sobi::Txt( 'FMN.SEARCH_SELECT_CATEGORY' ) );
 			}
 			else {
 				$values = array();
