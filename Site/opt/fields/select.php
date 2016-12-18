@@ -699,7 +699,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			}
 			else {
 				if (($this->searchMethod == 'select')) {
-					$data = array( '' => Sobi::Txt( 'FD.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) );
+					$data = array( '' => Sobi::Txt( 'FMN.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) );
 				}
 			}
 		}

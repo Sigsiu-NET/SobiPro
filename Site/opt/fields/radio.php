@@ -160,7 +160,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 			case 'select':
 			case 'mselect':
 				$params = array( 'id' => $this->nid, 'size' => ( $this->searchMethod == 'mselect' ? $this->optInLine : 1 ), 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) );
-				$data = array_merge( array( '' => Sobi::Txt( 'FD.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) ), $data );
+				$data = array_merge( array( '' => Sobi::Txt( 'FMN.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) ), $data );
 				$field = SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params );
 				break;
 		}
