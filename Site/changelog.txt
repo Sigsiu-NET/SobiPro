@@ -48,6 +48,7 @@ Legend:
 	(!) Started moving libraries to Sobi Framework
 	(!) Payment screen layout improved
 	(!) Select label option of single select lists moved to general settings
+	(!) Select label in search form for multiple select lists adjustable
 
 	(-) Suffix setting removed from image field
 
