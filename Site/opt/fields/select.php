@@ -30,7 +30,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	/** * @var int */
 	protected $width = 350;
 	/** * @var int */
-	protected $bsWidth = 10;
+	protected $bsWidth = 5;
 	/** * @var int */
 	protected $size = 1;
 	/** * @var array */
@@ -54,7 +54,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	/** * @var int */
 	protected $swidth = 350;
 	/** * @var int */
-	protected $bsSearchWidth = 9;
+	protected $bsSearchWidth = 5;
 	/** * @var int */
 	protected $ssize = 1;
 	/** * @var string */
