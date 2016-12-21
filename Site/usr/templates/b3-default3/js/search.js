@@ -44,29 +44,19 @@ SobiPro.jQuery( document ).ready( function ()
 	catch ( e ) {
 	}
 
-	SobiPro.jQuery( '.buttons-radio :button' ).each( function ( i, e )
+	SobiPro.jQuery( '.sphrase' ).each( function ( i, e )
 	{
 		var e = SobiPro.jQuery( e );
-		if ( ! ( e.hasClass( 'selected' ) ) ) {
-			e.removeClass( 'btn-success' )
-				.removeClass( 'btn-danger' );
+		if ( ! ( e.hasClass( 'active' ) ) ) {
+			e.removeClass( 'btn-success' );
 		}
 		e.click( function ()
 		{
 			SobiPro.jQuery( e )
 				.parent()
-				.parent()
-				.find( '.buttons-radio :button' )
-				.removeClass( 'btn-danger' )
-				.removeClass( 'btn-success' );
-			switch ( parseInt( SobiPro.jQuery( this ).val() ) ) {
-				case 0:
-					e.addClass( 'btn-danger' );
-					break;
-				case 1:
-					e.addClass( 'btn-success' );
-					break;
-			}
+				.find( '.sphrase' )
+				.removeClass( 'btn-success' ).addClass('btn-default');
+			SobiPro.jQuery( e ).removeClass('btn-default').addClass('btn-success');
 		} );
 	} );
 

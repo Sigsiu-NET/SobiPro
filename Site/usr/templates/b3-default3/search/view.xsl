@@ -66,12 +66,15 @@
 							<div class="col-sm-9 sp-search-phrases">
 								<div class="btn-group" data-toggle="buttons">
 									<xsl:for-each select="/search/fields/phrase/data/*">
-										<label class="btn btn-default">
+										<label class="sphrase btn btn-default">
 											<xsl:if test="./input/@checked = 'checked'">
-												<xsl:attribute name="class">btn btn-default active</xsl:attribute>
+												<xsl:attribute name="class">sphrase btn btn-success active</xsl:attribute>
 											</xsl:if>
+											<xsl:attribute name="for">
+												<xsl:value-of select="./@for" />
+											</xsl:attribute>
 											<xsl:copy-of select="./input"/>
-											<xsl:value-of select="./label"/>
+											<xsl:value-of select="."/>
 										</label>
 									</xsl:for-each>
 								</div>

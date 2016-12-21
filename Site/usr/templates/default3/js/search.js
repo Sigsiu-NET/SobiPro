@@ -52,4 +52,21 @@ SobiPro.jQuery( document ).ready( function ()
 	}
 	catch ( e ) {
 	}
+
+	SobiPro.jQuery( '.spsearchphrase' ).each( function ( i, e )
+	{
+		var e = SobiPro.jQuery( e );
+		if ( ! ( e.hasClass( 'active' ) ) ) {
+			e.removeClass( 'btn-success' );
+		}
+		e.click( function ()
+		{
+			SobiPro.jQuery( e )
+				.parent()
+				.find( '.spsearchphrase' )
+				.removeClass( 'btn-success' ).addClass('btn-default');
+			SobiPro.jQuery( e ).removeClass('btn-default').addClass('btn-success');
+		} );
+	} );
+
 } );

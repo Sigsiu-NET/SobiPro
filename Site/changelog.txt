@@ -75,6 +75,8 @@ Legend:
 	(#) Dependency select list shows wrong option in views
 	(#) Dependency select list shows 0 instead of parent option in views (Issue #1711)
 	(#) Don't save a wrong value if dependency select list is unselected
+	(#) Search phrase labels missing (Issue #1749)
+	(#) Wrong button type for search phrase buttons
 
 
 -------------------
