@@ -19,6 +19,9 @@
 SobiPro.jQuery( document ).ready( function ()
 {
 	var Term = SobiPro.jQuery( '#SPSearchBox' ).val();
+	if ( Term == spSearchDefStr ) {
+		return true;
+	}
 	var Words = Term.match( /("[^"]+"|[^"\s]+)/g );
 	if ( Words.length ) {
 		SobiPro.jQuery.each( Words, function ( i, word )

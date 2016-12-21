@@ -43,4 +43,31 @@ SobiPro.jQuery( document ).ready( function ()
 	}
 	catch ( e ) {
 	}
+
+	SobiPro.jQuery( '.buttons-radio :button' ).each( function ( i, e )
+	{
+		var e = SobiPro.jQuery( e );
+		if ( ! ( e.hasClass( 'selected' ) ) ) {
+			e.removeClass( 'btn-success' )
+				.removeClass( 'btn-danger' );
+		}
+		e.click( function ()
+		{
+			SobiPro.jQuery( e )
+				.parent()
+				.parent()
+				.find( '.buttons-radio :button' )
+				.removeClass( 'btn-danger' )
+				.removeClass( 'btn-success' );
+			switch ( parseInt( SobiPro.jQuery( this ).val() ) ) {
+				case 0:
+					e.addClass( 'btn-danger' );
+					break;
+				case 1:
+					e.addClass( 'btn-success' );
+					break;
+			}
+		} );
+	} );
+
 } );
