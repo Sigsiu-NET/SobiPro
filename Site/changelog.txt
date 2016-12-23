@@ -36,6 +36,7 @@ Legend:
 	(+) Raw payment values (values without currency) available as email placeholders
 	(+) Absolute discount support
 	(+) First common methods moved to Sobi Framework
+	(+) Load path 'storage' to load CSS and JS files from the Template Storage
 
     (!) Bootstrap 3 updated to version 3.3.7 (local and CDN)
     (!) Font Awesome 4 updated to 4.6.3

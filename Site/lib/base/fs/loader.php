@@ -346,6 +346,9 @@ abstract class SPLoader
 		elseif ( strstr( $path, 'front.' ) ) {
 			$file = self::translatePath( str_replace( 'front.', null, $path ), 'front', $checkExist, $ext, $count );
 		}
+		elseif ( strstr( $path, 'storage.' ) ) {
+			$file = self::translatePath( str_replace( 'storage.', null, $path ), 'storage', $checkExist, $ext, $count );
+		}
 		elseif ( strstr( $path, 'absolute.' ) ) {
 			$file = self::translatePath( str_replace( 'absolute.', null, $path ), 'absolute', $checkExist, $ext, $count );
 		}
@@ -378,6 +381,9 @@ abstract class SPLoader
 		}
 		elseif ( strstr( $path, 'front.' ) ) {
 			$file = self::translatePath( str_replace( 'front.', null, $path ), 'front', $checkExist, $ext, $count );
+		}
+		elseif ( strstr( $path, 'storage.' ) ) {
+			$file = self::translatePath( str_replace( 'storage.', null, $path ), 'storage', $checkExist, $ext, $count );
 		}
 		elseif ( strstr( $path, 'absolute.' ) ) {
 			$file = self::translatePath( str_replace( 'absolute.', null, $path ), 'absolute', $checkExist, $ext, $count );
@@ -482,6 +488,9 @@ abstract class SPLoader
 				else {
 					return false;
 				}
+				break;
+			case 'storage':
+				$spoint = SOBI_PATH . '/usr/templates/storage/';
 				break;
 			case 'absolute':
 			default:
