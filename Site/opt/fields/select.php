@@ -122,7 +122,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			}
 		}
 		if ( !( $this->dependency ) ) {
-			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
+			$field = "<div class=\"spFieldSelect\">" . SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
+			$field .= "</div>";
 		}
 		else {
 			$path = null;
