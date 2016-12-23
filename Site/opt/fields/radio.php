@@ -25,6 +25,8 @@ SPLoader::loadClass( 'opt.fields.select' );
 class SPField_Radio extends SPField_Select implements SPFieldInterface
 {
 	/** * @var int */
+	protected $bsWidth = 10;
+	/** * @var int */
 	protected $optInLine = 3;
 	/** * @var int */
 	protected $optWidth = 150;

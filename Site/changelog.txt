@@ -78,6 +78,7 @@ Legend:
 	(#) Don't save a wrong value if dependency select list is unselected
 	(#) Search phrase labels missing (Issue #1749)
 	(#) Wrong button type for search phrase buttons
+	(#) Width for radio buttons in entry form too small
 
 
 -------------------
