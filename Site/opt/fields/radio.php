@@ -27,6 +27,8 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	/** * @var int */
 	protected $bsWidth = 10;
 	/** * @var int */
+	protected $bsSearchWidth = 9;
+	/** * @var int */
 	protected $optInLine = 3;
 	/** * @var int */
 	protected $optWidth = 150;

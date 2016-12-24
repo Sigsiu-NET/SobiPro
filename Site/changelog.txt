@@ -50,6 +50,7 @@ Legend:
 	(!) Payment screen layout improved
 	(!) Select label option of single select lists moved to general settings
 	(!) Select label in search form for multiple select lists adjustable
+	(!) Option settings of radio buttons field moved to general settings
 
 	(-) Suffix setting removed from image field
 
@@ -78,7 +79,7 @@ Legend:
 	(#) Don't save a wrong value if dependency select list is unselected
 	(#) Search phrase labels missing (Issue #1749)
 	(#) Wrong button type for search phrase buttons
-	(#) Width for radio buttons in entry form too small
+	(#) Width for radio buttons in entry and search form too small
 
 
 -------------------

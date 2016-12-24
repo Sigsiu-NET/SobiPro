@@ -46,6 +46,24 @@
 									<field type="text" name="field.name" value="field.name" label="FMN.FIELD_LABEL" size="50" maxlength="255" required="true" />
 									<field type="text" name="field.nid" value="field.nid" label="FM.ALIAS" placeholder="FM.LABEL_PLACEHOLDER_ALIAS" />
 									<field type="text" name="field.suffix" value="field.suffix" label="FM.SUFFIX" class="input-medium" />
+									<field type="select" name="field.optInLine" selected="field.optInLine" label="FM.CHBXGR.OPTS_IN_LINE" class="input-mini">
+										<values>
+											<option value="0" label="FM.OPTIONS" />
+											<option value="1" label="1" />
+											<option value="2" label="2" />
+											<option value="3" label="3" />
+											<option value="4" label="4" />
+											<option value="5" label="5" />
+											<option value="6" label="6" />
+											<option value="7" label="7" />
+											<option value="8" label="8" />
+										</values>
+									</field>
+									<field type="text" name="field.optWidth" value="field.optWidth" label="FM.CHBXGR.CELL_WIDTH" maxlength="10" class="input-mini">
+										<add where="after">
+											<text>px</text>
+										</add>
+									</field>
 									<field type="text" name="field.cssClass" value="field.cssClass" label="FM.CSS_CLASS" class="input-large" />
 									<field type="textarea" name="field.notice" value="field.notice" label="FM.NOTICES" editor="false" class="input-splarge" rows="2" style="" />
 								</fieldset>
@@ -69,24 +87,6 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="select" name="field.optInLine" selected="field.optInLine" label="FM.CHBXGR.OPTS_IN_LINE" class="input-mini">
-										<values>
-											<option value="0" label="FM.OPTIONS" />
-											<option value="1" label="1" />
-											<option value="2" label="2" />
-											<option value="3" label="3" />
-											<option value="4" label="4" />
-											<option value="5" label="5" />
-											<option value="6" label="6" />
-											<option value="7" label="7" />
-											<option value="8" label="8" />
-										</values>
-									</field>
-									<field type="text" name="field.optWidth" value="field.optWidth" label="FM.CHBXGR.CELL_WIDTH" maxlength="10" class="input-mini">
-										<add where="after">
-											<text>px</text>
-										</add>
-									</field>
 									<!--<field type="select" name="field.labelSite" selected="field.labelSite" label="FM.CHBXGR.LABEL_SITE" class="input-medium">-->
 										<!--<values>-->
 											<!--<option value="right" label="FM.CHBXGR.RIGHT_SITE_OPT" />-->
