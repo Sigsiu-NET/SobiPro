@@ -51,6 +51,7 @@ Legend:
 	(!) Select label option of single select lists moved to general settings
 	(!) Select label in search form for multiple select lists adjustable
 	(!) Option settings of radio buttons field moved to general settings
+	(!) Categories ordering and categories in line setting moved to template; deprecated message added
 
 	(-) Suffix setting removed from image field
 

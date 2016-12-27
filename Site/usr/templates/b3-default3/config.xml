@@ -141,8 +141,10 @@
 											<option value="updatedTime.desc" label="EMN_ORDER_BY_UPDATE_DATE_DESC"/>
 										</values>
 									</field>
+									<!--<field type="toggle" name="settings[feeds.rss][section-view][showcategories]"-->
+									       <!--value="settings.feeds-rss.section-view.showcategories" label="TP.CONFIG.SHOWCATS"-->
+									       <!--prefix="yes_no"/> &lt;!&ndash; SobiPro setting! &ndash;&gt;-->
 								</fieldset>
-
 								<!--
 	                            <fieldset label="TP.SETTINGS_PRINT">
 		                            <field type="toggle" name="settings[config][general][showprint]" value="settings.settings.config.general.showprint" label="TP.CONFIG.SHOWPRT" prefix="yes_no" />
@@ -190,7 +192,8 @@
 											<option value="below" label="TP.CONFIG.ENTRY_HELPPOSITION_BELOW"/>
 										</values>
 									</field>
-									<field type="text" label="TP.CONFIG.ENTRY_REDIRECTLOGIN" name="settings[config][general][redirectlogin]" value="settings.config.general.redirectlogin" class="input-xlarge" />
+									<field type="text" label="TP.CONFIG.ENTRY_REDIRECTLOGIN" name="settings[config][general][redirectlogin]"
+									       value="settings.config.general.redirectlogin" class="input-xlarge"/>
 								</fieldset>
 							</div>
 						</div>
@@ -351,21 +354,48 @@
 											<option value="4" label="4"/>
 											<option value="5" label="5"/>
 										</values>
-									</field>
+									</field>  <!-- SobiPro setting! -->
 									<field type="toggle" name="settings[config][section-view][entries_recursive]"
 									       value="settings.config.section-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE"
 									       prefix="yes_no"/> <!-- SobiPro setting! -->
 									<field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][section-view][entries_ordering]"
 									       values="entriesOrdering" selected="settings.config.section-view.entries_ordering"
 									       class="input-large"/> <!-- SobiPro setting! -->
-
+									<field type="select" label="TP.CONFIG.CAT_INLINE" name="settings[config][section-view][categories_in_line]"
+									       selected="settings.config.section-view.categories_in_line" class="input-mini">
+										<values>
+											<option value="1" label="1"/>
+											<option value="2" label="2"/>
+											<option value="3" label="3"/>
+											<option value="4" label="4"/>
+											<option value="5" label="5"/>
+										</values>
+									</field>  <!-- SobiPro setting! -->
+									<field type="select" label="TP.CONFIG.CAT_ORDERING" name="settings[config][section-view][categories_ordering]"
+									       selected="settings.config.section-view.categories_ordering" class="input-large">
+										<values>
+											<option value="name.asc" label="ORDER_BY_NAME_ASCENDING"/>
+											<option value="name.desc" label="ORDER_BY_NAME_DESCENDING"/>
+											<option value="position.asc" label="ORDER_BY_POSITION_ASCENDING"/>
+											<option value="position.desc" label="ORDER_BY_POSITION_DESCENDING"/>
+											<option value="counter.asc" label="ORDER_BY_POPULARITY_ASCENDING"/>
+											<option value="counter.desc" label="ORDER_BY_POPULARITY_DESCENDING"/>
+											<option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC"/>
+											<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC"/>
+											<option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC"/>
+											<option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC"/>
+											<option value="validUntil.asc" label="ORDER_BY_EXPIRATION_DATE_ASC"/>
+											<option value="validUntil.desc" label="ORDER_BY_EXPIRATION_DATE_DESC"/>
+										</values>
+									</field>  <!-- SobiPro setting! -->
 								</fieldset>
 								<fieldset label="TP.CONFIG.CAT">
-									<field type="select" label="TP.CONFIG.FIELDSPOS" name="settings[config][general][fieldsposition]" selected="settings.config.general.fieldsposition" class="input-xlarge">
+									<field type="select" label="TP.CONFIG.FIELDSPOS" name="settings[config][general][fieldsposition]"
+									       selected="settings.config.general.fieldsposition" class="input-xlarge">
 										<values>
-											<option value="above" label="TP.CONFIG.FIELDSPOS_ABOVE" />
-											<option value="between" label="TP.CONFIG.FIELDSPOS_BETWEEN" />
-											<option value="below" label="TP.CONFIG.FIELDSPOS_BELOW" />
+											<option value="above" label="TP.CONFIG.FIELDSPOS_ABOVE"/>
+											<option value="between" label="TP.CONFIG.FIELDSPOS_BETWEEN"/>
+											<option value="below" label="TP.CONFIG.FIELDSPOS_BELOW"/>
 										</values>
 									</field>
 									<field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][category-view][entries_limit]"
@@ -400,7 +430,33 @@
 									<field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][category-view][entries_ordering]"
 									       values="entriesOrdering" selected="settings.config.category-view.entries_ordering"
 									       class="input-large"/> <!-- SobiPro setting! -->
-
+									<field type="select" label="TP.CONFIG.CAT_INLINE" name="settings[config][category-view][categories_in_line]"
+									       selected="settings.config.category-view.categories_in_line" class="input-mini">
+										<values>
+											<option value="1" label="1"/>
+											<option value="2" label="2"/>
+											<option value="3" label="3"/>
+											<option value="4" label="4"/>
+											<option value="5" label="5"/>
+										</values>
+									</field>  <!-- SobiPro setting! -->
+									<field type="select" label="TP.CONFIG.CAT_ORDERING" name="settings[config][category-view][categories_ordering]"
+									       selected="settings.config.category-view.categories_ordering" class="input-large">
+										<values>
+											<option value="name.asc" label="ORDER_BY_NAME_ASCENDING"/>
+											<option value="name.desc" label="ORDER_BY_NAME_DESCENDING"/>
+											<option value="position.asc" label="ORDER_BY_POSITION_ASCENDING"/>
+											<option value="position.desc" label="ORDER_BY_POSITION_DESCENDING"/>
+											<option value="counter.asc" label="ORDER_BY_POPULARITY_ASCENDING"/>
+											<option value="counter.desc" label="ORDER_BY_POPULARITY_DESCENDING"/>
+											<option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC"/>
+											<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC"/>
+											<option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC"/>
+											<option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC"/>
+											<option value="validUntil.asc" label="ORDER_BY_EXPIRATION_DATE_ASC"/>
+											<option value="validUntil.desc" label="ORDER_BY_EXPIRATION_DATE_DESC"/>
+										</values>
+									</field>  <!-- SobiPro setting! -->
 								</fieldset>
 								<fieldset label="TP.CONFIG.LIST">
 									<field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][general][entries_limit]"
@@ -433,6 +489,33 @@
 									<field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[config][general][entries_ordering]"
 									       values="entriesOrdering" selected="settings.config.general.entries_ordering"
 									       class="input-large"/> <!-- SobiPro setting! -->
+									<field type="select" label="TP.CONFIG.CAT_INLINE" name="settings[config][general][categories_in_line]"
+									       selected="settings.config.general.categories_in_line" class="input-mini">
+										<values>
+											<option value="1" label="1"/>
+											<option value="2" label="2"/>
+											<option value="3" label="3"/>
+											<option value="4" label="4"/>
+											<option value="5" label="5"/>
+										</values>
+									</field>  <!-- SobiPro setting! -->
+									<field type="select" label="TP.CONFIG.CAT_ORDERING" name="settings[config][general][categories_ordering]"
+									       selected="settings.config.general.categories_ordering" class="input-large">
+										<values>
+											<option value="name.asc" label="ORDER_BY_NAME_ASCENDING"/>
+											<option value="name.desc" label="ORDER_BY_NAME_DESCENDING"/>
+											<option value="position.asc" label="ORDER_BY_POSITION_ASCENDING"/>
+											<option value="position.desc" label="ORDER_BY_POSITION_DESCENDING"/>
+											<option value="counter.asc" label="ORDER_BY_POPULARITY_ASCENDING"/>
+											<option value="counter.desc" label="ORDER_BY_POPULARITY_DESCENDING"/>
+											<option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC"/>
+											<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC"/>
+											<option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC"/>
+											<option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC"/>
+											<option value="validUntil.asc" label="ORDER_BY_EXPIRATION_DATE_ASC"/>
+											<option value="validUntil.desc" label="ORDER_BY_EXPIRATION_DATE_DESC"/>
+										</values>
+									</field>  <!-- SobiPro setting! -->
 								</fieldset>
 							</div>
 						</div>

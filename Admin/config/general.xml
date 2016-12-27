@@ -20,6 +20,7 @@
 		<file type="script" filename="bootstrap.tabs" />
 		<style>
 			input[type=checkbox] { float: left; margin-right: 5px!important; }
+			.deprecated::after { content: "DEPRECATED"; padding: 4px 10px 6px 10px; margin-left: 15px; color: #9e0e0e; background-color: #f8b1a9; border-color: #f8b1a9; }
 		</style>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSectionCfg">
@@ -103,7 +104,11 @@
 										<fieldset label="SECN.CFG.CATEGORY_SETTINGS">
 											<field type="toggle" name="spcfg[category.show_icon]" value="category.show_icon" label="SECN.CFG.SHOW_CATEGORY_ICONS" prefix="show" />
 											<field type="toggle" name="spcfg[category.show_intro]" value="category.show_intro" label="SECN.CFG.SHOW_CATEGORY_INTROTEXT" prefix="show" />
-											<field type="select" label="SECN.CFG.NUMBER_CATS_LINE" name="spcfg[list.categories_in_line]" selected="list.categories_in_line" class="input-mini">
+
+											<div style="margin-top:20px;"></div>
+											<message label="SECN.DEPRECATED" type="danger" dismiss-button="false" class="spConfigAlert" />
+
+											<field type="select" label="SECN.CFG.NUMBER_CATS_LINE" name="spcfg[list.categories_in_line]" selected="list.categories_in_line" class="input-mini" warn="deprecated">
 												<values>
 													<option value="1" />
 													<option value="2" />
@@ -112,20 +117,20 @@
 													<option value="5" />
 												</values>
 											</field>
-											<field type="select" label="ORDER_BY" name="spcfg[list.categories_ordering]" selected="list.categories_ordering" class="input-xlarge">
+											<field type="select" label="ORDER_BY" name="spcfg[list.categories_ordering]" selected="list.categories_ordering" class="input-xlarge" warn="deprecated">
 												<values>
-													<option value="name.asc" label="ORDER_BY_NAME_ASCENDING" />
-													<option value="name.desc" label="ORDER_BY_NAME_DESCENDING" />
-													<option value="position.asc" label="ORDER_BY_POSITION_ASCENDING" />
-													<option value="position.desc" label="ORDER_BY_POSITION_DESCENDING" />
-													<option value="counter.asc" label="ORDER_BY_POPULARITY_ASCENDING" />
-													<option value="counter.desc" label="ORDER_BY_POPULARITY_DESCENDING" />
-													<option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC" />
-													<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC" />
-													<option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC" />
-													<option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC" />
-													<option value="validUntil.asc" label="ORDER_BY_EXPIRATION_DATE_ASC" />
-													<option value="validUntil.desc" label="ORDER_BY_EXPIRATION_DATE_DESC" />
+													<option value="name.asc" label="ORDER_BY_NAME_ASCENDING"/>
+													<option value="name.desc" label="ORDER_BY_NAME_DESCENDING"/>
+													<option value="position.asc" label="ORDER_BY_POSITION_ASCENDING"/>
+													<option value="position.desc" label="ORDER_BY_POSITION_DESCENDING"/>
+													<option value="counter.asc" label="ORDER_BY_POPULARITY_ASCENDING"/>
+													<option value="counter.desc" label="ORDER_BY_POPULARITY_DESCENDING"/>
+													<option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC"/>
+													<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC"/>
+													<option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC"/>
+													<option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC"/>
+													<option value="validUntil.asc" label="ORDER_BY_EXPIRATION_DATE_ASC"/>
+													<option value="validUntil.desc" label="ORDER_BY_EXPIRATION_DATE_DESC"/>
 												</values>
 											</field>
 										</fieldset>
@@ -168,8 +173,8 @@
 											<div style="margin-top:20px;"></div>
 											<message label="SECN.DEPRECATED" type="danger" dismiss-button="false" class="spConfigAlert" />
 
-											<field type="select" label="ORDER_BY" name="spcfg[list.entries_ordering]" selected="list.entries_ordering" values="entriesOrdering" class="input-xlarge" />
-											<field type="select" label="SECN.CFG.NUMBER_ENTRIES_PAGE" name="spcfg[list.entries_limit]" selected="list.entries_limit" class="input-mini">
+											<field type="select" label="ORDER_BY" name="spcfg[list.entries_ordering]" selected="list.entries_ordering" values="entriesOrdering" class="input-xlarge" warn="deprecated" />
+											<field type="select" label="SECN.CFG.NUMBER_ENTRIES_PAGE" name="spcfg[list.entries_limit]" selected="list.entries_limit" class="input-mini" warn="deprecated">
 												<values>
 													<option value="1" />
 													<option value="2" />
@@ -188,7 +193,7 @@
 													<option value="15" />
 												</values>
 											</field>
-											<field type="select" label="SECN.CFG.NUMBER_ENTRIES_LINE" name="spcfg[list.entries_in_line]" selected="list.entries_in_line" class="input-mini">
+											<field type="select" label="SECN.CFG.NUMBER_ENTRIES_LINE" name="spcfg[list.entries_in_line]" selected="list.entries_in_line" class="input-mini" warn="deprecated">
 												<values>
 													<option value="1" />
 													<option value="2" />

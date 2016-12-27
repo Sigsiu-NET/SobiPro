@@ -105,7 +105,12 @@ class SPTplParser
 				if ( $this->table ) {
 					$this->_out[ ] = '</td>';
 				}
-				$this->_out[ ] = "<div class=\"controls\">\n";
+				$warn = '';
+				if ( isset( $element[ 'attributes' ][ 'warn' ] ) && strlen( $element[ 'attributes' ][ 'warn' ] ) ) {
+					$warn = ' ' . $element[ 'attributes' ][ 'warn' ];
+					//unset($element[ 'attributes' ][ 'warn' ]);
+				}
+				$this->_out[ ] = "<div class=\"controls{$warn}\">\n";
 				$class = null;
 
 				if ( $element[ 'args' ][ 'type' ] == 'output' ) {

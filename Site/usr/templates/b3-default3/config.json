@@ -27,6 +27,8 @@
     "entries_limit": "6",
     "entries_in_line": "2",
     "entries_ordering": "updatedTime.desc",
+    "categories_in_line": "2",
+    "categories_ordering": "name.asc",
     "module_eil": "1",
     "bs": "bs3",
     "noimage": "1",
@@ -36,14 +38,21 @@
   "section-view": {
     "entries_limit": "2",
     "entries_in_line": "2",
-    "entries_ordering": "position.asc",
+    "entries_ordering": "createdTime.desc",
+    "categories_in_line": "2",
+    "categories_ordering": "name.asc",
     "entries_recursive": "0"
   },
   "category-view": {
     "entries_limit": "6",
     "entries_in_line": "2",
     "entries_ordering": "updatedTime.desc",
+    "categories_in_line": "2",
+    "categories_ordering": "name.asc",
     "entries_recursive": "1"
+  },
+  "collection": {
+    "entries_limit": "2"
   },
   "entry-details": {
     "entries_in_line": "1"
