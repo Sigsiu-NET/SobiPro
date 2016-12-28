@@ -37,6 +37,7 @@ Legend:
 	(+) Absolute discount support
 	(+) First common methods moved to Sobi Framework
 	(+) Load path 'storage' to load CSS and JS files from the Template Storage
+	(+) Width for radio buttons and checkbox groups in search form adjustable
 
     (!) Bootstrap 3 updated to version 3.3.7 (local and CDN)
     (!) Font Awesome 4 updated to 4.6.3
@@ -50,7 +51,7 @@ Legend:
 	(!) Payment screen layout improved
 	(!) Select label option of single select lists moved to general settings
 	(!) Select label in search form for multiple select lists adjustable
-	(!) Option settings of radio buttons field moved to general settings
+	(!) Option settings of radio buttons and checkbox groups fields moved to general settings
 	(!) Categories ordering and categories in line setting moved to template; deprecated message added
 
 	(-) Suffix setting removed from image field
@@ -80,7 +81,7 @@ Legend:
 	(#) Don't save a wrong value if dependency select list is unselected
 	(#) Search phrase labels missing (Issue #1749)
 	(#) Wrong button type for search phrase buttons
-	(#) Width for radio buttons in entry and search form too small
+	(#) Width for radio buttons and checkbox groups in entry and search form too small
 
 
 -------------------

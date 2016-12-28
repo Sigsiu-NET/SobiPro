@@ -24,6 +24,10 @@ SPLoader::loadClass( 'opt.fields.radio' );
  */
 class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 {
+	/** * @var int */
+	protected $bsWidth = 10;
+	/** * @var int */
+	protected $bsSearchWidth = 9;
 	/** * @var string */
 	protected $cssClass = 'spClassCheckbox';
 	/** * @var string */
@@ -275,6 +279,6 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	protected function getAttr()
 	{
 //		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue' );
-		return array( 'optInLine', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue' );
+		return array( 'optInLine', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsSearchWidth' );
 	}
 }
