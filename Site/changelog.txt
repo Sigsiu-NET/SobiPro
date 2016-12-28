@@ -82,6 +82,7 @@ Legend:
 	(#) Search phrase labels missing (Issue #1749)
 	(#) Wrong button type for search phrase buttons
 	(#) Width for radio buttons and checkbox groups in entry and search form too small
+	(#) JSON settings file isn't loading when using template override
 
 
 -------------------
