@@ -913,9 +913,12 @@ abstract class SPFrontView extends SPObject implements SPView
 				$settings[ str_replace( '-', '.', $section ) ] = $setting;
 			}
 			if ( Input::Cmd( 'sptpl' ) ) {
-				$task = Input::String( 'sptpl' );
+				$file = Input::String( 'sptpl' );
 			}
-			if ( SPLoader::translatePath( "{$this->_templatePath}.{$task}", 'absolute', true, 'json' ) ) {
+			else {
+				$file = $task;
+			}
+			if ( SPLoader::translatePath( "{$this->_templatePath}.{$file}", 'absolute', true, 'json' ) ) {
 				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.{$task}", 'absolute', true, 'json' ) ), true );
 				if ( count( $subConfig ) ) {
 					foreach ( $subConfig as $section => $subSettings ) {
