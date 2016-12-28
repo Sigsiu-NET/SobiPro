@@ -616,27 +616,55 @@ input[type='radio'] {
 		color: #9c680e;
 		background-color: #f5e69a;
 		border-color: #f5e69a;
-		border-radius: 0;
+		border-radius: 2px;
+		a:focus,
+		a:hover,
+		a {
+			color: #9C5413;
+		}
 	}
 	.alert-danger,
 	.alert-error {
 		color: #9e0e0e;
 		background-color: #f8b1a9;
 		border-color: #f8b1a9;
+		a:focus,
+		a:hover,
+		a {
+			color: #830C0C;
+		}
 	}
 	.alert-success {
 		color: #1d861f;
 		background-color: #c0e9b0;
 		border-color: #c0e9b0;
+		a:focus,
+		a:hover,
+		a {
+			color: #186E1A;
+		}
 	}
 	.alert-info {
 		color: #0671ab;
 		background-color: #aad9f3;
 		border-color: #aad9f3;
+		a:focus,
+		a:hover,
+		a {
+			color: #03407b;
+		}
 	}
 	.spConfigAlert {
 		max-width: 600px;
 		margin-left: 20px;
+	}
+	.spTemplateHint {
+		max-width: 600px;
+		margin-left: 20px;
+		background-color: unset;
+		border: none;
+		margin-bottom: 5px;
+		color: #b83d3d;
 	}
 	.spAppAlert {
 		max-width: 700px;
@@ -1149,7 +1177,6 @@ input[type='radio'] {
 .SobiPro .spCountableReset {
 	margin-top: 5px;
 }
-
 // Checkboxes and Radio Buttons
 .SobiPro .spFieldRadio,
 .SobiPro .spFieldCheckbox {
@@ -1281,6 +1308,10 @@ input[type='radio'] {
 		.spConfigAlert {
 			margin-left: 0;
 		}
+		.spTemplateHint {
+			margin-left: 0;
+			padding-left: 0;
+		}
 	}
 	.SobiPro .form-horizontal {
 		.control-label {
@@ -1318,13 +1349,11 @@ input[type='radio'] {
 		float: none;
 	}
 }
-
 @media (max-width: 460px) {
 	.SobiPro .spTextNew {
 		margin-left: 0;
 	}
 }
-
 //restore Codemirror styles, overwritten by Bootstrap loaded by SobiPro
 .SobiPro {
 	.CodeMirror-code pre {
