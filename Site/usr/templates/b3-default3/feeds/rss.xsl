@@ -101,7 +101,8 @@
 				<id>http://www.sigsiu.net"</id>
 				<content type="html"><div>
 					<xsl:for-each select="//config/*">
-						<xsl:value-of select="name(.)"/>: <xsl:value-of select="./@value"/><br/>
+						<xsl:value-of select="name(.)"/>: <xsl:value-of select="./@value"/>
+						<br/>
 					</xsl:for-each>
 				</div>
 				</content>

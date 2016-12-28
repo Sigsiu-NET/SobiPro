@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadView( 'interface' );
@@ -909,6 +911,9 @@ abstract class SPFrontView extends SPObject implements SPView
 			$settings = array();
 			foreach ( $config as $section => $setting ) {
 				$settings[ str_replace( '-', '.', $section ) ] = $setting;
+			}
+			if ( Input::Cmd( 'sptpl' ) ) {
+				$task = Input::String( 'sptpl' );
 			}
 			if ( SPLoader::translatePath( "{$this->_templatePath}.{$task}", 'absolute', true, 'json' ) ) {
 				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.{$task}", 'absolute', true, 'json' ) ), true );
