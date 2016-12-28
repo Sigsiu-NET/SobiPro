@@ -1,7 +1,19 @@
 {
   "section-view": {
-    "entries_limit": "5",
+    "entries_limit": "2",
     "entries-ordering": "createdTime.desc",
-    "entries_recursive": "1"
+    "entries_recursive": "1",
+    "categories_limit": "10",
+    "showcategories": "1"
+  },
+  "category-view": {
+    "entries_limit": "4",
+    "entries-ordering": "createdTime.desc",
+    "entries_recursive": "1",
+    "categories_limit": "10",
+    "showcategories": "1"
+  },
+  "general": {
+    "showcategories": "1"
   }
 }
