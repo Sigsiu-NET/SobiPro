@@ -17,7 +17,9 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
+use Sobi\Autoloader\Autoloader;
 use Sobi\Framework;
+use Sobi\Input\Input;
 
 
 /**
@@ -93,6 +95,10 @@ final class SobiProCtrl
 			}
 		}
 		Framework::Init();
+//		Autoloader::getInstance()
+//				->registerClasses( [
+//
+//				] );
 		$this->_mem = memory_get_usage();
 		$this->_time = microtime( true );
 		SPLoader::loadClass( 'base.exception' );
@@ -113,7 +119,7 @@ final class SobiProCtrl
 		Framework::SetTranslator( [ 'SPlang', '_txt' ] );
 
 		/* get sid if any */
-		$this->_sid = SPRequest::sid();
+		$this->_sid = Input::Sid();
 
 		/* determine section */
 		$access = $this->getSection();
@@ -140,7 +146,7 @@ final class SobiProCtrl
 		if ( !( $access ) ) {
 			if ( Sobi::Cfg( 'redirects.section_enabled', false ) ) {
 				$redirect = Sobi::Cfg( 'redirects.section_url', null );
-				$msg = Sobi::Cfg( 'redirects.section_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) );
+				$msg = Sobi::Cfg( 'redirects.section_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', Input::Task() ) );
 				$msgtype = Sobi::Cfg( 'redirects.section_msgtype', 'message' );
 				Sobi::Redirect( Sobi::Url( $redirect ), Sobi::Txt( $msg ), $msgtype, true );
 			}
@@ -161,7 +167,7 @@ final class SobiProCtrl
 		$start = array( $this->_mem, $this->_time );
 		SPFactory::registry()->set( 'start', $start );
 		/* check if it wasn't plugin custom task */
-		if ( !( Sobi::Trigger( 'custom', 'task', array( &$this, SPRequest::task() ) ) ) ) {
+		if ( !( Sobi::Trigger( 'custom', 'task', array( &$this, Input::Task() ) ) ) ) {
 			/* if not, start to route */
 			try {
 				$this->route();
@@ -199,8 +205,8 @@ final class SobiProCtrl
 	 */
 	private function getSection()
 	{
-		$sid = SPRequest::int( 'pid' ) ? SPRequest::int( 'pid' ) : $this->_sid;
-		$db =& SPFactory::db();
+		$sid = Input::Pid() ? Input::Pid() : $this->_sid;
+		$db = SPFactory::db();
 		$section = null;
 		if ( $sid ) {
 			$section = &SPFactory::object( $sid );
@@ -255,11 +261,11 @@ final class SobiProCtrl
 				return false;
 			}
 		}
-		if ( $section && $section->id == SPRequest::sid() ) {
+		if ( $section && $section->id == Input::Sid() ) {
 			$this->_model = $section;
 		}
-		elseif ( SPRequest::sid() ) {
-			$this->_model = &SPFactory::object( SPRequest::sid() );
+		elseif ( Input::Sid() ) {
+			$this->_model = &SPFactory::object( Input::Sid() );
 		}
 		return true;
 	}
@@ -382,14 +388,15 @@ final class SobiProCtrl
 
 			/* route task for multiple objects - e.g removing or publishing elements from a list */
 			/* and there was some of multiple sids */
-			if ( count( SPRequest::arr( 'sid' ) ) || count( SPRequest::arr( 'c_sid' ) ) || count( SPRequest::arr( 'e_sid' ) ) ) {
+			if ( count( Input::Arr( 'sid' ) ) || count( Input::Arr( 'c_sid' ) ) || count( Input::Arr( 'e_sid' ) ) ) {
 				$sid = array_key_exists( 'sid', $_REQUEST ) ? 'sid' : ( array_key_exists( 'c_sid', $_REQUEST ) ? 'c_sid' : 'e_sid' );
-				if ( count( SPRequest::arr( $sid ) ) ) {
+				if ( count( Input::Arr( $sid ) ) ) {
 					/* @var SPdb $db */
 					$db =& SPFactory::db();
 					try {
-						$db->select( '*', 'spdb_object', array( 'id' => SPRequest::arr( $sid ) ) );
-						$objects = $db->loadObjectList();
+						$objects = $db
+								->select( '*', 'spdb_object', array( 'id' => Input::Arr( $sid ) ) )
+								->loadObjectList();
 					} catch ( SPException $x ) {
 						Sobi::Error( 'CoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 						$r = false;
@@ -460,7 +467,7 @@ final class SobiProCtrl
 			$ctrl = SPFactory::Controller( $this->_model->oType );
 			if ( $ctrl instanceof SPController ) {
 				$this->setController( $ctrl );
-				if ( $this->_model->id == SPRequest::sid() ) {
+				if ( $this->_model->id == Input::Sid() ) {
 					// just to use the pre-fetched entry
 					if ( $this->_model->oType == 'entry' ) {
 						$e = SPFactory::Entry( $this->_model->id );
@@ -477,7 +484,7 @@ final class SobiProCtrl
 					}
 				}
 				else {
-					$this->_ctrl->extend( SPFactory::object( SPRequest::sid() ) );
+					$this->_ctrl->extend( SPFactory::object( Input::Sid() ) );
 				}
 				$this->_ctrl->setTask( $this->_task );
 			}
@@ -515,7 +522,7 @@ final class SobiProCtrl
 				}
 			}
 			else {
-				Sobi::Error( 'CoreCtrl', SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
+				Sobi::Error( 'CoreCtrl', SPLang::e( 'SUCH_TASK_NOT_FOUND', Input::Task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 			}
 		}
 		return $ctrl;
@@ -528,7 +535,7 @@ final class SobiProCtrl
 	{
 		$ctrl = SPLoader::loadController( 'front' );
 		$this->setController( new $ctrl() );
-		$this->_ctrl->setTask( SPRequest::task() );
+		$this->_ctrl->setTask( Input::Task() );
 	}
 
 	/**
@@ -563,7 +570,7 @@ final class SobiProCtrl
 			$view->display();
 		}
 		/* send header data etc ...*/
-		if ( SPRequest::cmd( 'format' ) == 'raw' && SPRequest::bool( 'xmlc' ) ) {
+		if ( Input::Cmd( 'format' ) == 'raw' && Input::Bool( 'xmlc' ) ) {
 			SPFactory::cache()->storeView( array() );
 		}
 		SPFactory::mainframe()->endOut();
