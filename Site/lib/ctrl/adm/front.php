@@ -121,6 +121,7 @@ class SPAdminPanel extends SPController
 				$ordering = Sobi::GetUserState( 'sections.order', 'order', 'name.asc' );
 				$myVersion = SPFactory::CmsHelper()->myVersion( true );
 				$cfg = Sobi::Cfg( 'cpanel.show_entries', true );
+				$fVersion = \Sobi\C::VERSION;
 				$state = $this->getState();
 				$view = SPFactory::View( 'front', true )
 						->assign( $acl, 'acl' )
@@ -128,6 +129,7 @@ class SPAdminPanel extends SPController
 						->assign( $news, 'news' )
 						->assign( $ordering, 'order' )
 						->assign( $myVersion, 'version' )
+						->assign( $fVersion, 'frameworkVersion' )
 						->assign( $cfg, 'show-entries' )
 						->assign( $state, 'system-state' );
 				if ( Sobi::Cfg( 'cpanel.show_entries', true ) ) {
