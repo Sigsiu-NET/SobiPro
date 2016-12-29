@@ -224,9 +224,16 @@
 						</div>
 						<div id="SobiProUpdates" class="accordion-body collapse">
 							<div class="accordion-inner">
-								<text value="ABOUT.UD.YOU_ARE_USING">
-									<param value="version" parse="true" />
-								</text>
+								<div>
+									<text value="ABOUT.UD.YOU_ARE_USING">
+										<param value="version" parse="true" />
+									</text>
+								</div>
+								<div>
+									<text value="ABOUT.UD.YOU_ARE_USING_FW">
+										<param value="frameworkVersion" parse="true" />
+									</text>
+								</div>
 								<div id="SPVerUpd" class="spVersions" />
 							</div>
 						</div>
