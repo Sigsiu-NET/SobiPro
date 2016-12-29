@@ -40,6 +40,8 @@ Legend:
 	(+) Width for radio buttons and checkbox groups in search form adjustable
 	(+) Categories can be shown in RSS feeds
 	(+) Options available in XML for radio buttons and single select list fields
+	(+) List of most popular and new categories in CPanel; by default off
+	(+) Global setting to switch off showing entries and categories in CPanel
 
     (!) Bootstrap 3 updated to version 3.3.7 (local and CDN)
     (!) Font Awesome 4 updated to 4.6.3
