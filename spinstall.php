@@ -313,7 +313,9 @@ class com_sobiproInstallerScript
 		JFile::copy( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
 		JFile::delete( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz' );
 		// I am guessing that this was wath cached the PHAR file. Let's see
-		opcache_reset();
+		if ( function_exists( 'opcache_reset' ) ) {
+			opcache_reset();
+		}
 	}
 }
 
