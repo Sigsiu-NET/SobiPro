@@ -39,6 +39,7 @@ Legend:
 	(+) Load path 'storage' to load CSS and JS files from the Template Storage
 	(+) Width for radio buttons and checkbox groups in search form adjustable
 	(+) Categories can be shown in RSS feeds
+	(+) Options available in XML for radio buttons and single select list fields
 
     (!) Bootstrap 3 updated to version 3.3.7 (local and CDN)
     (!) Font Awesome 4 updated to 4.6.3

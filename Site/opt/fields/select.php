@@ -1037,6 +1037,26 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			}
 			$_options = array( 'path' => count( $selectedPath ) ? $selectedPath : $path );
 		}
+		else {
+			foreach ( $this->options as $opt ) {
+				if ( isset( $opt[ 'options' ] ) && is_array( $opt[ 'options' ] ) ) {
+					foreach ( $opt[ 'options' ] as $sub ) {
+						$_options[ ] = array(
+							'_complex' => 1,
+							'_data' => $sub[ 'label' ],
+							'_attributes' => array( 'group' => $opt[ 'id' ], 'selected' => $selected == $sub[ 'id' ] ? 'true' : 'false', 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
+						);
+					}
+				}
+				else {
+					$_options[ ] = array(
+						'_complex' => 1,
+						'_data' => $opt[ 'label' ],
+						'_attributes' => array( 'selected' => $selected == $opt[ 'id' ] ? 'true' : 'false', 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
+					);
+				}
+			}
+		}
 		$this->cleanCss();
 
 		return array(
