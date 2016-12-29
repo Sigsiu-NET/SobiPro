@@ -116,35 +116,8 @@
 											<option value="Ubuntu" label="Ubuntu (Google Font)"/>
 										</values>
 									</field>
-
-
 								</fieldset>
 
-								<fieldset label="TP.CONFIG.RSS">
-									<field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[feeds.rss][section-view][entries_limit]"
-									       selected="settings.feeds-rss.section-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
-										<values>
-											<option value="1" label="1"/>
-											<option value="3" label="3"/>
-											<option value="5" label="5"/>
-											<option value="10" label="10"/>
-											<option value="15" label="15"/>
-										</values>
-									</field>
-									<field type="toggle" name="settings[feeds.rss][section-view][entries_recursive]"
-									       value="settings.feeds-rss.section-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE"
-									       prefix="yes_no"/> <!-- SobiPro setting! -->
-									<field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[feeds.rss][section-view][entries-ordering]"
-									       selected="settings.feeds-rss.section-view.entries-ordering" class="input-large"> <!-- SobiPro setting! -->
-										<values>
-											<option value="createdTime.desc" label="EMN_ORDER_BY_CREATION_DATE_DESC"/>
-											<option value="updatedTime.desc" label="EMN_ORDER_BY_UPDATE_DATE_DESC"/>
-										</values>
-									</field>
-									<!--<field type="toggle" name="settings[feeds.rss][section-view][showcategories]"-->
-									       <!--value="settings.feeds-rss.section-view.showcategories" label="TP.CONFIG.SHOWCATS"-->
-									       <!--prefix="yes_no"/> &lt;!&ndash; SobiPro setting! &ndash;&gt;-->
-								</fieldset>
 								<!--
 	                            <fieldset label="TP.SETTINGS_PRINT">
 		                            <field type="toggle" name="settings[config][general][showprint]" value="settings.settings.config.general.showprint" label="TP.CONFIG.SHOWPRT" prefix="yes_no" />
@@ -518,6 +491,87 @@
 									</field>  <!-- SobiPro setting! -->
 								</fieldset>
 							</div>
+						</div>
+					</tab>
+
+					<tab label="TP.CONFIG.RSS">
+						<fieldset label="TP.CONFIG.SECTION">
+							<field type="select" label="TP.CONFIG.RSS_ENTRIESLIMIT" name="settings[feeds.rss][section-view][entries_limit]"
+							       selected="settings.feeds-rss.section-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
+								<values>
+									<option value="1" label="1"/>
+									<option value="3" label="3"/>
+									<option value="5" label="5"/>
+									<option value="10" label="10"/>
+									<option value="15" label="15"/>
+								</values>
+							</field>
+							<field type="toggle" name="settings[feeds.rss][section-view][entries_recursive]"
+							       value="settings.feeds-rss.section-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE"
+							       prefix="yes_no"/> <!-- SobiPro setting! -->
+							<field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[feeds.rss][section-view][entries-ordering]"
+							       selected="settings.feeds-rss.section-view.entries-ordering" class="input-large"> <!-- SobiPro setting! -->
+								<values>
+									<option value="createdTime.desc" label="EMN_ORDER_BY_CREATION_DATE_DESC"/>
+									<option value="updatedTime.desc" label="EMN_ORDER_BY_UPDATE_DATE_DESC"/>
+								</values>
+							</field>
+						</fieldset>
+						<fieldset label="TP.CONFIG.CAT">
+							<field type="select" name="settings[feeds.rss][category-view][showrss]" selected="settings.feeds-rss.category-view.showrss"
+							       label="TP.CONFIG.RSS_SHOWFEEDS" class="input-medium">
+								<values>
+									<option value="entries" label="TP.CONFIG.RSS_ENTRIES"/>
+									<option value="categories" label="TP.CONFIG.RSS_CATEGORIES"/>
+									<option value="both" label="TP.CONFIG.RSS_BOTH"/>
+								</values>
+							</field>
+							<div>
+								<message label="TP.CONFIG.RSSENTRIES" type="error" dismiss-button="false" class="spTemplateHint"/>
+							</div>
+							<field type="select" label="TP.CONFIG.RSS_ENTRIESLIMIT" name="settings[feeds.rss][category-view][entries_limit]"
+							       selected="settings.feeds-rss.category-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
+								<values>
+									<option value="1" label="1"/>
+									<option value="3" label="3"/>
+									<option value="5" label="5"/>
+									<option value="10" label="10"/>
+									<option value="15" label="15"/>
+								</values>
+							</field>
+							<field type="toggle" name="settings[feeds.rss][category-view][entries_recursive]"
+							       value="settings.feeds-rss.category-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE"
+							       prefix="yes_no"/> <!-- SobiPro setting! -->
+							<field type="select" label="TP.CONFIG.LST_ORDERING" name="settings[feeds.rss][category-view][entries-ordering]"
+							       selected="settings.feeds-rss.category-view.entries-ordering" class="input-large"> <!-- SobiPro setting! -->
+								<values>
+									<option value="createdTime.desc" label="EMN_ORDER_BY_CREATION_DATE_DESC"/>
+									<option value="updatedTime.desc" label="EMN_ORDER_BY_UPDATE_DATE_DESC"/>
+								</values>
+							</field>
+							<div>
+								<message label="TP.CONFIG.RSSCATS" type="error" dismiss-button="false" class="spTemplateHint"/>
+							</div>
+							<field type="select" label="TP.CONFIG.RSS_CATSLIMIT" name="settings[feeds.rss][category-view][categories_limit]"
+							       selected="settings.feeds-rss.category-view.categories_limit" class="input-mini"> <!-- SobiPro setting! -->
+								<values>
+									<option value="1" label="1"/>
+									<option value="3" label="3"/>
+									<option value="5" label="5"/>
+									<option value="10" label="10"/>
+									<option value="15" label="15"/>
+								</values>
+							</field>
+							<field type="select" label="TP.CONFIG.CAT_ORDERING" name="settings[feeds.rss][category-view][categories-ordering]"
+							       selected="settings.feeds-rss.category-view.categories-ordering" class="input-large"> <!-- SobiPro setting! -->
+								<values>
+									<option value="createdTime.desc" label="EMN_ORDER_BY_CREATION_DATE_DESC"/>
+									<option value="updatedTime.desc" label="EMN_ORDER_BY_UPDATE_DATE_DESC"/>
+								</values>
+							</field>
+						</fieldset>
+						<div>
+							<message label="TP.CONFIG.RSS_INFO" type="warning" dismiss-button="false" class="spConfigAlert alert-danger"/>
 						</div>
 					</tab>
 

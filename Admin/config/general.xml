@@ -104,10 +104,6 @@
 										<fieldset label="SECN.CFG.CATEGORY_SETTINGS">
 											<field type="toggle" name="spcfg[category.show_icon]" value="category.show_icon" label="SECN.CFG.SHOW_CATEGORY_ICONS" prefix="show" />
 											<field type="toggle" name="spcfg[category.show_intro]" value="category.show_intro" label="SECN.CFG.SHOW_CATEGORY_INTROTEXT" prefix="show" />
-
-											<div style="margin-top:20px;"></div>
-											<message label="SECN.DEPRECATED" type="danger" dismiss-button="false" class="spConfigAlert" />
-
 											<field type="select" label="SECN.CFG.NUMBER_CATS_LINE" name="spcfg[list.categories_in_line]" selected="list.categories_in_line" class="input-mini" warn="deprecated">
 												<values>
 													<option value="1" />
@@ -157,6 +153,9 @@
 											<field type="toggle" name="spcfg[list.cat_desc]" value="list.cat_desc" label="SECN.CFG.PASS_CAT_DESC_TO_TEMPLATE" prefix="yes_no" />
 											<field type="toggle" name="spcfg[list.cat_meta]" value="list.cat_meta" label="SECN.CFG.PASS_CAT_DATA_TO_TEMPLATE" prefix="yes_no" />
 										</fieldset>
+										<div style="margin-top:20px;"></div>
+										<message label="SECN.DEPRECATED2" type="danger" dismiss-button="false" class="spConfigAlert" />
+
 									</tab>
 									<tab label="SECN.CFG.ELISTING_SETTINGS">
 										<fieldset>
@@ -170,9 +169,6 @@
 											</field>
 										</fieldset>
 										<fieldset label="SECN.CFG.ENTRY_SETTINGS">
-											<div style="margin-top:20px;"></div>
-											<message label="SECN.DEPRECATED" type="danger" dismiss-button="false" class="spConfigAlert" />
-
 											<field type="select" label="ORDER_BY" name="spcfg[list.entries_ordering]" selected="list.entries_ordering" values="entriesOrdering" class="input-xlarge" warn="deprecated" />
 											<field type="select" label="SECN.CFG.NUMBER_ENTRIES_PAGE" name="spcfg[list.entries_limit]" selected="list.entries_limit" class="input-mini" warn="deprecated">
 												<values>
@@ -207,6 +203,8 @@
 											<field type="toggle" name="spcfg[list.entry_meta]" value="list.entry_meta" label="SECN.CFG.PASS_ENTRY_META_TEMPLATE" prefix="yes_no" />
 											<field type="toggle" name="spcfg[list.entry_cats]" value="list.entry_cats" label="SECN.CFG.PASS_SEL_CATS_OF_ENTRY_TO_TEMPLATE" prefix="yes_no" />
 										</fieldset>
+										<div style="margin-top:20px;"></div>
+										<message label="SECN.DEPRECATED2" type="danger" dismiss-button="false" class="spConfigAlert" />
 									</tab>
 									<tab label="SEC.CFG.SEARCH_SETTINGS">
 										<fieldset>
