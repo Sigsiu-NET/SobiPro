@@ -38,6 +38,7 @@ Legend:
 	(+) First common methods moved to Sobi Framework
 	(+) Load path 'storage' to load CSS and JS files from the Template Storage
 	(+) Width for radio buttons and checkbox groups in search form adjustable
+	(+) Categories can be shown in RSS feeds
 
     (!) Bootstrap 3 updated to version 3.3.7 (local and CDN)
     (!) Font Awesome 4 updated to 4.6.3
@@ -82,7 +83,8 @@ Legend:
 	(#) Search phrase labels missing (Issue #1749)
 	(#) Wrong button type for search phrase buttons
 	(#) Width for radio buttons and checkbox groups in entry and search form too small
-	(#) JSON settings file isn't loading when using template override
+	(#) JSON settings file isn't loaded when using template override
+	(#) No possibility to adjust RSS settings for categories
 
 
 -------------------

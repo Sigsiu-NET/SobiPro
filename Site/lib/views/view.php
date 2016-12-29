@@ -919,7 +919,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				$file = $task;
 			}
 			if ( SPLoader::translatePath( "{$this->_templatePath}.{$file}", 'absolute', true, 'json' ) ) {
-				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.{$task}", 'absolute', true, 'json' ) ), true );
+				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.{$file}", 'absolute', true, 'json' ) ), true );
 				if ( count( $subConfig ) ) {
 					foreach ( $subConfig as $section => $subSettings ) {
 						foreach ( $subSettings as $k => $v ) {

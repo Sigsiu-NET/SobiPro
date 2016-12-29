@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -43,81 +43,58 @@
 				<xsl:value-of select="php:function( 'SobiPro::FormatDate', 'c', string($updated_time) )"/>
 			</updated>
 			<generator>SobiPro</generator>
-			<xsl:for-each select="entries/entry">
-				<xsl:variable name="entryUrl">
-					{"sid":"<xsl:value-of select="@id"/>","title":"<xsl:value-of select="@nid"/>"}
-				</xsl:variable>
-				<xsl:variable name="url">
-					<xsl:value-of select="php:function( 'SobiPro::Url', $entryUrl, 0, 1, 1, 1 )"/>
-				</xsl:variable>
-				<entry>
-					<title>
-						<xsl:value-of select="name"/>
-					</title>
-					<author>
-						<name>
-							<xsl:choose>
-								<xsl:when test="author != 0">
-									<xsl:variable name="author">
-										<xsl:value-of select="author"/>
-									</xsl:variable>
-									<xsl:value-of select="php:function('SobiPro::User', $author, 'name')"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:text>Guest author</xsl:text>
-								</xsl:otherwise>
-							</xsl:choose>
-						</name>
-					</author>
-					<link rel="alternate" href="{$url}"/>
-					<id>
-						<xsl:value-of select="$url"/>
-					</id>
-					<content type="html">
-						<xsl:value-of select="fields/field_description/data"/>
-					</content>
-					<xsl:variable name="created_time">
-						<xsl:value-of select="created_time"/>
+
+			<xsl:if test="//config/showrss/@value = 'entries' or //config/showrss/@value = 'both'">
+				<xsl:for-each select="entries/entry">
+					<xsl:variable name="entryUrl">
+						{"sid":"<xsl:value-of select="@id"/>","title":"<xsl:value-of select="@nid"/>"}
 					</xsl:variable>
-					<published>
-						<xsl:value-of select="php:function( 'SobiPro::FormatDate', 'c', string($created_time) )"/>
-					</published>
-					<updated>
-						<xsl:variable name="updated_time">
-							<xsl:value-of select="updated_time"/>
+					<xsl:variable name="url">
+						<xsl:value-of select="php:function( 'SobiPro::Url', $entryUrl, 0, 1, 1, 1 )"/>
+					</xsl:variable>
+					<entry>
+						<title>
+							<xsl:value-of select="name"/>
+						</title>
+						<author>
+							<name>
+								<xsl:choose>
+									<xsl:when test="author != 0">
+										<xsl:variable name="author">
+											<xsl:value-of select="author"/>
+										</xsl:variable>
+										<xsl:value-of select="php:function('SobiPro::User', $author, 'name')"/>
+									</xsl:when>
+									<xsl:otherwise>
+										<xsl:text>Guest author</xsl:text>
+									</xsl:otherwise>
+								</xsl:choose>
+							</name>
+						</author>
+						<link rel="alternate" href="{$url}"/>
+						<id>
+							<xsl:value-of select="$url"/>
+						</id>
+						<content type="html">
+							<xsl:value-of select="fields/field_description/data"/>
+						</content>
+						<xsl:variable name="created_time">
+							<xsl:value-of select="created_time"/>
 						</xsl:variable>
-						<xsl:value-of select="php:function( 'SobiPro::FormatDate', 'c', string($updated_time) )"/>
-					</updated>
-				</entry>
-			</xsl:for-each>
+						<published>
+							<xsl:value-of select="php:function( 'SobiPro::FormatDate', 'c', string($created_time) )"/>
+						</published>
+						<updated>
+							<xsl:variable name="updated_time">
+								<xsl:value-of select="updated_time"/>
+							</xsl:variable>
+							<xsl:value-of select="php:function( 'SobiPro::FormatDate', 'c', string($updated_time) )"/>
+						</updated>
+					</entry>
+				</xsl:for-each>
+			</xsl:if>
 
-
-
-
-			<entry>
-				<title>all</title>
-				<author><name>Sigrid</name></author>
-				<link rel="alternate" href="http://www.sigsiu.net"/>
-				<id>http://www.sigsiu.net"</id>
-				<content type="html"><div>
-					<xsl:for-each select="//config/*">
-						<xsl:value-of select="name(.)"/>: <xsl:value-of select="./@value"/>
-						<br/>
-					</xsl:for-each>
-				</div>
-				</content>
-				<updated>
-					<xsl:variable name="updated_time">
-						<xsl:value-of select="updated_time"/>
-					</xsl:variable>
-					<xsl:value-of select="php:function( 'SobiPro::FormatDate', 'c', string($updated_time) )"/>
-				</updated>
-			</entry>
-
-
-
-
-			<xsl:if test="//config/showcategories/@value = '1'">
+			<xsl:if test="//config/showrss/@value = 'categories' or //config/showrss/@value = 'both'">
 				<xsl:for-each select="categories/category">
 					<xsl:variable name="entryUrl">
 						{"sid":"<xsl:value-of select="@id"/>","title":"<xsl:value-of select="@nid"/>"}
@@ -156,10 +133,10 @@
 												<xsl:value-of select="fields/field_description/data" disable-output-escaping="no" />
 											</content>
 						-->
-						<xsl:variable name="created_time">
-							<xsl:value-of select="created_time"/>
-						</xsl:variable>
 						<published>
+							<xsl:variable name="created_time">
+								<xsl:value-of select="created_time"/>
+							</xsl:variable>
 							<xsl:value-of select="php:function( 'SobiPro::FormatDate', 'c', string($created_time) )"/>
 						</published>
 						<updated>
