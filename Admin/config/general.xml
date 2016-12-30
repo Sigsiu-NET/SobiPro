@@ -16,52 +16,59 @@
 
 <definition>
 	<header>
-		<title value="AMN.GEN_CFG" />
-		<file type="script" filename="bootstrap.tabs" />
+		<title value="AMN.GEN_CFG"/>
+		<file type="script" filename="bootstrap.tabs"/>
 		<style>
 			input[type=checkbox] { float: left; margin-right: 5px!important; }
-			.deprecated::after { content: "DEPRECATED"; padding: 4px 10px 6px 10px; margin-left: 15px; color: #9e0e0e; background-color: #f8b1a9; border-color: #f8b1a9; }
+			.deprecated::after { content: "DEPRECATED"; padding: 4px 10px 6px 10px; margin-left: 15px; color: #9e0e0e; background-color: #f8b1a9; border-color:
+			#f8b1a9; }
 		</style>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiSectionCfg">
-		<button type="apply" task="config.save" />
-		<divider />
-		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
-		<divider />
-		<button task="config.clean" icon="refresh" label="TB.CLEAN_CACHE" />
-		<divider />
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-		<divider />
+		<button type="apply" task="config.save"/>
+		<divider/>
+		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES"/>
+		<divider/>
+		<button task="config.clean" icon="refresh" label="TB.CLEAN_CACHE"/>
+		<divider/>
+		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<divider/>
 		<buttons type="options" dropdown-class="pull-right">
-			<button type="url" task="panel" />
+			<button type="url" task="panel"/>
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
-			<button type="url" task="extensions.installed" condition="acl.apps" />
-			<button type="url" task="template.info"  condition="acl.apps"/>
-			<button type="help" target="_blank" />
+			<button type="url" task="extensions.installed" condition="acl.apps"/>
+			<button type="url" task="template.info" condition="acl.apps"/>
+			<button type="help" target="_blank"/>
 		</buttons>
 	</toolbar>
 	<body>
 		<div class="row-fluid">
 			<div class="span3" id="SPRightMenu">
-				<menu />
+				<menu/>
 			</div>
 			<div class="span9 spMainArea">
-				<message id="spMessage" />
+				<message id="spMessage"/>
 				<tabs>
 					<tab label="SECN.CFG.SECTION_CONFIGURATION">
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="toggle" name="section.state" value="section.state" label="ENABLED" prefix="yes_no" />
-									<field type="text" name="section.name" value="section.name" label="SECN.CFG.SECTION_NAME" class="input-xlarge" required="true" />
-									<field type="text" name="section.nid" value="section.nid" readonly="readonly" label="SECN.ADD_SECTION_ALIAS" class="input-xlarge" />
-									<field type="textarea" name="section.description" value="section.description" class="input-xxlarge" editor="true" label="SECN.CFG.SECTION_DESCRIPTION" />
+									<field type="toggle" name="section.state" value="section.state" label="ENABLED" prefix="yes_no"/>
+									<field type="text" name="section.name" value="section.name" label="SECN.CFG.SECTION_NAME" class="input-xlarge"
+									       required="true"/>
+									<field type="text" name="section.nid" value="section.nid" readonly="readonly" label="SECN.ADD_SECTION_ALIAS"
+									       class="input-xlarge"/>
+									<field type="textarea" name="section.description" value="section.description" class="input-xxlarge" editor="true"
+									       label="SECN.CFG.SECTION_DESCRIPTION"/>
 								</fieldset>
 								<fieldset label="SECN.CFG.PUBLISHING">
-									<field type="datePicker" label="CREATED_AT" name="section.createdTime" value="section.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="calendar" addOffset="true" />
-									<field type="datePicker" label="VALID_SINCE" name="section.validSince" value="section.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" addOffset="true" />
-									<field type="datePicker" label="VALID_UNTIL" name="section.validUntil" value="section.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" addOffset="true" />
+									<field type="datePicker" label="CREATED_AT" name="section.createdTime" value="section.createdTime" class=""
+									       dateFormat="d-m-Y H:i:s" icon="calendar" addOffset="true"/>
+									<field type="datePicker" label="VALID_SINCE" name="section.validSince" value="section.validSince" class=""
+									       dateFormat="d-m-Y H:i:s" icon="unlock" addOffset="true"/>
+									<field type="datePicker" label="VALID_UNTIL" name="section.validUntil" value="section.validUntil" class=""
+									       dateFormat="d-m-Y H:i:s" icon="lock" addOffset="true"/>
 								</fieldset>
 							</div>
 						</div>
@@ -71,49 +78,62 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="select" label="SECN.CFG.SECTION_TEMPLATE" name="spcfg[section.template]" selected="section.template" values="templatesList" class="input-xlarge" />
-									<field type="toggle" name="spcfg[general.top_menu]" value="general.top_menu" label="SECN.CFG.SHOW_TOP_MENU" prefix="show" />
-									<field type="toggle" name="spcfg[general.parse_template_content]" value="general.parse_template_content" label="SECN.CFG.PARSE_TPL_CONTENT" prefix="yes_no" />
+									<field type="select" label="SECN.CFG.SECTION_TEMPLATE" name="spcfg[section.template]" selected="section.template"
+									       values="templatesList" class="input-xlarge"/>
+									<field type="toggle" name="spcfg[general.top_menu]" value="general.top_menu" label="SECN.CFG.SHOW_TOP_MENU" prefix="show"/>
+									<field type="toggle" name="spcfg[general.parse_template_content]" value="general.parse_template_content"
+									       label="SECN.CFG.PARSE_TPL_CONTENT" prefix="yes_no"/>
 								</fieldset>
 
 								<div style="margin-top:40px;"></div>
 								<tabs>
 									<tab label="SECN.CFG.GENERAL_SETTINGS">
 										<fieldset label="SECN.CFG.SETTINGS_BS">
-											<field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled" label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="noload" />
-											<field type="toggle" name="spcfg[template.bootstrap3-load]" value="template.bootstrap3-load" label="SECN.CFG.SETTINGS_BOOTSTRAP3_LOAD" prefix="load" />
-											<field type="toggle" name="spcfg[template.bootstrap3-source]" value="template.bootstrap3-source" label="SECN.CFG.SETTINGS_BOOTSTRAP3SOURCE" prefix="source" />
-											<field type="toggle" name="spcfg[template.bootstrap3-styles]" value="template.bootstrap3-styles" label="SECN.CFG.SETTINGS_BOOTSTRAP3STYLES" prefix="bootstrap" />
+											<field type="toggle" name="spcfg[template.bootstrap-disabled]" value="template.bootstrap-disabled"
+											       label="SECN.CFG.SETTINGS_BOOTSTRAP_DISABLED" prefix="noload"/>
+											<field type="toggle" name="spcfg[template.bootstrap3-load]" value="template.bootstrap3-load"
+											       label="SECN.CFG.SETTINGS_BOOTSTRAP3_LOAD" prefix="load"/>
+											<field type="toggle" name="spcfg[template.bootstrap3-source]" value="template.bootstrap3-source"
+											       label="SECN.CFG.SETTINGS_BOOTSTRAP3SOURCE" prefix="source"/>
+											<field type="toggle" name="spcfg[template.bootstrap3-styles]" value="template.bootstrap3-styles"
+											       label="SECN.CFG.SETTINGS_BOOTSTRAP3STYLES" prefix="bootstrap"/>
 										</fieldset>
 										<fieldset label="SECN.CFG.SETTINGS_FONTS">
-											<field type="checkBoxGroup" label="SECN.CFG.LOAD_ICONS_FONTS" name="spcfg[template.icon_fonts_arr]" selected="template.icon_fonts_arr" class="input-xlarge">
+											<field type="checkBoxGroup" label="SECN.CFG.LOAD_ICONS_FONTS" name="spcfg[template.icon_fonts_arr]"
+											       selected="template.icon_fonts_arr" class="input-xlarge">
 												<values>
-													<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4" />
-													<option value="font-google-materials" label="SECN.CFG.ICONS_MATERIAL" />
-													<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3" />
-													<option value="font-awesome-3-local" label="SECN.CFG.ICONS_FONT_AWESOME_3_LOCAL" />
+													<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4"/>
+													<option value="font-google-materials" label="SECN.CFG.ICONS_MATERIAL"/>
+													<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3"/>
+													<option value="font-awesome-3-local" label="SECN.CFG.ICONS_FONT_AWESOME_3_LOCAL"/>
 												</values>
 											</field>
 										</fieldset>
 									</tab>
 									<tab label="SECN.CFG.CLISTING_SETTINGS">
 										<fieldset>
-											<field type="toggle" name="spcfg[category.show_desc]" value="category.show_desc" label="SECN.CFG.SHOW_CATEGORY_DESC" prefix="show" />
-											<field type="toggle" name="spcfg[category.parse_desc]" value="category.parse_desc" label="SECN.CFG.PARSE_CATEGORY_DESC" prefix="yes_no" />
+											<field type="toggle" name="spcfg[category.show_desc]" value="category.show_desc" label="SECN.CFG.SHOW_CATEGORY_DESC"
+											       prefix="show"/>
+											<field type="toggle" name="spcfg[category.parse_desc]" value="category.parse_desc"
+											       label="SECN.CFG.PARSE_CATEGORY_DESC" prefix="yes_no"/>
 										</fieldset>
 										<fieldset label="SECN.CFG.CATEGORY_SETTINGS">
-											<field type="toggle" name="spcfg[category.show_icon]" value="category.show_icon" label="SECN.CFG.SHOW_CATEGORY_ICONS" prefix="show" />
-											<field type="toggle" name="spcfg[category.show_intro]" value="category.show_intro" label="SECN.CFG.SHOW_CATEGORY_INTROTEXT" prefix="show" />
-											<field type="select" label="SECN.CFG.NUMBER_CATS_LINE" name="spcfg[list.categories_in_line]" selected="list.categories_in_line" class="input-mini" warn="deprecated">
+											<field type="toggle" name="spcfg[category.show_icon]" value="category.show_icon"
+											       label="SECN.CFG.SHOW_CATEGORY_ICONS" prefix="show"/>
+											<field type="toggle" name="spcfg[category.show_intro]" value="category.show_intro"
+											       label="SECN.CFG.SHOW_CATEGORY_INTROTEXT" prefix="show"/>
+											<field type="select" label="SECN.CFG.NUMBER_CATS_LINE" name="spcfg[list.categories_in_line]"
+											       selected="list.categories_in_line" class="input-mini" warn="deprecated">
 												<values>
-													<option value="1" />
-													<option value="2" />
-													<option value="3" />
-													<option value="4" />
-													<option value="5" />
+													<option value="1"/>
+													<option value="2"/>
+													<option value="3"/>
+													<option value="4"/>
+													<option value="5"/>
 												</values>
 											</field>
-											<field type="select" label="ORDER_BY" name="spcfg[list.categories_ordering]" selected="list.categories_ordering" class="input-xlarge" warn="deprecated">
+											<field type="select" label="ORDER_BY" name="spcfg[list.categories_ordering]" selected="list.categories_ordering"
+											       class="input-xlarge" warn="deprecated">
 												<values>
 													<option value="name.asc" label="ORDER_BY_NAME_ASCENDING"/>
 													<option value="name.desc" label="ORDER_BY_NAME_DESCENDING"/>
@@ -131,36 +151,42 @@
 											</field>
 										</fieldset>
 										<fieldset label="SECN.CFG.SUBCATEGORY_SETTINGS">
-											<field type="toggle" name="spcfg[list.subcats]" value="list.subcats" label="SECN.CFG.PASS_SUBCATS_TO_TEMPLATE" prefix="show" />
-											<field type="select" label="SECN.CFG.NUMBER_SUBCATS" name="spcfg[list.num_subcats]" selected="list.num_subcats" class="input-mini">
+											<field type="toggle" name="spcfg[list.subcats]" value="list.subcats" label="SECN.CFG.PASS_SUBCATS_TO_TEMPLATE"
+											       prefix="show"/>
+											<field type="select" label="SECN.CFG.NUMBER_SUBCATS" name="spcfg[list.num_subcats]" selected="list.num_subcats"
+											       class="input-mini">
 												<values>
-													<option value="1" />
-													<option value="2" />
-													<option value="3" />
-													<option value="4" />
-													<option value="5" />
-													<option value="6" />
-													<option value="7" />
-													<option value="8" />
-													<option value="9" />
-													<option value="10" />
-													<option value="15" />
-													<option value="20" />
+													<option value="1"/>
+													<option value="2"/>
+													<option value="3"/>
+													<option value="4"/>
+													<option value="5"/>
+													<option value="6"/>
+													<option value="7"/>
+													<option value="8"/>
+													<option value="9"/>
+													<option value="10"/>
+													<option value="15"/>
+													<option value="20"/>
 												</values>
 											</field>
 										</fieldset>
 										<fieldset label="SECN.CFG.PASS_TO_TEMPLATE">
-											<field type="toggle" name="spcfg[list.cat_desc]" value="list.cat_desc" label="SECN.CFG.PASS_CAT_DESC_TO_TEMPLATE" prefix="yes_no" />
-											<field type="toggle" name="spcfg[list.cat_meta]" value="list.cat_meta" label="SECN.CFG.PASS_CAT_DATA_TO_TEMPLATE" prefix="yes_no" />
+											<field type="toggle" name="spcfg[list.cat_desc]" value="list.cat_desc" label="SECN.CFG.PASS_CAT_DESC_TO_TEMPLATE"
+											       prefix="yes_no"/>
+											<field type="toggle" name="spcfg[list.cat_meta]" value="list.cat_meta" label="SECN.CFG.PASS_CAT_DATA_TO_TEMPLATE"
+											       prefix="yes_no"/>
 										</fieldset>
 										<div style="margin-top:20px;"></div>
-										<message label="SECN.DEPRECATED2" type="danger" dismiss-button="false" class="spConfigAlert" />
+										<message label="SECN.DEPRECATED2" type="danger" dismiss-button="false" class="spConfigAlert"/>
 
 									</tab>
 									<tab label="SECN.CFG.ELISTING_SETTINGS">
 										<fieldset>
-											<field type="select" label="SECN.CFG.ENTRY_TITLE_FIELD" name="spcfg[entry.name_field]" selected="entry.name_field" values="nameFields" class="input-large" />
-											<field type="text" name="spcfg[entry.publish_limit]" value="entry.publish_limit" label="SECN.CFG.STOP_PUBLISHING_ENTRY_AFTER" class="input-mini">
+											<field type="select" label="SECN.CFG.ENTRY_TITLE_FIELD" name="spcfg[entry.name_field]" selected="entry.name_field"
+											       values="nameFields" class="input-large"/>
+											<field type="text" name="spcfg[entry.publish_limit]" value="entry.publish_limit"
+											       label="SECN.CFG.STOP_PUBLISHING_ENTRY_AFTER" class="input-mini">
 												<add where="after">
 													<call function="Sobi::Txt">
 														<param>DAYS</param>
@@ -169,58 +195,65 @@
 											</field>
 										</fieldset>
 										<fieldset label="SECN.CFG.ENTRY_SETTINGS">
-											<field type="select" label="ORDER_BY" name="spcfg[list.entries_ordering]" selected="list.entries_ordering" values="entriesOrdering" class="input-xlarge" warn="deprecated" />
-											<field type="select" label="SECN.CFG.NUMBER_ENTRIES_PAGE" name="spcfg[list.entries_limit]" selected="list.entries_limit" class="input-mini" warn="deprecated">
+											<field type="select" label="ORDER_BY" name="spcfg[list.entries_ordering]" selected="list.entries_ordering"
+											       values="entriesOrdering" class="input-xlarge" warn="deprecated"/>
+											<field type="select" label="SECN.CFG.NUMBER_ENTRIES_PAGE" name="spcfg[list.entries_limit]"
+											       selected="list.entries_limit" class="input-mini" warn="deprecated">
 												<values>
-													<option value="1" />
-													<option value="2" />
-													<option value="3" />
-													<option value="4" />
-													<option value="5" />
-													<option value="6" />
-													<option value="7" />
-													<option value="8" />
-													<option value="9" />
-													<option value="10" />
-													<option value="11" />
-													<option value="12" />
-													<option value="13" />
-													<option value="14" />
-													<option value="15" />
+													<option value="1"/>
+													<option value="2"/>
+													<option value="3"/>
+													<option value="4"/>
+													<option value="5"/>
+													<option value="6"/>
+													<option value="7"/>
+													<option value="8"/>
+													<option value="9"/>
+													<option value="10"/>
+													<option value="11"/>
+													<option value="12"/>
+													<option value="13"/>
+													<option value="14"/>
+													<option value="15"/>
 												</values>
 											</field>
-											<field type="select" label="SECN.CFG.NUMBER_ENTRIES_LINE" name="spcfg[list.entries_in_line]" selected="list.entries_in_line" class="input-mini" warn="deprecated">
+											<field type="select" label="SECN.CFG.NUMBER_ENTRIES_LINE" name="spcfg[list.entries_in_line]"
+											       selected="list.entries_in_line" class="input-mini" warn="deprecated">
 												<values>
-													<option value="1" />
-													<option value="2" />
-													<option value="3" />
-													<option value="4" />
-													<option value="5" />
+													<option value="1"/>
+													<option value="2"/>
+													<option value="3"/>
+													<option value="4"/>
+													<option value="5"/>
 												</values>
 											</field>
 										</fieldset>
 										<fieldset label="SECN.CFG.PASS_TO_VCARD">
-											<field type="toggle" name="spcfg[list.entry_meta]" value="list.entry_meta" label="SECN.CFG.PASS_ENTRY_META_TEMPLATE" prefix="yes_no" />
-											<field type="toggle" name="spcfg[list.entry_cats]" value="list.entry_cats" label="SECN.CFG.PASS_SEL_CATS_OF_ENTRY_TO_TEMPLATE" prefix="yes_no" />
+											<field type="toggle" name="spcfg[list.entry_meta]" value="list.entry_meta" label="SECN.CFG.PASS_ENTRY_META_TEMPLATE"
+											       prefix="yes_no"/>
+											<field type="toggle" name="spcfg[list.entry_cats]" value="list.entry_cats"
+											       label="SECN.CFG.PASS_SEL_CATS_OF_ENTRY_TO_TEMPLATE" prefix="yes_no"/>
 										</fieldset>
 										<div style="margin-top:20px;"></div>
-										<message label="SECN.DEPRECATED2" type="danger" dismiss-button="false" class="spConfigAlert" />
+										<message label="SECN.DEPRECATED2" type="danger" dismiss-button="false" class="spConfigAlert"/>
 									</tab>
 									<tab label="SEC.CFG.SEARCH_SETTINGS">
 										<fieldset>
-											<field type="toggle" name="spcfg[search.highlight-search]" value="search.highlight-search" label="SECN.CFG.SEARCH_HIGHLIGHT" prefix="yes_no" />
-											<field type="select" label="SECN.CFG.SEARCH_SETTINGS_ORDER" name="spcfg[search.entries_ordering]" selected="search.entries_ordering" class="input-xlarge">
+											<field type="toggle" name="spcfg[search.highlight-search]" value="search.highlight-search"
+											       label="SECN.CFG.SEARCH_HIGHLIGHT" prefix="yes_no"/>
+											<field type="select" label="SECN.CFG.SEARCH_SETTINGS_ORDER" name="spcfg[search.entries_ordering]"
+											       selected="search.entries_ordering" class="input-xlarge">
 												<values>
-													<option value="disabled" label="SECOND_ORDER_DISABLED" />
-													<option value="random" label="ORDER_BY_RANDOM" />
-													<option value="counter.asc" label="ORDER_BY_POPULARITY_ASCENDING" />
-													<option value="counter.desc" label="ORDER_BY_POPULARITY_DESCENDING" />
-													<option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC" />
-													<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC" />
-													<option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC" />
-													<option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC" />
-													<option value="validUntil.asc" label="ORDER_BY_EXPIRATION_DATE_ASC" />
-													<option value="validUntil.desc" label="ORDER_BY_EXPIRATION_DATE_DESC" />
+													<option value="disabled" label="SECOND_ORDER_DISABLED"/>
+													<option value="random" label="ORDER_BY_RANDOM"/>
+													<option value="counter.asc" label="ORDER_BY_POPULARITY_ASCENDING"/>
+													<option value="counter.desc" label="ORDER_BY_POPULARITY_DESCENDING"/>
+													<option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC"/>
+													<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC"/>
+													<option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC"/>
+													<option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC"/>
+													<option value="validUntil.asc" label="ORDER_BY_EXPIRATION_DATE_ASC"/>
+													<option value="validUntil.desc" label="ORDER_BY_EXPIRATION_DATE_DESC"/>
 												</values>
 											</field>
 
@@ -228,15 +261,20 @@
 									</tab>
 									<tab label="SEC.CFG.ALPHAMENU_SETTINGS">
 										<fieldset>
-											<field type="toggle" name="spcfg[alphamenu.show]" value="alphamenu.show" label="SECN.CFG.SHOW_ALPHA_MENU" prefix="show" />
-											<field type="text" name="spcfg[alphamenu.letters]" value="alphamenu.letters" label="SECN.CFG.ALPHA_LETTERS" class="input-splarge" />
-											<field type="toggle" name="spcfg[alphamenu.verify]" value="alphamenu.verify" label="SECN.CFG.SHOW_ALPHA_VERIFY" prefix="yes_no" />
-											<field type="select" label="SECN.CFG.ALPHA_FIELD" name="spcfg[alphamenu.primary_field]" selected="alphamenu.primary_field" values="alphaMenuFields" class="input-large" />
-											<field type="select" label="SECN.CFG.ALPHA_FIELDS" multi="true" size="12" name="spcfg[alphamenu.extra_fields_array]" selected="alphamenu.extra_fields_array" values="alphaMenuFields" class="input-large" />
+											<field type="toggle" name="spcfg[alphamenu.show]" value="alphamenu.show" label="SECN.CFG.SHOW_ALPHA_MENU"
+											       prefix="show"/>
+											<field type="text" name="spcfg[alphamenu.letters]" value="alphamenu.letters" label="SECN.CFG.ALPHA_LETTERS"
+											       class="input-splarge"/>
+											<field type="toggle" name="spcfg[alphamenu.verify]" value="alphamenu.verify" label="SECN.CFG.SHOW_ALPHA_VERIFY"
+											       prefix="yes_no"/>
+											<field type="select" label="SECN.CFG.ALPHA_FIELD" name="spcfg[alphamenu.primary_field]"
+											       selected="alphamenu.primary_field" values="alphaMenuFields" class="input-large"/>
+											<field type="select" label="SECN.CFG.ALPHA_FIELDS" multi="true" size="12" name="spcfg[alphamenu.extra_fields_array]"
+											       selected="alphamenu.extra_fields_array" values="alphaMenuFields" class="input-large"/>
 										</fieldset>
 									</tab>
 								</tabs>
-								<message label="SECN.CFG.WARNING" type="info" dismiss-button="false" class="spConfigAlert" />
+								<message label="SECN.CFG.WARNING" type="info" dismiss-button="false" class="spConfigAlert"/>
 							</div>
 						</div>
 					</tab>
@@ -245,27 +283,34 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset label="SECN.CFG.META_DATA_SECTION">
-									<field type="toggle" name="spcfg[meta.always_add_section]" value="meta.always_add_section" label="SECN.CFG.META_DATA_ADD" prefix="yes_no" />
-									<field type="textarea" name="section.metaDesc" value="section.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="textarea" name="section.metaKeys" value="section.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="text" name="section.metaAuthor" value="section.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+									<field type="toggle" name="spcfg[meta.always_add_section]" value="meta.always_add_section" label="SECN.CFG.META_DATA_ADD"
+									       prefix="yes_no"/>
+									<field type="textarea" name="section.metaDesc" value="section.metaDesc" label="DESCRIPTION" editor="false"
+									       class="input-splarge" rows="2" style=""/>
+									<field type="textarea" name="section.metaKeys" value="section.metaKeys" label="KEYS" editor="false" class="input-splarge"
+									       rows="2" style=""/>
+									<field type="text" name="section.metaAuthor" value="section.metaAuthor" label="AUTHOR" class="input-large" maxlength="255"/>
 									<field type="select" label="ROBOTS" name="section.metaRobots" selected="section.metaRobots" class="input-large">
 										<values>
-											<option value="" label="ROBOTS_NONE" />
-											<option value="index, follow" label="index, follow" />
-											<option value="index, nofollow" label="index, nofollow" />
-											<option value="noindex, follow" label="noindex, follow" />
-											<option value="noindex, nofollow" label="noindex, nofollow" />
+											<option value="" label="ROBOTS_NONE"/>
+											<option value="index, follow" label="index, follow"/>
+											<option value="index, nofollow" label="index, nofollow"/>
+											<option value="noindex, follow" label="noindex, follow"/>
+											<option value="noindex, nofollow" label="noindex, nofollow"/>
 										</values>
 									</field>
 								</fieldset>
 								<fieldset label="SECN.CFG.META_DATA_INPUT">
-									<field type="textarea" name="section.efMetaDesc" value="section.efMetaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="textarea" name="section.efMetaKeys" value="section.efMetaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="textarea" name="section.efMetaDesc" value="section.efMetaDesc" label="DESCRIPTION" editor="false"
+									       class="input-splarge" rows="2" style=""/>
+									<field type="textarea" name="section.efMetaKeys" value="section.efMetaKeys" label="KEYS" editor="false"
+									       class="input-splarge" rows="2" style=""/>
 								</fieldset>
 								<fieldset label="SECN.CFG.META_DATA_SEARCH">
-									<field type="textarea" name="section.sfMetaDesc" value="section.sfMetaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="textarea" name="section.sfMetaKeys" value="section.sfMetaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="textarea" name="section.sfMetaDesc" value="section.sfMetaDesc" label="DESCRIPTION" editor="false"
+									       class="input-splarge" rows="2" style=""/>
+									<field type="textarea" name="section.sfMetaKeys" value="section.sfMetaKeys" label="KEYS" editor="false"
+									       class="input-splarge" rows="2" style=""/>
 								</fieldset>
 							</div>
 						</div>
@@ -274,117 +319,141 @@
 					<tab label="SEC.CFG.REDIRECTS">
 						<div class="row-fluid">
 							<div class="span12">
-								<message label="SECN.CFG.REDIRECT_INFO" type="info" dismiss-button="false" class="spConfigAlert" />
+								<message label="SECN.CFG.REDIRECT_INFO" type="info" dismiss-button="false" class="spConfigAlert"/>
 								<tabs>
 									<tab label="SECN.CFG.REDIRECT_SECTION">
 										<fieldset label="SECN.CFG.REDIRECTS_SECTION_SPACER">
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_access_enabled]" selected="redirects.section_access_enabled" class="input-xlarge">
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_access_enabled]"
+											       selected="redirects.section_access_enabled" class="input-xlarge">
 												<values>
-													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
-													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT"/>
+													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.section_access_url]" value="redirects.section_access_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_access_msgtype]" selected="redirects.section_access_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.section_access_url]" value="redirects.section_access_url"
+											       label="SEC.CFG.REDIRECTS_TO" class="input-splarge"/>
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_access_msgtype]"
+											       selected="redirects.section_access_msgtype" class="input-large">
 												<values>
-													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
-													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
-													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT"/>
+													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT"/>
+													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_access_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+											<field type="text" name="spcfg[redirects.section_msg]" value="redirects.section_access_msg"
+											       label="SEC.CFG.REDIRECTS_MSG" class="input-splarge"/>
 										</fieldset>
 										<fieldset label="SECN.CFG.REDIRECTS_SEARCH_SPACER">
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_search_enabled]" selected="redirects.section_search_enabled" class="input-xlarge">
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.section_search_enabled]"
+											       selected="redirects.section_search_enabled" class="input-xlarge">
 												<values>
-													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
-													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT"/>
+													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.section_search_url]" value="redirects.section_search_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_search_msgtype]" selected="redirects.section_search_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.section_search_url]" value="redirects.section_search_url"
+											       label="SEC.CFG.REDIRECTS_TO" class="input-splarge"/>
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.section_search_msgtype]"
+											       selected="redirects.section_search_msgtype" class="input-large">
 												<values>
-													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
-													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
-													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT"/>
+													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT"/>
+													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.section_search_msg]" value="redirects.section_search_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+											<field type="text" name="spcfg[redirects.section_search_msg]" value="redirects.section_search_msg"
+											       label="SEC.CFG.REDIRECTS_MSG" class="input-splarge"/>
 										</fieldset>
 									</tab>
 									<tab label="SECN.CFG.REDIRECT_CATEGORY">
 										<fieldset label="SECN.CFG.REDIRECTS_CAT_SPACER">
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.category_access_enabled]" selected="redirects.category_access_enabled" class="input-xlarge">
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.category_access_enabled]"
+											       selected="redirects.category_access_enabled" class="input-xlarge">
 												<values>
-													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
-													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT"/>
+													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.category_access_url]" value="redirects.category_access_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.category_access_msgtype]" selected="redirects.category_access_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.category_access_url]" value="redirects.category_access_url"
+											       label="SEC.CFG.REDIRECTS_TO" class="input-splarge"/>
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.category_access_msgtype]"
+											       selected="redirects.category_access_msgtype" class="input-large">
 												<values>
-													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
-													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
-													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT"/>
+													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT"/>
+													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.category_access_msg]" value="redirects.category_access_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+											<field type="text" name="spcfg[redirects.category_access_msg]" value="redirects.category_access_msg"
+											       label="SEC.CFG.REDIRECTS_MSG" class="input-splarge"/>
 										</fieldset>
 									</tab>
 
 									<tab label="SECN.CFG.REDIRECT_ENTRY">
 										<fieldset label="SECN.CFG.REDIRECTS_ENTRY_SPACER">
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_access_enabled]" selected="redirects.entry_access_enabled" class="input-xlarge">
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_access_enabled]"
+											       selected="redirects.entry_access_enabled" class="input-xlarge">
 												<values>
-													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
-													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT"/>
+													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.entry_access_url]" value="redirects.entry_access_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_access_msgtype]" selected="redirects.entry_access_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.entry_access_url]" value="redirects.entry_access_url"
+											       label="SEC.CFG.REDIRECTS_TO" class="input-splarge"/>
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_access_msgtype]"
+											       selected="redirects.entry_access_msgtype" class="input-large">
 												<values>
-													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
-													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
-													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT"/>
+													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT"/>
+													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.entry_access_msg]" value="redirects.entry_access_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+											<field type="text" name="spcfg[redirects.entry_access_msg]" value="redirects.entry_access_msg"
+											       label="SEC.CFG.REDIRECTS_MSG" class="input-splarge"/>
 										</fieldset>
 
 										<fieldset label="SECN.CFG.REDIRECTS_INPUT">
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_add_enabled]" selected="redirects.entry_add_enabled" class="input-xlarge">
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_add_enabled]"
+											       selected="redirects.entry_add_enabled" class="input-xlarge">
 												<values>
-													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT" />
-													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+													<option value="0" label="SEC.CFG.REDIRECTS_ERR_OPT"/>
+													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.entry_add_url]" value="redirects.entry_add_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_add_msgtype]" selected="redirects.entry_add_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.entry_add_url]" value="redirects.entry_add_url"
+											       label="SEC.CFG.REDIRECTS_TO" class="input-splarge"/>
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_add_msgtype]"
+											       selected="redirects.entry_add_msgtype" class="input-large">
 												<values>
-													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
-													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
-													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT"/>
+													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT"/>
+													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.entry_add_msg]" value="redirects.entry_add_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
+											<field type="text" name="spcfg[redirects.entry_add_msg]" value="redirects.entry_add_msg"
+											       label="SEC.CFG.REDIRECTS_MSG" class="input-splarge"/>
 										</fieldset>
 										<fieldset label="SECN.CFG.REDIRECTS_SAVE">
-											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_save_enabled]" selected="redirects.entry_save_enabled" class="input-xlarge">
+											<field type="select" label="SEC.CFG.REDIRECTS_DO" name="spcfg[redirects.entry_save_enabled]"
+											       selected="redirects.entry_save_enabled" class="input-xlarge">
 												<values>
-													<option value="0" label="SEC.CFG.REDIRECTS_TO_PARENT_CATEGORY" />
-													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT" />
+													<option value="0" label="SEC.CFG.REDIRECTS_TO_PARENT_CATEGORY"/>
+													<option value="1" label="SEC.CFG.REDIRECTS_RED_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.entry_save_url]" value="redirects.entry_save_url" label="SEC.CFG.REDIRECTS_TO" class="input-splarge" />
-											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_save_msgtype]" selected="redirects.entry_save_msgtype" class="input-large">
+											<field type="text" name="spcfg[redirects.entry_save_url]" value="redirects.entry_save_url"
+											       label="SEC.CFG.REDIRECTS_TO" class="input-splarge"/>
+											<field type="select" label="SEC.CFG.REDIRECTS_MSG_TYPE" name="spcfg[redirects.entry_save_msgtype]"
+											       selected="redirects.entry_save_msgtype" class="input-large">
 												<values>
-													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT" />
-													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT" />
-													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT" />
+													<option value="none" label="SEC.CFG.REDIRECTS_MSGTYPE_NONE_OPT"/>
+													<option value="info" label="SEC.CFG.REDIRECTS_MSGTYPE_MSG_OPT"/>
+													<option value="error" label="SEC.CFG.REDIRECTS_MSGTYPE_ERR_OPT"/>
 												</values>
 											</field>
-											<field type="text" name="spcfg[redirects.entry_save_msg]" value="redirects.entry_save_msg" label="SEC.CFG.REDIRECTS_MSG" class="input-splarge" />
-											<message label="SECN.CFG.REDIRECT_ENTRY_INFO" type="warning" dismiss-button="false" class="spConfigAlert" />
+											<field type="text" name="spcfg[redirects.entry_save_msg]" value="redirects.entry_save_msg"
+											       label="SEC.CFG.REDIRECTS_MSG" class="input-splarge"/>
+											<message label="SECN.CFG.REDIRECT_ENTRY_INFO" type="warning" dismiss-button="false" class="spConfigAlert"/>
 										</fieldset>
 									</tab>
 								</tabs>
@@ -395,27 +464,40 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset label="CFG.VERSIONING">
-									<field type="toggle" name="spcfg[entry.versioning]" value="entry.versioning" label="ENTRY_VERSIONING" prefix="enabled" />
-									<field type="toggle" name="spcfg[entry.versioningAdminBehaviour]" value="entry.versioningAdminBehaviour" label="ENTRY_VERSIONING_ADM_BEHAVIOUR" prefix="versioning_adm" />
+									<field type="toggle" name="spcfg[entry.versioning]" value="entry.versioning" label="ENTRY_VERSIONING" prefix="enabled"/>
+									<field type="toggle" name="spcfg[entry.versioningAdminBehaviour]" value="entry.versioningAdminBehaviour"
+									       label="ENTRY_VERSIONING_ADM_BEHAVIOUR" prefix="versioning_adm"/>
 								</fieldset>
 								<fieldset label="CFG.HTML_ELEMENTS">
-									<field type="textarea" name="spcfg[html.allowed_tags_array]" value="html.allowed_tags_array" label="SEC.CFG.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="textarea" name="spcfg[html.allowed_attributes_array]" value="html.allowed_attributes_array" label="SEC.CFG.ALLOWED_ATTRIBUTES" editor="false" class="input-splarge" rows="2" style="" />
+									<field type="textarea" name="spcfg[html.allowed_tags_array]" value="html.allowed_tags_array" label="SEC.CFG.ALLOWED_TAGS"
+									       editor="false" class="input-splarge" rows="2" style=""/>
+									<field type="textarea" name="spcfg[html.allowed_attributes_array]" value="html.allowed_attributes_array"
+									       label="SEC.CFG.ALLOWED_ATTRIBUTES" editor="false" class="input-splarge" rows="2" style=""/>
 								</fieldset>
 							</div>
 						</div>
 					</tab>
+
+<!--
+					<tab label="SEC.STATISTICS">
+						<div class="row-fluid">
+							<div class="span12">
+							</div>
+						</div>
+					</tab>
+-->
+
 				</tabs>
 			</div>
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="sp-language" default="" />
-			<field name="option" default="com_sobipro" />
-			<field name="task" default="" />
-			<field name="method" default="xhr" />
+			<field name="sp-language" default=""/>
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+			<field name="method" default="xhr"/>
 		</hidden>
 	</config>
 </definition>

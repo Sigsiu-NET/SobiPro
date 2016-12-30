@@ -194,7 +194,9 @@ INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`,
   ('xml_enabled', '1', 0, 0, 'cache'),
   ('xml_ip', '', 0, 0, 'debug'),
   ('xml_no_reg', '0', 0, 0, 'cache'),
-  ('xml_raw', '0', 0, 0, 'debug');
+  ('xml_raw', '0', 0, 0, 'debug'),
+  ('show_entries','1',0,0,'cpanel'),
+  ('show_categories','0',0,0,'cpanel');
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
