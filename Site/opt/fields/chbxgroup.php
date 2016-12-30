@@ -279,6 +279,6 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	protected function getAttr()
 	{
 //		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue' );
-		return array( 'optInLine', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsSearchWidth' );
+		return array( 'optInLine', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsSearchWidth', 'ssize', 'selectLabel' );
 	}
 }

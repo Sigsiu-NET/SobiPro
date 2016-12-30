@@ -44,6 +44,8 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	protected $cssClassSearch = 'spClassSearchRadio';
 	/** * @var string */
 	protected $searchMethod = 'general';
+	/** * @var int */
+	protected $ssize = 1;
 	/** * @var string */
 	protected $dType = 'predefined_multi_data_single_choice';
 	/** * @var string */
@@ -58,7 +60,9 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 
 	/**
 	 * Shows the field in the edit entry or add entry form
+	 *
 	 * @param bool $return return or display directly
+	 *
 	 * @return string
 	 */
 	public function field( $return = false )
@@ -84,13 +88,13 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 
 	private function getField( $class, $selected = null )
 	{
-		$params = array( 'class' => $class );
+		$params   = array( 'class' => $class );
 		$selected = $selected ? $selected : $this->getRaw();
 		$selected = $selected ? $selected : $this->defSel;
 
 		$this->labelSite = 'right';
-		$list = SPHtml_Input::radioList( $this->nid, $this->getValues(), $this->nid, $selected, $params, $this->labelSite, true );
-		$field = null;
+		$list            = SPHtml_Input::radioList( $this->nid, $this->getValues(), $this->nid, $selected, $params, $this->labelSite, true );
+		$field           = null;
 		if ( count( $list ) ) {
 			$c = 0;
 			foreach ( $list as $radio ) {
@@ -112,6 +116,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 			$field .= "\n<div class=\"clearfix\"></div>\n"; //another clear at the end
 			$field = "<div id=\"{$this->nid}\" class=\"{$class}\">{$field}</div>";
 		}
+
 		return $field;
 	}
 
@@ -123,17 +128,20 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 				$values[ $option[ 'id' ] ] = $option[ 'label' ];
 			}
 		}
+
 		return $values;
 	}
 
 	/**
 	 * Shows the field in the search form
+	 *
 	 * @param bool $return return or display directly
+	 *
 	 * @return string
 	 */
 	public function searchForm( $return = false )
 	{
-		$data = $this->getValues();
+		$data  = $this->getValues();
 		$field = null;
 		switch ( $this->searchMethod ) {
 			default:
@@ -163,11 +171,13 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 				break;
 			case 'select':
 			case 'mselect':
-				$params = array( 'id' => $this->nid, 'size' => ( $this->searchMethod == 'mselect' ? $this->optInLine : 1 ), 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) );
-				$data = array_merge( array( '' => Sobi::Txt( 'FMN.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) ), $data );
-				$field = SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params );
+				$label  = ( $this->selectLabel ) ? Sobi::Txt( $this->selectLabel, $this->name ) : Sobi::Txt( 'FMN.SEARCH_SELECT_LIST', array( 'name' => $this->name ) );
+				$params = array( 'id' => $this->nid, 'size' => $this->ssize, 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) );
+				$data   = array_merge( array( '' => $label ), $data );
+				$field  = SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params );
 				break;
 		}
+
 		return $field;
 	}
 
@@ -178,6 +188,6 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	protected function getAttr()
 	{
 //		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel' );
-		return array( 'optInLine', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'bsSearchWidth' );
+		return array( 'optInLine', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'bsSearchWidth', 'ssize', 'selectLabel' );
 	}
 }

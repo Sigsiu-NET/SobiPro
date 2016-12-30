@@ -171,6 +171,14 @@
 											<option value="mselect" label="FM.MSELECT_LIST_OPT" />
 										</values>
 									</field>
+									<field type="text" name="field.ssize" value="field.ssize" label="FMN.SEL.SIZE_IN_SEARCH" maxlength="10" class="input-mini">
+										<add where="after">
+											<call function="Sobi::Txt">
+												<param>FMN.LENGTH_ROWS</param>
+											</call>
+										</add>
+									</field>
+									<field type="text" name="field.selectLabel" value="field.selectLabel" label="FM.SEL.SELECT_LABEL" maxlength="150" class="input-large" />
 									<field type="select" name="field.bsSearchWidth" selected="field.bsSearchWidth" label="FMN.FIELD_WIDTH" class="input-mini">
 										<values>
 											<option value="1" label="1" />
