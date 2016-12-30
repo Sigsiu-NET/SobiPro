@@ -851,7 +851,11 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				$request = array_pop( $path );
 			}
 		}
-		if ( !( is_array( $request ) ) && $request == 0 ) {
+		/** Please someone explain this shit to me
+		 * @link https://twitter.com/RadekSu/status/814778742723723264
+		 * So we need some extremely stupid work around for that
+		 * */
+		if ( !is_array( $request ) && is_numeric( $request ) && $request == 0 ) {
 			return null;
 		}
 		$sids = array();
@@ -1041,18 +1045,18 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			foreach ( $this->options as $opt ) {
 				if ( isset( $opt[ 'options' ] ) && is_array( $opt[ 'options' ] ) ) {
 					foreach ( $opt[ 'options' ] as $sub ) {
-						$_options[ ] = array(
-							'_complex' => 1,
-							'_data' => $sub[ 'label' ],
-							'_attributes' => array( 'group' => $opt[ 'id' ], 'selected' => $selected == $sub[ 'id' ] ? 'true' : 'false', 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
+						$_options[] = array(
+								'_complex' => 1,
+								'_data' => $sub[ 'label' ],
+								'_attributes' => array( 'group' => $opt[ 'id' ], 'selected' => $selected == $sub[ 'id' ] ? 'true' : 'false', 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
 						);
 					}
 				}
 				else {
-					$_options[ ] = array(
-						'_complex' => 1,
-						'_data' => $opt[ 'label' ],
-						'_attributes' => array( 'selected' => $selected == $opt[ 'id' ] ? 'true' : 'false', 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
+					$_options[] = array(
+							'_complex' => 1,
+							'_data' => $opt[ 'label' ],
+							'_attributes' => array( 'selected' => $selected == $opt[ 'id' ] ? 'true' : 'false', 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
 					);
 				}
 			}
