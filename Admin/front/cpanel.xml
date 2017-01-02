@@ -24,7 +24,7 @@
 		<divider/>
 		<buttons type="actions" condition="acl.config">
 			<nav-header label="TB.SECTION"/>
-			<button type="new" task="section.add" label="TB.ADD_NEW" icon="file"/>
+			<button type="new" task="section.add" label="AMN.ADD" icon="file"/>
 			<button type="delete" task="section.delete" confirm="TB.JS_DELETE_SECTION_WARN"/>
 			<nav-header label="TB.PUBLISHING"/>
 			<button type="publish" task="section.publish"/>
