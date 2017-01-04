@@ -23,7 +23,7 @@
 	<toolbar title="var:[site_title]" icon="SobiSection">
 		<divider/>
 		<buttons type="entry" condition="acl.entry.visible">
-			<button type="url" sid="true" task="entry.add" label="TB.ADD_NEW" icon="file-text" condition="acl.entry.add"/>
+			<button type="url" sid="true" task="entry.add" label="TB.ADD_NEW" icon="plus" condition="acl.entry.add"/>
 			<button type="delete" task="entry.delete" confirm="TB.JS_DELETE_ENTRIES_WARN" condition="acl.entry.delete"/>
 			<nav-header label="TB.PUBLISHING"/>
 			<button type="publish" task="entry.publish" condition="acl.entry.publish"/>

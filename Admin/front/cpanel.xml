@@ -22,9 +22,8 @@
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiPro">
 		<divider/>
-		<buttons type="section" condition="acl.config">
-			<nav-header label="TB.SECTION"/>
-			<button type="new" task="section.add" label="AMN.ADD" icon="file"/>
+		<buttons type="action" label="TB.SECTION" condition="acl.config">
+			<button type="new" task="section.add" label="AMN.ADD" icon="plus"/>
 			<button type="delete" task="section.delete" confirm="TB.JS_DELETE_SECTION_WARN"/>
 			<nav-header label="TB.PUBLISHING"/>
 			<button type="publish" task="section.publish"/>
