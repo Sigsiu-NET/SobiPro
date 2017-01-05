@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -81,6 +83,7 @@ class SPEntryCtrl extends SPController
 				}
 				break;
 		}
+
 		return $r;
 	}
 
@@ -95,7 +98,8 @@ class SPEntryCtrl extends SPController
 			try {
 				SPFactory::db()->update( 'spdb_object', array( 'approved' => 1 ), array( 'id' => $this->_model->get( 'id' ), 'oType' => 'entry' ) );
 				$this->_model->approveFields( true );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_model ) );
@@ -110,6 +114,7 @@ class SPEntryCtrl extends SPController
 	/**
 	 * @param int $sid
 	 * @param bool $redirect
+	 *
 	 * @return void
 	 */
 	protected function checkIn( $sid, $redirect = true )
@@ -190,7 +195,7 @@ class SPEntryCtrl extends SPController
 		}
 		$this->_model->loadFields( Sobi::Reg( 'current_section' ) );
 		$fields = $this->_model->get( 'fields' );
-		$tsId = SPRequest::string( 'editentry', null, false, 'cookie' );
+		$tsId   = SPRequest::string( 'editentry', null, false, 'cookie' );
 
 		$tsIdToRequest = false;
 		if ( !strlen( $tsId ) ) {
@@ -211,7 +216,8 @@ class SPEntryCtrl extends SPController
 					if ( is_array( $request ) && count( $request ) ) {
 						$store = array_merge( $store, $request );
 					}
-				} catch ( SPException $x ) {
+				}
+				catch ( SPException $x ) {
 					$this->response( Sobi::Back(), $x->getMessage(), !( $ajax ), SPC::ERROR_MSG, array( 'error' => $field->get( 'nid' ) ) );
 				}
 			}
@@ -243,11 +249,11 @@ class SPEntryCtrl extends SPController
 
 	private function getCache( $tsId, $cache = 'requestcache' )
 	{
-		$store = SPFactory::cache()->getVar( 'request_cache_' . $tsId );
+		$store       = SPFactory::cache()->getVar( 'request_cache_' . $tsId );
 		$this->store = $store;
 		/* try from Sobi Cache first */
 		if ( $store && isset( $store[ 'post' ] ) && isset( $store[ 'store' ] ) && isset( $store[ 'files' ] ) ) {
-			$post = $store[ 'post' ];
+			$post  = $store[ 'post' ];
 			$files = $store[ 'files' ];
 			$store = $store[ 'store' ];
 			if ( is_array( $files ) ) {
@@ -258,15 +264,15 @@ class SPEntryCtrl extends SPController
 			$request = $cache;
 		}
 		else {
-			$file = str_replace( '.', '-', $tsId );
+			$file    = str_replace( '.', '-', $tsId );
 			$tempDir = SPLoader::dirPath( 'tmp.edit.' . $file );
 			if ( strlen( $file ) && $tempDir ) {
-				$tempFile = SPLoader::path( 'tmp.edit.' . $file . '.post', 'front', true, 'var' );
+				$tempFile  = SPLoader::path( 'tmp.edit.' . $file . '.post', 'front', true, 'var' );
 				$filesFile = SPLoader::path( 'tmp.edit.' . $file . '.files', 'front', true, 'var' );
 				$storeFile = SPLoader::path( 'tmp.edit.' . $file . '.store', 'front', true, 'var' );
-				$post = SPConfig::unserialize( SPFs::read( $tempFile ) );
-				$files = SPConfig::unserialize( SPFs::read( $filesFile ) );
-				$store = SPConfig::unserialize( SPFs::read( $storeFile ) );
+				$post      = SPConfig::unserialize( SPFs::read( $tempFile ) );
+				$files     = SPConfig::unserialize( SPFs::read( $filesFile ) );
+				$store     = SPConfig::unserialize( SPFs::read( $storeFile ) );
 				if ( is_array( $files ) ) {
 					$post = array_merge( $post, $files );
 				}
@@ -278,15 +284,16 @@ class SPEntryCtrl extends SPController
 				$request = 'post';
 			}
 		}
+
 		return $request;
 	}
 
 	private function payment()
 	{
-		$sid = SPRequest::sid();
+		$sid  = SPRequest::sid();
 		$data = SPFactory::cache()->getObj( 'payment', $sid, Sobi::Section(), true );
 		if ( !( $data ) ) {
-			$tsId = SPRequest::string( 'tsid' );
+			$tsId  = SPRequest::string( 'tsid' );
 			$tfile = SPLoader::path( 'tmp.edit.' . $tsId . '.payment', 'front', false, 'var' );
 			if ( SPFs::exists( $tfile ) ) {
 				$data = SPConfig::unserialize( SPFs::read( $tfile ) );
@@ -385,9 +392,9 @@ class SPEntryCtrl extends SPController
 			}
 		}
 		$preState = array(
-				'approved' => $this->_model->get( 'approved' ),
-				'state' => $this->_model->get( 'state' ),
-				'new' => !( $this->_model->get( 'id' ) )
+			'approved' => $this->_model->get( 'approved' ),
+			'state'    => $this->_model->get( 'state' ),
+			'new'      => !( $this->_model->get( 'id' ) )
 		);
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 
@@ -466,8 +473,8 @@ class SPEntryCtrl extends SPController
 		}
 		if ( $pCount && !( Sobi::Can( 'entry.payment.free' ) ) ) {
 			$ident = md5( microtime() . $tsId . $sid . time() );
-			$data = array( 'data' => SPFactory::payment()->summary( $sid ), 'ident' => $ident );
-			$url = Sobi::Url( array( 'sid' => $sid, 'task' => 'entry.payment' ), false, false );
+			$data  = array( 'data' => SPFactory::payment()->summary( $sid ), 'ident' => $ident );
+			$url   = Sobi::Url( array( 'sid' => $sid, 'task' => 'entry.payment' ), false, false );
 			if ( Sobi::Cfg( 'cache.l3_enabled', true ) ) {
 				SPFactory::cache()->addObj( $data, 'payment', $sid, Sobi::Section(), true );
 			}
@@ -488,8 +495,10 @@ class SPEntryCtrl extends SPController
 
 	/**
 	 * authorise action
+	 *
 	 * @param string $action
 	 * @param string $ownership
+	 *
 	 * @return bool
 	 */
 	protected function authorise( $action = 'access', $ownership = 'valid' )
@@ -509,6 +518,7 @@ class SPEntryCtrl extends SPController
 					break;
 			}
 		}
+
 		return true;
 	}
 
@@ -528,7 +538,7 @@ class SPEntryCtrl extends SPController
 		}
 		else {
 			$this->_model = null;
-			$sid = SPRequest::int( 'pid' );
+			$sid          = SPRequest::int( 'pid' );
 		}
 
 		if ( $this->_model && $this->_model->isCheckedOut() ) {
@@ -558,11 +568,13 @@ class SPEntryCtrl extends SPController
 		/* if adding new */
 		else {
 			/* handle meta data */
-			SPFactory::header()->objMeta( $section );
+			if ( Sobi::Cfg( 'meta.always_add_section' ) ) {
+				SPFactory::header()->objMeta( $section );
+			}
 			if ( $this->_task == 'add' ) {
 				SPFactory::header()
-						->addKeyword( $section->get( 'efMetaKeys' ) )
-						->addDescription( $section->get( 'efMetaDesc' ) );
+					->addKeyword( $section->get( 'efMetaKeys' ) )
+					->addDescription( $section->get( 'efMetaDesc' ) );
 			}
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'EN.ADD_PATH_TITLE' ), Sobi::Url( 'current' ) );
 			SPFactory::mainframe()->setTitle( Sobi::Txt( 'EN.ADD_TITLE', array( 'section' => $section->get( 'name' ) ) ) );
@@ -596,7 +608,7 @@ class SPEntryCtrl extends SPController
 		/* check out the model */
 		$this->_model->checkOut();
 		$class = SPLoader::loadView( 'entry' );
-		$view = new $class( $this->template );
+		$view  = new $class( $this->template );
 		$view->assign( $this->_model, 'entry' );
 
 		$cache = Sobi::Reg( 'editcache' );
@@ -610,9 +622,9 @@ class SPEntryCtrl extends SPController
 		if ( count( $cats ) ) {
 			$tCats = array();
 			foreach ( $cats as $cid ) {
-				$tCats2 = SPFactory::config()->getParentPath( ( int )$cid, true );
+				$tCats2 = SPFactory::config()->getParentPath( ( int ) $cid, true );
 				if ( is_array( $tCats2 ) && count( $tCats2 ) ) {
-					$tCats[ ] = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), $tCats2 );
+					$tCats[] = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), $tCats2 );
 				}
 			}
 			if ( count( $tCats ) ) {
@@ -669,7 +681,7 @@ class SPEntryCtrl extends SPController
 		$this->_model->loadFields( Sobi::Reg( 'current_section' ) );
 		$this->_model->formatDatesToDisplay();
 		$class = SPLoader::loadView( 'entry' );
-		$view = new $class( $this->template );
+		$view  = new $class( $this->template );
 		$view->assign( $this->_model, 'entry' );
 		$visitor = SPFactory::user()->getCurrent();
 		$view->assign( $visitor, 'visitor' );
@@ -685,6 +697,7 @@ class SPEntryCtrl extends SPController
 
 	/**
 	 * @param SPField[] $fields
+	 *
 	 * @return void
 	 */
 	protected function createValidationScript( $fields )
@@ -692,22 +705,22 @@ class SPEntryCtrl extends SPController
 		/* get input filters */
 		$registry =& SPFactory::registry();
 		$registry->loadDBSection( 'fields_filter' );
-		$filters = $registry->get( 'fields_filter' );
+		$filters  = $registry->get( 'fields_filter' );
 		$validate = array();
 		foreach ( $fields as $field ) {
 			$filter = $field->get( 'filter' );
 			if ( $filter && isset( $filters[ $filter ] ) ) {
-				$f = new stdClass();
-				$f->name = $field->get( 'nid' );
-				$f->filter = base64_decode( $filters[ $filter ][ 'params' ] );
-				$f->msg = Sobi::Txt( '[JS]' . $filters[ $filter ][ 'description' ] );
-				$validate[ ] = $f;
+				$f          = new stdClass();
+				$f->name    = $field->get( 'nid' );
+				$f->filter  = base64_decode( $filters[ $filter ][ 'params' ] );
+				$f->msg     = Sobi::Txt( '[JS]' . $filters[ $filter ][ 'description' ] );
+				$validate[] = $f;
 			}
 		}
 		if ( count( $validate ) ) {
 			Sobi::Trigger( $this->name(), __FUNCTION__, array( &$validate ) );
 			$validate = json_encode( ( $validate ) );
-			$header =& SPFactory::header();
+			$header   =& SPFactory::header();
 			$header->addJsVarFile( 'efilter', md5( $validate ), array( 'OBJ' => addslashes( $validate ) ) );
 		}
 	}
@@ -719,12 +732,13 @@ class SPEntryCtrl extends SPController
 	protected function logChanges( $action, $reason = null )
 	{
 		$changes = $this->_model->getCurrentBaseData();
-		$fields = $this->_model->getFields();
+		$fields  = $this->_model->getFields();
 		if ( count( $fields ) ) {
 			foreach ( $fields as $nid => $field ) {
 				try {
 					$changes[ 'fields' ][ $nid ] = $field->saveHistory();
-				} catch ( SPException $x ) {
+				}
+				catch ( SPException $x ) {
 					$changes[ 'fields' ][ $nid ] = $field->getRaw();
 				}
 			}

@@ -89,6 +89,7 @@ Legend:
 	(#) JSON settings file isn't loaded when using template override
 	(#) No possibility to adjust RSS settings for categories
 	(#) Missing size and label settings in search form for checkbox groups and radio buttons
+	(#) Section meta data are added always to meta data of entry and search forms
 
 
 -------------------
