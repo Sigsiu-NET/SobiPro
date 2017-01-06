@@ -233,9 +233,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 		// check if the entry was ever approved.
 		// if it wasn't we would delete current data and there would be no other data at all
 		// See #1221 - Thu, May 8, 2014 11:18:20
+		// and what if logging will be switch on first after the entry was already approved?? (Sigrid)
 		$count = SPFactory::db()
-				->select( 'COUNT(*)', 'spdb_history', array( 'sid' => $this->id, 'change' => 'approve' ) )
-				->loadResult();
+			->select( 'COUNT(*)', 'spdb_history', array( 'sid' => $this->id, 'change' => [ 'approve', 'approved' ] ) )
+			->loadResult();
 		if ( $count ) {
 			// restore previous version
 			foreach ( $this->fields as $field ) {

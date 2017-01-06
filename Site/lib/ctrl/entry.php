@@ -132,7 +132,8 @@ class SPEntryCtrl extends SPController
 			}
 			if ( ( ( $this->_model->get( 'owner' ) == Sobi::My( 'id' ) ) && Sobi::Can( 'entry.publish.own' ) ) || Sobi::Can( 'entry.publish.*' ) ) {
 				$this->_model->changeState( $state );
-				$this->logChanges( 'change-state' );
+				$log_message = $state ? 'published' : 'unpublished';
+				$this->logChanges( $log_message );
 				$this->response( Sobi::Back(), Sobi::Txt( $state ? 'EN.PUBLISHED' : 'EN.UNPUBLISHED', $this->_model->get( 'name' ) ), false, SPC::SUCCESS_MSG );
 			}
 			else {

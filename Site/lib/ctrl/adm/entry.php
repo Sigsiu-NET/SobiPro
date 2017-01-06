@@ -215,9 +215,12 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			$messages[ 'rejection' ] = $objects;
 			SPFactory::registry()->set( 'messages', $messages );
 			$this->_model->setMessage( $reason, 'reason' );
+			SPFactory::message()->logAction( 'reject', $this->_model->get( 'id' ), array(), $reason );
+
 			if ( SPRequest::bool( 'unpublish', false, 'post' ) ) {
 				$this->_model->changeState( 0, $reason, false );
 				$changes[ ] = 'unpublish';
+				SPFactory::message()->logAction( 'unpublished', $this->_model->get( 'id' ), array(), Sobi::Txt( 'EN.REJECT_HISTORY' ) );
 			}
 			if ( SPRequest::bool( 'trigger_unpublish', false, 'post' ) ) {
 				Sobi::Trigger( 'Entry', 'AfterChangeState', array( $this->_model, 0, 'messages' => $this->_model->get( 'messages' ) ) );
@@ -225,12 +228,12 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			if ( SPRequest::bool( 'discard', false, 'post' ) ) {
 				$changes[ ] = 'discard';
 				$data = $this->_model->discard( false );
+				SPFactory::message()->logAction( 'discard', $this->_model->get( 'id' ), $data, Sobi::Txt( 'EN.REJECT_HISTORY' ) );
 			}
 			if ( SPRequest::bool( 'trigger_unapprove', false, 'post' ) ) {
 				Sobi::Trigger( 'Entry', 'AfterUnapprove', array( $this->_model, 0 ) );
 			}
 			Sobi::Trigger( 'Entry', 'AfterReject', array( $this->_model, 0 ) );
-			SPFactory::message()->logAction( 'reject', $this->_model->get( 'id' ), $data, $reason );
 			$this->response( Sobi::Back(), Sobi::Txt( 'ENTRY_REJECTED', $this->_model->get( 'name' ) ), true, SPC::SUCCESS_MSG );
 		}
 	}
@@ -369,7 +372,8 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
 			}
-			$this->logChanges( 'approve' );
+			$log_message = $approve ? 'approved' : 'unapproved';
+			$this->logChanges( $log_message );
 			SPFactory::cache()->purgeSectionVars();
 			$this->response( Sobi::Back(), Sobi::Txt( $approve ? 'EMN.APPROVED' : 'EMN.UNAPPROVED', $entry->get( 'name' ) ), false, SPC::SUCCESS_MSG );
 		}
