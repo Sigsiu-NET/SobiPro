@@ -63,9 +63,9 @@ class SPRequirements extends SPController
 		}
 	}
 
-	private function txt( $text, $params = array() )
+	private function txt( $text, $params = [] )
 	{
-		return array( 'current' => Sobi::Txt( $text, $params ), 'org' => array( 'label' => $text, 'params' => $params ) );
+		return [ 'current' => Sobi::Txt( $text, $params ), 'org' => [ 'label' => $text, 'params' => $params ] ];
 	}
 
 	private function mySQLCache()
@@ -155,10 +155,10 @@ class SPRequirements extends SPController
 		SPFactory::db()->exec( 'SELECT collation( "spdb_object" )' );
 		$col = SPFactory::db()->loadResult();
 		if ( !( strstr( $col, 'utf8' ) ) ) {
-			echo $this->error( $this->txt( 'REQ.MYSQL_WRONG_COLL', array( 'collation' => $col ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.MYSQL_WRONG_COLL', [ 'collation' => $col ] ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( $this->txt( 'REQ.MYSQL_COLL_OK', array( 'collation' => $col ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.MYSQL_COLL_OK', [ 'collation' => $col ] ), __FUNCTION__ );
 		}
 	}
 
@@ -167,17 +167,17 @@ class SPRequirements extends SPController
 		$ver = SPFactory::db()->getVersion();
 		$ver = preg_replace( '/[^0-9\.]/i', null, $ver );
 		$ver = explode( '.', $ver );
-		$ver = array( 'major' => $ver[ 0 ], 'minor' => $ver[ 1 ], 'build' => ( isset( $ver[ 2 ] ) ? substr( $ver[ 2 ], 0, 2 ) : 0 ) );
-		$minVer = array( 'major' => 5, 'minor' => 0, 'build' => 0 );
-		$rVer = array( 'major' => 5, 'minor' => 1, 'build' => 0 );
+		$ver = [ 'major' => $ver[ 0 ], 'minor' => $ver[ 1 ], 'build' => ( isset( $ver[ 2 ] ) ? substr( $ver[ 2 ], 0, 2 ) : 0 ) ];
+		$minVer = [ 'major' => 5, 'minor' => 0, 'build' => 0 ];
+		$rVer = [ 'major' => 5, 'minor' => 1, 'build' => 0 ];
 		if ( !( $this->compareVersion( $minVer, $ver ) ) ) {
-			echo $this->error( $this->txt( 'REQ.MYSQL_WRONG_VER', array( 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.MYSQL_WRONG_VER', [ 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ) ] ), __FUNCTION__ );
 		}
 		elseif ( !( $this->compareVersion( $rVer, $ver ) ) ) {
-			echo $this->warning( $this->txt( 'REQ.MYSQL_NOT_REC_VER', array( 'recommended' => implode( '.', $rVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.MYSQL_NOT_REC_VER', [ 'recommended' => implode( '.', $rVer ), 'installed' => implode( '.', $ver ) ] ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( $this->txt( 'REQ.MYSQL_VERSION_OK', array( 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.MYSQL_VERSION_OK', [ 'installed' => implode( '.', $ver ) ] ), __FUNCTION__ );
 		}
 	}
 
@@ -198,13 +198,13 @@ class SPRequirements extends SPController
 		$v = ini_get( 'memory_limit' );
 		$v = preg_replace( '/[^0-9]/i', null, $v );
 		if ( $v >= 48 ) {
-			echo $this->ok( $this->txt( 'REQ.MEM_LIM_IS', array( 'memory' => $v ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.MEM_LIM_IS', [ 'memory' => $v ] ), __FUNCTION__ );
 		}
 		elseif ( $v >= 32 ) {
-			echo $this->warning( $this->txt( 'REQ.MEM_LIM_IS_LOW', array( 'memory' => $v ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.MEM_LIM_IS_LOW', [ 'memory' => $v ] ), __FUNCTION__ );
 		}
 		else {
-			echo $this->error( $this->txt( 'REQ.MEM_LIM_IS_TOO_LOW', array( 'memory' => $v ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.MEM_LIM_IS_TOO_LOW', [ 'memory' => $v ] ), __FUNCTION__ );
 		}
 	}
 
@@ -218,10 +218,10 @@ class SPRequirements extends SPController
 		}
 
 		if ( $v >= 30 ) {
-			echo $this->ok( $this->txt( 'REQ.MAX_EXEC_IS', array( 'limit' => $v ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.MAX_EXEC_IS', [ 'limit' => $v ] ), __FUNCTION__ );
 		}
 		else {
-			echo $this->warning( $this->txt( 'REQ.MAX_EXEC_IS_LOW', array( 'limit' => $v ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.MAX_EXEC_IS_LOW', [ 'limit' => $v ] ), __FUNCTION__ );
 		}
 	}
 
@@ -492,17 +492,17 @@ class SPRequirements extends SPController
 	{
 		$phpVer = $ver = preg_replace( '/[^0-9\.]/i', null, substr( PHP_VERSION, 0, 6 ) );
 		$ver = explode( '.', $phpVer );
-		$ver = array( 'major' => $ver[ 0 ], 'minor' => $ver[ 1 ], 'build' => ( isset( $ver[ 2 ] ) ? $ver[ 2 ] : 0 ) );
-		$minVer = array( 'major' => 5, 'minor' => 4, 'build' => 0 );
-		$rVer = array( 'major' => 7, 'minor' => 0, 'build' => 10 );
+		$ver = [ 'major' => $ver[ 0 ], 'minor' => $ver[ 1 ], 'build' => ( isset( $ver[ 2 ] ) ? $ver[ 2 ] : 0 ) ];
+		$minVer = [ 'major' => 5, 'minor' => 4, 'build' => 0 ];
+		$rVer = [ 'major' => 7, 'minor' => 0, 'build' => 10 ];
 		if ( !( $this->compareVersion( $minVer, $ver ) ) ) {
-			echo $this->error( $this->txt( 'REQ.PHP_WRONG_VER', array( 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.PHP_WRONG_VER', [ 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ) ] ), __FUNCTION__ );
 		}
 		elseif ( !( $this->compareVersion( $minVer, $ver ) ) ) {
-			echo $this->warning( $this->txt( 'REQ.PHP_NOT_REC_VER', array( 'recommended' => implode( '.', $rVer ), 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.PHP_NOT_REC_VER', [ 'recommended' => implode( '.', $rVer ), 'installed' => implode( '.', $ver ) ] ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( $this->txt( 'REQ.PHP_VERSION_OK', array( 'installed' => implode( '.', $ver ) ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.PHP_VERSION_OK', [ 'installed' => implode( '.', $ver ) ] ), __FUNCTION__ );
 		}
 	}
 
@@ -516,24 +516,24 @@ class SPRequirements extends SPController
 		$ver = explode( '.', $ver );
 		$sapi = function_exists( 'php_sapi_name' ) ? php_sapi_name() : 'Unknown';
 		if ( strtolower( $soft ) != 'apache' ) {
-			echo $this->warning( $this->txt( 'REQ.WS_WRONG_SOFTWARE', array( 'webserver' => SPRequest::string( 'SERVER_SOFTWARE', getenv( 'SERVER_SOFTWARE' ), null, 'server' ) ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.WS_WRONG_SOFTWARE', [ 'webserver' => SPRequest::string( 'SERVER_SOFTWARE', getenv( 'SERVER_SOFTWARE' ), null, 'server' ) ] ), __FUNCTION__ );
 		}
 		else {
-			$minVer = array( 'major' => 2, 'minor' => 0, 'build' => 0 );
+			$minVer = [ 'major' => 2, 'minor' => 0, 'build' => 0 ];
 //			$rVer = array( 'major' => 2, 'minor' => 2, 'build' => 0 );
 			if ( !( isset( $ver[ 0 ] ) && isset( $ver[ 1 ] ) && isset( $ver[ 2 ] ) ) || !( $ver[ 0 ] && $ver[ 1 ] ) ) {
-				echo $this->warning( $this->txt( 'REQ.WS_NO_APACHE_VER', array( 'required' => implode( '.', $minVer ), 'sapi' => $sapi ) ), __FUNCTION__ );
+				echo $this->warning( $this->txt( 'REQ.WS_NO_APACHE_VER', [ 'required' => implode( '.', $minVer ), 'sapi' => $sapi ] ), __FUNCTION__ );
 				exit;
 			}
-			$ver = array( 'major' => $ver[ 0 ], 'minor' => $ver[ 1 ], 'build' => ( isset( $ver[ 2 ] ) ? $ver[ 2 ] : 0 ) );
+			$ver = [ 'major' => $ver[ 0 ], 'minor' => $ver[ 1 ], 'build' => ( isset( $ver[ 2 ] ) ? $ver[ 2 ] : 0 ) ];
 			if ( !( $this->compareVersion( $minVer, $ver ) ) ) {
-				echo $this->error( $this->txt( 'REQ.WS_WRONG_VER', array( 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ), 'sapi' => $sapi ) ), __FUNCTION__ );
+				echo $this->error( $this->txt( 'REQ.WS_WRONG_VER', [ 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $ver ), 'sapi' => $sapi ] ), __FUNCTION__ );
 			}
 //			elseif ( !( $this->compareVersion( $rVer, $ver ) ) ) {
 //				echo $this->warning( $this->txt( 'REQ.WS_NOT_REC_VER', array( 'recommended' => implode( '.', $rminVer ), 'installed' => implode( '.', $ver ), 'sapi' => $sapi ) ), __FUNCTION__ );
 //			}
 			else {
-				echo $this->ok( $this->txt( 'REQ.WS_VERSION_OK', array( 'installed' => implode( '.', $ver ), 'sapi' => $sapi ) ), __FUNCTION__ );
+				echo $this->ok( $this->txt( 'REQ.WS_VERSION_OK', [ 'installed' => implode( '.', $ver ), 'sapi' => $sapi ] ), __FUNCTION__ );
 			}
 		}
 	}
@@ -542,10 +542,10 @@ class SPRequirements extends SPController
 	{
 		$e = strtolower( SPFactory::CmsHelper()->cmsSetting( 'charset' ) );
 		if ( $e != 'utf-8' ) {
-			echo $this->error( $this->txt( 'REQ.CMS_ENCODING_NOK', array( 'encoding' => $e ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.CMS_ENCODING_NOK', [ 'encoding' => $e ] ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( $this->txt( 'REQ.CMS_ENCODING_OK', array( 'encoding' => $e ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.CMS_ENCODING_OK', [ 'encoding' => $e ] ), __FUNCTION__ );
 		}
 	}
 
@@ -570,13 +570,13 @@ class SPRequirements extends SPController
 		unset( $minVer[ 'rev' ] );
 
 		if ( !( $this->compareVersion( $minVer, $cmsVer ) ) ) {
-			echo $this->error( $this->txt( 'REQ.CMS_WRONG_VER', array( 'cms' => $cmsName, 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $cmsVer ) ) ), __FUNCTION__ );
+			echo $this->error( $this->txt( 'REQ.CMS_WRONG_VER', [ 'cms' => $cmsName, 'required' => implode( '.', $minVer ), 'installed' => implode( '.', $cmsVer ) ] ), __FUNCTION__ );
 		}
 		elseif ( !( $this->compareVersion( $rminVer, $cmsVer ) ) ) {
-			echo $this->warning( $this->txt( 'REQ.CMS_NOT_REC_VER', array( 'cms' => $cmsName, 'recommended' => implode( '.', $rminVer ), 'installed' => implode( '.', $cmsVer ) ) ), __FUNCTION__ );
+			echo $this->warning( $this->txt( 'REQ.CMS_NOT_REC_VER', [ 'cms' => $cmsName, 'recommended' => implode( '.', $rminVer ), 'installed' => implode( '.', $cmsVer ) ] ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( $this->txt( 'REQ.CMS_VERSION_OK', array( 'cms' => $cmsName, 'installed' => implode( '.', $cmsVer ), 'cms' => $cmsName, ) ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.CMS_VERSION_OK', [ 'cms' => $cmsName, 'installed' => implode( '.', $cmsVer ), 'cms' => $cmsName, ] ), __FUNCTION__ );
 		}
 	}
 
@@ -589,8 +589,8 @@ class SPRequirements extends SPController
 		}
 		$c = date( DATE_RFC822 );
 		SPFs::write( $file, $c );
-		$store = Sobi::GetUserData( 'requirements', array() );
-		$store[ $key ] = array( 'value' => $value, 'message' => $msg );
+		$store = Sobi::GetUserData( 'requirements', [] );
+		$store[ $key ] = [ 'value' => $value, 'message' => $msg ];
 		Sobi::SetUserData( 'requirements', $store );
 		SPFs::delete( $file );
 
@@ -606,7 +606,7 @@ class SPRequirements extends SPController
 
 	private function prepareStoredData( &$settings )
 	{
-		$store = Sobi::GetUserData( 'requirements', array() );
+		$store = Sobi::GetUserData( 'requirements', [] );
 		if ( Sobi::Lang() != 'en-GB' && file_exists( JPATH_ADMINISTRATOR . self::langFile ) ) {
 			$file = parse_ini_file( JPATH_ADMINISTRATOR . self::langFile );
 		}
@@ -619,10 +619,10 @@ class SPRequirements extends SPController
 							$translate = str_replace( "var:[$param]", $value, $translate );
 						}
 					}
-					$settings[ $key ] = array( 'key' => $key, 'response' => array( 'en-GB' => $translate, Sobi::Lang() => $data[ 'message' ][ 'current' ] ), 'status' => $data[ 'value' ] );
+					$settings[ $key ] = [ 'key' => $key, 'response' => [ 'en-GB' => $translate, Sobi::Lang() => $data[ 'message' ][ 'current' ] ], 'status' => $data[ 'value' ] ];
 				}
 				else {
-					$settings[ $key ] = array( 'key' => $key, 'response' => array( 'en-GB' => $data[ 'message' ][ 'current' ] ), 'status' => $data[ 'value' ] );
+					$settings[ $key ] = [ 'key' => $key, 'response' => [ 'en-GB' => $data[ 'message' ][ 'current' ] ], 'status' => $data[ 'value' ] ];
 				}
 			}
 		}
@@ -632,8 +632,8 @@ class SPRequirements extends SPController
 	{
 //		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
 		$cont = null;
-		$settings = array();
-		$settings[ 'SobiPro' ] = array( 'Version' => SPFactory::CmsHelper()->myVersion( true ), 'Version_Num' => implode( '.', SPFactory::CmsHelper()->myVersion() ) );
+		$settings = [];
+		$settings[ 'SobiPro' ] = [ 'Version' => SPFactory::CmsHelper()->myVersion( true ), 'Version_Num' => implode( '.', SPFactory::CmsHelper()->myVersion() ) ];
 //		$file = SPLoader::path( 'tmp.info', 'front', false, 'txt' );
 //		if ( SPFs::exists( $file ) ) {
 //			$cont = SPFs::read( $file );
@@ -649,30 +649,30 @@ class SPRequirements extends SPController
 //			}
 //		}
 		$this->prepareStoredData( $settings );
-		$settings[ 'env' ] = array(
+		$settings[ 'env' ] = [
 			'PHP_OS' => PHP_OS,
 			'php_uname' => php_uname(),
 			'PHP_VERSION_ID' => PHP_VERSION_ID
-		);
+		];
 		$settings[ 'ftp' ] = $this->ftp();
 		$settings[ 'curl' ] = $this->curlFull();
 		$settings[ 'exec' ][ 'response' ] = $this->execResp();
 		$settings[ 'SOBI_SETTINGS' ] = SPFactory::config()->getSettings();
 		$c = SPFactory::db()->select( '*', 'spdb_config' )->loadObjectList();
 		$sections = SPFactory::db()
-				->select( array( 'nid', 'id' ), 'spdb_object', array( 'oType' => 'section' ) )
+				->select( [ 'nid', 'id' ], 'spdb_object', [ 'oType' => 'section' ] )
 				->loadAssocList( 'id' );
-		$as = array();
+		$as = [];
 		foreach ( $c as $key ) {
 			if ( $key->section == 0 || !( isset( $sections[ $key->section ] ) ) ) {
 				continue;
 			}
 			$key->section = $sections[ $key->section ][ 'nid' ];
 			if ( !( isset( $as[ $key->section ] ) ) ) {
-				$as[ $key->section ] = array();
+				$as[ $key->section ] = [];
 			}
 			if ( !( isset( $as[ $key->section ][ $key->cSection ] ) ) ) {
-				$as[ $key->section ][ $key->cSection ] = array();
+				$as[ $key->section ][ $key->cSection ] = [];
 			}
 			$_c = explode( '_', $key->sKey );
 			if ( $_c[ count( $_c ) - 1 ] == 'array' ) {
@@ -711,7 +711,7 @@ class SPRequirements extends SPController
 		$settings[ 'PHP_EXT' ] = $php;
 		$out = SPFactory::Instance( 'types.array' );
 		$data = $out->toXML( $settings, 'settings' );
-		$data = str_replace( array( SOBI_ROOT, '></' ), array( 'REMOVED', '>0</' ), $data );
+		$data = str_replace( [ SOBI_ROOT, '></' ], [ 'REMOVED', '>0</' ], $data );
 		$f = SPLang::nid( $settings[ 'SOBI_SETTINGS' ][ 'general' ][ 'site_name' ] . '-' . date( DATE_RFC822 ) );
 
 		SPFactory::mainframe()->cleanBuffer();
@@ -729,7 +729,7 @@ class SPRequirements extends SPController
 	private function execResp()
 	{
 		$cmd = 'date';
-		$cfg = array( 'shell' => array() );
+		$cfg = [ 'shell' => [] ];
 		$n = null;
 		if ( function_exists( 'exec' ) ) {
 			set_time_limit( 15 );
@@ -748,7 +748,7 @@ class SPRequirements extends SPController
 
 	private function ftp()
 	{
-		$cfg = array();
+		$cfg = [];
 		if ( function_exists( 'ftp_connect' ) ) {
 			$cfg[ 'available' ] = 'available';
 			$address = 'sigsiu-net.de';
@@ -834,13 +834,13 @@ class SPRequirements extends SPController
 
 	protected function out( $message, $type = SPC::SUCCESS_MSG )
 	{
-		return json_encode( array( 'type' => $type, 'message' => $message[ 'current' ], 'textType' => Sobi::Txt( 'STATUS_' . $type ) ) );
+		return json_encode( [ 'type' => $type, 'message' => $message[ 'current' ], 'textType' => Sobi::Txt( 'STATUS_' . $type ) ] );
 	}
 
 	protected function view()
 	{
 		$msg = null;
-		$store = array();
+		$store = [];
 		Sobi::SetUserData( 'requirements', $store );
 		$home = SPRequest::int( 'init' ) ? Sobi::Url( null, true ) : Sobi::Url( 'config', true );
 		/** @var $view SPAdmView */

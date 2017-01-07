@@ -47,28 +47,28 @@ final class SPPlugins
 	{
 		$db =& SPFactory::db();
 		$adm = defined( 'SOBIPRO_ADM' ) ? 'adm.' : null;
-		$enabled = $db->select( 'pid', 'spdb_plugins', array( 'enabled' => 1 ) )
+		$enabled = $db->select( 'pid', 'spdb_plugins', [ 'enabled' => 1 ] )
 				->loadResultArray();
-		$condition = array( $adm . '*', $adm . $task );
+		$condition = [ $adm . '*', $adm . $task ];
 		if ( strstr( $task, '.' ) ) {
 			$t = explode( '.', $task );
 			$condition[ ] = $adm . $t[ 0 ] . '.*';
 			$task = $t[ 0 ] . '.' . $t[ 1 ];
 		}
-		$this->_actions[ $task ] = array();
+		$this->_actions[ $task ] = [];
 		try {
-			$pids = $db->select( 'pid', 'spdb_plugin_task', array( 'onAction' => $condition, 'pid' => $enabled ) )
+			$pids = $db->select( 'pid', 'spdb_plugin_task', [ 'onAction' => $condition, 'pid' => $enabled ] )
 					->loadResultArray();
 		} catch ( SPException $x ) {
 			Sobi::Error( 'Plugins', $x->getMessage(), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		if ( !( count( $pids ) ) ) {
-			$this->_actions[ $task ] = array();
+			$this->_actions[ $task ] = [];
 		}
 		// get section depend apps
 		if ( Sobi::Section() && count( $pids ) ) {
 			try {
-				$this->_actions[ $task ] = $db->select( 'pid', 'spdb_plugin_section', array( 'section' => Sobi::Section(), 'enabled' => 1, 'pid' => $pids ) )->loadResultArray();
+				$this->_actions[ $task ] = $db->select( 'pid', 'spdb_plugin_section', [ 'section' => Sobi::Section(), 'enabled' => 1, 'pid' => $pids ] )->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( 'Plugins', $x->getMessage(), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
@@ -112,9 +112,9 @@ final class SPPlugins
 	 * @param mixed $params
 	 * @return bool
 	 */
-	public function trigger( $action, $subject = null, $params = array() )
+	public function trigger( $action, $subject = null, $params = [] )
 	{
-		static $actions = array();
+		static $actions = [];
 		static $count = 0;
 		$action = ucfirst( $action ) . ucfirst( $subject );
 		$action = str_replace( 'SP', null, $action );
@@ -163,7 +163,7 @@ final class SPPlugins
 					}
 					/* call the method */
 					if ( isset( $this->_plugins[ $plugin ] ) && $this->_plugins[ $plugin ]->provide( $action ) ) {
-						call_user_func_array( array( $this->_plugins[ $plugin ], $action ), $params );
+						call_user_func_array( [ $this->_plugins[ $plugin ], $action ], $params );
 					}
 				}
 			}

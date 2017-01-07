@@ -31,11 +31,11 @@ abstract class SPFrontView extends SPObject implements SPView
 	/**
 	 * @var array
 	 */
-	protected $_attr = array();
+	protected $_attr = [];
 	/**
 	 * @var array
 	 */
-	protected $_config = array();
+	protected $_config = [];
 	/**
 	 * @var string
 	 */
@@ -43,7 +43,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	/**
 	 * @var array
 	 */
-	protected $_hidden = array();
+	protected $_hidden = [];
 	/**
 	 * @var bool
 	 */
@@ -79,11 +79,12 @@ abstract class SPFrontView extends SPObject implements SPView
 
 
 	/**
+	 * @param null $tTask
 	 */
 	public function __construct( $tTask = null )
 	{
 		$this->tTask = $tTask;
-		Sobi::Trigger( 'Create', $this->name(), array( &$this ) );
+		Sobi::Trigger( 'Create', $this->name(), [ &$this ] );
 	}
 
 	protected function tplPath()
@@ -134,7 +135,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	public function loadCSSFile( $path )
 	{
-		Sobi::Trigger( 'loadCSSFile', $this->name(), array( &$path ) );
+		Sobi::Trigger( 'loadCSSFile', $this->name(), [ &$path ] );
 
 		$tplPath = $this->tplPath();
 		if ( SPFs::exists( $tplPath . DS . 'css' . DS . $path . '.css' ) ) {
@@ -152,7 +153,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	public function loadJsFile( $path )
 	{
-		Sobi::Trigger( 'loadJsFile', $this->name(), array( &$path ) );
+		Sobi::Trigger( 'loadJsFile', $this->name(), [ &$path ] );
 		if ( SPFs::exists( $this->tplPath() . DS . 'js' . DS . $path . '.js' ) ) {
 			$path = 'absolute.' . $this->tplPath() . '.js.' . $path;
 			SPFactory::header()->addJsFile( $path );
@@ -181,7 +182,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		else {
 			$this->_template = SOBI_PATH . '/usr/templates/' . str_replace( '.', '/', $template );
 		}
-		Sobi::Trigger( 'setTemplate', $this->name(), array( &$this->_template ) );
+		Sobi::Trigger( 'setTemplate', $this->name(), [ &$this->_template ] );
 		return $this;
 	}
 
@@ -191,7 +192,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	public function setTitle( $title )
 	{
-		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
+		Sobi::Trigger( 'setTitle', $this->name(), [ &$title ] );
 		SPFactory::header()->setTitle( Sobi::Txt( $title ) );
 	}
 
@@ -222,7 +223,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	public function csection( $section )
 	{
-		return isset( $this->_config[ $section ] ) ? $this->_config[ $section ] : array();
+		return isset( $this->_config[ $section ] ) ? $this->_config[ $section ] : [];
 	}
 
 	private function pb()
@@ -254,7 +255,8 @@ abstract class SPFrontView extends SPObject implements SPView
 	}
 
 	/**
-	 *
+	 * @param null $o
+	 * @throws SPException
 	 */
 	public function display( $o = null )
 	{
@@ -291,10 +293,10 @@ abstract class SPFrontView extends SPObject implements SPView
 		$parser->setProxy( $this );
 		$parser->setData( $this->_attr );
 		$parser->setXML( $this->_xml );
-		$parser->setCacheData( array( 'hidden' => $this->_hidden ) );
+		$parser->setCacheData( [ 'hidden' => $this->_hidden ] );
 		$parser->setType( $this->_type );
 		$parser->setTemplate( $this->_template );
-		Sobi::Trigger( 'Display', $this->name(), array( $type, &$this->_attr ) );
+		Sobi::Trigger( 'Display', $this->name(), [ $type, &$this->_attr ] );
 		$o = $o ? $o : strtolower( $this->key( 'output', $this->key( 'output', 'html' ), $this->tTask ) );
 		$action = $this->key( 'form.action' );
 		if ( $action ) {
@@ -325,13 +327,13 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 		$out .= $action ? "\n</form>\n" : null;
 		/* SobiPro type specific content parser */
-		Sobi::Trigger( 'ContentDisplay', $this->name(), array( &$out ) );
+		Sobi::Trigger( 'ContentDisplay', $this->name(), [ &$out ] );
 		/* common content parser */
 		$cParse = $this->key( 'parse', -1 );
 		/* if it was specified in the template config file or it was set in the section config and not disabled in the template config */
-		if ( !( strstr( $task, '.edit' ) || strstr( $task, '.add' ) || in_array( $task, Sobi::Cfg( 'plugins.content_disable', array() ) ) ) ) {
+		if ( !( strstr( $task, '.edit' ) || strstr( $task, '.add' ) || in_array( $task, Sobi::Cfg( 'plugins.content_disable', [] ) ) ) ) {
 			if ( $cParse == 1 || ( Sobi::Cfg( 'parse_template_content', false ) && $cParse == -1 ) ) {
-				Sobi::Trigger( 'Parse', 'Content', array( &$out ) );
+				Sobi::Trigger( 'Parse', 'Content', [ &$out ] );
 			}
 		}
 		header( 'SobiPro: ' . Sobi::Section() );
@@ -380,8 +382,8 @@ abstract class SPFrontView extends SPObject implements SPView
 
 	protected function registerFunctions()
 	{
-		static $classes = array();
-		$functions = array();
+		static $classes = [];
+		$functions = [];
 		$package = Sobi::Reg( 'current_template' );
 		if ( SPFs::exists( Sobi::FixPath( $package . '/' . $this->key( 'functions' ) ) ) ) {
 			$path = Sobi::FixPath( $package . '/' . $this->key( 'functions' ) );
@@ -390,7 +392,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			 */
 //			ob_start();
 			$content = file_get_contents( $path );
-			$class = array();
+			$class = [];
 			preg_match( '/\s*(class)\s+(\w+)/', $content, $class );
 			if ( isset( $class[ 2 ] ) ) {
 				$className = $class[ 2 ];
@@ -406,7 +408,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			else {
 				if ( $classes[ $className ] != $path ) {
 					Sobi::Error( __CLASS__, 'Class with this name has already been defined, but this is not the same class.', SPC::WARNING );
-					return array();
+					return [];
 				}
 			}
 			$methods = get_class_methods( $className );
@@ -460,7 +462,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				}
 				$method = $params[ 0 ];
 				array_shift( $params );
-				$field = call_user_func_array( array( 'SPHtml_Input', $method ), $params );
+				$field = call_user_func_array( [ 'SPHtml_Input', $method ], $params );
 			}
 			else {
 				Sobi::Error( $this->name(), SPLang::e( 'METHOD_DOES_NOT_EXISTS', $params[ 0 ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -514,7 +516,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				$this->addHidden( SPRequest::string( $name, $defValue ), $name );
 			}
 		}
-		Sobi::Trigger( 'afterLoadConfig', $this->name(), array( &$this->_config ) );
+		Sobi::Trigger( 'afterLoadConfig', $this->name(), [ &$this->_config ] );
 		return $this;
 	}
 
@@ -655,9 +657,9 @@ abstract class SPFrontView extends SPObject implements SPView
 				$entries = SPFactory::cache()->getVar( 'alpha_entries_' . $field );
 				if ( !$entries ) {
 					$alphCtrl = SPFactory::Instance( 'opt.listing.alpha' );
-					$entries = array();
+					$entries = [];
 					foreach ( $letters as $letter ) {
-						$params = array( 'letter' => $letter );
+						$params = [ 'letter' => $letter ];
 						if ( $field ) {
 							$params[ 'field' ] = $field;
 						}
@@ -667,7 +669,7 @@ abstract class SPFrontView extends SPObject implements SPView
 					SPFactory::cache()->addVar( $entries, 'alpha_entries_' . $field );
 				}
 				foreach ( $letters as $letter ) {
-					$le = array( '_complex' => 1, '_data' => trim( $letter ) );
+					$le = [ '_complex' => 1, '_data' => trim( $letter ) ];
 
 					$urlLetter =
 							SPFactory::Instance( 'types.string', $letter )
@@ -681,7 +683,7 @@ abstract class SPFrontView extends SPObject implements SPView
 						else {
 							$task = 'list.alpha.' . $urlLetter;
 						}
-						$le[ '_attributes' ] = array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => $task ) ) );
+						$le[ '_attributes' ] = [ 'url' => Sobi::Url( [ 'sid' => Sobi::Section(), 'task' => $task ] ) ];
 					}
 					$l[] = $le;
 				}
@@ -693,15 +695,15 @@ abstract class SPFrontView extends SPObject implements SPView
 									->toLower()
 									->trim()
 									->get();
-					$l[] = array(
+					$l[] = [
 							'_complex' => 1,
 							'_data' => trim( $letter ),
-							'_attributes' => array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => 'list.alpha.' . $urlLetter ) ) )
-					);
+							'_attributes' => [ 'url' => Sobi::Url( [ 'sid' => Sobi::Section(), 'task' => 'list.alpha.' . $urlLetter ] ) ]
+					];
 				}
 			}
 			$fields = Sobi::Cfg( 'alphamenu.extra_fields_array' );
-			$extraFields = array();
+			$extraFields = [];
 			if ( count( $fields ) ) {
 				array_unshift( $fields, Sobi::Cfg( 'alphamenu.primary_field' ) );
 				foreach ( $fields as $fid ) {
@@ -712,15 +714,15 @@ abstract class SPFrontView extends SPObject implements SPView
 					}
 				}
 				if ( count( $extraFields ) < 2 ) {
-					$extraFields = array();
+					$extraFields = [];
 				}
-				$extraFields = array(
+				$extraFields = [
 						'_complex' => 1,
 						'_data' => $extraFields,
-						'_attributes' => array( 'current' => $field )
-				);
+						'_attributes' => [ 'current' => $field ]
+				];
 			}
-			$data[ 'alphaMenu' ] = array( '_complex' => 1, '_data' => array( 'letters' => $l, 'fields' => $extraFields ) );
+			$data[ 'alphaMenu' ] = [ '_complex' => 1, '_data' => [ 'letters' => $l, 'fields' => $extraFields ] ];
 		}
 	}
 
@@ -729,22 +731,23 @@ abstract class SPFrontView extends SPObject implements SPView
 		$usertype = $visitor->get( 'usertype' );
 		if ( strlen( $usertype ) == 0 )
 			$usertype = 'Visitor';
-		return array(
+		return [
 				'_complex' => 1,
-				'_data' => array(
+				'_data' => [
 						'name' => $visitor->get( 'name' ),
 						'username' => $visitor->get( 'username' ),
-						'usertype' => array(
+						'usertype' => [
 								'_complex' => 1,
 								'_data' => $usertype,
-								'_attributes' => array( 'gid' => implode( ', ', $visitor->get( 'gid' ) ) )
-						)
-				),
-				'_attributes' => array( 'id' => $visitor->get( 'id' ) )
-		);
+								'_attributes' => [ 'gid' => implode( ', ', $visitor->get( 'gid' ) ) ]
+						]
+				],
+				'_attributes' => [ 'id' => $visitor->get( 'id' ) ]
+		];
 	}
 
 	/**
+	 * @param $action
 	 */
 	public function trigger( $action )
 	{
@@ -772,7 +775,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	{
 		$this->nonStaticData
 				= SPFactory::db()
-				->select( array( 'counter', 'sid' ), 'spdb_counter', array( 'sid' => $objects ) )
+				->select( [ 'counter', 'sid' ], 'spdb_counter', [ 'sid' => $objects ] )
 				->loadAssocList( 'sid' );
 	}
 
@@ -784,7 +787,7 @@ abstract class SPFrontView extends SPObject implements SPView
 
 	protected function fieldStruct( $fields, $view )
 	{
-		$data = array();
+		$data = [];
 		foreach ( $fields as $field ) {
 			if ( $field->enabled( $view ) && $field->get( 'id' ) != Sobi::Cfg( 'entry.name_field' ) ) {
 				$struct = $field->struct();
@@ -793,27 +796,27 @@ abstract class SPFrontView extends SPObject implements SPView
 					$options = $struct[ '_options' ];
 					unset( $struct[ '_options' ] );
 				}
-				$data[ $field->get( 'nid' ) ] = array(
+				$data[ $field->get( 'nid' ) ] = [
 						'_complex' => 1,
-						'_data' => array(
-								'label' => array(
+						'_data' => [
+								'label' => [
 										'_complex' => 1,
 										'_data' => $field->get( 'name' ),
-										'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
-								),
+										'_attributes' => [ 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) ]
+								],
 								'data' => $struct,
-						),
-						'_attributes' => array( 'id' => $field->get( 'id' ),
+						],
+						'_attributes' => [ 'id' => $field->get( 'id' ),
 								'itemprop' => $field->get( 'itemprop' ),
 								'type' => $field->get( 'type' ),
 								'suffix' => $field->get( 'suffix' ),
 								'position' => $field->get( 'position' ),
 								'css_view' => $field->get( 'cssClassView' ),
 								'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
-						)
-				);
+						]
+				];
 				if ( Sobi::Cfg( 'entry.field_description', false ) ) {
-					$data[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
+					$data[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = [ '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) ];
 				}
 				if ( $options ) {
 					$data[ $field->get( 'nid' ) ][ '_data' ][ 'options' ] = $options;
@@ -832,7 +835,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	{
 		foreach ( $fields as $data ) {
 			if ( isset( $data[ '_data' ][ 'data' ][ '_validate' ] ) && count( $data[ '_data' ][ 'data' ][ '_validate' ] ) ) {
-				$class = str_replace( array( '/', '.php' ), array( '.', null ), $data[ '_data' ][ 'data' ][ '_validate' ][ 'class' ] );
+				$class = str_replace( [ '/', '.php' ], [ '.', null ], $data[ '_data' ][ 'data' ][ '_validate' ][ 'class' ] );
 				if ( $class ) {
 					$method = $data[ '_data' ][ 'data' ][ '_validate' ][ 'method' ];
 					$class = SPLoader::loadClass( $class );
@@ -844,7 +847,7 @@ abstract class SPFrontView extends SPObject implements SPView
 
 	protected function fixTimes( &$data )
 	{
-		$fix = array( 'valid_since', 'valid_until', 'updated_time', 'created_time' );
+		$fix = [ 'valid_since', 'valid_until', 'updated_time', 'created_time' ];
 		static $offset = null;
 		if ( $offset === null ) {
 			$offset = SPFactory::config()->getTimeOffset();
@@ -854,48 +857,48 @@ abstract class SPFrontView extends SPObject implements SPView
 				continue;
 			}
 			$timestamp = strtotime( $data[ $index ] . 'UTC' );
-			$data[ $index ] = array(
+			$data[ $index ] = [
 					'_complex' => 1,
 					'_data' => gmdate( Sobi::Cfg( 'db.publishing_format', 'j F Y H:i:s' ), $timestamp + $offset ),
-					'_attributes' => array(
+					'_attributes' => [
 							'UTC' => $data[ $index ],
 							'timestamp' => $timestamp,
 							'offset' => $offset,
 							'timezone' => Sobi::Cfg( 'time_offset' )
-					)
-			);
+					]
+			];
 		}
 	}
 
 	protected function menu( &$data )
 	{
 		if ( Sobi::Cfg( 'general.top_menu', true ) ) {
-			$data[ 'menu' ] = array(
-					'front' => array(
+			$data[ 'menu' ] = [
+					'front' => [
 							'_complex' => 1,
 							'_data' => Sobi::Reg( 'current_section_name' ),
-							'_attributes' => array(
-									'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'sid' => Sobi::Section() ) )
-							)
-					)
-			);
+							'_attributes' => [
+									'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'sid' => Sobi::Section() ] )
+							]
+					]
+			];
 			if ( Sobi::Can( 'section.search' ) ) {
-				$data[ 'menu' ][ 'search' ] = array(
+				$data[ 'menu' ][ 'search' ] = [
 						'_complex' => 1,
 						'_data' => Sobi::Txt( 'MN.SEARCH' ),
-						'_attributes' => array(
-								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'task' => 'search', 'sid' => Sobi::Section() ) )
-						)
-				);
+						'_attributes' => [
+								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'task' => 'search', 'sid' => Sobi::Section() ] )
+						]
+				];
 			}
 			if ( Sobi::Can( 'entry', 'add', 'own', Sobi::Section() ) ) {
-				$data[ 'menu' ][ 'add' ] = array(
+				$data[ 'menu' ][ 'add' ] = [
 						'_complex' => 1,
 						'_data' => Sobi::Txt( 'MN.ADD_ENTRY' ),
-						'_attributes' => array(
-								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( array( 'task' => 'entry.add', 'sid' => SPRequest::sid() ) )
-						)
-				);
+						'_attributes' => [
+								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'task' => 'entry.add', 'sid' => SPRequest::sid() ] )
+						]
+				];
 			}
 		}
 	}
@@ -908,7 +911,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		if ( !( isset( $this->_attr[ 'config' ] ) && count( $this->_attr[ 'config' ] ) ) && SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ) {
 			$config = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ), true );
 			$task = SPRequest::task() == 'entry.add' ? 'entry.edit' : SPRequest::task();
-			$settings = array();
+			$settings = [];
 			foreach ( $config as $section => $setting ) {
 				$settings[ str_replace( '-', '.', $section ) ] = $setting;
 			}
@@ -930,22 +933,22 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 			if ( isset( $settings[ 'general' ] ) ) {
 				foreach ( $settings[ 'general' ] as $k => $v ) {
-					$this->_attr[ 'config' ][ $k ] = array(
+					$this->_attr[ 'config' ][ $k ] = [
 							'_complex' => 1,
-							'_attributes' => array(
+							'_attributes' => [
 									'value' => $v
-							)
-					);
+							]
+					];
 				}
 			}
 			if ( isset( $settings[ $task ] ) ) {
 				foreach ( $settings[ $task ] as $k => $v ) {
-					$this->_attr[ 'config' ][ $k ] = array(
+					$this->_attr[ 'config' ][ $k ] = [
 							'_complex' => 1,
-							'_attributes' => array(
+							'_attributes' => [
 									'value' => $v
-							)
-					);
+							]
+					];
 				}
 			}
 		}

@@ -65,23 +65,23 @@ final class SPSection extends SPDBObject implements SPDataModel
 	/**
 	 * @var array
 	 */
-	private static $types = array( 'description' => 'html', 'sfMetaKeys' => 'string', 'sfMetaDesc' => 'string', 'efMetaKeys' => 'string', 'efMetaDesc' => 'string' );
+	private static $types = [ 'description' => 'html', 'sfMetaKeys' => 'string', 'sfMetaDesc' => 'string', 'efMetaKeys' => 'string', 'efMetaDesc' => 'string' ];
 	/**
 	 * @var array
 	 */
-	private static $translatable = array( 'description', 'name', 'metaKeys', 'metaDesc', 'sfMetaKeys', 'sfMetaDesc', 'efMetaKeys', 'efMetaDesc' );
+	private static $translatable = [ 'description', 'name', 'metaKeys', 'metaDesc', 'sfMetaKeys', 'sfMetaDesc', 'efMetaKeys', 'efMetaDesc' ];
 
 	/**
 	 */
 	public function delete()
 	{
 		$childs = $this->getChilds( 'all', true );
-		Sobi::Trigger( 'Section', ucfirst( __FUNCTION__ ), array( &$this->id ) );
+		Sobi::Trigger( 'Section', ucfirst( __FUNCTION__ ), [ &$this->id ] );
 		if ( count( $childs ) ) {
 			Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), Sobi::Txt( 'SEC.DEL_WARN' ), SPC::ERROR_MSG, true );
 		}
 		else {
-			Sobi::Trigger( 'delete', $this->name(), array( &$this ) );
+			Sobi::Trigger( 'delete', $this->name(), [ &$this ] );
 			$db = SPFactory::db();
 			try {
 				$db->delete( 'spdb_relations', "id = {$this->id} OR pid = {$this->id}" );
@@ -90,19 +90,19 @@ final class SPSection extends SPDBObject implements SPDataModel
 			}
 			try {
 				$db
-						->delete( 'spdb_config', array( 'section' => $this->id ) )
-						->delete( 'spdb_plugin_section', array( 'section' => $this->id ) )
-						->delete( 'spdb_permissions_map', array( 'sid' => $this->id ) );
+						->delete( 'spdb_config', [ 'section' => $this->id ] )
+						->delete( 'spdb_plugin_section', [ 'section' => $this->id ] )
+						->delete( 'spdb_permissions_map', [ 'sid' => $this->id ] );
 
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			try {
-				$fids = $db->select( 'fid', 'spdb_field', array( 'section' => $this->id, 'adminField>' => -1 ) )->loadResultArray();
+				$fids = $db->select( 'fid', 'spdb_field', [ 'section' => $this->id, 'adminField>' => -1 ] )->loadResultArray();
 				if ( count( $fids ) ) {
 					foreach ( $fids as $fid ) {
 						try {
-							$db->select( '*', $db->join( array( array( 'table' => 'spdb_field', 'as' => 'sField', 'key' => 'fieldType' ), array( 'table' => 'spdb_field_types', 'as' => 'sType', 'key' => 'tid' ) ) ), array( 'fid' => $fid ) );
+							$db->select( '*', $db->join( [ [ 'table' => 'spdb_field', 'as' => 'sField', 'key' => 'fieldType' ], [ 'table' => 'spdb_field_types', 'as' => 'sType', 'key' => 'tid' ] ] ), [ 'fid' => $fid ] );
 							$f = $db->loadObject();
 						} catch ( SPException $x ) {
 							Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -116,11 +116,13 @@ final class SPSection extends SPDBObject implements SPDataModel
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			parent::delete();
-			Sobi::Trigger( 'afterDelete', $this->name(), array( &$this ) );
+			Sobi::Trigger( 'afterDelete', $this->name(), [ &$this ] );
 		}
 	}
 
 	/**
+	 * @param bool $update
+	 * @param bool $init
 	 */
 	public function save( $update = false, $init = true )
 	{
@@ -132,7 +134,7 @@ final class SPSection extends SPDBObject implements SPDataModel
 			while ( $c ) {
 				/* section name id has to be unique */
 				try {
-					$db->select( 'COUNT(nid)', 'spdb_object', array( 'oType' => 'section', 'nid' => $this->nid ) );
+					$db->select( 'COUNT(nid)', 'spdb_object', [ 'oType' => 'section', 'nid' => $this->nid ] );
 					$c = $db->loadResult();
 					if ( $c > 0 ) {
 						$this->nid = $this->nid . '_' . rand( 0, 1000 );
@@ -149,7 +151,7 @@ final class SPSection extends SPDBObject implements SPDataModel
 		if ( !$update && $init ) {
 			$field = SPFactory::Model( 'field', true );
 			$fid = $field->saveNew(
-					array(
+					[
 							'name' => 'Name',
 							'nid' => 'field_name',
 							'showIn' => 'both',
@@ -163,11 +165,11 @@ final class SPSection extends SPDBObject implements SPDataModel
 							'isFree' => 1,
 							'editLimit' => -1,
 							'withLabel' => 1
-					)
+					]
 			);
 			$field = SPFactory::Model( 'field', true );
 			$field->saveNew(
-					array(
+					[
 							'name' => 'Category',
 							'nid' => 'field_category',
 							'showIn' => 'hidden',
@@ -183,14 +185,14 @@ final class SPSection extends SPDBObject implements SPDataModel
 							'withLabel' => 1,
 							'method' => 'select',
 							'isPrimary' => true
-					)
+					]
 			);
 			SPFactory::config()
 					->saveCfg( 'entry.name_field', $fid )
 					->saveCfg( 'list.entries_ordering', 'field_name' )
-					->saveCfg( 'template.icon_fonts_arr', array( 'font-awesome-3-local' ) );
+					->saveCfg( 'template.icon_fonts_arr', [ 'font-awesome-3-local' ] );
 
-			$permissions = array(
+			$permissions = [
 					'section.access.valid',
 					'category.access.valid',
 					'entry.access.valid',
@@ -199,19 +201,19 @@ final class SPSection extends SPDBObject implements SPDataModel
 					'section.*.*.adm',
 					'category.*.*.adm',
 					'entry.*.*.adm',
-			);
+			];
 			$myGroups = Sobi::My( 'groups' );
 			$gids = SPUser::availableGroups();
-			$userGroups = array( 'visitor', 'registered' );
+			$userGroups = [ 'visitor', 'registered' ];
 			foreach ( $myGroups as $gid ) {
 				$userGroups[ ] = $gids[ $gid ];
 			}
 			SPFactory::Controller( 'acl', true )
-					->addNewRule( $this->get( 'name' ), array( $this->id ), $permissions, $userGroups, 'Default permissions for the section "' . $this->get( 'name' ) . '"' );
+					->addNewRule( $this->get( 'name' ), [ $this->id ], $permissions, $userGroups, 'Default permissions for the section "' . $this->get( 'name' ) . '"' );
 		}
 		/* insert relation */
 		try {
-			$db->insertUpdate( 'spdb_relations', array( 'id' => $this->id, 'pid' => 0, 'oType' => 'section', 'position' => 1, 'validSince' => $this->validSince, 'validUntil' => $this->validUntil ) );
+			$db->insertUpdate( 'spdb_relations', [ 'id' => $this->id, 'pid' => 0, 'oType' => 'section', 'position' => 1, 'validSince' => $this->validSince, 'validUntil' => $this->validUntil ] );
 		} catch ( SPException $x ) {
 			$db->rollback();
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -223,7 +225,7 @@ final class SPSection extends SPDBObject implements SPDataModel
 //		}
 		SPFactory::cache()->cleanSection();
 		/* trigger plugins */
-		Sobi::Trigger( 'afterSave', $this->name(), array( &$this ) );
+		Sobi::Trigger( 'afterSave', $this->name(), [ &$this ] );
 	}
 
 	/**
@@ -236,7 +238,7 @@ final class SPSection extends SPDBObject implements SPDataModel
 
 	public static function & getInstance( $id = 0 )
 	{
-		static $instances = array();
+		static $instances = [];
 		$id = $id ? $id : Sobi::Reg( 'current_section' );
 		if ( !isset( $instances[ $id ] ) || !( $instances[ $id ] instanceof self ) ) {
 			$instances[ $id ] = new self();

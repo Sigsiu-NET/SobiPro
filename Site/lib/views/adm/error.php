@@ -46,12 +46,12 @@ class SPAdmError extends SPAdmView
 	{
 		$errors = $this->get( 'errors' );
 		$levels = $this->get( 'levels' );
-		$icons = array(
+		$icons = [
 			'error' => Sobi::Cfg( 'list_icons.err_err' ),
 			'warning' => Sobi::Cfg( 'list_icons.err_warn' ),
 			'notice' => Sobi::Cfg( 'list_icons.err_notice' ),
 			'details' => Sobi::Cfg( 'list_icons.err_details' ),
-		);
+		];
 		/* create the header */
 		if( count( $errors ) ) {
 			foreach ( $errors as $i => $error ) {
@@ -88,7 +88,7 @@ class SPAdmError extends SPAdmView
 				}
 				$error[ 'errMsg' ] = str_replace( SOBI_ROOT, null, $error[ 'errMsg' ]  );
 				$error[ 'errMsg' ] = str_replace( 'href=\'function.', 'target="_blank" href=\'http://php.net/manual/en/function.', $error[ 'errMsg' ] );
-				$dh = Sobi::Url( array( 'task' => 'error.details', 'eid' => $error[ 'eid' ] ) );
+				$dh = Sobi::Url( [ 'task' => 'error.details', 'eid' => $error[ 'eid' ] ] );
 				$error[ 'details' ] = "<a href=\"{$dh}\"><img src=\"{$icons[ 'details' ]}\"/></a>";
 				$errors[ $i ] = $error;
 			}

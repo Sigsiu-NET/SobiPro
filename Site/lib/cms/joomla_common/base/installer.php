@@ -53,18 +53,18 @@ class SPJoomlaInstaller
 				break;
 		}
 		if ( $result ) {
-			SPFactory::db()->delete( 'spdb_plugins', array( 'pid' => $eid, 'type' => $type ), 1 );
+			SPFactory::db()->delete( 'spdb_plugins', [ 'pid' => $eid, 'type' => $type ], 1 );
 			return Sobi::Txt( 'CMS_EXT_REMOVED', $name );
 		}
-		return array( 'msg' => Sobi::Txt( 'CMS_EXT_NOT_REMOVED', $name ), 'msgtype' => 'error' );
+		return [ 'msg' => Sobi::Txt( 'CMS_EXT_NOT_REMOVED', $name ), 'msgtype' => 'error' ];
 	}
 
 	public function removeModule( $module )
 	{
-		$id = SPFactory::db()->select( 'id', '#__modules', array( 'module' => $module ) )->loadResult();
+		$id = SPFactory::db()->select( 'id', '#__modules', [ 'module' => $module ] )->loadResult();
 		if ( $id ) {
 			if ( $this->removeExt( 'module', $id ) ) {
-				SPFactory::db()->delete( 'spdb_plugins', array( 'pid' => $module ) );
+				SPFactory::db()->delete( 'spdb_plugins', [ 'pid' => $module ] );
 				return true;
 			}
 		}
@@ -74,10 +74,10 @@ class SPJoomlaInstaller
 	public function removePlugin( $plugin )
 	{
 		$pluginArr = explode( '_', $plugin, 2 );
-		$id = SPFactory::db()->select( 'id', '#__plugins', array( 'folder' => $pluginArr[ 0 ], 'element' => $pluginArr[ 1 ] ) )->loadResult();
+		$id = SPFactory::db()->select( 'id', '#__plugins', [ 'folder' => $pluginArr[ 0 ], 'element' => $pluginArr[ 1 ] ] )->loadResult();
 		if ( $id ) {
 			if ( $this->removeExt( 'plugin', $id ) ) {
-				SPFactory::db()->delete( 'spdb_plugins', array( 'pid' => $plugin ) );
+				SPFactory::db()->delete( 'spdb_plugins', [ 'pid' => $plugin ] );
 				return true;
 			}
 		}
@@ -102,7 +102,7 @@ class SPJoomlaInstaller
 		}
 		if ( $this->error ) {
 			Sobi::Error( 'LangInstaller', $this->error, SPC::NOTICE, 0 );
-			$msg = array( 'msg' => $this->error, 'msgtype' => $this->errorType );
+			$msg = [ 'msg' => $this->error, 'msgtype' => $this->errorType ];
 		}
 		return $msg;
 	}
@@ -125,7 +125,7 @@ class SPJoomlaInstaller
 			// it was core update - break now
 			if ( $type == 'component' ) {
 				SPFactory::cache()->cleanAll();
-				return array( 'msg' => Sobi::Txt( 'CMS_SOBIPRO_UPDATE_INSTALLED', $def->getElementsByTagName( 'version' )->item( 0 )->nodeValue ), 'msgtype' => SPC::SUCCESS_MSG );
+				return [ 'msg' => Sobi::Txt( 'CMS_SOBIPRO_UPDATE_INSTALLED', $def->getElementsByTagName( 'version' )->item( 0 )->nodeValue ), 'msgtype' => SPC::SUCCESS_MSG ];
 			}
 			$msg = Sobi::Txt( 'CMSEX_INSTALLED', $type, $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue );
 			$this->id = SPLang::nid( $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue );
@@ -156,11 +156,11 @@ class SPJoomlaInstaller
 				$file->save();
 				$this->storeData( $type, $def );
 			}
-			return array( 'msg' => $msg, 'msgtype' => SPC::SUCCESS_MSG );
+			return [ 'msg' => $msg, 'msgtype' => SPC::SUCCESS_MSG ];
 		} catch ( Exception $x ) {
 			$this->error = Sobi::Txt( 'CMS_EXT_NOT_INSTALLED' ) . ' ' . $x->getMessage();
 			$this->errorType = SPC::ERROR_MSG;
-			return array( 'msg' => $this->error, 'msgtype' => SPC::ERROR_MSG );
+			return [ 'msg' => $this->error, 'msgtype' => SPC::ERROR_MSG ];
 		}
 	}
 
@@ -168,7 +168,7 @@ class SPJoomlaInstaller
 	{
 		SPFactory::db()->insertUpdate(
 			'spdb_plugins',
-			array(
+			[
 				'pid' => $this->id,
 				'name' => $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue,
 				'version' => $def->getElementsByTagName( 'version' )->item( 0 )->nodeValue,
@@ -177,7 +177,7 @@ class SPJoomlaInstaller
 				'authorUrl' => $def->getElementsByTagName( 'authorUrl' )->item( 0 )->nodeValue,
 				'authorMail' => $def->getElementsByTagName( 'authorEmail' )->item( 0 )->nodeValue,
 				'enabled' => 1, 'type' => $type, 'depend' => null
-			)
+			]
 		);
 	}
 
@@ -190,7 +190,7 @@ class SPJoomlaInstaller
 		$this->definition->appendChild( $this->definition->createElement( 'SobiProApp' ) );
 		$Install = $this->definition->createElement( 'installLog' );
 		$Files = $this->definition->createElement( 'files' );
-		$filesLog = array();
+		$filesLog = [];
 		$this->id = $def->getElementsByTagName( 'tag' )->item( 0 )->nodeValue;
 
 		if ( $def->getElementsByTagName( 'administration' )->length ) {
@@ -221,18 +221,18 @@ class SPJoomlaInstaller
 		$file->content( $this->definition->saveXML() );
 		$file->save();
 		if ( !( $this->error ) ) {
-			return array( 'msg' => Sobi::Txt( 'LANG_INSTALLED', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ), 'msgtype' => SPC::SUCCESS_MSG );
+			return [ 'msg' => Sobi::Txt( 'LANG_INSTALLED', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ), 'msgtype' => SPC::SUCCESS_MSG ];
 		}
 		else {
-			return array( 'msg' => Sobi::Txt( 'LANG_INSTALLED', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ) . "\n" . $this->error, 'msgtype' => $this->errorType );
+			return [ 'msg' => Sobi::Txt( 'LANG_INSTALLED', $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue ) . "\n" . $this->error, 'msgtype' => $this->errorType ];
 		}
 	}
 
 	private function langFiles( $tag, $def, $dir, &$FilesLog )
 	{
 		$target = ( $tag == 'administration' ) ?
-				implode( DS, array( SOBI_ROOT, 'administrator', 'language', $this->id ) ) :
-				implode( DS, array( SOBI_ROOT, 'language', $this->id ) );
+				implode( DS, [ SOBI_ROOT, 'administrator', 'language', $this->id ] ) :
+				implode( DS, [ SOBI_ROOT, 'language', $this->id ] );
 		if ( !( file_exists( $target ) ) ) {
 			$this->error = Sobi::Txt( 'LANG_INSTALL_NO_CORE', $this->id );
 			$this->errorType = SPC::WARN_MSG;
@@ -251,7 +251,7 @@ class SPJoomlaInstaller
 					SPFactory::message()->error( Sobi::Txt( 'Cannot copy %s to %s', $folder . $file->nodeValue, $target . DS . $file->nodeValue ), false );
 				}
 				else {
-					$FilesLog[ ] = str_replace( array( DS . DS, SOBI_ROOT ), array( DS, null ), $target . DS . $file->nodeValue );
+					$FilesLog[ ] = str_replace( [ DS . DS, SOBI_ROOT ], [ DS, null ], $target . DS . $file->nodeValue );
 				}
 			}
 			else {

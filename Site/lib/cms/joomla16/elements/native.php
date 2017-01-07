@@ -21,7 +21,7 @@ include_once JPATH_ADMINISTRATOR . '/components/com_menus/tables/menu.php';
 
 class JFormFieldNative extends JFormField
 {
-	protected $params = array();
+	protected $params = [];
 	static $sid = 0;
 	static $functionsLabel = 0;
 	static $section = 0;
@@ -43,12 +43,12 @@ class JFormFieldNative extends JFormField
 			if ( SOBI_CMS == 'joomla3' ) {
 				SPFactory::header()
 						->initBase( true )
-						->addJsFile( array( 'sobipro', 'jqnc', 'adm.sobipro', 'adm.jnmenu', 'jquery-base64' ) );
+						->addJsFile( [ 'sobipro', 'jqnc', 'adm.sobipro', 'adm.jnmenu', 'jquery-base64' ] );
 			}
 			else {
 				SPFactory::header()
 						->initBase( true )
-						->addJsFile( array( 'sobipro', 'jquery', 'adm.sobipro', 'adm.jnmenu', 'jquery-migrate', 'jquery-base64' ) )
+						->addJsFile( [ 'sobipro', 'jquery', 'adm.sobipro', 'adm.jnmenu', 'jquery-migrate', 'jquery-base64' ] )
 						->addCSSCode( '#toolbar-box { display: block }' );
 			}
 			$loaded = true;
@@ -64,10 +64,10 @@ class JFormFieldNative extends JFormField
 				$this->params = json_decode( base64_decode( $model->params[ 'SobiProSettings' ] ) );
 			}
 			$jsString = json_encode(
-					array(
+					[
 							'component' => Sobi::Txt( 'SOBI_NATIVE_TASKS' ),
 							'buttonLabel' => Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' )
-					)
+					]
 			);
 			SPFactory::header()
 					->addJsCode( "SpStrings = {$jsString}; " );
@@ -110,11 +110,11 @@ class JFormFieldNative extends JFormField
 
 	protected function loadSection()
 	{
-		$sections = array();
-		$sectionsOutput = array();
+		$sections = [];
+		$sectionsOutput = [];
 		try {
 			$sections = SPFactory::db()
-					->select( '*', 'spdb_object', array( 'oType' => 'section' ), 'id' )
+					->select( '*', 'spdb_object', [ 'oType' => 'section' ], 'id' )
 					->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), $x->getMessage(), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -129,7 +129,7 @@ class JFormFieldNative extends JFormField
 				}
 			}
 		}
-		$params = array( 'id' => 'SobiSection', 'class' => 'required' );
+		$params = [ 'id' => 'SobiSection', 'class' => 'required' ];
 		return SPHtml_Input::select( 'section', $sectionsOutput, self::$section, false, $params );
 	}
 

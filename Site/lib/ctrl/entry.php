@@ -37,7 +37,7 @@ class SPEntryCtrl extends SPController
 	 */
 	protected $_defTask = 'details';
 
-	protected $store = array();
+	protected $store = [];
 
 	/**
 	 */
@@ -96,15 +96,15 @@ class SPEntryCtrl extends SPController
 		}
 		if ( ( ( $this->_model->get( 'owner' ) == Sobi::My( 'id' ) ) && Sobi::Can( 'entry.manage.own' ) ) || Sobi::Can( 'entry.manage.*' ) ) {
 			try {
-				SPFactory::db()->update( 'spdb_object', array( 'approved' => 1 ), array( 'id' => $this->_model->get( 'id' ), 'oType' => 'entry' ) );
+				SPFactory::db()->update( 'spdb_object', [ 'approved' => 1 ], [ 'id' => $this->_model->get( 'id' ), 'oType' => 'entry' ] );
 				$this->_model->approveFields( true );
 			}
 			catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
-			Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_model ) );
+			Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_model ] );
 			$this->logChanges( 'approve' );
-			$this->response( Sobi::Url( array( 'sid' => $this->_model->get( 'id' ) ) ), Sobi::Txt( 'EN.APPROVED' ), false, SPC::SUCCESS_MSG );
+			$this->response( Sobi::Url( [ 'sid' => $this->_model->get( 'id' ) ] ), Sobi::Txt( 'EN.APPROVED' ), false, SPC::SUCCESS_MSG );
 		}
 		else {
 			Sobi::Error( 'entry', SPLang::e( 'UNAUTHORIZED_ACCESS' ), SPC::ERROR, 403, __LINE__, __FILE__ );
@@ -123,6 +123,7 @@ class SPEntryCtrl extends SPController
 	}
 
 	/**
+	 * @param $state
 	 */
 	protected function state( $state )
 	{
@@ -178,7 +179,7 @@ class SPEntryCtrl extends SPController
 		$sid = $this->_model->get( 'id' );
 		$this->_model->init( SPRequest::sid() );
 		$this->_model->getRequest( $this->_type );
-		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_model ) );
+		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_model ] );
 		if ( $sid ) {
 			if ( Sobi::My( 'id' ) && Sobi::My( 'id' ) == $this->_model->get( 'owner' ) ) {
 				$this->authorise( 'edit', 'own' );
@@ -201,14 +202,14 @@ class SPEntryCtrl extends SPController
 		$tsIdToRequest = false;
 		if ( !strlen( $tsId ) ) {
 //			$tsId = date( 'Y-m-d_H-m-s_' ) . str_replace( array( '.', ':' ), array( '-', null ), SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
-			$tsId = ( microtime( true ) * 100 ) . '.' . rand( 0, 99 ) . '.' . str_replace( array( ':', '.' ), null, SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
+			$tsId = ( microtime( true ) * 100 ) . '.' . rand( 0, 99 ) . '.' . str_replace( [ ':', '.' ], null, SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
 			SPLoader::loadClass( 'env.cookie' );
 			// in case we wre not able for some reason to set the cookie - we are going to pass this id into the URL
 			if ( !( SPCookie::set( 'editentry', $tsId, SPCookie::hours( 48 ) ) ) ) {
 				$tsIdToRequest = true;
 			}
 		}
-		$store = array();
+		$store = [];
 		if ( count( $fields ) ) {
 			foreach ( $fields as $field ) {
 				$field->enabled( 'form' );
@@ -219,13 +220,13 @@ class SPEntryCtrl extends SPController
 					}
 				}
 				catch ( SPException $x ) {
-					$this->response( Sobi::Back(), $x->getMessage(), !( $ajax ), SPC::ERROR_MSG, array( 'error' => $field->get( 'nid' ) ) );
+					$this->response( Sobi::Back(), $x->getMessage(), !( $ajax ), SPC::ERROR_MSG, [ 'error' => $field->get( 'nid' ) ] );
 				}
 			}
 		}
 		/* try in Sobi Cache first */
 		if ( Sobi::Cfg( 'cache.l3_enabled', true ) ) {
-			SPFactory::cache()->addVar( array( 'post' => $_POST, 'files' => $_FILES, 'store' => $store ), 'request_cache_' . $tsId );
+			SPFactory::cache()->addVar( [ 'post' => $_POST, 'files' => $_FILES, 'store' => $store ], 'request_cache_' . $tsId );
 		}
 		else {
 			$file = str_replace( '.', '-', $tsId );
@@ -240,7 +241,7 @@ class SPEntryCtrl extends SPController
 			if ( $customClass && method_exists( $customClass, 'AfterSubmitEntry' ) ) {
 				$customClass::AfterSubmitEntry( $this->_model );
 			}
-			$url = array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $sid );
+			$url = [ 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $sid ];
 			if ( $tsIdToRequest ) {
 				$url[ 'ssid' ] = $tsId;
 			}
@@ -342,7 +343,7 @@ class SPEntryCtrl extends SPController
 		$view->addHidden( $tsId, 'ssid' );
 		$view->setConfig( $this->_tCfg, $this->_task );
 		$view->setTemplate( $tplPackage . '.payment.' . $this->_task );
-		Sobi::Trigger( ucfirst( $this->_task ), $this->name(), array( &$view, &$this->_model ) );
+		Sobi::Trigger( ucfirst( $this->_task ), $this->name(), [ &$view, &$this->_model ] );
 		if ( SPRequest::cmd( 'method', null, 'post' ) == 'xhr' ) {
 			SPFactory::mainframe()->cleanBuffer();
 			$view->display();
@@ -361,6 +362,7 @@ class SPEntryCtrl extends SPController
 	 * Save an entry
 	 *
 	 * @param bool $apply
+	 * @param bool $clone
 	 */
 	protected function save( $apply, $clone = false )
 	{
@@ -392,15 +394,15 @@ class SPEntryCtrl extends SPController
 				SPFactory::registry()->set( 'requestcache', $this->store[ 'post' ] );
 			}
 		}
-		$preState = array(
+		$preState = [
 			'approved' => $this->_model->get( 'approved' ),
 			'state'    => $this->_model->get( 'state' ),
 			'new'      => !( $this->_model->get( 'id' ) )
-		);
+		];
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 
 		$this->_model->getRequest( $this->_type, $request );
-		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_model ) );
+		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_model ] );
 
 		if ( $this->_model->get( 'id' ) && $this->_model->get( 'id' ) == SPRequest::sid() ) {
 			$new = false;
@@ -441,7 +443,7 @@ class SPEntryCtrl extends SPController
 		if ( $new ) {
 			if ( $this->_model->get( 'state' ) || Sobi::Can( 'entry.see_unpublished.own' ) ) {
 				$msg = $this->_model->get( 'state' ) ? Sobi::Txt( 'EN.ENTRY_SAVED' ) : Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
-				$url = Sobi::Url( array( 'sid' => $sid, 'pid' => $pid ), false, false );
+				$url = Sobi::Url( [ 'sid' => $sid, 'pid' => $pid ], false, false );
 			}
 			else {
 				// determine if there is a custom redirect
@@ -454,13 +456,13 @@ class SPEntryCtrl extends SPController
 				}
 				else {
 					$msg = Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
-					$url = Sobi::Url( array( 'sid' => $pid ), false, false );
+					$url = Sobi::Url( [ 'sid' => $pid ], false, false );
 				}
 			}
 		}
 		/* I know, it could be in one statement but it is more readable like this */
 		elseif ( $this->_model->get( 'approved' ) || Sobi::Can( 'entry.see_unapproved.own' ) ) {
-			$url = Sobi::Url( array( 'sid' => $sid, 'pid' => $pid ) );
+			$url = Sobi::Url( [ 'sid' => $sid, 'pid' => $pid ] );
 			$msg = $this->_model->get( 'approved' ) ? Sobi::Txt( 'EN.ENTRY_SAVED' ) : Sobi::Txt( 'EN.ENTRY_SAVED_NA' );
 		}
 		else {
@@ -470,18 +472,18 @@ class SPEntryCtrl extends SPController
 			else {
 				$msg = Sobi::Txt( 'EN.ENTRY_SAVED_NA' );
 			}
-			$url = Sobi::Url( array( 'sid' => $sid, 'pid' => $pid ), false, false );
+			$url = Sobi::Url( [ 'sid' => $sid, 'pid' => $pid ], false, false );
 		}
 		if ( $pCount && !( Sobi::Can( 'entry.payment.free' ) ) ) {
 			$ident = md5( microtime() . $tsId . $sid . time() );
-			$data  = array( 'data' => SPFactory::payment()->summary( $sid ), 'ident' => $ident );
-			$url   = Sobi::Url( array( 'sid' => $sid, 'task' => 'entry.payment' ), false, false );
+			$data  = [ 'data' => SPFactory::payment()->summary( $sid ), 'ident' => $ident ];
+			$url   = Sobi::Url( [ 'sid' => $sid, 'task' => 'entry.payment' ], false, false );
 			if ( Sobi::Cfg( 'cache.l3_enabled', true ) ) {
 				SPFactory::cache()->addObj( $data, 'payment', $sid, Sobi::Section(), true );
 			}
 			else {
 				SPFs::write( SPLoader::path( 'tmp.edit.' . $ident . '.payment', 'front', false, 'var' ), SPConfig::serialize( $data ) );
-				$url = Sobi::Url( array( 'sid' => $sid, 'task' => 'entry.payment', 'tsid' => $ident ), false, false );
+				$url = Sobi::Url( [ 'sid' => $sid, 'task' => 'entry.payment', 'tsid' => $ident ], false, false );
 			}
 			SPLoader::loadClass( 'env.cookie' );
 			SPCookie::set( 'payment_' . $sid, $ident, SPCookie::days( 1 ) );
@@ -543,7 +545,7 @@ class SPEntryCtrl extends SPController
 		}
 
 		if ( $this->_model && $this->_model->isCheckedOut() ) {
-			Sobi::Redirect( Sobi::Url( array( 'sid' => SPRequest::sid() ) ), Sobi::Txt( 'EN.IS_CHECKED_OUT', $this->_model->get( 'name' ) ), SPC::ERROR_MSG, true );
+			Sobi::Redirect( Sobi::Url( [ 'sid' => SPRequest::sid() ] ), Sobi::Txt( 'EN.IS_CHECKED_OUT', $this->_model->get( 'name' ) ), SPC::ERROR_MSG, true );
 		}
 
 		/* determine template package */
@@ -578,7 +580,7 @@ class SPEntryCtrl extends SPController
 					->addDescription( $section->get( 'efMetaDesc' ) );
 			}
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'EN.ADD_PATH_TITLE' ), Sobi::Url( 'current' ) );
-			SPFactory::mainframe()->setTitle( Sobi::Txt( 'EN.ADD_TITLE', array( 'section' => $section->get( 'name' ) ) ) );
+			SPFactory::mainframe()->setTitle( Sobi::Txt( 'EN.ADD_TITLE', [ 'section' => $section->get( 'name' ) ] ) );
 
 			/* add pathway */
 			SPFactory::mainframe()->addObjToPathway( $section );
@@ -621,7 +623,7 @@ class SPEntryCtrl extends SPController
 			$cats = $this->_model->getCategories( true );
 		}
 		if ( count( $cats ) ) {
-			$tCats = array();
+			$tCats = [];
 			foreach ( $cats as $cid ) {
 				$tCats2 = SPFactory::config()->getParentPath( ( int ) $cid, true );
 				if ( is_array( $tCats2 ) && count( $tCats2 ) ) {
@@ -655,7 +657,7 @@ class SPEntryCtrl extends SPController
 		$view->addHidden( $id, 'sid' );
 		$view->addHidden( ( SPRequest::int( 'pid' ) && SPRequest::int( 'pid' ) != $id ) ? SPRequest::int( 'pid' ) : Sobi::Section(), 'pid' );
 		$view->addHidden( 'entry.submit', SOBI_TASK );
-		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$view ) );
+		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$view ] );
 		$view->display();
 	}
 
@@ -689,7 +691,7 @@ class SPEntryCtrl extends SPController
 		$view->assign( $this->_task, 'task' );
 		$view->setConfig( $this->_tCfg, $this->template );
 		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );
-		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$view ) );
+		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$view ] );
 		SPFactory::header()->objMeta( $this->_model );
 		$view->display();
 		SPFactory::cache()->addObj( $this->_model, 'entry', $this->_model->get( 'id' ) );
@@ -707,7 +709,7 @@ class SPEntryCtrl extends SPController
 		$registry =& SPFactory::registry();
 		$registry->loadDBSection( 'fields_filter' );
 		$filters  = $registry->get( 'fields_filter' );
-		$validate = array();
+		$validate = [];
 		foreach ( $fields as $field ) {
 			$filter = $field->get( 'filter' );
 			if ( $filter && isset( $filters[ $filter ] ) ) {
@@ -719,10 +721,10 @@ class SPEntryCtrl extends SPController
 			}
 		}
 		if ( count( $validate ) ) {
-			Sobi::Trigger( $this->name(), __FUNCTION__, array( &$validate ) );
+			Sobi::Trigger( $this->name(), __FUNCTION__, [ &$validate ] );
 			$validate = json_encode( ( $validate ) );
 			$header   =& SPFactory::header();
-			$header->addJsVarFile( 'efilter', md5( $validate ), array( 'OBJ' => addslashes( $validate ) ) );
+			$header->addJsVarFile( 'efilter', md5( $validate ), [ 'OBJ' => addslashes( $validate ) ] );
 		}
 	}
 

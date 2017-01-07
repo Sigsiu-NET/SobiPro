@@ -23,7 +23,7 @@ class SpAdmToolbar
 	protected $icon = null;
 	protected $buttons = null;
 	protected $output = null;
-	private $icons = array(
+	private $icons = [
 		'apply' => 'ok',
 		'cancel' => 'ban-circle',
 		'exit' => 'ban-circle',
@@ -49,8 +49,8 @@ class SpAdmToolbar
 		'template.info' => 'picture',
 		'selected' => 'check',
 		'not-selected' => 'check-empty'
-	);
-	private $labels = array(
+	];
+	private $labels = [
 		'apply' => 'SAVE_ONLY',
 		'cancel' => 'CANCEL',
 		'exit' => 'EXIT',
@@ -72,7 +72,7 @@ class SpAdmToolbar
 		'extensions.installed' => 'SAM',
 		'options' => 'OPTIONS',
 		'template.info' => 'TEMPLATE'
-	);
+	];
 	protected $btClass = 'btn';
 
 //	protected $btClass = 'btn btn-large';
@@ -104,7 +104,7 @@ class SpAdmToolbar
 		$this->buttons = $arr;
 	}
 
-	public function render( $options = array() )
+	public function render( $options = [] )
 	{
 		if ( !( count( $this->buttons ) ) ) {
 			return null;
@@ -277,7 +277,7 @@ class SpAdmToolbar
 					break;
 				case 'url':
 					if ( isset( $button[ 'sid' ] ) && $button[ 'sid' ] == 'true' ) {
-						$link = Sobi::Url( array( 'task' => $button[ 'task' ], 'sid' => SPRequest::sid( 'request', SPRequest::int( 'pid' ), true ) ) );
+						$link = Sobi::Url( [ 'task' => $button[ 'task' ], 'sid' => SPRequest::sid( 'request', SPRequest::int( 'pid' ), true ) ] );
 					}
 					else {
 						$link = Sobi::Url( $button[ 'task' ] ? $button[ 'task' ] : $button[ 'url' ] );

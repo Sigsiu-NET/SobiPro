@@ -34,7 +34,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	/*** @var string */
 	protected $_fieldType = 'field';
 	/*** @var array */
-	private $attr = array();
+	private $attr = [];
 	/** @var bool */
 	protected $_category = false;
 
@@ -73,7 +73,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$helpTask = 'field.' . $field->get( 'fieldType' );
 		$registry->set( 'help_task', $helpTask );
 		$filters = $registry->get( 'fields_filter' );
-		$f = array( 0 => Sobi::Txt( 'FM.NO_FILTER' ) );
+		$f = [ 0 => Sobi::Txt( 'FM.NO_FILTER' ) ];
 		if ( count( $filters ) ) {
 			foreach ( $filters as $filter => $data ) {
 				$f[ $filter ] = Sobi::Txt( $data[ 'value' ] );
@@ -121,7 +121,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$nid = '/' . Sobi::Section( 'nid' ) . '/';
 		$disableOverrides = null;
 		if ( is_array( Sobi::My( 'groups' ) ) ) {
-			$disableOverrides = array_intersect( Sobi::My( 'groups' ), Sobi::Cfg( 'templates.disable-overrides', array() ) );
+			$disableOverrides = array_intersect( Sobi::My( 'groups' ), Sobi::Cfg( 'templates.disable-overrides', [] ) );
 		}
 		if ( SPLoader::translatePath( 'field.' . $field->get( 'fieldType' ), 'adm', true, 'xml' ) ) {
 			/** Case we have also override  */
@@ -154,14 +154,14 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 		if ( !( $group ) ) {
 			$group = SPFactory::db()
-					->select( 'tGroup', 'spdb_field_types', array( 'tid' => $fType ) )
+					->select( 'tGroup', 'spdb_field_types', [ 'tid' => $fType ] )
 					->loadResult();
 		}
 		/* get cognate field types */
 		if ( $group != 'special' ) {
 			try {
 				$fTypes = SPFactory::db()
-						->select( '*', 'spdb_field_types', array( 'tGroup' => $group ), 'fPos' )
+						->select( '*', 'spdb_field_types', [ 'tGroup' => $group ], 'fPos' )
 						->loadObjectList();
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_TYPES_DB_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
@@ -176,7 +176,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		}
 		else {
 			$name = SPFactory::db()
-					->select( 'fType', 'spdb_field_types', array( 'tid' => $fType ) )
+					->select( 'fType', 'spdb_field_types', [ 'tid' => $fType ] )
 					->loadResult();
 			$groups[ Sobi::Txt( 'FIELD.TYPE_OPTG_SPECIAL' ) ][ $fType ] = $name;
 		}
@@ -192,7 +192,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		try {
-			$db->select( '*', $db->join( array( array( 'table' => 'spdb_field', 'as' => 'sField', 'key' => 'fieldType' ), array( 'table' => 'spdb_field_types', 'as' => 'sType', 'key' => 'tid' ) ) ), array( 'fid' => $fid ) );
+			$db->select( '*', $db->join( [ [ 'table' => 'spdb_field', 'as' => 'sField', 'key' => 'fieldType' ], [ 'table' => 'spdb_field_types', 'as' => 'sType', 'key' => 'tid' ] ] ), [ 'fid' => $fid ] );
 			$f = $db->loadObject();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
@@ -216,7 +216,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		else {
 			$groups = $this->getFieldTypes();
 			/* create dummy field with initial values */
-			$field = array(
+			$field = [
 					'name' => '',
 					'nid' => '',
 					'notice' => '',
@@ -236,7 +236,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 					'inSearch' => 0,
 					'cssClass' => '',
 					'fieldType' => $this->_fieldType,
-			);
+			];
 		}
 
 		/* get view class */
@@ -261,7 +261,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$helpTask = 'field.' . $field->get( 'fieldType' );
 		$registry->set( 'help_task', $helpTask );
 		$filters = $registry->get( 'fields_filter' );
-		$f = array( 0 => Sobi::Txt( 'FM.NO_FILTER' ) );
+		$f = [ 0 => Sobi::Txt( 'FM.NO_FILTER' ) ];
 		if ( count( $filters ) ) {
 			foreach ( $filters as $filter => $data ) {
 				$f[ $filter ] = Sobi::Txt( $data[ 'value' ] );
@@ -362,11 +362,13 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	}
 
 	/**
+	 * @param int $id
+	 * @return array|void
 	 */
 	public function delete( $id = 0 )
 	{
-		$fields = array();
-		$m = array();
+		$fields = [];
+		$m = [];
 		if ( $id ) {
 			$fields[] = $id;
 		}
@@ -375,7 +377,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$fields[] = SPRequest::int( 'fid', 0 );
 			}
 			else {
-				$fields = SPRequest::arr( 'p_fid', array() );
+				$fields = SPRequest::arr( 'p_fid', [] );
 			}
 		}
 		if ( count( $fields ) ) {
@@ -418,7 +420,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 					$node = $required->item( $i );
 					$name = $node->attributes->getNamedItem( 'name' )->nodeValue;
 					if ( !( SPRequest::raw( str_replace( '.', '_', $name ) ) ) ) {
-						$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $field->get( 'fid' ), 'sid' => SPRequest::sid() ) ), Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, 'error', array( 'required' => $name ) );
+						$this->response( Sobi::Url( [ 'task' => 'field.edit', 'fid' => $field->get( 'fid' ), 'sid' => SPRequest::sid() ] ), Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, 'error', [ 'required' => $name ] );
 					}
 				}
 			}
@@ -432,7 +434,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	protected function save( $clone = false, $apply = false )
 	{
-		$sets = array();
+		$sets = [];
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
@@ -460,14 +462,14 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				//warum nochmal save??
 				$field->save( $this->attr );
 			} catch ( SPException $x ) {
-				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $x->getMessage(), false, SPC::ERROR_MSG );
+				$this->response( Sobi::Url( [ 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ] ), $x->getMessage(), false, SPC::ERROR_MSG );
 			}
 		}
 		else {
 			try {
 				$field->save( $this->attr );
 			} catch ( SPException $x ) {
-				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $x->getMessage(), false, SPC::ERROR_MSG );
+				$this->response( Sobi::Url( [ 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ] ), $x->getMessage(), false, SPC::ERROR_MSG );
 			}
 		}
 		$alias = $field->get( 'nid' );
@@ -486,11 +488,11 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		if ( $this->_task == 'apply' || $clone ) {
 			if ( $clone ) {
 				$msg = Sobi::Txt( 'FM.FIELD_CLONED' );
-				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $msg );
+				$this->response( Sobi::Url( [ 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ] ), $msg );
 			}
 			else {
 				$msg = Sobi::Txt( 'MSG.ALL_CHANGES_SAVED' );
-				$this->response( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ) ), $msg, false, 'success', array( 'sets' => $sets ) );
+				$this->response( Sobi::Url( [ 'task' => 'field.edit', 'fid' => $fid, 'sid' => SPRequest::sid() ] ), $msg, false, 'success', [ 'sets' => $sets ] );
 			}
 		}
 		else {
@@ -512,19 +514,19 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$sid = Sobi::Reg( 'current_section' );
 		$menu = SPFactory::Instance( 'views.adm.menu', 'field.list', $sid );
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
-		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
+		Sobi::Trigger( 'Create', 'AdmMenu', [ &$cfg ] );
 		if ( count( $cfg ) ) {
 			foreach ( $cfg as $section => $keys ) {
 				$menu->addSection( $section, $keys );
 			}
 		}
 
-		Sobi::Trigger( 'AfterCreate', 'AdmMenu', array( &$menu ) );
+		Sobi::Trigger( 'AfterCreate', 'AdmMenu', [ &$menu ] );
 		/* create new SigsiuTree */
 		$tree = SPLoader::loadClass( 'mlo.tree' );
 		$tree = new $tree( Sobi::GetUserState( 'categories.order', 'corder', 'position.asc' ) );
 		/* set link */
-		$tree->setHref( Sobi::Url( array( 'sid' => '{sid}' ) ) );
+		$tree->setHref( Sobi::Url( [ 'sid' => '{sid}' ] ) );
 		$tree->setId( 'menuTree' );
 		/* set the task to expand the tree */
 		$tree->setTask( 'category.expand' );
@@ -534,13 +536,13 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 
 		try {
 			$results = SPFactory::db()
-					->select( '*', 'spdb_field', array( 'section' => $sid ), $ord )
+					->select( '*', 'spdb_field', [ 'section' => $sid ], $ord )
 					->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		$fields = array();
-		$categoryFields = array();
+		$fields = [];
+		$categoryFields = [];
 		if ( count( $results ) ) {
 			foreach ( $results as $result ) {
 				$field = SPFactory::Model( 'field', true );
@@ -554,39 +556,39 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			}
 		}
 		$fieldTypes = $this->getFieldTypes();
-		$subMenu = array();
+		$subMenu = [];
 		foreach ( $fieldTypes as $type => $group ) {
 			asort( $group );
-			$subMenu[] = array(
+			$subMenu[] = [
 					'label' => $type,
 					'element' => 'nav-header'
-			);
+			];
 			foreach ( $group as $t => $l ) {
-				$subMenu[] = array(
+				$subMenu[] = [
 						'type' => null,
 						'task' => 'field.add.' . $t,
 						'label' => $l,
 						'icon' => 'tasks',
 						'element' => 'button'
-				);
+				];
 			}
 		}
 		$categoryFieldsTypes = $this->getFieldTypes( true );
-		$cateSubMenu = array();
+		$cateSubMenu = [];
 		foreach ( $categoryFieldsTypes as $type => $group ) {
 			asort( $group );
-			$cateSubMenu[] = array(
+			$cateSubMenu[] = [
 					'label' => $type,
 					'element' => 'nav-header'
-			);
+			];
 			foreach ( $group as $t => $l ) {
-				$cateSubMenu[] = array(
+				$cateSubMenu[] = [
 						'type' => null,
 						'task' => 'field.add.' . $t . '.category',
 						'label' => $l,
 						'icon' => 'tasks',
 						'element' => 'button'
-				);
+				];
 			}
 		}
 
@@ -630,11 +632,11 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			/* @var SPdb $db */
 			$db = SPFactory::db();
 			$fields = $db
-					->select( 'fid', 'spdb_language', array( 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.' . $dir )
+					->select( 'fid', 'spdb_language', [ 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::Lang() ], 'sValue.' . $dir )
 					->loadResultArray();
 			if ( !count( $fields ) && Sobi::Lang() != Sobi::DefLang() ) {
 				$fields = $db
-						->select( 'id', 'spdb_language', array( 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.' . $dir )
+						->select( 'id', 'spdb_language', [ 'oType' => 'field', 'sKey' => 'name', 'language' => Sobi::DefLang() ], 'sValue.' . $dir )
 						->loadResultArray();
 			}
 			if ( count( $fields ) ) {
@@ -656,10 +658,10 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	 */
 	private function reorder()
 	{
-		$this->_reorder( SPRequest::arr( 'fid', array() ) );
-		$this->_reorder( SPRequest::arr( 'cfid', array() ) );
+		$this->_reorder( SPRequest::arr( 'fid', [] ) );
+		$this->_reorder( SPRequest::arr( 'cfid', [] ) );
 		SPFactory::cache()->cleanSection();
-		$this->response( Sobi::Url( array( 'task' => 'field.list', 'pid' => Sobi::Section() ) ), Sobi::Txt( 'NEW_FIELDS_ORDERING_HAS_BEEN_SAVED' ), true, SPC::SUCCESS_MSG );
+		$this->response( Sobi::Url( [ 'task' => 'field.list', 'pid' => Sobi::Section() ] ), Sobi::Txt( 'NEW_FIELDS_ORDERING_HAS_BEEN_SAVED' ), true, SPC::SUCCESS_MSG );
 	}
 
 	/**
@@ -684,7 +686,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$dir = $up ? 'position.desc' : 'position.asc';
 		$current = $field->get( 'position' );
 		try {
-			$condition = array( 'position' . $eq => $current, 'section' => SPRequest::int( 'sid' ) );
+			$condition = [ 'position' . $eq => $current, 'section' => SPRequest::int( 'sid' ) ];
 			if ( !( $category ) ) {
 				$condition[ 'adminField>' ] = -1;
 			}
@@ -695,18 +697,18 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 					->select( 'position, fid', 'spdb_field', $condition, $dir, 1 )
 					->loadAssocList();
 			if ( $interchange && count( $interchange ) ) {
-				$db->update( 'spdb_field', array( 'position' => $interchange[ 0 ][ 'position' ] ), array( 'section' => SPRequest::int( 'sid' ), 'fid' => $field->get( 'fid' ) ), 1 );
-				$db->update( 'spdb_field', array( 'position' => $current ), array( 'section' => SPRequest::int( 'sid' ), 'fid' => $interchange[ 0 ][ 'fid' ] ), 1 );
+				$db->update( 'spdb_field', [ 'position' => $interchange[ 0 ][ 'position' ] ], [ 'section' => SPRequest::int( 'sid' ), 'fid' => $field->get( 'fid' ) ], 1 );
+				$db->update( 'spdb_field', [ 'position' => $current ], [ 'section' => SPRequest::int( 'sid' ), 'fid' => $interchange[ 0 ][ 'fid' ] ], 1 );
 			}
 			else {
 				$current = $up ? $current-- : $current++;
-				$db->update( 'spdb_field', array( 'position' => $current ), array( 'section' => SPRequest::int( 'sid' ), 'fid' => $field->get( 'fid' ) ), 1 );
+				$db->update( 'spdb_field', [ 'position' => $current ], [ 'section' => SPRequest::int( 'sid' ), 'fid' => $field->get( 'fid' ) ], 1 );
 			}
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
 		SPFactory::cache()->cleanSection();
-		$this->response( Sobi::Url( array( 'task' => 'field.list', 'pid' => Sobi::Section() ) ), Sobi::Txt( 'NEW_FIELDS_ORDERING_HAS_BEEN_SAVED' ), true, SPC::SUCCESS_MSG );
+		$this->response( Sobi::Url( [ 'task' => 'field.list', 'pid' => Sobi::Section() ] ), Sobi::Txt( 'NEW_FIELDS_ORDERING_HAS_BEEN_SAVED' ), true, SPC::SUCCESS_MSG );
 	}
 
 	/**
@@ -722,14 +724,14 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$msg = null;
 		if ( !$fIds ) {
 			if ( SPRequest::int( 'fid' ) ) {
-				$fIds = array( SPRequest::int( 'fid' ) );
+				$fIds = [ SPRequest::int( 'fid' ) ];
 			}
 			else {
-				$fIds = array();
+				$fIds = [];
 			}
 		}
 		if ( !( count( $fIds ) ) ) {
-			return array( 'text' => Sobi::Txt( 'FMN.STATE_CHANGE_NO_ID' ), 'type' => SPC::ERROR_MSG );
+			return [ 'text' => Sobi::Txt( 'FMN.STATE_CHANGE_NO_ID' ), 'type' => SPC::ERROR_MSG ];
 		}
 		switch ( $task ) {
 			case 'hide':
@@ -754,34 +756,34 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				break;
 			/** @since 1.1 - single row only from the field list */
 			case 'toggle':
-				$fIds = array();
+				$fIds = [];
 				$fid = SPRequest::int( 'fid' );
 				$attribute = explode( '.', SPRequest::task() );
 				/** now you know what a naming convention is for! Right? Damn!!! */
-				$attribute = in_array( $attribute[ 2 ], array( 'editable', 'enabled', 'required' ) ) ? $attribute[ 2 ] : 'is' . ucfirst( $attribute[ 2 ] );
+				$attribute = in_array( $attribute[ 2 ], [ 'editable', 'enabled', 'required' ] ) ? $attribute[ 2 ] : 'is' . ucfirst( $attribute[ 2 ] );
 				$this->_model = SPFactory::Model( 'field', true )
 						->init( $fid );
 				$current = $this->_model->get( $attribute );
 				try {
 					SPFactory::db()
-							->update( 'spdb_field', array( $attribute => !( $current ) ), array( 'fid' => $fid ), 1 );
-					$msg = Sobi::Txt( 'FM.STATE_CHANGED', array( 'fid' => $fid ) );
+							->update( 'spdb_field', [ $attribute => !( $current ) ], [ 'fid' => $fid ], 1 );
+					$msg = Sobi::Txt( 'FM.STATE_CHANGED', [ 'fid' => $fid ] );
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
-					$msg = Sobi::Txt( 'FM.STATE_NOT_CHANGED', array( 'fid' => $fid ) );
+					$msg = Sobi::Txt( 'FM.STATE_NOT_CHANGED', [ 'fid' => $fid ] );
 				}
 				break;
 		}
 		if ( count( $fIds ) ) {
-			$msg = array();
+			$msg = [];
 			foreach ( $fIds as $fid ) {
 				try {
 					SPFactory::db()
-							->update( 'spdb_field', array( $col => $state ), array( 'fid' => $fid ), 1 );
-					$msg[] = array( 'text' => Sobi::Txt( 'FM.STATE_CHANGED', array( 'fid' => $fid ) ), 'type' => 'success' );
+							->update( 'spdb_field', [ $col => $state ], [ 'fid' => $fid ], 1 );
+					$msg[] = [ 'text' => Sobi::Txt( 'FM.STATE_CHANGED', [ 'fid' => $fid ] ), 'type' => 'success' ];
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
-					$msg[] = array( 'text' => Sobi::Txt( 'FM.STATE_NOT_CHANGED', array( 'fid' => $fid ) ), 'type' => 'error' );
+					$msg[] = [ 'text' => Sobi::Txt( 'FM.STATE_NOT_CHANGED', [ 'fid' => $fid ] ), 'type' => 'error' ];
 				}
 			}
 		}
@@ -821,7 +823,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				break;
 			case 'addNew':
 				$r = true;
-				Sobi::Redirect( Sobi::Url( array( 'task' => 'field.edit', 'fid' => $this->saveNew(), 'sid' => SPRequest::sid() ) ) );
+				Sobi::Redirect( Sobi::Url( [ 'task' => 'field.edit', 'fid' => $this->saveNew(), 'sid' => SPRequest::sid() ] ) );
 				break;
 			case 'apply':
 			case 'save':
@@ -835,7 +837,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			case 'delete':
 				$r = true;
 				SPFactory::cache()->cleanSection();
-				$this->response( Sobi::Url( array( 'task' => 'field.list', 'pid' => Sobi::Section() ) ), $this->delete(), true );
+				$this->response( Sobi::Url( [ 'task' => 'field.list', 'pid' => Sobi::Section() ] ), $this->delete(), true );
 				break;
 			case 'reorder':
 				$r = true;
@@ -867,7 +869,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
-				if ( !( Sobi::Trigger( 'Execute', $this->name(), array( &$this ) ) ) ) {
+				if ( !( Sobi::Trigger( 'Execute', $this->name(), [ &$this ] ) ) ) {
 					$fid = SPRequest::int( 'fid' );
 					$method = $this->_task;
 					if ( $fid ) {
@@ -892,6 +894,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 
 	/**
 	 * @param $fIds
+	 * @return bool
 	 */
 	private function _reorder( $fIds )
 	{
@@ -904,7 +907,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			$c++;
 			try {
 				SPFactory::db()
-						->update( 'spdb_field', array( 'position' => $c ), array( 'fid' => $fid ) );
+						->update( 'spdb_field', [ 'position' => $c ], [ 'fid' => $fid ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 			}

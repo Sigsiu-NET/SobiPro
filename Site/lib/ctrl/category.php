@@ -86,33 +86,33 @@ class SPCategoryCtrl extends SPSectionCtrl
 		$folder = SPRequest::cmd( 'iconFolder', null );
 		$callback = SPRequest::cmd( 'callback', 'SPSelectIcon' );
 		$dir = $folder ? Sobi::Cfg( 'images.category_icons' ) . str_replace( '.', '/', $folder ) . '/' : Sobi::Cfg( 'images.category_icons' );
-		$files = array();
-		$dirs = array();
+		$files = [];
+		$dirs = [];
 		if ( $folder ) {
 			$up = explode( '.', $folder );
 			unset( $up[ count( $up ) - 1 ] );
-			$dirs[ ] = array(
+			$dirs[ ] = [
 					'name' => Sobi::Txt( 'FOLEDR_UP' ),
 					'count' => ( count( scandir( $dir . '..' ) ) - 2 ),
-					'url' => Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( count( $up ) ? implode( '.', $up ) : null ) ) )
-			);
+					'url' => Sobi::Url( [ 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( count( $up ) ? implode( '.', $up ) : null ) ] )
+			];
 		}
-		$ext = array( 'png', 'jpg', 'jpeg', 'gif' );
+		$ext = [ 'png', 'jpg', 'jpeg', 'gif' ];
 		if ( ( is_dir( $dir ) ) && ( $dh = opendir( $dir ) ) ) {
 			while ( ( $file = readdir( $dh ) ) !== false ) {
 				if ( ( filetype( $dir . $file ) == 'file' ) && in_array( strtolower( SPFs::getExt( $file ) ), $ext ) ) {
-					$files[ ] = array(
+					$files[ ] = [
 							'name' => $folder ? str_replace( '.', '/', $folder ) . '/' . $file : $file,
 							'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) )
-					);
+					];
 				}
 				elseif ( filetype( $dir . $file ) == 'dir' && !( $file == '.' || $file == '..' ) ) {
-					$dirs[ ] = array(
+					$dirs[ ] = [
 							'name' => $file,
 							'count' => ( count( scandir( $dir . $file ) ) - 2 ),
 							'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) ),
-							'url' => Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( $folder ? $folder . '.' . $file : $file ) ) )
-					);
+							'url' => Sobi::Url( [ 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( $folder ? $folder . '.' . $file : $file ) ] )
+					];
 				}
 			}
 			closedir( $dh );
@@ -135,7 +135,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 		SPFactory::mainframe()
 				->cleanBuffer()
 				->customHeader();
-		$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
+		$fonts = Sobi::Cfg( 'template.icon_fonts_arr', [] );
 		if ( count( $fonts ) ) {
 			foreach ( $fonts as $i => $font ) {
 				if ( strstr( $font, '-local' ) ) {
@@ -178,10 +178,10 @@ class SPCategoryCtrl extends SPSectionCtrl
 		if ( $menu ) {
 			$tree->setId( 'menuTree' );
 			if ( defined( 'SOBIPRO_ADM' ) ) {
-				$link = Sobi::Url( array( 'sid' => '{sid}' ), false, false, true );
+				$link = Sobi::Url( [ 'sid' => '{sid}' ], false, false, true );
 			}
 			else {
-				$link = Sobi::Url( array( 'sid' => '{sid}' ) );
+				$link = Sobi::Url( [ 'sid' => '{sid}' ] );
 			}
 		}
 		else {
@@ -237,7 +237,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 			else {
 				$view->setTemplate( 'category.chooser' );
 			}
-			Sobi::Trigger( 'Category', 'ChooserView', array( &$view ) );
+			Sobi::Trigger( 'Category', 'ChooserView', [ &$view ] );
 			$view->chooser();
 		}
 	}
@@ -251,14 +251,14 @@ class SPCategoryCtrl extends SPSectionCtrl
 		$sid = SPRequest::sid();
 		$out = SPRequest::cmd( 'out', 'json' );
 		$path = SPFactory::config()->getParentPath( $sid, true, false, true );
-		$cats = array();
+		$cats = [];
 		if ( count( $path ) ) {
 			$childs = 0;
 			foreach ( $path as $category ) {
 				if ( $category[ 'id' ] == $sid ) {
 					$childs = count( SPFactory::Category( $sid )->getChilds( 'category', false, 1 ) );
 				}
-				$cats[ ] = array( 'id' => $category[ 'id' ], 'name' => $category[ 'name' ], 'childsCount' => $childs );
+				$cats[ ] = [ 'id' => $category[ 'id' ], 'name' => $category[ 'name' ], 'childsCount' => $childs ];
 			}
 		}
 		switch ( $out ) {
@@ -266,7 +266,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 				SPFactory::mainframe()
 						->cleanBuffer()
 						->customHeader();
-				echo json_encode( array( 'id' => $sid, 'categories' => $cats ) );
+				echo json_encode( [ 'id' => $sid, 'categories' => $cats ] );
 				exit;
 		}
 	}

@@ -28,37 +28,37 @@ final class SPHeader
 {
 
 	/*** @var array */
-	private $head = array();
+	private $head = [];
 	/*** @var array */
-	private $css = array();
+	private $css = [];
 	/*** @var array */
-	private $cssFiles = array();
+	private $cssFiles = [];
 	/*** @var array */
-	private $js = array();
+	private $js = [];
 	/*** @var array */
-	private $links = array();
+	private $links = [];
 	/*** @var array */
-	private $jsFiles = array();
+	private $jsFiles = [];
 	/*** @var array */
-	private $author = array();
+	private $author = [];
 	/*** @var array */
-	private $title = array();
+	private $title = [];
 	/*** @var array */
-	private $robots = array();
+	private $robots = [];
 	/*** @var array */
-	private $description = array();
+	private $description = [];
 	/*** @var array */
-	private $keywords = array();
+	private $keywords = [];
 	/*** @var array */
-	private $raw = array();
+	private $raw = [];
 	/*** @var int */
 	private $count = 0;
 	/*** @var array */
-	private $_cache = array( 'js' => array(), 'css' => array() );
+	private $_cache = [ 'js' => [], 'css' => [] ];
 	/** @var array */
-	private $_store = array();
+	private $_store = [];
 	/** @var array */
-	private $_checksums = array();
+	private $_checksums = [];
 
 	/**
 	 * @return SPHeader
@@ -75,12 +75,12 @@ final class SPHeader
 	public function & initBase( $adm = false )
 	{
 		if ( $adm ) {
-			$this->addCssFile( array( 'bootstrap.bootstrap', 'admicons', 'adm.sobipro' ) )
-					->addJsFile( array( 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface' ) );
+			$this->addCssFile( [ 'bootstrap.bootstrap', 'admicons', 'adm.sobipro' ] )
+					->addJsFile( [ 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface' ] );
 		}
 		else {
-			$this->addCssFile( array( 'sobipro' ) )
-					->addJsFile( array( 'sobipro', 'jquery', 'jqnc' ) );
+			$this->addCssFile( [ 'sobipro' ] )
+					->addJsFile( [ 'sobipro', 'jquery', 'jqnc' ] );
 			if ( Sobi::Cfg( 'template.bootstrap3-load', false ) && !defined( 'SOBIPRO_ADM' ) ) {
 				if ( Sobi::Cfg( 'template.bootstrap3-source', true ) ) { //true=local, false=CDN
 					$this->addCssFile( 'b3bootstrap.b3bootstrap' )
@@ -95,7 +95,7 @@ final class SPHeader
 				$this->addCssFile( 'bootstrap.bootstrap' )
 						->addJsFile( 'bootstrap' );
 			}
-			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
+			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', [] );
 			if ( count( $fonts ) ) {
 				foreach ( $fonts as $font ) {
 					if ( $font == 'font-awesome-3-local' ) {
@@ -145,7 +145,7 @@ final class SPHeader
 	 * @param array $attributes
 	 * @return SPHeader
 	 */
-	public function & addMeta( $name, $content, $attributes = array() )
+	public function & addMeta( $name, $content, $attributes = [] )
 	{
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -173,7 +173,7 @@ final class SPHeader
 	 * @internal param string $js
 	 * @return SPHeader
 	 */
-	public function & meta( $content, $name = null, $attributes = array() )
+	public function & meta( $content, $name = null, $attributes = [] )
 	{
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -430,7 +430,7 @@ final class SPHeader
 					}
 				}
 				elseif ( $file == 'icons' && !( defined( 'SOBIPRO_ADM' ) ) ) {
-					$fonts = Sobi::Cfg( 'template.icon_fonts_arr', array() );
+					$fonts = Sobi::Cfg( 'template.icon_fonts_arr', [] );
 					if ( !( in_array( 'font-awesome-3-local', $fonts ) ) ) {
 						return $this;
 					}
@@ -534,11 +534,11 @@ final class SPHeader
 	 * @param array $site
 	 * @return SPHeader
 	 */
-	public function & addTitle( $title, $site = array() )
+	public function & addTitle( $title, $site = [] )
 	{
 		if ( count( $site ) && $site[ 0 ] > 1 ) {
 			if ( !( is_array( $title ) ) ) {
-				$title = array( $title );
+				$title = [ $title ];
 			}
 			if ( $site[ 1 ] > 1 ) { // no page counter when on page 1
 				$title[ ] = Sobi::Txt( 'SITES_COUNTER', $site[ 1 ], $site[ 0 ] );
@@ -596,7 +596,7 @@ final class SPHeader
 			$this->title = $title;
 		}
 		else {
-			$this->title = array( SPLang::clean( $title ) );
+			$this->title = [ SPLang::clean( $title ) ];
 		}
 		return $this;
 	}
@@ -644,7 +644,7 @@ final class SPHeader
 
 	public function addRobots( $robots )
 	{
-		$this->robots = array( $robots );
+		$this->robots = [ $robots ];
 	}
 
 	public function addAuthor( $author )
@@ -693,17 +693,17 @@ final class SPHeader
 
 	public function & reset()
 	{
-		$this->keywords = array();
-		$this->author = array();
-		$this->robots = array();
-		$this->description = array();
-		$this->cssFiles = array();
-		$this->jsFiles = array();
-		$this->css = array();
-		$this->js = array();
-		$this->raw = array();
-		$this->head = array();
-		$this->_store = array();
+		$this->keywords = [];
+		$this->author = [];
+		$this->robots = [];
+		$this->description = [];
+		$this->cssFiles = [];
+		$this->jsFiles = [];
+		$this->css = [];
+		$this->js = [];
+		$this->raw = [];
+		$this->head = [];
+		$this->_store = [];
 		return $this;
 	}
 
@@ -712,7 +712,7 @@ final class SPHeader
 		if ( Sobi::Cfg( 'cache.include_css_files', false ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			if ( count( $this->_cache[ 'css' ] ) ) {
 				/* * create the right checksum */
-				$check = array( 'section' => Sobi::Section() );
+				$check = [ 'section' => Sobi::Section() ];
 				foreach ( $this->_cache[ 'css' ] as $file ) {
 					if ( file_exists( $file ) ) {
 						$check[ $file ] = filemtime( $file );
@@ -753,7 +753,7 @@ final class SPHeader
 								else {
 									$realUrl = Sobi::FixPath( $rPath . '/' . $url );
 								}
-								$realUrl = str_replace( array( '"', "'", ' ' ), null, $realUrl );
+								$realUrl = str_replace( [ '"', "'", ' ' ], null, $realUrl );
 								$fc = str_replace( $url, $realUrl, $fc );
 							}
 						}
@@ -775,7 +775,7 @@ final class SPHeader
 			if ( count( $this->_cache[ 'js' ] ) ) {
 				$compression = Sobi::Cfg( 'cache.compress_js', false );
 				$comprLevel = Sobi::Cfg( 'cache.compress_level', 0 );
-				$check = array( 'section' => Sobi::Section(), 'compress_level' => $comprLevel, 'compress_js' => $compression );
+				$check = [ 'section' => Sobi::Section(), 'compress_level' => $comprLevel, 'compress_js' => $compression ];
 				foreach ( $this->_cache[ 'js' ] as $file ) {
 					$check[ $file ] = filemtime( $file );
 				}
@@ -822,14 +822,14 @@ final class SPHeader
 				foreach ( $this->js as $js ) {
 					$jsCode .= "\n\t" . str_replace( "\n", "\n\t", $js );
 				}
-				$this->js = array( "\n<script type=\"text/javascript\">\n/*<![CDATA[*/{$jsCode}\n/*]]>*/\n</script>\n" );
+				$this->js = [ "\n<script type=\"text/javascript\">\n/*<![CDATA[*/{$jsCode}\n/*]]>*/\n</script>\n" ];
 			}
 			if ( count( $this->css ) ) {
 				$cssCode = null;
 				foreach ( $this->css as $css ) {
 					$cssCode .= "\n\t" . str_replace( "\n", "\n\t", $css );
 				}
-				$this->css = array( "<style type=\"text/css\">\n{$cssCode}\n</style>" );
+				$this->css = [ "<style type=\"text/css\">\n{$cssCode}\n</style>" ];
 			}
 			// Thu, May 8, 2014 13:10:19 - changed order of meta keys and meta description
 			// See #1231
@@ -843,7 +843,7 @@ final class SPHeader
 			$this->head[ 'css' ] = array_merge( $this->head[ 'css' ], $this->css );
 			$this->head[ 'js' ] = array_merge( $this->head[ 'js' ], $this->js );
 			$this->head[ 'raw' ] = $this->raw;
-			Sobi::Trigger( 'Header', 'Send', array( &$this->head ) );
+			Sobi::Trigger( 'Header', 'Send', [ &$this->head ] );
 			SPFactory::mainframe()->addHead( $this->head );
 			if ( count( $this->title ) ) {
 				SPFactory::mainframe()->setTitle( $this->title );

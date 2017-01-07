@@ -45,7 +45,7 @@ class SPFieldCtrl extends SPController
 		$this->nid = 'field_' . $method[ 0 ];
 		$method = 'Proxy' . ucfirst( $method[ 1 ] );
 		$this->fid = SPFactory::db()
-				->select( 'fid', 'spdb_field', array( 'nid' => $this->nid, 'section' => Sobi::Section() ) )
+				->select( 'fid', 'spdb_field', [ 'nid' => $this->nid, 'section' => Sobi::Section() ] )
 				->loadResult();
 		$this->field = SPFactory::Model( 'field' );
 		$this->field->init( $this->fid );

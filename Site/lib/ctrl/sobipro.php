@@ -76,7 +76,7 @@ final class SobiProCtrl
 	/**
 	 * @var array
 	 */
-	private $_cache = array();
+	private $_cache = [];
 
 	/**
 	 * @param string $task
@@ -164,10 +164,10 @@ final class SobiProCtrl
 			SPFactory::registry()->set( 'current_section_name', $set );
 		}
 
-		$start = array( $this->_mem, $this->_time );
+		$start = [ $this->_mem, $this->_time ];
 		SPFactory::registry()->set( 'start', $start );
 		/* check if it wasn't plugin custom task */
-		if ( !( Sobi::Trigger( 'custom', 'task', array( &$this, Input::Task() ) ) ) ) {
+		if ( !( Sobi::Trigger( 'custom', 'task', [ &$this, Input::Task() ] ) ) ) {
 			/* if not, start to route */
 			try {
 				$this->route();
@@ -215,11 +215,11 @@ final class SobiProCtrl
 				$state = $section->state;
 			}
 			else {
-				$path = array();
+				$path = [];
 				$id = $sid;
 				while ( $id > 0 ) {
 					try {
-						$id = $db->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
+						$id = $db->select( 'pid', 'spdb_relations', [ 'id' => $id ] )
 								->loadResult();
 						if ( $id ) {
 							$path[] = ( int )$id;
@@ -284,7 +284,7 @@ final class SobiProCtrl
 		$cache = true;
 		if ( Sobi::Cfg( 'cache.xml_enabled' ) ) {
 			if ( ( $this->_model instanceof stdClass ) && !( ( $this->_model instanceof stdClass ) && $this->_model->owner == Sobi::My( 'id' ) ) ) {
-				if ( in_array( $this->_model->owner, array( 'entry' ) ) ) {
+				if ( in_array( $this->_model->owner, [ 'entry' ] ) ) {
 					$cache = false;
 				}
 			}
@@ -395,14 +395,14 @@ final class SobiProCtrl
 					$db =& SPFactory::db();
 					try {
 						$objects = $db
-								->select( '*', 'spdb_object', array( 'id' => Input::Arr( $sid ) ) )
+								->select( '*', 'spdb_object', [ 'id' => Input::Arr( $sid ) ] )
 								->loadObjectList();
 					} catch ( SPException $x ) {
 						Sobi::Error( 'CoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 						$r = false;
 					}
 					if ( count( $objects ) ) {
-						$this->_ctrl = array();
+						$this->_ctrl = [];
 						foreach ( $objects as $object ) {
 							$this->_ctrl[] = $this->extendObj( $object, $obj, $ctrl, $task );
 						}
@@ -571,7 +571,7 @@ final class SobiProCtrl
 		}
 		/* send header data etc ...*/
 		if ( Input::Cmd( 'format' ) == 'raw' && Input::Bool( 'xmlc' ) ) {
-			SPFactory::cache()->storeView( array() );
+			SPFactory::cache()->storeView( [] );
 		}
 		SPFactory::mainframe()->endOut();
 		Sobi::Trigger( 'End' );

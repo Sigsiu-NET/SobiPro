@@ -30,7 +30,7 @@ class SPFront extends SPController
 	/**
 	 * @var array
 	 */
-	private $_sections = array();
+	private $_sections = [];
 	/**
 	 * @var string
 	 */
@@ -46,7 +46,7 @@ class SPFront extends SPController
 	{
 		try {
 			$sections = SPFactory::db()
-					->select( '*', 'spdb_object', array( 'oType' => 'section' ), 'id' )
+					->select( '*', 'spdb_object', [ 'oType' => 'section' ], 'id' )
 					->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_SECTIONS_LIST', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
@@ -59,7 +59,7 @@ class SPFront extends SPController
 					$this->_sections[ ] = $s;
 				}
 			}
-			Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_sections ) );
+			Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_sections ] );
 		}
 	}
 

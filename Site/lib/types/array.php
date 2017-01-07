@@ -30,7 +30,7 @@ final class SPData_Array extends SPObject
 	/**
 	 * @var array
 	 */
-	private $_arr = array();
+	private $_arr = [];
 	/** @var bool */
 	private $legacy = true;
 
@@ -70,7 +70,7 @@ final class SPData_Array extends SPObject
 	 */
 	function toString( $array, $inDel = '=', $outDel = ' ' )
 	{
-		$out = array();
+		$out = [];
 		if ( is_array( $array ) && count( $array ) ) {
 			foreach ( $array as $key => $item ) {
 				if ( is_array( $item ) ) {
@@ -113,7 +113,7 @@ final class SPData_Array extends SPObject
 	public function toINIString( $arr )
 	{
 		$this->_arr = $arr;
-		$out = array();
+		$out = [];
 		if ( is_array( $this->_arr ) && count( $this->_arr ) ) {
 			foreach ( $this->_arr as $key => $value ) {
 				if ( is_array( $value ) && !( is_string( $value ) ) ) {
@@ -136,7 +136,7 @@ final class SPData_Array extends SPObject
 
 	private function _cleanIni( $txt )
 	{
-		return str_replace( array( '?{}|&~![()^"' ), null, $txt );
+		return str_replace( [ '?{}|&~![()^"' ], null, $txt );
 	}
 
 	public function toXML( $arr, $root = 'root', $returnDOM = false )
@@ -184,7 +184,7 @@ final class SPData_Array extends SPObject
 	public function fromXML( $dom, $root )
 	{
 		$r = $dom->getElementsByTagName( $root );
-		$arr = array();
+		$arr = [];
 		$this->_fromXML( $r, $arr );
 		return $arr;
 	}
@@ -215,7 +215,7 @@ final class SPData_Array extends SPObject
 					$arr[ $node->nodeName ] = $node->nodeValue;
 				}
 				else {
-					$arr[ $node->nodeName ] = array();
+					$arr[ $node->nodeName ] = [];
 					$this->_fromXML( $node->childNodes, $arr[ $node->nodeName ] );
 				}
 			}

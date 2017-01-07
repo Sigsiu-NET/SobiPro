@@ -37,36 +37,36 @@ class SPListingView extends SPSectionView implements SPView
 			$current = $this->get( 'section' );
 			$categories = $this->get( 'categories' );
 			$entries = $this->get( 'entries' );
-			$data = array();
+			$data = [];
 			$data[ 'id' ] = $current->get( 'id' );
-			$data[ 'section' ] = array(
+			$data[ 'section' ] = [
 					'_complex' => 1,
 					'_data' => Sobi::Section( true ),
-					'_attributes' => array( 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) )
-			);
-			$data[ 'name' ] = array(
+					'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
+			];
+			$data[ 'name' ] = [
 							'_complex' => 1,
 							'_data' => $this->get( 'listing_name' ),
-							'_attributes' => array( 'lang' => Sobi::Lang( false ) )
-			);
+							'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+			];
 			if( Sobi::Cfg( 'category.show_desc' ) ) {
 				$desc = $current->get( 'description' );
 				if( Sobi::Cfg( 'category.parse_desc' ) ) {
-					Sobi::Trigger( 'prepare', 'Content', array( &$desc, $current ) );
+					Sobi::Trigger( 'prepare', 'Content', [ &$desc, $current ] );
 				}
-				$data[ 'description' ] = array(
+				$data[ 'description' ] = [
 								'_complex' => 1,
 								'_cdata' => 1,
 								'_data' => $desc,
-								'_attributes' => array( 'lang' => Sobi::Lang( false ) )
-				);
+								'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+				];
 			}
-			$data[ 'meta' ] = array(
+			$data[ 'meta' ] = [
 									'description' => $current->get( 'metaDesc' ),
 									'keys' => $this->metaKeys( $current ),
 									'author' => $current->get( 'metaAuthor' ),
 									'robots' => $current->get( 'metaRobots' ),
-			);
+			];
 			$data[ 'entries_in_line' ] = $this->get( '$eInLine' );
 			$data[ 'categories_in_line' ] = $this->get( '$cInLine' );
 			$this->menu( $data );
@@ -77,11 +77,11 @@ class SPListingView extends SPSectionView implements SPView
 					if( is_numeric( $category ) ) {
 						$category = SPFactory::Category( $category );
 					}
-					$data[ 'categories' ][] = array(
+					$data[ 'categories' ][] = [
 						'_complex' => 1,
-						'_attributes' => array( 'id' => $category->get( 'id' ),  'nid' => $category->get( 'nid' ) ),
+						'_attributes' => [ 'id' => $category->get( 'id' ),  'nid' => $category->get( 'nid' ) ],
 						'_data' => $this->category( $category )
-					);
+					];
 					unset( $category );
 				}
 			}
@@ -90,24 +90,25 @@ class SPListingView extends SPSectionView implements SPView
 				$manager = Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ? true : false;
 				foreach ( $entries as $eid ) {
 					$en = $this->entry( $eid, $manager );
-					$data[ 'entries' ][] = array(
+					$data[ 'entries' ][] = [
 						'_complex' => 1,
-						'_attributes' => array( 'id' => $en[ 'id' ] ),
+						'_attributes' => [ 'id' => $en[ 'id' ] ],
 						'_data' => $en
-					);
+					];
 				}
 				$this->navigation( $data );
 			}
 			$this->_attr = $data;
 		}
 		// general listing trigger
-		Sobi::Trigger( 'Listing', ucfirst( __FUNCTION__ ), array( &$this->_attr ) );
+		Sobi::Trigger( 'Listing', ucfirst( __FUNCTION__ ), [ &$this->_attr ] );
 		// specific lisitng trigger
-		Sobi::Trigger( $this->_type, ucfirst( __FUNCTION__ ), array( &$this->_attr ) );
+		Sobi::Trigger( $this->_type, ucfirst( __FUNCTION__ ), [ &$this->_attr ] );
 	}
 
 	/**
-	 *
+	 * @param string $type
+	 * @param null $out
 	 */
 	public function display( $type = 'listing', $out = null )
 	{

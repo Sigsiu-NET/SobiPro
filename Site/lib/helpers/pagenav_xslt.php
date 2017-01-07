@@ -41,7 +41,7 @@ final class SPPageNavXSLT
 	/**
 	 * @var array
 	 */
-	private $url = array();
+	private $url = [];
 
 	/**
 	 * @param int $limit - number of entries to show on a page
@@ -63,7 +63,7 @@ final class SPPageNavXSLT
 	 */
 	public function get()
 	{
-		$pn 	= array();
+		$pn 	= [];
 		$pages 	= $this->limit > 0 ? ceil( $this->count / $this->limit ) : 0;
 		if( $pages > 1 ) {
 			if( $this->current == 1 ) {
@@ -71,16 +71,16 @@ final class SPPageNavXSLT
 				$pn[] = Sobi::Txt( 'PN.PREVIOUS' );
 			}
 			else {
-				$pn[] = array(
+				$pn[] = [
 					'_complex' => 1,
 					'_data' => Sobi::Txt( 'PN.START' ),
-					'_attributes' => array( 'url' => Sobi::Url( array_merge( $this->url, array( 'site' => 1 ) ) )  )
-				);
-				$pn[] = array(
+					'_attributes' => [ 'url' => Sobi::Url( array_merge( $this->url, [ 'site' => 1 ] ) ) ]
+				];
+				$pn[] = [
 					'_complex' => 1,
 					'_data' => Sobi::Txt( 'PN.PREVIOUS' ),
-					'_attributes' => array( 'url' => Sobi::Url( array_merge( $this->url, array( 'site' => ( $this->current - 1 ) ) ) )  )
-				);
+					'_attributes' => [ 'url' => Sobi::Url( array_merge( $this->url, [ 'site' => ( $this->current - 1 ) ] ) ) ]
+				];
 			}
 			for ( $page = 1; $page <= $pages; $page++ ) {
 				/** when we have many pages a lot of nodes is being generated and it is slowing the whole site down */
@@ -89,45 +89,45 @@ final class SPPageNavXSLT
 						continue;
 					}
 				}
-				$_attributes = array();
+				$_attributes = [];
 				if ( $page == $this->current ) {
 					$_attributes[ 'selected' ] = 1;
 				}
 				elseif( $page > 1 ) {
-					$_attributes[ 'url' ] =  Sobi::Url( array_merge( $this->url, array( 'site' => $page ) ) );
+					$_attributes[ 'url' ] =  Sobi::Url( array_merge( $this->url, [ 'site' => $page ] ) );
 				}
 				else {
-					$_attributes[ 'url' ] =  Sobi::Url( array_merge( $this->url, array( 'site' => $page ) ) );
+					$_attributes[ 'url' ] =  Sobi::Url( array_merge( $this->url, [ 'site' => $page ] ) );
 				}
-				$pn[] = array(
+				$pn[] = [
 					'_complex' => 1,
 					'_data' => $page,
 					'_attributes' => $_attributes
-				);
+				];
 			}
 			if ( $this->current == $pages ) {
 				$pn[] = Sobi::Txt( 'PN.NEXT' );
 				$pn[] = Sobi::Txt( 'PN.END' );
 			}
 			else {
-				$pn[] = array(
+				$pn[] = [
 					'_complex' => 1,
 					'_data' => Sobi::Txt( 'PN.NEXT' ),
-					'_attributes' => array( 'url' => Sobi::Url( array_merge( $this->url, array( 'site' => ( $this->current + 1 ) ) ) )  )
-				);
-				$pn[] = array(
+					'_attributes' => [ 'url' => Sobi::Url( array_merge( $this->url, [ 'site' => ( $this->current + 1 ) ] ) ) ]
+				];
+				$pn[] = [
 					'_complex' => 1,
 					'_data' => Sobi::Txt( 'PN.END' ),
-					'_attributes' => array( 'url' => Sobi::Url( array_merge( $this->url, array( 'site' => $pages ) ) )  )
-				);
+					'_attributes' => [ 'url' => Sobi::Url( array_merge( $this->url, [ 'site' => $pages ] ) ) ]
+				];
 			}
 		}
-		return array(
-			'current_site_txt' => Sobi::Txt( 'PN.CURRENT_SITE', array( 'current' => $this->current, 'pages' => $pages ) ),
+		return [
+			'current_site_txt' => Sobi::Txt( 'PN.CURRENT_SITE', [ 'current' => $this->current, 'pages' => $pages ] ),
 			'current_site' => $this->current,
 			'all_sites' => $pages,
 			'entries' => $this->count,
 			'sites' => $pn,
-		);
+		];
 	}
 }

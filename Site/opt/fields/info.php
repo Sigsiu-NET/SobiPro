@@ -87,25 +87,25 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	{
 		$data = SPLang::getValue( $this->nid . '-viewInfo', 'field_information', Sobi::Section(), null, null, $this->fid );
 
-		$attributes = array();
+		$attributes = [];
 		if ( strlen( $data ) ) {
 			$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData';
 			$this->cssClass = $this->cssClass . ' ' . $this->nid;
 			$this->cleanCss();
-			$attributes = array(
+			$attributes = [
 				'lang' => Sobi::Lang(),
 				'class' => $this->cssClass
-			);
+			];
 		}
 		else {
 			$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spField';
 		}
 
-		return array(
+		return [
 			'_complex' => 1,
 			'_data' => $data,
 			'_attributes' => $attributes
-		);
+		];
 	}
 
 	/**
@@ -127,7 +127,7 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	 */
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{
-		return array();
+		return [];
 	}
 
 	/**
@@ -137,7 +137,7 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'cssClassView', 'cssClassEdit', 'showEditLabel', 'bsWidth' );
+		return [ 'cssClassView', 'cssClassEdit', 'showEditLabel', 'bsWidth' ];
 	}
 
 	/**
@@ -152,6 +152,8 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	}
 
 	/**
+	 * @param $request
+	 * @param $section
 	 * @return bool
 	 */
 	public function searchData( $request, $section )

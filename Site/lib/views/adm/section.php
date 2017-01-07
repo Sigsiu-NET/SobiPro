@@ -37,7 +37,7 @@ class SPSectionAdmView extends SPAdmView
 	{
 		$name = $this->get( 'section.name' );
 		if ( $name ) {
-			Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
+			Sobi::Trigger( 'setTitle', $this->name(), [ &$title ] );
 			$title = $name; //Sobi::Txt( $title, array( 'category_name' => $name ) );
 			$this->set( $name, 'category_name' );
 			$this->set( $name, 'section_name' );
@@ -73,11 +73,11 @@ class SPSectionAdmView extends SPAdmView
 		$this->assign( $parentPath, 'current_path' );
 		$this->_plgSect = '_SectionListTemplate';
 		$c = $this->get( 'categories' );
-		$categories = array();
-		$entries = array();
+		$categories = [];
+		$entries = [];
 
 		/* get users/authors data first */
-		$usersData = array();
+		$usersData = [];
 		if ( count( $c ) ) {
 			foreach ( $c as $cat ) {
 				$usersData[ ] = $cat->get( 'owner' );
@@ -89,7 +89,7 @@ class SPSectionAdmView extends SPAdmView
 		/* handle the categories */
 		if ( count( $c ) ) {
 			foreach ( $c as $cat ) {
-				$category = array();
+				$category = [];
 				/* data needed to display in the list */
 				$category[ 'name' ] = $cat->get( 'name' );
 				$category[ 'state' ] = $cat->get( 'state' );
@@ -136,8 +136,8 @@ class SPSectionAdmView extends SPAdmView
 		/* handle the fields in this section for header */
 		$f = $this->get( 'fields' );
 
-		$entriesOrdering = array(
-			Sobi::Txt( 'ORDER_BY' ) => array(),
+		$entriesOrdering = [
+			Sobi::Txt( 'ORDER_BY' ) => [],
 			'e_sid.asc' => Sobi::Txt( 'EMN.ORDER_BY_ID_ASC' ),
 			'e_sid.desc' => Sobi::Txt( 'EMN.ORDER_BY_ID_DESC' ),
 			$this->get( 'entries_field' ) . '.asc' => Sobi::Txt( 'EMN.ORDER_BY_NAME_ASC' ),
@@ -150,23 +150,23 @@ class SPSectionAdmView extends SPAdmView
             'updatedTime.desc' => Sobi::Txt( 'EMN_ORDER_BY_UPDATE_DATE_DESC' ),
 			'approved.asc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_ASC' ),
 			'approved.desc' => Sobi::Txt( 'EMN.ORDER_BY_APPROVAL_DESC' ),
-		);
+		];
 		if ( $this->get( 'task' ) == 'view' ) {
 			$entriesOrdering[ 'position.asc' ] = Sobi::Txt( 'EMN.ORDER_BY_ORDER_ASC' );
 			$entriesOrdering[ 'position.desc' ] = Sobi::Txt( 'EMN.ORDER_BY_ORDER_DESC' );
 		}
-		$customFields = array();
-		$customHeader = array();
+		$customFields = [];
+		$customHeader = [];
 		if ( count( $f ) ) {
 			/* @var SPField $fit */
 			foreach ( $f as $field ) {
 				$entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ) . '.asc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt( 'EMN.ORDER_BY_FIELD_ASC' );
 				$entriesOrdering[ Sobi::Txt( 'EMN.ORDER_BY_FIELD' ) ][ $field->get( 'nid' ) . '.desc' ] = '\'' . $field->get( 'name' ) . '\' ' . Sobi::Txt( 'EMN.ORDER_BY_FIELD_DESC' );
 				$customFields[ ] = $field->get( 'nid' );
-				$customHeader[ ] = array(
+				$customHeader[ ] = [
 					'content' => $field->get( 'name' ),
-					'attributes' => array( 'type' => 'text' ),
-				);
+					'attributes' => [ 'type' => 'text' ],
+				];
 			}
 		}
 		$entriesOrdering[ 'owner.desc' ] = Sobi::Txt( 'EMN.ORDER_BY_OWNER' );
@@ -178,7 +178,7 @@ class SPSectionAdmView extends SPAdmView
 		$e = $this->get( 'entries' );
 		if ( count( $e ) ) {
 			/* get users/authors data first */
-			$usersData = array();
+			$usersData = [];
 			foreach ( $e as $i => $sid ) {
 				$e[ $i ] = SPFactory::EntryRow( $sid );
 				$usersData[ ] = $e[ $i ]->get( 'owner' );
@@ -187,7 +187,7 @@ class SPSectionAdmView extends SPAdmView
 			$usersData = $this->userData( $usersData );
 			foreach ( $e as $sentry ) {
 				/* @var SPEntryAdm $sentry */
-				$entry = array();
+				$entry = [];
 				$entry[ 'state' ] = $sentry->get( 'state' );
 				$entry[ 'approved' ] = $sentry->get( 'approved' );
 

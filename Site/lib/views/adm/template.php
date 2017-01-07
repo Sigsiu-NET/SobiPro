@@ -46,19 +46,19 @@ class SPAdmTemplateView extends SPConfigAdmView
 		$name = $this->get( 'template_name' );
 		if ( !( strlen( $name ) ) ) {
 			$name = $this->get( 'file_name' );
-			$title = Sobi::Txt( $title, array( 'path' => $name ) );
+			$title = Sobi::Txt( $title, [ 'path' => $name ] );
 		}
 		else {
-			$title = Sobi::Txt( $title, array( 'template' => $name ) );
+			$title = Sobi::Txt( $title, [ 'template' => $name ] );
 		}
-		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
+		Sobi::Trigger( 'setTitle', $this->name(), [ &$title ] );
 		SPFactory::header()->setTitle( $title );
 		$this->set( $title, 'site_title' );
 	}
 
 	private function edit()
 	{
-		$jsFiles = array( 'codemirror.codemirror' );
+		$jsFiles = [ 'codemirror.codemirror' ];
 		$ext = $this->get( 'file_ext' );
 		$mode = null;
 		switch ( strtolower( $ext ) ) {

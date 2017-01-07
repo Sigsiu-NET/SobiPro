@@ -32,7 +32,7 @@ define( 'SOBI_TASK', 'task' );
 //}
 define( 'SOBI_ACL', 'front' );
 define( 'SOBI_ROOT', JPATH_ROOT );
-define( 'SOBI_MEDIA', implode( '/', array( JPATH_ROOT, 'media', 'sobipro' ) ) );
+define( 'SOBI_MEDIA', implode( '/', [ JPATH_ROOT, 'media', 'sobipro' ] ) );
 define( 'SOBI_MEDIA_LIVE', JURI::root().'media/sobipro' );
 define( 'SOBI_PATH', SOBI_ROOT.'/components/com_sobipro' );
 define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );

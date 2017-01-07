@@ -54,12 +54,12 @@ abstract class SPFactory
 	public static function & cache( $sid = 0 )
 	{
 		if ( !( Sobi::Section() ) ) {
-			$path = array();
+			$path = [];
 			$id = $sid;
 			while ( $id > 0 ) {
 				try {
 					$id = SPFactory::db()
-							->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
+							->select( 'pid', 'spdb_relations', [ 'id' => $id ] )
 							->loadResult();
 					if ( $id ) {
 						$path[] = ( int )$id;
@@ -196,7 +196,7 @@ abstract class SPFactory
 		if ( !isset( $instances[ $id ] ) ) {
 			try {
 				$instances[ $id ] = self::db()
-						->select( '*', 'spdb_object', array( 'id' => $id ) )
+						->select( '*', 'spdb_object', [ 'id' => $id ] )
 						->loadObject();
 			} catch ( SPException $x ) {
 				Sobi::Error( 'factory', 'cannot_get_object', SPC::WARNING, 500, __LINE__, __CLASS__, $x->getMessage() );
@@ -213,7 +213,7 @@ abstract class SPFactory
 	 */
 	public static function & Instance( $class )
 	{
-		static $loaded = array();
+		static $loaded = [];
 		if ( !( isset( $loaded[ $class ] ) ) ) {
 			$c = SPLoader::loadClass( $class, false, null, false );
 			if ( !( strlen( $c ) ) ) {
@@ -230,7 +230,7 @@ abstract class SPFactory
 		try {
 			$refMethod = new ReflectionMethod( $loaded[ $class ], '__construct' );
 			$params = $refMethod->getParameters();
-			$argsProcessed = array();
+			$argsProcessed = [];
 			if ( count( $args ) ) {
 				foreach ( $params as $key => $param ) {
 					if ( array_key_exists( $key, $args ) ) {
@@ -321,7 +321,7 @@ abstract class SPFactory
 	 */
 	public static function & Category( $sid )
 	{
-		static $cats = array();
+		static $cats = [];
 		if ( !( isset( $cats[ $sid ] ) ) ) {
 			$cats[ $sid ] = self::Model( 'category' );
 			$cats[ $sid ]->init( $sid );
@@ -336,7 +336,7 @@ abstract class SPFactory
 	 */
 	public static function & Section( $sid )
 	{
-		static $sections = array();
+		static $sections = [];
 		if ( !( isset( $sections[ $sid ] ) ) ) {
 			$sections[ $sid ] = self::Model( 'section' );
 			$sections[ $sid ]->init( $sid );

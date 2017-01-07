@@ -33,7 +33,7 @@ abstract class SobiPro
 	 */
 	public static function ParseContent( $content )
 	{
-		Sobi::Trigger( 'Parse', 'Content', array( &$content ) );
+		Sobi::Trigger( 'Parse', 'Content', [ &$content ] );
 		return $content;
 	}
 
@@ -44,7 +44,7 @@ abstract class SobiPro
 	public static function Txt()
 	{
 		$args = func_get_args();
-		return call_user_func_array( array( 'Sobi', 'Txt' ), $args );
+		return call_user_func_array( [ 'Sobi', 'Txt' ], $args );
 	}
 
 	public static function LoadLang( $lang )
@@ -68,7 +68,7 @@ abstract class SobiPro
 	 */
 	public static function Count( $sid, $childs = 'entry' )
 	{
-		static $cache = array();
+		static $cache = [];
 		if ( !( isset( $cache[ $sid ] ) ) ) {
 			$cache[ $sid ] = SPFactory::Model( 'category' );
 			$cache[ $sid ]->init( $sid );
@@ -233,7 +233,7 @@ abstract class SobiPro
 	{
 		$section = $section ? $section : Sobi::Section();
 		$content = null;
-		Sobi::Trigger( $name, 'TemplateDisplay', array( &$content, $sid, $section ) );
+		Sobi::Trigger( $name, 'TemplateDisplay', [ &$content, $sid, $section ] );
 		return $content;
 	}
 
@@ -287,7 +287,7 @@ abstract class SobiPro
 	 */
 	public static function My( $property )
 	{
-		if ( in_array( $property, array( 'password', 'block', 'sendEmail', 'activation', 'params' ) ) ) {
+		if ( in_array( $property, [ 'password', 'block', 'sendEmail', 'activation', 'params' ] ) ) {
 			return false;
 		}
 		static $user = null;
@@ -308,11 +308,11 @@ abstract class SobiPro
 	public static function User( $id, $property )
 	{
 		$property = trim( $property );
-		if ( in_array( $property, array( 'password', 'block', 'sendEmail', 'activation', 'params' ) ) ) {
+		if ( in_array( $property, [ 'password', 'block', 'sendEmail', 'activation', 'params' ] ) ) {
 			return false;
 		}
 		$id = ( int )$id;
-		static $loaded = array();
+		static $loaded = [];
 		if ( !( isset( $loaded[ $id ] ) ) ) {
 			$loaded[ $id ] = SPUser::getBaseData( $id );
 		}

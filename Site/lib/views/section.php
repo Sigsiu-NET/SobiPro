@@ -37,18 +37,18 @@ class SPSectionView extends SPFrontView implements SPView
 			}
 			$cat[ 'id' ] = $category->get( 'id' );
 			$cat[ 'nid' ] = $category->get( 'nid' );
-			$cat[ 'name' ] = array(
+			$cat[ 'name' ] = [
 					'_complex' => 1,
 					'_data' => $category->get( 'name' ),
-					'_attributes' => array( 'lang' => Sobi::Lang( false ) )
-			);
+					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+			];
 			if ( Sobi::Cfg( 'list.cat_desc', false ) ) {
-				$cat[ 'description' ] = array(
+				$cat[ 'description' ] = [
 						'_complex' => 1,
 						'_cdata' => 1,
 						'_data' => $category->get( 'description' ),
-						'_attributes' => array( 'lang' => Sobi::Lang( false ) )
-				);
+						'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+				];
 			}
 			$cat[ 'created_time' ] = $category->get( 'createdTime' );
 			$cat[ 'updated_time' ] = $category->get( 'updatedTime' );
@@ -61,12 +61,12 @@ class SPSectionView extends SPFrontView implements SPView
 				$showIntro = Sobi::Cfg( 'category.show_intro', true );
 			}
 			if ( $showIntro ) {
-				$cat[ 'introtext' ] = array(
+				$cat[ 'introtext' ] = [
 						'_complex' => 1,
 						'_cdata' => 1,
 						'_data' => $category->get( 'introtext' ),
-						'_attributes' => array( 'lang' => Sobi::Lang( false ) )
-				);
+						'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+				];
 			}
 			$showIcon = $category->get( 'showIcon' );
 			if ( $showIcon == SPC::GLOBAL_SETTING ) {
@@ -78,17 +78,17 @@ class SPSectionView extends SPFrontView implements SPView
 					if ( $category->param( 'icon-font-add-class' ) ) {
 						$icon[ 'class' ] .= ' ' . $category->param( 'icon-font-add-class' );
 					}
-					$cat[ 'icon' ] = array(
+					$cat[ 'icon' ] = [
 							'_complex' => 1,
 							'_data' => '',
 							'_attributes' => $icon
-					);
+					];
 				}
 				elseif ( SPFs::exists( Sobi::Cfg( 'images.category_icons' ) . '/' . $category->get( 'icon' ) ) ) {
 					$cat[ 'icon' ] = Sobi::FixPath( Sobi::Cfg( 'images.category_icons_live' ) . $category->get( 'icon' ) );
 				}
 			}
-			$cat[ 'url' ] = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $category->get( 'nid' ) : $category->get( 'name' ), 'sid' => $category->get( 'id' ) ) );
+			$cat[ 'url' ] = Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $category->get( 'nid' ) : $category->get( 'name' ), 'sid' => $category->get( 'id' ) ] );
 			$cat[ 'position' ] = $category->get( 'position' );
 			$cat[ 'author' ] = $category->get( 'owner' );
 			if ( $category->get( 'state' ) == 0 ) {
@@ -106,12 +106,12 @@ class SPSectionView extends SPFrontView implements SPView
 				}
 			}
 			if ( Sobi::Cfg( 'list.cat_meta', false ) ) {
-				$cat[ 'meta' ] = array(
+				$cat[ 'meta' ] = [
 						'description' => $category->get( 'metaDesc' ),
 						'keys' => $this->metaKeys( $category ),
 						'author' => $category->get( 'metaAuthor' ),
 						'robots' => $category->get( 'metaRobots' ),
-				);
+				];
 			}
 			if ( $fields ) {
 				$category->loadFields( Sobi::Section(), true );
@@ -121,14 +121,14 @@ class SPSectionView extends SPFrontView implements SPView
 			if ( Sobi::Cfg( 'list.subcats', true ) ) {
 				/* @todo we have to change this method in this way that it can be sorted and limited */
 				$subcats = $category->getChilds( 'category', false, 1, true, Sobi::Cfg( 'list.subcats_ordering', 'name' ) );
-				$sc = array();
+				$sc = [];
 				if ( count( $subcats ) ) {
 					foreach ( $subcats as $id => $name ) {
-						$sc[ ] = array(
+						$sc[ ] = [
 								'_complex' => 1,
 								'_data' => SPLang::clean( $name[ 'name' ] ),
-								'_attributes' => array( 'lang' => Sobi::Lang( false ), 'nid' => $name[ 'alias' ], 'id' => $id, 'url' => Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $name[ 'alias' ] : $name[ 'name' ], 'sid' => $id, ) ) )
-						);
+								'_attributes' => [ 'lang' => Sobi::Lang( false ), 'nid' => $name[ 'alias' ], 'id' => $id, 'url' => Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $name[ 'alias' ] : $name[ 'name' ], 'sid' => $id, ] ) ]
+						];
 					}
 				}
 				$cat[ 'subcategories' ] = $sc;
@@ -138,7 +138,7 @@ class SPSectionView extends SPFrontView implements SPView
 			unset( $category );
 		}
 		$cat[ 'counter' ] = $this->getNonStaticData( $cat[ 'id' ], 'counter' );
-		Sobi::Trigger( 'List', ucfirst( __FUNCTION__ ), array( &$cat ) );
+		Sobi::Trigger( 'List', ucfirst( __FUNCTION__ ), [ &$cat ] );
 		return $cat;
 	}
 
@@ -205,7 +205,7 @@ class SPSectionView extends SPFrontView implements SPView
 
 	protected function entry( $entry, $manager, $noId = false )
 	{
-		$en = array();
+		$en = [];
 		if ( is_numeric( $entry ) ) {
 			$en = $this->cachedEntry( $entry, $manager, $noId );
 		}
@@ -216,22 +216,22 @@ class SPSectionView extends SPFrontView implements SPView
 			}
 			$en[ 'id' ] = $entry->get( 'id' );
 			$en[ 'nid' ] = $entry->get( 'nid' );
-			$en[ 'name' ] = array(
+			$en[ 'name' ] = [
 					'_complex' => 1,
 					'_data' => $entry->get( 'name' ),
-					'_attributes' => array( 'lang' => Sobi::Lang( false ) )
-			);
+					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+			];
 			$ownership = 'valid';
 			if ( Sobi::My( 'id' ) && Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
 				$ownership = 'own';
 			}
 			// don't ask
 			SPRequest::set( 'sid', $entry->get( 'id' ) );
-			$en[ 'acl' ] = array(
+			$en[ 'acl' ] = [
 					'_complex' => 1,
 					'_data' => null,
-					'_attributes' => array( 'accessible' => Sobi::Can( 'entry', 'access', $ownership ) ? 'true' : 'false' )
-			);
+					'_attributes' => [ 'accessible' => Sobi::Can( 'entry', 'access', $ownership ) ? 'true' : 'false' ]
+			];
 			SPRequest::set( 'sid', $currentSid );
 //			SPRequest::set( 'sid', $currentSid );
 //			$en[ 'acl' ] = array(
@@ -240,30 +240,30 @@ class SPSectionView extends SPFrontView implements SPView
 //					'_attributes' => array( 'accessible' => Sobi::Can( 'entry', 'access', $ownership ) ? 'true' : 'false' )
 //			);
 //			SPRequest::set( 'sid', $entry->get( 'id' ) );
-			$en[ 'url_array' ] = array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) );
+			$en[ 'url_array' ] = [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) ];
 			if ( strstr( SPRequest::task(), 'search' ) || $noId || ( Sobi::Cfg( 'section.force_category_id', false ) && SPRequest::sid() == Sobi::Section() ) ) {
-				$en[ 'url' ] = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) ) );
+				$en[ 'url' ] = Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) ] );
 			}
 			else {
-				$en[ 'url' ] = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => SPRequest::sid(), 'sid' => $entry->get( 'id' ) ) );
+				$en[ 'url' ] = Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => SPRequest::sid(), 'sid' => $entry->get( 'id' ) ] );
 			}
 			if ( Sobi::Cfg( 'list.entry_meta', true ) ) {
-				$en[ 'meta' ] = array(
+				$en[ 'meta' ] = [
 						'description' => $entry->get( 'metaDesc' ),
 						'keys' => $this->metaKeys( $entry ),
 						'author' => $entry->get( 'metaAuthor' ),
 						'robots' => $entry->get( 'metaRobots' ),
-				);
+				];
 			}
 			if ( $manager || ( ( Sobi::My( 'id' ) && ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) && Sobi::Can( 'entry', 'edit', 'own', Sobi::Section() ) ) ) ) {
-				$en[ 'edit_url' ] = Sobi::Url( array( 'task' => 'entry.edit', 'pid' => SPRequest::sid(), 'sid' => $entry->get( 'id' ) ) );
+				$en[ 'edit_url' ] = Sobi::Url( [ 'task' => 'entry.edit', 'pid' => SPRequest::sid(), 'sid' => $entry->get( 'id' ) ] );
 			}
 			else {
 				if ( isset( $en[ 'edit_url' ] ) ) {
 					unset( $en[ 'edit_url' ] );
 				}
 			}
-			$en[ 'edit_url_array' ] = array( 'task' => 'entry.edit', 'pid' => SPRequest::sid(), 'sid' => $entry->get( 'id' ) );
+			$en[ 'edit_url_array' ] = [ 'task' => 'entry.edit', 'pid' => SPRequest::sid(), 'sid' => $entry->get( 'id' ) ];
 			$en[ 'created_time' ] = $entry->get( 'createdTime' );
 			$en[ 'updated_time' ] = $entry->get( 'updatedTime' );
 			$en[ 'valid_since' ] = $entry->get( 'validSince' );
@@ -289,16 +289,16 @@ class SPSectionView extends SPFrontView implements SPView
 			//		$en[ 'confirmed' ] = $entry->get( 'confirmed' );
 			if ( Sobi::Cfg( 'list.entry_cats', true ) ) {
 				$cats = $entry->get( 'categories' );
-				$categories = array();
+				$categories = [];
 				if ( count( $cats ) ) {
-					$cn = SPLang::translateObject( array_keys( $cats ), array( 'name', 'alias' ) );
+					$cn = SPLang::translateObject( array_keys( $cats ), [ 'name', 'alias' ] );
 				}
 				foreach ( $cats as $cid => $cat ) {
-					$categories[ ] = array(
+					$categories[ ] = [
 							'_complex' => 1,
 							'_data' => SPLang::clean( $cn[ $cid ][ 'value' ] ),
-							'_attributes' => array( 'lang' => Sobi::Lang( false ), 'id' => $cat[ 'pid' ], 'position' => $cat[ 'position' ], 'url' => Sobi::Url( array( 'sid' => $cat[ 'pid' ], 'title' => Sobi::Cfg( 'sef.alias', true ) ? $cat[ 'alias' ] : $cat[ 'name' ] ) ) )
-					);
+							'_attributes' => [ 'lang' => Sobi::Lang( false ), 'id' => $cat[ 'pid' ], 'position' => $cat[ 'position' ], 'url' => Sobi::Url( [ 'sid' => $cat[ 'pid' ], 'title' => Sobi::Cfg( 'sef.alias', true ) ? $cat[ 'alias' ] : $cat[ 'name' ] ] ) ]
+					];
 				}
 				$en[ 'categories' ] = $categories;
 			}
@@ -321,7 +321,7 @@ class SPSectionView extends SPFrontView implements SPView
 		   */
 		$task = 'list.custom';
 		SPFactory::registry()->set( 'task', $task );
-		Sobi::Trigger( 'List', ucfirst( __FUNCTION__ ), array( &$en ) );
+		Sobi::Trigger( 'List', ucfirst( __FUNCTION__ ), [ &$en ] );
 		return $en;
 	}
 
@@ -329,7 +329,7 @@ class SPSectionView extends SPFrontView implements SPView
 	{
 		$navigation = $this->get( 'navigation' );
 		if ( count( $navigation ) ) {
-			$data[ 'navigation' ] = array( '_complex' => 1, '_data' => $navigation, '_attributes' => array( 'lang' => Sobi::Lang( false ) ) );
+			$data[ 'navigation' ] = [ '_complex' => 1, '_data' => $navigation, '_attributes' => [ 'lang' => Sobi::Lang( false ) ] ];
 		}
 	}
 
@@ -345,38 +345,38 @@ class SPSectionView extends SPFrontView implements SPView
 			$orderings = $this->get( 'orderings' );
 			$categories = $this->get( 'categories' );
 			$entries = $this->get( 'entries' );
-			$cUrl = array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $current->get( 'nid' ) : $current->get( 'name' ), 'sid' => $current->get( 'id' ) );
+			$cUrl = [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $current->get( 'nid' ) : $current->get( 'name' ), 'sid' => $current->get( 'id' ) ];
 			if ( SPRequest::int( 'site', 0 ) ) {
 				$cUrl[ 'site' ] = SPRequest::int( 'site', 0 );
 			}
 			SPFactory::header()->addCanonical( Sobi::Url( $cUrl, true, true, true ) );
-			$data = array();
+			$data = [];
 			$data[ 'id' ] = $current->get( 'id' );
 
 			if ($current->get( 'oType' ) != 'section') {
 				$data[ 'counter' ] = $current->get( 'counter' );
 			}
-			$data[ 'section' ] = array(
+			$data[ 'section' ] = [
 					'_complex' => 1,
 					'_data' => Sobi::Section( true ),
-					'_attributes' => array( 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) )
-			);
-			$data[ 'name' ] = array(
+					'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
+			];
+			$data[ 'name' ] = [
 					'_complex' => 1,
 					'_data' => $current->get( 'name' ),
-					'_attributes' => array( 'lang' => Sobi::Lang( false ) )
-			);
+					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+			];
 			if ( Sobi::Cfg( 'category.show_desc' ) || $current->get( 'oType' ) == 'section' ) {
 				$desc = $current->get( 'description' );
 				if ( Sobi::Cfg( 'category.parse_desc' ) ) {
-					Sobi::Trigger( 'prepare', 'Content', array( &$desc, $current ) );
+					Sobi::Trigger( 'prepare', 'Content', [ &$desc, $current ] );
 				}
-				$data[ 'description' ] = array(
+				$data[ 'description' ] = [
 						'_complex' => 1,
 						'_cdata' => 1,
 						'_data' => $desc,
-						'_attributes' => array( 'lang' => Sobi::Lang( false ) )
-				);
+						'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+				];
 			}
 			$showIcon = $current->get( 'showIcon' );
 			if ( $showIcon == SPC::GLOBAL_SETTING ) {
@@ -388,22 +388,22 @@ class SPSectionView extends SPFrontView implements SPView
 					if ( $current->param( 'icon-font-add-class' ) ) {
 						$icon[ 'class' ] .= ' ' . $current->param( 'icon-font-add-class' );
 					}
-					$data[ 'icon' ] = array(
+					$data[ 'icon' ] = [
 							'_complex' => 1,
 							'_data' => '',
 							'_attributes' => $icon
-					);
+					];
 				}
 				if ( SPFs::exists( Sobi::Cfg( 'images.category_icons' ) . '/' . $current->get( 'icon' ) ) ) {
 					$data[ 'icon' ] = Sobi::FixPath( Sobi::Cfg( 'images.category_icons_live' ) . $current->get( 'icon' ) );
 				}
 			}
-			$data[ 'meta' ] = array(
+			$data[ 'meta' ] = [
 					'description' => $current->get( 'metaDesc' ),
 					'keys' => $this->metaKeys( $current ),
 					'author' => $current->get( 'metaAuthor' ),
 					'robots' => $current->get( 'metaRobots' ),
-			);
+			];
 			$this->categoryFields( $data );
 			$data[ 'entries_in_line' ] = $this->get( '$eInLine' );
 			$data[ 'categories_in_line' ] = $this->get( '$cInLine' );
@@ -415,11 +415,11 @@ class SPSectionView extends SPFrontView implements SPView
 				$this->loadNonStaticData( $categories );
 				foreach ( $categories as $category ) {
 					$cat = $this->category( $category );
-					$data[ 'categories' ][ ] = array(
+					$data[ 'categories' ][ ] = [
 							'_complex' => 1,
-							'_attributes' => array( 'id' => $cat[ 'id' ], 'nid' => $cat[ 'nid' ] ),
+							'_attributes' => [ 'id' => $cat[ 'id' ], 'nid' => $cat[ 'nid' ] ],
 							'_data' => $cat
-					);
+					];
 				}
 				if ( strstr( $orderings[ 'categories' ], 'name' ) && Sobi::Cfg( 'lang.multimode', false ) ) {
 					usort( $data[ 'categories' ], 'self::orderByName' );
@@ -433,11 +433,11 @@ class SPSectionView extends SPFrontView implements SPView
 				$manager = Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ? true : false;
 				foreach ( $entries as $eid ) {
 					$en = $this->entry( $eid, $manager );
-					$data[ 'entries' ][ ] = array(
+					$data[ 'entries' ][ ] = [
 							'_complex' => 1,
-							'_attributes' => array( 'id' => $en[ 'id' ], 'nid' => $en[ 'nid' ] ),
+							'_attributes' => [ 'id' => $en[ 'id' ], 'nid' => $en[ 'nid' ] ],
 							'_data' => $en
-					);
+					];
 				}
 				if ( strstr( $orderings[ 'entries' ], 'name' ) && Sobi::Cfg( 'lang.multimode', false ) ) {
 					usort( $data[ 'entries' ], 'self::orderByName' );
@@ -450,7 +450,7 @@ class SPSectionView extends SPFrontView implements SPView
 			$this->fixTimes( $data );
 			$this->_attr = $data;
 		}
-		Sobi::Trigger( $this->_type, ucfirst( __FUNCTION__ ), array( &$this->_attr ) );
+		Sobi::Trigger( $this->_type, ucfirst( __FUNCTION__ ), [ &$this->_attr ] );
 	}
 
 	protected function orderByName( $from, $to )
@@ -472,27 +472,27 @@ class SPSectionView extends SPFrontView implements SPView
 					$options = $struct[ '_options' ];
 					unset( $struct[ '_options' ] );
 				}
-				$data[ 'fields' ][ $field->get( 'nid' ) ] = array(
+				$data[ 'fields' ][ $field->get( 'nid' ) ] = [
 						'_complex' => 1,
-						'_data' => array(
-								'label' => array(
+						'_data' => [
+								'label' => [
 										'_complex' => 1,
 										'_data' => $field->get( 'name' ),
-										'_attributes' => array( 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) )
-								),
+										'_attributes' => [ 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) ]
+								],
 								'data' => $struct,
-						),
-						'_attributes' => array( 'id' => $field->get( 'id' ),
+						],
+						'_attributes' => [ 'id' => $field->get( 'id' ),
 								'itemprop' => $field->get( 'itemprop' ),
 								'type' => $field->get( 'type' ),
 								'suffix' => $field->get( 'suffix' ),
 								'position' => $field->get( 'position' ),
 								'css_view' => $field->get( 'cssClassView' ),
 								'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
-						)
-				);
+						]
+				];
 				if ( Sobi::Cfg( 'category.field_description', false ) ) {
-					$data[ 'fields' ][ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = array( '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) );
+					$data[ 'fields' ][ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = [ '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) ];
 				}
 				if ( $options ) {
 					$data[ 'fields' ][ $field->get( 'nid' ) ][ '_data' ][ 'options' ] = $options;
@@ -506,7 +506,8 @@ class SPSectionView extends SPFrontView implements SPView
 	}
 
 	/**
-	 *
+	 * @param string $type
+	 * @param null $out
 	 */
 	public function display( $type = 'section', $out = null )
 	{

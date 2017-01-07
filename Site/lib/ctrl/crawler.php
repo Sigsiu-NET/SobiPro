@@ -34,19 +34,19 @@ class SPCrawler extends SPController
 	const FORMAT = 'tmpl=component&crawl=1';
 	const FORMAT_FULL = 'crawl=1';
 	private $format = null;
-	private $skipTasks = array( 'entry.edit', 'entry.disable', 'entry.save', 'entry.clone', 'entry.payment', 'entry.submit', 'entry.approve', 'entry.publish', 'entry.delete' );
+	private $skipTasks = [ 'entry.edit', 'entry.disable', 'entry.save', 'entry.clone', 'entry.payment', 'entry.submit', 'entry.approve', 'entry.publish', 'entry.delete' ];
 
 	public function execute()
 	{
 		$this->start = microtime( true );
 		$sites = $this->getSites();
-		$responses = array();
+		$responses = [];
 		$status = 'working';
 		$message = null;
 		$this->format = SPRequest::bool( 'fullFormat' ) ? self::FORMAT_FULL : self::FORMAT;
 //		$this->format = SPRequest::bool( 'fullFormat' ) ? self::FORMAT_FULL : self::FORMAT_FULL;
 		$task = SPRequest::task();
-		if ( in_array( $task, array( 'crawler.init', 'crawler.restart' ) ) ) {
+		if ( in_array( $task, [ 'crawler.init', 'crawler.restart' ] ) ) {
 			if ( $task == 'crawler.restart' ) {
 				SPFactory::cache()->cleanSection( Sobi::Section() );
 			}
@@ -63,10 +63,10 @@ class SPCrawler extends SPController
 			$responses[ ] = $this->getResponse( Sobi::Cfg( 'live_site' ) . 'index.php?option=com_sobipro&sid=' . Sobi::Section() );
 			$sites = $this->getSites();
 		}
-		if ( !( count( $sites ) ) && !( in_array( $task, array( 'crawler.init', 'crawler.restart' ) ) ) ) {
+		if ( !( count( $sites ) ) && !( in_array( $task, [ 'crawler.init', 'crawler.restart' ] ) ) ) {
 			$message = Sobi::Txt( 'CRAWL_URL_PARSED_DONE', SPFactory::db()->select( 'count(*)', self::DB_TABLE )->loadResult() );
 			SPFactory::db()->truncate( self::DB_TABLE );
-			$this->out( array( 'status' => 'done', 'data' => array(), 'message' => $message ) );
+			$this->out( [ 'status' => 'done', 'data' => [], 'message' => $message ] );
 		}
 		if ( count( $sites ) ) {
 			$i = 0;
@@ -83,7 +83,7 @@ class SPCrawler extends SPController
 			}
 			$message = Sobi::Txt( 'CRAWL_URL_PARSED_WORKING', $i, count( $sites ) );
 		}
-		$this->out( array( 'status' => $status, 'data' => $responses, 'message' => $message ) );
+		$this->out( [ 'status' => $status, 'data' => $responses, 'message' => $message ] );
 	}
 
 	protected function out( $status )
@@ -111,18 +111,18 @@ class SPCrawler extends SPController
 		/** @var $connection SPRemote */
 		$connection = SPFactory::Instance( 'services.remote' );
 		$connection->setOptions(
-			array(
+			[
 				'url' => $request,
 				'connecttimeout' => 10,
 				'returntransfer' => true,
 				'useragent' => self::USER_AGENT,
 				'header' => true,
 				'verbose' => true
-			)
+			]
 		);
 		$content = $connection->exec();
 		$response = $connection->info();
-		$urls = array();
+		$urls = [];
 		if ( $response[ 'http_code' ] == 200 ) {
 			$urls = $this->parseResponse( $content );
 			if ( !( is_array( $urls ) ) && is_numeric( $urls ) ) {
@@ -131,28 +131,28 @@ class SPCrawler extends SPController
 		}
 		if ( $response[ 'http_code' ] == 303 ) {
 			preg_match( '/Location: (http.*)/', $content, $newUrl );
-			$urls[ ] = str_replace( array( '?' . $this->format, '&' . $this->format ), null, trim( $newUrl[ 1 ] ) );
+			$urls[ ] = str_replace( [ '?' . $this->format, '&' . $this->format ], null, trim( $newUrl[ 1 ] ) );
 		}
 		if ( count( $urls ) ) {
 			$this->insertUrls( $urls );
 		}
 		$this->removeUrl( $url );
-		return array(
+		return [
 			'url' => "<a href=\"{$url}\" target=\"_blank\">{$url}</a>",
 			'count' => count( $urls ),
 			'code' => $response[ 'http_code' ],
 			'time' => $response[ 'total_time' ]
-		);
+		];
 	}
 
 	protected function removeUrl( $url )
 	{
-		SPFactory::db()->update( self::DB_TABLE, array( 'state' => 1 ), array( 'url' => $url ) );
+		SPFactory::db()->update( self::DB_TABLE, [ 'state' => 1 ], [ 'url' => $url ] );
 	}
 
 	protected function insertUrls( $urls )
 	{
-		$rows = array();
+		$rows = [];
 //		$multiLang = Sobi::Cfg( 'lang.multimode', false );
 //		$langs = SPFactory::CmsHelper()->getLanguages();
 //		$language = Sobi::Lang();
@@ -201,7 +201,7 @@ class SPCrawler extends SPController
 			if ( strstr( $url, '.css' ) ) {
 				continue;
 			}
-			$rows[ ] = array( 'crid' => 'NULL', 'url' => $url, 'state' => 0 );
+			$rows[ ] = [ 'crid' => 'NULL', 'url' => $url, 'state' => 0 ];
 //			if ( $multiLang && $langs ) {
 //				foreach ( $langs as $lang ) {
 //					if ( $lang != $language ) {
@@ -220,7 +220,7 @@ class SPCrawler extends SPController
 	protected function getSites()
 	{
 		return SPFactory::db()
-				->select( 'url', self::DB_TABLE, array( 'state' => 0 ) )
+				->select( 'url', self::DB_TABLE, [ 'state' => 0 ] )
 				->loadResultArray();
 	}
 
@@ -229,7 +229,7 @@ class SPCrawler extends SPController
 		if ( !( strlen( $response ) ) ) {
 			return 204;
 		}
-		$links = array();
+		$links = [];
 		if ( strlen( $response ) && strstr( $response, 'SobiPro' ) ) {
 			// we need to limit the "explode" to two pieces only because otherwise
 			// if the separator is used somewhere in the <body> it will be split into more pieces

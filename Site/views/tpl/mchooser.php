@@ -140,19 +140,19 @@ SPFactory::header()->addCSSCode( '.sigsiuTree {height: 330px;}');
 		</legend>
 		<div>
 			<div style="height: 240px; float:left; padding: 2px;">
-				<?php $this->field( 'select', 'categories', array(), null, false, array( 'id' => 'selectedCats', 'size' => 10, 'class' => 'inputbox', 'style' => 'width: 225px; height: 240px; font-weight: bold; font-size: 10px; overflow: hidden; border-color: #eeeeee!important;' ) ); ?>
+				<?php $this->field( 'select', 'categories', [], null, false, [ 'id' => 'selectedCats', 'size' => 10, 'class' => 'inputbox', 'style' => 'width: 225px; height: 240px; font-weight: bold; font-size: 10px; overflow: hidden; border-color: #eeeeee!important;' ] ); ?>
 			</div>
 		</div>
 		</fieldset>
 	</div>
 		<div style="padding: 4px; float: left;">
-			<?php $this->field( 'button', 'addCat', 'translate:[CC.ADD_BT]', array( 'id' => 'addCat', 'onclick' => 'SP_addCat();', 'size' => 50, 'class' => 'button', 'style' => ' text-align: center; width: 180px; font-size: 13px; border: 1px solid silver;' ) ); ?>
+			<?php $this->field( 'button', 'addCat', 'translate:[CC.ADD_BT]', [ 'id' => 'addCat', 'onclick' => 'SP_addCat();', 'size' => 50, 'class' => 'button', 'style' => ' text-align: center; width: 180px; font-size: 13px; border: 1px solid silver;' ] ); ?>
 		</div>
         <div style="padding: 4px; float: left; ">
-            <?php $this->field( 'button', 'delCat', 'translate:[CC.DEL_BT]', array( 'onclick' => 'SP_delCat();', 'size' => 50, 'class' => 'button', 'style' => 'text-align: center; width: 180px; font-size: 13px; border: 1px solid silver;' ) ); ?>
+            <?php $this->field( 'button', 'delCat', 'translate:[CC.DEL_BT]', [ 'onclick' => 'SP_delCat();', 'size' => 50, 'class' => 'button', 'style' => 'text-align: center; width: 180px; font-size: 13px; border: 1px solid silver;' ] ); ?>
         </div>
 	<div style="clear: both"></div>
 	<div style="padding: 4px; float: right;">
-		<?php $this->field( 'button', 'save', 'translate:[CC.SAVE_BT]', array( 'onclick' => 'SP_Save();', 'size' => 50, 'class' => 'button', 'style' => 'text-align: center; width: 100px; font-size: 13px; border: 1px solid silver;' ) ); ?>
+		<?php $this->field( 'button', 'save', 'translate:[CC.SAVE_BT]', [ 'onclick' => 'SP_Save();', 'size' => 50, 'class' => 'button', 'style' => 'text-align: center; width: 100px; font-size: 13px; border: 1px solid silver;' ] ); ?>
 	</div>
 </div>

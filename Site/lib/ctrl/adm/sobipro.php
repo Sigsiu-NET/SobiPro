@@ -140,7 +140,7 @@ final class SobiProAdmCtrl
 			SPFactory::config()->set( 'template', SPC::DEFAULT_TEMPLATE, 'section' );
 		}
 		/* check if it wasn't plugin custom task */
-		if ( !( Sobi::Trigger( 'custom', 'task', array( $this, SPRequest::task() ) ) ) ) {
+		if ( !( Sobi::Trigger( 'custom', 'task', [ $this, SPRequest::task() ] ) ) ) {
 			/* if not, start to route */
 			try {
 				$this->route();
@@ -211,11 +211,11 @@ final class SobiProAdmCtrl
 			}
 			else {
 				$db = SPFactory::db();
-				$path = array();
+				$path = [];
 				$id = $pid;
 				while ( $id > 0 ) {
 					try {
-						$db->select( 'pid', 'spdb_relations', array( 'id' => $id ) );
+						$db->select( 'pid', 'spdb_relations', [ 'id' => $id ] );
 						$id = $db->loadResult();
 						if ( $id ) {
 							$path[] = ( int )$id;
@@ -289,7 +289,7 @@ final class SobiProAdmCtrl
 					$db =& SPFactory::db();
 					$objects = null;
 					try {
-						$db->select( '*', 'spdb_object', array( 'id' => SPRequest::arr( $sid ) ) );
+						$db->select( '*', 'spdb_object', [ 'id' => SPRequest::arr( $sid ) ] );
 						$objects = $db->loadObjectList();
 					} catch ( SPException $x ) {
 						Sobi::Error( 'CoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -297,7 +297,7 @@ final class SobiProAdmCtrl
 					}
 					/** @noinspection PhpUndefinedVariableInspection */
 					if ( count( $objects ) ) {
-						$this->_ctrl = array();
+						$this->_ctrl = [];
 						foreach ( $objects as $object ) {
 							$o = $this->extendObj( $object, $obj, $ctrl, $task );
 							if ( $o ) {

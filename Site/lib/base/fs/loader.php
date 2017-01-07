@@ -34,7 +34,7 @@ abstract class SPLoader
 	/**
 	 * @var array
 	 */
-	private static $loaded = array();
+	private static $loaded = [];
 
 	/**
 	 * @author Radek Suski
@@ -47,7 +47,7 @@ abstract class SPLoader
 	 */
 	public static function loadClass( $name, $adm = false, $type = null, $raiseErr = true )
 	{
-		static $types = array( 'sp-root' => 'sp-root', 'base' => 'base', 'controller' => 'ctrl', 'controls' => 'ctrl', 'ctrl' => 'ctrl', 'model' => 'models', 'plugin' => 'plugins', 'application' => 'plugins', 'view' => 'views', 'templates' => 'templates' );
+		static $types = [ 'sp-root' => 'sp-root', 'base' => 'base', 'controller' => 'ctrl', 'controls' => 'ctrl', 'ctrl' => 'ctrl', 'model' => 'models', 'plugin' => 'plugins', 'application' => 'plugins', 'view' => 'views', 'templates' => 'templates' ];
 		$type = strtolower( trim( $type ) );
 		$name = ( trim( $name ) );
 		if ( isset( $types[ $type ] ) ) {
@@ -116,7 +116,7 @@ abstract class SPLoader
 		else {
 			ob_start();
 			$content = file_get_contents( $path );
-			$class = array();
+			$class = [];
 			preg_match( '/\s*(class|interface)\s+(\w+)/', $content, $class );
 			if ( isset( $class[ 2 ] ) ) {
 				$className = $class[ 2 ];

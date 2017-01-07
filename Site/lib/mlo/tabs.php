@@ -64,7 +64,6 @@ final class SPHtml_Tabs
 	 * @param bool $useCookies
 	 * @param string $cssFile - separate CSS file
 	 * @param string $prefix
-	 * @return sobiTabs
 	 * @deprecated
 	 */
 	public function __construct( $useCookies = true, $cssFile = 'tabs', $prefix = null )
@@ -80,6 +79,7 @@ final class SPHtml_Tabs
 	/**
 	 * creates a tab pane and creates JS obj
 	 * @param string The Tab Pane Name
+	 * @param bool $return
 	 * @deprecated
 	 */
 	public function startPane( $id, $return = false )
@@ -89,13 +89,14 @@ final class SPHtml_Tabs
 		$r .= "<script type=\"text/javascript\">\n";
 		$r .= "	var SobiTabPane{$this->prefix} = new WebFXTabPane( document.getElementById( \"{$id}\" ), {$this->useCookies} )\n";
 		$r .= "</script>\n";
-		Sobi::Trigger( 'Tabs', ucfirst( __FUNCTION__ ), array( &$r ) );
+		Sobi::Trigger( 'Tabs', ucfirst( __FUNCTION__ ), [ &$r ] );
 		$this->out( $r, $return );
 	}
 
 	/**
 	 * Ends Tab Pane
 	 * @deprecated
+	 * @param bool $return
 	 */
 	public function endPane( $return = false )
 	{
@@ -105,8 +106,11 @@ final class SPHtml_Tabs
 
 	/**
 	 * Creates a tab with title text and starts that tabs page
-	 * @param tabText - This is what is displayed on the tab
-	 * @param paneid - This is the parent pane to build this tab on
+	 * @param $tabText
+	 * @param $paneid
+	 * @param bool $return
+	 * @internal param $tabText - This is what is displayed on the tab
+	 * @internal param $paneid - This is the parent pane to build this tab on
 	 * @deprecated
 	 */
 	public function startTab( $tabText, $paneid, $return = false )
@@ -117,7 +121,7 @@ final class SPHtml_Tabs
 		$r .= "<script type=\"text/javascript\">\n";
 		$r .= "  SobiTabPane{$this->prefix}.addTabPage( document.getElementById( \"{$paneid}\" ) );";
 		$r .= "</script>";
-		Sobi::Trigger( 'Tabs', ucfirst( __FUNCTION__ ), array( &$r ) );
+		Sobi::Trigger( 'Tabs', ucfirst( __FUNCTION__ ), [ &$r ] );
 		$this->out( $r, $return );
 	}
 
@@ -132,6 +136,7 @@ final class SPHtml_Tabs
 	}
 
 	/**
+	 * @param $r
 	 * @param bool $return
 	 * @return string
 	 * @deprecated

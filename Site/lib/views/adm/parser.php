@@ -23,18 +23,18 @@ class SPTplParser
 	protected $table = true;
 	protected $loopTable = true;
 	protected $thTd = 'th';
-	protected $_out = array();
+	protected $_out = [];
 	protected $loopOpen = false;
-	protected $_tickerIcons = array(
+	protected $_tickerIcons = [
 			0 => 'remove',
 			1 => 'ok',
 			-1 => 'stop',
 			-2 => 'pause'
-	);
+	];
 	protected $_checkedOutIcon = 'lock';
 	static $newLine = "\n";
-	protected $html = array( 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre', 'label', 'tr', 'th', 'td', 'code', 'i' );
-	protected $internalAttributes = array( 'condition' );
+	protected $html = [ 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre', 'label', 'tr', 'th', 'td', 'code', 'i' ];
+	protected $internalAttributes = [ 'condition' ];
 
 
 	public function __construct( $table = false )
@@ -69,13 +69,13 @@ class SPTplParser
 			}
 		}
 		echo implode( "", $this->_out );
-		$this->_out = array();
+		$this->_out = [];
 	}
 
 	protected function parseElement( $element )
 	{
 		if ( !( isset( $element[ 'attributes' ] ) ) ) {
-			$element[ 'attributes' ] = array();
+			$element[ 'attributes' ] = [];
 		}
 		switch ( $element[ 'type' ] ) {
 			case 'field':
@@ -302,7 +302,7 @@ class SPTplParser
 					$a = null;
 					if ( count( $data[ 'attributes' ] ) ) {
 						foreach ( $data[ 'attributes' ] as $att => $value ) {
-							if ( in_array( $att, array( 'type', 'image', 'label' ) ) ) {
+							if ( in_array( $att, [ 'type', 'image', 'label' ] ) ) {
 								continue;
 							}
 							$a .= " {$att}=\"{$value}\"";
@@ -374,7 +374,7 @@ class SPTplParser
 			$this->_out[ ] = '</div>';
 		}
 		else {
-			$attr = array();
+			$attr = [];
 			if ( isset( $data[ 'attributes' ][ 'type' ] ) ) {
 				unset( $data[ 'attributes' ][ 'type' ] );
 			}
@@ -528,7 +528,7 @@ class SPTplParser
 					$this->_out[ ] = '</button>';
 				}
 				else {
-					$this->_out[ ] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], array( 'class' => 'input-mini sp-input-micro spSubmit' ) );
+					$this->_out[ ] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], [ 'class' => 'input-mini sp-input-micro spSubmit' ] );
 				}
 				break;
 			case 'checkbox':
@@ -580,7 +580,7 @@ class SPTplParser
 			$aOpen = true;
 			$this->_out[ ] = "<a href=\"{$cell['link']}\" class=\"{$linkClass}\" >";
 		}
-		$icons = array();
+		$icons = [];
 		if ( isset( $cell[ 'attributes' ][ 'icons' ] ) && $cell[ 'attributes' ][ 'icons' ] ) {
 			$icons = json_decode( str_replace( "'", '"', $cell[ 'attributes' ][ 'icons' ] ), true );
 		}

@@ -98,7 +98,7 @@ class SPRequirements
 	private function parseVer( $v )
 	{
 		$v = explode( '.', $v );
-		return array( 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => ( isset( $v[ 2 ] ) ? $v[ 2 ] : 0 ), 'rev' => ( isset( $v[ 3 ] ) ? $v[ 3 ] : 0 ) );
+		return [ 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => ( isset( $v[ 2 ] ) ? $v[ 2 ] : 0 ), 'rev' => ( isset( $v[ 3 ] ) ? $v[ 3 ] : 0 ) ];
 	}
 
 	/*
@@ -139,14 +139,14 @@ class SPRequirements
 		static $extensions = null;
 		if ( !( $extensions ) ) {
 			try {
-				SPFactory::db()->select( array( 'version', 'type', 'pid' ), 'spdb_plugins' );
+				SPFactory::db()->select( [ 'version', 'type', 'pid' ], 'spdb_plugins' );
 				$exts = SPFactory::db()->loadObjectList();
 			} catch ( SPException $x ) {
 				Sobi::Error( 'installer', SPLang::e( 'CANNOT_GET_INSTALLED_EXTS', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 				return false;
 			}
 			if ( count( $exts ) ) {
-				$extensions = array( 'plugin' => array(), 'field' => array(), 'payment' => array() );
+				$extensions = [ 'plugin' => [], 'field' => [], 'payment' => [] ];
 				foreach ( $exts as $ext ) {
 					$extensions[ $ext->type ][ $ext->pid ] = $this->parseVer( $ext->version );
 				}

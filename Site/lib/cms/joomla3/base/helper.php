@@ -46,14 +46,14 @@ class SPCMSHelper3 extends SPCMSHelper
 		$updater = JUpdater::getInstance();
 		$updater->findUpdates( 700, 0 );
 		$version = SPFactory::db()
-				->select( 'version', '#__updates', array( 'extension_id' => 700 ) )
+				->select( 'version', '#__updates', [ 'extension_id' => 700 ] )
 				->loadResult();
-		$recommendedVersion = array( 'major' => 3, 'minor' => 2, 'build' => 3 );
+		$recommendedVersion = [ 'major' => 3, 'minor' => 2, 'build' => 3 ];
 		if ( $version ) {
 			$version = explode( '.', $version );
-			$recommendedVersion = array( 'major' => $version[ 0 ], 'minor' => $version[ 1 ], 'build' => $version[ 2 ] );
+			$recommendedVersion = [ 'major' => $version[ 0 ], 'minor' => $version[ 1 ], 'build' => $version[ 2 ] ];
 		}
-		return $recommended ? $recommendedVersion : array( 'major' => 3, 'minor' => 2, 'build' => 0 );
+		return $recommended ? $recommendedVersion : [ 'major' => 3, 'minor' => 2, 'build' => 0 ];
 	}
 
 	/**
@@ -68,7 +68,7 @@ class SPCMSHelper3 extends SPCMSHelper
 		}
 		$version = new JVersion();
 		$v = explode( '.', $version->RELEASE );
-		return array( 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => $version->DEV_LEVEL, 'rev' => 0 );
+		return [ 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => $version->DEV_LEVEL, 'rev' => 0 ];
 	}
 
 	/**
@@ -105,7 +105,7 @@ class SPCMSHelper3 extends SPCMSHelper
 	public static function userSelect( $name, $active, $nouser = 0, $javascript = null, $order = 'name', $reg = 0 )
 	{
 		require_once 'userform.php';
-		$s = array( 'id' => str_replace( '.', '_', $name ), 'name' => $name, 'value' => $active );
+		$s = [ 'id' => str_replace( '.', '_', $name ), 'name' => $name, 'value' => $active ];
 		$f = new SPFormFieldUser();
 		$f->setupData( $s );
 		return $f->input;

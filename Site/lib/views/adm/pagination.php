@@ -37,15 +37,17 @@ final class SPPagination extends SPObject
 	/** @var string */
 	protected $class = null;
 	/** @var array */
-	private $_content = array();
+	private $_content = [];
 	/** @var array */
-	protected $url = array();
+	protected $url = [];
 	/** @var string */
 	protected $inputbox = null;
     /** @var string */
     protected $type = null;
 
 	/**
+	 * @param bool $return
+	 * @return null|string
 	 */
 	public function display( $return = false )
 	{

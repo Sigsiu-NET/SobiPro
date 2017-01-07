@@ -42,6 +42,7 @@ abstract class SPJoomlaFs
 	/**
 	 *     *
 	 * @param string $file
+	 * @param bool $safe
 	 * @return bool
 	 */
 	public static function clean( $file, $safe = false )
@@ -92,7 +93,7 @@ abstract class SPJoomlaFs
 	public static function copy( $source, $destination )
 	{
 		$destination = Sobi::FixPath( str_replace( '\\', '/', $destination ) );
-		$path = explode( '/', str_replace( array( SOBI_ROOT, str_replace( '\\', '/', SOBI_ROOT ) ), null, $destination ) );
+		$path = explode( '/', str_replace( [ SOBI_ROOT, str_replace( '\\', '/', SOBI_ROOT ) ], null, $destination ) );
 		$part = SOBI_ROOT;
 		$i = count( $path );
 		/** clean the path */

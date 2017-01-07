@@ -45,8 +45,8 @@ class SPConfigAdmView extends SPAdmView implements SPView
 	 */
 	public function setTitle( $title )
 	{
-		$title = Sobi::Txt( $title, array( 'section' => $this->get( 'section.name' ) ) );
-		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
+		$title = Sobi::Txt( $title, [ 'section' => $this->get( 'section.name' ) ] );
+		Sobi::Trigger( 'setTitle', $this->name(), [ &$title ] );
 		SPFactory::header()->setTitle( $title );
 		$this->set( $title, 'site_title' );
 	}
@@ -71,7 +71,7 @@ class SPConfigAdmView extends SPAdmView implements SPView
 					$class = $c % 2;
 					$c++;
 					$params = explode( '|', $params );
-					$p = array();
+					$p = [];
 					/* at first we need the label */
 					$label = Sobi::Txt( array_shift( $params ) );
 					$label2 = null;
@@ -167,7 +167,7 @@ class SPConfigAdmView extends SPAdmView implements SPView
 				$params[ 3 ] = $selected;
 			}
 		}
-		call_user_func_array( array( $this, 'field' ), $params );
+		call_user_func_array( [ $this, 'field' ], $params );
 	}
 
 	public function alphaFieldList( $params = null, $add = false )
@@ -180,11 +180,11 @@ class SPConfigAdmView extends SPAdmView implements SPView
 		}
 		if ( $add ) {
 			$selected = Sobi::Cfg( 'alphamenu.extra_fields_array' );
-			$p = array( 'select', $params[ 1 ], $fData, $selected, $add, $params[ 3 ] );
+			$p = [ 'select', $params[ 1 ], $fData, $selected, $add, $params[ 3 ] ];
 		}
 		else {
 			$selected = Sobi::Cfg( 'alphamenu.primary_field', SPFactory::config()->nameField()->get( 'id' ) );
-			$p = array( 'select', $params[ 1 ], $fData, $selected, $add, $params[ 3 ] );
+			$p = [ 'select', $params[ 1 ], $fData, $selected, $add, $params[ 3 ] ];
 		}
 		return $p;
 	}
@@ -193,7 +193,7 @@ class SPConfigAdmView extends SPAdmView implements SPView
 	{
 		echo "<tr>";
 		echo '<td colspan="2"><div style="margin-left: 150px;">';
-		echo Sobi::Txt( 'GB.CFG.PBY_EXPL', array( 'image' => Sobi::Cfg( 'img_folder_live' ) . '/donate.png' ) );
+		echo Sobi::Txt( 'GB.CFG.PBY_EXPL', [ 'image' => Sobi::Cfg( 'img_folder_live' ) . '/donate.png' ] );
 		echo '</div></td>';
 		echo '</tr>';
 	}
@@ -202,10 +202,10 @@ class SPConfigAdmView extends SPAdmView implements SPView
 	{
 		$cms = SPFactory::CmsHelper()->templatesPath();
 		$dir = new SPDirectoryIterator( SPLoader::dirPath( 'usr.templates' ) );
-		$templates = array();
+		$templates = [];
 		foreach ( $dir as $file ) {
 			if ( $file->isDir() ) {
-				if ( $file->isDot() || in_array( $file->getFilename(), array( 'common', 'front' ) ) ) {
+				if ( $file->isDot() || in_array( $file->getFilename(), [ 'common', 'front' ] ) ) {
 					continue;
 				}
 				if ( SPFs::exists( $file->getPathname() . DS . 'template.xml' ) && ( $tname = $this->templateName( $file->getPathname() . DS . 'template.xml' ) ) ) {
@@ -217,9 +217,9 @@ class SPConfigAdmView extends SPAdmView implements SPView
 			}
 		}
 		if ( is_array( $cms ) && isset( $cms[ 'name' ] ) && isset( $cms[ 'data' ] ) && is_array( $cms[ 'data' ] ) && count( $cms[ 'data' ] ) ) {
-			$templates[ $cms[ 'name' ] ] = array();
+			$templates[ $cms[ 'name' ] ] = [];
 			foreach ( $cms[ 'data' ] as $name => $path ) {
-				$templates[ $cms[ 'name' ] ][ $name ] = array();
+				$templates[ $cms[ 'name' ] ][ $name ] = [];
 				$dir = new SPDirectoryIterator( $path );
 				foreach ( $dir as $file ) {
 					if ( $file->isDot() ) {
@@ -237,7 +237,7 @@ class SPConfigAdmView extends SPAdmView implements SPView
 			}
 		}
 		if ( $params ) {
-			$p = array( 'select', 'spcfg_' . $params[ 1 ], $templates, Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE ), false, $params[ 3 ] );
+			$p = [ 'select', 'spcfg_' . $params[ 1 ], $templates, Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE ), false, $params[ 3 ] ];
 		}
 		else {
 			$p = $templates;
@@ -257,7 +257,7 @@ class SPConfigAdmView extends SPAdmView implements SPView
 	public function namesFields( $params = null, $ordering = false )
 	{
 		$fields = $this->_ctrl->getNameFields( $ordering );
-		$fData = array( 0 => Sobi::Txt( 'SEC.CFG.ENTRY_TITLE_FIELD_SELECT' ) );
+		$fData = [ 0 => Sobi::Txt( 'SEC.CFG.ENTRY_TITLE_FIELD_SELECT' ) ];
 		if ( count( $fields ) ) {
 			foreach ( $fields as $fid => $field ) {
 				if ( $ordering ) {
@@ -275,7 +275,7 @@ class SPConfigAdmView extends SPAdmView implements SPView
 		}
 		if ( $ordering ) {
 			unset( $fData[ 0 ] );
-			$fData = array(
+			$fData = [
 					'position.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POSITION_ASCENDING' ),
 					'position.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POSITION_DESCENDING' ),
 					'counter.asc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_POPULARITY_ASCENDING' ),
@@ -288,10 +288,10 @@ class SPConfigAdmView extends SPAdmView implements SPView
 					'validUntil.desc' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_EXPIRATION_DATE_DESC' ),
 					'RAND()' => Sobi::Txt( 'SECN.CFG.ENTRY_ORDER_BY_RANDOM' ),
 					Sobi::Txt( 'SEC.CFG.ENTRY_ORDER_BY_FIELDS' ) => $fData
-			);
+			];
 		}
 		if ( $params ) {
-			$p = array( 'select', $params[ 1 ], $fData, $params[ 2 ], false );
+			$p = [ 'select', $params[ 1 ], $fData, $params[ 2 ], false ];
 			if ( isset( $params[ 3 ] ) ) {
 				$p[ ] = $params[ 3 ];
 			}

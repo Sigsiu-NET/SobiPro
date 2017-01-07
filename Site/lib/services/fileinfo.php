@@ -40,7 +40,7 @@ class SPFileInfo
 	/**
 	 * @var array
 	 */
-	private static $_exts = array();
+	private static $_exts = [];
 
 	/**
 	 * @param

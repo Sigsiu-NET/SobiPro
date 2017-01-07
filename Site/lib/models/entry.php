@@ -29,7 +29,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	/**
 	 * @var array
 	 */
-	private static $types = array(
+	private static $types = [
 			'description' => 'html',
 			'icon' => 'string',
 			'showIcon' => 'int',
@@ -37,7 +37,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			'showIntrotext' => 'int',
 			'parseDesc' => 'int',
 			'position' => 'int',
-	);
+	];
 	/**
 	 * @var
 	 */
@@ -45,19 +45,19 @@ class SPEntry extends SPDBObject implements SPDataModel
 	/**
 	 * @var array categories where the entry belongs to
 	 */
-	protected $categories = array();
+	protected $categories = [];
 	/**
 	 * @var array
 	 */
-	protected $fields = array();
+	protected $fields = [];
 	/**
 	 * @var array
 	 */
-	protected $fieldsNids = array();
+	protected $fieldsNids = [];
 	/**
 	 * @var array
 	 */
-	protected $fieldsIds = array();
+	protected $fieldsIds = [];
 	/**
 	 * @var string
 	 */
@@ -65,7 +65,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	/**
 	 * @var array
 	 */
-	private $data = array();
+	private $data = [];
 	/**
 	 * @var bool
 	 */
@@ -97,6 +97,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 
 	/**
 	 * Full init
+	 * @param bool $cache
 	 */
 	public function loadTable( $cache = false )
 	{
@@ -110,7 +111,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			// we need to get some information from the object table
 			$this->valid = $this->valid && count( $this->categories ) > 0;
 			$this->loadFields( Sobi::Section(), true );
-			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fields ) );
+			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$this->fields ] );
 			if ( count( $this->fields ) ) {
 				foreach ( $this->fields as $field ) {
 					/* create field aliases */
@@ -119,12 +120,12 @@ class SPEntry extends SPDBObject implements SPDataModel
 				}
 			}
 			$this->primary =& $this->parent;
-			$this->url = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->get( 'nid' ) : $this->get( 'name' ), 'pid' => $this->get( 'primary' ), 'sid' => $this->id ), false, true, true, true );
-			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fieldsIds, &$this->fieldsNids ) );
+			$this->url = Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->get( 'nid' ) : $this->get( 'name' ), 'pid' => $this->get( 'primary' ), 'sid' => $this->id ], false, true, true, true );
+			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$this->fieldsIds, &$this->fieldsNids ] );
 		}
 		if ( $this->id ) {
 			$counter = SPFactory::db()
-					->select( 'counter', 'spdb_counter', array( 'sid' => $this->id ) )
+					->select( 'counter', 'spdb_counter', [ 'sid' => $this->id ] )
 					->loadResult();
 			if ( $counter !== null ) {
 				$this->counter = $counter;
@@ -170,7 +171,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	public function publish()
 	{
 		SPFactory::db()
-				->update( 'spdb_object', array( 'approved' => 1 ), array( 'id' => $this->id, 'oType' => 'entry' ) );
+				->update( 'spdb_object', [ 'approved' => 1 ], [ 'id' => $this->id, 'oType' => 'entry' ] );
 		$this->changeState( true );
 		$this->approveFields( true );
 	}
@@ -181,7 +182,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	public function unpublish()
 	{
 		SPFactory::db()
-				->update( 'spdb_object', array( 'approved' => 0 ), array( 'id' => $this->id, 'oType' => 'entry' ) );
+				->update( 'spdb_object', [ 'approved' => 0 ], [ 'id' => $this->id, 'oType' => 'entry' ] );
 		$this->changeState( false );
 	}
 
@@ -192,7 +193,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 */
 	public function approveFields( $approve )
 	{
-		Sobi::Trigger( $this->name(), 'Approve', array( $this->id, $approve, &$this->fields ) );
+		Sobi::Trigger( $this->name(), 'Approve', [ $this->id, $approve, &$this->fields ] );
 		SPFactory::cache()->purgeSectionVars();
 		SPFactory::cache()->deleteObj( 'entry', $this->id );
 		foreach ( $this->fields as $field ) {
@@ -203,13 +204,13 @@ class SPEntry extends SPDBObject implements SPDataModel
 			$db = SPFactory::db();
 			try {
 				$count = $db
-						->select( 'COUNT(id)', 'spdb_relations', array( 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ) )
+						->select( 'COUNT(id)', 'spdb_relations', [ 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ] )
 						->loadResult();
 				if ( $count ) {
 					/** Thu, Jun 19, 2014 11:24:05: here is the question: why are we deleting the 1 status when the list of categories is re-generating each time anyway
 					 *   So basically there should not be a situation that there is any relation which should be removed while approving an entry */
 					// $db->delete( 'spdb_relations', array( 'id' => $this->id, 'copy' => '0', 'oType' => 'entry' ) );
-					$db->update( 'spdb_relations', array( 'copy' => '0' ), array( 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ) );
+					$db->update( 'spdb_relations', [ 'copy' => '0' ], [ 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ] );
 				}
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -217,7 +218,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 		SPFactory::cache()->purgeSectionVars();
 		SPFactory::cache()->deleteObj( 'entry', $this->id );
-		Sobi::Trigger( $this->name(), 'AfterApprove', array( $this->id, $approve ) );
+		Sobi::Trigger( $this->name(), 'AfterApprove', [ $this->id, $approve ] );
 	}
 
 	/**
@@ -228,14 +229,14 @@ class SPEntry extends SPDBObject implements SPDataModel
 	{
 		$data = $this->getCurrentBaseData();
 		if ( $trigger ) {
-			Sobi::Trigger( 'Entry', 'Unapprove', array( $this->_model, 0 ) );
+			Sobi::Trigger( 'Entry', 'Unapprove', [ $this->_model, 0 ] );
 		}
 		// check if the entry was ever approved.
 		// if it wasn't we would delete current data and there would be no other data at all
 		// See #1221 - Thu, May 8, 2014 11:18:20
 		// and what if logging will be switch on first after the entry was already approved?? (Sigrid)
 		$count = SPFactory::db()
-			->select( 'COUNT(*)', 'spdb_history', array( 'sid' => $this->id, 'change' => [ 'approve', 'approved' ] ) )
+			->select( 'COUNT(*)', 'spdb_history', [ 'sid' => $this->id, 'changeAction' => [ 'approve', 'approved' ] ] )
 			->loadResult();
 		if ( $count ) {
 			// restore previous version
@@ -252,10 +253,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 		if ( $count ) {
 			SPFactory::db()
-					->delete( 'spdb_relations', array( 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ) );
+					->delete( 'spdb_relations', [ 'id' => $this->id, 'copy' => '1', 'oType' => 'entry' ] );
 		}
 		if ( $trigger ) {
-			Sobi::Trigger( 'Entry', 'AfterUnapprove', array( $this->_model, 0 ) );
+			Sobi::Trigger( 'Entry', 'AfterUnapprove', [ $this->_model, 0 ] );
 		}
 		SPFactory::cache()
 				->purgeSectionVars()
@@ -272,11 +273,11 @@ class SPEntry extends SPDBObject implements SPDataModel
 	public function changeState( $state, $reason = null, $trigger = true )
 	{
 		if ( $trigger ) {
-			Sobi::Trigger( $this->name(), 'ChangeState', array( $this->id, $state ) );
+			Sobi::Trigger( $this->name(), 'ChangeState', [ $this->id, $state ] );
 		}
 		try {
 			SPFactory::db()
-					->update( 'spdb_object', array( 'state' => ( int )$state, 'stateExpl' => $reason ), array( 'id' => $this->id ) );
+					->update( 'spdb_object', [ 'state' => ( int )$state, 'stateExpl' => $reason ], [ 'id' => $this->id ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
@@ -288,7 +289,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				->deleteObj( 'entry', $this->id )
 				->cleanXMLRelations( $this->categories );
 		if ( $trigger ) {
-			Sobi::Trigger( $this->name(), 'AfterChangeState', array( $this->id, $state ) );
+			Sobi::Trigger( $this->name(), 'AfterChangeState', [ $this->id, $state ] );
 		}
 	}
 
@@ -321,7 +322,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 //				throw new SPException( SPLang::e( 'THERE_IS_NO_SUCH_FIELD', $ident ) );
 //			}
 		}
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( $ident, &$this->fieldsIds, &$this->fieldsNids ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ $ident, &$this->fieldsIds, &$this->fieldsNids ] );
 		return $field;
 	}
 
@@ -342,7 +343,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				$fields =& $this->fieldsIds;
 				break;
 		}
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$fields ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$fields ] );
 		return $fields;
 	}
 
@@ -384,16 +385,16 @@ class SPEntry extends SPDBObject implements SPDataModel
 				$db = SPFactory::db();
 				/* get fields */
 				try {
-					$c = array( 'id' => $this->id, 'oType' => 'entry' );
+					$c = [ 'id' => $this->id, 'oType' => 'entry' ];
 					if ( !( $this->approved || ( SPRequest::task() == 'entry.edit' || ( Sobi::Can( 'entry.access.unapproved_any' ) ) ) ) ) {
 						$c[ 'copy' ] = '0';
 					}
-					$db->select( array( 'pid', 'position', 'validSince', 'validUntil' ), 'spdb_relations', $c, 'position' );
+					$db->select( [ 'pid', 'position', 'validSince', 'validUntil' ], 'spdb_relations', $c, 'position' );
 					$categories = $db->loadAssocList( 'pid' );
 					/* validate categories - case some of them has been deleted */
 					$cats = array_keys( $categories );
 					if ( count( $cats ) ) {
-						$cats = $db->select( 'id', 'spdb_object', array( 'id' => $cats ) )->loadResultArray();
+						$cats = $db->select( 'id', 'spdb_object', [ 'id' => $cats ] )->loadResultArray();
 					}
 					if ( count( $categories ) ) {
 						foreach ( $categories as $i => $c ) {
@@ -415,13 +416,13 @@ class SPEntry extends SPDBObject implements SPDataModel
 						$this->categories[ $cid ] = $cat;
 					}
 					if ( $this->categories ) {
-						$labels = SPLang::translateObject( array_keys( $this->categories ), array( 'name', 'alias' ), 'category' );
+						$labels = SPLang::translateObject( array_keys( $this->categories ), [ 'name', 'alias' ], 'category' );
 						foreach ( $labels as $id => $t ) {
 							$this->categories[ $id ][ 'name' ] = isset( $t[ 'value' ] ) ? $t[ 'value' ] : $t[ 'name' ];
 							$this->categories[ $id ][ 'alias' ] = $t[ 'alias' ];
 						}
 					}
-					Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->categories ) );
+					Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$this->categories ] );
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_RELATIONS_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 				}
@@ -434,7 +435,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			}
 		}
 		else {
-			return array();
+			return [];
 		}
 	}
 
@@ -446,7 +447,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 		else {
 			$nameField = SPFactory::db()
-					->select( 'sValue', 'spdb_config', array( 'section' => $this->section, 'sKey' => 'name_field', 'cSection' => 'entry' ) )
+					->select( 'sValue', 'spdb_config', [ 'section' => $this->section, 'sKey' => 'name_field', 'cSection' => 'entry' ] )
 					->loadResult();
 		}
 		return $nameField;
@@ -454,7 +455,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 
 	public function validateCache()
 	{
-		static $remove = array( 'name', 'nid', 'metaDesc', 'metaKeys', 'metaRobots', 'options', 'oType', 'parent' );
+		static $remove = [ 'name', 'nid', 'metaDesc', 'metaKeys', 'metaRobots', 'options', 'oType', 'parent' ];
 		$core = SPFactory::object( $this->id );
 		foreach ( $core as $a => $v ) {
 			if ( !( in_array( $a, $remove ) ) ) {
@@ -474,20 +475,20 @@ class SPEntry extends SPDBObject implements SPDataModel
 		/* @var SPdb $db */
 		$db = SPFactory::db();
 
-		static $fields = array();
+		static $fields = [];
 		static $lang = null;
 		$lang = $lang ? $lang : Sobi::Lang( false );
 		if ( !isset( $fields[ $sid ] ) ) {
 			/* get fields */
 			try {
 				if ( $enabled ) {
-					$db->select( '*', 'spdb_field', array( 'section' => $sid, 'enabled' => 1, 'adminField>' => -1 ), 'position' );
+					$db->select( '*', 'spdb_field', [ 'section' => $sid, 'enabled' => 1, 'adminField>' => -1 ], 'position' );
 				}
 				else {
-					$db->select( '*', 'spdb_field', array( 'section' => $sid, 'adminField>' => -1 ), 'position' );
+					$db->select( '*', 'spdb_field', [ 'section' => $sid, 'adminField>' => -1 ], 'position' );
 				}
 				$fields[ $sid ] = $db->loadObjectList();
-				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$fields ) );
+				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$fields ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELDS_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
@@ -509,9 +510,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 					}
 					try {
 						$fdata = $db
-								->select( '*', 'spdb_field_data', array( 'sid' => $this->id ), $ordering )
+								->select( '*', 'spdb_field_data', [ 'sid' => $this->id ], $ordering )
 								->loadObjectList();
-						$fieldsdata = array();
+						$fieldsdata = [];
 						if ( count( $fdata ) ) {
 							foreach ( $fdata as $data ) {
 								/* if it has been already set - check if it is not better language choose */
@@ -579,7 +580,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	private function checkCopy()
 	{
 		return !(
-				in_array( SPRequest::task(), array( 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit', 'entry.payment' ) ) ||
+				in_array( SPRequest::task(), [ 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit', 'entry.payment' ] ) ||
 				Sobi::Can( 'entry.access.unapproved_any' ) ||
 				( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.manage.own' ) ) ||
 				( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.access.unpublished_own' ) ) ||
@@ -600,13 +601,13 @@ class SPEntry extends SPDBObject implements SPDataModel
 	public function delete()
 	{
 		parent::delete();
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( $this->id ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ $this->id ] );
 		foreach ( $this->fields as $field ) {
 			$field->deleteData( $this->id );
 		}
 		/** Thu, Jul 30, 2015 10:11:57 - delete history */
 		SPFactory::db()
-				->delete( 'spdb_history', array( 'sid' => $this->id ) );
+				->delete( 'spdb_history', [ 'sid' => $this->id ] );
 
 		/** Thu, Jul 30, 2015 10:22:38 - delete payments */
 		SPFactory::payment()
@@ -614,7 +615,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 
 		/** Thu, Jul 30, 2015 11:32:45 - delete counters */
 		SPFactory::db()
-				->delete( 'spdb_counter', array( 'sid' => $this->id ) );
+				->delete( 'spdb_counter', [ 'sid' => $this->id ] );
 
 		SPFactory::cache()->purgeSectionVars();
 		SPFactory::cache()->deleteObj( 'entry', $this->id );
@@ -635,7 +636,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 					$field->validate( $this, $request );
 				} catch ( SPException $x ) {
 					$exception = new SPException( $x->getMessage() );
-					$exception->setData( array( 'field' => $field->get( 'nid' ) ) );
+					$exception->setData( [ 'field' => $field->get( 'nid' ) ] );
 					throw $exception;
 				}
 			}
@@ -645,12 +646,14 @@ class SPEntry extends SPDBObject implements SPDataModel
 	/**
 	 * (non-PHPdoc)
 	 * @see Site/lib/models/SPDBObject#save()
+	 * @param string $request
+	 * @throws SPException
 	 */
 	public function save( $request = 'post' )
 	{
 		$this->loadFields( Sobi::Section(), true );
 		// Thu, Feb 19, 2015 12:12:47 - it should be actually "beforeSave"
-		Sobi::Trigger( $this->name(), 'Before' . ucfirst( __FUNCTION__ ), array( $this->id ) );
+		Sobi::Trigger( $this->name(), 'Before' . ucfirst( __FUNCTION__ ), [ $this->id ] );
 		/* save the base object data */
 		/* @var SPdb $db */
 		$db = SPFactory::db();
@@ -698,11 +701,11 @@ class SPEntry extends SPDBObject implements SPDataModel
 				}
 			}
 		}
-		$values = array();
+		$values = [];
 		/* get categories */
 		$cats = Sobi::Reg( 'request_categories' );
 		if ( !( count( $cats ) ) ) {
-			$cats = SPRequest::arr( 'entry_parent', SPFactory::registry()->get( 'request_categories', array() ), $request );
+			$cats = SPRequest::arr( 'entry_parent', SPFactory::registry()->get( 'request_categories', [] ), $request );
 		}
 		/* by default it should be comma separated string */
 		if ( !( count( $cats ) ) ) {
@@ -720,7 +723,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				}
 			}
 			elseif ( strlen( $cats ) ) {
-				$cats = array( ( int )$cats );
+				$cats = [ ( int )$cats ];
 			}
 		}
 		if ( is_array( $cats ) && count( $cats ) ) {
@@ -733,9 +736,9 @@ class SPEntry extends SPDBObject implements SPDataModel
 		if ( is_array( $cats ) && count( $cats ) ) {
 			/* get the ordering in these categories */
 			try {
-				$db->select( 'pid, MAX(position)', 'spdb_relations', array( 'pid' => $cats, 'oType' => 'entry' ), null, 0, 0, false, 'pid' );
+				$db->select( 'pid, MAX(position)', 'spdb_relations', [ 'pid' => $cats, 'oType' => 'entry' ], null, 0, 0, false, 'pid' );
 				$cPos = $db->loadAssocList( 'pid' );
-				$currPos = $db->select( array( 'pid', 'position' ), 'spdb_relations', array( 'id' => $this->id, 'oType' => 'entry' ) )->loadAssocList( 'pid' );
+				$currPos = $db->select( [ 'pid', 'position' ], 'spdb_relations', [ 'id' => $this->id, 'oType' => 'entry' ] )->loadAssocList( 'pid' );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
@@ -746,7 +749,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 					$copy = isset( $this->categories[ $cats[ $i ] ] ) ? 0 : 1;
 				}
 				else {
-					$db->delete( 'spdb_relations', array( 'id' => $this->id, 'oType' => 'entry' ) );
+					$db->delete( 'spdb_relations', [ 'id' => $this->id, 'oType' => 'entry' ] );
 				}
 				if ( isset( $currPos[ $cat ] ) ) {
 					$pos = $currPos[ $cat ][ 'position' ];
@@ -755,7 +758,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 					$pos = isset( $cPos[ $cat ] ) ? $cPos[ $cat ][ 'MAX(position)' ] : 0;
 					$pos++;
 				}
-				$values[ ] = array( 'id' => $this->id, 'pid' => $cats[ $i ], 'oType' => 'entry', 'position' => $pos, 'validSince' => $this->validSince, 'validUntil' => $this->validUntil, 'copy' => $copy );
+				$values[ ] = [ 'id' => $this->id, 'pid' => $cats[ $i ], 'oType' => 'entry', 'position' => $pos, 'validSince' => $this->validSince, 'validUntil' => $this->validUntil, 'copy' => $copy ];
 			}
 			try {
 				$db->insertArray( 'spdb_relations', $values, true );
@@ -778,7 +781,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			}
 		}
 		if ( $preState[ 'state' ] != $this->state ) {
-			Sobi::Trigger( $this->name(), 'AfterChangeState', array( $this->id, $this->state ) );
+			Sobi::Trigger( $this->name(), 'AfterChangeState', [ $this->id, $this->state ] );
 		}
 		SPFactory::cache()->purgeSectionVars();
 		SPFactory::cache()->deleteObj( 'entry', $this->id );
@@ -788,10 +791,10 @@ class SPEntry extends SPDBObject implements SPDataModel
 			}
 		}
 		if ( !( $preState[ 'new' ] ) ) {
-			Sobi::Trigger( $this->name(), 'AfterUpdate', array( &$this ) );
+			Sobi::Trigger( $this->name(), 'AfterUpdate', [ &$this ] );
 		}
 		else {
-			Sobi::Trigger( $this->name(), 'After' . ucfirst( __FUNCTION__ ), array( &$this ) );
+			Sobi::Trigger( $this->name(), 'After' . ucfirst( __FUNCTION__ ), [ &$this ] );
 		}
 	}
 
@@ -800,7 +803,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 */
 	public function getCurrentBaseData()
 	{
-		$data = array();
+		$data = [];
 		$data[ 'owner' ] = $this->owner;
 		$data[ 'categories' ] = $this->categories;
 		$data[ 'position' ] = $this->position;

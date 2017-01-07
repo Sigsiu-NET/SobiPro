@@ -34,8 +34,8 @@ class SPEntryAdmView extends SPAdmView
 	public function setTitle( $title )
 	{
 		$name = $this->get( 'entry.name' );
-		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-		$title = Sobi::Txt( $title, array( 'entry_name' => $name ) );
+		Sobi::Trigger( 'setTitle', $this->name(), [ &$title ] );
+		$title = Sobi::Txt( $title, [ 'entry_name' => $name ] );
 		$this->set( $name, 'entry_name' );
 		$title = parent::setTitle( $title );
 		return $title;
@@ -67,7 +67,7 @@ class SPEntryAdmView extends SPAdmView
 			$this->addHidden( $id, 'entry.id' );
 		}
 		$sid = SPRequest::int( 'pid' ) ? SPRequest::int( 'pid' ) : SPRequest::sid();
-		$catChooserUrl = Sobi::Url( array( 'task' => 'category.chooser', 'sid' => $sid, 'out' => 'html', 'multiple' => 1 ), true );
+		$catChooserUrl = Sobi::Url( [ 'task' => 'category.chooser', 'sid' => $sid, 'out' => 'html', 'multiple' => 1 ], true );
 		$this->assign( $catChooserUrl, 'cat_chooser_url' );
 	}
 }

@@ -18,17 +18,17 @@
 class SPMessage
 {
 	/** @var array */
-	private $messages = array();
+	private $messages = [];
 	/** @var bool */
 	private $reset = false;
 	/** @var bool */
 	private $langLoaded = false;
 	/** @var array */
-	private $store = array();
+	private $store = [];
 	/** @var array */
-	private $reports = array();
+	private $reports = [];
 	/** @var array */
-	private $current = array();
+	private $current = [];
 
 	/**
 	 * @return SPMessage
@@ -65,23 +65,23 @@ class SPMessage
 	 * @param $message
 	 * @return SPMessage
 	 */
-	public function & logAction( $action, $sid = 0, $changes = array(), $message = null )
+	public function & logAction( $action, $sid = 0, $changes = [], $message = null )
 	{
 		if ( Sobi::Cfg( 'entry.versioning', true ) ) {
-			$log = array(
+			$log = [
 					'revision' => microtime( true ) . '.' . $sid . '.' . Sobi::My( 'id' ),
 					'changedAt' => 'FUNCTION:NOW()',
 					'uid' => Sobi::My( 'id' ),
 					'userName' => Sobi::My( 'name' ),
 					'userEmail' => Sobi::My( 'mail' ),
-					'change' => $action,
+					'changeAction' => $action,
 					'site' => defined( 'SOBIPRO_ADM' ) ? 'adm' : 'site',
 					'sid' => $sid,
 					'changes' => SPConfig::serialize( $changes ),
 					'params' => null,
 					'reason' => $message,
 					'language' => Sobi::Lang()
-			);
+			];
 			SPFactory::db()->insert( 'spdb_history', $log );
 		}
 		return $this;
@@ -91,7 +91,7 @@ class SPMessage
 	{
 		if ( Sobi::Cfg( 'entry.versioning', true ) ) {
 			$log = ( array )SPFactory::db()
-					->select( '*', 'spdb_history', array( 'sid' => $sid ), 'changedAt.desc', 100 )
+					->select( '*', 'spdb_history', [ 'sid' => $sid ], 'changedAt.desc', 100 )
 					->loadAssocList( 'revision' );
 			if ( count( $log ) ) {
 				foreach ( $log as $revision => $data ) {
@@ -105,7 +105,7 @@ class SPMessage
 			return $log;
 		}
 		else {
-			return array();
+			return [];
 		}
 	}
 
@@ -113,7 +113,7 @@ class SPMessage
 	{
 		if ( Sobi::Cfg( 'entry.versioning', true ) ) {
 			$log = ( array )SPFactory::db()
-					->select( '*', 'spdb_history', array( 'revision' => $rev ) )
+					->select( '*', 'spdb_history', [ 'revision' => $rev ] )
 					->loadObject( 'revision' );
 			if ( count( $log ) ) {
 				$log[ 'changes' ] = SPConfig::unserialize( $log[ 'changes' ] );
@@ -121,7 +121,7 @@ class SPMessage
 			return $log;
 		}
 		else {
-			return array();
+			return [];
 		}
 	}
 
@@ -151,16 +151,16 @@ class SPMessage
 	 */
 	public function resetSystemMessages()
 	{
-		$this->store = array();
+		$this->store = [];
 		$this->storeMessages();
-		$store = array(
-				'params' => array(),
+		$store = [
+				'params' => [],
 				'key' => 'queue',
 				'value' => date( DATE_RFC822 ),
 				'description' => null,
 				'options' => null
-		);
-		SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
+		];
+		SPFactory::registry()->saveDBSection( [ 'messages' => $store ], 'messages' );
 		return $this;
 	}
 
@@ -169,7 +169,7 @@ class SPMessage
 	 */
 	public function reset()
 	{
-		$this->messages = array();
+		$this->messages = [];
 		$this->reset = true;
 		$this->storeMessages();
 		return $this;
@@ -212,7 +212,7 @@ class SPMessage
 		if ( $display ) {
 			$this->messages[ $type ][ $message ] = $messageText;
 		}
-		$this->current = array( 'message' => $messageText, 'type' => $type, 'section' => array( 'id' => Sobi::Section(), 'name' => Sobi::Section( true ) ) );
+		$this->current = [ 'message' => $messageText, 'type' => $type, 'section' => [ 'id' => Sobi::Section(), 'name' => Sobi::Section( true ) ] ];
 		$this->storeMessages();
 		return $this;
 	}
@@ -228,14 +228,14 @@ class SPMessage
 		$this->store[ md5( serialize( $this->current ) ) ] = $this->current;
 		if ( count( $this->store ) > $change ) {
 			$messages = SPConfig::serialize( $this->store );
-			$store = array(
+			$store = [
 					'params' => $messages,
 					'key' => 'queue',
 					'value' => date( DATE_RFC822 ),
 					'description' => null,
 					'options' => null
-			);
-			SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
+			];
+			SPFactory::registry()->saveDBSection( [ 'messages' => $store ], 'messages' );
 			SPFactory::cache()->cleanSection( -1, false );
 		}
 		return $this;
@@ -249,19 +249,19 @@ class SPMessage
 	 */
 	public function & setSilentSystemMessage( $message, $type = SPC::NOTICE_MSG, $section = 'configuration' )
 	{
-		$this->current = array( 'message' => $message, 'type' => $type, 'section' => array( 'id' => Sobi::Section(), 'name' => Sobi::Section( true ) ) );
+		$this->current = [ 'message' => $message, 'type' => $type, 'section' => [ 'id' => Sobi::Section(), 'name' => Sobi::Section( true ) ] ];
 		$this->current[ 'issue-type' ] = $section;
 		$this->store[ md5( serialize( $this->current ) ) ] = $this->current;
 		if ( count( $this->store ) ) {
 			$messages = SPConfig::serialize( $this->store );
-			$store = array(
+			$store = [
 					'params' => $messages,
 					'key' => 'queue',
 					'value' => date( DATE_RFC822 ),
 					'description' => null,
 					'options' => null
-			);
-			SPFactory::registry()->saveDBSection( array( 'messages' => $store ), 'messages' );
+			];
+			SPFactory::registry()->saveDBSection( [ 'messages' => $store ], 'messages' );
 			SPFactory::cache()->cleanSection( -1, false );
 		}
 		return $this;
@@ -278,14 +278,14 @@ class SPMessage
 		$this->reports[ $spsid ][ $type ][ ] = $message;
 		if ( count( $this->reports ) ) {
 			$messages = SPConfig::serialize( $this->reports );
-			$store = array(
+			$store = [
 					'params' => $messages,
 					'key' => 'queue',
 					'value' => date( DATE_RFC822 ),
 					'description' => null,
 					'options' => null
-			);
-			SPFactory::registry()->saveDBSection( array( 'reports' => $store ), 'reports' );
+			];
+			SPFactory::registry()->saveDBSection( [ 'reports' => $store ], 'reports' );
 		}
 		return $this;
 	}
@@ -296,7 +296,7 @@ class SPMessage
 	 */
 	public function getReports( $spsid )
 	{
-		$reports = array();
+		$reports = [];
 		if ( $this->reports[ $spsid ] ) {
 //			$messages = SPConfig::serialize( $this->reports );
 			$reports = $this->reports[ $spsid ];
@@ -304,14 +304,14 @@ class SPMessage
 			/** Thu, Jul 31, 2014 11:12:02
 			 * Why the hell we are setting these messages into the db again?
 			 */
-			$store = array(
-					'params' => array(),//$messages,
+			$store = [
+					'params' => [],//$messages,
 					'key' => 'queue',
 					'value' => date( DATE_RFC822 ),
 					'description' => null,
 					'options' => null
-			);
-			SPFactory::registry()->saveDBSection( array( 'reports' => $store ), 'reports' );
+			];
+			SPFactory::registry()->saveDBSection( [ 'reports' => $store ], 'reports' );
 		}
 		return $reports;
 	}
@@ -322,7 +322,7 @@ class SPMessage
 	 */
 	public function getSystemMessages( $spsid = null )
 	{
-		return $spsid ? ( isset( $this->reports[ $spsid ] ) ? $this->reports[ $spsid ] : array() ) : $this->store;
+		return $spsid ? ( isset( $this->reports[ $spsid ] ) ? $this->reports[ $spsid ] : [] ) : $this->store;
 	}
 
 //	/**

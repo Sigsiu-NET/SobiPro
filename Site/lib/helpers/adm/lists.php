@@ -38,10 +38,11 @@ abstract class SPLists
 	 * Creates published/unpublished/expired/pending symbol
 	 *
 	 * @param SPDataModel $row
-	 * @param int $id - id ident label of the object
+	 * @param int|string $id - id ident label of the object
 	 * @param string $type - object type e.g. field, entry, category
 	 * @param string $stateKey - name of the property where the state is stored
 	 * @param array $states - label for states description. By default array( 'on' => 'publish', 'off' => 'hide' )
+	 * @param int $sid
 	 * @return string
 	 */
 	public static function state( $row, $id = 'sid', $type = null, $stateKey = 'state', $states = null, $sid = 0 )
@@ -54,7 +55,7 @@ abstract class SPLists
 
 		/* get icons */
 		if( !$states ) {
-			$states	= array( 'on' => 'publish', 'off' => 'hide' );
+			$states	= [ 'on' => 'publish', 'off' => 'hide' ];
 			$up = Sobi::Cfg( 'list_icons.unpublished' );
 			$pu = Sobi::Cfg( 'list_icons.published' );
 			$ex = Sobi::Cfg( 'list_icons.expired' );
@@ -87,7 +88,7 @@ abstract class SPLists
 
 		/* if user has permission for this action */
 		if( SPFactory::user()->can( $action ) ) {
-			$url = array( 'task' => $action, $id => $row->get( 'id' ) );
+			$url = [ 'task' => $action, $id => $row->get( 'id' ) ];
 			if( $sid ) {
 				$url[ 'sid' ] = $sid;
 			}
@@ -119,7 +120,7 @@ abstract class SPLists
 		}
 		if( $position > 1 ) {
 			$up = /*Sobi::Cfg( 'live_site' ).*/Sobi::Cfg( 'list_icons.position_up' );
-			$url = Sobi::Url( array( 'task' => $type.'.up', $parent => SPRequest::sid(), $lsid => $row->get( 'id' ) ) );
+			$url = Sobi::Url( [ 'task' => $type.'.up', $parent => SPRequest::sid(), $lsid => $row->get( 'id' ) ] );
 			/* translate alternative text */
 			$s = Sobi::Txt( $type.'.order_up' );
 			$a = Sobi::Txt( $type.'.order_up_expl' );
@@ -127,7 +128,7 @@ abstract class SPLists
 			$up = "<a href=\"{$url}\">{$img}</a>";
 		}
 		$down = /*Sobi::Cfg( 'live_site' ).*/Sobi::Cfg( 'list_icons.position_down' );
-		$url = Sobi::Url( array( 'task' => $type.'.down', $parent => SPRequest::sid(), $lsid => $row->get( 'id' ) ) );
+		$url = Sobi::Url( [ 'task' => $type.'.down', $parent => SPRequest::sid(), $lsid => $row->get( 'id' ) ] );
 		/* translate alternative text */
 		$s = Sobi::Txt( $type.'.order_down' );
 		if( $position != $count ) {
@@ -139,7 +140,7 @@ abstract class SPLists
 			$down = null;
 		}
 		$sid = $row->get( 'id' );
-		$box = SPHtml_Input::text( "{$id}[{$sid}]", $position, array( 'style' => 'text-align:center; width: 40px;' ) );
+		$box = SPHtml_Input::text( "{$id}[{$sid}]", $position, [ 'style' => 'text-align:center; width: 40px;' ] );
 		return "<div style=\"width:30%;float:left;\">{$up}&nbsp;{$down}</div>&nbsp;{$box}";
 	}
 
@@ -167,7 +168,7 @@ abstract class SPLists
 
 		/* if user has permission for this action */
 		if( SPFactory::user()->can( $action ) ) {
-			$url = SPFactory::mainframe()->url( array( 'task' => $action, 'sid' => $row->get( 'id' ) ) );
+			$url = SPFactory::mainframe()->url( [ 'task' => $action, 'sid' => $row->get( 'id' ) ] );
 			$img = "<a href=\"{$url}\">{$img}</a>";
 		}
 		return $img;
@@ -180,11 +181,12 @@ abstract class SPLists
 	 * @param string $type
 	 * @param string $id
 	 * @param string $fname
+	 * @param string $def
 	 * @return string
 	 */
 	public static function tableHeader( $ordering, $type, $id = 'sid', $fname = 'order', $def = 'position.asc' )
 	{
-		$header = array();
+		$header = [];
 		$current = SPFactory::user()->getUserState( $type.'.order', $fname, $def );
 		if( strstr( $current, '.' ) ) {
 			$current 	= explode( '.', $current );
@@ -195,7 +197,7 @@ abstract class SPLists
 		if( is_array( $ordering ) && count( $ordering ) ) {
 			foreach ( $ordering as $order => $active ) {
 				$class = null;
-				$params = array();
+				$params = [];
 				if( is_array( $active ) ) {
 					$params = $active;
 					$active = $active[ 'type' ];
@@ -228,7 +230,7 @@ abstract class SPLists
 						}
 						if( $active == SP_TBL_HEAD_SORTABLE_FIELD ) {
 							$label = $params[ 'label' ];
-							$title = Sobi::Txt( 'LIST.ORDER_BY_FIELD', array( 'field' => $label ) );
+							$title = Sobi::Txt( 'LIST.ORDER_BY_FIELD', [ 'field' => $label ] );
 						}
 						if( $active == SP_TBL_HEAD_STATE ) {
 							SPLoader::loadClass( 'html.tooltip' );
@@ -236,12 +238,12 @@ abstract class SPLists
 							$onclk	= " onclick=\"if( document.adminForm.boxchecked.value == 0 ) { alert( '{$msg}' ); } else { submitbutton( '{$type}.publish' ); }\"";
 							$url	= "#";
 							$ai 	= /*Sobi::Cfg( 'live_site' ).*/Sobi::Cfg( 'list_icons.enable' );
-							$s 		= Sobi::Txt( 'LIST.ENABLE_S', array( 'type' => Sobi::Txt( strtoupper( $type ) ) ) );
+							$s 		= Sobi::Txt( 'LIST.ENABLE_S', [ 'type' => Sobi::Txt( strtoupper( $type ) ) ] );
 							$a 		= Sobi::Txt( $type.'.enable_expl' );
 							$aico 	= SPTooltip::toolTip( $a, $s, $ai );
 							$aico 	= "&nbsp;<span class=\"headerStateIcons\"><a href=\"{$url}\"{$onclk}>{$aico}</a></span>";
 							$ui 	= /*Sobi::Cfg( 'live_site' ).*/Sobi::Cfg( 'list_icons.disable' );
-							$s 		= Sobi::Txt( 'LIST.DISABLE_S', array( 'type' => Sobi::Txt( strtoupper( $type ) ) ) );
+							$s 		= Sobi::Txt( 'LIST.DISABLE_S', [ 'type' => Sobi::Txt( strtoupper( $type ) ) ] );
 							$a 		= Sobi::Txt( $type.'.disable_expl' );
 							$uico 	= SPTooltip::toolTip( $a, $s, $ui );
 							$onclk	= " onclick=\"if( document.adminForm.boxchecked.value == 0 ) { alert( '{$msg}' ); } else { submitbutton( '{$type}.hide' ); }\"";
@@ -294,7 +296,7 @@ abstract class SPLists
 	 * Enter description here...
 	 *
 	 * @param unknown_type $row
-	 * @param unknown_type $id
+	 * @param string|unknown_type $id
 	 * @return unknown
 	 */
 	public static function checkedOut( $row, $id = 'sid' )
@@ -313,7 +315,7 @@ abstract class SPLists
 			$uname = $user->get( 'name' );
 			$img = /*Sobi::Cfg( 'live_site' ).*/Sobi::Cfg( 'list_icons.checked_out' );
 			$s = Sobi::Txt( $row->get( 'oType' ).'.checked_out' );
-			$a = Sobi::Txt( $row->get( 'oType' ).'.checked_out_by', array( 'user' => $uname, 'time' => $row->get( 'coutTime' ) ) );
+			$a = Sobi::Txt( $row->get( 'oType' ).'.checked_out_by', [ 'user' => $uname, 'time' => $row->get( 'coutTime' ) ] );
 			$r = SPTooltip::toolTip( $a, $s, $img );
 		}
 		else {

@@ -44,7 +44,7 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 	/** @var bool */
 	protected $useIcon = true;
 	/** @var array */
-	protected $allowedProtocols = array( 'http', 'https', 'relative' );
+	protected $allowedProtocols = [ 'http', 'https', 'relative' ];
 	/** @var string */
 	protected $dType = 'special';
 	/** @var bool */
@@ -88,7 +88,7 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 					$class .= ' ' . $width;
 				}
 			}
-			$params = array( 'id' => $this->nid, 'class' => $class );
+			$params = [ 'id' => $this->nid, 'class' => $class ];
 			if ( $this->labelMaxLength ) {
 				$params[ 'maxlength' ] = $this->labelMaxLength;
 			}
@@ -102,16 +102,16 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 			}
 			$fieldTitle .= SPHtml_Input::text( $this->nid, ( ( is_array( $raw ) && isset( $raw[ 'label' ] ) ) ? SPLang::clean( $raw[ 'label' ] ) : null ), $params );
 		}
-		$protocols = array();
+		$protocols = [];
 		if ( count( $this->allowedProtocols ) ) {
 			foreach ( $this->allowedProtocols as $protocol ) {
 				$protocols[ $protocol ] = $protocol . '://';
 			}
 		}
 		else {
-			$protocols = array( 'http' => 'http://', 'https' => 'https://' );
+			$protocols = [ 'http' => 'http://', 'https' => 'https://' ];
 		}
-		$params = array( 'id' => $this->nid . '_protocol', 'size' => 1, 'class' => $this->cssClass . 'Protocol' );
+		$params = [ 'id' => $this->nid . '_protocol', 'size' => 1, 'class' => $this->cssClass . 'Protocol' ];
 
 		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) ) {
 			$protofield = '<div class="input-group"><div class="input-group-btn">';
@@ -133,7 +133,7 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 			}
 		}
 
-		$params = array( 'id' => $this->nid . '_url', 'class' => $class );
+		$params = [ 'id' => $this->nid . '_url', 'class' => $class ];
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
@@ -172,7 +172,7 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 				SPFactory::header()->addJsFile( 'opt.field_url_edit' );
 			}
 			$classes = 'btn btn-default spCountableReset';
-			$attr    = array();
+			$attr    = [];
 			if ( !( $counter ) ) {
 				$attr[ 'disabled' ] = 'disabled';
 			}
@@ -192,12 +192,12 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit', 'noFollow', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth', 'deleteClicks', 'useIcon', 'cssIconClass', 'cssButtonClass' );
+		return [ 'ownLabel', 'labelWidth', 'labelMaxLength', 'labelsLabel', 'validateUrl', 'allowedProtocols', 'newWindow', 'maxLength', 'width', 'countClicks', 'counterToLabel', 'itemprop', 'cssClassView', 'cssClassEdit', 'noFollow', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth', 'deleteClicks', 'useIcon', 'cssIconClass', 'cssButtonClass' ];
 	}
 
 	private function fromCache( $cache )
 	{
-		$data = array();
+		$data = [];
 		if ( isset( $cache[ $this->nid ] ) ) {
 			$data[ 'label' ] = $cache[ $this->nid ];
 		}
@@ -230,7 +230,7 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 			$this->cssClass = $this->cssClass . ' ' . $this->cssButtonClass;
 			$this->cssClass = $this->cssClass . ' ' . $this->nid;
 
-			$attributes = array( 'href' => $url, 'class' => $this->cssClass );
+			$attributes = [ 'href' => $url, 'class' => $this->cssClass ];
 			if ( $this->countClicks ) {
 				SPFactory::header()->addJsFile( 'opt.field_url' );
 				$this->cssClass           = $this->cssClass . ' ctrl-visit-countable';
@@ -242,7 +242,7 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 				}
 				$attributes[ 'class' ] = $this->cssClass;
 				if ( $this->counterToLabel ) {
-					$data[ 'label' ] = Sobi::Txt( 'FM.URL.COUNTER_WITH_LABEL2', array( 'label' => $data[ 'label' ], 'counter' => $counter ) );
+					$data[ 'label' ] = Sobi::Txt( 'FM.URL.COUNTER_WITH_LABEL2', [ 'label' => $data[ 'label' ], 'counter' => $counter ] );
 				}
 			}
 			$this->cleanCss();
@@ -254,24 +254,24 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 					$attributes[ 'rel' ] = 'nofollow';
 				}
 				if ( $this->useIcon ) {
-					$f[ 'i' ] = array(
+					$f[ 'i' ] = [
 						'_complex'    => 1,
 						'_data'       => ' ',
-						'_attributes' => array( 'class' => $this->cssIconClass )
-					);
+						'_attributes' => [ 'class' => $this->cssIconClass ]
+					];
 				}
 				$f[ 'span' ] = SPLang::clean( $data[ 'label' ] );
-				$data        = array(
+				$data        = [
 					'_complex'    => 1,
 					'_data'       => $f,
 					'_attributes' => $attributes
-				);
+				];
 
-				return array(
+				return [
 					'_complex'    => 1,
-					'_data'       => array( 'a' => $data ),
-					'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass, 'counter' => $counter )
-				);
+					'_data'       => [ 'a' => $data ],
+					'_attributes' => [ 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass, 'counter' => $counter ]
+				];
 			}
 		}
 	}

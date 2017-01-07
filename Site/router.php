@@ -17,16 +17,18 @@
  * $Revision$
  * $Author$
  * $HeadURL$
+ * @param $query
+ * @return array
  */
 
 function SobiProBuildRoute( &$query )
 {
 	$cfg = SobiProRouterCfg();
-	$segments = array();
+	$segments = [];
 	$reserved = $cfg[ 'skip' ];
 	if ( isset( $query[ 'task' ] ) ) {
 		if ( isset( $reserved[ $query[ 'task' ] ] ) && $reserved[ $query[ 'task' ] ] ) {
-			return array();
+			return [];
 		}
 		if ( isset( $query[ 'sid' ] ) && isset( $query[ 'Itemid' ] ) ) {
 			if ( !( SobiProIsLinked( $query[ 'Itemid' ], $query[ 'sid' ], $query[ 'task' ] ) ) ) {
@@ -123,7 +125,7 @@ function SobiProRemoveVars( $cfg, &$query )
 
 function SobiProRouterCfg()
 {
-	static $config = array();
+	static $config = [];
 	if ( !( count( $config ) ) ) {
 		$config = parse_ini_file( 'etc/router.ini', true );
 		if ( file_exists( dirname( __FILE__ ) . '/etc/router_override.ini' ) ) {
@@ -134,13 +136,13 @@ function SobiProRouterCfg()
 	if ( isset( $config[ 'remove_query' ] ) && count( $config[ 'remove_query' ] ) ) {
 		foreach ( $config[ 'remove_query' ] as $condition => $remove ) {
 			$cond = explode( ':', $condition );
-			$query = array();
+			$query = [];
 			$remove = explode( ',', $remove );
 			foreach ( $remove as $q ) {
 				$q = explode( ':', $q );
 				$query[ $q[ 0 ] ] = $q[ 1 ];
 			}
-			$config[ 'remove_vars' ][ $condition ] = array( 'condition' => $cond[ 1 ], 'query' => $query );
+			$config[ 'remove_vars' ][ $condition ] = [ 'condition' => $cond[ 1 ], 'query' => $query ];
 		}
 	}
 	return $config;
@@ -159,7 +161,7 @@ function SobiProTaskEnhancement( $value, $task, $values )
 function SobiProParseRoute( $segments )
 {
 	$cfg = SobiProRouterCfg();
-	$vars = array();
+	$vars = [];
 	$return = JFactory::getApplication()->getMenu()->getActive()->query;
 	$tasks = array_flip( $cfg[ 'tasks' ] );
 	$taskEnhancement = array_flip( $cfg[ 'segments_to_task' ] );
@@ -213,7 +215,7 @@ function SobiProParseRoute( $segments )
 		}
 	}
 	$replacement = array_flip( array_merge( $cfg[ 'vars' ], $cfg[ 'transform_vars' ] ) );
-	$pre = array();
+	$pre = [];
 	foreach ( $vars as $k => $v ) {
 		if ( isset( $replacement[ $k ] ) ) {
 			$k = $replacement[ $k ];

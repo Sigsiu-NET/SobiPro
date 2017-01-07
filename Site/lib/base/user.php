@@ -27,9 +27,12 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 interface SPUserInterface
 {
 	public function __destruct();
+
 	/**
-	 * @access 	public
+	 * @access    public
+	 * @param $subject
 	 * @param string $action - e.g. edit
+	 * @param null $section
 	 * @param string $ownership - e.g. own, all
 	 * @return bool - true if authorized
 	 */

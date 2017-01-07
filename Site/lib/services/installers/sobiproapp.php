@@ -28,14 +28,14 @@ class SPAppInstaller extends SPInstaller
 {
 	public function install()
 	{
-		$log = array();
+		$log = [];
 		$type = strlen( $this->xGetString( 'type' ) ) ? $this->xGetString( 'type' ) : ( $this->xGetString( 'fieldType' ) ? 'field' : null );
 		$id = $this->xGetString( 'id' );
 
 		if ( $this->installed( $id, $type ) ) {
-			SPFactory::db()->delete( 'spdb_plugins', array( 'pid' => $id, 'type' => $type ) );
+			SPFactory::db()->delete( 'spdb_plugins', [ 'pid' => $id, 'type' => $type ] );
 		}
-		Sobi::Trigger( 'Before', 'InstallPlugin', array( $id ) );
+		Sobi::Trigger( 'Before', 'InstallPlugin', [ $id ] );
 		$requirements = $this->xGetChilds( 'requirements/*' );
 		if ( $requirements && ( $requirements instanceof DOMNodeList ) ) {
 			$reqCheck =& SPFactory::Instance( 'services.installers.requirements' );
@@ -64,7 +64,7 @@ class SPAppInstaller extends SPInstaller
 		}
 
 		$files = $this->xGetChilds( 'files' );
-		$date = str_replace( array( ':', ' ' ), array( '-', '_' ), SPFactory::config()->date( time() ) );
+		$date = str_replace( [ ':', ' ' ], [ '-', '_' ], SPFactory::config()->date( time() ) );
 		if ( $files && ( $files instanceof DOMNodeList ) && $files->length ) {
 			$log[ 'files' ] = $this->files( $files, $id, "{$dir}/{$id}/backup/{$date}" );
 			if ( count( $log[ 'files' ] ) ) {
@@ -76,7 +76,7 @@ class SPAppInstaller extends SPInstaller
 
 		$languages = $this->xGetChilds( 'language' );
 		if ( $languages->length ) {
-			$langFiles = array();
+			$langFiles = [];
 			foreach ( $languages as $language ) {
 				$folder =  $language->attributes->getNamedItem( 'folder' ) ? $language->attributes->getNamedItem( 'folder' )->nodeValue : null;
 				foreach ( $language->childNodes as $file ) {
@@ -88,11 +88,11 @@ class SPAppInstaller extends SPInstaller
 						$adm = $file->attributes->getNamedItem( 'admin' )->nodeValue == 'true' ? true : false;
 					}
 					$langFiles[ $file->attributes->getNamedItem( 'lang' )->nodeValue ][ ] =
-							array(
+							[
 									'path' => Sobi::FixPath( "{$this->root}/{$folder}/" . trim( $file->nodeValue ) ),
 									'name' => $file->nodeValue,
 									'adm' => $adm
-							);
+							];
 
 				}
 			}
@@ -147,10 +147,10 @@ class SPAppInstaller extends SPInstaller
 				$t = Sobi::Txt( 'EX.PAYMENT_METHOD_TYPE' );
 				break;
 		}
-		Sobi::Trigger( 'After', 'InstallPlugin', array( $id ) );
+		Sobi::Trigger( 'After', 'InstallPlugin', [ $id ] );
 		$dir =& SPFactory::Instance( 'base.fs.directory', SPLoader::dirPath( 'tmp.install' ) );
 		$dir->deleteFiles();
-		return Sobi::Txt( 'EX.EXTENSION_HAS_BEEN_INSTALLED', array( 'type' => $t, 'name' => $this->xGetString( 'name' ) ) );
+		return Sobi::Txt( 'EX.EXTENSION_HAS_BEEN_INSTALLED', [ 'type' => $t, 'name' => $this->xGetString( 'name' ) ] );
 	}
 
 	private function _d( $msg )
@@ -223,7 +223,7 @@ class SPAppInstaller extends SPInstaller
 						if ( count( $values ) ) {
 							$queries = $this->definition->createElement( 'sql' );
 							/* first find all created tables */
-							$tables = array();
+							$tables = [];
 							foreach ( $values as $i => $query ) {
 								if ( stristr( $query, 'create table' ) ) {
 									preg_match( '/spdb_[a-z0-9\-_]*/i', $query, $table );
@@ -237,7 +237,7 @@ class SPAppInstaller extends SPInstaller
 								}
 								$queries->appendChild( $tbls );
 							}
-							$inserts = array();
+							$inserts = [];
 							/* second loop to find all inserts */
 							foreach ( $values as $i => $query ) {
 								if ( stristr( $query, 'insert into' ) ) {
@@ -248,13 +248,13 @@ class SPAppInstaller extends SPInstaller
 										continue;
 									}
 									preg_match( '/\([^\)]*\)/i', $query, $match );
-									$cols = isset( $match[ 0 ] ) ? str_ireplace( array( '`', '(', ')' ), array( null, null, null ), $match[ 0 ] ) : null;
+									$cols = isset( $match[ 0 ] ) ? str_ireplace( [ '`', '(', ')' ], [ null, null, null ], $match[ 0 ] ) : null;
 									$cols = explode( ',', $cols );
 									preg_match( '/VALUES.*\)/i', $query, $match );
-									$values = isset( $match[ 0 ] ) ? str_ireplace( array( 'VALUES', '(', ')' ), array( null, null, null ), $match[ 0 ] ) : null;
+									$values = isset( $match[ 0 ] ) ? str_ireplace( [ 'VALUES', '(', ')' ], [ null, null, null ], $match[ 0 ] ) : null;
 									$values = explode( ',', $values );
 									$cc = count( $cols );
-									$v = array();
+									$v = [];
 									if ( $cc ) {
 										for ( $i = 0; $i < $cc; $i++ ) {
 											$v[ trim( str_replace( "'", null, $cols[ $i ] ) ) ] = trim( str_ireplace( "NULL", null, trim( trim( $values[ $i ] ), "\x22\x27" ) ) );
@@ -315,11 +315,11 @@ class SPAppInstaller extends SPInstaller
 	 */
 	private function actions( $action, $id )
 	{
-		$adds = array();
-		$actions = array();
+		$adds = [];
+		$actions = [];
 		for ( $i = 0; $i < $action->length; $i++ ) {
 			$actions[ ] = $action->item( $i )->nodeValue;
-			$adds[ $i ] = array( 'pid' => $id, 'onAction' => $action->item( $i )->nodeValue );
+			$adds[ $i ] = [ 'pid' => $id, 'onAction' => $action->item( $i )->nodeValue ];
 		}
 		if ( count( $adds ) ) {
 			try {
@@ -335,7 +335,7 @@ class SPAppInstaller extends SPInstaller
 	{
 		$res = 0;
 		try {
-			SPFactory::db()->select( 'COUNT( pid )', 'spdb_plugins', array( 'pid' => $id, 'type' => $type ) );
+			SPFactory::db()->select( 'COUNT( pid )', 'spdb_plugins', [ 'pid' => $id, 'type' => $type ] );
 			$res = SPFactory::db()->loadResult();
 		} catch ( SPException $x ) {
 		}
@@ -346,9 +346,9 @@ class SPAppInstaller extends SPInstaller
 	{
 		if ( $this->xGetString( 'type' ) != 'update' ) {
 			try {
-				SPFactory::db()->insert( 'spdb_plugins', array( $id, $this->xGetString( 'name' ), $this->xGetString( 'version' ), $this->xGetString( 'description' ), $this->xGetString( 'authorName' ), $this->xGetString( 'authorUrl' ), $this->xGetString( 'authorEmail' ), 1, $type, null ) );
+				SPFactory::db()->insert( 'spdb_plugins', [ $id, $this->xGetString( 'name' ), $this->xGetString( 'version' ), $this->xGetString( 'description' ), $this->xGetString( 'authorName' ), $this->xGetString( 'authorUrl' ), $this->xGetString( 'authorEmail' ), 1, $type, null ] );
 				if ( $this->xGetString( 'type' ) == 'payment' ) {
-					SPFactory::db()->insert( 'spdb_plugin_task', array( $id, 'PaymentMethodView', 'payment' ) );
+					SPFactory::db()->insert( 'spdb_plugin_task', [ $id, 'PaymentMethodView', 'payment' ] );
 				}
 			} catch ( SPException $x ) {
 				throw new SPException( SPLang::e( 'CANNOT_INSTALL_PLUGIN_DB_ERR', $x->getMessage() ) );
@@ -363,7 +363,7 @@ class SPAppInstaller extends SPInstaller
 		$tGroup = $node->attributes->getNamedItem( 'fieldGroup' )->nodeValue;
 		$fType = $node->nodeValue;
 		try {
-			SPFactory::db()->insert( 'spdb_field_types', array( $tid, $fType, $tGroup, null ), true );
+			SPFactory::db()->insert( 'spdb_field_types', [ $tid, $fType, $tGroup, null ], true );
 		} catch ( SPException $x ) {
 			throw new SPException( SPLang::e( 'CANNOT_INSTALL_FIELD_DB_ERR', $x->getMessage() ) );
 		}
@@ -378,7 +378,7 @@ class SPAppInstaller extends SPInstaller
 	 */
 	private function files( $folders, $eid, $backup )
 	{
-		$log = array( 'created' => array(), 'modified' => array() );
+		$log = [ 'created' => [], 'modified' => [] ];
 		foreach ( $folders as $folder ) {
 			$target = $folder->attributes->getNamedItem( 'path' )->nodeValue;
 			if ( strstr( $target, 'templates:default' ) ) {
@@ -413,7 +413,7 @@ class SPAppInstaller extends SPInstaller
 							   *  - so let's simplify it
 							   */
 						// $dir = SPFactory::Instance( 'base.fs.directory', str_replace( DS . DS, DS, $this->root.DS.$child->nodeValue ) );
-						$files = array();
+						$files = [];
 						$this->travelDir( $this->root . '/' . $child->nodeValue, $files );
 						if ( count( $files ) ) {
 							$this->_d( sprintf( 'List %s', print_r( $files, true ) ) );
@@ -436,7 +436,7 @@ class SPAppInstaller extends SPInstaller
 									}
 									else {
 										$this->_d( sprintf( 'File %s exist and will be backed up', $t ) );
-										$log[ 'modified' ][ ] = array( 'file' => $t, 'size' => filesize( $t ), 'checksum' => md5_file( $t ), 'backup' => $bPath );
+										$log[ 'modified' ][ ] = [ 'file' => $t, 'size' => filesize( $t ), 'checksum' => md5_file( $t ), 'backup' => $bPath ];
 									}
 								}
 								else {
@@ -467,7 +467,7 @@ class SPAppInstaller extends SPInstaller
 							}
 							else {
 								// if modifying file - store the current data so when we are going to restore it, we can be sure we are not overwriting some file
-								$log[ 'modified' ][ ] = array( 'file' => $t, 'size' => filesize( $t ), 'checksum' => md5_file( $t ), 'backup' => $bPath );
+								$log[ 'modified' ][ ] = [ 'file' => $t, 'size' => filesize( $t ), 'checksum' => md5_file( $t ), 'backup' => $bPath ];
 								/** 1.1 changes - we don't want to restore the backed up files because it causing ,uch more problems as it is worth */
 								$log[ 'created' ][ ] = $t;
 								$this->_d( sprintf( 'File %s exist and will be backed up', $t ) );
@@ -542,10 +542,10 @@ class SPAppInstaller extends SPInstaller
 	 */
 	private function revert( $changes )
 	{
-		$files = array();
+		$files = [];
 		foreach ( $changes as $file ) {
 			if ( $file->hasChildNodes() ) {
-				$f = array();
+				$f = [];
 				foreach ( $file->childNodes as $node ) {
 					if ( $node->nodeName != '#text' ) {
 						$f[ $node->nodeName ] = $node->nodeValue;
@@ -624,14 +624,14 @@ class SPAppInstaller extends SPInstaller
 		if ( $actions && ( $actions instanceof DOMNodeList ) ) {
 			for ( $i = 0; $i < $actions->length; $i++ ) {
 				try {
-					SPFactory::db()->delete( 'spdb_plugin_task', array( 'pid' => $pid, 'onAction' => $actions->item( $i )->nodeValue ) );
+					SPFactory::db()->delete( 'spdb_plugin_task', [ 'pid' => $pid, 'onAction' => $actions->item( $i )->nodeValue ] );
 				} catch ( SPException $x ) {
 					Sobi::Error( 'installer', SPLang::e( 'Cannot remove plugin task "%s". Db query failed. Error: %s', $actions->item( $i )->nodeValue, $x->getMessage() ), SPC::WARNING, 0 );
 				}
 			}
 			if ( $this->xGetString( 'type' ) == 'payment' ) {
 				try {
-					SPFactory::db()->delete( 'spdb_plugin_task', array( 'pid' => $pid, 'onAction' => 'PaymentMethodView' ) );
+					SPFactory::db()->delete( 'spdb_plugin_task', [ 'pid' => $pid, 'onAction' => 'PaymentMethodView' ] );
 				} catch ( SPException $x ) {
 					Sobi::Error( 'installer', SPLang::e( 'Cannot remove plugin task "PaymentMethodView". Db query failed. Error: %s', $x->getMessage() ), SPC::WARNING, 0 );
 				}
@@ -641,7 +641,7 @@ class SPAppInstaller extends SPInstaller
 		$field = $this->xdef->query( "/{$this->type}/fieldType[@typeId]" );
 		if ( $field && $field->length ) {
 			try {
-				SPFactory::db()->delete( 'spdb_field_types', array( 'tid' => $field->item( 0 )->getAttribute( 'typeId' ) ) );
+				SPFactory::db()->delete( 'spdb_field_types', [ 'tid' => $field->item( 0 )->getAttribute( 'typeId' ) ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( 'installer', SPLang::e( 'CANNOT_REMOVE_FIELD_DB_ERR', $field->item( 0 )->getAttribute( 'typeId' ), $x->getMessage() ), SPC::WARNING, 0 );
 			}
@@ -662,7 +662,7 @@ class SPAppInstaller extends SPInstaller
 		if ( $inserts && ( $inserts instanceof DOMNodeList ) ) {
 			for ( $i = 0; $i < $inserts->length; $i++ ) {
 				$table = $inserts->item( $i )->attributes->getNamedItem( 'table' )->nodeValue;
-				$where = array();
+				$where = [];
 				$cols = $inserts->item( $i )->childNodes;
 				if ( $cols->length ) {
 					for ( $j = 0; $j < $cols->length; $j++ ) {
@@ -697,17 +697,17 @@ class SPAppInstaller extends SPInstaller
 				break;
 		}
 		try {
-			SPFactory::db()->delete( 'spdb_plugins', array( 'pid' => $pid, 'type' => $type ), 1 );
+			SPFactory::db()->delete( 'spdb_plugins', [ 'pid' => $pid, 'type' => $type ], 1 );
 		} catch ( SPException $x ) {
 			Sobi::Error( 'installer', SPLang::e( 'CANNOT_DELETE_PLUGIN_DB_ERR', $pid, $x->getMessage() ), SPC::ERROR, 0 );
 		}
 
 		try {
-			SPFactory::db()->delete( 'spdb_plugin_section', array( 'pid' => $pid ) );
+			SPFactory::db()->delete( 'spdb_plugin_section', [ 'pid' => $pid ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( 'installer', SPLang::e( 'CANNOT_DELETE_PLUGIN_SECTION_DB_ERR', $pid, $x->getMessage() ), SPC::WARNING, 0 );
 		}
 		SPFs::delete( $this->xmlFile );
-		return ucfirst( Sobi::Txt( 'EX.EXTENSION_HAS_BEEN_REMOVED', array( 'type' => $t, 'name' => $this->xGetString( 'name' ) ) ) );
+		return ucfirst( Sobi::Txt( 'EX.EXTENSION_HAS_BEEN_REMOVED', [ 'type' => $t, 'name' => $this->xGetString( 'name' ) ] ) );
 	}
 }

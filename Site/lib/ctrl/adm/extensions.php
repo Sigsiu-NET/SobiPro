@@ -103,7 +103,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
-				if ( !( Sobi::Trigger( 'Execute', $this->name(), array( &$this ) ) ) ) {
+				if ( !( Sobi::Trigger( 'Execute', $this->name(), [ &$this ] ) ) ) {
 					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}
 				break;
@@ -118,23 +118,23 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$repos = $repos->searchFile( 'repository.xml', true, 2 );
 			$repos = array_keys( $repos );
 			$cr = count( $repos );
-			$list = array();
+			$list = [];
 			$repository = SPFactory::Instance( 'services.installers.repository' );
 			try {
 				$installed = SPFactory::db()
-						->select( array( 'name', 'type', 'pid', 'version' ), 'spdb_plugins' )
+						->select( [ 'name', 'type', 'pid', 'version' ], 'spdb_plugins' )
 						->loadAssocList();
-				array_unshift( $installed, array( 'name' => 'SobiPro', 'type' => 'core', 'pid' => 'SobiPro', 'version' => implode( '.', SPFactory::CmsHelper()->myVersion() ) ) );
+				array_unshift( $installed, [ 'name' => 'SobiPro', 'type' => 'core', 'pid' => 'SobiPro', 'version' => implode( '.', SPFactory::CmsHelper()->myVersion() ) ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( 'extensions', SPLang::e( 'CANNOT_GET_UPDATES', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				SPFactory::mainframe()->cleanBuffer();
-				echo json_encode( array( 'err' => SPLang::e( 'REPO_ERR', $x->getMessage() ) ) );
+				echo json_encode( [ 'err' => SPLang::e( 'REPO_ERR', $x->getMessage() ) ] );
 				exit;
 			}
 
 			if ( !( $cr ) ) {
 				SPFactory::mainframe()->cleanBuffer();
-				echo json_encode( array( 'err' => SPLang::e( 'UPD_NO_REPOS_FOUND' ) ) );
+				echo json_encode( [ 'err' => SPLang::e( 'UPD_NO_REPOS_FOUND' ) ] );
 				exit;
 			}
 
@@ -146,7 +146,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				} catch ( SPException $x ) {
 					SPFactory::mainframe()->cleanBuffer();
 					//echo json_encode( array( 'err' => SPLang::e( '%s Repository: %s', $x->getMessage(), $repository->get( 'id' ) ) ) );
-					echo json_encode( array( 'err' => SPLang::e( '%s', $x->getMessage() ) ) );
+					echo json_encode( [ 'err' => SPLang::e( '%s', $x->getMessage() ) ] );
 					exit;
 				}
 				if ( is_array( $l ) ) {
@@ -162,9 +162,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				}
 			}
 			if ( count( $list ) ) {
-				$updates = array();
+				$updates = [];
 				$updates [ 'created' ] = time();
-				$updates [ 'createdBy' ] = array( 'id' => Sobi::My( 'id' ), 'name' => Sobi::My( 'name' ) );
+				$updates [ 'createdBy' ] = [ 'id' => Sobi::My( 'id' ), 'name' => Sobi::My( 'name' ) ];
 				$updates [ 'repositories' ] = $r;
 				$updates [ 'updates' ] = $list;
 				$file = SPFactory::Instance( 'base.fs.file', SPLoader::path( 'etc.updates', 'front', false, 'xml' ) );
@@ -224,17 +224,17 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		/* create menu */
 		$menu = SPFactory::Instance( 'views.adm.menu', 'extensions.manage', Sobi::Section() );
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
-		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
+		Sobi::Trigger( 'Create', 'AdmMenu', [ &$cfg ] );
 		if ( count( $cfg ) ) {
 			foreach ( $cfg as $section => $keys ) {
 				$menu->addSection( $section, $keys );
 			}
 		}
-		Sobi::Trigger( 'AfterCreate', 'AdmMenu', array( &$menu ) );
+		Sobi::Trigger( 'AfterCreate', 'AdmMenu', [ &$menu ] );
 		/* create new SigsiuTree */
 		$tree = SPFactory::Instance( 'mlo.tree' );
 		/* set link */
-		$tree->setHref( Sobi::Url( array( 'sid' => '{sid}' ) ) );
+		$tree->setHref( Sobi::Url( [ 'sid' => '{sid}' ] ) );
 		$tree->setId( 'menuTree' );
 		/* set the task to expand the tree */
 		$tree->setTask( 'category.expand' );
@@ -247,10 +247,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 		$db = SPFactory::db();
 		$all = $db
-				->select( '*', 'spdb_plugins', array( '!type' => Sobi::Cfg( 'apps.global_types_array' ), 'enabled' => 1 ) )
+				->select( '*', 'spdb_plugins', [ '!type' => Sobi::Cfg( 'apps.global_types_array' ), 'enabled' => 1 ] )
 				->loadAssocList( 'pid' );
 		$list = $db
-				->select( '*', 'spdb_plugin_section', array( 'section' => Sobi::Section() ) )
+				->select( '*', 'spdb_plugin_section', [ 'section' => Sobi::Section() ] )
 				->loadAssocList( 'pid' );
 		if ( count( $all ) ) {
 			foreach ( $all as $id => $app ) {
@@ -272,32 +272,32 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				->assign( $menu, 'menu' )
 				->assign( $sid, 'sid' )
 				->assign( $all, 'applications' );
-		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
+		Sobi::Trigger( $this->_task, $this->name(), [ &$view ] );
 		$view->display();
-		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
+		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), [ &$view ] );
 
 	}
 
 	public function appsMenu()
 	{
-		$links = array();
+		$links = [];
 		$db =& SPFactory::db();
-		$enabled = $db->select( 'pid', 'spdb_plugins', array( 'enabled' => 1 ) )
+		$enabled = $db->select( 'pid', 'spdb_plugins', [ 'enabled' => 1 ] )
 				->loadResultArray();
-		$all = $db->select( 'pid', 'spdb_plugin_task', array( 'onAction' => 'adm_menu', 'pid' => $enabled ) )->loadResultArray();
+		$all = $db->select( 'pid', 'spdb_plugin_task', [ 'onAction' => 'adm_menu', 'pid' => $enabled ] )->loadResultArray();
 		if ( count( $all ) ) {
 			if ( Sobi::Section() ) {
-				$list = $db->select( 'pid', 'spdb_plugin_section', array( 'section' => Sobi::Section(), 'pid' => $all, 'enabled' => 1 ) )->loadResultArray();
+				$list = $db->select( 'pid', 'spdb_plugin_section', [ 'section' => Sobi::Section(), 'pid' => $all, 'enabled' => 1 ] )->loadResultArray();
 			}
 			else {
-				$list = $db->select( 'pid', 'spdb_plugins', array( 'pid' => $all, 'enabled' => 1 ) )->loadResultArray();
+				$list = $db->select( 'pid', 'spdb_plugins', [ 'pid' => $all, 'enabled' => 1 ] )->loadResultArray();
 			}
 			if ( count( $list ) ) {
 				foreach ( $list as $app ) {
 					if ( SPLoader::translatePath( 'opt.plugins.' . $app . '.init' ) ) {
 						$pc = SPLoader::loadClass( $app . '.init', false, 'plugin' );
 						if ( method_exists( $pc, 'admMenu' ) ) {
-							call_user_func_array( array( $pc, 'admMenu' ), array( &$links ) );
+							call_user_func_array( [ $pc, 'admMenu' ], [ &$links ] );
 						}
 					}
 					else {
@@ -337,7 +337,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$pid = $pid[ 2 ];
 		$repository = SPFactory::Instance( 'services.installers.repository' );
 		$repository->loadDefinition( SPLoader::path( "etc.repos.{$rid}.repository", 'front', true, 'xml' ) );
-		$msg->progress( 15, Sobi::Txt( 'EX.CONNECTING_TO_REPO_NAME', array( 'repo' => $repository->get( 'name' ) ) ) );
+		$msg->progress( 15, Sobi::Txt( 'EX.CONNECTING_TO_REPO_NAME', [ 'repo' => $repository->get( 'name' ) ] ) );
 		try {
 			$repository->connect( $msg );
 			sleep( 1 );
@@ -352,7 +352,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
 			exit;
 		}
-		$msg->progress( 50, Sobi::Txt( 'EX.SENDING_REQUEST_TO', array( 'repo' => $repository->get( 'name' ) ) ), 2000 );
+		$msg->progress( 50, Sobi::Txt( 'EX.SENDING_REQUEST_TO', [ 'repo' => $repository->get( 'name' ) ] ), 2000 );
 		$this->downloadResponse( $response, $repository, $msg );
 	}
 
@@ -360,7 +360,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	{
 		if ( is_array( $response ) && isset( $response[ 'callback' ] ) ) {
 			$progress = isset( $response[ 'progress' ] ) ? $response[ 'progress' ] : 45;
-			$msg->progress( $progress, Sobi::Txt( 'EX.REPO_FEEDBACK_REQ', array( 'repo' => $repository->get( 'name' ) ) ) );
+			$msg->progress( $progress, Sobi::Txt( 'EX.REPO_FEEDBACK_REQ', [ 'repo' => $repository->get( 'name' ) ] ) );
 			return $this->parseSoapRequest( $response, null, SPRequest::cmd( 'plid' ) );
 		}
 		elseif ( is_array( $response ) && isset( $response[ 'message' ] ) ) {
@@ -370,7 +370,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 		elseif ( $response === true || isset( $response[ 'package' ] ) ) {
 			$progress = isset( $response[ 'progress' ] ) ? $response[ 'progress' ] : 60;
-			$msg->progress( $progress, Sobi::Txt( 'EX.REC_PACKAGE_WITH_TYPE_NAME', array( 'type' => Sobi::Txt( $response[ 'type' ] ), 'name' => $response[ 'name' ] ) ) );
+			$msg->progress( $progress, Sobi::Txt( 'EX.REC_PACKAGE_WITH_TYPE_NAME', [ 'type' => Sobi::Txt( $response[ 'type' ] ), 'name' => $response[ 'name' ] ] ) );
 //			sleep( 1 );
 			if ( !( $response[ 'package' ] ) ) {
 				$msg->error( SPLang::e( 'PACKAGE_ERR' ) );
@@ -398,7 +398,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$tid = $pid[ 1 ];
 		$pid = $pid[ 2 ];
 		$data = SPRequest::search( 'sprpfield_' );
-		$answer = array();
+		$answer = [];
 		$msg->progress( 55, Sobi::Txt( 'EX.PARSING_RESPONSE' ) );
 		if ( count( $data ) ) {
 			foreach ( $data as $k => $v ) {
@@ -420,8 +420,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			array_unshift( $answer, $pid );
 			array_unshift( $answer, $tid );
 			array_unshift( $answer, $repository->get( 'token' ) );
-			$msg->progress( 60, Sobi::Txt( 'EX.SENDING_REQUEST_TO', array( 'repo' => $repository->get( 'name' ) ) ) );
-			$response = call_user_func_array( array( $repository, $callback ), $answer );
+			$msg->progress( 60, Sobi::Txt( 'EX.SENDING_REQUEST_TO', [ 'repo' => $repository->get( 'name' ) ] ) );
+			$response = call_user_func_array( [ $repository, $callback ], $answer );
 //			sleep( 2 );
 		} catch ( SPException $x ) {
 			$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
@@ -465,17 +465,17 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$repos = array_keys( $repos );
 		$cr = count( $repos );
 		$progress = 5;
-		$msg->progress( $progress, Sobi::Txt( 'EX.FOUND_NUM_REPOS', array( 'count' => $cr ) ) );
+		$msg->progress( $progress, Sobi::Txt( 'EX.FOUND_NUM_REPOS', [ 'count' => $cr ] ) );
 		$repository = SPFactory::Instance( 'services.installers.repository' );
 //		sleep( 5 );
 		$steps = 2;
 		$pstep = ( 80 / $cr ) / $steps;
-		$list = array();
-		$r = array();
+		$list = [];
+		$r = [];
 		for ( $i = 0; $i < $cr; $i++ ) {
 			$repository->loadDefinition( $repos[ $i ] );
 			$progress += ( $pstep / $steps );
-			$msg->progress( $progress, Sobi::Txt( 'EX.CON_TO_REPO_D_D', array( 'num' => ( $i + 1 ), 'from' => $cr ) ) );
+			$msg->progress( $progress, Sobi::Txt( 'EX.CON_TO_REPO_D_D', [ 'num' => ( $i + 1 ), 'from' => $cr ] ) );
 			try {
 				$repository->connect( $msg );
 				sleep( 1 );
@@ -485,7 +485,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			}
 
 			$progress += ( $pstep / $steps );
-			$msg->progress( $progress, Sobi::Txt( 'EX.FETCHING_FROM_REPO_D_D', array( 'num' => ( $i + 1 ), 'from' => $cr ) ) );
+			$msg->progress( $progress, Sobi::Txt( 'EX.FETCHING_FROM_REPO_D_D', [ 'num' => ( $i + 1 ), 'from' => $cr ] ) );
 			try {
 				$ver = SPFactory::CmsHelper()->cmsVersion();
 				$l = $repository->fetchList( $repository->get( 'token' ), 'Joomla ' . $ver[ 'major' ] . '.' . $ver[ 'minor' ] );
@@ -497,7 +497,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				if ( count( $l ) ) {
 					$pid = $repository->get( 'id' );
 					foreach ( $l as $eid => $values ) {
-						$eid = str_replace( array( '.', '_' ), '-', $eid );
+						$eid = str_replace( [ '.', '_' ], '-', $eid );
 						$values[ 'repository' ] = $pid;
 						$l[ $eid ] = $values;
 					}
@@ -506,14 +506,14 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$list = array_merge( $list, $l );
 			}
 			$progress += ( $pstep / $steps );
-			$msg->progress( $progress, Sobi::Txt( 'EX.FETCHED_LIST_FROM_REPOSITORY', array( 'count' => count( $l ), 'num' => ( $i + 1 ), 'from' => $cr ) ) );
+			$msg->progress( $progress, Sobi::Txt( 'EX.FETCHED_LIST_FROM_REPOSITORY', [ 'count' => count( $l ), 'num' => ( $i + 1 ), 'from' => $cr ] ) );
 		}
 		$progress += 5;
 		if ( count( $list ) ) {
-			$msg->progress( $progress, Sobi::Txt( 'EX.FETCHED_D_EXTENSIONS', array( 'count' => count( $list ) ) ) );
-			$extensions = array();
+			$msg->progress( $progress, Sobi::Txt( 'EX.FETCHED_D_EXTENSIONS', [ 'count' => count( $list ) ] ) );
+			$extensions = [];
 			$extensions[ 'created' ] = time();
-			$extensions[ 'createdBy' ] = array( 'id' => Sobi::My( 'id' ), 'name' => Sobi::My( 'name' ) );
+			$extensions[ 'createdBy' ] = [ 'id' => Sobi::My( 'id' ), 'name' => Sobi::My( 'name' ) ];
 			$extensions[ 'repositories' ] = $r;
 			$extensions[ 'extensions' ] = $list;
 			$progress += 10;
@@ -541,13 +541,13 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$view = SPFactory::View( 'extensions', true );
 		$def = SPFactory::Instance( 'types.array' );
 		$list = null;
-		$apps = array();
+		$apps = [];
 		if ( SPFs::exists( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) ) ) {
 			$list = $def->fromXML( SPFactory::LoadXML( SPLoader::path( 'etc.extensions', 'front', false, 'xml' ) ), 'extensionslist' );
 		}
 		if ( !( count( $list ) ) ) {
 			SPFactory::message()->warning( 'EX.MSG_UPDATE_FIRST' );
-			$status = array( 'label' => Sobi::Txt( 'EX.LAST_UPDATED', Sobi::Txt( 'UNKNOWN' ) ), 'type' => SPC::ERROR_MSG );
+			$status = [ 'label' => Sobi::Txt( 'EX.LAST_UPDATED', Sobi::Txt( 'UNKNOWN' ) ), 'type' => SPC::ERROR_MSG ];
 			$view->assign( $status, 'last-update' );
 		}
 		else {
@@ -557,13 +557,13 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 						->loadAssocList();
 			} catch ( SPException $x ) {
 			}
-			$status = array( 'label' => Sobi::Txt( 'EX.LAST_UPDATED', SPFactory::config()->date( $list[ 'extensionslist' ][ 'created' ] ) ), 'type' => SPC::INFO_MSG );
+			$status = [ 'label' => Sobi::Txt( 'EX.LAST_UPDATED', SPFactory::config()->date( $list[ 'extensionslist' ][ 'created' ] ) ), 'type' => SPC::INFO_MSG ];
 			$view->assign( $status, 'last-update' );
 			$list = $list[ 'extensionslist' ][ 'extensions' ];
 			if ( count( $list ) ) {
 				foreach ( $list as $pid => $plugin ) {
 					$plugin[ 'installed' ] = -1;
-					$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.INSTALL_APP' ), 'class' => 'install' );
+					$plugin[ 'action' ] = [ 'text' => Sobi::Txt( 'EX.INSTALL_APP' ), 'class' => 'install' ];
 					$eid = $pid;
 					if ( $plugin[ 'type' ] == 'language' ) {
 						$eid = explode( '-', $pid );
@@ -575,10 +575,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 						foreach ( $installed as $ex ) {
 							if ( $eid == $ex[ 'pid' ] || str_replace( '_', '-', $ex[ 'pid' ] ) == $eid ) {
 								$plugin[ 'installed' ] = -2;
-								$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.REINSTALL_APP' ), 'class' => 'reinstall' );
+								$plugin[ 'action' ] = [ 'text' => Sobi::Txt( 'EX.REINSTALL_APP' ), 'class' => 'reinstall' ];
 								if ( version_compare( $plugin[ 'version' ], $ex[ 'version' ], '>' ) ) {
 									$plugin[ 'installed' ] = -3;
-									$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.UPDATE_APP' ), 'class' => 'update' );
+									$plugin[ 'action' ] = [ 'text' => Sobi::Txt( 'EX.UPDATE_APP' ), 'class' => 'update' ];
 								}
 							}
 						}
@@ -588,17 +588,17 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 						if ( $compare <= 0 ) {
 							$plugin[ 'installed' ] = -1;
 							$eid = $eid . '.disabled';
-							$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.APP_UPDATE_DISABLED' ), 'class' => 'disabled' );
+							$plugin[ 'action' ] = [ 'text' => Sobi::Txt( 'EX.APP_UPDATE_DISABLED' ), 'class' => 'disabled' ];
 						}
 						else {
 							$plugin[ 'installed' ] = -3;
-							$plugin[ 'action' ] = array( 'text' => Sobi::Txt( 'EX.UPDATE_CORE' ), 'class' => 'update' );
+							$plugin[ 'action' ] = [ 'text' => Sobi::Txt( 'EX.UPDATE_CORE' ), 'class' => 'update' ];
 						}
 					}
 					$plugin[ 'pid' ] = $eid;
 					$plugin[ 'eid' ] = $plugin[ 'repository' ] . '.' . $plugin[ 'type' ] . '.' . $plugin[ 'pid' ];
 					$list[ $eid ] = $plugin;
-					$index = in_array( $plugin[ 'type' ], array( 'application', 'field', 'update', 'template', 'language' ) ) ? $plugin[ 'type' ] . 's' : 'others';
+					$index = in_array( $plugin[ 'type' ], [ 'application', 'field', 'update', 'template', 'language' ] ) ? $plugin[ 'type' ] . 's' : 'others';
 					$apps[ $index ][ ] = $plugin;
 				}
 				if ( isset( $apps[ 'updates' ] ) ) {
@@ -608,7 +608,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				}
 			}
 		}
-		$repos = array();
+		$repos = [];
 		$dir =& SPFactory::Instance( 'base.fs.directory', SPLoader::dirPath( 'etc.repos' ) );
 		$xml = array_keys( $dir->searchFile( 'repository.xml', false, 2 ) );
 		foreach ( $xml as $def ) {
@@ -623,9 +623,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				->assign( $repos, 'repositories' )
 				->assign( $list, 'full-list' )
 				->determineTemplate( 'extensions', $this->_task );
-		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
+		Sobi::Trigger( $this->_task, $this->name(), [ &$view ] );
 		$view->display();
-		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
+		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), [ &$view ] );
 	}
 
 	private function delete()
@@ -684,13 +684,13 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		if ( SPRequest::sid() ) {
 			try {
 				$app = SPFactory::db()
-						->select( 'name', 'spdb_plugins', array( 'pid' => $plugin, 'type' => $ptype, ) )
+						->select( 'name', 'spdb_plugins', [ 'pid' => $plugin, 'type' => $ptype, ] )
 						->loadResult();
 				$state = !( SPFactory::db()
-						->select( 'enabled', 'spdb_plugin_section', array( 'section' => SPRequest::sid( 'get' ), 'pid' => $plugin, 'type' => $ptype, ) )
+						->select( 'enabled', 'spdb_plugin_section', [ 'section' => SPRequest::sid( 'get' ), 'pid' => $plugin, 'type' => $ptype, ] )
 						->loadResult() );
 				SPFactory::db()
-						->replace( 'spdb_plugin_section', array( 'section' => SPRequest::sid( 'get' ), 'pid' => $plugin, 'type' => $ptype, 'enabled' => $state, 0 ) );
+						->replace( 'spdb_plugin_section', [ 'section' => SPRequest::sid( 'get' ), 'pid' => $plugin, 'type' => $ptype, 'enabled' => $state, 0 ] );
 				$message = $state ? Sobi::Txt( 'EX.APP_ENABLED', $app ) : Sobi::Txt( 'EX.APP_DISABLED', $app );
 				$messageType = $state ? 'success' : 'warning';
 			} catch ( SPException $x ) {
@@ -702,10 +702,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		else {
 			try {
 				$app = SPFactory::db()
-						->select( array( 'enabled', 'name' ), 'spdb_plugins', array( 'pid' => $plugin, 'type' => $ptype, ) )
+						->select( [ 'enabled', 'name' ], 'spdb_plugins', [ 'pid' => $plugin, 'type' => $ptype, ] )
 						->loadObject();
 				SPFactory::db()
-						->update( 'spdb_plugins', array( 'enabled' => !( $app->enabled ) ), array( 'type' => $ptype, 'pid' => $plugin ) );
+						->update( 'spdb_plugins', [ 'enabled' => !( $app->enabled ) ], [ 'type' => $ptype, 'pid' => $plugin ] );
 				$message = !( $app->enabled ) ? Sobi::Txt( 'EX.APP_ENABLED', $app->name ) : Sobi::Txt( 'EX.APP_DISABLED', $app->name );
 				$messageType = !( $app->enabled ) ? 'success' : 'warning';
 			} catch ( SPException $x ) {
@@ -721,7 +721,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	{
 		$repo = trim( preg_replace( '/[^a-zA-Z0-9\.\-\_]/', null, SPRequest::string( 'repository' ) ) );
 		$data = SPRequest::arr( 'RepositoryResponse' );
-		$answer = array();
+		$answer = [];
 		if ( count( $data ) ) {
 			foreach ( $data as $k => $v ) {
 				$v = ( strlen( $v ) && $v != '' ) ? $v : SPC::NO_VALUE;
@@ -737,7 +737,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$this->ajaxResponse( true, SPLang::e( 'REPO_ERR', $x->getMessage() ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 		}
 		$callback = SPRequest::word( 'callback' );
-		$response = call_user_func_array( array( $repository, $callback ), $answer );
+		$response = call_user_func_array( [ $repository, $callback ], $answer );
 		if ( is_array( $response ) && isset( $response[ 'callback' ] ) ) {
 			return $this->parseSoapRequest( $response, $repo );
 		}
@@ -749,10 +749,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$repository->saveToken( $response[ 'token' ] );
 			}
 			if ( isset( $response[ 'welcome_msg' ] ) && $response[ 'welcome_msg' ] ) {
-				echo json_encode( array( 'message' => array( 'type' => SPC::SUCCESS_MSG, 'response' => $response[ 'welcome_msg' ] ), 'callback' => null, 'redirect' => true ) );
+				echo json_encode( [ 'message' => [ 'type' => SPC::SUCCESS_MSG, 'response' => $response[ 'welcome_msg' ] ], 'callback' => null, 'redirect' => true ] );
 			}
 			else {
-				echo json_encode( array( 'message' => array( 'type' => SPC::SUCCESS_MSG, 'response' => Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED', array( 'location' => $repo ) ) ), 'callback' => null, 'redirect' => true ) );
+				echo json_encode( [ 'message' => [ 'type' => SPC::SUCCESS_MSG, 'response' => Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED', [ 'location' => $repo ] ) ], 'callback' => null, 'redirect' => true ] );
 			}
 			exit;
 		}
@@ -782,7 +782,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$view->assign( $message, 'message' );
 			unset( $response[ 'message' ] );
 		}
-		$fields = array();
+		$fields = [];
 		foreach ( $response as $values ) {
 			if ( isset( $values[ 'params' ][ 'style' ] ) ) {
 				unset( $values[ 'params' ][ 'style' ] );
@@ -793,8 +793,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$values[ 'name' ] = 'RepositoryResponse[' . $values[ 'params' ][ 'id' ] . ']';
 			$fields[ ] = $values;
 		}
-		$fields[ ] = array( 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => array( 'id' => 'url', 'size' => 30, 'readonly' => 'readonly' ) );
-		$request = array( 'fields' => $fields );
+		$fields[ ] = [ 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => [ 'id' => 'url', 'size' => 30, 'readonly' => 'readonly' ] ];
+		$request = [ 'fields' => $fields ];
 		$view->assign( $request, 'request' );
 		$view->determineTemplate( 'extensions', 'soap-request' );
 		ob_start();
@@ -805,10 +805,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				->cleanBuffer()
 				->customHeader();
 		if ( $repositoryId ) {
-			echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => $response ), 'repository' => $repositoryId, 'callback' => $callback ) );
+			echo json_encode( [ 'message' => [ 'type' => SPC::INFO_MSG, 'response' => $response ], 'repository' => $repositoryId, 'callback' => $callback ] );
 		}
 		else {
-			echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => $response ), 'extension' => $appId, 'callback' => $callback ) );
+			echo json_encode( [ 'message' => [ 'type' => SPC::INFO_MSG, 'response' => $response ], 'extension' => $appId, 'callback' => $callback ] );
 		}
 		exit;
 	}
@@ -819,14 +819,14 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$connection = SPFactory::Instance( 'services.remote' );
 		$def = "https://{$repositoryId}/repository.xml";
 		$connection->setOptions(
-				array(
+				[
 						'url' => $def,
 						'connecttimeout' => 10,
 						'header' => false,
 						'returntransfer' => true,
 						'ssl_verifypeer' => false,
 						'ssl_verifyhost' => 2,
-				)
+				]
 		);
 		$path = SPLoader::path( 'etc.repos.' . str_replace( '.', '_', $repositoryId ), 'front', false, 'xml' );
 		$file = SPFactory::Instance( 'base.fs.file', $path );
@@ -837,7 +837,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					->cleanBuffer()
 					->customHeader();
 			$response = SPLang::e( 'Error (%d) has occurred and the repository at "%s" could not be added.', $connectionInfo[ 'http_code' ], "https://{$repositoryId}" );
-			echo json_encode( array( 'message' => array( 'type' => SPC::ERROR_MSG, 'text' => $response ) ) );
+			echo json_encode( [ 'message' => [ 'type' => SPC::ERROR_MSG, 'text' => $response ] ] );
 			exit;
 //			$this->ajaxResponse( true, SPLang::e( 'Error (%d) has occurred and the repository at "%s" could not be added.', $connectionInfo[ 'http_code' ], "https://{$repositoryId}" ), Sobi::Url( 'extensions.browse' ), SPC::ERROR_MSG );
 		}
@@ -853,7 +853,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$arrDef = $arrDef->fromXML( $def, 'repository' );
 			$remoteDefinition = SPFactory::Instance( 'types.array' );
 			$remoteDefinition = $remoteDefinition->fromXML( $rDef, 'repository' );
-			$repoDef = array();
+			$repoDef = [];
 			$repoDef[ 'name' ] = $remoteDefinition[ 'repository' ][ 'name' ];
 			$repoDef[ 'id' ] = $remoteDefinition[ 'repository' ][ 'id' ];
 			$repoDef[ 'url' ] = $arrDef[ 'repository' ][ 'url' ] . '/' . $remoteDefinition[ 'repository' ][ 'repositoryLocation' ];
@@ -891,10 +891,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			}
 			elseif ( $response === true || isset( $response[ 'welcome_msg' ] ) ) {
 				if ( isset( $response[ 'welcome_msg' ] ) && $response[ 'welcome_msg' ] ) {
-					$this->ajaxResponse( true, Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED_WITH_MSG', array( 'location' => $repositoryId, 'msg' => $response[ 'welcome_msg' ] ) ), Sobi::Url( 'extensions.browse' ), SPC::SUCCESS_MSG );
+					$this->ajaxResponse( true, Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED_WITH_MSG', [ 'location' => $repositoryId, 'msg' => $response[ 'welcome_msg' ] ] ), Sobi::Url( 'extensions.browse' ), SPC::SUCCESS_MSG );
 				}
 				else {
-					$this->ajaxResponse( true, Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED_WITH_MSG', array( 'location' => $repositoryId ) ), Sobi::Url( 'extensions.browse' ), SPC::SUCCESS_MSG );
+					$this->ajaxResponse( true, Sobi::Txt( 'EX.REPO_HAS_BEEN_ADDED_WITH_MSG', [ 'location' => $repositoryId ] ), Sobi::Url( 'extensions.browse' ), SPC::SUCCESS_MSG );
 				}
 			}
 			else {
@@ -914,14 +914,14 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$connection = SPFactory::Instance( 'services.remote' );
 		$def = 'https://xml.sigsiu.net/SobiPro/repository.xsd';
 		$connection->setOptions(
-				array(
+				[
 						'url' => $def,
 						'connecttimeout' => 10,
 						'header' => false,
 						'returntransfer' => true,
 						'ssl_verifypeer' => false,
 						'ssl_verifyhost' => 2,
-				)
+				]
 		);
 		$schema =& SPFactory::Instance( 'base.fs.file', SPLoader::path( 'lib.services.installers.schemas.repository', 'front', false, 'xsd' ) );
 		$file = $connection->exec();
@@ -963,11 +963,11 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					->customHeader();
 			//$response = sprintf( 'The connection could not be validated (error number %s). %s', $ssl[ 'err' ], $ssl[ 'msg' ] );
 			$response = SPLang::e( 'NOT_VALIDATED', $ssl[ 'err' ], $ssl[ 'msg' ] );
-			echo json_encode( array( 'message' => array( 'type' => SPC::ERROR_MSG, 'text' => $response ) ) );
+			echo json_encode( [ 'message' => [ 'type' => SPC::ERROR_MSG, 'text' => $response ] ] );
 			exit;
 		}
 		else {
-			$cert = array();
+			$cert = [];
 			$file = SPFactory::Instance( 'base.fs.file', SPLoader::path( 'etc.repos.' . str_replace( '.', '_', $repo ), 'front', false, 'xml' ) );
 			$cert[ 'url' ] = 'https://' . $repo;
 			$cert[ 'certificate' ][ 'serialNumber' ] = $ssl[ 'serialNumber' ];
@@ -991,7 +991,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			SPFactory::mainframe()
 					->cleanBuffer()
 					->customHeader();
-			echo json_encode( array( 'message' => array( 'type' => SPC::INFO_MSG, 'response' => $response ) ) );
+			echo json_encode( [ 'message' => [ 'type' => SPC::INFO_MSG, 'response' => $response ] ] );
 			exit;
 		}
 	}
@@ -1030,7 +1030,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		if ( !( $file ) ) {
 			$ident = SPRequest::cmd( 'ident', null, 'post' );
 			$data = SPRequest::file( $ident );
-			$name = str_replace( array( '.' . SPFs::getExt( $data[ 'name' ] ), '.' ), null, $data[ 'name' ] );
+			$name = str_replace( [ '.' . SPFs::getExt( $data[ 'name' ] ), '.' ], null, $data[ 'name' ] );
 			$path = SPLoader::dirPath( 'tmp.install.' . $name, 'front', false );
 			$c = 0;
 			while ( SPFs::exists( $path ) ) {
@@ -1062,7 +1062,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 		else {
 			$arch->setFile( $file );
-			$name = str_replace( array( '.' . SPFs::getExt( $file ), '.' ), null, basename( $file ) );
+			$name = str_replace( [ '.' . SPFs::getExt( $file ), '.' ], null, basename( $file ) );
 			$path = SPLoader::dirPath( 'tmp.install.' . $name, 'front', false );
 			$c = 0;
 			while ( SPFs::exists( $path ) ) {
@@ -1129,12 +1129,12 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			if ( $redirect ) {
 				SPFactory::message()->setMessage( $message, false, $type );
 			}
-			$response = array(
+			$response = [
 					'type' => $type,
 					'text' => $message,
 					'redirect' => $redirect ? Sobi::Url( 'extensions.installed' ) : false,
 					'callback' => $type == SPC::SUCCESS_MSG ? $callback : false
-			);
+			];
 			SPFactory::mainframe()
 					->cleanBuffer()
 					->customHeader();
@@ -1146,7 +1146,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			Sobi::Redirect( Sobi::Url( 'extensions.installed' ) );
 		}
 		else {
-			return array( 'msg' => $message, 'msgtype' => $type );
+			return [ 'msg' => $message, 'msgtype' => $type ];
 		}
 	}
 
@@ -1155,8 +1155,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		foreach ( $xml as $file ) {
 			$def = new DOMDocument();
 			$def->load( $file );
-			if ( in_array( trim( $def->documentElement->tagName ), array( 'template', 'SobiProApp' ) ) ) {
-				$xml = array( $file );
+			if ( in_array( trim( $def->documentElement->tagName ), [ 'template', 'SobiProApp' ] ) ) {
+				$xml = [ $file ];
 				return $def;
 			}
 		}
@@ -1168,7 +1168,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		/* create menu */
 		$menu = SPFactory::Instance( 'views.adm.menu', 'extensions.' . $this->_task );
 		$cfg = SPLoader::loadIniFile( 'etc.adm.config_menu' );
-		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
+		Sobi::Trigger( 'Create', 'AdmMenu', [ &$cfg ] );
 		if ( count( $cfg ) ) {
 			foreach ( $cfg as $section => $keys ) {
 				if ( ( $section == 'GB.CFG.GLOBAL_CONFIG' || $section == 'GB.ACL' ) && !( Sobi::Can( 'cms.admin' ) ) ) {
@@ -1178,13 +1178,13 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			}
 		}
 		$menu->addCustom( 'GB.CFG.GLOBAL_TEMPLATES', $this->listTemplates() );
-		Sobi::Trigger( 'AfterCreate', 'AdmMenu', array( &$menu ) );
+		Sobi::Trigger( 'AfterCreate', 'AdmMenu', [ &$menu ] );
 		return $menu;
 	}
 
 	private function installed()
 	{
-		$list = array();
+		$list = [];
 		try {
 			SPFactory::db()->select( '*', 'spdb_plugins' );
 			$list = SPFactory::db()->loadAssocList();
@@ -1194,7 +1194,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		for ( $i = 0; $i < $cl; $i++ ) {
 			$list[ $i ][ 'locked' ] = SPLoader::path( "etc.installed.{$list[$i]['type']}s.{$list[$i]['pid']}", 'front', true, 'xml' ) ? false : true;
 			$list[ $i ][ 'eid' ] = $list[ $i ][ 'type' ] . '.' . $list[ $i ][ 'pid' ];
-			if ( ( $list[ $i ][ 'pid' ] == 'router' ) || ( in_array( $list[ $i ][ 'type' ], array( 'field', 'language', 'module', 'plugin' ) ) ) ) {
+			if ( ( $list[ $i ][ 'pid' ] == 'router' ) || ( in_array( $list[ $i ][ 'type' ], [ 'field', 'language', 'module', 'plugin' ] ) ) ) {
 				$list[ $i ][ 'enabled' ] = -1;
 			}
 		}
@@ -1205,8 +1205,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				->assign( $menu, 'menu' )
 				->assign( $list, 'applications' )
 				->determineTemplate( 'extensions', $this->_task );
-		Sobi::Trigger( $this->_task, $this->name(), array( &$view ) );
+		Sobi::Trigger( $this->_task, $this->name(), [ &$view ] );
 		$view->display();
-		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), array( &$view ) );
+		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), [ &$view ] );
 	}
 }

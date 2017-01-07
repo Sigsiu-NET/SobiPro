@@ -62,17 +62,17 @@ class SPSectionCtrl extends SPController
 		$eOrder = $this->parseOrdering( 'entries', 'eorder', $this->tKey( $this->template, 'entries_ordering', Sobi::Cfg( 'list.entries_ordering', 'name.asc' ) ) );
 		$cOrder = $this->parseOrdering( 'categories', 'corder', $this->tKey( $this->template, 'categories_ordering', Sobi::Cfg( 'list.categories_ordering', 'name.asc' ) ) );
 
-		$orderings = array( 'entries' => $eOrder, 'categories' => $cOrder );
+		$orderings = [ 'entries' => $eOrder, 'categories' => $cOrder ];
 		/* get entries */
 		$eCount = count( $this->getEntries( $eOrder, 0, 0, true, null, $entriesRecursive ) );
 		$entries = $this->getEntries( $eOrder, $eLimit, $eLimStart, false, null, $entriesRecursive );
-		$categories = array();
+		$categories = [];
 		if ( $cLim ) {
 			$categories = $this->getCats( $cOrder, $cLim );
 		}
 
 		/* create page navigation */
-		$url = array( 'sid' => SPRequest::sid(), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->_model->get( 'nid' ) : $this->_model->get( 'name' ) );
+		$url = [ 'sid' => SPRequest::sid(), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $this->_model->get( 'nid' ) : $this->_model->get( 'name' ) ];
 		if ( SPRequest::cmd( 'sptpl' ) ) {
 			$url[ 'sptpl' ] = SPRequest::cmd( 'sptpl' );
 		}
@@ -87,7 +87,7 @@ class SPSectionCtrl extends SPController
 		}
 		$pn = new $pnc( $eLimit, $eCount, $site, $url );
 
-		$fields = array();
+		$fields = [];
 		/* handle meta data */
 		if ( $this->_type == 'category' ) {
 			$this->_model->loadFields( Sobi::Section(), true );
@@ -96,7 +96,7 @@ class SPSectionCtrl extends SPController
 		SPFactory::header()->objMeta( $this->_model );
 
 		/* add pathway */
-		SPFactory::mainframe()->addObjToPathway( $this->_model, array( ceil( $eCount / $eLimit ), $site ) );
+		SPFactory::mainframe()->addObjToPathway( $this->_model, [ ceil( $eCount / $eLimit ), $site ] );
 
 		$this->_model->countVisit();
 		/* get view class */
@@ -118,7 +118,7 @@ class SPSectionCtrl extends SPController
 				->assign( $visitor, 'visitor' )
 				->assign( $entries, 'entries' )
 				->assign( $orderings, 'orderings' );
-		Sobi::Trigger( $this->name(), 'View', array( &$view ) );
+		Sobi::Trigger( $this->name(), 'View', [ &$view ] );
 		$view->display( $this->_type );
 	}
 
@@ -132,7 +132,7 @@ class SPSectionCtrl extends SPController
 	 */
 	public function getCats( $cOrder, $cLim = 0 )
 	{
-		$categories = array();
+		$categories = [];
 		$cOrder = trim( $cOrder );
 		$cLim = $cLim > 0 ? $cLim : 0;
 		if ( $this->_model->getChilds( 'category' ) ) {
@@ -142,19 +142,19 @@ class SPSectionCtrl extends SPController
 
 			/* load needed definitions */
 			SPLoader::loadClass( 'models.dbobject' );
-			$conditions = array();
+			$conditions = [];
 
 			switch ( $cOrder ) {
 				case 'name.asc':
 				case 'name.desc':
-					$table = $db->join( array(
-							array( 'table' => 'spdb_language', 'as' => 'splang', 'key' => 'id' ),
-							array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
-					) );
+					$table = $db->join( [
+							[ 'table' => 'spdb_language', 'as' => 'splang', 'key' => 'id' ],
+							[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' ]
+					] );
 					$oPrefix = 'spo.';
 					$conditions[ 'spo.oType' ] = 'category';
 					$conditions[ 'splang.sKey' ] = 'name';
-					$conditions[ 'splang.language' ] = array( Sobi::Lang( false ), Sobi::DefLang(), 'en-GB' );
+					$conditions[ 'splang.language' ] = [ Sobi::Lang( false ), Sobi::DefLang(), 'en-GB' ];
 					if ( strstr( $cOrder, '.' ) ) {
 						$cOrder = explode( '.', $cOrder );
 						$cOrder = 'sValue.' . $cOrder[ 1 ];
@@ -162,19 +162,19 @@ class SPSectionCtrl extends SPController
 					break;
 				case 'position.asc':
 				case 'position.desc':
-					$table = $db->join( array(
-							array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => 'id' ),
-							array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
-					) );
+					$table = $db->join( [
+							[ 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => 'id' ],
+							[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' ]
+					] );
 					$conditions[ 'spo.oType' ] = 'category';
 					$oPrefix = 'spo.';
 					break;
 				case 'counter.asc':
 				case 'counter.desc':
-					$table = $db->join( array(
-							array( 'table' => 'spdb_counter', 'as' => 'spcounter', 'key' => 'sid' ),
-							array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
-					) );
+					$table = $db->join( [
+							[ 'table' => 'spdb_counter', 'as' => 'spcounter', 'key' => 'sid' ],
+							[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' ]
+					] );
 					$oPrefix = 'spo.';
 					$conditions[ 'spo.oType' ] = 'category';
 					if ( strstr( $cOrder, '.' ) ) {
@@ -191,7 +191,7 @@ class SPSectionCtrl extends SPController
 			if ( Sobi::My( 'id' ) ) {
 				if ( !( Sobi::Can( 'category.access.*' ) ) ) {
 					if ( Sobi::Can( 'category.access.unapproved_own' ) ) {
-						$conditions[ ] = $db->argsOr( array( 'approved' => '1', 'owner' => Sobi::My( 'id' ) ) );
+						$conditions[ ] = $db->argsOr( [ 'approved' => '1', 'owner' => Sobi::My( 'id' ) ] );
 					}
 					else {
 						$conditions[ $oPrefix . 'approved' ] = '1';
@@ -199,7 +199,7 @@ class SPSectionCtrl extends SPController
 				}
 				if ( !( Sobi::Can( 'category.access.unpublished' ) ) ) {
 					if ( Sobi::Can( 'category.access.unpublished_own' ) ) {
-						$conditions[ ] = $db->argsOr( array( 'state' => '1', 'owner' => Sobi::My( 'id' ) ) );
+						$conditions[ ] = $db->argsOr( [ 'state' => '1', 'owner' => Sobi::My( 'id' ) ] );
 					}
 					else {
 						$conditions[ $oPrefix . 'state' ] = '1';
@@ -207,7 +207,7 @@ class SPSectionCtrl extends SPController
 				}
 				if ( !( Sobi::Can( 'category.access.*' ) ) ) {
 					if ( Sobi::Can( 'category.access.expired_own' ) ) {
-						$conditions[ ] = $db->argsOr( array( '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ) );
+						$conditions[ ] = $db->argsOr( [ '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ] );
 					}
 					else {
 						$conditions[ 'state' ] = '1';
@@ -216,7 +216,7 @@ class SPSectionCtrl extends SPController
 				}
 			}
 			else {
-				$conditions = array_merge( $conditions, array( $oPrefix . 'state' => '1', $oPrefix . 'approved' => '1', '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ) ) );
+				$conditions = array_merge( $conditions, [ $oPrefix . 'state' => '1', $oPrefix . 'approved' => '1', '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ) ] );
 			}
 			$conditions[ $oPrefix . 'id' ] = $this->_model->getChilds( 'category' );
 			try {
@@ -226,7 +226,7 @@ class SPSectionCtrl extends SPController
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
-			Sobi::Trigger( $this->name(), 'AfterGetCategories', array( &$results ) );
+			Sobi::Trigger( $this->name(), 'AfterGetCategories', [ &$results ] );
 			if ( $results && count( $results ) ) {
 				foreach ( $results as $i => $cid ) {
 					$categories[ $i ] = $cid; // new $cClass();
@@ -243,10 +243,10 @@ class SPSectionCtrl extends SPController
 		if ( !( Sobi::Can( 'entry.access.*' ) ) ) {
 			if ( Sobi::Can( 'entry.access.unpublished_own' ) ) {
 				if ( !( Sobi::Can( 'entry.access.unpublished_any' ) ) ) {
-					$conditions[ ] = $db->argsOr( array( $oPrefix . 'state' => '1', $oPrefix . 'owner' => Sobi::My( 'id' ) ) );
+					$conditions[ ] = $db->argsOr( [ $oPrefix . 'state' => '1', $oPrefix . 'owner' => Sobi::My( 'id' ) ] );
 				}
 				if ( Sobi::Can( 'entry.access.unapproved_own' ) ) {
-					$conditions[ ] = $db->argsOr( array( $oPrefix . 'approved' => '1', $oPrefix . 'owner' => Sobi::My( 'id' ) ) );
+					$conditions[ ] = $db->argsOr( [ $oPrefix . 'approved' => '1', $oPrefix . 'owner' => Sobi::My( 'id' ) ] );
 				}
 				elseif ( !( Sobi::Can( 'entry.access.unapproved_own' ) || Sobi::Can( 'entry.access.unapproved_any' ) ) ) {
 					$conditions[ $oPrefix . 'approved' ] = '1';
@@ -259,7 +259,7 @@ class SPSectionCtrl extends SPController
 		if ( !( Sobi::Can( 'entry.access.*' ) ) ) {
 			// @todo: expired permission
 			if ( Sobi::Can( 'entry.access.expired_own' ) ) {
-				$conditions[ ] = $db->argsOr( array( '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ) );
+				$conditions[ ] = $db->argsOr( [ '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ] );
 			}
 			else {
 				// conflicts with "entry.access.unpublished_own" See #521
@@ -286,14 +286,14 @@ class SPSectionCtrl extends SPController
 	 * @param int $pid
 	 * @return array
 	 */
-	public function getEntries( $eOrder, $eLimit = null, $eLimStart = null, $count = false, $conditions = array(), $entriesRecursive = false, $pid = 0 )
+	public function getEntries( $eOrder, $eLimit = null, $eLimStart = null, $count = false, $conditions = [], $entriesRecursive = false, $pid = 0 )
 	{
 		/* var SPDb $db */
 		$db = SPFactory::db();
-		$entries = array();
+		$entries = [];
 		$eDir = 'asc';
 		$oPrefix = null;
-		$conditions = is_array( $conditions ) ? $conditions : array();
+		$conditions = is_array( $conditions ) ? $conditions : [];
 
 		/* get the ordering and the direction */
 		if ( strstr( $eOrder, '.' ) ) {
@@ -330,7 +330,7 @@ class SPSectionCtrl extends SPController
 			if ( !$field ) {
 				try {
 					$fType = $db
-							->select( 'fieldType', 'spdb_field', array( 'nid' => $eOrder, 'section' => Sobi::Section(), 'adminField>' => -1 ) )
+							->select( 'fieldType', 'spdb_field', [ 'nid' => $eOrder, 'section' => Sobi::Section(), 'adminField>' => -1 ] )
 							->loadResult();
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DETERMINE_FIELD_TYPE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -342,21 +342,21 @@ class SPSectionCtrl extends SPController
 			if ( $field && method_exists( $field, 'customOrdering' ) ) {
 				$table = null;
 				$oPrefix = null;
-				$specificMethod = call_user_func_array( array( $field, 'customOrdering' ), array( &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ) );
+				$specificMethod = call_user_func_array( [ $field, 'customOrdering' ], [ &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ] );
 			}
 			elseif ( $field && method_exists( $field, 'sortBy' ) ) {
 				$table = null;
 				$oPrefix = null;
-				$specificMethod = call_user_func_array( array( $field, 'sortBy' ), array( &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ) );
+				$specificMethod = call_user_func_array( [ $field, 'sortBy' ], [ &$table, &$conditions, &$oPrefix, &$eOrder, &$eDir ] );
 			}
 			if ( !$specificMethod ) {
 				$table = $db->join(
-						array(
-								array( 'table' => 'spdb_field', 'as' => 'fdef', 'key' => 'fid' ),
-								array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
-								array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'fdata.sid', 'spo.id' ) ),
-								array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'fdata.sid', 'sprl.id' ) ),
-						)
+						[
+								[ 'table' => 'spdb_field', 'as' => 'fdef', 'key' => 'fid' ],
+								[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ],
+								[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => [ 'fdata.sid', 'spo.id' ] ],
+								[ 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => [ 'fdata.sid', 'sprl.id' ] ],
+						]
 				);
 				$oPrefix = 'spo.';
 				$conditions[ 'spo.oType' ] = 'entry';
@@ -365,11 +365,11 @@ class SPSectionCtrl extends SPController
 			}
 		}
 		elseif ( strstr( $eOrder, 'counter' ) ) {
-			$table = $db->join( array(
-					array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' ),
-					array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'spo.id', 'sprl.id' ) ),
-					array( 'table' => 'spdb_counter', 'as' => 'spcounter', 'key' => array( 'spo.id', 'spcounter.sid' ) ),
-			) );
+			$table = $db->join( [
+					[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' ],
+					[ 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => [ 'spo.id', 'sprl.id' ] ],
+					[ 'table' => 'spdb_counter', 'as' => 'spcounter', 'key' => [ 'spo.id', 'spcounter.sid' ] ],
+			] );
 			$oPrefix = 'spo.';
 			$conditions[ 'spo.oType' ] = 'entry';
 			if ( strstr( $eOrder, '.' ) ) {
@@ -381,10 +381,10 @@ class SPSectionCtrl extends SPController
 			}
 		}
 		else {
-			$table = $db->join( array(
-					array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => 'id' ),
-					array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' )
-			) );
+			$table = $db->join( [
+					[ 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => 'id' ],
+					[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => 'id' ]
+			] );
 			$conditions[ 'spo.oType' ] = 'entry';
 			$eOrder = $eOrder . '.' . $eDir;
 			$oPrefix = 'spo.';
@@ -401,7 +401,7 @@ class SPSectionCtrl extends SPController
 			}
 		}
 		else {
-			$conditions = array_merge( $conditions, array( $oPrefix . 'state' => '1', '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ) ) );
+			$conditions = array_merge( $conditions, [ $oPrefix . 'state' => '1', '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ) ] );
 			$conditions[ 'sprl.copy' ] = '0';
 		}
 		try {
@@ -411,7 +411,7 @@ class SPSectionCtrl extends SPController
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		Sobi::Trigger( $this->name(), 'AfterGetEntries', array( &$results, $count ) );
+		Sobi::Trigger( $this->name(), 'AfterGetEntries', [ &$results, $count ] );
 		if ( count( $results ) && !$count ) {
 			foreach ( $results as $i => $sid ) {
 				// it needs too much memory moving the object creation to the view

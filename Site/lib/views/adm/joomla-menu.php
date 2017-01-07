@@ -30,10 +30,10 @@ class SPAdmJoomlaMenuView extends SPAdmView
 	public function functions()
 	{
 		$functions = $this->get( 'functions' );
-		$out = array();
+		$out = [];
 		$section = SPRequest::int( 'section' );
 		$out[ ] = '<form action="index.php" method="post">';
-		$out[ ] = SPHtml_Input::select( 'function', $functions, null, false, array( 'id' => 'SobiProFunctions' ) );
+		$out[ ] = SPHtml_Input::select( 'function', $functions, null, false, [ 'id' => 'SobiProFunctions' ] );
 		$out[ ] = '<input type="hidden" name="option" value="com_sobipro">';
 		$out[ ] = '<input type="hidden" name="task" value="menu">';
 		$out[ ] = '<input type="hidden" name="tmpl" value="component">';

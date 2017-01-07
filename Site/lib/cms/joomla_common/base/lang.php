@@ -88,7 +88,7 @@ class SPJoomlaLang
 		$over = $this->tplOverride( $a[ 0 ] );
 		if ( !( $over ) ) {
 			$a[ 0 ] = 'SP.' . $a[ 0 ];
-			$m = call_user_func_array( array( 'JText', '_' ), array( $a[ 0 ] ) );
+			$m = call_user_func_array( [ 'JText', '_' ], [ $a[ 0 ] ] );
 			if ( $m == $a[ 0 ] || $m == 'SP.' ) {
 				$m = $in;
 			}
@@ -114,7 +114,7 @@ class SPJoomlaLang
 			}
 		}
 		if ( strstr( $m, 'translate:' ) ) {
-			$matches = array();
+			$matches = [];
 			preg_match( '/translate\:\[([a-zA-Z0-9\.\_\-]*)\]/', $m, $matches );
 			$m = str_replace( $matches[ 0 ], $this->_txt( $matches[ 1 ], null, false ), $m );
 		}
@@ -122,7 +122,7 @@ class SPJoomlaLang
 			$m = str_replace( "\n", '\n', $m );
 		}
 		$m = str_replace( '_QQ_', '"', $m );
-		return str_replace( array( '[JS]', '[MSG]', '[URL]' ), null, $m );
+		return str_replace( [ '[JS]', '[MSG]', '[URL]' ], null, $m );
 	}
 
 	protected function tplOverride( $term )
@@ -201,7 +201,7 @@ class SPJoomlaLang
 			self::getInstance()->_eload();
 		}
 		$a = func_get_args();
-		return call_user_func_array( array( self::getInstance(), '_txt' ), $a );
+		return call_user_func_array( [ self::getInstance(), '_txt' ], $a );
 	}
 
 	protected function _eload()
@@ -258,7 +258,7 @@ class SPJoomlaLang
 		if ( $values[ 'type' ] == 'plugin' ) {
 			$values[ 'type' ] = 'application';
 		}
-		$data = array(
+		$data = [
 				'sKey' => $values[ 'key' ],
 				'sValue' => $values[ 'value' ],
 				'section' => isset( $values[ 'section' ] ) ? $values[ 'section' ] : null,
@@ -269,7 +269,7 @@ class SPJoomlaLang
 				'params' => isset( $values[ 'params' ] ) ? $values[ 'params' ] : null,
 				'options' => isset( $values[ 'options' ] ) ? $values[ 'options' ] : null,
 				'explanation' => isset( $values[ 'explanation' ] ) ? $values[ 'explanation' ] : null,
-		);
+		];
 		try {
 			SPFactory::db()->replace( 'spdb_language', $data );
 			if ( $lang != Sobi::DefLang() ) {
@@ -336,6 +336,10 @@ class SPJoomlaLang
 	}
 
 	/**
+	 * @param $label
+	 * @param $obj
+	 * @param bool $html
+	 * @return mixed|string
 	 */
 	protected static function parseVal( $label, $obj, $html = false )
 	{
@@ -363,7 +367,7 @@ class SPJoomlaLang
 				}
 				/** For the placeholder we need for sure the full URL */
 				elseif ( ( $property == 'url' ) && ( $var instanceof SPEntry ) ) {
-					$var = Sobi::Url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $var->get( 'nid' ) : $var->get( 'name' ), 'pid' => $var->get( 'primary' ), 'sid' => $var->get( 'id' ) ), false, true, true );
+					$var = Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $var->get( 'nid' ) : $var->get( 'name' ), 'pid' => $var->get( 'primary' ), 'sid' => $var->get( 'id' ) ], false, true, true );
 				}
 				else {
 					$var = $var->get( $property );
@@ -386,6 +390,7 @@ class SPJoomlaLang
 	 * @param int $sid - section id
 	 * @param string $select - what is to select, key, descritpion, params
 	 * @param null $lang
+	 * @param int $fid
 	 * @return string
 	 */
 	public static function getValue( $key, $type, $sid = 0, $select = 'sValue', $lang = null, $fid = 0 )
@@ -396,15 +401,15 @@ class SPJoomlaLang
 			$type = 'application';
 		}
 		if ( !( is_array( $select ) ) ) {
-			$toSselect = array( $select );
+			$toSselect = [ $select ];
 		}
 		try {
 			$toSselect[ ] = 'language';
-			$params = array(
+			$params = [
 					'sKey' => $key,
 					'oType' => $type,
-					'language' => array_unique( array( $lang, Sobi::DefLang(), 'en-GB' ) )
-			);
+					'language' => array_unique( [ $lang, Sobi::DefLang(), 'en-GB' ] )
+			];
 			if ( $sid ) {
 				$params[ 'section' ] = $sid;
 			}
@@ -458,7 +463,7 @@ class SPJoomlaLang
 		$dp = html_entity_decode( Sobi::Cfg( 'payments.dec_point', ',' ), ENT_QUOTES );
 		$value = number_format( $value, Sobi::Cfg( 'payments.decimal', 2 ), $dp, Sobi::Cfg( 'payments.thousands_sep', ' ' ) );
 		if ( $currency ) {
-			$value = str_replace( array( '%value', '%currency' ), array( $value, Sobi::Cfg( 'payments.currency', 'EUR' ) ), Sobi::Cfg( 'payments.format', '%value %currency' ) );
+			$value = str_replace( [ '%value', '%currency' ], [ $value, Sobi::Cfg( 'payments.currency', 'EUR' ) ], Sobi::Cfg( 'payments.format', '%value %currency' ) );
 		}
 		return $value;
 	}
@@ -475,11 +480,11 @@ class SPJoomlaLang
 
 	protected function _jsLang( $adm )
 	{
-		$front = array();
+		$front = [];
 		if ( $adm ) {
 			$front = $this->_jsLang( false );
 		}
-		$path = $adm ? implode( DS, array( JPATH_ADMINISTRATOR, 'language', 'en-GB', 'en-GB.com_sobipro.js' ) ) : implode( DS, array( SOBI_ROOT, 'language', 'en-GB', 'en-GB.com_sobipro.js' ) );
+		$path = $adm ? implode( DS, [ JPATH_ADMINISTRATOR, 'language', 'en-GB', 'en-GB.com_sobipro.js' ] ) : implode( DS, [ SOBI_ROOT, 'language', 'en-GB', 'en-GB.com_sobipro.js' ] );
 		if ( $this->_lang != 'en-GB' && Sobi::Cfg( 'lang.engb_preload', true ) ) {
 			$strings = SPLoader::loadIniFile( str_replace( 'en-GB', str_replace( '_', '-', $this->_lang ), $path ), false, false, true, true, true );
 			$def = SPLoader::loadIniFile( $path, false, false, true, true, true );
@@ -593,7 +598,7 @@ class SPJoomlaLang
 			return $txt;
 		}
 		//		$txt = htmlentities( $txt, ENT_QUOTES, 'UTF-8' );
-		$entities = array( 'auml' => '&#228;', 'ouml' => '&#246;', 'uuml' => '&#252;', 'szlig' => '&#223;', 'Auml' => '&#196;', 'Ouml' => '&#214;', 'Uuml' => '&#220;', 'nbsp' => '&#160;', 'Agrave' => '&#192;', 'Egrave' => '&#200;', 'Eacute' => '&#201;', 'Ecirc' => '&#202;', 'egrave' => '&#232;', 'eacute' => '&#233;', 'ecirc' => '&#234;', 'agrave' => '&#224;', 'iuml' => '&#239;', 'ugrave' => '&#249;', 'ucirc' => '&#251;', 'uuml' => '&#252;', 'ccedil' => '&#231;', 'AElig' => '&#198;', 'aelig' => '&#330;', 'OElig' => '&#338;', 'oelig' => '&#339;', 'angst' => '&#8491;', 'cent' => '&#162;', 'copy' => '&#169;', 'Dagger' => '&#8225;', 'dagger' => '&#8224;', 'deg' => '&#176;', 'emsp' => '&#8195;', 'ensp' => '&#8194;', 'ETH' => '&#208;', 'eth' => '&#240;', 'euro' => '&#8364;', 'half' => '&#189;', 'laquo' => '&#171;', 'ldquo' => '&#8220;', 'lsquo' => '&#8216;', 'mdash' => '&#8212;', 'micro' => '&#181;', 'middot' => '&#183;', 'ndash' => '&#8211;', 'not' => '&#172;', 'numsp' => '&#8199;', 'para' => '&#182;', 'permil' => '&#8240;', 'puncsp' => '&#8200;', 'raquo' => '&#187;', 'rdquo' => '&#8221;', 'rsquo' => '&#8217;', 'reg' => '&#174;', 'sect' => '&#167;', 'THORN' => '&#222;', 'thorn' => '&#254;', 'trade' => '&#8482;' );
+		$entities = [ 'auml' => '&#228;', 'ouml' => '&#246;', 'uuml' => '&#252;', 'szlig' => '&#223;', 'Auml' => '&#196;', 'Ouml' => '&#214;', 'Uuml' => '&#220;', 'nbsp' => '&#160;', 'Agrave' => '&#192;', 'Egrave' => '&#200;', 'Eacute' => '&#201;', 'Ecirc' => '&#202;', 'egrave' => '&#232;', 'eacute' => '&#233;', 'ecirc' => '&#234;', 'agrave' => '&#224;', 'iuml' => '&#239;', 'ugrave' => '&#249;', 'ucirc' => '&#251;', 'uuml' => '&#252;', 'ccedil' => '&#231;', 'AElig' => '&#198;', 'aelig' => '&#330;', 'OElig' => '&#338;', 'oelig' => '&#339;', 'angst' => '&#8491;', 'cent' => '&#162;', 'copy' => '&#169;', 'Dagger' => '&#8225;', 'dagger' => '&#8224;', 'deg' => '&#176;', 'emsp' => '&#8195;', 'ensp' => '&#8194;', 'ETH' => '&#208;', 'eth' => '&#240;', 'euro' => '&#8364;', 'half' => '&#189;', 'laquo' => '&#171;', 'ldquo' => '&#8220;', 'lsquo' => '&#8216;', 'mdash' => '&#8212;', 'micro' => '&#181;', 'middot' => '&#183;', 'ndash' => '&#8211;', 'not' => '&#172;', 'numsp' => '&#8199;', 'para' => '&#182;', 'permil' => '&#8240;', 'puncsp' => '&#8200;', 'raquo' => '&#187;', 'rdquo' => '&#8221;', 'rsquo' => '&#8217;', 'reg' => '&#174;', 'sect' => '&#167;', 'THORN' => '&#222;', 'thorn' => '&#254;', 'trade' => '&#8482;' ];
 		foreach ( $entities as $ent => $repl ) {
 			$txt = preg_replace( '/&' . $ent . ';?/m', $repl, $txt );
 		}
@@ -621,7 +626,7 @@ class SPJoomlaLang
 		$str = str_replace( '?', '', $str );
 		// Remove any duplicate whitespace and replace whitespaces by hyphens
 		$str = preg_replace( '/\x20+/', '-', $str );
-		$str = preg_replace( array( '/\s+/', Sobi::Cfg( 'browser.url_filter', '/[^A-Za-z0-9\p{L}\-\_]/iu' ) ), array( '-', null ), $str );
+		$str = preg_replace( [ '/\s+/', Sobi::Cfg( 'browser.url_filter', '/[^A-Za-z0-9\p{L}\-\_]/iu' ) ], [ '-', null ], $str );
 		$str = trim( $str, '_-\[\]\(\)' );
 		return $str;
 	}
@@ -654,7 +659,7 @@ class SPJoomlaLang
 	 */
 	public static function nid( $txt, $unicode = false, $forceUnicode = false )
 	{
-		$txt = trim( str_replace( array( '.', '_' ), '-', $txt ) );
+		$txt = trim( str_replace( [ '.', '_' ], '-', $txt ) );
 		return ( Sobi::Cfg( 'sef.unicode' ) && $unicode ) || $forceUnicode ?
 				self::urlSafe( $txt ) :
 				trim( preg_replace( '/(\s|[^A-Za-z0-9\-])+/', '-', JFactory::getLanguage()->transliterate( $txt ) ), '_-\[\]\(\)' );
@@ -670,19 +675,19 @@ class SPJoomlaLang
 	 * @param string $ident
 	 * @return array
 	 */
-	public static function translateObject( $sids, $fields = array(), $type = null, $lang = null, $ident = 'id' )
+	public static function translateObject( $sids, $fields = [], $type = null, $lang = null, $ident = 'id' )
 	{
 		/** @todo multiple attr does not work because the id is the object id */
-		$fields = is_array( $fields ) ? $fields : ( strlen( $fields ) ? array( $fields ) : null );
+		$fields = is_array( $fields ) ? $fields : ( strlen( $fields ) ? [ $fields ] : null );
 		$lang = $lang ? $lang : Sobi::Lang( false );
 		// we don't need to specify the language as we want to have all of them and then order it right
 		// when an object name has been entered in a particular language but this language isn't used later
 		// we won't have any label for this certain object
 		// Wed, Dec 18, 2013 09:57:04
 		//$params = array( 'id' => $sids, 'language' => array( $lang, Sobi::DefLang(), 'en-GB' ) );
-		static $store = array();
-		$params = array( $ident => $sids );
-		$result = array();
+		static $store = [];
+		$params = [ $ident => $sids ];
+		$result = [];
 		if ( $type ) {
 			$params[ 'oType' ] = $type;
 		}
@@ -701,10 +706,10 @@ class SPJoomlaLang
 					->select( $ident . ' AS id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
 					->loadAssocList();
 			if ( count( $labels ) ) {
-				$aliases = array();
+				$aliases = [];
 				if ( in_array( 'alias', $fields ) ) {
 					$aliases = SPFactory::db()
-							->select( array( 'nid', 'id' ), 'spdb_object', array( 'id' => $sids ) )
+							->select( [ 'nid', 'id' ], 'spdb_object', [ 'id' => $sids ] )
 							->loadAssocList( 'id' );
 				}
 				foreach ( $labels as $label ) {

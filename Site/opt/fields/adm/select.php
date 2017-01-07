@@ -51,7 +51,7 @@ class SPField_SelectAdm extends SPField_Select
 		$options = $this->parseOptsFile( $data );
 		if ( !( count( $options ) ) && count( $attr[ 'options' ] ) ) {
 			$p = 0;
-			$hold = array();
+			$hold = [];
 			foreach ( $attr[ 'options' ] as $o ) {
 				if ( is_numeric( $o[ 'id' ] ) ) {
 					$o[ 'id' ] = $this->nid . '_' . $o[ 'id' ];
@@ -62,17 +62,17 @@ class SPField_SelectAdm extends SPField_Select
 					while ( isset( $hold[ $oid ] ) ) {
 						$oid = $o[ 'id' ] . '_' . ++$i;
 					}
-					$options[ ] = array( 'id' => $oid, 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p );
+					$options[ ] = [ 'id' => $oid, 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p ];
 					$hold[ $oid ] = $oid;
 				}
 			}
 		}
 		if ( count( $options ) ) {
 			unset( $attr[ 'options' ] );
-			$optionsArr = array();
-			$labelsArr = array();
-			$optsIds = array();
-			$defLabelsArr = array();
+			$optionsArr = [];
+			$labelsArr = [];
+			$optsIds = [];
+			$defLabelsArr = [];
 			$duplicates = false;
 			foreach ( $options as $i => $option ) {
 				/* check for doubles */
@@ -85,9 +85,9 @@ class SPField_SelectAdm extends SPField_Select
 						$duplicates = true;
 					}
 				}
-				$optionsArr[ ] = array( 'fid' => $this->id, 'optValue' => $option[ 'id' ], 'optPos' => $option[ 'position' ], 'optParent' => $option[ 'parent' ] );
-				$defLabelsArr[ ] = array( 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $defLang, 'oType' => 'field_option', 'fid' => $this->id );
-				$labelsArr[ ] = array( 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $lang, 'oType' => 'field_option', 'fid' => $this->id );
+				$optionsArr[ ] = [ 'fid' => $this->id, 'optValue' => $option[ 'id' ], 'optPos' => $option[ 'position' ], 'optParent' => $option[ 'parent' ] ];
+				$defLabelsArr[ ] = [ 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $defLang, 'oType' => 'field_option', 'fid' => $this->id ];
+				$labelsArr[ ] = [ 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $lang, 'oType' => 'field_option', 'fid' => $this->id ];
 				$optsIds[ ] = $option[ 'id' ];
 			}
 			if ( $duplicates ) {
@@ -96,8 +96,8 @@ class SPField_SelectAdm extends SPField_Select
 			$db = SPFactory::db();
 			/* try to delete the existing labels */
 			try {
-				$db->delete( 'spdb_field_option', array( 'fid' => $this->id ) );
-				$db->delete( 'spdb_language', array( 'oType' => 'field_option', 'fid' => $this->id, '!sKey' => $optsIds ) );
+				$db->delete( 'spdb_field_option', [ 'fid' => $this->id ] );
+				$db->delete( 'spdb_language', [ 'oType' => 'field_option', 'fid' => $this->id, '!sKey' => $optsIds ] );
 
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_STORE_FIELD_OPTIONS_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -115,10 +115,10 @@ class SPField_SelectAdm extends SPField_Select
 			}
 		}
 		if ( !isset( $attr[ 'params' ] ) ) {
-			$attr[ 'params' ] = array();
+			$attr[ 'params' ] = [];
 		}
 		$myAttr = $this->getAttr();
-		$properties = array();
+		$properties = [];
 		if ( count( $myAttr ) ) {
 			foreach ( $myAttr as $property ) {
 				$properties[ $property ] = isset( $attr[ $property ] ) ? ( $attr[ $property ] ) : null;
@@ -180,11 +180,11 @@ class SPField_SelectAdm extends SPField_Select
 		$dom = new DOMDocument();
 		$dom->load( SOBI_PATH . '/etc/fields/select-list/' . $file );
 		$xpath = new DOMXPath( $dom );
-		$definition = array();
+		$definition = [];
 		$root = $xpath->query( '/definition' );
 		$definition[ 'prefix' ] = $root->item( 0 )->attributes->getNamedItem( 'prefix' )->nodeValue;
 		$definition[ 'translation' ] = $root->item( 0 )->attributes->getNamedItem( 'translation' )->nodeValue;
-		$definition[ 'options' ] = array();
+		$definition[ 'options' ] = [];
 		$this->_parseXML( $xpath->query( '/definition/option' ), $definition[ 'options' ] );
 		SPFs::write( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $file ) ), json_encode( $definition ) );
 	}
@@ -199,10 +199,10 @@ class SPField_SelectAdm extends SPField_Select
 			if ( !( $node->attributes ) ) {
 				continue;
 			}
-			$option = array(
+			$option = [
 					'id' => $node->attributes->getNamedItem( 'id' )->nodeValue,
-					'childs' => array()
-			);
+					'childs' => []
+			];
 			if ( $node->attributes->getNamedItem( 'child-type' ) ) {
 				$option[ 'child-type' ] = $node->attributes->getNamedItem( 'child-type' )->nodeValue;
 			}
@@ -218,7 +218,7 @@ class SPField_SelectAdm extends SPField_Select
 		/* @var SPdb $db */
 		$db = SPFactory::db();
 		try {
-			$db->delete( 'spdb_field_option', array( 'fid' => $this->id ) );
+			$db->delete( 'spdb_field_option', [ 'fid' => $this->id ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}

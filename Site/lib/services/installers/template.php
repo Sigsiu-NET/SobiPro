@@ -31,7 +31,7 @@ class SPTemplateInstaller extends SPInstaller
 		$id = $this->xGetString( 'id' );
 		$name = $this->xGetString( 'name' );
 		if ( SPLoader::dirPath( 'usr.templates.' . $id ) && !( SPRequest::bool( 'force' ) ) ) {
-			throw new SPException( SPLang::e( 'TEMPLATE_INST_DUPLICATE', $name ) . ' ' . Sobi::Txt( 'FORCE_TPL_UPDATE', Sobi::Url( array( 'task' => 'extensions.install', 'force' => 1, 'root' => basename( $this->root ) . '/' . basename( $this->xmlFile ) ) ) ) );
+			throw new SPException( SPLang::e( 'TEMPLATE_INST_DUPLICATE', $name ) . ' ' . Sobi::Txt( 'FORCE_TPL_UPDATE', Sobi::Url( [ 'task' => 'extensions.install', 'force' => 1, 'root' => basename( $this->root ) . '/' . basename( $this->xmlFile ) ] ) ) );
 		}
 
 		$requirements = $this->xGetChilds( 'requirements/*' );
@@ -43,18 +43,18 @@ class SPTemplateInstaller extends SPInstaller
 		$language = $this->xGetChilds( 'language/file' );
 		$folder = @$this->xGetChilds( 'language/@folder' )->item( 0 )->nodeValue;
 		if ( $language && ( $language instanceof DOMNodeList ) && $language->length ) {
-			$langFiles = array();
+			$langFiles = [];
 			foreach ( $language as $file ) {
 				$adm = false;
 				if ( $file->attributes->getNamedItem( 'admin' ) ) {
 					$adm = $file->attributes->getNamedItem( 'admin' )->nodeValue == 'true' ? true : false;
 				}
 				$langFiles[ $file->attributes->getNamedItem( 'lang' )->nodeValue ][ ] =
-						array(
+						[
 								'path' => Sobi::FixPath( "{$this->root}/{$folder}/" . trim( $file->nodeValue ) ),
 								'name' => $file->nodeValue,
 								'adm' => $adm
-						);
+						];
 			}
 			SPFactory::CmsHelper()->installLang( $langFiles, false, true );
 		}
@@ -93,10 +93,10 @@ class SPTemplateInstaller extends SPInstaller
 			}
 		}
 
-		Sobi::Trigger( 'After', 'InstallTemplate', array( $id ) );
+		Sobi::Trigger( 'After', 'InstallTemplate', [ $id ] );
 		$dir =& SPFactory::Instance( 'base.fs.directory', SPLoader::dirPath( 'tmp.install' ) );
 		$dir->deleteFiles();
-		return Sobi::Txt( 'TP.TEMPLATE_HAS_BEEN_INSTALLED', array( 'template' => $name ) );
+		return Sobi::Txt( 'TP.TEMPLATE_HAS_BEEN_INSTALLED', [ 'template' => $name ] );
 	}
 
 	/**
@@ -125,12 +125,12 @@ class SPTemplateInstaller extends SPInstaller
 		}
 		$sid = $section->get( 'id' );
 
-		$settings = array();
+		$settings = [];
 		$options = $this->xGetChilds( $path . 'options/*' );
 		if ( ( $options instanceof DOMNodeList ) && $options->length ) {
 			foreach ( $options as $option ) {
 				$v = $option->nodeValue;
-				if ( in_array( $option->nodeValue, array( 'true', 'false' ) ) ) {
+				if ( in_array( $option->nodeValue, [ 'true', 'false' ] ) ) {
 					$v = $option->nodeValue == 'true' ? true : false;
 				}
 				$key = explode( '.', $option->getAttribute( 'attribute' ) );
@@ -166,17 +166,17 @@ class SPTemplateInstaller extends SPInstaller
 		if ( ( $options instanceof DOMNodeList ) && $options->length ) {
 			foreach ( $options as $option ) {
 				$v = $option->getAttribute( 'value' );
-				if ( in_array( $v, array( 'true', 'false' ) ) ) {
+				if ( in_array( $v, [ 'true', 'false' ] ) ) {
 					$v = $v == 'true' ? true : false;
 				}
 				$settings[ $option->getAttribute( 'section' ) ][ $option->getAttribute( 'key' ) ] = $v;
 			}
 		}
 
-		$values = array();
+		$values = [];
 		foreach ( $settings as $section => $setting ) {
 			foreach ( $setting as $k => $v ) {
-				$values[ ] = array( 'sKey' => $k, 'sValue' => $v, 'section' => $sid, 'critical' => 0, 'cSection' => $section );
+				$values[ ] = [ 'sKey' => $k, 'sValue' => $v, 'section' => $sid, 'critical' => 0, 'cSection' => $section ];
 			}
 		}
 		try {
@@ -186,13 +186,13 @@ class SPTemplateInstaller extends SPInstaller
 		}
 		/* create default permission */
 		SPFactory::Controller( 'acl', true )
-				->addNewRule( $name, array( $sid ), array( 'section.access.valid', 'category.access.valid', 'entry.access.valid', 'entry.add.own' ), array( 'visitor', 'registered' ), "Default permissions for the section {$name}" );
+				->addNewRule( $name, [ $sid ], [ 'section.access.valid', 'category.access.valid', 'entry.access.valid', 'entry.add.own' ], [ 'visitor', 'registered' ], "Default permissions for the section {$name}" );
 
 		$categories = $this->xGetChilds( $path . 'categories/*' );
 		if ( ( $categories instanceof DOMNodeList ) && $categories->length ) {
 			$this->categories( $categories, $sid );
 		}
-		Sobi::Trigger( 'After', 'SaveConfig', array( &$values ) );
+		Sobi::Trigger( 'After', 'SaveConfig', [ &$values ] );
 	}
 
 	/**
@@ -234,7 +234,7 @@ class SPTemplateInstaller extends SPInstaller
 				if ( ( $options instanceof DOMNodeList ) && $options->length ) {
 					foreach ( $options as $option ) {
 						$v = $option->nodeValue;
-						if ( in_array( $option->nodeValue, array( 'true', 'false' ) ) ) {
+						if ( in_array( $option->nodeValue, [ 'true', 'false' ] ) ) {
 							$v = $option->nodeValue == 'true' ? true : false;
 						}
 						$cat->set( $option->getAttribute( 'attribute' ), $v );
@@ -263,13 +263,13 @@ class SPTemplateInstaller extends SPInstaller
 				$cid = $cat->get( 'id' );
 				$fields = $this->xdef->query( 'fields', $category );
 				if ( $fields && $fields->length ) {
-					$fieldsData = array();
+					$fieldsData = [];
 					if ( ( $fields instanceof DOMNodeList ) && $fields->length ) {
 						foreach ( $fields->item( 0 )->childNodes as $field ) {
 							if ( $field->nodeName == '#text' ) {
 								continue;
 							}
-							$fieldsData[ $field->nodeName ] = array();
+							$fieldsData[ $field->nodeName ] = [];
 							$this->categoryFieldsData( $field, $fieldsData );
 						}
 					}
@@ -316,7 +316,7 @@ class SPTemplateInstaller extends SPInstaller
 				if ( $node->nodeName == '#text' ) {
 					continue;
 				}
-				$data[ $field->nodeName ][ $node->nodeName ] = array();
+				$data[ $field->nodeName ][ $node->nodeName ] = [];
 				$this->categoryFieldsData( $node, $data[ $field->nodeName ] );
 				if ( !( count( $data[ $field->nodeName ][ $node->nodeName ] ) ) ) {
 					$data[ $field->nodeName ][ $node->nodeName ] = $node->nodeValue;
@@ -336,19 +336,19 @@ class SPTemplateInstaller extends SPInstaller
 	protected function fields( $fields, $sid )
 	{
 		$c = 0;
-		$fids = array();
+		$fids = [];
 		foreach ( $fields as $field ) {
-			$specificSetting = array();
+			$specificSetting = [];
 			if ( $field->nodeName == 'field' ) {
 				$c++;
-				$attr = array();
+				$attr = [];
 				$attr[ 'editLimit' ] = -1;
 				$ftype = $this->txt( $field, 'type' );
 				$options = $field->getElementsByTagName( 'option' );
 				if ( ( $options instanceof DOMNodeList ) && $options->length ) {
 					foreach ( $options as $option ) {
 						$v = $option->nodeValue;
-						if ( in_array( $option->nodeValue, array( 'true', 'false' ) ) ) {
+						if ( in_array( $option->nodeValue, [ 'true', 'false' ] ) ) {
 							$v = $option->nodeValue == 'true' ? true : false;
 						}
 						$attr[ $option->getAttribute( 'attribute' ) ] = $v;
@@ -372,19 +372,19 @@ class SPTemplateInstaller extends SPInstaller
 				/** @var $options DOMNodeList */
 				$options = $field->getElementsByTagName( 'value' );
 				// handles std options in select/checkbox group etc
-				$addOptions = array();
+				$addOptions = [];
 				if ( ( $options instanceof DOMNodeList ) && $options->length && $options->item( 0 )->parentNode->getAttribute( 'attribute' ) == 'fieldOptions' ) {
-					$values = array();
+					$values = [];
 					foreach ( $options as $option ) {
 						$id = strlen( $option->getAttribute( 'name' ) ) ? $option->getAttribute( 'name' ) : 0;
 						if ( strlen( $option->getAttribute( 'group' ) ) && $option->getAttribute( 'group' ) != 'root' ) {
 							if ( !( isset( $values[ $option->getAttribute( 'group' ) ] ) ) ) {
-								$values[ $option->getAttribute( 'group' ) ] = array( 'gid' => $option->getAttribute( 'group' ), 'name' => $option->getAttribute( 'group' ) );
+								$values[ $option->getAttribute( 'group' ) ] = [ 'gid' => $option->getAttribute( 'group' ), 'name' => $option->getAttribute( 'group' ) ];
 							}
-							$values[ $option->getAttribute( 'group' ) ][ ] = array( 'id' => $id, 'name' => $option->nodeValue );
+							$values[ $option->getAttribute( 'group' ) ][ ] = [ 'id' => $id, 'name' => $option->nodeValue ];
 						}
 						elseif ( $id ) {
-							$values[ ] = array( 'id' => $id, 'name' => $option->nodeValue );
+							$values[ ] = [ 'id' => $id, 'name' => $option->nodeValue ];
 						}
 						else {
 							$addOptions[ $option->parentNode->getAttribute( 'attribute' ) ][ ] = $option->nodeValue;

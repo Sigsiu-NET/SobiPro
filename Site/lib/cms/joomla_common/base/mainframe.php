@@ -30,7 +30,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	/** @var string */
 	const baseUrl = "index.php?option=com_sobipro";
 	/** @var array */
-	protected $pathway = array();
+	protected $pathway = [];
 
 	/**
 	 *
@@ -72,7 +72,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	{
 		$cfg = SPFactory::config();
 		$cfg->set( 'live_site', JURI::root() );
-		$cfg->set( 'live_site_root', JURI::getInstance()->toString( array( 'scheme', 'host', 'port' ) ) );
+		$cfg->set( 'live_site_root', JURI::getInstance()->toString( [ 'scheme', 'host', 'port' ] ) );
 		$cfg->set( 'tmp_path', $this->JConfigValue( 'config.tmp_path' ) );
 		$cfg->set( 'from', $this->JConfigValue( 'config.mailfrom' ), 'mail' );
 		$cfg->set( 'mailer', $this->JConfigValue( 'config.mailer' ), 'mail' );
@@ -136,10 +136,10 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		}
 		// Mon, Jun 29, 2015 10:52:09 - compat mode
 		if ( $cfg->get( 'template.icon_fonts_arr', -1 ) == -1 ) {
-			$cfg->set( 'icon_fonts_arr', array( 'font-awesome-local' ), 'template' );
+			$cfg->set( 'icon_fonts_arr', [ 'font-awesome-local' ], 'template' );
 		}
 		if ( !( is_array( $cfg->get( 'template.icon_fonts_arr', -1 ) ) ) ) {
-			$cfg->change( 'icon_fonts_arr', array( $cfg->get( 'template.icon_fonts_arr', -1 ) ), 'template' );
+			$cfg->change( 'icon_fonts_arr', [ $cfg->get( 'template.icon_fonts_arr', -1 ) ], 'template' );
 		}
 	}
 
@@ -206,7 +206,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			$msgtype = isset( $msg[ 'msgtype' ] ) ? $msg[ 'msgtype' ] : null;
 			$msg = $msg[ 'msg' ];
 		}
-		$a = array( 'address' => $add, 'msg' => $msg, 'msgtype' => $msgtype );
+		$a = [ 'address' => $add, 'msg' => $msg, 'msgtype' => $msgtype ];
 		SPFactory::registry()->set( 'redirect', $a );
 		if ( $now ) {
 			self::redirect();
@@ -294,7 +294,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			JFactory::getApplication()
 					->getPathway()
 					->addItem( $name, $url );
-			$this->pathway[ ] = array( 'name' => $name, 'url' => $url );
+			$this->pathway[ ] = [ 'name' => $name, 'url' => $url ];
 		}
 		return $this;
 	}
@@ -332,13 +332,13 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	 * @param array $site
 	 * @return mixed
 	 */
-	public function & addObjToPathway( $obj, $site = array() )
+	public function & addObjToPathway( $obj, $site = [] )
 	{
 		if ( defined( 'SOBI_ADM_PATH' ) ) {
 			return true;
 		}
 		$active = JFactory::getApplication()->getMenu()->getActive();
-		$menu = isset( $active->query ) ? $active->query : array();
+		$menu = isset( $active->query ) ? $active->query : [];
 		$sid = isset( $menu[ 'sid' ] ) ? $menu[ 'sid' ] : 0;
 		$resetPathway = false;
 		if ( $obj->get( 'oType' ) == 'entry' ) {
@@ -377,7 +377,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		if ( count( $path ) ) {
 			/* skip everything above the linked sid */
 			$rpath = array_reverse( $path );
-			$path = array();
+			$path = [];
 			foreach ( $rpath as $part ) {
 				if ( isset( $part[ 'id' ] ) && $part[ 'id' ] == $sid ) {
 					break;
@@ -387,7 +387,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			$path = array_reverse( $path );
 			/* ^^ skip everything above the linked sid */
 		}
-		$title = array();
+		$title = [];
 		// if there was an active menu - add its title to the browser title as well
 		if ( $sid ) {
 			$title[ ] = JFactory::getDocument()->getTitle();
@@ -407,18 +407,18 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				 */
 				JFactory::getApplication()
 						->getPathway()
-						->setPathway( array() );
+						->setPathway( [] );
 			}
 			foreach ( $path as $data ) {
 				if ( !( isset( $data[ 'name' ] ) || isset( $data[ 'id' ] ) ) || !( $data[ 'id' ] ) ) {
 					continue;
 				}
 				$title[ ] = $data[ 'name' ];
-				$this->addToPathway( $data[ 'name' ], ( self::url( array( 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ) ) ) );
+				$this->addToPathway( $data[ 'name' ], ( self::url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ] ) ) );
 			}
 		}
 		if ( $obj->get( 'oType' ) == 'entry' ) {
-			$this->addToPathway( $obj->get( 'name' ), ( self::url( array( 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ) ) ) );
+			$this->addToPathway( $obj->get( 'name' ), ( self::url( [ 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ] ) ) );
 			$title[ ] = $obj->get( 'name' );
 		}
 //		if ( count( $site ) && $site[ 0 ] ) {
@@ -442,9 +442,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$c = 0;
 		if ( count( $head ) ) {
 			$document->addCustomTag( "\n\t<!--  SobiPro Head Tags Output  -->\n" );
-			$document->addCustomTag( "\n\t<script type=\"text/javascript\">/*\n<![CDATA[*/ \n\tvar SobiProUrl = '" . Sobi::FixPath( self::Url( array( 'task' => '%task%' ), true, false, true ) ) . "'; \n\tvar SobiProSection = " . ( Sobi::Section() ? Sobi::Section() : 0 ) . "; \n\tvar SPLiveSite = '" . Sobi::Cfg( 'live_site' ) . "'; \n/*]]>*/\n</script>\n" );
+			$document->addCustomTag( "\n\t<script type=\"text/javascript\">/*\n<![CDATA[*/ \n\tvar SobiProUrl = '" . Sobi::FixPath( self::Url( [ 'task' => '%task%' ], true, false, true ) ) . "'; \n\tvar SobiProSection = " . ( Sobi::Section() ? Sobi::Section() : 0 ) . "; \n\tvar SPLiveSite = '" . Sobi::Cfg( 'live_site' ) . "'; \n/*]]>*/\n</script>\n" );
 			if ( defined( 'SOBI_ADM_PATH' ) ) {
-				$document->addCustomTag( "\n\t<script type=\"text/javascript\">/* <![CDATA[ */ \n\tvar SobiProAdmUrl = '" . Sobi::FixPath( Sobi::Cfg( 'live_site' ) . SOBI_ADM_FOLDER . '/' . self::Url( array( 'task' => '%task%' ), true, false ) ) . "'; \n/* ]]> */</script>\n" );
+				$document->addCustomTag( "\n\t<script type=\"text/javascript\">/* <![CDATA[ */ \n\tvar SobiProAdmUrl = '" . Sobi::FixPath( Sobi::Cfg( 'live_site' ) . SOBI_ADM_FOLDER . '/' . self::Url( [ 'task' => '%task%' ], true, false ) ) . "'; \n/* ]]> */</script>\n" );
 			}
 			foreach ( $head as $type => $code ) {
 				switch ( $type ) {
@@ -512,7 +512,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 						break;
 				}
 			}
-			$jsUrl = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . ( defined( 'SOBI_ADM_FOLDER' ) ? SOBI_ADM_FOLDER . '/' : '' ) . self::Url( array( 'task' => 'txt.js', 'format' => 'json' ), true, false ) );
+			$jsUrl = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . ( defined( 'SOBI_ADM_FOLDER' ) ? SOBI_ADM_FOLDER . '/' : '' ) . self::Url( [ 'task' => 'txt.js', 'format' => 'json' ], true, false ) );
 			$document->addCustomTag( "\n\t<script type=\"text/javascript\" src=\"" . str_replace( '&', '&amp;', $jsUrl ) . "\"></script>\n" );
 			$c++;
 			$document->addCustomTag( "\n\t<!--  SobiPro ({$c}) Head Tags Output -->\n" );
@@ -526,7 +526,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	 */
 	public function form()
 	{
-		return array( 'option' => 'com_sobipro', 'Itemid' => SPRequest::int( 'Itemid' ) );
+		return [ 'option' => 'com_sobipro', 'Itemid' => SPRequest::int( 'Itemid' ) ];
 	}
 
 	/**
@@ -548,7 +548,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		// Nevertheless it is generating &amp; in URL fro ImEx
 //		$sef = Sobi::Cfg( 'disable_sef_globally', false ) ? false : ( defined( 'SOBIPRO_ADM' ) && !( $forceItemId ) ? false : $sef );
 		$sef = Sobi::Cfg( 'disable_sef_globally', false ) ? false : $sef;
-		Sobi::Trigger( 'Create', 'Url', array( &$var, $js ) );
+		Sobi::Trigger( 'Create', 'Url', [ &$var, $js ] );
 		if ( is_array( $var ) && !empty( $var ) ) {
 			if ( isset( $var[ 'option' ] ) ) {
 				$url = str_replace( 'com_sobipro', $var[ 'option' ], $url );
@@ -649,7 +649,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$url = str_replace( '%3A', ':', $url );
 		// all urls in front are passed to the XML/XSL template are going to be encoded anyway
 		$o = SPRequest::cmd( 'format', SPRequest::cmd( 'out' ) );
-		if ( !( in_array( $o, array( 'raw', 'xml' ) ) ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
+		if ( !( in_array( $o, [ 'raw', 'xml' ] ) ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
 			$url = html_entity_decode( $url );
 		}
 		$url = str_replace( ' ', '%20', urldecode( $url ) );
@@ -765,6 +765,8 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	}
 
 	/**
+	 * @param string $type
+	 * @return $this
 	 */
 	public function & customHeader( $type = 'application/json' )
 	{
@@ -806,7 +808,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	{
 		$document = JFactory::getDocument();
 		if ( !( is_array( $title ) ) && ( Sobi::Cfg( 'browser.add_title', true ) || $forceAdd ) ) {
-			$title = array( $title );
+			$title = [ $title ];
 		}
 		if ( is_array( $title ) ) {
 			//browser.add_title = true: adds the Joomla part (this is normally the menu item) in front of it (works only if full_title is also set to true)

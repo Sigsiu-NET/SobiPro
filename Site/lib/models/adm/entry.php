@@ -40,7 +40,7 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 		}
 		else {
 			$nameField = SPFactory::db()
-					->select( 'sValue', 'spdb_config', array( 'section' => $this->section, 'sKey' => 'name_field', 'cSection' => 'entry' ) )
+					->select( 'sValue', 'spdb_config', [ 'section' => $this->section, 'sKey' => 'name_field', 'cSection' => 'entry' ] )
 					->loadResult();
 		}
 		return $nameField ? $nameField : Sobi::Cfg( 'entry.name_field' );
@@ -48,6 +48,7 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 
 	/**
 	 * @param int $sid
+	 * @param bool $enabled
 	 * @return void
 	 */
 	public function loadFields( $sid = 0, $enabled = false )
@@ -56,16 +57,16 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 
-		static $fields = array();
+		static $fields = [];
 		static $lang = null;
 		$lang = $lang ? $lang : Sobi::Lang( false );
 		if ( !isset( $fields[ $sid ] ) ) {
 			/* get fields */
 			try {
 				$fields[ $sid ] = $db
-						->select( '*', 'spdb_field', array( 'section' => $sid, $db->argsOr( array( 'admList' => 1, 'fid' => $this->nameField() ) ) ), 'position' )
+						->select( '*', 'spdb_field', [ 'section' => $sid, $db->argsOr( [ 'admList' => 1, 'fid' => $this->nameField() ] ) ], 'position' )
 						->loadObjectList();
-				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$fields ) );
+				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$fields ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELDS_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
@@ -86,9 +87,9 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 						$ordering = 'copy.asc';
 					}
 					try {
-						$db->select( '*', 'spdb_field_data', array( 'sid' => $this->id ), $ordering );
+						$db->select( '*', 'spdb_field_data', [ 'sid' => $this->id ], $ordering );
 						$fdata = $db->loadObjectList();
-						$fieldsdata = array();
+						$fieldsdata = [];
 						if ( count( $fdata ) ) {
 							foreach ( $fdata as $data ) {
 								/* if it has been already set - check if it is not better language choose */
@@ -162,7 +163,7 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 	private function checkCopy()
 	{
 		return !(
-				in_array( SPRequest::task(), array( 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit' ) ) ||
+				in_array( SPRequest::task(), [ 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit' ] ) ||
 						Sobi::Can( 'entry.see.unapproved_any' ) ||
 						( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.manage.own' ) ) ||
 						Sobi::Can( 'entry.manage.*' )

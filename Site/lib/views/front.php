@@ -40,50 +40,50 @@ class SPSectionsView extends SPFrontView implements SPView
 		}
 		if( $type == 'xslt' ) {
 			$sections = $this->get( 'sections' );
-			$data = array();
+			$data = [];
 			if( count( $sections ) ) {
 				foreach ( $sections as $section ) {
-					$s = array(
-								'name' => array (
+					$s = [
+								'name' => [
 									'_complex' => 1,
 									'_data' => $section->get( 'name' ),
-									'_attributes' => array(
+									'_attributes' => [
 										'lang' => Sobi::Lang( false )
-							)
-					),
-							'description' => array (
+									]
+								],
+							'description' => [
 								'_complex' => 1,
 								'_cdata' => 1,
 								'_data' => $section->get( 'description' ),
-								'_attributes' => array(
+								'_attributes' => [
 									'lang' => Sobi::Lang( false )
-						)
-					),
+								]
+							],
 								'createdTime' => $section->get( 'createdTime' ),
-								'meta' => array(
+								'meta' => [
 									'description' => $section->get( 'metaDesc' ),
 									'keys' => $this->metaKeys( $section ),
 									'author' => $section->get( 'metaAuthor' ),
 									'robots' => $section->get( 'metaRobots' ),
-					),
+								],
 								'owner' => $section->get( 'owner' ),
 								'version' => $section->get( 'version' ),
 								'validSince' => $section->get( 'validSince' ),
 								'validUntil' => $section->get( 'validUntil' ),
-								'url' => Sobi::Url( array( 'sid' => $section->get( 'id' ) ) )
-					);
-					$data[] = array(
+								'url' => Sobi::Url( [ 'sid' => $section->get( 'id' ) ] )
+					];
+					$data[] = [
 									'_complex' => 1,
 									'_data' => $s,
-									'_attributes' => array(
+									'_attributes' => [
 										'id' => $section->get( 'id' ),
 										'nid' => $section->get( 'nid' ),
-							)
-					);
+									]
+					];
 				}
 			}
 			$this->assign( $data, 'sections' );
-			Sobi::Trigger( $this->_type, ucfirst( __FUNCTION__ ), array( &$this->_attr ) );
+			Sobi::Trigger( $this->_type, ucfirst( __FUNCTION__ ), [ &$this->_attr ] );
 		}
 		parent::display();
 	}

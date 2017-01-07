@@ -86,7 +86,7 @@ function SPAddAdmFormVal( name, value )
 function SPCheckListElements( name, toggler )
 {
 	el = SP_name( name + '[]' );
-	var on = toggler.value == 1 ? true : false;
+	var on = toggler.value == 1;
 	for ( var i = 0; i < el.length; i++ ) {
 		el[ i ].checked = on;
 	}

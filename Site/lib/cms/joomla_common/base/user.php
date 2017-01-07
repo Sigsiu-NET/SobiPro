@@ -27,29 +27,29 @@ class SPJoomlaUser extends JUser
 	/**
 	 * @var array
 	 */
-	protected $_permReq = array();
+	protected $_permReq = [];
 	/**
 	 * @var array
 	 */
-	protected $_permissions = array();
+	protected $_permissions = [];
 	/**
 	 * @var array
 	 */
-	protected $_availablePerm = array();
+	protected $_availablePerm = [];
 	/**
 	 * @var array
 	 */
-	protected $_pmap = array();
+	protected $_pmap = [];
 	/**
 	 * @var array
 	 */
-	protected $_prules = array();
+	protected $_prules = [];
 	/**
 	 * @var array
 	 */
-	protected $_prequest = array();
+	protected $_prequest = [];
 
-	protected $_special = array( 'txt.js', 'progress' );
+	protected $_special = [ 'txt.js', 'progress' ];
 
 
 	/* get all parent groups */
@@ -59,10 +59,10 @@ class SPJoomlaUser extends JUser
 		if ( count( $this->gid ) ) {
 			foreach ( $this->gid as $gid ) {
 				if ( $gid >= 5000 ) {
-					$gids = array();
+					$gids = [];
 					while ( $gid > 5000 ) {
 						try {
-							$gid = SPFactory::db()->select( 'pid', 'spdb_user_group', array( 'gid' => $gid, 'enabled' => 1 ) )->loadResult();
+							$gid = SPFactory::db()->select( 'pid', 'spdb_user_group', [ 'gid' => $gid, 'enabled' => 1 ] )->loadResult();
 							$gids[ ] = $gid;
 						} catch ( SPException $x ) {
 							Sobi::Error( 'permissions', SPLang::e( 'Cannot load additional gids. %s', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
@@ -94,11 +94,11 @@ class SPJoomlaUser extends JUser
 		try {
 			$db =& SPFactory::db();
 			$valid = $db->valid( 'rel.validUntil', 'rel.validSince', 'grp.enabled' );
-			$join = array(
-					array( 'table' => 'spdb_user_group', 'as' => 'grp', 'key' => 'gid' ),
-					array( 'table' => 'spdb_users_relation', 'as' => 'rel', 'key' => 'gid' )
-			);
-			$gids = $db->select( 'rel.gid', $db->join( $join ), array( '@VALID' => $valid, 'uid' => $this->id ) )->loadResultArray();
+			$join = [
+					[ 'table' => 'spdb_user_group', 'as' => 'grp', 'key' => 'gid' ],
+					[ 'table' => 'spdb_users_relation', 'as' => 'rel', 'key' => 'gid' ]
+			];
+			$gids = $db->select( 'rel.gid', $db->join( $join ), [ '@VALID' => $valid, 'uid' => $this->id ] )->loadResultArray();
 			if ( count( $gids ) ) {
 				$this->gid = array_merge( $gids, $this->gid );
 			}
@@ -109,13 +109,13 @@ class SPJoomlaUser extends JUser
 
 	public static function groups( $gids )
 	{
-		$groups = array();
+		$groups = [];
 		if ( $gids instanceof self ) {
 			$gids = $gids->get( 'gid' );
 		}
 		if ( count( $gids ) ) {
 			$groups = array_flip( $gids );
-			$r = SPFactory::db()->select( array( 'groupName', 'gid' ), 'spdb_user_group', array( 'gid' => $gids ) )->loadAssocList( 'gid' );
+			$r = SPFactory::db()->select( [ 'groupName', 'gid' ], 'spdb_user_group', [ 'gid' => $gids ] )->loadAssocList( 'gid' );
 			if ( count( $r ) ) {
 				foreach ( $r as $gid => $data ) {
 					if ( isset( $groups[ $gid ] ) ) {
@@ -124,7 +124,7 @@ class SPJoomlaUser extends JUser
 				}
 			}
 			if ( count( $r ) < count( $groups ) ) {
-				$r = SPFactory::db()->select( array( 'name', 'id' ), '#__core_acl_aro_groups', array( 'id' => $gids ) )->loadAssocList( 'id' );
+				$r = SPFactory::db()->select( [ 'name', 'id' ], '#__core_acl_aro_groups', [ 'id' => $gids ] )->loadAssocList( 'id' );
 				if ( count( $r ) ) {
 					foreach ( $r as $gid => $data ) {
 						if ( isset( $groups[ $gid ] ) ) {
@@ -139,14 +139,14 @@ class SPJoomlaUser extends JUser
 
 	public static function availableGroups()
 	{
-		$groups = array( 0 => 'visitor' );
-		$r = SPFactory::db()->select( array( 'groupName', 'gid' ), 'spdb_user_group' )->loadAssocList( 'gid' );
+		$groups = [ 0 => 'visitor' ];
+		$r = SPFactory::db()->select( [ 'groupName', 'gid' ], 'spdb_user_group' )->loadAssocList( 'gid' );
 		if ( count( $r ) ) {
 			foreach ( $r as $gid => $data ) {
 				$groups[ $gid ] = $data[ 'groupName' ];
 			}
 		}
-		$r = SPFactory::db()->select( array( 'name', 'id' ), '#__core_acl_aro_groups' )->loadAssocList( 'id' );
+		$r = SPFactory::db()->select( [ 'name', 'id' ], '#__core_acl_aro_groups' )->loadAssocList( 'id' );
 		if ( count( $r ) ) {
 			foreach ( $r as $gid => $data ) {
 				$groups[ $gid ] = $data[ 'name' ];
@@ -179,7 +179,7 @@ class SPJoomlaUser extends JUser
 		}
 		$can = $this->authorisePermission( $section, $subject, $action, $value );
 		if ( SPFactory::registry()->__isset( 'plugins' ) ) {
-			Sobi::Trigger( 'Authorise', 'Permission', array( &$can, $section, $subject, $action, $value ) );
+			Sobi::Trigger( 'Authorise', 'Permission', [ &$can, $section, $subject, $action, $value ] );
 		}
 		return $can;
 	}
@@ -221,7 +221,7 @@ class SPJoomlaUser extends JUser
 			case 'view':
 				$action = 'access';
 		}
-		if ( in_array( $subject, array( 'acl', 'config', 'extensions' ) ) ) {
+		if ( in_array( $subject, [ 'acl', 'config', 'extensions' ] ) ) {
 			$action = 'manage';
 			$section = 0;
 		}
@@ -284,7 +284,8 @@ class SPJoomlaUser extends JUser
 
 	/**
 	 * Enter description here...
-	 *
+	 * @param null $sid
+	 * @return bool
 	 */
 	protected function getPermissions( $sid = null )
 	{
@@ -300,14 +301,14 @@ class SPJoomlaUser extends JUser
 		$db =& SPFactory::db();
 
 		/* first thing we need is all rules id for the group where the user is assigned to */
-		$join = array(
-				array( 'table' => 'spdb_permissions_groups', 'as' => 'spgr', 'key' => 'rid' ),
-				array( 'table' => 'spdb_permissions_rules', 'as' => 'sprl', 'key' => 'rid' )
-		);
+		$join = [
+				[ 'table' => 'spdb_permissions_groups', 'as' => 'spgr', 'key' => 'rid' ],
+				[ 'table' => 'spdb_permissions_rules', 'as' => 'sprl', 'key' => 'rid' ]
+		];
 		$gids = implode( ', ', $this->gid );
 		$valid = $db->valid( 'sprl.validUntil', 'sprl.validSince', 'state' );
 		$valid .= "AND spgr.gid in( {$gids} ) ";
-		$db->dselect( 'sprl.rid', $db->join( $join ), array( '@VALID' => $valid ) );
+		$db->dselect( 'sprl.rid', $db->join( $join ), [ '@VALID' => $valid ] );
 		try {
 			$this->_prules = $db->loadResultArray();
 		} catch ( SPException $x ) {
@@ -316,7 +317,7 @@ class SPJoomlaUser extends JUser
 		/* if we have the rules ids we need to get permission for this section and global permission */
 		if ( count( $this->_prules ) ) {
 			try {
-				$db->select( 'pid', 'spdb_permissions_map', array( 'sid' => $sid, 'rid' => $this->_prules ) );
+				$db->select( 'pid', 'spdb_permissions_map', [ 'sid' => $sid, 'rid' => $this->_prules ] );
 				$permissions = $db->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( 'permissions', SPLang::e( 'CANNOT_GET_USERS_DATA', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __CLASS__ );
@@ -324,18 +325,18 @@ class SPJoomlaUser extends JUser
 		}
 		/* get all available permissions */
 		try {
-			$db->select( '*', 'spdb_permissions', array( 'site' => SOBI_ACL, 'published' => 1 ) );
+			$db->select( '*', 'spdb_permissions', [ 'site' => SOBI_ACL, 'published' => 1 ] );
 			$this->_availablePerm = $db->loadAssocList( 'pid' );
 		} catch ( SPException $x ) {
 			Sobi::Error( 'permissions', SPLang::e( 'CANNOT_GET_PERMISSIONS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
 		}
-		$this->_permissions[ $sid ] = array();
+		$this->_permissions[ $sid ] = [];
 		/* create permissions array */
 		if ( count( $permissions ) ) {
 			foreach ( $permissions as $perm ) {
 				if ( isset( $this->_availablePerm[ $perm ] ) ) {
 					if ( !( isset( $this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ] ) ) ) {
-						$this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ] = array();
+						$this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ] = [];
 					}
 					$this->_permissions[ $sid ][ $this->_availablePerm[ $perm ][ 'subject' ] ][ $this->_availablePerm[ $perm ][ 'action' ] ][ $this->_availablePerm[ $perm ][ 'value' ] ] = true;
 				}
@@ -353,7 +354,7 @@ class SPJoomlaUser extends JUser
 	public static function getBaseData( $id )
 	{
 		if ( is_int( $id ) ) {
-			$ids = array( $id );
+			$ids = [ $id ];
 		}
 		else {
 			$ids = $id;
@@ -363,7 +364,7 @@ class SPJoomlaUser extends JUser
 		}
 		try {
 			$data = SPFactory::db()
-					->select( '*', '#__users', array( 'id' => $ids ) )
+					->select( '*', '#__users', [ 'id' => $ids ] )
 					->loadObjectList( 'id' );
 		} catch ( SPException $x ) {
 			Sobi::Error( 'user', SPLang::e( 'CANNOT_GET_USERS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );

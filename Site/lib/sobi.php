@@ -91,14 +91,14 @@ abstract class Sobi
 			if ( SPRequest::task() ) {
 				$sMsg .= ' [ ' . SPRequest::task() . ' ]';
 			}
-			$error = array(
+			$error = [
 					'section' => $section,
 					'message' => $msg,
 					'code' => $code,
 					'file' => $file,
 					'line' => $line,
 					'content' => $sMsg
-			);
+			];
 			trigger_error( 'json://' . json_encode( $error ), $type );
 		}
 		if ( $code ) {
@@ -163,28 +163,27 @@ abstract class Sobi
 	 * or translates language dependend properties (case 2)
 	 *
 	 * case 1)
-	 * @param string $txt - string to translate
-	 * @param array $vars - variables included in the string.
-	 *             array( 'username' => $username, 'userid' => $uid ).
-	 *         The language label has to be defined like this my_label = " My name is var:[username] and my id is var:[userid]"
-	 * @return string
+	 * @return string case 2)
 	 *
 	 * case 2)
-	 * @param array $sids - array with ids of objects to translate
-	 * @param array $fields - (optional) array (or string) with properties names to translate. If not given, translates all
-	 * @param string $type - (optional) type of object (section, category, entry). If not given, translates all
-	 * @param string $lang - (optional) specific language. If not given, use currently set language
-	 * @return array
+	 * @internal param string $txt - string to translate
+	 * @internal param array $vars - variables included in the string.
+	 *             array( 'username' => $username, 'userid' => $uid ).
+	 *         The language label has to be defined like this my_label = " My name is var:[username] and my id is var:[userid]"
+	 * @internal param array $sids - array with ids of objects to translate
+	 * @internal param array $fields - (optional) array (or string) with properties names to translate. If not given, translates all
+	 * @internal param string $type - (optional) type of object (section, category, entry). If not given, translates all
+	 * @internal param string $lang - (optional) specific language. If not given, use currently set language
 	 */
 	public static function Txt()
 	{
 		$args = func_get_args();
 		SPLoader::loadClass( 'types.array' );
 		if ( is_array( $args[ 0 ] ) && SPData_Array::is_int( $args[ 0 ] ) ) {
-			return call_user_func_array( array( 'SPLang', 'translateObject' ), $args );
+			return call_user_func_array( [ 'SPLang', 'translateObject' ], $args );
 		}
 		else {
-			return call_user_func_array( array( 'SPLang', '_' ), $args );
+			return call_user_func_array( [ 'SPLang', '_' ], $args );
 		}
 	}
 
@@ -222,7 +221,7 @@ abstract class Sobi
 	 * @param array $params - parameters to pass to the plugin
 	 * @return bool
 	 */
-	public static function Trigger( $action, $subject = null, $params = array() )
+	public static function Trigger( $action, $subject = null, $params = [] )
 	{
 		SPFactory::plugins()->trigger( $action, $subject, $params );
 	}
@@ -314,7 +313,7 @@ abstract class Sobi
 	 * @param mixed $params
 	 * @return bool
 	 */
-	public static function TriggerPlugin( $action, $subject = null, $params = array() )
+	public static function TriggerPlugin( $action, $subject = null, $params = [] )
 	{
 		return Sobi::Trigger( $action, $subject, $params );
 	}
@@ -418,7 +417,7 @@ abstract class Sobi
 				else {
 					$lang = self::DefLang();
 				}
-				self::Trigger( 'Language', 'Determine', array( &$lang ) );
+				self::Trigger( 'Language', 'Determine', [ &$lang ] );
 			}
 		}
 		$lang = strlen( $lang ) ? $lang : ( $allowEmpty ? self::DefLang() : self::Lang( false, true ) );
@@ -502,7 +501,7 @@ abstract class Sobi
 			defined( 'SOBI_TASK' ) || define( 'SOBI_TASK', 'task' );
 			defined( 'SOBI_DEFLANG' ) || define( 'SOBI_DEFLANG', $lang );
 			defined( 'SOBI_ACL' ) || define( 'SOBI_ACL', 'front' );
-			defined( 'SOBI_MEDIA' ) || define( 'SOBI_MEDIA', implode( '/', array( $root, 'media', 'sobipro' ) ) );
+			defined( 'SOBI_MEDIA' ) || define( 'SOBI_MEDIA', implode( '/', [ $root, 'media', 'sobipro' ] ) );
 			defined( 'SOBI_PATH' ) || define( 'SOBI_PATH', SOBI_ROOT . '/components/com_sobipro' );
 			defined( 'SOBI_LIVE_PATH' ) || define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );
 			require_once( SOBI_PATH . '/lib/base/fs/loader.php' );
@@ -527,13 +526,13 @@ abstract class Sobi
 		if ( $sid ) {
 			$section = null;
 			if ( $sid ) {
-				$path = array();
+				$path = [];
 				$id = $sid;
 				$path[] = ( int )$id;
 				while ( $id > 0 ) {
 					try {
 						$id = SPFactory::db()
-								->select( 'pid', 'spdb_relations', array( 'id' => $id ) )
+								->select( 'pid', 'spdb_relations', [ 'id' => $id ] )
 								->loadResult();
 						if ( $id ) {
 							$path[] = ( int )$id;

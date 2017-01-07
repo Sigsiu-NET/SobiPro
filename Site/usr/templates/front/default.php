@@ -29,7 +29,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 <?php $c = $this->count( 'sections' );
 for ( $i = 0; $i < $c ; $i++ ) { ?>
 	<div>
-		<a href="<?php echo Sobi::Url( array( 'sid' => $this->get( 'sections.id', $i ) ) )?>"><?php $this->show( 'sections.name', $i ); ?> </a>
+		<a href="<?php echo Sobi::Url( [ 'sid' => $this->get( 'sections.id', $i ) ] )?>"><?php $this->show( 'sections.name', $i ); ?> </a>
 	</div>
 	<?php } ?>
 </div>

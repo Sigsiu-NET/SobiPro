@@ -33,21 +33,24 @@ class SPImage extends SPFile
 	/*** @var resource */
 	private $image = null;
 	/*** @var array */
-	private $exif = array();
+	private $exif = [];
 	/*** @var array */
-	static $imgFunctions = array(
+	static $imgFunctions = [
 			IMAGETYPE_GIF => 'imagecreatefromgif',
 			IMAGETYPE_JPEG => 'imagecreatefromjpeg',
 			IMAGETYPE_PNG => 'imagecreatefrompng',
 			IMAGETYPE_JPEG2000 => 'imagecreatefromjpeg'
-	);
+	];
 
 	/**
-	 * */
+	 * @param int $sections
+	 * @param bool $array
+	 * @return array|bool
+	 */
 	public function exif( $sections = 0, $array = true )
 	{
 		if ( function_exists( 'exif_read_data' ) && $this->_filename ) {
-			if ( in_array( strtolower( SPFs::getExt( $this->_filename ) ), array( 'jpg', 'jpeg', 'tiff' ) ) ) {
+			if ( in_array( strtolower( SPFs::getExt( $this->_filename ) ), [ 'jpg', 'jpeg', 'tiff' ] ) ) {
 				$this->exif = exif_read_data( $this->_filename, $sections, $array );
 			}
 			return $this->exif;
@@ -79,7 +82,7 @@ class SPImage extends SPFile
 		$this->type = $imgType;
 		$currentImg = $this->createImage( $imgType );
 		if ( function_exists( 'imagecrop' ) ) {
-			$this->image = imagecrop( $currentImg, array( 'x' => $x, 'y' => $y, 'width' => $width, 'height' => $height ) );
+			$this->image = imagecrop( $currentImg, [ 'x' => $x, 'y' => $y, 'width' => $width, 'height' => $height ] );
 		}
 		else {
 			// imagecopy ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $src_w , int $src_h )

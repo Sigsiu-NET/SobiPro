@@ -42,11 +42,11 @@ class SPCategoryView extends SPSectionView implements SPView
 			$path = $this->parentPath( $id );
 		}
 		$this->assign( $path, 'parent_path' );
-		$url = Sobi::Url( array( 'task' => 'category.parents', 'out' => 'json', 'format' => 'raw' ), true );
+		$url = Sobi::Url( [ 'task' => 'category.parents', 'out' => 'json', 'format' => 'raw' ], true );
 		$this->assign( $url, 'parent_ajax_url' );
 		/* @TODO  */
-		$tpl = str_replace( implode( '/', array( 'usr', 'templates', 'category' ) ), 'views/tpl/', $this->_template.'.php' );
-		Sobi::Trigger( 'Display', $this->name(), array( &$this ) );
+		$tpl = str_replace( implode( '/', [ 'usr', 'templates', 'category' ] ), 'views/tpl/', $this->_template.'.php' );
+		Sobi::Trigger( 'Display', $this->name(), [ &$this ] );
 		include( $tpl );
 		Sobi::Trigger( 'AfterDisplay', $this->name() );
 	}
@@ -54,7 +54,7 @@ class SPCategoryView extends SPSectionView implements SPView
 	public function icon()
 	{
 		/* @TODO  */
-		$tpl = str_replace( implode( '/', array( 'usr', 'templates', 'category' ) ), 'views/tpl/', $this->_template.'.php' );
+		$tpl = str_replace( implode( '/', [ 'usr', 'templates', 'category' ] ), 'views/tpl/', $this->_template.'.php' );
 //		$tpl = str_replace( implode( DS, array( 'usr', 'templates', 'category' ) ), DS.'views'.DS .'tpl'.DS, $this->_template.'.php' );
 		include( $tpl );
 	}

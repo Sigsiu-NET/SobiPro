@@ -69,7 +69,7 @@ class SPListingCtrl extends SPSectionCtrl
 		}
 	}
 
-	public function entries( $eOrder, $eLimit = null, $eLimStart = null, $count = false, $conditions = array(), $entriesRecursive = false, $pid = -1 )
+	public function entries( $eOrder, $eLimit = null, $eLimStart = null, $count = false, $conditions = [], $entriesRecursive = false, $pid = -1 )
 	{
 		return $this->getEntries( $eOrder, $eLimit, $eLimStart, $count, $conditions, $entriesRecursive, $pid );
 	}

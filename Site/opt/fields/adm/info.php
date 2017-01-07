@@ -56,23 +56,23 @@ class SPField_InfoAdm extends SPField_Info
 			$attr[ 'viewInfo' ] = $this->viewInfo;
 			$attr[ 'entryInfo' ] = $this->entryInfo;
 		}
-		$data = array(
+		$data = [
 				'key' => $this->nid . '-viewInfo',
 				'value' => $attr[ 'viewInfo' ],
 				'type' => 'field_information',
 				'fid' => $this->fid,
 				'id' => Sobi::Section(),
 				'section' => Sobi::Section()
-		);
+		];
 		SPLang::saveValues( $data );
-		$data = array(
+		$data = [
 				'key' => $this->nid . '-entryInfo',
 				'value' => $attr[ 'entryInfo' ],
 				'type' => 'field_information',
 				'fid' => $this->fid,
 				'id' => Sobi::Section(),
 				'section' => Sobi::Section()
-		);
+		];
 		SPLang::saveValues( $data );
 
 		$attr[ 'required' ] = 0;
@@ -83,9 +83,9 @@ class SPField_InfoAdm extends SPField_Info
 
 	public function exportField()
 	{
-		$data = array();
-		$data[ ] = array( 'attributes' => array( 'name' => 'viewInfo' ), 'value' => $this->viewInfo );
-		$data[ ] = array( 'attributes' => array( 'name' => 'entryInfo' ), 'value' => $this->entryInfo );
+		$data = [];
+		$data[ ] = [ 'attributes' => [ 'name' => 'viewInfo' ], 'value' => $this->viewInfo ];
+		$data[ ] = [ 'attributes' => [ 'name' => 'entryInfo' ], 'value' => $this->entryInfo ];
 		return $data;
 	}
 
@@ -97,23 +97,23 @@ class SPField_InfoAdm extends SPField_Info
 				$attr = $set[ 'attributes' ][ 'name' ];
 				$this->$attr = $set[ 'value' ];
 			}
-			$viewInfo = array(
+			$viewInfo = [
 					'key' => $this->nid . '-viewInfo',
 					'value' => $this->viewInfo,
 					'type' => 'field_information',
 					'fid' => $this->fid,
 					'id' => Sobi::Section(),
 					'section' => Sobi::Section()
-			);
+			];
 			SPLang::saveValues( $viewInfo );
-			$entryInfo = array(
+			$entryInfo = [
 					'key' => $this->nid . '-entryInfo',
 					'value' => $this->entryInfo,
 					'type' => 'field_information',
 					'fid' => $this->fid,
 					'id' => Sobi::Section(),
 					'section' => Sobi::Section()
-			);
+			];
 			SPLang::saveValues( $entryInfo );
 		}
 	}

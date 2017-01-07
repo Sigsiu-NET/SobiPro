@@ -74,14 +74,14 @@ class SPPPaypal extends SPPlugin
         $rp = $cfg[ 'general' ][ 'replace' ];
         $to = ( $cfg[ 'general' ][ 'replace' ] == ',' ) ? '.' : ',';
         $amount = str_replace( $rp, $to, $payment[ 'summary' ][ 'sum_brutto' ] );
-        $values = array(
+        $values = [
             'entry' => $entry,
             'amount' => preg_replace( '/[^0-9\.,]/', null, $amount ),
             'ppurl' => SPLang::replacePlaceHolders( $data[ 'ppurl' ][ 'value' ], $entry ),
             'ppemail' => SPLang::replacePlaceHolders( $data[ 'ppemail' ][ 'value' ], $entry ),
             'pprurl' => SPLang::replacePlaceHolders( $data[ 'pprurl' ][ 'value' ], $entry ),
             'ppcc' => SPLang::replacePlaceHolders( $data[ 'ppcc' ][ 'value' ], $entry ),
-        );
+        ];
         $expl = SPLang::replacePlaceHolders(
             SPLang::getValue( 'ppexpl', 'plugin', Sobi::Section() ),
             $values
@@ -93,10 +93,10 @@ class SPPPaypal extends SPPlugin
         $values[ 'expl' ] = $expl;
         $values[ 'subject' ] = $subject;
         $values[ 'ip' ] = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
-        $methods[ $this->id ] = array(
+        $methods[ $this->id ] = [
             'content' => ( $message ? $this->raw( $cfg, $values ) : $this->content( $cfg, $values ) ),
             'title' => Sobi::Txt( 'APP.PPP.PAY_TITLE' )
-        );
+        ];
     }
 
     /**
@@ -111,7 +111,7 @@ class SPPPaypal extends SPPlugin
         $out .= Sobi::Txt( 'APP.PPP.PAY_TITLE' ) . ': ';
         $out .= $config[ 'message' ][ 'url' ];
         array_shift( $config[ 'message' ] );
-        $v = array();
+        $v = [];
         foreach ( $config[ 'message' ] as $field => $value ) {
             $v[ ] = $field . '=' . urlencode( SPLang::replacePlaceHolders( $value, $values ) );
         }

@@ -44,7 +44,7 @@ class SPJoomlaCMSHelper
 	 */
 	public static function myVersion( $str = false )
 	{
-		static $ver = array();
+		static $ver = [];
 		if ( !isset( $ver[ $str ] ) ) {
 			//$def = SOBI_CMS == 'joomla15' ? 'sobipro.xml' : 'com_sobipro.xml';
 			$def = 'com_sobipro.xml';
@@ -57,7 +57,7 @@ class SPJoomlaCMSHelper
 			}
 			else {
 				$v = explode( '.', $doc->getElementsByTagName( 'version_number' )->item( 0 )->nodeValue );
-				$ver[ $str ] = array( 'major' => $v[ 0 ], 'minor' => ( isset( $v[ 1 ] ) ? $v[ 1 ] : 0 ), 'build' => ( isset( $v[ 2 ] ) ? $v[ 2 ] : 0 ), 'rev' => ( isset( $v[ 3 ] ) ? $v[ 3 ] : 0 ) );
+				$ver[ $str ] = [ 'major' => $v[ 0 ], 'minor' => ( isset( $v[ 1 ] ) ? $v[ 1 ] : 0 ), 'build' => ( isset( $v[ 2 ] ) ? $v[ 2 ] : 0 ), 'rev' => ( isset( $v[ 3 ] ) ? $v[ 3 ] : 0 ) ];
 			}
 		}
 		return $ver[ $str ];
@@ -70,7 +70,7 @@ class SPJoomlaCMSHelper
 	 */
 	public static function minCmsVersion( $recommended = false )
 	{
-		return $recommended ? array( 'major' => 1, 'minor' => 5, 'build' => 26, 'rev' => 0 ) : array( 'major' => 1, 'minor' => 5, 'build' => 20, 'rev' => 0 );
+		return $recommended ? [ 'major' => 1, 'minor' => 5, 'build' => 26, 'rev' => 0 ] : [ 'major' => 1, 'minor' => 5, 'build' => 20, 'rev' => 0 ];
 	}
 
 	/**
@@ -107,7 +107,7 @@ class SPJoomlaCMSHelper
 		}
 		$version = new JVersion();
 		$v = explode( '.', $version->RELEASE );
-		return array( 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => $version->DEV_LEVEL, 'rev' => 0 );
+		return [ 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => $version->DEV_LEVEL, 'rev' => 0 ];
 	}
 
 	/**
@@ -118,9 +118,9 @@ class SPJoomlaCMSHelper
 	{
 		foreach ( $files as $file ) {
 			$def = SPFactory::LoadXML( $file, LIBXML_NOERROR );
-			if ( in_array( trim( $def->documentElement->tagName ), array( 'install', 'extension' ) ) ) {
+			if ( in_array( trim( $def->documentElement->tagName ), [ 'install', 'extension' ] ) ) {
 				if ( $def->getElementsByTagName( 'SobiPro' )->length ) {
-					if ( in_array( trim( $def->documentElement->getAttribute( 'type' ) ), array( 'language', 'module', 'plugin', 'component' ) ) ) {
+					if ( in_array( trim( $def->documentElement->getAttribute( 'type' ) ), [ 'language', 'module', 'plugin', 'component' ] ) ) {
 						return $def;
 					}
 				}
@@ -151,13 +151,13 @@ class SPJoomlaCMSHelper
 	 */
 	public static function installLang( $lang, $force = true, $move = false )
 	{
-		$log = array();
+		$log = [];
 		if ( count( $lang ) ) {
 			foreach ( $lang as $language => $files ) {
 				$language = str_replace( '_', '-', $language );
 				if ( count( $files ) ) {
 					foreach ( $files as $file ) {
-						$target = $file[ 'adm' ] ? implode( '/', array( JPATH_ADMINISTRATOR, 'language', $language ) ) : implode( '/', array( SOBI_ROOT, 'language', $language ) );
+						$target = $file[ 'adm' ] ? implode( '/', [ JPATH_ADMINISTRATOR, 'language', $language ] ) : implode( '/', [ SOBI_ROOT, 'language', $language ] );
 						if ( $force || SPFs::exists( $target ) ) {
 							$iFile = $target . '/' . trim( $file[ 'name' ] );
 							$log[ ] = $iFile;
@@ -188,7 +188,7 @@ class SPJoomlaCMSHelper
 	{
 		$langs = JFactory::getLanguage()->getKnownLanguages();
 		if ( $list ) {
-			$llist = array();
+			$llist = [];
 			foreach ( $langs as $i => $value ) {
 				$llist[ $i ] = $value[ 'name' ];
 			}
@@ -205,21 +205,21 @@ class SPJoomlaCMSHelper
 	{
 		SPLoader::loadClass( 'base.fs.directory_iterator' );
 		$jTemplates = new SPDirectoryIterator( SPLoader::dirPath( 'templates', 'root', true ) );
-		$tr = array();
+		$tr = [];
 		foreach ( $jTemplates as $template ) {
 			if ( $template->isDot() ) {
 				continue;
 			}
 			if ( $template->isDir() ) {
-				if ( file_exists( implode( '/', array( $template->getPathname(), 'html', 'com_sobipro' ) ) ) && file_exists( implode( '/', array( $template->getPathname(), 'templateDetails.xml' ) ) ) ) {
+				if ( file_exists( implode( '/', [ $template->getPathname(), 'html', 'com_sobipro' ] ) ) && file_exists( implode( '/', [ $template->getPathname(), 'templateDetails.xml' ] ) ) ) {
 					$data = new DOMDocument( '1.0', 'utf-8' );
 					$data->load( Sobi::FixPath( $template->getPathname() . '/templateDetails.xml' ) );
 					$name = $data->getElementsByTagName( 'name' )->item( 0 )->nodeValue;
-					$tr[ $name ] = Sobi::FixPath( implode( DS, array( $template->getPathname(), 'html', 'com_sobipro' ) ) );
+					$tr[ $name ] = Sobi::FixPath( implode( DS, [ $template->getPathname(), 'html', 'com_sobipro' ] ) );
 				}
 			}
 		}
-		return array( 'name' => Sobi::Txt( 'TP.TEMPLATES_OVERRIDE' ), 'icon' => Sobi::Cfg( 'live_site' ) . 'media/sobipro/tree/joomla.gif', 'data' => $tr );
+		return [ 'name' => Sobi::Txt( 'TP.TEMPLATES_OVERRIDE' ), 'icon' => Sobi::Cfg( 'live_site' ) . 'media/sobipro/tree/joomla.gif', 'data' => $tr ];
 	}
 
 
@@ -237,11 +237,11 @@ class SPJoomlaCMSHelper
 	 * @param bool $force - force even if it has been already done - forcing only language files redefinition
 	 * @return void
 	 */
-	public function updateXMLDefinition( $tasks, $controlString, $languageFile, $additionalStrings = array(), $force = false )
+	public function updateXMLDefinition( $tasks, $controlString, $languageFile, $additionalStrings = [], $force = false )
 	{
 		$file = SPLoader::translatePath( 'metadata', 'front', true, 'xml' );
 		$run = false;
-		$strings = array();
+		$strings = [];
 		foreach ( $tasks as $label ) {
 			$strings[ ] = $label;
 			$strings[ ] = $label . '_EXPL';
@@ -277,7 +277,7 @@ class SPJoomlaCMSHelper
 			/** @var SPDirectory $dir */
 			$dir = SPFactory::Instance( 'base.fs.directory', $dirPath );
 			$files = $dir->searchFile( 'com_sobipro.sys.ini', false, 2 );
-			$default = array();
+			$default = [];
 			$defaultLangDir = SPLoader::dirPath( "language.en-GB", 'root', true );
 			$defaultLang = parse_ini_file( $defaultLangDir . 'en-GB.' . $languageFile . '.ini' );
 			foreach ( $strings as $string ) {
@@ -289,7 +289,7 @@ class SPJoomlaCMSHelper
 				$fileName = $file->getFileName();
 				list( $language ) = explode( '.', $fileName );
 				$nativeLangDir = SPLoader::dirPath( "language.{$language}", 'root', true );
-				$nativeStrings = array();
+				$nativeStrings = [];
 				if ( $nativeLangDir ) {
 					$nativeLangFile = $nativeLangDir . $language . '.' . $languageFile . '.ini';
 					if ( file_exists( $nativeLangFile ) ) {

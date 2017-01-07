@@ -92,7 +92,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				 * Preventing deletion of THIS category (Issue #1162)
 				 * Basically if there was no array of $cids something went wrong
 				 */
-				$cids = SPRequest::arr( 'c_sid', array() );
+				$cids = SPRequest::arr( 'c_sid', [] );
 				if ( count( $cids ) ) {
 					SPFactory::cache()->cleanCategories();
 					parent::execute();
@@ -139,16 +139,17 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 	}
 
 	/**
+	 * @param $approve
 	 */
 	private function approval( $approve )
 	{
-		$sids = SPRequest::arr( 'c_sid', array() );
+		$sids = SPRequest::arr( 'c_sid', [] );
 		if ( !( count( $sids ) ) ) {
 			if ( $this->_model->get( 'id' ) ) {
-				$sids = array( $this->_model->get( 'id' ) );
+				$sids = [ $this->_model->get( 'id' ) ];
 			}
 			else {
-				$sids = array();
+				$sids = [];
 			}
 		}
 		if ( !( count( $sids ) ) ) {
@@ -157,7 +158,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		else {
 			foreach ( $sids as $sid ) {
 				try {
-					SPFactory::db()->update( 'spdb_object', array( 'approved' => $approve ? 1 : 0 ), array( 'id' => $sid, 'oType' => 'category' ) );
+					SPFactory::db()->update( 'spdb_object', [ 'approved' => $approve ? 1 : 0 ], [ 'id' => $sid, 'oType' => 'category' ] );
 					SPFactory::cache()->deleteObj( 'category', $sid );
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -175,9 +176,9 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		/* get the requested ordering */
-		$sids = SPRequest::arr( 'cp_sid', array() );
+		$sids = SPRequest::arr( 'cp_sid', [] );
 		/* re-order it to the valid ordering */
-		$order = array();
+		$order = [];
 		asort( $sids );
 
 		$cLimStart = SPRequest::int( 'cLimStart', 0 );
@@ -191,7 +192,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		}
 		foreach ( $order as $sid ) {
 			try {
-				$db->update( 'spdb_relations', array( 'position' => ++$LimStart ), array( 'id' => $sid, 'oType' => 'category' ) );
+				$db->update( 'spdb_relations', [ 'position' => ++$LimStart ], [ 'id' => $sid, 'oType' => 'category' ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
@@ -233,8 +234,8 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			SPRequest::set( 'eSite', $ePages );
 		}
 
-		$entries = array();
-		$categories = array();
+		$entries = [];
+		$categories = [];
 		SPLoader::loadClass( 'models.dbobject' );
 
 		/* if there are categories in the root */
@@ -243,7 +244,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				$LimStart = $cLimStart ? ( ( $cLimStart - 1 ) * $cLimit ) : $cLimStart;
 				$Limit = $cLimit > 0 ? $cLimit : 0;
 				$cOrder = $this->parseCategoryOrdering( 'categories', 'corder', 'position.asc', $Limit, $LimStart, $c );
-				$db->select( '*', 'spdb_object', array( 'id' => $c, 'oType' => 'category' ), $cOrder, $Limit, $LimStart );
+				$db->select( '*', 'spdb_object', [ 'id' => $c, 'oType' => 'category' ], $cOrder, $Limit, $LimStart );
 				$results = $db->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -261,7 +262,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				$Limit = $eLimit > 0 ? $eLimit : 0;
 				$eOrder = $this->parseCategoryOrdering( 'entries', 'eorder', 'position.asc', $Limit, $LimStart, $e );
 				$entries = $db
-						->select( '*', 'spdb_object', array( 'id' => $e, 'oType' => 'entry' ), $eOrder, $Limit, $LimStart )
+						->select( '*', 'spdb_object', [ 'id' => $e, 'oType' => 'entry' ], $eOrder, $Limit, $LimStart )
 						->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -279,7 +280,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$menu = new SPAdmSiteMenu( 'section.' . $this->_task, SPRequest::sid() );
 		/* load the menu definition */
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
-		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
+		Sobi::Trigger( 'Create', 'AdmMenu', [ &$cfg ] );
 		if ( count( $cfg ) ) {
 			$i = 0;
 			foreach ( $cfg as $section => $keys ) {
@@ -294,7 +295,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$tree = SPLoader::loadClass( 'mlo.tree' );
 		$tree = new $tree( Sobi::GetUserState( 'categories.order', 'corder', 'position.asc' ) );
 		/* set link */
-		$tree->setHref( Sobi::Url( array( 'sid' => '{sid}' ) ) );
+		$tree->setHref( Sobi::Url( [ 'sid' => '{sid}' ] ) );
 		$tree->setId( 'menuTree' );
 		/* set the task to expand the tree */
 		$tree->setTask( 'category.expand' );
@@ -332,7 +333,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				->assign( $catName, 'category_name' )
 				->addHidden( $pid, 'pid' )
 				->addHidden( $sid, 'sid' );
-		Sobi::Trigger( 'Category', 'View', array( &$view ) );
+		Sobi::Trigger( 'Category', 'View', [ &$view ] );
 		$view->display();
 	}
 
@@ -340,10 +341,10 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 	public function customCols()
 	{
 		/* get fields for header */
-		$fields = array();
+		$fields = [];
 		try {
 			$fieldsData = SPFactory::db()
-					->select( '*', 'spdb_field', array( 'admList' => 1, 'section' => Sobi::Reg( 'current_section' ) ) )
+					->select( '*', 'spdb_field', [ 'admList' => 1, 'section' => Sobi::Reg( 'current_section' ) ] )
 					->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -395,7 +396,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				->assign( $id, 'cid' )
 				->assign( $fields, 'fields' )
 				->addHidden( Sobi::Section(), 'pid' );
-		Sobi::Trigger( 'Category', 'EditView', array( &$view ) );
+		Sobi::Trigger( 'Category', 'EditView', [ &$view ] );
 		$view->display();
 	}
 
@@ -413,7 +414,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$ord = Sobi::GetUserState( $subject . '.order', $col, Sobi::Cfg( 'admin.' . $subject . '-order', $def ) );
 		/** legacy - why the hell I called it order?! */
 		$ord = str_replace( 'order', 'position', $ord );
-		$ord = str_replace( array( 'e_s', 'c_s' ), null, $ord );
+		$ord = str_replace( [ 'e_s', 'c_s' ], null, $ord );
 		$dir = 'asc';
 		if ( strstr( $ord, '.' ) ) {
 			$ord = explode( '.', $ord );
@@ -424,7 +425,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			$subject = $subject == 'categories' ? 'category' : 'entry';
 			/* @var SPdb $db */
 			$db = SPFactory::db();
-			$db->select( 'id', 'spdb_relations', array( 'oType' => $subject, 'pid' => $this->_model->get( 'id' ) ), 'position.' . $dir, $lim, $lStart );
+			$db->select( 'id', 'spdb_relations', [ 'oType' => $subject, 'pid' => $this->_model->get( 'id' ) ], 'position.' . $dir, $lim, $lStart );
 			$fields = $db->loadResultArray();
 			if ( count( $fields ) ) {
 				$sids = $fields;
@@ -441,10 +442,10 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			$subject = $subject == 'categories' ? 'category' : 'entry';
 			/* @var SPdb $db */
 			$db =& SPFactory::db();
-			$db->select( 'id', 'spdb_language', array( 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.' . $dir );
+			$db->select( 'id', 'spdb_language', [ 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::Lang() ], 'sValue.' . $dir );
 			$fields = $db->loadResultArray();
 			if ( !count( $fields ) && Sobi::Lang() != Sobi::DefLang() ) {
-				$db->select( 'id', 'spdb_language', array( 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.' . $dir );
+				$db->select( 'id', 'spdb_language', [ 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::DefLang() ], 'sValue.' . $dir );
 				$fields = $db->loadResultArray();
 			}
 			if ( count( $fields ) ) {
@@ -463,7 +464,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			static $field = null;
 			if ( !$field ) {
 				try {
-					$db->select( 'fieldType', 'spdb_field', array( 'nid' => $ord, 'section' => Sobi::Section() ) );
+					$db->select( 'fieldType', 'spdb_field', [ 'nid' => $ord, 'section' => Sobi::Section() ] );
 					$fType = $db->loadResult();
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DETERMINE_FIELD_TYPE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -478,14 +479,14 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			 * The current method could be very inefficient !!!
 			 */
 			if ( $field && method_exists( $field, 'sortByAdm' ) ) {
-				$fields = call_user_func_array( array( $field, 'sortByAdm' ), array() );
+				$fields = call_user_func_array( [ $field, 'sortByAdm' ], [] );
 			}
 			else {
-				$join = array(
-						array( 'table' => 'spdb_field', 'as' => 'def', 'key' => 'fid' ),
-						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' )
-				);
-				$db->select( 'sid', $db->join( $join ), array( 'def.nid' => $ord, 'lang' => Sobi::Lang() ), 'baseData.' . $dir );
+				$join = [
+						[ 'table' => 'spdb_field', 'as' => 'def', 'key' => 'fid' ],
+						[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ]
+				];
+				$db->select( 'sid', $db->join( $join ), [ 'def.nid' => $ord, 'lang' => Sobi::Lang() ], 'baseData.' . $dir );
 				$fields = $db->loadResultArray();
 			}
 			if ( count( $fields ) ) {
@@ -514,15 +515,15 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		$current = $this->_model->get( 'position' );
 		try {
 			$interchange = $db
-					->select( 'position, id', 'spdb_relations', array( 'position' . $eq => $current, 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ) ), $dir, 1 )
+					->select( 'position, id', 'spdb_relations', [ 'position' . $eq => $current, 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ) ], $dir, 1 )
 					->loadAssocList();
 			if ( $interchange && count( $interchange ) ) {
-				$db->update( 'spdb_relations', array( 'position' => $interchange[ 0 ][ 'position' ] ), array( 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ), 'id' => $this->_model->get( 'id' ) ), 1 );
-				$db->update( 'spdb_relations', array( 'position' => $current ), array( 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ), 'id' => $interchange[ 0 ][ 'id' ] ), 1 );
+				$db->update( 'spdb_relations', [ 'position' => $interchange[ 0 ][ 'position' ] ], [ 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ), 'id' => $this->_model->get( 'id' ) ], 1 );
+				$db->update( 'spdb_relations', [ 'position' => $current ], [ 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ), 'id' => $interchange[ 0 ][ 'id' ] ], 1 );
 			}
 			else {
 				$current = $up ? $current-- : $current++;
-				$db->update( 'spdb_relations', array( 'position' => $current ), array( 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ), 'id' => $this->_model->get( 'id' ) ), 1 );
+				$db->update( 'spdb_relations', [ 'position' => $current ], [ 'oType' => $this->_model->type(), 'pid' => SPRequest::int( 'pid' ), 'id' => $this->_model->get( 'id' ) ], 1 );
 			}
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );

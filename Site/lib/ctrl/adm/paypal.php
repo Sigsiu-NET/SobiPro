@@ -52,22 +52,22 @@ class SPPaymentPP extends SPConfigAdmCtrl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$this->validate( 'extensions.paypal', array( 'task' => 'paypal', 'pid' => Sobi::Section() ) );
+		$this->validate( 'extensions.paypal', [ 'task' => 'paypal', 'pid' => Sobi::Section() ] );
 		SPFactory::registry()->saveDBSection(
-				array(
-						array( 'key' => 'ppurl', 'value' => SPRequest::string( 'ppurl' ) ),
-						array( 'key' => 'ppemail', 'value' => SPRequest::string( 'ppemail' ) ),
-						array( 'key' => 'ppcc', 'value' => SPRequest::string( 'ppcc' ) ),
-						array( 'key' => 'pprurl', 'value' => SPRequest::string( 'pprurl' ) ),
-				), 'paypal_' . Sobi::Section()
+				[
+						[ 'key' => 'ppurl', 'value' => SPRequest::string( 'ppurl' ) ],
+						[ 'key' => 'ppemail', 'value' => SPRequest::string( 'ppemail' ) ],
+						[ 'key' => 'ppcc', 'value' => SPRequest::string( 'ppcc' ) ],
+						[ 'key' => 'pprurl', 'value' => SPRequest::string( 'pprurl' ) ],
+				], 'paypal_' . Sobi::Section()
 		);
-		$data = array(
+		$data = [
 				'key' => 'ppexpl',
 				'value' => SPRequest::string( 'ppexpl', null, true ),
 				'type' => 'application',
 				'id' => Sobi::Section(),
 				'section' => Sobi::Section()
-		);
+		];
 		try {
 			SPLang::saveValues( $data );
 			$data[ 'key' ] = 'ppsubject';

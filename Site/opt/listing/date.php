@@ -32,7 +32,7 @@ class SPDateListing extends SPSectionCtrl implements SPListing
 	/** @var string */
 	public static $compatibility = '1.1';
 	/** @var array */
-	protected $date = array( 'year' => null, 'month' => null, 'day' => null );
+	protected $date = [ 'year' => null, 'month' => null, 'day' => null ];
 
 	public function execute()
 	{
@@ -72,7 +72,7 @@ class SPDateListing extends SPSectionCtrl implements SPListing
 		$site = SPRequest::int( 'site', 1 );
 		$eLimStart = ( ( $site - 1 ) * $eLimit );
 
-		$conditions = array( 'spo.oType' => 'entry', 'year(createdTime)' => $this->date[ 'year' ] );
+		$conditions = [ 'spo.oType' => 'entry', 'year(createdTime)' => $this->date[ 'year' ] ];
 		$listing = 'year';
 		if ( $this->date[ 'month' ] && $this->date[ 'month' ] < 13 && $this->date[ 'month' ] > 0 ) {
 			$conditions[ 'month(createdTime)' ] = $this->date[ 'month' ];
@@ -87,7 +87,7 @@ class SPDateListing extends SPSectionCtrl implements SPListing
 		$eCount = count( $this->getEntries( $eOrder, 0, 0, true, $conditions, true, Sobi::Section() ) );
 		$entries = $this->getEntries( $eOrder, $eLimit, $eLimStart, true, $conditions, true, Sobi::Section() );
 
-		$url = array( 'sid' => SPRequest::sid(), 'task' => 'list.date', 'date' => SPRequest::cmd( 'date' ) );
+		$url = [ 'sid' => SPRequest::sid(), 'task' => 'list.date', 'date' => SPRequest::cmd( 'date' ) ];
 		$pn = SPFactory::Instance( 'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ), $eLimit, $eCount, $site, $url );
 		if ( SPRequest::int( 'site', 0 ) ) {
 			$url[ 'site' ] = SPRequest::int( 'site', 0 );
@@ -99,7 +99,7 @@ class SPDateListing extends SPSectionCtrl implements SPListing
 		$monthsNames = explode( ',', Sobi::Txt( 'JS_CALENDAR_MONTHS' ) );
 		$date[ 'month' ] = isset( $monthsNames[ $date[ 'month' ] - 1 ]) ? trim( $monthsNames[ $date[ 'month' ] - 1 ] ) : null;
 		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'DL.PATH_TITLE_' . strtoupper( $listing ), $date ), Sobi::Url( 'current' ) );
-		SPFactory::header()->addTitle( Sobi::Txt( 'DL.TITLE_' . strtoupper( $listing ), $date ), array( ceil( $eCount / $eLimit ), $site ) );
+		SPFactory::header()->addTitle( Sobi::Txt( 'DL.TITLE_' . strtoupper( $listing ), $date ), [ ceil( $eCount / $eLimit ), $site ] );
 
 		/* get view class */
 		$view = SPFactory::View( 'listing' );
@@ -116,7 +116,7 @@ class SPDateListing extends SPSectionCtrl implements SPListing
 		$visitor = SPFactory::user()->getCurrent();
 		$view->assign( $visitor, 'visitor' );
 		$view->assign( $entries, 'entries' );
-		Sobi::Trigger( 'UserListing', 'View', array( &$view ) );
+		Sobi::Trigger( 'UserListing', 'View', [ &$view ] );
 		$view->display();
 	}
 
@@ -136,7 +136,7 @@ class SPDateListing extends SPSectionCtrl implements SPListing
 	{
 		$this->_task = strlen( $task ) ? $task : $this->_defTask;
 		$helpTask = $this->_type . '.' . $this->_task;
-		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_task ) );
+		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_task ] );
 		SPFactory::registry()->set( 'task', $helpTask );
 	}
 }

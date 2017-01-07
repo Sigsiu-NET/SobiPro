@@ -57,7 +57,7 @@ class SPProgressCtrl extends SPController
 			echo SPFs::read( $this->file );
 		}
 		else {
-			echo json_encode( array( 'progress' => 0, 'message' => '', 'interval' => 100, 'type' => '' ) );
+			echo json_encode( [ 'progress' => 0, 'message' => '', 'interval' => 100, 'type' => '' ] );
 		}
 		exit;
 	}
@@ -75,7 +75,7 @@ class SPProgressCtrl extends SPController
 		$this->interval = $interval;
 		$this->type = $type;
 		$typeText = Sobi::Txt( 'STATUS_' . $type );
-		$out = json_encode( array( 'progress' => $progress, 'message' => $message, 'interval' => $interval, 'type' => $type, 'typeText' => $typeText ) );
+		$out = json_encode( [ 'progress' => $progress, 'message' => $message, 'interval' => $interval, 'type' => $type, 'typeText' => $typeText ] );
 		SPFs::write( $this->file, $out );
 	}
 

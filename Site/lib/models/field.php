@@ -184,11 +184,11 @@ class SPField extends SPObject
 	/**
 	 * @var array
 	 */
-	protected $allowedAttributes = array();
+	protected $allowedAttributes = [];
 	/**
 	 * @var array
 	 */
-	protected $allowedTags = array();
+	protected $allowedTags = [];
 	/**
 	 * @var bool
 	 */
@@ -204,7 +204,7 @@ class SPField extends SPObject
 	/**
 	 * @var array
 	 */
-	protected $params = array();
+	protected $params = [];
 	/**
 	 * @var bool
 	 */
@@ -236,7 +236,7 @@ class SPField extends SPObject
 	/**
 	 * @var array
 	 */
-	private $_translatable = array( 'name', 'description', 'suffix' );
+	private $_translatable = [ 'name', 'description', 'suffix' ];
 	/** @var bool */
 	private $_rawDataChanged = false;
 
@@ -254,7 +254,7 @@ class SPField extends SPObject
 			$data = $this->_type->getRawData( $this->_rawData );
 			$r =& $data;
 		}
-		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$r ) );
+		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$r ] );
 		return $r;
 	}
 
@@ -287,7 +287,7 @@ class SPField extends SPObject
 		if ( $this->_off ) {
 			return null;
 		}
-		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$this->_data ) );
+		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$this->_data ] );
 		if ( !( $raw ) ) {
 			$this->checkMethod( 'cleanData' );
 		}
@@ -309,7 +309,7 @@ class SPField extends SPObject
 			$r =& $this->_rawData;
 		}
 		if ( $this->parse ) {
-			Sobi::Trigger( 'Parse', 'Content', array( &$r ) );
+			Sobi::Trigger( 'Parse', 'Content', [ &$r ] );
 		}
 		return is_string( $r ) ? SPLang::clean( $r ) : $r;
 	}
@@ -330,7 +330,7 @@ class SPField extends SPObject
 			$r = $this->_type->struct();
 		}
 		else {
-			$attributes = array();
+			$attributes = [];
 			if ( strlen( $this->data() ) ) {
 				$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData';
 				$this->cssClass = $this->cssClass . ' ' . $this->nid;
@@ -342,18 +342,18 @@ class SPField extends SPObject
 					$this->_type->setCSS( $this->cssClass );
 				}
 
-				$attributes = array(
+				$attributes = [
 						'lang' => Sobi::Lang( false ),
 						'class' => $this->cssClass
-				);
+				];
 			}
-			$r = array(
+			$r = [
 					'_complex' => 1,
 					'_data' => $this->data(),
 					'_attributes' => $attributes
-			);
+			];
 		}
-		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$r ) );
+		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$r ] );
 		return $r;
 	}
 
@@ -375,9 +375,9 @@ class SPField extends SPObject
 		/* @var SPdb $db */
 		try {
 			$field = SPFactory::db()
-					->select( '*', 'spdb_field', array( 'fid' => $id ) )
+					->select( '*', 'spdb_field', [ 'fid' => $id ] )
 					->loadObject();
-			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$field ) );
+			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$field ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
@@ -390,7 +390,7 @@ class SPField extends SPObject
 	 */
 	public function extend( $obj )
 	{
-		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$obj ) );
+		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$obj ] );
 		if ( !empty( $obj ) ) {
 			foreach ( $obj as $k => $v ) {
 				$this->_set( $k, $v );
@@ -431,7 +431,7 @@ class SPField extends SPObject
 
 	public function delete()
 	{
-		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( $this->id ) );
+		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ $this->id ] );
 		if ( !( $this->_type ) ) {
 			$this->loadType();
 		}
@@ -441,21 +441,21 @@ class SPField extends SPObject
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		try {
-			$db->delete( 'spdb_field', array( 'fid' => $this->id ) );
+			$db->delete( 'spdb_field', [ 'fid' => $this->id ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		try {
-			$db->delete( 'spdb_field_data', array( 'fid' => $this->id ) );
+			$db->delete( 'spdb_field_data', [ 'fid' => $this->id ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		try {
-			$db->delete( 'spdb_language', array( 'fid' => $this->id, 'oType' => 'field' ) );
+			$db->delete( 'spdb_language', [ 'fid' => $this->id, 'oType' => 'field' ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		return Sobi::Txt( 'FD.DELETED', array( 'field' => $this->name ) );
+		return Sobi::Txt( 'FD.DELETED', [ 'field' => $this->name ] );
 	}
 
 	/**
@@ -500,17 +500,17 @@ class SPField extends SPObject
 		try {
 			$lang = Sobi::Lang( false );
 			$labels = SPFactory::db()
-					->select( array( 'sValue', 'sKey' ), 'spdb_language', array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'oType' => 'field' ), "FIELD( language, '{$lang}', '%' ) ASC" )
+					->select( [ 'sValue', 'sKey' ], 'spdb_language', [ 'fid' => $this->id, 'sKey' => $this->_translatable, 'oType' => 'field' ], "FIELD( language, '{$lang}', '%' ) ASC" )
 					->loadAssocList( 'sKey' );
 			if ( !( count( $labels ) ) ) {
 				// last fallback
 				$labels = SPFactory::db()
-						->select( array( 'sValue', 'sKey' ), 'spdb_language', array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => 'en-GB', 'oType' => 'field' ) )
+						->select( [ 'sValue', 'sKey' ], 'spdb_language', [ 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => 'en-GB', 'oType' => 'field' ] )
 						->loadAssocList( 'sKey' );
 			}
 			if ( Sobi::Lang( false ) != Sobi::DefLang() ) {
 				$labels2 = SPFactory::db()
-						->select( array( 'sValue', 'sKey' ), 'spdb_language', array( 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => Sobi::DefLang(), 'oType' => 'field' ) )
+						->select( [ 'sValue', 'sKey' ], 'spdb_language', [ 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => Sobi::DefLang(), 'oType' => 'field' ] )
 						->loadAssocList( 'sKey' );
 				$labels = array_merge( $labels2, $labels );
 			}
@@ -518,7 +518,7 @@ class SPField extends SPObject
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		if ( count( $labels ) ) {
-			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$labels ) );
+			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$labels ] );
 			foreach ( $labels as $k => $v ) {
 				$this->_set( $k, $v[ 'sValue' ] );
 			}
@@ -575,7 +575,7 @@ class SPField extends SPObject
 	public function getAttributes()
 	{
 		$attr = get_class_vars( __CLASS__ );
-		$ret = array();
+		$ret = [];
 		foreach ( $attr as $k => $v ) {
 			if ( !( strstr( $k, '_' ) && strpos( $k, '_' ) == 0 ) ) {
 				$ret[] = $k;
@@ -599,7 +599,7 @@ class SPField extends SPObject
 			$this->lang = Sobi::Lang( false );
 		}
 		$this->sid = $sid;
-		$fdata = Sobi::Reg( 'fields_data_' . $sid, array() );
+		$fdata = Sobi::Reg( 'fields_data_' . $sid, [] );
 		$this->suffix = SPLang::clean( $this->suffix );
 		if ( $sid && count( $fdata ) && isset( $fdata[ $this->id ] ) ) {
 			$this->_fData = $fdata[ $this->id ];
@@ -622,7 +622,7 @@ class SPField extends SPObject
 				$this->editLimit = 2;
 			}
 			// if the limit has been reached - this field cannot be required
-			if ( !( Sobi::Can( 'entry.manage.*' ) ) && $this->editLimit < 1 && in_array( SPRequest::task(), array( 'entry.save', 'entry.edit', 'entry.submit' ) ) ) {
+			if ( !( Sobi::Can( 'entry.manage.*' ) ) && $this->editLimit < 1 && in_array( SPRequest::task(), [ 'entry.save', 'entry.edit', 'entry.submit' ] ) ) {
 				$this->required = false;
 				$this->enabled = false;
 				$this->_off = true;
@@ -641,12 +641,12 @@ class SPField extends SPObject
 				}
 				else {
 					$this->_rawData = SPFactory::db()
-							->select( 'baseData', 'spdb_field_data', array( 'sid' => $this->sid, 'fid' => $this->fid, 'lang' => Sobi::Lang( false ) ) )
+							->select( 'baseData', 'spdb_field_data', [ 'sid' => $this->sid, 'fid' => $this->fid, 'lang' => Sobi::Lang( false ) ] )
 							->loadResult();
 				}
 			}
 		}
-		if ( in_array( SPRequest::task(), array( 'entry.save', 'entry.edit', 'entry.submit' ) ) ) {
+		if ( in_array( SPRequest::task(), [ 'entry.save', 'entry.edit', 'entry.submit' ] ) ) {
 			if ( !( $this->isFree ) && SPRequest::task() == 'entry.edit' ) {
 				/* in case we are editing - check if this field wasn't paid already */
 				SPLoader::loadClass( 'services.payment' );
@@ -673,7 +673,7 @@ class SPField extends SPObject
 		if ( $this->_type && method_exists( $this->_type, 'field' ) ) {
 			$args = func_get_args();
 			$r = $this->_type->field( $args );
-			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$r ) );
+			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$r ] );
 			return $r;
 		}
 	}
@@ -690,7 +690,7 @@ class SPField extends SPObject
 		if ( $this->_type && method_exists( $this->_type, 'searchForm' ) ) {
 			$args = func_get_args();
 			$r = $this->_type->searchForm( $args );
-			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$r ) );
+			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$r ] );
 			return $r;
 		}
 	}
@@ -751,7 +751,7 @@ class SPField extends SPObject
 				 * When the user is adding the entry very first time this should not affect because
 				 * the field is not editable but the user has to be able to add data for the first time
 				 */
-				if ( !( $this->editable ) && SPRequest::task() != 'entry.add' && !( $new && in_array( SPRequest::task(), array( 'entry.submit', 'entry.save' ) ) ) ) {
+				if ( !( $this->editable ) && SPRequest::task() != 'entry.add' && !( $new && in_array( SPRequest::task(), [ 'entry.submit', 'entry.save' ] ) ) ) {
 					//if ( !( $this->editable ) && !( $new && in_array( SPRequest::task(), array( 'entry.add', 'entry.submit', 'entry.save' ) ) ) ) {
 					return false;
 				}
@@ -821,13 +821,13 @@ class SPField extends SPObject
 		}
 		$this->checkMethod( $method );
 		if ( $this->_type && method_exists( $this->_type, $method ) ) {
-			$Args = array();
+			$Args = [];
 			// http://www.php.net/manual/en/function.call-user-func-array.php#91503
 			foreach ( $args as $k => &$arg ) {
 				$Args[ $k ] =& $arg;
 			}
-			Sobi::Trigger( 'Field', ucfirst( $method ), array( &$Args ) );
-			return call_user_func_array( array( $this->_type, $method ), $Args );
+			Sobi::Trigger( 'Field', ucfirst( $method ), [ &$Args ] );
+			return call_user_func_array( [ $this->_type, $method ], $Args );
 		}
 		else {
 			if ( $this->_off ) {

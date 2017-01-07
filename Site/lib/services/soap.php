@@ -29,7 +29,7 @@ class SPSoapClient extends SoapClient
 	const UA = 'SobiPro Soap Client';
 	const URI = 'http://www.Sigsiu.NET';
 
-	public function __construct( $wdsl = null, $options = array() )
+	public function __construct( $wdsl = null, $options = [] )
 	{
 		if( !( isset( $options[ 'user_agent' ] ) ) ) {
 			$options[ 'user_agent' ] = self::UA;

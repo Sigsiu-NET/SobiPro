@@ -25,7 +25,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  */
 final class SPBrowser
 {
-	private $client = array();
+	private $client = [];
 
 	private function __construct()
 	{
@@ -55,15 +55,15 @@ final class SPBrowser
 	 */
 	private function parse_user_agent( $user_agent )
 	{
-		$client_data = array(
+		$client_data = [
 				'system' => '',
 				'system_icon' => '',
 				'browser' => '',
 				'browser_icon' => '',
 				'type' => '',
 				'humanity' => 100
-		);
-		$tmp_array = array();
+		];
+		$tmp_array = [];
 		//
 		// Check browsers
 		//

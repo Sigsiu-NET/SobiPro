@@ -43,10 +43,10 @@ class SPField_UrlAdm extends SPField_Url
 			}
 		}
 		elseif ( !( is_array( $attr[ 'allowedProtocols' ] ) ) ) {
-			$attr[ 'allowedProtocols' ] = array();
+			$attr[ 'allowedProtocols' ] = [];
 		}
 		$myAttr = $this->getAttr();
-		$properties = array();
+		$properties = [];
 		if ( count( $myAttr ) ) {
 			foreach ( $myAttr as $property ) {
 				$properties[ $property ] = isset( $attr[ $property ] ) ? ( $attr[ $property ] ) : null;

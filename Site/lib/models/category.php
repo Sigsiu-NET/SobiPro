@@ -47,7 +47,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 	/*** @var int */
 	protected $parent = 0;
 	/*** @var array */
-	private static $types = array(
+	private static $types = [
 			'description' => 'html',
 			'icon' => 'string',
 			'showIcon' => 'string',
@@ -55,15 +55,16 @@ class SPCategory extends SPDBObject implements SPDataModel
 			'showIntrotext' => 'int',
 			'parseDesc' => 'int',
 			'position' => 'int'
-	);
+	];
 	/*** @var array */
-	private static $translatable = array( 'description', 'introtext', 'name', 'metaKeys', 'metaDesc' );
+	private static $translatable = [ 'description', 'introtext', 'name', 'metaKeys', 'metaDesc' ];
 	/** @var string */
 	protected $_dbTable = 'spdb_category';
 	/** @var array */
-	protected $fields = array();
+	protected $fields = [];
 
 	/**
+	 * @param string $request
 	 */
 	public function save( $request = 'post' )
 	{
@@ -80,13 +81,13 @@ class SPCategory extends SPDBObject implements SPDataModel
 
 		/* get database columns and their ordering */
 		$cols = $db->getColumns( $this->_dbTable );
-		$values = array();
+		$values = [];
 
 		/* and sort the properties in the same order */
 		foreach ( $cols as $col ) {
 			$values[ $col ] = array_key_exists( $col, $properties ) ? $this->$col : '';
 		}
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$values ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$values ] );
 		/* try to save */
 		try {
 			$db->insertUpdate( $this->_dbTable, $values );
@@ -97,15 +98,15 @@ class SPCategory extends SPDBObject implements SPDataModel
 
 		/* insert relation */
 		try {
-			$db->delete( 'spdb_relations', array( 'id' => $this->id, 'oType' => 'category' ) );
+			$db->delete( 'spdb_relations', [ 'id' => $this->id, 'oType' => 'category' ] );
 			if ( !$this->position ) {
-				$db->select( 'MAX( position ) + 1', 'spdb_relations', array( 'pid' => $this->parent, 'oType' => 'category' ) );
+				$db->select( 'MAX( position ) + 1', 'spdb_relations', [ 'pid' => $this->parent, 'oType' => 'category' ] );
 				$this->position = ( int )$db->loadResult();
 				if ( !$this->position ) {
 					$this->position = 1;
 				}
 			}
-			$db->insertUpdate( 'spdb_relations', array( 'id' => $this->id, 'pid' => $this->parent, 'oType' => 'category', 'position' => $this->position, 'validSince' => $this->validSince, 'validUntil' => $this->validUntil ) );
+			$db->insertUpdate( 'spdb_relations', [ 'id' => $this->id, 'pid' => $this->parent, 'oType' => 'category', 'position' => $this->position, 'validSince' => $this->validSince, 'validUntil' => $this->validUntil ] );
 		} catch ( SPException $x ) {
 			$db->rollback();
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SAVE_CATEGORY_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -135,7 +136,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 				->deleteObj( 'category', $this->id )
 				->deleteObj( 'category', $this->parent );
 		/* trigger plugins */
-		Sobi::Trigger( 'afterSave', $this->name(), array( &$this ) );
+		Sobi::Trigger( 'afterSave', $this->name(), [ &$this ] );
 	}
 
 	/**
@@ -147,9 +148,9 @@ class SPCategory extends SPDBObject implements SPDataModel
 		$db =& SPFactory::db();
 		$this->icon = SPLang::clean( $this->icon );
 		try {
-			$db->select( array( 'position', 'pid' ), 'spdb_relations', array( 'id' => $this->id ) );
+			$db->select( [ 'position', 'pid' ], 'spdb_relations', [ 'id' => $this->id ] );
 			$r = $db->loadObject();
-			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$r ) );
+			Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$r ] );
 			$this->position = $r->position;
 			$this->parent = $r->pid;
 		} catch ( SPException $x ) {
@@ -160,7 +161,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 				$this->parseDesc = Sobi::Cfg( 'category.parse_desc', true );
 			}
 			if ( $this->parseDesc ) {
-				Sobi::Trigger( 'Parse', 'Content', array( &$this->description ) );
+				Sobi::Trigger( 'Parse', 'Content', [ &$this->description ] );
 			}
 		}
 	}
@@ -188,9 +189,9 @@ class SPCategory extends SPDBObject implements SPDataModel
 				}
 			}
 			$childs[ $this->id ] = $this->id;
-			SPFactory::db()->delete( 'spdb_category', array( 'id' => $this->id ) );
+			SPFactory::db()->delete( 'spdb_category', [ 'id' => $this->id ] );
 			if ( $childs ) {
-				SPFactory::db()->update( 'spdb_object', array( 'parent' => Sobi::Section() ), array( 'parent' => $childs ) );
+				SPFactory::db()->update( 'spdb_object', [ 'parent' => Sobi::Section() ], [ 'parent' => $childs ] );
 			}
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DELETE_CATEGORY_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -219,7 +220,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 	 */
 	public function & getFields( $by = 'name' )
 	{
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$this->fields ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$this->fields ] );
 		return $this->fields;
 	}
 
@@ -234,18 +235,18 @@ class SPCategory extends SPDBObject implements SPDataModel
 		/* @var SPdb $db */
 		$db = SPFactory::db();
 
-		static $fields = array();
+		static $fields = [];
 		if ( !isset( $fields[ $sid ] ) ) {
 			/* get fields */
 			try {
 				if ( $enabled ) {
-					$db->select( '*', 'spdb_field', array( 'section' => $sid, 'enabled' => 1, 'adminField' => -1 ), 'position' );
+					$db->select( '*', 'spdb_field', [ 'section' => $sid, 'enabled' => 1, 'adminField' => -1 ], 'position' );
 				}
 				else {
-					$db->select( '*', 'spdb_field', array( 'section' => $sid, 'adminField' => -1 ), 'position' );
+					$db->select( '*', 'spdb_field', [ 'section' => $sid, 'adminField' => -1 ], 'position' );
 				}
 				$fields[ $sid ] = $db->loadObjectList();
-				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$fields ) );
+				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$fields ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELDS_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}

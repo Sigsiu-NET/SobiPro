@@ -85,22 +85,22 @@ class SPFilter extends SPConfigAdmCtrl
 			$this->validate( 'field.filter', 'filter' );
 			$filters = $this->getFilters();
 			$name = SPRequest::string( 'filter_name', 'Filter Name' );
-			$msg = str_replace( array( "\n", "\t", "\r" ), null, SPLang::clean( SPRequest::string( 'filter_message', 'The data entered in the $field field contains not allowed characters' ) ) );
+			$msg = str_replace( [ "\n", "\t", "\r" ], null, SPLang::clean( SPRequest::string( 'filter_message', 'The data entered in the $field field contains not allowed characters' ) ) );
 			$regex = SPLang::clean( SPRequest::raw( 'filter_regex', '/^[\.*]+$/' ) );
 			$regex = str_replace( '[:apostrophes:]', '\"' . "\'", $regex );
-			$regex = base64_encode( str_replace( array( "\n", "\t", "\r" ), null, $regex ) );
+			$regex = base64_encode( str_replace( [ "\n", "\t", "\r" ], null, $regex ) );
 			$custom = 'custom';
 			if ( isset( $filters[ $id ] ) && !( strlen( $filters[ $id ][ 'options' ] ) ) ) {
 				$regex = $filters[ $id ][ 'params' ];
 				$custom = null;
 			}
-			$filters[ $id ] = array(
+			$filters[ $id ] = [
 					'params' => $regex,
 					'key' => $id,
 					'value' => $name,
 					'description' => $msg,
 					'options' => $custom
-			);
+			];
 			SPFactory::registry()->saveDBSection( $filters, 'fields_filter' );
 			$this->response( Sobi::Url( 'filter' ), Sobi::Txt( 'FLR.MSG_FILTER_SAVED' ), false, 'success' );
 		}
@@ -114,15 +114,15 @@ class SPFilter extends SPConfigAdmCtrl
 		$registry =& SPFactory::registry();
 		$registry->loadDBSection( 'fields_filter' );
 		$filters = $registry->get( 'fields_filter' );
-		$f = array();
+		$f = [];
 		foreach ( $filters as $fid => $filter ) {
-			$f[ $fid ] = array(
+			$f[ $fid ] = [
 					'params' => $filter[ 'params' ],
 					'key' => $fid,
 					'value' => $filter[ 'value' ],
 					'description' => $filter[ 'description' ],
 					'options' => $filter[ 'options' ]
-			);
+			];
 		}
 		ksort( $f );
 		return $f;
@@ -133,17 +133,17 @@ class SPFilter extends SPConfigAdmCtrl
 		$id = SPRequest::cmd( 'fid' );
 		$filters = $this->getFilters();
 		if ( count( $filters ) && isset( $filters[ $id ] ) ) {
-			$Filter = array(
+			$Filter = [
 					'id' => $id,
 					'regex' => str_replace( '\"' . "\'", '[:apostrophes:]', base64_decode( $filters[ $id ][ 'params' ] ) ),
 					'name' => $filters[ $id ][ 'value' ],
 					'message' => $filters[ $id ][ 'description' ],
 					'editable' => strlen( $filters[ $id ][ 'options' ] ),
 					'readonly' => !( strlen( $filters[ $id ][ 'options' ] ) )
-			);
+			];
 		}
 		else {
-			$Filter = array( 'id' => '', 'regex' => '', 'name' => '', 'message' => '', 'editable' => true, 'readonly' => false );
+			$Filter = [ 'id' => '', 'regex' => '', 'name' => '', 'message' => '', 'editable' => true, 'readonly' => false ];
 		}
 		$view = SPFactory::View( 'view', true );
 		$view->assign( $this->_task, 'task' );
@@ -156,23 +156,23 @@ class SPFilter extends SPConfigAdmCtrl
 	private function screen()
 	{
 		$filters = $this->getFilters();
-		$Filters = array();
+		$Filters = [];
 		if ( count( $filters ) ) {
 			foreach ( $filters as $name => $filter ) {
-				$Filters[ ] = array(
+				$Filters[ ] = [
 						'id' => $name,
 						'regex' => str_replace( '\"' . "\'", '[:apostrophes:]', base64_decode( $filter[ 'params' ] ) ),
 						'name' => $filter[ 'value' ],
 						'message' => $filter[ 'description' ],
 						'editable' => strlen( $filter[ 'options' ] )
-				);
+				];
 			}
 		}
 		$menu = $this->createMenu( 'filter' );
 		/** @var $view  SPAdmView */
 		$view = SPFactory::View( 'view', true );
 		$menuOut = $this->createMenu();
-		$url = Sobi::Url( array( 'task' => 'filter.edit', 'out' => 'html' ), true );
+		$url = Sobi::Url( [ 'task' => 'filter.edit', 'out' => 'html' ], true );
 		$view->assign( $this->_task, 'task' )
 				->assign( $menuOut, 'menu' )
 				->assign( $url, 'edit_url' )

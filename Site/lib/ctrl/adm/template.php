@@ -144,7 +144,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	protected function templateSettings()
 	{
 		$templateName = SPRequest::cmd( 'template' );
-		$templateSettings = array();
+		$templateSettings = [];
 		if ( !( strlen( $templateName ) ) ) {
 			$templateName = SPC::DEFAULT_TEMPLATE;
 		}
@@ -199,7 +199,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				->assign( $plugins, 'apps' )
 				->addHidden( $templateName, 'templateName' )
 				->determineTemplate( 'template', 'config', $dir );
-		Sobi::Trigger( 'Settings', $this->name(), array( &$file, &$view ) );
+		Sobi::Trigger( 'Settings', $this->name(), [ &$file, &$view ] );
 		$view->display();
 	}
 
@@ -210,8 +210,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		$file = $this->file( SPRequest::cmd( 'fileName' ) );
 		$output = str_replace( 'less', 'css', $file );
-		Sobi::Trigger( 'BeforeCompileLess', $this->name(), array( &$file ) );
-		$u = array( 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) );
+		Sobi::Trigger( 'BeforeCompileLess', $this->name(), [ &$file ] );
+		$u = [ 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) ];
 		if ( Sobi::Section() ) {
 			$u[ 'sid' ] = Sobi::Section();
 		}
@@ -242,12 +242,12 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				foreach ( $files as $file ) {
 					$stack = explode( '.', $file );
 					if ( array_pop( $stack ) == 'xsl' ) {
-						$arr[] = array( 'name' => $stack[ 0 ], 'filename' => $file );
+						$arr[] = [ 'name' => $stack[ 0 ], 'filename' => $file ];
 					}
 				}
 			}
 		}
-		Sobi::Trigger( 'List', 'Templates', array( &$arr ) );
+		Sobi::Trigger( 'List', 'Templates', [ &$arr ] );
 		SPFactory::mainframe()->cleanBuffer();
 		echo json_encode( $arr );
 		exit;
@@ -284,7 +284,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$this->response( Sobi::Url( 'template.info' ), Sobi::Txt( 'TP.DO_NOT_REMOVE' ), true, 'error' );
 		}
 		if ( $dir && SPFs::delete( $dir ) ) {
-			$this->response( Sobi::Url( array( 'task' => 'config.general' ) ), Sobi::Txt( 'TP.REMOVED' ), false, 'success' );
+			$this->response( Sobi::Url( [ 'task' => 'config.general' ] ), Sobi::Txt( 'TP.REMOVED' ), false, 'success' );
 		}
 		else {
 			$this->response( Sobi::Back(), Sobi::Txt( 'TP.CANNOT_REMOVE' ), false, 'error' );
@@ -323,7 +323,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$xdef->query( '/template/name' )->item( 0 )->nodeValue = $newName;
 			$xdef->query( '/template/creationDate' )->item( 0 )->nodeValue = $date;
 			$xdef->query( '/template/id' )->item( 0 )->nodeValue = $dirName;
-			$newDesc = Sobi::Txt( 'TP.CLONE_NOTE', array( 'name' => $oldName, 'date' => $date ) );
+			$newDesc = Sobi::Txt( 'TP.CLONE_NOTE', [ 'name' => $oldName, 'date' => $date ] );
 			$xdef->query( '/template/description' )->item( 0 )->nodeValue = "{$newDesc}\n{$oldDesc}";
 			$file = new $fc( $defFile );
 			$file->content( $def->saveXML() );
@@ -333,7 +333,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$newDir = $this->dir( $dirName );
 		if ( SPFs::exists( $newDir . '/template.php' ) ) {
 			$content = file_get_contents( $newDir . '/template.php' );
-			$class = array();
+			$class = [];
 			preg_match( '/\s*(class)\s+(\w+)/', $content, $class );
 			$className = $class[ 2 ];
 			$oldTplName = SPRequest::cmd( 'templateName' );
@@ -387,7 +387,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				}
 			}
 		}
-		$this->response( Sobi::Url( array( 'task' => 'template.info', 'template' => str_replace( SOBI_PATH . '/usr/templates/', null, $dirName ) ) ), Sobi::Txt( 'TP.DUPLICATED' ), false, 'success' );
+		$this->response( Sobi::Url( [ 'task' => 'template.info', 'template' => str_replace( SOBI_PATH . '/usr/templates/', null, $dirName ) ] ), Sobi::Txt( 'TP.DUPLICATED' ), false, 'success' );
 	}
 
 	private function info()
@@ -427,7 +427,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				->assign( $sid, 'sid' )
 				->addHidden( $templateName, 'templateName' )
 				->determineTemplate( 'template', 'info' );
-		Sobi::Trigger( 'Info', $this->name(), array( &$file, &$view ) );
+		Sobi::Trigger( 'Info', $this->name(), [ &$file, &$view ] );
 		$view->display();
 	}
 
@@ -450,7 +450,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		$content = SPRequest::raw( 'file_content', null, 'post' );
 		$file = $this->file( SPRequest::cmd( 'fileName' ), !( $new ) );
-		Sobi::Trigger( 'Save', $this->name(), array( &$content, &$file ) );
+		Sobi::Trigger( 'Save', $this->name(), [ &$content, &$file ] );
 		if ( !( $file ) ) {
 			throw new SPException( SPLang::e( 'Missing  file to save %s', SPRequest::cmd( 'fileName' ) ) );
 		}
@@ -464,7 +464,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				$message .= "\n" . $this->compile( false );
 			}
 
-			$u = array( 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) );
+			$u = [ 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) ];
 			if ( Sobi::Section() ) {
 				$u[ 'sid' ] = Sobi::Section();
 			}
@@ -549,7 +549,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				->addHidden( SPRequest::cmd( 'file' ), 'fileName' )
 				->addHidden( $filename, 'filePath' )
 				->determineTemplate( 'template', 'edit' );
-		Sobi::Trigger( 'Edit', $this->name(), array( &$file, &$view ) );
+		Sobi::Trigger( 'Edit', $this->name(), [ &$file, &$view ] );
 		$view->display();
 	}
 
@@ -564,14 +564,14 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$info = new DOMDocument();
 		$info->load( $dir . '/template.xml' );
 		$xinfo = new DOMXPath( $info );
-		$template = array();
+		$template = [];
 		$template[ 'name' ] = $xinfo->query( '/template/name' )->item( 0 )->nodeValue;
 		$view->assign( $template[ 'name' ], 'template_name' );
-		$template[ 'author' ] = array(
+		$template[ 'author' ] = [
 				'name' => $xinfo->query( '/template/authorName' )->item( 0 )->nodeValue,
 				'email' => $xinfo->query( '/template/authorEmail' )->item( 0 )->nodeValue,
 				'url' => $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue ? $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue : null,
-		);
+		];
 		$template[ 'copyright' ] = $xinfo->query( '/template/copyright' )->item( 0 )->nodeValue;
 		$template[ 'license' ] = $xinfo->query( '/template/license' )->item( 0 )->nodeValue;
 		$template[ 'date' ] = $xinfo->query( '/template/creationDate' )->item( 0 )->nodeValue;
@@ -583,7 +583,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		$file = '';
 		if ( $xinfo->query( '/template/files/file' )->length ) {
-			$files = array();
+			$files = [];
 			foreach ( $xinfo->query( '/template/files/file' ) as $file ) {
 				$filePath = $dir . '/' . $file->attributes->getNamedItem( 'path' )->nodeValue;
 				if ( $filePath && is_file( $filePath ) ) {
@@ -592,11 +592,11 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				else {
 					$filePath = null;
 				}
-				$files[] = array(
+				$files[] = [
 						'file' => $file->attributes->getNamedItem( 'path' )->nodeValue,
 						'description' => $file->nodeValue,
 						'filepath' => $filePath
-				);
+				];
 			}
 			$template[ 'files' ] = $files;
 			$view->assign( $files, 'files' );
@@ -609,6 +609,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	 * @param $file
 	 * @param $output
 	 * @param $u
+	 * @param bool $compress
 	 */
 	protected function compileLessFile( $file, $output, $u, $compress = false )
 	{
@@ -617,13 +618,13 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			Less_Autoloader::register();
 
 			if ( $compress ) {
-				$options = array(
+				$options = [
 						'compress' => true,
 						'strictMath' => true
-				);
+				];
 			}
 			else {
-				$options = array();
+				$options = [];
 			}
 			$parser = new Less_Parser( $options );
 			$parser->parseFile( $file );

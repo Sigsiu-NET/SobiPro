@@ -61,10 +61,10 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 					$o[ 'id' ] = $this->nid.'_'.$o[ 'id' ];
 				}
 				if( isset( $o[ 'id' ] ) ) {
-					$options[] = array( 'id' => $o[ 'id' ], 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p );
+					$options[] = [ 'id' => $o[ 'id' ], 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p ];
 				}
 				elseif ( isset( $o[ 'gid' ] ) ) {
-					$options[] = array( 'id' => $o[ 'gid' ], 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p );
+					$options[] = [ 'id' => $o[ 'gid' ], 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p ];
 					if( count( $o ) ) {
 						$gid = $o[ 'gid' ];
 						unset( $o[ 'gid' ] );
@@ -74,7 +74,7 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 							if( is_numeric( $so[ 'id' ] ) ) {
 								$so[ 'id' ] = $this->nid.'_'.$so[ 'id' ];
 							}
-							$options[] = array( 'id' => $so[ 'id' ], 'name' => $so[ 'name' ], 'parent' => $gid, 'position' => ++$index );
+							$options[] = [ 'id' => $so[ 'id' ], 'name' => $so[ 'name' ], 'parent' => $gid, 'position' => ++$index ];
 						}
 					}
 				}
@@ -82,10 +82,10 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 		}
 		if( count( $options ) ) {
 			unset( $attr['options'] );
-			$optionsArr = array();
-			$labelsArr = array();
-			$optsIds = array();
-			$defLabelsArr = array();
+			$optionsArr = [];
+			$labelsArr = [];
+			$optsIds = [];
+			$defLabelsArr = [];
 			foreach ( $options as $i => $option ) {
 				/* check for doubles */
 				foreach ( $options as $pos => $opt ) {
@@ -97,9 +97,9 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 						SPFactory::message()->warning( 'FIELD_WARN_DUPLICATE_OPT_ID' );
 					}
 				}
-				$optionsArr[] = array( 'fid' => $this->id, 'optValue' => $option[ 'id' ], 'optPos'  => $option[ 'position' ], 'optParent' =>  $option[ 'parent' ] );
-				$defLabelsArr[] = array( 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $defLang, 'oType' => 'field_option', 'fid' => $this->id );
-				$labelsArr[] = array( 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $lang, 'oType' => 'field_option', 'fid' => $this->id );
+				$optionsArr[] = [ 'fid' => $this->id, 'optValue' => $option[ 'id' ], 'optPos'  => $option[ 'position' ], 'optParent' =>  $option[ 'parent' ] ];
+				$defLabelsArr[] = [ 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $defLang, 'oType' => 'field_option', 'fid' => $this->id ];
+				$labelsArr[] = [ 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $lang, 'oType' => 'field_option', 'fid' => $this->id ];
 				$optsIds[] = $option[ 'id' ];
 			}
 			/* @var SPdb $db */
@@ -107,8 +107,8 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 
 			/* try to delete the existing labels */
 			try {
-				$db->delete( 'spdb_field_option', array( 'fid' => $this->id ) );
-				$db->delete( 'spdb_language', array( 'oType' => 'field_option', 'fid' => $this->id, '!sKey' => $optsIds ) );
+				$db->delete( 'spdb_field_option', [ 'fid' => $this->id ] );
+				$db->delete( 'spdb_language', [ 'oType' => 'field_option', 'fid' => $this->id, '!sKey' => $optsIds ] );
 			}
 			catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DELETE_SELECTED_OPTIONS', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -126,10 +126,10 @@ class SPField_MultiSelectAdm extends SPField_MultiSelect
 			}
 		}
 		if( !isset( $attr[ 'params' ] ) ) {
-			$attr[ 'params' ] = array();
+			$attr[ 'params' ] = [];
 		}
 		$myAttr = $this->getAttr();
-		$properties = array();
+		$properties = [];
 		if( count( $myAttr ) ) {
 			foreach ( $myAttr as $property ) {
 				$properties[ $property ] = isset( $attr[ $property ] ) ? ( $attr[ $property ] ) : null;

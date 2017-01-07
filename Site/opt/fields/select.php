@@ -95,13 +95,13 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			}
 		}
 
-		$params = array( 'id' => $this->nid, 'size' => $this->size, 'class' => $class );
+		$params = [ 'id' => $this->nid, 'size' => $this->size, 'class' => $class ];
 		//for compatibility reason still there
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
 		if ( $this->dependency ) {
-			$params[ 'data' ] = array( 'order' => '1' );
+			$params[ 'data' ] = [ 'order' => '1' ];
 		}
 		$selected = $this->getRaw();
 		/*
@@ -138,7 +138,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$field = "<div class=\"spFieldSelect\">" . SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
 //			$field = SPHtml_Input::select( $this->nid, $this->getValues(), $selected, $this->multi, $params );
 			$field .= $subFields;
-			$field .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'section' => Sobi::Section() ) ) );
+			$field .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, [ 'data' => [ 'section' => Sobi::Section() ] ] );
 			$field .= "</div>";
 		}
 		if ( !$return ) {
@@ -151,7 +151,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 
 	private function getValues( $required = true )
 	{
-		$values = array();
+		$values = [];
 		if ( $this->dependency ) {
 			SPFactory::header()
 					->addJsFile( 'opt.field_select' );
@@ -175,7 +175,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			}
 			foreach ( $this->options as $option ) {
 				if ( isset( $option[ 'options' ] ) && is_array( $option[ 'options' ] ) && count( $option[ 'options' ] ) ) {
-					$values[ $option[ 'label' ] ] = array();
+					$values[ $option[ 'label' ] ] = [];
 					foreach ( $option[ 'options' ] as $subOption ) {
 						$values[ $option[ 'label' ] ][ $subOption[ 'id' ] ] = $subOption[ 'label' ];
 					}
@@ -205,12 +205,12 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$this->getSelectLabel();
 		/* @var SPdb $db */
 		$db = SPFactory::db();
-		$options = array();
+		$options = [];
 
 		try {
-			$db->select( '*', 'spdb_field_option', array( 'fid' => $this->fid ) );
+			$db->select( '*', 'spdb_field_option', [ 'fid' => $this->fid ] );
 			$o = $db->loadObjectList();
-			$db->select( array( 'sValue', 'language', 'sKey' ), 'spdb_language', array( 'fid' => $this->fid, 'oType' => 'field_option' ) );
+			$db->select( [ 'sValue', 'language', 'sKey' ], 'spdb_language', [ 'fid' => $this->fid, 'oType' => 'field_option' ] );
 			$l = $db->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_POSITION_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -221,32 +221,32 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$defLang = Sobi::DefLang();
 		}
 		if ( count( $o ) ) {
-			$labels = array();
+			$labels = [];
 			if ( count( $l ) ) {
 				foreach ( $l as $label ) {
 					if ( !isset( $labels[ $label->sKey ] ) ) {
-						$labels[ $label->sKey ] = array();
+						$labels[ $label->sKey ] = [];
 					}
 					$labels[ $label->sKey ][ $label->language ] = $label->sValue;
 				}
 			}
 			/* re-label */
 			foreach ( $o as $opt ) {
-				$option = array();
+				$option = [];
 				$option[ 'id' ] = $opt->optValue;
 				$option[ 'label' ] = isset( $labels[ $opt->optValue ][ $lang ] ) ? $labels[ $opt->optValue ][ $lang ] : ( isset( $labels[ $opt->optValue ][ $defLang ] ) ? $labels[ $opt->optValue ][ SOBI_DEFLANG ] : ( isset( $labels[ $opt->optValue ][ 0 ] ) ? $labels[ $opt->optValue ][ 0 ] : $opt->optValue ) );
 				$option[ 'position' ] = $opt->optPos;
 				$option[ 'parent' ] = $opt->optParent;
 				if ( $option[ 'parent' ] ) {
 					if ( !( isset( $options[ $option[ 'parent' ] ] ) ) ) {
-						$options[ $option[ 'parent' ] ] = array();
+						$options[ $option[ 'parent' ] ] = [];
 					}
 					$options[ $option[ 'parent' ] ][ 'options' ][ $option[ 'id' ] ] = $option;
 					$this->optionsById[ $option[ 'id' ] ] = $option;
 				}
 				else {
 					if ( !( isset( $options[ $option[ 'id' ] ] ) ) ) {
-						$options[ $option[ 'id' ] ] = array();
+						$options[ $option[ 'id' ] ] = [];
 					}
 					$options[ $option[ 'id' ] ] = array_merge( $options[ $option[ 'id' ] ], $option );
 					$this->optionsById[ $option[ 'id' ] ] = $options[ $option[ 'id' ] ];
@@ -277,22 +277,22 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		$table = $db->join(
-				array(
-						array( 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ),
-						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
-						array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue', 'ldata.sKey' ) ),
-				)
+				[
+						[ 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ],
+						[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ],
+						[ 'table' => 'spdb_language', 'as' => 'ldata', 'key' => [ 'sdata.optValue', 'ldata.sKey' ] ],
+				]
 		);
 		try {
 			//$order = $this->checkCopy() ? 'scopy.desc' : 'scopy.asc';
 			$order = $this->checkCopy() ? 'scopy.asc' : 'scopy.desc';
-			$where = array(
+			$where = [
 					'sdata.fid' => $this->id,
 					'sdata.sid' => $sid,
 					'fdata.sid' => $sid,
 					'ldata.oType' => 'field_option',
 					'ldata.fid' => $this->id
-			);
+			];
 			if ( $this->dependency ) {
 				$where[ 'ldata.sKey' ] = $rawData;
 			}
@@ -321,7 +321,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 
 	protected function sortOpt( $options )
 	{
-		$sorted = array();
+		$sorted = [];
 		if ( count( $options ) ) {
 			foreach ( $options as $option ) {
 				if ( isset( $option[ 'options' ] ) ) {
@@ -344,7 +344,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsWidth', 'bsSearchWidth' );
+		return [ 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsWidth', 'bsSearchWidth' ];
 	}
 
 	protected function fetchData( $data, $request = 'post' )
@@ -375,7 +375,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $data, $this->name ) );
 			}
 
-			return array( $data );
+			return [ $data ];
 		}
 		else {
 			return null;
@@ -393,12 +393,12 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{
-		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ) );
+		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, [], $request ) : SPRequest::word( $this->nid, null, $request ) );
 		if ( count( $this->verify( $entry, $request, $data ) ) ) {
 			return SPRequest::search( $this->nid, $request );
 		}
 		else {
-			return array();
+			return [];
 		}
 	}
 
@@ -454,7 +454,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$time = SPRequest::now();
 		$uid = Sobi::My( 'id' );
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
-		$params = array();
+		$params = [];
 		$params[ 'publishUp' ] = $entry->get( 'publishUp' );
 		$params[ 'publishDown' ] = $entry->get( 'publishDown' );
 		$params[ 'fid' ] = $this->fid;
@@ -495,13 +495,13 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		foreach ( $data as $selected ) {
 			/* collect the needed params */
 			$params[ 'baseData' ] = strip_tags( SPFactory::db()->escape( $selected ) );
-			$options[] = array( 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'optValue' => $selected, 'copy' => $params[ 'copy' ], 'params' => null );
+			$options[] = [ 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'optValue' => $selected, 'copy' => $params[ 'copy' ], 'params' => null ];
 			$selectedOption = $selected;
 		}
 
 		/* delete old selected values */
 		try {
-			SPFactory::db()->delete( 'spdb_field_option_selected', array( 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'copy' => $params[ 'copy' ] ) );
+			SPFactory::db()->delete( 'spdb_field_option_selected', [ 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'copy' => $params[ 'copy' ] ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_DELETE_PREVIOUS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
@@ -529,7 +529,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ), $request );
+		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, [], $request ) : SPRequest::word( $this->nid, null, $request ), $request );
 		$cdata = $this->verify( $entry, $request, $data );
 		$time = SPRequest::now();
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
@@ -543,8 +543,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			if ( $this->dependency ) {
 				return $this->saveDependencyField( $entry, $data, $request );
 			}
-			$options = array();
-			$params = array();
+			$options = [];
+			$params = [];
 			$params[ 'publishUp' ] = $entry->get( 'publishUp' );
 			$params[ 'publishDown' ] = $entry->get( 'publishDown' );
 			$params[ 'fid' ] = $this->fid;
@@ -581,12 +581,12 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			foreach ( $data as $selected ) {
 				/* collect the needed params */
 				$params[ 'baseData' ] = strip_tags( $db->escape( $selected ) );
-				$options[] = array( 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'optValue' => $selected, 'copy' => $params[ 'copy' ], 'params' => null );
+				$options[] = [ 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'optValue' => $selected, 'copy' => $params[ 'copy' ], 'params' => null ];
 			}
 
 			/* delete old selected values */
 			try {
-				$db->delete( 'spdb_field_option_selected', array( 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'copy' => $params[ 'copy' ] ) );
+				$db->delete( 'spdb_field_option_selected', [ 'fid' => $this->fid, 'sid' => $entry->get( 'id' ), 'copy' => $params[ 'copy' ] ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_DELETE_PREVIOUS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
@@ -601,7 +601,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		elseif ( $entry->get( 'version' ) > 1 ) {
 			if ( !( $entry->get( 'approved' ) ) ) {
 				try {
-					$db->update( 'spdb_field_option_selected', array( 'copy' => 1 ), array( 'fid' => $this->fid, 'sid' => $entry->get( 'id' ) ) );
+					$db->update( 'spdb_field_option_selected', [ 'copy' => 1 ], [ 'fid' => $this->fid, 'sid' => $entry->get( 'id' ) ] );
 				} catch ( SPException $x ) {
 					Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_UPDATE_PREVIOUS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
@@ -609,7 +609,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			else {
 				/* delete old selected values */
 				try {
-					$db->delete( 'spdb_field_option_selected', array( 'fid' => $this->fid, 'sid' => $entry->get( 'id' ) ) );
+					$db->delete( 'spdb_field_option_selected', [ 'fid' => $this->fid, 'sid' => $entry->get( 'id' ) ] );
 				} catch ( SPException $x ) {
 					Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_DELETE_PREVIOUS_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
@@ -632,14 +632,14 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		$tables = $db->join(
-				array(
-						array( 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ),
-						array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'sdata.sid', 'spo.id' ) ),
-						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => array( 'fdata.fid', 'sdata.fid' ) ),
-						array( 'table' => 'spdb_field', 'as' => 'fdef', 'key' => array( 'fdef.fid', 'sdata.fid' ) ),
-						array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue', 'ldata.sKey' ) ),
-						array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'spo.id', 'sprl.id' ) ),
-				)
+				[
+						[ 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ],
+						[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => [ 'sdata.sid', 'spo.id' ] ],
+						[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => [ 'fdata.fid', 'sdata.fid' ] ],
+						[ 'table' => 'spdb_field', 'as' => 'fdef', 'key' => [ 'fdef.fid', 'sdata.fid' ] ],
+						[ 'table' => 'spdb_language', 'as' => 'ldata', 'key' => [ 'sdata.optValue', 'ldata.sKey' ] ],
+						[ 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => [ 'spo.id', 'sprl.id' ] ],
+				]
 		);
 		$oPrefix = 'spo.';
 		$conditions[ 'spo.oType' ] = 'entry';
@@ -658,10 +658,10 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	{
 		parent::approve( $sid );
 		$db =& SPFactory::db();
-		if ( $db->select( 'COUNT(*)', 'spdb_field_option_selected', array( 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ) )->loadResult() ) {
+		if ( $db->select( 'COUNT(*)', 'spdb_field_option_selected', [ 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ] )->loadResult() ) {
 			try {
-				$db->delete( 'spdb_field_option_selected', array( 'sid' => $sid, 'copy' => '0', 'fid' => $this->fid ) );
-				$db->update( 'spdb_field_option_selected', array( 'copy' => '0' ), array( 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ) );
+				$db->delete( 'spdb_field_option_selected', [ 'sid' => $sid, 'copy' => '0', 'fid' => $this->fid ] );
+				$db->update( 'spdb_field_option_selected', [ 'copy' => '0' ], [ 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
@@ -685,18 +685,18 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$d = $this->getValues( false );
 		if ( !$this->dependency ) {
 			if ( $this->selectLabel ) {
-				$data = array( '' => Sobi::Txt( $this->selectLabel, $this->name ) );
+				$data = [ '' => Sobi::Txt( $this->selectLabel, $this->name ) ];
 			}
 			else {
 				if ( ( $this->searchMethod == 'select' ) ) {
-					$data = array( '' => Sobi::Txt( 'FMN.SEARCH_SELECT_LIST', array( 'name' => $this->name ) ) );
+					$data = [ '' => Sobi::Txt( 'FMN.SEARCH_SELECT_LIST', [ 'name' => $this->name ] ) ];
 				}
 			}
 		}
 		foreach ( $d as $k => $v ) {
 			$data[ $k ] = $v;
 		}
-		$params = array( 'id' => $this->nid, 'size' => $this->ssize, 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) );
+		$params = [ 'id' => $this->nid, 'size' => $this->ssize, 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) ];
 
 		//still there for compatibility reason
 		if ( $this->swidth ) {
@@ -710,8 +710,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$hidden = $this->travelDependencyPath( $request, $params );
 			$this->_selected = isset( $request[ 1 ] ) ? $request[ 1 ] : null;
 			$hiddenValue = str_replace( '"', "&quot;", json_encode( (object)$request ) );
-			$hidden .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, array( 'data' => array( 'selected' => '', 'section' => Sobi::Section() ) ) );
-			$params[ 'data' ] = array( 'order' => '1' );
+			$hidden .= SPHtml_Input::hidden( $this->nid . '_path', $hiddenValue, null, [ 'data' => [ 'selected' => '', 'section' => Sobi::Section() ] ] );
+			$params[ 'data' ] = [ 'order' => '1' ];
 		}
 
 		return "<div class=\"spFieldSelect\">" . SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params ) . $hidden . "</div>";
@@ -727,7 +727,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		parent::rejectChanges( $sid );
 		try {
 			SPFactory::db()
-					->delete( 'spdb_field_option_selected', array( 'sid' => $sid, 'fid' => $this->fid, 'copy' => '1', ) );
+					->delete( 'spdb_field_option_selected', [ 'sid' => $sid, 'fid' => $this->fid, 'copy' => '1', ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
@@ -742,7 +742,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		parent::deleteData( $sid );
 		try {
 			SPFactory::db()
-					->delete( 'spdb_field_option_selected', array( 'sid' => $sid, 'fid' => $this->fid ) );
+					->delete( 'spdb_field_option_selected', [ 'sid' => $sid, 'fid' => $this->fid ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
@@ -755,13 +755,13 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	{
 		$db =& SPFactory::db();
 		try {
-			$db->delete( 'spdb_field_option_selected', array( 'fid' => $this->fid ) );
+			$db->delete( 'spdb_field_option_selected', [ 'fid' => $this->fid ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		try {
-			$db->delete( 'spdb_field_option', array( 'fid' => $this->fid ) );
-			$db->delete( 'spdb_language', array( 'oType' => 'field_option', 'fid' => $this->id ) );
+			$db->delete( 'spdb_field_option', [ 'fid' => $this->fid ] );
+			$db->delete( 'spdb_language', [ 'oType' => 'field_option', 'fid' => $this->id ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
@@ -782,14 +782,14 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 		/* @var SPdb $db */
 		$db = SPFactory::db();
-		$sids = array();
+		$sids = [];
 		try {
-			$query = array( 'oType' => 'field_option', 'fid' => $this->fid, 'sValue' => $regex ? $data : "%{$data}%" );
+			$query = [ 'oType' => 'field_option', 'fid' => $this->fid, 'sValue' => $regex ? $data : "%{$data}%" ];
 			$db->select( 'sKey', 'spdb_language', $query );
 			$fids = $db->loadResultArray();
 			if ( count( $fids ) ) {
 				foreach ( $fids as $opt ) {
-					$db->dselect( 'sid', 'spdb_field_option_selected', array( 'copy' => '0', 'fid' => $this->fid, 'optValue' => $opt ) );
+					$db->dselect( 'sid', 'spdb_field_option_selected', [ 'copy' => '0', 'fid' => $this->fid, 'optValue' => $opt ] );
 					$ids = $db->loadResultArray();
 					if ( is_array( $ids ) && count( $ids ) ) {
 						$sids = array_unique( array_merge( $ids, $sids ) );
@@ -817,16 +817,16 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 		/* @var SPdb $db */
 //		$db =& SPFactory::db();
-		$terms = array();
+		$terms = [];
 		$data = $startWith ? "{$data}%" : "%{$data}%";
 		try {
 			$fids = SPFactory::db()
-					->dselect( 'sKey', 'spdb_language', array( 'oType' => 'field_option', 'fid' => $this->fid, 'sValue' => $data ) )
+					->dselect( 'sKey', 'spdb_language', [ 'oType' => 'field_option', 'fid' => $this->fid, 'sValue' => $data ] )
 					->loadResultArray();
 			if ( count( $fids ) ) {
 				foreach ( $fids as $opt ) {
 					$c = SPFactory::db()
-							->dselect( 'COUNT(*)', 'spdb_field_option_selected', array( 'copy' => '0', 'fid' => $this->fid, 'optValue' => $opt ) )
+							->dselect( 'COUNT(*)', 'spdb_field_option_selected', [ 'copy' => '0', 'fid' => $this->fid, 'optValue' => $opt ] )
 							->loadResult();
 					if ( $c ) {
 						$terms[] = $opt;
@@ -858,7 +858,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( !is_array( $request ) && is_numeric( $request ) && $request == 0 ) {
 			return null;
 		}
-		$sids = array();
+		$sids = [];
 		/* check if there was something to search for */
 		if ( ( is_array( $request ) && count( $request ) ) || ( is_string( $request ) && strlen( $request ) ) ) {
 			/** @var SPDb $db */
@@ -869,7 +869,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				 * - we have to find entries matches all these options */
 				if ( is_array( $request ) && $this->multi ) {
 					foreach ( $request as $opt ) {
-						$db->select( 'sid', 'spdb_field_option_selected', array( 'copy' => '0', 'fid' => $this->fid, 'optValue' => $opt ) );
+						$db->select( 'sid', 'spdb_field_option_selected', [ 'copy' => '0', 'fid' => $this->fid, 'optValue' => $opt ] );
 						if ( !( isset( $results ) ) ) {
 							$results = $db->loadResultArray();
 						}
@@ -882,7 +882,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				}
 				else {
 					$sids = $db
-							->select( 'sid', 'spdb_field_option_selected', array( 'copy' => '0', 'fid' => $this->fid, 'optValue' => $request ) )
+							->select( 'sid', 'spdb_field_option_selected', [ 'copy' => '0', 'fid' => $this->fid, 'optValue' => $request ] )
 							->loadResultArray();
 				}
 			} catch ( SPException $x ) {
@@ -896,7 +896,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	{
 		foreach ( $options as $value ) {
 			if ( isset( $value[ 'options' ] ) && is_array( $value[ 'options' ] ) ) {
-				$arr[ $value[ 'label' ] ] = array();
+				$arr[ $value[ 'label' ] ] = [];
 				$this->_parseOptions( $value[ 'options' ], $arr[ $value[ 'label' ] ] );
 			}
 			else {
@@ -916,7 +916,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		/** it can be for core files only at the moment because a stupid developer (yes, we all know which one) declared too many private methods and inherited classes returning always wrong results */
 		$class = strtolower( get_class( $this ) );
 		if ( strstr( $class, 'select' ) || strstr( $class, 'radio' ) || strstr( $class, 'chbxgr' ) ) {
-			return $this->verify( $entry, $request, $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, array(), $request ) : SPRequest::word( $this->nid, null, $request ) ) );
+			return $this->verify( $entry, $request, $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, [], $request ) : SPRequest::word( $this->nid, null, $request ) ) );
 		}
 		else {
 			return true;
@@ -935,10 +935,10 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				$rev = implode( "\n", ( $revision ) );
 			}
 
-			return array( 'current' => $cur, 'revision' => $rev );
+			return [ 'current' => $cur, 'revision' => $rev ];
 		}
 		else {
-			return array( 'current' => $current, 'revision' => $revision );
+			return [ 'current' => $current, 'revision' => $revision ];
 		}
 	}
 
@@ -946,7 +946,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	{
 		$dependencyDefinitions = scandir( SOBI_PATH . '/etc/fields/select-list/' );
 		if ( count( $dependencyDefinitions ) ) {
-			$set = array();
+			$set = [];
 			foreach ( $dependencyDefinitions as $file ) {
 				if ( !( is_dir( SOBI_PATH . '/etc/fields/select-list/' . $file ) ) ) {
 					$set[ $file ] = $file;
@@ -956,7 +956,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		}
 		/** @var $arr SPData_Array */
 		$arr = SPFactory::Instance( 'types.array' );
-		$options = array();
+		$options = [];
 		$this->_parseOptions( $this->options, $options );
 		$options = $arr->toINIString( $options );
 		$view->assign( $options, 'options' );
@@ -972,7 +972,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		SPFactory::mainframe()
 				->cleanBuffer()
 				->customHeader();
-		exit( json_encode( array( 'options' => $values, 'path' => ( json_encode( $path ) ) ) ) );
+		exit( json_encode( [ 'options' => $values, 'path' => ( json_encode( $path ) ) ] ) );
 	}
 
 	/**
@@ -982,7 +982,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function loadDependencyDefinition( $path )
 	{
-		static $options = array();
+		static $options = [];
 		if ( !( count( $options ) ) ) {
 			$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 		}
@@ -995,7 +995,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			$type = isset( $selected[ $option ][ 'child-type' ] ) ? Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $selected[ $option ][ 'child-type' ] ) ) : null;
 			$selected = $selected[ $option ][ 'childs' ];
 		}
-		$values = array();
+		$values = [];
 		if ( is_array( $selected ) && count( $selected ) ) {
 			$values[ 0 ] = Sobi::Txt( $this->selectLabel, ( strlen( $type ) ? $type : $this->name ) );
 			foreach ( $selected as $child ) {
@@ -1020,7 +1020,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	{
 		$selected = $this->getRaw();
 		$data = $this->data();
-		$_options = array();
+		$_options = [];
 		if ( $this->dependency ) {
 			if ( isset( $this->_fData->options ) ) {
 				$path = SPConfig::unserialize( $this->_fData->options );
@@ -1028,7 +1028,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			else {
 				return null;
 			}
-			$selectedPath = array();
+			$selectedPath = [];
 			$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 			if ( isset( $options[ 'translation' ] ) ) {
 				SPLang::load( $options[ 'translation' ] );
@@ -1039,39 +1039,39 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 					$selectedPath[ $step ] = $selected = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $step ) );
 				}
 			}
-			$_options = array( 'path' => count( $selectedPath ) ? $selectedPath : $path );
+			$_options = [ 'path' => count( $selectedPath ) ? $selectedPath : $path ];
 		}
 		else {
 			foreach ( $this->options as $opt ) {
 				if ( isset( $opt[ 'options' ] ) && is_array( $opt[ 'options' ] ) ) {
 					foreach ( $opt[ 'options' ] as $sub ) {
-						$_options[] = array(
+						$_options[] = [
 								'_complex' => 1,
 								'_data' => $sub[ 'label' ],
-								'_attributes' => array( 'group' => $opt[ 'id' ], 'selected' => $selected == $sub[ 'id' ] ? 'true' : 'false', 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
-						);
+								'_attributes' => [ 'group' => $opt[ 'id' ], 'selected' => $selected == $sub[ 'id' ] ? 'true' : 'false', 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] ]
+						];
 					}
 				}
 				else {
-					$_options[] = array(
+					$_options[] = [
 							'_complex' => 1,
 							'_data' => $opt[ 'label' ],
-							'_attributes' => array( 'selected' => $selected == $opt[ 'id' ] ? 'true' : 'false', 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
-					);
+							'_attributes' => [ 'selected' => $selected == $opt[ 'id' ] ? 'true' : 'false', 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] ]
+					];
 				}
 			}
 		}
 		$this->cleanCss();
 
-		return array(
+		return [
 				'_complex' => 1,
 				'_data' => $data,
-				'_attributes' => array(
+				'_attributes' => [
 						'class' => $this->cssClass,
 						'selected' => $this->getRaw()
-				),
+				],
 				'_options' => $_options,
-		);
+		];
 
 	}
 
@@ -1085,7 +1085,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	{
 		$subFields = null;
 		if ( count( $path ) ) {
-			$progress = array();
+			$progress = [];
 			foreach ( $path as $index => $step ) {
 				$progress[] = $step;
 
@@ -1115,14 +1115,14 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function saveSelectLabel( &$attr )
 	{
-		$data = array(
+		$data = [
 				'key' => $this->nid . '-select-label',
 				'value' => $attr[ 'selectLabel' ],
 				'type' => 'field_select',
 				'fid' => $this->fid,
 				'id' => Sobi::Section(),
 				'section' => Sobi::Section()
-		);
+		];
 		SPLang::saveValues( $data );
 	}
 }

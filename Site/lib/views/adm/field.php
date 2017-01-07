@@ -28,7 +28,7 @@ SPLoader::loadView( 'view', true );
  */
 class SPFieldAdmView extends SPAdmView
 {
-	private $_templates = array();
+	private $_templates = [];
 
 	/**
 	 */
@@ -58,8 +58,8 @@ class SPFieldAdmView extends SPAdmView
 		if ( strstr( SPRequest::task(), '.add' ) ) {
 			$title = str_replace( 'EDIT', 'ADD', $title );
 		}
-		$title = Sobi::Txt( $title, array( 'field' => $this->get( 'field.name' ), 'field_type' => $this->get( 'field.fieldType' ) ) );
-		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
+		$title = Sobi::Txt( $title, [ 'field' => $this->get( 'field.name' ), 'field_type' => $this->get( 'field.fieldType' ) ] );
+		Sobi::Trigger( 'setTitle', $this->name(), [ &$title ] );
 		SPFactory::header()->setTitle( $title );
 		$this->set( $title, 'site_title' );
 	}
@@ -74,7 +74,7 @@ class SPFieldAdmView extends SPAdmView
 			$this->_template = $template;
 		}
 		$this->_templates[ ] = $template;
-		Sobi::Trigger( 'setTemplate', $this->name(), array( &$this->_templates ) );
+		Sobi::Trigger( 'setTemplate', $this->name(), [ &$this->_templates ] );
 		return $this;
 	}
 
@@ -83,7 +83,7 @@ class SPFieldAdmView extends SPAdmView
 	 */
 	public function displayForm()
 	{
-		Sobi::Trigger( 'Display', $this->name(), array( &$this ) );
+		Sobi::Trigger( 'Display', $this->name(), [ &$this ] );
 		$action = $this->key( 'action' );
 
 		echo '<div class="SobiPro" id="SobiPro">' . "\n";

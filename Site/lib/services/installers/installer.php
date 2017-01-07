@@ -85,14 +85,14 @@ class SPInstaller extends SPObject
 		if ( !( SPFs::exists( $schemaDef ) ) || ( time() - filemtime( $schemaDef ) > ( 60 * 60 * 24 * 7 ) ) ) {
 			$connection = SPFactory::Instance( 'services.remote' );
 			$connection->setOptions(
-				array(
+				[
 					'url' => $def,
 					'connecttimeout' => 10,
 					'header' => false,
 					'returntransfer' => true,
 					'ssl_verifypeer' => false,
 					'ssl_verifyhost' => 2,
-				)
+				]
 			);
 			$schema =& SPFactory::Instance( 'base.fs.file', SPLoader::path( 'lib.services.installers.schemas.' . $type, 'front', false, 'xsd' ) );
 			$file = $connection->exec();

@@ -31,7 +31,7 @@ class SPRepository extends SPInstaller
 	/*** @var SPSoapClient */
 	private $_server = null;
 	/** @var array  */
-	protected $_repoDefArr = array();
+	protected $_repoDefArr = [];
 
 	public function __construct()
 	{
@@ -52,7 +52,7 @@ class SPRepository extends SPInstaller
 	{
 		$arrdef = SPFactory::Instance( 'types.array' );
 		$def = $arrdef->fromXML( $this->definition, 'repository' );
-		$ndef = array();
+		$ndef = [];
 		$u = false;
 		$rid = null;
 		foreach ( $def[ 'repository' ] as $k => $v ) {
@@ -125,7 +125,7 @@ class SPRepository extends SPInstaller
 					)
 				);
 			}
-			$this->_server = SPFactory::Instance( 'services.soap', null, array( 'location' => $this->xGetString( 'url' ) ) );
+			$this->_server = SPFactory::Instance( 'services.soap', null, [ 'location' => $this->xGetString( 'url' ) ] );
 		}
 		else {
 			throw new SPException( SPLang::e( 'No repository definition file at %s or the definition is invalid.', $this->xmlFile ) );
@@ -134,7 +134,7 @@ class SPRepository extends SPInstaller
 
 	public function __call( $fn, $args )
 	{
-		$return = array( 'error' => 500 );
+		$return = [ 'error' => 500 ];
 		array_unshift( $args, Sobi::Lang( false ) );
 		array_unshift( $args, Sobi::Cfg( 'live_site' ) );
 		if ( $this->_server instanceof SPSoapClient ) {

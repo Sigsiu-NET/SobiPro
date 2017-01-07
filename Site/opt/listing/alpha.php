@@ -95,9 +95,9 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		if ( Sobi::Cfg( 'alphamenu.verify' ) ) {
 			$entries = SPFactory::cache()->getVar( 'alpha_entries_' . $field );
 			if ( !$entries ) {
-				$entries = array();
+				$entries = [];
 				foreach ( $letters as $letter ) {
-					$params = array( 'letter' => $letter );
+					$params = [ 'letter' => $letter ];
 					if ( $field ) {
 						$params[ 'field' ] = $field;
 					}
@@ -107,10 +107,10 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 				SPFactory::cache()->addVar( $entries, 'alpha_entries_' . $field );
 			}
 			foreach ( $letters as $letter ) {
-				$le = array( '_complex' => 1, '_data' => trim( $letter ) );
+				$le = [ '_complex' => 1, '_data' => trim( $letter ) ];
 				if ( count( $entries[ $letter ] ) ) {
 					$task = 'list.alpha.' . trim( strtolower( $letter ) ) . '.' . $field;
-					$le[ '_attributes' ] = array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => $task ) ) );
+					$le[ '_attributes' ] = [ 'url' => Sobi::Url( [ 'sid' => Sobi::Section(), 'task' => $task ] ) ];
 				}
 				$l[ ] = $le;
 			}
@@ -118,14 +118,14 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		else {
 			foreach ( $letters as $letter ) {
 				$task = 'list.alpha.' . trim( strtolower( $letter ) ) . '.' . $field;
-				$l[ ] = array(
+				$l[ ] = [
 						'_complex' => 1,
 						'_data' => trim( $letter ),
-						'_attributes' => array( 'url' => Sobi::Url( array( 'sid' => Sobi::Section(), 'task' => $task ) ) )
-				);
+						'_attributes' => [ 'url' => Sobi::Url( [ 'sid' => Sobi::Section(), 'task' => $task ] ) ]
+				];
 			}
 		}
-		$data = array( '_complex' => 1, '_data' => array( 'letters' => $l ) );
+		$data = [ '_complex' => 1, '_data' => [ 'letters' => $l ] ];
 		/* get view class */
 		$view = SPFactory::View( 'listing' );
 		$view->setTemplate( $tplPckg . '.common.alphaindex' );
@@ -136,7 +136,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		SPFactory::mainframe()
 				->cleanBuffer()
 				->customHeader();
-		echo json_encode( array( 'index' => $out ) );
+		echo json_encode( [ 'index' => $out ] );
 		exit;
 	}
 
@@ -144,12 +144,12 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 	{
 		if ( is_numeric( $nid ) ) {
 			$field = SPFactory::db()
-					->select( array( 'fid', 'fieldType', 'nid' ), 'spdb_field', array( 'section' => Sobi::Section(), 'fid' => $nid ) )
+					->select( [ 'fid', 'fieldType', 'nid' ], 'spdb_field', [ 'section' => Sobi::Section(), 'fid' => $nid ] )
 					->loadObject();
 		}
 		else {
 			$field = SPFactory::db()
-					->select( array( 'fid', 'fieldType', 'nid' ), 'spdb_field', array( 'section' => Sobi::Section(), 'nid' => $nid ) )
+					->select( [ 'fid', 'fieldType', 'nid' ], 'spdb_field', [ 'section' => Sobi::Section(), 'nid' => $nid ] )
 					->loadObject();
 		}
 		$this->_field = $field->fid;
@@ -194,9 +194,9 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		$pn = SPFactory::Instance(
 				'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ),
 				$eLimit, $eCount, $site,
-				array( 'sid' => SPRequest::sid(), 'task' => $t )
+				[ 'sid' => SPRequest::sid(), 'task' => $t ]
 		);
-		$cUrl = array( 'sid' => SPRequest::sid(), 'task' => $t );
+		$cUrl = [ 'sid' => SPRequest::sid(), 'task' => $t ];
 		if ( SPRequest::int( 'site', 0 ) ) {
 			$cUrl[ 'site' ] = SPRequest::int( 'site', 0 );
 		}
@@ -207,16 +207,16 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 		$letter = urldecode( SPRequest::cmd( 'letter' ) );
 		/* add pathway */
 		if ( !( $this->_fieldType ) ) {
-			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $letter ) ), Sobi::Url( 'current' ) );
-			SPFactory::header()->addTitle( Sobi::Txt( 'AL.TITLE', array( 'letter' => $letter, 'section' => $this->_model->get( 'name' ) ) ), array( ceil( $eCount / $eLimit ), $site ) );
+			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'AL.PATH_TITLE', [ 'letter' => $letter ] ), Sobi::Url( 'current' ) );
+			SPFactory::header()->addTitle( Sobi::Txt( 'AL.TITLE', [ 'letter' => $letter, 'section' => $this->_model->get( 'name' ) ] ), [ ceil( $eCount / $eLimit ), $site ] );
 			$listingName = null;
 		}
 		else {
 			$field = SPFactory::Model( 'field' );
 			$field->init( $this->_field );
-			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'AL.PATH_TITLE_FIELD', array( 'letter' => $letter, 'field' => $field->get( 'name' ) ) ), Sobi::Url( 'current' ) );
-			SPFactory::header()->addTitle( Sobi::Txt( 'AL.TITLE_FIELD', array( 'letter' => $letter, 'section' => $this->_model->get( 'name' ), 'field' => $field->get( 'name' ) ) ), array( ceil( $eCount / $eLimit ), $site ) );
-			$listingName = Sobi::Txt( 'AL.PATH_TITLE', array( 'letter' => $this->_letter, 'field' => $field->get( 'name' ) ) );
+			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'AL.PATH_TITLE_FIELD', [ 'letter' => $letter, 'field' => $field->get( 'name' ) ] ), Sobi::Url( 'current' ) );
+			SPFactory::header()->addTitle( Sobi::Txt( 'AL.TITLE_FIELD', [ 'letter' => $letter, 'section' => $this->_model->get( 'name' ), 'field' => $field->get( 'name' ) ] ), [ ceil( $eCount / $eLimit ), $site ] );
+			$listingName = Sobi::Txt( 'AL.PATH_TITLE', [ 'letter' => $this->_letter, 'field' => $field->get( 'name' ) ] );
 		}
 
 		$visitor = SPFactory::user()->getCurrent();
@@ -234,7 +234,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 				->assign( $navigation, 'navigation' )
 				->assign( $visitor, 'visitor' )
 				->assign( $entries, 'entries' );
-		Sobi::Trigger( 'AlphaListing', 'View', array( &$view ) );
+		Sobi::Trigger( 'AlphaListing', 'View', [ &$view ] );
 		$view->display();
 	}
 
@@ -251,8 +251,8 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 
 	public function getAlphaEntries( $eLimit, $site, $ids = false )
 	{
-		$conditions = array();
-		$entries = array();
+		$conditions = [];
+		$entries = [];
 
 		/* get the site to display */
 		$eLimStart = ( ( $site - 1 ) * $eLimit );
@@ -283,12 +283,12 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			case 'multiselect':
 				$eOrder = 'sValue';
 				$table = $db->join(
-						array(
-								array( 'table' => 'spdb_field_option_selected', 'as' => 'opts' ),
-								array( 'table' => 'spdb_language', 'as' => 'lang', 'key' => array( 'opts.optValue', 'lang.sKey' ) ),
-								array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'opts.sid', 'spo.id' ) ),
-								array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'opts.sid', 'sprl.id' ) ),
-						)
+						[
+								[ 'table' => 'spdb_field_option_selected', 'as' => 'opts' ],
+								[ 'table' => 'spdb_language', 'as' => 'lang', 'key' => [ 'opts.optValue', 'lang.sKey' ] ],
+								[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => [ 'opts.sid', 'spo.id' ] ],
+								[ 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => [ 'opts.sid', 'sprl.id' ] ],
+						]
 				);
 				$oPrefix = 'spo.';
 				$conditions[ 'spo.oType' ] = 'entry';
@@ -298,12 +298,12 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			default:
 				$eOrder = 'baseData';
 				$table = $db->join(
-						array(
-								array( 'table' => 'spdb_field', 'as' => 'fdef', 'key' => 'fid' ),
-								array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
-								array( 'table' => 'spdb_object', 'as' => 'spo', 'key' => array( 'fdata.sid', 'spo.id' ) ),
-								array( 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => array( 'fdata.sid', 'sprl.id' ) ),
-						)
+						[
+								[ 'table' => 'spdb_field', 'as' => 'fdef', 'key' => 'fid' ],
+								[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ],
+								[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => [ 'fdata.sid', 'spo.id' ] ],
+								[ 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => [ 'fdata.sid', 'sprl.id' ] ],
+						]
 				);
 				$oPrefix = 'spo.';
 				$conditions[ 'spo.oType' ] = 'entry';
@@ -318,7 +318,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 			$this->userPermissionsQuery( $conditions, $oPrefix );
 		}
 		else {
-			$conditions = array_merge( $conditions, array( $oPrefix . 'state' => '1', '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ) ) );
+			$conditions = array_merge( $conditions, [ $oPrefix . 'state' => '1', '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ) ] );
 		}
 		$conditions[ 'sprl.copy' ] = '0';
 		try {
@@ -338,7 +338,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 				$entries[ $i ] = $sid;
 			}
 		}
-		Sobi::Trigger( $this->name(), 'AfterGetEntries', array( &$entries, false ) );
+		Sobi::Trigger( $this->name(), 'AfterGetEntries', [ &$entries, false ] );
 		return $entries;
 	}
 
@@ -359,7 +359,7 @@ class SPAlphaListing extends SPSectionCtrl implements SPListing
 	{
 		$this->_task = strlen( $task ) ? $task : $this->_defTask;
 		$helpTask = $this->_type . '.' . $this->_task;
-		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_task ) );
+		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_task ] );
 		SPFactory::registry()->set( 'task', $helpTask );
 	}
 }

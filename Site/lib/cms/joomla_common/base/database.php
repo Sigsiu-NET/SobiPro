@@ -90,12 +90,12 @@ class SPJoomlaDb
 	public function __call( $method, $args )
 	{
 		if ( $this->db && method_exists( $this->db, $method ) ) {
-			$Args = array();
+			$Args = [];
 			// http://www.php.net/manual/en/function.call-user-func-array.php#91503
 			foreach ( $args as $k => &$arg ) {
 				$Args[ $k ] = &$arg;
 			}
-			return call_user_func_array( array( $this->db, $method ), $Args );
+			return call_user_func_array( [ $this->db, $method ], $Args );
 		}
 		else {
 			throw new SPException( SPLang::e( 'CALL_TO_UNDEFINED_CLASS_METHOD', get_class( $this->_type ), $method ) );
@@ -156,7 +156,7 @@ class SPJoomlaDb
 	{
 		$sql = SPFs::read( $file );
 		$sql = explode( "\n", $sql );
-		$log = array();
+		$log = [];
 		if ( count( $sql ) ) {
 			foreach ( $sql as $query ) {
 				if ( strlen( $query ) ) {
@@ -223,7 +223,7 @@ class SPJoomlaDb
 			}
 			if ( strstr( $order, ',' ) ) {
 				$o = explode( ',', $order );
-				$order = array();
+				$order = [];
 				foreach ( $o as $p ) {
 					if ( strstr( $p, '.' ) ) {
 						$p = explode( '.', $p );
@@ -323,7 +323,7 @@ class SPJoomlaDb
 	public function where( $where, $andor = 'AND' )
 	{
 		if ( is_array( $where ) ) {
-			$w = array();
+			$w = [];
 			foreach ( $where as $col => $val ) {
 				$equal = '=';
 				$not = false;
@@ -381,7 +381,7 @@ class SPJoomlaDb
 					 * 	key IN ( 1,2,3,4 )
 					 */
 				elseif ( is_array( $val ) ) {
-					$v = array();
+					$v = [];
 					foreach ( $val as $k ) {
 						if ( strlen( $k ) || $k == SPC::NO_VALUE ) {
 							$k = $k == SPC::NO_VALUE ? null : $k;
@@ -480,7 +480,7 @@ class SPJoomlaDb
 	 * @param string $charset
 	 * @return $this
 	 */
-	public function createTable( $name, $fields, $keys = array(), $notExists = false, $engine = null, $charset = 'utf8' )
+	public function createTable( $name, $fields, $keys = [], $notExists = false, $engine = null, $charset = 'utf8' )
 	{
 		$name = "#__sobipro_{$name}";
 		$query = $notExists ? "CREATE TABLE IF NOT EXISTS `{$name}` " : "CREATE TABLE `{$name}` ";
@@ -538,7 +538,7 @@ class SPJoomlaDb
 	  */
 	public function argsOr( $val )
 	{
-		$cond = array();
+		$cond = [];
 		foreach ( $val as $i => $k ) {
 			$equal = ' = ';
 			if ( strpos( $i, '<' ) ) {
@@ -566,7 +566,7 @@ class SPJoomlaDb
 	 */
 	public function update( $table, $set, $where, $limit = 0 )
 	{
-		$change = array();
+		$change = [];
 		$where = $this->where( $where );
 		foreach ( $set as $var => $state ) {
 			if ( is_array( $state ) || is_object( $state ) ) {
@@ -599,7 +599,7 @@ class SPJoomlaDb
 	 */
 	public function replace( $table, $values )
 	{
-		$v = array();
+		$v = [];
 		foreach ( $values as $var => $val ) {
 			if ( is_array( $val ) || is_object( $val ) ) {
 				$val = SPConfig::serialize( $val );
@@ -633,7 +633,7 @@ class SPJoomlaDb
 	public function insert( $table, $values, $ignore = false, $normalize = false )
 	{
 		$ignore = $ignore ? 'IGNORE ' : null;
-		$v = array();
+		$v = [];
 		if ( $normalize ) {
 			$this->normalize( $table, $values );
 		}
@@ -665,7 +665,7 @@ class SPJoomlaDb
 	 */
 	public function normalize( $table, &$values )
 	{
-		$normalised = array();
+		$normalised = [];
 		$cols = $this->getColumns( $table );
 		/* sort the properties in the same order */
 		foreach ( $cols as $col ) {
@@ -687,11 +687,11 @@ class SPJoomlaDb
 	public function insertArray( $table, $values, $update = false, $ignore = false )
 	{
 		$ignore = $ignore ? 'IGNORE ' : null;
-		$rows = array();
+		$rows = [];
 		foreach ( $values as $arr ) {
-			$v = array();
-			$vars = array();
-			$k = array();
+			$v = [];
+			$vars = [];
+			$k = [];
 			foreach ( $arr as $var => $val ) {
 				if ( is_array( $val ) || is_object( $val ) ) {
 					$val = SPConfig::serialize( $val );
@@ -730,9 +730,9 @@ class SPJoomlaDb
 	 */
 	public function insertUpdate( $table, $values )
 	{
-		$v = array();
-		$c = array();
-		$k = array();
+		$v = [];
+		$c = [];
+		$k = [];
 		foreach ( $values as $var => $val ) {
 			if ( is_array( $val ) || is_object( $val ) ) {
 				$val = SPConfig::serialize( $val );
@@ -968,7 +968,7 @@ class SPJoomlaDb
 	 */
 	public function getColumns( $table )
 	{
-		static $cache = array();
+		static $cache = [];
 		if ( !( isset( $cache[ $table ] ) ) ) {
 			$this->setQuery( "SHOW COLUMNS FROM {$table}" );
 			try {
@@ -1031,7 +1031,7 @@ class SPJoomlaDb
 		$through = strtoupper( $through );
 		$join = null;
 		if ( count( $params ) > 2 ) {
-			$joins = array();
+			$joins = [];
 			$c = 0;
 			foreach ( $params as $table ) {
 				if ( isset( $table[ 'table' ] ) ) {
@@ -1081,7 +1081,7 @@ class SPJoomlaDb
 			$since = "AND ( {$since} < NOW() OR {$since} IN( '{$null}', '{$stamp}' ) ) ";
 		}
 		if ( $exception && is_array( $exception ) ) {
-			$ex = array();
+			$ex = [];
 			foreach ( $exception as $subject => $value ) {
 				$ex[ ] = "{$subject} = '{$value}'";
 			}

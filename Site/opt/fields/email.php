@@ -72,7 +72,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 					$class .= ' ' . $width;
 				}
 			}
-			$params = array( 'id' => $this->nid, 'size' => $this->labelWidth, 'class' => $class );
+			$params = [ 'id' => $this->nid, 'size' => $this->labelWidth, 'class' => $class ];
 			if ( $this->labelMaxLength ) {
 				$params[ 'maxlength' ] = $this->labelMaxLength;
 			}
@@ -94,7 +94,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			}
 		}
 		$this->nid .= '_url';
-		$params = array( 'id' => $this->nid, 'size' => $this->width, 'class' => $class );
+		$params = [ 'id' => $this->nid, 'size' => $this->width, 'class' => $class ];
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
@@ -149,23 +149,23 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 				$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData';
 				$this->cssClass = $this->cssClass . ' ' . $this->nid;
 				$this->cleanCss();
-				$attributes = array( 'href' => "mailto:{$data['url']}", 'class' => $this->cssClass );
+				$attributes = [ 'href' => "mailto:{$data['url']}", 'class' => $this->cssClass ];
 				if ( $this->newWindow ) {
 					$attributes[ 'target' ] = '_blank';
 				}
-				$data = array(
+				$data = [
 					'_complex'    => 1,
 					'_data'       => SPLang::clean( $data[ 'label' ] ),
 //						'_data' => SPLang::clean( $this->ownLabel ? $data[ 'label' ] : $data[ 'url' ] ),
 					'_attributes' => $attributes
-				);
+				];
 
-				return array(
+				return [
 					'_complex'    => 1,
-					'_validate'   => array( 'class' => str_replace( str_replace( '\\', '/', SOBI_PATH ), null, str_replace( '\\', '/', __FILE__ ) ), 'method' => 'validateVisibility' ),
-					'_data'       => array( 'a' => $data ),
-					'_attributes' => array( 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass )
-				);
+					'_validate'   => [ 'class' => str_replace( str_replace( '\\', '/', SOBI_PATH ), null, str_replace( '\\', '/', __FILE__ ) ), 'method' => 'validateVisibility' ],
+					'_data'       => [ 'a' => $data ],
+					'_attributes' => [ 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass ]
+				];
 			}
 		}
 	}
@@ -177,7 +177,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			->get( 'humanity' );
 		$display  = Sobi::Cfg( 'mail_protection.show' );
 		if ( !( $humanity >= $display ) ) {
-			$data[ '_data' ] = array();
+			$data[ '_data' ] = [];
 		}
 	}
 
@@ -203,7 +203,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 			return SPRequest::search( $this->nid, $request );
 		}
 		else {
-			return array();
+			return [];
 		}
 	}
 
@@ -222,7 +222,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 
 	private function fromCache( $cache )
 	{
-		$data = array();
+		$data = [];
 		if ( isset( $cache[ $this->nid ] ) ) {
 			$data[ 'label' ] = $cache[ $this->nid ];
 		}
@@ -254,7 +254,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 		$uid  = Sobi::My( 'id' );
 
 		/* collect the needed params */
-		$params                  = array();
+		$params                  = [];
 		$params[ 'publishUp' ]   = $entry->get( 'publishUp' );
 		$params[ 'publishDown' ] = $entry->get( 'publishDown' );
 		$params[ 'fid' ]         = $this->fid;
@@ -316,7 +316,7 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	 */
 	protected function verifyEmail( $entry, $request )
 	{
-		$save = array();
+		$save = [];
 		$data = SPRequest::raw( $this->nid . '_url', null, $request );
 		$dexs = strlen( $data );
 		$data = SPFactory::db()->escape( $data );

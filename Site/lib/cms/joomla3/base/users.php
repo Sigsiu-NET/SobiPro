@@ -41,11 +41,11 @@ class SPUsers
 		for ( $i = 0, $n = count( $options ); $i < $n; $i ++ ) {
 			$options[ $i ]->text = str_repeat( '- ', $options[ $i ]->level ) . $options[ $i ]->text;
 		}
-		$gids = array();
+		$gids = [];
 		foreach( $options as $k => $v ) {
 			$gids[] = get_object_vars( $v );
 		}
-		$gids[ 0 ] = array( 'value' => 0, 'text' => Sobi::Txt( 'ACL.REG_VISITOR' ), 'level' => 0 );
+		$gids[ 0 ] = [ 'value' => 0, 'text' => Sobi::Txt( 'ACL.REG_VISITOR' ), 'level' => 0 ];
 		return $gids;
 	}
 }

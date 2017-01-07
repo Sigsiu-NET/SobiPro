@@ -30,7 +30,7 @@ class SPJoomlaMail extends JMail
 	public function __construct()
 	{
 		$cfg = SPFactory::config();
-		$this->setSender( array ( $cfg->get( 'mail.mailfrom' ), $cfg->get( 'mail.fromname' ) ) );
+		$this->setSender( [ $cfg->get( 'mail.mailfrom' ), $cfg->get( 'mail.fromname' ) ] );
 		switch ( $cfg->get( 'mail.mailer' ) ) {
 			case 'smtp':
 				$this->useSMTP(

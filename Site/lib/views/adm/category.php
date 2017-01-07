@@ -35,8 +35,8 @@ class SPCategoryAdmView extends SPSectionAdmView
 	public function setTitle( $title )
 	{
 		$name = $this->get( 'category.name' );
-		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-		$title = Sobi::Txt( $title, array( 'category_name' => $name ) );
+		Sobi::Trigger( 'setTitle', $this->name(), [ &$title ] );
+		$title = Sobi::Txt( $title, [ 'category_name' => $name ] );
 		$this->set( $name, 'category_name' );
 		$title = parent::setTitle( $title );
 		return $title;
@@ -106,14 +106,14 @@ class SPCategoryAdmView extends SPSectionAdmView
 		$this->assign( $path, 'parent_path' );
 		$this->assign( $parentCat, 'parent_cat' );
 		if ( SPRequest::sid() ) {
-			$catChooserURL = Sobi::Url( array( 'task' => 'category.chooser', 'sid' => SPRequest::sid(), 'out' => 'html' ), true );
+			$catChooserURL = Sobi::Url( [ 'task' => 'category.chooser', 'sid' => SPRequest::sid(), 'out' => 'html' ], true );
 			$this->assign( $catChooserURL, 'cat_chooser_url' );
 		}
 		elseif ( SPRequest::int( 'pid' ) ) {
-			$catUrl = Sobi::Url( array( 'task' => 'category.chooser', 'pid' => SPRequest::int( 'pid' ), 'out' => 'html' ), true );
+			$catUrl = Sobi::Url( [ 'task' => 'category.chooser', 'pid' => SPRequest::int( 'pid' ), 'out' => 'html' ], true );
 			$this->assign( $catUrl, 'cat_chooser_url' );
 		}
-		$iconChooserUrl = Sobi::Url( array( 'task' => 'category.icon', 'out' => 'html' ), true );
+		$iconChooserUrl = Sobi::Url( [ 'task' => 'category.icon', 'out' => 'html' ], true );
 		$this->assign( $iconChooserUrl, 'icon_chooser_url' );
 	}
 
@@ -131,7 +131,7 @@ class SPCategoryAdmView extends SPSectionAdmView
 			$path = $this->parentPath( $id );
 		}
 		$this->assign( $path, 'parent_path' );
-		$ajaxUrl = Sobi::Url( array( 'task' => 'category.parents', 'out' => 'json', 'format' => 'raw' ), true );
+		$ajaxUrl = Sobi::Url( [ 'task' => 'category.parents', 'out' => 'json', 'format' => 'raw' ], true );
 		$this->assign( $ajaxUrl, 'parent_ajax_url' );
 	}
 }

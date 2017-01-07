@@ -33,7 +33,7 @@ class SPTemplateXSLT implements SPTemplate
 	/**
 	 * @var array
 	 */
-	private $_data = array();
+	private $_data = [];
 	/**
 	 * @var string
 	 */
@@ -49,7 +49,7 @@ class SPTemplateXSLT implements SPTemplate
 	/**
 	 * @var array
 	 */
-	private $_cacheData = array();
+	private $_cacheData = [];
 
 	/**
 	 * @param array $cacheData
@@ -69,7 +69,7 @@ class SPTemplateXSLT implements SPTemplate
 	 * @throws SPException
 	 * @return mixed|string
 	 */
-	public function display( $out = 'html', $functions = array() )
+	public function display( $out = 'html', $functions = [] )
 	{
 		$class = SPLoader::loadClass( 'helpers.template' );
 		$methods = get_class_methods( $class );
@@ -94,7 +94,7 @@ class SPTemplateXSLT implements SPTemplate
 				}
 			}
 		}
-		Sobi::Trigger( 'TemplateEngine', 'RegisterFunctions', array( &$functions ) );
+		Sobi::Trigger( 'TemplateEngine', 'RegisterFunctions', [ &$functions ] );
 		$this->createXML();
 		if ( SPRequest::cmd( 'xml' ) && Sobi::Cfg( 'debug.xml_raw', false ) && ( !( Sobi::Cfg( 'debug.xml_ip', null ) ) || ( Sobi::Cfg( 'debug.xml_ip' ) == SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) ) ) ) {
 			SPFactory::mainframe()->cleanBuffer();
@@ -120,7 +120,7 @@ class SPTemplateXSLT implements SPTemplate
 			} catch ( DOMException $x ) {
 				Sobi::Error( 'template', SPLang::e( 'CANNOT_LOAD_TEMPLATE_FILE', $template, $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
-			Sobi::Trigger( 'TemplateEngine', 'LoadStyle', array( &$tplDoc ) );
+			Sobi::Trigger( 'TemplateEngine', 'LoadStyle', [ &$tplDoc ] );
 			$processor = new XSLTProcessor();
 			$processor->setParameter( 'block', 'xmlns', 'http://www.w3.org/1999/xhtml' );
 			$processor->registerPHPFunctions( $functions );
@@ -187,12 +187,12 @@ class SPTemplateXSLT implements SPTemplate
 				$this->_xml->appendChild( $e );
 			}
 		}
-		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), array( &$this->_xml ) );
+		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), [ &$this->_xml ] );
 	}
 
 	private static function entities( $txt )
 	{
-		$entities = array( 'auml' => '&#228;', 'ouml' => '&#246;', 'uuml' => '&#252;', 'szlig' => '&#223;', 'Auml' => '&#196;', 'Ouml' => '&#214;', 'Uuml' => '&#220;', 'nbsp' => '&#160;', 'Agrave' => '&#192;', 'Egrave' => '&#200;', 'Eacute' => '&#201;', 'Ecirc' => '&#202;', 'egrave' => '&#232;', 'eacute' => '&#233;', 'ecirc' => '&#234;', 'agrave' => '&#224;', 'iuml' => '&#239;', 'ugrave' => '&#249;', 'ucirc' => '&#251;', 'uuml' => '&#252;', 'ccedil' => '&#231;', 'AElig' => '&#198;', 'aelig' => '&#330;', 'OElig' => '&#338;', 'oelig' => '&#339;', 'angst' => '&#8491;', 'cent' => '&#162;', 'copy' => '&#169;', 'Dagger' => '&#8225;', 'dagger' => '&#8224;', 'deg' => '&#176;', 'emsp' => '&#8195;', 'ensp' => '&#8194;', 'ETH' => '&#208;', 'eth' => '&#240;', 'euro' => '&#8364;', 'half' => '&#189;', 'laquo' => '&#171;', 'ldquo' => '&#8220;', 'lsquo' => '&#8216;', 'mdash' => '&#8212;', 'micro' => '&#181;', 'middot' => '&#183;', 'ndash' => '&#8211;', 'not' => '&#172;', 'numsp' => '&#8199;', 'para' => '&#182;', 'permil' => '&#8240;', 'puncsp' => '&#8200;', 'raquo' => '&#187;', 'rdquo' => '&#8221;', 'rsquo' => '&#8217;', 'reg' => '&#174;', 'sect' => '&#167;', 'THORN' => '&#222;', 'thorn' => '&#254;', 'trade' => '&#8482;' );
+		$entities = [ 'auml' => '&#228;', 'ouml' => '&#246;', 'uuml' => '&#252;', 'szlig' => '&#223;', 'Auml' => '&#196;', 'Ouml' => '&#214;', 'Uuml' => '&#220;', 'nbsp' => '&#160;', 'Agrave' => '&#192;', 'Egrave' => '&#200;', 'Eacute' => '&#201;', 'Ecirc' => '&#202;', 'egrave' => '&#232;', 'eacute' => '&#233;', 'ecirc' => '&#234;', 'agrave' => '&#224;', 'iuml' => '&#239;', 'ugrave' => '&#249;', 'ucirc' => '&#251;', 'uuml' => '&#252;', 'ccedil' => '&#231;', 'AElig' => '&#198;', 'aelig' => '&#330;', 'OElig' => '&#338;', 'oelig' => '&#339;', 'angst' => '&#8491;', 'cent' => '&#162;', 'copy' => '&#169;', 'Dagger' => '&#8225;', 'dagger' => '&#8224;', 'deg' => '&#176;', 'emsp' => '&#8195;', 'ensp' => '&#8194;', 'ETH' => '&#208;', 'eth' => '&#240;', 'euro' => '&#8364;', 'half' => '&#189;', 'laquo' => '&#171;', 'ldquo' => '&#8220;', 'lsquo' => '&#8216;', 'mdash' => '&#8212;', 'micro' => '&#181;', 'middot' => '&#183;', 'ndash' => '&#8211;', 'not' => '&#172;', 'numsp' => '&#8199;', 'para' => '&#182;', 'permil' => '&#8240;', 'puncsp' => '&#8200;', 'raquo' => '&#187;', 'rdquo' => '&#8221;', 'rsquo' => '&#8217;', 'reg' => '&#174;', 'sect' => '&#167;', 'THORN' => '&#222;', 'thorn' => '&#254;', 'trade' => '&#8482;' ];
 		foreach ( $entities as $ent => $repl ) {
 			$txt = preg_replace( '/&' . $ent . ';?/m', $repl, $txt );
 		}
@@ -230,18 +230,18 @@ class SPTemplateXSLT implements SPTemplate
 				if ( is_array( $values ) && isset( $values[ '_value' ] ) ) {
 					if ( isset( $values[ '_class' ] ) || isset( $values[ '_id' ] ) ) {
 						$label = isset( $values[ '_tag' ] ) ? $values[ '_tag' ] : $label;
-						$attr = array();
+						$attr = [];
 						if ( isset( $values[ '_class' ] ) ) {
 							$attr[ 'class' ] = $values[ '_class' ];
 						}
 						if ( isset( $values[ '_id' ] ) ) {
 							$attr[ 'id' ] = $values[ '_id' ];
 						}
-						$values = array(
+						$values = [
 								'_complex' => 1,
 								'_data' => $values[ '_value' ],
 								'_attributes' => $attr
-						);
+						];
 					}
 					else {
 						$label = isset( $values[ '_tag' ] ) ? $values[ '_tag' ] : $label;
@@ -337,12 +337,12 @@ class SPTemplateXSLT implements SPTemplate
 	private function repairHtml( $node )
 	{
 		if ( class_exists( 'tidy' ) ) {
-			$c = array(
+			$c = [
 					'clean' => true,
 					'output-xhtml' => true,
 					'show-body-only' => true,
 					'input-xml' => true
-			);
+			];
 			$tidy = new tidy();
 			$tidy->parseString( $node, $c, 'utf8' );
 			$tidy->cleanRepair();
@@ -365,7 +365,7 @@ class SPTemplateXSLT implements SPTemplate
 	 */
 	public function setProxy( &$proxy )
 	{
-		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), array( &$proxy ) );
+		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), [ &$proxy ] );
 		$this->_proxy =& $proxy;
 	}
 
@@ -375,7 +375,7 @@ class SPTemplateXSLT implements SPTemplate
 	 */
 	public function setData( $data )
 	{
-		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), array( &$data ) );
+		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), [ &$data ] );
 		$this->_data =& $data;
 	}
 
@@ -385,7 +385,7 @@ class SPTemplateXSLT implements SPTemplate
 	 */
 	public function setTemplate( $template )
 	{
-		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), array( &$template ) );
+		Sobi::Trigger( 'TemplateEngine', ucfirst( __FUNCTION__ ), [ &$template ] );
 		$this->_tpl = $template;
 	}
 
@@ -396,7 +396,7 @@ class SPTemplateXSLT implements SPTemplate
 	 */
 	public function __call( $method, $params )
 	{
-		Sobi::Trigger( 'TemplateEngine', ucfirst( $method ), array( &$method, &$params ) );
-		return call_user_func_array( array( $this->_proxy, $method ), $params );
+		Sobi::Trigger( 'TemplateEngine', ucfirst( $method ), [ &$method, &$params ] );
+		return call_user_func_array( [ $this->_proxy, $method ], $params );
 	}
 }

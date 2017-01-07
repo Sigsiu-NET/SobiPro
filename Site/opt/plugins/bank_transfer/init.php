@@ -59,10 +59,10 @@ class SPPBankTransfer extends SPPlugin
 	public function PaymentMethodView( &$methods, $entry, &$payment )
 	{
 		$bankdata = SPLang::getValue( 'bankdata', 'plugin', Sobi::Section() );
-		$bankdata = SPLang::replacePlaceHolders( $bankdata, array( 'entry' => $entry ) );
-		$methods[ $this->id ] = array(
+		$bankdata = SPLang::replacePlaceHolders( $bankdata, [ 'entry' => $entry ] );
+		$methods[ $this->id ] = [
 			'content' => SPLang::clean( $bankdata ),
 			'title' => Sobi::Txt( 'APP.PBT.PAY_TITLE' )
-		);
+		];
 	}
 }

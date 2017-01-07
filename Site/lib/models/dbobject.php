@@ -89,7 +89,7 @@ abstract class SPDBObject extends SPObject
 	/**
 	 * @var array
 	 */
-	protected $options = array();
+	protected $options = [];
 	/**
 	 * @var string
 	 */
@@ -105,7 +105,7 @@ abstract class SPDBObject extends SPObject
 	/**
 	 * @var array
 	 */
-	protected $params = array();
+	protected $params = [];
 	/**
 	 * @var int
 	 */
@@ -153,7 +153,7 @@ abstract class SPDBObject extends SPObject
 	/**
 	 * @var array
 	 */
-	protected $properties = array();
+	protected $properties = [];
 
 	/**
 	 * @param string $name
@@ -169,7 +169,7 @@ abstract class SPDBObject extends SPObject
 	 * If a property isn't declared here, it will be ignored in the getRequest method
 	 * @var array
 	 */
-	private static $types = array(
+	private static $types = [
 			'approved' => 'bool',
 			'state' => 'int',
 			'confirmed' => 'bool',
@@ -189,11 +189,11 @@ abstract class SPDBObject extends SPObject
 			'validSince' => 'timestamp',
 			'validUntil' => 'timestamp',
 			'params' => 'arr',
-	);
+	];
 	/**
 	 * @var array
 	 */
-	private static $translatable = array( 'nid', 'metaDesc', 'metaKeys' );
+	private static $translatable = [ 'nid', 'metaDesc', 'metaKeys' ];
 
 	/**
 	 * @return \SPDBObject
@@ -208,7 +208,7 @@ abstract class SPDBObject extends SPObject
 		$this->updater = Sobi::My( 'id' );
 		$this->owner = Sobi::My( 'id' );
 		$this->updatedTime = SPFactory::config()->date( time(), 'date.db_format' );
-		Sobi::Trigger( 'CreateModel', $this->name(), array( &$this ) );
+		Sobi::Trigger( 'CreateModel', $this->name(), [ &$this ] );
 	}
 
 
@@ -271,7 +271,7 @@ abstract class SPDBObject extends SPObject
 	public function changeState( $state, $reason = null )
 	{
 		try {
-			SPFactory::db()->update( 'spdb_object', array( 'state' => ( int )$state, 'stateExpl' => $reason ), array( 'id' => $this->id ) );
+			SPFactory::db()->update( 'spdb_object', [ 'state' => ( int )$state, 'stateExpl' => $reason ], [ 'id' => $this->id ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
@@ -290,7 +290,7 @@ abstract class SPDBObject extends SPObject
 			$this->cout = 0;
 			$this->coutTime = null;
 			try {
-				SPFactory::db()->update( 'spdb_object', array( 'coutTime' => $this->coutTime, 'cout' => $this->cout ), array( 'id' => $this->id ) );
+				SPFactory::db()->update( 'spdb_object', [ 'coutTime' => $this->coutTime, 'cout' => $this->cout ], [ 'id' => $this->id ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
@@ -308,7 +308,7 @@ abstract class SPDBObject extends SPObject
 			$this->cout = Sobi::My( 'id' );
 			$this->coutTime = $config->date( ( time() + $config->key( 'editing.def_cout_time', 3600 ) ), 'date.db_format' );
 			try {
-				SPFactory::db()->update( 'spdb_object', array( 'coutTime' => $this->coutTime, 'cout' => $this->cout ), array( 'id' => $this->id ) );
+				SPFactory::db()->update( 'spdb_object', [ 'coutTime' => $this->coutTime, 'cout' => $this->cout ], [ 'id' => $this->id ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
@@ -319,19 +319,19 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function delete()
 	{
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( $this->id ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ $this->id ] );
 		try {
-			SPFactory::db()->delete( 'spdb_object', array( 'id' => $this->id ) );
+			SPFactory::db()->delete( 'spdb_object', [ 'id' => $this->id ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		try {
-			SPFactory::db()->delete( 'spdb_relations', array( 'id' => $this->id, 'oType' => $this->type() ) );
+			SPFactory::db()->delete( 'spdb_relations', [ 'id' => $this->id, 'oType' => $this->type() ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		try {
-			SPFactory::db()->delete( 'spdb_language', array( 'id' => $this->id, 'oType' => $this->type() ) );
+			SPFactory::db()->delete( 'spdb_language', [ 'id' => $this->id, 'oType' => $this->type() ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
@@ -352,25 +352,25 @@ abstract class SPDBObject extends SPObject
 		}
 		$childs = SPFactory::cache()->getVar( 'childs_' . $lang . $type . ( $recursive ? '_recursive' : '' ) . ( $name ? '_full' : '' ) . $state, $this->id );
 		if ( $childs ) {
-			return $childs == SPC::NO_VALUE ? array() : $childs;
+			return $childs == SPC::NO_VALUE ? [] : $childs;
 		}
 		$db = SPFactory::db();
-		$childs = array();
+		$childs = [];
 		try {
-			$cond = array( 'pid' => $this->id );
+			$cond = [ 'pid' => $this->id ];
 			if ( $state ) {
 				$cond[ 'so.state' ] = $state;
 				$cond[ 'so.approved' ] = $state;
 				$tables = $db->join(
-						array(
-								array( 'table' => 'spdb_object', 'as' => 'so', 'key' => 'id' ),
-								array( 'table' => 'spdb_relations', 'as' => 'sr', 'key' => 'id' )
-						)
+						[
+								[ 'table' => 'spdb_object', 'as' => 'so', 'key' => 'id' ],
+								[ 'table' => 'spdb_relations', 'as' => 'sr', 'key' => 'id' ]
+						]
 				);
-				$db->select( array( 'sr.id', 'sr.oType' ), $tables, $cond );
+				$db->select( [ 'sr.id', 'sr.oType' ], $tables, $cond );
 			}
 			else {
-				$db->select( array( 'id', 'oType' ), 'spdb_relations', $cond );
+				$db->select( [ 'id', 'oType' ], 'spdb_relations', $cond );
 			}
 			$results = $db->loadAssocList( 'id' );
 		} catch ( SPException $x ) {
@@ -396,10 +396,10 @@ abstract class SPDBObject extends SPObject
 			}
 		}
 		if ( $name && count( $childs ) ) {
-			$names = SPLang::translateObject( $childs, array( 'name', 'alias' ), $type );
+			$names = SPLang::translateObject( $childs, [ 'name', 'alias' ], $type );
 			if ( is_array( $names ) && !empty( $names ) ) {
 				foreach ( $childs as $i => $id ) {
-					$childs[ $i ] = array( 'name' => $names[ $id ][ 'value' ], 'alias' => $names[ $id ][ 'alias' ] );
+					$childs[ $i ] = [ 'name' => $names[ $id ][ 'value' ], 'alias' => $names[ $id ][ 'alias' ] ];
 				}
 			}
 		}
@@ -422,7 +422,7 @@ abstract class SPDBObject extends SPObject
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		try {
-			$cond = array( 'pid' => $id );
+			$cond = [ 'pid' => $id ];
 			/** Tue, Mar 25, 2014 12:46:08 - it's a recursive function so we need entries and categories
 			 *  See Issue #1211
 			 *  Thanks Marcel
@@ -434,7 +434,7 @@ abstract class SPDBObject extends SPObject
 			if ( $type == 'category' ) {
 				$cond[ 'oType' ] = $type;
 			}
-			$r = $db->select( array( 'id', 'oType' ), 'spdb_relations', $cond )
+			$r = $db->select( [ 'id', 'oType' ], 'spdb_relations', $cond )
 					->loadAssocList( 'id' );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_CHILDS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -460,7 +460,7 @@ abstract class SPDBObject extends SPObject
 		}
 		while ( $c ) {
 			try {
-				$condition = array( 'oType' => $this->oType, 'nid' => $this->nid . $suffix );
+				$condition = [ 'oType' => $this->oType, 'nid' => $this->nid . $suffix ];
 				if ( $this->id ) {
 					$condition[ '!id' ] = $this->id;
 				}
@@ -486,7 +486,7 @@ abstract class SPDBObject extends SPObject
 		$prefix = $prefix ? $prefix . '_' : null;
 		/* get data types of my  properties */
 		$properties = get_object_vars( $this );
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', array( &$properties ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', [ &$properties ] );
 		/* and of the parent properties */
 		$types = array_merge( $this->types(), self::$types );
 		foreach ( $properties as $property => $values ) {
@@ -512,7 +512,7 @@ abstract class SPDBObject extends SPObject
 			$this->$property = SPRequest::$method( $prefix . $property, null, $request );
 		}
 		/* trigger plugins */
-		Sobi::Trigger( 'getRequest', $this->name(), array( &$this ) );
+		Sobi::Trigger( 'getRequest', $this->name(), [ &$this ] );
 	}
 
 	public function countChilds( $type = null, $state = 0 )
@@ -531,10 +531,10 @@ abstract class SPDBObject extends SPObject
 	public function countVisit( $reset = false )
 	{
 		$count = true;
-		Sobi::Trigger( 'CountVisit', ucfirst( $this->type() ), array( &$count, $this->id ) );
+		Sobi::Trigger( 'CountVisit', ucfirst( $this->type() ), [ &$count, $this->id ] );
 		if ( $this->id && $count ) {
 			try {
-				SPFactory::db()->insertUpdate( 'spdb_counter', array( 'sid' => $this->id, 'counter' => ( $reset ? '0' : ++$this->counter ), 'lastUpdate' => 'FUNCTION:NOW()' ) );
+				SPFactory::db()->insertUpdate( 'spdb_counter', [ 'sid' => $this->id, 'counter' => ( $reset ? '0' : ++$this->counter ), 'lastUpdate' => 'FUNCTION:NOW()' ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_INC_COUNTER_DB', $x->getMessage() ), SPC::ERROR, 0, __LINE__, __FILE__ );
 			}
@@ -542,6 +542,7 @@ abstract class SPDBObject extends SPObject
 	}
 
 	/**
+	 * @param string $request
 	 */
 	public function save( $request = 'post' )
 	{
@@ -594,7 +595,7 @@ abstract class SPDBObject extends SPObject
 
 		/* get database columns and their ordering */
 		$cols = $db->getColumns( 'spdb_object' );
-		$values = array();
+		$values = [];
 
 		/*
 		 * @todo: manage own is not implemented yet
@@ -617,7 +618,7 @@ abstract class SPDBObject extends SPObject
 		}
 
 		/* trigger plugins */
-		Sobi::Trigger( 'save', $this->name(), array( &$this ) );
+		Sobi::Trigger( 'save', $this->name(), [ &$this ] );
 		/* try to save */
 		try {
 			/* if new object */
@@ -627,7 +628,7 @@ abstract class SPDBObject extends SPObject
 			}
 			/* if update */
 			else {
-				$db->update( 'spdb_object', $values, array( 'id' => $this->id ) );
+				$db->update( 'spdb_object', $values, [ 'id' => $this->id ] );
 			}
 		} catch ( SPException $x ) {
 			$db->rollback();
@@ -636,13 +637,13 @@ abstract class SPDBObject extends SPObject
 
 		/* get translatable properties */
 		$attributes = array_merge( $this->translatable(), self::$translatable );
-		$labels = array();
-		$defLabels = array();
+		$labels = [];
+		$defLabels = [];
 		foreach ( $attributes as $attr ) {
 			if ( $this->has( $attr ) ) {
-				$labels[ ] = array( 'sKey' => $attr, 'sValue' => $this->$attr, 'language' => Sobi::Lang(), 'id' => $this->id, 'oType' => $this->type(), 'fid' => 0 );
+				$labels[ ] = [ 'sKey' => $attr, 'sValue' => $this->$attr, 'language' => Sobi::Lang(), 'id' => $this->id, 'oType' => $this->type(), 'fid' => 0 ];
 				if ( Sobi::Lang() != Sobi::DefLang() ) {
-					$defLabels[ ] = array( 'sKey' => $attr, 'sValue' => $this->$attr, 'language' => Sobi::DefLang(), 'id' => $this->id, 'oType' => $this->type(), 'fid' => 0 );
+					$defLabels[ ] = [ 'sKey' => $attr, 'sValue' => $this->$attr, 'language' => Sobi::DefLang(), 'id' => $this->id, 'oType' => $this->type(), 'fid' => 0 ];
 				}
 			}
 		}
@@ -672,6 +673,7 @@ abstract class SPDBObject extends SPObject
 
 	/**
 	 * @param stdClass $obj
+	 * @param bool $cache
 	 */
 	public function extend( $obj, $cache = false )
 	{
@@ -680,7 +682,7 @@ abstract class SPDBObject extends SPObject
 				$this->_set( $k, $v );
 			}
 		}
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$obj ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$obj ] );
 		$this->loadTable( $cache );
 		$this->validUntil = SPFactory::config()->date( $this->validUntil, 'Y-m-d H:i:s' );
 	}
@@ -692,7 +694,7 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function & init( $id = 0 )
 	{
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', array( &$id ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', [ &$id ] );
 		$this->id = $id ? $id : $this->id;
 		if ( $this->id ) {
 			try {
@@ -721,6 +723,8 @@ abstract class SPDBObject extends SPObject
 	}
 
 	/**
+	 * @param $id
+	 * @return SPDBObject
 	 */
 	public function load( $id )
 	{
@@ -734,14 +738,14 @@ abstract class SPDBObject extends SPObject
 		if ( $this->has( '_dbTable' ) && $this->_dbTable ) {
 			try {
 				$db = SPFactory::db();
-				$obj = $db->select( '*', $this->_dbTable, array( 'id' => $this->id ) )
+				$obj = $db->select( '*', $this->_dbTable, [ 'id' => $this->id ] )
 						->loadObject();
-				$counter = $db->select( 'counter', 'spdb_counter', array( 'sid' => $this->id ) )
+				$counter = $db->select( 'counter', 'spdb_counter', [ 'sid' => $this->id ] )
 						->loadResult();
 				if ( $counter !== null ) {
 					$this->counter = $counter;
 				}
-				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$obj ) );
+				Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$obj ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
@@ -762,7 +766,7 @@ abstract class SPDBObject extends SPObject
 	protected function translate()
 	{
 		$attributes = array_merge( $this->translatable(), self::$translatable );
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', array( &$attributes ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ) . 'Start', [ &$attributes ] );
 		$labels = SPLang::translateObject( $this->id, $attributes );
 		foreach ( $labels[ $this->id ] as $k => $label ) {
 			if ( in_array( $k, $attributes ) ) {
@@ -797,7 +801,7 @@ abstract class SPDBObject extends SPObject
 //				$this->_set( $k, $v[ 'sValue' ] );
 //			}
 //		}
-		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), array( &$labels ) );
+		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$labels ] );
 	}
 
 	/**
@@ -842,7 +846,7 @@ abstract class SPDBObject extends SPObject
 	 */
 	public function & set( $var, $val )
 	{
-		static $types = array();
+		static $types = [];
 		if ( !count( $types ) ) {
 			$types = array_merge( $this->types(), self::$types );
 		}
@@ -864,7 +868,7 @@ abstract class SPDBObject extends SPObject
 	 */
 	protected function translatable()
 	{
-		return array();
+		return [];
 	}
 
 }

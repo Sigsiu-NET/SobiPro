@@ -28,7 +28,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 class SPObject
 {
 
-	protected $messages = array();
+	protected $messages = [];
 	/**
 	 * @return string
 	 */

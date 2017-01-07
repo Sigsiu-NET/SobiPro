@@ -58,37 +58,37 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 			$lang = Sobi::Lang( false );
 		}
 		$table = $db->join(
-				array(
-						array( 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ),
-						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ),
-						array( 'table' => 'spdb_language', 'as' => 'ldata', 'key' => array( 'sdata.optValue', 'ldata.sKey' ) ),
-				)
+				[
+						[ 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ],
+						[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ],
+						[ 'table' => 'spdb_language', 'as' => 'ldata', 'key' => [ 'sdata.optValue', 'ldata.sKey' ] ],
+				]
 		);
 		try {
 			$db->select(
 					'*, sdata.copy as scopy',
 					$table,
-					array(
+					[
 							'sdata.fid' => $this->id,
 							'sdata.sid' => $sid,
 							'fdata.sid' => $sid,
 							'ldata.oType' => 'field_option',
 							'ldata.fid' => $this->id,
-					),
+					],
 					'scopy', 0, 0, true /*, 'sdata.optValue' */
 			);
 			$data = $db->loadObjectList();
 			$order = SPFactory::cache()->getVar( 'order_' . $this->nid );
 			if ( !( $order ) ) {
-				$db->select( 'optValue', 'spdb_field_option', array( 'fid' => $this->id ), 'optPos' );
+				$db->select( 'optValue', 'spdb_field_option', [ 'fid' => $this->id ], 'optPos' );
 				$order = $db->loadResultArray();
 				SPFactory::cache()->addVar( $order, 'order_' . $this->nid );
 			}
 			// check which version the user may see
 			$copy = $this->checkCopy();
 			if ( $data && count( $data ) ) {
-				$rawData = array();
-				$sRawData = array();
+				$rawData = [];
+				$sRawData = [];
 				$copied = false;
 				foreach ( $data as $selected ) {
 					// if there was at least once copy
@@ -143,10 +143,10 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	public function struct()
 	{
 		$baseData = $this->getRaw();
-		$list = array();
+		$list = [];
 		$order = SPFactory::cache()->getVar( 'order_' . $this->nid );
 		if ( !( $order ) ) {
-			$order = SPFactory::db()->select( 'optValue', 'spdb_field_option', array( 'fid' => $this->id ), 'optPos' )->loadResultArray();
+			$order = SPFactory::db()->select( 'optValue', 'spdb_field_option', [ 'fid' => $this->id ], 'optPos' )->loadResultArray();
 			SPFactory::cache()->addVar( $order, 'order_' . $this->nid );
 		}
 		$this->cssClass = ( strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData' );
@@ -154,17 +154,17 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 		$this->cleanCss();
 		foreach ( $order as $opt ) {
 			if ( isset( $baseData[ $opt ] ) ) {
-				$list[ ] = array( '_tag' => 'li', '_value' => SPLang::clean( $baseData[ $opt ] ), '_class' => $opt, /* '_id' => trim( $this->nid.'_'.strtolower( $opt ) )*/ );
+				$list[ ] = [ '_tag' => 'li', '_value' => SPLang::clean( $baseData[ $opt ] ), '_class' => $opt, /* '_id' => trim( $this->nid.'_'.strtolower( $opt ) )*/ ];
 			}
 		}
 		foreach ( $this->options as $opt ) {
 			if ( isset( $opt[ 'options' ] ) && is_array( $opt[ 'options' ] ) ) {
 				foreach ( $opt[ 'options' ] as $sub ) {
-					$struct[ ] = array(
+					$struct[ ] = [
 							'_complex' => 1,
 							'_data' => $sub[ 'label' ],
-							'_attributes' => array( 'group' => $opt[ 'id' ], 'selected' => ( isset( $baseData[ $sub [ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] )
-					);
+							'_attributes' => [ 'group' => $opt[ 'id' ], 'selected' => ( isset( $baseData[ $sub [ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $sub[ 'id' ], 'position' => $sub[ 'position' ] ]
+					];
 //						$group[ ] = array(
 //							'_complex' => 1,
 //							'_data' => $sub[ 'label' ],
@@ -174,25 +174,25 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 				}
 			}
 			else {
-				$struct[ ] = array(
+				$struct[ ] = [
 						'_complex' => 1,
 						'_data' => $opt[ 'label' ],
-						'_attributes' => array( 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] )
-				);
+						'_attributes' => [ 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] ]
+				];
 			}
 		}
-		$data = array(
-				'ul' => array(
+		$data = [
+				'ul' => [
 						'_complex' => 1,
 						'_data' => $list,
-						'_attributes' => array( 'class' => $this->cssClass ) )
-		);
-		return array(
+						'_attributes' => [ 'class' => $this->cssClass ] ]
+		];
+		return [
 				'_complex' => 1,
 				'_data' => count( $list ) ? $data : null,
-				'_attributes' => array( 'lang' => $this->lang, 'class' => $this->cssClass ),
+				'_attributes' => [ 'lang' => $this->lang, 'class' => $this->cssClass ],
 				'_options' => $struct,
-		);
+		];
 
 	}
 
@@ -202,7 +202,7 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	protected function fetchData( $data, $request = 'post' )
 	{
 		if ( is_array( $data ) && count( $data ) ) {
-			$selected = array();
+			$selected = [];
 			foreach ( $data as $opt ) {
 				/* check if such option exist at all */
 				if ( !( isset( $this->optionsById[ $opt ] ) ) ) {
@@ -213,12 +213,17 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 			return $selected;
 		}
 		else {
-			return array();
+			return [];
 		}
 	}
 
 	/**
 	 * Static function to create the right SQL-Query if a entries list should be sorted by this field
+	 * @param string $tables
+	 * @param array $conditions
+	 * @param string $oPrefix
+	 * @param string $eOrder
+	 * @param string $eDir
 	 * @return bool
 	 */
 	public static function sortBy( &$tables, &$conditions, &$oPrefix, &$eOrder, $eDir )

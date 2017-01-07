@@ -55,52 +55,52 @@ class SPPaymentView extends SPFrontView implements SPView
 			$data = SPFactory::payment()->summary( $id );
 		}
 
-		$positions = array();
-		$xml = array();
+		$positions = [];
+		$xml = [];
 		$this->menu( $xml );
 		if ( count( $data[ 'positions' ] ) ) {
 			foreach ( $data[ 'positions' ] as $position ) {
 				$ref = $position[ 'reference' ];
 				unset( $position[ 'reference' ] );
-				$positions[ ] = array(
+				$positions[ ] = [
 					'_complex' => 1,
 					'_data' => $ref,
 					'_attributes' => $position
-				);
+				];
 			}
 			$xml[ 'positions' ] = $positions;
 		}
 		if ( isset( $data[ 'discount' ] ) && count( $data[ 'discount' ] ) ) {
-			$xml[ 'discount' ] = array(
+			$xml[ 'discount' ] = [
 				'_complex' => 1,
 				'_attributes' => $data[ 'discount' ]
-			);
+			];
 		}
-		$xml[ 'summary' ] = array(
+		$xml[ 'summary' ] = [
 			'_complex' => 1,
 			'_attributes' => $data[ 'summary' ]
-		);
+		];
 
-		$xml[ 'section' ] = array(
+		$xml[ 'section' ] = [
 			'_complex' => 1,
 			'_data' => Sobi::Section( true ),
-			'_attributes' => array( 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) )
-		);
+			'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
+		];
 
 		if ( ( $id ) ) {
 			$entry = $this->get('entry');
-			$xml['entry'] = array(
+			$xml['entry'] = [
 				'_complex' => 1,
 				'_data' => $entry->get( 'name' ),
-				'_attributes' => array( 'lang' => Sobi::Lang( false ),
-					 'url' => Sobi::Url( array( 'pid' => $entry->get( 'parent' ), 'sid' => $entry->get( 'id' ), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ) ), true, true, true ),
+				'_attributes' => [ 'lang' => Sobi::Lang( false ),
+					 'url' => Sobi::Url( [ 'pid' => $entry->get( 'parent' ), 'sid' => $entry->get( 'id' ), 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ) ], true, true, true ),
 					 'sid' => $entry->get( 'id' ),
 					 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' )
-				)
-			);
+				]
+			];
 
 		}
-		Sobi::Trigger( 'PaymentView', ucfirst( __FUNCTION__ ), array( &$xml ) );
+		Sobi::Trigger( 'PaymentView', ucfirst( __FUNCTION__ ), [ &$xml ] );
 		return $xml;
 	}
 
@@ -114,25 +114,25 @@ class SPPaymentView extends SPFrontView implements SPView
 		$visitor = $this->get( 'visitor' );
 		$xml = $this->payment();
 		if ( count( $methods ) ) {
-			$xml[ 'payment_methods' ] = array();
+			$xml[ 'payment_methods' ] = [];
 			foreach ( $methods as $mid => $mout ) {
-				$params = array();
+				$params = [];
 				if ( is_array( $mout ) ) {
 					$params = $mout;
 					$mout = $mout[ 'content' ];
 					unset( $params[ 'content' ] );
 				}
-				$xml[ 'payment_methods' ][ $mid ] = array(
+				$xml[ 'payment_methods' ][ $mid ] = [
 					'_complex' => 1,
 					'_xml' => 1,
 					'_data' => $mout,
 					'_attributes' => $params
-				);
+				];
 			}
 		}
 		$xml[ 'visitor' ] = $this->visitorArray( $visitor );
 		$this->_attr = $xml;
-		Sobi::Trigger( 'PaymentView', ucfirst( __FUNCTION__ ), array( &$this->_attr ) );
+		Sobi::Trigger( 'PaymentView', ucfirst( __FUNCTION__ ), [ &$this->_attr ] );
 	}
 
 	private function submit()
@@ -142,47 +142,47 @@ class SPPaymentView extends SPFrontView implements SPView
 		$id = $this->get( 'entry' )->get( 'id' );
 		SPLoader::loadClass( 'mlo.input' );
 		if ( $id ) {
-			$saveUrl = Sobi::Url( array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $id ), false, false );
-			$backUrl = Sobi::Url( array( 'task' => 'entry.edit', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $id ) );
+			$saveUrl = Sobi::Url( [ 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $id ], false, false );
+			$backUrl = Sobi::Url( [ 'task' => 'entry.edit', 'pid' => Sobi::Reg( 'current_section' ), 'sid' => $id ] );
 		}
 		else {
-			$saveUrl = Sobi::Url( array( 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ) ), false, false );
-			$backUrl = Sobi::Url( array( 'task' => 'entry.add', 'pid' => Sobi::Reg( 'current_section' ) ) );
+			$saveUrl = Sobi::Url( [ 'task' => 'entry.save', 'pid' => Sobi::Reg( 'current_section' ) ], false, false );
+			$backUrl = Sobi::Url( [ 'task' => 'entry.add', 'pid' => Sobi::Reg( 'current_section' ) ] );
 		}
-		$xml[ 'buttons' ][ 'save_button' ] = array(
+		$xml[ 'buttons' ][ 'save_button' ] = [
 			'_complex' => 1,
-			'_data' => array(
-				'data' => array(
+			'_data' => [
+				'data' => [
 					'_complex' => 1,
 					'_xml' => 1,
 					'_data' =>
 					SPHtml_Input::button(
 						'save',
 						Sobi::Txt( 'EN.PAYMENT_SAVE_ENTRY_BT' ),
-						array( 'href' => $saveUrl )
+						[ 'href' => $saveUrl ]
 					)
-				),
-			)
-		);
-		$xml[ 'buttons' ][ 'back_button' ] = array(
+				],
+			]
+		];
+		$xml[ 'buttons' ][ 'back_button' ] = [
 			'_complex' => 1,
-			'_data' => array(
-				'data' => array(
+			'_data' => [
+				'data' => [
 					'_complex' => 1,
 					'_xml' => 1,
 					'_data' =>
 					SPHtml_Input::button(
 						'back',
 						Sobi::Txt( 'EN.PAYMENT_BACK_BT' ),
-						array( 'href' => $backUrl )
+						[ 'href' => $backUrl ]
 					)
-				),
-			)
-		);
-		$xml[ 'buttons' ][ 'cancel_button' ] = array(
+				],
+			]
+		];
+		$xml[ 'buttons' ][ 'cancel_button' ] = [
 			'_complex' => 1,
-			'_data' => array(
-				'data' => array(
+			'_data' => [
+				'data' => [
 					'_complex' => 1,
 					'_xml' => 1,
 					'_data' => SPHtml_Input::submit( 'save', Sobi::Txt( 'EN.CANCEL_BT' ) ),
@@ -190,14 +190,14 @@ class SPPaymentView extends SPFrontView implements SPView
 					SPHtml_Input::button(
 						'cancel',
 						Sobi::Txt( 'EN.CANCEL_BT' ),
-						array( 'href' => Sobi::Url( array( 'task' => 'entry.cancel', 'pid' => Sobi::Reg( 'current_section' ) ) ) )
+						[ 'href' => Sobi::Url( [ 'task' => 'entry.cancel', 'pid' => Sobi::Reg( 'current_section' ) ] ) ]
 					)
-				),
-			)
-		);
+				],
+			]
+		];
 		$xml[ 'save_url' ] = $saveUrl;
 		$xml[ 'visitor' ] = $this->visitorArray( $visitor );
 		$this->_attr = $xml;
-		Sobi::Trigger( 'PaymentView', ucfirst( __FUNCTION__ ), array( &$this->_attr ) );
+		Sobi::Trigger( 'PaymentView', ucfirst( __FUNCTION__ ), [ &$this->_attr ] );
 	}
 }

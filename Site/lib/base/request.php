@@ -275,7 +275,7 @@ abstract class SPRequest
 	static public function search( $search, $method = 'REQUEST' )
 	{
 		self::init( null, $method );
-		self::$val = array();
+		self::$val = [];
 		if ( count( self::$request ) ) {
 			foreach ( self::$request as $name => $value ) {
 				if ( strstr( $name, $search ) ) {
@@ -364,7 +364,7 @@ abstract class SPRequest
 	{
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;
-		$back = array();
+		$back = [];
 		if ( $html == 1 ) {
 			$val = self::$val;
 			if ( preg_match_all( '/(<pre((?!>).)*>*)(((?!<\/pre|<pre).)+)\s*<\/pre>/s', $val, $matches ) ) {
@@ -373,7 +373,7 @@ abstract class SPRequest
 				if ( isset( $allowed[ 'pre' ] ) ) {
 					foreach ( $matches[ 3 ] as $i => $pre ) {
 						$id = '[%pre%]' . $i . '[%pre%]';
-						$back[ $id ] = array( 'content' => $pre, 'tag' => $matches[ 1 ][ $i ] );
+						$back[ $id ] = [ 'content' => $pre, 'tag' => $matches[ 1 ][ $i ] ];
 						$val = str_replace( $matches[ 1 ][ $i ] . $pre, $id, $val );
 					}
 				}
@@ -465,7 +465,7 @@ abstract class SPRequest
 	 * @param string $method request method
 	 * @return array
 	 */
-	static public function arr( $name, $default = array(), $method = 'REQUEST' )
+	static public function arr( $name, $default = [], $method = 'REQUEST' )
 	{
 		self::init( $name, $method );
 		self::$val = isset( self::$request[ self::$name ] ) ? self::$request[ self::$name ] : $default;

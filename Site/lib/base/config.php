@@ -25,13 +25,13 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 class SPConfig
 {
 	/*** @var array */
-	private $_store = array();
+	private $_store = [];
 	/*** @var bool */
 	static $cs = false;
 	/** @var array */
-	private static $fields = array();
+	private static $fields = [];
 	/** @var array */
-	private $_icons = array();
+	private $_icons = [];
 
 	private function __construct()
 	{
@@ -116,6 +116,7 @@ class SPConfig
 	 *
 	 * @param string $path
 	 * @param bool $sections
+	 * @param bool $adm
 	 * @param string $defSection
 	 * @return bool
 	 */
@@ -129,7 +130,7 @@ class SPConfig
 			if ( $sections ) {
 				foreach ( $arr as $section => $values ) {
 					if ( !isset( $this->_store[ $section ] ) ) {
-						$this->_store[ $section ] = array();
+						$this->_store[ $section ] = [];
 					}
 					$currSec =& $this->_store[ $section ];
 					if ( !empty( $values ) ) {
@@ -165,6 +166,7 @@ class SPConfig
 	 * @param string $section name of row where the section name is stored
 	 * @param string $key name of row where the key name is stored
 	 * @param string $value name of row where the value is stored
+	 * @param string $object
 	 * @param bool $parseObject parse directory section
 	 * @return bool
 	 */
@@ -176,19 +178,19 @@ class SPConfig
 		$order = 'configsection';
 		if ( $parseObject ) {
 			if ( $id ) {
-				$where = array( $object => array( 0, $id ) );
+				$where = [ $object => [ 0, $id ] ];
 				$order = "{$object}, configsection";
 			}
 			else {
-				$where = array( $object => 0 );
+				$where = [ $object => 0 ];
 			}
 		}
 		try {
-			$db->select( array( "{$section} AS configsection", "{$key} AS sKey", "{$value} AS sValue" ), $table, $where, $order );
+			$db->select( [ "{$section} AS configsection", "{$key} AS sKey", "{$value} AS sValue" ], $table, $where, $order );
 			$config = $db->loadObjectList();
 			foreach ( $config as $row ) {
 				if ( !isset( $this->_store[ $row->configsection ] ) ) {
-					$this->_store[ $row->configsection ] = array();
+					$this->_store[ $row->configsection ] = [];
 				}
 				$_c = explode( '_', $row->sKey );
 				if ( $_c[ count( $_c ) - 1 ] == 'array' || $_c[ count( $_c ) - 1 ] == 'arr' ) {
@@ -214,21 +216,21 @@ class SPConfig
 	public static function fields( $sid = 0, $types = null, $cat = false )
 	{
 		if ( !$cat ) {
-			$params = array( 'section' => $sid, 'adminField>' => -1 );
+			$params = [ 'section' => $sid, 'adminField>' => -1 ];
 		}
 		else {
-			$params = array( 'section' => $sid, 'adminField' => -1 );
+			$params = [ 'section' => $sid, 'adminField' => -1 ];
 		}
 		if ( $types ) {
 			$params[ 'fieldType' ] = $types;
 		}
-		$fields = array();
+		$fields = [];
 
 		$results = SPFactory::db()
 				->select( 'fid', 'spdb_field', $params, 'position' )
 				->loadResultArray();
 		if ( count( $results ) ) {
-			$labels = SPLang::translateObject( $results, array( 'name' ), 'field', null, 'fid' );
+			$labels = SPLang::translateObject( $results, [ 'name' ], 'field', null, 'fid' );
 			foreach ( $results as $id ) {
 				$fields[ $id ] = $labels[ $id ][ 'value' ];
 			}
@@ -274,7 +276,7 @@ class SPConfig
 				$data = explode( ';', $data );
 			}
 			else {
-				$data = array( $data );
+				$data = [ $data ];
 			}
 		}
 		return $data;
@@ -410,7 +412,7 @@ class SPConfig
 	 */
 	public static function getBacktrace()
 	{
-		return self::backtrace( false, $out = array( 'file', 'line', 'function', 'class' ), true, false, false );
+		return self::backtrace( false, $out = [ 'file', 'line', 'function', 'class' ], true, false, false );
 	}
 
 
@@ -423,13 +425,13 @@ class SPConfig
 	 * @param bool $do - output directly
 	 * @return mixed
 	 */
-	public static function backtrace( $store = false, $out = array( 'file', 'line', 'function', 'class' ), $return = false, $hide = false, $do = true )
+	public static function backtrace( $store = false, $out = [ 'file', 'line', 'function', 'class' ], $return = false, $hide = false, $do = true )
 	{
-		$trace = array();
+		$trace = [];
 		$backtrace = debug_backtrace();
 		if ( count( $backtrace ) ) {
 			foreach ( $backtrace as $level ) {
-				$l = array();
+				$l = [];
 				foreach ( $out as $i ) {
 					$l[ $i ] = isset( $level[ $i ] ) ? $level[ $i ] : 'none';
 					$l[ $i ] = str_replace( SOBI_ROOT, null, $l[ $i ] );
@@ -529,10 +531,10 @@ class SPConfig
 //            $str .= ' ' . $date[ 'h' ] . ' ' . $date[ 'i' ] . ' ' . $date[ 's' ];
 //        }
 //        return strtotime( $str );
-		$date = array();
+		$date = [];
 		$format = $this->key( $format );
 		$format = preg_replace( '/[^\w]/', '_', $format );
-		$format = str_replace( array( 'dd', 'y' ), array( 'd', 'Y' ), $format );
+		$format = str_replace( [ 'dd', 'y' ], [ 'd', 'Y' ], $format );
 		$format = explode( '_', $format );
 		$str = preg_replace( '/[^\w]/', '_', $str );
 		$str = explode( '_', $str );
@@ -707,11 +709,11 @@ class SPConfig
 				$cfgSection = $key[ 0 ];
 				$key = $key[ 1 ];
 			}
-			Sobi::Trigger( 'Config', 'Save', array( &$key, &$val, &$cfgSection ) );
+			Sobi::Trigger( 'Config', 'Save', [ &$key, &$val, &$cfgSection ] );
 			/* @var SPdb $db */
 			$db =& SPFactory::db();
 			try {
-				$db->insertUpdate( 'spdb_config', array( 'sKey' => $key, 'sValue' => $val, 'section' => Sobi::Reg( 'current_section', 0 ), 'critical' => 0, 'cSection' => $cfgSection ) );
+				$db->insertUpdate( 'spdb_config', [ 'sKey' => $key, 'sValue' => $val, 'section' => Sobi::Reg( 'current_section', 0 ), 'critical' => 0, 'cSection' => $cfgSection ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( 'config', SPLang::e( 'CANNOT_SAVE_CONFIG', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __CLASS__ );
 			}
@@ -742,12 +744,12 @@ class SPConfig
 		else {
 			$cid = $id;
 		}
-		$path = $parents ? array() : array( $id );
+		$path = $parents ? [] : [ $id ];
 		while ( $id > 0 ) {
 			try {
 				// it doesn't make sense but it happened because of a bug in the SigsiuTree category selector
 				$id = $db
-						->select( 'pid', 'spdb_relations', array( 'id' => $id, '!pid' => $id ) )
+						->select( 'pid', 'spdb_relations', [ 'id' => $id, '!pid' => $id ] )
 						->loadResult();
 				if ( $id ) {
 					$path[ ] = ( int )$id;
@@ -757,11 +759,11 @@ class SPConfig
 			}
 		}
 		if ( $names && count( $path ) ) {
-			$names = SPLang::translateObject( $path, array( 'name', 'alias' ), array( 'section', 'category', 'entry' ) );
+			$names = SPLang::translateObject( $path, [ 'name', 'alias' ], [ 'section', 'category', 'entry' ] );
 			if ( is_array( $names ) && !empty( $names ) ) {
 				foreach ( $path as $i => $id ) {
 					if ( $join ) {
-						$path[ $i ] = array( 'id' => $id, 'name' => $names[ $id ][ 'value' ], 'alias' => $names[ $id ][ 'alias' ] );
+						$path[ $i ] = [ 'id' => $id, 'name' => $names[ $id ][ 'value' ], 'alias' => $names[ $id ][ 'alias' ] ];
 					}
 					else {
 						$path[ $i ] = $names[ $id ][ 'value' ];

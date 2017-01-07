@@ -33,13 +33,13 @@ class SPAdmPanelView extends SPAdmView
 	public function display()
 	{
 		$sections =& $this->get( 'sections' );
-		$_sections = array();
+		$_sections = [];
 		if ( count( $sections ) ) {
 			foreach ( $sections as $section ) {
 				$name = $section->get( 'name' );
 				$id = $section->get( 'id' );
-				$url = Sobi::Url( array( 'sid' => $id ) );
-				$_section = array();
+				$url = Sobi::Url( [ 'sid' => $id ] );
+				$_section = [];
 				$_section[ 'id' ] = $id;
 				$_section[ 'nid' ] = $section->get( 'nid' );
 				$_section[ 'name' ] = "<a href=\"{$url}\">{$name}</a>";

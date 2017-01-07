@@ -26,10 +26,10 @@ SPLoader::loadView( 'view' );
  */
 class SPCachedView extends SPFrontView implements SPView
 {
-	public function cachedView( $xml, $template, $cacheId, $config = array() )
+	public function cachedView( $xml, $template, $cacheId, $config = [] )
 	{
 		$this->_xml = $xml;
-		Sobi::Trigger( 'Start', ucfirst( __FUNCTION__ ), array( &$this->_xml ) );
+		Sobi::Trigger( 'Start', ucfirst( __FUNCTION__ ), [ &$this->_xml ] );
 		$templatePackage = SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' );
 		$templateOverride = SPRequest::cmd( 'sptpl' );
 		if ( $templateOverride ) {
@@ -44,7 +44,7 @@ class SPCachedView extends SPFrontView implements SPView
 			}
 			else {
 				$type = SPFactory::db()
-						->select( 'oType', 'spdb_object', array( 'id' => SPRequest::sid() ) )
+						->select( 'oType', 'spdb_object', [ 'id' => SPRequest::sid() ] )
 						->loadResult();
 				$template = ( $templatePackage . '/' . $type . '/' . $template );
 			}
@@ -52,7 +52,7 @@ class SPCachedView extends SPFrontView implements SPView
 		SPFactory::registry()->set( 'current_template', $templatePackage );
 		$this->_templatePath = $templatePackage;
 		$this->_template = str_replace( '.xsl', null, $template );
-		$ini = array();
+		$ini = [];
 		if ( count( $config ) ) {
 			foreach ( $config as $file ) {
 				$file = parse_ini_file( $file, true );
@@ -69,13 +69,13 @@ class SPCachedView extends SPFrontView implements SPView
 		$this->setConfig( $ini, SPRequest::task( 'get' ) );
 		$this->parseXml();
 		$this->validateData( $cacheId );
-		Sobi::Trigger( 'After', ucfirst( __FUNCTION__ ), array( &$this->_xml ) );
+		Sobi::Trigger( 'After', ucfirst( __FUNCTION__ ), [ &$this->_xml ] );
 	}
 
 	protected function validateData( $cacheId )
 	{
 		$sids = SPFactory::db()
-				->select( 'sid', 'spdb_view_cache_relation', array( 'cid' => $cacheId ) )
+				->select( 'sid', 'spdb_view_cache_relation', [ 'cid' => $cacheId ] )
 				->loadResultArray();
 		if ( $sids && count( $sids ) ) {
 			$this->loadNonStaticData( $sids );
@@ -107,7 +107,7 @@ class SPCachedView extends SPFrontView implements SPView
 		if ( $header->hasChildNodes() ) {
 			foreach ( $header->childNodes as $node ) {
 				if ( !( strstr( $node->nodeName, '#' ) ) ) {
-					$params = array();
+					$params = [];
 					$this->parseParams( $node, $params );
 					$this->callHeader( $node->nodeName, $params[ $node->nodeName ] );
 				}
@@ -117,7 +117,7 @@ class SPCachedView extends SPFrontView implements SPView
 		if ( $data && $data->hasChildNodes() ) {
 			foreach ( $data->childNodes as $node ) {
 				if ( !( strstr( $node->nodeName, '#' ) ) ) {
-					$params = array();
+					$params = [];
 					$this->parseParams( $node, $params );
 					if ( isset( $params[ 'hidden' ] ) && is_array( $params[ 'hidden' ] ) && count( $params[ 'hidden' ] ) ) {
 						foreach ( $params[ 'hidden' ] as $k => $v ) {
@@ -142,7 +142,7 @@ class SPCachedView extends SPFrontView implements SPView
 			$this->importData( $this->_xml->documentElement, $visitor, 'visitor' );
 		}
 		$messages = SPFactory::message()->getMessages();
-		$info = array();
+		$info = [];
 		if ( count( $messages ) ) {
 			foreach ( $messages as $type => $content ) {
 				$info[ $type ] = array_values( $content );
@@ -210,7 +210,7 @@ class SPCachedView extends SPFrontView implements SPView
 				$instance = new ReflectionMethod( $header, $methods[ $method ] );
 				$methodParams = $instance->getParameters();
 				foreach ( $calls as $call ) {
-					$methodArgs = array();
+					$methodArgs = [];
 					foreach ( $methodParams as $param ) {
 						if ( isset( $call[ $param->name ] ) ) {
 							$methodArgs[ ] = $call[ $param->name ];
@@ -225,7 +225,7 @@ class SPCachedView extends SPFrontView implements SPView
 							$methodArgs[ ] = null;
 						}
 					}
-					call_user_func_array( array( $header, $methods[ $method ] ), $methodArgs );
+					call_user_func_array( [ $header, $methods[ $method ] ], $methodArgs );
 				}
 			}
 		}
@@ -244,7 +244,7 @@ class SPCachedView extends SPFrontView implements SPView
 					$value = $node->nodeValue;
 				}
 				else {
-					$value = array();
+					$value = [];
 					foreach ( $node->childNodes as $subNode ) {
 						$this->parseParams( $subNode, $value );
 					}

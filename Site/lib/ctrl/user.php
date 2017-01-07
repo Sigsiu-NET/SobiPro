@@ -62,33 +62,33 @@ class SPUserCtrl extends SPController
 //		$selected = SPRequest::int( 'selected', 0 );
 		$ssid = SPRequest::base64( 'ssid' );
 		$query = SPRequest::string( 'q', null );
-		$session = SPFactory::user()->getUserState( 'userSelector', null, array() );
+		$session = SPFactory::user()->getUserState( 'userSelector', null, [] );
 		$setting = $session[ $ssid ];
 		/* get the site to display */
 		$site = SPRequest::int( 'site', 1 );
 		$eLim = Sobi::Cfg( 'user_selector.entries_limit', 18 );
 		$eLimStart = ( ( $site - 1 ) * $eLim );
-		$params = array();
+		$params = [];
 		if ( $query ) {
 			$q = '%' . $query . '%';
-			$params = SPFactory::db()->where( array( 'name' => $q, 'username' => $q, 'email' => $q ), 'OR' );
+			$params = SPFactory::db()->where( [ 'name' => $q, 'username' => $q, 'email' => $q ], 'OR' );
 		}
 		try {
 			$count = SPFactory::db()
 					->select( 'COUNT(*)', '#__users', $params, $setting[ 'ordering' ] )
 					->loadResult();
 			$data = SPFactory::db()
-					->select( array( 'id', 'name', 'username', 'email', 'registerDate', 'lastvisitDate' ), '#__users', $params, $setting[ 'ordering' ], $eLim, $eLimStart )
+					->select( [ 'id', 'name', 'username', 'email', 'registerDate', 'lastvisitDate' ], '#__users', $params, $setting[ 'ordering' ], $eLim, $eLimStart )
 					->loadAssocList();
 		} catch ( SPException $x ) {
 			echo $x->getMessage();
 			exit;
 		}
-		$response = array( 'sites' => ceil( $count / $eLim ), 'site' => $site );
+		$response = [ 'sites' => ceil( $count / $eLim ), 'site' => $site ];
 		if ( count( $data ) ) {
-			$replacements = array();
+			$replacements = [];
 			preg_match_all( '/\%[a-z]*/', $setting[ 'format' ], $replacements );
-			$placeholders = array();
+			$placeholders = [];
 			if ( isset( $replacements[ 0 ] ) && count( $replacements[ 0 ] ) ) {
 				foreach ( $replacements[ 0 ] as $placeholder ) {
 					$placeholders[ ] = str_replace( '%', null, $placeholder );

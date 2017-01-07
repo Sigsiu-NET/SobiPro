@@ -43,7 +43,7 @@ class SPMail extends SPMailInterface
 	 */
 	public static function SpSendMail( $recipient, $subject, $body, $html = false, $replyto = null, $cc = null, $bcc = null, $attachment = null, $cert = null, $from = null )
 	{
-		$from = is_array( $from ) ? $from : array( Sobi::Cfg( 'mail.from' ), Sobi::Cfg( 'mail.fromname' ) );
+		$from = is_array( $from ) ? $from : [ Sobi::Cfg( 'mail.from' ), Sobi::Cfg( 'mail.fromname' ) ];
 		$mail = new self();
 		$mail->setSender( $from );
 		$mail->setSubject( $subject );

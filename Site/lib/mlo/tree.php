@@ -31,7 +31,7 @@ final class SigsiuTree extends SPObject
      *
      * @var array
      */
-    private $_images = array(
+    private $_images = [
         'root' => 'base.gif',
         'join' => 'empty.gif',
         'joinBottom' => 'empty.gif',
@@ -44,7 +44,7 @@ final class SigsiuTree extends SPObject
         'folderOpen' => 'folderopen.gif',
         'line' => 'empty.gif',
         'empty' => 'empty.gif'
-    );
+    ];
     /**
      * @var string
      */
@@ -80,7 +80,7 @@ final class SigsiuTree extends SPObject
     /**
      * @var int
      */
-    private $_disabled = array();
+    private $_disabled = [];
 
     /**
      * Set category, or set of categories id which should not be selectable in the tree
@@ -102,7 +102,7 @@ final class SigsiuTree extends SPObject
      */
     public function getTree()
     {
-        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$this->tree ) );
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), [ &$this->tree ] );
         return $this->tree;
     }
 
@@ -112,7 +112,7 @@ final class SigsiuTree extends SPObject
 	 */
     public function display( $return = false )
     {
-        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$this->tree ) );
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), [ &$this->tree ] );
         if ( $return ) {
             return $this->tree;
         }
@@ -142,7 +142,7 @@ final class SigsiuTree extends SPObject
      */
     public function setImages( $images )
     {
-        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$images ) );
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), [ &$images ] );
         if ( $images && is_array( $images ) ) {
             foreach ( $images as $img => $loc ) {
                 if ( file_exists( SOBI_ROOT . DS . $loc ) ) {
@@ -185,7 +185,7 @@ final class SigsiuTree extends SPObject
 	 * @param array $opts
 	 * @return SigsiuTree
 	 */
-    public function __construct( $ordering = 'position', $opts = array() )
+    public function __construct( $ordering = 'position', $opts = [] )
     {
         $this->_ordering = $ordering;
         foreach ( $this->_images as $img => $loc ) {
@@ -326,7 +326,7 @@ final class SigsiuTree extends SPObject
     public function extend( $sid )
     {
         $childs = $this->getChilds( $sid );
-        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$childs ) );
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), [ &$childs ] );
         SPFactory::mainframe()->cleanBuffer();
         header( 'Content-type: application/xml' );
         echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
@@ -376,11 +376,15 @@ final class SigsiuTree extends SPObject
         }
     }
 
-    /**
-     */
+	/**
+	 * @param $lastNode
+	 * @param $childs
+	 * @param $matrix
+	 * @param $head
+	 */
     private function createScript( $lastNode, $childs, $matrix, $head )
     {
-        $params = array();
+        $params = [];
         $params[ 'ID' ] = $this->_id;
         $params[ 'LAST_NODE' ] = ( string )$lastNode;
         $params[ 'IMAGES_ARR' ] = null;
@@ -389,13 +393,13 @@ final class SigsiuTree extends SPObject
             $params[ 'IMAGES_ARR' ] .= "{$this->_id}_stmImgs[ '{$img}' ] = '{$loc}';";
         }
         $params[ 'URL' ] = Sobi::Url(
-            array(
+            [
                 'task' => $this->_task,
                 'sid' => $this->_sid,
                 'out' => 'xml',
                 'expand' => '__JS__',
                 'pid' => '__JS2__'
-            ),
+            ],
             true, false
         );
         $params[ 'URL' ] = str_replace( '__JS__', '" + ' . $this->_id . '_stmcid + "', $params[ 'URL' ] );
@@ -403,21 +407,22 @@ final class SigsiuTree extends SPObject
         $params[ 'FAIL_MSG' ] = Sobi::Txt( 'AJAX_FAIL' );
         $params[ 'TAG' ] = $this->_tag;
         $params[ 'SPINNER' ] = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ) . '/adm/spinner.gif' );
-        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$params ) );
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), [ &$params ] );
         $head->addJsVarFile( 'tree', md5( count( $childs, COUNT_RECURSIVE ) . $this->_id . $this->_sid . $this->_task . serialize( $params ) ), $params );
     }
 
-    /**
-     * @param int $sid
-     * @return SPSection
-     */
+	/**
+	 * @param int $sid
+	 * @param bool $count
+	 * @return SPSection
+	 */
     private function getChilds( $sid, $count = false )
     {
-        $childs = array();
+        $childs = [];
         /* @var SPdb $db */
         try {
             $ids = SPFactory::db()
-                    ->select( 'id', 'spdb_relations', array( 'pid' => $sid, 'oType' => 'category' ) )
+                    ->select( 'id', 'spdb_relations', [ 'pid' => $sid, 'oType' => 'category' ] )
                     ->loadResultArray();
         }
         catch ( SPException $x ) {
@@ -434,7 +439,7 @@ final class SigsiuTree extends SPObject
                 }
             }
         }
-        uasort( $childs, array( $this, 'sortChilds' ) );
+        uasort( $childs, [ $this, 'sortChilds' ] );
         return $childs;
     }
 
@@ -481,18 +486,18 @@ final class SigsiuTree extends SPObject
      */
     private function parseLink( $cat )
     {
-        static $placeHolders = array(
+        static $placeHolders = [
             '{sid}',
             '{name}',
             '{introtext}',
-        );
-        $replacement = array(
+        ];
+        $replacement = [
             $cat->get( 'id' ),
             $cat->get( 'name' ),
             $cat->get( 'introtext' ),
-        );
+        ];
         $link = str_replace( $placeHolders, $replacement, $this->_url );
-        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), array( &$link ) );
+        Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), [ &$link ] );
         return $link;
     }
 

@@ -57,28 +57,28 @@ class SPJsTxt extends SPController
 	protected function translate()
 	{
 		$term = Sobi::Txt( SPRequest::cmd( 'term' ) );
-		Sobi::Trigger( 'Translate', 'Text', array( &$term ) );
+		Sobi::Trigger( 'Translate', 'Text', [ &$term ] );
 		SPFactory::mainframe()
 				->cleanBuffer()
 				->customHeader();
-		echo json_encode( array( 'translation' => $term ) );
+		echo json_encode( [ 'translation' => $term ] );
 		exit;
 	}
 
 	protected function messages()
 	{
 		$messages = SPFactory::message()->getReports( SPRequest::cmd( 'spsid' ) );
-		$response = array();
+		$response = [];
 		if ( count( $messages ) ) {
 			foreach ( $messages as $type => $content ) {
 				if ( count( $content ) ) {
 					foreach ( $content as $message ) {
-						$response[ ] = array( 'type' => $type, 'text' => $message );
+						$response[ ] = [ 'type' => $type, 'text' => $message ];
 					}
 				}
 			}
 		}
-		$this->response( null, null, false, SPC::INFO_MSG, array( 'messages' => $response ) );
+		$this->response( null, null, false, SPC::INFO_MSG, [ 'messages' => $response ] );
 	}
 
 	protected function js()

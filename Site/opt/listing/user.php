@@ -62,7 +62,7 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 		$eLimit = $this->tKey( $this->template, 'entries_limit', Sobi::Cfg( 'list.entries_limit', 2 ) );
 		$eInLine = $this->tKey( $this->template, 'entries_in_line', Sobi::Cfg( 'list.entries_in_line', 2 ) );
 
-		$url = array( 'sid' => SPRequest::sid(), 'task' => 'list.user' );
+		$url = [ 'sid' => SPRequest::sid(), 'task' => 'list.user' ];
 		if ( SPRequest::int( 'uid' ) ) {
 			$url[ 'uid' ] = SPRequest::int( 'uid' );
 			$this->uid = (int)SPRequest::int( 'uid' );
@@ -81,8 +81,8 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 		$eLimStart = ( ( $site - 1 ) * $eLimit );
 
 		$eOrder = $this->parseOrdering( 'entries', 'eorder', $this->tKey( $this->template, 'entries_ordering', Sobi::Cfg( 'list.entries_ordering', 'name.asc' ) ) );
-		$eCount = count( $this->getEntries( $eOrder, 0, 0, true, array( 'spo.owner' => $this->uid ), true, Sobi::Section() ) );
-		$entries = $this->getEntries( $eOrder, $eLimit, $eLimStart, true, array( 'spo.owner' => $this->uid ), true, Sobi::Section() );
+		$eCount = count( $this->getEntries( $eOrder, 0, 0, true, [ 'spo.owner' => $this->uid ], true, Sobi::Section() ) );
+		$entries = $this->getEntries( $eOrder, $eLimit, $eLimStart, true, [ 'spo.owner' => $this->uid ], true, Sobi::Section() );
 //		$eCount = count( $this->_getEntries( 0, 0, true ) );
 //		$entries = $this->_getEntries( $eLimit, $site );
 
@@ -93,8 +93,8 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 		SPFactory::header()->addCanonical( Sobi::Url( $url, true, true, true ) );
 		/* handle meta data */
 		SPFactory::header()->objMeta( $this->_model );
-		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'UL.PATH_TITLE', array( 'username' => $this->user->username, 'user' => $this->user->name ) ), Sobi::Url( 'current' ) );
-		SPFactory::header()->addTitle( Sobi::Txt( 'UL.TITLE', array( 'username' => $this->user->username, 'user' => $this->user->name, 'section' => $this->_model->get( 'name' ) ) ), array( ceil( $eCount / $eLimit ), $site ) );
+		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'UL.PATH_TITLE', [ 'username' => $this->user->username, 'user' => $this->user->name ] ), Sobi::Url( 'current' ) );
+		SPFactory::header()->addTitle( Sobi::Txt( 'UL.TITLE', [ 'username' => $this->user->username, 'user' => $this->user->name, 'section' => $this->_model->get( 'name' ) ] ), [ ceil( $eCount / $eLimit ), $site ] );
 		/* add pathway */
 
 		/* get view class */
@@ -112,7 +112,7 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 		$visitor = SPFactory::user()->getCurrent();
 		$view->assign( $visitor, 'visitor' );
 		$view->assign( $entries, 'entries' );
-		Sobi::Trigger( 'UserListing', 'View', array( &$view ) );
+		Sobi::Trigger( 'UserListing', 'View', [ &$view ] );
 		$view->display();
 	}
 
@@ -165,7 +165,7 @@ class SPUserListing extends SPSectionCtrl implements SPListing
 	{
 		$this->_task = strlen( $task ) ? $task : $this->_defTask;
 		$helpTask = $this->_type . '.' . $this->_task;
-		Sobi::Trigger( $this->name(), __FUNCTION__, array( &$this->_task ) );
+		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_task ] );
 		SPFactory::registry()->set( 'task', $helpTask );
 	}
 }

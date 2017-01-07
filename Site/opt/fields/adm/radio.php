@@ -51,16 +51,16 @@ class SPField_RadioAdm extends SPField_Radio
 			$p = 0;
 			foreach ( $attr[ 'options' ] as $o ) {
 				if ( isset( $o[ 'id' ] ) ) {
-					$options[ ] = array( 'id' => $o[ 'id' ], 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p );
+					$options[ ] = [ 'id' => $o[ 'id' ], 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p ];
 				}
 			}
 			unset( $attr[ 'options' ] );
 		}
 		if ( count( $options ) ) {
-			$optionsArr = array();
-			$labelsArr = array();
-			$optsIds = array();
-			$defLabelsArr = array();
+			$optionsArr = [];
+			$labelsArr = [];
+			$optsIds = [];
+			$defLabelsArr = [];
 			foreach ( $options as $i => $option ) {
 				/* check for doubles */
 				foreach ( $options as $pos => $opt ) {
@@ -72,9 +72,9 @@ class SPField_RadioAdm extends SPField_Radio
 						SPFactory::message()->warning( 'FIELD_WARN_DUPLICATE_OPT_ID' );
 					}
 				}
-				$optionsArr[ ] = array( 'fid' => $this->id, 'optValue' => $option[ 'id' ], 'optPos' => $option[ 'position' ], 'optParent' => $option[ 'parent' ] );
-				$defLabelsArr[ ] = array( 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $defLang, 'oType' => 'field_option', 'fid' => $this->id );
-				$labelsArr[ ] = array( 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $lang, 'oType' => 'field_option', 'fid' => $this->id );
+				$optionsArr[ ] = [ 'fid' => $this->id, 'optValue' => $option[ 'id' ], 'optPos' => $option[ 'position' ], 'optParent' => $option[ 'parent' ] ];
+				$defLabelsArr[ ] = [ 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $defLang, 'oType' => 'field_option', 'fid' => $this->id ];
+				$labelsArr[ ] = [ 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $lang, 'oType' => 'field_option', 'fid' => $this->id ];
 				$optsIds[ ] = $option[ 'id' ];
 			}
 			/* @var SPdb $db */
@@ -82,8 +82,8 @@ class SPField_RadioAdm extends SPField_Radio
 
 			/* try to delete the existing labels */
 			try {
-				$db->delete( 'spdb_field_option', array( 'fid' => $this->id ) );
-				$db->delete( 'spdb_language', array( 'oType' => 'field_option', 'fid' => $this->id, '!sKey' => $optsIds ) );
+				$db->delete( 'spdb_field_option', [ 'fid' => $this->id ] );
+				$db->delete( 'spdb_language', [ 'oType' => 'field_option', 'fid' => $this->id, '!sKey' => $optsIds ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DELETE_SELECTED_OPTIONS', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
@@ -99,10 +99,10 @@ class SPField_RadioAdm extends SPField_Radio
 			}
 		}
 		if ( !isset( $attr[ 'params' ] ) ) {
-			$attr[ 'params' ] = array();
+			$attr[ 'params' ] = [];
 		}
 		$myAttr = $this->getAttr();
-		$properties = array();
+		$properties = [];
 		if ( count( $myAttr ) ) {
 			foreach ( $myAttr as $property ) {
 				$properties[ $property ] = isset( $attr[ $property ] ) ? ( $attr[ $property ] ) : null;

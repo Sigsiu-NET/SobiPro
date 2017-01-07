@@ -46,6 +46,7 @@ interface SPFieldInterface
 	/**
 	 * Gets the data for a field and save it in the database
 	 * @param SPEntry $entry
+	 * @param string $request
 	 * @return bool
 	 */
 	public function saveData( &$entry, $request = 'POST' );

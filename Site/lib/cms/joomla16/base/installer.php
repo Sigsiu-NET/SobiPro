@@ -36,14 +36,14 @@ class SPCmsInstaller extends SPJoomlaInstaller
         $name = $def->getElementsByTagName( 'name' )->item( 0 )->nodeValue;
         $type = $def->getElementsByTagName( 'type' )->item( 0 )->nodeValue;
         $id = SPFactory::db()
-                ->select( 'extension_id', '#__extensions', array( 'type' => $type, 'element' => $eid ) )
+                ->select( 'extension_id', '#__extensions', [ 'type' => $type, 'element' => $eid ] )
                 ->loadResult();
         jimport( 'joomla.installer.installer' );
         if( JInstaller::getInstance()->uninstall( $type, $id ) ) {
-            SPFactory::db()->delete( 'spdb_plugins', array( 'pid' => $eid, 'type' => $type ), 1 );
+            SPFactory::db()->delete( 'spdb_plugins', [ 'pid' => $eid, 'type' => $type ], 1 );
             return Sobi::Txt( 'CMS_EXT_REMOVED', $name );
         }
-        return array( 'msg' => Sobi::Txt( 'CMS_EXT_NOT_REMOVED', $name ), 'msgtype' => 'error' );
+        return [ 'msg' => Sobi::Txt( 'CMS_EXT_NOT_REMOVED', $name ), 'msgtype' => 'error' ];
     }
 
 	/**
@@ -56,7 +56,7 @@ class SPCmsInstaller extends SPJoomlaInstaller
 		if ( $def->firstChild->nodeName == 'install' ) {
 			$content = $def->saveXML();
 			// I know, I know ....
-			$content = str_replace( array( '<install', '</install>' ), array( '<extension', '</extension>' ), $content );
+			$content = str_replace( [ '<install', '</install>' ], [ '<extension', '</extension>' ], $content );
 			SPFs::write( $dir . '/temp.xml', $content );
 			$def = new DOMDocument();
 			$def->load( $dir . '/temp.xml' );

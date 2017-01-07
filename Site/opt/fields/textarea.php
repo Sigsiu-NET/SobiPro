@@ -89,7 +89,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 //				});" );
 //			}
 //		}
-		$params = array( 'id' => $this->nid, 'class' => $class );
+		$params = [ 'id' => $this->nid, 'class' => $class ];
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
@@ -117,15 +117,15 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	public function struct()
 	{
 		$data = $this->data();
-		$attributes = array();
+		$attributes = [];
 		if ( strlen( $data ) ) {
 			$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData';
 			$this->cssClass = $this->cssClass . ' ' . $this->nid;
 			$this->cleanCss();
-			$attributes = array(
+			$attributes = [
 					'lang' => Sobi::Lang(),
 					'class' => $this->cssClass
-			);
+			];
 		}
 		else {
 			$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spField';
@@ -133,11 +133,11 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		if ( !( $this->editor || $this->allowHtml ) ) {
 			$data = nl2br( $data );
 		}
-		return array(
+		return [
 				'_complex' => 1,
 				'_data' => $data,
 				'_attributes' => $attributes
-		);
+		];
 	}
 
 	/**
@@ -175,7 +175,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			}
 			if ( $this->allowHtml ) {
 				$checkMethod = function_exists( 'mb_strlen' ) ? 'mb_strlen' : 'strlen';
-				$check = $checkMethod( str_replace( array( "\n", "\r", "\t" ), null, strip_tags( $data ) ) );
+				$check = $checkMethod( str_replace( [ "\n", "\r", "\t" ], null, strip_tags( $data ) ) );
 				if ( $this->maxLength && $check > $this->maxLength ) {
 					throw new SPException( SPLang::e( 'FIELD_TEXTAREA_LIMIT', $this->maxLength, $this->name, $dexs ) );
 				}
@@ -205,7 +205,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			return SPRequest::search( $this->nid, $request );
 		}
 		else {
-			return array();
+			return [];
 		}
 	}
 
@@ -215,7 +215,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'height', 'editor', 'allowHtml', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth' );
+		return [ 'maxLength', 'width', 'height', 'editor', 'allowHtml', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth' ];
 	}
 
 	/**
@@ -258,7 +258,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		}
 
 		/* collect the needed params */
-		$params = array();
+		$params = [];
 		$params[ 'publishUp' ] = $entry->get( 'publishUp' );
 		$params[ 'publishDown' ] = $entry->get( 'publishDown' );
 		$params[ 'fid' ] = $this->fid;
@@ -305,6 +305,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	}
 
 	/**
+	 * @param $request
+	 * @param $section
 	 * @return bool
 	 */
 	public function searchData( $request, $section )

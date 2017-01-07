@@ -31,11 +31,12 @@ class SPCMSEditor
 	 * @param    string    The height of the text area (px or %)
 	 * @param    boolean    True and the editor buttons will be displayed
 	 * @param    array    Associative array of editor parameters
+	 * @return string
 	 */
-	public function display( $name, $html, $width, $height, $buttons = true, $params = array() )
+	public function display( $name, $html, $width, $height, $buttons = true, $params = [] )
 	{
 		if ( SPRequest::cmd( 'format' ) != 'raw' ) {
-			JHtml::_( 'jquery.ui', array( 'core' ) );
+			JHtml::_( 'jquery.ui', [ 'core' ] );
 			return JEditor::getInstance()->display( $name, $html, $width, $height, '75', '20', $buttons, $params );
 		}
 	}

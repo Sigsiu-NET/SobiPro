@@ -49,7 +49,7 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 
 		if ( !( count( $options ) ) && count( $attr[ 'options' ] ) ) {
 			$p = 0;
-			$hold = array();
+			$hold = [];
 			foreach ( $attr[ 'options' ] as $o ) {
 				if ( is_numeric( $o[ 'id' ] ) ) {
 					$o[ 'id' ] = $this->nid . '_' . $o[ 'id' ];
@@ -60,7 +60,7 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 					while ( isset( $hold[ $oid ] ) ) {
 						$oid = $o[ 'id' ] . '_' . ++$i;
 					}
-					$options[ ] = array( 'id' => $oid, 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p );
+					$options[ ] = [ 'id' => $oid, 'name' => $o[ 'name' ], 'parent' => null, 'position' => ++$p ];
 					$hold[ $oid ] = $oid;
 				}
 			}
@@ -68,10 +68,10 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 
 		if ( count( $options ) ) {
 			unset( $attr[ 'options' ] );
-			$optionsArr = array();
-			$labelsArr = array();
-			$defLabelsArr = array();
-			$optsIds = array();
+			$optionsArr = [];
+			$labelsArr = [];
+			$defLabelsArr = [];
+			$optsIds = [];
 			foreach ( $options as $i => $option ) {
 				/* check for doubles */
 				foreach ( $options as $pos => $opt ) {
@@ -83,9 +83,9 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 						SPFactory::message()->warning( 'FIELD_WARN_DUPLICATE_OPT_ID' );
 					}
 				}
-				$optionsArr[ ] = array( 'fid' => $this->id, 'optValue' => $option[ 'id' ], 'optPos' => $option[ 'position' ], 'optParent' => $option[ 'parent' ] );
-				$defLabelsArr[ ] = array( 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $defLang, 'oType' => 'field_option', 'fid' => $this->id );
-				$labelsArr[ ] = array( 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $lang, 'oType' => 'field_option', 'fid' => $this->id );
+				$optionsArr[ ] = [ 'fid' => $this->id, 'optValue' => $option[ 'id' ], 'optPos' => $option[ 'position' ], 'optParent' => $option[ 'parent' ] ];
+				$defLabelsArr[ ] = [ 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $defLang, 'oType' => 'field_option', 'fid' => $this->id ];
+				$labelsArr[ ] = [ 'sKey' => $option[ 'id' ], 'sValue' => $option[ 'name' ], 'language' => $lang, 'oType' => 'field_option', 'fid' => $this->id ];
 				$optsIds[ ] = $option[ 'id' ];
 			}
 			/* @var SPdb $db */
@@ -93,8 +93,8 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 
 			/* try to delete the existing labels */
 			try {
-				$db->delete( 'spdb_field_option', array( 'fid' => $this->id ) );
-				$db->delete( 'spdb_language', array( 'oType' => 'field_option', 'fid' => $this->id, '!sKey' => $optsIds ) );
+				$db->delete( 'spdb_field_option', [ 'fid' => $this->id ] );
+				$db->delete( 'spdb_language', [ 'oType' => 'field_option', 'fid' => $this->id, '!sKey' => $optsIds ] );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DELETE_SELECTED_OPTIONS', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
@@ -110,10 +110,10 @@ class SPField_ChbxGrAdm extends SPField_ChbxGr
 			}
 		}
 		if ( !isset( $attr[ 'params' ] ) ) {
-			$attr[ 'params' ] = array();
+			$attr[ 'params' ] = [];
 		}
 		$myAttr = $this->getAttr();
-		$properties = array();
+		$properties = [];
 		if ( count( $myAttr ) ) {
 			foreach ( $myAttr as $property ) {
 				$properties[ $property ] = isset( $attr[ $property ] ) ? ( $attr[ $property ] ) : null;

@@ -46,13 +46,13 @@ class SPAclView extends SPAdmView
 	 */
 	private function edit()
 	{
-		$put = array();
+		$put = [];
 		$get = $this->get( 'groups' );
 		foreach ( $get as $group ) {
 			$put[ $group[ 'value' ] ] = $group[ 'text' ];
 		}
 		$this->set( $put, 'groups' );
-		$put = array();
+		$put = [];
 		$get = $this->get( 'sections' );
 		if ( is_array( $get ) && count( $get ) ) {
 			foreach ( $get as $section ) {
@@ -64,13 +64,13 @@ class SPAclView extends SPAdmView
 			}
 		}
 		$this->set( $put, 'sections' );
-		$put = array();
+		$put = [];
 		$get = $this->get( 'adm_permissions' );
 		if ( is_array( $get ) && count( $get ) ) {
 			foreach ( $get as $permission ) {
 				$subject = ucfirst( $permission->subject );
 				if ( !isset( $put[ $subject ] ) ) {
-					$put[ $subject ] = array();
+					$put[ $subject ] = [];
 				}
 				$k = $permission->action . '_' . $permission->value;
 				$put[ $subject ][ $permission->pid ] = Sobi::Txt( 'adm_permissions.' . $k );
@@ -78,7 +78,7 @@ class SPAclView extends SPAdmView
 		}
 		$put = array_reverse($put);
 		$this->set( $put, 'adm_permissions' );
-		$put = array();
+		$put = [];
 		$rule = $this->get( 'set' );
 		$get = $this->get( 'permissions' );
 		// WTF was that?!!
@@ -88,21 +88,21 @@ class SPAclView extends SPAdmView
 		foreach ( $get as $permission ) {
 			$subject = ucfirst( $permission->subject );
 			if ( !isset( $put[ $subject ] ) ) {
-				$put[ $subject ] = array();
+				$put[ $subject ] = [];
 			}
 			$k = $permission->action . '_' . $permission->value;
 			$put[ $subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
 		}
 
 		// default ordering
-		$permissionsOrder = array(
-			'Section' => array( 3, 4 ),
-			'Category' => array( 8, 7 ),
-			'Entry' => array( 9, 11, 10, 14, 12, 16, 18, 17, 20, 21, 19, 15, 24, 25 )
-		);
+		$permissionsOrder = [
+			'Section' => [ 3, 4 ],
+			'Category' => [ 8, 7 ],
+			'Entry' => [ 9, 11, 10, 14, 12, 16, 18, 17, 20, 21, 19, 15, 24, 25 ]
+		];
 		// to show current
 //		 SPConfig::debOut( $put );
-		$permissions = array();
+		$permissions = [];
 		foreach ( $permissionsOrder as $subject => $ordering ) {
 			foreach ( $ordering as $pid ) {
 				$permissions[ $subject ][ $pid ] = $put[ $subject ][ $pid ];
@@ -124,8 +124,8 @@ class SPAclView extends SPAdmView
 		}
 //			SPConfig::debOut( $permissions );
 		$this->set( $permissions, 'permissions' );
-		$sections = array();
-		$perms = array();
+		$sections = [];
+		$perms = [];
 		if ( count( $rule[ 'permissions' ] ) ) {
 			foreach ( $rule[ 'permissions' ] as $keys ) {
 				$sections[ ] = $keys[ 'sid' ];
@@ -144,8 +144,8 @@ class SPAclView extends SPAdmView
 	public function setTitle( $title )
 	{
 		$name = $this->get( 'rule' );
-		Sobi::Trigger( 'setTitle', $this->name(), array( &$title ) );
-		$title = Sobi::Txt( $title, array( 'rule_name' => $name ) );
+		Sobi::Trigger( 'setTitle', $this->name(), [ &$title ] );
+		$title = Sobi::Txt( $title, [ 'rule_name' => $name ] );
 		$title = parent::setTitle( $title );
 		return $title;
 	}

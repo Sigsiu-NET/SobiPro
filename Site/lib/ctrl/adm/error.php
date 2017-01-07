@@ -173,7 +173,7 @@ class SPError extends SPConfigAdmCtrl
 		$id = SPRequest::int( 'eid' );
 		try {
 			$err = SPFactory::db()
-					->select( '*', 'spdb_errors', array( 'eid' => $id ) )
+					->select( '*', 'spdb_errors', [ 'eid' => $id ] )
 					->loadObject();
 		} catch ( SPException $x ) {
 		}
@@ -195,7 +195,7 @@ class SPError extends SPConfigAdmCtrl
 		try {
 			SPFactory::db()->truncate( 'spdb_errors' );
 		} catch ( SPException $x ) {
-			$this->response( Sobi::Url( 'error' ), Sobi::Txt( 'ERR.ERROR_LOG_NOT_DELETED', array( 'error' => $x->getMessage() ) ), false, SPC::ERROR_MSG );
+			$this->response( Sobi::Url( 'error' ), Sobi::Txt( 'ERR.ERROR_LOG_NOT_DELETED', [ 'error' => $x->getMessage() ] ), false, SPC::ERROR_MSG );
 		}
 		if ( SPFs::exists( SOBI_PATH . '/var/log/error.log' ) ) {
 			SPFs::delete( SOBI_PATH . '/var/log/error.log' );
@@ -220,7 +220,7 @@ class SPError extends SPConfigAdmCtrl
 		}
 		try {
 			$errors = SPFactory::db()
-					->select( array( 'eid', 'date', 'errNum', 'errCode', 'errFile', 'errLine', 'errMsg', 'errUid', 'errSect', 'errReq' ), 'spdb_errors', null, 'eid.desc', $eLimit, $LimStart )
+					->select( [ 'eid', 'date', 'errNum', 'errCode', 'errFile', 'errLine', 'errMsg', 'errUid', 'errSect', 'errReq' ], 'spdb_errors', null, 'eid.desc', $eLimit, $LimStart )
 					->loadAssocList();
 		} catch ( SPException $x ) {
 		}

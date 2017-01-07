@@ -29,7 +29,7 @@ abstract class SPHtml_Input
 	public static function __callStatic($name, $args)
 	{
 		if (defined('SOBIPRO_ADM')) {
-			return call_user_func_array(array('self', '_' . $name), $args);
+			return call_user_func_array( [ 'self', '_' . $name ], $args);
 		}
 		else {
 			static $className = false;
@@ -39,7 +39,7 @@ abstract class SPHtml_Input
 					$path = Sobi::FixPath($package . '/input.php');
 					ob_start();
 					$content = file_get_contents($path);
-					$class   = array();
+					$class   = [];
 					preg_match('/\s*(class)\s+(\w+)/', $content, $class);
 					if (isset($class[2])) {
 						$className = $class[2];
@@ -56,10 +56,10 @@ abstract class SPHtml_Input
 				}
 			}
 			if (is_string($className) && method_exists($className, $name)) {
-				return call_user_func_array(array($className, $name), $args);
+				return call_user_func_array( [ $className, $name ], $args);
 			}
 			else {
-				return call_user_func_array(array('self', '_' . $name), $args);
+				return call_user_func_array( [ 'self', '_' . $name ], $args);
 			}
 		}
 	}
@@ -75,13 +75,13 @@ abstract class SPHtml_Input
 			$arr->fromString($params, ',', '=');
 			$params = $arr->toArr();
 		}
-		$p = array();
+		$p = [];
 		if (is_array($params)) {
 			foreach ($params as $i => $k) {
 				$p[trim($i)] = ($k);
 			}
 		}
-		$params = is_array($p) ? $p : array();
+		$params = is_array($p) ? $p : [];
 	}
 
 	/**
@@ -92,7 +92,7 @@ abstract class SPHtml_Input
 	protected static function _translate($txt)
 	{
 		if (strstr($txt, 'translate:')) {
-			$matches = array();
+			$matches = [];
 			preg_match('/translate\:\[(.*)\]/', $txt, $matches);
 			$txt = str_replace($matches[0], Sobi::Txt($matches[1]), $txt);
 		}
@@ -111,11 +111,11 @@ abstract class SPHtml_Input
 		self::checkArray($params);
 		if ($params && is_array($params) && count($params)) {
 			foreach ($params as $param => $v) {
-				if (in_array($param, array('required'))) {
+				if (in_array($param, [ 'required' ] )) {
 					continue;
 				}
 				$v     = trim(str_replace('"', '\'', $v));
-				$param = str_replace(array('\'', '"'), null, trim($param));
+				$param = str_replace( [ '\'', '"' ], null, trim($param));
 				$add .= " {$param}=\"{$v}\"";
 			}
 		}
@@ -137,7 +137,7 @@ abstract class SPHtml_Input
 	{
 		$params = self::params($params);
 		$f      = "<input name=\"{$name}\" type=\"file\" size=\"{$size}\" value=\"\" accept=\"{$accept}\"{$params}/>";
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$f));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- FileBox '{$name}' Output -->{$f}<!-- FileBox '{$name}' End -->\n\n";
 		return "\n{$f}\n\n";
@@ -157,28 +157,28 @@ abstract class SPHtml_Input
 	 *
 	 * @return string
 	 */
-	public static function _fileUpload($name, $accept = '*', $value = null, $class = 'spFileUpload', $task = 'file.upload', $scripts = array('jquery', 'jquery-form', 'fileupload'), $request = null)
+	public static function _fileUpload( $name, $accept = '*', $value = null, $class = 'spFileUpload', $task = 'file.upload', $scripts = [ 'jquery', 'jquery-form', 'fileupload' ], $request = null)
 	{
 		if (is_string($scripts)) {
 			$scripts = SPFactory::config()->structuralData($scripts);
 		}
 		SPFactory::header()->addJsFile($scripts);
 		if (!($request)) {
-			$request = array(
+			$request = [
 				'option'                        => 'com_sobipro',
 				'task'                          => $task,
 				'sid'                           => Sobi::Section(),
 				'ident'                         => $name . '-file',
 				SPFactory::mainframe()->token() => 1,
 				'format'                        => 'raw'
-			);
+			];
 		}
-		$classes = array('class' => 'hide spFileUploadHidden');
+		$classes = [ 'class' => 'hide spFileUploadHidden' ];
 		SPLoader::loadClass('env.browser');
 		$browser                = SPBrowser::getInstance()->get('browser');
 		$stupidInternetExplorer = false;
 		if (strstr(strtolower($browser), 'internet explorer')) {
-			$classes                = array('class' => '');
+			$classes                = [ 'class' => '' ];
 			$stupidInternetExplorer = true;
 		}
 		$f = null;
@@ -239,7 +239,7 @@ abstract class SPHtml_Input
 		$params = self::params($params);
 		$value  = strlen($value) ? str_replace('"', '&quot;', SPLang::entities($value, true)) : null;
 		$f      = "<input type=\"text\" name=\"{$name}\" value=\"{$value}\"{$params}/>";
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$f));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 		//"\n<!-- InputBox '{$name}' Output -->{$f}<!-- InputBox '{$name}' End -->\n\n";
 		return "\n{$f}\n\n";
@@ -261,7 +261,7 @@ abstract class SPHtml_Input
 		$value  = strlen($value) ? SPLang::entities( /*Sobi::Txt*/
 			($value), true) : null;
 		$f      = "<input type=\"submit\" name=\"{$name}\" value=\"{$value}\"{$params}/>";
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$f));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- SubmitButton '{$name}' Output -->{$f}<!-- SubmitButton '{$name}' End -->\n\n";
 		return "\n{$f}\n\n";
@@ -270,11 +270,12 @@ abstract class SPHtml_Input
 	/**
 	 * Creates a HTML file box
 	 *
-	 * @param string $name   - name of the html field
-	 * @param string $value  - selected value
-	 * @param array  $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
-	 *
+	 * @param $width
 	 * @return string
+	 * @internal param string $name - name of the html field
+	 * @internal param string $value - selected value
+	 * @internal param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 *
 	 */
 	public static function _translateWidth($width)
 	{
@@ -361,7 +362,7 @@ abstract class SPHtml_Input
 		if (isset($a)) {
 			$f = $a . $f . "</a>";
 		}
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$f));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- Button '{$name}' Output --> {$f}<!-- Button '{$name}' End -->\n\n";
 		return "\n{$f}\n\n";
@@ -370,14 +371,13 @@ abstract class SPHtml_Input
 	/**
 	 * Creates a textarea field with or without WYSIWYG editor
 	 *
-	 * @param string         $name   - name of the html field
-	 * @param string         $value  - selected value
-	 * @param bool           $editor - enables WYSIWYG editor
-	 * @param int            $width  - width of the created textarea field in pixel
-	 * @param int            $height - height of the created textarea field in pixel
-	 * @param array|string   $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param string $name - name of the html field
+	 * @param string $value - selected value
+	 * @param bool $editor - enables WYSIWYG editor
+	 * @param int|string $width - width of the created textarea field in pixel
+	 * @param int $height - height of the created textarea field in pixel
+	 * @param array|string $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
 	 * @param string | array $editorParams
-	 *
 	 * @return string
 	 */
 	public static function _textarea($name, $value = null, $editor = false, $width = '', $height = 350, $params = '', $editorParams = null)
@@ -393,7 +393,7 @@ abstract class SPHtml_Input
 			$editorParams['class'] = "form-control";
 		}
 
-		Sobi::Trigger('BeforeCreateField', ucfirst(__FUNCTION__), array(&$name, &$value, &$editor, &$width, &$height, &$params));
+		Sobi::Trigger('BeforeCreateField', ucfirst(__FUNCTION__), [ &$name, &$value, &$editor, &$width, &$height, &$params ] );
 		$value = SPLang::entities($value);
 		if ($editor) {
 			$e = Sobi::Cfg('html.editor', 'cms.html.editor');
@@ -416,7 +416,7 @@ abstract class SPHtml_Input
 			$params = self::params($params);
 			$area   = "<textarea name=\"{$name}\" {$params}>{$value}</textarea>";
 		}
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$area));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$area ] );
 
 //		return "\n<!-- TextArea '{$name}' Output -->\n{$area}\n<!-- TextArea '{$name}' End -->\n\n";
 		return "\n{$area}\n\n";
@@ -440,7 +440,7 @@ abstract class SPHtml_Input
 	 *
 	 * @return string
 	 */
-	public static function _radio($name, $value, $label = null, $id = null, $checked = false, $params = null, $order = array('field', 'image', 'label'), $image = null)
+	public static function _radio( $name, $value, $label = null, $id = null, $checked = false, $params = null, $order = [ 'field', 'image', 'label' ], $image = null)
 	{
 		$params = self::params($params);
 		if (!(is_bool($checked))) {
@@ -497,7 +497,7 @@ abstract class SPHtml_Input
 //				$f = ( $order == 'left' ) ? $l . $f : $f . $l;
 //			}
 		}
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$f));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- RadioButton '{$name}' Output -->{$f}\n<!-- RadioButton '{$name}' End -->\n";
 		return "\n{$f}\n\n";
@@ -521,16 +521,16 @@ abstract class SPHtml_Input
 	 * @internal param string $field - on which site from the label the field should be displayed
 	 * @return string
 	 */
-	public static function _checkBoxGroup($name, $values, $id, $selected = null, $params = null, $order = array('field', 'image', 'label'), $asArray = false)
+	public static function _checkBoxGroup( $name, $values, $id, $selected = null, $params = null, $order = [ 'field', 'image', 'label' ], $asArray = false)
 	{
 		self::checkArray($values);
 		if ($selected !== null && !(is_array($selected))) {
-			$selected = array(( string ) $selected);
+			$selected = [ ( string ) $selected ];
 		}
 		elseif (!(is_array($selected))) {
-			$selected = array();
+			$selected = [];
 		}
-		$list = array();
+		$list = [];
 		if (count($values)) {
 			foreach ($values as $value => $label) {
 				$checked = in_array(( string ) $value, $selected, true) ? true : false;
@@ -554,7 +554,7 @@ abstract class SPHtml_Input
 				$list[] = self::checkbox($name . '[]', $value, $label, $id . '_' . $value, $checked, $params, $order, $image);
 			}
 		}
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$list));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$list ] );
 
 		return $asArray ? $list : (count($list) ? implode("\n", $list) : null);
 	}
@@ -577,7 +577,7 @@ abstract class SPHtml_Input
 	 *
 	 * @return string
 	 */
-	public static function _checkbox($name, $value, $label = null, $id = null, $checked = false, $params = null, $order = array('field', 'image', 'label'), $image = null)
+	public static function _checkbox( $name, $value, $label = null, $id = null, $checked = false, $params = null, $order = [ 'field', 'image', 'label' ], $image = null)
 	{
 		$params = self::params($params);
 		if (!(is_bool($checked))) {
@@ -678,7 +678,7 @@ abstract class SPHtml_Input
 //			$containerend = '</span>';
 //		}
 
-		$list = array();
+		$list = [];
 		if (count($values)) {
 			foreach ($values as $value => $label) {
 				if (is_numeric($value)) {
@@ -691,7 +691,7 @@ abstract class SPHtml_Input
 				$list[] = self::radio($name, $value, $label, $Id, $checked, $params, $field);
 			}
 		}
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$list));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$list ] );
 
 		return $asArray ? $list : (count($list) ? implode("\n", $list) : null);
 	}
@@ -699,7 +699,7 @@ abstract class SPHtml_Input
 
 	public static function createOptions($values, $selected = null)
 	{
-		$cells = array();
+		$cells = [];
 		$t     = null;
 		$gt    = null;
 		if (is_array($values) && count($values)) {
@@ -720,7 +720,7 @@ abstract class SPHtml_Input
 									$ol      = self::cleanOpt($ol['label']);
 									$ov      = self::cleanOpt($ol['value']);
 									$p       = null;
-									$oParams = array();
+									$oParams = [];
 									if (isset($ol['params']) && count($ol['params'])) {
 										foreach ($ol['params'] as $param => $value) {
 											$oParams[] = "{$param}=\"{$value}\"";
@@ -750,7 +750,7 @@ abstract class SPHtml_Input
 						$ol      = self::cleanOpt($l['label']);
 						$ov      = self::cleanOpt($l['value']);
 						$p       = null;
-						$oParams = array();
+						$oParams = [];
 						if (isset($l['params']) && count($l['params'])) {
 							foreach ($l['params'] as $param => $value) {
 								$oParams[] = "{$param}=\"{$value}\"";
@@ -834,10 +834,10 @@ abstract class SPHtml_Input
 		}
 		self::checkArray($values);
 		if ($selected !== null && !(is_array($selected))) {
-			$selected = array(( string ) $selected);
+			$selected = [ ( string ) $selected ];
 		}
 		elseif (!(is_array($selected))) {
-			$selected = array();
+			$selected = [];
 		}
 
 		$cells = self::createOptions($values, $selected);
@@ -848,7 +848,7 @@ abstract class SPHtml_Input
 		}
 		$cells = implode("\n\t", $cells);
 		$f     = "<select name=\"{$name}\"{$multi}{$params}{$data}>\n\t{$cells}\n</select>";
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$f));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- SelectList '{$name}' Output -->{$f}<!-- SelectList '{$name}' End -->\n\n";
 		return "\n{$f}\n\n";
@@ -892,7 +892,7 @@ abstract class SPHtml_Input
 	 */
 	public static function _states($name, $value, $id, $label, $params = null, $side = 'right')
 	{
-		return self::radioList($name, array('0' => "translate:[{$label}_no]", '1' => "translate:[{$label}_yes]"), $id, ( int ) $value, $params, $side);
+		return self::radioList($name, [ '0' => "translate:[{$label}_no]", '1' => "translate:[{$label}_yes]" ], $id, ( int ) $value, $params, $side);
 	}
 
 	/**
@@ -935,13 +935,13 @@ abstract class SPHtml_Input
 		self::checkArray($params);
 		$value    = $value ? SPFactory::config()->date($value, 'calendar.date_format') : null;
 		$id       = $id ? $id : $name;
-		$params   = array_merge($params, array('id' => $id));
+		$params   = array_merge($params, [ 'id' => $id ] );
 		$calendar = self::text($name, $value, $params);
 		$bt       = self::translate(SPFactory::config()->key('calendar.button_label', ' ... '));
 		$bt       = "<input name=\"reset\" type=\"reset\" id=\"{$id}CalBt\" class=\"button\" onclick=\"return SPCalendar( '{$id}', '{$id}CalBt');\" value=\"{$bt}\" />";
 		$site     = SPFactory::config()->key('calendar.button_side', 'right');
 		$calendar = ($site == 'right') ? $calendar . $bt : $bt . $calendar;
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$calendar));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$calendar ] );
 
 		return $calendar;
 	}
@@ -966,7 +966,7 @@ abstract class SPHtml_Input
 		$header->addCssFile("calendar.calendar-{$theme}");
 		$header->addJsFile('calendar.calendar');
 		$header->addJsFile("calendar.lang.calendar-{$lang}");
-		$header->addJsVarFile('calendar.init', md5("{$dateFormat}_{$dateFormatTxt}"), array('FORMAT' => $dateFormat, 'FORMAT_TXT' => $dateFormatTxt));
+		$header->addJsVarFile('calendar.init', md5("{$dateFormat}_{$dateFormatTxt}"), [ 'FORMAT' => $dateFormat, 'FORMAT_TXT' => $dateFormatTxt ] );
 	}
 
 	/**
@@ -994,10 +994,10 @@ abstract class SPHtml_Input
 //		);
 
 		if (strstr($dateFormat, 'A')) {
-			$dateFormat = str_replace(array('h', 'H'), array('g', 'G'), $dateFormat);
+			$dateFormat = str_replace( [ 'h', 'H' ], [ 'g', 'G' ], $dateFormat);
 		}
 		$jsDateFormat   = $dateFormat;
-		$jsReplacements = array(
+		$jsReplacements = [
 			'y' => 'yy',
 			'Y' => 'yyyy',
 			'F' => 'MM',
@@ -1011,7 +1011,7 @@ abstract class SPHtml_Input
 			'i' => 'mm',
 			's' => 'ss',
 			'A' => 'PP'
-		);
+		];
 		foreach ($jsReplacements as $php => $js) {
 			$jsDateFormat = str_replace($php, $js, $jsDateFormat);
 		}
@@ -1030,7 +1030,7 @@ abstract class SPHtml_Input
 			$params['id'] = SPLang::nid($name);
 		}
 		if (!(isset($params['data']))) {
-			$params['data'] = array();
+			$params['data'] = [];
 		}
 		if (strstr($dateFormat, 'A')) {
 			$params['data']['am-pm'] = 'true';
@@ -1046,7 +1046,7 @@ abstract class SPHtml_Input
 		$data = self::createDataTag($params);
 		SPFactory::header()
 			->addCssFile('bootstrap.datepicker')
-			->addJsFile(array('locale.' . Sobi::Lang(false) . '_date_picker', 'bootstrap.datepicker'));
+			->addJsFile( [ 'locale.' . Sobi::Lang(false) . '_date_picker', 'bootstrap.datepicker' ] );
 		if ($bs3) {
 			$f = '<div class="input-group input-append date spDatePicker">';
 			$params['class'] .= ' form-control';
@@ -1082,7 +1082,7 @@ abstract class SPHtml_Input
 		}
 		$f .= '<i data-date-icon="icon-' . $icon . '" class="icon-' . $icon . '"></i></span>';
 		$f .= '</div>';
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$f));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- Date Picker '{$name}' Output -->{$f}<!-- Date Picker '{$name}' End -->\n\n";
 		return "\n{$f}\n\n";
@@ -1137,7 +1137,7 @@ abstract class SPHtml_Input
 		$f .= '<span ' . $params . '>' . $valueDisplay . '</span>';
 		$f .= '</div>';
 
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$f));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- Date Getter '{$name}' Output -->{$f}<!-- Date Getter '{$name}' End -->\n\n";
 		return "\n{$f}\n\n";
@@ -1147,14 +1147,14 @@ abstract class SPHtml_Input
 	{
 		static $loaded = false;
 		if (!($loaded)) {
-			$lang  = array(
+			$lang  = [
 				'months'      => Sobi::Txt('JS_CALENDAR_MONTHS'),
 				'monthsShort' => Sobi::Txt('JS_CALENDAR_MONTHS_SHORT'),
 				'days'        => Sobi::Txt('JS_CALENDAR_DAYS'),
 				'daysShort'   => Sobi::Txt('JS_CALENDAR_DAYS_SHORT'),
 				'daysMin'     => Sobi::Txt('JS_CALENDAR_DAYS_MINI'),
 				'today'       => Sobi::Txt('JS_CALENDAR_TODAY'),
-			);
+			];
 			$check = md5(serialize($lang));
 			if (!(SPLoader::JsFile('locale.' . Sobi::Lang(false) . '_date_picker', false, true, false)) || !(stripos(SPFs::read(SPLoader::JsFile('locale.' . Sobi::Lang(false) . '_date_picker', false, false, false)), $check))) {
 				foreach ($lang as $k => $v) {
@@ -1174,7 +1174,7 @@ abstract class SPHtml_Input
 		static $count = 0;
 		static $session = null;
 		if (!($session)) {
-			$session = SPFactory::user()->getUserState('userSelector', null, array());
+			$session = SPFactory::user()->getUserState('userSelector', null, [] );
 		}
 		$params = self::checkArray($params);
 		if (!(isset($params['id']))) {
@@ -1183,13 +1183,13 @@ abstract class SPHtml_Input
 		$user = null;
 		SPFactory::header()->addJsFile('user_selector');
 		$user     = SPUser::getBaseData(( int ) $value);
-		$settings = array(
+		$settings = [
 			'groups'   => $groups,
 			'format'   => $format,
 			'user'     => Sobi::My('id'),
 			'ordering' => $orderBy,
 			'time'     => microtime(true),
-		);
+		];
 		if (count($session)) {
 			foreach ($session as $id => $data) {
 				if (microtime(true) - $data['time'] > 3600) {
@@ -1202,9 +1202,9 @@ abstract class SPHtml_Input
 		SPFactory::user()->setUserState('userSelector', $session);
 		$userData = null;
 		if ($user) {
-			$replacements = array();
+			$replacements = [];
 			preg_match_all('/\%[a-z]*/', $format, $replacements);
-			$placeholders = array();
+			$placeholders = [];
 			if (isset($replacements[0]) && count($replacements[0])) {
 				foreach ($replacements[0] as $placeholder) {
 					$placeholders[] = str_replace('%', null, $placeholder);
@@ -1235,7 +1235,7 @@ abstract class SPHtml_Input
 		$f .= "\n";
 		$f .= self::modalWindow(Sobi::Txt($header) . $filter, $id . '-window', $modal);
 		$f .= '</div>';
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$f));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- User Picker '{$name}' Output -->{$f}<!-- User Picker '{$name}' End -->\n\n";
 		return "\n{$f}\n\n";
@@ -1254,9 +1254,9 @@ abstract class SPHtml_Input
 		$user     = SPUser::getBaseData(( int ) $value);
 		$userData = null;
 		if ($user) {
-			$replacements = array();
+			$replacements = [];
 			preg_match_all('/\%[a-z]*/', $format, $replacements);
-			$placeholders = array();
+			$placeholders = [];
 			if (isset($replacements[0]) && count($replacements[0])) {
 				foreach ($replacements[0] as $placeholder) {
 					$placeholders[] = str_replace('%', null, $placeholder);
@@ -1275,7 +1275,7 @@ abstract class SPHtml_Input
 		$f      = '<div class="spOutput">';
 		$f .= '<span ' . $params . '>' . $userData . '</span>';
 		$f .= '</div>';
-		Sobi::Trigger('Field', ucfirst(__FUNCTION__), array(&$f));
+		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- User Getter '{$name}' Output -->{$f}<!-- User Getter '{$name}' End -->\n\n";
 		return "\n{$f}\n\n";
@@ -1319,7 +1319,7 @@ abstract class SPHtml_Input
 		return $html;
 	}
 
-	public static function _hidden($name, $value = null, $id = null, $params = array())
+	public static function _hidden($name, $value = null, $id = null, $params = [] )
 	{
 		$data = self::createDataTag($params);
 		$id   = $id ? $id : SPLang::nid($name);

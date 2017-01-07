@@ -42,7 +42,7 @@ class SPCMSHelper extends SPJoomlaCMSHelper
 	 */
 	public static function minCmsVersion( $recommended = false )
 	{
-		return $recommended ? array( 'major' => 2, 'minor' => 5, 'build' => 19 ) : array( 'major' => 2, 'minor' => 5, 'build' => 19 );
+		return $recommended ? [ 'major' => 2, 'minor' => 5, 'build' => 19 ] : [ 'major' => 2, 'minor' => 5, 'build' => 19 ];
 	}
 
 	/**
@@ -52,12 +52,12 @@ class SPCMSHelper extends SPJoomlaCMSHelper
 	 */
 	public static function cmsVersion( $version = null )
 	{
-		if ( ( $version ) && !( in_array( $version, array( 'Joomla 1.6', 'Joomla 1.7', 'Joomla 2.5' ) ) ) ) {
+		if ( ( $version ) && !( in_array( $version, [ 'Joomla 1.6', 'Joomla 1.7', 'Joomla 2.5' ] ) ) ) {
 			return 'Joomla 2.5';
 		}
 		$version = new JVersion();
 		$v = explode( '.', $version->RELEASE );
-		return array( 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => $version->DEV_LEVEL, 'rev' => 0 );
+		return [ 'major' => $v[ 0 ], 'minor' => $v[ 1 ], 'build' => $version->DEV_LEVEL, 'rev' => 0 ];
 	}
 
 	/**
@@ -94,7 +94,7 @@ class SPCMSHelper extends SPJoomlaCMSHelper
 	public static function userSelect( $name, $active, $nouser = 0, $javascript = null, $order = 'name', $reg = 0 )
 	{
 		require_once 'userform.php';
-		$s = array( 'id' => str_replace( '.', '_', $name ), 'name' => $name, 'value' => $active );
+		$s = [ 'id' => str_replace( '.', '_', $name ), 'name' => $name, 'value' => $active ];
 		$f = new SPFormFieldUser();
 		$f->setup( $s );
 		return $f->input;
@@ -102,10 +102,10 @@ class SPCMSHelper extends SPJoomlaCMSHelper
 
 	public function getLanguages()
 	{
-		static $return = array();
+		static $return = [];
 		if ( !( count( $return ) ) ) {
 			$langs = JLanguageHelper::getLanguages();
-			$return = array();
+			$return = [];
 			foreach ( $langs as $lang ) {
 				$return[ $lang->lang_code ] = $lang->sef;
 			}

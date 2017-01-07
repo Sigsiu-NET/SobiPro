@@ -53,13 +53,13 @@ class SPPaymentBt extends SPConfigAdmCtrl
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$data = SPRequest::string( 'bankdata', null, true );
-		$data = array(
+		$data = [
 				'key' => 'bankdata',
 				'value' => $data,
 				'type' => 'application',
 				'id' => Sobi::Section(),
 				'section' => Sobi::Section()
-		);
+		];
 		try {
 			SPLang::saveValues( $data );
 		} catch ( SPException $x ) {

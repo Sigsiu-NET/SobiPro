@@ -28,7 +28,7 @@ final class SPAdmField extends SPField
 	/**
 	 * @var array
 	 */
-	private $_translatable = array( 'name', 'description' );
+	private $_translatable = [ 'name', 'description' ];
 
 	public function save( $attr )
 	{
@@ -140,7 +140,7 @@ final class SPAdmField extends SPField
 
 		/* get database columns and their ordering */
 		$cols = $db->getColumns( 'spdb_field' );
-		$values = array();
+		$values = [];
 
 		/* and sort the properties in the same order */
 		foreach ( $cols as $col ) {
@@ -150,21 +150,21 @@ final class SPAdmField extends SPField
 		}
 		/* save field */
 		try {
-			$db->update( 'spdb_field', $values, array( 'fid' => $this->fid ) );
+			$db->update( 'spdb_field', $values, [ 'fid' => $this->fid ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 
 		/* save language dependent properties */
-		$labels = array();
-		$defLabels = array();
-		$labels[ ] = array( 'sKey' => 'name', 'sValue' => $base[ 'name' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
-		$labels[ ] = array( 'sKey' => 'description', 'sValue' => $base[ 'description' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
-		$labels[ ] = array( 'sKey' => 'suffix', 'sValue' => $base[ 'suffix' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
+		$labels = [];
+		$defLabels = [];
+		$labels[ ] = [ 'sKey' => 'name', 'sValue' => $base[ 'name' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
+		$labels[ ] = [ 'sKey' => 'description', 'sValue' => $base[ 'description' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
+		$labels[ ] = [ 'sKey' => 'suffix', 'sValue' => $base[ 'suffix' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
 		if ( Sobi::Lang() != Sobi::DefLang() ) {
-			$defLabels[ ] = array( 'sKey' => 'name', 'sValue' => $base[ 'name' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
-			$defLabels[ ] = array( 'sKey' => 'suffix', 'sValue' => $base[ 'suffix' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
-			$defLabels[ ] = array( 'sKey' => 'description', 'sValue' => $base[ 'description' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
+			$defLabels[ ] = [ 'sKey' => 'name', 'sValue' => $base[ 'name' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
+			$defLabels[ ] = [ 'sKey' => 'suffix', 'sValue' => $base[ 'suffix' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
+			$defLabels[ ] = [ 'sKey' => 'description', 'sValue' => $base[ 'description' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
 		}
 		if ( count( $labels ) ) {
 			try {
@@ -187,7 +187,7 @@ final class SPAdmField extends SPField
 		while ( $c ) {
 			/* field alias has to be unique */
 			try {
-				$condition = array( 'nid' => $nid . $suffix, 'section' => Sobi::Section() );
+				$condition = [ 'nid' => $nid . $suffix, 'section' => Sobi::Section() ];
 				if ( !( $new ) ) {
 					$condition[ '!fid' ] = $this->id;
 				}
@@ -206,14 +206,15 @@ final class SPAdmField extends SPField
 	/**
 	 * Adding new field
 	 * Save base data and redirect to the edit function when the field type has been chosed
-	 * @return integer
+	 * @param $attr
+	 * @return int
 	 */
 	public function saveNew( $attr )
 	{
 		$db = SPFactory::db();
 
 		/* cast all needed data and clean - it is possible just in admin panel but "strzeżonego pan Bóg strzeże" ;-) */
-		$base = array();
+		$base = [];
 		$base[ 'section' ] = ( isset( $attr[ 'section' ] ) && $attr[ 'section' ] ) ? $attr[ 'section' ] : SPRequest::sid();
 		$this->loadType();
 
@@ -272,7 +273,7 @@ final class SPAdmField extends SPField
 
 		/* determine the right position */
 		try {
-			$condition = array( 'section' => SPRequest::sid() );
+			$condition = [ 'section' => SPRequest::sid() ];
 			if ( !( SPRequest::int( 'category-field' ) ) ) {
 				$condition[ 'adminField>' ] = -1;
 			}
@@ -286,7 +287,7 @@ final class SPAdmField extends SPField
 		}
 		/* get database columns and their ordering */
 		$cols = $db->getColumns( 'spdb_field' );
-		$values = array();
+		$values = [];
 
 		/* and sort the properties in the same order */
 		foreach ( $cols as $col ) {
@@ -306,15 +307,15 @@ final class SPAdmField extends SPField
 		}
 
 		/* save language depend properties */
-		$labels = array();
-		$defLabels = array();
-		$labels[ ] = array( 'sKey' => 'name', 'sValue' => $base[ 'name' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
-		$labels[ ] = array( 'sKey' => 'description', 'sValue' => $base[ 'description' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
-		$labels[ ] = array( 'sKey' => 'suffix', 'sValue' => $base[ 'suffix' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
+		$labels = [];
+		$defLabels = [];
+		$labels[ ] = [ 'sKey' => 'name', 'sValue' => $base[ 'name' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
+		$labels[ ] = [ 'sKey' => 'description', 'sValue' => $base[ 'description' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
+		$labels[ ] = [ 'sKey' => 'suffix', 'sValue' => $base[ 'suffix' ], 'language' => Sobi::Lang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
 		if ( Sobi::Lang() != Sobi::DefLang() ) {
-			$defLabels[ ] = array( 'sKey' => 'name', 'sValue' => $base[ 'name' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
-			$defLabels[ ] = array( 'sKey' => 'suffix', 'sValue' => $base[ 'suffix' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
-			$defLabels[ ] = array( 'sKey' => 'description', 'sValue' => $base[ 'description' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid );
+			$defLabels[ ] = [ 'sKey' => 'name', 'sValue' => $base[ 'name' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
+			$defLabels[ ] = [ 'sKey' => 'suffix', 'sValue' => $base[ 'suffix' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
+			$defLabels[ ] = [ 'sKey' => 'description', 'sValue' => $base[ 'description' ], 'language' => Sobi::DefLang(), 'id' => 0, 'oType' => 'field', 'fid' => $this->fid ];
 		}
 		if ( count( $labels ) ) {
 			try {

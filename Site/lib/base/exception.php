@@ -26,7 +26,7 @@ class SPException extends Exception
 {
 	private static $_trigger = 0;
 	private static $_cs = false;
-	protected $data = array();
+	protected $data = [];
 
 	public function setData( $data )
 	{

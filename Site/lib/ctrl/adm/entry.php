@@ -99,7 +99,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$fid = SPRequest::cmd( 'fid' );
 		if ( strstr( $fid, 'field_' ) ) {
 			$fid = SPFactory::db()
-					->select( 'fid', 'spdb_field', array( 'nid' => $fid, 'section' => Sobi::Section(), 'adminField>' => -1 ) )
+					->select( 'fid', 'spdb_field', [ 'nid' => $fid, 'section' => Sobi::Section(), 'adminField>' => -1 ] )
 					->loadResult();
 			/** @var SPField $field */
 			$field = SPFactory::Model( 'field' );
@@ -133,10 +133,10 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				if ( is_array( $revision ) ) {
 					$revision = print_r( $revision, true );
 				}
-				$data = array(
+				$data = [
 						'current' => $current,
 						'revision' => $revision
-				);
+				];
 			}
 		}
 		// core data
@@ -161,30 +161,30 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 						$pastUser = SPUser::getBaseData( ( int )$revision );
 						$pastUser = $pastUser->name . ' (' . $pastUser->id . ')';
 					}
-					$data = array(
+					$data = [
 							'current' => $currentUser,
 							'revision' => $pastUser,
-					);
+					];
 					break;
 				default:
-					$data = array(
+					$data = [
 							'current' => $this->_model->get( $i ),
 							'revision' => $revision
-					);
+					];
 					break;
 			}
 		}
 		if ( !( SPRequest::bool( 'html', false, 'post' ) ) ) {
-			$data = array(
+			$data = [
 					'current' => html_entity_decode( strip_tags( $data[ 'current' ] ), ENT_QUOTES, 'UTF-8' ),
 					'revision' => html_entity_decode( strip_tags( $data[ 'revision' ] ), ENT_QUOTES, 'UTF-8' ),
-			);
+			];
 
 		}
-		$data = array(
+		$data = [
 				'current' => explode( "\n", $data[ 'current' ] ),
 				'revision' => explode( "\n", $data[ 'revision' ] )
-		);
+		];
 		$diff = SPFactory::Instance( 'services.third-party.diff.lib.Diff', $data[ 'revision' ], $data[ 'current' ] );
 		$renderer = SPFactory::Instance( 'services.third-party.diff.lib.Diff.Renderer.Html.SideBySide' );
 //		$renderer = SPFactory::Instance( 'services.third-party.diff.lib.Diff.Renderer.Html.Inline' );
@@ -203,27 +203,27 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		if ( $this->authorise( 'manage' ) ) {
-			$changes = array();
-			$objects = array(
+			$changes = [];
+			$objects = [
 					'entry' => $this->_model,
 					'user' => SPFactory::user(),
 					'author' => SPFactory::Instance( 'cms.base.user', $this->_model->get( 'owner' ) )
-			);
+			];
 			$messages =& SPFactory::registry()->get( 'messages' );
 			$reason = SPLang::replacePlaceHolders( SPRequest::string( 'reason', null, true, 'post' ), $objects );
 			$objects[ 'reason' ] = nl2br( $reason );
 			$messages[ 'rejection' ] = $objects;
 			SPFactory::registry()->set( 'messages', $messages );
 			$this->_model->setMessage( $reason, 'reason' );
-			SPFactory::message()->logAction( 'reject', $this->_model->get( 'id' ), array(), $reason );
+			SPFactory::message()->logAction( 'reject', $this->_model->get( 'id' ), [], $reason );
 
 			if ( SPRequest::bool( 'unpublish', false, 'post' ) ) {
 				$this->_model->changeState( 0, $reason, false );
 				$changes[ ] = 'unpublish';
-				SPFactory::message()->logAction( 'unpublished', $this->_model->get( 'id' ), array(), Sobi::Txt( 'EN.REJECT_HISTORY' ) );
+				SPFactory::message()->logAction( 'unpublished', $this->_model->get( 'id' ), [], Sobi::Txt( 'EN.REJECT_HISTORY' ) );
 			}
 			if ( SPRequest::bool( 'trigger_unpublish', false, 'post' ) ) {
-				Sobi::Trigger( 'Entry', 'AfterChangeState', array( $this->_model, 0, 'messages' => $this->_model->get( 'messages' ) ) );
+				Sobi::Trigger( 'Entry', 'AfterChangeState', [ $this->_model, 0, 'messages' => $this->_model->get( 'messages' ) ] );
 			}
 			if ( SPRequest::bool( 'discard', false, 'post' ) ) {
 				$changes[ ] = 'discard';
@@ -231,9 +231,9 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 				SPFactory::message()->logAction( 'discard', $this->_model->get( 'id' ), $data, Sobi::Txt( 'EN.REJECT_HISTORY' ) );
 			}
 			if ( SPRequest::bool( 'trigger_unapprove', false, 'post' ) ) {
-				Sobi::Trigger( 'Entry', 'AfterUnapprove', array( $this->_model, 0 ) );
+				Sobi::Trigger( 'Entry', 'AfterUnapprove', [ $this->_model, 0 ] );
 			}
-			Sobi::Trigger( 'Entry', 'AfterReject', array( $this->_model, 0 ) );
+			Sobi::Trigger( 'Entry', 'AfterReject', [ $this->_model, 0 ] );
 			$this->response( Sobi::Back(), Sobi::Txt( 'ENTRY_REJECTED', $this->_model->get( 'name' ) ), true, SPC::SUCCESS_MSG );
 		}
 	}
@@ -259,7 +259,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$sets = array();
+		$sets = [];
 		if ( !( $clone ) ) {
 			$sid = SPRequest::sid() ? SPRequest::sid() : SPRequest::int( 'entry_id' );
 		}
@@ -282,11 +282,11 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			}
 		}
 
-		$preState = array(
+		$preState = [
 				'approved' => $this->_model->get( 'approved' ),
 				'state' => $this->_model->get( 'state' ),
 				'new' => !( $this->_model->get( 'id' ) )
-		);
+		];
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 
 		$this->_model->getRequest( $this->_type );
@@ -295,15 +295,15 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		try {
 			$this->_model->validate( 'post' );
 		} catch ( SPException $x ) {
-			$back = Sobi::GetUserState( 'back_url', Sobi::Url( array( 'task' => 'entry.add', 'sid' => Sobi::Section() ) ) );
+			$back = Sobi::GetUserState( 'back_url', Sobi::Url( [ 'task' => 'entry.add', 'sid' => Sobi::Section() ] ) );
 			$data = $x->getData();
-			$this->response( $back, $x->getMessage(), false, 'error', array( 'required' => $data[ 'field' ] ) );
+			$this->response( $back, $x->getMessage(), false, 'error', [ 'required' => $data[ 'field' ] ] );
 		}
 
 		try {
 			$this->_model->save();
 		} catch ( SPException $x ) {
-			$back = Sobi::GetUserState( 'back_url', Sobi::Url( array( 'task' => 'entry.add', 'sid' => Sobi::Section() ) ) );
+			$back = Sobi::GetUserState( 'back_url', Sobi::Url( [ 'task' => 'entry.add', 'sid' => Sobi::Section() ] ) );
 			$this->response( $back, $x->getMessage(), false, 'error' );
 		}
 		$sid = $this->_model->get( 'id' );
@@ -319,12 +319,12 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		}
 		if ( $apply || $clone ) {
 			if ( $clone ) {
-				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
-				$this->response( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg );
+				$msg = Sobi::Txt( 'MSG.OBJ_CLONED', [ 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ] );
+				$this->response( Sobi::Url( [ 'task' => $this->_type . '.edit', 'sid' => $sid ] ), $msg );
 			}
 			else {
-				$msg = Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) );
-				$this->response( Sobi::Url( array( 'task' => $this->_type . '.edit', 'sid' => $sid ) ), $msg, false, 'success', array( 'sets' => $sets ) );
+				$msg = Sobi::Txt( 'MSG.OBJ_SAVED', [ 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ] );
+				$this->response( Sobi::Url( [ 'task' => $this->_type . '.edit', 'sid' => $sid ] ), $msg, false, 'success', [ 'sets' => $sets ] );
 			}
 		}
 		elseif ( $this->_task == 'saveAndNew' ) {
@@ -333,25 +333,26 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 			if ( !( $sid ) ) {
 				$sid = Sobi::Section();
 			}
-			$this->response( Sobi::Url( array( 'task' => $this->_type . '.add', 'sid' => $sid ) ), $msg, true, 'success', array( 'sets' => $sets ) );
+			$this->response( Sobi::Url( [ 'task' => $this->_type . '.add', 'sid' => $sid ] ), $msg, true, 'success', [ 'sets' => $sets ] );
 
 		}
 		else {
-			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', array( 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ) ) );
+			$this->response( Sobi::Back(), Sobi::Txt( 'MSG.OBJ_SAVED', [ 'type' => Sobi::Txt( $this->_model->get( 'oType' ) ) ] ) );
 		}
 	}
 
 	/**
+	 * @param $approve
 	 */
 	protected function approval( $approve )
 	{
-		$sids = SPRequest::arr( 'e_sid', array() );
+		$sids = SPRequest::arr( 'e_sid', [] );
 		if ( !count( $sids ) ) {
 			if ( $this->_model->get( 'id' ) ) {
-				$sids = array( $this->_model->get( 'id' ) );
+				$sids = [ $this->_model->get( 'id' ) ];
 			}
 			else {
-				$sids = array();
+				$sids = [];
 			}
 		}
 		if ( !( count( $sids ) ) ) {
@@ -360,7 +361,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		else {
 			foreach ( $sids as $sid ) {
 				try {
-					SPFactory::db()->update( 'spdb_object', array( 'approved' => $approve ? 1 : 0 ), array( 'id' => $sid, 'oType' => 'entry' ) );
+					SPFactory::db()->update( 'spdb_object', [ 'approved' => $approve ? 1 : 0 ], [ 'id' => $sid, 'oType' => 'entry' ] );
 					$entry = SPFactory::Entry( $sid );
 					if ( $approve ) {
 						$entry->approveFields( $approve );
@@ -385,9 +386,9 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 	{
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
-		$sids = SPRequest::arr( 'ep_sid', array() );
+		$sids = SPRequest::arr( 'ep_sid', [] );
 		/* re-order it to the valid ordering */
-		$order = array();
+		$order = [];
 		asort( $sids );
 		$eLimStart = SPRequest::int( 'eLimStart', 0 );
 		$eLimit = Sobi::GetUserState( 'adm.entries.limit', 'elimit', Sobi::Cfg( 'adm_list.entries_limit', 25 ) );
@@ -402,7 +403,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$pid = SPRequest::int( 'sid' );
 		foreach ( $order as $sid ) {
 			try {
-				$db->update( 'spdb_relations', array( 'position' => ++$LimStart ), array( 'id' => $sid, 'oType' => 'entry', 'pid' => $pid ) );
+				$db->update( 'spdb_relations', [ 'position' => ++$LimStart ], [ 'id' => $sid, 'oType' => 'entry', 'pid' => $pid ] );
 				SPFactory::cache()->deleteObj( 'entry', $sid );
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -422,15 +423,15 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$dir = $up ? 'position.desc' : 'position.asc';
 		$current = $this->_model->getPosition( SPRequest::int( 'pid' ) );
 		try {
-			$db->select( 'position, id', 'spdb_relations', array( 'position' . $eq => $current, 'oType' => 'entry', 'pid' => SPRequest::int( 'pid' ) ), $dir, 1 );
+			$db->select( 'position, id', 'spdb_relations', [ 'position' . $eq => $current, 'oType' => 'entry', 'pid' => SPRequest::int( 'pid' ) ], $dir, 1 );
 			$interchange = $db->loadAssocList();
 			if ( $interchange && count( $interchange ) ) {
-				$db->update( 'spdb_relations', array( 'position' => $interchange[ 0 ][ 'position' ] ), array( 'oType' => 'entry', 'pid' => SPRequest::int( 'pid' ), 'id' => $this->_model->get( 'id' ) ), 1 );
-				$db->update( 'spdb_relations', array( 'position' => $current ), array( 'oType' => 'entry', 'pid' => SPRequest::int( 'pid' ), 'id' => $interchange[ 0 ][ 'id' ] ), 1 );
+				$db->update( 'spdb_relations', [ 'position' => $interchange[ 0 ][ 'position' ] ], [ 'oType' => 'entry', 'pid' => SPRequest::int( 'pid' ), 'id' => $this->_model->get( 'id' ) ], 1 );
+				$db->update( 'spdb_relations', [ 'position' => $current ], [ 'oType' => 'entry', 'pid' => SPRequest::int( 'pid' ), 'id' => $interchange[ 0 ][ 'id' ] ], 1 );
 			}
 			else {
 				$current = $up ? $current-- : $current++;
-				$db->update( 'spdb_relations', array( 'position' => $current ), array( 'oType' => 'entry', 'pid' => SPRequest::int( 'pid' ), 'id' => $this->_model->get( 'id' ) ), 1 );
+				$db->update( 'spdb_relations', [ 'position' => $current ], [ 'oType' => 'entry', 'pid' => SPRequest::int( 'pid' ), 'id' => $this->_model->get( 'id' ) ], 1 );
 			}
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
@@ -478,7 +479,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		}
 		$revisionChange = false;
 		$rev = SPRequest::cmd( 'revision' );
-		$revisionsDelta = array();
+		$revisionsDelta = [];
 		if ( $rev ) {
 			$revision = SPFactory::message()->getRevision( SPRequest::cmd( 'revision' ) );
 			if ( isset( $revision[ 'changes' ] ) && count( $revision[ 'changes' ] ) ) {
@@ -523,7 +524,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 						->setSystemMessage();
 			}
 		}
-		$f = array();
+		$f = [];
 		foreach ( $fields as $field ) {
 			if ( ( $field->get( 'enabled' ) ) && $field->enabled( 'form' ) ) {
 				$f[ ] = $field;
@@ -565,11 +566,11 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 //			$view->assign( $n, 'parent_path' );
 //		}
 
-		$history = array();
+		$history = [];
 		$messages = SPFactory::message()->getHistory( $id );
 		if ( count( $messages ) ) {
 			foreach ( $messages as $message ) {
-				$message[ 'change' ] = Sobi::Txt( 'HISTORY_CHANGE_TYPE_' . str_replace( '-', '_', strtoupper( $message[ 'change' ] ) ) );
+				$message[ 'changeAction' ] = Sobi::Txt( 'HISTORY_CHANGE_TYPE_' . str_replace( '-', '_', strtoupper( $message[ 'changeAction' ] ) ) );
 				$message[ 'site' ] = Sobi::Txt( 'HISTORY_CHANGE_AREA_' . strtoupper( $message[ 'site' ] ) );
 				if ( strlen( $message[ 'reason' ] ) ) {
 					$message[ 'status' ] = 1;

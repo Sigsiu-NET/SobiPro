@@ -42,7 +42,7 @@ class SPExtensionsView extends SPAdmView
 	{
 		/* create the header */
 		$list =& $this->get( 'applications' );
-		$plugins = array();
+		$plugins = [];
 		if ( count( $list ) ) {
 			$c = 0;
 			foreach ( $list as $plugin ) {

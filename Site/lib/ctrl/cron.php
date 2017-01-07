@@ -45,13 +45,13 @@ class SobiProCrawler extends JApplicationCli
 	const USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1');";
 	protected $silent = true;
 	protected $section = 0;
-	protected $sections = array();
+	protected $sections = [];
 	protected $timeLimit = 3600;
 	protected $start = 0;
 	protected $cleanCache = true;
 	protected $liveURL = '';
 	protected $loopTimeLimit = 15;
-	protected $args = array();
+	protected $args = [];
 
 	public function & setArgs( $args )
 	{
@@ -66,12 +66,12 @@ class SobiProCrawler extends JApplicationCli
 		if ( $continue ) {
 			if ( !( $this->section ) ) {
 				$this->sections = SPFactory::db()
-						->select( 'id', 'spdb_object', array( 'oType' => 'section', 'state' => '1', '@VALID' => SPFactory::db()->valid( 'validUntil', 'validSince' ) ) )
+						->select( 'id', 'spdb_object', [ 'oType' => 'section', 'state' => '1', '@VALID' => SPFactory::db()->valid( 'validUntil', 'validSince' ) ] )
 						->loadResultArray();
 			}
 			else {
 				$this->sections = SPFactory::db()
-						->select( 'id', 'spdb_object', array( 'id' => $this->section, 'oType' => 'section', 'state' => '1', '@VALID' => SPFactory::db()->valid( 'validUntil', 'validSince' ) ) )
+						->select( 'id', 'spdb_object', [ 'id' => $this->section, 'oType' => 'section', 'state' => '1', '@VALID' => SPFactory::db()->valid( 'validUntil', 'validSince' ) ] )
 						->loadResultArray();
 			}
 			if ( !( $this->liveURL ) || !( preg_match( '/http[s]?:\/\/.*/i', $this->liveURL ) ) ) {
@@ -188,10 +188,10 @@ class SobiProCrawler extends JApplicationCli
 	 */
 	protected function SpConnect( $connection, $url )
 	{
-		$connection->setOptions( array( 'url' => $url, 'connecttimeout' => 10, 'returntransfer' => true, 'useragent' => self::USER_AGENT, 'header' => true, 'verbose' => false ) );
+		$connection->setOptions( [ 'url' => $url, 'connecttimeout' => 10, 'returntransfer' => true, 'useragent' => self::USER_AGENT, 'header' => true, 'verbose' => false ] );
 		$content = $connection->exec();
 		$response = $connection->info();
-		return array( $content, $response );
+		return [ $content, $response ];
 	}
 }
 

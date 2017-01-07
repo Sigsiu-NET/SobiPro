@@ -28,7 +28,7 @@ final class SPRegistry
 	/**
 	 * @var array
 	 */
-	private $store = array( array() );
+	private $store = [ [] ];
 
 	/**
 	 * Storing variable
@@ -107,6 +107,9 @@ final class SPRegistry
 	}
 
 	/**
+	 * @param $label
+	 * @param null $default
+	 * @return mixed|null
 	 */
 	private function parseVal ( $label, $default = null )
 	{
@@ -129,11 +132,11 @@ final class SPRegistry
 	 */
 	public function & loadDBSection( $section )
 	{
-		static $loaded = array();
+		static $loaded = [];
 		if( !( in_array( $section, $loaded ) ) ) {
 			try {
 				$keys = SPFactory::db()
-						->select( '*', 'spdb_registry', array( 'section' => $section ), 'value' )
+						->select( '*', 'spdb_registry', [ 'section' => $section ], 'value' )
 						->loadObjectList();
 			}
 			catch ( SPException $x ) {
@@ -141,7 +144,7 @@ final class SPRegistry
 			}
 			if( count( $keys ) ) {
 				foreach ( $keys as $section ) {
-					$this->store[ 0 ][ $section->section ][ $section->key ] = array( 'value' => $section->value, 'params' => $section->params, 'description' => $section->description, 'options' => $section->options );
+					$this->store[ 0 ][ $section->section ][ $section->key ] = [ 'value' => $section->value, 'params' => $section->params, 'description' => $section->description, 'options' => $section->options ];
 				}
 			}
 			$loaded[] = $section;
@@ -165,9 +168,9 @@ final class SPRegistry
 			$value[ 'options' ] = isset( $value[ 'options' ] ) ? $value[ 'options' ] : null;
 			$values[ $i ] = $value;
 		}
-		Sobi::Trigger( 'Registry', 'SaveDb', array( &$values ) );
+		Sobi::Trigger( 'Registry', 'SaveDb', [ &$values ] );
 		try {
-			SPFactory::db()->delete( 'spdb_registry', array( 'section' => $section ) );
+			SPFactory::db()->delete( 'spdb_registry', [ 'section' => $section ] );
 			SPFactory::db()->insertArray( 'spdb_registry', $values );
 		}
 		catch ( SPException $x ) {
@@ -181,7 +184,7 @@ final class SPRegistry
 	 */
 	public function save ()
 	{
-		array_unshift( $this->store, array() );
+		array_unshift( $this->store, [] );
 		if ( ! count( $this->store ) ) {
 			Sobi::Error( 'registry', SPLang::e( 'Registry lost' ), SPC::NOTICE, 0, __LINE__, __CLASS__ );
 		}

@@ -31,13 +31,14 @@ abstract class SPTooltip
 	 * @deprecated
 	 * @param string $tooltip
 	 * @param string $title
-	 * @param int $width
 	 * @param string $image
+	 * @param int $width
 	 * @param string $text
 	 * @param string $href
-	 * @param bool $link
-	 * @param string $position
+	 * @param string $target
 	 * @return string
+	 * @internal param bool $link
+	 * @internal param string $position
 	 */
 	public static function toolTip( $tooltip, $title = null, $image = null, $width = null, $text = null, $href = null, $target = '_blank' )
 	{
@@ -63,14 +64,16 @@ abstract class SPTooltip
 		}
 		return $tip;
 	}
+
 	/**
 	 * @param string $tooltip
 	 * @param string $title
+	 * @param null $img
 	 * @return string
 	 */
 	public static function _( $tooltip, $title, $img = null )
 	{
-		Sobi::Trigger( 'Tooltip', 'Show', array( &$tooltip, &$title ) );
+		Sobi::Trigger( 'Tooltip', 'Show', [ &$tooltip, &$title ] );
 		return self::toolTip( $tooltip, $title, $img, null, $title );
 	}
 }

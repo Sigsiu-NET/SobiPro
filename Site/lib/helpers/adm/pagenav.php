@@ -54,17 +54,19 @@ final class SPAdmPageNav
 	/**
 	 * @var array
 	 */
-	private $limits = array( 5, 10, 15, 25, 50, 100, 0 );
+	private $limits = [ 5, 10, 15, 25, 50, 100, 0 ];
 
 	/**
 	 * @param int $limit
 	 * @param int $count
 	 * @param int $current
 	 * @param string $func
+	 * @param $box
+	 * @param $boxFunc
 	 * @param array $limits
 	 * @deprecated
 	 */
-	public function __construct( $limit, $count, $current, $func, $box, $boxFunc, $limits = array( 5, 10, 15, 25, 50 ) )
+	public function __construct( $limit, $count, $current, $func, $box, $boxFunc, $limits = [ 5, 10, 15, 25, 50 ] )
 	{
 		$this->limit 	= $limit;
 		$this->count 	= $count;
@@ -78,6 +80,8 @@ final class SPAdmPageNav
 
 	/**
 	 * @deprecated
+	 * @param bool $return
+	 * @return null|string
 	 */
 	public function display( $return = false )
 	{
@@ -87,7 +91,7 @@ final class SPAdmPageNav
 		$pn .= '<div style="text-align:center;"><div class="pagination">';
 		$pn .= '<div class="limit">';
 		$pn .= Sobi::Txt( 'PN.DISPLAY' );
-		$box = array();
+		$box = [];
 		foreach ( $this->limits as $v ) {
 			if( $v ) {
 				$box[ $v ] = $v;
@@ -96,7 +100,7 @@ final class SPAdmPageNav
 				$box[ -1 ] = Sobi::Txt( 'PN.ALL' );
 			}
 		}
-		$pn .= SPHtml_Input::select( $this->box, $box, $this->limit, false, array( 'onchange' => "{$this->boxFunc}( {$sid} )" ) );
+		$pn .= SPHtml_Input::select( $this->box, $box, $this->limit, false, [ 'onchange' => "{$this->boxFunc}( {$sid} )" ] );
 		$pn .= '</div>';
 		if( $pages > 1 ) {
 			if( $this->current == 1 ) {
@@ -154,7 +158,7 @@ final class SPAdmPageNav
 				$pn .= "<div class=\"button2-left\"><div class=\"end\"><a href=\"#\"{$link}title=\"{$txt}\">{$txt}</a></div></div>";
 			}
 			$pn .= "<div class=\"limit\">";
-			$pn .= Sobi::Txt( 'PN.CURRENT_SITE', array( 'current' => $this->current, 'pages' => $pages ) );
+			$pn .= Sobi::Txt( 'PN.CURRENT_SITE', [ 'current' => $this->current, 'pages' => $pages ] );
 			$pn .= '</div></div>';
 		}
 		$pn .= '</div><br/>';

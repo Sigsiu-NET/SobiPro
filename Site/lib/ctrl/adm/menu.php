@@ -52,7 +52,7 @@ class SPMenuAdm extends SPController
 		$calls = $xpath->query( '/definition/config/calls/call' );
 
 		$this->menu = SPFactory::db()
-				->select( '*', '#__menu', array( 'id' => SPRequest::int( 'mid' ) ) )
+				->select( '*', '#__menu', [ 'id' => SPRequest::int( 'mid' ) ] )
 				->loadObject();
 		if ( isset( $this->menu->params ) ) {
 			$this->menu->params = json_decode( $this->menu->params );
@@ -88,17 +88,17 @@ class SPMenuAdm extends SPController
 	 */
 	public function calendar( &$view, $menu )
 	{
-		$months = array( null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) );
-		$years = array( null => Sobi::Txt( 'FD.SEARCH_SELECT_LABEL' ) );
-		$days = array( null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) );
+		$months = [ null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) ];
+		$years = [ null => Sobi::Txt( 'FD.SEARCH_SELECT_LABEL' ) ];
+		$days = [ null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) ];
 
 		$monthsNames = Sobi::Txt( 'JS_CALENDAR_MONTHS' );
 		$monthsNames = explode( ',', $monthsNames );
 
 		$link = $view->get( 'joomlaMenu' )->link;
-		$query = array();
+		$query = [];
 		parse_str( $link, $query );
-		$selected = array( 'year' => null, 'month' => null, 'day' => null );
+		$selected = [ 'year' => null, 'month' => null, 'day' => null ];
 		if ( isset( $query[ 'date' ] ) ) {
 			$date = explode( '.', $query[ 'date' ] );
 			$selected[ 'year' ] = isset( $date[ 0 ] ) && $date[ 0 ] ? $date[ 0 ] : null;
@@ -263,7 +263,7 @@ class SPMenuAdm extends SPController
 		/** @var SPDirectory $directory */
 		$directory = SPFactory::Instance( 'base.fs.directory', SPLoader::dirPath( 'menu', 'adm.templates' ) );
 		$files = $directory->searchFile( '.xml', false );
-		$functions = array();
+		$functions = [];
 		if ( count( $files ) ) {
 			foreach ( $files as $file ) {
 				$path = $file->getPathInfo();
@@ -273,8 +273,8 @@ class SPMenuAdm extends SPController
 		/** Mon, Aug 24, 2015 10:24:24 - put the section ink on the top */
 		$section = $functions[ 'section' ];
 		unset( $functions[ 'section' ] );
-		$functions = array_merge( array( 'section' => $section ), $functions );
-		$functions = array_merge( array( 'null' => Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' ) ), $functions );
+		$functions = array_merge( [ 'section' => $section ], $functions );
+		$functions = array_merge( [ 'null' => Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' ) ], $functions );
 		SPFactory::View( 'joomla-menu', true )
 				->assign( $functions, 'functions' )
 				->functions();
@@ -325,10 +325,10 @@ class SPMenuAdm extends SPController
 
 	protected function getTemplates( $type )
 	{
-		$templates = array();
+		$templates = [];
 		$templates[ '' ] = Sobi::Txt( 'SELECT_TEMPLATE_OVERRIDE' );
 		$template = SPFactory::db()
-				->select( 'sValue', 'spdb_config', array( 'section' => SPRequest::int( 'section' ), 'sKey' => 'template', 'cSection' => 'section' ) )
+				->select( 'sValue', 'spdb_config', [ 'section' => SPRequest::int( 'section' ), 'sKey' => 'template', 'cSection' => 'section' ] )
 				->loadResult();
 		$templateDir = $this->templatePath( $template );
 		$this->listTemplates( $templates, $templateDir, $type );
@@ -351,7 +351,7 @@ class SPMenuAdm extends SPController
 
 	protected function listTemplates( &$arr, $path, $type )
 	{
-		$stdTemplates = array( 'view.xsl', 'details.xsl', 'edit.xsl' );
+		$stdTemplates = [ 'view.xsl', 'details.xsl', 'edit.xsl' ];
 		switch ( $type ) {
 			case 'entry':
 			case 'entry.add':
@@ -395,7 +395,7 @@ class SPMenuAdm extends SPController
 	{
 		$templates = $this->getTemplates( $type );
 		$view->assign( $templates, 'templates' );
-		$query = array();
+		$query = [];
 		if ( isset( $menu->link ) ) {
 			$link = $menu->link;
 			parse_str( $link, $query );

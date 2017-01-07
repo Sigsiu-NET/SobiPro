@@ -88,7 +88,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 
 	private function getField( $class, $selected = null )
 	{
-		$params   = array( 'class' => $class );
+		$params   = [ 'class' => $class ];
 		$selected = $selected ? $selected : $this->getRaw();
 		$selected = $selected ? $selected : $this->defSel;
 
@@ -122,7 +122,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 
 	private function getValues()
 	{
-		$values = array();
+		$values = [];
 		if ( count( $this->options ) ) {
 			foreach ( $this->options as $option ) {
 				$values[ $option[ 'id' ] ] = $option[ 'label' ];
@@ -149,7 +149,7 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 				$field = false;
 				break;
 			case 'chbx':
-				$list = SPHtml_Input::checkBoxGroup( $this->nid, $data, $this->nid, $this->_selected, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_checkbox_def_css', 'SPSearchChbx' ) ), 'right', true );
+				$list = SPHtml_Input::checkBoxGroup( $this->nid, $data, $this->nid, $this->_selected, [ 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_checkbox_def_css', 'SPSearchChbx' ) ], 'right', true );
 				if ( count( $list ) ) {
 					$c = 0;
 					foreach ( $list as $box ) {
@@ -171,9 +171,9 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 				break;
 			case 'select':
 			case 'mselect':
-				$label  = ( $this->selectLabel ) ? Sobi::Txt( $this->selectLabel, $this->name ) : Sobi::Txt( 'FMN.SEARCH_SELECT_LIST', array( 'name' => $this->name ) );
-				$params = array( 'id' => $this->nid, 'size' => $this->ssize, 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) );
-				$data   = array_merge( array( '' => $label ), $data );
+				$label  = ( $this->selectLabel ) ? Sobi::Txt( $this->selectLabel, $this->name ) : Sobi::Txt( 'FMN.SEARCH_SELECT_LIST', [ 'name' => $this->name ] );
+				$params = [ 'id' => $this->nid, 'size' => $this->ssize, 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ) ];
+				$data   = array_merge( [ '' => $label ], $data );
 				$field  = SPHtml_Input::select( $this->nid, $data, $this->_selected, ( $this->searchMethod == 'mselect' ), $params );
 				break;
 		}
@@ -188,6 +188,6 @@ class SPField_Radio extends SPField_Select implements SPFieldInterface
 	protected function getAttr()
 	{
 //		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel' );
-		return array( 'optInLine', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'bsSearchWidth', 'ssize', 'selectLabel' );
+		return [ 'optInLine', 'optWidth', 'searchMethod', 'defSel', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'bsSearchWidth', 'ssize', 'selectLabel' ];
 	}
 }

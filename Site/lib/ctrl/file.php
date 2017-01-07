@@ -52,25 +52,25 @@ class SPFileUploader extends SPController
 			/** @var $file SPFile */
 			$file = SPFactory::Instance( 'base.fs.file' );
 			if ( !( $file->upload( $data, $path ) ) ) {
-				$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'CANNOT_UPLOAD_FILE' ), 'id' => '' ) );
+				$this->message( [ 'type' => 'error', 'text' => SPLang::e( 'CANNOT_UPLOAD_FILE' ), 'id' => '' ] );
 			}
 			$path = $file->getPathname();
 			$type = $this->check( $path );
 			$properties[ 'tmp_name' ] = $path;
 			SPFs::write( $path . '.var', SPConfig::serialize( $properties ) );
-			$response = array(
+			$response = [
 					'type' => 'success',
 					'text' => Sobi::Txt( 'FILE_UPLOADED', $properties[ 'name' ], $type ),
 					'id' => 'file://' . $fileName,
-					'data' => array( 'name' => $properties[ 'name' ], 'type' => $properties[ 'type' ], 'size' => $properties[ 'size' ] )
-			);
+					'data' => [ 'name' => $properties[ 'name' ], 'type' => $properties[ 'type' ], 'size' => $properties[ 'size' ] ]
+			];
 		}
 		else {
-			$response = array(
+			$response = [
 					'type' => 'error',
 					'text' => SPLang::e( 'CANNOT_UPLOAD_FILE_NO_DATA' ),
 					'id' => '',
-			);
+			];
 		}
 //		$field = SPRequest::cmd( 'field', null );
 		$this->message( $response );
@@ -82,7 +82,7 @@ class SPFileUploader extends SPController
 		$mType = SPFactory::Instance( 'services.fileinfo', $file )->mimeType();
 		if ( strlen( $mType ) && !( in_array( $mType, $allowed ) ) ) {
 			SPFs::delete( $file );
-			$this->message( array( 'type' => 'error', 'text' => SPLang::e( 'FILE_WRONG_TYPE', $mType ), 'id' => '' ) );
+			$this->message( [ 'type' => 'error', 'text' => SPLang::e( 'FILE_WRONG_TYPE', $mType ), 'id' => '' ] );
 		}
 		return $mType;
 	}

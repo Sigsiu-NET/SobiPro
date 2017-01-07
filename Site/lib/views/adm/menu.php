@@ -26,12 +26,12 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  */
 final class SPAdmSiteMenu
 {
-	private $_sections = array();
+	private $_sections = [];
 	private $_sid = 0;
-	private $_view = array();
+	private $_view = [];
 	private $_task = null;
 	private $_open = null;
-	private $_custom = array();
+	private $_custom = [];
 
 	public function __construct( $task = null, $sid = 0 )
 	{
@@ -45,7 +45,7 @@ final class SPAdmSiteMenu
 
 	public function addSection( $name, $section )
 	{
-		Sobi::Trigger( 'addSection', 'SPAdmSiteMenu', array( $name, $section ) );
+		Sobi::Trigger( 'addSection', 'SPAdmSiteMenu', [ $name, $section ] );
 		if ( $name == 'AMN.APPS_HEAD' || $name == 'AMN.APPS_SECTION_HEAD' ) {
 			$p = SPFactory::Controller( 'extensions', true );
 			$links = $p->appsMenu();
@@ -63,7 +63,7 @@ final class SPAdmSiteMenu
 	public function addCustom( $section, $html, $before = false )
 	{
 		$i = $before ? 'before' : 'after';
-		Sobi::Trigger( 'addCustom', 'SPAdmSiteMenu', array( $html, $section ) );
+		Sobi::Trigger( 'addCustom', 'SPAdmSiteMenu', [ $html, $section ] );
 		$this->_custom[ $section ][ $i ][ ] = $html;
 	}
 
@@ -144,10 +144,10 @@ final class SPAdmSiteMenu
 				}
 				$label = Sobi::Txt( $label );
 				if ( $this->_sid ) {
-					$url = Sobi::Url( array( 'task' => $pos, 'pid' => $this->_sid ) );
+					$url = Sobi::Url( [ 'task' => $pos, 'pid' => $this->_sid ] );
 				}
 				else {
-					$url = Sobi::Url( array( 'task' => $pos ) );
+					$url = Sobi::Url( [ 'task' => $pos ] );
 				}
 				if ( SPRequest::task() == $pos || $this->_task == $pos ) {
 					$v .= "\n\t\t\t\t<li><a href=\"{$url}\" class=\"SPMenuActive\">{$label}</a></li>";

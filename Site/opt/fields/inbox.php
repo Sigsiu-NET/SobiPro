@@ -76,8 +76,8 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 			}
 		}
 
-		$params = array( 'id' => $this->nid, /*'size' => $this->width,*/
-			'class' => $class );
+		$params = [ 'id' => $this->nid, /*'size' => $this->width,*/
+			'class' => $class ];
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
@@ -108,7 +108,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return array( 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth', 'bsSearchWidth' );
+		return [ 'maxLength', 'width', 'searchMethod', 'searchRangeValues', 'freeRange', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'labelAsPlaceholder', 'defaultValue', 'bsWidth', 'bsSearchWidth' ];
 	}
 
 	/**
@@ -125,7 +125,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 			return SPRequest::search( $this->nid, $request );
 		}
 		else {
-			return array();
+			return [];
 		}
 	}
 
@@ -213,7 +213,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		$db = SPFactory::db();
 
 		/* collect the needed params */
-		$params = array();
+		$params = [];
 		$params[ 'publishUp' ] = $entry->get( 'publishUp' );
 		$params[ 'publishDown' ] = $entry->get( 'publishDown' );
 		$params[ 'fid' ] = $this->fid;
@@ -279,13 +279,13 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		if ( $this->searchMethod == 'range' ) {
 			return $this->rangeSearch( $this->searchRangeValues, $this->freeRange );
 		}
-		$fdata = array();
+		$fdata = [];
 		try {
 			$data = SPFactory::db()
-					->dselect( array( 'baseData', 'sid', 'lang' ), 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1 ), 'field( lang, \'' . Sobi::Lang() . '\'), baseData', 0, 0, 'baseData' )
+					->dselect( [ 'baseData', 'sid', 'lang' ], 'spdb_field_data', [ 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1 ], 'field( lang, \'' . Sobi::Lang() . '\'), baseData', 0, 0, 'baseData' )
 					->loadAssocList();
-			$languages = array();
-			$output = array();
+			$languages = [];
+			$output = [];
 			$lang = Sobi::Lang( false );
 			$defLang = Sobi::DefLang();
 			if ( count( $data ) ) {
@@ -323,14 +323,14 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 
 		$data = ( ( array ) $output );
 		if ( count( $data ) ) {
-			$fdata[ '' ] = Sobi::Txt( 'FD.INBOX_SEARCH_SELECT', array( 'name' => $this->name ) );
+			$fdata[ '' ] = Sobi::Txt( 'FD.INBOX_SEARCH_SELECT', [ 'name' => $this->name ] );
 			foreach ( $data as $i => $d ) {
 				if ( strlen( $d ) ) {
 					$fdata[ strip_tags( $d ) ] = strip_tags( $d );
 				}
 			}
 		}
-		return SPHtml_Input::select( $this->nid, $fdata, $this->_selected, false, array( 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1', 'id' => $this->nid ) );
+		return SPHtml_Input::select( $this->nid, $fdata, $this->_selected, false, [ 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1', 'id' => $this->nid ] );
 	}
 
 	/**
@@ -353,15 +353,15 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	public function searchSuggest( $data, $section, $startWith = true, $ids = false )
 	{
-		$terms = array();
+		$terms = [];
 		$data = $startWith ? "{$data}%" : "%{$data}%";
-		$request = array( 'baseData' );
+		$request = [ 'baseData' ];
 		if ( $ids ) {
 			$request[ ] = 'sid';
 		}
 		try {
 			if ( $ids ) {
-				$conditions = array( 'fid' => $this->fid, 'baseData' => $data, 'section' => $section );
+				$conditions = [ 'fid' => $this->fid, 'baseData' => $data, 'section' => $section ];
 				if ( !( defined( 'SOBIPRO_ADM' ) ) ) {
 					$conditions[ 'copy' ] = 0;
 					$conditions[ 'enabled' ] = 1;
@@ -369,16 +369,16 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 				$result = SPFactory::db()
 						->dselect( $request, 'spdb_field_data', $conditions )
 						->loadAssocList();
-				$terms = array();
+				$terms = [];
 				if ( count( $result ) ) {
 					foreach ( $result as $row ) {
-						$terms[ ] = array( 'id' => $row[ 'sid' ], 'name' => SPLang::clean( $row[ 'baseData' ] ) );
+						$terms[ ] = [ 'id' => $row[ 'sid' ], 'name' => SPLang::clean( $row[ 'baseData' ] ) ];
 					}
 				}
 			}
 			else {
 				$terms = SPFactory::db()
-						->select( $request, 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ) )
+						->select( $request, 'spdb_field_data', [ 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ] )
 						->loadResultArray();
 			}
 		} catch ( SPException $x ) {
@@ -394,14 +394,14 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	private function search( $data, $section )
 	{
-		$sids = array();
+		$sids = [];
 		try {
 			$sids = SPFactory::db()
 					/** Fri, Oct 9, 2015 15:10:42
 					 * We do not need the enabled / copy check as all entries are being verified in the search controller anyway
 					->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ) )
 					 */
-					->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'baseData' => $data, 'section' => $section ) )
+					->dselect( 'sid', 'spdb_field_data', [ 'fid' => $this->fid, 'baseData' => $data, 'section' => $section ] )
 					->loadResultArray();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SEARCH_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );

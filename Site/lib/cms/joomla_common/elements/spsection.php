@@ -71,6 +71,7 @@ if ( !( class_exists( 'JElement' ) ) ) {
 		 * Constructor
 		 *
 		 * @access protected
+		 * @param null $parent
 		 */
 		function __construct( $parent = null )
 		{
@@ -175,15 +176,15 @@ class JElementSPSection extends JElement
 
 		$head = SPFactory::header();
 		if ( SOBI_CMS == 'joomla3' ) {
-			$head->addJsFile( array( 'sobipro', 'jqnc', 'adm.sobipro', 'adm.jmenu' ) );
+			$head->addJsFile( [ 'sobipro', 'jqnc', 'adm.sobipro', 'adm.jmenu' ] );
 		}
 		else {
-			$head->addJsFile( array( 'sobipro', 'jquery', 'adm.sobipro', 'adm.jmenu', 'jquery-migrate' ) );
+			$head->addJsFile( [ 'sobipro', 'jquery', 'adm.sobipro', 'adm.jmenu', 'jquery-migrate' ] );
 		}
 
 		if ( SOBI_CMS != 'joomla3' ) {
 			$head->addCssFile( 'bootstrap.bootstrap' )
-					->addJsFile( array( 'bootstrap' ) )
+					->addJsFile( [ 'bootstrap' ] )
 					->addCSSCode( '
 							#jform_request_SOBI_SELECT_SECTION-lbl { margin-top: 8px; }
                             #jform_request_cid-lbl { margin-top: 8px; }
@@ -205,18 +206,18 @@ class JElementSPSection extends JElement
 			$this->cid = SPRequest::int( 'id', 0 );
 		}
 		$this->determineTask();
-		$strings = array(
-			'objects' => array(
+		$strings = [
+			'objects' => [
 				'entry' => Sobi::Txt( 'OTYPE_ENTRY' ),
 				'category' => Sobi::Txt( 'OTYPE_CATEGORY' ),
 				'section' => Sobi::Txt( 'OTYPE_SECTION' ),
-			),
-			'labels' => array(
+			],
+			'labels' => [
 				'category' => Sobi::Txt( 'SOBI_SELECT_CATEGORY' ),
 				'entry' => Sobi::Txt( 'SOBI_SELECT_ENTRY' )
-			),
+			],
 			'task' => $this->task
-		);
+		];
 		$strings = json_encode( $strings );
 
 		$head->addJsCode( "SPJmenuFixTask( '{$this->taskName}' );" )
@@ -241,7 +242,7 @@ class JElementSPSection extends JElement
 	protected function determineTask()
 	{
 		$link = $this->getLink();
-		$query = array();
+		$query = [];
 		parse_str( $link, $query );
 		$this->task = isset( $query[ 'task' ] ) ? $query[ 'task' ] : null;
 		if ( $this->task ) {
@@ -301,11 +302,11 @@ class JElementSPSection extends JElement
 
 	protected function getCat()
 	{
-		$params = array(
+		$params = [
 			'id' => 'sp_category',
 			'class' => $this->oType == 'category' ? 'btn input-medium btn-primary' : 'btn input-medium',
 			'style' => 'width: 300px'
-		);
+		];
 		if ( $this->task && $this->task != 'entry.add' ) {
 			$params[ 'disabled' ] = 'disabled';
 		}
@@ -331,11 +332,11 @@ class JElementSPSection extends JElement
 
 	private function getEntry()
 	{
-		$params = array(
+		$params = [
 			'id' => 'sp_entry',
 			'class' => $this->oType == 'entry' ? 'btn input-large btn-primary' : 'btn input-medium',
 			'style' => 'margin-top: 10px; width: 300px'
-		);
+		];
 		if ( $this->task ) {
 			$params[ 'disabled' ] = 'disabled';
 		}
@@ -375,7 +376,7 @@ class JElementSPSection extends JElement
 			if ( $this->cid ) {
 				$link = $this->getLink();
 				if ( strstr( $link, 'sid' ) ) {
-					$query = array();
+					$query = [];
 					parse_str( $link, $query );
 					$sid = $query[ 'sid' ];
 					if ( isset( $query[ 'sptpl' ] ) ) {
@@ -389,11 +390,11 @@ class JElementSPSection extends JElement
 						$this->section = $selected;
 					}
 					else {
-						$path = array();
+						$path = [];
 						$id = $sid;
 						while ( $id > 0 ) {
 							try {
-								$db->select( 'pid', 'spdb_relations', array( 'id' => $id ) );
+								$db->select( 'pid', 'spdb_relations', [ 'id' => $id ] );
 								$id = $db->loadResult();
 								if ( $id ) {
 									$path[ ] = ( int )$id;
@@ -416,9 +417,9 @@ class JElementSPSection extends JElement
 		$this->determineObjectType( $sid );
 		switch ( $name ) {
 			case 'sid':
-				$params = array( 'id' => 'sid', 'class' => 'input-mini', 'style' => 'text-align: center; margin-top: 10px; margin-left: 10px;', 'readonly' => 'readonly' );
+				$params = [ 'id' => 'sid', 'class' => 'input-mini', 'style' => 'text-align: center; margin-top: 10px; margin-left: 10px;', 'readonly' => 'readonly' ];
 				return '<div class="SobiPro" id="jform_request_sid">'
-				. SPHtml_Input::text( 'type', $this->oTypeName, array( 'id' => 'otype', 'class' => 'input-medium', 'style' => 'text-align: center; margin-top: 10px;', 'readonly' => 'readonly' ) )
+				. SPHtml_Input::text( 'type', $this->oTypeName, [ 'id' => 'otype', 'class' => 'input-medium', 'style' => 'text-align: center; margin-top: 10px;', 'readonly' => 'readonly' ] )
 				. SPHtml_Input::text( 'urlparams[sid]', $sid, $params )
 				. '</div>';
 				break;
@@ -437,10 +438,10 @@ class JElementSPSection extends JElement
 				return $this->getTemplates();
 				break;
 		}
-		$sections = array();
-		$sout = array();
+		$sections = [];
+		$sout = [];
 		try {
-			$sections = $db->select( '*', 'spdb_object', array( 'oType' => 'section' ), 'id' )
+			$sections = $db->select( '*', 'spdb_object', [ 'oType' => 'section' ], 'id' )
 					->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), $x->getMessage(), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -458,7 +459,7 @@ class JElementSPSection extends JElement
 				}
 			}
 		}
-		$params = array( 'id' => 'spsection', 'class' => 'required' );
+		$params = [ 'id' => 'spsection', 'class' => 'required' ];
 		$field = SPHtml_Input::select( 'sid', $sout, $selected, false, $params );
 		return "<div class=\"SobiPro\" style=\"margin-top: 2px;\">{$field}</div>";
 	}
@@ -467,9 +468,9 @@ class JElementSPSection extends JElement
 	{
 		if ( $this->task == 'list.date' ) {
 			$link = $this->getLink();
-			$query = array();
+			$query = [];
 			parse_str( $link, $query );
-			$selected = array( 'year' => null, 'month' => null, 'day' => null );
+			$selected = [ 'year' => null, 'month' => null, 'day' => null ];
 			if ( isset( $query[ 'date' ] ) ) {
 				$date = explode( '.', $query[ 'date' ] );
 				$selected[ 'year' ] = isset( $date[ 0 ] ) && $date[ 0 ] ? $date[ 0 ] : null;
@@ -479,14 +480,14 @@ class JElementSPSection extends JElement
 			else {
 				$query[ 'date' ] = '';
 			}
-			$months = array( null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) );
+			$months = [ null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) ];
 			$monthsNames = Sobi::Txt( 'JS_CALENDAR_MONTHS' );
 			$monthsNames = explode( ',', $monthsNames );
-			$years = array( null => Sobi::Txt( 'FD.SEARCH_SELECT_LABEL' ) );
+			$years = [ null => Sobi::Txt( 'FD.SEARCH_SELECT_LABEL' ) ];
 			for ( $i = 1; $i < 12; $i++ ) {
 				$months[ $i ] = $monthsNames[ $i - 1 ];
 			}
-			$days = array( null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) );
+			$days = [ null => Sobi::Txt( 'FMN.HIDDEN_OPT' ) ];
 
 			for ( $i = 1; $i < 32; $i++ ) {
 				$days[ $i ] = $i;
@@ -517,15 +518,15 @@ class JElementSPSection extends JElement
 	protected function getTemplates()
 	{
 		$selected = $this->tpl;
-		$templates = array();
+		$templates = [];
 		$name = $this->tpl ? 'urlparams[sptpl]' : 'urlparams[-sptpl-]';
 		$templates[ '' ] = Sobi::Txt( 'SELECT_TEMPLATE_OVERRIDE' );
 		$template = SPFactory::db()
-				->select( 'sValue', 'spdb_config', array( 'section' => $this->section, 'sKey' => 'template', 'cSection' => 'section' ) )
+				->select( 'sValue', 'spdb_config', [ 'section' => $this->section, 'sKey' => 'template', 'cSection' => 'section' ] )
 				->loadResult();
 		$templateDir = $this->templatePath( $template );
 		$this->listTemplates( $templates, $templateDir, $this->oType );
-		$params = array( 'id' => 'sptpl' );
+		$params = [ 'id' => 'sptpl' ];
 		$field = SPHtml_Input::select( $name, $templates, $selected, false, $params );
 		return "<div class=\"SobiPro\" style=\"margin-top: 2px;\">{$field}</div>";
 	}
@@ -585,7 +586,7 @@ class JElementSPSection extends JElement
 		}
 		elseif ( $sid ) {
 			$this->oType = SPFactory::db()
-					->select( 'oType', 'spdb_object', array( 'id' => $sid ) )
+					->select( 'oType', 'spdb_object', [ 'id' => $sid ] )
 					->loadResult();
 			$this->oTypeName = Sobi::Txt( 'OTYPE_' . strtoupper( $this->oType ) );
 		}

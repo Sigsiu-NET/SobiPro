@@ -83,7 +83,7 @@ interface SPMainframeInterface
 	 * @param array $site
 	 * @return void
 	 */
-	public function & addObjToPathway( $obj, $site = array() );
+	public function & addObjToPathway( $obj, $site = [] );
 
 	/**
 	 * @param array $head

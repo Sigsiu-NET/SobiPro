@@ -37,7 +37,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				$this->editForm();
 				break;
 			case 'edit':
-				Sobi::Redirect( Sobi::Url( array( 'task' => 'config', 'sid' => SPRequest::sid() ) ), null, true );
+				Sobi::Redirect( Sobi::Url( [ 'task' => 'config', 'sid' => SPRequest::sid() ] ), null, true );
 				break;
 			case 'view':
 			case 'entries':
@@ -58,6 +58,8 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	}
 
 	/**
+	 * @param $allEntries
+	 * @param null $term
 	 */
 	protected function viewSection( $allEntries, $term = null )
 	{
@@ -69,8 +71,8 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		}
 		/* @var SPdb $db */
 		$db = SPFactory::db();
-		$c = array();
-		$e = array();
+		$c = [];
+		$e = [];
 		if ( !( Sobi::Section() ) ) {
 			Sobi::Error( 'Section', SPLang::e( 'Missing section identifier' ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
@@ -95,10 +97,10 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			if ( count( $c ) ) {
 				try {
 					$e1 = $db
-							->dselect( 'id', 'spdb_relations', array( 'pid' => $c, 'oType' => 'entry' ) )
+							->dselect( 'id', 'spdb_relations', [ 'pid' => $c, 'oType' => 'entry' ] )
 							->loadResultArray();
 					$e2 = $db
-							->dselect( 'sid', 'spdb_field_data', array( 'section' => Sobi::Section(), 'fid' => Sobi::Cfg( 'entry.name_field' ) ) )
+							->dselect( 'sid', 'spdb_field_data', [ 'section' => Sobi::Section(), 'fid' => Sobi::Cfg( 'entry.name_field' ) ] )
 							->loadResultArray();
 					$e = array_merge( $e1, $e2 );
 					$e = array_unique( $e );
@@ -110,7 +112,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		else {
 			try {
 				$e = $db
-						->dselect( 'sid', 'spdb_field_data', array( 'section' => Sobi::Section(), 'fid' => Sobi::Cfg( 'entry.name_field' ), 'baseData' => "%{$term}%" ) )
+						->dselect( 'sid', 'spdb_field_data', [ 'section' => Sobi::Section(), 'fid' => Sobi::Cfg( 'entry.name_field' ), 'baseData' => "%{$term}%" ] )
 						->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -131,8 +133,8 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			SPRequest::set( 'eSite', $ePages );
 		}
 
-		$entries = array();
-		$categories = array();
+		$entries = [];
+		$categories = [];
 		/* if there are entries in the root */
 		if ( count( $e ) ) {
 			try {
@@ -140,7 +142,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				$LimStart = $eLimStart ? ( ( $eLimStart - 1 ) * $eLimit ) : $eLimStart;
 				$eOrder = $this->sectionOrdering( 'entries', 'eorder', 'position.asc', $Limit, $LimStart, $e );
 				$results = $db
-						->select( 'id', 'spdb_object', array( 'id' => $e, 'oType' => 'entry' ), $eOrder, $Limit, $LimStart )
+						->select( 'id', 'spdb_object', [ 'id' => $e, 'oType' => 'entry' ], $eOrder, $Limit, $LimStart )
 						->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -157,7 +159,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				$Limit = $cLimit > 0 ? $cLimit : 0;
 				$cOrder = $this->sectionOrdering( 'categories', 'corder', 'order.asc', $Limit, $LimStart, $c );
 				$results = $db
-						->select( 'id', 'spdb_object', array( 'id' => $c, 'oType' => 'category' ), $cOrder, $Limit, $LimStart )
+						->select( 'id', 'spdb_object', [ 'id' => $c, 'oType' => 'category' ], $cOrder, $Limit, $LimStart )
 						->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -171,7 +173,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$menu = new $mClass( 'section.' . $this->_task, Sobi::Section() );
 		/* load the menu definition */
 		$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
-		Sobi::Trigger( 'Create', 'AdmMenu', array( &$cfg ) );
+		Sobi::Trigger( 'Create', 'AdmMenu', [ &$cfg ] );
 		if ( count( $cfg ) ) {
 			$i = 0;
 			foreach ( $cfg as $root => $keys ) {
@@ -182,12 +184,12 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				}
 			}
 		}
-		Sobi::Trigger( 'AfterCreate', 'AdmMenu', array( &$menu ) );
+		Sobi::Trigger( 'AfterCreate', 'AdmMenu', [ &$menu ] );
 		/* create new SigsiuTree */
 		$tree = SPLoader::loadClass( 'mlo.tree' );
 		$tree = new $tree( Sobi::GetUserState( 'categories.order', 'corder', 'order.asc' ) );
 		/* set link */
-		$tree->setHref( Sobi::Url( array( 'sid' => '{sid}' ) ) );
+		$tree->setHref( Sobi::Url( [ 'sid' => '{sid}' ] ) );
 		$tree->setId( 'menuTree' );
 		/* set the task to expand the tree */
 		$tree->setTask( 'category.expand' );
@@ -230,7 +232,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				->assign( $sectionName, 'category' )
 				->addHidden( $sectionId, 'pid' )
 				->addHidden( $sid, 'sid' );
-		Sobi::Trigger( 'Section', 'View', array( &$view ) );
+		Sobi::Trigger( 'Section', 'View', [ &$view ] );
 		$view->display();
 	}
 
@@ -238,10 +240,10 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	protected function customCols()
 	{
 		/* get fields for header */
-		$fields = array();
+		$fields = [];
 		try {
 			$fieldsData = SPFactory::db()
-					->select( '*', 'spdb_field', array( 'admList' => 1, 'section' => Sobi::Reg( 'current_section' ) ), 'admList' )
+					->select( '*', 'spdb_field', [ 'admList' => 1, 'section' => Sobi::Reg( 'current_section' ) ], 'admList' )
 					->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -270,7 +272,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	protected function sectionOrdering( $subject, $col, $def, &$lim, &$lStart, &$sids )
 	{
 		$ord = Sobi::GetUserState( $subject . '.order', $col, Sobi::Cfg( 'admin.' . $subject . '-order', $def ) );
-		$ord = str_replace( array( 'e_s', 'c_s' ), null, $ord );
+		$ord = str_replace( [ 'e_s', 'c_s' ], null, $ord );
 		if ( strstr( $ord, '.' ) ) {
 			$ord = explode( '.', $ord );
 			$dir = $ord[ 1 ];
@@ -283,7 +285,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			$subject = $subject == 'categories' ? 'category' : 'entry';
 			/* @var SPdb $db */
 			$db = SPFactory::db();
-			$db->select( 'id', 'spdb_relations', array( 'oType' => $subject, 'pid' => $this->_model->get( 'id' ) ), 'position.' . $dir, $lim, $lStart );
+			$db->select( 'id', 'spdb_relations', [ 'oType' => $subject, 'pid' => $this->_model->get( 'id' ) ], 'position.' . $dir, $lim, $lStart );
 			$fields = $db->loadResultArray();
 			if ( count( $fields ) ) {
 				$sids = $fields;
@@ -300,10 +302,10 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			$subject = $subject == 'categories' ? 'category' : 'entry';
 			/* @var SPdb $db */
 			$db =& SPFactory::db();
-			$db->select( 'id', 'spdb_language', array( 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::Lang() ), 'sValue.' . $dir );
+			$db->select( 'id', 'spdb_language', [ 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::Lang() ], 'sValue.' . $dir );
 			$fields = $db->loadResultArray();
 			if ( !count( $fields ) && Sobi::Lang() != Sobi::DefLang() ) {
-				$db->select( 'id', 'spdb_language', array( 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::DefLang() ), 'sValue.' . $dir );
+				$db->select( 'id', 'spdb_language', [ 'oType' => $subject, 'sKey' => 'name', 'language' => Sobi::DefLang() ], 'sValue.' . $dir );
 				$fields = $db->loadResultArray();
 			}
 			if ( count( $fields ) ) {
@@ -319,7 +321,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			static $field = null;
 			if ( !$field ) {
 				try {
-					$db->select( 'fieldType', 'spdb_field', array( 'nid' => $ord, 'section' => Sobi::Section() ) );
+					$db->select( 'fieldType', 'spdb_field', [ 'nid' => $ord, 'section' => Sobi::Section() ] );
 					$fType = $db->loadResult();
 				} catch ( SPException $x ) {
 					Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DETERMINE_FIELD_TYPE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
@@ -334,14 +336,14 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			 * The current method could be very inefficient !!!
 			 */
 			if ( $field && method_exists( $field, 'sortByAdm' ) ) {
-				$fields = call_user_func_array( array( $field, 'sortByAdm' ), array( &$ord, &$dir ) );
+				$fields = call_user_func_array( [ $field, 'sortByAdm' ], [ &$ord, &$dir ] );
 			}
 			else {
-				$join = array(
-						array( 'table' => 'spdb_field', 'as' => 'def', 'key' => 'fid' ),
-						array( 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' )
-				);
-				$db->select( 'sid', $db->join( $join ), array( 'def.nid' => $ord, 'lang' => Sobi::Lang() ), 'baseData.' . $dir );
+				$join = [
+						[ 'table' => 'spdb_field', 'as' => 'def', 'key' => 'fid' ],
+						[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ]
+				];
+				$db->select( 'sid', $db->join( $join ), [ 'def.nid' => $ord, 'lang' => Sobi::Lang() ], 'baseData.' . $dir );
 				$fields = $db->loadResultArray();
 			}
 			if ( count( $fields ) ) {
@@ -376,7 +378,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 
 	protected function authorise( $action = 'access', $ownership = 'valid' )
 	{
-		$manage = array( 'add' => true, 'manage' => true, 'delete' => true );
+		$manage = [ 'add' => true, 'manage' => true, 'delete' => true ];
 		if ( isset( $manage[ $action ] ) && Sobi::Can( 'cms.admin' ) ) {
 			return true;
 		}

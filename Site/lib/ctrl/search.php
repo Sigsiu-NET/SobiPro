@@ -33,19 +33,19 @@ class SPSearchCtrl extends SPSectionCtrl
 	/*** @var string */
 	protected $_defTask = 'view';
 	/*** @var array */
-	protected $_request = array();
+	protected $_request = [];
 	/*** @var array */
-	protected $_fields = array();
+	protected $_fields = [];
 	/*** @var array */
-	protected $_results = array();
+	protected $_results = [];
 	/*** @var array */
-	protected $_resultsByPriority = array();
+	protected $_resultsByPriority = [];
 	/*** @var int */
 	protected $_resultsCount = 0;
 	/*** @var array */
-	protected $_categoriesResults = array();
+	protected $_categoriesResults = [];
 	/*** @var SPDb */
-	protected $_db = array();
+	protected $_db = [];
 	/*** @var bool */
 	protected $_narrowing = true;
 
@@ -108,9 +108,9 @@ class SPSearchCtrl extends SPSectionCtrl
 		if ( strlen( $fieldNid ) ) {
 			$fieldNids = SPFactory::config()->structuralData( $fieldNid, true );
 		}
-		$results = array();
+		$results = [];
 		if ( strlen( $this->_request[ 'search_for' ] ) >= Sobi::Cfg( 'search.suggest_min_chars', 1 ) ) {
-			Sobi::Trigger( 'OnSuggest', 'Search', array( &$this->_request[ 'search_for' ] ) );
+			Sobi::Trigger( 'OnSuggest', 'Search', [ &$this->_request[ 'search_for' ] ] );
 			$this->_fields = $this->loadFields();
 			$search = str_replace( '.', '\.', $this->_request[ 'search_for' ] );
 			if ( count( $this->_fields ) ) {
@@ -138,8 +138,8 @@ class SPSearchCtrl extends SPSectionCtrl
 				$results[ $k ] = $v;
 			}
 		}
-		usort( $results, array( 'self', 'sortByLen' ) );
-		Sobi::Trigger( 'AfterSuggest', 'Search', array( &$results ) );
+		usort( $results, [ 'self', 'sortByLen' ] );
+		Sobi::Trigger( 'AfterSuggest', 'Search', [ &$results ] );
 		if ( count( $results ) ) {
 			foreach ( $results as $i => $term ) {
 				$results[ $i ] = SPLang::clean( $term );
@@ -166,10 +166,10 @@ class SPSearchCtrl extends SPSectionCtrl
 		$ssid = SPRequest::cmd( 'ssid', SPRequest::cmd( 'ssid', null, 'cookie' ) );
 		$this->_fields = $this->loadFields();
 		$searchForString = false;
-		Sobi::Trigger( 'OnRequest', 'Search', array( &$this->_request ) );
+		Sobi::Trigger( 'OnRequest', 'Search', [ &$this->_request ] );
 		$searchLimit = Sobi::Cfg( 'search.result_limit', 1000 );
 		for ( $i = 1; $i < 11; $i++ ) {
-			$this->_resultsByPriority[ $i ] = array();
+			$this->_resultsByPriority[ $i ] = [];
 		}
 		// if the visitor wasn't on the search page first
 		if ( !( $ssid ) || SPRequest::int( 'reset', 0 ) ) {
@@ -192,7 +192,7 @@ class SPSearchCtrl extends SPSectionCtrl
 		}
 
 		/* sort fields by priority */
-		usort( $this->_fields, array( 'self', 'sortByPrio' ) );
+		usort( $this->_fields, [ 'self', 'sortByPrio' ] );
 
 		/* First the basic search ..... */
 		/* if we have a string to search */
@@ -211,7 +211,7 @@ class SPSearchCtrl extends SPSectionCtrl
 			}
 			$this->_results = array_unique( $this->_results );
 		}
-		Sobi::Trigger( 'AfterBasic', 'Search', array( &$this->_results, &$this->_resultsByPriority ) );
+		Sobi::Trigger( 'AfterBasic', 'Search', [ &$this->_results, &$this->_resultsByPriority ] );
 
 		/* ... now the extended search. Check which data we've received */
 		if ( count( $this->_fields ) ) {
@@ -266,10 +266,10 @@ class SPSearchCtrl extends SPSectionCtrl
 			}
 		}
 		$this->_request[ 'search_for' ] = str_replace( '%', '*', $this->_request[ 'search_for' ] );
-		Sobi::Trigger( 'AfterExtended', 'Search', array( &$this->_results, &$this->_resultsByPriority ) );
+		Sobi::Trigger( 'AfterExtended', 'Search', [ &$this->_results, &$this->_resultsByPriority ] );
 		if ( count( $this->_results ) > $searchLimit ) {
 			SPFactory::message()->error( Sobi::Txt( 'SH.SEARCH_TOO_MANY_RESULTS', count( $this->_results ), $searchLimit ), false );
-			$this->_resultsByPriority = array();
+			$this->_resultsByPriority = [];
 			$this->_results = array_slice( $this->_results, 0, $searchLimit );
 		}
 		else {
@@ -279,25 +279,25 @@ class SPSearchCtrl extends SPSectionCtrl
 		$res = ( is_array( $this->_results ) && count( $this->_results ) ) ? implode( ', ', $this->_results ) : null;
 		$cre = ( is_array( $this->_categoriesResults ) && count( $this->_categoriesResults ) ) ? implode( ', ', $this->_categoriesResults ) : null;
 		/* determine the search parameters */
-		$attr = array(
-				'entriesResults' => array( 'results' => $res, 'resultsByPriority' => $this->_resultsByPriority ),
+		$attr = [
+				'entriesResults' => [ 'results' => $res, 'resultsByPriority' => $this->_resultsByPriority ],
 				'catsResults' => $cre,
 				'uid' => Sobi::My( 'id' ),
 				'browserData' => SPConfig::serialize( SPBrowser::getInstance() )
-		);
+		];
 		if ( strlen( $req ) ) {
 			$attr[ 'requestData' ] = $req;
 		}
 
 		/* finally save */
 		try {
-			Sobi::Trigger( 'OnSave', 'Search', array( &$attr, &$ssid ) );
+			Sobi::Trigger( 'OnSave', 'Search', [ &$attr, &$ssid ] );
 			$this->verify( $attr[ 'entriesResults' ][ 'results' ] );
-			$this->_db->update( 'spdb_search', $attr, array( 'ssid' => $ssid ) );
+			$this->_db->update( 'spdb_search', $attr, [ 'ssid' => $ssid ] );
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_CREATE_SESSION_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
-		$url = array( 'task' => 'search.results', 'sid' => Sobi::Section() );
+		$url = [ 'task' => 'search.results', 'sid' => Sobi::Section() ];
 		// For Peter's Components Anywhere extension and other
 		$params = Sobi::Cfg( 'search.params_to_pass' );
 		if ( count( $params ) ) {
@@ -350,7 +350,7 @@ class SPSearchCtrl extends SPSectionCtrl
 					$this->_resultsByPriority[ $prio ] = array_unique( $ids );
 				}
 			}
-			$this->_results = array();
+			$this->_results = [];
 			foreach ( $this->_resultsByPriority as $prio => $ids ) {
 				if ( count( $ids ) ) {
 					if ( Sobi::Cfg( 'search.entries_ordering' ) == 'random' ) {
@@ -358,12 +358,12 @@ class SPSearchCtrl extends SPSectionCtrl
 					}
 					elseif ( Sobi::Cfg( 'search.entries_ordering' ) == 'counter.asc' || Sobi::Cfg( 'search.entries_ordering' ) == 'counter.desc' ) {
 						$this->_resultsByPriority[ $prio ] = SPFactory::db()
-								->select( 'sid', 'spdb_counter', array( 'sid' => $ids ), Sobi::Cfg( 'search.entries_ordering' ) )
+								->select( 'sid', 'spdb_counter', [ 'sid' => $ids ], Sobi::Cfg( 'search.entries_ordering' ) )
 								->loadResultArray();
 					}
 					else {
 						$this->_resultsByPriority[ $prio ] = SPFactory::db()
-								->select( 'id', 'spdb_object', array( 'id' => $ids ), Sobi::Cfg( 'search.entries_ordering' ) )
+								->select( 'id', 'spdb_object', [ 'id' => $ids ], Sobi::Cfg( 'search.entries_ordering' ) )
 								->loadResultArray();
 					}
 					$this->_results = array_merge( $this->_results, $this->_resultsByPriority[ $prio ] );
@@ -371,7 +371,7 @@ class SPSearchCtrl extends SPSectionCtrl
 			}
 		}
 		else {
-			$this->_resultsByPriority = array();
+			$this->_resultsByPriority = [];
 		}
 	}
 
@@ -379,12 +379,12 @@ class SPSearchCtrl extends SPSectionCtrl
 	{
 		if ( $entries ) {
 			$entries = explode( ',', $entries );
-			$conditions = array();
+			$conditions = [];
 			if ( Sobi::My( 'id' ) ) {
 				$this->userPermissionsQuery( $conditions, null );
 			}
 			else {
-				$conditions = array( 'state' => '1', '@VALID' => $this->_db->valid( 'validUntil', 'validSince' ) );
+				$conditions = [ 'state' => '1', '@VALID' => $this->_db->valid( 'validUntil', 'validSince' ) ];
 			}
 			$conditions[ 'id' ] = $entries;
 			$conditions[ 'oType' ] = 'entry';
@@ -399,7 +399,7 @@ class SPSearchCtrl extends SPSectionCtrl
 			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 			}
-			Sobi::Trigger( 'OnVerify', 'Search', array( &$entries ) );
+			Sobi::Trigger( 'OnVerify', 'Search', [ &$entries ] );
 		}
 	}
 
@@ -413,12 +413,12 @@ class SPSearchCtrl extends SPSectionCtrl
 	protected function searchWords( $all )
 	{
 		/* @TODO categories */
-		$matches = array();
+		$matches = [];
 
 		/* extrapolate single words */
 		preg_match_all( Sobi::Cfg( 'search.word_filter', '/\p{L}+|\d+|%/iu' ), $this->_request[ 'search_for' ], $matches );
 		if ( count( $matches ) && isset( $matches[ 0 ] ) ) {
-			$wordResults = array();
+			$wordResults = [];
 			$results = null;
 			/* search all fields for this word */
 			foreach ( $matches[ 0 ] as $word ) {
@@ -449,7 +449,7 @@ class SPSearchCtrl extends SPSectionCtrl
 
 	protected function travelFields( $word, $regex = false )
 	{
-		$results = array();
+		$results = [];
 		if ( count( $this->_fields ) ) {
 			foreach ( $this->_fields as $field ) {
 				$priority = $field->get( 'priority' );
@@ -496,10 +496,10 @@ class SPSearchCtrl extends SPSectionCtrl
 
 		/* add pathway */
 		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'SH.PATH_TITLE' ), Sobi::Url( 'current' ) );
-		SPFactory::mainframe()->setTitle( Sobi::Txt( 'SH.TITLE', array( 'section' => $this->_model->get( 'name' ) ) ) );
+		SPFactory::mainframe()->setTitle( Sobi::Txt( 'SH.TITLE', [ 'section' => $this->_model->get( 'name' ) ] ) );
 
 		if ( Sobi::Cfg( 'search.highlight-search' ) ) {
-			SPFactory::header()->addJsFile( array( 'jquery-highlight', 'search-highlight' ) );
+			SPFactory::header()->addJsFile( [ 'jquery-highlight', 'search-highlight' ] );
 		}
 		Sobi::Trigger( 'OnFormStart', 'Search' );
 		SPLoader::loadClass( 'mlo.input' );
@@ -527,7 +527,7 @@ class SPSearchCtrl extends SPSectionCtrl
 					->assign( $entries, 'entries' );
 			/* create page navigation */
 			$pnc = SPLoader::loadClass( 'helpers.pagenav_' . $this->tKey( $this->template, 'template_type', 'xslt' ) );
-			$url = array( 'task' => 'search.results', 'sid' => SPRequest::sid() );
+			$url = [ 'task' => 'search.results', 'sid' => SPRequest::sid() ];
 			if ( !( SPRequest::cmd( 'ssid', null, 'cookie' ) ) ) {
 				$url[ 'ssid' ] = $ssid;
 			}
@@ -562,15 +562,15 @@ class SPSearchCtrl extends SPSectionCtrl
 				->addHidden( 'search.search', 'task' )
 				->setConfig( $this->_tCfg, $this->template )
 				->setTemplate( $tplPackage . '.' . $this->templateType . '.' . $this->template );
-		Sobi::Trigger( 'OnCreateView', 'Search', array( &$view ) );
+		Sobi::Trigger( 'OnCreateView', 'Search', [ &$view ] );
 		$view->display();
 	}
 
 	protected function getResults( $ssid, $template )
 	{
-		$results = array();
+		$results = [];
 		/* case some plugin overwrites this method */
-		Sobi::Trigger( 'GetResults', 'Search', array( &$results, &$ssid, &$template ) );
+		Sobi::Trigger( 'GetResults', 'Search', [ &$results, &$ssid, &$template ] );
 		if ( count( $results ) ) {
 			return $results;
 		}
@@ -582,7 +582,7 @@ class SPSearchCtrl extends SPSectionCtrl
 		$eLimStart = ( ( $site - 1 ) * $eLimit );
 
 		try {
-			$r = $this->_db->select( array( 'entriesResults', 'requestData' ), 'spdb_search', array( 'ssid' => $ssid ) )
+			$r = $this->_db->select( [ 'entriesResults', 'requestData' ], 'spdb_search', [ 'ssid' => $ssid ] )
 					->loadAssocList();
 			if ( strlen( $r[ 0 ][ 'entriesResults' ] ) ) {
 				$store = SPConfig::unserialize( $r[ 0 ][ 'entriesResults' ] );
@@ -621,11 +621,11 @@ class SPSearchCtrl extends SPSectionCtrl
 			$new = true;
 		}
 
-		$attr = array(
+		$attr = [
 				'ssid' => $ssid,
 				'uid' => Sobi::My( 'id' ),
 				'browserData' => SPConfig::serialize( SPBrowser::getInstance() )
-		);
+		];
 
 		/* get search request */
 		if ( !( count( $this->_request ) ) ) {
@@ -653,7 +653,7 @@ class SPSearchCtrl extends SPSectionCtrl
 		$fmod = SPLoader::loadModel( 'field' );
 		/* get fields */
 		try {
-			$this->_db->select( '*', 'spdb_field', array( 'section' => Sobi::Section(), 'inSearch' => 1, 'enabled' => 1, 'adminField>' => -1 ), 'position' );
+			$this->_db->select( '*', 'spdb_field', [ 'section' => Sobi::Section(), 'inSearch' => 1, 'enabled' => 1, 'adminField>' => -1 ], 'position' );
 			$fields = $this->_db->loadObjectList();
 		} catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELDS_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -669,7 +669,7 @@ class SPSearchCtrl extends SPSectionCtrl
 				$fields[ $i ] = $field;
 			}
 		}
-		Sobi::Trigger( 'LoadFields', 'Search', array( &$fields ) );
+		Sobi::Trigger( 'LoadFields', 'Search', [ &$fields ] );
 		return $fields;
 	}
 }

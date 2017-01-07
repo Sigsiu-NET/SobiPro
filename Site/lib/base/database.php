@@ -75,9 +75,12 @@ interface SPDatabase
 	 * @param string $toSelect
 	 * @param string $tables
 	 * @param string $where
+	 * @param null $order
 	 * @param int $limit
 	 * @param int $limitStart
-	 * @param string $groupBy - column to group by
+	 * @param null $group
+	 * @return
+	 * @internal param string $groupBy - column to group by
 	 */
 	public function dselect( $toSelect, $tables, $where = null, $order = null, $limit = 0, $limitStart = 0, $group = null );
 
@@ -87,6 +90,7 @@ interface SPDatabase
 	 * @param string $toSelect - table rows to select
 	 * @param string $tables - from which table(s);
 	 * @param string $where - SQL select condition
+	 * @param null $order
 	 * @param int $limit - maximal number of rows
 	 * @param int $limitStart - start position
 	 * @param bool $distinct - clear??
@@ -108,7 +112,8 @@ interface SPDatabase
 	 * Creates a "drop table" SQL query
 	 *
 	 * @param string $table - in which table
-	 * @param string $ifExists
+	 * @param bool|string $ifExists
+	 * @return
 	 */
 	public function drop( $table, $ifExists = true );
 
@@ -116,7 +121,8 @@ interface SPDatabase
 	 * Creates a "drop table" SQL query
 	 *
 	 * @param string $table - in which table
-	 * @param string $ifExists
+	 * @return
+	 * @internal param string $ifExists
 	 */
 	public function truncate( $table );
 	public function argsOr( $val );
@@ -125,8 +131,10 @@ interface SPDatabase
 	 * Creates a "update" SQL query
 	 *
 	 * @param string $table - table to update
-	 * @param array $set  - two-dimensional array with table row name to update => new value
-	 * @param string $where  - SQL update condition
+	 * @param array $set - two-dimensional array with table row name to update => new value
+	 * @param string $where - SQL update condition
+	 * @param int $limit
+	 * @return
 	 */
 	public function update( $table, $set, $where, $limit = 0 );
 
