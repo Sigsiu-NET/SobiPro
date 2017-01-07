@@ -24,7 +24,7 @@ define( 'SOBI_TASK', 'task' );
 define( 'SOBI_DEFLANG', JComponentHelper::getParams( 'com_languages' )->get( 'site', 'en-GB' ) );
 define( 'SOBI_ACL', 'adm' );
 define( 'SOBI_ROOT', JPATH_ROOT );
-define( 'SOBI_MEDIA', implode( '/', array( JPATH_ROOT, 'media', 'sobipro' ) ) );
+define( 'SOBI_MEDIA', implode( '/', [ JPATH_ROOT, 'media', 'sobipro' ] ) );
 define( 'SOBI_MEDIA_LIVE', JURI::root() . '/media/sobipro' );
 define( 'SOBI_PATH', SOBI_ROOT . '/components/com_sobipro' );
 define( 'SOBI_ADM_PATH', JPATH_ADMINISTRATOR . '/components/com_sobipro' );

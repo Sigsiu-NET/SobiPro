@@ -148,7 +148,7 @@
 											<cell class="SpCellCenter">
 												<date value="changedAt" dateFormat="d-m-Y H:i:s"/>
 											</cell>
-											<cell type="text" value="change"/>
+											<cell type="text" value="changeAction"/>
 											<cell type="link" value="userName" condition="uid" target="_blank" sef="false" live="true">
 												<url type="intern">
 													<param name="option" value="com_users"/>

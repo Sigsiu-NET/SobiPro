@@ -125,7 +125,7 @@ $row = 0;
                 </td>
                 <td>
 					<?php
-					$params = array( 'id' => 'field_css', 'size' => 15, 'maxlength' => 50, 'class' => 'inputbox', 'style' => 'text-align:center;' );
+					$params = [ 'id' => 'field_css', 'size' => 15, 'maxlength' => 50, 'class' => 'inputbox', 'style' => 'text-align:center;' ];
 					if ( $this->get( 'field.id' ) == SPFactory::config()->nameField()->get( 'id' ) ) {
 						$params[ 'readonly' ] = 'readonly';
 					}
