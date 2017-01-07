@@ -1710,7 +1710,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_history` (
   `uid` int(11) NOT NULL,
   `userName` varchar(150) NOT NULL,
   `userEmail` varchar(150) NOT NULL,
-  `change` varchar(150) NOT NULL,
+  `changeAction` varchar(150) NOT NULL,
   `site` enum('site','adm') NOT NULL,
   `sid` int(11) NOT NULL,
   `changes` text NOT NULL,

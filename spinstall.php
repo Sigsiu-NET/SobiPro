@@ -53,14 +53,14 @@ class com_sobiproInstallerScript
 	 */
 	function update( JAdapterInstance $adapter )
 	{
-		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) ) ) {
-			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) );
+		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) ) ) {
+			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) );
 		}
-		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ) ) ) ) {
-			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ) ) );
+		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) ) ) {
+			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) );
 		}
-		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) ) ) {
-			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
+		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
+			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
 		}
 		$srcpath = JPATH_ROOT . '/media/sobipro/icons';
 		if ( file_exists( $srcpath ) ) {
@@ -175,6 +175,23 @@ class com_sobiproInstallerScript
 			$db->execute();
 		}
 
+		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_history' );
+		$cols = $db->loadAssocList();
+		$skip = false;
+		foreach ( $cols as $col ) {
+			if ( $col[ 'Key_name' ] == 'changeAction' ) {
+				$skip = true;
+				continue;
+			}
+		}
+		if ( !( $skip ) ) {
+			try {
+				$db->setQuery( 'ALTER TABLE #__sobipro_history CHANGE `change` `changeAction` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;' );
+				$db->execute();
+			} catch ( Exception $x ) {
+			}
+		}
+
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `description`, `options`) VALUES ('rejections-templates', 'rejection-of-a-new-entry', 'Rejection of a new entry', 'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjoxO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjA7czo5OiJ1bnB1Ymxpc2giO2I6MTtzOjc6ImRpc2NhcmQiO2I6MDt9', '', ''), ('rejections-templates', 'rejection-of-changes', 'Rejection of changes', 'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjowO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjE7czo5OiJ1bnB1Ymxpc2giO2I6MDtzOjc6ImRpc2NhcmQiO2I6MTt9', '', '');" );
 		$db->execute();
 
@@ -235,23 +252,23 @@ class com_sobiproInstallerScript
 	 */
 	public function install( JAdapterInstance $adapter )
 	{
-		if ( !( file_exists( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) ) ) ) {
-			JFolder::create( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) );
+		if ( !( file_exists( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) ) ) ) {
+			JFolder::create( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) );
 		}
-		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ) ) ) ) {
+		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ) ) ) {
 			JFolder::move(
-					implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ) ),
-					implode( '/', array( JPATH_ROOT, 'images', 'sobipro', 'entries' ) )
+					implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ),
+					implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'entries' ] )
 			);
 		}
-		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) ) ) {
-			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ) ) );
+		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) ) ) {
+			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) );
 		}
-		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ) ) ) ) {
-			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ) ) );
+		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) ) ) {
+			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) );
 		}
-		if ( file_exists( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) ) ) {
-			JFolder::delete( implode( '/', array( JPATH_ROOT, 'components', 'com_sobipro', 'media' ) ) );
+		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
+			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
 		}
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.2.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$db = JFactory::getDBO();
@@ -271,7 +288,7 @@ class com_sobiproInstallerScript
 	protected function installPlugins( $source )
 	{
 		$source = $source[ 'source' ];
-		$plugins = array( 'Header' );
+		$plugins = [ 'Header' ];
 		$path = $source . '/Plugins';
 		$installer = new JInstaller;
 		$db = JFactory::getDBO();
@@ -298,7 +315,7 @@ class com_sobiproInstallerScript
 			$db->setQuery( "DROP TABLE {$table};" );
 			$db->execute();
 		}
-		JFolder::delete( implode( '/', array( JPATH_ROOT, 'images', 'sobipro' ) ) );
+		JFolder::delete( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) );
 	}
 
 	protected function installFramework()
