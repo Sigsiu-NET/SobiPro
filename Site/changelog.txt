@@ -8,7 +8,7 @@ Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
 Email: sobi[at]sigsiu.net
 Url: https://www.Sigsiu.NET
 
-@copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+@copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
 @license GNU/GPL Version 3
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -91,6 +91,7 @@ Legend:
 	(#) No possibility to adjust RSS settings for categories
 	(#) Missing size and label settings in search form for checkbox groups and radio buttons
 	(#) Section meta data are added always to meta data of entry and search forms
+	(#) Discard Changes while rejection of an entry never worked
 
 
 -------------------
