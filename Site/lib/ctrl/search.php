@@ -494,15 +494,14 @@ class SPSearchCtrl extends SPSectionCtrl
 				->addKeyword( $section->get( 'sfMetaKeys' ) )
 				->addDescription( $section->get( 'sfMetaDesc' ) );
 
-		/* add pathway */
-		SPFactory::mainframe()->addToPathway( Sobi::Txt( 'SH.PATH_TITLE' ), Sobi::Url( 'current' ) );
-		SPFactory::mainframe()->setTitle( Sobi::Txt( 'SH.TITLE', [ 'section' => $this->_model->get( 'name' ) ] ) );
-
 		if ( Sobi::Cfg( 'search.highlight-search' ) ) {
 			SPFactory::header()->addJsFile( [ 'jquery-highlight', 'search-highlight' ] );
 		}
 		Sobi::Trigger( 'OnFormStart', 'Search' );
 		SPLoader::loadClass( 'mlo.input' );
+
+		SPFactory::mainframe()->setTitle( Sobi::Txt( 'SH.TITLE', [ 'section' => $this->_model->get( 'name' ) ] ) );
+
 		/** @var SPSearchView $view */
 		$view = SPFactory::View( 'search' );
 
@@ -510,7 +509,11 @@ class SPSearchCtrl extends SPSectionCtrl
 		if ( !( $this->session( $ssid ) ) ) {
 			$view->addHidden( $ssid, 'ssid' );
 		}
+
 		if ( $this->_task == 'results' && $ssid ) {
+			/* add pathway */
+			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'SH.PATH_TITLE_RESULT' ), Sobi::Url( 'current' ) );
+
 			/* get limits - if defined in template config - otherwise from the section config */
 			$eLimit = $this->tKey( $this->template, 'entries_limit', Sobi::Cfg( 'search.entries_limit', Sobi::Cfg( 'list.entries_limit', 2 ) ) );
 			$eInLine = $this->tKey( $this->template, 'entries_in_line', Sobi::Cfg( 'search.entries_in_line', Sobi::Cfg( 'list.entries_in_line', 2 ) ) );
@@ -544,6 +547,8 @@ class SPSearchCtrl extends SPSectionCtrl
 			SPFactory::registry()->set( 'task', $task );
 		}
 		else {
+			/* add pathway */
+			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'SH.PATH_TITLE' ), Sobi::Url( 'current' ) );
 			$eLimit = -1;
 			$view->assign( $eLimit, '$eCount' );
 		}

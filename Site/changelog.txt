@@ -58,6 +58,7 @@ Legend:
 	(!) Select label in search form for multiple select lists adjustable
 	(!) Option settings of radio buttons and checkbox groups fields moved to general settings
 	(!) Categories ordering and categories in line setting moved to template; deprecated message added
+	(!) Different pathway items for search parameters and search result
 
 	(-) Suffix setting removed from image field
 
