@@ -17,39 +17,39 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
-	<xsl:include href="vcard.xsl" />
-	<xsl:include href="manage.xsl" />
+	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
+	<xsl:include href="vcard.xsl"/>
+	<xsl:include href="manage.xsl"/>
 
 	<xsl:template name="entriesLoop">
 		<xsl:variable name="entriesInLine">
-             <xsl:value-of select="//config/entries_in_line/@value" />
+			<xsl:value-of select="//config/entries_in_line/@value"/>
 		</xsl:variable>
 
 		<xsl:variable name="cellClass">
-			<xsl:value-of select="floor( 12 div $entriesInLine )" />
+			<xsl:value-of select="floor( 12 div $entriesInLine )"/>
 		</xsl:variable>
 
 		<xsl:variable name="entriesCount">
-			<xsl:value-of select="count(entries/entry)" />
+			<xsl:value-of select="count(entries/entry)"/>
 		</xsl:variable>
 
 		<xsl:comment>entries loop - start</xsl:comment>
-        <div class="spEntryContainer">
-                <xsl:for-each select="entries/entry">
-                    <xsl:if test="($entriesInLine > 1 and (position() = 1 or (position() mod $entriesInLine) = 1 )) or $entriesInLine = 1">
-                        <!-- opening the "table" row -->
-                        <xsl:text disable-output-escaping="yes">&lt;div class="row-fluid" &gt;</xsl:text>
-                    </xsl:if>
-                    <div class="span{$cellClass}">
-                        <xsl:call-template name="vcard" />
-                    </div>
-                    <xsl:if test="($entriesInLine > 1 and ((position() mod $entriesInLine) = 0 or position() = $entriesCount)) or $entriesInLine = 1">
-                        <!-- closing the "table" row -->
-                        <xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
-                    </xsl:if>
-                </xsl:for-each>
-        </div>
+		<div class="spEntryContainer">
+			<xsl:for-each select="entries/entry">
+				<xsl:if test="($entriesInLine > 1 and (position() = 1 or (position() mod $entriesInLine) = 1 )) or $entriesInLine = 1">
+					<!-- opening the "table" row -->
+					<xsl:text disable-output-escaping="yes">&lt;div class="row-fluid" &gt;</xsl:text>
+				</xsl:if>
+				<div class="span{$cellClass}">
+					<xsl:call-template name="vcard"/>
+				</div>
+				<xsl:if test="($entriesInLine > 1 and ((position() mod $entriesInLine) = 0 or position() = $entriesCount)) or $entriesInLine = 1">
+					<!-- closing the "table" row -->
+					<xsl:text disable-output-escaping="yes">&lt;/div&gt;</xsl:text>
+				</xsl:if>
+			</xsl:for-each>
+		</div>
 		<xsl:comment>entries loop - end</xsl:comment>
 
 	</xsl:template>

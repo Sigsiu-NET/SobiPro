@@ -16,7 +16,8 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 -->
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" xmlns:xls="http://www.w3.org/1999/XSL/Transform"
+                exclude-result-prefixes="php">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
 
 	<xsl:include href="../common/alphamenu.xsl"/>
@@ -48,11 +49,13 @@
 							       class="form-control input-large pull-left" id="SPSearchBox"/>
 							<xsl:if test="/search/fields/top_button/label">
 								<button type="submit" class="btn btn-primary btn-sigsiu">
+									<xls:text>&#160;</xls:text>
 									<xsl:value-of select="/search/fields/top_button/label"/>
 								</button>
 							</xsl:if>
 							<xsl:if test="count( /search/fields/* ) &gt; 3 and //config/extendedsearch/@value = 'show'">
 								<button type="button" class="btn btn-default" name="SPExOptBt" id="SPExOptBt">
+									<xls:text>&#160;</xls:text>
 									<xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )"/>
 								</button>
 							</xsl:if>
@@ -71,7 +74,7 @@
 												<xsl:attribute name="class">sphrase btn btn-success active</xsl:attribute>
 											</xsl:if>
 											<xsl:attribute name="for">
-												<xsl:value-of select="./@for" />
+												<xsl:value-of select="./@for"/>
 											</xsl:attribute>
 											<xsl:copy-of select="./input"/>
 											<xsl:value-of select="."/>
