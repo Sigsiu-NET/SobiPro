@@ -100,7 +100,7 @@
 						<xs:attribute name="path" use="required">
 							<xs:simpleType>
 								<xs:restriction base="xs:string">
-									<xs:pattern value="(home|root|lib|ctrl|media|models|views|js|css|img|adm|fields|templates|front|config)+:[0-9a-z\-A-Z\._]*"/>
+									<xs:pattern value="(home|root|lib|ctrl|media|models|views|js|css|img|adm|fields|templates|front|config|storage)+:[0-9a-z\-A-Z\._]*"/>
 									<xs:whiteSpace value="preserve"/>
 								</xs:restriction>
 							</xs:simpleType>
