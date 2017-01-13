@@ -24,6 +24,7 @@
 	<xsl:include href="../common/navigation.xsl"/>
 	<xsl:include href="../common/entries.xsl"/>
 	<xsl:include href="../common/messages.xsl"/>
+	<xsl:include href="../common/searchfields.xsl"/>
 
 	<xsl:template match="/search">
 		<div class="spSearch">
@@ -86,34 +87,7 @@
 							<xsl:attribute name="id">SPExtSearch</xsl:attribute>
 						</xsl:if>
 						<xsl:for-each select="fields/*">
-							<xsl:if test="position() &gt; 3">
-								<div class="control-group {@css-search}">
-									<label class="control-label" for="{name(.)}">
-										<xsl:value-of select="label"/>
-									</label>
-									<div class="controls">
-										<xsl:variable name="colwidth">
-											<xsl:choose>
-												<xsl:when test="string-length( @width )">
-													<xsl:value-of select="@width"/>
-												</xsl:when>
-												<xsl:otherwise>9</xsl:otherwise>
-											</xsl:choose>
-										</xsl:variable>
-										<div class="span{$colwidth}">
-											<xsl:if test="string-length( @suffix )">
-												<xsl:attribute name="class">input-append</xsl:attribute>
-											</xsl:if>
-											<xsl:copy-of select="data/*"/>
-											<xsl:if test="string-length( @suffix )">
-												<span class="add-on">
-													<xsl:value-of select="@suffix"/>
-												</span>
-											</xsl:if>
-										</div>
-									</div>
-								</div>
-							</xsl:if>
+
 						</xsl:for-each>
 					</div>
 				</xsl:if>

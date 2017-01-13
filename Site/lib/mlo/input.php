@@ -140,7 +140,7 @@ abstract class SPHtml_Input
 		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- FileBox '{$name}' Output -->{$f}<!-- FileBox '{$name}' End -->\n\n";
-		return "\n{$f}\n\n";
+		return "{$f}\n";
 	}
 
 
@@ -242,7 +242,7 @@ abstract class SPHtml_Input
 		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 		//"\n<!-- InputBox '{$name}' Output -->{$f}<!-- InputBox '{$name}' End -->\n\n";
-		return "\n{$f}\n\n";
+		return "{$f}\n";
 	}
 
 	/**
@@ -264,7 +264,7 @@ abstract class SPHtml_Input
 		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- SubmitButton '{$name}' Output -->{$f}<!-- SubmitButton '{$name}' End -->\n\n";
-		return "\n{$f}\n\n";
+		return "{$f}\n";
 	}
 
 	/**
@@ -365,7 +365,7 @@ abstract class SPHtml_Input
 		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- Button '{$name}' Output --> {$f}<!-- Button '{$name}' End -->\n\n";
-		return "\n{$f}\n\n";
+		return "{$f}\n";
 	}
 
 	/**
@@ -419,7 +419,7 @@ abstract class SPHtml_Input
 		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$area ] );
 
 //		return "\n<!-- TextArea '{$name}' Output -->\n{$area}\n<!-- TextArea '{$name}' End -->\n\n";
-		return "\n{$area}\n\n";
+		return "{$area}\n";
 	}
 
 	/**
@@ -645,7 +645,7 @@ abstract class SPHtml_Input
 //		}
 //		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), array( &$f ) );
 ////		return "\n<!-- CheckBox '{$name}' Output -->{$f}\n<!-- CheckBox '{$name}' End -->\n";
-		return "\n{$f}\n";
+		return "{$f}\n";
 	}
 
 	/**
@@ -851,7 +851,7 @@ abstract class SPHtml_Input
 		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- SelectList '{$name}' Output -->{$f}<!-- SelectList '{$name}' End -->\n\n";
-		return "\n{$f}\n\n";
+		return "{$f}\n";
 	}
 
 	public static function cleanOpt($opt)
@@ -916,7 +916,7 @@ abstract class SPHtml_Input
 		$field .= '</div>';
 
 //		return "\n<!-- States '{$name}' Output -->{$field}\n<!-- States '{$name}' End -->\n";
-		return "\n{$field}\n\n";
+		return "{$field}\n";
 	}
 
 	/**
@@ -1085,7 +1085,7 @@ abstract class SPHtml_Input
 		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- Date Picker '{$name}' Output -->{$f}<!-- Date Picker '{$name}' End -->\n\n";
-		return "\n{$f}\n\n";
+		return "{$f}\n";
 	}
 
 	/**
@@ -1140,7 +1140,7 @@ abstract class SPHtml_Input
 		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- Date Getter '{$name}' Output -->{$f}<!-- Date Getter '{$name}' End -->\n\n";
-		return "\n{$f}\n\n";
+		return "{$f}\n";
 	}
 
 	public static function _createLangFile()
@@ -1238,7 +1238,7 @@ abstract class SPHtml_Input
 		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- User Picker '{$name}' Output -->{$f}<!-- User Picker '{$name}' End -->\n\n";
-		return "\n{$f}\n\n";
+		return "{$f}\n";
 	}
 
 	public static function _userGetter($name, $value, $params = null, $class = null, $format = '%user')
@@ -1278,7 +1278,7 @@ abstract class SPHtml_Input
 		Sobi::Trigger('Field', ucfirst(__FUNCTION__), [ &$f ] );
 
 //		return "\n<!-- User Getter '{$name}' Output -->{$f}<!-- User Getter '{$name}' End -->\n\n";
-		return "\n{$f}\n\n";
+		return "{$f}\n";
 	}
 
 
@@ -1326,6 +1326,6 @@ abstract class SPHtml_Input
 		$f    = "<input type=\"hidden\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\" {$data}/>";
 
 //		return "\n<!--  '{$name}' Output -->{$f}<!-- '{$name}' End -->\n\n";
-		return "\n{$f}\n\n";
+		return "{$f}\n";
 	}
 }

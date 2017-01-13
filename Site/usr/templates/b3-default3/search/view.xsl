@@ -25,6 +25,7 @@
 	<xsl:include href="../common/navigation.xsl"/>
 	<xsl:include href="../common/entries.xsl"/>
 	<xsl:include href="../common/messages.xsl"/>
+	<xsl:include href="../common/searchfields.xsl"/>
 
 	<xsl:template match="/search">
 
@@ -91,51 +92,10 @@
 							<xsl:attribute name="id">SPExtSearch</xsl:attribute>
 						</xsl:if>
 						<xsl:for-each select="fields/*">
-							<xsl:if test="position() &gt; 3">
-								<div class="form-group {@css-search}">
-									<label class="col-sm-3 control-label" for="{name(.)}">
-										<xsl:value-of select="label"/>
-									</label>
-									<xsl:variable name="colwidth">
-										<xsl:choose>
-											<xsl:when test="string-length( @width )">
-												<xsl:value-of select="@width"/>
-											</xsl:when>
-											<xsl:otherwise>9</xsl:otherwise>
-										</xsl:choose>
-									</xsl:variable>
-									<div class="col-sm-{$colwidth}">
-										<div>
-											<xsl:choose>
-												<xsl:when test="string-length( @suffix )">
-													<xsl:attribute name="class">input-group</xsl:attribute>
-													<xsl:choose>
-														<xsl:when test="data/@escaped">
-															<xsl:value-of select="data" disable-output-escaping="yes"/>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:copy-of select="data/*"/>
-														</xsl:otherwise>
-													</xsl:choose>
-													<div class="input-group-addon">
-														<xsl:value-of select="@suffix"/>
-													</div>
-												</xsl:when>
-												<xsl:otherwise>
-													<xsl:choose>
-														<xsl:when test="data/@escaped">
-															<xsl:value-of select="data" disable-output-escaping="yes"/>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:copy-of select="data/*"/>
-														</xsl:otherwise>
-													</xsl:choose>
-												</xsl:otherwise>
-											</xsl:choose>
-										</div>
-									</div>
-								</div>
-							</xsl:if>
+							<xsl:call-template name="searchfield">
+								<xsl:with-param name="fieldname" select="."/>
+								<xsl:with-param name="position" select="position()"/>
+							</xsl:call-template>
 						</xsl:for-each>
 					</div>
 				</xsl:if>

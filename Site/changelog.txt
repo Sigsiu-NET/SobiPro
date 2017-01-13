@@ -60,6 +60,7 @@ Legend:
 	(!) Categories ordering and categories in line setting moved to template; deprecated message added
 	(!) Different pathway items for search parameters and search result
 	(!) Improvement of search form (b3-default3) on mobile
+	(!) Extended search fields output in default templates moved to a separate template (searchfields.xsl)
 
 	(-) Suffix setting removed from image field
 
