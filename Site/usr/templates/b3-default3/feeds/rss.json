@@ -2,6 +2,7 @@
   "section-view": {
     "entries_limit": "5",
     "entries-ordering": "createdTime.desc",
+    "showrss": "entries",
     "entries_recursive": "1"
   },
   "category-view": {
