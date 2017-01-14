@@ -39,7 +39,7 @@
  * @version 1.1
  * @link http://github.com/chrisboulton/php-diff
  */
-defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
 class Diff_SequenceMatcher
 {
 	/**
@@ -83,7 +83,6 @@ class Diff_SequenceMatcher
 	 * @param string|array $a A string or array containing the lines to compare against.
 	 * @param string|array $b A string or array containing the lines to compare.
 	 * @param string|array $junkCallback Either an array or string that references a callback function (if there is one) to determine 'junk' characters.
-	 * @param $options
 	 */
 	public function __construct($a, $b, $junkCallback=null, $options)
 	{
@@ -208,8 +207,7 @@ class Diff_SequenceMatcher
 	 * Checks if a particular character is in the junk dictionary
 	 * for the list of junk characters.
 	 *
-	 * @param $b
-	 * @return bool $b True if the character is considered junk. False if not.
+	 * @return boolean $b True if the character is considered junk. False if not.
 	 */
 	private function isBJunk($b)
 	{

@@ -1,15 +1,14 @@
 <?php
-defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 /**
  * Base renderer for rendering HTML based diffs for PHP DiffLib.
  *
  * PHP version 5
  *
  * Copyright (c) 2009 Chris Boulton <chris.boulton@interspire.com>
- *
+ * 
  * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
+ * 
+ * Redistribution and use in source and binary forms, with or without 
  * modification, are permitted provided that the following conditions are met:
  *
  *  - Redistributions of source code must retain the above copyright notice,
@@ -17,20 +16,20 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  *  - Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- *  - Neither the name of the Chris Boulton nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
+ *  - Neither the name of the Chris Boulton nor the names of its contributors 
+ *    may be used to endorse or promote products derived from this software 
  *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package DiffLib
@@ -41,7 +40,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  * @link http://github.com/chrisboulton/php-diff
  */
 
-require_once dirname( __FILE__ ) . '/../Abstract.php';
+require_once dirname(__FILE__).'/../Abstract.php';
 
 class Diff_Renderer_Html_Array extends Diff_Renderer_Abstract
 {
@@ -173,12 +172,12 @@ class Diff_Renderer_Html_Array extends Diff_Renderer_Abstract
 	 * @param array $lines Array of lines to format.
 	 * @return array Array of the formatted lines.
 	 */
-	private function formatLines($lines)
+	protected function formatLines($lines)
 	{
 		$lines = array_map(array($this, 'ExpandTabs'), $lines);
 		$lines = array_map(array($this, 'HtmlSafe'), $lines);
 		foreach($lines as &$line) {
-			$line = preg_replace('# ( +)|^ #e', "\$this->fixSpaces('\\1')", $line);
+			$line = preg_replace_callback('# ( +)|^ #', array($this, 'fixSpaces'), $line);
 		}
 		return $lines;
 	}
@@ -186,11 +185,12 @@ class Diff_Renderer_Html_Array extends Diff_Renderer_Abstract
 	/**
 	 * Replace a string containing spaces with a HTML representation using &nbsp;.
 	 *
-	 * @param string $spaces The string of spaces.
+	 * @param string[] $matches Array with preg matches.
 	 * @return string The HTML representation of the string.
 	 */
-	function fixSpaces($spaces='')
+	private function fixSpaces(array $matches)
 	{
+		$spaces = $matches[1];
 		$count = strlen($spaces);
 		if($count == 0) {
 			return '';
