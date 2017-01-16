@@ -95,7 +95,7 @@ Legend:
 	(#) Missing size and label settings in search form for checkbox groups and radio buttons
 	(#) Section meta data are added always to meta data of entry and search forms
 	(#) Discard Changes while rejection of an entry never worked
-	(#) php-diff library updated (Issue #1760)
+	(#) Comparision library (php-diff) updated to work with PHP7 (Issue #1760)
 
 
 -------------------
