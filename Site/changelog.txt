@@ -61,6 +61,7 @@ Legend:
 	(!) Different pathway items for search parameters and search result
 	(!) Improvement of search form (b3-default3) on mobile
 	(!) Extended search fields output in default templates moved to a separate template (searchfields.xsl)
+	(!) Styles for version comparison screen improved
 
 	(-) Suffix setting removed from image field
 
