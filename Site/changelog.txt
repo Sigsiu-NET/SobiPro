@@ -27,7 +27,7 @@ Legend:
 
 
 -------------------
-1.3.3 ()
+1.3.3 (21 January 2017)
 -------------------
 	(+) Category dates available in XML data
 	(+) New field 'Button'
