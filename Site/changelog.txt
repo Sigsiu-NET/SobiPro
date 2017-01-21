@@ -35,7 +35,6 @@ Legend:
 	(+) Raw payment/discount values added to XSL nodes
 	(+) Raw payment values (values without currency) available as email placeholders
 	(+) Absolute discount support
-	(+) First common methods moved to Sobi Framework
 	(+) Load path 'storage' to load CSS and JS files from the Template Storage
 	(+) Width for radio buttons and checkbox groups in search form adjustable
 	(+) Categories can be shown in RSS feeds
@@ -67,7 +66,6 @@ Legend:
 	(-) Suffix setting removed from image field
 
 	(#) Checkboxes for backend settings are again vertically ordered
-	(#) Re-define standard Bootstrap alert-link colours (b3-default3 only)
 	(#) Re-define standard Bootstrap btn link colours (b3-default3 only)
 	(#) If no custom label for a URL set, but label given in the settings, it wasn't used (2nd try)
 	(#) If no custom label for an email set, but label given in the settings, it wasn't used (2nd try)
