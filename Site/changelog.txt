@@ -43,6 +43,7 @@ Legend:
 	(+) List of most popular and new categories in CPanel; by default off
 	(+) Global setting to switch off showing entries and categories in CPanel
 	(+) History/Logging types improved, more actions logged during rejection
+	(+) Possibility to sort categories by id in back-end
 
     (!) Bootstrap 3 updated to version 3.3.7 (local and CDN)
     (!) Font Awesome 4 updated to 4.6.3
