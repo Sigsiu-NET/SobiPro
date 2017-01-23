@@ -147,7 +147,7 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter"/>
-						<cell condition="/acl.category.edit">
+						<cell condition="/acl.category.edit" class="spPositionCol">
 							<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellArrowCol" condition="/corder.contains(position)">
 								<cell type="text" class="SpCellArrow">
 									<cell type="link" icon="chevron-up">
@@ -241,7 +241,7 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter"/>
-						<cell condition="/acl.entry.edit">
+						<cell condition="/acl.entry.edit" class="spPositionCol">
 							<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellArrowCol" condition="/eorder.contains(position)">
 								<cell type="text" class="SpCellArrow">
 									<cell type="link" icon="chevron-up">
