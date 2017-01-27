@@ -78,15 +78,21 @@
 						<field type="select" name="corder" selected="corder" class="input-large spOrdering">
 							<values>
 								<values label="ORDER_BY"/>
+								<option value="c_sid.asc" label="EMN.ORDER_BY_ID_ASC"/>
+								<option value="c_sid.desc" label="EMN.ORDER_BY_ID_DESC"/>
 								<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC"/>
 								<option value="name.desc" label="CATN.ORDER_BY_NAME_DESC"/>
 								<option value="state.asc" label="CATN.ORDER_BY_STATE_ASC"/>
 								<option value="state.desc" label="CATN.ORDER_BY_STATE_DESC"/>
+								<option value="createdTime.asc" label="ORDER_BY_CREATION_DATE_ASC"/>
+								<option value="createdTime.desc" label="ORDER_BY_CREATION_DATE_DESC"/>
+								<option value="updatedTime.asc" label="ORDER_BY_UPDATE_DATE_ASC"/>
+								<option value="updatedTime.desc" label="ORDER_BY_UPDATE_DATE_DESC"/>
 								<option value="approved.asc" label="CATN.ORDER_BY_APPR_ASC"/>
 								<option value="approved.desc" label="CATN.ORDER_BY_APPR_DESC"/>
 								<option value="position.asc" label="CATN.ORDER_BY_ORDER_ASC"/>
 								<option value="position.desc" label="CATN.ORDER_BY_ORDER_DESC"/>
-								<option value="owner.desc" label="CATN.ORDER_BY_OWNER"/>
+								<option value="owner.desc" label="CREATED_BY"/>
 							</values>
 						</field>
 						<field type="select" name="climit" selected="categories-limit" class="input-mini spOrdering">
@@ -141,7 +147,7 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter"/>
-						<cell condition="/acl.category.edit">
+						<cell condition="/acl.category.edit" class="spPositionCol">
 							<cell type="ordering" value="position" name="cp_sid[var:[id]]" class="SpCellArrowCol" condition="/corder.contains(position)">
 								<cell type="text" class="SpCellArrow">
 									<cell type="link" icon="chevron-up">
@@ -235,7 +241,7 @@
 							</url>
 						</cell>
 						<cell type="text" value="owner" class="SpCellCenter"/>
-						<cell condition="/acl.entry.edit">
+						<cell condition="/acl.entry.edit" class="spPositionCol">
 							<cell type="ordering" value="position" name="ep_sid[var:[id]]" class="SpCellArrowCol" condition="/eorder.contains(position)">
 								<cell type="text" class="SpCellArrow">
 									<cell type="link" icon="chevron-up">

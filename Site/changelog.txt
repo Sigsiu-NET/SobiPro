@@ -25,15 +25,14 @@ Legend:
  (-) - Removed
  (!) - Change
 
-1762
-
 -------------------
 1.3.4 ()
 -------------------
-	(#) Sorting the select list in search form for input box field (Issue #1762)
+	(+) Small layout improvement in Entries & Categories Manager
+
 
 -------------------
-1.3.3 ()
+1.3.3 (21 January 2017)
 -------------------
 	(+) Category dates available in XML data
 	(+) New field 'Button'
@@ -41,7 +40,6 @@ Legend:
 	(+) Raw payment/discount values added to XSL nodes
 	(+) Raw payment values (values without currency) available as email placeholders
 	(+) Absolute discount support
-	(+) First common methods moved to Sobi Framework
 	(+) Load path 'storage' to load CSS and JS files from the Template Storage
 	(+) Width for radio buttons and checkbox groups in search form adjustable
 	(+) Categories can be shown in RSS feeds
@@ -49,6 +47,7 @@ Legend:
 	(+) List of most popular and new categories in CPanel; by default off
 	(+) Global setting to switch off showing entries and categories in CPanel
 	(+) History/Logging types improved, more actions logged during rejection
+	(+) Possibility to sort categories by id, by creation date and by update date in back-end
 
     (!) Bootstrap 3 updated to version 3.3.7 (local and CDN)
     (!) Font Awesome 4 updated to 4.6.3
@@ -67,11 +66,11 @@ Legend:
 	(!) Different pathway items for search parameters and search result
 	(!) Improvement of search form (b3-default3) on mobile
 	(!) Extended search fields output in default templates moved to a separate template (searchfields.xsl)
+	(!) Styles for version comparison screen improved
 
 	(-) Suffix setting removed from image field
 
 	(#) Checkboxes for backend settings are again vertically ordered
-	(#) Re-define standard Bootstrap alert-link colours (b3-default3 only)
 	(#) Re-define standard Bootstrap btn link colours (b3-default3 only)
 	(#) If no custom label for a URL set, but label given in the settings, it wasn't used (2nd try)
 	(#) If no custom label for an email set, but label given in the settings, it wasn't used (2nd try)
