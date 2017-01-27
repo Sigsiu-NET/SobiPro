@@ -1,24 +1,24 @@
 <?php
 /**
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.fieldtype' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -54,7 +54,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	protected $metaSeparator = ' ';
 	/** @var bool */
 	protected $labelAsPlaceholder = false;
-	/** @var bool  */
+	/** @var bool */
 	static private $CAT_FIELD = true;
 
 
@@ -70,14 +70,14 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 		if ( defined( 'SOBIPRO_ADM' ) ) {
-			if ($this->bsWidth) {
-				$width = SPHtml_Input::_translateWidth($this->bsWidth);
-				$class .=  ' ' . $width;
+			if ( $this->bsWidth ) {
+				$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+				$class .= ' ' . $width;
 			}
 		}
 
 		$params = [ 'id' => $this->nid, /*'size' => $this->width,*/
-			'class' => $class ];
+				'class' => $class ];
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
@@ -85,13 +85,12 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		if ( $this->width ) {
 			$params[ 'style' ] = "width: {$this->width}px;";
 		}
-		if ($this->labelAsPlaceholder) {
-			$params['placeholder'] = $this->__get('name');
+		if ( $this->labelAsPlaceholder ) {
+			$params[ 'placeholder' ] = $this->__get( 'name' );
 		}
 
-
 		$value = $this->getRaw();
-		$value = strlen( $value )? $value : $this->defaultValue;
+		$value = strlen( $value ) ? $value : $this->defaultValue;
 
 		$field = SPHtml_Input::text( $this->nid, $value, $params );
 		if ( !$return ) {
@@ -122,6 +121,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	{
 		$data = $this->verify( $entry, $request );
 		if ( strlen( $data ) ) {
+			$a = Input::Search( $request, $request );
 			return SPRequest::search( $this->nid, $request );
 		}
 		else {
@@ -137,7 +137,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
-		$data = SPRequest::raw( $this->nid, null, $request );
+		$data = Input::Raw( $this->nid, null, $request );
 		$dexs = strlen( $data );
 		/* check if it was required */
 		if ( $this->required && !( $dexs ) ) {
@@ -204,8 +204,8 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		}
 
 		$data = $this->verify( $entry, $request );
-		$time = SPRequest::now();
-		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$time = Input::Now();
+		$IP = Input::Ip4( 'REMOTE_ADDR' );
 		$uid = Sobi::My( 'id' );
 
 		/* if we are here, we can save these data */
@@ -308,7 +308,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 				unset( $languages[ $defLang ] );
 			}
 			if ( count( $languages ) ) {
-				foreach( $languages as $language => $langData ) {
+				foreach ( $languages as $language => $langData ) {
 					foreach ( $langData as $sid => $fieldData ) {
 						if ( !( isset( $output[ $sid ] ) ) ) {
 							$output[ $sid ] = $fieldData;
@@ -321,7 +321,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELDS_DATA_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
-		$data = ( ( array ) $output );
+		$data = ( ( array )$output );
 		if ( count( $data ) ) {
 			$fdata[ '' ] = Sobi::Txt( 'FD.INBOX_SEARCH_SELECT', [ 'name' => $this->name ] );
 			foreach ( $data as $i => $d ) {
@@ -330,6 +330,15 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 				}
 			}
 		}
+		if ( function_exists( 'iconv' ) ) {
+			uasort( $fdata, function ( $a, $b ) {
+				return strcmp( iconv( 'UTF-8', 'ASCII//TRANSLIT', $a ), iconv( 'UTF-8', 'ASCII//TRANSLIT', $b ) );
+			} );
+		}
+		else {
+			asort( $fdata );
+		}
+
 		return SPHtml_Input::select( $this->nid, $fdata, $this->_selected, false, [ 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1', 'id' => $this->nid ] );
 	}
 
@@ -357,7 +366,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		$data = $startWith ? "{$data}%" : "%{$data}%";
 		$request = [ 'baseData' ];
 		if ( $ids ) {
-			$request[ ] = 'sid';
+			$request[] = 'sid';
 		}
 		try {
 			if ( $ids ) {
@@ -372,7 +381,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 				$terms = [];
 				if ( count( $result ) ) {
 					foreach ( $result as $row ) {
-						$terms[ ] = [ 'id' => $row[ 'sid' ], 'name' => SPLang::clean( $row[ 'baseData' ] ) ];
+						$terms[] = [ 'id' => $row[ 'sid' ], 'name' => SPLang::clean( $row[ 'baseData' ] ) ];
 					}
 				}
 			}
@@ -399,7 +408,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 			$sids = SPFactory::db()
 					/** Fri, Oct 9, 2015 15:10:42
 					 * We do not need the enabled / copy check as all entries are being verified in the search controller anyway
-					->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ) )
+					 * ->dselect( 'sid', 'spdb_field_data', array( 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ) )
 					 */
 					->dselect( 'sid', 'spdb_field_data', [ 'fid' => $this->fid, 'baseData' => $data, 'section' => $section ] )
 					->loadResultArray();

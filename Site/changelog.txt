@@ -25,6 +25,12 @@ Legend:
  (-) - Removed
  (!) - Change
 
+1762
+
+-------------------
+1.3.4 ()
+-------------------
+	(#) Sorting the select list in search form for input box field (Issue #1762)
 
 -------------------
 1.3.3 ()
