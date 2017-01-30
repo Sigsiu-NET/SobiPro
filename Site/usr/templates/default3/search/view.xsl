@@ -97,10 +97,12 @@
 					<xsl:value-of select="message"/>
 				</div>
 			</xsl:if>
-			<xsl:call-template name="entriesLoop"/>
-			<xsl:apply-templates select="navigation"/>
+			<div class="spListing search">
+				<xsl:call-template name="entriesLoop"/>
+				<xsl:apply-templates select="navigation"/>
 
-			<xsl:call-template name="bottomHook"/>
+				<xsl:call-template name="bottomHook"/>
+			</div>
 		</div>
 
 	</xsl:template>

@@ -30,9 +30,10 @@ Legend:
 -------------------
 	(+) Small layout improvement in Entries & Categories Manager
 
-	(#) Sorting the select list in search form for input box field (Issue #1762)
-
 	(!) Loading all fonts into the category edit screen
+
+	(#) Sorting the select list in search form for input box field (Issue #1762)
+	(#) Missing container 'spListing' added to search results
 
 
 -------------------
