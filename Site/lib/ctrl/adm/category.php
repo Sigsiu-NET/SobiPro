@@ -355,7 +355,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				$fit = new $fModel();
 				/* @var SPField $fit */
 				$fit->extend( $field );
-				$fields[ ] = $fit;
+				$fields[] = $fit;
 			}
 		}
 		return $fields;
@@ -370,7 +370,11 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			$this->setModel( SPLoader::loadModel( 'category' ) );
 		}
 		$this->checkTranslation();
-
+		$fonts = SPFactory::config()->getSettings();
+		$fonts = $fonts[ 'icon-fonts' ];
+		foreach ( $fonts as $font ) {
+			SPFactory::header()->addHeadLink( $font, null, null, 'stylesheet' );
+		}
 		$this->_model->formatDatesToEdit();
 		$id = $this->_model->get( 'id' );
 		if ( !$id ) {

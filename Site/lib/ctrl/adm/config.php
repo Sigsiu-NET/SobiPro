@@ -26,17 +26,11 @@ SPLoader::loadController( 'controller' );
  */
 class SPConfigAdmCtrl extends SPController
 {
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_type = 'config';
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_defTask = 'general';
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_aclCheck = 'section.configure';
 
 	public function __construct()
@@ -74,6 +68,7 @@ class SPConfigAdmCtrl extends SPController
 				$this->crawler();
 				break;
 			case 'fields':
+				/** @TODO check this static method */
 				$this->fields();
 				break;
 			case 'saveRejectionTpl':
