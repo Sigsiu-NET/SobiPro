@@ -34,6 +34,7 @@ Legend:
 
 	(#) Sorting the select list in search form for input box field (Issue #1762)
 	(#) Missing container 'spListing' added to search results
+	(#) icons.json not read from current template
 
 
 -------------------
