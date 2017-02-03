@@ -576,8 +576,15 @@ class SPEntryCtrl extends SPController
 			}
 			if ( $this->_task == 'add' ) {
 				SPFactory::header()
-					->addKeyword( $section->get( 'efMetaKeys' ) )
-					->addDescription( $section->get( 'efMetaDesc' ) );
+					->addKeyword( $section->get( 'efMetaKeys' ) );
+
+				$desc = $section->get( 'efMetaDesc' );
+				if ( $desc ) {
+					$separator = Sobi::Cfg( 'meta.separator', '.' );
+					$desc .= $separator;
+					SPFactory::header()
+						->addDescription( $desc );
+				}
 			}
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'EN.ADD_PATH_TITLE' ), Sobi::Url( 'current' ) );
 			SPFactory::mainframe()->setTitle( Sobi::Txt( 'EN.ADD_TITLE', [ 'section' => $section->get( 'name' ) ] ) );

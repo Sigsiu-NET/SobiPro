@@ -307,6 +307,7 @@
 								<fieldset label="SECN.CFG.META_DATA_SECTION">
 									<field type="toggle" name="spcfg[meta.always_add_section]" value="meta.always_add_section" label="SECN.CFG.META_DATA_ADD"
 									       prefix="yes_no"/>
+									<field type="text" name="spcfg[meta.separator]" value="meta.separator" label="FM.META_SEPARATOR" class="input-mini" maxlength="6" />
 									<field type="textarea" name="section.metaDesc" value="section.metaDesc" label="DESCRIPTION" editor="false"
 									       class="input-splarge" rows="2" style=""/>
 									<field type="textarea" name="section.metaKeys" value="section.metaKeys" label="KEYS" editor="false" class="input-splarge"

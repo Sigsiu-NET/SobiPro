@@ -30,6 +30,7 @@ Legend:
 -------------------
 	(+) Small layout improvement in Entries & Categories Manager
 	(+) Title and description for entry and search forms adjustable
+	(+) Meta description separator for section, search and entry forms adjustable
 
 	(!) Loading all fonts into the category edit screen
 
@@ -37,6 +38,8 @@ Legend:
 	(#) Missing container 'spListing' added to search results
 	(#) icons.json not read from current template
 	(#) Add to meta keys for checkbox groups fields added the data also to meta description
+	(#) Meta description cannot be added to the search and entry forms
+
 
 
 -------------------
