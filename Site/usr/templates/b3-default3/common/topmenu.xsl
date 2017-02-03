@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -22,6 +22,7 @@
 
 	<xsl:template name="topMenu">
 		<xsl:param name="searchbox"/>
+		<xsl:param name="title"/>
 
 		<!-- load the fonts needed -->
 		<xsl:call-template name="font"/>
@@ -29,6 +30,9 @@
 		<!-- Show the Directory name and description -->
 		<div class="pageheader lead">
 			<xsl:value-of select="section"/>
+			<xsl:if test="string-length($title) > 0">
+				<xsl:text> - </xsl:text><xsl:value-of select="$title"/>
+			</xsl:if>
 		</div>
 
 		<!-- if top menu is switched on in SobiPro settings -->

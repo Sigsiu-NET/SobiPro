@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -184,11 +186,23 @@ class SPEntryView extends SPFrontView implements SPView
 		$entry = $this->get( 'entry' );
 		$visitor = $this->get( 'visitor' );
 		$data = [];
+		$section = SPFactory::Section( Sobi::Section() );
 		$data[ 'section' ] = [
 				'_complex' => 1,
 				'_data' => Sobi::Section( true ),
 				'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
 		];
+		$data[ 'name' ] = [
+			'_complex' => 1,
+			'_data' => $section->get('efTitle'),
+			'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+		];
+		$data[ 'description' ] = [
+			'_complex' => 1,
+			'_data' => $section->get('efDesc'),
+			'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+		];
+
 		$en = [];
 		$en[ 'name' ] = [
 				'_complex' => 1,

@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
@@ -57,8 +57,12 @@
 									<field type="toggle" name="section.state" value="section.state" label="ENABLED" prefix="yes_no"/>
 									<field type="text" name="section.name" value="section.name" label="SECN.CFG.SECTION_NAME" class="input-xlarge"
 									       required="true"/>
+									<field type="text" name="section.nid" value="section.nid" label="SECN.ADD_SECTION_ALIAS"
+									       class="input-xlarge"/>
+<!--
 									<field type="text" name="section.nid" value="section.nid" readonly="readonly" label="SECN.ADD_SECTION_ALIAS"
 									       class="input-xlarge"/>
+-->
 									<field type="textarea" name="section.description" value="section.description" class="input-xxlarge" editor="true"
 									       label="SECN.CFG.SECTION_DESCRIPTION"/>
 								</fieldset>
@@ -69,6 +73,24 @@
 									       dateFormat="d-m-Y H:i:s" icon="unlock" addOffset="true"/>
 									<field type="datePicker" label="VALID_UNTIL" name="section.validUntil" value="section.validUntil" class=""
 									       dateFormat="d-m-Y H:i:s" icon="lock" addOffset="true"/>
+								</fieldset>
+							</div>
+						</div>
+					</tab>
+					<tab label="FORMS">
+						<div class="row-fluid">
+							<div class="span12">
+								<fieldset label="SECN.CFG.META_DATA_INPUT">
+									<field type="text" name="section.efTitle" value="section.efTitle" label="FORMS_TITLE"
+									       class="input-xlarge"/>
+									<field type="textarea" name="section.efDesc" value="section.efDesc" label="DESCRIPTION" editor="false"
+									       class="input-splarge" rows="2" style=""/>
+								</fieldset>
+								<fieldset label="SECN.CFG.META_DATA_SEARCH">
+									<field type="text" name="section.sfTitle" value="section.sfTitle" label="FORMS_TITLE"
+									       class="input-xlarge"/>
+									<field type="textarea" name="section.sfDesc" value="section.sfDesc" label="DESCRIPTION" editor="false"
+									       class="input-splarge" rows="2" style=""/>
 								</fieldset>
 							</div>
 						</div>
@@ -478,14 +500,14 @@
 						</div>
 					</tab>
 
-<!--
-					<tab label="SEC.STATISTICS">
-						<div class="row-fluid">
-							<div class="span12">
-							</div>
-						</div>
-					</tab>
--->
+					<!--
+										<tab label="SEC.STATISTICS">
+											<div class="row-fluid">
+												<div class="span12">
+												</div>
+											</div>
+										</tab>
+					-->
 
 				</tabs>
 			</div>

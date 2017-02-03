@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -63,13 +65,29 @@ final class SPSection extends SPDBObject implements SPDataModel
 	 */
 	protected $efMetaKeys = null;
 	/**
-	 * @var array
+	 * @var string
 	 */
-	private static $types = [ 'description' => 'html', 'sfMetaKeys' => 'string', 'sfMetaDesc' => 'string', 'efMetaKeys' => 'string', 'efMetaDesc' => 'string' ];
+	protected $efTitle = null;
+	/**
+	 * @var string
+	 */
+	protected $sfTitle = null;
+	/**
+	 * @var string
+	 */
+	protected $efDesc = null;
+	/**
+	 * @var string
+	 */
+	protected $sfDesc = null;
 	/**
 	 * @var array
 	 */
-	private static $translatable = [ 'description', 'name', 'metaKeys', 'metaDesc', 'sfMetaKeys', 'sfMetaDesc', 'efMetaKeys', 'efMetaDesc' ];
+	private static $types = [ 'description' => 'html', 'sfMetaKeys' => 'string', 'sfMetaDesc' => 'string', 'efMetaKeys' => 'string', 'efMetaDesc' => 'string', 'efDesc' => 'string', 'sfDesc' => 'string', 'efTitle' => 'string', 'sfTitle' => 'string' ];
+	/**
+	 * @var array
+	 */
+	private static $translatable = [ 'description', 'name', 'metaKeys', 'metaDesc', 'sfMetaKeys', 'sfMetaDesc', 'efMetaKeys', 'efMetaDesc', 'efDesc', 'sfDesc', 'efTitle', 'sfTitle' ];
 
 	/**
 	 */

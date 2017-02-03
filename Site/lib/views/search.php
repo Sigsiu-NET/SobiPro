@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -49,11 +51,22 @@ class SPSearchView extends SPSectionView implements SPView
 					}
 				}
 			}
-			$entries                 = $this->get( 'entries' );
+			$entries = $this->get( 'entries' );
 			$searchData[ 'section' ] = [
 				'_complex'    => 1,
 				'_data'       => Sobi::Section( true ),
 				'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
+			];
+			$section                 = SPFactory::Section( Sobi::Section() );
+			$searchData[ 'name' ]         = [
+				'_complex'    => 1,
+				'_data'       => $section->get( 'sfTitle' ),
+				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+			];
+			$searchData[ 'description' ]   = [
+				'_complex'    => 1,
+				'_data'       => $section->get( 'sfDesc' ),
+				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 			];
 
 			$searchPhrase = $this->get( 'search_for' );

@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -42,6 +42,7 @@
 		<div class="spListing section">
 			<xsl:call-template name="topMenu">
 				<xsl:with-param name="searchbox">true</xsl:with-param>
+				<xsl:with-param name="title"></xsl:with-param>
 			</xsl:call-template>
 			<xsl:apply-templates select="alphaMenu"/>
 			<xsl:apply-templates select="messages"/>
@@ -49,9 +50,11 @@
 			<h1 class="page-header lead">
 				<xsl:value-of select="name"/>
 			</h1>
-			<div class="spSectionDesc">
-				<xsl:value-of select="description" disable-output-escaping="yes"/>
-			</div>
+			<xsl:if test="string-length(description) > 0">
+				<div class="spSectionDesc">
+					<xsl:value-of select="description" disable-output-escaping="yes"/>
+				</div>
+			</xsl:if>
 
 			<xsl:if test="//config/hidecategories/@value != 'none'">
 				<xsl:if test="//config/hidecategories/@value = 'hide'">
