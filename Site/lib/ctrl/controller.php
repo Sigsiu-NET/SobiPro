@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 /**
@@ -145,11 +147,11 @@ abstract class SPController extends SPObject implements SPControl
 				}
 				$this->checkIn( SPRequest::int( 'sid' ) );
 				$r = true;
-				if ( SPRequest::int( 'sid' ) ) {
-					$url = Sobi::Url( [ 'sid' => SPRequest::sid() ] );
+				if ( Input::Sid() ) {
+					$url = Sobi::Url( [ 'sid' => Input::Sid() ] );
 				}
-				elseif ( SPRequest::int( 'pid' ) ) {
-					$url = Sobi::Url( [ 'sid' => SPRequest::int( 'pid' ) ] );
+				elseif ( Input::Int( 'pid' ) ) {
+					$url = Sobi::Url( [ 'sid' => Input::Int( 'pid' ) ] );
 				}
 				else {
 					$url = Sobi::Url( [ 'sid' => Sobi::Section() ] );
@@ -199,7 +201,7 @@ abstract class SPController extends SPObject implements SPControl
 
 	protected function checkTranslation()
 	{
-		$lang = SPRequest::cmd( 'sp-language', false, 'get' );
+		$lang = Input::Cmd( 'sp-language', 'get' );
 		if ( $lang && $lang != Sobi::Cfg( 'language' ) ) {
 			$languages = SPFactory::CmsHelper()->availableLanguages();
 			SPFactory::message()
@@ -265,7 +267,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
 		}
-		$sid = SPRequest::sid() ? SPRequest::sid() : SPRequest::int( $this->_type . '_id' );
+		$sid = Input::Sid() ? Input::Sid() : Input::Int( $this->_type . '_id' );
 		if ( $sid ) {
 			$this->_model->init( $sid );
 		}
@@ -485,8 +487,14 @@ abstract class SPController extends SPObject implements SPControl
 			foreach ( $config as $section => $setting ) {
 				$settings[ str_replace( '-', '.', $section ) ] = $setting;
 			}
-			if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'json' ) ) {
-				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'json' ) ), true );
+			if ( Input::Cmd( 'sptpl' ) ) {
+				$file = Input::String( 'sptpl' );
+			}
+			else {
+				$file = $task;
+			}
+			if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'json' ) ) {
+				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'json' ) ), true );
 				if ( count( $subConfig ) ) {
 					foreach ( $subConfig as $section => $subSettings ) {
 						foreach ( $subSettings as $k => $v ) {

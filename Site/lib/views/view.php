@@ -757,7 +757,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	/**
 	 * @param int $id
 	 * @param bool $parents
-	 * @return array
+	 * @return string
 	 */
 	protected function parentPath( $id, $parents = false )
 	{
@@ -910,7 +910,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	{
 		if ( !( isset( $this->_attr[ 'config' ] ) && count( $this->_attr[ 'config' ] ) ) && SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ) {
 			$config = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.config", 'absolute', true, 'json' ) ), true );
-			$task = SPRequest::task() == 'entry.add' ? 'entry.edit' : SPRequest::task();
+			$task = Input::Task() == 'entry.add' ? 'entry.edit' : Input::Task();
 			$settings = [];
 			foreach ( $config as $section => $setting ) {
 				$settings[ str_replace( '-', '.', $section ) ] = $setting;

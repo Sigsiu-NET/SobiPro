@@ -140,7 +140,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
-		$data = Input::Raw( $this->nid, null, $request );
+		$data = SPRequest::raw( $this->nid, null, $request );
 		$dexs = strlen( $data );
 		/* check if it was required */
 		if ( $this->required && !( $dexs ) ) {
@@ -148,9 +148,12 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		}
 		/* check if there was a filter */
 		if ( $this->filter && $dexs ) {
-			$registry =& SPFactory::registry();
-			$registry->loadDBSection( 'fields_filter' );
-			$filters = $registry->get( 'fields_filter' );
+			static $filters = null;
+			if ( !( $filters ) ) {
+				$registry = SPFactory::registry();
+				$registry->loadDBSection( 'fields_filter' );
+				$filters = $registry->get( 'fields_filter' );
+			}
 			$filter = isset( $filters[ $this->filter ] ) ? $filters[ $this->filter ] : null;
 			if ( !( count( $filter ) ) ) {
 				throw new SPException( SPLang::e( 'FIELD_FILTER_ERR', $this->filter ) );

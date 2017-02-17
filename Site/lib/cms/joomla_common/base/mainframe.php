@@ -294,7 +294,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			JFactory::getApplication()
 					->getPathway()
 					->addItem( $name, $url );
-			$this->pathway[ ] = [ 'name' => $name, 'url' => $url ];
+			$this->pathway[] = [ 'name' => $name, 'url' => $url ];
 		}
 		return $this;
 	}
@@ -382,7 +382,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				if ( isset( $part[ 'id' ] ) && $part[ 'id' ] == $sid ) {
 					break;
 				}
-				$path[ ] = $part;
+				$path[] = $part;
 			}
 			$path = array_reverse( $path );
 			/* ^^ skip everything above the linked sid */
@@ -390,7 +390,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$title = [];
 		// if there was an active menu - add its title to the browser title as well
 		if ( $sid ) {
-			$title[ ] = JFactory::getDocument()->getTitle();
+			$title[] = JFactory::getDocument()->getTitle();
 		}
 		/**
 		 * Mon, Jul 16, 2012
@@ -413,13 +413,13 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				if ( !( isset( $data[ 'name' ] ) || isset( $data[ 'id' ] ) ) || !( $data[ 'id' ] ) ) {
 					continue;
 				}
-				$title[ ] = $data[ 'name' ];
+				$title[] = $data[ 'name' ];
 				$this->addToPathway( $data[ 'name' ], ( self::url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $data[ 'alias' ] : $data[ 'name' ], 'sid' => $data[ 'id' ] ] ) ) );
 			}
 		}
 		if ( $obj->get( 'oType' ) == 'entry' ) {
 			$this->addToPathway( $obj->get( 'name' ), ( self::url( [ 'task' => 'entry.details', 'title' => Sobi::Cfg( 'sef.alias', true ) ? $obj->get( 'nid' ) : $obj->get( 'name' ), 'sid' => $obj->get( 'id' ) ] ) ) );
-			$title[ ] = $obj->get( 'name' );
+			$title[] = $obj->get( 'name' );
 		}
 //		if ( count( $site ) && $site[ 0 ] ) {
 //			$title[ ] = Sobi::Txt( 'SITES_COUNTER', $site[ 1 ], $site[ 0 ] );
@@ -684,25 +684,35 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				$link = 'index.php?option=com_sobipro&sid=' . $sid;
 			}
 		}
-		$item = $menu->getItems( 'link', $link, true );
-		if ( $item && count( $item ) ) {
-			if ( isset( $url[ 'sptpl' ] ) ) {
-				unset( $url[ 'sptpl' ] );
+		/** Fri, Feb 17, 2017 10:46:34 - check a direct link first - for e.g. linked entries */
+		if ( isset( $url[ 'sid' ] ) ) {
+			$item = $menu->getItems( 'link', 'index.php?option=com_sobipro&sid=' . $url[ 'sid' ], true );
+			if ( isset( $item ) && isset( $item->id ) ) {
+				$url[ 'Itemid' ] = $item->id;
 			}
-			$url[ 'Itemid' ] = $item->id;
 		}
+		if ( !( $url[ 'Itemid' ] ) ) {
+			$item = $menu->getItems( 'link', $link, true );
+			if ( $item && count( $item ) ) {
+				if ( isset( $url[ 'sptpl' ] ) ) {
+					unset( $url[ 'sptpl' ] );
+				}
+				$url[ 'Itemid' ] = $item->id;
+			}
 
-		$item = $menu->getItems( 'link', $link, true );
-		if ( $item && count( $item ) ) {
-			$url[ 'Itemid' ] = $item->id;
-		}
-		else {
-			$path = SPFactory::config()->getParentPath( $sid );
-			if ( count( $path ) ) {
-				foreach ( $path as $sid ) {
-					$item = $menu->getItems( 'link', 'index.php?option=com_sobipro&sid=' . $sid, true );
-					if ( $item && count( $item ) ) {
-						$url[ 'Itemid' ] = $item->id;
+			$item = $menu->getItems( 'link', $link, true );
+			if ( $item && count( $item ) ) {
+				$url[ 'Itemid' ] = $item->id;
+			}
+
+			else {
+				$path = SPFactory::config()->getParentPath( $sid );
+				if ( count( $path ) ) {
+					foreach ( $path as $sid ) {
+						$item = $menu->getItems( 'link', 'index.php?option=com_sobipro&sid=' . $sid, true );
+						if ( $item && count( $item ) ) {
+							$url[ 'Itemid' ] = $item->id;
+						}
 					}
 				}
 			}

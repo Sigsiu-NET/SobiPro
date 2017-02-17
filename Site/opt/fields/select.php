@@ -359,11 +359,14 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 						if ( isset( $selected[ $part ] ) && isset( $selected[ $part ][ 'childs' ] ) && count( $selected[ $part ][ 'childs' ] ) ) {
 							$selected = $selected[ $part ][ 'childs' ];
 						}
+						elseif ( isset( $selected[ $part ] ) ) {
+							$selected = $selected[ $part ][ 'id' ];
+						}
 						elseif ( $part != 0 && count( $selected ) ) {
 							throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $data, $this->name ) );
 						}
 					}
-					if ( count( $selected ) && !( $this->allowParents ) ) {
+					if ( is_array( $selected ) && count( $selected ) && !( $this->allowParents ) ) {
 						throw new SPException( SPLang::e( 'SELECT_FIELD_NO_PARENT', $this->name ) );
 					}
 				}

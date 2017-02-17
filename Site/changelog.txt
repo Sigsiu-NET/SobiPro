@@ -39,6 +39,9 @@ Legend:
 	(#) icons.json not read from current template
 	(#) Add to meta keys for checkbox groups fields added the data also to meta description
 	(#) Meta description cannot be added to the search and entry forms
+	(#) Wrong URL for directly linked entries (Issue #1764)
+	(#) Dependency field cannot be saved without allowed selecting parent (Issue #1772)
+	(#) Override json file data isn't passsed to the template xml config nodes (Issue #1770)
 
 
 
