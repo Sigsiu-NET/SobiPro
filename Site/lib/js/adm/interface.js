@@ -505,4 +505,22 @@ SobiPro.jQuery( document ).ready( function ()
 		}
 	} );
 
+	SobiPro.jQuery( 'ul.nav-tabs > li > a' ).on( 'shown.bs.tab', function ( e )
+	{
+		try {
+			localStorage.setItem( 'SobiProOpenTab', SobiPro.jQuery( e.target ).attr( 'href' ) );
+
+		}
+		catch ( x ) {
+		}
+	} );
+	var lastTab = localStorage.getItem( 'SobiProOpenTab' );
+	try {
+		if ( lastTab ) {
+			SobiPro.jQuery( '[href="' + lastTab + '"]' ).tab( 'show' );
+		}
+	}
+	catch ( x ) {
+	}
+
 } );

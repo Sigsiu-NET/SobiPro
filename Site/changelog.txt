@@ -31,6 +31,7 @@ Legend:
 	(+) Small layout improvement in Entries & Categories Manager
 	(+) Title and description for entry and search forms adjustable
 	(+) Meta description separator for section, search and entry forms adjustable
+	(+) Remembering last selected tab in local storage
 
 	(!) Loading all fonts into the category edit screen
 
