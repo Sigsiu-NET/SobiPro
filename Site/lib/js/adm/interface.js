@@ -264,7 +264,7 @@ SobiPro.jQuery( document ).ready( function ()
 
 	SobiPro.jQuery( '[name="spToggle"]' ).change( function ()
 	{
-		SobiPro.jQuery( '[name="' + SobiPro.jQuery( this ).attr( 'rel' ) + '[]"]' ).prop( 'checked', SobiPro.jQuery( this ).is( ':checked' ) );
+		SobiPro.jQuery( this ).parent().parent().parent().parent().parent().find( '[name="' + SobiPro.jQuery( this ).attr( 'rel' ) + '[]"]' ).prop( 'checked', SobiPro.jQuery( this ).is( ':checked' ) );
 	} );
 
 	SobiPro.jQuery( '[name="spReorder"]' ).click( function ( e )
