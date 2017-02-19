@@ -77,6 +77,14 @@
 										<values>
 											<option value="topmenu" label="TP.CONFIG.TOPMENU_STANDARD"/>
 											<option value="linkbar" label="TP.CONFIG.TOPMENU_BAR"/>
+											<option value="buttonbar" label="TP.CONFIG.TOPMENU_BUTTON"/>
+										</values>
+									</field>
+									<field type="select" label="TP.CONFIG.TOPMENU_BUTTON_POS" name="settings[config][general][buttonpos]"
+									       selected="settings.config.general.buttonpos" class="input-medium">
+										<values>
+											<option value="left" label="TP.CONFIG.LEFT"/>
+											<option value="right" label="TP.CONFIG.RIGHT"/>
 										</values>
 									</field>
 								</fieldset>
@@ -88,6 +96,7 @@
 											<option value="Lato" label="Lato (Google Font)"/>
 											<option value="Droid Sans" label="Droid Sans (Google Font)"/>
 											<option value="Raleway" label="Raleway (Google Font)"/>
+											<option value="Dosis" label="Dosis (Google Font)"/>
 										</values>
 									</field>
 
@@ -114,6 +123,7 @@
 											<option value="Pacifico" label="Pacifico (Google Font)"/>
 											<option value="Alegreya Sans SC" label="Alegreya Sans SC (Google Font)"/>
 											<option value="Ubuntu" label="Ubuntu (Google Font)"/>
+											<option value="Dosis" label="Dosis (Google Font)"/>
 										</values>
 									</field>
 								</fieldset>

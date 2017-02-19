@@ -26,6 +26,9 @@
 		<div class="spEntryEdit">
 			<xsl:call-template name="topMenu">
 				<xsl:with-param name="searchbox">false</xsl:with-param>
+				<xsl:with-param name="title">
+					<xsl:value-of select="name"/>
+				</xsl:with-param>
 			</xsl:call-template>
 			<xsl:apply-templates select="messages"/>
 

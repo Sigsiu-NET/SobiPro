@@ -77,6 +77,7 @@
 										<values>
 											<option value="topmenu" label="TP.CONFIG.TOPMENU_STANDARD"/>
 											<option value="linkbar" label="TP.CONFIG.TOPMENU_BAR"/>
+											<option value="buttonbar" label="TP.CONFIG.TOPMENU_BUTTON"/>
 										</values>
 									</field>
 								</fieldset>
@@ -88,6 +89,7 @@
 											<option value="Lato" label="Lato (Google Font)"/>
 											<option value="Droid Sans" label="Droid Sans (Google Font)"/>
 											<option value="Raleway" label="Raleway (Google Font)"/>
+											<option value="Dosis" label="Dosis (Google Font)"/>
 										</values>
 									</field>
 
@@ -114,6 +116,7 @@
 											<option value="Pacifico" label="Pacifico (Google Font)"/>
 											<option value="Alegreya Sans SC" label="Alegreya Sans SC (Google Font)"/>
 											<option value="Ubuntu" label="Ubuntu (Google Font)"/>
+											<option value="Dosis" label="Dosis (Google Font)"/>
 										</values>
 									</field>
 								</fieldset>
@@ -315,7 +318,7 @@
 											<option value="4" label="4"/>
 											<option value="5" label="5"/>
 										</values>
-									</field>
+									</field>  <!-- SobiPro setting! -->
 									<field type="toggle" name="settings[config][section-view][entries_recursive]"
 									       value="settings.config.section-view.entries_recursive" label="TP.CONFIG.LST_RECURSIVE"
 									       prefix="yes_no"/> <!-- SobiPro setting! -->

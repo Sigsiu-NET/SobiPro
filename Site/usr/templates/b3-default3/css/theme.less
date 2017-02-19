@@ -448,29 +448,22 @@ body.modal-open {
 	}
 	.btn,
 	.btn-submit {
-		//	font-weight: 500;
 		text-shadow: none;
-		//	font-size: @fontsize;
-		//  padding: 6px 12px;
 	}
 	.btn-sm,
 	.btn-group-sm > .btn {
 		padding: 5px 10px;
-		//		font-size: calc(@fontsize - 2px);
 	}
 	.btn-xs,
 	.btn-group-xs > .btn {
 		padding: 1px 5px;
-		//		font-size: calc(@fontsize - 2px);
 	}
 	.dropdown-menu,
 	.form-control {
-		//		font-size: @fontsize;
 	}
 	.input-sm,
 	.form-horizontal .form-group-sm .form-control {
 		padding: 5px 10px;
-		//		font-size: calc(@fontsize - 2px);
 		line-height: 1.5;
 	}
 	.lead {
@@ -526,28 +519,6 @@ body.modal-open {
 
 	// Overwrite some bootstrap styles resp. template changes
 	// ----------------------------------------
-	/* form-inline mode needs to be checked
-	.form-inline [class*="col-sm-"] {
-		float: none!important;
-	}
-	.form-inline .form-control {
-		display: block;
-	}
-	.form-inline label {
-		display: inline-block;
-		max-width: 100%;
-		width: 100%;
-		margin-bottom: 5px;
-	}
-	.form-inline .form-group {
-		display: inherit;
-		margin-bottom: 15px;
-	}
-	.form-inline .col-sm-offset-2 {
-		margin-left: 0;
-	}
-	*/
-
 	a:hover,
 	a:focus {
 		color: darken(@active-color, 10%);
@@ -613,22 +584,10 @@ body.modal-open {
 		font-weight: 500;
 		font-size: @fontsize;
 	}
-	/*
-	.label-info,
-	.badge-info {
-		background-color: @base-color;
-	}
-	*/
 	.label-sigsiu i,
 	.badge-sigsiu i,
 	.label-sigsiu a,
 	.badge-sigsiu a {
-		/*
-		.label-info i,
-		.badge-info i,
-		.label-info a,
-		.badge-info a {
-		*/
 		color: @text-color;
 		text-shadow: none;
 	}
@@ -737,7 +696,7 @@ body.modal-open {
 		}
 	}
 
-	// seems that is missed in bootstrap??
+	// seems that is missing in bootstrap??
 	.input-medium {
 		min-height: 30px;
 		-webkit-box-sizing: border-box;
@@ -792,6 +751,7 @@ body.modal-open {
 	}
 	.modal-body {
 		max-height: 550px;
+		overflow-y: auto;
 	}
 	.modal-header h3 {
 		.headertext;
@@ -1145,20 +1105,6 @@ body.modal-open {
 		color: @active-color;
 	}
 
-	//Redefine standard Bootstrap alert-link colours
-	//.alert-info .alert-link {
-	//	color: #245269;
-	//}
-	//.alert-danger .alert-link {
-	//	color: #843534;
-	//}
-	//.alert-success .alert-link {
-	//	color: #2b542c;
-	//}
-	//.alert-warning .alert-link {
-	//	color: #66512c;
-	//}
-
 	// define bootstrap alert to use it as mixin
 	.alert {
 		padding: 8px 15px 8px 14px;
@@ -1183,10 +1129,10 @@ body.modal-open {
 	// has to be defined by the template as several apps are using it
 	// conflicts with Joomla alerts in colour meaning
 	//.alert-message {
-		//border-style: solid;
-		//border-width: 1px;
-		//.alert;
-		//.spAlert;
+	//border-style: solid;
+	//border-width: 1px;
+	//.alert;
+	//.spAlert;
 	//}
 	.spMessage {
 		margin-top: 10px;
@@ -1303,40 +1249,55 @@ body.modal-open {
 			border-radius: 4px;
 		}
 	}
-	.topmenu .nav {
-		background: inherit;
+	.topmenu {
+		.nav {
+			background: inherit;
+		}
+		.nav > li,
+		.nav > li a {
+			color: @text-color;
+			line-height: 40px;
+			border-bottom: inherit;
+			text-align: inherit;
+		}
+		.nav > li a.active,
+		.nav > li a:focus,
+		.nav > li a:hover {
+			background-color: @active-color;
+			color: @hover-color;
+		}
+		.navbar-nav > li > a {
+			padding-top: 15px;
+			padding-bottom: 15px;
+			font-size: inherit;
+		}
+		.navbar-search {
+			margin-top: 15px;
+
+			input {
+				width: 115px;
+			}
+		}
+		input[type="text"] {
+			border-color: darken(@base-color, 5%);
+			height: inherit;
+			margin-bottom: inherit;
+		}
 	}
-	.topmenu .nav > li,
-	.topmenu .nav > li a {
-		color: @text-color;
-		line-height: 40px;
-		border-bottom: inherit;
-		text-align: inherit;
-	}
-	.topmenu .nav > li a.active,
-	.topmenu .nav > li a:focus,
-	.topmenu .nav > li a:hover {
-		background-color: @active-color;
-		color: @hover-color;
-	}
-	.topmenu .navbar-nav > li {
-		//	margin-left: inherit;
-	}
-	.topmenu .navbar-nav > li > a {
-		padding-top: 15px;
-		padding-bottom: 15px;
-		font-size: inherit;
-	}
-	.topmenu .navbar-search {
-		margin-top: 15px;
-	}
-	.topmenu .navbar-search input {
-		width: 115px;
-	}
-	.topmenu input[type="text"] {
-		border-color: darken(@base-color, 5%);
-		height: inherit;
-		margin-bottom: inherit;
+	.topmenu.buttonbar {
+		.menu {
+			float: left;
+		}
+		.add.right,
+		.search.right {
+			float: right;
+			margin-left: 5px;
+		}
+		.add.left,
+		.search.left {
+			float: left;
+			margin-left: 5px;
+		}
 	}
 
 	// Alphalist
@@ -1345,9 +1306,11 @@ body.modal-open {
 		float: left;
 		margin: 5px 10px 2px 1px;
 	}
+
 	.alphalist .dropdown-menu {
 		text-align: left;
 	}
+
 	.alphalist .btn.btn-xs {
 		padding: 1px 5px;
 		font-weight: unset;
@@ -1357,11 +1320,13 @@ body.modal-open {
 		margin-right: inherit;
 		text-transform: none;
 	}
+
 	.alpha .pagination {
 		margin-top: 5px;
 		width: inherit;
 		display: inline-block;
 	}
+
 	.alpha .pagination li a {
 		min-width: 20px;
 		text-align: center;
@@ -1373,14 +1338,17 @@ body.modal-open {
 			border-radius: 4px;
 		}
 	}
+
 	.alpha .pagination > li:first-child > a,
 	.alpha .pagination > li:first-child > span {
 		margin-left: 1px;
 	}
+
 	.alpha .pagination ul > li > a,
 	.alpha .pagination ul > li > span {
 		padding: inherit;
 	}
+
 	.alpha .pagination ul > li {
 		margin-right: inherit;
 	}
@@ -1393,32 +1361,40 @@ body.modal-open {
 		display: block;
 		line-height: 25px;
 	}
+
 	.spCatname p {
 		margin: 5px 0 0 0;
 		font-size: calc(@fontsize + 1px);
 	}
+
 	.spCaticon i {
 		color: @base-color;
 	}
+
 	.spCaticon [class^="fa-"],
 	.spCaticon [class*=" fa-"] {
 		margin-right: 0;
 	}
+
 	.spCaticon [class^="icon-"],
 	.spCaticon [class*=" icon-"] {
 		margin-right: 0;
 	}
+
 	.spCaticon {
 		text-align: center;
 		margin-top: 5px;
 	}
+
 	.spCaticon a {
 		color: @base-color;
 	}
+
 	.spCaticon a:hover {
 		color: @base-color;
 		text-decoration: none;
 	}
+
 	.spCatintro {
 		font-size: 90%;
 		line-height: 15px;
@@ -1441,30 +1417,38 @@ body.modal-open {
 		margin-bottom: 15px;
 		margin-top: 15px;
 	}
+
 	.spNavigationContainer .spEntryContainer {
 		margin-top: 0;
 	}
+
 	.spNavigationContainer {
 		margin-top: -15px;
 		padding-top: 15px;
 	}
+
 	.btn-navigation {
 		margin-top: 10px;
 		margin-bottom: 10px;
 	}
+
 	.spEntryCats {
 		font-size: 80%;
 	}
+
 	.spEntryCount {
 		font-size: calc(@fontsize - 2px);
 		color: @font-color;
 	}
+
 	.spSubcats {
 		line-height: 15px;
 	}
+
 	.spLabel {
 		font-weight: 700;
 	}
+
 	.spSectionDesc {
 		margin-bottom: 30px;
 		margin-top: 20px;
@@ -1493,6 +1477,7 @@ body.modal-open {
 		.background(light);
 		.borders(light);
 	}
+
 	.spDetailEntry .spNoImage {
 		width: 300px;
 		height: 200px;
@@ -1503,21 +1488,26 @@ body.modal-open {
 			font-size: calc((@big-image * 6) / 10);
 		}
 	}
+
 	.spNoImage i {
 		color: lighten(@base-color, 30%);
 	}
+
 	.spNoImageContainer {
 		display: flex;
 		display: -webkit-flex;
 	}
+
 	.spNoImageContainer.right {
 		float: right;
 		display: inline;
 	}
+
 	.spNoImageContainer.left {
 		float: left;
 		display: inline;
 	}
+
 	.spNoImage {
 		display: flex;
 		display: -webkit-flex;
@@ -1526,6 +1516,7 @@ body.modal-open {
 		justify-content: space-around;
 		-webkit-justify-content: space-around;
 	}
+
 	.spNoImage.stretch {
 		align-self: stretch;
 		-webkit-align-self: stretch;
@@ -1548,13 +1539,16 @@ body.modal-open {
 		margin-top: 10px;
 		min-height: 200px;
 	}
+
 	.spTablist {
 		margin-top: 20px;
 	}
+
 	.nav-pills a:focus,
 	.nav-tabs a:focus {
 		outline: none;
 	}
+
 	.nav-tabs > li > a {
 		& when (@corners = angular) {
 			border-radius: 0;
@@ -1565,9 +1559,11 @@ body.modal-open {
 	.tab-content.tabs.coloured .tab-pane {
 		margin-top: 0;
 	}
+
 	.tab-content.tabs.coloured .tab-pane.active {
 		border-top-left-radius: 0;
 	}
+
 	.nav-tabs.coloured > li.active > a,
 	.nav-tabs.coloured > li.active > a:hover,
 	.nav-tabs.coloured > li.active > a:focus {
@@ -1577,6 +1573,7 @@ body.modal-open {
 		.borders(light);
 		.bottomborder(lightbackground);
 	}
+
 	.nav-tabs.coloured {
 		border-bottom: none;
 	}
@@ -1586,9 +1583,11 @@ body.modal-open {
 		margin-top: -20px;
 		padding: 0;
 	}
+
 	.nav-pills.staples {
 		margin-top: 0;
 	}
+
 	.nav-pills.staples > .active > a,
 	.nav-pills.staples > .active > a:focus,
 	.nav-pills.staples > .active > a:hover {
@@ -1597,27 +1596,34 @@ body.modal-open {
 		border-bottom: 2px solid @active-color;
 		top: 20px;
 	}
+
 	.tab-content.pills.staples .tab-pane {
 		padding-top: 36px;
 	}
+
 	.nav-pills.staples > li {
 		opacity: 0.5;
 	}
+
 	.nav-pills.staples > li > a:hover,
 	.nav-pills.staples > li > a:focus {
 		background: none;
 	}
+
 	.nav-pills.staples > li:hover,
 	.nav-pills.staples > li.active {
 		opacity: 1.0;
 	}
+
 	ul.nav-pills.staples {
 		margin-left: 10px;
 	}
+
 	.nav-pills.staples > li > a {
 		border-top-left-radius: 0;
 		border-top-right-radius: 0;
 	}
+
 	.nav-pills.staples > li.active::before,
 	.nav-pills.staples > li.active::after {
 		top: 20px;
@@ -1627,11 +1633,13 @@ body.modal-open {
 		height: 0;
 		border-bottom: 14px solid #cdcdcd;
 	}
+
 	.nav-pills.staples > li.active::before {
 		left: -9px;
 		border-left: 10px solid transparent;
 		border-right: 0 solid transparent;
 	}
+
 	.nav-pills.staples > li.active::after {
 		right: -9px;
 		border-left: 0 solid transparent;
@@ -1643,12 +1651,15 @@ body.modal-open {
 	.spDetails {
 		font-size: @fontsize;
 	}
+
 	.spDetailEntry .spManage {
 		margin-right: 7px;
 	}
+
 	span.spDetailSuffix {
 		font-size: 80%;
 	}
+
 	.spDetailEntry .spClassViewImage img {
 		width: @big-image;
 	}
@@ -1660,11 +1671,13 @@ body.modal-open {
 		color: @important-color;
 		padding-left: 5px;
 	}
+
 	a.entry-status:hover,
 	a.entry-status:active,
 	a.entry-status:focus {
 		text-decoration: none;
 	}
+
 	// Popover in General
 	// ----------------------------------------
 	.popover {
@@ -1672,12 +1685,14 @@ body.modal-open {
 		font-weight: normal;
 		line-height: 20px;
 	}
+
 	.popover-inner .spclose {
 		padding-right: 8px;
 		padding-top: 5px;
 		font-size: calc(@fontsize + 1px);
 		text-shadow: none;
 	}
+
 	.popover .popover-title {
 		text-shadow: none;
 		font-weight: bold;
@@ -1685,58 +1700,72 @@ body.modal-open {
 
 	// Add entry form
 	// ----------------------------------------
-	.spEntryEdit .required {
-		border: 1px solid @important-color;
-	}
-	.spEntryEdit .spClassRadio.required,
-	.spEntryEdit .spClassCheckbox.required {
-		border: none;
-	}
-	.spEntryEdit textarea,
-	.spEntryEdit input[type="text"] {
-		margin-bottom: inherit;
-	}
-	.spEntryEdit .progress {
-		min-width: 100px;
-	}
-	.spEntryEdit .required-message {
-		margin: 25px 0 10px 0;
-	}
-	.spEntryEdit .star {
-		color: @important-color;
-		padding-left: 2px;
-		font-size: @fontsize;
-	}
-	.spEntryEdit .message-lightbulb {
-		left: 0;
-		position: relative;
-	}
-	& when (@corners = rounded) {
-		.spEntryEdit .message-lightbulb .popover-content {
-			border-bottom-left-radius: 6px;
-			border-bottom-right-radius: 6px;
+	.spEntryEdit {
+		.required {
+			border: 1px solid @important-color;
 		}
-	}
-	.spEntryEdit .message-lightbulb .popover.bottom {
-		margin-top: 0;
-	}
-	.spEntryEdit .popover-title {
-		color: @error-color;
-		font-size: calc(@fontsize + 3px);
-		font-weight: 400;
-	}
-	.spEntryEdit .popover-title::before {
-		font-family: FontAwesome;
-		content: "";
-		padding-right: 5px;
+
+		.spClassRadio.required,
+		.spClassCheckbox.required {
+			border: none;
+		}
+
+		textarea,
+		input[type="text"] {
+			margin-bottom: inherit;
+		}
+
+		.progress {
+			min-width: 100px;
+		}
+
+		.required-message {
+			margin: 25px 0 10px 0;
+		}
+
+		.star {
+			color: @important-color;
+			padding-left: 2px;
+			font-size: @fontsize;
+		}
+
+		.message-lightbulb {
+			left: 0;
+			position: relative;
+		}
+
+		& when (@corners = rounded) {
+			.message-lightbulb .popover-content {
+				border-bottom-left-radius: 6px;
+				border-bottom-right-radius: 6px;
+			}
+		}
+
+		.message-lightbulb .popover.bottom {
+			margin-top: 0;
+		}
+
+		.popover-title {
+			color: @error-color;
+			font-size: calc(@fontsize + 3px);
+			font-weight: 400;
+		}
+
+		.popover-title::before {
+			font-family: FontAwesome;
+			content: "";
+			padding-right: 5px;
+		}
 	}
 	.spSearch select.spClassCategory,
 	.spEntryEdit select.spClassCategory {
 		margin-bottom: 3px;
 	}
+
 	.editor {
 		overflow: visible;
 	}
+
 	.spUpload {
 		.span1 {
 			margin-left: 10px;
@@ -1745,9 +1774,11 @@ body.modal-open {
 			margin-top: 5px;
 		}
 	}
+
 	.spClassEditInfo {
 		margin-top: 10px;
 	}
+
 	// URL and Email Fields
 	// ----------------------------------------
 	.spFieldSelect select,
@@ -1756,24 +1787,28 @@ body.modal-open {
 	.spFieldUrlLabel {
 		margin-bottom: 5px;
 	}
+
 	& when (@corners = rounded) {
 		.spFieldButton .input-group-btn select,
 		.spFieldUrl .input-group-btn select {
 			border-radius: 4px 0 0 4px;
 		}
 	}
+
 	.spFieldButton .input-group select.form-control,
 	.spFieldButton select,
 	.spFieldUrl .input-group select.form-control,
 	.spFieldUrl select {
 		width: 100px;
 	}
+
 	.spButtonCounterValue,
 	.spUrlCounterValue {
 		font-size: 85%;
 		color: grey;
 		padding-left: 18px;
 	}
+
 	.spCountableReset {
 		margin-top: 5px;
 	}
@@ -1784,6 +1819,7 @@ body.modal-open {
 		float: left;
 		min-height: 65px;
 	}
+
 	.spEditImagePreview img {
 		padding: 4px;
 		background-color: #fff;
@@ -1796,14 +1832,17 @@ body.modal-open {
 			border-radius: 4px;
 		}
 	}
+
 	.spImageField input[type='checkbox'] {
 		//		margin: 1px 5px 5px 0;
 		margin: 4px 5px 5px -20px;
 	}
+
 	.spImageField label {
 		display: inline-block;
 		padding-left: 20px;
 	}
+
 	.spImageUpload {
 		.span1 {
 			margin-left: 10px;
@@ -1813,25 +1852,31 @@ body.modal-open {
 		}
 		margin-bottom: 3px;
 	}
+
 	// Sigsiu Tree
 	// ----------------------------------------
 	.SigsiuTree .selected {
 		margin-top: 10px;
 	}
+
 	.SigsiuTree .selected select {
 		min-height: 100px;
 		width: 100%;
 	}
+
 	.SigsiuTree .buttons {
 		text-align: right;
 		margin-top: 12px;
 	}
+
 	.SigsiuTree .buttons button {
 		margin: 3px 0 10px 3px;
 	}
+
 	.SigsiuTree .buttons button i::after {
 		content: ' ';
 	}
+
 	.SigsiuTree .tree {
 		overflow: auto;
 		max-height: 250px;
@@ -1845,26 +1890,29 @@ body.modal-open {
 	.spFieldRadio {
 		display: inline-block;
 	}
+
 	.spFieldRadio label,
 	.spFieldCheckbox label {
 		float: left;
 		color: #666666;
 	}
 
-	//BS3 does not have the option of label right of input box -> simulate
 	.radio.left input[type="radio"],
 	.radio-inline.left input[type="radio"],
 	.checkbox.left input[type="checkbox"],
 	.checkbox-inline.left input[type="checkbox"] {
 		margin-left: 10px;
 	}
+
 	.radio-inline.left,
 	.checkbox-inline.left {
 		padding-left: 0;
 	}
+
 	.checkbox + .checkbox, .radio + .radio {
 		margin-top: -5px;
 	}
+
 	.spFieldRadio input,
 	.spFieldCheckbox input {
 		margin-top: 3px;
@@ -1878,10 +1926,12 @@ body.modal-open {
 		float: left;
 		width: calc(100% / 2 - 5px);
 	}
+
 	.spSelectRangeFrom select,
 	.spSelectRangeFrom .input-group {
 		margin: 0 5px 10px 0;
 	}
+
 	.spSelectRangeTo select,
 	.spSelectRangeTo .input-group {
 		margin: 0 0 10px 5px;
@@ -1895,9 +1945,11 @@ body.modal-open {
 		border: 1px solid darken(@alert-color, 10%);;
 		background-color: @alert-color;
 	}
+
 	.form-inline .control-label div.paybox {
 		margin-bottom: 12px;
 	}
+
 	.form-group.payment-message,
 	.control-group.payment-message {
 		padding-top: 10px;
@@ -1909,38 +1961,45 @@ body.modal-open {
 	.spSelectRangeTo span {
 		min-width: 34px;
 	}
+
 	.SPSearch .highlight,
 	.spSearch .highlight {
 		background-color: yellow;
 	}
+
 	.sp-search-controls input {
 		margin-bottom: 10px;
 	}
-
 
 	// Payment popup
 	// ----------------------------------------
 	table.payment td {
 		line-height: 10px;
 	}
+
 	table tr.summary td {
 		background-color: #ffffff !important;
 		padding-top: 25px;
 	}
+
 	table.payment tbody tr.info > td {
 		.borders(medium);
 		.background(medium);
 	}
+
 	table.payment tbody tr.success > td {
 		background-color: lighten(@alert-color, 20%);
 	}
+
 	table tr.sum td {
 		font-weight: bold;
 	}
+
 	.disabledArea {
 		opacity: 0.3;
 		cursor: progress;
 	}
+
 	.disabledArea a {
 		cursor: progress;
 	}
@@ -1952,6 +2011,7 @@ body.modal-open {
 	div.spClassViewUrl {
 		padding-top: 10px;
 	}
+
 	.popover img,
 	.spClassViewImage img {
 		padding: 4px;
@@ -1963,6 +2023,7 @@ body.modal-open {
 			border-radius: 4px;
 		}
 	}
+
 	.spEntryContainer .spClassViewImage img {
 		width: @small-image;
 		margin-bottom: 5px;
@@ -1984,6 +2045,7 @@ body.modal-open {
 			}
 		}
 	}
+
 	ul.spNavigationLinks {
 		text-align: right;
 		border-bottom: 1px solid;
@@ -2002,15 +2064,19 @@ body.modal-open {
 		background-color: @base-color;
 		color: @text-color;
 	}
+
 	.tooltip.top .tooltip-arrow {
 		border-top-color: @base-color;
 	}
+
 	.tooltip.bottom .tooltip-arrow {
 		border-bottom-color: @base-color;
 	}
+
 	.tooltip.left .tooltip-arrow {
 		border-left-color: @base-color;
 	}
+
 	.tooltip.right .tooltip-arrow {
 		border-right-color: @base-color;
 	}
@@ -2019,18 +2085,47 @@ body.modal-open {
 	// -----------------------------------------------
 	.carousel-inner {
 		height: @carousel-image;
+
+		.carousel-caption {
+			background-color: transparent;
+			color: white;
+			font-weight: 600;
+		}
 	}
+
 	.carousel-inner > .item > img,
 	.carousel-inner > .item > a > img {
 		height: @carousel-image;
 	}
+
 	.carousel-inner img.sp-carousel-image {
 		margin-left: auto;
 		margin-right: auto;
 	}
+
+	.carousel-indicators {
+		top: auto;
+		right: auto;
+
+		li {
+			float: none;
+		}
+	}
+
+	.carousel-control {
+		height: unset;
+		margin-top: -20px;
+		line-height: unset;
+		border: 0 solid #fff;
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
+	}
+
 	.carousel-control.right {
 		background-image: linear-gradient(to right, transparent 0, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 100%);
 	}
+
 	.carousel-control.left {
 		background-image: linear-gradient(to right, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 0, transparent 100%);
 	}
@@ -2072,6 +2167,7 @@ body.modal-open {
 			margin-top: -10px;
 		}
 	}
+
 	// Entries Module
 	// -----------------------------------------------
 	.ctrl-emod-navigation {
@@ -2084,6 +2180,7 @@ body.modal-open {
 			}
 		}
 	}
+
 	.spModule .spModuleContainer {
 		margin-top: 15px;
 		margin-bottom: 15px;
@@ -2104,24 +2201,34 @@ body.modal-open {
 			border-radius: 4px;
 		}
 	}
+
 	.mapSearch input {
 	}
 
 	// Aggregation Field
 	// -----------------------------------------------
-	.bootstrap-tagsinput .tag {
-		color: @text-color;
+	.bootstrap-tagsinput {
+		.tag {
+			color: @text-color;
+		}
+		.tag [data-role="remove"] {
+			color: darken(@text-color, 10%);
+		}
+		input {
+			width: initial;
+		}
+		input:focus[type="text"],
+		input:focus {
+			border: none;
+			box-shadow: none;
+		}
 	}
-	.bootstrap-tagsinput .tag [data-role="remove"] {
-		color: darken(@text-color, 10%);
-	}
+
 	div.spClassViewAggregation,
 	div.spClassViewAggregation a {
 		color: @active-color;
 	}
-	.bootstrap-tagsinput input {
-		width: initial;
-	}
+
 	// Review and Rating App
 	// -----------------------------------------------
 	.review-ajax-navigation:hover,
@@ -2129,17 +2236,20 @@ body.modal-open {
 	.review-ajax-navigation .icon-chevron-down {
 		color: @base-color;
 	}
+
 	.review-first {
 		font-size: calc(@fontsize + 2px);
 		i {
 			color: @base-color;
 		}
 	}
+
 	.rating-summary .criteria,
 	.review-container .criteria {
 		line-height: 1.428571429;
 		min-height: 22px;
 	}
+
 	.review-container {
 		.rating-criteria {
 			font-size: calc(@fontsize + 1px);
@@ -2171,28 +2281,34 @@ body.modal-open {
 	.spListing h3 {
 		color: @base-color;
 	}
+
 	table.SpCalendar th,
 	table.SpCalendar td,
 	table.SpCalendar {
 		.background(light);
 		.borders(light);
 	}
+
 	table.SpCalendar td.SpCalSun {
 		.borders(medium);
 		.background(medium);
 	}
+
 	table.SpCalendar th {
 		color: @base-color;
 	}
+
 	.spCalDayHead .navbar-inner {
 		background-color: @alert-color;
 		color: @text-color;
 		font-size: calc(@fontsize + 1px);;
 	}
+
 	.spCalendarDayHead .navbar-text,
 	.spcalNav a {
 		font-size: calc(@fontsize + 1px);;
 	}
+
 	.SpCalDay.badge {
 		background-color: @alert-color;
 		color: @active-color;
@@ -2203,6 +2319,7 @@ body.modal-open {
 		border-color: darken(@alert-color, 8%);
 		font-weight: 400;
 	}
+
 	.spClassCalendarRepeat {
 		margin-top: 5px;
 	}
@@ -2228,21 +2345,25 @@ body.modal-open {
 		.background(light);
 		.borders(light);
 	}
+
 	.spCollection .nav > li > a {
 		border-color: fade(#ffffff, 0%);
 	}
+
 	.spCollection .nav > li > a:hover,
 	.spCollection .nav > li > a:focus {
 		border-color: darken(@hover-color, 10%);
 		background-color: @hover-color;
 		color: @active-color;
 	}
+
 	.ctrl-collection-remove-item {
 		margin-top: 5px;
 		i {
 			font-size: @fontsize;
 		}
 	}
+
 	.collection-entry-container .page-header,
 	.btnCollection i {
 		font-size: calc(@fontsize + 3px);
@@ -2253,22 +2374,27 @@ body.modal-open {
 	.spGalleryDropArea div.table .file-row {
 		.background(light);
 	}
+
 	.spGalleryDropArea,
 	.spGalleryDropArea div.table .file-row > div {
 		.borders(light);
 	}
+
 	.pswp__share-tooltip a:hover {
 		color: @hover-color;
 		background-color: @active-color;
 	}
+
 	& when (@corners = rounded) {
 		.pswp__share-tooltip {
 			border-radius: 4px;
 		}
 	}
+
 	.pswp__share-modal {
 		background: rgba(red(@base-color), green(@base-color), blue(@base-color), 0.5);
 	}
+
 	.pswp__share-modal--fade-in {
 		opacity: 1;
 	}
@@ -2279,10 +2405,12 @@ body.modal-open {
 		.background(light);
 		.borders(light);
 	}
+
 	.spProfile.striped > blockquote:nth-child(2n) {
 		.borders(medium);
 		.background(medium);
 	}
+
 	.spProfileSection {
 		color: @base-color;
 	}
@@ -2312,11 +2440,13 @@ body.modal-open {
 			font-size: 14px;
 		}
 	}
+
 	.modal-footer {
 		.btn {
 			font-size: 14px;
 		}
 	}
+
 	.modal-header {
 		.spMessage {
 			font-size: 14px;
@@ -2341,6 +2471,7 @@ body.modal-open {
 	//@media (min-width: 768px) and (max-width: 979px) {
 	@media (min-width: 769px) and (max-width: 991px) {
 	}
+
 	/* Small devices (tablets, 768px and up) */
 	@screen-sm-min: 768px;
 	@media (max-width: @screen-sm-min) {
@@ -2443,12 +2574,14 @@ body.modal-open {
 		.nav-pills > li + li {
 			margin-left: 0;
 		}
+
 		.form-horizontal .control-label {
 			float: none;
 			width: 100%;
 			text-align: left;
 		}
 	}
+
 	// form switch to label above input
 	@media (max-width: 599px) {
 		.spEntryContainer > .row-fluid > [class*='span'],
@@ -2484,6 +2617,7 @@ body.modal-open {
 			width: 100%;
 		}
 	}
+
 	// Landscape phones and down
 	@media (max-width: 480px) {
 		.modal .form-group,
@@ -2521,14 +2655,17 @@ body.modal-open {
 		.sp-search-controls .btn {
 			width: 100%;
 		}
+
 		.spSelectRangeFrom .input-group,
 		.spSelectRangeTo .input-group {
 			margin: 0 10px 10px 0;
 			width: 100%;
 		}
+
 		.sp-search-controls .btn {
 			margin-bottom: 6px;
 		}
+
 		.sp-search-phrases .btn {
 			width: calc(100% / 3);
 			font-size: calc(@fontsize - 1px);
@@ -2542,7 +2679,7 @@ body.modal-open {
 			min-height: inherit;
 		}
 
-		// Navigation Link Bar
+		// Link Bar
 		// -----------------------------------------------
 		.alert-navigationlinks {
 			height: auto;
@@ -2563,8 +2700,27 @@ body.modal-open {
 			}
 		}
 
+		// Button Bar
+		// -----------------------------------------------
+		.topmenu.buttonbar {
+			margin-bottom: 0;
+			.menu,
+			.add,
+			.search {
+				float: none;
+				width: 100%;
+				padding-bottom: 4px;
+				margin-left: 0;
+
+				a {
+					width: 100%;
+				}
+			}
+		}
+
 		.lead {
 			text-align: center;
 		}
 	}
+
 }

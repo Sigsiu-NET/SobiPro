@@ -5,11 +5,11 @@
 	<authorName>Sigrid Suski and Radek Suski</authorName>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
-	<copyright>Copyright (C) 2006-2016 Sigsiu.NET GmbH</copyright>
+	<copyright>Copyright (C) 2006-2017 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License</license>
-	<creationDate>2016-06-28</creationDate>
-	<version>3.3</version>
-	<description>Default Template for SobiPro 1.2+ with Bootstrap 2 support.
+	<creationDate>2017-02-28</creationDate>
+	<version>3.4</version>
+	<description>Default Template for SobiPro 1.3+ with Bootstrap 2 support.
 	This template makes use of Bootstrap 2 and Font Awesome 3 elements and styles.</description>
 	<files>
 		<file path="category/view.xsl">
@@ -44,6 +44,9 @@
 		</file>
 		<file path="common/navigation.xsl">
 			Template for the site navigation.
+		</file>
+		<file path="common/searchfields.xsl">
+			Template to output one field in the search. Called from default loop.
 		</file>
 		<file path="common/showfields.xsl">
 			Template to output one field in vCard and details view. Called from default loop.

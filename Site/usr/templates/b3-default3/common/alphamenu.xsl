@@ -22,7 +22,7 @@
 	<xsl:template match="alphaMenu">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="spAlphamenu text-center">
+				<div class="spAlphamenu">
 					<xsl:if test="count( fields/* )">
 						<div class="alphalist">
 							<div class="btn-group" role="group">

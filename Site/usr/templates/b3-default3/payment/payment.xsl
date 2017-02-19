@@ -28,6 +28,7 @@
 		<div class="SPPayment spPayment">
 			<xsl:call-template name="topMenu">
 				<xsl:with-param name="searchbox">true</xsl:with-param>
+				<xsl:with-param name="title"></xsl:with-param>
 			</xsl:call-template>
 			<xsl:apply-templates select="messages"/>
 

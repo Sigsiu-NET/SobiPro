@@ -57,15 +57,15 @@ SobiPro.jQuery( document ).ready( function ()
 	{
 		var e = SobiPro.jQuery( e );
 		if ( ! ( e.hasClass( 'active' ) ) ) {
-			e.removeClass( 'btn-success' );
+			e.removeClass( 'btn-sigsiu' );
 		}
 		e.click( function ()
 		{
 			SobiPro.jQuery( e )
 				.parent()
 				.find( '.spsearchphrase' )
-				.removeClass( 'btn-success' ).addClass('btn-default');
-			SobiPro.jQuery( e ).removeClass('btn-default').addClass('btn-success');
+				.removeClass( 'btn-sigsiu' ).addClass('btn-default');
+			SobiPro.jQuery( e ).removeClass('btn-default').addClass('btn-sigsiu').removeClass('btn-success');
 		} );
 	} );
 

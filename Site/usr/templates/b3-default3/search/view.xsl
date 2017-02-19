@@ -34,7 +34,9 @@
 		<div class="spSearch">
 			<xsl:call-template name="topMenu">
 				<xsl:with-param name="searchbox">false</xsl:with-param>
-				<xsl:with-param name="title"></xsl:with-param>
+				<xsl:with-param name="title">
+					<xsl:value-of select="name"/>
+				</xsl:with-param>
 			</xsl:call-template>
 
 			<xsl:apply-templates select="alphaMenu"/>
@@ -79,7 +81,7 @@
 									<xsl:for-each select="/search/fields/phrase/data/*">
 										<label class="sphrase btn btn-default">
 											<xsl:if test="./input/@checked = 'checked'">
-												<xsl:attribute name="class">sphrase btn btn-success active</xsl:attribute>
+												<xsl:attribute name="class">sphrase btn btn-sigsiu active</xsl:attribute>
 											</xsl:if>
 											<xsl:attribute name="for">
 												<xsl:value-of select="./@for"/>

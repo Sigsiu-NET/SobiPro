@@ -32,8 +32,12 @@ Legend:
 	(+) Title and description for entry and search forms adjustable
 	(+) Meta description separator for section, search and entry forms adjustable
 	(+) Remembering last selected tab in local storage
+	(+) New Google Font 'Dosis' added to both templates
+	(+) New toolbar style 'buttonbar'
 
 	(!) Loading all fonts into the category edit screen
+	(!) Search phrases adapted to template style
+	(!) Login redirect added to toolbar style 'linkbar'
 
 	(#) Sorting the select list in search form for input box field (Issue #1762)
 	(#) Missing container 'spListing' added to search results
@@ -44,7 +48,7 @@ Legend:
 	(#) Dependency field cannot be saved without allowed selecting parent (Issue #1772)
 	(#) Override json file data isn't passsed to the template xml config nodes (Issue #1770)
 	(#) Selecting fields in fields manager via checkbox does not distinguish betweend entry and category fields (Issue #1765)
-
+	(#) Several small template corrections
 
 
 -------------------
