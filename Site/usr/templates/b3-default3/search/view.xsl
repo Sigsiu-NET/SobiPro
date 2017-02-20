@@ -50,10 +50,10 @@
 
 			<xsl:variable name="sparam">
 				<xsl:choose>
-				<xsl:when test="//config/hidesearch/@value = 1">
-					<xsl:value-of select="php:function( 'SobiPro::Request', 'sparam' )"/>
-				</xsl:when>
-				<xsl:otherwise></xsl:otherwise>
+					<xsl:when test="//config/hidesearch/@value = 1">
+						<xsl:value-of select="php:function( 'SobiPro::Request', 'sparam' )"/>
+					</xsl:when>
+					<xsl:otherwise>in</xsl:otherwise>
 				</xsl:choose>
 			</xsl:variable>
 
@@ -72,13 +72,13 @@
 									       placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}"/>
 									<xsl:if test="/search/fields/top_button/label">
 										<button type="submit" class="btn btn-primary btn-sigsiu">
-											<xls:text>&#160;</xls:text>
+											<xsl:text>&#160;</xsl:text>
 											<xsl:value-of select="/search/fields/top_button/label"/>
 										</button>
 									</xsl:if>
 									<xsl:if test="count( /search/fields/* ) &gt; 3 and //config/extendedsearch/@value = 'show'">
 										<button type="button" class="btn btn-default" name="SPExOptBt" id="SPExOptBt">
-											<xls:text>&#160;</xls:text>
+											<xsl:text>&#160;</xsl:text>
 											<xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )"/>
 										</button>
 									</xsl:if>
@@ -126,6 +126,7 @@
 			</div>
 
 			<xsl:if test="//config/hidesearch/@value = 1">
+				<div class="spSearchBottom">
 				<xsl:choose>
 					<xsl:when test="$sparam = 'in'">
 						<button class="btn btn-info" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea" aria-expanded="true"
@@ -133,7 +134,7 @@
 							<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.SEARCH_HIDE' )"/>
 						</button>
 						<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu">
-							<xls:text>&#160;</xls:text>
+							<xsl:text>&#160;</xsl:text>
 							<xsl:value-of select="/search/fields/top_button/label"/>
 						</button>
 					</xsl:when>
@@ -143,11 +144,12 @@
 							<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.SEARCH_REFINE' )"/>
 						</button>
 						<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu hidden">
-							<xls:text>&#160;</xls:text>
+							<xsl:text>&#160;</xsl:text>
 							<xsl:value-of select="/search/fields/top_button/label"/>
 						</button>
 					</xsl:otherwise>
 				</xsl:choose>
+				</div>
 			</xsl:if>
 
 			<xsl:if test="message">

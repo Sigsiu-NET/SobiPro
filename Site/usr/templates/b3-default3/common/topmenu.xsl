@@ -51,7 +51,7 @@
 										<a href="{//menu/front/@url}">
 											<xsl:choose>
 												<xsl:when test="//menu/search">
-													<xsl:if test="$currentUrl != //menu/add/@url and $currentUrl != //menu/search/@url">
+													<xsl:if test="$currentUrl != //menu/add/@url and not(contains($currentUrl, //menu/search/@url))">
 														<xsl:attribute name="class">active</xsl:attribute>
 													</xsl:if>
 												</xsl:when>
@@ -95,7 +95,7 @@
 								<xsl:if test="//menu/search">
 									<li>
 										<a href="{//menu/search/@url}/?sparam=in">
-											<xsl:if test="$currentUrl = //menu/search/@url">
+											<xsl:if test="contains($currentUrl, //menu/search/@url)">
 												<xsl:attribute name="class">active</xsl:attribute>
 											</xsl:if>
 											<i class="icon-search"></i>
