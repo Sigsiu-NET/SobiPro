@@ -4,7 +4,7 @@
 /* Authors: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH */
 /* Url: https://www.Sigsiu.NET */
 /**/
-/* @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved. */
+/* @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved. */
 /* @license GNU/GPL Version 3 */
 /* This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 */
 /* as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3. */
@@ -70,6 +70,62 @@
 
 // Mixins
 // ----------------------------------------
+.background(dark) {
+	background-color: lighten(@base-color, 20%);
+	& when (@colour-set = cornflower) {
+		background-color: lighten(@base-color, 22%);
+	}
+	& when (@colour-set = cornfield) {
+		background-color: lighten(@base-color, 8%);
+	}
+	& when (@colour-set = malva) {
+		border-color: lighten(@base-color, 18%);
+	}
+	& when (@colour-set = meadow) {
+		background-color: lighten(desaturate(@base-color, 15%), 20%);
+	}
+	& when (@colour-set = poppyseed) {
+		background-color: lighten(@base-color, 25%);
+	}
+	& when (@colour-set = roses) {
+		background-color: lighten(@base-color, 22%);
+	}
+	& when (@colour-set = terra) {
+		background-color: lighten(@base-color, 21%);
+	}
+	& when (@colour-set = waterfall) {
+		background-color: lighten(desaturate(@base-color, 25%), 20%);
+	}
+}
+
+.borders(dark) {
+	border-color: lighten(@base-color, 16%);
+	& when (@colour-set = cornflower) {
+		background-color: lighten(@base-color, 22%);
+	}
+	& when (@colour-set = cornfield) {
+		border-color: lighten(@base-color, 4%);
+	}
+	& when (@colour-set = malva) {
+		border-color: lighten(@base-color, 14%);
+	}
+	& when (@colour-set = meadow) {
+		border-color: lighten(desaturate(@base-color, 15%), 16%);
+	}
+	& when (@colour-set = poppyseed) {
+		border-color: lighten(@base-color, 21%);
+	}
+	& when (@colour-set = roses) {
+		border-color: lighten(@base-color, 18%);
+	}
+	& when (@colour-set = terra) {
+		border-color: lighten(@base-color, 17%);
+	}
+	& when (@colour-set = waterfall) {
+		border-color: lighten(desaturate(@base-color, 25%), 16%);
+	}
+}
+
 .background(medium) {
 	background-color: lighten(saturate(@base-color, 20%), 48%);
 	& when (@colour-set = cornflower) {
@@ -97,6 +153,7 @@
 		background-color: lighten(desaturate(@base-color, 25%), 43%);
 	}
 }
+
 .borders(medium) {
 	border-color: lighten(@base-color, 33%);
 	& when (@colour-set = cornflower) {
@@ -124,6 +181,7 @@
 		border-color: lighten(desaturate(@base-color, 25%), 30%);
 	}
 }
+
 .borders(light) {
 	border-color: lighten(@base-color, 48%);
 	& when (@colour-set = cornflower) {
@@ -151,6 +209,7 @@
 		border-color: lighten(desaturate(@base-color, 20%), 45%);
 	}
 }
+
 .background(light) {
 	background-color: lighten(saturate(@base-color, 15%), 56%);
 	& when (@colour-set = cornflower) {
@@ -178,6 +237,35 @@
 		background-color: lighten(desaturate(@base-color, 10%), 56%);
 	}
 }
+
+.topborder(light) {
+	border-top-color: lighten(@base-color, 48%);
+	& when (@colour-set = cornflower) {
+		border-top-color: lighten(@base-color, 36%);
+	}
+	& when (@colour-set = cornfield) {
+		border-top-color: lighten(@base-color, 28%);
+	}
+	& when (@colour-set = malva) {
+		border-top-color: lighten(@base-color, 40%);
+	}
+	& when (@colour-set = meadow) {
+		border-top-color: lighten(@base-color, 48%);
+	}
+	& when (@colour-set = poppyseed) {
+		border-top-color: lighten(@base-color, 50%);
+	}
+	& when (@colour-set = roses) {
+		border-top-color: lighten(@base-color, 40%);
+	}
+	& when (@colour-set = terra) {
+		border-top-color: lighten(@base-color, 50%);
+	}
+	& when (@colour-set = waterfall) {
+		border-top-color: lighten(desaturate(@base-color, 20%), 45%);
+	}
+}
+
 .bottomborder(lightbackground) {
 	border-bottom-color: lighten(saturate(@base-color, 15%), 56%);
 	& when (@colour-set = cornflower) {
@@ -205,10 +293,26 @@
 		border-bottom-color: lighten(desaturate(@base-color, 10%), 56%);
 	}
 }
+
 .headertext {
 	font-size: calc(@fontsize + 8px);
 	color: @base-color;
 }
+
+// special styles for component only (not modules)
+#SobiPro {
+	padding: 4px;
+	margin-top: 20px;
+	background-color: @back-color;
+}
+
+// Firefox-specific table hack
+@-moz-document url-prefix() {
+	fieldset {
+		display: table-cell;
+	}
+}
+
 // Background for modal windows (outside SobiPro container)
 // -----------------------------------------------
 .modal-backdrop,
@@ -216,6 +320,7 @@
 	opacity: 0.2;
 	filter: alpha(opacity=20);
 }
+
 .modal-backdrop {
 	background-color: @base-color;
 	bottom: 0;
@@ -225,6 +330,7 @@
 	top: 0;
 	z-index: 1040;
 }
+
 // Alert windows and error messages
 // ----------------------------------------
 // Alert messages outside SobiPro without given color class
@@ -232,13 +338,16 @@
 	background-color: @alert-color;
 	border: 1px solid darken(@alert-color, 10%);
 }
+
 .alert-sigsiu,
 .alert-sigsiu h4 {
 	color: @active-color;
 }
+
 .alert-message {
-//	margin-bottom: 0;
+	//	margin-bottom: 0;
 }
+
 // Calendar/Datepicker
 // ----------------------------------------
 .bootstrap-datetimepicker-widget {
@@ -274,18 +383,11 @@
 		background-color: #fff;
 	}
 }
-// Overwrite some bootstrap styles
+
+// Styles in this scope concerns also SobiPro modules
 // ----------------------------------------
-// special styles for component only (not modules)
-#SobiPro {
-	padding: 4px;
-	margin-top: 20px;
-	background-color: @back-color;
-}
-// these styles concerns also SobiPro modules
 .SobiPro.default3 {
 	font-size: @fontsize;
-	line-height: inherit;
 
 	a {
 		color: @active-color;
@@ -342,23 +444,41 @@
 		font-weight: 500;
 		font-size: @fontsize;
 	}
-
-	.label-info,
-	.badge-info {
-		background-color: @base-color;
-	}
-
-	.label-info i,
-	.badge-info i,
-	.label-info a,
-	.badge-info a {
+	.label-sigsiu i,
+	.badge-sigsiu i,
+	.label-sigsiu a,
+	.badge-sigsiu a {
 		color: @text-color;
 		text-shadow: none;
 	}
+	.label-sigsiu,
+	.badge-sigsiu {
+		color: @text-color !important;
+		background-color: lighten(@base-color, 5%);
+	}
 
+	// Tables
+	// ------------------------
+	.table { font-size: @fontsize; }
 	.table th,
 	.table td {
 		.borders(light);
+	}
+	.table > tbody > tr.sigsiu > td,
+	.table > tbody > tr.sigsiu > th,
+	.table > tbody > tr > td.sigsiu,
+	.table > tbody > tr > th.sigsiu,
+	.table > tfoot > tr.sigsiu > td,
+	.table > tfoot > tr.sigsiu > th,
+	.table > tfoot > tr > td.sigsiu,
+	.table > tfoot > tr > th.sigsiu,
+	.table > thead > tr.sigsiu > td,
+	.table > thead > tr.sigsiu > th,
+	.table > thead > tr > td.sigsiu,
+	.table > thead > tr > th.sigsiu {
+		.background(medium);
+		.borders(medium);
+		color: @base-color;
 	}
 
 	// Vertical striped tables
@@ -381,6 +501,15 @@
 
 	.table.table-vstriped > thead > tr > th {
 		border-bottom: none;
+	}
+	.table td a {
+		color: @base-color;
+	}
+	.table td a.active,
+	.table td a:hover,
+	.table td a:focus {
+		color: @base-color;
+		text-decoration: underline;
 	}
 
 	// seems that is missed in bootstrap??
@@ -734,6 +863,11 @@
 		background-color: @alert-color;
 		color: @active-color;
 		border-color: darken(@alert-color, 10%);
+		& when (@corners = angular) {
+			border-radius: 0;
+			-webkit-border-radius: 0;
+			-moz-border-radius: 0;
+		}
 	}
 
 	// Define widths to use as classes
@@ -796,28 +930,34 @@
 		margin-top: 10px;
 	}
 
+	//simulate default alert-danger, used by SobiPro apps instead of alert-message
+	.alert-error {
+		color: #a94442;
+		background-color: #f2dede;
+		border-color: #ebccd1;
+	}
 	// Bootbox
-	.SobiPro.default3BootBox i.error {
+	.bootbox i.error {
 		color: #a94442;
 		font-size: calc(@fontsize + 16px);
 	}
 
-	.SobiPro.default3BootBox i.success {
+	bootbox i.success {
 		color: #449d44;
 		font-size: calc(@fontsize + 16px);
 	}
 
-	.SobiPro.default3BootBox div.signal {
+	bootbox div.signal {
 		float: left;
 		padding-right: 10px;
 		margin-top: 10px;
 	}
 
-	.SobiPro.default3BootBox .modal-body {
+	bootbox .modal-body {
 		padding: 20px;
 	}
 
-	.SobiPro.default3BootBox .modal-footer {
+	bootbox .modal-footer {
 		padding: 10px 15px 15px;
 		background-color: #fff;
 	}
@@ -833,7 +973,7 @@
 	.spSearch .alert-info {
 		border-color: @alert-color;
 		background-color: lighten(@alert-color, 5%);
-		color: desaturate(lighten(@active-color, 20%), 10%);
+		color: @active-color;
 		font-weight: 500;
 	}
 
@@ -898,45 +1038,61 @@
 		}
 	}
 
-	.topmenu li {
-		line-height: 40px;
-	}
+	.topmenu {
+		li {
+			line-height: 40px;
+		}
 
-	.topmenu .navbar-inner {
-		background-color: @base-color;
-		background-image: none;
-		min-height: 60px;
-		border: none;
-		font-size: calc(@fontsize + 1px);
-		padding-left: 0;
-		padding-right: 0;
-	}
+		.navbar-inner {
+			background-color: @base-color;
+			background-image: none;
+			min-height: 60px;
+			border: none;
+			font-size: calc(@fontsize + 1px);
+			padding-left: 0;
+			padding-right: 0;
+		}
 
-	.topmenu .navbar-search {
-		margin-top: 15px;
-	}
+		.navbar-search {
+			margin-top: 15px;
 
-	.topmenu input[type="text"] {
-		border-color: darken(@base-color, 5%);
-	}
+			input {
+				width: 95px;
+			}
+		}
 
-	.topmenu .navbar-search input {
-		width: 95px;
-	}
+		input[type="text"] {
+			border-color: darken(@base-color, 5%);
+		}
 
-	.topmenu .nav {
-		margin-right: 5px;
-	}
+		.nav {
+			margin-right: 5px;
+		}
 
-	.topmenu .navbar .nav > li {
-		list-style: none;
-	}
+		.navbar .nav > li {
+			list-style: none;
+		}
 
-	.navbar .nav > li > a {
-		padding-left: 10px;
-		padding-right: 10px;
+		.navbar .nav > li > a {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
 	}
-
+	.topmenu.buttonbar {
+		.menu {
+			float: left;
+		}
+		.add.right,
+		.search.right {
+			float: right;
+			margin-left: 5px;
+		}
+		.add.left,
+		.search.left {
+			float: left;
+			margin-left: 5px;
+		}
+	}
 	// Alphalist
 	// ----------------------------------------
 	.alphalist {
@@ -1491,6 +1647,9 @@
 	.spSearch .highlight {
 		background-color: yellow;
 	}
+	.spSearchBottom {
+		margin-bottom: 10px;
+	}
 
 	// Payment popup
 	// ----------------------------------------
@@ -1577,10 +1736,39 @@
 		}
 	}
 
+	// Tooltip Settings
+	// -----------------------------------------------
+	.tooltip-inner {
+		background-color: @base-color;
+		color: @text-color;
+	}
+
+	.tooltip.top .tooltip-arrow {
+		border-top-color: @base-color;
+	}
+
+	.tooltip.bottom .tooltip-arrow {
+		border-bottom-color: @base-color;
+	}
+
+	.tooltip.left .tooltip-arrow {
+		border-left-color: @base-color;
+	}
+
+	.tooltip.right .tooltip-arrow {
+		border-right-color: @base-color;
+	}
+
 	// Carousel Slider Settings
 	// -----------------------------------------------
 	.carousel-inner {
 		height: @carousel-image;
+
+		.carousel-caption {
+			background-color: transparent;
+			color: white;
+			font-weight: 600;
+		}
 	}
 
 	.carousel-inner > .item > img,
@@ -1591,6 +1779,25 @@
 	.carousel-inner img.sp-carousel-image {
 		margin-left: auto;
 		margin-right: auto;
+	}
+
+	.carousel-indicators {
+		top: auto;
+		right: auto;
+
+		li {
+			float: none;
+		}
+	}
+
+	.carousel-control {
+		height: unset;
+		margin-top: -20px;
+		line-height: unset;
+		border: 0 solid #fff;
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
 	}
 
 	.carousel-control.right {
@@ -1636,6 +1843,32 @@
 			z-index: 5;
 			display: inline-block;
 			margin-top: -10px;
+		}
+	}
+
+	// Entries Module
+	// -----------------------------------------------
+	.ctrl-emod-navigation {
+		.pagination {
+			margin-bottom: 0;
+			margin-top: 5px;
+
+			ul {
+				margin-bottom: 2px;
+			}
+		}
+	}
+
+	.spModule .spModuleContainer {
+		margin-top: 15px;
+		margin-bottom: 15px;
+
+		.spNoImage {
+			display: none;
+		}
+		.spClassViewImage img {
+			width: 100%;
+			float: none;
 		}
 	}
 
@@ -1935,32 +2168,40 @@
 		.topmenu ul.nav {
 			width: 100%;
 		}
+
 		.navbar .nav > li {
 			float: none;
 		}
+
 		.topmenu li {
 			line-height: 20px;
 		}
+
 		.navbar .nav > li > a {
 			padding-left: 15px;
 		}
+
 		.topmenu .navbar-inner {
 			min-height: 20px;
 			padding-left: 0;
 			padding-right: 0;
 		}
+
 		.spCaticon {
 			margin-top: 10px;
 			padding-left: 0;
 			text-align: left;
 		}
+
 		.spUpload input,
 		.input-append input.spClassMap {
 			height: 31px;
 		}
+
 		.input-small {
 			width: calc(100% - 12px);
 		}
+
 		// Carousel
 		.carousel-inner,
 		.carousel-inner > .item > img,
@@ -1977,44 +2218,56 @@
 			float: none;
 			margin-left: 0;
 		}
+
 		.spEditImagePreview {
 			float: none;
 		}
+
 		.spUpload button.btn.select {
 			width: calc(100% - 44px);
 		}
+
 		.btn[name="spsearchphrase"] {
 			padding: 2px 10px;
 			font-size: 12px;
 		}
+
 		.control-label div.paybox {
 			margin-bottom: 12px;
 		}
+
 		.controls {
 			margin-left: 0;
 		}
+
 		input[name="sp_search_for"] {
 			margin-bottom: 10px;
 		}
+
 		button.btn.spsearchphrase {
 			//PhpStorm meldet hier fälschlicherweise einen Fehler
 			width: calc(100% / 3);
 		}
+
 		.input-append.date.spDatePicker {
 			margin: 0 10px 10px 0;
 			width: 100%;
 		}
+
 		.spCaticon i {
 			//font-size: 3em;
 		}
+
 		.spEntryEdit .message-lightbulb {
 			left: 49%;
 		}
+
 		.input-medium,
 		.sp-search-phrases .btn-group,
 		.spUpload .btn-group {
 			width: 100%;
 		}
+
 		.form-horizontal .control-label {
 			float: none;
 			width: 100%;
@@ -2027,6 +2280,7 @@
 		.modal .control-group {
 			margin-bottom: 6px;
 		}
+
 		.spPrint .spClassViewImage img,
 		.spDetailEntry .spClassViewImage img,
 		div.spClassViewImage img,
@@ -2034,31 +2288,42 @@
 			width: calc(100% - 8px);
 			margin: 0 0 10px 0;
 		}
+
 		.spNoImage {
 			display: none;
 		}
+
 		.SigsiuTree .buttons {
 			text-align: center;
 		}
+
 		.spDetailEntry .spClassViewImage img,
 		.spClassViewImage img {
 			float: none !important;
 		}
+
 		.input-large,
 		.input-medium,
 		.sp-search-controls .btn {
 			width: 100%;
 		}
+
+		.spSearchBottom button {
+			width: 100%;
+		}
+
 		.tab-pane {
 			min-height: inherit;
 		}
-		// Navigation Link Bar
+
+		// Link Bar
 		// -----------------------------------------------
 		.alert-navigationlinks {
 			height: auto;
 			margin-bottom: 0;
 			margin-top: 0;
 		}
+
 		ul.spNavigationLinks {
 			border-bottom: none;
 			text-align: center;
@@ -2071,8 +2336,28 @@
 				line-height: 24px;
 			}
 		}
+
+		// Button Bar
+		// -----------------------------------------------
+		.topmenu.buttonbar {
+			margin-bottom: 0;
+			.menu,
+			.add,
+			.search {
+				float: none;
+				width: 100%;
+				padding-bottom: 4px;
+				margin-left: 0;
+
+				a {
+					width: 100%;
+				}
+			}
+		}
+
 		.lead {
 			text-align: center;
 		}
 	}
+
 }

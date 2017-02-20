@@ -40,6 +40,7 @@ Legend:
 	(!) Loading all fonts into the category edit screen
 	(!) Search phrases adapted to template style
 	(!) Login redirect added to toolbar style 'linkbar'
+	(!) Added some of B3-default3 template features to default3 template
 
 	(#) Sorting the select list in search form for input box field (Issue #1762)
 	(#) Missing container 'spListing' added to search results

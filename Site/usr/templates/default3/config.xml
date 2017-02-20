@@ -80,6 +80,13 @@
 											<option value="buttonbar" label="TP.CONFIG.TOPMENU_BUTTON"/>
 										</values>
 									</field>
+									<field type="select" label="TP.CONFIG.TOPMENU_BUTTON_POS" name="settings[config][general][buttonpos]"
+									       selected="settings.config.general.buttonpos" class="input-medium">
+										<values>
+											<option value="left" label="TP.CONFIG.LEFT"/>
+											<option value="right" label="TP.CONFIG.RIGHT"/>
+										</values>
+									</field>
 								</fieldset>
 								<fieldset label="TP.CONFIG.FONTS">
 									<field type="select" label="TP.CONFIG.FONT" name="settings[config][general][basefont]"
@@ -168,6 +175,8 @@
 											<option value="below" label="TP.CONFIG.ENTRY_HELPPOSITION_BELOW"/>
 										</values>
 									</field>
+									<field type="text" label="TP.CONFIG.ENTRY_REDIRECTLOGIN" name="settings[config][general][redirectlogin]"
+									       value="settings.config.general.redirectlogin" class="input-xlarge"/>
 								</fieldset>
 							</div>
 						</div>
@@ -183,6 +192,9 @@
 											<option value="show" label="SHOW_YES"/>
 											<option value="hide" label="SHOW_NO"/>
 										</values>
+									</field>
+									<field type="toggle" label="TP.CONFIG.HIDESEARCH" name="settings[config][general][hidesearch]"
+									       selected="settings.config.general.hidesearch" prefix="yes_no">
 									</field>
 								</fieldset>
 							</div>

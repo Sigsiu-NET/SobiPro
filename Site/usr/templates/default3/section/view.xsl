@@ -32,10 +32,9 @@
 		<xsl:variable name="sectionName">
 			<xsl:value-of select="name"/>
 		</xsl:variable>
-
 		<xsl:value-of select="php:function( 'SobiPro::AlternateLink', $rssUrl, 'application/atom+xml', $sectionName )"/>
 		<xsl:variable name="showCategoriesLabel">
-			<xsl:value-of select="php:function( 'SobiPro::Txt', 'Show Categories' )"/>
+			<xsl:value-of select="php:function( 'SobiPro::Txt', 'CATEGORIES_SHOW' )"/>
 		</xsl:variable>
 
 		<div class="spListing section">
@@ -46,6 +45,9 @@
 			<xsl:apply-templates select="alphaMenu"/>
 			<xsl:apply-templates select="messages"/>
 
+			<h1 class="page-header lead">
+				<xsl:value-of select="name"/>
+			</h1>
 			<xsl:if test="string-length(description) > 0">
 			<div class="spSectionDesc">
 				<xsl:value-of select="description" disable-output-escaping="yes"/>

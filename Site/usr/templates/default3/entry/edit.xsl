@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -26,6 +26,9 @@
 		<div class="spEntryEdit">
 			<xsl:call-template name="topMenu">
 				<xsl:with-param name="searchbox">false</xsl:with-param>
+				<xsl:with-param name="title">
+					<xsl:value-of select="name"/>
+				</xsl:with-param>
 			</xsl:call-template>
 			<xsl:apply-templates select="messages"/>
 

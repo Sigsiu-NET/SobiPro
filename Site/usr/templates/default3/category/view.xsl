@@ -54,7 +54,7 @@
 
 			<xsl:apply-templates select="alphaMenu"/>
 
-			<h1>
+			<h1 class="page-header lead">
 				<xsl:value-of select="name"/>
 			</h1>
 			<xsl:if test="string-length(description) > 0">
