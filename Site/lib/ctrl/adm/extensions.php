@@ -110,7 +110,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 	}
 
-	private function updates()
+	public function updates( $json = true )
 	{
 		if ( $this->updatesTime() ) {
 			$repos = SPLoader::dirPath( 'etc.repos', 'front' );
@@ -173,10 +173,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				$file->save();
 			}
 		}
-		return $this->parseUpdates();
+		return $this->parseUpdates( $json );
 	}
 
-	private function updatesTime()
+	public function updatesTime()
 	{
 		if ( SPFs::exists( SPLoader::path( 'etc.updates', 'front', false, 'xml' ) ) ) {
 			if ( time() - filemtime( SPLoader::path( 'etc.updates', 'front', true, 'xml' ) ) > ( 60 * 60 * 12 ) ) {
@@ -191,7 +191,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		}
 	}
 
-	private function parseUpdates()
+	private function parseUpdates( $json )
 	{
 		$file = SPLoader::path( 'etc.updates', 'front', true, 'xml' );
 		if ( $file ) {
@@ -209,11 +209,16 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					}
 				}
 			}
-			SPFactory::mainframe()
-					->cleanBuffer()
-					->customHeader();
-			echo json_encode( $list[ 'updateslist' ][ 'updates' ] );
-			exit;
+			if ( $json ) {
+				SPFactory::mainframe()
+						->cleanBuffer()
+						->customHeader();
+				echo json_encode( $list[ 'updateslist' ][ 'updates' ] );
+				exit;
+			}
+			else {
+				return $list;
+			}
 		}
 	}
 
@@ -599,7 +604,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					$plugin[ 'eid' ] = $plugin[ 'repository' ] . '.' . $plugin[ 'type' ] . '.' . $plugin[ 'pid' ];
 					$list[ $eid ] = $plugin;
 					$index = in_array( $plugin[ 'type' ], [ 'application', 'field', 'update', 'template', 'language' ] ) ? $plugin[ 'type' ] . 's' : 'others';
-					$apps[ $index ][ ] = $plugin;
+					$apps[ $index ][] = $plugin;
 				}
 				if ( isset( $apps[ 'updates' ] ) ) {
 					usort( $apps[ 'updates' ], function ( $from, $to ) {
@@ -614,7 +619,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		foreach ( $xml as $def ) {
 			$repository = SPFactory::Instance( 'services.installers.repository' );
 			$repository->loadDefinition( $def );
-			$repos[ ] = $repository->getDef();
+			$repos[] = $repository->getDef();
 		}
 		$menu = $this->menu();
 		$view->assign( $this->_task, 'task' )
@@ -791,9 +796,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				unset( $values[ 'params' ][ 'class' ] );
 			}
 			$values[ 'name' ] = 'RepositoryResponse[' . $values[ 'params' ][ 'id' ] . ']';
-			$fields[ ] = $values;
+			$fields[] = $values;
 		}
-		$fields[ ] = [ 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => [ 'id' => 'url', 'size' => 30, 'readonly' => 'readonly' ] ];
+		$fields[] = [ 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => [ 'id' => 'url', 'size' => 30, 'readonly' => 'readonly' ] ];
 		$request = [ 'fields' => $fields ];
 		$view->assign( $request, 'request' );
 		$view->determineTemplate( 'extensions', 'soap-request' );

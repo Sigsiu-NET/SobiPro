@@ -41,6 +41,12 @@ class SPImage extends SPFile
 			IMAGETYPE_PNG => 'imagecreatefrompng',
 			IMAGETYPE_JPEG2000 => 'imagecreatefromjpeg'
 	];
+	protected $transparency = true;
+
+	public function setTransparency( $transparency )
+	{
+
+	}
 
 	/**
 	 * @param int $sections
@@ -230,6 +236,9 @@ class SPImage extends SPFile
 	 */
 	private function transparency( &$img )
 	{
+		if ( !( $this->transparency ) ) {
+			return true;
+		}
 		$index = imagecolortransparent( $img );
 		/* If we have a specific transparent color */
 		if ( $index >= 0 ) {
