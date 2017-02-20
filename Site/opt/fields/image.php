@@ -75,6 +75,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	protected $bsWidth = 10;
 	/** @var bool */
 	static private $CAT_FIELD = true;
+	/** @var bool */
+	protected $detectTransparency = true;
 
 	/**
 	 * Returns the parameter list
@@ -82,7 +84,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return [ 'width', 'savePath', 'inDetails', 'inVcard', 'thumbHeight', 'thumbWidth', 'thumbName', 'keepOrg', 'resize', 'maxSize', 'resizeWidth', 'resizeHeight', 'imageName', 'generateThumb', 'thumbFloat', 'imageFloat', 'itemprop', 'crop', 'cssClassView', 'cssClassEdit', 'showEditLabel', 'inCategory', 'float' ];
+		return [ 'width', 'savePath', 'inDetails', 'inVcard', 'thumbHeight', 'thumbWidth', 'thumbName', 'keepOrg', 'resize', 'maxSize', 'resizeWidth', 'resizeHeight', 'imageName', 'generateThumb', 'thumbFloat', 'imageFloat', 'itemprop', 'crop', 'cssClassView', 'cssClassEdit', 'showEditLabel', 'inCategory', 'float', 'detectTransparency' ];
 	}
 
 	public function compareRevisions( $revision, $current )
@@ -497,6 +499,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				}
 			}
 			if ( $this->resize ) {
+				/** @var SPImage $image */
+				$image->setTransparency( $this->detectTransparency );
 				$image = clone $orgImage;
 				try {
 					$image->resample( $this->resizeWidth, $this->resizeHeight, false );

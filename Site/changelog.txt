@@ -35,6 +35,7 @@ Legend:
 	(+) New Google Font 'Dosis' added to both templates
 	(+) New toolbar style 'buttonbar'
 	(+) New template settings 'Hide search parameters'
+	(+) Switch to disable transparency recognition
 
 	(!) Loading all fonts into the category edit screen
 	(!) Search phrases adapted to template style

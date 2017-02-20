@@ -78,6 +78,7 @@
 									</field>
 									<field type="text" name="field.savePath" value="field.savePath" label="FMN.IMG.IMAGE_SAVE_PATH" maxlength="150" class="input-splarge" />
 									<field type="toggle" name="field.keepOrg" value="field.keepOrg" label="FMN.IMG.KEEP_ORG" prefix="yes_no" />
+									<field type="toggle" name="field.detectTransparency" value="field.detectTransparency" label="FMN.IMG.DETECT_TRANSPARENCY" prefix="yes_no" />
 
 									<field type="text" name="field.imageName" value="field.imageName" label="FM.IMG.IMG_NAME" maxlength="100" class="input-large" />
 									<field type="toggle" name="field.resize" value="field.resize" label="FM.IMG.RESIZE_IMG" prefix="yes_no" />
