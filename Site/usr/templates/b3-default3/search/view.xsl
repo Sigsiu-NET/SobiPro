@@ -48,67 +48,108 @@
 				</div>
 			</xsl:if>
 
-			<div id="SPSearchForm" class="form-horizontal">
-				<xsl:if test="/search/fields/searchbox">
-					<div class="form-group">
-						<label class="col-sm-3 control-label" for="SPSearchBox">
-							<xsl:value-of select="/search/fields/searchbox/label"/>
-						</label>
-						<div class="col-sm-9 sp-search-controls">
-							<input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}"
-							       class="form-control input-large pull-left" id="SPSearchBox"/>
-							<xsl:if test="/search/fields/top_button/label">
-								<button type="submit" class="btn btn-primary btn-sigsiu">
-									<xls:text>&#160;</xls:text>
-									<xsl:value-of select="/search/fields/top_button/label"/>
-								</button>
-							</xsl:if>
-							<xsl:if test="count( /search/fields/* ) &gt; 3 and //config/extendedsearch/@value = 'show'">
-								<button type="button" class="btn btn-default" name="SPExOptBt" id="SPExOptBt">
-									<xls:text>&#160;</xls:text>
-									<xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )"/>
-								</button>
-							</xsl:if>
-						</div>
-					</div>
-					<xsl:if test="count( /search/fields/phrase/* )">
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="sp-search-phrases">
-								<xsl:value-of select="/search/fields/phrase/label"/>
-							</label>
-							<div class="col-sm-9 sp-search-phrases">
-								<div class="btn-group" data-toggle="buttons">
-									<xsl:for-each select="/search/fields/phrase/data/*">
-										<label class="sphrase btn btn-default">
-											<xsl:if test="./input/@checked = 'checked'">
-												<xsl:attribute name="class">sphrase btn btn-sigsiu active</xsl:attribute>
-											</xsl:if>
-											<xsl:attribute name="for">
-												<xsl:value-of select="./@for"/>
-											</xsl:attribute>
-											<xsl:copy-of select="./input"/>
-											<xsl:value-of select="."/>
-										</label>
-									</xsl:for-each>
+			<xsl:variable name="sparam">
+				<xsl:choose>
+				<xsl:when test="//config/hidesearch/@value = 1">
+					<xsl:value-of select="php:function( 'SobiPro::Request', 'sparam' )"/>
+				</xsl:when>
+				<xsl:otherwise></xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+
+			<div id="info-window">
+				<div class="collapse {$sparam}" id="collapsearea">
+
+					<div id="SPSearchForm" class="form-horizontal">
+						<xsl:if test="/search/fields/searchbox">
+							<div class="form-group">
+								<label class="col-sm-3 control-label" for="SPSearchBox">
+									<xsl:value-of select="/search/fields/searchbox/label"/>
+								</label>
+								<div class="col-sm-9 sp-search-controls">
+									<input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}"
+									       class="form-control input-large pull-left" id="SPSearchBox"
+									       placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}"/>
+									<xsl:if test="/search/fields/top_button/label">
+										<button type="submit" class="btn btn-primary btn-sigsiu">
+											<xls:text>&#160;</xls:text>
+											<xsl:value-of select="/search/fields/top_button/label"/>
+										</button>
+									</xsl:if>
+									<xsl:if test="count( /search/fields/* ) &gt; 3 and //config/extendedsearch/@value = 'show'">
+										<button type="button" class="btn btn-default" name="SPExOptBt" id="SPExOptBt">
+											<xls:text>&#160;</xls:text>
+											<xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )"/>
+										</button>
+									</xsl:if>
 								</div>
 							</div>
-						</div>
-					</xsl:if>
-				</xsl:if>
-				<xsl:if test="count( /search/fields/* ) &gt; 3">
-					<div>
-						<xsl:if test="//config/extendedsearch/@value = 'show'">
-							<xsl:attribute name="id">SPExtSearch</xsl:attribute>
+							<xsl:if test="count( /search/fields/phrase/* )">
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="sp-search-phrases">
+										<xsl:value-of select="/search/fields/phrase/label"/>
+									</label>
+									<div class="col-sm-9 sp-search-phrases">
+										<div class="btn-group" data-toggle="buttons">
+											<xsl:for-each select="/search/fields/phrase/data/*">
+												<label class="sphrase btn btn-default">
+													<xsl:if test="./input/@checked = 'checked'">
+														<xsl:attribute name="class">sphrase btn btn-sigsiu active</xsl:attribute>
+													</xsl:if>
+													<xsl:attribute name="for">
+														<xsl:value-of select="./@for"/>
+													</xsl:attribute>
+													<xsl:copy-of select="./input"/>
+													<xsl:value-of select="."/>
+												</label>
+											</xsl:for-each>
+										</div>
+									</div>
+								</div>
+							</xsl:if>
 						</xsl:if>
-						<xsl:for-each select="fields/*">
-							<xsl:call-template name="searchfield">
-								<xsl:with-param name="fieldname" select="."/>
-								<xsl:with-param name="position" select="position()"/>
-							</xsl:call-template>
-						</xsl:for-each>
+						<xsl:if test="count( /search/fields/* ) &gt; 3">
+							<div>
+								<xsl:if test="//config/extendedsearch/@value = 'show'">
+									<xsl:attribute name="id">SPExtSearch</xsl:attribute>
+								</xsl:if>
+								<xsl:for-each select="fields/*">
+									<xsl:call-template name="searchfield">
+										<xsl:with-param name="fieldname" select="."/>
+										<xsl:with-param name="position" select="position()"/>
+									</xsl:call-template>
+								</xsl:for-each>
+							</div>
+						</xsl:if>
 					</div>
-				</xsl:if>
+				</div>
 			</div>
+
+			<xsl:if test="//config/hidesearch/@value = 1">
+				<xsl:choose>
+					<xsl:when test="$sparam = 'in'">
+						<button class="btn btn-info" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea" aria-expanded="true"
+						        aria-controls="collapsearea" data-visible="true" type="button">
+							<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.SEARCH_HIDE' )"/>
+						</button>
+						<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu">
+							<xls:text>&#160;</xls:text>
+							<xsl:value-of select="/search/fields/top_button/label"/>
+						</button>
+					</xsl:when>
+					<xsl:otherwise>
+						<button class="btn btn-info" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea" aria-expanded="false"
+						        aria-controls="collapsearea" data-visible="false" type="button">
+							<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.SEARCH_REFINE' )"/>
+						</button>
+						<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu hidden">
+							<xls:text>&#160;</xls:text>
+							<xsl:value-of select="/search/fields/top_button/label"/>
+						</button>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:if>
+
 			<xsl:if test="message">
 				<div class="alert alert-info">
 					<xsl:value-of select="message"/>

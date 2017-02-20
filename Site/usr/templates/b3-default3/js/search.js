@@ -6,7 +6,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
 
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -39,6 +39,24 @@ SobiPro.jQuery(document).ready(function () {
 	}
 	catch (e) {
 	}
+
+	try {
+		SobiPro.jQuery('#info-window-btn').bind('click', function () {
+			if (SobiPro.jQuery('#info-window-btn').attr('data-visible') == 'false') {
+
+				SobiPro.jQuery('#info-window-btn').html(SobiPro.Txt('TP.SEARCH_HIDE'));  //set new
+				SobiPro.jQuery('#info-window-btn').attr('data-visible', true);
+				SobiPro.jQuery('#bottom_button').removeClass('hidden');
+			}
+			else {
+				SobiPro.jQuery('#info-window-btn').attr('data-visible', false);
+				SobiPro.jQuery('#info-window-btn').html(SobiPro.Txt('TP.SEARCH_REFINE'));
+				SobiPro.jQuery('#bottom_button').addClass('hidden');
+			}
+		});
+	} catch (e) {
+	}
+
 
 	SobiPro.jQuery('.sphrase').each(function (i, e) {
 		var e = SobiPro.jQuery(e);

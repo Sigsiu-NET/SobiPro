@@ -34,6 +34,7 @@ Legend:
 	(+) Remembering last selected tab in local storage
 	(+) New Google Font 'Dosis' added to both templates
 	(+) New toolbar style 'buttonbar'
+	(+) New template settings 'Hide search parameters'
 
 	(!) Loading all fonts into the category edit screen
 	(!) Search phrases adapted to template style
