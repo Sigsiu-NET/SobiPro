@@ -1595,7 +1595,7 @@ INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `
 ('fields_filter', 'integer', 'Decimal Value', 'L15cZCskLw==', 'Please enter a numeric value in the $field field', ''),
 ('fields_filter', 'float', 'Float Value', 'L15cZCsoXC5cZCopPyQv', 'Please enter a float value like 9.9 or 12.34 into the  $field field', ''),
 ('fields_filter', 'alphanum', 'Alphanumeric String', 'L15bYS16QS1aMC05XSskLw==', 'In the $field field only alphabetic and numeric characters are allowed', ''),
-('fields_filter', 'email', 'Email Address', 'L15bXHdcLi1dK0BbXHdcLi1dK1wuW2EtekEtWl17Miw1fSQv', 'Please enter an email address into the $field field', ''),
+('fields_filter', 'email', 'Email Address', 'L15bXHdcLi1dK0BbXHdcLi1dK1wuW2EtekEtWl17MiwyNH0kLw==', 'Please enter an email address into the $field field', ''),
 ('fields_filter', 'alpha', 'Alphabetic String', 'L15bYS16QS1aXSskLw==', 'In this $field field only letters are allowed', ''),
 ('paypal', 'ppcc', 'EUR', '', '', ''),
 ('paypal', 'pprurl', '{cfg:live_site}/index.php?option=com_sobipro&sid={section.id}', '', '', ''),

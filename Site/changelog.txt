@@ -52,6 +52,7 @@ Legend:
 	(#) Override json file data isn't passsed to the template xml config nodes (Issue #1770)
 	(#) Selecting fields in fields manager via checkbox does not distinguish betweend entry and category fields (Issue #1765)
 	(#) Several small template corrections
+	(#) Corrected Regex for email field (Issue #1777)
 
 
 -------------------
