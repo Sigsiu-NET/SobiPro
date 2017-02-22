@@ -223,7 +223,7 @@ class com_sobiproInstallerScript
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES ('rejection-of-a-new-entry', 'Entry {entry.name} has been rejected as it does not comply with the rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', ''), ('rejection-of-changes', 'Changes in {entry.name} discarded as these changes violating rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', '');" );
 		$db->execute();
 
-		$db->setQuery( "UPDATE `sobi_sobipro_registry` SET `params` = 'L15bXHdcLi1dK0BbXHdcLi1dK1wuW2EtekEtWl17MiwyNH0kLw==' WHERE `key` = 'email' " );
+		$db->setQuery( "UPDATE `#__sobipro_registry` SET `params` = 'L15bXHdcLi1dK0BbXHdcLi1dK1wuW2EtekEtWl17MiwyNH0kLw==' WHERE `key` = 'email' " );
 		$db->execute();
 
 //		$db->setQuery( 'SELECT pid FROM `#__sobipro_permissions` WHERE subject = "section" AND  action = "search";' );
