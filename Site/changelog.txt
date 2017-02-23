@@ -36,6 +36,7 @@ Legend:
 	(+) New toolbar style 'buttonbar'
 	(+) New template settings 'Hide search parameters'
 	(+) Switch to disable transparency recognition
+	(+) Up-to-date checker in Joomla! cPanel
 
 	(!) Loading all fonts into the category edit screen
 	(!) Search phrases adapted to template style

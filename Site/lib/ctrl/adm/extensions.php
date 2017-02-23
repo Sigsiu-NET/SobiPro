@@ -217,7 +217,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				exit;
 			}
 			else {
-				return $list;
+				return $list[ 'updateslist' ][ 'updates' ];
 			}
 		}
 	}
