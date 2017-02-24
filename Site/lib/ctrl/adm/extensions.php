@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
- *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- *
  * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -16,6 +14,10 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
+
+use Sobi\FileSystem\FileSystem;
+use Sobi\Input\Input;
+use Sobi\FileSystem\Directory;
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
@@ -1029,18 +1031,18 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	private function install( $file = null )
 	{
 		$arch = SPFactory::Instance( 'base.fs.archive' );
-		$ajax = strlen( SPRequest::cmd( 'ident', null, 'post' ) );
-		if ( !( $file ) && SPRequest::string( 'root' ) ) {
-			$file = str_replace( '.xml', null, SPRequest::string( 'root' ) );
+		$ajax = strlen( Input::Cmd( 'ident', null, 'post' ) );
+		if ( !( $file ) && Input::String( 'root' ) ) {
+			$file = str_replace( '.xml', null, Input::String( 'root' ) );
 			$file = SPLoader::path( 'tmp.install.' . $file, 'front', true, 'xml' );
 		}
 		if ( !( $file ) ) {
-			$ident = SPRequest::cmd( 'ident', null, 'post' );
+			$ident = Input::Cmd( 'ident', null, 'post' );
 			$data = SPRequest::file( $ident );
 			$name = str_replace( [ '.' . SPFs::getExt( $data[ 'name' ] ), '.' ], null, $data[ 'name' ] );
 			$path = SPLoader::dirPath( 'tmp.install.' . $name, 'front', false );
 			$c = 0;
-			while ( SPFs::exists( $path ) ) {
+			while ( FileSystem::Exists( $path ) ) {
 				$path = SPLoader::dirPath( 'tmp.install.' . $name . '_' . ++$c, 'front', false );
 			}
 			/*
@@ -1048,10 +1050,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			 */
 			try {
 				if ( Sobi::Cfg( 'ftp_mode' ) ) {
-					SPFs::mkdir( $path, 0777 );
+					FileSystem::Mkdir( $path, 0777 );
 				}
 				else {
-					SPFs::mkdir( $path );
+					FileSystem::Mkdir( $path );
 				}
 			} catch ( SPException $x ) {
 				return $this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );
@@ -1064,15 +1066,15 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			}
 		}
 		// force update
-		elseif ( SPRequest::string( 'root' ) && $file ) {
+		elseif ( Input::String( 'root' ) && $file ) {
 			$path = dirname( $file );
 		}
 		else {
 			$arch->setFile( $file );
-			$name = str_replace( [ '.' . SPFs::getExt( $file ), '.' ], null, basename( $file ) );
+			$name = str_replace( [ '.' . FileSystem::GetExt( $file ), '.' ], null, basename( $file ) );
 			$path = SPLoader::dirPath( 'tmp.install.' . $name, 'front', false );
 			$c = 0;
-			while ( SPFs::exists( $path ) ) {
+			while ( FileSystem::Exists( $path ) ) {
 				$path = SPLoader::dirPath( 'tmp.install.' . $name . '_' . ++$c, 'front', false );
 			}
 			/*
@@ -1080,10 +1082,10 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			 */
 			try {
 				if ( Sobi::Cfg( 'ftp_mode' ) ) {
-					SPFs::mkdir( $path, 0777 );
+					FileSystem::Mkdir( $path, 0777 );
 				}
 				else {
-					SPFs::mkdir( $path );
+					FileSystem::Mkdir( $path );
 				}
 			} catch ( SPException $x ) {
 				return $this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );
@@ -1091,12 +1093,12 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 
 		}
 		if ( $path ) {
-			if ( !( SPRequest::string( 'root' ) ) ) {
+			if ( !( Input::String( 'root' ) ) ) {
 				if ( !( $arch->extract( $path ) ) ) {
 					return $this->ajaxResponse( $ajax, SPLang::e( 'CANNOT_EXTRACT_ARCHIVE', basename( $file ), $path ), false, SPC::ERROR_MSG );
 				}
 			}
-			$dir =& SPFactory::Instance( 'base.fs.directory', $path );
+			$dir = new Directory( $path );
 			$xml = array_keys( $dir->searchFile( '.xml', false, 2 ) );
 			if ( !( count( $xml ) ) ) {
 				return $this->ajaxResponse( $ajax, SPLang::e( 'NO_INSTALL_FILE_IN_PACKAGE' ), false, SPC::ERROR_MSG );
@@ -1120,6 +1122,12 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			try {
 				$installer->validate();
 				$msg = $installer->install();
+				if ( SPLoader::path( 'tmp.message', 'front', true, 'json' ) ) {
+					FileSystem::Delete( SPLoader::path( 'tmp.message', 'front', true, 'json' ) );
+				}
+				if ( SPLoader::path( 'etc.updates', 'front', true, 'xml' ) ) {
+					FileSystem::Delete( SPLoader::path( 'etc.updates', 'front', true, 'xml' ) );
+				}
 				return $this->ajaxResponse( $ajax, $msg, true, SPC::SUCCESS_MSG );
 			} catch ( SPException $x ) {
 				return $this->ajaxResponse( $ajax, $x->getMessage(), false, SPC::ERROR_MSG );

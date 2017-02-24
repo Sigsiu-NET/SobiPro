@@ -114,7 +114,7 @@ class SPJoomlaCMSHelper
 	 * @param array $files
 	 * @return bool
 	 */
-	public static function installerFile( $files )
+	public function installerFile( $files )
 	{
 		foreach ( $files as $file ) {
 			$def = SPFactory::LoadXML( $file, LIBXML_NOERROR );
@@ -136,7 +136,7 @@ class SPJoomlaCMSHelper
 	 * @param $dir
 	 * @return string
 	 */
-	public static function install( $files, $dir )
+	public function install( $files, $dir )
 	{
 		return SPFactory::Instance( 'cms.base.installer' )
 				->install( self::installerFile( $files ), $files, $dir );
