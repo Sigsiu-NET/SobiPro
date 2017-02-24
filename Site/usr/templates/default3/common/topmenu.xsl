@@ -167,7 +167,6 @@
 							<xsl:if test="$currentUrl = //menu/add/@url">
 								<xsl:attribute name="class">active</xsl:attribute>
 							</xsl:if>
-								<i class="icon-plus-sign"></i>
 								<xsl:text> </xsl:text>
 							<xsl:value-of select="//menu/add"/>
 						</a>
@@ -177,7 +176,6 @@
 						<xsl:if test="string-length(//config/redirectlogin/@value) > 0">
 							<li>
 								<a href="{//config/redirectlogin/@value}">
-									<i class="icon-plus-sign"></i>
 									<xsl:text> </xsl:text>
 									<xsl:value-of select="php:function( 'SobiPro::Txt', 'MN.ADD_ENTRY' )" />
 								</a>
