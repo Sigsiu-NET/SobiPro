@@ -54,7 +54,7 @@ Legend:
 	(#) Selecting fields in fields manager via checkbox does not distinguish betweend entry and category fields (Issue #1765)
 	(#) Several small template corrections
 	(#) Corrected Regex for email field (Issue #1777)
-	(#) Deleting temp files with updates list after new App has been installed
+	(#) Deleting temporary update list files after application has been installed
 
 
 -------------------

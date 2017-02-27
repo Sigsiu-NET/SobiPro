@@ -124,7 +124,6 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	{
 		$data = $this->verify( $entry, $request );
 		if ( strlen( $data ) ) {
-			$a = Input::Search( $request, $request );
 			return SPRequest::search( $this->nid, $request );
 		}
 		else {
