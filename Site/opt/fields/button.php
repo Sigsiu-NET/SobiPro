@@ -249,9 +249,15 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 			if ( strlen( $url ) ) {
 				if ( $this->newWindow ) {
 					$attributes[ 'target' ] = '_blank';
+					$attributes['rel'] = 'noopener noreferrer';
 				}
 				if ( $this->noFollow ) {
-					$attributes[ 'rel' ] = 'nofollow';
+					if ( $this->newWindow ) {
+						$attributes[ 'rel' ] = 'nofollow noopener noreferrer';
+					}
+					else {
+						$attributes[ 'rel' ] = 'nofollow';
+					}
 				}
 				if ( $this->useIcon ) {
 					$f[ 'i' ] = [

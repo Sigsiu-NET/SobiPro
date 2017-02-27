@@ -56,6 +56,8 @@ Legend:
 	(#) Corrected Regex for email field (Issue #1777)
 	(#) Deleting temporary update list files after application has been installed
 
+	(*) Added rel="noopener noreferrer" to all user controlled links with target="_blank" @see https://dev.to/ben/the-targetblank-vulnerability-by-example
+
 
 -------------------
 1.3.3 (21 January 2017)
