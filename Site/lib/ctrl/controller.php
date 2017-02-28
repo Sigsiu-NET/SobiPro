@@ -438,6 +438,7 @@ abstract class SPController extends SPObject implements SPControl
 			$template = "/{$this->templateType}/{$this->template}.xsl";
 			SPFactory::registry()->set( 'cache_view_template', $template );
 		}
+		SPFactory::registry()->set( 'template_type', $this->templateType );
 	}
 
 	/**
