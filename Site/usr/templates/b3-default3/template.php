@@ -35,7 +35,6 @@ abstract class tplDefault3
 	}
 	public static function CSS ($src)
 	{
-		SPFactory::header()->addCSSCode(".SobiPro.b3-default3 .spImageHeader {background-image:url(" . $src . ");}");
 	}
 	public static function LoadFont ($name)
 	{
