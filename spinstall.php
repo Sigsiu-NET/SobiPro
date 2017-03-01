@@ -327,10 +327,18 @@ class com_sobiproInstallerScript
 		if ( !( file_exists( JPATH_ROOT . '/libraries/sobi' ) ) ) {
 			JFolder::create( JPATH_ROOT . '/libraries/sobi' );
 		}
-		if ( file_exists( JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' ) ) {
-			JFile::delete( JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
+		$files = scandir( JPATH_ROOT . '/libraries/sobi' );
+		if ( count( $files ) ) {
+			foreach ( $files as $file ) {
+				if ( strstr( $file, '.tar.gz' ) || strstr( $file, '.php' ) ) {
+					JFile::delete( JPATH_ROOT . '/libraries/sobi/' . $file );
+				}
+			}
 		}
-		JFile::copy( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
+//		if ( file_exists( JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' ) ) {
+//			JFile::delete( JPATH_ROOT . '/libraries/sobi/Sobi.phar.tar.gz' );
+//		}
+		JFile::copy( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/Sobi-1.0.1.phar.tar.gz' );
 		JFile::delete( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz' );
 		// I am guessing that this was wath cached the PHAR file. Let's see
 		if ( function_exists( 'opcache_reset' ) ) {
