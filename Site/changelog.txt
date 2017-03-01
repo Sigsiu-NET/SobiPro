@@ -26,7 +26,7 @@ Legend:
  (!) - Change
 
 -------------------
-1.3.4 ()
+1.3.4 (1 March 2017)
 -------------------
 	(+) Small layout improvement in Entries & Categories Manager
 	(+) Title and description for entry and search forms adjustable
