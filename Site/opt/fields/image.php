@@ -500,8 +500,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			}
 			if ( $this->resize ) {
 				/** @var SPImage $image */
-				$image->setTransparency( $this->detectTransparency );
 				$image = clone $orgImage;
+				$image->setTransparency( $this->detectTransparency );
 				try {
 					$image->resample( $this->resizeWidth, $this->resizeHeight, false );
 					$files[ 'image' ] = $this->parseName( $entry, $orgName, $this->imageName, true );
