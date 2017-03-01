@@ -919,7 +919,13 @@ abstract class SPFrontView extends SPObject implements SPView
 				$file = Input::String( 'sptpl' );
 			}
 			else {
-				$file = $task;
+				if ( strstr( $task, '.' ) ) {
+					$file = explode( '.', $task );
+					$file = $file[ 1 ];
+				}
+				else {
+					$file = $task;
+				}
 			}
 			$templateType = SPFactory::registry()->get( 'template_type' );
 			if ( SPLoader::translatePath( "{$this->_templatePath}.{$templateType}.{$file}", 'absolute', true, 'json' ) ) {
