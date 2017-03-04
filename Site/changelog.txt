@@ -25,6 +25,12 @@ Legend:
  (-) - Removed
  (!) - Change
 
+
+-------------------
+1.3.5 ()
+-------------------
+	(!) Changed str related functions to multibyte in router and alpha view
+
 -------------------
 1.3.4 (1 March 2017)
 -------------------

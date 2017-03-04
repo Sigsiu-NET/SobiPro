@@ -83,7 +83,7 @@ function SobiProBuildRoute( &$query )
 	}
 	if ( $cfg[ 'config' ][ 'to_lower' ] ) {
 		foreach ( $segments as $i => $segment ) {
-			$segments[ $i ] = strtolower( $segment );
+			$segments[ $i ] = function_exists( 'mb_strtolower' ) ? mb_strtolower( $segment ) : strtolower( $segment );
 		}
 	}
 	if ( count( $segments ) && strstr( $segments[ count( $segments ) - 1 ], '.' ) ) {
