@@ -515,6 +515,9 @@ class SPAppInstaller extends SPInstaller
 			case 'templates':
 				$path = Sobi::FixPath( SPLoader::newDir( "usr.templates.{$path}" ) . '/' );
 				break;
+			case 'storage':
+				$path = Sobi::FixPath( SPLoader::newDir( "usr.templates.storage.{$path}" ) . '/' );
+				break;
 			case 'config':
 				$path = Sobi::FixPath( SPLoader::newDir( "etc.{$path}" ) . '/' );
 				break;
