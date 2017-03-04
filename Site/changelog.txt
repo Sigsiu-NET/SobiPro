@@ -27,9 +27,11 @@ Legend:
 
 
 -------------------
-1.3.5 ()
+1.3.5 (4 March 2017)
 -------------------
-	(!) Changed str related functions to multibyte in router and alpha view
+	(!) Changed string related functions to multibyte in router and alpha view
+	(!) Includes Sobi Framework 1.0.2
+
 
 -------------------
 1.3.4 (1 March 2017)
@@ -48,6 +50,7 @@ Legend:
 	(!) Search phrases adapted to template style
 	(!) Login redirect added to toolbar style 'linkbar'
 	(!) Added some of B3-default3 template features to default3 template
+	(!) Includes Sobi Framework 1.0.1
 
 	(#) Sorting the select list in search form for input box field (Issue #1762)
 	(#) Missing container 'spListing' added to search results
