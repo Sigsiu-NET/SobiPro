@@ -27,9 +27,10 @@ Legend:
 
 
 -------------------
-1.3.6 ()
+1.3.6 (4 March 2017)
 -------------------
 	(#) Installing files to template storage throws error
+	(#) edit.json settings won't be loaded on editing existing entries
 
 
 -------------------

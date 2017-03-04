@@ -462,7 +462,7 @@ abstract class SPController extends SPObject implements SPControl
 			$path = SPLoader::dirPath( 'usr.templates.' . $path, 'front', true );
 		}
 		if ( !$task ) {
-			$task = ( $this->_task == 'add' || $this->_task == 'submit' ) ? 'edit' : $this->_defTask;
+			$task = ( $this->_task == 'add' || $this->_task == 'submit' || $this->_task == 'edit' ) ? 'edit' : $this->_defTask;
 			Input::Set( 'task', "{$this->_type}.{$task}" );
 		}
 		if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'ini' ) ) {
