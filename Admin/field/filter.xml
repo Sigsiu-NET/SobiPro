@@ -18,8 +18,8 @@
 <definition>
 	<body>
 		<message id="spMessage" />
-		<div class="spFilterModal">
-			<fieldset type="vertical">
+		<div class="spModalForm">
+			<fieldset type="horizontal">
 				<field type="text" name="filter.id" value="filter.id" label="FLR.FILTER_ID" required="true">
 					<attribute name="readonly" value="filter.readonly" />
 				</field>

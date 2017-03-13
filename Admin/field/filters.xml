@@ -20,12 +20,12 @@
 		<title value="FLR.SITE_TITLE"/>
 		<file type="script" filename="adm.filters"/>
 	</header>
-	<toolbar title="FLR.SITE_TITLE" icon="SobiFields">
+	<toolbar title="FLR.SITE_TITLE" icon="SobiFields" class="field filters">
 		<button type="new" class="filter-edit"/>
 		<divider/>
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel"/>
 			<button type="url" task="config"/>
 			<button type="url" task="acl"/>
@@ -44,20 +44,20 @@
 				<div class="table-responsive">
 					<table>
 						<head>
-							<cell label="FLR.FILTER_ID" type="text" class="SpCellLeft"/>
-							<cell label="FLR.EDIT_FILTER" type="text" class="SpCellCenter"/>
-							<cell label="FLR.FILTER_NAME" type="text" class="SpCellLeft"/>
-							<cell label="FLR.FILTER_MSG" type="text" class="SpCellLeft"/>
-							<cell label="FLR.FILTER_REGEX" type="text" class="SpCellLeft"/>
+							<cell label="FLR.FILTER_ID" type="text" class="spCell left"/>
+							<cell label="FLR.EDIT_FILTER" type="text" class="spCell center"/>
+							<cell label="FLR.FILTER_NAME" type="text" class="spCell left"/>
+							<cell label="FLR.FILTER_MSG" type="text" class="spCell left"/>
+							<cell label="FLR.FILTER_REGEX" type="text" class="spCell left"/>
 						</head>
 						<loop subject="filters">
-							<cell type="text" value="id" class="SpCellLeft filterId"/>
-							<cell type="text" class="SpCellCenter">
+							<cell type="text" value="id" class="spCell left filterId"/>
+							<cell type="text" class="spCell center">
 								<button type="new" class="filter-edit" icon="edit" rel="var:[id]"/>
 							</cell>
-							<cell type="text" value="name" class="SpCellLeft"/>
-							<cell type="text" value="message" class="SpCellLeft"/>
-							<cell type="text" value="regex" class="SpCellLeft"/>
+							<cell type="text" value="name" class="spCell left"/>
+							<cell type="text" value="message" class="spCell left"/>
+							<cell type="text" value="regex" class="spCell left"/>
 						</loop>
 					</table>
 				</div>

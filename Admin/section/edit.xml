@@ -20,7 +20,7 @@
 		<title value="SEC.ADD_SITE_TITLE" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiEdit">
+	<toolbar title="var:[site_title]" icon="SobiEdit" class="section edit">
 		<button task="section.apply" type="apply"/>
 		<divider />
 		<button type="exit" task="section.cancel" />

@@ -20,14 +20,14 @@
 		<file type="script" filename="bootstrap.tabs"/>
 		<file type="script" filename="adm.template"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiTemplate">
+	<toolbar title="var:[site_title]" icon="SobiTemplate" class="template info">
 		<button type="duplicate" task="template.clone" label="TB.CLONE"/>
 		<divider/>
 		<button type="delete" task="template.delete" confirm="TB.JS_DELETE_TEMPLATE_WARN"/>
 		<divider/>
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel"/>
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
@@ -73,8 +73,8 @@
 								<div class="table-responsive">
 									<table>
 										<head>
-											<cell label="TP.HEAD_FILENAME" type="text" class="SpCellLeft"/>
-											<cell label="TP.HEAD_FILE_DESC" type="text" class="SpCellLeft"/>
+											<cell label="TP.HEAD_FILENAME" type="text" class="spCell left"/>
+											<cell label="TP.HEAD_FILE_DESC" type="text" class="spCell left"/>
 										</head>
 										<loop subject="files">
 											<cell type="link" value="file" condition="filepath">
@@ -85,7 +85,7 @@
 												</url>
 											</cell>
 											<cell type="text" value="file" invert-condition="filepath"/>
-											<cell type="text" value="description" class="SpCellLeft"/>
+											<cell type="text" value="description" class="spCell left"/>
 										</loop>
 									</table>
 								</div>

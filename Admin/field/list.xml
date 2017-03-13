@@ -25,7 +25,7 @@
 			} );
 		</script>
 	</header>
-	<toolbar title="FM.SITE_TITLE" icon="SobiFields">
+	<toolbar title="FM.SITE_TITLE" icon="SobiFields" class="field">
 		<buttons type="new" icon="plus" label="TB.FIELDNEW" buttons="fieldTypes"/>
 		<divider/>
 		<buttons type="new" icon="plus" label="TB.FIELDNEW" buttons="categoryFieldTypes"/>
@@ -37,9 +37,9 @@
 			<button type="disable" task="field.hide"/>
 		</buttons>
 		<divider/>
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel"/>
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
@@ -89,21 +89,21 @@
 							<div class="table-responsive">
 								<table>
 									<head>
-										<cell label="HEADER_ID" type="text" class="SpCellCenter"/>
-										<cell type="checkbox" rel="p_fid" class="SpCellCenter"/>
+										<cell label="HEADER_ID" type="text" class="spCell center"/>
+										<cell type="checkbox" rel="p_fid" class="spCell center"/>
 										<cell label="HEADER_FIELD_NAME" type="text"/>
-										<cell label="HEADER_FIELD_STATE" type="text" class="SpCellCenter"/>
-										<cell label="HEADER_FIELD_TYPE" type="text" class="SpCellCenter"/>
-										<cell label="HEADER_FIELD_SHOW_IN" type="text" class="SpCellCenter"/>
-										<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="SpCellCenter"/>
-										<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="SpCellCenter"/>
-										<cell label="HEADER_FIELD_IS_FREE" type="text" class="SpCellCenter"/>
-										<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="field"
+										<cell label="HEADER_FIELD_STATE" type="text" class="spCell center"/>
+										<cell label="HEADER_FIELD_TYPE" type="text" class="spCell center"/>
+										<cell label="HEADER_FIELD_SHOW_IN" type="text" class="spCell center"/>
+										<cell label="HEADER_FIELD_IS_REQUIRED" type="text" class="spCell center"/>
+										<cell label="HEADER_FIELD_IS_EDITABLE" type="text" class="spCell center"/>
+										<cell label="HEADER_FIELD_IS_FREE" type="text" class="spCell center"/>
+										<cell label="HEADER_FIELD_POSITION" type="ordering" class="spCell position" rel="field"
 										      condition="ordering.contains(order)"/>
 									</head>
 									<loop subject="fields">
-										<cell type="text" value="id" class="SpCellCenter"/>
-										<cell type="checkbox" name="p_fid" value="id" class="SpCellCenter"/>
+										<cell type="text" value="id" class="spCell center"/>
+										<cell type="checkbox" name="p_fid" value="id" class="spCell center"/>
 										<cell invert-condition="_off">
 											<cell type="link" value="name">
 												<url type="intern">
@@ -118,40 +118,40 @@
 											<cell type="text" value="name" class="invalid"/>
 											<cell type="text" value="nid" class="subText invalid"/>
 										</cell>
-										<cell type="ticker" value="enabled" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}">
+										<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove-sign','1':'ok'}">
 											<url type="intern">
 												<param name="task" value="field.toggle.enabled"/>
 												<param name="fid" value="fid" parse="true"/>
 												<param name="sid" value="request.sid" parse="true" subject="skip"/>
 											</url>
 										</cell>
-										<cell type="text" value="fieldType" class="SpCellCenter" invert-condition="_off"/>
-										<cell type="text" value="fieldType" class="SpCellCenter invalid" condition="_off"/>
-										<cell type="text" value="showIn" class="SpCellCenter"/>
-										<cell type="ticker" value="required" class="SpCellCenter" icons="{'0':'check-empty','1':'check'}">
+										<cell type="text" value="fieldType" class="spCell center" invert-condition="_off"/>
+										<cell type="text" value="fieldType" class="spCell center invalid" condition="_off"/>
+										<cell type="text" value="showIn" class="spCell center"/>
+										<cell type="ticker" value="required" class="spCell center" icons="{'0':'check-empty','1':'check'}">
 											<url type="intern">
 												<param name="task" value="field.toggle.required"/>
 												<param name="fid" value="fid" parse="true"/>
 												<param name="sid" value="request.sid" parse="true" subject="skip"/>
 											</url>
 										</cell>
-										<cell type="ticker" value="editable" class="SpCellCenter" icons="{'0':'lock','1':'edit'}">
+										<cell type="ticker" value="editable" class="spCell center" icons="{'0':'lock','1':'edit'}">
 											<url type="intern">
 												<param name="task" value="field.toggle.editable"/>
 												<param name="fid" value="fid" parse="true"/>
 												<param name="sid" value="request.sid" parse="true" subject="skip"/>
 											</url>
 										</cell>
-										<cell type="ticker" value="isFree" class="SpCellCenter" icons="{'0':'dollar','1':'gift'}">
+										<cell type="ticker" value="isFree" class="spCell center" icons="{'0':'dollar','1':'gift'}">
 											<url type="intern">
 												<param name="task" value="field.toggle.free"/>
 												<param name="fid" value="fid" parse="true"/>
 												<param name="sid" value="request.sid" parse="true" subject="skip"/>
 											</url>
 										</cell>
-										<cell type="ordering" value="position" name="fid[var:[id]]" class="SpCellArrowCol"
+										<cell type="ordering" value="position" name="fid[var:[id]]" class="spCell position"
 										      condition="/ordering.contains(order)">
-											<cell type="text" class="SpCellArrow">
+											<cell type="text" class="arrow">
 												<cell type="link" icon="chevron-up">
 													<url type="intern">
 														<param name="task" value="field.up"/>
@@ -179,17 +179,17 @@
 							<div class="table-responsive">
 								<table>
 									<head>
-										<cell label="HEADER_ID" type="text" class="SpCellCenter spWidth5pp"/>
-										<cell type="checkbox" rel="p_fid" class="SpCellCenter spWidth5pp"/>
+										<cell label="HEADER_ID" type="text" class="spCell center extrasmall"/>
+										<cell type="checkbox" rel="p_fid" class="spCell center extrasmall"/>
 										<cell label="HEADER_FIELD_NAME" type="text"/>
-										<cell label="HEADER_FIELD_STATE" type="text" class="SpCellCenter"/>
-										<cell label="HEADER_FIELD_TYPE" type="text" class="SpCellCenter"/>
-										<cell label="HEADER_FIELD_POSITION" type="ordering" class="SpCellArrowCol" rel="field"
+										<cell label="HEADER_FIELD_STATE" type="text" class="spCell center"/>
+										<cell label="HEADER_FIELD_TYPE" type="text" class="spCell center"/>
+										<cell label="HEADER_FIELD_POSITION" type="ordering" class="spCell position" rel="field"
 										      condition="ordering.contains(order)"/>
 									</head>
 									<loop subject="category-fields">
-										<cell type="text" value="id" class="SpCellCenter"/>
-										<cell type="checkbox" name="p_fid" value="id" class="SpCellCenter"/>
+										<cell type="text" value="id" class="spCell center"/>
+										<cell type="checkbox" name="p_fid" value="id" class="spCell center"/>
 										<cell invert-condition="_off">
 											<cell type="link" value="name">
 												<url type="intern">
@@ -204,18 +204,18 @@
 											<cell type="text" value="name" class="invalid"/>
 											<cell type="text" value="nid" class="subText invalid"/>
 										</cell>
-										<cell type="ticker" value="enabled" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}">
+										<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove-sign','1':'ok'}">
 											<url type="intern">
 												<param name="task" value="field.toggle.enabled"/>
 												<param name="fid" value="fid" parse="true"/>
 												<param name="sid" value="request.sid" parse="true" subject="skip"/>
 											</url>
 										</cell>
-										<cell type="text" value="fieldType" class="SpCellCenter" invert-condition="_off"/>
-										<cell type="text" value="fieldType" class="SpCellCenter invalid" condition="_off"/>
-										<cell type="ordering" value="position" name="cfid[var:[id]]" class="SpCellArrowCol"
+										<cell type="text" value="fieldType" class="spCell center" invert-condition="_off"/>
+										<cell type="text" value="fieldType" class="spCell center invalid" condition="_off"/>
+										<cell type="ordering" value="position" name="cfid[var:[id]]" class="spCell position"
 										      condition="/ordering.contains(order)">
-											<cell type="text" class="SpCellArrow">
+											<cell type="text" class="arrow">
 												<cell type="link" icon="chevron-up">
 													<url type="intern">
 														<param name="task" value="field.up"/>

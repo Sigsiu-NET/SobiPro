@@ -22,12 +22,12 @@
 		<file type="script" filename="adm.sam"/>
 		<style>.SpAddRepo { float: none; }</style>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
+	<toolbar title="var:[site_title]" icon="SobiApplicationSection" class="extensions browse">
 		<button task="extensions.fetch" label="TB.FETCH_UPDATES" icon="refresh"/>
 		<divider/>
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel"/>
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
@@ -62,16 +62,16 @@
 							<div class="SpApps table-responsive">
 								<table>
 									<head>
-										<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft"/>
-										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_ENABLED" class="SpCellCenter"/>
+										<cell label="EX.HEADER_NAME" type="text" class="spCell left"/>
+										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_ENABLED" class="spCell center"/>
 										<cell/>
-										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft"/>
+										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="spCell left"/>
 									</head>
 									<loop subject="extensions.applications">
-										<cell class="SpCellLeft SpExtName">
+										<cell class="spCell left SpExtName">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="description" parse="true"/>
@@ -80,15 +80,15 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="version" class="SpCellCenter"/>
-										<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}"
+										<cell type="text" value="version" class="spCell center"/>
+										<cell type="ticker" value="installed" class="spCell center" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}"
 										      status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }"/>
-										<cell class="SpCellLeft SpCloudInstall">
+										<cell class="spCell left SpCloudInstall">
 											<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall"/>
 										</cell>
-										<cell type="text" value="author" class="SpCellCenter"/>
-										<cell type="text" value="license" class="SpCellCenter"/>
-										<cell class="SpCellLeft" condition="availability-link">
+										<cell type="text" value="author" class="spCell center"/>
+										<cell type="text" value="license" class="spCell center"/>
+										<cell class="spCell left" condition="availability-link">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="availability-expl" parse="true"/>
@@ -97,7 +97,7 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="availability" class="SpCellLeft" invert-condition="availability-link"/>
+										<cell type="text" value="availability" class="spCell left" invert-condition="availability-link"/>
 									</loop>
 								</table>
 							</div>
@@ -106,16 +106,16 @@
 							<div class="SpApps table-responsive">
 								<table>
 									<head>
-										<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft"/>
-										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_ENABLED" class="SpCellCenter"/>
+										<cell label="EX.HEADER_NAME" type="text" class="spCell left"/>
+										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_ENABLED" class="spCell center"/>
 										<cell/>
-										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft"/>
+										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="spCell left"/>
 									</head>
 									<loop subject="extensions.fields">
-										<cell class="SpCellLeft SpExtName">
+										<cell class="spCell left SpExtName">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="description" parse="true"/>
@@ -124,15 +124,15 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="version" class="SpCellCenter"/>
-										<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}"
+										<cell type="text" value="version" class="spCell center"/>
+										<cell type="ticker" value="installed" class="spCell center" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}"
 										      status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }"/>
 										<cell class="SpCloudInstall">
 											<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall"/>
 										</cell>
-										<cell type="text" value="author" class="SpCellCenter"/>
-										<cell type="text" value="license" class="SpCellCenter"/>
-										<cell class="SpCellLeft" condition="availability-link">
+										<cell type="text" value="author" class="spCell center"/>
+										<cell type="text" value="license" class="spCell center"/>
+										<cell class="spCell left" condition="availability-link">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="availability-expl" parse="true"/>
@@ -141,7 +141,7 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="availability" class="SpCellLeft" invert-condition="availability-link"/>
+										<cell type="text" value="availability" class="spCell left" invert-condition="availability-link"/>
 									</loop>
 								</table>
 							</div>
@@ -150,15 +150,15 @@
 							<div class="SpApps table-responsive">
 								<table>
 									<head>
-										<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft"/>
-										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter"/>
+										<cell label="EX.HEADER_NAME" type="text" class="spCell left"/>
+										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="spCell center"/>
 										<cell/>
-										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft"/>
+										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="spCell left"/>
 									</head>
 									<loop subject="extensions.templates">
-										<cell class="SpCellLeft SpExtName">
+										<cell class="spCell left SpExtName">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="description" parse="true"/>
@@ -167,13 +167,13 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="version" class="SpCellCenter"/>
+										<cell type="text" value="version" class="spCell center"/>
 										<cell class="SpCloudInstall">
 											<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall"/>
 										</cell>
-										<cell type="text" value="author" class="SpCellCenter"/>
-										<cell type="text" value="license" class="SpCellCenter"/>
-										<cell class="SpCellLeft" condition="availability-link">
+										<cell type="text" value="author" class="spCell center"/>
+										<cell type="text" value="license" class="spCell center"/>
+										<cell class="spCell left" condition="availability-link">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="availability-expl" parse="true"/>
@@ -182,7 +182,7 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="availability" class="SpCellLeft" invert-condition="availability-link"/>
+										<cell type="text" value="availability" class="spCell left" invert-condition="availability-link"/>
 									</loop>
 								</table>
 							</div>
@@ -191,16 +191,16 @@
 							<div class="SpApps table-responsive">
 								<table>
 									<head>
-										<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft"/>
-										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_ENABLED" class="SpCellCenter"/>
+										<cell label="EX.HEADER_NAME" type="text" class="spCell left"/>
+										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_ENABLED" class="spCell center"/>
 										<cell/>
-										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft"/>
+										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="spCell left"/>
 									</head>
 									<loop subject="extensions.languages">
-										<cell class="SpCellLeft SpExtName">
+										<cell class="spCell left SpExtName">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="description" parse="true"/>
@@ -209,15 +209,15 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="version" class="SpCellCenter"/>
-										<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}"
+										<cell type="text" value="version" class="spCell center"/>
+										<cell type="ticker" value="installed" class="spCell center" icons="{'-1':'check-empty','-2':'check','-3':'bell-alt'}"
 										      status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }"/>
 										<cell class="SpCloudInstall">
 											<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall"/>
 										</cell>
-										<cell type="text" value="author" class="SpCellCenter"/>
-										<cell type="text" value="license" class="SpCellCenter"/>
-										<cell class="SpCellLeft" condition="availability-link">
+										<cell type="text" value="author" class="spCell center"/>
+										<cell type="text" value="license" class="spCell center"/>
+										<cell class="spCell left" condition="availability-link">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="availability-expl" parse="true"/>
@@ -226,7 +226,7 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="availability" class="SpCellLeft" invert-condition="availability-link"/>
+										<cell type="text" value="availability" class="spCell left" invert-condition="availability-link"/>
 									</loop>
 								</table>
 							</div>
@@ -235,17 +235,17 @@
 							<div class="SpApps table-responsive">
 								<table>
 									<head>
-										<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft"/>
-										<cell label="EX.HEADER_TYPE" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_ENABLED" class="SpCellCenter"/>
+										<cell label="EX.HEADER_NAME" type="text" class="spCell left"/>
+										<cell label="EX.HEADER_TYPE" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_ENABLED" class="spCell center"/>
 										<cell/>
-										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft"/>
+										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="spCell left"/>
 									</head>
 									<loop subject="extensions.others">
-										<cell class="SpCellLeft SpExtName">
+										<cell class="spCell left SpExtName">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="description" parse="true"/>
@@ -254,16 +254,16 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="type" class="SpCellCenter"/>
-										<cell type="text" value="version" class="SpCellCenter"/>
-										<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'check-empty','-2':'check','-3':'flag'}"
+										<cell type="text" value="type" class="spCell center"/>
+										<cell type="text" value="version" class="spCell center"/>
+										<cell type="ticker" value="installed" class="spCell center" icons="{'-1':'check-empty','-2':'check','-3':'flag'}"
 										      status-text="{'-1':'EX.BRWOSE_NOT_INSTALLED_EXPL', '-2':'EX.BRWOSE_INSTALLED_EXPL', '-3':'EX.BRWOSE_INSTALLED_UPD_EXPL' }"/>
 										<cell class="SpCloudInstall">
 											<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall"/>
 										</cell>
-										<cell type="text" value="author" class="SpCellCenter"/>
-										<cell type="text" value="license" class="SpCellCenter"/>
-										<cell class="SpCellLeft" condition="availability-link">
+										<cell type="text" value="author" class="spCell center"/>
+										<cell type="text" value="license" class="spCell center"/>
+										<cell class="spCell left" condition="availability-link">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="availability-expl" parse="true"/>
@@ -272,7 +272,7 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="availability" class="SpCellLeft" invert-condition="availability-link"/>
+										<cell type="text" value="availability" class="spCell left" invert-condition="availability-link"/>
 									</loop>
 								</table>
 							</div>
@@ -281,16 +281,16 @@
 							<div class="SpApps table-responsive">
 								<table>
 									<head>
-										<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft"/>
-										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_ENABLED" class="SpCellCenter"/>
+										<cell label="EX.HEADER_NAME" type="text" class="spCell left"/>
+										<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_ENABLED" class="spCell center"/>
 										<cell/>
-										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="SpCellCenter"/>
-										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="SpCellLeft"/>
+										<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_LICENSE" type="text" class="spCell center"/>
+										<cell label="EXTENSIONS.HEADER_AVAILABILITY" type="text" class="spCell left"/>
 									</head>
 									<loop subject="extensions.updates">
-										<cell class="SpCellLeft SpExtName">
+										<cell class="spCell left SpExtName">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="description" parse="true"/>
@@ -299,15 +299,15 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="version" class="SpCellCenter"/>
-										<cell type="ticker" value="installed" class="SpCellCenter" icons="{'-1':'remove-sign','-2':'check','-3':'bell-alt'}"
+										<cell type="text" value="version" class="spCell center"/>
+										<cell type="ticker" value="installed" class="spCell center" icons="{'-1':'remove-sign','-2':'check','-3':'bell-alt'}"
 										      status-text="{'-1':'EX.UPDATE_OLD_EXPL', '-2':'', '-3':'EX.UPDATE_REQUIRED' }"/>
 										<cell class="SpCloudInstall">
 											<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall"/>
 										</cell>
-										<cell type="text" value="author" class="SpCellCenter"/>
-										<cell type="text" value="license" class="SpCellCenter"/>
-										<cell class="SpCellLeft" condition="availability-link">
+										<cell type="text" value="author" class="spCell center"/>
+										<cell type="text" value="license" class="spCell center"/>
+										<cell class="spCell left" condition="availability-link">
 											<cell>
 												<tooltip>
 													<attribute name="content" value="availability-expl" parse="true"/>
@@ -316,7 +316,7 @@
 												</tooltip>
 											</cell>
 										</cell>
-										<cell type="text" value="availability" class="SpCellLeft" invert-condition="availability-link"/>
+										<cell type="text" value="availability" class="spCell left" invert-condition="availability-link"/>
 									</loop>
 								</table>
 							</div>
@@ -337,19 +337,19 @@
 							<div class="table-responsive">
 								<table>
 									<head>
-										<cell label="EX.REPOSITORY_NAME" type="text" class="SpCellLeft"/>
-										<cell label="EX.REPO_DESCRIPTION" type="text" class="SpCellLeft"/>
-										<cell label="EX.REPO_MAINTAINER" class="SpCellLeft"/>
-										<cell label="EX.MAINT_SUPPORT" type="text" class="SpCellLeft"/>
+										<cell label="EX.REPOSITORY_NAME" type="text" class="spCell left"/>
+										<cell label="EX.REPO_DESCRIPTION" type="text" class="spCell left"/>
+										<cell label="EX.REPO_MAINTAINER" class="spCell left"/>
+										<cell label="EX.MAINT_SUPPORT" type="text" class="spCell left"/>
 										<cell/>
 									</head>
 									<loop subject="repositories">
-										<cell type="text" value="repository.name" class="SpCellLeft"/>
-										<cell type="text" value="repository.description" class="SpCellLeft"/>
-										<cell type="link" value="repository.maintainer.name" class="SpCellLeft">
+										<cell type="text" value="repository.name" class="spCell left"/>
+										<cell type="text" value="repository.description" class="spCell left"/>
+										<cell type="link" value="repository.maintainer.name" class="spCell left">
 											<url type="extern" host="repository.maintainer.url"/>
 										</cell>
-										<cell type="link" value="repository.maintainer.supporturl" class="SpCellLeft">
+										<cell type="link" value="repository.maintainer.supporturl" class="spCell left">
 											<url type="extern" host="repository.maintainer.supporturl"/>
 										</cell>
 										<cell>

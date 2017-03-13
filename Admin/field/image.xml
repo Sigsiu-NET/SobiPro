@@ -20,7 +20,7 @@
 		<title value="FM.EDIT_FIELD"/>
 		<file type="script" filename="bootstrap.tabs"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiFieldEdit">
+	<toolbar title="var:[site_title]" icon="SobiFieldEdit" class="field image">
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES"/>
 		<divider/>
 		<button task="field.apply" type="apply">
@@ -91,7 +91,6 @@
 									<field type="toggle" name="field.crop" value="field.crop" label="FM.IMG.CROP_IMG" prefix="yes_no"/>
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYINPUT_DVIMAGE">
-
 									<field type="text" name="field.imageName" value="field.imageName" label="FM.FIELD_IMAGE_NAME" maxlength="100"
 									       class="input-large"/>
 									<field type="text" name="field.resizeWidth" value="field.resizeWidth" label="FM.IMG.RESIZEWIDTH_TO" maxlength="50"

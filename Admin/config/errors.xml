@@ -19,16 +19,16 @@
 	<header>
 		<title value="ERR.SITE_TITLE" />
 	</header>
-	<toolbar title="ERR.SITE_TITLE" icon="SobiConfig">
+	<toolbar title="ERR.SITE_TITLE" icon="SobiConfig" class="config errors">
 		<divider />
 		<buttons type="actions">
 			<button label="TB.PURGE" task="error.purge" icon="trash" />
 			<button label="TB.DOWNLOAD_LOG" task="error.download" icon="save" />
 		</buttons>
 		<divider />
-        <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-        <divider />
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
+		<divider/>
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
@@ -47,19 +47,19 @@
 				<!--<header label="ERR.SITE_TITLE" icon="SobiFieldList" />-->
 				<table condition="errors.length">
 					<head>
-						<cell label="ERR.ERROR_INFO" type="text" class="SpCellCenterSmall" />
+						<cell label="ERR.ERROR_INFO" type="text" class="spCell center small" />
 						<cell />
-						<cell label="ERR.ERROR_DETAILS" type="text" class="SpCellCenter" />
+						<cell label="ERR.ERROR_DETAILS" type="text" class="spCell center" />
 					</head>
 					<loop subject="errors">
-						<cell type="text" value="errNum" class="SpCellCenterSmall" />
+						<cell type="text" value="errNum" class="spCell center small" />
 						<cell>
 							<cell type="text" value="errMsg" />
-							<cell label="ERR.ERROR_DATE" type="text" value="date" class="SpCellPair" />
-							<cell label="ERR.IN_FILE" type="text" value="errFile" class="SpCellPair" />
-							<cell label="ERR.REQUESTED_URI" type="text" value="errReq" class="SpCellPair" />
+							<cell label="ERR.ERROR_DATE" type="text" value="date" class="spCell" />
+							<cell label="ERR.IN_FILE" type="text" value="errFile" class="spCell" />
+							<cell label="ERR.REQUESTED_URI" type="text" value="errReq" class="spCell" />
 						</cell>
-						<cell class="SpCellCenter">
+						<cell class="spCell center">
 							<cell type="link" value="eid">
 								<url type="intern" class="label label-warning">
 									<param name="task" value="error.details" />

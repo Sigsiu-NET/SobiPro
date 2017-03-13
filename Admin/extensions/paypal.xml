@@ -20,12 +20,12 @@
 		<title value="APP.PPP_NAME" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
+	<toolbar title="var:[site_title]" icon="SobiApplicationSection" class="extensions paypal">
 		<button type="apply" task="paypal.save" />
 		<divider />
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-		<divider />
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
+		<divider/>
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>

@@ -19,7 +19,7 @@
 	<body>
 		<div class="modal hide">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">
+				<button class="close" data-dismiss="modal">
 					<text value="CLOSE_X" />
 				</button>
 				<h3>
@@ -28,7 +28,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row-fluid">
-					<div class="SpSoap">
+					<div class="spModalForm SpSoap">
 						<fieldset>
 							<loop subject="request.fields" type="fields" />
 						</fieldset>
