@@ -244,7 +244,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$selector .= '<div class="selected span6">';
 			$treeclass = 'SigsiuTree';
 			if ( defined( 'SOBIPRO_ADM' ) ) {
-				$treeclass = 'SigsiuTree AdminEntry';
+				$treeclass .= ' spAdminEntry';
 			}
 		}
 		if ( $this->height > 100 ) {

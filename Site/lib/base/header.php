@@ -78,12 +78,15 @@ final class SPHeader
 	public function & initBase( $adm = false )
 	{
 		if ( $adm ) {
-			$this->addCssFile( [ 'bootstrap.bootstrap', 'admicons', 'adm.sobipro' ] )
+//			$this->addCssFile( [ 'bootstrap.bootstrap', 'admicons', 'adm.sobipro' ] )
+			$this->addCssFile( [ 'adm.sobiadmin', 'admicons' ] )
 				->addJsFile( [ 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface' ] );
 		}
 		else {
-			$this->addCssFile( [ 'sobipro' ] )
-				->addJsFile( [ 'sobipro', 'jquery', 'jqnc' ] );
+			if ( !defined( 'SOBIPRO_ADM' ) ) {
+				$this->addCssFile( [ 'sobipro' ] );
+			}
+			$this->addJsFile( [ 'sobipro', 'jquery', 'jqnc' ] );
 			if ( Sobi::Cfg( 'template.bootstrap3-load', false ) && !defined( 'SOBIPRO_ADM' ) ) {
 				if ( Sobi::Cfg( 'template.bootstrap3-source', true ) ) { //true=local, false=CDN
 					$this->addCssFile( 'b3bootstrap.b3bootstrap' )
@@ -95,8 +98,10 @@ final class SPHeader
 				}
 			}
 			else {
-				$this->addCssFile( 'bootstrap.bootstrap' )
-					->addJsFile( 'bootstrap' );
+				if ( !defined( 'SOBIPRO_ADM' ) ) {
+					$this->addCssFile( 'bootstrap.bootstrap' );
+				}
+				$this->addJsFile( 'bootstrap' );
 			}
 			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', [] );
 			if ( count( $fonts ) ) {
@@ -117,7 +122,8 @@ final class SPHeader
 		return $this;
 	}
 
-	protected function store( $args, $id )
+	protected
+	function store( $args, $id )
 	{
 		if ( isset( $args[ 'this' ] ) ) {
 			unset( $args[ 'this' ] );
@@ -133,7 +139,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & add( $html )
+	public
+	function & add( $html )
 	{
 		$checksum = md5( $html );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -154,7 +161,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & addMeta( $name, $content, $attributes = [] )
+	public
+	function & addMeta( $name, $content, $attributes = [] )
 	{
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -185,7 +193,8 @@ final class SPHeader
 	 * @internal param string $js
 	 * @return SPHeader
 	 */
-	public function & meta( $content, $name = null, $attributes = [] )
+	public
+	function & meta( $content, $name = null, $attributes = [] )
 	{
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -213,7 +222,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & addJsCode( $js )
+	public
+	function & addJsCode( $js )
 	{
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -236,7 +246,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & addJsFile( $script, $adm = false, $params = null, $force = false, $ext = 'js' )
+	public
+	function & addJsFile( $script, $adm = false, $params = null, $force = false, $ext = 'js' )
 	{
 		if ( is_array( $script ) && count( $script ) ) {
 			foreach ( $script as $f ) {
@@ -327,7 +338,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & addJsUrl( $file, $params = null )
+	public
+	function & addJsUrl( $file, $params = null )
 	{
 		if ( is_array( $file ) && count( $file ) ) {
 			foreach ( $file as $f ) {
@@ -360,7 +372,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & addJsVarFile( $script, $id, $params, $adm = false )
+	public
+	function & addJsVarFile( $script, $id, $params, $adm = false )
 	{
 		$this->store( get_defined_vars(), __FUNCTION__ );
 		$checksum = md5( json_encode( get_defined_vars() ) );
@@ -408,7 +421,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & addCSSCode( $css )
+	public
+	function & addCSSCode( $css )
 	{
 		$checksum = md5( $css );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -432,7 +446,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & addCssFile( $file, $adm = false, $media = null, $force = false, $ext = 'css', $params = null )
+	public
+	function & addCssFile( $file, $adm = false, $media = null, $force = false, $ext = 'css', $params = null )
 	{
 		if ( is_array( $file ) && count( $file ) ) {
 			foreach ( $file as $f ) {
@@ -530,7 +545,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & addHeadLink( $href, $type = null, $title = null, $rel = 'alternate', $relType = 'rel', $params = null )
+	public
+	function & addHeadLink( $href, $type = null, $title = null, $rel = 'alternate', $relType = 'rel', $params = null )
 	{
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -554,7 +570,8 @@ final class SPHeader
 		return $this;
 	}
 
-	public function & addCanonical( $url )
+	public
+	function & addCanonical( $url )
 	{
 		$checksum = md5( $url );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -573,7 +590,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & addTitle( $title, $site = [] )
+	public
+	function & addTitle( $title, $site = [] )
 	{
 		if ( count( $site ) && $site[ 0 ] > 1 ) {
 			if ( !( is_array( $title ) ) ) {
@@ -609,7 +627,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & addDescription( $desc )
+	public
+	function & addDescription( $desc )
 	{
 		if ( is_string( $desc ) ) {
 			$checksum = md5( $desc );
@@ -632,7 +651,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & setTitle( $title )
+	public
+	function & setTitle( $title )
 	{
 		if ( defined( 'SOBIPRO_ADM' ) ) {
 			SPFactory::mainframe()->setTitle( SPLang::clean( $title ) );
@@ -655,7 +675,8 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public function & objMeta( $obj )
+	public
+	function & objMeta( $obj )
 	{
 		$task = Input::Task();
 		if ( Sobi::Cfg( 'meta.always_add_section' ) ) {
@@ -665,7 +686,7 @@ final class SPHeader
 		}
 		if ( $obj->get( 'metaDesc' ) ) {
 			$separator = Sobi::Cfg( 'meta.separator', '.' );
-			$desc = $obj->get( 'metaDesc' );
+			$desc      = $obj->get( 'metaDesc' );
 			$desc .= $separator;
 			$this->addDescription( $desc );
 		}
@@ -697,12 +718,14 @@ final class SPHeader
 		return $this;
 	}
 
-	public function addRobots( $robots )
+	public
+	function addRobots( $robots )
 	{
 		$this->robots = [ $robots ];
 	}
 
-	public function addAuthor( $author )
+	public
+	function addAuthor( $author )
 	{
 		$checksum = md5( $author );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -720,7 +743,8 @@ final class SPHeader
 	 * @internal param string $key
 	 * @return SPHeader
 	 */
-	public function & addKeyword( $keys )
+	public
+	function & addKeyword( $keys )
 	{
 		if ( is_string( $keys ) ) {
 			$checksum = md5( $keys );
@@ -742,14 +766,16 @@ final class SPHeader
 		return $this;
 	}
 
-	public function getData( $index )
+	public
+	function getData( $index )
 	{
 		if ( isset( $this->$index ) ) {
 			return $this->$index;
 		}
 	}
 
-	public function & reset()
+	public
+	function & reset()
 	{
 		$this->keywords    = [];
 		$this->author      = [];
@@ -766,7 +792,8 @@ final class SPHeader
 		return $this;
 	}
 
-	private function _cssFiles()
+	private
+	function _cssFiles()
 	{
 		if ( Sobi::Cfg( 'cache.include_css_files', false ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			if ( count( $this->_cache[ 'css' ] ) ) {
@@ -829,7 +856,8 @@ final class SPHeader
 		return $this->cssFiles;
 	}
 
-	private function _jsFiles()
+	private
+	function _jsFiles()
 	{
 		if ( Sobi::Cfg( 'cache.include_js_files', false ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			if ( count( $this->_cache[ 'js' ] ) ) {
@@ -868,14 +896,16 @@ final class SPHeader
 	/**
 	 * @deprecated
 	 */
-	public function send()
+	public
+	function send()
 	{
 	}
 
 	/**
 	 * Send the header via the mainframe interface
 	 */
-	public function sendHeader()
+	public
+	function sendHeader()
 	{
 		if ( count( $this->_store ) ) {
 			if ( count( $this->js ) ) {

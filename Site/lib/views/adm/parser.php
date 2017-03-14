@@ -292,7 +292,7 @@ class SPTplParser
 				$this->_out[ ] = $data[ 'content' ];
 				break;
 			case 'table':
-				$data[ 'attributes' ][ 'class' ] = 'table table-striped';
+				$data[ 'attributes' ][ 'class' ] = 'table table-striped table-hover';
 			default:
 				if ( in_array( $data[ 'type' ], $this->html ) ) {
 					$tag = $data[ 'type' ];
@@ -528,7 +528,7 @@ class SPTplParser
 					$this->_out[ ] = '</button>';
 				}
 				else {
-					$this->_out[ ] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], [ 'class' => 'input-mini sp-input-micro spSubmit' ] );
+					$this->_out[ ] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], [ 'class' => 'input-mini input-micro spSubmit' ] );
 				}
 				break;
 			case 'checkbox':
@@ -676,10 +676,10 @@ class SPTplParser
 				$icon = $button[ 'icon' ];
 			}
 			if ( $icon != 'none' ) {
-				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;' . $label;
 			}
 			else {
-				$this->_out[ ] = '&nbsp;&nbsp;' . $label;
+				$this->_out[ ] = '&nbsp;' . $label;
 			}
 			$this->_out[ ] = '</a>';
 			$this->_out[ ] = '<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span>&nbsp;</button>';
@@ -728,7 +728,7 @@ class SPTplParser
 				else {
 					$icon = $button[ 'icon' ];
 				}
-				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;' . $label;
 				$this->_out[ ] = '</a></li>';
 			}
 		}

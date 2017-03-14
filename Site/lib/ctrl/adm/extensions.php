@@ -802,7 +802,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$values[ 'name' ] = 'RepositoryResponse[' . $values[ 'params' ][ 'id' ] . ']';
 			$fields[] = $values;
 		}
-		$fields[] = [ 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => [ 'id' => 'url', 'size' => 30, 'readonly' => 'readonly' ] ];
+		$fields[] = [ 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => [ 'id' => 'url', /*'size' => 30,*/ 'readonly' => 'readonly' ] ];
 		$request = [ 'fields' => $fields ];
 		$view->assign( $request, 'request' );
 		$view->determineTemplate( 'extensions', 'soap-request' );

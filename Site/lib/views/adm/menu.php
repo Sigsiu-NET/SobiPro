@@ -36,7 +36,7 @@ final class SPAdmSiteMenu
 	public function __construct( $task = null, $sid = 0 )
 	{
 		SPFactory::header()
-				->addCSSFile( 'menu', true )
+//				->addCSSFile( 'menu', true )
 				->addJsFile( 'menu', true );
 		$this->_task = $task ? $task : SPRequest::task();
 		$this->_sid = $sid;
@@ -72,13 +72,13 @@ final class SPAdmSiteMenu
 	 */
 	public function display()
 	{
-		$this->_view[ ] = "\n <!-- Sobi Pro - admin side menu start -->";
-		$this->_view[ ] = "\n<div id=\"SPaccordionTabs\" class=\"SPmenuTabs\">";
-		$this->_view[ ] = '<div id="SPMenuCtrl">';
-		$this->_view[ ] = ' <button class="btn btn-mini btn-sobipro" id="SPMenuCtrlBt" type="button"><i class="icon-minus"></i></button>';
+		$this->_view[ ] = "\n <!-- SobiPro - admin side menu start -->";
+		$this->_view[ ] = "\n<div id=\"SPaccordionTabs\" class=\"spMenuContainer\">";
+		$this->_view[ ] = '<div id="SPMenuCtrl" class="spMenuCtrl">';
+		$this->_view[ ] = ' <button class="spMenuCtrlBtn btn btn-mini btn-sobipro" id="SPMenuCtrlBt" type="button"><i class="icon-minus"></i></button>';
 		$this->_view[ ] = '</div>';
 		$media = Sobi::Cfg( 'img_folder_live' );
-		$this->_view[ ] = "\n<div class='well well-small'><a href=\"http://www.Sigsiu.NET\" target=\"_blank\" title=\"Sigsiu.NET Software Development\"><img src=\"{$media}/sp.png\" alt=\"Sigsiu.NET Software Development\" style=\"border-style:none;\" /></a></div>\n";
+		$this->_view[ ] = "\n<div class='well well-small'><a href=\"https://www.Sigsiu.NET\" title=\"Sigsiu.NET GmbH - Software Development\"><img src=\"{$media}/sp.png\" alt=\"Sigsiu.NET GmbH - Software Development\" style=\"border-style:none;\" /></a></div>\n";
 		$fs = null;
 		if ( count( $this->_sections ) ) {
 			if ( $this->_task == 'section.view' ) {

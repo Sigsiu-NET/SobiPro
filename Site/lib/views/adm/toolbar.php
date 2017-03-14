@@ -21,6 +21,7 @@ class SpAdmToolbar
 {
 	protected $title = null;
 	protected $icon = null;
+	protected $class = '';
 	protected $buttons = null;
 	protected $output = null;
 	private $icons = [
@@ -97,6 +98,7 @@ class SpAdmToolbar
 	{
 		$this->title = $arr[ 'title' ];
 		$this->icon = $arr[ 'icon' ];
+		$this->class = $arr[ 'class' ];
 	}
 
 	public function addButtons( $arr )
@@ -111,8 +113,8 @@ class SpAdmToolbar
 		}
 		$id = isset( $options[ 'id' ] ) ? $options[ 'id' ] : 'SPAdmToolbar';
 		$this->output[ ] = '<div id="SpSpinner" class="SobiPro hide" style="position:fixed; top:50%; left:50%; font-size: 35px;"><i class="icon-spinner icon-spin icon-large"></i></div>';
-		$this->output[ ] = '<div class="breadcrumb" id="' . $id . '">';
-		$this->output[ ] = '<div id="SPRightMenuHold">';
+		$this->output[ ] = '<div class="breadcrumb ' . $this->class . '" id="' . $id . '">';
+		$this->output[ ] = '<div id="SPRightMenuHold" class="spHoldCtrl">';
 		$this->output[ ] = '</div>';
 		//$this->output[ ] = '<div class="container-fluid">';
 		$this->output[ ] = '<div class="row-fluid">';
@@ -148,9 +150,9 @@ class SpAdmToolbar
 					$label = ( isset( $button[ 'label' ] ) && $button[ 'label' ] ) ? $button[ 'label' ] : $this->getLabel( $button );
 					$class = isset( $button[ 'dropdown-class' ] ) ? ' ' . $button[ 'dropdown-class' ] : null;
 					$this->output[ ] = '<div class="btn-group">';
-					$this->output[ ] = '<button class="' . $this->btClass . ' dropdown-toggle" data-toggle="dropdown">';
-					$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
-					$this->output[ ] = '<span class="caret"></span>&nbsp;</button>';
+					$this->output[ ] = '<a class="' . $this->btClass . ' dropdown-toggle" data-toggle="dropdown">';
+					$this->output[ ] = '<i class="icon-' . $icon . '"></i>' . $label;
+					$this->output[ ] = '<span class="caret"></span></a>';
 					$this->output[ ] = "<div class=\"dropdown-menu{$class}\">";
 					$this->output[ ] = '<ul class="nav nav-stacked SpDropDownBt">';
 					foreach ( $button[ 'buttons' ] as $bt ) {
@@ -207,7 +209,7 @@ class SpAdmToolbar
 
 		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button['target']}\"" : null;
 		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
-			$this->output[ ] = '<div class="btn-group">';
+			$this->output[ ] = '<div class="btn-group multi">';
 			$this->output[ ] = "<a href=\"{$href}\" class=\"{$this->btClass}{$class}\"{$target} rel=\"{$rel}\">";
 			if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 				$icon = $this->getIcon( $button, true );
@@ -215,9 +217,9 @@ class SpAdmToolbar
 			else {
 				$icon = $button[ 'icon' ];
 			}
-			$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+			$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;' . $label;
 			$this->output[ ] = '</a>';
-			$this->output[ ] = '<button class="' . $this->btClass . ' dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span>&nbsp;</button>';
+			$this->output[ ] = '<a class="' . $this->btClass . ' dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span></a>';
 			$this->output[ ] = '<div class="dropdown-menu" id="spmenu-' . SPLang::nid( $button[ 'task' ] ) . '">';
 			$this->output[ ] = '<ul class="nav nav-stacked SpDropDownBt">';
 			foreach ( $button[ 'buttons' ] as $bt ) {
@@ -236,7 +238,7 @@ class SpAdmToolbar
 			else {
 				$icon = $button[ 'icon' ];
 			}
-			$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+			$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;' . $label;
 			$this->output[ ] = '</a>';
 		}
 		/** dropdown */

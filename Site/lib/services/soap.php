@@ -27,7 +27,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 class SPSoapClient extends SoapClient
 {
 	const UA = 'SobiPro Soap Client';
-	const URI = 'http://www.Sigsiu.NET';
+	const URI = 'https://www.Sigsiu.NET';
 
 	public function __construct( $wdsl = null, $options = [] )
 	{

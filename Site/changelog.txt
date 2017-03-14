@@ -25,11 +25,21 @@ Legend:
  (-) - Removed
  (!) - Change
 
+-------------------
+1.4 ()
+-------------------
+	(+) Back-end layout improved and adapted to Joomla! 3.7
+	(+) Back-end Bootstrap LESS files evacuated to separate package 'sobiadmin'
+
+
+-------------------
+1.3.7 ()
+-------------------
 
 -------------------
 1.3.6 (4 March 2017)
 -------------------
-	(#) Installing files to template storage throws error
+	(#) Installing files to template storage doesn't work correctly
 	(#) edit.json settings won't be loaded on editing existing entries
 
 
