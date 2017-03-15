@@ -31,6 +31,8 @@ Legend:
 	(+) Back-end layout improved and adapted to Joomla! 3.7
 	(+) Back-end Bootstrap LESS files evacuated to separate package 'sobiadmin'
 
+	(-) unused tabs script of SobiPro version 1.0 removed
+
 
 -------------------
 1.3.7 ()
