@@ -79,7 +79,7 @@ final class SPHeader
 	{
 		if ( $adm ) {
 //			$this->addCssFile( [ 'bootstrap.bootstrap', 'admicons', 'adm.sobipro' ] )
-			$this->addCssFile( [ 'adm.sobiadmin', 'admicons' ] )
+			$this->addCssFile( [ 'adm.sobiadmin' ] )
 				->addJsFile( [ 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface' ] );
 		}
 		else {
@@ -107,7 +107,7 @@ final class SPHeader
 			if ( count( $fonts ) ) {
 				foreach ( $fonts as $font ) {
 					if ( $font == 'font-awesome-3-local' ) {
-						$this->addCssFile( 'admicons' );
+						$this->addCssFile( 'sobifont' );
 					}
 					elseif ( Sobi::Cfg( 'icon-fonts.' . $font ) ) {
 						$this->addHeadLink( Sobi::Cfg( 'icon-fonts.' . $font ), null, null, 'stylesheet' );

@@ -35,9 +35,9 @@ final class SPAdmSiteMenu
 
 	public function __construct( $task = null, $sid = 0 )
 	{
-		SPFactory::header()
+//		SPFactory::header()
 //				->addCSSFile( 'menu', true )
-				->addJsFile( 'menu', true );
+//				->addJsFile( 'menu', true );
 		$this->_task = $task ? $task : SPRequest::task();
 		$this->_sid = $sid;
 		SPFactory::registry()->set( 'adm_menu', $this );
@@ -72,20 +72,21 @@ final class SPAdmSiteMenu
 	 */
 	public function display()
 	{
-		$this->_view[ ] = "\n <!-- SobiPro - admin side menu start -->";
+		$this->_view[ ] = "\n <!-- SobiPro - admin menu start -->";
 		$this->_view[ ] = "\n<div id=\"SPaccordionTabs\" class=\"spMenuContainer\">";
 		$this->_view[ ] = '<div id="SPMenuCtrl" class="spMenuCtrl">';
 		$this->_view[ ] = ' <button class="spMenuCtrlBtn btn btn-mini btn-sobipro" id="SPMenuCtrlBt" type="button"><i class="icon-minus"></i></button>';
 		$this->_view[ ] = '</div>';
 		$media = Sobi::Cfg( 'img_folder_live' );
-		$this->_view[ ] = "\n<div class='well well-small'><a href=\"https://www.Sigsiu.NET\" title=\"Sigsiu.NET GmbH - Software Development\"><img src=\"{$media}/sp.png\" alt=\"Sigsiu.NET GmbH - Software Development\" style=\"border-style:none;\" /></a></div>\n";
+		$name = 'SobiPro';
+		$this->_view[ ] = "\n<div class='spLogo well well-small'><a href=\"https://www.Sigsiu.NET\" title=\"Sigsiu.NET GmbH - Software Development\"><img src=\"{$media}/{$name}.png\" alt=\"Sigsiu.NET GmbH - Software Development\" /></a></div>\n";
 		$fs = null;
 		if ( count( $this->_sections ) ) {
 			if ( $this->_task == 'section.view' ) {
 //				$this->_task = 'section.entries';
 				$this->_open = 'AMN.ENT_CAT';
 			}
-			$this->_view[ ] = '<div class="accordion" id="SpMenu">';
+			$this->_view[ ] = '<div class="spMenuAccordion accordion" id="SpMenu">';
 			foreach ( $this->_sections as $section => $list ) {
 				$sid = SPLang::nid( $section );
 				$in = false;
@@ -119,7 +120,7 @@ final class SPAdmSiteMenu
 		}
 		$this->_view[ ] = "\n</div>\n";
 		$this->_view[ ] = '<div class="brand" style="display: inherit;">© <a href="https://www.sigsiu.net">Sigsiu.NET GmbH</a></div>';
-		$this->_view[ ] = "\n<!-- Sobi Pro - admin side menu end -->\n";
+		$this->_view[ ] = "\n<!-- SobiPro - admin menu end -->\n";
 		return implode( "\n", $this->_view );
 	}
 
@@ -150,7 +151,7 @@ final class SPAdmSiteMenu
 					$url = Sobi::Url( [ 'task' => $pos ] );
 				}
 				if ( SPRequest::task() == $pos || $this->_task == $pos ) {
-					$v .= "\n\t\t\t\t<li><a href=\"{$url}\" class=\"SPMenuActive\">{$label}</a></li>";
+					$v .= "\n\t\t\t\t<li><a href=\"{$url}\" class=\"active\">{$label}</a></li>";
 				}
 				else {
 					$v .= "\n\t\t\t\t<li><a href=\"{$url}\">{$label}</a></li>";
