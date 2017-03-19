@@ -195,7 +195,8 @@ var fakewaffle = ( function ($, fakewaffle) {
 }(window.jQuery, fakewaffle || {}) );
 
 
-(function ($) {
-	fakewaffle.responsiveTabs(['xs']);
-})(jQuery);
-
+SobiPro.jQuery(document).ready(
+	(function ($) {
+		fakewaffle.responsiveTabs(['xs']);
+	})(jQuery);
+}
