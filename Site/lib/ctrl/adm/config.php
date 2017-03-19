@@ -357,8 +357,8 @@ class SPConfigAdmCtrl extends SPController
 	protected function listTemplates( $tpl = null, $cmsOv = true )
 	{
 		SPFactory::header()
-				->addJsFile( 'dtree' )
-				->addCssFile( 'dtree', true );
+				->addJsFile( 'dtree' );
+//				->addCssFile( 'dtree', true );
 		SPLoader::loadClass( 'base.fs.directory_iterator' );
 		$ls = Sobi::Cfg( 'live_site' ) . 'media/sobipro/tree';
 		$nodes = null;

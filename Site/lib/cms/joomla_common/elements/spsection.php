@@ -123,7 +123,6 @@ if ( !( class_exists( 'JElement' ) ) ) {
 }
 
 if ( !( defined( 'SOBI_CMS' ) ) ) {
-//	define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
 	define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : 'joomla16' );
 }
 class JElementSPSection extends JElement
@@ -147,6 +146,7 @@ class JElementSPSection extends JElement
 		return $instance;
 	}
 
+	// will be called for SobiPro modules in backend
 	public function __construct()
 	{
 		static $loaded = false;

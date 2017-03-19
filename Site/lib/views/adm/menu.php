@@ -37,7 +37,7 @@ final class SPAdmSiteMenu
 	{
 //		SPFactory::header()
 //				->addCSSFile( 'menu', true )
-//				->addJsFile( 'menu', true );
+		SPFactory::header()->addJsFile( 'menu', true );
 		$this->_task = $task ? $task : SPRequest::task();
 		$this->_sid = $sid;
 		SPFactory::registry()->set( 'adm_menu', $this );

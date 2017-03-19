@@ -61,7 +61,7 @@
 						</loop>
 					</table>
 				</div>
-				<field type="modalWindow" id="filter-edit-window" header="FLR.EDIT_FILTER"/>
+				<field type="modalWindow" id="filter-edit-window" class="spModalIframe" header="FLR.EDIT_FILTER"/>
 			</div>
 		</div>
 	</body>

@@ -1,23 +1,19 @@
 /**
- * @version: $Id$
  * @package: SobiPro Library
-
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
- * Url: http://www.Sigsiu.NET
-
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * Url: https://www.Sigsiu.NET
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
-
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
 SobiPro.jQuery( document ).ready( function ()
@@ -264,7 +260,7 @@ SobiPro.jQuery( document ).ready( function ()
 
 	SobiPro.jQuery( '[name="spToggle"]' ).change( function ()
 	{
-		SobiPro.jQuery( '[name="' + SobiPro.jQuery( this ).attr( 'rel' ) + '[]"]' ).prop( 'checked', SobiPro.jQuery( this ).is( ':checked' ) );
+		SobiPro.jQuery( this ).parent().parent().parent().parent().parent().find( '[name="' + SobiPro.jQuery( this ).attr( 'rel' ) + '[]"]' ).prop( 'checked', SobiPro.jQuery( this ).is( ':checked' ) );
 	} );
 
 	SobiPro.jQuery( '[name="spReorder"]' ).click( function ( e )
@@ -488,11 +484,14 @@ SobiPro.jQuery( document ).ready( function ()
 				e.preventDefault();
 				try {
 					e.preventDefault();
-					if( SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).length ) {
+					if ( SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).length ) {
 						SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).click();
 					}
+					else if ( SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.saveConfig"]' ).length ) {
+						SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.saveConfig"]' ).click();
+					}
 					else {
-						SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.save"]' ).click();
+						SobiPro.jQuery( '.spIconBar' ).find( '[rel$="\.save"]' ).click();
 					}
 				}
 				catch ( x ) {
@@ -501,5 +500,23 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.cmdKey = false;
 		}
 	} );
+
+	SobiPro.jQuery( 'ul.nav-tabs > li > a' ).on( 'shown.bs.tab', function ( e )
+	{
+		try {
+			localStorage.setItem( 'SobiProOpenTab', SobiPro.jQuery( e.target ).attr( 'href' ) );
+
+		}
+		catch ( x ) {
+		}
+	} );
+	var lastTab = localStorage.getItem( 'SobiProOpenTab' );
+	try {
+		if ( lastTab ) {
+			SobiPro.jQuery( '[href="' + lastTab + '"]' ).tab( 'show' );
+		}
+	}
+	catch ( x ) {
+	}
 
 } );

@@ -1,1 +1,202 @@
-eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('2.3(1m).1n(9(){2.3(\'.1o\').w(9(){l a=2.3(n).G(\'K\');2.3(\'#1p\').o(\'<x L="1q" y="\'+a+\'"> </x>\');2.3(\'#1r\').z()});2.3(\'#1s\').1t(\'w\',9(e){k(!(2.3(\'#M\').4())){1u}2.3(\'#1v\').o(2.3(\'#1w\').4());2.3(\'[r^="6.N"]\').4(2.3(\'#M\').4());2.3(\'#1x\').o(2.3(\'#1y\').4())});k(2.3(\'#s\').4()){2.3(\'#8\').o(\'<O y="\'+2.3(\'#s\').4()+\'" m="P" />\')}k(2.3(\'[r^="6.7"]\').4()&&2.3(\'[r^="6.7"]\').4().t(\'5-\')!=-1){2.3(\'#8\').u(\'Q\');l h=R.1z(2.3(\'[r^="6.7"]\').4().S(/\\\\\'/g,\'"\'));l j=(h.A!=T)?h.A:\'\';2.3(\'#8\').o(\'<\'+h.v+\' m="U \'+h.m+\'">\'+j+\'</\'+h.v+\'>\')}k(2.3(\'#6-p-7-5\').4()&&2.3(\'#6-p-7-5\').4().t(\'5-\')!=-1){2.3(\'.H-I-5-m\').q(\'B\')}2.3.V({\'W\':\'X.Y\',\'Z\':\'10\',\'11\':\'12\',\'C\':{\'D\':\'13\',\'14\':\'6.1A\',\'15\':16,\'17\':\'18\',\'19\':\'1a\',\'1b\':\'1c\'}}).1d(9(c){2.3(\'#6-p-7-5 D\').J(9(i,e){l a=1B;l b=2.3(n).4();k(b!=0){2.3.J(c,9(i,e){k(b.t(e)!=-1){a=1C}});k(!(a)){2.3(n).G(\'1e\',\'1e\')}}})});2.3(\'#6-p-7-5\').1D(9(){k(2.3(n).4()&&2.3(n).4().t(\'5-\')!=-1){2.3(\'.H-I-5-m\').q(\'B\')}1f{2.3(\'.H-I-5-m\').u(\'B\')}});2.3(\'#8\').w(9(){k(2.3(\'#6-p-7-5\').4().t(\'5-\')!=-1){2.3(\'#E\').o(\'\');l f={\'D\':\'13\',\'14\':\'6.7\',\'15\':16,\'17\':\'18\',\'19\':\'1a\',\'1b\':\'1c\',\'5\':2.3(\'#6-p-7-5\').4()};2.3.V({W:\'X.Y\',Z:\'10\',11:\'12\',C:f}).1d(9(b){k(b.1E){l c;l d=1;1F{d=2.3(\'#6-p-7-5 D:1G\').1H().1I(/\\((.*?)\\)/);d=1J(d[1])}1K(e){d=1}2.3.J(b,9(i,e){l a=(e.A!=T)?e.A:\'\';c=e.v;e.5=2.3(\'#6-p-7-5\').4();2.3(\'#E\').1g(\'<1h m="1i 1j\'+d+\'">\'+\'<\'+e.v+\' m="U \'+e.m+\'" C-1k="\'+R.1L(e).S(/"/g,"\'")+\'">\'+a+\'</\'+e.v+\'></1h>\')});2.3(\'#E\').1M(c).w(9(){2.3(\'#8\').o(\'\');2.3(\'#8\').1g(2.3(n).1N());2.3(\'[r^="6.7"]\').4(2.3(n).C(\'1k\'));2.3(\'#8\').q(\'1O\');2.3(\'#8\').q(\'1P\');2.3(\'#8\').q(\'1Q\');2.3(\'#8\').q(\'1R\');2.3(\'#8\').q(\'Q\');2.3(\'#8\').u(\'1j\'+d);2.3(\'.1i\').q(\'1l\');2.3(n).N().u(\'1l\')});2.3(\'#F\').u(\'5\');2.3(\'#F\').z()}})}1f{l g=2.3(n).G(\'K\');2.3(\'#E\').o(\'<x L="1S" y="\'+g+\'"> </x>\');2.3(\'#F\').z()}})});9 1T(a,b){2.3(\'#s\').4(a);2.3(\'[r^="6.7"]\').4(b);k(2.3(\'#s\').4()){2.3(\'#8\').o(\'<O y="\'+2.3(\'#s\').4()+\'" m="P" />\')}2.3(\'#F\').z(\'B\')}',62,118,'||SobiPro|jQuery|val|font|category|icon|catIcoChooser|function|||||||||||if|var|class|this|html|params|removeClass|name|SP_categoryIconHolder|indexOf|addClass|element|click|iframe|src|modal|content|hide|data|option|spIcoChooser|spIco|attr|ctrl|add|each|rel|id|SP_selectedCid|parent|img|spCatImage|el5|JSON|replace|undefined|spIconElement|ajax|url|index|php|type|post|dataType|json|com_sobipro|task|sid|SobiProSection|format|raw|tmpl|component|method|xhr|done|disabled|else|append|div|spIconElCont|el|setting|active|document|ready|spCategoryChooser|spCatsChooser|spCatSelectFrame|spCat|spCatSelect|bind|return|selectedCatPath|SP_selectedCatPath|categoryParentName|SP_selectedCatName|parse|iconFonts|false|true|change|length|try|selected|text|match|parseInt|catch|stringify|find|clone|el1|el2|el3|el4|spIcoSelectFrame|SPSelectIcon'.split('|'),0,{}))
+/**
+ * @package: SobiPro Library
+ *
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: https://www.Sigsiu.NET
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @license GNU/LGPL Version 3
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ */
+
+SobiPro.jQuery(document).ready(function () {
+	SobiPro.jQuery('.spCategoryChooser').click(function () {
+		var requestUrl = SobiPro.jQuery(this).attr('rel');
+		SobiPro.jQuery( '#spCatsChooser' ).html( '<iframe id="spCatSelectFrame" src="' + requestUrl + '"> </iframe>' );
+		SobiPro.jQuery('#spCat').modal();
+	});
+
+	SobiPro.jQuery('#spCatSelect').bind('click', function (e) {
+		if (!( SobiPro.jQuery('#SP_selectedCid').val() )) {
+			return;
+		}
+		SobiPro.jQuery('#selectedCatPath').html(SobiPro.jQuery('#SP_selectedCatPath').val());
+		SobiPro.jQuery('[name^="category.parent"]').val(SobiPro.jQuery('#SP_selectedCid').val());
+		SobiPro.jQuery('#categoryParentName').html(SobiPro.jQuery('#SP_selectedCatName').val());
+	});
+
+	if (SobiPro.jQuery('#SP_categoryIconHolder').val()) {
+		SobiPro.jQuery( '#catIcoChooser' ).html( '<img src="' + SobiPro.jQuery( '#SP_categoryIconHolder' ).val() + '" class="spCatImage" />' );
+	}
+
+	if (SobiPro.jQuery('[name^="category.icon"]').val() && SobiPro.jQuery('[name^="category.icon"]').val().indexOf('font-') != -1) {
+		SobiPro.jQuery('#catIcoChooser').addClass('el5');
+		var Icon = JSON.parse(SobiPro.jQuery('[name^="category.icon"]').val().replace(/\\'/g, '"'));
+		var Content = ( Icon.content != undefined ) ? Icon.content : '';
+		SobiPro.jQuery('#catIcoChooser').html('<' + Icon.element + ' class="spIconElement ' + Icon.class + '">' + Content + '</' + Icon.element + '>');
+	}
+
+	// show additional input field for fonts
+	if (SobiPro.jQuery('#category-params-icon-font').val() && SobiPro.jQuery('#category-params-icon-font').val().indexOf('font-') != -1) {
+		SobiPro.jQuery('.ctrl-add-font-class').removeClass('hide');
+	}
+
+	SobiPro.jQuery.ajax({
+		'url': 'index.php',
+		'type': 'post',
+		'dataType': 'json',
+		'data': {
+			'option': 'com_sobipro',
+			'task': 'category.iconFonts',
+			'sid': SobiProSection,
+			'format': 'raw',
+			'tmpl': 'component',
+			'method': 'xhr'
+		}
+	}).done(function (response) {
+		SobiPro.jQuery('#category-params-icon-font option').each(function (i, e) {
+			var Found = false;
+			var Option = SobiPro.jQuery(this).val();
+			if (Option != 0) {
+				SobiPro.jQuery.each(response, function (i, e) {
+					if (Option.indexOf(e) != -1) {
+						Found = true;
+					}
+				});
+				if (!(Found)) {
+					SobiPro.jQuery(this).attr('disabled', 'disabled');
+				}
+			}
+		});
+	});
+
+	SobiPro.jQuery('#category-params-icon-font').change(function () {
+		if (SobiPro.jQuery(this).val() && SobiPro.jQuery(this).val().indexOf('font-') != -1) {
+			SobiPro.jQuery('.ctrl-add-font-class').removeClass('hide');
+			SobiPro.jQuery('#spIco').addClass('spModalPopup');
+			SobiPro.jQuery('#spIco').removeClass('spModalIframe');
+		}
+		else {
+			SobiPro.jQuery('.ctrl-add-font-class').addClass('hide');
+			SobiPro.jQuery('#spIco').addClass('spModalIframe');
+			SobiPro.jQuery('#spIco').removeClass('spModalPopup');
+		}
+	});
+
+	SobiPro.jQuery('#catIcoChooser').click(function () {
+		if (SobiPro.jQuery('#category-params-icon-font').val().indexOf('font-') != -1) {
+			SobiPro.jQuery('#spIcoChooser').html('');
+			var Request = {
+				'option': 'com_sobipro',
+				'task': 'category.icon',
+				'sid': SobiProSection,
+				'format': 'raw',
+				'tmpl': 'component',
+				'method': 'xhr',
+				'font': SobiPro.jQuery('#category-params-icon-font').val()
+			};
+			SobiPro.jQuery.ajax({
+				url: 'index.php',
+				type: 'post',
+				dataType: 'json',
+				data: Request
+			}).done(function (response) {
+				if (response.length) {
+					var Element;
+					var Size = 1;
+					try {
+						Size = SobiPro.jQuery('#category-params-icon-font option:selected').text().match(/\((.*?)\)/);
+						Size = parseInt(Size[1]);
+					}
+					catch (e) {
+						Size = 1;
+					}
+					// var divheight;
+					// var divwidth;
+					// var paddingtop;
+					// switch (Size) {
+					// 	case 2:
+					// 		divheight = 30;
+					// 		divwidth = 40;
+					// 		paddingtop = 5;
+					// 		break;
+					// 	case 3:
+					// 		divheight = 38;
+					// 		divwidth = 58;
+					// 		paddingtop = 10;
+					// 		break;
+					// 	case 4:
+					// 		divheight = 45;
+					// 		divwidth = 80;
+					// 		paddingtop = 10;
+					// 		break;
+					// 	case 5:
+					// 		divheight = 50;
+					// 		divwidth = 100;
+					// 		paddingtop = 15;
+					// 		break;
+					// 	default:
+					// 		divheight = 20;
+					// 		divwidth = 30;
+					// 		paddingtop = 3;
+					// 		break;
+					// }
+					SobiPro.jQuery.each(response, function (i, e) {
+						var Content = ( e.content != undefined ) ? e.content : '';
+						Element = e.element;
+						e.font = SobiPro.jQuery('#category-params-icon-font').val();
+						SobiPro.jQuery('#spIcoChooser')
+							.append('<div class="spIconElCont el' + Size + '">' +
+								'<' + e.element + ' class="spIconElement ' + e.class + '" data-setting="' + JSON.stringify(e).replace(/"/g, "'") + '">' +
+								Content +
+								'</' + e.element + '></div>');
+					});
+					SobiPro.jQuery('#spIcoChooser').find(Element).click(function () {
+						SobiPro.jQuery('#catIcoChooser').html('');
+						SobiPro.jQuery('#catIcoChooser').append(SobiPro.jQuery(this).clone());
+						SobiPro.jQuery('[name^="category.icon"]').val(SobiPro.jQuery(this).data('setting'));
+						SobiPro.jQuery('#catIcoChooser').removeClass('el1');
+						SobiPro.jQuery('#catIcoChooser').removeClass('el2');
+						SobiPro.jQuery('#catIcoChooser').removeClass('el3');
+						SobiPro.jQuery('#catIcoChooser').removeClass('el4');
+						SobiPro.jQuery('#catIcoChooser').removeClass('el5');
+						SobiPro.jQuery('#catIcoChooser').addClass('el' + Size);
+						SobiPro.jQuery('.spIconElCont').removeClass('active');
+						SobiPro.jQuery(this).parent().addClass('active');
+					});
+					SobiPro.jQuery('#spIco').addClass('spModalPopup');
+					SobiPro.jQuery('#spIco').removeClass('spModalIframe');
+					SobiPro.jQuery('#spIco').modal();
+				}
+			});
+		}
+		else {
+			var requestUrl = SobiPro.jQuery(this).attr('rel');
+			SobiPro.jQuery( '#spIcoChooser' ).html( '<iframe id="spIcoSelectFrame" src="' + requestUrl + '"> </iframe>' );
+			SobiPro.jQuery('#spIco').addClass('spModalIframe');
+			SobiPro.jQuery('#spIco').removeClass('spModalPopup');
+			SobiPro.jQuery('#catIcoChooser').removeClass('el1');
+			SobiPro.jQuery('#catIcoChooser').removeClass('el2');
+			SobiPro.jQuery('#catIcoChooser').removeClass('el3');
+			SobiPro.jQuery('#catIcoChooser').removeClass('el4');
+			SobiPro.jQuery('#catIcoChooser').removeClass('el5');
+			SobiPro.jQuery('#spIco').modal();
+		}
+	});
+});
+
+function SPSelectIcon(src, name) {
+	SobiPro.jQuery('#SP_categoryIconHolder').val(src);
+	SobiPro.jQuery('[name^="category.icon"]').val(name);
+	if (SobiPro.jQuery('#SP_categoryIconHolder').val()) {
+		SobiPro.jQuery( '#catIcoChooser' ).html( '<img src="' + SobiPro.jQuery( '#SP_categoryIconHolder' ).val() + '" class="spCatImage" />' );
+	}
+	SobiPro.jQuery('#spIco').modal('hide');
+}

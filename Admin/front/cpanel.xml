@@ -63,7 +63,7 @@
 					<message parse="system-state.display-errors" dismiss-button="false" icon="true" class="spStatusAlert"/>
 					<message parse="system-state.debug-level" dismiss-button="false" icon="true" class="spStatusAlert"/>
 					<message parse="system-state.debug-xml" dismiss-button="false" icon="true" class="spStatusAlert"/>
-					<div class="modal hide" id="ReportedIssues" condition="system-state.messages.length">
+					<div class="spModalPopup modal hide" id="ReportedIssues" condition="system-state.messages.length">
 						<div class="modal-header">
 							<button class="close" data-dismiss="modal">
 								<text value="CLOSE_X" />

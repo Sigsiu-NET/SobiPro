@@ -139,27 +139,25 @@
 				</pagination>
 			</div>
 		</div>
-		<div class="modal hide" id="reject-entry-window">
+		<div class="spModalPopup spReject modal hide" id="reject-entry-window">
 			<div class="modal-header">
 				<button class="close" data-dismiss="modal">
-					<text value="CLOSE_X" />
+					<text value="CLOSE_X"/>
 				</button>
 				<h3>
 					<text value="ENTRY_REJECT"/>
 				</h3>
 			</div>
 			<div class="modal-body">
-				<div class="spModalForm">
-					<fieldset>
-						<field type="select" name="template" label="ENTRY_REJECT_TPLS" class="input-large"/>
-						<field type="textarea" name="reason" label="ENTRY_REJECT_REASON" editor="false" class="input-splarge" rows="10" style=""/>
-						<field type="toggle" name="trigger.unpublish" value="1" label="ENTRY_REJECT_TRIGGER_UNPUBLISH" prefix="yes_no"/>
-						<field type="toggle" name="trigger.unapprove" label="ENTRY_REJECT_TRIGGER_UNAPPROVE" prefix="yes_no"/>
-						<field type="toggle" name="unpublish" value="0" label="ENTRY_REJECT_UNPUBLISH" prefix="yes_no"/>
-						<field type="toggle" name="discard" value="0" label="ENTRY_REJECT_DISCARD" prefix="yes_no"/>
-						<field type="token"/>
-					</fieldset>
-				</div>
+				<fieldset>
+					<field type="select" name="template" label="ENTRY_REJECT_TPLS" class="input-large"/>
+					<field type="textarea" name="reason" label="ENTRY_REJECT_REASON" editor="false" class="input-splarge" rows="10" style=""/>
+					<field type="toggle" name="trigger.unpublish" value="1" label="ENTRY_REJECT_TRIGGER_UNPUBLISH" prefix="yes_no"/>
+					<field type="toggle" name="trigger.unapprove" label="ENTRY_REJECT_TRIGGER_UNAPPROVE" prefix="yes_no"/>
+					<field type="toggle" name="unpublish" value="0" label="ENTRY_REJECT_UNPUBLISH" prefix="yes_no"/>
+					<field type="toggle" name="discard" value="0" label="ENTRY_REJECT_DISCARD" prefix="yes_no"/>
+					<field type="token"/>
+				</fieldset>
 			</div>
 			<div class="modal-footer">
 				<a href="#" class="btn btn-success pull-left ctrl-save-tpl">

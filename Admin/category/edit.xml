@@ -162,7 +162,7 @@
 				</tabs>
 
 
-				<div class="spCategorySelect modal hide" id="spCat">
+				<div class="spCategorySelect spModalIframe modal hide" id="spCat">
 					<div class="modal-header">
 						<button class="close" data-dismiss="modal">
 							<text value="CLOSE_X" />
@@ -181,7 +181,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="spIconSelect modal hide" id="spIco">
+				<div class="spIconSelect spModalPopup modal hide" id="spIco">
 					<div class="modal-header">
 						<button class="close" data-dismiss="modal">
 							<text value="CLOSE_X" />

@@ -186,7 +186,7 @@
 			</div>
 		</div>
 		<div condition="revision-change">
-			<div class="modal hide" id="revisions-window">
+			<div class="spHistory spModalPopup modal hide" id="revisions-window">
 				<div class="modal-header">
 					<button class="close" data-dismiss="modal">
 						<text value="CLOSE_X" />
@@ -196,10 +196,11 @@
 					</h3>
 				</div>
 				<div class="modal-body">
-					<div class="row-fluid">
-					</div>
-					<div class="row-fluid ctrl-diff">
-						<div class="diff" id="revision-diff" style="overflow:scroll"></div>
+					<div class="spHistoryTable">
+						<div class="row-fluid"></div>
+						<div class="row-fluid ctrl-diff">
+							<div class="diff" id="revision-diff" style="overflow:scroll"></div>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
