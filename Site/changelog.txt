@@ -29,10 +29,13 @@ Legend:
 1.4 ()
 -------------------
 	(+) Back-end layout improved and adapted to Joomla! 3.7
-	(+) Back-end Bootstrap LESS files evacuated to separate package 'sobiadmin'
+	(+) Back-end Bootstrap Less files evacuated to separate package 'sobiadmin'
 	(+) Font Awesome for back-end included in sobiadmin.css; separate version for front-end available (sobifont.css)
 
 	(-) unused tabs script of SobiPro version 1.0 removed
+	(-) clean-up of loaded scripts in template
+
+	(!) Less folder removed; less files moved to css folder
 
 
 -------------------
