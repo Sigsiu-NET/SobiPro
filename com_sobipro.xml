@@ -50,7 +50,6 @@
 
 	<media folder="Site/media" destination="sobipro">
 		<folder>css</folder>
-		<folder>less</folder>
 		<folder>images</folder>
 		<folder>adm</folder>
 		<folder>browser</folder>

@@ -80,7 +80,7 @@ Legend:
 	(#) Wrong URL for directly linked entries (Issue #1764)
 	(#) Dependency field cannot be saved without allowed selecting parent (Issue #1772)
 	(#) Override json file data isn't passsed to the template xml config nodes (Issue #1770)
-	(#) Selecting fields in fields manager via checkbox does not distinguish betweend entry and category fields (Issue #1765)
+	(#) Selecting fields in fields manager via checkbox does not distinguish between entry and category fields (Issue #1765)
 	(#) Several small template corrections
 	(#) Corrected Regex for email field (Issue #1777)
 	(#) Deleting temporary update list files after application has been installed

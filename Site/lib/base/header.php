@@ -80,7 +80,7 @@ final class SPHeader
 		if ( $adm ) {
 //			$this->addCssFile( [ 'bootstrap.bootstrap', 'admicons', 'adm.sobipro' ] )
 			$this->addCssFile( [ 'adm.sobiadmin' ] )
-				->addJsFile( [ 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface' ] );
+				->addJsFile( [ 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface', 'adm.responsive-tabs' ] );
 		}
 		else {
 			if ( !defined( 'SOBIPRO_ADM' ) ) {

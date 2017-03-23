@@ -11,7 +11,7 @@ var fakewaffle = ( function ($, fakewaffle) {
 		var activeTab = '';
 
 		if (collapseDisplayed === undefined) {
-			collapseDisplayed = ['xs', 'sm'];
+			collapseDisplayed = ['phone'];
 		}
 
 		$.each(collapseDisplayed, function () {
@@ -29,7 +29,7 @@ var fakewaffle = ( function ($, fakewaffle) {
 			}
 
 			collapseDiv = $('<div></div>', {
-				'class': 'panel-group responsive' + visible,
+				'class': 'accordion responsive' + visible,
 				'id': 'collapse-' + $tabGroup.attr('id')
 			});
 
@@ -38,7 +38,7 @@ var fakewaffle = ( function ($, fakewaffle) {
 				var oldLinkClass = $this.attr('class') === undefined ? '' : $this.attr('class');
 				var newLinkClass = 'accordion-toggle';
 				var oldParentClass = $this.parent().attr('class') === undefined ? '' : $this.parent().attr('class');
-				var newParentClass = 'panel panel-default';
+				var newParentClass = 'accordion-group';
 				var newHash = $this.get(0).hash.replace('#', 'collapse-');
 
 				if (oldLinkClass.length > 0) {
@@ -58,21 +58,19 @@ var fakewaffle = ( function ($, fakewaffle) {
 
 				collapseDiv.append(
 					$('<div>').attr('class', newParentClass).html(
-						$('<div>').attr('class', 'panel-heading').html(
-							$('<h4>').attr('class', 'panel-title').html(
-								$('<a>', {
-									'class': newLinkClass,
-									'data-toggle': 'collapse',
-									'data-parent': '#collapse-' + $tabGroup.attr('id'),
-									'href': '#' + newHash,
-									'html': $this.html()
-								})
-							)
+						$('<div>').attr('class', 'accordion-heading').html(
+							$('<a>', {
+								'class': newLinkClass,
+								'data-toggle': 'collapse',
+								'data-parent': '#collapse-' + $tabGroup.attr('id'),
+								'href': '#' + newHash,
+								'html': $this.html()
+							})
 						)
 					).append(
 						$('<div>', {
 							'id': newHash,
-							'class': 'panel-collapse collapse'
+							'class': 'accordion-body collapse'
 						})
 					)
 				);
@@ -83,7 +81,7 @@ var fakewaffle = ( function ($, fakewaffle) {
 			$('.tab-content.responsive').addClass(hidden);
 
 			if (activeTab) {
-				$(activeTab).collapse('show');
+				$(activeTab).collapse('show').height('auto');
 			}
 		});
 
@@ -93,10 +91,10 @@ var fakewaffle = ( function ($, fakewaffle) {
 
 	fakewaffle.checkResize = function () {
 
-		if ($('.panel-group.responsive').is(':visible') === true && fakewaffle.currentPosition === 'tabs') {
+		if ($('.accordion.responsive').is(':visible') === true && fakewaffle.currentPosition === 'tabs') {
 			fakewaffle.tabToPanel();
 			fakewaffle.currentPosition = 'panel';
-		} else if ($('.panel-group.responsive').is(':visible') === false && fakewaffle.currentPosition === 'panel') {
+		} else if ($('.accordion.responsive').is(':visible') === false && fakewaffle.currentPosition === 'panel') {
 			fakewaffle.panelToTab();
 			fakewaffle.currentPosition = 'tabs';
 		}
@@ -119,7 +117,7 @@ var fakewaffle = ( function ($, fakewaffle) {
 				// Convert tab to panel and move to destination
 				$(tabContent)
 					.removeClass('tab-pane')
-					.addClass('panel-body fw-previous-tab-pane')
+					.addClass('accordion-inner fw-previous-tab-pane')
 					.appendTo($(destinationId));
 
 			});
@@ -130,7 +128,7 @@ var fakewaffle = ( function ($, fakewaffle) {
 
 	fakewaffle.panelToTab = function () {
 
-		var panelGroups = $('.panel-group.responsive');
+		var panelGroups = $('.accordion.responsive');
 
 		$.each(panelGroups, function (index, panelGroup) {
 
@@ -138,11 +136,11 @@ var fakewaffle = ( function ($, fakewaffle) {
 			var destination = $(destinationId).next('.tab-content')[0];
 
 			// Find the panel contents
-			var panelContents = $(panelGroup).find('.panel-body.fw-previous-tab-pane');
+			var panelContents = $(panelGroup).find('.accordion-inner.fw-previous-tab-pane');
 
 			// Convert to tab and move to destination
 			panelContents
-				.removeClass('panel-body fw-previous-tab-pane')
+				.removeClass('accordion-inner fw-previous-tab-pane')
 				.addClass('tab-pane')
 				.appendTo($(destination));
 
@@ -153,10 +151,10 @@ var fakewaffle = ( function ($, fakewaffle) {
 	fakewaffle.bindTabToCollapse = function () {
 
 		var tabs = $('.nav-tabs.responsive').find('li a');
-		var collapse = $('.panel-group.responsive').find('.panel-collapse');
+		var collapse = $('.accordion.responsive').find('.accordion-body');
 
 		// Toggle the panels when the associated tab is toggled
-		tabs.on('shown.bs.tab', function (e) {
+		tabs.on('shown', function (e) {
 
 			if (fakewaffle.currentPosition === 'tabs') {
 				var $current = $(e.currentTarget.hash.replace(/#/, '#collapse-'));
@@ -171,7 +169,8 @@ var fakewaffle = ( function ($, fakewaffle) {
 		});
 
 		// Toggle the tab when the associated panel is toggled
-		collapse.on('shown.bs.collapse', function (e) {
+		collapse.on('shown', function (e) {
+			alert('click2');
 
 			if (fakewaffle.currentPosition === 'panel') {
 				// Activate current tabs
@@ -179,9 +178,9 @@ var fakewaffle = ( function ($, fakewaffle) {
 				$('a[href="' + current + '"]').tab('show');
 
 				// Update the content with active
-				var panelGroup = $(e.currentTarget).closest('.panel-group.responsive');
-				$(panelGroup).find('.panel-body').removeClass('active');
-				$(e.currentTarget).find('.panel-body').addClass('active');
+				var panelGroup = $(e.currentTarget).closest('.accordion.responsive');
+				$(panelGroup).find('.accordion-inner').removeClass('active');
+				$(e.currentTarget).find('.accordion-inner').addClass('active');
 			}
 
 		});
@@ -192,11 +191,10 @@ var fakewaffle = ( function ($, fakewaffle) {
 	});
 
 	return fakewaffle;
-}(window.jQuery, fakewaffle || {}) );
+}(SobiPro.jQuery, fakewaffle || {}) );
 
 
-SobiPro.jQuery(document).ready(
-	(function ($) {
-		fakewaffle.responsiveTabs(['xs']);
-	})(jQuery);
-}
+// SobiPro.jQuery(document).ready(function () {
+// 	fakewaffle.responsiveTabs(['phone']);
+// });
+

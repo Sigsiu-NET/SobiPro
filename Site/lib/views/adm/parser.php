@@ -637,7 +637,7 @@ class SPTplParser
 	{
 		$this->tabsContentOpen = true;
 		$this->activeTab = false;
-		$this->_out[ ] = "\n" . '<ul class="nav nav-tabs">';
+		$this->_out[ ] = "\n" . '<ul class="nav nav-tabs responsive">';
 		$active = false;
 		foreach ( $element[ 'content' ] as $tab ) {
 			if ( !( $active ) ) {
@@ -649,7 +649,7 @@ class SPTplParser
 			}
 		}
 		$this->_out[ ] = '</ul>';
-		$this->_out[ ] = "\n" . '<div class="tab-content">';
+		$this->_out[ ] = "\n" . '<div class="tab-content responsive">';
 	}
 
 	public function renderButton( $button, $list = false )
