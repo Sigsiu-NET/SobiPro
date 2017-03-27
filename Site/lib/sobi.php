@@ -483,20 +483,6 @@ abstract class Sobi
 				define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : 'joomla16' );
 			}
 			defined( 'SOBI_ROOT' ) || define( 'SOBI_ROOT', $root );
-			if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
-				// Suppressing warning because the error is being handled
-				@include_once 'phar://' . SOBI_ROOT . '/libraries/sobi/Sobi-1.0.2.phar.tar.gz/Framework.php';
-				if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
-					if ( file_exists( SOBI_ROOT . '/libraries/sobi/Framework.php' ) ) {
-						include_once SOBI_ROOT . '/libraries/sobi/Framework.php';
-					}
-					else {
-						throw new Exception( 'Cannot initialise Sobi Framework. Ensure that your server has PHAR support or install the Sobi Framework manually.' );
-					}
-				}
-				Framework::Init();
-			}
-
 			defined( 'SOBIPRO' ) || define( 'SOBIPRO', true );
 			defined( 'SOBI_TASK' ) || define( 'SOBI_TASK', 'task' );
 			defined( 'SOBI_DEFLANG' ) || define( 'SOBI_DEFLANG', $lang );
@@ -505,6 +491,7 @@ abstract class Sobi
 			defined( 'SOBI_PATH' ) || define( 'SOBI_PATH', SOBI_ROOT . '/components/com_sobipro' );
 			defined( 'SOBI_LIVE_PATH' ) || define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );
 			require_once( SOBI_PATH . '/lib/base/fs/loader.php' );
+
 			SPLoader::loadController( 'sobipro' );
 			SPLoader::loadController( 'interface' );
 			SPLoader::loadClass( 'base.exception' );
