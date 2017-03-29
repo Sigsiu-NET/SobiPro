@@ -949,7 +949,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	{
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
-		$this->verify( $entry, $request );
+		if ( get_class( $this ) == 'SPField_Image' ) {
+			$this->verify( $entry, $request );
+		}
 
 		$time = SPRequest::now();
 		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );

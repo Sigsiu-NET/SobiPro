@@ -41,7 +41,7 @@ function SobiProBuildRoute( &$query )
 				if ( isset( $cfg[ 'task_id' ][ $query[ 'task' ] ] ) ) {
 					$task = $query[ 'sid' ] . '.' . $task;
 				}
-				$segments[ ] = $task;
+				$segments[] = $task;
 			}
 			unset( $query[ 'task' ] );
 			unset( $query[ 'sid' ] );
@@ -50,7 +50,7 @@ function SobiProBuildRoute( &$query )
 	elseif ( isset( $query[ 'Itemid' ] ) ) {
 		if ( isset( $query[ 'sid' ] ) ) {
 			if ( !( SobiProIsLinked( $query[ 'Itemid' ], $query[ 'sid' ] ) ) ) {
-				$segments[ ] = $query[ 'sid' ];
+				$segments[] = $query[ 'sid' ];
 			}
 			unset( $query[ 'sid' ] );
 		}
@@ -64,7 +64,7 @@ function SobiProBuildRoute( &$query )
 	if ( count( $query ) ) {
 		foreach ( $query as $k => $v ) {
 			if ( isset( $cfg[ 'transform_vars' ][ $k ] ) ) {
-				$segments[ ] = $cfg[ 'transform_vars' ][ $k ] . $cfg[ 'config' ][ 'transform_separator' ] . SobiProTransformValue( $v, $cfg, false );
+				$segments[] = $cfg[ 'transform_vars' ][ $k ] . $cfg[ 'config' ][ 'transform_separator' ] . SobiProTransformValue( $v, $cfg, false );
 				unset( $query[ $k ] );
 				continue;
 			}
@@ -74,8 +74,8 @@ function SobiProBuildRoute( &$query )
 				}
 			}
 			if ( isset( $cfg[ 'vars' ][ $k ] ) ) {
-				$segments[ ] = $cfg[ 'vars' ][ $k ];
-				$segments[ ] = SobiProTransformValue( $v, $cfg, false );
+				$segments[] = $cfg[ 'vars' ][ $k ];
+				$segments[] = SobiProTransformValue( $v, $cfg, false );
 				unset( $query[ $k ] );
 				continue;
 			}
@@ -87,7 +87,7 @@ function SobiProBuildRoute( &$query )
 		}
 	}
 	if ( count( $segments ) && strstr( $segments[ count( $segments ) - 1 ], '.' ) ) {
-		$segments[ ] = '/.';
+		$segments[] = '/.';
 	}
 	if ( isset( $segments[ count( $segments ) - 1 ] ) && $segments[ count( $segments ) - 1 ] == '' ) {
 		unset( $segments[ count( $segments ) - 1 ] );
@@ -160,6 +160,11 @@ function SobiProTaskEnhancement( $value, $task, $values )
 
 function SobiProParseRoute( $segments )
 {
+	/** because screw logic. That's why .... #1783 */
+	if ( $segments[ 0 ] == 'results' ) {
+		$segments[ 0 ] = 'search';
+		$segments[ 1 ] = 'results';
+	}
 	$cfg = SobiProRouterCfg();
 	$vars = [];
 	$return = JFactory::getApplication()->getMenu()->getActive()->query;

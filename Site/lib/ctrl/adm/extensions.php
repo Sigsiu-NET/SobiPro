@@ -445,18 +445,18 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 		$stream = base64_decode( $stream );
 		$msg->progress( 65, Sobi::Txt( 'EX.EXAMINING_CHECKSUM' ), 1000 );
 		try {
-			SPFs::write( $path . DS . $name, $stream );
+			SPFs::write( $path . '/' . $name, $stream );
 		} catch ( SPException $x ) {
 			$msg->error( SPLang::e( 'REPO_ERR', $x->getMessage() ) );
 			exit;
 		}
-		if ( md5_file( $path . DS . $name ) != $checksum ) {
+		if ( md5_file( $path . '/' . $name ) != $checksum ) {
 			$msg->error( SPLang::e( 'EX.CHECKSUM_NOK' ) );
 			exit;
 		}
 //		sleep( 1 );
 		$msg->progress( 75, Sobi::Txt( 'EX.CHECKSUM_OK' ) );
-		return $path . DS . $name;
+		return $path . '/' . $name;
 	}
 
 	private function fetch()
@@ -1031,7 +1031,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	private function install( $file = null )
 	{
 		$arch = SPFactory::Instance( 'base.fs.archive' );
-		$ajax = strlen( Input::Cmd( 'ident', null, 'post' ) );
+		$ajax = strlen( Input::Cmd( 'ident', 'post', null  ) );
 		if ( !( $file ) && Input::String( 'root' ) ) {
 			$file = str_replace( '.xml', null, Input::String( 'root' ) );
 			$file = SPLoader::path( 'tmp.install.' . $file, 'front', true, 'xml' );

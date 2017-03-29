@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -18,6 +16,23 @@
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
+use Sobi\Framework;
+
+if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
+	// Suppressing warning because the error is being handled
+	@include_once 'phar://' . SOBI_ROOT . '/libraries/sobi/Sobi-1.0.2.phar.tar.gz/Framework.php';
+	if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
+		if ( file_exists( SOBI_ROOT . '/libraries/sobi/Framework.php' ) ) {
+			include_once SOBI_ROOT . '/libraries/sobi/Framework.php';
+		}
+		else {
+			throw new Exception( 'Cannot initialise Sobi Framework. Ensure that your server has PHAR support or install the Sobi Framework manually.' );
+		}
+	}
+	Framework::Init();
+}
+
 
 /**
  * @author Radek Suski
