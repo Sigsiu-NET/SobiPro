@@ -508,6 +508,8 @@ abstract class Sobi
 			if ( isset( $_SERVER[ 'REQUEST_URI' ] ) ) {
 				SPFactory::config()->set( 'live_site', JURI::root() );
 			}
+			Framework::SetTranslator( [ 'SPlang', '_txt' ] );
+			Framework::setConfig( [ 'Sobi', 'Cfg' ] );
 			$loaded = true;
 		}
 		if ( $sid ) {

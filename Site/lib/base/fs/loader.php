@@ -17,6 +17,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
+use Sobi\Autoloader\Autoloader;
 use Sobi\Framework;
 
 if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
@@ -32,6 +33,20 @@ if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
 	}
 	Framework::Init();
 }
+
+Autoloader::getInstance()
+		->registerClasses( [
+				'SPImage' => SOBI_PATH . '/lib/base/fs/image.php',
+				'SPCache' => SOBI_PATH . '/lib/base/cache.php',
+				'SPConfig' => SOBI_PATH . '/lib/base/config.php',
+				'SPFactory' => SOBI_PATH . '/lib/base/factory.php',
+				'SPHeader' => SOBI_PATH . '/lib/base/header.php',
+				'SPMessage' => SOBI_PATH . '/lib/base/message.php',
+				'SPObject' => SOBI_PATH . '/lib/base/object.php',
+				'SPRegistry' => SOBI_PATH . '/lib/base/registry.php',
+				'SPMainframeInterface' => SOBI_PATH . '/lib/base/mainframe.php',
+				'SPUserInterface' => SOBI_PATH . '/lib/base/user.php',
+		] );
 
 
 /**

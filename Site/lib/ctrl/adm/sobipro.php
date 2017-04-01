@@ -14,7 +14,11 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
+
+defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
 use Sobi\Framework;
+use Sobi\Input\Input;
 
 /**
  * @author Radek Suski
@@ -23,49 +27,27 @@ use Sobi\Framework;
  */
 final class SobiProAdmCtrl
 {
-	/**
-	 * @var SPMainFrame
-	 */
+	/*** @var SPMainFrame */
 	private $_mainframe = null;
-	/**
-	 * @var SPConfig
-	 */
+	/*** @var SPConfig */
 	private $_config = null;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	private $_mem = 0;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	private $_time = 0;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	private $_section = 0;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	private $_task = 0;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	private $_sid = 0;
-	/**
-	 * @var SPUser
-	 */
+	/*** @var SPUser */
 	private $_user = null;
-	/**
-	 * @var SPController - could be also array of
-	 */
+	/*** @var SPController - could be also array of */
 	private $_ctrl = null;
-	/**
-	 * @var mixed
-	 */
+	/*** @var mixed */
 	private $_model = null;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	private $_type = 'component';
 
 	/**
@@ -90,14 +72,15 @@ final class SobiProAdmCtrl
 		SPLoader::loadClass( 'base.config' );
 
 		Framework::SetTranslator( [ 'SPlang', '_txt' ] );
+		Framework::setConfig( [ 'Sobi', 'Cfg' ] );
 
 		/* authorise access */
 		$this->checkAccess();
 		/* initialise mainframe interface to CMS */
-		$this->_mainframe = &SPFactory::mainframe();
+		$this->_mainframe = SPFactory::mainframe();
 
 		/* get sid if any */
-		$this->_sid = SPRequest::sid();
+		$this->_sid = Input::Sid();
 		/* determine section */
 		$this->getSection();
 		/* initialise config */
@@ -129,7 +112,7 @@ final class SobiProAdmCtrl
 			SPFactory::config()->set( 'template', SPC::DEFAULT_TEMPLATE, 'section' );
 		}
 		/* check if it wasn't plugin custom task */
-		if ( !( Sobi::Trigger( 'custom', 'task', [ $this, SPRequest::task() ] ) ) ) {
+		if ( !( Sobi::Trigger( 'custom', 'task', [ $this, Input::Task() ] ) ) ) {
 			/* if not, start to route */
 			try {
 				$this->route();
@@ -188,7 +171,7 @@ final class SobiProAdmCtrl
 	 */
 	private function getSection()
 	{
-		$pid = SPRequest::int( 'pid' );
+		$pid = Input::Pid();
 		$pid = $pid ? $pid : $this->_sid;
 		if ( $pid ) {
 			$this->_model = SPFactory::object( $pid );
@@ -268,17 +251,17 @@ final class SobiProAdmCtrl
 			$ctrl = SPLoader::loadController( $obj, true );
 
 			/* route task for multiple objects - e.g removing or publishing elements from a list */
-			$sids = SPRequest::arr( 'sid' );
-			$csids = SPRequest::arr( 'c_sid' );
-			$esids = SPRequest::arr( 'e_sid' );
+			$sids = Input::Arr( 'sid' );
+			$csids = Input::Arr( 'c_sid' );
+			$esids = Input::Arr( 'e_sid' );
 			if ( count( $sids ) || count( $csids ) || count( $esids ) ) {
 				$sid = array_key_exists( 'sid', $_REQUEST ) && is_array( $_REQUEST[ 'sid' ] ) ? 'sid' : ( array_key_exists( 'c_sid', $_REQUEST ) ? 'c_sid' : 'e_sid' );
-				if ( count( SPRequest::arr( $sid ) ) ) {
+				if ( count( Input::Arr( $sid ) ) ) {
 					/* @var SPdb $db */
 					$db =& SPFactory::db();
 					$objects = null;
 					try {
-						$db->select( '*', 'spdb_object', [ 'id' => SPRequest::arr( $sid ) ] );
+						$db->select( '*', 'spdb_object', [ 'id' => Input::Arr( $sid ) ] );
 						$objects = $db->loadObjectList();
 					} catch ( SPException $x ) {
 						Sobi::Error( 'CoreCtrl', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
@@ -402,7 +385,7 @@ final class SobiProAdmCtrl
 				}
 			}
 			else {
-				Sobi::Error( 'CoreCtrl', SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
+				Sobi::Error( 'CoreCtrl', SPLang::e( 'SUCH_TASK_NOT_FOUND', Input::Task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 			}
 		}
 		return $ctrl;
@@ -417,7 +400,7 @@ final class SobiProAdmCtrl
 		$p = new SPAdminPanel();
 		$this->setController( $p );
 		Sobi::ReturnPoint();
-		$this->_ctrl->setTask( SPRequest::task() );
+		$this->_ctrl->setTask( Input::Task() );
 	}
 
 	/**
@@ -446,7 +429,6 @@ final class SobiProAdmCtrl
 //			Sobi::Redirect( Sobi::GetUserState( 'back_url', Sobi::Url() ), $x->getMessage(), SPC::ERROR_MSG );
 		}
 		/* send header data etc ...*/
-		SPFactory::header()->send();
 		SPFactory::mainframe()->endOut();
 		/* redirect if any redirect has been set */
 		SPFactory::mainframe()->redirect();
