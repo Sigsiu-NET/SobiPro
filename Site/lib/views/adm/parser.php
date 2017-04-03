@@ -1,13 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
-
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -494,7 +494,7 @@ class SPTplParser
 					$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class}{$target} >";
 				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'icon' ) ) {
-					$this->_out[ ] = '<i class="icon-' . $cell[ 'attributes' ][ 'icon' ] . '"></i>&nbsp;';
+					$this->_out[ ] = '<i class="icon-' . $cell[ 'attributes' ][ 'icon' ] . '"></i>';
 				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'label' ) ) {
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
@@ -676,10 +676,10 @@ class SPTplParser
 				$icon = $button[ 'icon' ];
 			}
 			if ( $icon != 'none' ) {
-				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;' . $label;
+				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>' . $label;
 			}
 			else {
-				$this->_out[ ] = '&nbsp;' . $label;
+				$this->_out[ ] = $label;
 			}
 			$this->_out[ ] = '</a>';
 			$this->_out[ ] = '<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span>&nbsp;</button>';
@@ -708,7 +708,7 @@ class SPTplParser
 			else {
 				$icon = $button[ 'icon' ];
 			}
-			$this->_out[ ] = '&nbsp;<i class="icon-' . $icon . '"></i>&nbsp;' . $label;
+			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>' . $label;
 			if ( $rel || $href ) {
 				$this->_out[ ] = '</a>';
 			}
@@ -728,7 +728,7 @@ class SPTplParser
 				else {
 					$icon = $button[ 'icon' ];
 				}
-				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;' . $label;
+				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>' . $label;
 				$this->_out[ ] = '</a></li>';
 			}
 		}

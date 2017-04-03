@@ -53,7 +53,7 @@
 						<loop subject="filters">
 							<cell type="text" value="id" class="spCell left filterId"/>
 							<cell type="text" class="spCell center">
-								<button type="new" class="filter-edit" icon="edit" rel="var:[id]"/>
+								<button type="new" class="filter-edit btn-small" icon="edit" rel="var:[id]"/>
 							</cell>
 							<cell type="text" value="name" class="spCell left"/>
 							<cell type="text" value="message" class="spCell left"/>
@@ -61,7 +61,7 @@
 						</loop>
 					</table>
 				</div>
-				<field type="modalWindow" id="filter-edit-window" class="spModalIframe" header="FLR.EDIT_FILTER"/>
+				<field type="modalWindow" id="filter-edit-window" class="spModalIframe narrow" header="FLR.EDIT_FILTER"/>
 			</div>
 		</div>
 	</body>
