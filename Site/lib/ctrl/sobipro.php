@@ -30,53 +30,29 @@ use Sobi\Input\Input;
  */
 final class SobiProCtrl
 {
-	/**
-	 * @var SPMainFrame
-	 */
+	/*** @var SPMainFrame */
 	private $_mainframe = null;
-	/**
-	 * @var SPConfig
-	 */
+	/*** @var SPConfig */
 	private $_config = null;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	private $_mem = 0;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	private $_time = 0;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	private $_section = 0;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	private $_task = null;
-	/**
-	 * @var int
-	 */
+	/*** @var int */
 	private $_sid = 0;
-	/**
-	 * @var SPController - can be also array of
-	 */
+	/*** @var SPController - can be also array of */
 	private $_ctrl = null;
-	/**
-	 * @var mixed
-	 */
+	/*** @var mixed*/
 	private $_model = null;
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	private $_err = 0;
-	/**
-	 * @var int
-	 */
+	/** * @var int */
 	private $_deb = 0;
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $_cache = [];
 
 	/**
@@ -85,10 +61,6 @@ final class SobiProCtrl
 	 */
 	function __construct( $task )
 	{
-//		Autoloader::getInstance()
-//				->registerClasses( [
-//
-//				] );
 		$this->_mem = memory_get_usage();
 		$this->_time = microtime( true );
 		SPLoader::loadClass( 'base.exception' );
@@ -107,6 +79,7 @@ final class SobiProCtrl
 		SPLoader::loadClass( 'cms.base.lang' );
 
 		Framework::SetTranslator( [ 'SPlang', '_txt' ] );
+		Framework::setConfig( [ 'Sobi', 'Cfg' ] );
 
 		/* get sid if any */
 		$this->_sid = Input::Sid();

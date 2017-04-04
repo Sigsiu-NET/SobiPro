@@ -122,8 +122,7 @@ final class SPHeader
 		return $this;
 	}
 
-	protected
-	function store( $args, $id )
+	protected function store( $args, $id )
 	{
 		if ( isset( $args[ 'this' ] ) ) {
 			unset( $args[ 'this' ] );
@@ -139,13 +138,12 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & add( $html )
+	public function & add( $html )
 	{
 		$checksum = md5( $html );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
 			$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
-			$this->raw[ ++$this->count ]                   = $html;
+			$this->raw[ ++$this->count ] = $html;
 			$this->store( get_defined_vars(), __FUNCTION__ );
 		}
 
@@ -161,8 +159,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & addMeta( $name, $content, $attributes = [] )
+	public function & addMeta( $name, $content, $attributes = [] )
 	{
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -193,8 +190,7 @@ final class SPHeader
 	 * @internal param string $js
 	 * @return SPHeader
 	 */
-	public
-	function & meta( $content, $name = null, $attributes = [] )
+	public function & meta( $content, $name = null, $attributes = [] )
 	{
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -222,8 +218,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & addJsCode( $js )
+	public function & addJsCode( $js )
 	{
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -246,8 +241,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & addJsFile( $script, $adm = false, $params = null, $force = false, $ext = 'js' )
+	public function & addJsFile( $script, $adm = false, $params = null, $force = false, $ext = 'js' )
 	{
 		if ( is_array( $script ) && count( $script ) ) {
 			foreach ( $script as $f ) {
@@ -274,25 +268,25 @@ final class SPHeader
 				$jsFile = SPLoader::JsFile( $script, $adm, true, false, $ext );
 				if ( $jsFile ) {
 					$override = false;
-					$index    = ++$this->count;
+					$index = ++$this->count;
 					// if this is a template JavaScript file - ensure it will be loaded after all others JavaScript files
 					if ( Sobi::Reg( 'current_template' ) && ( strstr( dirname( $jsFile ), Sobi::Reg( 'current_template' ) ) ) ) {
 						$index *= 100;
 					}
 					if (
 						/* If there is already template defined */
-						Sobi::Reg( 'current_template' )
-						&& /* and we are NOT including js file from the template  */
-						!( strstr( dirname( $jsFile ), Sobi::Reg( 'current_template' ) ) )
-						&& /* but there is such file (with the same name) in the template package  */
-						SPFs::exists( Sobi::Reg( 'current_template' ) . '/js/' . basename( $jsFile ) )
-						&& !( strstr( dirname( $jsFile ), 'templates' ) )
+							Sobi::Reg( 'current_template' )
+							&& /* and we are NOT including js file from the template  */
+							!( strstr( dirname( $jsFile ), Sobi::Reg( 'current_template' ) ) )
+							&& /* but there is such file (with the same name) in the template package  */
+							SPFs::exists( Sobi::Reg( 'current_template' ) . '/js/' . basename( $jsFile ) )
+							&& !( strstr( dirname( $jsFile ), 'templates' ) )
 					) {
 						$jsFile = explode( '.', basename( $jsFile ) );
-						$ext    = $jsFile[ count( $jsFile ) - 1 ];
+						$ext = $jsFile[ count( $jsFile ) - 1 ];
 						unset( $jsFile[ count( $jsFile ) - 1 ] );
-						$f        = implode( '.', $jsFile );
-						$jsFile   = Sobi::FixPath( SPLoader::JsFile( 'absolute.' . Sobi::Reg( 'current_template' ) . '/js/' . $f, $adm, true, true, $ext ) );
+						$f = implode( '.', $jsFile );
+						$jsFile = Sobi::FixPath( SPLoader::JsFile( 'absolute.' . Sobi::Reg( 'current_template' ) . '/js/' . $f, $adm, true, true, $ext ) );
 						$override = true;
 						$index *= 100;
 					}
@@ -310,7 +304,7 @@ final class SPHeader
 					}
 					else {
 						$params = $params ? '?' . $params : null;
-						$file   = "\n<script type=\"text/javascript\" src=\"{$jsFile}{$params}\"></script>";
+						$file = "\n<script type=\"text/javascript\" src=\"{$jsFile}{$params}\"></script>";
 						if ( !in_array( $file, $this->jsFiles ) || $force ) {
 							$this->jsFiles[ $index ] = $file;
 							ksort( $this->jsFiles );
@@ -338,8 +332,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & addJsUrl( $file, $params = null )
+	public function & addJsUrl( $file, $params = null )
 	{
 		if ( is_array( $file ) && count( $file ) ) {
 			foreach ( $file as $f ) {
@@ -352,7 +345,7 @@ final class SPHeader
 				$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
 				$this->store( get_defined_vars(), __FUNCTION__ );
 				$params = $params ? '?' . $params : null;
-				$file   = "\n<script type=\"text/javascript\" src=\"{$file}{$params}\"></script>";
+				$file = "\n<script type=\"text/javascript\" src=\"{$file}{$params}\"></script>";
 				if ( !in_array( $file, $this->jsFiles ) ) {
 					$this->jsFiles[ ++$this->count ] = $file;
 				}
@@ -372,24 +365,23 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & addJsVarFile( $script, $id, $params, $adm = false )
+	public function & addJsVarFile( $script, $id, $params, $adm = false )
 	{
 		$this->store( get_defined_vars(), __FUNCTION__ );
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
 			$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
-			$varFile                                       = SPLoader::translatePath( "var.js.{$script}_{$id}", 'front', true, 'js' );
+			$varFile = SPLoader::translatePath( "var.js.{$script}_{$id}", 'front', true, 'js' );
 			if ( !$varFile ) {
 				$file = SPLoader::JsFile( $script, $adm, true, false );
 				if ( $file ) {
 					SPLoader::loadClass( 'base.fs.file' );
 					$file = new SPFile( $file );
-					$fc   =& $file->read();
+					$fc =& $file->read();
 					foreach ( $params as $k => $v ) {
 						$fc = str_replace( "__{$k}__", $v, $fc );
 					}
-					$fc      = str_replace( '__CREATED__', date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ), $fc );
+					$fc = str_replace( '__CREATED__', date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ), $fc );
 					$varFile = SPLoader::translatePath( "var.js.{$script}_{$id}", 'front', false, 'js' );
 					$file->saveAs( $varFile );
 				}
@@ -421,8 +413,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & addCSSCode( $css )
+	public function & addCSSCode( $css )
 	{
 		$checksum = md5( $css );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -446,8 +437,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & addCssFile( $file, $adm = false, $media = null, $force = false, $ext = 'css', $params = null )
+	public function & addCssFile( $file, $adm = false, $media = null, $force = false, $ext = 'css', $params = null )
 	{
 		if ( is_array( $file ) && count( $file ) ) {
 			foreach ( $file as $f ) {
@@ -460,7 +450,7 @@ final class SPHeader
 				$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
 				$this->store( get_defined_vars(), __FUNCTION__ );
 				$cssFile = SPLoader::CssFile( $file, $adm, true, false, $ext );
-				$index   = ++$this->count;
+				$index = ++$this->count;
 				// if this is a template CSS file - ensure it will be loaded after all others CSS files
 				if ( Sobi::Reg( 'current_template' ) && ( strstr( dirname( $cssFile ), Sobi::Reg( 'current_template' ) ) ) ) {
 					$index *= 100;
@@ -485,19 +475,18 @@ final class SPHeader
 					$override = false;
 					if (
 						/* If there is already template defined */
-						Sobi::Reg( 'current_template' )
-						&& /* and we are NOT including css file from the template  */
-						!( strstr( dirname( $cssFile ), Sobi::Reg( 'current_template' ) ) )
-						&& /* but there is such file (with the same name) in the template package  */
-						SPFs::exists( Sobi::Reg( 'current_template' ) . '/css/' . basename( $cssFile ) )
-						&& !( strstr( dirname( $cssFile ), 'templates' ) )
+							Sobi::Reg( 'current_template' )
+							&& /* and we are NOT including css file from the template  */
+							!( strstr( dirname( $cssFile ), Sobi::Reg( 'current_template' ) ) )
+							&& /* but there is such file (with the same name) in the template package  */
+							SPFs::exists( Sobi::Reg( 'current_template' ) . '/css/' . basename( $cssFile ) )
+							&& !( strstr( dirname( $cssFile ), 'templates' ) )
 					) {
 						$cssFile = explode( '.', basename( $cssFile ) );
-						$ext     = $cssFile[ count( $cssFile ) - 1 ];
+						$ext = $cssFile[ count( $cssFile ) - 1 ];
 						unset( $cssFile[ count( $cssFile ) - 1 ] );
 						$f = implode( '.', $cssFile );
-//						$cssFile = SPLoader::CssFile( 'absolute.' . Sobi::Reg( 'current_template' ) . '/css/' . $f, $adm, true, false, $ext );
-						$cssFile  = SPLoader::CssFile( 'absolute.' . Sobi::Reg( 'current_template' ) . '/css/' . $f, $adm, true, true, $ext );
+						$cssFile = SPLoader::CssFile( 'absolute.' . Sobi::Reg( 'current_template' ) . '/css/' . $f, $adm, true, !( Sobi::Cfg( 'cache.include_css_files', false ) ), $ext );
 						$override = true;
 						$index *= 100;
 					}
@@ -515,8 +504,8 @@ final class SPHeader
 					}
 					else {
 						$params = $params ? '?' . $params : null;
-						$media  = $media ? "media=\"{$media}\"" : null;
-						$file   = "<link rel=\"stylesheet\" href=\"{$cssFile}{$params}\" type=\"text/css\" {$media} />";
+						$media = $media ? "media=\"{$media}\"" : null;
+						$file = "<link rel=\"stylesheet\" href=\"{$cssFile}{$params}\" type=\"text/css\" {$media} />";
 						if ( !in_array( $file, $this->cssFiles ) || $force ) {
 							$this->cssFiles[ $index ] = $file;
 							ksort( $this->cssFiles );
@@ -545,8 +534,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & addHeadLink( $href, $type = null, $title = null, $rel = 'alternate', $relType = 'rel', $params = null )
+	public function & addHeadLink( $href, $type = null, $title = null, $rel = 'alternate', $relType = 'rel', $params = null )
 	{
 		$checksum = md5( json_encode( get_defined_vars() ) );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -554,24 +542,23 @@ final class SPHeader
 			$this->store( get_defined_vars(), __FUNCTION__ );
 			$title = $title ? " title=\"{$title}\" " : null;
 			if ( $params && count( $params ) ) {
-				$arr    = SPLoader::loadClass( 'types.array' );
-				$p      = new $arr();
+				$arr = SPLoader::loadClass( 'types.array' );
+				$p = new $arr();
 				$params = $p->toString( $params );
 			}
 			if ( $type ) {
 				$type = "type=\"{$type}\" ";
 			}
-			$href          = preg_replace( '/&(?![#]?[a-z0-9]+;)/i', '&amp;', $href );
-			$title         = preg_replace( '/&(?![#]?[a-z0-9]+;)/i', '&amp;', $title );
+			$href = preg_replace( '/&(?![#]?[a-z0-9]+;)/i', '&amp;', $href );
+			$title = preg_replace( '/&(?![#]?[a-z0-9]+;)/i', '&amp;', $title );
 			$this->links[] = "<link href=\"{$href}\" {$relType}=\"{$rel}\" {$type}{$params}{$title}/>";
-			$this->links   = array_unique( $this->links );
+			$this->links = array_unique( $this->links );
 		}
 
 		return $this;
 	}
 
-	public
-	function & addCanonical( $url )
+	public function & addCanonical( $url )
 	{
 		$checksum = md5( $url );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -590,8 +577,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & addTitle( $title, $site = [] )
+	public function & addTitle( $title, $site = [] )
 	{
 		if ( count( $site ) && $site[ 0 ] > 1 ) {
 			if ( !( is_array( $title ) ) ) {
@@ -610,7 +596,7 @@ final class SPHeader
 			$checksum = md5( $title );
 			if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
 				$this->_checksums[ __FUNCTION__ ][ $checksum ] = true;
-				$args                                          = get_defined_vars();
+				$args = get_defined_vars();
 				unset( $args[ 'site' ] );
 				$this->store( $args, __FUNCTION__ );
 				$this->title[] = $title;
@@ -627,8 +613,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & addDescription( $desc )
+	public function & addDescription( $desc )
 	{
 		if ( is_string( $desc ) ) {
 			$checksum = md5( $desc );
@@ -651,8 +636,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & setTitle( $title )
+	public function & setTitle( $title )
 	{
 		if ( defined( 'SOBIPRO_ADM' ) ) {
 			SPFactory::mainframe()->setTitle( SPLang::clean( $title ) );
@@ -675,8 +659,7 @@ final class SPHeader
 	 *
 	 * @return SPHeader
 	 */
-	public
-	function & objMeta( $obj )
+	public function & objMeta( $obj )
 	{
 		$task = Input::Task();
 		if ( Sobi::Cfg( 'meta.always_add_section' ) ) {
@@ -686,7 +669,7 @@ final class SPHeader
 		}
 		if ( $obj->get( 'metaDesc' ) ) {
 			$separator = Sobi::Cfg( 'meta.separator', '.' );
-			$desc      = $obj->get( 'metaDesc' );
+			$desc = $obj->get( 'metaDesc' );
 			$desc .= $separator;
 			$this->addDescription( $desc );
 		}
@@ -705,7 +688,7 @@ final class SPHeader
 				$fields = array_reverse( $fields );
 				foreach ( $fields as $field ) {
 					$separator = $field->get( 'metaSeparator' );
-					$desc      = $field->metaDesc();
+					$desc = $field->metaDesc();
 					if ( is_string( $desc ) && strlen( $desc ) ) {
 						$desc .= $separator;
 					}
@@ -718,14 +701,12 @@ final class SPHeader
 		return $this;
 	}
 
-	public
-	function addRobots( $robots )
+	public function addRobots( $robots )
 	{
 		$this->robots = [ $robots ];
 	}
 
-	public
-	function addAuthor( $author )
+	public function addAuthor( $author )
 	{
 		$checksum = md5( $author );
 		if ( !( isset( $this->_checksums[ __FUNCTION__ ][ $checksum ] ) ) ) {
@@ -743,8 +724,7 @@ final class SPHeader
 	 * @internal param string $key
 	 * @return SPHeader
 	 */
-	public
-	function & addKeyword( $keys )
+	public function & addKeyword( $keys )
 	{
 		if ( is_string( $keys ) ) {
 			$checksum = md5( $keys );
@@ -766,34 +746,31 @@ final class SPHeader
 		return $this;
 	}
 
-	public
-	function getData( $index )
+	public function getData( $index )
 	{
 		if ( isset( $this->$index ) ) {
 			return $this->$index;
 		}
 	}
 
-	public
-	function & reset()
+	public function & reset()
 	{
-		$this->keywords    = [];
-		$this->author      = [];
-		$this->robots      = [];
+		$this->keywords = [];
+		$this->author = [];
+		$this->robots = [];
 		$this->description = [];
-		$this->cssFiles    = [];
-		$this->jsFiles     = [];
-		$this->css         = [];
-		$this->js          = [];
-		$this->raw         = [];
-		$this->head        = [];
-		$this->_store      = [];
+		$this->cssFiles = [];
+		$this->jsFiles = [];
+		$this->css = [];
+		$this->js = [];
+		$this->raw = [];
+		$this->head = [];
+		$this->_store = [];
 
 		return $this;
 	}
 
-	private
-	function _cssFiles()
+	private function _cssFiles()
 	{
 		if ( Sobi::Cfg( 'cache.include_css_files', false ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			if ( count( $this->_cache[ 'css' ] ) ) {
@@ -825,7 +802,7 @@ final class SPHeader
 								elseif ( strpos( $url, '/' ) === 0 ) {
 									continue;
 								}
-								$c        = preg_match_all( '|\.\./|', $url, $c ) + 1;
+								$c = preg_match_all( '|\.\./|', $url, $c ) + 1;
 								$tempFile = array_reverse( $fPath );
 								for ( $i = 0; $i < $c; $i++ ) {
 									unset( $tempFile[ $i ] );
@@ -840,7 +817,7 @@ final class SPHeader
 									$realUrl = Sobi::FixPath( $rPath . '/' . $url );
 								}
 								$realUrl = str_replace( [ '"', "'", ' ' ], null, $realUrl );
-								$fc      = str_replace( $url, $realUrl, $fc );
+								$fc = str_replace( $url, $realUrl, $fc );
 							}
 						}
 						// and add to content
@@ -848,7 +825,7 @@ final class SPHeader
 					}
 					SPFs::write( SOBI_PATH . "/var/css/{$check}.css", $cssContent );
 				}
-				$cfile                            = SPLoader::CssFile( 'front.var.css.' . $check, false, true, true );
+				$cfile = SPLoader::CssFile( 'front.var.css.' . $check, false, true, true );
 				$this->cssFiles[ ++$this->count ] = "<link rel=\"stylesheet\" href=\"{$cfile}\" media=\"all\" type=\"text/css\" />";
 			}
 		}
@@ -856,21 +833,20 @@ final class SPHeader
 		return $this->cssFiles;
 	}
 
-	private
-	function _jsFiles()
+	private function _jsFiles()
 	{
 		if ( Sobi::Cfg( 'cache.include_js_files', false ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			if ( count( $this->_cache[ 'js' ] ) ) {
 				$compression = Sobi::Cfg( 'cache.compress_js', false );
-				$comprLevel  = Sobi::Cfg( 'cache.compress_level', 0 );
-				$check       = [ 'section' => Sobi::Section(), 'compress_level' => $comprLevel, 'compress_js' => $compression ];
+				$comprLevel = Sobi::Cfg( 'cache.compress_level', 0 );
+				$check = [ 'section' => Sobi::Section(), 'compress_level' => $comprLevel, 'compress_js' => $compression ];
 				foreach ( $this->_cache[ 'js' ] as $file ) {
 					$check[ $file ] = filemtime( $file );
 				}
 				$check = md5( serialize( $check ) );
 				if ( !( SPFs::exists( SOBI_PATH . "/var/js/{$check}.js" ) ) ) {
 					$noCompress = explode( ',', Sobi::Cfg( 'cache.js_compress_exceptions' ) );
-					$jsContent  = "\n/* Created at: " . date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ) . " */\n";
+					$jsContent = "\n/* Created at: " . date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ) . " */\n";
 					foreach ( $this->_cache[ 'js' ] as $file ) {
 						$fName = str_replace( SOBI_ROOT, null, $file );
 						$jsContent .= "\n// ========\n// File: {$fName}\n// ========\n\n";
@@ -885,7 +861,7 @@ final class SPHeader
 					}
 					SPFs::write( SOBI_PATH . "/var/js/{$check}.js", $jsContent );
 				}
-				$cfile                           = SPLoader::JsFile( 'front.var.js.' . $check, false, true, true );
+				$cfile = SPLoader::JsFile( 'front.var.js.' . $check, false, true, true );
 				$this->jsFiles[ ++$this->count ] = "\n<script type=\"text/javascript\" src=\"{$cfile}\"></script>";
 			}
 		}
@@ -896,16 +872,14 @@ final class SPHeader
 	/**
 	 * @deprecated
 	 */
-	public
-	function send()
+	public function send()
 	{
 	}
 
 	/**
 	 * Send the header via the mainframe interface
 	 */
-	public
-	function sendHeader()
+	public function sendHeader()
 	{
 		if ( count( $this->_store ) ) {
 			if ( count( $this->js ) ) {
@@ -924,16 +898,16 @@ final class SPHeader
 			}
 			// Thu, May 8, 2014 13:10:19 - changed order of meta keys and meta description
 			// See #1231
-			$this->head[ 'keywords' ]    = array_reverse( $this->keywords );
-			$this->head[ 'author' ]      = $this->author;
-			$this->head[ 'robots' ]      = $this->robots;
+			$this->head[ 'keywords' ] = array_reverse( $this->keywords );
+			$this->head[ 'author' ] = $this->author;
+			$this->head[ 'robots' ] = $this->robots;
 			$this->head[ 'description' ] = array_reverse( $this->description );
-			$this->head[ 'links' ]       = $this->links;
-			$this->head[ 'css' ]         = $this->_cssFiles();
-			$this->head[ 'js' ]          = $this->_jsFiles();
-			$this->head[ 'css' ]         = array_merge( $this->head[ 'css' ], $this->css );
-			$this->head[ 'js' ]          = array_merge( $this->head[ 'js' ], $this->js );
-			$this->head[ 'raw' ]         = $this->raw;
+			$this->head[ 'links' ] = $this->links;
+			$this->head[ 'css' ] = $this->_cssFiles();
+			$this->head[ 'js' ] = $this->_jsFiles();
+			$this->head[ 'css' ] = array_merge( $this->head[ 'css' ], $this->css );
+			$this->head[ 'js' ] = array_merge( $this->head[ 'js' ], $this->js );
+			$this->head[ 'raw' ] = $this->raw;
 			Sobi::Trigger( 'Header', 'Send', [ &$this->head ] );
 			SPFactory::mainframe()->addHead( $this->head );
 			if ( count( $this->title ) ) {

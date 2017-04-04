@@ -43,6 +43,7 @@ Legend:
 -------------------
 	(#) Wrong Ajax definition (switch to Framework) while installing applications from repository (Issue #1791)
 	(#) Added exception for search results in router (Issue #1783)
+	(#) CSS cache is trying to load CSS files over URL (Issue #1745 again and #1813)
 
 	(!) Sobi Framework inclusion moved to the loader
 
