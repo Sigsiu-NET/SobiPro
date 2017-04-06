@@ -32,6 +32,7 @@ $adm = str_replace( JPATH_ROOT, null, JPATH_ADMINISTRATOR );
 define( 'SOBI_ADM_LIVE_PATH', $adm . '/components/com_sobipro' );
 define( 'SOBI_ADM_FOLDER', $adm );
 define( 'SOBI_LIVE_PATH', 'components/com_sobipro' );
+
 require_once( SOBI_PATH . '/lib/base/fs/loader.php' );
 SPLoader::loadController( 'interface' );
 SPLoader::loadClass( 'base.filter' );
