@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\FileSystem\File;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'controller' );
@@ -445,7 +447,7 @@ class SPConfigAdmCtrl extends SPController
 		$ls = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ) . '/tree' );
 		static $root = null;
 		if ( !( $root ) ) {
-			$root = new SPFile( SOBI_PATH );
+			$root = new File( str_replace('\\','/',SOBI_PATH) );
 		}
 		$exceptions = [ 'config.xml', 'config.json', 'tmp' ];
 		foreach ( $dir as $file ) {

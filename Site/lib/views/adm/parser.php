@@ -18,22 +18,34 @@
  */
 class SPTplParser
 {
+	/** @var bool  */
 	protected $tabsContentOpen = false;
+	/** @var bool  */
 	protected $activeTab = false;
+	/** @var bool  */
 	protected $table = true;
+	/** @var bool  */
 	protected $loopTable = true;
+	/** @var string  */
 	protected $thTd = 'th';
+	/** @var array  */
 	protected $_out = [];
+	/** @var bool  */
 	protected $loopOpen = false;
+	/** @var array  */
 	protected $_tickerIcons = [
 			0 => 'remove',
 			1 => 'ok',
 			-1 => 'stop',
 			-2 => 'pause'
 	];
+	/** @var string  */
 	protected $_checkedOutIcon = 'lock';
+	/** @var string  */
 	static $newLine = "\n";
+	/** @var array  */
 	protected $html = [ 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre', 'label', 'tr', 'th', 'td', 'code', 'i' ];
+	/** @var array  */
 	protected $internalAttributes = [ 'condition' ];
 
 

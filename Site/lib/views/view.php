@@ -928,6 +928,9 @@ abstract class SPFrontView extends SPObject implements SPView
 				}
 			}
 			$templateType = SPFactory::registry()->get( 'template_type' );
+			if ( strstr( $file, $templateType ) ) {
+				$file = str_replace( $templateType, null, $file );
+			}
 			if ( SPLoader::translatePath( "{$this->_templatePath}.{$templateType}.{$file}", 'absolute', true, 'json' ) ) {
 				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$this->_templatePath}.{$templateType}.{$file}", 'absolute', true, 'json' ) ), true );
 				if ( count( $subConfig ) ) {
