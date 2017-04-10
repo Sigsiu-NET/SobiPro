@@ -495,6 +495,9 @@ abstract class SPController extends SPObject implements SPControl
 			else {
 				$file = $task;
 			}
+			if ( strstr( $file, $this->templateType ) ) {
+				$file = str_replace( $this->templateType, null, $file );
+			}
 			if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'json' ) ) {
 				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'json' ) ), true );
 				if ( count( $subConfig ) ) {
