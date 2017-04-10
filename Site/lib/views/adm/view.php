@@ -721,7 +721,7 @@ class SPAdmView extends SPObject implements SPView
 		$value = null;
 		if ( $node->attributes->getNamedItem( 'value' ) ) {
 			if ( $node->attributes->getNamedItem( 'parse' ) && $node->attributes->getNamedItem( 'parse' )->nodeValue == 'true' ) {
-				if ( strlen( $subject ) ) {
+				if ( strlen( $subject ) && $subject ) {
 					$value = $this->get( $subject . '.' . $node->attributes->getNamedItem( 'value' )->nodeValue, $i );
 				}
 				else {
