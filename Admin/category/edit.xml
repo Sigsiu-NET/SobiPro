@@ -162,7 +162,7 @@
 				</tabs>
 
 
-				<div class="spCategorySelect spModalIframe modal hide" id="spCat">
+				<div class="spCategorySelect spModalIframe modal tiny hide" id="spCat">
 					<div class="modal-header">
 						<button class="close" data-dismiss="modal">
 							<text value="CLOSE_X" />

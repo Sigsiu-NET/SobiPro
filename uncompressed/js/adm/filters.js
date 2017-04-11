@@ -30,7 +30,7 @@ SobiPro.jQuery( document ).ready( function ()
 			}
 			SobiPro.jQuery( "#filter-edit-window" )
 				//.css( 'width', '600px' )
-				.addClass('spModalIframe')
+				.addClass('spModalIframe narrow')
 				.find( '.modal-body' )
 				.html( '<iframe src="' + requestUrl + '" id="filter-edit-window-frame"> </iframe>' );
 
