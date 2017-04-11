@@ -36,6 +36,7 @@ Legend:
 	(-) clean-up of loaded scripts in template
 
 	(!) Less folder removed; less files moved to css folder
+	(!) Redesign of entries & categories in SobiPro's cPanel
 
 
 -------------------
