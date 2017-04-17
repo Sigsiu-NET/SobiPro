@@ -78,6 +78,9 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			case 'toggle.enabled':
 				$this->toggle();
 				break;
+			case 'section':
+				$this->listSectionRules();
+				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
 				if ( !( Sobi::Trigger( 'Execute', $this->name(), [ &$this ] ) ) ) {
@@ -90,8 +93,9 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	private function toggle()
 	{
 		$state = SPFactory::db()
-				->select( 'state', 'spdb_permissions_rules', [ 'rid' => SPRequest::int( 'rid' ) ] )
-				->loadResult();
+			->select( 'state', 'spdb_permissions_rules', [ 'rid' => SPRequest::int( 'rid' ) ] )
+			->loadResult();
+
 		return $this->state( !( $state ) );
 	}
 
@@ -100,6 +104,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 * @param $action
 	 * @param $value
 	 * @param string $site
+	 *
 	 * @internal param
 	 * @return void
 	 */
@@ -108,7 +113,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		Sobi::Trigger( 'Acl', __FUNCTION__, [ &$subject, &$action, &$value, &$site ] );
 		try {
 			SPFactory::db()->delete( 'spdb_permissions', [ 'subject' => $subject, 'action' => $action, 'value' => $value, 'site' => $site ] );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'acl', SPLang::e( 'CANNOT_REMOVE_PERMISSION_DB_ERR', $subject, $action, $action, $x->getMessage() ), SPC::WARNING, 0 );
 		}
 	}
@@ -119,6 +125,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 	 * @param $value
 	 * @param $site
 	 * @param $published
+	 *
 	 * @return bool
 	 */
 	public function addPermission( $subject, $action, $value, $site = 'front', $published = 1 )
@@ -128,18 +135,19 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			$this->loadPermissions();
 		}
 		if (
-				isset( $this->_perms[ $site ][ $subject ] )
-				&& isset( $this->_perms[ $site ][ $subject ][ $action ] )
-				&& in_array( $value, $this->_perms[ $site ][ $subject ][ $action ] )
+			isset( $this->_perms[ $site ][ $subject ] )
+			&& isset( $this->_perms[ $site ][ $subject ][ $action ] )
+			&& in_array( $value, $this->_perms[ $site ][ $subject ][ $action ] )
 		) {
 			return true;
 		}
 		else {
-			$this->_perms[ $site ][ $subject ][ $action ][ ] = $value;
+			$this->_perms[ $site ][ $subject ][ $action ][] = $value;
 			$db =& SPFactory::db();
 			try {
 				$db->insert( 'spdb_permissions', [ null, $subject, $action, $value, $site, $published ] );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( 'acl', SPLang::e( 'CANNOT_ADD_NEW_PERMS', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
@@ -151,7 +159,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		try {
 			$db->select( '*', 'spdb_permissions' );
 			$permissions = $db->loadObjectList();
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'acl', SPLang::e( 'CANNOT_GET_PERMISSION_LIST', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		foreach ( $permissions as $permission ) {
@@ -164,7 +173,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			if ( !( isset( $this->_perms[ $permission->site ][ $permission->subject ][ $permission->action ] ) ) ) {
 				$this->_perms[ $permission->site ][ $permission->subject ][ $permission->action ] = [];
 			}
-			$this->_perms[ $permission->site ][ $permission->subject ][ $permission->action ][ ] = $permission->value;
+			$this->_perms[ $permission->site ][ $permission->subject ][ $permission->action ][] = $permission->value;
 		}
 	}
 
@@ -175,7 +184,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		try {
 			$db->insertUpdate( 'spdb_permissions_rules', [ 'rid' => 'NULL', 'name' => $name, 'nid' => SPLang::nid( $name ), 'validSince' => $db->getNullDate(), 'validUntil' => $db->getNullDate(), 'note' => $note, 'state' => 1 ] );
 			$rid = $db->insertid();
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'CANNOT_CREATE_RULE_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
@@ -183,12 +193,13 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		$gids = SPUser::availableGroups();
 		foreach ( $gids as $id => $group ) {
 			if ( in_array( $group, $groups ) || in_array( strtolower( $group ), $groups ) ) {
-				$affectedGroups[ ] = [ 'rid' => $rid, 'gid' => $id ];
+				$affectedGroups[] = [ 'rid' => $rid, 'gid' => $id ];
 			}
 		}
 		try {
 			$db->insertArray( 'spdb_permissions_groups', $affectedGroups );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'CANNOT_INSERT_GROUPS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
@@ -200,27 +211,30 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			$perm = explode( '.', $perm );
 			$site = ( isset( $perm[ 3 ] ) ) ? $perm[ 3 ] : 'front';
 			$pid = $db
-					->select( 'pid', 'spdb_permissions', [ 'subject' => $perm[ 0 ], 'action' => $perm[ 1 ], 'value' => $perm[ 2 ], 'site' => $site ] )
-					->loadResult();
+				->select( 'pid', 'spdb_permissions', [ 'subject' => $perm[ 0 ], 'action' => $perm[ 1 ], 'value' => $perm[ 2 ], 'site' => $site ] )
+				->loadResult();
 			$db->getQuery();
 			if ( $pid ) {
 				foreach ( $sections as $sid ) {
-					$map[ ] = [ 'rid' => $rid, 'sid' => $sid, 'pid' => $pid ];
+					$map[] = [ 'rid' => $rid, 'sid' => $sid, 'pid' => $pid ];
 				}
 			}
 		}
 		if ( count( $map ) ) {
 			try {
 				$db->insertArray( 'spdb_permissions_map', $map, true );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( 'ACL', SPLang::e( 'CANNOT_INSERT_GROUPS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
+
 		return $rid;
 	}
 
 	/**
 	 * Save a rule
+	 *
 	 * @param bool $apply
 	 * @param bool $clone
 	 */
@@ -250,14 +264,14 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		$pa = SPRequest::arr( 'set_adm_permissions', [] );
 		// if can publish any, then can see any unpublished
 		if ( in_array( 20, $pf ) ) {
-			$pf[ ] = 14;
+			$pf[] = 14;
 		}
 		// if can publish own, then can see own unpublished
 		if ( in_array( 21, $pf ) ) {
-			$pf[ ] = 12;
+			$pf[] = 12;
 		}
 		if ( in_array( 19, $pf ) ) {
-			$pf[ ] = 15;
+			$pf[] = 15;
 		}
 		$perms = array_merge( $pf, $pa );
 
@@ -266,10 +280,11 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		/* update or insert the rule definition */
 		try {
 			$db->insertUpdate( 'spdb_permissions_rules', [ 'rid' => $rid, 'name' => $name, 'nid' => $nid, 'validSince' => $vs, 'validUntil' => $vu, 'note' => $note, 'state' => $state ] );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'CANNOT_CREATE_RULE_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
-		$rid = ( int )$rid ? ( int )$rid : $db->insertid();
+		$rid = ( int ) $rid ? ( int ) $rid : $db->insertid();
 
 		/* insert the groups ids */
 		if ( count( $gids ) ) {
@@ -278,15 +293,17 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			}
 			try {
 				$db->insertArray( 'spdb_permissions_groups', $gids );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( 'ACL', SPLang::e( 'CANNOT_INSERT_GROUPS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
 
 		try {
 			$admPermissions = $db->select( '*', 'spdb_permissions', [ 'site' => 'adm' ] )
-					->loadResultArray();
-		} catch ( SPException $x ) {
+				->loadResultArray();
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'CANNOT_GET_PERMISSIONS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
@@ -297,16 +314,17 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			foreach ( $sids as $sid ) {
 				foreach ( $perms as $pid ) {
 					if ( in_array( $pid, $admPermissions ) ) {
-						$map[ ] = [ 'rid' => $rid, 'sid' => $sid, 'pid' => $pid ];
+						$map[] = [ 'rid' => $rid, 'sid' => $sid, 'pid' => $pid ];
 					}
 					else {
-						$map[ ] = [ 'rid' => $rid, 'sid' => $sid, 'pid' => $pid ];
+						$map[] = [ 'rid' => $rid, 'sid' => $sid, 'pid' => $pid ];
 					}
 				}
 			}
 			try {
 				$db->insertArray( 'spdb_permissions_map', $map, true );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( 'ACL', SPLang::e( 'CANNOT_INSERT_GROUPS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
@@ -338,7 +356,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			$db->delete( 'spdb_permissions_groups', [ 'rid' => $rids ] );
 			$db->delete( 'spdb_permissions_map', [ 'rid' => $rids ] );
 			$db->delete( 'spdb_permissions_rules', [ 'rid' => $rids ] );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'CANNOT_REMOVE_RULES_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		$this->response( Sobi::Url( 'acl' ), Sobi::Txt( 'ACL_RULE_DELETED' ), true, SPC::SUCCESS_MSG );
@@ -354,13 +373,15 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		try {
 			$db->delete( 'spdb_permissions_groups', [ 'rid' => $rid ] );
 			$db->delete( 'spdb_permissions_map', [ 'rid' => $rid ] );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'CANNOT_REMOVE_PERMISSIONS_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 	}
 
 	/**
 	 * @param bool $state
+	 *
 	 * @return bool
 	 */
 	protected function state( $state )
@@ -378,11 +399,13 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		}
 		if ( !$where ) {
 			$this->response( Sobi::Back(), Sobi::Txt( 'ACL_SELECT_RULE_FIRST' ), true, SPC::ERROR_MSG );
+
 			return false;
 		}
 		try {
 			SPFactory::db()->update( 'spdb_permissions_rules', [ 'state' => $state ], $where );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 		$this->response( Sobi::Back(), Sobi::Txt( 'ACL.MSG_STATE_CHANGED' ), true, SPC::SUCCESS_MSG );
@@ -401,15 +424,16 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		$db = SPFactory::db();
 		try {
 			$sections = $db
-					->select( '*', 'spdb_object', [ 'oType' => 'section' ] )
-					->loadObjectList();
+				->select( '*', 'spdb_object', [ 'oType' => 'section' ] )
+				->loadObjectList();
 			$admPermissions = $db
-					->select( '*', 'spdb_permissions', [ 'site' => 'adm', 'published' => 1 ] )
-					->loadObjectList();
+				->select( '*', 'spdb_permissions', [ 'site' => 'adm', 'published' => 1 ] )
+				->loadObjectList();
 			$frontPermissions = $db
-					->select( '*', 'spdb_permissions', [ 'site' => 'front', 'published' => 1 ] )
-					->loadObjectList();
-		} catch ( SPException $x ) {
+				->select( '*', 'spdb_permissions', [ 'site' => 'front', 'published' => 1 ] )
+				->loadObjectList();
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
 		/** @var $view SPAclView */
@@ -422,8 +446,8 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		if ( $rid ) {
 			try {
 				$rule = $db
-						->select( '*', 'spdb_permissions_rules', [ 'rid' => $rid ] )
-						->loadAssocList( 'rid' );
+					->select( '*', 'spdb_permissions_rules', [ 'rid' => $rid ] )
+					->loadAssocList( 'rid' );
 				$rule = $rule[ $rid ];
 				if ( $rule[ 'validSince' ] == $db->getNullDate() ) {
 					$rule[ 'validSince' ] = null;
@@ -433,25 +457,26 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 				}
 				$view->assign( $rule[ 'name' ], 'rule' );
 				$rule[ 'groups' ] = $db
-						->select( 'gid', 'spdb_permissions_groups', [ 'rid' => $rid ] )
-						->loadResultArray();
+					->select( 'gid', 'spdb_permissions_groups', [ 'rid' => $rid ] )
+					->loadResultArray();
 
 				$rule[ 'permissions' ] = $db
-						->select( '*', 'spdb_permissions_map', [ 'rid' => $rid ] )
-						->loadAssocList();
+					->select( '*', 'spdb_permissions_map', [ 'rid' => $rid ] )
+					->loadAssocList();
 				$view->assign( $rule, 'set' );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
 		else {
 			$rule = [
-					'validUntil' => null,
-					'validSince' => null,
-					'name' => '',
-					'nid' => '',
-					'note' => '',
-					'permissions' => []
+				'validUntil'  => null,
+				'validSince'  => null,
+				'name'        => '',
+				'nid'         => '',
+				'note'        => '',
+				'permissions' => []
 			];
 			$view->assign( $rule, 'set' );
 		}
@@ -474,14 +499,15 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		$groups = [];
 		try {
 			$ids = SPFactory::db()->select( [ 'pid', 'groupName', 'gid' ], 'spdb_user_group', [ 'enabled' => 1 ] )->loadAssocList( 'gid' );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		if ( count( $ids ) ) {
 			$this->sortGroups( $ids, $gids, $parents );
 		}
 		foreach ( $cgids as $group ) {
-			$groups[ ] = $group;
+			$groups[] = $group;
 			preg_match( '/\.([&nbsp;]+)\-/', $group[ 'text' ], $nbsp );
 			if ( !( isset( $nbsp[ 1 ] ) ) ) {
 				$nbsp[ 1 ] = null;
@@ -492,13 +518,14 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 				}
 			}
 		}
+
 		return $groups;
 	}
 
 	private function addGroups( $group, &$groups, $nbsp )
 	{
 		$nbsp = $nbsp . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-		$groups[ ] = [ 'value' => $group[ 'gid' ], 'text' => '.' . $nbsp . '-&nbsp;' . $group[ 'groupName' ] ];
+		$groups[] = [ 'value' => $group[ 'gid' ], 'text' => '.' . $nbsp . '-&nbsp;' . $group[ 'groupName' ] ];
 		if ( isset( $group[ 'childs' ] ) && count( $group[ 'childs' ] ) ) {
 			foreach ( $group[ 'childs' ] as $gid => $grp ) {
 				$this->addGroups( $grp, $groups, $nbsp );
@@ -527,7 +554,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 					unset( $gids[ $gid ] );
 				}
 				else {
-					$parents[ $group[ 'pid' ] ][ ] = $gids[ $gid ];
+					$parents[ $group[ 'pid' ] ][] = $gids[ $gid ];
 				}
 			}
 		}
@@ -555,21 +582,66 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 		}
 		Sobi::ReturnPoint();
 		$order = SPFactory::user()
-				->getUserState( 'acl.order', 'position', 'rid.asc' );
+			->getUserState( 'acl.order', 'position', 'rid.asc' );
 		try {
 			$rules = SPFactory::db()
-					->select( '*', 'spdb_permissions_rules', null, $order )
-					->loadObjectList();
-		} catch ( SPException $x ) {
+				->select( '*', 'spdb_permissions_rules', null, $order )
+				->loadObjectList();
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		$menu = $this->createMenu( 'acl' );
 		/** @var $view SPAclView */
 		SPFactory::View( 'acl', true )
-				->assign( $this->_task, 'task' )
-				->assign( $rules, 'rules' )
-				->assign( $menu, 'menu' )
-				->determineTemplate( 'acl', 'list' )
-				->display();
+			->assign( $this->_task, 'task' )
+			->assign( $rules, 'rules' )
+			->assign( $menu, 'menu' )
+			->determineTemplate( 'acl', 'list' )
+			->display();
 	}
+
+
+	/**
+	 */
+	private function listSectionRules()
+	{
+		if ( !( Sobi::Can( 'cms.admin' ) ) && !( Sobi::Can( 'cms.apps' ) ) ) {
+			Sobi::Error( 'ACL', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::WARNING, 403, __LINE__, __FILE__ );
+			exit();
+		}
+		Sobi::ReturnPoint();
+		$order = SPFactory::user()
+			->getUserState( 'acl.order', 'position', 'rid.asc' );
+
+
+		SPLoader::loadClass( 'cms.base.users' );
+		$db = SPFactory::db();
+		try {
+			$admPermissions = $db
+				->select( '*', 'spdb_permissions', [ 'site' => 'adm', 'published' => 1 ] )
+				->loadObjectList();
+			$frontPermissions = $db
+				->select( '*', 'spdb_permissions', [ 'site' => 'front', 'published' => 1 ] )
+				->loadObjectList();
+		}
+		catch ( SPException $x ) {
+			Sobi::Error( 'ACL', SPLang::e( 'Db reports %s.', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
+		}
+
+
+		$userGroups = $this->userGroups();
+		$menu = $this->createMenu( 'acl.section' );
+		/** @var $view SPAclView */
+		SPFactory::View( 'acl', true )
+			->assign( $this->_task, 'task' )
+			->assign( $admPermissions, 'adm_permissions' )
+			->assign( $frontPermissions, 'permissions' )
+			->assign( $userGroups, 'groups' )
+//			->assign( $rules, 'rules' )
+			->assign( $menu, 'menu' )
+			->determineTemplate( 'acl', 'rules' )
+			->display();
+	}
+
 }
