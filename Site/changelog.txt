@@ -38,6 +38,8 @@ Legend:
 	(!) Less folder removed; less files moved to css folder
 	(!) Redesign of entries & categories in SobiPro's cPanel
 
+	(#) Codemirror truncated in Joomla 3.7
+
 
 -------------------
 1.3.7 ()
