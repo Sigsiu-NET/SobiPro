@@ -34,6 +34,7 @@ Legend:
 
 	(-) unused tabs script of SobiPro version 1.0 removed
 	(-) clean-up of loaded scripts in template
+	(-) en-GB preload function removed as Joomla 3.7 is always pre-loading the English language
 
 	(!) Less folder removed; less files moved to css folder
 	(!) Redesign of entries & categories in SobiPro's cPanel
