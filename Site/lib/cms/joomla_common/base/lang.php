@@ -220,8 +220,8 @@ class SPJoomlaLang
 			JFactory::getLanguage()->load( 'com_sobipro', JPATH_BASE, 'en-GB' );
 		}
 		/* load front language file always */
-		JFactory::getLanguage()->load( 'com_sobipro', JPATH_BASE, null, true );
-		JFactory::getLanguage()->load( 'com_sobipro', JPATH_SITE );
+		JFactory::getLanguage()->load( 'com_sobipro', JPATH_BASE, $this->_lang, true );
+		JFactory::getLanguage()->load( 'com_sobipro', JPATH_SITE, $this->_lang, true );
 		$this->_loaded = true;
 	}
 
@@ -558,7 +558,7 @@ class SPJoomlaLang
 	 */
 	protected function _setLang( $lang )
 	{
-		$lang = str_replace( '-', '_', $lang );
+//		$lang = str_replace( '-', '_', $lang );
 		$this->_lang = $lang;
 	}
 

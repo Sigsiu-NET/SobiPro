@@ -51,6 +51,7 @@ Legend:
 	(#) RSS feed use general settings (Issue #1802)
 	(#) Wrong condition for subject while parsing text node in administrator area (Issue #1801)
 	(#) Different directory separators used in path. (Issue #1797)
+	(#) Overwritten "searchSuggest" method in image field (Issue #1828)
 
 	(!) Sobi Framework inclusion moved to the loader
 
