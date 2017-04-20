@@ -1031,4 +1031,16 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 		return $this->storeData( $entry, $request, $cloneFiles );
 	}
+
+	/**
+	 * @param string $data
+	 * @param int $section
+	 * @param bool $startWith
+	 * @param bool $ids
+	 * @return array
+	 */
+	public function searchSuggest( $data, $section, $startWith = true, $ids = false )
+	{
+		return [];
+	}
 }
