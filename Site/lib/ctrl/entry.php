@@ -17,6 +17,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'controller' );
@@ -404,7 +406,7 @@ class SPEntryCtrl extends SPController
 		$this->_model->getRequest( $this->_type, $request );
 		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_model ] );
 
-		if ( $this->_model->get( 'id' ) && $this->_model->get( 'id' ) == SPRequest::sid() ) {
+		if ( $this->_model->get( 'id' ) && $this->_model->get( 'id' ) == Input::Sid() ) {
 			$new = false;
 			if ( Sobi::My( 'id' ) && Sobi::My( 'id' ) == $this->_model->get( 'owner' ) ) {
 				$this->authorise( 'edit', 'own' );

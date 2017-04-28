@@ -19,29 +19,17 @@ SPLoader::loadClass( 'models.fields.interface' );
 
 class SPFieldType extends SPObject
 {
-	/**
-	 * @var SPField
-	 */
+	/*** @var SPField */
 	private $_field = null;
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	protected $_attr = [];
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_selected = null;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $dType = 'free_single_simple_data';
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_rdata = null;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $cssClass = "inputbox";
 	/** @var bool */
 	protected $showLabel = true;
