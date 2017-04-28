@@ -514,6 +514,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			}
 			if ( $this->generateThumb ) {
 				$thumb = clone $orgImage;
+				$thumb->setTransparency( $this->detectTransparency );
 				try {
 					$thumb->resample( $this->thumbWidth, $this->thumbHeight, false );
 					$files[ 'thumb' ] = $this->parseName( $entry, $orgName, $this->thumbName, true );
@@ -528,6 +529,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$ico = clone $orgImage;
 			try {
 				$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '80:80' ) );
+				$ico->setTransparency( $this->detectTransparency );
 				$ico->resample( $icoSize[ 0 ], $icoSize[ 1 ], false );
 				$files[ 'ico' ] = $this->parseName( $entry, strtolower( $orgName ), 'ico_{orgname}_' . $this->nid, true );
 				$ico->saveAs( $path . $files[ 'ico' ] );
@@ -804,6 +806,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$width = $aspectRatio * $originalHeight > $originalWidth ? $originalWidth : $aspectRatio * $originalHeight;
 				$height = $originalWidth / $aspectRatio > $originalHeight ? $originalHeight : $originalWidth / $aspectRatio;
 				try {
+					$croppedImage->setTransparency( $this->detectTransparency );
 					$croppedImage->crop( $width, $height );
 					$croppedImage->saveAs( $dirName . 'cropped_' . $orgFileName );
 					$ico = SPFactory::Instance( 'base.fs.image', $dirName . 'cropped_' . $orgFileName );
@@ -817,6 +820,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$image = clone $orgImage;
 			try {
 				$previewSize = explode( ':', Sobi::Cfg( 'image.preview_size', '500:500' ) );
+				$image->setTransparency( $this->detectTransparency );
 				$image->resample( $previewSize[ 0 ], $previewSize[ 1 ], false );
 				$image->saveAs( $dirName . 'resized_' . $orgFileName );
 			} catch ( SPException $x ) {

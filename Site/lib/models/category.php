@@ -73,7 +73,6 @@ class SPCategory extends SPDBObject implements SPDataModel
 		/* initial org settings */
 		/* @var SPdb $db */
 		$db = SPFactory::db();
-		$this->nid = $this->createAlias();
 
 		$this->approved = Sobi::Can( $this->type(), 'publish', 'own' );
 
@@ -82,6 +81,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 		if ( $clone ) {
 			$this->id = 0;
 		}
+		$this->nid = $this->createAlias();
 		parent::save();
 		$properties = get_class_vars( __CLASS__ );
 
