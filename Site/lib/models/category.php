@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadModel( 'datamodel' );
 SPLoader::loadModel( 'dbobject' );
@@ -76,6 +78,10 @@ class SPCategory extends SPDBObject implements SPDataModel
 		$this->approved = Sobi::Can( $this->type(), 'publish', 'own' );
 
 		$db->transaction();
+		$clone = Input::Task() == 'category.clone';
+		if ( $clone ) {
+			$this->id = 0;
+		}
 		parent::save();
 		$properties = get_class_vars( __CLASS__ );
 
@@ -116,10 +122,10 @@ class SPCategory extends SPDBObject implements SPDataModel
 			/* @var $field SPField */
 			try {
 				if ( $field->enabled( 'form' ) ) {
-					$field->saveData( $this, $request );
+					$field->saveData( $this, $request, $clone );
 				}
 				else {
-					$field->finaliseSave( $this, $request );
+					$field->finaliseSave( $this, $request, $clone );
 				}
 			} catch ( SPException $x ) {
 				$db->rollback();

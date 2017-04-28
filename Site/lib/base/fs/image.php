@@ -45,7 +45,7 @@ class SPImage extends SPFile
 
 	public function setTransparency( $transparency )
 	{
-
+		$this->transparency = $transparency;
 	}
 
 	/**

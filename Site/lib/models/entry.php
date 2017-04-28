@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadModel( 'datamodel' );
 SPLoader::loadModel( 'dbobject' );
@@ -658,7 +660,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		/* @var SPdb $db */
 		$db = SPFactory::db();
 		$db->transaction();
-		$clone = SPRequest::task() == 'entry.clone';
+		$clone = Input::Task() == 'entry.clone';
 
 		if ( !( $this->nid ) || $clone ) {
 			$this->nid = strtolower( SPLang::nid( SPRequest::string( $this->nameField, null, false, $request ), true ) );
