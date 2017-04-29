@@ -7,10 +7,10 @@
 	<authorUrl>https://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2017 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.3.7.D</version>
+	<version>1.3.7</version>
 	<codename>Eagle</codename>
 	<description>SobiPro directory component for Joomla!</description>
-	<version_number>1.3.7.E</version_number>
+	<version_number>1.3.7</version_number>
 	<svn>$Revision$</svn>
 	<SobiPro>
 		<requirements>
