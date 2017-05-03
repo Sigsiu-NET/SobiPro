@@ -1336,7 +1336,7 @@ $ = SobiPro.jQuery;
 	{
 		if ( pickDate && pickTime ) {
 			return (
-			'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+			'<div class="SobiPro bootstrap-datetimepicker-widget dropdown-menu">' +
 			'<ul>' +
 			'<li' + (collapse ? ' class="collapse in"' : '') + '>' +
 			'<div class="datepicker">' +
@@ -1359,7 +1359,7 @@ $ = SobiPro.jQuery;
 		}
 		else if ( pickTime ) {
 			return (
-			'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+			'<div class="SobiPro bootstrap-datetimepicker-widget dropdown-menu">' +
 			'<div class="timepicker">' +
 			TPGlobal.getTemplate( is12Hours, showSeconds ) +
 			'</div>' +
@@ -1368,7 +1368,7 @@ $ = SobiPro.jQuery;
 		}
 		else {
 			return (
-			'<div class="bootstrap-datetimepicker-widget dropdown-menu">' +
+			'<div class="SobiPro bootstrap-datetimepicker-widget dropdown-menu">' +
 			'<ul>' +
 			'<div class="datepicker">' +
 			DPGlobal.template +

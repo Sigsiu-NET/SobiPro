@@ -136,7 +136,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		}
 		// Mon, Jun 29, 2015 10:52:09 - compat mode
 		if ( $cfg->get( 'template.icon_fonts_arr', -1 ) == -1 ) {
-			$cfg->set( 'icon_fonts_arr', [ 'font-awesome-local' ], 'template' );
+			$cfg->set( 'icon_fonts_arr', [ 'font-awesome-3-local' ], 'template' );
 		}
 		if ( !( is_array( $cfg->get( 'template.icon_fonts_arr', -1 ) ) ) ) {
 			$cfg->change( 'icon_fonts_arr', [ $cfg->get( 'template.icon_fonts_arr', -1 ) ], 'template' );
