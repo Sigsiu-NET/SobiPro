@@ -40,6 +40,7 @@ Legend:
 	(!) Redesign of entries & categories in SobiPro's cPanel
 
 	(#) Font Awesome 3 local does not show icons in front-end datepicker
+	(#) Solution to overcome Joomla's IcoMoon when Font Awesome 3 is loaded via CDN
 
 
 -------------------
