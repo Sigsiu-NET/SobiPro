@@ -31,6 +31,7 @@ Legend:
 	(+) Back-end layout improved and adapted to Joomla! 3.7
 	(+) Back-end Bootstrap Less files evacuated to separate package 'sobiadmin'
 	(+) Font Awesome for back-end included in sobiadmin.css; separate version for front-end available (sobifont.css)
+	(+) Indicator in back-end for primary category
 
 	(-) unused tabs script of SobiPro version 1.0 removed
 	(-) clean-up of loaded scripts in template
