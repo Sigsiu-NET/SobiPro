@@ -20,7 +20,7 @@
 		<title value="FM.EDIT_FIELD" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiFieldEdit" class="field inbox">
+	<toolbar title="var:[site_title]" icon="" class="field inbox">
         <buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
         <divider />
 		<button task="field.apply" type="apply">

@@ -19,7 +19,7 @@
 	<header>
 		<title value="AMN.APPS"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiApplicationSection" class="extensions section">
+	<toolbar title="var:[site_title]" icon="" class="extensions section">
 		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
 		<buttons type="options" dropdown-class="right">

@@ -28,7 +28,7 @@ class SpAdmToolbar
 		'apply' => 'ok',
 		'cancel' => 'ban-circle',
 		'exit' => 'ban-circle',
-		'help' => 'question-sign',
+		'help' => 'question',
 		'save' => 'share',
 		'duplicate' => 'paste',
 		'new' => 'plus-sign',
@@ -42,12 +42,12 @@ class SpAdmToolbar
 		'revoke' => 'thumbs-down-alt',
 		'entry' => 'file-text',
 		'category' => 'folder-open',
-		'panel' => 'home',
-		'config' => 'cogs',
-		'acl' => 'th-list',
-		'extensions.installed' => 'magic',
+		'panel' => '',
+		'config' => '',
+		'acl' => '',
+		'extensions.installed' => '',
 		'options' => 'eye-open',
-		'template.info' => 'picture',
+		'template.info' => '',
 		'selected' => 'check',
 		'not-selected' => 'check-empty'
 	];
@@ -114,14 +114,13 @@ class SpAdmToolbar
 		$id = isset( $options[ 'id' ] ) ? $options[ 'id' ] : 'SPAdmToolbar';
 		$this->output[ ] = '<div id="SpSpinner" class="SobiPro hide" style="position:fixed; top:50%; left:50%; font-size: 35px;"><i class="icon-spinner icon-spin icon-large"></i></div>';
 		$this->output[ ] = '<div class="breadcrumb ' . $this->class . '" id="' . $id . '">';
+		$this->output[ ] = '<div class="row-fluid">';
+//		$this->output[ ] = '<div class="spScreenTitle span5">';
+//		$this->output[ ] = '<h4><i class="icon-' . $this->icon . ' icon-large"></i> ' .  $this->title . '</h4>';
+//		$this->output[ ] = '</div>';
+		$this->output[ ] = '<div class="spIconBar span12">';
 		$this->output[ ] = '<div id="SPRightMenuHold" class="spHoldCtrl">';
 		$this->output[ ] = '</div>';
-		//$this->output[ ] = '<div class="container-fluid">';
-		$this->output[ ] = '<div class="row-fluid">';
-		$this->output[ ] = '<div class="spicon-48-' . $this->icon . ' spScreenTitle span5">';
-		$this->output[ ] = "<h4>{$this->title}</h4>";
-		$this->output[ ] = '</div>';
-		$this->output[ ] = '<div class="spIconBar span7">';
 		$this->output[ ] = '<div class="nav nav-pills pull-right">';
 		$this->output[ ] = '<div class="">';
 		foreach ( $this->buttons as $button ) {
@@ -168,7 +167,6 @@ class SpAdmToolbar
 		$this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
-		//$this->output[ ] = '</div>';
 		$this->output[ ] = '</div>';
 		return implode( "\n", $this->output );
 	}
@@ -263,7 +261,12 @@ class SpAdmToolbar
 //						$this->output[ ] = '<i class="icon-' . $this->icons[ 'selected' ] . '"></i>&nbsp;&nbsp;';
 					}
 				}
-				$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+				if ($icon) {
+					$this->output[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+				}
+				else {
+					$this->output[ ] = $label;
+				}
 				$this->output[ ] = '</a></li>';
 			}
 		}
@@ -300,7 +303,7 @@ class SpAdmToolbar
 			$icon = $this->icons[ $button[ 'type' ] ];
 		}
 		else {
-			$icon = $group ? 'list' : 'file';
+			$icon = $group ? 'list' : '';
 		}
 		return $icon;
 	}

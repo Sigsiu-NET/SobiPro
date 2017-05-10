@@ -19,7 +19,7 @@
 	<header>
 		<title value="MN.SECTION.ACL"/>
 	</header>
-	<toolbar title="MN.SECTION.ACL" icon="SobiUser" class="acl rules">
+	<toolbar title="MN.SECTION.ACL" icon="" class="acl rules">
 		<button icon="cog" label="TB.JOOMLA_ACL" type="url" url="index.php?option=com_config&amp;amp;view=component&amp;amp;component=com_sobipro"/>
 		<divider/>
 		<buttons type="actions">

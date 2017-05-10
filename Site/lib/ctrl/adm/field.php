@@ -568,7 +568,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 						'type' => null,
 						'task' => 'field.add.' . $t,
 						'label' => $l,
-						'icon' => 'tasks',
+						'icon' => '',
 						'element' => 'button'
 				];
 			}
@@ -586,7 +586,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 						'type' => null,
 						'task' => 'field.add.' . $t . '.category',
 						'label' => $l,
-						'icon' => 'tasks',
+						'icon' => '',
 						'element' => 'button'
 				];
 			}

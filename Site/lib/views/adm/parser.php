@@ -210,8 +210,9 @@ class SPTplParser
 				$this->_out[] = '</div>';
 				break;
 			case 'header':
-				$this->_out[] = '<div class="span6 spScreenSubHead spicon-48-' . $element[ 'attributes' ][ 'icon' ] . '">';
-				$this->_out[] = $element[ 'attributes' ][ 'label' ];
+				$this->_out[] = '<div class="span6 spScreenSubHead"><i class="icon-' . $element[ 'attributes' ][ 'icon' ] . ' icon-2x"></i>';
+//				$this->_out[] = '<div class="span6 spScreenSubHead spicon-48-' . $element[ 'attributes' ][ 'icon' ] . '">';
+				$this->_out[] = '<div class="title">' . $element[ 'attributes' ][ 'label' ] . '</div>';
 				$this->_out[] = '</div>';
 				break;
 			case 'url':
@@ -306,7 +307,8 @@ class SPTplParser
 				$this->_out[] = $data[ 'content' ];
 				break;
 			case 'table':
-				if ( ( $data[ 'attributes' ][ 'class' ] ) ) {
+				if (isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ]) {
+//				if ( ( $data[ 'attributes' ][ 'class' ] ) ) {
 					$data[ 'attributes' ][ 'class' ] = 'table ' . $data[ 'attributes' ][ 'class' ];
 				}
 				else {

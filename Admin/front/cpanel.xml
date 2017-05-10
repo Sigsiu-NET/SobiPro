@@ -20,9 +20,9 @@
 		<file type="script" filename="bootstrap.tabs"/>
 		<file type="script" filename="adm.front"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiPro" class="front cpanel">
+	<toolbar title="var:[site_title]" icon="" class="front cpanel">
 		<divider/>
-		<buttons type="action" label="TB.SECTION" condition="acl.config">
+		<buttons type="action" icon="sitemap" label="TB.SECTION" condition="acl.config">
 			<button type="new" task="section.add" label="AMN.ADD" icon="plus"/>
 			<button type="delete" task="section.delete" confirm="TB.JS_DELETE_SECTION_WARN"/>
 			<nav-header label="TB.PUBLISHING"/>
@@ -123,7 +123,7 @@
 					</li>
 				</ul>
 
-				<header label="SECTIONS" icon="SobiCatList">
+				<header label="SECTIONS" icon="sitemap">
 					<div class="btn-group pull-right" id="SectionFilterHead">
 						<field type="select" name="order" selected="order" class="input-large spOrdering">
 							<values>

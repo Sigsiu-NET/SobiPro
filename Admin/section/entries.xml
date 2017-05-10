@@ -20,7 +20,7 @@
 		<file type="script" filename="bootstrap.bootbox"/>
 		<file type="script" filename="adm.rejection"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiSection" class="section entries">
+	<toolbar title="var:[site_title]" icon="" class="section entries">
 		<divider/>
 		<buttons type="entry" condition="acl.entry.visible">
 			<button type="url" sid="true" task="entry.add" label="TB.ADD_NEW" icon="plus" condition="acl.entry.add"/>
@@ -61,7 +61,7 @@
 						</div>
 					</div>
 				</div>
-				<header label="CAT.ENTRIES_LIST_HEAD" icon="SobiEntries">
+				<header label="CAT.ENTRIES_LIST_HEAD" icon="file-text">
 					<div class="btn-group pull-right" id="spEntriesFilterHead">
 						<field type="text" name="sp_entries_filter" id="spEntriesFilter" value="filter" placeholder="FILTER" class="input-large spSubmit"/>
 						<field type="select" name="eorder" selected="ordering" values="entriesOrdering" class="input-large spOrdering"/>
@@ -139,7 +139,7 @@
 				</pagination>
 			</div>
 		</div>
-		<div class="spModalPopup spReject modal hide" id="reject-entry-window">
+		<div class="spModalPopup spReject narrow modal hide" id="reject-entry-window">
 			<div class="modal-header">
 				<button class="close" data-dismiss="modal">
 					<text value="CLOSE_X"/>

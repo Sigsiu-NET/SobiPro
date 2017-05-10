@@ -22,7 +22,7 @@
 		<file type="script" filename="adm.sam"/>
 		<style>.SpAddRepo { float: none; }</style>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiApplicationSection" class="extensions browse">
+	<toolbar title="var:[site_title]" icon="" class="extensions browse">
 		<button task="extensions.fetch" label="TB.FETCH_UPDATES" icon="refresh"/>
 		<divider/>
 		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>

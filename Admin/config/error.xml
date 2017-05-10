@@ -20,7 +20,7 @@
 		<title value="ERR.SITE_TITLE_DETAIL" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiEdit" class="config error">
+	<toolbar title="var:[site_title]" icon="" class="config error">
 		<button type="exit" task="error.cancel" />
 		<divider />
 		<button type="help" target="_blank" />

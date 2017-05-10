@@ -47,10 +47,9 @@ class SPAdmError extends SPAdmView
 		$errors = $this->get( 'errors' );
 		$levels = $this->get( 'levels' );
 		$icons = [
-			'error' => Sobi::Cfg( 'list_icons.err_err' ),
-			'warning' => Sobi::Cfg( 'list_icons.err_warn' ),
-			'notice' => Sobi::Cfg( 'list_icons.err_notice' ),
-			'details' => Sobi::Cfg( 'list_icons.err_details' ),
+			'error' => 'shield error',
+			'warning' => 'shield warning',
+			'notice' => 'shield notice',
 		];
 		/* create the header */
 		if( count( $errors ) ) {
@@ -69,13 +68,13 @@ class SPAdmError extends SPAdmView
 					case E_COMPILE_ERROR:
 					case E_USER_ERROR:
 					case E_RECOVERABLE_ERROR:
-						$error[ 'errNum' ] = "<img src=\"{$icons[ 'error' ]}\" alt=\"{$level}\" title=\"{$level}\"/><br/>{$level}";
+						$error[ 'errNum' ] = "<i src=\"icon-{$icons[ 'error' ]}\" title=\"{$level}\"></i><br/>{$level}";
 						break;
 					case E_WARNING:
 					case E_CORE_WARNING:
 					case E_COMPILE_WARNING:
 					case E_USER_WARNING:
-						$error[ 'errNum' ] = "<img src=\"{$icons[ 'warning' ]}\" alt=\"{$level}\" title=\"{$level}\"/><br/>{$level}";
+						$error[ 'errNum' ] = "<i class=\"icon-{$icons[ 'warning' ]}\"title=\"{$level}\"></i><br/>{$level}";
 						break;
 					case E_NOTICE:
 					case E_USER_NOTICE:
@@ -83,13 +82,12 @@ class SPAdmError extends SPAdmView
 					case E_USER_WARNING:
 					case E_DEPRECATED:
 					case E_USER_DEPRECATED:
-						$error[ 'errNum' ] = "<img src=\"{$icons[ 'notice' ]}\" alt=\"{$level}\" title=\"{$level}\"/><br/>{$level}";
+						$error[ 'errNum' ] = "<i class=\"icon-{$icons[ 'notice' ]}\" title=\"{$level}\"></i><br/>{$level}";
 						break;
 				}
 				$error[ 'errMsg' ] = str_replace( SOBI_ROOT, null, $error[ 'errMsg' ]  );
 				$error[ 'errMsg' ] = str_replace( 'href=\'function.', 'target="_blank" href=\'http://php.net/manual/en/function.', $error[ 'errMsg' ] );
 				$dh = Sobi::Url( [ 'task' => 'error.details', 'eid' => $error[ 'eid' ] ] );
-				$error[ 'details' ] = "<a href=\"{$dh}\"><img src=\"{$icons[ 'details' ]}\"/></a>";
 				$errors[ $i ] = $error;
 			}
 		}

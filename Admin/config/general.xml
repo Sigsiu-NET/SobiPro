@@ -24,7 +24,7 @@
 			#f8b1a9; }
 		</style>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiSectionCfg" class="config general">
+	<toolbar title="var:[site_title]" icon="" class="config general">
 		<button type="apply" task="config.save"/>
 		<divider/>
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES"/>

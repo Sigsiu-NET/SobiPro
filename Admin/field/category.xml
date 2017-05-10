@@ -20,7 +20,7 @@
 		<file type="script" filename="bootstrap.tabs" />
 		<file type="script" filename="adm.fields.category" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiFieldEdit" class="field category">
+	<toolbar title="var:[site_title]" icon="" class="field category">
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
 		<divider />
 		<button task="field.apply" type="apply">

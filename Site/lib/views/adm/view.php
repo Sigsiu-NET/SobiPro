@@ -204,7 +204,7 @@ class SPAdmView extends SPObject implements SPView
 							'task' => '',
 							'url' => [ 'sid' => $section[ 'id' ] ],
 							'label' => SPLang::clean( strlen( $section[ 'value' ] ) < $sectionLength ? $section[ 'value' ] : substr( $section[ 'value' ], 0, $sectionLength - 3 ) . ' ...' ),
-							'icon' => 'file',
+							'icon' => '',
 							'element' => 'button'
 					];
 				}
@@ -237,7 +237,7 @@ class SPAdmView extends SPObject implements SPView
 							'task' => '',
 							'url' => $url,
 							'label' => strlen( $language[ 'name' ] ) < $sectionLength ? $language[ 'name' ] : substr( $language[ 'name' ], 0, $sectionLength - 3 ) . ' ...',
-							'icon' => 'file',
+							'icon' => 's',
 							'element' => 'button',
 							'selected' => $language[ 'tag' ] == Sobi::Lang()
 					];
