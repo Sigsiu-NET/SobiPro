@@ -31,7 +31,7 @@ class SpAdmToolbar
 		'help' => 'question',
 		'save' => 'share',
 		'duplicate' => 'paste',
-		'new' => 'plus-sign',
+		'new' => 'plus',
 		'delete' => 'trash',
 		'actions' => 'share',
 		'enable' => 'ok',
@@ -49,7 +49,8 @@ class SpAdmToolbar
 		'options' => 'eye-open',
 		'template.info' => '',
 		'selected' => 'check',
-		'not-selected' => 'check-empty'
+		'not-selected' => 'check-empty',
+		'rule' => 'user'
 	];
 	private $labels = [
 		'apply' => 'SAVE_ONLY',
@@ -245,6 +246,9 @@ class SpAdmToolbar
 				$this->output[ ] = '<li class="nav-header">' . $button[ 'label' ] . '</li>';
 			}
 			else {
+				if ($button[ 'type' ] == 'help') {
+					$this->output[] = '<li class="divider"></li>';
+				}
 				$this->output[ ] = '<li><a href="' . $href . '"' . $target . $title . ' rel="' . $rel . '">';
 				if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 					$icon = $this->getIcon( $button );

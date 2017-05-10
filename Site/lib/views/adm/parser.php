@@ -221,6 +221,11 @@ class SPTplParser
 					$this->closeElement( $element );
 					$this->openElement( $element );
 				}
+				if ( isset( $element[ 'attributes' ][ 'icon' ] ) ) {
+					$this->_out[] = "<i class=\"icon-{$element['attributes']['icon']}\"></i>";
+					$this->closeElement( $element );
+					$this->openElement( $element );
+				}
 				$this->_out[] = $element[ 'content' ];
 				break;
 			case 'text':

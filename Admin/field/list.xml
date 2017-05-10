@@ -30,7 +30,7 @@
 		<divider/>
 		<buttons type="new" icon="plus" label="TB.FIELDNEW" buttons="categoryFieldTypes"/>
 		<divider/>
-		<buttons type="field" icon="tasks">
+		<buttons type="field" icon="tasks" label="FIELD">
 			<button type="delete" task="field.delete" confirm="TB.JS_DELETE_FIELD_WARN"/>
 			<nav-header label="TB.ENABLED"/>
 			<button type="enable" task="field.publish"/>

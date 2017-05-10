@@ -68,7 +68,7 @@ class SPAdmError extends SPAdmView
 					case E_COMPILE_ERROR:
 					case E_USER_ERROR:
 					case E_RECOVERABLE_ERROR:
-						$error[ 'errNum' ] = "<i src=\"icon-{$icons[ 'error' ]}\" title=\"{$level}\"></i><br/>{$level}";
+						$error[ 'errNum' ] = "<i class=\"icon-{$icons[ 'error' ]}\" title=\"{$level}\"></i><br/>{$level}";
 						break;
 					case E_WARNING:
 					case E_CORE_WARNING:
