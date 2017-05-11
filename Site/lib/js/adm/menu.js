@@ -30,7 +30,7 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( '#SPRightMenuHold' ).hide();
 			SobiPro.jQuery( '#SPRightMenuHold' ).html( SobiPro.jQuery( '#SPMenuCtrl' ).html() );
 			SobiPro.jQuery( '#SPMenuCtrl' ).html( '' );
-			SobiPro.jQuery( '#SPMenuCtrlBt' ).html( '<i class="icon-plus"></i> Menu' );
+			SobiPro.jQuery( '#SPMenuCtrlBt' ).html( '<i class="icon-plus"></i> ' + SobiPro.Txt( 'TB.SIDEMENU' ) );
 			SobiPro.jQuery( '#SPRightMenuHold' ).fadeIn( 'slide' );
 			SobiPro.jQuery( '#SPRightMenu' )
 				.siblings( 'div' )
