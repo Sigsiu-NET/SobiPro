@@ -51,6 +51,7 @@
 									       rows="2" style=""/>
 								</fieldset>
 								<fieldset label="FM.FIELD_TYPE">
+									<field type="output" value="type" label="FMN.FIELD_TYPE" class="badge"/>
 									<field type="output" value="field.version" label="VERSION" class="badge" />
 								</fieldset>
 

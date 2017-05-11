@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -64,7 +66,9 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 
 		$field = SPFactory::Model( 'field', true );
 		$field->extend( $f );
+
 		$groups = $this->getFieldGroup( $f->fieldType, $f->tGroup );
+		$type = $f->fType . ' ( ' . $f->tGroup . ' / ' . $f->fieldType . ' )';
 		$this->_fieldType = $f->fieldType;
 
 		/* get input filters */
@@ -90,6 +94,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			$view->addHidden( $this->_fieldType, 'field.fieldType' );
 		}
 		$view->assign( $groups, 'types' );
+		$view->assign( $type, 'type' );
 		$view->assign( $f, 'filters' );
 		$view->assign( $field, 'field' );
 		$view->assign( $this->_category, 'category-field' );
@@ -183,6 +188,43 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		return $groups;
 	}
 
+
+	protected function getPlainFieldType( $fType, $group = null )
+	{
+		if ( !( $group ) ) {
+			$group = SPFactory::db()
+				->select( 'tGroup', 'spdb_field_types', [ 'tid' => $fType ] )
+				->loadResult();
+		}
+		/* get cognate field types */
+		if ( $group != 'special' ) {
+			try {
+				$fTypes = SPFactory::db()
+					->select( '*', 'spdb_field_types', [ 'tGroup' => $group ], 'fPos' )
+					->loadObjectList();
+			} catch ( SPException $x ) {
+				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_TYPES_DB_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
+			}
+
+			if ( count( $fTypes ) ) {
+				$pre = 'FIELD.TYPE_OPTG_';
+				foreach ( $fTypes as $type ) {
+					if ($type->tid == $fType) {
+						$type = $type->fType . ' (' . $type->tGroup . ' / ' . $fType . ')';
+						break;
+					}
+				}
+			}
+		}
+		else {
+			$name = SPFactory::db()
+				->select( 'fType', 'spdb_field_types', [ 'tid' => $fType ] )
+				->loadResult();
+			$type = $name . ' ( ' . $group . ' / ' . $fType . ' )';
+		}
+		return $type;
+	}
+
 	/**
 	 * @param int $fid
 	 * @return stdClass
@@ -210,6 +252,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 	{
 		if ( $this->_fieldType ) {
 			$groups = $this->getFieldGroup( $this->_fieldType );
+			$type = $this->getPlainFieldType( $this->_fieldType );
 			$field = SPFactory::Model( 'field', true );
 			$field->loadType( $this->_fieldType );
 		}
@@ -250,6 +293,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			$view->addHidden( $this->_fieldType, 'field.fieldType' );
 		}
 		$view->assign( $groups, 'types' );
+		$view->assign( $type, 'type' );
 		$view->assign( $field, 'field' );
 		$view->assign( $this->_category, 'category-field' );
 		$view->assign( $task, 'task' );

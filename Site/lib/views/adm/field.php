@@ -31,6 +31,7 @@ class SPFieldAdmView extends SPAdmView
 	private $_templates = [];
 
 	/**
+	 * Fields Manager
 	 */
 	public function display()
 	{

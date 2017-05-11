@@ -45,6 +45,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Less folder removed; less files moved to css folder
 	(!) Redesign of entries & categories in SobiPro's cPanel
 	(!) Font Awesome 4 updated to 4.7.0
+	(!) Improved field type info in fields manager
 
 	(#) Font Awesome 3 local does not show icons in front-end datepicker
 	(#) Solution to overcome Joomla's IcoMoon when Font Awesome 3 is loaded via CDN
