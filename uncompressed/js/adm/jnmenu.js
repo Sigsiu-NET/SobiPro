@@ -22,6 +22,7 @@ SobiPro.jQuery( document ).ready( function ()
 	var modal = SobiPro.jQuery( '#SobiProModal' );
 	SobiProSelectedUrl = SobiPro.jQuery( '#jform_link' ).val();
 	SobiPro.jQuery( '#jform_link' ).css( 'min-width', '400px' );
+	modal.addClass('spModalIframe narrow');
 	modal.find( '.ctrl-save' ).click( function ( e )
 	{
 		e.preventDefault();
