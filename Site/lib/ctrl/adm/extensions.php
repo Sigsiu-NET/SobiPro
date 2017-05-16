@@ -1,10 +1,12 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
+ *
  * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -802,7 +804,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$values[ 'name' ] = 'RepositoryResponse[' . $values[ 'params' ][ 'id' ] . ']';
 			$fields[] = $values;
 		}
-		$fields[] = [ 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => [ 'id' => 'url', 'size' => 30, 'readonly' => 'readonly' ] ];
+		$fields[] = [ 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => [ 'id' => 'url', /*'size' => 30,*/ 'readonly' => 'readonly' ] ];
 		$request = [ 'fields' => $fields ];
 		$view->assign( $request, 'request' );
 		$view->determineTemplate( 'extensions', 'soap-request' );

@@ -25,13 +25,28 @@ Legend:
  (-) - Removed
  (!) - Change
 
+-------------------
+1.4 ()
+-------------------
+	(+) Back-end layout improved and adapted to Joomla! 3.7
+	(+) Back-end Bootstrap Less files evacuated to separate package 'sobiadmin'
+	(+) Font Awesome for back-end included in sobiadmin.css; separate version for front-end available (sobifont.css)
+
+	(-) unused tabs script of SobiPro version 1.0 removed
+	(-) clean-up of loaded scripts in template
+	(-) en-GB preload function removed as Joomla 3.7 is always pre-loading the English language
+
+	(!) Less folder removed; less files moved to css folder
+	(!) Redesign of entries & categories in SobiPro's cPanel
+
+	(#) Codemirror truncated in Joomla 3.7
 
 -------------------
 1.3.7 (28 April 2017)
 -------------------
 	(!) Moved Sobi Framework inclusion to the loader
 
-	(#) Wrong Ajax definition (switch to Framework) while installing application from repository (Issue #1791)
+	(#) Wrong Ajax definition (switch to Framework) while installing applications from repository (Issue #1791)
 	(#) Added exception for search results in router (Issue #1783)
 	(#) CSS cache is trying to load CSS files over URL (Issue #1745 again and #1813)
 	(#) RSS feeds use general settings (Issue #1802)
@@ -44,7 +59,7 @@ Legend:
 -------------------
 1.3.6 (4 March 2017)
 -------------------
-	(#) Installing files to template storage throws error
+	(#) Installing files to template storage doesn't work correctly
 	(#) edit.json settings won't be loaded on editing existing entries
 
 
@@ -82,7 +97,7 @@ Legend:
 	(#) Wrong URL for directly linked entries (Issue #1764)
 	(#) Dependency field cannot be saved without allowed selecting parent (Issue #1772)
 	(#) Override json file data isn't passsed to the template xml config nodes (Issue #1770)
-	(#) Selecting fields in fields manager via checkbox does not distinguish betweend entry and category fields (Issue #1765)
+	(#) Selecting fields in fields manager via checkbox does not distinguish between entry and category fields (Issue #1765)
 	(#) Several small template corrections
 	(#) Corrected Regex for email field (Issue #1777)
 	(#) Deleting temporary update list files after application has been installed

@@ -26,7 +26,7 @@
 				<message id="spMessage" />
 				<div class="row-fluid">
 					<div class="span6">
-						<div><message label="REQ.MOREINFO" type="info" class="message" /></div>
+						<div style="margin-top:5px"><message label="REQ.MOREINFO" type="info" class="message" /></div>
                         <div>
                             <message label="REQ.CHECKING_REQUIREMENTS" type="success" class="smallmessage checkstatus" />
                         </div>

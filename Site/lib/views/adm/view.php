@@ -320,7 +320,11 @@ class SPAdmView extends SPObject implements SPView
 				->attributes
 				->getNamedItem( 'icon' )
 				->nodeValue;
-		SPFactory::AdmToolbar()->setTitle( [ 'title' => $this->parseValue( $title ), 'icon' => $icon ] );
+		$class = $xml
+			->attributes
+			->getNamedItem( 'class' )
+			->nodeValue;
+		SPFactory::AdmToolbar()->setTitle( [ 'title' => $this->parseValue( $title ), 'icon' => $icon , 'class' => $class ] );
 		$buttons = [];
 		foreach ( $xml->childNodes as $node ) {
 			if ( strstr( $node->nodeName, '#' ) ) {
@@ -1101,7 +1105,7 @@ class SPAdmView extends SPObject implements SPView
 						$args[ 'id' ] = SPLang::nid( $attribute->nodeValue );
 						$element[ 'id' ] = $args[ 'id' ];
 						$params[ 'id' ] = $args[ 'id' ];
-					case 'name':
+//					case 'name':
 					case 'type':
 					case 'width':
 					case 'height':

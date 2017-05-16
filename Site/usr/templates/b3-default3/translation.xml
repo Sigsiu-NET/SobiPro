@@ -39,6 +39,10 @@
 	<term value="ENTRY_MANAGE_DELETE">
 		<value lang="en-GB"></value>
 	</term>
+	<term value="ENTRY_NO_REVIEWS_NO_ADD">
+		<value lang="en-GB">No reviews yet for %s.</value>
+		<value lang="de-DE">Noch keine Kommentare für %s abgegeben.</value>
+	</term>
 	<term value="ENTRY_REQUIRED_MESSAGE">
 		<value lang="en-GB"></value>
 	</term>

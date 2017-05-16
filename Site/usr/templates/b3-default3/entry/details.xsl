@@ -92,9 +92,20 @@
 			</div>
 			<div class="clearfix"/>
 
-			<xsl:if test="( count(/entry_details/review_form/*) or count(/entry_details/reviews/*) ) and document('')/*/xsl:include[@href='../common/review.xsl'] ">
-				<xsl:call-template name="reviewForm"/>
-				<xsl:call-template name="reviews"/>
+			<xsl:if test="document('')/*/xsl:include[@href='../common/review.xsl'] ">
+				<xsl:choose>
+					<xsl:when test="count(/entry_details/review_form/*) or (/entry_details/reviews/summary_review/overall > 0)">
+						<xsl:call-template name="reviewForm"/>
+						<xsl:call-template name="reviews"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<div class="review-first">
+							<i class="icon icon-exclamation-sign icon-large"></i>
+							<xsl:text> </xsl:text>
+							<xsl:value-of select="php:function( 'SobiPro::Txt', 'ENTRY_NO_REVIEWS_NO_ADD', string(entry/name) )"/>
+						</div>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:if>
 
 			<!-- Uncomment only if Profile Field is installed -->

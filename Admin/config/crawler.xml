@@ -20,15 +20,15 @@
 		<title value="CRAWLER.SITE_TITLE"/>
 		<file type="script" filename="adm.crawler"/>
 	</header>
-	<toolbar title="CRAWLER.SITE_TITLE" icon="SobiConfig">
+	<toolbar title="CRAWLER.SITE_TITLE" icon="SobiConfig" class="config crawler">
 		<divider/>
 		<button label="TB.START_CRAWL" task="crawler.init" icon="fighter-jet">
 			<button label="TB.RESTART_CRAWL" task="crawler.restart" icon="refresh"/>
 		</button>
 		<divider/>
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel"/>
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
@@ -52,15 +52,15 @@
 						<table>
 							<head>
 								<cell label="CRAWL_URL" type="text" class=""/>
-								<cell label="CRAWL_CODE" type="text" class="SpCellCenter"/>
-								<cell label="CRAWL_LINKS" type="text" class="SpCellCenter"/>
-								<cell label="CRAWL_TIME" type="text" class="SpCellCenter"/>
+								<cell label="CRAWL_CODE" type="text" class="spCell center"/>
+								<cell label="CRAWL_LINKS" type="text" class="spCell center"/>
+								<cell label="CRAWL_TIME" type="text" class="spCell center"/>
 							</head>
 							<tbody id="response-container">
 								<cell class="url"/>
-								<cell class="code SpCellCenter"/>
-								<cell class="links SpCellCenter"/>
-								<cell class="time SpCellCenter"/>
+								<cell class="code spCell center"/>
+								<cell class="links spCell center"/>
+								<cell class="time spCell center"/>
 							</tbody>
 						</table>
 					</div>

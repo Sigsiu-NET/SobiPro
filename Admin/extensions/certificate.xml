@@ -17,9 +17,9 @@
 
 <definition>
 	<body>
-		<div class="modal hide">
+		<div class="spModalPopup modal hide">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">
+				<button class="close" data-dismiss="modal">
 					<text value="CLOSE_X" />
 				</button>
 				<h3>
@@ -28,7 +28,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="row-fluid">
-					<div class="SpCertificate">
+					<div class="spModalForm narrow">
 						<fieldset label="EX.SSL_TO">
 							<field type="output" value="certificate.subject.CN" label="EX.SSL_COMMON_NAME" />
 							<field type="output" value="certificate.subject.O" label="EX.SSL_ORGANIZATION" />

@@ -22,12 +22,12 @@
 		<file type="script" filename="bootstrap.tabs"/>
 		<file type="language" filename="SpTpl.default3"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiTemplate">
+	<toolbar title="var:[site_title]" icon="SobiTemplate" class="templatesettings">
 		<button type="apply" task="template.saveConfig"/>
 		<divider/>
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel"/>
 			<button type="url" task="config"/>
 			<button type="url" task="acl"/>

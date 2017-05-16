@@ -24,16 +24,16 @@
 			#f8b1a9; }
 		</style>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiSectionCfg">
+	<toolbar title="var:[site_title]" icon="SobiSectionCfg" class="config general">
 		<button type="apply" task="config.save"/>
 		<divider/>
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES"/>
 		<divider/>
 		<button task="config.clean" icon="refresh" label="TB.CLEAN_CACHE"/>
 		<divider/>
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel"/>
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>

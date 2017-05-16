@@ -19,10 +19,10 @@
 	<header>
 		<title value="AMN.APPS"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiApplicationSection">
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+	<toolbar title="var:[site_title]" icon="SobiApplicationSection" class="extensions section">
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel"/>
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
@@ -42,26 +42,26 @@
 				<div class="table-responsive">
 					<table>
 						<head>
-							<cell label="EXTENSIONS.HEADER_ENABLED" type="text" class="SpCellCenter"/>
-							<cell label="EX.HEADER_NAME" type="text" class="SpCellLeft"/>
-							<cell label="EX.HEADER_TYPE" type="text" class="SpCellCenter"/>
-							<cell label="EXTENSIONS.HEADER_PID" type="text" class="SpCellCenter"/>
-							<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="SpCellCenter"/>
-							<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="SpCellCenter"/>
+							<cell label="EXTENSIONS.HEADER_ENABLED" type="text" class="spCell center"/>
+							<cell label="EX.HEADER_NAME" type="text" class="spCell left"/>
+							<cell label="EX.HEADER_TYPE" type="text" class="spCell center"/>
+							<cell label="EXTENSIONS.HEADER_PID" type="text" class="spCell center"/>
+							<cell label="EXTENSIONS.HEADER_VERSION" type="text" class="spCell center"/>
+							<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="spCell center"/>
 						</head>
 						<loop subject="applications">
-							<cell type="ticker" value="enabled" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}">
+							<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove-sign','1':'ok'}">
 								<url type="intern">
 									<param name="task" value="extensions.toggle"/>
 									<param name="eid" value="id" parse="true"/>
 									<param name="sid" value="sid" parse="true" subject="skip"/>
 								</url>
 							</cell>
-							<cell type="text" value="name" class="SpCellLeft"/>
-							<cell type="text" value="type" class="SpCellCenter"/>
-							<cell type="text" value="pid" class="SpCellCenter"/>
-							<cell type="text" value="version" class="SpCellCenter"/>
-							<cell type="text" value="author" class="SpCellCenter"/>
+							<cell type="text" value="name" class="spCell left"/>
+							<cell type="text" value="type" class="spCell center"/>
+							<cell type="text" value="pid" class="spCell center"/>
+							<cell type="text" value="version" class="spCell center"/>
+							<cell type="text" value="author" class="spCell center"/>
 						</loop>
 					</table>
 				</div>

@@ -20,7 +20,7 @@
 		<file type="script" filename="bootstrap.bootbox"/>
 		<file type="script" filename="adm.rejection"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiSection">
+	<toolbar title="var:[site_title]" icon="SobiSection" class="section entries">
 		<divider/>
 		<buttons type="entry" condition="acl.entry.visible">
 			<button type="url" sid="true" task="entry.add" label="TB.ADD_NEW" icon="plus" condition="acl.entry.add"/>
@@ -33,9 +33,9 @@
 			<button type="revoke" task="entry.unapprove" condition="acl.entry.approve"/>
 		</buttons>
 		<divider/>
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel"/>
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
@@ -80,18 +80,18 @@
 				</header>
 				<table>
 					<head>
-						<cell label="HEADER_ID" type="text" class="SpCellCenter"/>
-						<cell type="checkbox" rel="e_sid" class="SpCellCenter"/>
+						<cell label="HEADER_ID" type="text" class="spCell center"/>
+						<cell type="checkbox" rel="e_sid" class="spCell center"/>
 						<cell label="HEADER_ENTRIES_NAME" type="text"/>
-						<cells value="customHeader" class="SpCellCenter" type="text"/>
-						<cell label="HEADER_ENTRIES_STATE" condition="acl.entry.edit" type="text" class="SpCellCenter"/>
-						<cell label="HEADER_ENTRIES_APPROVAL" condition="acl.entry.approve" type="text" class="SpCellCenter"/>
-						<cell label="HEADER_FIELD_AUTHOR" type="text" class="SpCellCenter"/>
-						<cell label="HEADER_ENTRIES_REJECT" type="text" condition="acl.entry.approve" class="SpCellCenter"/>
+						<cells value="customHeader" class="spCell center" type="text"/>
+						<cell label="HEADER_ENTRIES_STATE" condition="acl.entry.edit" type="text" class="spCell center"/>
+						<cell label="HEADER_ENTRIES_APPROVAL" condition="acl.entry.approve" type="text" class="spCell center"/>
+						<cell label="HEADER_FIELD_AUTHOR" type="text" class="spCell center"/>
+						<cell label="HEADER_ENTRIES_REJECT" type="text" condition="acl.entry.approve" class="spCell center"/>
 					</head>
 					<loop subject="entries">
-						<cell type="text" value="id" class="SpCellCenter"/>
-						<cell type="checkbox" name="e_sid" value="id" class="SpCellCenter" checked-out-time="coutTime" checked-out-by="cout"/>
+						<cell type="text" value="id" class="spCell center"/>
+						<cell type="checkbox" name="e_sid" value="id" class="spCell center" checked-out-time="coutTime" checked-out-by="cout"/>
 						<cell>
 							<cell type="link" value="name" class="var:[valid] entry-name">
 								<url type="intern">
@@ -102,23 +102,23 @@
 							</cell>
 						</cell>
 						<!--<cell type="text" value="field_price"/>-->
-						<cells value="customFields" class="SpCellCenter"/>
-						<cell condition="/acl.entry.publish" type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}"
+						<cells value="customFields" class="spCell center"/>
+						<cell condition="/acl.entry.publish" type="ticker" value="state" class="spCell center" icons="{'0':'remove-sign','1':'ok'}"
 						      valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="entry.toggle.enabled"/>
 								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell condition="/acl.entry.approve" type="ticker" value="approved" class="SpCellCenter"
+						<cell condition="/acl.entry.approve" type="ticker" value="approved" class="spCell center"
 						      icons="{'0':'thumbs-down-alt','1':'thumbs-up-alt'}">
 							<url type="intern">
 								<param name="task" value="entry.toggle.approval"/>
 								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell type="text" value="owner" class="SpCellCenter"/>
-						<cell condition="/acl.entry.approve" type="ticker" value="state" class="SpCellCenter" icons="{'0':'undo','1':'undo'}">
+						<cell type="text" value="owner" class="spCell center"/>
+						<cell condition="/acl.entry.approve" type="ticker" value="state" class="spCell center" icons="{'0':'undo','1':'undo'}">
 							<url type="intern" class="btn btn-mini ctrl-entry-reject">
 								<param name="task" value="entry.edit"/>
 								<param name="sid" value="id" parse="true"/>
@@ -139,9 +139,11 @@
 				</pagination>
 			</div>
 		</div>
-		<div class="modal hide" id="reject-entry-window" style="width:700px">
+		<div class="spModalPopup spReject modal hide" id="reject-entry-window">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&amp;times;</button>
+				<button class="close" data-dismiss="modal">
+					<text value="CLOSE_X"/>
+				</button>
 				<h3>
 					<text value="ENTRY_REJECT"/>
 				</h3>

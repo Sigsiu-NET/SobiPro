@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -55,148 +57,151 @@ class SPConfigAdmView extends SPAdmView implements SPView
 	 * Enter description here...
 	 *
 	 */
-	protected function fields()
-	{
-		SPLoader::loadClass( 'html.tabs' );
-		SPFactory::header()->addCssFile( 'tabs', true );
-		$t = new SPHtml_Tabs( true, null );
-		$tabs = $this->get( 'fields' );
-		if ( count( $tabs ) ) {
-			$t->startPane( 'fields_' . $this->get( 'task' ) );
-			foreach ( $tabs as $tab => $keys ) {
-				$t->startTab( Sobi::Txt( $tab ), str_replace( ' ', '_', $tab ) );
-				echo '<table  class="admintable" style="width: 100%;">';
-				$c = 0;
-				foreach ( $keys as $key => $params ) {
-					$class = $c % 2;
-					$c++;
-					$params = explode( '|', $params );
-					$p = [];
-					/* at first we need the label */
-					$label = Sobi::Txt( array_shift( $params ) );
-					$label2 = null;
-					if ( strstr( $label, ':' ) ) {
-						$label = explode( ':', $label );
-						$label2 = $label[ 1 ];
-						$label = $label[ 0 ];
-					}
-					/* get the field type */
-					$p[ 0 ] = array_shift( $params );
+// not longer used
+//	protected function fields()
+//	{
+//		SPLoader::loadClass( 'html.tabs' );
+//		SPFactory::header()->addCssFile( 'tabs', true );
+//		$t = new SPHtml_Tabs( true, null );
+//		$tabs = $this->get( 'fields' );
+//		if ( count( $tabs ) ) {
+//			$t->startPane( 'fields_' . $this->get( 'task' ) );
+//			foreach ( $tabs as $tab => $keys ) {
+//				$t->startTab( Sobi::Txt( $tab ), str_replace( ' ', '_', $tab ) );
+//				echo '<table  class="admintable" style="width: 100%;">';
+//				$c = 0;
+//				foreach ( $keys as $key => $params ) {
+//					$class = $c % 2;
+//					$c++;
+//					$params = explode( '|', $params );
+//					$p = [];
+//					/* at first we need the label */
+//					$label = Sobi::Txt( array_shift( $params ) );
+//					$label2 = null;
+//					if ( strstr( $label, ':' ) ) {
+//						$label = explode( ':', $label );
+//						$label2 = $label[ 1 ];
+//						$label = $label[ 0 ];
+//					}
+//					/* get the field type */
+//					$p[ 0 ] = array_shift( $params );
+//
+//					if ( preg_match( '/^section.*/', $key ) ) {
+//						/* put the field name */
+//						$p[ 1 ] = $key;
+//						/* get the current value */
+//						$p[ 2 ] = $this->get( $key );
+//					}
+//					elseif ( !( strstr( $key, 'spacer' ) ) ) {
+//						/* put the field name */
+//						$p[ 1 ] = 'spcfg_' . $key;
+//						/* get the current value */
+//						$p[ 2 ] = Sobi::Cfg( $key, '' );
+//					}
+//					if ( ( strstr( $key, 'spacer' ) ) ) {
+//						if ( $key == 'spacer_pby' ) {
+//							$this->pby();
+//						}
+//						else {
+//							echo "<tr class=\"row{$class}\">";
+//							echo '<th colspan="2" class="spConfigTableHeader">';
+//							$this->txt( $label );
+//							echo '</th>';
+//							echo '</tr>';
+//						}
+//					}
+//					else {
+//						if ( strstr( $key, '_array' ) && count( $p[ 2 ] ) && $p[ 2 ] ) {
+//							$p[ 2 ] = implode( ',', $p[ 2 ] );
+//						}
+//						/* and all other parameters */
+//						if ( count( $params ) ) {
+//							foreach ( $params as $param ) {
+//								$p[ ] = $param;
+//							}
+//						}
+//						echo "<tr class=\"row{$class}\">";
+//						echo '<td class="key" style="min-width:200px;">';
+//						$this->txt( $label );
+//						echo '</td>';
+//						echo '<td>';
+//						$this->parseField( $p );
+//						if ( $label2 ) {
+//							$this->txt( $label2 );
+//						}
+//						echo '</td>';
+//						echo '</tr>';
+//					}
+//				}
+//				echo '</table>';
+//				$t->endTab();
+//			}
+//			$t->endPane();
+//		}
+//	}
 
-					if ( preg_match( '/^section.*/', $key ) ) {
-						/* put the field name */
-						$p[ 1 ] = $key;
-						/* get the current value */
-						$p[ 2 ] = $this->get( $key );
-					}
-					elseif ( !( strstr( $key, 'spacer' ) ) ) {
-						/* put the field name */
-						$p[ 1 ] = 'spcfg_' . $key;
-						/* get the current value */
-						$p[ 2 ] = Sobi::Cfg( $key, '' );
-					}
-					if ( ( strstr( $key, 'spacer' ) ) ) {
-						if ( $key == 'spacer_pby' ) {
-							$this->pby();
-						}
-						else {
-							echo "<tr class=\"row{$class}\">";
-							echo '<th colspan="2" class="spConfigTableHeader">';
-							$this->txt( $label );
-							echo '</th>';
-							echo '</tr>';
-						}
-					}
-					else {
-						if ( strstr( $key, '_array' ) && count( $p[ 2 ] ) && $p[ 2 ] ) {
-							$p[ 2 ] = implode( ',', $p[ 2 ] );
-						}
-						/* and all other parameters */
-						if ( count( $params ) ) {
-							foreach ( $params as $param ) {
-								$p[ ] = $param;
-							}
-						}
-						echo "<tr class=\"row{$class}\">";
-						echo '<td class="key" style="min-width:200px;">';
-						$this->txt( $label );
-						echo '</td>';
-						echo '<td>';
-						$this->parseField( $p );
-						if ( $label2 ) {
-							$this->txt( $label2 );
-						}
-						echo '</td>';
-						echo '</tr>';
-					}
-				}
-				echo '</table>';
-				$t->endTab();
-			}
-			$t->endPane();
-		}
-	}
+// not longer used
+//	private function parseField( $params )
+//	{
+//		if ( strstr( $params[ 0 ], 'function:' ) ) {
+//			$params[ 0 ] = str_replace( 'function:', null, $params[ 0 ] );
+//			switch ( $params[ 0 ] ) {
+//				case 'name_fields_list':
+//					$params = $this->namesFields( $params );
+//					break;
+//				case 'entries_ordering':
+//					$params = $this->namesFields( $params, true );
+//					break;
+//				case 'templates_list':
+//					$params = $this->templatesList( $params, true );
+//					break;
+//				case 'alpha_field_list':
+//					$params = $this->alphaFieldList( $params );
+//					break;
+//				case 'alpha_fields_list':
+//					$params = $this->alphaFieldList( $params, true );
+//					break;
+//			}
+//		}
+//		else {
+//			if ( $params[ 0 ] == 'select' ) {
+//				$selected = $params[ 2 ];
+//				$params[ 2 ] = $params[ 3 ];
+//				$params[ 3 ] = $selected;
+//			}
+//		}
+//		call_user_func_array( [ $this, 'field' ], $params );
+//	}
 
-	private function parseField( $params )
-	{
-		if ( strstr( $params[ 0 ], 'function:' ) ) {
-			$params[ 0 ] = str_replace( 'function:', null, $params[ 0 ] );
-			switch ( $params[ 0 ] ) {
-				case 'name_fields_list':
-					$params = $this->namesFields( $params );
-					break;
-				case 'entries_ordering':
-					$params = $this->namesFields( $params, true );
-					break;
-				case 'templates_list':
-					$params = $this->templatesList( $params, true );
-					break;
-				case 'alpha_field_list':
-					$params = $this->alphaFieldList( $params );
-					break;
-				case 'alpha_fields_list':
-					$params = $this->alphaFieldList( $params, true );
-					break;
-			}
-		}
-		else {
-			/* bei der methode is das value array, ein array mit allen moeglichen values und das was ausgewaehlt ist, ist das selected. Muss umdrehen */
-			if ( $params[ 0 ] == 'select' ) {
-				$selected = $params[ 2 ];
-				$params[ 2 ] = $params[ 3 ];
-				$params[ 3 ] = $selected;
-			}
-		}
-		call_user_func_array( [ $this, 'field' ], $params );
-	}
+// not longer used
+//	public function alphaFieldList( $params = null, $add = false )
+//	{
+//		$fields = $this->_ctrl->getNameFields( true, Sobi::Cfg( 'alphamenu.field_types' ) );
+//		if ( count( $fields ) ) {
+//			foreach ( $fields as $fid => $field ) {
+//				$fData[ $fid ] = $field->get( 'name' );
+//			}
+//		}
+//		if ( $add ) {
+//			$selected = Sobi::Cfg( 'alphamenu.extra_fields_array' );
+//			$p = [ 'select', $params[ 1 ], $fData, $selected, $add, $params[ 3 ] ];
+//		}
+//		else {
+//			$selected = Sobi::Cfg( 'alphamenu.primary_field', SPFactory::config()->nameField()->get( 'id' ) );
+//			$p = [ 'select', $params[ 1 ], $fData, $selected, $add, $params[ 3 ] ];
+//		}
+//		return $p;
+//	}
 
-	public function alphaFieldList( $params = null, $add = false )
-	{
-		$fields = $this->_ctrl->getNameFields( true, Sobi::Cfg( 'alphamenu.field_types' ) );
-		if ( count( $fields ) ) {
-			foreach ( $fields as $fid => $field ) {
-				$fData[ $fid ] = $field->get( 'name' );
-			}
-		}
-		if ( $add ) {
-			$selected = Sobi::Cfg( 'alphamenu.extra_fields_array' );
-			$p = [ 'select', $params[ 1 ], $fData, $selected, $add, $params[ 3 ] ];
-		}
-		else {
-			$selected = Sobi::Cfg( 'alphamenu.primary_field', SPFactory::config()->nameField()->get( 'id' ) );
-			$p = [ 'select', $params[ 1 ], $fData, $selected, $add, $params[ 3 ] ];
-		}
-		return $p;
-	}
-
-	private function pby()
-	{
-		echo "<tr>";
-		echo '<td colspan="2"><div style="margin-left: 150px;">';
-		echo Sobi::Txt( 'GB.CFG.PBY_EXPL', [ 'image' => Sobi::Cfg( 'img_folder_live' ) . '/donate.png' ] );
-		echo '</div></td>';
-		echo '</tr>';
-	}
+// not longer used
+//	private function pby()
+//	{
+//		echo "<tr>";
+//		echo '<td colspan="2"><div style="margin-left: 150px;">';
+//		echo Sobi::Txt( 'GB.CFG.PBY_EXPL', [ 'image' => Sobi::Cfg( 'img_folder_live' ) . '/donate.png' ] );
+//		echo '</div></td>';
+//		echo '</tr>';
+//	}
 
 	public function templatesList( $params = null )
 	{

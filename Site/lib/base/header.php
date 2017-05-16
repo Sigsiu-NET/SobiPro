@@ -78,31 +78,36 @@ final class SPHeader
 	public function & initBase( $adm = false )
 	{
 		if ( $adm ) {
-			$this->addCssFile( [ 'bootstrap.bootstrap', 'admicons', 'adm.sobipro' ] )
-					->addJsFile( [ 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface' ] );
+//			$this->addCssFile( [ 'bootstrap.bootstrap', 'admicons', 'adm.sobipro' ] )
+			$this->addCssFile( [ 'adm.sobiadmin' ] )
+				->addJsFile( [ 'sobipro', 'adm.sobipro', 'jquery', 'jqnc', 'bootstrap', 'adm.interface', 'adm.responsive-tabs' ] );
 		}
 		else {
-			$this->addCssFile( [ 'sobipro' ] )
-					->addJsFile( [ 'sobipro', 'jquery', 'jqnc' ] );
+			if ( !defined( 'SOBIPRO_ADM' ) ) {
+				$this->addCssFile( [ 'sobipro' ] );
+			}
+			$this->addJsFile( [ 'sobipro', 'jquery', 'jqnc' ] );
 			if ( Sobi::Cfg( 'template.bootstrap3-load', false ) && !defined( 'SOBIPRO_ADM' ) ) {
 				if ( Sobi::Cfg( 'template.bootstrap3-source', true ) ) { //true=local, false=CDN
 					$this->addCssFile( 'b3bootstrap.b3bootstrap' )
-							->addJsFile( 'b3bootstrap' );
+						->addJsFile( 'b3bootstrap' );
 				}
 				else {
 					$this->addHeadLink( Sobi::Cfg( 'template.bs3_css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' ), null, null, 'stylesheet' )
-							->addJsUrl( Sobi::Cfg( 'template.bs3_js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' ) );
+						->addJsUrl( Sobi::Cfg( 'template.bs3_js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js' ) );
 				}
 			}
 			else {
-				$this->addCssFile( 'bootstrap.bootstrap' )
-						->addJsFile( 'bootstrap' );
+				if ( !defined( 'SOBIPRO_ADM' ) ) {
+					$this->addCssFile( 'bootstrap.bootstrap' );
+				}
+				$this->addJsFile( 'bootstrap' );
 			}
 			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', [] );
 			if ( count( $fonts ) ) {
 				foreach ( $fonts as $font ) {
 					if ( $font == 'font-awesome-3-local' ) {
-						$this->addCssFile( 'admicons' );
+						$this->addCssFile( 'sobifont' );
 					}
 					elseif ( Sobi::Cfg( 'icon-fonts.' . $font ) ) {
 						$this->addHeadLink( Sobi::Cfg( 'icon-fonts.' . $font ), null, null, 'stylesheet' );

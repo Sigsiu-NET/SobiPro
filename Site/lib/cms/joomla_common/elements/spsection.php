@@ -123,7 +123,6 @@ if ( !( class_exists( 'JElement' ) ) ) {
 }
 
 if ( !( defined( 'SOBI_CMS' ) ) ) {
-//	define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : ( version_compare( JVERSION, '1.6.0', 'ge' ) ? 'joomla16' : 'joomla15' ) );
 	define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : 'joomla16' );
 }
 class JElementSPSection extends JElement
@@ -147,6 +146,7 @@ class JElementSPSection extends JElement
 		return $instance;
 	}
 
+	// will be called for SobiPro modules in backend
 	public function __construct()
 	{
 		static $loaded = false;
@@ -313,8 +313,8 @@ class JElementSPSection extends JElement
 		return
 				'<div class="SobiPro">' .
 				SPHtml_Input::button( 'sp_category', $this->oType == 'category' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_CATEGORY' ), $params ) .
-				'<div class="modal hide" id="spCat" style="width:500px;">
-					<div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
+				'<div class="spCategoryChooser modal hide" id="spCat">
+					<div class="modal-header"><button class="close" data-dismiss="modal">×</button>
 						<h3>' . Sobi::Txt( 'SOBI_SELECT_CATEGORY' ) . '</h3>
                 </div>
                 <div class="modal-body">
@@ -347,8 +347,8 @@ class JElementSPSection extends JElement
 					$this->oType == 'entry' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_ENTRY' ),
 					$params
 				) .
-				'<div class="modal hide" id="spEntry" style="width:500px; overflow: visible;">
-					<div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>
+				'<div class="modal hide" id="spEntry" overflow: visible;">
+					<div class="modal-header"><button class="close" data-dismiss="modal">×</button>
 						<h3>' . Sobi::Txt( 'SOBI_SELECT_ENTRY' ) . '</h3>
                 </div>
                 <div class="modal-body" style="overflow-y: visible;">

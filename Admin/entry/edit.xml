@@ -29,7 +29,7 @@
 			}
 		</style>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiEdit">
+	<toolbar title="var:[site_title]" icon="SobiEdit" class="entry edit">
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES"/>
 		<divider/>
 		<button task="entry.apply" type="apply" condition="acl.entry.edit">
@@ -137,15 +137,15 @@
 
 									<table>
 										<head>
-											<cell label="HEAD_HISTORY_DATE" type="text" class="SpCellCenter"/>
+											<cell label="HEAD_HISTORY_DATE" type="text" class="spCell center"/>
 											<cell label="HEAD_HISTORY_TYPE" type="text"/>
 											<cell label="HEAD_HISTORY_CHANGED_BY" type="text"/>
-											<cell label="HEAD_HISTORY_NOTE" type="text" class="SpCellCenter"/>
-											<cell label="HEAD_HISTORY_LOAD" type="text" class="SpCellCenter"/>
-											<cell label="HEAD_HISTORY_SITE" type="text" class="SpCellCenter"/>
+											<cell label="HEAD_HISTORY_NOTE" type="text" class="spCell center"/>
+											<cell label="HEAD_HISTORY_LOAD" type="text" class="spCell center"/>
+											<cell label="HEAD_HISTORY_SITE" type="text" class="spCell center"/>
 										</head>
 										<loop subject="history">
-											<cell class="SpCellCenter">
+											<cell class="spCell center">
 												<date value="changedAt" dateFormat="d-m-Y H:i:s"/>
 											</cell>
 											<cell type="text" value="changeAction"/>
@@ -157,7 +157,7 @@
 												</url>
 											</cell>
 											<cell type="text" value="" invert-condition="uid"/>
-											<cell class="SpCellCenter">
+											<cell class="spCell center">
 												<cell condition="status">
 													<tooltip>
 														<attribute name="content" value="reason" parse="true"/>
@@ -166,7 +166,7 @@
 													</tooltip>
 												</cell>
 											</cell>
-											<cell type="link" label="HISTORY_LOAD" sef="false" live="true" class="SpCellCenter">
+											<cell type="link" label="HISTORY_LOAD" sef="false" live="true" class="spCell center">
 												<url type="intern" class="btn btn-small" icon="refresh">
 													<param name="task" value="entry.edit"/>
 													<param name="sid" value="id" parse="true" subject="skip"/>
@@ -175,7 +175,7 @@
 													<param name="sp-language" value="language" parse="true"/>
 												</url>
 											</cell>
-											<cell type="text" value="site" class="SpCellCenter"/>
+											<cell type="text" value="site" class="spCell center"/>
 										</loop>
 									</table>
 								</div>
@@ -186,18 +186,21 @@
 			</div>
 		</div>
 		<div condition="revision-change">
-			<div class="modal hide" id="revisions-window" style="width:800px">
+			<div class="spHistory spModalPopup modal hide" id="revisions-window">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&amp;times;</button>
+					<button class="close" data-dismiss="modal">
+						<text value="CLOSE_X" />
+					</button>
 					<h3>
 						<text value="HISTORY_REVISION_COMPARE"/>
 					</h3>
 				</div>
 				<div class="modal-body">
-					<div class="row-fluid">
-					</div>
-					<div class="row-fluid ctrl-diff">
-						<div class="diff" id="revision-diff" style="overflow:scroll"></div>
+					<div class="spHistoryTable">
+						<div class="row-fluid"></div>
+						<div class="row-fluid ctrl-diff">
+							<div class="diff" id="revision-diff" style="overflow:scroll"></div>
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">

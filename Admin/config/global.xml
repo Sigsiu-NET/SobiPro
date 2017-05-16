@@ -19,12 +19,12 @@
 		<title value="GB.CFG.GLOBAL_CONFIGURATION" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiSectionCfg">
+	<toolbar title="var:[site_title]" icon="SobiSectionCfg" class="config global">
 		<button type="apply" task="config.save" />
 		<divider />
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-		<divider />
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
+		<divider/>
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" condition="acl.config" />
 			<button type="url" task="acl" condition="acl.config" />
@@ -46,7 +46,7 @@
 							<div class="span12">
 								<fieldset label="GB.CFG.LANG">
 									<field type="toggle" name="spcfg[lang.multimode]" value="lang.multimode" label="GB.CFG.MULTILANG" prefix="onoff" />
-									<field type="toggle" name="spcfg[lang.engb_preload]" value="lang.engb_preload" label="GB.CFG.ENGB_PRELOAD" prefix="yes_no" />
+									<!--<field type="toggle" name="spcfg[lang.engb_preload]" value="lang.engb_preload" label="GB.CFG.ENGB_PRELOAD" prefix="yes_no" />-->
 								</fieldset>
 								<fieldset label="GBN.CFG.HTML_INPUT">
 									<field type="textarea" name="spcfg[html.allowed_tags_array]" value="html.allowed_tags_array" label="GB.CFG.ALLOWED_TAGS" editor="false" class="input-splarge" rows="2" style="" />

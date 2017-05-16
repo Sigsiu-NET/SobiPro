@@ -1,23 +1,19 @@
 /**
- * @version: $Id$
  * @package: SobiPro Library
-
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
- * Url: http://www.Sigsiu.NET
-
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * Url: https://www.Sigsiu.NET
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
-
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
 SobiPro.jQuery( document ).ready( function ()
@@ -33,9 +29,10 @@ SobiPro.jQuery( document ).ready( function ()
 				fid = SobiPro.jQuery( this ).attr( 'rel' );
 			}
 			SobiPro.jQuery( "#filter-edit-window" )
-				.css( 'width', '600px' )
+				//.css( 'width', '600px' )
+				.addClass('spModalIframe narrow')
 				.find( '.modal-body' )
-				.html( '<iframe src="' + requestUrl + '" id="filter-edit-window-frame" style="width: 570px; height: 300px; border: none; overflow-y: hidden;"> </iframe>' );
+				.html( '<iframe src="' + requestUrl + '" id="filter-edit-window-frame"> </iframe>' );
 
 			SobiPro.jQuery( '#filter-edit-window-frame' ).load( function ()
 			{

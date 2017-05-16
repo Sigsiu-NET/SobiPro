@@ -20,7 +20,7 @@
 		<file type="script" filename="bootstrap.tabs"/>
 		<file type="script" filename="adm.front"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiPro">
+	<toolbar title="var:[site_title]" icon="SobiPro" class="front cpanel">
 		<divider/>
 		<buttons type="action" label="TB.SECTION" condition="acl.config">
 			<button type="new" task="section.add" label="AMN.ADD" icon="plus"/>
@@ -30,7 +30,7 @@
 			<button type="hide" task="section.hide"/>
 		</buttons>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>
 			<button type="url" task="extensions.installed" condition="acl.apps"/>
@@ -63,28 +63,28 @@
 					<message parse="system-state.display-errors" dismiss-button="false" icon="true" class="spStatusAlert"/>
 					<message parse="system-state.debug-level" dismiss-button="false" icon="true" class="spStatusAlert"/>
 					<message parse="system-state.debug-xml" dismiss-button="false" icon="true" class="spStatusAlert"/>
-					<div class="modal hide" id="ReportedIssues" style="width: 620px;" condition="system-state.messages.length">
+					<div class="spModalPopup modal normal hide" id="ReportedIssues" condition="system-state.messages.length">
 						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
+							<button class="close" data-dismiss="modal">
 								<text value="CLOSE_X"/>
 							</button>
-							<h4>
+							<h3>
 								<text value="CPANEL_REPORTED_ISSUES">
 									<param value="system-state.messages.length" parse="true"/>
 								</text>
-							</h4>
+							</h3>
 						</div>
 						<div class="modal-body">
 							<div class="table-responsive">
 								<table>
 									<head>
-										<cell label="CPANEL_ISSUES_TYPE" type="text" class="SpCellCenter"/>
+										<cell label="CPANEL_ISSUES_TYPE" type="text" class="spCell center"/>
 										<cell label="CPANEL_ISSUES_SECTION" type="text"/>
 										<cell label="CPANEL_ISSUES_MESSAGE" type="text"/>
 									</head>
 									<loop subject="system-state.messages">
-										<cell type="text" class="SPCellIssueMsg">
-											<cell type="text" value="type-text" class="SpCellLeft label label-var:[type]"/>
+										<cell type="text" class="spCell level">
+											<cell type="text" value="type-text" class="spCell left label label-var:[type]"/>
 										</cell>
 										<cell type="text" value="section.link"/>
 										<cell type="text" value="message"/>
@@ -138,14 +138,14 @@
 				</header>
 				<table>
 					<head>
-						<cell type="checkbox" rel="c_sid" class="SpCellCenter"/>
-						<cell label="SECTIONS.HEADER_ID" type="text" class="SpCellCenter"/>
+						<cell type="checkbox" rel="c_sid" class="spCell center"/>
+						<cell label="SECTIONS.HEADER_ID" type="text" class="spCell center"/>
 						<cell label="SECTIONS.HEADER_NAME" type="text"/>
-						<cell label="SECTION.STATE_HEAD" type="text" class="SpCellCenter"/>
+						<cell label="SECTION.STATE_HEAD" type="text" class="spCell center"/>
 					</head>
 					<loop subject="sections">
-						<cell type="checkbox" name="c_sid" value="id" class="SpCellCenter"/>
-						<cell type="text" value="id" class="SpCellCenter"/>
+						<cell type="checkbox" name="c_sid" value="id" class="spCell center"/>
+						<cell type="text" value="id" class="spCell center"/>
 						<cell>
 							<cell type="link" value="name">
 								<url type="intern">
@@ -153,7 +153,7 @@
 								</url>
 							</cell>
 						</cell>
-						<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince"
+						<cell type="ticker" value="state" class="spCell center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince"
 						      valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="section.toggle.enabled"/>
@@ -166,7 +166,7 @@
 
 
 			<div class="span6">
-				<div class="accordion" id="SobiProPanel">
+				<div class="spPanel accordion" id="SobiProPanel">
 					<div class="accordion-group">
 						<div class="accordion-heading">
 							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#collapseOne">
@@ -294,158 +294,201 @@
 						</div>
 					</div>
 				</div>
-				<div class="cpanel entries">
-					<tabs condition="show-entries">
-						<tab label="CPANEL_POPULAR_ENTRIES" condition="entries.popular.length">
-							<div class="table-responsive">
-								<table>
-									<head>
-										<cell label="ENTRY.HEADER_NAME" type="text"/>
-										<cell label="ENTRY.HEADER_COUNTER" type="text" class="SpCellCenter"/>
-										<cell label="ENTRY.HEADER_SECTION" type="text"/>
-									</head>
-									<loop subject="entries.popular">
-										<cell>
-											<cell type="link" value="name">
-												<url type="intern">
-													<param name="task" value="entry.edit" parse="false"/>
-													<param name="sid" value="id" parse="true"/>
-												</url>
-											</cell>
-										</cell>
-										<cell type="text" value="counter" class="SpCellCenter"/>
-										<cell>
-											<cell type="link" value="properties.section.name">
-												<url type="intern">
-													<param name="sid" value="properties.section.id" parse="true"/>
-												</url>
-											</cell>
-										</cell>
-									</loop>
-								</table>
-							</div>
-						</tab>
-						<tab label="CPANEL_NEW_ENTRIES" condition="entries.latest.length">
-							<div class="table-responsive">
-								<table>
-									<head>
-										<cell label="ENTRY.HEADER_NAME" type="text"/>
-										<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter"/>
-										<cell label="ENTRY.HEADER_SECTION" type="text"/>
-									</head>
-									<loop subject="entries.latest">
-										<cell>
-											<cell type="link" value="name">
-												<url type="intern">
-													<param name="task" value="entry.edit" parse="false"/>
-													<param name="sid" value="id" parse="true"/>
-												</url>
-											</cell>
-										</cell>
-										<cell type="text" value="createdTime" class="SpCellCenter"/>
-										<cell>
-											<cell type="link" value="properties.section.name">
-												<url type="intern">
-													<param name="sid" value="properties.section.id" parse="true"/>
-												</url>
-											</cell>
-										</cell>
-									</loop>
-								</table>
-							</div>
-						</tab>
-						<tab label="CPANEL_AWAITING_APPROVAL" condition="entries.unapproved.length">
-							<div class="table-responsive">
-								<table>
-									<head>
-										<cell label="ENTRY.HEADER_NAME" type="text"/>
-										<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter"/>
-										<cell label="ENTRY.HEADER_SECTION" type="text"/>
-									</head>
-									<loop subject="entries.unapproved">
-										<cell>
-											<cell type="link" value="name">
-												<url type="intern">
-													<param name="task" value="entry.edit" parse="false"/>
-													<param name="sid" value="id" parse="true"/>
-												</url>
-											</cell>
-										</cell>
-										<cell type="text" value="createdTime" class="SpCellCenter"/>
-										<cell>
-											<cell type="link" value="properties.section.name">
-												<url type="intern">
-													<param name="sid" value="properties.section.id" parse="true"/>
-												</url>
-											</cell>
-										</cell>
-									</loop>
-								</table>
-							</div>
-						</tab>
-					</tabs>
-					<tabs condition="show-categories">
-						<tab label="CPANEL_POPULAR_CATEGORIES" condition="categories.popular.length">
-							<div class="table-responsive">
-								<table>
-									<head>
-										<cell label="ENTRY.HEADER_NAME" type="text"/>
-										<cell label="ENTRY.HEADER_COUNTER" type="text" class="SpCellCenter"/>
-										<cell label="ENTRY.HEADER_SECTION" type="text"/>
-									</head>
-									<loop subject="categories.popular">
-										<cell>
-											<cell type="link" value="name">
-												<url type="intern">
-													<param name="task" value="category.edit" parse="false"/>
-													<param name="sid" value="id" parse="true"/>
-												</url>
-											</cell>
-										</cell>
-										<cell type="text" value="counter" class="SpCellCenter"/>
-										<cell>
-											<cell type="link" value="properties.section.name">
-												<url type="intern">
-													<param name="sid" value="properties.section.id" parse="true"/>
-												</url>
-											</cell>
-										</cell>
-									</loop>
-								</table>
-							</div>
-						</tab>
-						<tab label="CPANEL_NEW_CATEGORIES" condition="categories.latest.length">
-							<div class="table-responsive">
-								<table>
-									<head>
-										<cell label="ENTRY.HEADER_NAME" type="text"/>
-										<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="SpCellCenter"/>
-										<cell label="ENTRY.HEADER_SECTION" type="text"/>
-									</head>
-									<loop subject="categories.latest">
-										<cell>
-											<cell type="link" value="name">
-												<url type="intern">
-													<param name="task" value="categories.edit" parse="false"/>
-													<param name="sid" value="id" parse="true"/>
-												</url>
-											</cell>
-										</cell>
-										<cell type="text" value="createdTime" class="SpCellCenter"/>
-										<cell>
-											<cell type="link" value="properties.section.name">
-												<url type="intern">
-													<param name="sid" value="properties.section.id" parse="true"/>
-												</url>
-											</cell>
-										</cell>
-									</loop>
-								</table>
-							</div>
-						</tab>
-					</tabs>
-				</div>
 
+				<div class="spPanelPreview accordion" id="PreviewPanel">
+					<div class="accordion-group" condition="show-entries">
+						<div class="accordion-heading" condition="entries.popular.length">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#PreviewPanel" href="#popularentries">
+								<text value="CPANEL_POPULAR_ENTRIES"/>
+							</a>
+						</div>
+						<div id="popularentries" class="accordion-body collapse in" condition="entries.popular.length">
+							<div class="accordion-inner">
+								<div class="table-responsive">
+									<table class="table-condensed table-hover">
+										<head>
+											<cell label="ENTRY.HEADER_NAME" type="text"/>
+											<cell label="ENTRY.HEADER_COUNTER" type="text" class="spCell center"/>
+											<cell label="ENTRY.HEADER_SECTION" type="text"/>
+										</head>
+										<loop subject="entries.popular">
+											<cell>
+												<cell type="link" value="name">
+													<url type="intern">
+														<param name="task" value="entry.edit" parse="false"/>
+														<param name="sid" value="id" parse="true"/>
+													</url>
+												</cell>
+											</cell>
+											<cell type="text" value="counter" class="spCell center"/>
+											<cell>
+												<cell type="link" value="properties.section.name">
+													<url type="intern">
+														<param name="sid" value="properties.section.id" parse="true"/>
+													</url>
+												</cell>
+											</cell>
+										</loop>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group" condition="show-entries">
+						<div class="accordion-heading" condition="entries.latest.length">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#PreviewPanel" href="#newentries">
+								<text value="CPANEL_NEW_ENTRIES"/>
+							</a>
+						</div>
+						<div id="newentries" class="accordion-body collapse" condition="entries.latest.length">
+							<div class="accordion-inner">
+								<div class="table-responsive">
+									<table class="table-condensed table-hover">
+										<head>
+											<cell label="ENTRY.HEADER_NAME" type="text"/>
+											<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="spCell center"/>
+											<cell label="ENTRY.HEADER_SECTION" type="text"/>
+										</head>
+										<loop subject="entries.latest">
+											<cell>
+												<cell type="link" value="name">
+													<url type="intern">
+														<param name="task" value="entry.edit" parse="false"/>
+														<param name="sid" value="id" parse="true"/>
+													</url>
+												</cell>
+											</cell>
+											<cell type="text" value="createdTime" dateFormat="j F Y H:i:s" class="spCell center"/>
+											<cell>
+												<cell type="link" value="properties.section.name">
+													<url type="intern">
+														<param name="sid" value="properties.section.id" parse="true"/>
+													</url>
+												</cell>
+											</cell>
+										</loop>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group" condition="show-entries">
+						<div class="accordion-heading" condition="entries.unapproved.length">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#PreviewPanel" href="#unapprovedentries">
+								<text value="CPANEL_AWAITING_APPROVAL"/>
+							</a>
+						</div>
+						<div id="unapprovedentries" class="accordion-body collapse" condition="entries.unapproved.length">
+							<div class="accordion-inner">
+								<div class="table-responsive">
+									<table class="table-condensed table-hover">
+										<head>
+											<cell label="ENTRY.HEADER_NAME" type="text"/>
+											<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="spCell center"/>
+											<cell label="ENTRY.HEADER_SECTION" type="text"/>
+										</head>
+										<loop subject="entries.unapproved">
+											<cell>
+												<cell type="link" value="name">
+													<url type="intern">
+														<param name="task" value="entry.edit" parse="false"/>
+														<param name="sid" value="id" parse="true"/>
+													</url>
+												</cell>
+											</cell>
+											<cell type="text" value="createdTime" class="spCell center"/>
+											<cell>
+												<cell type="link" value="properties.section.name">
+													<url type="intern">
+														<param name="sid" value="properties.section.id" parse="true"/>
+													</url>
+												</cell>
+											</cell>
+										</loop>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" condition="show-categories">
+						<div class="accordion-heading" condition="categories.popular.length">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#PreviewPanel" href="#popularcategories">
+								<text value="CPANEL_POPULAR_CATEGORIES"/>
+							</a>
+						</div>
+						<div id="popularcategories" class="accordion-body collapse" condition="categories.popular.length">
+							<div class="accordion-inner">
+								<div class="table-responsive">
+									<table class="table-condensed table-hover">
+										<head>
+											<cell label="ENTRY.HEADER_NAME" type="text"/>
+											<cell label="ENTRY.HEADER_COUNTER" type="text" class="spCell center"/>
+											<cell label="ENTRY.HEADER_SECTION" type="text"/>
+										</head>
+										<loop subject="categories.popular">
+											<cell>
+												<cell type="link" value="name">
+													<url type="intern">
+														<param name="task" value="category.edit" parse="false"/>
+														<param name="sid" value="id" parse="true"/>
+													</url>
+												</cell>
+											</cell>
+											<cell type="text" value="counter" class="spCell center"/>
+											<cell>
+												<cell type="link" value="properties.section.name">
+													<url type="intern">
+														<param name="sid" value="properties.section.id" parse="true"/>
+													</url>
+												</cell>
+											</cell>
+										</loop>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-group" condition="show-categories">
+						<div class="accordion-heading" condition="categories.latest.length">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#PreviewPanel" href="#newcategories">
+								<text value="CPANEL_NEW_CATEGORIES"/>
+							</a>
+						</div>
+						<div id="newcategories" class="accordion-body collapse" condition="categories.latest.length">
+							<div class="accordion-inner">
+								<div class="table-responsive">
+									<table class="table-condensed table-hover">
+										<head>
+											<cell label="ENTRY.HEADER_NAME" type="text"/>
+											<cell label="ENTRY.HEADER_CREATED_AT" type="text" class="spCell center"/>
+											<cell label="ENTRY.HEADER_SECTION" type="text"/>
+										</head>
+										<loop subject="categories.latest">
+											<cell>
+												<cell type="link" value="name">
+													<url type="intern">
+														<param name="task" value="categories.edit" parse="false"/>
+														<param name="sid" value="id" parse="true"/>
+													</url>
+												</cell>
+											</cell>
+											<cell type="text" value="createdTime" dateFormat="j F Y H:i:s" class="spCell center"/>
+											<cell>
+												<cell type="link" value="properties.section.name">
+													<url type="intern">
+														<param name="sid" value="properties.section.id" parse="true"/>
+													</url>
+												</cell>
+											</cell>
+										</loop>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>

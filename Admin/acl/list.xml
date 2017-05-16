@@ -19,7 +19,7 @@
 	<header>
 		<title value="MN.ACL"/>
 	</header>
-	<toolbar title="MN.ACL" icon="SobiUser">
+	<toolbar title="MN.ACL" icon="SobiUser" class="acl list">
 		<button icon="cog" label="TB.JOOMLA_ACL" type="url" url="index.php?option=com_config&amp;amp;view=component&amp;amp;component=com_sobipro"/>
 		<divider/>
 		<buttons type="actions">
@@ -30,9 +30,9 @@
 			<button type="disable" task="acl.disable"/>
 		</buttons>
 		<divider/>
-		<buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS"/>
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
 		<divider/>
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel"/>
 			<button type="url" task="config"/>
 			<button type="url" task="extensions.installed"/>
@@ -50,20 +50,20 @@
 				<div class="table-responsive">
 					<table condition="rules.length">
 						<head>
-							<cell label="ACL.STATE_HEAD" type="text" class="SpCellCenter SpSmallCol"/>
-							<cell type="checkbox" rel="rid" class="SpCellCenter SpSmallCol"/>
-							<cell label="ACL.HEADER_NAME" type="text" class="SpCellLeft"/>
+							<cell label="ACL.STATE_HEAD" type="text" class="spCell center extrasmall"/>
+							<cell type="checkbox" rel="rid" class="spCell center extrasmall"/>
+							<cell label="ACL.HEADER_NAME" type="text" class="spCell left"/>
 						</head>
 						<loop subject="rules">
-							<cell type="ticker" value="state" class="SpCellCenter" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince"
+							<cell type="ticker" value="state" class="spCell center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince"
 							      valid-until="validUntil">
 								<url type="intern">
 									<param name="task" value="acl.toggle.enabled"/>
 									<param name="rid" value="rid" parse="true"/>
 								</url>
 							</cell>
-							<cell type="checkbox" name="rid" value="rid" class="SpCellCenter"/>
-							<cell class="SpCellLeft">
+							<cell type="checkbox" name="rid" value="rid" class="spCell center"/>
+							<cell class="spCell left">
 								<cell type="link" value="name">
 									<url type="intern">
 										<param name="task" value="acl.edit"/>

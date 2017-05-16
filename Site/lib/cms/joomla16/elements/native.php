@@ -142,7 +142,7 @@ class JFormFieldNative extends JFormField
 				'		<i class="icon-expand"></i>&nbsp;<span id="SobiProSelectedFunction">' . $label . '</span>' .
 				'	</div>' .
 				'   <div class="modal hide" id="SobiProModal" >' .
-				'       <div class="modal-header"><button type="button" class="close" data-dismiss="modal">×</button>' .
+				'       <div class="modal-header"><button class="close" data-dismiss="modal">×</button>' .
 				'           <h3>' . Sobi::Txt( 'SOBI_SELECT_FUNCTIONALITY' ) . '</h3>' .
 				'       </div>' .
 				'       <div class="modal-body">' .

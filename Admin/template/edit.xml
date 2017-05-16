@@ -20,16 +20,16 @@
 		<title value="TP.EDIT_SITE_TITLE" />
 		<file type="script" filename="adm.template" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiTemplate">
+	<toolbar title="var:[site_title]" icon="SobiTemplate" class="template edit">
 		<button type="apply" task="template.save">
 			<button type="duplicate" task="template.saveAs" />
 			<button type="compile" task="template.compile" condition="file_ext=less" />
 			<button type="compileSave" task="template.compileSave" condition="file_ext=less" />
 		</button>
 		<divider />
-        <buttons icon="sitemap" buttons="sections-list" label="TB.SECTIONS" />
-        <divider />
-		<buttons type="options" dropdown-class="pull-right">
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
+		<divider/>
+		<buttons type="options" dropdown-class="right">
 			<button type="url" task="panel" />
 			<button type="url" task="config" condition="acl.config"/>
 			<button type="url" task="acl" condition="acl.config"/>

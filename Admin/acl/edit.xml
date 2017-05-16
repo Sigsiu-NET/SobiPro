@@ -28,7 +28,7 @@
 		<title value="{'acl.add':'ACL_FORM_SITE_TITLE_ADD','acl.edit':'ACL_FORM_SITE_TITLE_EDIT'}" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiEdit">
+	<toolbar title="var:[site_title]" icon="SobiEdit" class="acl edit">
 		<button task="acl.apply" type="apply">
 			<button type="save" task="acl.save" />
 		</button>

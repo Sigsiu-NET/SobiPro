@@ -244,7 +244,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$selector .= '<div class="selected span6">';
 			$treeclass = 'SigsiuTree';
 			if ( defined( 'SOBIPRO_ADM' ) ) {
-				$treeclass = 'SigsiuTree AdminEntry';
+				$treeclass .= ' spAdminEntry';
 			}
 		}
 		if ( $this->height > 100 ) {
@@ -255,10 +255,10 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$selector .= '</div></div>';
 
 		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
-			$selector .= '<div class="row"><div class="buttons col-sm-12">';
+			$selector .= '<div class="row"><div class="spCatSelectBtns buttons col-sm-12">';
 		}
 		else {
-			$selector .= '<div class="row-fluid"><div class="buttons span12">';
+			$selector .= '<div class="row-fluid"><div class="spCatSelectBtns buttons span12">';
 		}
 		$selector .= SPHtml_Input::button( 'addCategory', '<i class="icon-plus" ></i>' . Sobi::Txt( 'CC.ADD_BT' ), $addBtParams );
 		$selector .= SPHtml_Input::button( 'removeCategory', '<i class="icon-minus-sign" ></i>' . Sobi::Txt( 'CC.DEL_BT' ), $delBtParams );
