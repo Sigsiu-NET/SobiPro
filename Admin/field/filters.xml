@@ -20,7 +20,7 @@
 		<title value="FLR.SITE_TITLE"/>
 		<file type="script" filename="adm.filters"/>
 	</header>
-	<toolbar title="FLR.SITE_TITLE" icon="SobiFields" class="field filters">
+	<toolbar title="FLR.SITE_TITLE" icon="" class="field filters">
 		<button type="new" class="filter-edit"/>
 		<divider/>
 		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>

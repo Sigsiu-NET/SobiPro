@@ -217,7 +217,7 @@
 						<cell type="text" value="id" class="spCell center"/>
 						<cell type="checkbox" name="e_sid" value="id" class="spCell center"/>
 						<cell class="spCell left">
-							<cell type="link" value="name" class="var:[valid]">
+							<cell type="link" value="name" class="var:[valid] var:[primary]">
 								<url type="intern">
 									<param name="task" value="entry.edit"/>
 									<param name="sid" value="id" parse="true"/>

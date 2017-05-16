@@ -19,7 +19,7 @@
 		<title value="GB.CFG.GLOBAL_CONFIGURATION" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiSectionCfg" class="config global">
+	<toolbar title="var:[site_title]" icon="" class="config global">
 		<button type="apply" task="config.save" />
 		<divider />
 		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>

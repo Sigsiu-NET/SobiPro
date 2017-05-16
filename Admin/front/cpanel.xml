@@ -20,9 +20,9 @@
 		<file type="script" filename="bootstrap.tabs"/>
 		<file type="script" filename="adm.front"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiPro" class="front cpanel">
+	<toolbar title="var:[site_title]" icon="" class="front cpanel">
 		<divider/>
-		<buttons type="action" label="TB.SECTION" condition="acl.config">
+		<buttons type="action" icon="sitemap" label="TB.SECTION" condition="acl.config">
 			<button type="new" task="section.add" label="AMN.ADD" icon="plus"/>
 			<button type="delete" task="section.delete" confirm="TB.JS_DELETE_SECTION_WARN"/>
 			<nav-header label="TB.PUBLISHING"/>
@@ -102,28 +102,28 @@
 
 				<ul class="cpanel thumbnails">
 					<li class="spBox" condition="acl.config">
-						<url type="intern" label="CPANEL.GCONF" image="../media/sobipro/adm/folder-configuration.png">
+						<url type="intern" label="CPANEL.GCONF" icon="cogs icon-4x">
 							<param name="task" value="config"/>
 						</url>
 					</li>
 					<li class="spBox" condition="acl.config">
-						<url type="intern" label="CPANEL.ACL" image="../media/sobipro/adm/sobipro-acl-edit.png">
+						<url type="intern" label="CPANEL.ACL" icon="user icon-4x">
 							<param name="task" value="acl"/>
 						</url>
 					</li>
 					<li class="spBox" condition="acl.apps">
-						<url type="intern" label="CPANEL.SAM" image="../media/sobipro/adm/folder-application.png">
+						<url type="intern" label="CPANEL.SAM" icon="puzzle-piece icon-4x">
 							<param name="task" value="extensions.installed"/>
 						</url>
 					</li>
 					<li class="spBox" condition="acl.apps">
-						<url type="intern" label="CPANEL.TMPL" image="../media/sobipro/adm/folder-templates.png">
+						<url type="intern" label="CPANEL.TMPL" icon="picture icon-4x">
 							<param name="task" value="template.info"/>
 						</url>
 					</li>
 				</ul>
 
-				<header label="SECTIONS" icon="SobiCatList">
+				<header label="SECTIONS" icon="sitemap">
 					<div class="btn-group pull-right" id="SectionFilterHead">
 						<field type="select" name="order" selected="order" class="input-large spOrdering">
 							<values>

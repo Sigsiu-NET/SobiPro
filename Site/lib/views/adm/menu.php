@@ -75,7 +75,7 @@ final class SPAdmSiteMenu
 		$this->_view[ ] = "\n <!-- SobiPro - admin menu start -->";
 		$this->_view[ ] = "\n<div id=\"SPaccordionTabs\" class=\"spMenuContainer\">";
 		$this->_view[ ] = '<div id="SPMenuCtrl" class="spMenuCtrl">';
-		$this->_view[ ] = ' <button class="spMenuCtrlBtn btn btn-mini btn-sobipro" id="SPMenuCtrlBt" type="button"><i class="icon-minus"></i></button>';
+		$this->_view[ ] = ' <button class="spMenuCtrlBtn btn" id="SPMenuCtrlBt" type="button"><i class="icon-minus"></i></button>';
 		$this->_view[ ] = '</div>';
 		$media = Sobi::Cfg( 'img_folder_live' );
 		$name = 'SobiPro';

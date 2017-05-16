@@ -29,7 +29,7 @@
 			}
 		</style>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiEdit" class="entry edit">
+	<toolbar title="var:[site_title]" icon="" class="entry edit">
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES"/>
 		<divider/>
 		<button task="entry.apply" type="apply" condition="acl.entry.edit">

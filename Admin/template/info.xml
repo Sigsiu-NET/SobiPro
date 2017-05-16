@@ -20,7 +20,7 @@
 		<file type="script" filename="bootstrap.tabs"/>
 		<file type="script" filename="adm.template"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiTemplate" class="template info">
+	<toolbar title="var:[site_title]" icon="" class="template info">
 		<button type="duplicate" task="template.clone" label="TB.CLONE"/>
 		<divider/>
 		<button type="delete" task="template.delete" confirm="TB.JS_DELETE_TEMPLATE_WARN"/>

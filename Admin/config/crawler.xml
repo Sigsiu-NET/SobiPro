@@ -20,7 +20,7 @@
 		<title value="CRAWLER.SITE_TITLE"/>
 		<file type="script" filename="adm.crawler"/>
 	</header>
-	<toolbar title="CRAWLER.SITE_TITLE" icon="SobiConfig" class="config crawler">
+	<toolbar title="CRAWLER.SITE_TITLE" icon="" class="config crawler">
 		<divider/>
 		<button label="TB.START_CRAWL" task="crawler.init" icon="fighter-jet">
 			<button label="TB.RESTART_CRAWL" task="crawler.restart" icon="refresh"/>

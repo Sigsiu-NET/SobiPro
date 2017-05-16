@@ -20,7 +20,7 @@
 		<title value="FM.EDIT_FIELD"/>
 		<file type="script" filename="bootstrap.tabs"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiFieldEdit" class="field info">
+	<toolbar title="var:[site_title]" icon="" class="field info">
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES"/>
 		<divider/>
 		<button task="field.apply" type="apply">
@@ -51,6 +51,7 @@
 									       rows="2" style=""/>
 								</fieldset>
 								<fieldset label="FM.FIELD_TYPE">
+									<field type="output" value="type" label="FMN.FIELD_TYPE" class="badge"/>
 									<field type="output" value="field.version" label="VERSION" class="badge" />
 								</fieldset>
 

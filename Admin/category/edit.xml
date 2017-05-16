@@ -20,7 +20,7 @@
 		<file type="script" filename="adm.category" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiEdit" class="category edit">
+	<toolbar title="var:[site_title]" icon="" class="category edit">
 		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
 		<divider />
 		<button task="category.apply" type="apply" condition="acl.category.edit">
@@ -181,7 +181,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="spIconSelect spModalPopup modal hide" id="spIco">
+				<div class="spIconSelect spModalPopup modal normal hide" id="spIco">
 					<div class="modal-header">
 						<button class="close" data-dismiss="modal">
 							<text value="CLOSE_X" />

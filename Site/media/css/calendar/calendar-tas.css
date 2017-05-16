@@ -3,15 +3,14 @@ div.calendar {
 	position: relative;
 }
 
-.calendar,.calendar table {
+.calendar, .calendar table {
 	border: 1px solid #655;
 	font-size: 11px;
 	color: #000;
 	cursor: default;
 	background: #ffd;
 	font-family: tahoma, verdana, sans-serif;
-	filter: progid : DXImageTransform.Microsoft.Gradient ( GradientType = 0,
-		StartColorStr = #DDDCCC, EndColorStr = #FFFFFF );
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#dddccc, EndColorStr=#ffffff );
 }
 
 /* Header part -- contains navigation buttons and day names. */
@@ -31,16 +30,16 @@ div.calendar {
 	background: #654;
 	color: #363636;
 	padding: 2px;
-	filter: progid : DXImageTransform.Microsoft.Gradient ( GradientType = 0,
-		StartColorStr = #ffffff, EndColorStr = #dddccc );
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,
+			StartColorStr=#ffffff, EndColorStr=#dddccc );
 }
 
 .calendar thead .headrow { /* Row <TR> containing navigation buttons */
 	/*background: #3B86A0;*/
 	color: #363636;
 	font-weight: bold;
-	filter: progid : DXImageTransform.Microsoft.Gradient ( GradientType = 0,
-		StartColorStr = #ffffff, EndColorStr = #3b86a0 );
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,
+			StartColorStr=#ffffff, EndColorStr=#3b86a0 );
 }
 
 .calendar thead .name { /* Cells <TD> containing the day names */
@@ -48,8 +47,8 @@ div.calendar {
 	padding: 2px;
 	text-align: center;
 	color: #363636;
-	filter: progid : DXImageTransform.Microsoft.Gradient ( GradientType = 0,
-		StartColorStr = #DDDCCC, EndColorStr = #FFFFFF );
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,
+			StartColorStr=#dddccc, EndColorStr=#ffffff );
 }
 
 .calendar thead .weekend { /* How a weekend day name shows in header */
@@ -155,8 +154,7 @@ div.calendar {
 	background: #dcb;
 	color: #363636;
 	font-weight: bold;
-	filter: progid : DXImageTransform.Microsoft.Gradient ( GradientType = 0,
-		StartColorStr = #FFFFFF, EndColorStr = #DDDCCC );
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0,StartColorStr=#ffffff,EndColorStr=#dddccc);
 }
 
 .calendar tfoot .hilite { /* Hover style for buttons in footer */
@@ -186,7 +184,7 @@ div.calendar {
 	z-index: 100;
 }
 
-.combo .label,.combo .label-IEfix {
+.combo .label, .combo .label-IEfix {
 	text-align: center;
 	padding: 1px;
 }
@@ -213,8 +211,7 @@ div.calendar {
 	background-color: #fed;
 }
 
-.calendar td.time .hour,.calendar td.time .minute,.calendar td.time .ampm
-	{
+.calendar td.time .hour, .calendar td.time .minute, .calendar td.time .ampm {
 	padding: 0px 3px 0px 4px;
 	border: 1px solid #988;
 	font-weight: bold;

@@ -17,17 +17,25 @@
  */
 
 iframe, svg { max-width: inherit; }
-.modal-backdrop {
-  background-color: #993333;
-}
+
+.modal-backdrop { background-color: #993333; }
+
 .SobiPro .input-splarge { width: 400px; }
+
 .SobiPro .hide { display: none; }
+
 .SobiPro div#sobiProFooter,
 .SobiPro div#sobiProFooter a {
-  color: #999999;
-  font-size: 9px;
-  padding-top: 10px;
-  text-decoration: none;
+	color: #999999;
+	font-size: 9px;
+	padding-top: 10px;
+	text-decoration: none;
+}
+
+/* to overcome Joomla's IcoMoon when Font Awesome 3 is loaded via CDN */
+[class^="icon-"]::before,
+[class*=" icon-"]::before {
+	font-family: 'FontAwesome';
 }
 
 @media (min-width: 481px) and (max-width: 979px) {
@@ -35,7 +43,9 @@ iframe, svg { max-width: inherit; }
 		width: calc(100% - 10px);
 		margin-right: 10px;
 	}
-}@media (max-width: 767px) {
+}
+
+@media (max-width: 767px) {
 	.input-splarge {
 		display: block;
 		width: 100%;

@@ -17,6 +17,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadView( 'view', true );
 
@@ -230,6 +232,7 @@ class SPSectionAdmView extends SPAdmView
 				$fields = $sentry->getFields();
 				$entry[ 'fields' ] = $fields;
 				$entry[ 'valid' ] = $sentry->get( 'valid' ) ? 'valid' : 'invalid';
+				$entry['primary'] = $sentry->getPrimary()['pid'] == Input::Sid() ? 'primary' : '';
 				$entry[ 'object' ] =& $sentry;
 				$entry[ 'name' ] = $sentry->get( 'name' );
 				/* fields data init */

@@ -20,7 +20,7 @@
 		<title value="EX.INSTALLED"/>
 		<file type="script" filename="adm.sam"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiApplicationSection" class="extensions install">
+	<toolbar title="var:[site_title]" icon="" class="extensions install">
 		<button label="TB.REMOVE" task="extensions.delete" icon="trash" confirm="TB.JS_DELETE_EXT"/>
 		<divider/>
 		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>

@@ -25,12 +25,12 @@
 			} );
 		</script>
 	</header>
-	<toolbar title="FM.SITE_TITLE" icon="SobiFields" class="field">
+	<toolbar title="FM.SITE_TITLE" icon="" class="field">
 		<buttons type="new" icon="plus" label="TB.FIELDNEW" buttons="fieldTypes"/>
 		<divider/>
 		<buttons type="new" icon="plus" label="TB.FIELDNEW" buttons="categoryFieldTypes"/>
 		<divider/>
-		<buttons type="field" icon="tasks">
+		<buttons type="field" icon="tasks" label="FIELD">
 			<button type="delete" task="field.delete" confirm="TB.JS_DELETE_FIELD_WARN"/>
 			<nav-header label="TB.ENABLED"/>
 			<button type="enable" task="field.publish"/>
@@ -55,7 +55,7 @@
 			</div>
 			<div class="span9 spMainArea">
 				<message id="spMessage"/>
-				<header label="FM.FIELDS_FOR" icon="SobiFieldList">
+				<header label="FM.FIELDS_FOR" icon="tasks">
 					<div class="btn-group pull-right">
 						<field type="select" name="forder" selected="ordering" class="input-large spOrdering">
 							<values>

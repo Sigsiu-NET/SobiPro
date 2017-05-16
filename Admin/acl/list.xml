@@ -19,10 +19,10 @@
 	<header>
 		<title value="MN.ACL"/>
 	</header>
-	<toolbar title="MN.ACL" icon="SobiUser" class="acl list">
+	<toolbar title="MN.ACL" icon="" class="acl list">
 		<button icon="cog" label="TB.JOOMLA_ACL" type="url" url="index.php?option=com_config&amp;amp;view=component&amp;amp;component=com_sobipro"/>
 		<divider/>
-		<buttons type="actions">
+		<buttons type="rule">
 			<button type="new" task="acl.add"/>
 			<button type="delete" task="acl.delete" confirm="ACL.JS_MSG_DELETE_ACL_RULE"/>
 			<nav-header label="TB.PUBLISHING"/>

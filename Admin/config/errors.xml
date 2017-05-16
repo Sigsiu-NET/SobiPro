@@ -19,7 +19,7 @@
 	<header>
 		<title value="ERR.SITE_TITLE"/>
 	</header>
-	<toolbar title="ERR.SITE_TITLE" icon="SobiConfig" class="config errors">
+	<toolbar title="ERR.SITE_TITLE" icon="" class="config errors">
 		<divider/>
 		<buttons type="actions">
 			<button label="TB.PURGE" task="error.purge" icon="trash"/>
@@ -44,9 +44,9 @@
 			</div>
 			<div class="span9 spMainArea">
 				<message id="spMessage"/>
-				<!--<header label="ERR.SITE_TITLE" icon="SobiFieldList" />-->
+				<!--<header label="ERR.SITE_TITLE" icon="tasks" />-->
 				<div class="table-responsive">
-					<table condition="errors.length">
+					<table condition="errors.length" class="spErrorList">
 						<head>
 							<cell label="ERR.ERROR_INFO" type="text" class="spCell center"/>
 							<cell/>

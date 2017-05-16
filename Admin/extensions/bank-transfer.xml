@@ -20,7 +20,7 @@
 		<title value="APP.BANK_TRANSFER_NAME" />
 		<file type="script" filename="bootstrap.tabs" />
 	</header>
-	<toolbar title="var:[site_title]" icon="SobiApplicationSection" class="extensions bank-transfer">
+	<toolbar title="var:[site_title]" icon="" class="extensions bank-transfer">
 		<button type="apply" task="bank_transfer.save" />
 		<divider />
 		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
