@@ -210,7 +210,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 				$pre = 'FIELD.TYPE_OPTG_';
 				foreach ( $fTypes as $type ) {
 					if ($type->tid == $fType) {
-						$type = $type->fType . ' (' . $type->tGroup . ' / ' . $fType . ')';
+						$type = $type->fType . ' ( ' . $type->tGroup . ' / ' . $fType . ' )';
 						break;
 					}
 				}
