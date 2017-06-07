@@ -28,7 +28,7 @@
 		<xsl:call-template name="font"/>
 
 		<!-- Show the Directory name and description -->
-		<div class="pageheader lead">
+		<div class="page-header lead">
 			<xsl:value-of select="section"/>
 			<xsl:if test="string-length($title) > 0">
 				<xsl:text> - </xsl:text><xsl:value-of select="$title"/>

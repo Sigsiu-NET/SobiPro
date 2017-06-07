@@ -49,6 +49,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 
 	(#) Font Awesome 3 local does not show icons in front-end datepicker
 	(#) Solution to overcome Joomla's IcoMoon when Font Awesome 3 is loaded via CDN
+	(#) Typo in page-header CSS class
 
 
 ### 1.3.7 (28 April 2017)
