@@ -50,7 +50,7 @@
 					<ul class="nav nav-tabs">
 						<loop subject="groups" table="false">
 							<li class="active">
-								<cell type="link" value="text" class="SpCellNewsTitle">
+								<cell type="link" value="text" tag="span">
 									<url type="extern" host="#" hash="value" hash-prefix="acl-group-"/>
 								</cell>
 							</li>
