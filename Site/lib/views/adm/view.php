@@ -321,10 +321,10 @@ class SPAdmView extends SPObject implements SPView
 				->getNamedItem( 'icon' )
 				->nodeValue;
 		$class = $xml
-			->attributes
-			->getNamedItem( 'class' )
-			->nodeValue;
-		SPFactory::AdmToolbar()->setTitle( [ 'title' => $this->parseValue( $title ), 'icon' => $icon , 'class' => $class ] );
+				->attributes
+				->getNamedItem( 'class' )
+				->nodeValue;
+		SPFactory::AdmToolbar()->setTitle( [ 'title' => $this->parseValue( $title ), 'icon' => $icon, 'class' => $class ] );
 		$buttons = [];
 		foreach ( $xml->childNodes as $node ) {
 			if ( strstr( $node->nodeName, '#' ) ) {
@@ -537,25 +537,7 @@ class SPAdmView extends SPObject implements SPView
 					'content' => null,
 					'attributes' => null
 			];
-			$attributes = $node->attributes;
-			if ( $attributes->length ) {
-				/** @var DOMElement $attribute */
-				foreach ( $attributes as $attribute ) {
-					switch ( $attribute->nodeName ) {
-						case 'label':
-							$element[ 'attributes' ][ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
-							$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
-							break;
-						case 'class':
-						case 'rel' :
-							$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
-							break;
-						default:
-							$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $attribute->nodeValue );
-							break;
-					}
-				}
-			}
+			$element = $this->xmlAttriutes( $node, $element );
 
 			/** @var DOMNode $node */
 			switch ( $node->nodeName ) {
@@ -973,6 +955,13 @@ class SPAdmView extends SPObject implements SPView
 					break;
 				case 'value':
 					$element[ 'content' ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
+					break;
+				case 'id':
+					$element[ 'attributes' ][ $attribute->nodeName ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
+					break;
+				case 'id-prefix':
+					$element[ 'attributes' ][ 'id' ] = $attribute->nodeValue . $element[ 'attributes' ][ 'id' ];
+					break;
 				case 'checked-out-by':
 				case 'checked-out-time':
 				case 'valid-since':
@@ -1005,7 +994,14 @@ class SPAdmView extends SPObject implements SPView
 		}
 		else {
 			$link = $node->attributes->getNamedItem( 'host' )->nodeValue;
-			if ( !( strstr( $link, '://' ) ) ) {
+			if ( @$node->attributes->getNamedItem( 'hash' )->nodeValue ) {
+				$prefix = null;
+				if ( @$node->attributes->getNamedItem( 'hash-prefix' )->nodeValue ) {
+					$prefix = $node->attributes->getNamedItem( 'hash-prefix' )->nodeValue;
+				}
+				$link = '#' . $prefix . $this->get( $subject . '.' . $node->attributes->getNamedItem( 'hash' )->nodeValue, $index );
+			}
+			if ( !( strstr( $link, '://' ) ) && !( strstr( $link, '#' ) ) ) {
 				if ( $subject ) {
 					$link = $this->get( $subject . '.' . $link, $index );
 				}
@@ -2043,5 +2039,37 @@ class SPAdmView extends SPObject implements SPView
 			}
 		}
 		return SPLang::clean( $path );
+	}
+
+	/**
+	 * @param $node
+	 * @param $element
+	 *
+	 * @return mixed
+	 *
+	 * @since version
+	 */
+	protected function xmlAttriutes( $node, $element )
+	{
+		$attributes = $node->attributes;
+		if ( $attributes->length ) {
+			/** @var DOMElement $attribute */
+			foreach ( $attributes as $attribute ) {
+				switch ( $attribute->nodeName ) {
+					case 'label':
+						$element[ 'attributes' ][ $attribute->nodeName ] = Sobi::Txt( $attribute->nodeValue );
+						$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $element[ 'attributes' ][ $attribute->nodeName ] );
+						break;
+					case 'class':
+					case 'rel' :
+						$element[ 'attributes' ][ $attribute->nodeName ] = $attribute->nodeValue;
+						break;
+					default:
+						$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( $attribute->nodeValue );
+						break;
+				}
+			}
+		}
+		return $element;
 	}
 }

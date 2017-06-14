@@ -263,7 +263,6 @@ abstract class SPFrontView extends SPObject implements SPView
 		if ( SPRequest::cmd( 'format' ) == 'json' && Sobi::Cfg( 'output.json_enabled', false ) ) {
 			return $this->jsonDisplay();
 		}
-
 		$this->templateSettings();
 		$type = $this->key( 'template_type', 'xslt' );
 		$f = null;
@@ -285,10 +284,14 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 		$this->_attr[ 'template_path' ] = Sobi::FixPath( str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), $this->_templatePath ) );
 		$messages = SPFactory::message()->getMessages();
-		if ( count( $messages ) ) {
+ 		if ( count( $messages ) ) {
 			foreach ( $messages as $type => $content ) {
 				$this->_attr[ 'messages' ][ $type ] = array_values( $content );
 			}
+		}
+		$visitor = $this->get( 'visitor' );
+		if ( $visitor && !( is_array( $visitor ) ) ) {
+			$this->_attr[ 'visitor' ] = $this->visitorArray( $visitor );
 		}
 		$parser->setProxy( $this );
 		$parser->setData( $this->_attr );

@@ -72,11 +72,11 @@ class SPTplParser
 					$this->parse( $element );
 				}
 			}
-//			elseif ( isset( $data[ 'childs' ] ) && !( is_string( $data[ 'childs' ] ) ) && is_array( $data[ 'childs' ] ) && count( $data[ 'childs' ] ) ) {
-//				foreach ( $data[ 'childs' ] as $element ) {
-//					$this->parse( $element );
-//				}
-//			}
+			elseif ( isset( $data[ 'childs' ] ) && !( is_string( $data[ 'childs' ] ) ) && is_array( $data[ 'childs' ] ) && count( $data[ 'childs' ] ) ) {
+				foreach ( $data[ 'childs' ] as $element ) {
+					$this->parse( $element );
+				}
+			}
 			if ( isset( $data[ 'type' ] ) ) {
 				$this->closeElement( $data );
 			}
@@ -311,6 +311,7 @@ class SPTplParser
 			case 'pagination':
 				$this->_out[] = $data[ 'content' ];
 				break;
+			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'table':
 				if (isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ]) {
 //				if ( ( $data[ 'attributes' ][ 'class' ] ) ) {
