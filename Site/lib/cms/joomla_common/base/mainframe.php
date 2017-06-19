@@ -95,6 +95,10 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$cfg->set( 'site_name', $this->JConfigValue( 'config.sitename' ) );
 		$cfg->set( 'images_folder', SOBI_ROOT . '/media/sobipro/' );
 		$cfg->set( 'img_folder_live', JURI::root() . '/media/sobipro' );
+
+		$cfg->set( 'mediaimages_folder', SOBI_ROOT . '/images/sobipro/' );
+		$cfg->set( 'mediaimages_folder_live', JURI::root() . '/images/sobipro' );
+
 		$cfg->set( 'ftp_mode', $this->JConfigValue( 'config.ftp_enable' ) );
 		$cfg->set( 'time_offset', $this->JConfigValue( 'offset' ) );
 

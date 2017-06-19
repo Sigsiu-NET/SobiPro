@@ -66,7 +66,25 @@ class com_sobiproInstallerScript
 		if ( file_exists( $srcpath ) ) {
 			$files = scandir( $srcpath );
 
-			$dest = JPATH_ROOT . '/media/sobipro/images';
+			$dest = JPATH_ROOT . '/images/sobipro/categories';
+			if ( count( $files ) ) {
+				foreach ( $files as $file ) {
+					if ( $file != '.' && $file != '..' ) {
+						if ( is_dir( $srcpath . '/' . $file ) ) {
+							JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file, '', true );
+						}
+						elseif ( !( file_exists( $dest . '/' . $file ) ) ) {
+							JFile::copy( $srcpath . '/' . $file, $dest . '/' . $file );
+						}
+					}
+				}
+			}
+		}
+		$srcpath = JPATH_ROOT . '/media/sobipro/images';
+		if ( file_exists( $srcpath ) ) {
+			$files = scandir( $srcpath );
+
+			$dest = JPATH_ROOT . '/images/sobipro/categories';
 			if ( count( $files ) ) {
 				foreach ( $files as $file ) {
 					if ( $file != '.' && $file != '..' ) {
