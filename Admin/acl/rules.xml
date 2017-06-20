@@ -16,43 +16,43 @@
 
 <definition>
 	<header>
-		<title value="MN.SECTION.ACL"/>
-		<file type="script" filename="bootstrap.tabs"/>
+		<title value="MN.SECTION.ACL" />
+		<file type="script" filename="bootstrap.tabs" />
 	</header>
 	<toolbar title="MN.SECTION.ACL" icon="" class="acl rules">
-		<button icon="cog" label="TB.JOOMLA_ACL" type="url" url="index.php?option=com_config&amp;amp;view=component&amp;amp;component=com_sobipro"/>
-		<divider/>
+		<button icon="cog" label="TB.JOOMLA_ACL" type="url" url="index.php?option=com_config&amp;amp;view=component&amp;amp;component=com_sobipro" />
+		<divider />
 		<buttons type="actions">
-			<nav-header label="TB.PUBLISHING"/>
-			<button type="enable" task="acl.enable"/>
-			<button type="disable" task="acl.disable"/>
+			<nav-header label="TB.PUBLISHING" />
+			<button type="enable" task="acl.enable" />
+			<button type="disable" task="acl.disable" />
 		</buttons>
-		<divider/>
-		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>
-		<divider/>
+		<divider />
+		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS" />
+		<divider />
 		<buttons type="options" dropdown-class="right">
-			<button type="url" task="panel"/>
-			<button type="url" task="config"/>
-			<button type="url" task="extensions.installed"/>
-			<button type="url" task="template.info"/>
-			<button type="help" target="_blank"/>
+			<button type="url" task="panel" />
+			<button type="url" task="config" />
+			<button type="url" task="extensions.installed" />
+			<button type="url" task="template.info" />
+			<button type="help" target="_blank" />
 		</buttons>
 	</toolbar>
 	<body>
 		<div class="row-fluid">
 			<div class="span3" id="SPRightMenu">
-				<menu/>
+				<menu />
 			</div>
 			<div class="span9 spMainArea">
-				<message id="spMessage"/>
+				<message id="spMessage" />
 
 				<div class="control-group">
 					<div class="tabbable tabs-left">
 						<ul class="nav nav-tabs">
 							<loop subject="groups" table="false">
-								<li class="active">
-									<cell type="link" value="text" tag="span">
-										<url type="extern" host="#" hash="value" hash-prefix="acl-group-"/>
+								<li>
+									<cell type="link" value="text" element="none">
+										<url type="extern" host="#" hash="value" hash-prefix="acl-group-" />
 									</cell>
 								</li>
 							</loop>
@@ -60,7 +60,54 @@
 						<div class="tab-content">
 							<loop subject="groups" table="false">
 								<div class="tab-pane" id="value" id-prefix="acl-group-">
-									<cell type="text" value="text" class=""/>
+									<tabs>
+										<tab label="ACL.FRONTEND_PERMISSIONS">
+											<div class="tab-content">
+												<div class="tab-pane active" id="permission-1" style="">
+													<div class="table-responsive">
+														<table>
+															<head>
+																<cell label="Action" type="text" class="spCell center extrasmall" />
+																<cell label="Select new setting" type="text" rel="rid" class="spCell center extrasmall" />
+																<cell label="calculated setting" type="text" class="spCell left" />
+															</head>
+															<loop subject="table">
+																<cell type="text" value="label" class="subText" />
+																<cell type="text" value="label" class="subText" />
+																<cell type="text" value="label" class="subText" />
+															</loop>
+														</table>
+													</div>
+												</div>
+											</div>
+										</tab>
+										<tab label="ACL.BACKEND_PERMISSIONS">
+											<div class="tab-content">
+												<div class="tab-pane active" id="permission-1" style="">
+													<div class="table-responsive">
+														<table condition="">
+															<head>
+																<cell label="Action" type="text" class="spCell center extrasmall" />
+																<cell label="Select new setting" type="text" rel="rid" class="spCell center extrasmall" />
+																<cell label="calculated setting" type="text" class="spCell left" />
+															</head>
+															<loop subject="table">
+																<cell class="spCell left">
+																	<cell type="link" value="name">
+																		<url type="intern">
+																			<param name="task" value="acl.edit" />
+																			<param name="rid" value="rid" parse="true" />
+																		</url>
+																	</cell>
+																	<cell type="text" value="label" class="subText" />
+																</cell>
+															</loop>
+														</table>
+													</div>
+												</div>
+											</div>
+										</tab>
+									</tabs>
 								</div>
 							</loop>
 						</div>
@@ -93,103 +140,103 @@
 						<!--</a>-->
 						<!--</li>-->
 						<!--</ul>-->
-						<div class="tab-content">
-							<div class="tab-pane active" id="permission-1" style="">
-								<div class="table-responsive">
-									<table condition="">
-										<head>
-											<cell label="Action" type="text" class="spCell center extrasmall"/>
-											<cell label="Select new setting" type="text" rel="rid" class="spCell center extrasmall"/>
-											<cell label="calculated setting" type="text" class="spCell left"/>
-										</head>
-										<loop subject="rules">
-											<cell type="ticker" value="state" class="spCell center" icons="{'0':'remove-sign','1':'ok'}"
-											      valid-since="validSince" valid-until="validUntil">
-												<url type="intern">
-													<param name="task" value="acl.toggle.enabled"/>
-													<param name="rid" value="rid" parse="true"/>
-												</url>
-											</cell>
-											<cell type="checkbox" name="rid" value="rid" class="spCell center"/>
-											<cell class="spCell left">
-												<cell type="link" value="name">
-													<url type="intern">
-														<param name="task" value="acl.edit"/>
-														<param name="rid" value="rid" parse="true"/>
-													</url>
-												</cell>
-												<cell type="text" value="note" class="subText"/>
-											</cell>
-										</loop>
-									</table>
-								</div>
-								<!--<tbody>-->
-								<!--<tr>-->
-								<!--<td headers="actions-th1">-->
-								<!--<label for="jform_rules_core.admin_1" class="hasTooltip" title=""-->
-								<!--data-original-title="<strong>Configure Rule</strong><br />Description">-->
-								<!--Rule-->
-								<!--</label>-->
-								<!--</td>-->
-								<!--<td headers="settings-th1">-->
-								<!--<select onchange="sendPermissions.call(this, event)" data-chosen="true" class="input-small novalidate"-->
-								<!--name="jform[rules][core.admin][1]" id="jform_rules_core.admin_1"-->
-								<!--title="Allow or deny Configure ACL &amp; Options for users in the Public group.">-->
-								<!--<option value="" selected="selected">Inherited</option>-->
-								<!--<option value="1">Allowed</option>-->
-								<!--<option value="0">Denied</option>-->
-								<!--</select>-->
-								<!--<span id="icon_jform_rules_core.admin_1"></span>-->
-								<!--</td>-->
-								<!--<td headers="aclactionth1">-->
-								<!--<span class="label label-important">Not Allowed (Inherited)</span>-->
-								<!--</td>-->
-								<!--</tr>-->
-								<!--<tr>-->
-								<!--<td headers="actions-th1">-->
-								<!--<label for="jform_rules_core.manage_1" class="hasTooltip" title=""-->
-								<!--data-original-title="<strong>Rule</strong><br />Description">-->
-								<!--Rule-->
-								<!--</label>-->
-								<!--</td>-->
-								<!--<td headers="settings-th1">-->
-								<!--<select onchange="sendPermissions.call(this, event)" data-chosen="true" class="input-small novalidate"-->
-								<!--name="jform[rules][core.manage][1]" id="jform_rules_core.manage_1"-->
-								<!--title="Allow or deny Access Administration Interface for users in the Public group.">-->
-								<!--<option value="" selected="selected">Inherited</option>-->
-								<!--<option value="1">Allowed</option>-->
-								<!--<option value="0">Denied</option>-->
-								<!--</select>-->
-								<!--<span id="icon_jform_rules_core.manage_1"></span>-->
-								<!--</td>-->
-								<!--<td headers="aclactionth1">-->
-								<!--<span class="label label-important">Not Allowed (Inherited)</span>-->
-								<!--</td>-->
-								<!--</tr>-->
-								<!--<tr>-->
-								<!--<td headers="actions-th1">-->
-								<!--<label for="jform_rules_core.apps_1" class="hasTooltip" title=""-->
-								<!--data-original-title="<strong>Rule</strong><br />Description">-->
-								<!--Rule-->
-								<!--</label>-->
-								<!--</td>-->
-								<!--<td headers="settings-th1">-->
-								<!--<select onchange="sendPermissions.call(this, event)" data-chosen="true" class="input-small novalidate"-->
-								<!--name="jform[rules][core.apps][1]" id="jform_rules_core.apps_1"-->
-								<!--title="Allow or deny Manage Applications for users in the Public group.">-->
-								<!--<option value="" selected="selected">Inherited</option>-->
-								<!--<option value="1">Allowed</option>-->
-								<!--<option value="0">Denied</option>-->
-								<!--</select>-->
-								<!--<span id="icon_jform_rules_core.apps_1"></span>-->
-								<!--</td>-->
-								<!--<td headers="aclactionth1">-->
-								<!--<span class="label label-important">Not Allowed (Inherited)</span>-->
-								<!--</td>-->
-								<!--</tr>-->
-								<!--</tbody>-->
-							</div>
-						</div>
+						<!--<div class="tab-content">-->
+						<!--<div class="tab-pane active" id="permission-1" style="">-->
+						<!--<div class="table-responsive">-->
+						<!--<table condition="">-->
+						<!--<head>-->
+						<!--<cell label="Action" type="text" class="spCell center extrasmall"/>-->
+						<!--<cell label="Select new setting" type="text" rel="rid" class="spCell center extrasmall"/>-->
+						<!--<cell label="calculated setting" type="text" class="spCell left"/>-->
+						<!--</head>-->
+						<!--<loop subject="rules">-->
+						<!--<cell type="ticker" value="state" class="spCell center" icons="{'0':'remove-sign','1':'ok'}"-->
+						<!--valid-since="validSince" valid-until="validUntil">-->
+						<!--<url type="intern">-->
+						<!--<param name="task" value="acl.toggle.enabled"/>-->
+						<!--<param name="rid" value="rid" parse="true"/>-->
+						<!--</url>-->
+						<!--</cell>-->
+						<!--<cell type="checkbox" name="rid" value="rid" class="spCell center"/>-->
+						<!--<cell class="spCell left">-->
+						<!--<cell type="link" value="name">-->
+						<!--<url type="intern">-->
+						<!--<param name="task" value="acl.edit"/>-->
+						<!--<param name="rid" value="rid" parse="true"/>-->
+						<!--</url>-->
+						<!--</cell>-->
+						<!--<cell type="text" value="note" class="subText"/>-->
+						<!--</cell>-->
+						<!--</loop>-->
+						<!--</table>-->
+						<!--</div>-->
+						<!--<tbody>-->
+						<!--<tr>-->
+						<!--<td headers="actions-th1">-->
+						<!--<label for="jform_rules_core.admin_1" class="hasTooltip" title=""-->
+						<!--data-original-title="<strong>Configure Rule</strong><br />Description">-->
+						<!--Rule-->
+						<!--</label>-->
+						<!--</td>-->
+						<!--<td headers="settings-th1">-->
+						<!--<select onchange="sendPermissions.call(this, event)" data-chosen="true" class="input-small novalidate"-->
+						<!--name="jform[rules][core.admin][1]" id="jform_rules_core.admin_1"-->
+						<!--title="Allow or deny Configure ACL &amp; Options for users in the Public group.">-->
+						<!--<option value="" selected="selected">Inherited</option>-->
+						<!--<option value="1">Allowed</option>-->
+						<!--<option value="0">Denied</option>-->
+						<!--</select>-->
+						<!--<span id="icon_jform_rules_core.admin_1"></span>-->
+						<!--</td>-->
+						<!--<td headers="aclactionth1">-->
+						<!--<span class="label label-important">Not Allowed (Inherited)</span>-->
+						<!--</td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+						<!--<td headers="actions-th1">-->
+						<!--<label for="jform_rules_core.manage_1" class="hasTooltip" title=""-->
+						<!--data-original-title="<strong>Rule</strong><br />Description">-->
+						<!--Rule-->
+						<!--</label>-->
+						<!--</td>-->
+						<!--<td headers="settings-th1">-->
+						<!--<select onchange="sendPermissions.call(this, event)" data-chosen="true" class="input-small novalidate"-->
+						<!--name="jform[rules][core.manage][1]" id="jform_rules_core.manage_1"-->
+						<!--title="Allow or deny Access Administration Interface for users in the Public group.">-->
+						<!--<option value="" selected="selected">Inherited</option>-->
+						<!--<option value="1">Allowed</option>-->
+						<!--<option value="0">Denied</option>-->
+						<!--</select>-->
+						<!--<span id="icon_jform_rules_core.manage_1"></span>-->
+						<!--</td>-->
+						<!--<td headers="aclactionth1">-->
+						<!--<span class="label label-important">Not Allowed (Inherited)</span>-->
+						<!--</td>-->
+						<!--</tr>-->
+						<!--<tr>-->
+						<!--<td headers="actions-th1">-->
+						<!--<label for="jform_rules_core.apps_1" class="hasTooltip" title=""-->
+						<!--data-original-title="<strong>Rule</strong><br />Description">-->
+						<!--Rule-->
+						<!--</label>-->
+						<!--</td>-->
+						<!--<td headers="settings-th1">-->
+						<!--<select onchange="sendPermissions.call(this, event)" data-chosen="true" class="input-small novalidate"-->
+						<!--name="jform[rules][core.apps][1]" id="jform_rules_core.apps_1"-->
+						<!--title="Allow or deny Manage Applications for users in the Public group.">-->
+						<!--<option value="" selected="selected">Inherited</option>-->
+						<!--<option value="1">Allowed</option>-->
+						<!--<option value="0">Denied</option>-->
+						<!--</select>-->
+						<!--<span id="icon_jform_rules_core.apps_1"></span>-->
+						<!--</td>-->
+						<!--<td headers="aclactionth1">-->
+						<!--<span class="label label-important">Not Allowed (Inherited)</span>-->
+						<!--</td>-->
+						<!--</tr>-->
+						<!--</tbody>-->
+						<!--</div>-->
+						<!--</div>-->
 
 					</div>
 				</div>
@@ -197,10 +244,10 @@
 		</div>
 	</body>
 	<config>
-		<action value="index.php"/>
+		<action value="index.php" />
 		<hidden>
-			<field name="option" default="com_sobipro"/>
-			<field name="task" default=""/>
+			<field name="option" default="com_sobipro" />
+			<field name="task" default="" />
 		</hidden>
 	</config>
 </definition>
