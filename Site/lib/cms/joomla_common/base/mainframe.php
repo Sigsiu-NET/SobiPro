@@ -93,11 +93,12 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$cfg->set( 'language', $lang );
 		$cfg->set( 'secret', $this->JConfigValue( 'secret' ) );
 		$cfg->set( 'site_name', $this->JConfigValue( 'config.sitename' ) );
-		$cfg->set( 'images_folder', SOBI_ROOT . '/media/sobipro/' );
-		$cfg->set( 'img_folder_live', JURI::root() . '/media/sobipro' );
 
-		$cfg->set( 'mediaimages_folder', SOBI_ROOT . '/images/sobipro/' );
-		$cfg->set( 'mediaimages_folder_live', JURI::root() . '/images/sobipro' );
+		$cfg->set( 'media_folder', SOBI_ROOT . '/media/sobipro/' );
+		$cfg->set( 'media_folder_live', JURI::root() . '/media/sobipro' );
+
+		$cfg->set( 'images_folder', SOBI_ROOT . '/images/sobipro/' );
+		$cfg->set( 'images_folder_live', JURI::root() . '/images/sobipro' );
 
 		$cfg->set( 'ftp_mode', $this->JConfigValue( 'config.ftp_enable' ) );
 		$cfg->set( 'time_offset', $this->JConfigValue( 'offset' ) );
@@ -105,10 +106,13 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$cfg->set( 'root_path', SOBI_PATH );
 		$cfg->set( 'cms_root_path', SOBI_ROOT );
 		$cfg->set( 'live_path', SOBI_LIVE_PATH );
-		if ( defined( 'SOBIPRO_ADM' ) ) {
-			$cfg->set( 'adm_img_folder_live', Sobi::FixPath( JURI::root() . '/' . SOBI_ADM_FOLDER . '/images' ) );
-		}
-		$cfg->set( 'img_folder_path', SOBI_ROOT . '/media/sobipro' );
+
+		//this folder does not exist
+//		if ( defined( 'SOBIPRO_ADM' ) ) {
+//			$cfg->set( 'adm_img_folder_live', Sobi::FixPath( JURI::root() . '/' . SOBI_ADM_FOLDER . '/images' ) );
+//		}
+		///same as media_folder
+		/// $cfg->set( 'img_folder_path', SOBI_ROOT . '/media/sobipro' );
 
 		if ( $this->JConfigValue( 'config.ftp_enable' ) ) {
 			if ( !( file_exists( $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro' ) ) ) {

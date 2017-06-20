@@ -198,7 +198,7 @@ class SPConfigAdmView extends SPAdmView implements SPView
 //	{
 //		echo "<tr>";
 //		echo '<td colspan="2"><div style="margin-left: 150px;">';
-//		echo Sobi::Txt( 'GB.CFG.PBY_EXPL', [ 'image' => Sobi::Cfg( 'img_folder_live' ) . '/donate.png' ] );
+//		echo Sobi::Txt( 'GB.CFG.PBY_EXPL', [ 'image' => Sobi::Cfg( 'media_folder_live' ) . '/donate.png' ] );
 //		echo '</div></td>';
 //		echo '</tr>';
 //	}

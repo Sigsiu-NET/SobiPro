@@ -77,7 +77,7 @@ final class SPAdmSiteMenu
 		$this->_view[ ] = '<div id="SPMenuCtrl" class="spMenuCtrl">';
 		$this->_view[ ] = ' <button class="spMenuCtrlBtn btn" id="SPMenuCtrlBt" type="button"><i class="icon-minus"></i></button>';
 		$this->_view[ ] = '</div>';
-		$media = Sobi::Cfg( 'img_folder_live' );
+		$media = Sobi::Cfg( 'media_folder_live' );
 		$name = 'SobiPro';
 		$this->_view[ ] = "\n<div class='spLogo well well-small'><a href=\"https://www.Sigsiu.NET\" title=\"Sigsiu.NET GmbH - Software Development\"><img src=\"{$media}/{$name}.png\" alt=\"Sigsiu.NET GmbH - Software Development\" /></a></div>\n";
 		$fs = null;

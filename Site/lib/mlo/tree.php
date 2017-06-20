@@ -152,7 +152,7 @@ final class SigsiuTree extends SPObject
 				}
 			}
 			foreach ( $this->_images as $img => $loc ) {
-				$this->_images[ $img ] = Sobi::FixPath( Sobi::Cfg( 'tree_images', Sobi::Cfg( 'images_folder_live' ) . 'tree/' . $loc ) );
+				$this->_images[ $img ] = Sobi::FixPath( Sobi::Cfg( 'tree_images', Sobi::Cfg( 'media_folder_live' ) . 'tree/' . $loc ) );
 			}
 		}
 	}
@@ -193,7 +193,7 @@ final class SigsiuTree extends SPObject
 	{
 		$this->_ordering = $ordering;
 		foreach ( $this->_images as $img => $loc ) {
-			$this->_images[ $img ] = Sobi::FixPath( Sobi::Cfg( 'tree_images', Sobi::Cfg( 'img_folder_live' ) . '/tree/' . $loc ) );
+			$this->_images[ $img ] = Sobi::FixPath( Sobi::Cfg( 'tree_images', Sobi::Cfg( 'media_folder_live' ) . '/tree/' . $loc ) );
 		}
 		if ( count( $opts ) ) {
 			foreach ( $opts as $a => $v ) {
@@ -418,7 +418,7 @@ final class SigsiuTree extends SPObject
 		$params[ 'URL' ]      = str_replace( '__JS2__', '" + ' . $this->_id . '_stmPid + "', $params[ 'URL' ] );
 		$params[ 'FAIL_MSG' ] = Sobi::Txt( 'AJAX_FAIL' );
 		$params[ 'TAG' ]      = $this->_tag;
-		$params[ 'SPINNER' ]  = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ) . '/adm/spinner.gif' );
+		$params[ 'SPINNER' ]  = Sobi::FixPath( Sobi::Cfg( 'media_folder_live' ) . '/adm/spinner.gif' );
 		Sobi::Trigger( 'SigsiuTree', ucfirst( __FUNCTION__ ), [ &$params ] );
 		$head->addJsVarFile( 'tree', md5( count( $childs, COUNT_RECURSIVE ) . $this->_id . $this->_sid . $this->_task . serialize( $params ) ), $params );
 	}

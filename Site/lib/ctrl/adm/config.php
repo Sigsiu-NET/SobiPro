@@ -444,7 +444,7 @@ class SPConfigAdmCtrl extends SPController
 	 */
 	private function travelTpl( $dir, &$nodes, $current, &$count, $package = false )
 	{
-		$ls = Sobi::FixPath( Sobi::Cfg( 'img_folder_live' ) . '/tree' );
+		$ls = Sobi::FixPath( Sobi::Cfg( 'media_folder_live' ) . '/tree' );
 		static $root = null;
 		if ( !( $root ) ) {
 			$root = new File( str_replace('\\','/',SOBI_PATH) );

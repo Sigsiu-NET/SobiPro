@@ -501,10 +501,10 @@ abstract class SPLoader
 				break;
 			case 'img':
 			case 'media.img':
-				$spoint = SOBI_MEDIAIMAGES . '/img/'; //does not exist
+				$spoint = SOBI_IMAGES . '/img/'; //does not exist
 				break;
 			case 'media.categories':
-				$spoint = SOBI_MEDIAIMAGES . '/categories/';
+				$spoint = SOBI_IMAGES . '/categories/';
 				break;
 			case 'adm':
 			case 'administrator':
