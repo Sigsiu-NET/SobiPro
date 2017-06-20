@@ -26,15 +26,11 @@ SPLoader::loadController( 'config', true );
  */
 final class SPAclCtrl extends SPConfigAdmCtrl
 {
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_type = 'acl';
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	protected $_defTask = 'list';
-
+	/*** @var array */
 	private $_perms = [];
 
 	/**
@@ -640,7 +636,7 @@ final class SPAclCtrl extends SPConfigAdmCtrl
 			->assign( $userGroups, 'groups' )
 //			->assign( $rules, 'rules' )
 			->assign( $menu, 'menu' )
-			->determineTemplate( 'acl', 'rules' )
+//			->determineTemplate( 'acl', 'rules' )
 			->display();
 	}
 

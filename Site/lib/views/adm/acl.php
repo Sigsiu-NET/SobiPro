@@ -38,6 +38,10 @@ class SPAclView extends SPAdmView
 				$this->edit();
 				$this->determineTemplate( 'acl', 'edit' );
 				break;
+			case 'section':
+				$this->edit();
+				$this->section();
+				$this->determineTemplate( 'acl', 'rules' );
 		}
 		parent::display();
 	}
@@ -56,7 +60,7 @@ class SPAclView extends SPAdmView
 		$get = $this->get( 'sections' );
 		if ( is_array( $get ) && count( $get ) ) {
 			foreach ( $get as $section ) {
-				$put[ ] = $section->id;
+				$put[] = $section->id;
 			}
 			$put = Sobi::Txt( $put, 'name', 'section' );
 			foreach ( $put as $id => $vals ) {
@@ -76,7 +80,7 @@ class SPAclView extends SPAdmView
 				$put[ $subject ][ $permission->pid ] = Sobi::Txt( 'adm_permissions.' . $k );
 			}
 		}
-		$put = array_reverse($put);
+		$put = array_reverse( $put );
 		$this->set( $put, 'adm_permissions' );
 		$put = [];
 		$rule = $this->get( 'set' );
@@ -96,9 +100,9 @@ class SPAclView extends SPAdmView
 
 		// default ordering
 		$permissionsOrder = [
-			'Section' => [ 3, 4 ],
-			'Category' => [ 8, 7 ],
-			'Entry' => [ 9, 11, 10, 14, 12, 16, 18, 17, 20, 21, 19, 15, 24, 25 ]
+				'Section' => [ 3, 4 ],
+				'Category' => [ 8, 7 ],
+				'Entry' => [ 9, 11, 10, 14, 12, 16, 18, 17, 20, 21, 19, 15, 24, 25 ]
 		];
 		// to show current
 //		 SPConfig::debOut( $put );
@@ -128,13 +132,26 @@ class SPAclView extends SPAdmView
 		$perms = [];
 		if ( count( $rule[ 'permissions' ] ) ) {
 			foreach ( $rule[ 'permissions' ] as $keys ) {
-				$sections[ ] = $keys[ 'sid' ];
-				$perms[ ] = $keys[ 'pid' ];
+				$sections[] = $keys[ 'sid' ];
+				$perms[] = $keys[ 'pid' ];
 			}
 		}
 		$rule[ 'sections' ] = $sections;
 		$rule[ 'permissions' ] = $perms;
 		$this->set( $rule, 'set' );
+	}
+
+	protected function section()
+	{
+		$permissions = $this->get( 'permissions' );
+		$table = [];
+		foreach ( $permissions as $subject => $rules ) {
+			$table[] = [ 'label' => $subject ];
+			foreach ( $rules as $rule ) {
+				$table[] = [ 'label' => $rule ];
+			}
+		}
+		$this->assign( $table, 'table' );
 	}
 
 	/**

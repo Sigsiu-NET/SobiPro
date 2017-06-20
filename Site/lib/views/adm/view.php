@@ -933,6 +933,9 @@ class SPAdmView extends SPObject implements SPView
 						$element[ 'type' ] = 'text';
 						$element[ 'content' ] = $this->xmlCall( $child, $subject, $i );
 						break;
+					case 'loop':
+						$this->xmlLoop( $child, $element );
+						break;
 					default:
 						$this->xmlCell( $child, $subject, $i, $element[ 'childs' ] );
 						break;

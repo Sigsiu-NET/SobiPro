@@ -35,10 +35,10 @@ class SPTplParser
 	protected $loopOpen = false;
 	/** @var array */
 	protected $_tickerIcons = [
-			0 => 'remove',
-			1 => 'ok',
-			-1 => 'stop',
-			-2 => 'pause'
+		0  => 'remove',
+		1  => 'ok',
+		-1 => 'stop',
+		-2 => 'pause'
 	];
 	/** @var string */
 	protected $_checkedOutIcon = 'lock';
@@ -152,7 +152,7 @@ class SPTplParser
 					}
 					if ( isset( $element[ 'attributes' ][ 'icons' ] ) && $element[ 'attributes' ][ 'icons' ] ) {
 						$icons = json_decode( str_replace( "'", '"', $element[ 'attributes' ][ 'icons' ] ), true );
-						$element[ 'content' ] = (int)$element[ 'content' ];
+						$element[ 'content' ] = (int) $element[ 'content' ];
 						$icon = ( isset( $icons[ $element[ 'content' ] ] ) && $icons[ $element[ 'content' ] ] ) ? $icons[ $element[ 'content' ] ] : $this->_tickerIcons[ $element[ 'content' ] ];
 						$element[ 'content' ] = '<i class="icon-' . $icon . '"></i>';
 					}
@@ -281,7 +281,7 @@ class SPTplParser
 				$this->_out[] = '<tr>';
 				break;
 			case 'cell':
-				$this->proceedCell( $data, $this->loopTable ? $this->thTd : ( isset( $data[ 'attributes' ][ 'tag' ] ) ? $data[ 'attributes' ][ 'tag' ] : 'div' ) );
+				$this->proceedCell( $data, $this->loopTable ? $this->thTd : 'div' );
 				break;
 			case 'header':
 				$this->_out[] = '<div class="SPAdmNavBar">';
@@ -313,7 +313,7 @@ class SPTplParser
 				break;
 			/** @noinspection PhpMissingBreakStatementInspection */
 			case 'table':
-				if ( isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ] ) {
+				if (isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ]) {
 //				if ( ( $data[ 'attributes' ][ 'class' ] ) ) {
 					$data[ 'attributes' ][ 'class' ] = 'table ' . $data[ 'attributes' ][ 'class' ];
 				}
