@@ -103,14 +103,18 @@ class SPCategoryCtrl extends SPSectionCtrl
 				if ( ( filetype( $dir . $file ) == 'file' ) && in_array( strtolower( SPFs::getExt( $file ) ), $ext ) ) {
 					$files[ ] = [
 							'name' => $folder ? str_replace( '.', '/', $folder ) . '/' . $file : $file,
-							'path' => str_replace('//', '/', str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) ))
+							'path' => str_replace( '\\', '/',
+									str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ),
+									str_replace( '//', '/', $dir . $file ) ) )
 					];
 				}
 				elseif ( filetype( $dir . $file ) == 'dir' && !( $file == '.' || $file == '..' ) ) {
 					$dirs[ ] = [
 							'name' => $file,
 							'count' => ( count( scandir( $dir . $file ) ) - 2 ),
-							'path' => str_replace('//', '/',str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) )),
+							'path' => str_replace( '\\', '/',
+									str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ),
+									str_replace( '//', '/', $dir . $file ) ) ),
 							'url' => Sobi::Url( [ 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( $folder ? $folder . '.' . $file : $file ) ] )
 					];
 				}
