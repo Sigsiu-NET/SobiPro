@@ -83,7 +83,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 		if ( strlen( SPRequest::cmd( 'font' ) ) ) {
 			return $this->iconFont();
 		}
-		$folder = SPRequest::cmd( 'iconFolder', null );
+		$folder = SPRequest::string( 'iconFolder', null );
 		$callback = SPRequest::cmd( 'callback', 'SPSelectIcon' );
 		$dir = $folder ? Sobi::Cfg( 'images.category_icons' ) . str_replace( '.', '/', $folder ) . '/' : Sobi::Cfg( 'images.category_icons' );
 		$files = [];
@@ -103,14 +103,14 @@ class SPCategoryCtrl extends SPSectionCtrl
 				if ( ( filetype( $dir . $file ) == 'file' ) && in_array( strtolower( SPFs::getExt( $file ) ), $ext ) ) {
 					$files[ ] = [
 							'name' => $folder ? str_replace( '.', '/', $folder ) . '/' . $file : $file,
-							'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) )
+							'path' => str_replace('//', '/', str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) ))
 					];
 				}
 				elseif ( filetype( $dir . $file ) == 'dir' && !( $file == '.' || $file == '..' ) ) {
 					$dirs[ ] = [
 							'name' => $file,
 							'count' => ( count( scandir( $dir . $file ) ) - 2 ),
-							'path' => str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) ),
+							'path' => str_replace('//', '/',str_replace( '\\', '/', str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), str_replace( '//', '/', $dir . $file ) ) )),
 							'url' => Sobi::Url( [ 'task' => 'category.icon', 'out' => 'html', 'iconFolder' => ( $folder ? $folder . '.' . $file : $file ) ] )
 					];
 				}
@@ -124,8 +124,8 @@ class SPCategoryCtrl extends SPSectionCtrl
 		$view->assign( $this->_task, 'task' );
 		$view->assign( $callback, 'callback' );
 		$view->assign( $files, 'files' );
-		$directory = Sobi::Cfg( 'images.folder_ico' );
-		$view->assign( $directory, 'folder' );
+		$symbol = Sobi::Cfg( 'image.folder_symbol', 'icon-folder-close');
+		$view->assign( $symbol, 'symbol' );
 		$view->assign( $dirs, 'directories' );
 		$view->icon();
 	}

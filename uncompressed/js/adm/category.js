@@ -118,36 +118,6 @@ SobiPro.jQuery(document).ready(function () {
 					catch (e) {
 						Size = 1;
 					}
-					// var divheight;
-					// var divwidth;
-					// var paddingtop;
-					// switch (Size) {
-					// 	case 2:
-					// 		divheight = 30;
-					// 		divwidth = 40;
-					// 		paddingtop = 5;
-					// 		break;
-					// 	case 3:
-					// 		divheight = 38;
-					// 		divwidth = 58;
-					// 		paddingtop = 10;
-					// 		break;
-					// 	case 4:
-					// 		divheight = 45;
-					// 		divwidth = 80;
-					// 		paddingtop = 10;
-					// 		break;
-					// 	case 5:
-					// 		divheight = 50;
-					// 		divwidth = 100;
-					// 		paddingtop = 15;
-					// 		break;
-					// 	default:
-					// 		divheight = 20;
-					// 		divwidth = 30;
-					// 		paddingtop = 3;
-					// 		break;
-					// }
 					SobiPro.jQuery.each(response, function (i, e) {
 						var Content = ( e.content != undefined ) ? e.content : '';
 						Element = e.element;

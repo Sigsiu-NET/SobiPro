@@ -33,7 +33,7 @@ $fc = $this->count( 'files' );
 			<?php for ( $i = 0; $i < $dc; ++$i ) { ?>
 				<div class="spImageFolder">
 					<a href="<?php $this->show( 'directories.url', $i ); ?>">
-						<img alt="<?php $this->show( 'directories.name', $i ); ?>" title="<?php $this->show( 'directories.name', $i ); ?> (<?php $this->show( 'directories.count', $i ); ?>)" src="<?php $this->show( 'folder' ); ?>">
+						<span title="<?php $this->show( 'directories.name', $i ); ?> (<?php $this->show( 'directories.count', $i ); ?>)" class="<?php $this->show( 'symbol' ); ?>"></span>
 					</a> <a href="<?php $this->show( 'directories.url', $i ); ?>">
 						<?php $this->show( 'directories.name', $i ); ?> (<?php $this->show( 'directories.count', $i ); ?>) </a>
 				</div>
@@ -52,5 +52,8 @@ $fc = $this->count( 'files' );
 				</li>
 			<?php } ?>
 		</ul>
+	<?php } ?>
+	<?php if ( !$dc && !$fc ) { ?>
+		<p>No files and folders found!</p>
 	<?php } ?>
 </div>
