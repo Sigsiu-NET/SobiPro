@@ -107,17 +107,17 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		 */
 
 		/** Legacy code */
-		if ( !( $this->loadTemplate( $field, $view ) ) ) {
-			$view->assign( $helpTask, '_compatibility' );
-			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm', true, 'ini' ) ) {
-				$view->loadConfig( 'field.edit.' . $field->get( 'fieldType' ) );
-			}
-			$view->setTemplate( 'field.edit' );
-			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm' ) ) {
-				$view->setTemplate( 'field.edit.' . $field->get( 'fieldType' ) );
-			}
-			SPFactory::header()->addCssFile( 'adm.legacy' );
-		}
+//		if ( !( $this->loadTemplate( $field, $view ) ) ) {
+//			$view->assign( $helpTask, '_compatibility' );
+//			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm', true, 'ini' ) ) {
+//				$view->loadConfig( 'field.edit.' . $field->get( 'fieldType' ) );
+//			}
+//			$view->setTemplate( 'field.edit' );
+//			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm' ) ) {
+//				$view->setTemplate( 'field.edit.' . $field->get( 'fieldType' ) );
+//			}
+//			SPFactory::header()->addCssFile( 'adm.legacy' );
+//		}
 		$view->display();
 	}
 
@@ -317,18 +317,18 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 			$view->display();
 		}
 		/** legacy */
-		elseif ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm' ) ) {
-			$view->assign( $helpTask, '_compatibility' );
-			if ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm', true, 'ini' ) ) {
-				$view->loadConfig( 'field.edit.' . $this->_fieldType );
-			}
-			$view->setTemplate( 'field.edit' );
-			if ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm' ) ) {
-				$view->setTemplate( 'field.edit.' . $this->_fieldType );
-			}
-			SPFactory::header()->addCSSCode( '#toolbar-box { display: block }' );
-			$view->display();
-		}
+//		elseif ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm' ) ) {
+//			$view->assign( $helpTask, '_compatibility' );
+//			if ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm', true, 'ini' ) ) {
+//				$view->loadConfig( 'field.edit.' . $this->_fieldType );
+//			}
+//			$view->setTemplate( 'field.edit' );
+//			if ( SPLoader::translatePath( 'field.edit.' . $this->_fieldType, 'adm' ) ) {
+//				$view->setTemplate( 'field.edit.' . $this->_fieldType );
+//			}
+//			SPFactory::header()->addCSSCode( '#toolbar-box { display: block }' );
+//			$view->display();
+//		}
 		else {
 			Sobi::Error( $this->name(), SPLang::e( 'NO_FIELD_DEF' ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}

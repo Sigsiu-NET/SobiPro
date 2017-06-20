@@ -38,9 +38,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Indicator in back-end for primary category
 	(+) Possibility to add entry link to image in vCard
 
-	(-) unused tabs script of SobiPro version 1.0 removed
-	(-) clean-up of loaded scripts in template
+	(-) Unused tabs script of SobiPro version 1.0 removed
+	(-) Clean-up of loaded scripts in template
 	(-) en-GB preload function removed as Joomla 3.7 is always pre-loading the English language
+	(-) Support for applications written for SobiPro 1.0 removed
 
 	(!) Less folder removed; less files moved to css folder
 	(!) Redesign of entries & categories in SobiPro's cPanel
