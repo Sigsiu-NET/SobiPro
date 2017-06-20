@@ -1,13 +1,14 @@
 <?php
+
 /**
  * @package: SobiPro Library
-
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -209,13 +210,19 @@ class SPTplParser
 				$this->_out[ ] = '</div>';
 				break;
 			case 'header':
-				$this->_out[ ] = '<div class="span6 spScreenSubHead spicon-48-' . $element[ 'attributes' ][ 'icon' ] . '">';
-				$this->_out[ ] = $element[ 'attributes' ][ 'label' ];
+				$this->_out[] = '<div class="span6 spScreenSubHead"><i class="icon-' . $element[ 'attributes' ][ 'icon' ] . ' icon-2x"></i>';
+//				$this->_out[] = '<div class="span6 spScreenSubHead spicon-48-' . $element[ 'attributes' ][ 'icon' ] . '">';
+				$this->_out[] = '<div class="title">' . $element[ 'attributes' ][ 'label' ] . '</div>';
 				$this->_out[ ] = '</div>';
 				break;
 			case 'url':
 				if ( isset( $element[ 'attributes' ][ 'image' ] ) ) {
 					$this->_out[ ] = "<img src=\"{$element['attributes']['image']}\" alt=\"{$element['attributes']['label']}\" />";
+					$this->closeElement( $element );
+					$this->openElement( $element );
+				}
+				if ( isset( $element[ 'attributes' ][ 'icon' ] ) ) {
+					$this->_out[] = "<i class=\"icon-{$element['attributes']['icon']}\"></i>";
 					$this->closeElement( $element );
 					$this->openElement( $element );
 				}
@@ -237,6 +244,7 @@ class SPTplParser
 		if ( $value ) {
 			return $element[ $index ] == $value;
 		}
+
 		return true;
 
 	}
@@ -304,7 +312,14 @@ class SPTplParser
 				$this->_out[ ] = $data[ 'content' ];
 				break;
 			case 'table':
-				$data[ 'attributes' ][ 'class' ] = 'table table-striped';
+				if (isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ]) {
+//				if ( ( $data[ 'attributes' ][ 'class' ] ) ) {
+					$data[ 'attributes' ][ 'class' ] = 'table ' . $data[ 'attributes' ][ 'class' ];
+				}
+				else {
+					$data[ 'attributes' ][ 'class' ] = 'table table-striped table-hover';
+				}
+			//break; no break by intention
 			default:
 				if ( in_array( $data[ 'type' ], $this->html ) ) {
 					$tag = $data[ 'type' ];
@@ -506,7 +521,14 @@ class SPTplParser
 					$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class}{$target} >";
 				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'icon' ) ) {
-					$this->_out[ ] = '<i class="icon-' . $cell[ 'attributes' ][ 'icon' ] . '"></i>&nbsp;';
+					$this->_out[] = '<i class="icon-' . $cell[ 'attributes' ][ 'icon' ] . '"></i>';
+				}
+				if ( $type == 'text' ) {
+					if ( $this->istSet( $cell[ 'attributes' ], 'dateFormat' ) ) {
+						$date = strtotime( $cell[ 'content' ] );
+						$date = date( $cell[ 'attributes' ][ 'dateFormat' ], ( $date ) );
+						$cell[ 'content' ] = $date;
+					}
 				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'label' ) ) {
 					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
@@ -540,7 +562,7 @@ class SPTplParser
 					$this->_out[ ] = '</button>';
 				}
 				else {
-					$this->_out[ ] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], [ 'class' => 'input-mini sp-input-micro spSubmit' ] );
+					$this->_out[] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], [ 'class' => 'input-mini input-micro spSubmit' ] );
 				}
 				break;
 			case 'checkbox':
@@ -603,8 +625,10 @@ class SPTplParser
 		$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
 		if ( $aOpen ) {
 			$this->_out[ ] = "</a>";
+
 			return $cell;
 		}
+
 		return $cell;
 	}
 
@@ -623,6 +647,7 @@ class SPTplParser
 			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="checkedout">';
 			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
 			$this->_out[ ] = '</a>';
+
 			return $cell;
 		}
 		elseif ( $this->istSet( $cell[ 'attributes' ], 'locked', true ) ) {
@@ -631,16 +656,19 @@ class SPTplParser
 			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $text . '" class="checkedout">';
 			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
 			$this->_out[ ] = '</a>';
+
 			return $cell;
 		}
 		$type = $this->istSet( $cell[ 'attributes' ], 'input-type' ) ? $cell[ 'attributes' ][ 'input-type' ] : 'checkbox';
 		if ( isset( $cell[ 'attributes' ][ 'rel' ] ) && $cell[ 'attributes' ][ 'rel' ] ) {
 			$this->_out[ ] = '<input type="' . $type . '" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '"/>';
+
 			return $cell;
 		}
 		else {
 			$multiple = $this->istSet( $cell[ 'attributes' ], 'multiple', 'false' ) ? null : '[]';
 			$this->_out[ ] = '<input type="' . $type . '" name="' . $cell[ 'attributes' ][ 'name' ] . $multiple . '" value="' . $cell[ 'content' ] . '"/>';
+
 			return $cell;
 		}
 	}
@@ -649,7 +677,7 @@ class SPTplParser
 	{
 		$this->tabsContentOpen = true;
 		$this->activeTab = false;
-		$this->_out[ ] = "\n" . '<ul class="nav nav-tabs">';
+		$this->_out[] = "\n" . '<ul class="nav nav-tabs responsive">';
 		$active = false;
 		foreach ( $element[ 'content' ] as $tab ) {
 			if ( !( $active ) ) {
@@ -661,7 +689,7 @@ class SPTplParser
 			}
 		}
 		$this->_out[ ] = '</ul>';
-		$this->_out[ ] = "\n" . '<div class="tab-content">';
+		$this->_out[] = "\n" . '<div class="tab-content responsive">';
 	}
 
 	public function renderButton( $button, $list = false )
@@ -688,10 +716,10 @@ class SPTplParser
 				$icon = $button[ 'icon' ];
 			}
 			if ( $icon != 'none' ) {
-				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+				$this->_out[] = '<i class="icon-' . $icon . '"></i>' . $label;
 			}
 			else {
-				$this->_out[ ] = '&nbsp;&nbsp;' . $label;
+				$this->_out[] = $label;
 			}
 			$this->_out[ ] = '</a>';
 			$this->_out[ ] = '<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span>&nbsp;</button>';
@@ -720,7 +748,7 @@ class SPTplParser
 			else {
 				$icon = $button[ 'icon' ];
 			}
-			$this->_out[ ] = '&nbsp;<i class="icon-' . $icon . '"></i>&nbsp;' . $label;
+			$this->_out[] = '<i class="icon-' . $icon . '"></i>' . $label;
 			if ( $rel || $href ) {
 				$this->_out[ ] = '</a>';
 			}
@@ -740,7 +768,7 @@ class SPTplParser
 				else {
 					$icon = $button[ 'icon' ];
 				}
-				$this->_out[ ] = '<i class="icon-' . $icon . '"></i>&nbsp;&nbsp;' . $label;
+				$this->_out[] = '<i class="icon-' . $icon . '"></i>' . $label;
 				$this->_out[ ] = '</a></li>';
 			}
 		}
