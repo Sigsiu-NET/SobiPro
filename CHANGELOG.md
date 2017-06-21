@@ -37,6 +37,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Font Awesome for back-end included in sobiadmin.css; separate version for front-end available (sobifont.css)
 	(+) Indicator in back-end for primary category
 	(+) Possibility to add entry link to image in vCard
+	(+) Autosuggest function extended to general search field
 
 	(-) Unused tabs script of SobiPro version 1.0 removed
 	(-) Clean-up of loaded scripts in template
@@ -52,6 +53,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Font Awesome 3 local does not show icons in front-end datepicker
 	(#) Solution to overcome Joomla's IcoMoon when Font Awesome 3 is loaded via CDN
 	(#) Typo in page-header CSS class
+	(#) Section redirect parameters won't be processed if section is unpublished
 
 
 ### 1.3.7 (28 April 2017)

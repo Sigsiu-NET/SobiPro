@@ -107,11 +107,20 @@ final class SobiProCtrl
 		}
 
 		if ( !( $access ) ) {
-			if ( Sobi::Cfg( 'redirects.section_enabled', false ) ) {
-				$redirect = Sobi::Cfg( 'redirects.section_url', null );
-				$msg = Sobi::Cfg( 'redirects.section_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', Input::Task() ) );
-				$msgtype = Sobi::Cfg( 'redirects.section_msgtype', 'message' );
-				Sobi::Redirect( Sobi::Url( $redirect ), Sobi::Txt( $msg ), $msgtype, true );
+			$redirect = Sobi::Cfg( 'redirects.section_access_url', null );
+			if ( Sobi::Cfg( 'redirects.section_access_enabled', false ) && strlen( $redirect ) ) {
+				$msg = Sobi::Cfg( 'redirects.section_access_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) );
+				$msgtype = Sobi::Cfg( 'redirects.section_access_msgtype', 'message' );
+
+				if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
+					$redirect = Sobi::Url( $redirect );
+				}
+				if ( $msgtype != 'none' ) {
+					Sobi::Redirect( $redirect, Sobi::Txt( $msg ), $msgtype, true );
+				}
+				else {
+					Sobi::Redirect( $redirect, null, null, true );
+				}
 			}
 			else {
 				SPFactory::mainframe()->runAway( 'You have no permission to access this site', 403, null, true );

@@ -412,7 +412,8 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $error ) {
 			$redirect = Sobi::Cfg( 'redirects.' . $type . '_access_url', null );
 			if ( Sobi::Cfg( 'redirects.' . $type . '_access_enabled', false ) && strlen( $redirect ) ) {
-				$this->escape( $redirect, Sobi::Cfg( 'redirects.' . $type . '_access_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) ), Sobi::Cfg( 'redirects.' . $type . '_access_msgtype', 'message' ) );
+				$this->escape( $redirect, Sobi::Cfg( 'redirects.' . $type . '_access_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) ),
+					Sobi::Cfg( 'redirects.' . $type . '_access_msgtype', 'message' ) );
 				exit;
 			}
 			else {
