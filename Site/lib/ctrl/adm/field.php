@@ -102,11 +102,11 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		$languages = $view->languages();
 		$view->assign( $languages, 'languages-list' );
 		$field->onFieldEdit( $view );
-		/*
-		 * 1.1 native - config and view in xml
-		 */
 
-		/** Legacy code */
+		// 1.1 native - config and view in xml
+		$this->loadTemplate( $field, $view );
+
+		/** Legacy code for 1.0 fields */
 //		if ( !( $this->loadTemplate( $field, $view ) ) ) {
 //			$view->assign( $helpTask, '_compatibility' );
 //			if ( SPLoader::translatePath( 'field.edit.' . $field->get( 'fieldType' ), 'adm', true, 'ini' ) ) {
