@@ -107,10 +107,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$cfg->set( 'cms_root_path', SOBI_ROOT );
 		$cfg->set( 'live_path', SOBI_LIVE_PATH );
 
-		//this folder does not exist
-//		if ( defined( 'SOBIPRO_ADM' ) ) {
-//			$cfg->set( 'adm_img_folder_live', Sobi::FixPath( JURI::root() . '/' . SOBI_ADM_FOLDER . '/images' ) );
-//		}
+		if ( defined( 'SOBIPRO_ADM' ) ) {
+			$cfg->set( 'adm_img_folder_live', Sobi::FixPath( JURI::root() . '/' . SOBI_ADM_FOLDER . '/images' ) );
+		}
 		///same as media_folder
 		/// $cfg->set( 'img_folder_path', SOBI_ROOT . '/media/sobipro' );
 
