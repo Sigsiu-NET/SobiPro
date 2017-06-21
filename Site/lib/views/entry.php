@@ -53,24 +53,6 @@ class SPEntryView extends SPFrontView implements SPView
 			$this->addHidden( $id, 'entry.id' );
 		}
 
-		if ( Sobi::Cfg( 'legacy.sigsiutree', false ) ) {
-			/* load the SigsiuTree class */
-			$tree = SPLoader::loadClass( 'mlo.tree' );
-			/* create new instance */
-			$tree = new $tree( Sobi::Cfg( 'list.categories_ordering' ) );
-			$link = "javascript:SP_selectCat( '{sid}' )";
-			$tree->setHref( $link );
-			$tree->setTask( 'category.chooser' );
-			$tree->disable( Sobi::Section() );
-			$tree->init( Sobi::Section() );
-			$head = SPFactory::header();
-			$params = [];
-			$params[ 'URL' ] = Sobi::Url( [ 'task' => 'category.parents', 'out' => 'json' ], true, false, true );
-			$params[ 'MAXCATS' ] = Sobi::Cfg( 'legacy.maxCats', '5' );
-			$params[ 'SEPARATOR' ] = Sobi::Cfg( 'string.path_separator', ' > ' );
-			$head->addJsVarFile( 'edit', md5( Sobi::Section() . Sobi::Section( true ) . serialize( $params ) ), $params );
-		}
-
 		$type = $this->key( 'template_type', 'xslt' );
 		if ( $type != 'php' && Sobi::Cfg( 'global.disable_xslt', false ) ) {
 			$type = 'php';
@@ -135,32 +117,12 @@ class SPEntryView extends SPFrontView implements SPView
 					]
 			];
 
-			if ( Sobi::Cfg( 'legacy.sigsiutree', false ) ) {
-				$data[ 'entry' ][ '_data' ][ 'category_chooser' ] = [
-						'path' => [
-								'_complex' => 1,
-								'_xml' => 1,
-								'_data' => SPHtml_Input::textarea( 'parent_path', $this->get( 'parent_path' ), false, 500, 60, [ 'id' => 'entry.path', 'class' => 'inputbox required', 'readonly' => 'readonly' ] ),
-						],
-						'selected' => [
-								'_complex' => 1,
-								'_xml' => 1,
-								'_data' => SPHtml_Input::text( 'entry.parent', $this->get( 'parents' ), [ 'id' => 'entry.parent', 'size' => 15, 'maxlength' => 50, 'class' => 'inputbox required', 'readonly' => 'readonly', 'style' => 'text-align:center;' ] ),
-						],
-				];
-			}
 			$data[ 'entry' ][ '_data' ][ 'fields' ] = [
 					'_complex' => 1,
 					'_data' => $f,
 					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 			];
-			if ( Sobi::Cfg( 'legacy.sigsiutree', false ) ) {
-				$data[ 'tree' ] = [
-						'_complex' => 1,
-						'_xml' => 1,
-						'_data' => SPLang::entities( $tree->display( true ), true ),
-				];
-			}
+
 			$this->_attr = $data;
 			Sobi::Trigger( $this->_type, ucfirst( __FUNCTION__ ), [ &$this->_attr ] );
 		}

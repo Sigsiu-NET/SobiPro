@@ -194,9 +194,6 @@ class SPEntryCtrl extends SPController
 			$this->authorise( 'add', 'own' );
 		}
 
-		if ( Sobi::Cfg( 'legacy.sigsiutree', false ) && !( SPRequest::int( 'entry_parent', 0 ) ) ) {
-			$this->response( Sobi::Back(), Sobi::Txt( 'CAT.SELECT_ONE' ), true, SPC::ERROR_MSG );
-		}
 		$this->_model->loadFields( Sobi::Reg( 'current_section' ) );
 		$fields = $this->_model->get( 'fields' );
 		$tsId   = SPRequest::string( 'editentry', null, false, 'cookie' );
