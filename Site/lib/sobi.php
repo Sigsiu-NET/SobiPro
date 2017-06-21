@@ -542,7 +542,7 @@ abstract class Sobi
 
 		/* load basic configuration settings */
 		$_config->addIniFile( 'etc.config', true );
-		$_config->addIniFile( 'etc.adm.base', true );
+		$_config->addIniFile( 'etc.base', true );
 
 		$_config->addTable( 'spdb_config', $sid );
 		/* initialise interface config setting */
