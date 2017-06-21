@@ -160,6 +160,7 @@ final class SobiProAdmCtrl
 		/* load basic configuration settings */
 		$this->_config->addIniFile( 'etc.config', true );
 		$this->_config->addIniFile( 'etc.adm.config', true );
+		$this->_config->addIniFile( 'etc.adm.base', true );
 		$this->_config->addTable( 'spdb_config', $this->_section );
 		/* initialise interface config setting */
 		$this->_mainframe->getBasicCfg();

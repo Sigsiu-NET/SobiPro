@@ -138,7 +138,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 		/** Mon, Jun 20, 2016 13:45:41 - we do not need the style for it */
 //		$noncropsize = "";
-//		$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '80:80' ) );
+//		$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '100:100' ) );
 		if ( $show ) {
 			$img = Sobi::Cfg( 'live_site' ) . $show;
 			if ( !$this->crop ) {
@@ -528,7 +528,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			}
 			$ico = clone $orgImage;
 			try {
-				$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '80:80' ) );
+				$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '100:100' ) );
 				$ico->setTransparency( $this->detectTransparency );
 				$ico->resample( $icoSize[ 0 ], $icoSize[ 1 ], false );
 				$files[ 'ico' ] = $this->parseName( $entry, strtolower( $orgName ), 'ico_{orgname}_' . $this->nid, true );
@@ -828,7 +828,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$this->message( [ 'type' => 'error', 'text' => SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ), 'id' => '', ] );
 			}
 			try {
-				$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '80:80' ) );
+				$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '100:100' ) );
 				$ico->resample( $icoSize[ 0 ], $icoSize[ 1 ], false );
 				$ico->saveAs( $dirName . 'icon_' . $orgFileName );
 			} catch ( SPException $x ) {

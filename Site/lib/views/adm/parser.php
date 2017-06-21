@@ -19,34 +19,34 @@
  */
 class SPTplParser
 {
-	/** @var bool  */
+	/** @var bool */
 	protected $tabsContentOpen = false;
-	/** @var bool  */
+	/** @var bool */
 	protected $activeTab = false;
-	/** @var bool  */
+	/** @var bool */
 	protected $table = true;
-	/** @var bool  */
+	/** @var bool */
 	protected $loopTable = true;
-	/** @var string  */
+	/** @var string */
 	protected $thTd = 'th';
-	/** @var array  */
+	/** @var array */
 	protected $_out = [];
-	/** @var bool  */
+	/** @var bool */
 	protected $loopOpen = false;
-	/** @var array  */
+	/** @var array */
 	protected $_tickerIcons = [
-			0 => 'remove',
-			1 => 'ok',
-			-1 => 'stop',
-			-2 => 'pause'
+		0  => 'remove',
+		1  => 'ok',
+		-1 => 'stop',
+		-2 => 'pause'
 	];
-	/** @var string  */
+	/** @var string */
 	protected $_checkedOutIcon = 'lock';
-	/** @var string  */
+	/** @var string */
 	static $newLine = "\n";
-	/** @var array  */
+	/** @var array */
 	protected $html = [ 'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'a', 'button', 'url', 'img', 'table', 'ul', 'li', 'pre', 'label', 'tr', 'th', 'td', 'code', 'i' ];
-	/** @var array  */
+	/** @var array */
 	protected $internalAttributes = [ 'condition' ];
 
 
@@ -93,14 +93,14 @@ class SPTplParser
 		switch ( $element[ 'type' ] ) {
 			case 'field':
 				if ( isset( $element[ 'attributes' ] ) && $this->istSet( $element[ 'attributes' ], 'stand-alone', 'true' ) ) {
-					$this->_out[ ] = $element[ 'content' ];
+					$this->_out[] = $element[ 'content' ];
 					break;
 				}
 				if ( $this->table ) {
-					$this->_out[ ] = '<tr>';
-					$this->_out[ ] = '<td>';
+					$this->_out[] = '<tr>';
+					$this->_out[] = '<td>';
 				}
-				$this->_out[ ] = '<div class="control-group">';
+				$this->_out[] = '<div class="control-group">';
 				if ( isset( $element[ 'label' ] ) && strlen( $element[ 'label' ] ) ) {
 					if ( !( isset( $element[ 'id' ] ) ) ) {
 						$element[ 'id' ] = $this->istSet( $element[ 'attributes' ], 'id' ) ? $element[ 'attributes' ][ 'id' ] : SPLang::nid( $element[ 'label' ] );
@@ -113,25 +113,25 @@ class SPTplParser
 						$i = strlen( $element[ 'revisions-change' ] ) > 5 ? $element[ 'revisions-change' ] : $element[ 'id' ];
 						$add = '&nbsp;<a data-fid="' . $i . '" href="#" class="btn btn-mini btn-warning ctrl-revision-compare">&nbsp;<i class="icon-resize-horizontal"></i></a>';
 					}
-					$this->_out[ ] = "<label class=\"control-label\" for=\"{$element['id']}\">{$element['label']}{$add}</label>\n";
+					$this->_out[] = "<label class=\"control-label\" for=\"{$element['id']}\">{$element['label']}{$add}</label>\n";
 				}
 				if ( $this->table ) {
-					$this->_out[ ] = '</td>';
+					$this->_out[] = '</td>';
 				}
 				$warn = '';
 				if ( isset( $element[ 'attributes' ][ 'warn' ] ) && strlen( $element[ 'attributes' ][ 'warn' ] ) ) {
 					$warn = ' ' . $element[ 'attributes' ][ 'warn' ];
 					//unset($element[ 'attributes' ][ 'warn' ]);
 				}
-				$this->_out[ ] = "<div class=\"controls{$warn}\">\n";
+				$this->_out[] = "<div class=\"controls{$warn}\">\n";
 				$class = null;
 
 				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
 					if ( $this->istSet( $element, 'id' ) ) {
-						$this->_out[ ] = "<div class=\"spOutput\" id=\"{$element['id']}\">";
+						$this->_out[] = "<div class=\"spOutput\" id=\"{$element['id']}\">";
 					}
 					else {
-						$this->_out[ ] = "<div class=\"spOutput\">";
+						$this->_out[] = "<div class=\"spOutput\">";
 					}
 					$outclass = null;
 					if ( isset( $element[ 'args' ][ 'params' ][ 'class' ] ) ) {
@@ -145,14 +145,14 @@ class SPTplParser
 						$id = ' id="' . $element[ 'args' ][ 'params' ][ 'id' ] . '" ';
 					}
 					if ( $outclass ) {
-						$this->_out[ ] = "<span class=\"{$outclass}\"{$id}>\n";
+						$this->_out[] = "<span class=\"{$outclass}\"{$id}>\n";
 					}
 					else {
-						$this->_out[ ] = "<span{$id}>\n";
+						$this->_out[] = "<span{$id}>\n";
 					}
 					if ( isset( $element[ 'attributes' ][ 'icons' ] ) && $element[ 'attributes' ][ 'icons' ] ) {
 						$icons = json_decode( str_replace( "'", '"', $element[ 'attributes' ][ 'icons' ] ), true );
-						$element[ 'content' ] = (int)$element[ 'content' ];
+						$element[ 'content' ] = (int) $element[ 'content' ];
 						$icon = ( isset( $icons[ $element[ 'content' ] ] ) && $icons[ $element[ 'content' ] ] ) ? $icons[ $element[ 'content' ] ] : $this->_tickerIcons[ $element[ 'content' ] ];
 						$element[ 'content' ] = '<i class="icon-' . $icon . '"></i>';
 					}
@@ -164,18 +164,18 @@ class SPTplParser
 					$class .= 'input-append ';
 				}
 				if ( $class ) {
-					$this->_out[ ] = "<div class=\"{$class}\">\n";
+					$this->_out[] = "<div class=\"{$class}\">\n";
 				}
 				if ( $this->table ) {
-					$this->_out[ ] = '<td>';
+					$this->_out[] = '<td>';
 				}
 				if ( count( $element[ 'adds' ][ 'before' ] ) ) {
 					foreach ( $element[ 'adds' ][ 'before' ] as $o ) {
-						$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
+						$this->_out[] = "<span class=\"add-on\">{$o}</span>";
 					}
 				}
 				/** here is the right content output */
-				$this->_out[ ] = $element[ 'content' ];
+				$this->_out[] = $element[ 'content' ];
 				if ( count( $element[ 'adds' ][ 'after' ] ) ) {
 					foreach ( $element[ 'adds' ][ 'after' ] as $o ) {
 						if ( $this->istSet( $o, 'element', 'button' ) ) {
@@ -189,35 +189,35 @@ class SPTplParser
 								}
 								$data .= ' ' . $a . '="' . $v . '" ';
 							}
-							$this->_out[ ] = "<button class=\"{$o['class']}\" {$data} type=\"button\">{$o['label']}</button>";
+							$this->_out[] = "<button class=\"{$o['class']}\" {$data} type=\"button\">{$o['label']}</button>";
 						}
 						else {
-							$this->_out[ ] = "<span class=\"add-on\">{$o}</span>";
+							$this->_out[] = "<span class=\"add-on\">{$o}</span>";
 						}
 					}
 				}
 				if ( $element[ 'args' ][ 'type' ] == 'output' ) {
-					$this->_out[ ] = "</div></span>\n";
+					$this->_out[] = "</div></span>\n";
 				}
 				if ( $class ) {
-					$this->_out[ ] = "</div>\n";
+					$this->_out[] = "</div>\n";
 				}
 				if ( $this->table ) {
-					$this->_out[ ] = '</td>';
-					$this->_out[ ] = '</tr>';
+					$this->_out[] = '</td>';
+					$this->_out[] = '</tr>';
 				}
-				$this->_out[ ] = '</div>';
-				$this->_out[ ] = '</div>';
+				$this->_out[] = '</div>';
+				$this->_out[] = '</div>';
 				break;
 			case 'header':
 				$this->_out[] = '<div class="span6 spScreenSubHead"><i class="icon-' . $element[ 'attributes' ][ 'icon' ] . ' icon-2x"></i>';
 //				$this->_out[] = '<div class="span6 spScreenSubHead spicon-48-' . $element[ 'attributes' ][ 'icon' ] . '">';
 				$this->_out[] = '<div class="title">' . $element[ 'attributes' ][ 'label' ] . '</div>';
-				$this->_out[ ] = '</div>';
+				$this->_out[] = '</div>';
 				break;
 			case 'url':
 				if ( isset( $element[ 'attributes' ][ 'image' ] ) ) {
-					$this->_out[ ] = "<img src=\"{$element['attributes']['image']}\" alt=\"{$element['attributes']['label']}\" />";
+					$this->_out[] = "<img src=\"{$element['attributes']['image']}\" alt=\"{$element['attributes']['label']}\" />";
 					$this->closeElement( $element );
 					$this->openElement( $element );
 				}
@@ -226,12 +226,12 @@ class SPTplParser
 					$this->closeElement( $element );
 					$this->openElement( $element );
 				}
-				$this->_out[ ] = $element[ 'content' ];
+				$this->_out[] = $element[ 'content' ];
 				break;
 			case 'text':
 			case 'menu':
 			case 'toolbar':
-				$this->_out[ ] = $element[ 'content' ];
+				$this->_out[] = $element[ 'content' ];
 				break;
 		}
 	}
@@ -257,34 +257,34 @@ class SPTplParser
 				break;
 			case 'tab':
 				if ( !( $this->activeTab ) ) {
-					$this->_out[ ] = '<div class="tab-pane active" id="' . $data[ 'id' ] . '">';
+					$this->_out[] = '<div class="tab-pane active" id="' . $data[ 'id' ] . '">';
 					$this->activeTab = true;
 				}
 				else {
-					$this->_out[ ] = '<div class="tab-pane" id="' . $data[ 'id' ] . '">';
+					$this->_out[] = '<div class="tab-pane" id="' . $data[ 'id' ] . '">';
 				}
 				break;
 			case 'fieldset':
 				if ( $this->table ) {
-					$this->_out[ ] = '<table class="table table-striped table-bordered table-condensed">';
-					$this->_out[ ] = '<tbody>';
+					$this->_out[] = '<table class="table table-striped table-bordered table-condensed">';
+					$this->_out[] = '<tbody>';
 				}
 				$formType = isset( $data[ 'attributes' ][ 'type' ] ) && $data[ 'attributes' ][ 'type' ] ? $data[ 'attributes' ][ 'type' ] : 'horizontal';
-				$this->_out[ ] = '<div class="form-' . $formType . '">';
+				$this->_out[] = '<div class="form-' . $formType . '">';
 				if ( isset( $data[ 'label' ] ) && $data[ 'label' ] ) {
-					$this->_out[ ] = '<div class="control-group spFieldGroup"><label class="control-label">' . $data[ 'label' ] . '</label></div>';
+					$this->_out[] = '<div class="control-group spFieldGroup"><label class="control-label">' . $data[ 'label' ] . '</label></div>';
 				}
 				break;
 			case 'head':
 				$this->thTd = 'th';
-				$this->_out[ ] = '<thead>';
-				$this->_out[ ] = '<tr>';
+				$this->_out[] = '<thead>';
+				$this->_out[] = '<tr>';
 				break;
 			case 'cell':
 				$this->proceedCell( $data, $this->loopTable ? $this->thTd : 'div' );
 				break;
 			case 'header':
-				$this->_out[ ] = '<div class="SPAdmNavBar">';
+				$this->_out[] = '<div class="SPAdmNavBar">';
 				break;
 			case 'loop':
 				$this->loopTable = true;
@@ -292,13 +292,13 @@ class SPTplParser
 					$this->loopTable = $data[ 'attributes' ][ 'table' ] == 'false' ? false : true;
 				}
 				if ( $this->loopTable ) {
-					$this->_out[ ] = '<tbody>';
+					$this->_out[] = '<tbody>';
 				}
 				$this->loopOpen = true;
 				break;
 			case 'loop-row':
 				if ( $this->loopTable ) {
-					$this->_out[ ] = '<tr>';
+					$this->_out[] = '<tr>';
 				}
 				break;
 			case 'message':
@@ -309,10 +309,10 @@ class SPTplParser
 				$this->tooltip( $data );
 				break;
 			case 'pagination':
-				$this->_out[ ] = $data[ 'content' ];
+				$this->_out[] = $data[ 'content' ];
 				break;
 			case 'table':
-				if (isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ]) {
+				if ( isset( $data[ 'attributes' ][ 'class' ] ) && $data[ 'attributes' ][ 'class' ] ) {
 //				if ( ( $data[ 'attributes' ][ 'class' ] ) ) {
 					$data[ 'attributes' ][ 'class' ] = 'table ' . $data[ 'attributes' ][ 'class' ];
 				}
@@ -335,7 +335,7 @@ class SPTplParser
 							$a .= " {$att}=\"{$value}\"";
 						}
 					}
-					$this->_out[ ] = "<{$tag}{$a}>";
+					$this->_out[] = "<{$tag}{$a}>";
 				}
 				break;
 		}
@@ -372,7 +372,7 @@ class SPTplParser
 		else {
 			$el .= ">{$data['title']}</a>";
 		}
-		$this->_out[ ] = $el;
+		$this->_out[] = $el;
 	}
 
 	protected function message( $data )
@@ -393,12 +393,12 @@ class SPTplParser
 				}
 				$icon = "<i class=\"{$icon}\"></i> ";
 			}
-			$this->_out[ ] = "<div class=\"alert {$type} {$class}\">";
+			$this->_out[] = "<div class=\"alert {$type} {$class}\">";
 			if ( isset( $data[ 'attributes' ][ 'dismiss-button' ] ) && $data[ 'attributes' ][ 'dismiss-button' ] == 'true' ) {
-				$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
+				$this->_out[] = '<button type="button" class="close" data-dismiss="alert">×</button>';
 			}
-			$this->_out[ ] = $icon . $data[ 'attributes' ][ 'label' ];
-			$this->_out[ ] = '</div>';
+			$this->_out[] = $icon . $data[ 'attributes' ][ 'label' ];
+			$this->_out[] = '</div>';
 		}
 		else {
 			$attr = [];
@@ -407,7 +407,7 @@ class SPTplParser
 			}
 			if ( count( $data[ 'attributes' ] ) ) {
 				foreach ( $data[ 'attributes' ] as $n => $v ) {
-					$attr[ ] = "{$n}=\"{$v}\"";
+					$attr[] = "{$n}=\"{$v}\"";
 				}
 			}
 			$attr = implode( ' ', $attr );
@@ -415,16 +415,16 @@ class SPTplParser
 			if ( count( $messages ) ) {
 				foreach ( $messages as $type => $texts ) {
 					if ( count( $texts ) ) {
-						$this->_out[ ] = "<div class=\"alert alert-{$type} spSystemAlert\">";
-						$this->_out[ ] = '<button type="button" class="close" data-dismiss="alert">×</button>';
+						$this->_out[] = "<div class=\"alert alert-{$type} spSystemAlert\">";
+						$this->_out[] = '<button type="button" class="close" data-dismiss="alert">×</button>';
 						foreach ( $texts as $text ) {
-							$this->_out[ ] = "<div>{$text}</div>";
+							$this->_out[] = "<div>{$text}</div>";
 						}
-						$this->_out[ ] = '</div>';
+						$this->_out[] = '</div>';
 					}
 				}
 			}
-			$this->_out[ ] = "<div {$attr}></div>";
+			$this->_out[] = "<div {$attr}></div>";
 		}
 	}
 
@@ -434,33 +434,33 @@ class SPTplParser
 			case 'tabs':
 				$this->tabsContentOpen = false;
 			case 'tab':
-				$this->_out[ ] = '</div>';
+				$this->_out[] = '</div>';
 				break;
 			case 'fieldset':
 				if ( $this->table ) {
-					$this->_out[ ] = '</tbody>';
-					$this->_out[ ] = '</table>';
+					$this->_out[] = '</tbody>';
+					$this->_out[] = '</table>';
 				}
-				$this->_out[ ] = '</div>';
+				$this->_out[] = '</div>';
 				break;
 			case 'head':
 				$this->thTd = 'td';
-				$this->_out[ ] = '</tr>';
-				$this->_out[ ] = '</thead>';
+				$this->_out[] = '</tr>';
+				$this->_out[] = '</thead>';
 				break;
 			case 'header':
-				$this->_out[ ] = '</div>';
+				$this->_out[] = '</div>';
 				break;
 			case 'loop':
 				if ( $this->loopTable ) {
-					$this->_out[ ] = '</tbody>';
+					$this->_out[] = '</tbody>';
 				}
 				$this->loopTable = true;
 				$this->loopOpen = false;
 				break;
 			case 'loop-row':
 				if ( $this->loopTable ) {
-					$this->_out[ ] = '</tr>';
+					$this->_out[] = '</tr>';
 				}
 				break;
 			case 'link':
@@ -471,7 +471,7 @@ class SPTplParser
 					if ( $data[ 'type' ] == 'url' ) {
 						$tag = 'a';
 					}
-					$this->_out[ ] = "</{$tag}>";
+					$this->_out[] = "</{$tag}>";
 				}
 				break;
 
@@ -499,10 +499,10 @@ class SPTplParser
 		}
 		if ( isset( $cell[ 'attributes' ][ 'class' ] ) ) {
 			$c = $cell[ 'attributes' ][ 'class' ];
-			$this->_out[ ] = "\n<{$span} {$data} class=\"{$c}\">\n";
+			$this->_out[] = "\n<{$span} {$data} class=\"{$c}\">\n";
 		}
 		else {
-			$this->_out[ ] = "\n<{$span} {$data}>\n";
+			$this->_out[] = "\n<{$span} {$data}>\n";
 		}
 		$type = isset( $cell[ 'attributes' ][ 'type' ] ) ? $cell[ 'attributes' ][ 'type' ] : 'text';
 		switch ( $type ) {
@@ -518,7 +518,7 @@ class SPTplParser
 					if ( $this->istSet( $cell[ 'attributes' ], 'target' ) ) {
 						$target = "target=\"{$cell['attributes']['target']}\" ";
 					}
-					$this->_out[ ] = "<a href=\"{$cell['link']}\"{$class}{$target} >";
+					$this->_out[] = "<a href=\"{$cell['link']}\"{$class}{$target} >";
 				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'icon' ) ) {
 					$this->_out[] = '<i class="icon-' . $cell[ 'attributes' ][ 'icon' ] . '"></i>';
@@ -531,35 +531,35 @@ class SPTplParser
 					}
 				}
 				if ( $this->istSet( $cell[ 'attributes' ], 'label' ) ) {
-					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
+					$this->_out[] = $cell[ 'attributes' ][ 'label' ];
 				}
 				if ( $this->istSet( $cell, 'label' ) ) {
 					$class = null; //if label in cell directly (with optional class) add a span as it could be a label/value pair
 					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
 						$class = "class=\"{$cell['attributes']['class']}Label\"";
 					}
-					$this->_out[ ] = "<span {$class}>{$cell['label']}</span>";
+					$this->_out[] = "<span {$class}>{$cell['label']}</span>";
 				}
 				if ( $this->istSet( $cell[ 'content' ], 'element', 'button' ) ) {
 					$this->renderButton( $cell[ 'content' ] );
 				}
 				else {
-					$this->_out[ ] = $cell[ 'content' ];
+					$this->_out[] = $cell[ 'content' ];
 				}
 				/** no break here - continue */
 				if ( $type == 'link' ) {
-					$this->_out[ ] = "</a>";
+					$this->_out[] = "</a>";
 				}
 				break;
 			case 'image':
-				$this->_out[ ] = "<img src=\"{$cell['link']}\" />";
+				$this->_out[] = "<img src=\"{$cell['link']}\" />";
 				break;
 			case 'ordering':
 				if ( isset( $cell[ 'attributes' ][ 'label' ] ) ) {
-					$this->_out[ ] = $cell[ 'attributes' ][ 'label' ];
-					$this->_out[ ] = '<button class="btn btn-mini" name="spReorder" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
-					$this->_out[ ] = '<i class="icon-reorder"></i>';
-					$this->_out[ ] = '</button>';
+					$this->_out[] = $cell[ 'attributes' ][ 'label' ];
+					$this->_out[] = '<button class="btn btn-mini" name="spReorder" rel="' . $cell[ 'attributes' ][ 'rel' ] . '">';
+					$this->_out[] = '<i class="icon-reorder"></i>';
+					$this->_out[] = '</button>';
 				}
 				else {
 					$this->_out[] = SPHtml_Input::text( $cell[ 'attributes' ][ 'name' ], $cell[ 'content' ], [ 'class' => 'input-mini input-micro spSubmit' ] );
@@ -577,7 +577,7 @@ class SPTplParser
 				$this->proceedCell( $child, 'div' );
 			}
 		}
-		$this->_out[ ] = "\n</{$span}>\n";
+		$this->_out[] = "\n</{$span}>\n";
 	}
 
 	public function ticker( $cell )
@@ -591,14 +591,14 @@ class SPTplParser
 			$index = -1;
 			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_EXPIRED', $cell[ 'attributes' ][ 'valid-until' ] );
-			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="expired">';
+			$this->_out[] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="expired">';
 		}
 		/** is pending ? */
 		elseif ( ( isset( $cell[ 'attributes' ][ 'valid-since' ] ) && $cell[ 'attributes' ][ 'valid-since' ] && strtotime( $cell[ 'attributes' ][ 'valid-since' ] . ' UTC' ) > $now ) && $index == 1 ) {
 			$index = -2;
 			$aOpen = true;
 			$txt = Sobi::Txt( 'ROW_PENDING', $cell[ 'attributes' ][ 'valid-since' ] );
-			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending' . $linkClass . '">';
+			$this->_out[] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending' . $linkClass . '">';
 		}
 		elseif ( $index < 0 ) {
 			$txt = 'Locked';
@@ -607,12 +607,12 @@ class SPTplParser
 				$txt = Sobi::Txt( $txt[ $index ] );
 			}
 			$aOpen = true;
-			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending' . $linkClass . '">';
+			$this->_out[] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="pending' . $linkClass . '">';
 		}
 		elseif ( isset( $cell[ 'link' ] ) && $cell[ 'link' ] ) {
 			$cell[ 'link' ] = $cell[ 'link' ] . '&t=' . microtime( true );
 			$aOpen = true;
-			$this->_out[ ] = "<a href=\"{$cell['link']}\" class=\"{$linkClass}\" >";
+			$this->_out[] = "<a href=\"{$cell['link']}\" class=\"{$linkClass}\" >";
 		}
 		$icons = [];
 		if ( isset( $cell[ 'attributes' ][ 'icons' ] ) && $cell[ 'attributes' ][ 'icons' ] ) {
@@ -622,9 +622,9 @@ class SPTplParser
 			$icons = $this->_tickerIcons;
 		}
 		$icon = ( isset( $icons[ $index ] ) && $icons[ $index ] ) ? $icons[ $index ] : $this->_tickerIcons[ $index ];
-		$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
+		$this->_out[] = '<i class="icon-' . $icon . '"></i>';
 		if ( $aOpen ) {
-			$this->_out[ ] = "</a>";
+			$this->_out[] = "</a>";
 
 			return $cell;
 		}
@@ -644,30 +644,30 @@ class SPTplParser
 			}
 			$user = SPUser::getInstance( $cell[ 'attributes' ][ 'checked-out-by' ] );
 			$txt = Sobi::Txt( 'CHECKED_OUT', $user->get( 'name' ), $cell[ 'attributes' ][ 'checked-out-time' ] );
-			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="checkedout">';
-			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
-			$this->_out[ ] = '</a>';
+			$this->_out[] = '<a href="#" rel="sp-tooltip" data-original-title="' . $txt . '" class="checkedout">';
+			$this->_out[] = '<i class="icon-' . $icon . '"></i>';
+			$this->_out[] = '</a>';
 
 			return $cell;
 		}
 		elseif ( $this->istSet( $cell[ 'attributes' ], 'locked', true ) ) {
 			$icon = $this->istSet( $cell[ 'attributes' ], 'locked-icon' ) ? $cell[ 'attributes' ][ 'locked-icon' ] : $this->_checkedOutIcon;
 			$text = $this->istSet( $cell[ 'attributes' ], 'locked-text' ) ? $cell[ 'attributes' ][ 'locked-text' ] : $this->_checkedOutIcon;
-			$this->_out[ ] = '<a href="#" rel="sp-tooltip" data-original-title="' . $text . '" class="checkedout">';
-			$this->_out[ ] = '<i class="icon-' . $icon . '"></i>';
-			$this->_out[ ] = '</a>';
+			$this->_out[] = '<a href="#" rel="sp-tooltip" data-original-title="' . $text . '" class="checkedout">';
+			$this->_out[] = '<i class="icon-' . $icon . '"></i>';
+			$this->_out[] = '</a>';
 
 			return $cell;
 		}
 		$type = $this->istSet( $cell[ 'attributes' ], 'input-type' ) ? $cell[ 'attributes' ][ 'input-type' ] : 'checkbox';
 		if ( isset( $cell[ 'attributes' ][ 'rel' ] ) && $cell[ 'attributes' ][ 'rel' ] ) {
-			$this->_out[ ] = '<input type="' . $type . '" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '"/>';
+			$this->_out[] = '<input type="' . $type . '" name="spToggle" value="1" rel="' . $cell[ 'attributes' ][ 'rel' ] . '"/>';
 
 			return $cell;
 		}
 		else {
 			$multiple = $this->istSet( $cell[ 'attributes' ], 'multiple', 'false' ) ? null : '[]';
-			$this->_out[ ] = '<input type="' . $type . '" name="' . $cell[ 'attributes' ][ 'name' ] . $multiple . '" value="' . $cell[ 'content' ] . '"/>';
+			$this->_out[] = '<input type="' . $type . '" name="' . $cell[ 'attributes' ][ 'name' ] . $multiple . '" value="' . $cell[ 'content' ] . '"/>';
 
 			return $cell;
 		}
@@ -682,13 +682,13 @@ class SPTplParser
 		foreach ( $element[ 'content' ] as $tab ) {
 			if ( !( $active ) ) {
 				$active = true;
-				$this->_out[ ] = "<li class=\"active\" ><a href=\"#{$tab['id']}\">{$tab['label']}</a></li>\n";
+				$this->_out[] = "<li class=\"active\" ><a href=\"#{$tab['id']}\">{$tab['label']}</a></li>\n";
 			}
 			else {
-				$this->_out[ ] = "<li><a href=\"#{$tab['id']}\">{$tab['label']}</a> </li>\n";
+				$this->_out[] = "<li><a href=\"#{$tab['id']}\">{$tab['label']}</a> </li>\n";
 			}
 		}
-		$this->_out[ ] = '</ul>';
+		$this->_out[] = '</ul>';
 		$this->_out[] = "\n" . '<div class="tab-content responsive">';
 	}
 
@@ -707,8 +707,8 @@ class SPTplParser
 		$label = $button[ 'label' ];
 		$target = ( isset( $button[ 'target' ] ) && $button[ 'target' ] ) ? " target=\"{$button['target']}\"" : null;
 		if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
-			$this->_out[ ] = '<div class="btn-group">';
-			$this->_out[ ] = "<a href=\"{$href}\" class=\"btn{$class}\"{$target} rel=\"{$rel}\">";
+			$this->_out[] = '<div class="btn-group">';
+			$this->_out[] = "<a href=\"{$href}\" class=\"btn{$class}\"{$target} rel=\"{$rel}\">";
 			if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 				$icon = 'cog';
 			}
@@ -721,26 +721,26 @@ class SPTplParser
 			else {
 				$this->_out[] = $label;
 			}
-			$this->_out[ ] = '</a>';
-			$this->_out[ ] = '<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span>&nbsp;</button>';
-			$this->_out[ ] = '<div class="dropdown-menu" id="' . SPLang::nid( $button[ 'task' ] ) . '">';
-			$this->_out[ ] = '<ul class="nav nav-stacked SpDropDownBt">';
+			$this->_out[] = '</a>';
+			$this->_out[] = '<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span>&nbsp;</button>';
+			$this->_out[] = '<div class="dropdown-menu" id="' . SPLang::nid( $button[ 'task' ] ) . '">';
+			$this->_out[] = '<ul class="nav nav-stacked SpDropDownBt">';
 			foreach ( $button[ 'buttons' ] as $bt ) {
 				$this->renderButton( $bt, true );
 			}
-			$this->_out[ ] = '</ul>';
-			$this->_out[ ] = '</div>';
-			$this->_out[ ] = '</div>';
+			$this->_out[] = '</ul>';
+			$this->_out[] = '</div>';
+			$this->_out[] = '</div>';
 		}
 		elseif ( !( $list ) ) {
 			if ( $rel || $href ) {
-				$this->_out[ ] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"btn{$class}\"{$target}>";
+				$this->_out[] = "<a href=\"{$href}\" rel=\"{$rel}\" class=\"btn{$class}\"{$target}>";
 			}
 			else {
 				if ( isset( $button[ 'rel' ] ) ) {
 					$r = " rel=\"{$button['rel']}\" ";
 				}
-				$this->_out[ ] = "<div class=\"btn{$class}\"{$r}{$target}>";
+				$this->_out[] = "<div class=\"btn{$class}\"{$r}{$target}>";
 			}
 			if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 				$icon = 'cog';
@@ -750,18 +750,18 @@ class SPTplParser
 			}
 			$this->_out[] = '<i class="icon-' . $icon . '"></i>' . $label;
 			if ( $rel || $href ) {
-				$this->_out[ ] = '</a>';
+				$this->_out[] = '</a>';
 			}
 			else {
-				$this->_out[ ] = '</div>';
+				$this->_out[] = '</div>';
 			}
 		}
 		else {
 			if ( $button[ 'element' ] == 'nav-header' ) {
-				$this->_out[ ] = '<li class="nav-header">' . $button[ 'label' ] . '</li>';
+				$this->_out[] = '<li class="nav-header">' . $button[ 'label' ] . '</li>';
 			}
 			else {
-				$this->_out[ ] = '<li><a href="' . $href . $target . '" rel="' . $rel . '">';
+				$this->_out[] = '<li><a href="' . $href . $target . '" rel="' . $rel . '">';
 				if ( !( isset( $button[ 'icon' ] ) && $button[ 'icon' ] ) ) {
 					$icon = 'cog';
 				}
@@ -769,7 +769,7 @@ class SPTplParser
 					$icon = $button[ 'icon' ];
 				}
 				$this->_out[] = '<i class="icon-' . $icon . '"></i>' . $label;
-				$this->_out[ ] = '</a></li>';
+				$this->_out[] = '</a></li>';
 			}
 		}
 	}

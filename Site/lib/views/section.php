@@ -407,7 +407,7 @@ class SPSectionView extends SPFrontView implements SPView
 			$this->categoryFields( $data );
 			$data[ 'entries_in_line' ] = $this->get( '$eInLine' );
 			$data[ 'categories_in_line' ] = $this->get( '$cInLine' );
-			$data[ 'number_of_subcats' ] = Sobi::Cfg( 'list.num_subcats' );
+			$data[ 'number_of_subcats' ] = Sobi::Cfg( 'list.num_subcats', 6 );
 			$this->menu( $data );
 			$this->alphaMenu( $data );
 			$data[ 'visitor' ] = $this->visitorArray( $visitor );
