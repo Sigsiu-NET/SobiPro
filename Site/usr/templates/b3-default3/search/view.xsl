@@ -68,7 +68,7 @@
 								</label>
 								<div class="col-sm-9 sp-search-controls">
 									<input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}"
-									       class="form-control input-large pull-left" id="SPSearchBox"
+									       class="form-control input-large pull-left search-query" autocomplete="off" id="SPSearchBox"
 									       placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}"/>
 									<xsl:if test="/search/fields/top_button/label">
 										<button type="submit" class="btn btn-primary btn-sigsiu">
