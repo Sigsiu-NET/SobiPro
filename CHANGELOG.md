@@ -44,6 +44,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(-) en-GB preload function removed as Joomla 3.7 is always pre-loading the English language
 	(-) Support for applications written for SobiPro 1.0 removed
 	(-) Legacy mode for old category chooser (1.0) removed
+	(-) default3 template for Bootstrap 2 removed (separately available)
 
 	(!) Less folder removed; less files moved to css folder
 	(!) Redesign of entries & categories in SobiPro's cPanel
