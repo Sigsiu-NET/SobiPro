@@ -51,6 +51,7 @@
 
 // same for all themes if not set
 @error-color: #a30000;
+@outline-color: #5e9ed6;
 
 @import "../themes/@{colour-set}.less";
 
@@ -441,7 +442,24 @@ body.modal-open {
 	a {
 		color: @active-color;
 	}
+	.hidden {
+		display: none;
+		visibility: hidden;
+	}
+	#skip a {
+		position: absolute;
+		left: -10000px;
+		top: auto;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
 
+		&:focus {
+			position: static;
+			width: auto;
+			height: auto;
+		}
+	}
 	//without that the topmenu items are not selectable
 	.collapse {
 		position: inherit;
@@ -924,7 +942,7 @@ body.modal-open {
 	.pagination ul > .disabled > span,
 	.pagination ul > .disabled > a,
 	.pagination ul > .disabled > a:hover,
-	.pagination ul > .disabled > a:focus
+	.pagination ul > .disabled > a:focus,
 	.pagination > .disabled > span,
 	.pagination > .disabled > a,
 	.pagination > .disabled > a:hover,
@@ -1214,6 +1232,9 @@ body.modal-open {
 	.navbar-default .navbar-form {
 		border-color: @base-color;
 	}
+	.navbar .nav > li > a:focus {
+		outline: 2px solid @outline-color;
+	}
 	.nav-tabs,
 	.nav-pills {
 		font-size: calc(@fontsize + 1px);
@@ -1275,7 +1296,7 @@ body.modal-open {
 			margin-top: 15px;
 
 			input {
-				width: 115px;
+				width: 140px;
 			}
 		}
 		input[type="text"] {
@@ -1305,54 +1326,55 @@ body.modal-open {
 	.alphalist {
 		float: left;
 		margin: 5px 10px 2px 1px;
-	}
 
-	.alphalist .dropdown-menu {
-		text-align: left;
-	}
+		.dropdown-menu {
+			text-align: left;
+		}
 
-	.alphalist .btn.btn-xs {
-		padding: 1px 5px;
-		font-weight: unset;
-		font-size: calc(@fontsize - 1px);
-		margin-bottom: inherit;
-		border: inherit;
-		margin-right: inherit;
-		text-transform: none;
-	}
-
-	.alpha .pagination {
-		margin-top: 5px;
-		width: inherit;
-		display: inline-block;
-	}
-
-	.alpha .pagination li a {
-		min-width: 20px;
-		text-align: center;
-		letter-spacing: -1.3px;
-		-webkit-box-sizing: unset;
-		-moz-box-sizing: unset;
-		box-sizing: unset;
-		& when (@corners = rounded) {
-			border-radius: 4px;
+		.btn.btn-xs {
+			padding: 1px 5px;
+			font-weight: unset;
+			font-size: calc(@fontsize - 1px);
+			margin-bottom: inherit;
+			border: inherit;
+			margin-right: inherit;
+			text-transform: none;
 		}
 	}
+	.alpha {
+		.pagination {
+			margin-top: 5px;
+			width: inherit;
+			display: inline-block;
 
-	.alpha .pagination > li:first-child > a,
-	.alpha .pagination > li:first-child > span {
-		margin-left: 1px;
+			.nolink,
+			li a {
+				min-width: 20px;
+				text-align: center;
+				letter-spacing: -1.3px;
+				-webkit-box-sizing: unset;
+				-moz-box-sizing: unset;
+				box-sizing: unset;
+				& when (@corners = rounded) {
+					border-radius: 4px;
+				}
+			}
+
+			> li:first-child > a,
+			> li:first-child > span {
+				margin-left: 1px;
+			}
+
+			ul > li > a,
+			ul > li > span {
+				padding: inherit;
+			}
+
+			ul > li {
+				margin-right: inherit;
+			}
+		}
 	}
-
-	.alpha .pagination ul > li > a,
-	.alpha .pagination ul > li > span {
-		padding: inherit;
-	}
-
-	.alpha .pagination ul > li {
-		margin-right: inherit;
-	}
-
 	// Category images and icons
 	// ----------------------------------------
 	div.spCat {
@@ -2327,7 +2349,7 @@ body.modal-open {
 
 	.spCalendarLabel.label-info,
 	.SpCalEntry.label-info {
-		background-color: lighten(@alert-color,10%);
+		background-color: lighten(@alert-color, 10%);
 		color: @active-color;
 
 		a {

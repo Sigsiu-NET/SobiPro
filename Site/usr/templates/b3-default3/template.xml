@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://xml.sigsiu.net/SobiPro/template.xsd">
-	<name>B3-Default Template V3</name>
+	<name>B3-Default Template V4</name>
 	<id>b3-default3</id>
 	<authorName>Sigrid Suski and Radek Suski</authorName>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2017 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License</license>
-	<creationDate>2017-04-18</creationDate>
-	<version>3.4</version>
-	<description>Default Template for SobiPro 1.3+ with Bootstrap 3 support.
+	<creationDate>2017-06-22</creationDate>
+	<version>4.0</version>
+	<description>Default Template for SobiPro 1.4+ with Bootstrap 3 support.
 	This template makes use of Bootstrap 3 and Font Awesome 3 elements and styles.</description>
 	<files>
 		<file path="category/view.xsl">

@@ -39,6 +39,9 @@
 
 		<!-- for proper work a container is needed, we assume that the component area is placed into a container by the template.
 		If not, you need to add a container around the SobiPro output here -->
+		<div id="skip">
+			<a href="#content">Skip Navigation</a>
+		</div>
 		<div class="spListing section">
 			<xsl:call-template name="topMenu">
 				<xsl:with-param name="searchbox">true</xsl:with-param>
@@ -47,26 +50,28 @@
 			<xsl:apply-templates select="alphaMenu"/>
 			<xsl:apply-templates select="messages"/>
 
-			<h1 class="page-header lead">
-				<xsl:value-of select="name"/>
-			</h1>
-			<xsl:if test="string-length(description) > 0">
-				<div class="spSectionDesc">
-					<xsl:value-of select="description" disable-output-escaping="yes"/>
-				</div>
-			</xsl:if>
-
-			<xsl:if test="//config/hidecategories/@value != 'none'">
-				<xsl:if test="//config/hidecategories/@value = 'hide'">
-					<input id="spCategoryShow" class="btn btn-sigsiu" name="spCategoryShow" value="{$showCategoriesLabel}" type="button"/>
+			<div id="content">
+				<h1 class="page-header lead">
+					<xsl:value-of select="name"/>
+				</h1>
+				<xsl:if test="string-length(description) > 0">
+					<div class="spSectionDesc">
+						<xsl:value-of select="description" disable-output-escaping="yes"/>
+					</div>
 				</xsl:if>
-				<xsl:call-template name="categoriesLoop"/>
-			</xsl:if>
 
-			<xsl:call-template name="entriesLoop"/>
-			<xsl:apply-templates select="navigation"/>
+				<xsl:if test="//config/hidecategories/@value != 'none'">
+					<xsl:if test="//config/hidecategories/@value = 'hide'">
+						<input id="spCategoryShow" class="btn btn-sigsiu" name="spCategoryShow" value="{$showCategoriesLabel}" type="button"/>
+					</xsl:if>
+					<xsl:call-template name="categoriesLoop"/>
+				</xsl:if>
 
-			<xsl:call-template name="bottomHook"/>
+				<xsl:call-template name="entriesLoop"/>
+				<xsl:apply-templates select="navigation"/>
+
+				<xsl:call-template name="bottomHook"/>
+			</div>
 		</div>
 		<input type="hidden" id="hidetext" value="{php:function( 'SobiPro::Txt', 'CATEGORIES_HIDE' )}"/>
 	</xsl:template>

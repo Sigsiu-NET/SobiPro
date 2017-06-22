@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package: SobiPro Component for Joomla!
  * @author
@@ -107,3 +108,4 @@ abstract class tplDefault3
 //	{
 //	}
 }
+

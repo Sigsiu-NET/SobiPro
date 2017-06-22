@@ -52,6 +52,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Improved field type info in fields manager
 	(!) Category images now located in /images instead /media folder
 	(!) Configuration ini files cleaned up
+	(!) Changes in b3-default3 template for basic accessibility
 
 	(#) Font Awesome 3 local does not show icons in front-end datepicker
 	(#) Solution to overcome Joomla's IcoMoon when Font Awesome 3 is loaded via CDN

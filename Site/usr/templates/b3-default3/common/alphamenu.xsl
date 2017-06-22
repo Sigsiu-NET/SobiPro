@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -25,15 +25,15 @@
 				<div class="spAlphamenu">
 					<xsl:if test="count( fields/* )">
 						<div class="alphalist">
-							<div class="btn-group" role="group">
-								<a class="btn dropdown-toggle btn-xs btn-sigsiu" data-toggle="dropdown" href="#" aria-haspopup="true" aria-espanded="false">
+							<div class="dropdown">
+								<button class="btn dropdown-toggle btn-xs btn-sigsiu" id="alphamenu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<xsl:value-of select="php:function( 'SobiPro::Txt', 'ALPHALIST_SELECT' )"/><xsl:text> </xsl:text>
 									<span class="caret"></span>
-								</a>
-								<ul class="dropdown-menu">
+								</button>
+								<ul class="dropdown-menu" aria-labelledby="alphamenu">
 									<xsl:for-each select="fields/*">
 										<li>
-											<a href="#" rel="{name()}" class="alpha-switch">
+											<a href="#" rel="{name()}" class="alpha-switch" tabindex="0">
 												<xsl:value-of select="."/>
 											</a>
 										</li>
