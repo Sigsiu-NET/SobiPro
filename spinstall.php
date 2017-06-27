@@ -210,6 +210,26 @@ class com_sobiproInstallerScript
 			}
 		}
 
+		$db->setQuery( 'SHOW INDEX FROM #__sobipro_category' );
+		$cols = $db->loadAssocList();
+		$skip = false;
+		foreach ( $cols as $col ) {
+			if ( $col[ 'Key_name' ] == 'allFields' ) {
+				$skip = true;
+				continue;
+			}
+		}
+		if ( !( $skip ) ) {
+			try {
+				$db->setQuery( 'ALTER TABLE `#__sobipro_category` ADD `allFields` TINYINT(2) NOT NULL AFTER `showIcon`, ADD `entryFields` TEXT NOT NULL AFTER `allFields`;' );
+				$db->execute();
+				$db->setQuery( 'UPDATE `#__sobipro_category` SET `allFields` = 1');
+				$db->execute();
+			} catch ( Exception $x ) {
+			}
+		}
+
+
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `description`, `options`) VALUES ('rejections-templates', 'rejection-of-a-new-entry', 'Rejection of a new entry', 'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjoxO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjA7czo5OiJ1bnB1Ymxpc2giO2I6MTtzOjc6ImRpc2NhcmQiO2I6MDt9', '', ''), ('rejections-templates', 'rejection-of-changes', 'Rejection of changes', 'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjowO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjE7czo5OiJ1bnB1Ymxpc2giO2I6MDtzOjc6ImRpc2NhcmQiO2I6MTt9', '', '');" );
 		$db->execute();
 

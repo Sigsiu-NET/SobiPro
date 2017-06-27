@@ -104,6 +104,19 @@
 							</fieldset>
 						</div>
 					</tab>
+					<tab label="CAT.CATEGORY_ENTRY_FIELDS" condition="entryFields">
+						<div class="span12">
+							<fieldset>
+								<field type="toggle" name="category.allFields" value="category.allFields" label="USE_ALL_FIELDS" prefix="yes_no" />
+								<div class="entryFields">
+									<loop subject="entryFields">
+										<cell type="checkbox" name="fid" value="id" checked="included" />
+										<cell type="text" value="name" />
+									</loop>
+								</div>
+							</fieldset>
+						</div>
+					</tab>
 					<tab label="META_DATA">
 						<div class="row-fluid">
 							<div class="span12">
@@ -167,7 +180,9 @@
 						<button class="close" data-dismiss="modal">
 							<text value="CLOSE_X" />
 						</button>
-						<h3><text value="CAT.SELECT_CATEGORY_PATH" /></h3>
+						<h3>
+							<text value="CAT.SELECT_CATEGORY_PATH" />
+						</h3>
 					</div>
 					<div class="modal-body">
 						<div id="spCatsChooser"></div>
@@ -186,7 +201,9 @@
 						<button class="close" data-dismiss="modal">
 							<text value="CLOSE_X" />
 						</button>
-						<h3><text value="CAT.JS_SELECT_CAT_ICON" /></h3>
+						<h3>
+							<text value="CAT.JS_SELECT_CAT_ICON" />
+						</h3>
 					</div>
 					<div class="modal-body">
 						<div id="spIcoChooser" class="spIconBody"></div>

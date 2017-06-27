@@ -284,7 +284,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 		$this->_attr[ 'template_path' ] = Sobi::FixPath( str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), $this->_templatePath ) );
 		$messages = SPFactory::message()->getMessages();
- 		if ( count( $messages ) ) {
+		if ( count( $messages ) ) {
 			foreach ( $messages as $type => $content ) {
 				$this->_attr[ 'messages' ][ $type ] = array_values( $content );
 			}
@@ -904,6 +904,28 @@ abstract class SPFrontView extends SPObject implements SPView
 				];
 			}
 		}
+	}
+
+	/**
+	 * @param $entry
+	 *
+	 * @return array|mixed
+	 *
+	 * @since version
+	 */
+	protected function getFieldsToDisplay( $entry )
+	{
+		$primaryCat = $entry->getPrimary();
+		$fieldsToDisplay = [];
+		if ( $primaryCat ) {
+			$primaryCatiD = $primaryCat[ 'pid' ];
+			$primaryCat = SPFactory::Model( 'category' );
+			$primaryCat->load( $primaryCatiD );
+			if ( !( $primaryCat->get( 'allFields' ) ) ) {
+				$fieldsToDisplay = $primaryCat->get( 'entryFields' );
+			}
+		}
+		return $fieldsToDisplay;
 	}
 
 	/**

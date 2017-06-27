@@ -972,6 +972,11 @@ class SPAdmView extends SPObject implements SPView
 				case 'valid-until':
 					$element[ 'attributes' ][ $attribute->nodeName ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
 					break;
+				case 'checked':
+					if ( $this->get( $subject . '.' . $attribute->nodeValue, $i ) ) {
+						$element[ 'attributes' ][ 'checked' ] = true;
+					}
+					break;
 				default:
 					$element[ 'attributes' ][ $attribute->nodeName ] = $this->parseValue( str_replace( 'var:[', 'var:[' . $subject . '.', $attribute->nodeValue ), $i );
 					break;

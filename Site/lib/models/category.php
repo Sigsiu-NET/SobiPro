@@ -56,7 +56,8 @@ class SPCategory extends SPDBObject implements SPDataModel
 			'introtext' => 'string',
 			'showIntrotext' => 'int',
 			'parseDesc' => 'int',
-			'position' => 'int'
+			'parseDesc' => 'int',
+			'allFields' => 'int'
 	];
 	/*** @var array */
 	private static $translatable = [ 'description', 'introtext', 'name', 'metaKeys', 'metaDesc' ];
@@ -64,6 +65,10 @@ class SPCategory extends SPDBObject implements SPDataModel
 	protected $_dbTable = 'spdb_category';
 	/** @var array */
 	protected $fields = [];
+	/** @var array */
+	protected $entryFields = [];
+	/** @var bool */
+	protected $allFields = true;
 
 	/**
 	 * @param string $request
@@ -92,6 +97,10 @@ class SPCategory extends SPDBObject implements SPDataModel
 		/* and sort the properties in the same order */
 		foreach ( $cols as $col ) {
 			$values[ $col ] = array_key_exists( $col, $properties ) ? $this->$col : '';
+		}
+		if ( !Input::Int( 'category_allFields' ) && Input::Arr( 'fid' ) ) {
+			$values[ 'entryFields' ] = Input::Arr( 'fid' );
+			$values[ 'entryFields' ][] = Sobi::Cfg( 'entry.name_field' );
 		}
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ &$values ] );
 		/* try to save */

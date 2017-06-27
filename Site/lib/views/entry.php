@@ -155,14 +155,14 @@ class SPEntryView extends SPFrontView implements SPView
 				'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
 		];
 		$data[ 'name' ] = [
-			'_complex' => 1,
-			'_data' => $section->get('efTitle'),
-			'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+				'_complex' => 1,
+				'_data' => $section->get( 'efTitle' ),
+				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 		];
 		$data[ 'description' ] = [
-			'_complex' => 1,
-			'_data' => $section->get('efDesc'),
-			'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+				'_complex' => 1,
+				'_data' => $section->get( 'efDesc' ),
+				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 		];
 
 		$en = [];
@@ -227,7 +227,7 @@ class SPEntryView extends SPFrontView implements SPView
 			if ( $cat[ 'pid' ] == $primaryCat ) {
 				$cAttr[ 'primary' ] = 'true';
 			}
-			$categories[ ] = [
+			$categories[] = [
 					'_complex' => 1,
 					'_data' => SPLang::clean( isset( $cn[ $cid ][ 'value' ] ) ? $cn[ $cid ][ 'value' ] : $cn[ $cid ][ 'name' ] ),
 					'_attributes' => $cAttr
@@ -243,6 +243,14 @@ class SPEntryView extends SPFrontView implements SPView
 		if ( $getFields ) {
 			$fields = $entry->getFields();
 			if ( count( $fields ) ) {
+				$fieldsToDisplay = $this->getFieldsToDisplay( $entry );
+				if ( $fieldsToDisplay ) {
+					foreach ( $fields as $i => $field ) {
+						if ( !( in_array( $field->get( 'id' ), $fieldsToDisplay ) ) ) {
+							unset( $fields[ $i ] );
+						}
+					}
+				}
 				$en[ 'fields' ] = $this->fieldStruct( $fields, 'details' );
 			}
 		}
@@ -256,4 +264,5 @@ class SPEntryView extends SPFrontView implements SPView
 		$data[ 'visitor' ] = $this->visitorArray( $visitor );
 		return $data;
 	}
+
 }

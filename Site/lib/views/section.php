@@ -304,6 +304,14 @@ class SPSectionView extends SPFrontView implements SPView
 			}
 			$fields = $entry->getFields();
 			if ( count( $fields ) ) {
+				$fieldsToDisplay = $this->getFieldsToDisplay( $entry );
+				if ( $fieldsToDisplay ) {
+					foreach ( $fields as $i => $field ) {
+						if ( !( in_array( $field->get( 'id' ), $fieldsToDisplay ) ) ) {
+							unset( $fields[ $i ] );
+						}
+					}
+				}
 				$en[ 'fields' ] = $this->fieldStruct( $fields, 'vcard' );
 			}
 			SPFactory::cache()

@@ -388,6 +388,14 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 			$this->_model->checkOut();
 		}
 		$this->_model->loadFields( Sobi::Section(), true );
+		$eFields = SPConfig::fields( Sobi::Section() );
+		unset( $eFields[ Sobi::Cfg( 'entry.name_field' ) ] );
+		$entryFields = [];
+		$selectedEntryFields = $this->_model->get( 'entryFields' );
+		$all = $this->_model->get( 'allFields' );
+		foreach ( $eFields as $id => $field ) {
+			$entryFields[] = [ 'id' => $id, 'name' => $field, 'included' => $all ? true : in_array( $id, $selectedEntryFields ) ];
+		}
 		/* @var SPEntry $this ->_model */
 		$fields = $this->_model->get( 'fields' );
 		// we need it for the icons' fonts
@@ -399,6 +407,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				->assign( $owner, 'owner' )
 				->assign( $id, 'cid' )
 				->assign( $fields, 'fields' )
+				->assign( $entryFields, 'entryFields' )
 				->addHidden( Sobi::Section(), 'pid' );
 		Sobi::Trigger( 'Category', 'EditView', [ &$view ] );
 		$view->display();
