@@ -393,8 +393,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 			}
 			else {
 				$terms = SPFactory::db()
-//					->select( $request, 'spdb_field_data', [ 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ], [ 'baseData' ] )
-						->select( $request, 'spdb_field_data', [ 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ] )
+						->select( $request, 'spdb_field_data', [ 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $data, 'section' => $section ], 'baseData' )
 						->loadResultArray();
 			}
 		} catch ( SPException $x ) {
