@@ -260,7 +260,7 @@ class SPJoomlaDb
 	 * Creates a "delete" SQL query
 	 *
 	 * @param string $table - in which table
-	 * @param string $where - SQL delete condition
+	 * @param array|string $where - SQL delete condition
 	 * @param int $limit - maximal number of rows to delete
 	 * @throws SPException
 	 * @return \SPJoomlaDb
@@ -561,7 +561,7 @@ class SPJoomlaDb
 	 *
 	 * @param string $table - table to update
 	 * @param array $set - two-dimensional array with table row name to update => new value
-	 * @param string $where - SQL update condition
+	 * @param array|string $where - SQL update condition
 	 * @param int $limit
 	 */
 	public function update( $table, $set, $where, $limit = 0 )

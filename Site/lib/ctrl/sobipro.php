@@ -164,6 +164,7 @@ final class SobiProCtrl
 		$this->_config = &SPFactory::config();
 		/* load basic configuration settings */
 		$this->_config->addIniFile( 'etc.config', true );
+		$this->_config->addIniFile( 'etc.base', true );
 		$this->_config->addTable( 'spdb_config', $this->_section );
 		/* initialise interface config setting */
 		$this->_mainframe->getBasicCfg();
