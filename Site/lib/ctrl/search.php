@@ -139,7 +139,8 @@ class SPSearchCtrl extends SPSectionCtrl
 				$results[ $k ] = $v;
 			}
 		}
-		usort( $results, [ 'self', 'sortByLen' ] );
+//		usort( $results, [ 'self', 'sortByLen' ] );
+		natcasesort( $results );
 		Sobi::Trigger( 'AfterSuggest', 'Search', [ &$results ] );
 		if ( count( $results ) ) {
 			foreach ( $results as $i => $term ) {
@@ -149,7 +150,7 @@ class SPSearchCtrl extends SPSectionCtrl
 		SPFactory::mainframe()
 				->cleanBuffer()
 				->customHeader();
-		echo json_encode( $results );
+		echo json_encode( (array)array_values( $results ) );
 		exit();
 	}
 
