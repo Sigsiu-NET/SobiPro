@@ -46,6 +46,9 @@ SobiPro.jQuery( document ).ready( function ()
 				}
 			} );
 		},
-		property: 'name'
+		property: 'name',
+		sorter: ( items ) => {
+			return items;
+		}
 	} );
 } );
