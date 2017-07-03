@@ -47,7 +47,7 @@ SobiPro.jQuery( document ).ready( function ()
 			} );
 		},
 		property: 'name',
-		sorter: ( items ) => {
+		sorter: function ( items ) {
 			return items;
 		}
 	} );
