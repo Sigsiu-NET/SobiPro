@@ -120,7 +120,7 @@ class SPSearchCtrl extends SPSectionCtrl
 						continue;
 					}
 					else {
-						$fr = $field->searchSuggest( $search, Sobi::Section(), Sobi::Cfg( 'search.suggest_start_with', true ) );
+						$fr = $field->searchSuggest( $search, Sobi::Section(), Sobi::Cfg( 'search.suggest_start_with', false ) );
 						if ( is_array( $fr ) && count( $fr ) ) {
 							$results = array_merge( $results, $fr );
 						}
