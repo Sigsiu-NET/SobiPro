@@ -783,10 +783,10 @@ final class SPHeader
 				}
 				$check = md5( serialize( $check ) );
 				if ( !( SPFs::exists( SOBI_PATH . "/var/css/{$check}.css" ) ) ) {
-					$cssContent = "\n/* Created at: " . date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ) . " */\n";
+					$cssContent = "* Created at: " . date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ) . " */\n";
 					foreach ( $this->_cache[ 'css' ] as $file ) {
 						$fName = str_replace( Sobi::FixPath( SOBI_ROOT ), null, $file );
-						$cssContent .= "\n/**  \n========\nFile: {$fName}\n========\n*/\n";
+						$cssContent .= "/** ==== File: {$fName} ==== */\n";
 						$fc = SPFs::read( $file );
 						preg_match_all( '/[^\(]*url\(([^\)]*)/', $fc, $matches );
 						// we have to replace url relative path
@@ -846,10 +846,10 @@ final class SPHeader
 				$check = md5( serialize( $check ) );
 				if ( !( SPFs::exists( SOBI_PATH . "/var/js/{$check}.js" ) ) ) {
 					$noCompress = explode( ',', Sobi::Cfg( 'cache.js_compress_exceptions' ) );
-					$jsContent = "\n/* Created at: " . date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ) . " */\n";
+					$jsContent = "* Created at: " . date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ) . " */\n";
 					foreach ( $this->_cache[ 'js' ] as $file ) {
 						$fName = str_replace( SOBI_ROOT, null, $file );
-						$jsContent .= "\n// ========\n// File: {$fName}\n// ========\n\n";
+						$jsContent .= "// ==== File: {$fName} ==== \n";
 						if ( $compression && !( in_array( basename( $file ), $noCompress ) ) ) {
 							$compressor = SPFactory::Instance( 'env.jspacker', SPFs::read( $file ), $comprLevel, false, true );
 							$jsContent .= $compressor->pack();
