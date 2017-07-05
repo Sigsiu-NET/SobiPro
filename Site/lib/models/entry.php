@@ -238,8 +238,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 		// See #1221 - Thu, May 8, 2014 11:18:20
 		// and what if logging will be switch on first after the entry was already approved?? (Sigrid)
 		$count = SPFactory::db()
-			->select( 'COUNT(*)', 'spdb_history', [ 'sid' => $this->id, 'changeAction' => [ 'approve', 'approved' ] ] )
-			->loadResult();
+				->select( 'COUNT(*)', 'spdb_history', [ 'sid' => $this->id, 'changeAction' => [ 'approve', 'approved' ] ] )
+				->loadResult();
 		if ( $count ) {
 			// restore previous version
 			foreach ( $this->fields as $field ) {
@@ -372,7 +372,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		if ( !( count( $this->categories ) ) ) {
 			$this->getCategories();
 		}
-		return $this->categories[ $this->primary ];
+		return isset( $this->categories[ $this->primary ] ) ? $this->categories[ $this->primary ] : 0;
 	}
 
 	/**
@@ -563,7 +563,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 					if ( isset( $fieldsdata[ $f->fid ] ) ) {
 						$field->loadData( $this->id );
 					}
-					$this->fields[ ] = $field;
+					$this->fields[] = $field;
 					$this->fieldsNids[ $field->get( 'nid' ) ] = $this->fields[ count( $this->fields ) - 1 ];
 					$this->fieldsIds[ $field->get( 'fid' ) ] = $this->fields[ count( $this->fields ) - 1 ];
 					/* case it was the name field */
@@ -760,7 +760,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 					$pos = isset( $cPos[ $cat ] ) ? $cPos[ $cat ][ 'MAX(position)' ] : 0;
 					$pos++;
 				}
-				$values[ ] = [ 'id' => $this->id, 'pid' => $cats[ $i ], 'oType' => 'entry', 'position' => $pos, 'validSince' => $this->validSince, 'validUntil' => $this->validUntil, 'copy' => $copy ];
+				$values[] = [ 'id' => $this->id, 'pid' => $cats[ $i ], 'oType' => 'entry', 'position' => $pos, 'validSince' => $this->validSince, 'validUntil' => $this->validUntil, 'copy' => $copy ];
 			}
 			try {
 				$db->insertArray( 'spdb_relations', $values, true );
