@@ -682,13 +682,15 @@ class SPTplParser
 		$this->activeTab = false;
 		$this->_out[] = "\n" . '<ul class="nav nav-tabs responsive">';
 		$active = false;
-		foreach ( $element[ 'content' ] as $tab ) {
-			if ( !( $active ) ) {
-				$active = true;
-				$this->_out[] = "<li class=\"active\" ><a href=\"#{$tab['id']}\">{$tab['label']}</a></li>\n";
-			}
-			else {
-				$this->_out[] = "<li><a href=\"#{$tab['id']}\">{$tab['label']}</a> </li>\n";
+		if ( isset( $element[ 'content' ] ) && count( $element[ 'content' ] ) ) {
+			foreach ( $element[ 'content' ] as $tab ) {
+				if ( !( $active ) ) {
+					$active = true;
+					$this->_out[] = "<li class=\"active\" ><a href=\"#{$tab['id']}\">{$tab['label']}</a></li>\n";
+				}
+				else {
+					$this->_out[] = "<li><a href=\"#{$tab['id']}\">{$tab['label']}</a> </li>\n";
+				}
 			}
 		}
 		$this->_out[] = '</ul>';
@@ -728,8 +730,10 @@ class SPTplParser
 			$this->_out[] = '<button class="btn dropdown-toggle" data-toggle="dropdown"><span class="icon-caret-down"></span>&nbsp;</button>';
 			$this->_out[] = '<div class="dropdown-menu" id="' . SPLang::nid( $button[ 'task' ] ) . '">';
 			$this->_out[] = '<ul class="nav nav-stacked SpDropDownBt">';
-			foreach ( $button[ 'buttons' ] as $bt ) {
-				$this->renderButton( $bt, true );
+			if ( isset( $button[ 'buttons' ] ) && count( $button[ 'buttons' ] ) ) {
+				foreach ( $button[ 'buttons' ] as $bt ) {
+					$this->renderButton( $bt, true );
+				}
 			}
 			$this->_out[] = '</ul>';
 			$this->_out[] = '</div>';
