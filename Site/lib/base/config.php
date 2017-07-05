@@ -617,7 +617,12 @@ class SPConfig
 		if ( !( is_numeric( $time ) ) ) {
 			$time = strtotime( $time );
 		}
-		if ( !( $time ) || ( $time < 0 ) ) {
+		/** Tue, Jul 4, 2017 11:12:08
+		 * No idea what the hell. But see
+		 * https://code.sigsiu.net/Sigsiu.NET/SobiPro/issues/16
+		 * */
+//		if ( !( $time ) || ( $time < 0 ) ) {
+		if ( !( $time ) ) {
 			return 0;
 		}
 		if ( !( $format ) ) {

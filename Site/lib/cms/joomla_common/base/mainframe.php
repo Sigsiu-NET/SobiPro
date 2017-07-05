@@ -246,8 +246,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 	/**
 	 * @static
+	 * @param int $code HTTP response code
 	 */
-	public function redirect()
+	public function redirect( $code = 302 )
 	{
 		$r = SPFactory::registry()->get( 'redirect' );
 		if ( $r && isset( $r[ 'address' ] ) ) {
@@ -267,7 +268,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			JFactory::getApplication()
 					->enqueueMessage( $msg, $type );
 			JFactory::getApplication()
-					->redirect( $r[ 'address' ] );
+					->redirect( $r[ 'address' ], $code );
 
 		}
 	}

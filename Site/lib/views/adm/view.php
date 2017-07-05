@@ -890,9 +890,13 @@ class SPAdmView extends SPObject implements SPView
 		}
 		elseif ( $cell->nodeName == 'date' ) {
 			$element[ 'type' ] = 'text';
-			$date = strtotime( $element[ 'attributes' ][ 'value' ] );
-			$date = date( $element[ 'attributes' ][ 'dateFormat' ], ( $date ) );
-			$element[ 'content' ] = $date;
+			/** Wed, Jul 5, 2017 10:01:53
+			 * Not sure what the hell it is. It's actually contains a date and all seems to works fine.
+			 * See also https://code.sigsiu.net/Sigsiu.NET/SobiPro/issues/15
+			 * */
+//			$date = strtotime( $element[ 'attributes' ][ 'value' ] );
+//			$date = date( $element[ 'attributes' ][ 'dateFormat' ], ( $date ) );
+//			$element[ 'content' ] = $date;
 		}
 		elseif ( $cell->nodeName == 'field' ) {
 			$this->xmlField( $cell, $element, $element[ 'content' ], true, $subject, $i );

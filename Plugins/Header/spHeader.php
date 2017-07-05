@@ -38,7 +38,7 @@ class plgSystemSpHeader extends JPlugin
 
 	public function onAfterRender( $context = null )
 	{
-		if ( JFactory::getApplication()->isAdmin() && JFactory::getApplication()->input->getWord( 'option' ) == 'com_cpanel' ) {
+		if ( JFactory::getApplication()->isClient( 'administrator' ) && JFactory::getApplication()->input->getWord( 'option' ) == 'com_cpanel' ) {
 			if ( file_exists( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' ) ) {
 				$data = json_decode( file_get_contents( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' ), true );
 				$content = '<div class="alert alert-error alert-joomlaupdate">
@@ -60,33 +60,35 @@ class plgSystemSpHeader extends JPlugin
 
 	public function onUserAfterLogin( $options )
 	{
-		if ( JFactory::getApplication()->isAdmin() ) {
+		if ( JFactory::getApplication()->isClient( 'administrator' ) ) {
 			require_once( JPATH_ROOT . '/components/com_sobipro/lib/sobi.php' );
 			Sobi::Initialise();
 			require_once( JPATH_ROOT . '/components/com_sobipro/lib/ctrl/adm/extensions.php' );
-			$ctrl = new SPExtensionsCtrl();
-			$updates = $ctrl->updates( false );
-			$apps = [];
-			if ( count( $updates ) ) {
-				foreach ( $updates as $update ) {
-					if ( $update[ 'update' ] == 'true' ) {
-						$apps[] = $update[ 'name' ];
+			if ( Sobi::Can( 'cms.apps' ) ) {
+				$ctrl = new SPExtensionsCtrl();
+				$updates = $ctrl->updates( false );
+				$apps = [];
+				if ( count( $updates ) ) {
+					foreach ( $updates as $update ) {
+						if ( $update[ 'update' ] == 'true' ) {
+							$apps[] = $update[ 'name' ];
+						}
 					}
 				}
-			}
-			if ( count( $apps ) ) {
-				$count = count( $apps );
-				if ( count( $apps ) > 3 ) {
-					$apps = array_slice( $apps, 0, 3 );
-					$apps[] = '...';
+				if ( count( $apps ) ) {
+					$count = count( $apps );
+					if ( count( $apps ) > 3 ) {
+						$apps = array_slice( $apps, 0, 3 );
+						$apps[] = '...';
+					}
+					$text = Sobi::Txt( 'UPDATE.APPS_OUTDATED', implode( ', ', $apps ) );
+					$message = [ 'count' => $count, 'text' => $text, 'btn-text' => Sobi::Txt( 'UPDATE.APPS_UPDATE' ) ];
+					$message = json_encode( $message );
+					FileSystem::Write( JPATH_ROOT . '/components/com_sobipro/tmp/message.json', $message );
 				}
-				$text = Sobi::Txt( 'UPDATE.APPS_OUTDATED', implode( ', ', $apps ) );
-				$message = [ 'count' => $count, 'text' => $text, 'btn-text' => Sobi::Txt( 'UPDATE.APPS_UPDATE' ) ];
-				$message = json_encode( $message );
-				FileSystem::Write( JPATH_ROOT . '/components/com_sobipro/tmp/message.json', $message );
-			}
-			else {
-				FileSystem::Delete( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' );
+				else {
+					FileSystem::Delete( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' );
+				}
 			}
 		}
 	}
