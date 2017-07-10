@@ -167,7 +167,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					$list = array_merge( $list, $l );
 				}
 			}
-			if ( count( $list ) ) {
+ 			if ( count( $list ) ) {
 				$updates = [];
 				$updates [ 'created' ] = time();
 				$updates [ 'createdBy' ] = [ 'id' => Sobi::My( 'id' ), 'name' => Sobi::My( 'name' ) ];

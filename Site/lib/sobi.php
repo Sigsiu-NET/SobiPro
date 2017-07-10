@@ -413,12 +413,17 @@ abstract class Sobi
 		else {
 			static $lang = null;
 			if ( !( strlen( $lang ) ) ) {
-				if ( self::Cfg( 'lang.multimode', false ) ) {
-					$lang = SPFactory::config()->key( 'language' );
-				}
-				else {
-					$lang = self::DefLang();
-				}
+				/**
+				 * Fri, Jul 7, 2017 13:42:02
+				 * It doesn't makes any sense. It should always get the currently set language
+				 * */
+//				if ( self::Cfg( 'lang.multimode', false ) ) {
+//					$lang = SPFactory::config()->key( 'language' );
+//				}
+//				else {
+//					$lang = self::DefLang();
+//				}
+				$lang = SPFactory::config()->key( 'language' );
 				self::Trigger( 'Language', 'Determine', [ &$lang ] );
 			}
 		}
