@@ -367,6 +367,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	public function searchSuggest( $data, $section, $startWith = true, $ids = false )
 	{
+		$nid = $this->__get('nid');
 		$terms = [];
 		$data = $startWith ? "{$data}%" : "%{$data}%";
 		$request = [ 'baseData' ];
