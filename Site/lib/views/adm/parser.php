@@ -35,10 +35,10 @@ class SPTplParser
 	protected $loopOpen = false;
 	/** @var array */
 	protected $_tickerIcons = [
-		0  => 'remove',
-		1  => 'ok',
-		-1 => 'stop',
-		-2 => 'pause'
+			0 => 'remove',
+			1 => 'ok',
+			-1 => 'stop',
+			-2 => 'pause'
 	];
 	/** @var string */
 	protected $_checkedOutIcon = 'lock';
@@ -152,7 +152,7 @@ class SPTplParser
 					}
 					if ( isset( $element[ 'attributes' ][ 'icons' ] ) && $element[ 'attributes' ][ 'icons' ] ) {
 						$icons = json_decode( str_replace( "'", '"', $element[ 'attributes' ][ 'icons' ] ), true );
-						$element[ 'content' ] = (int) $element[ 'content' ];
+						$element[ 'content' ] = (int)$element[ 'content' ];
 						$icon = ( isset( $icons[ $element[ 'content' ] ] ) && $icons[ $element[ 'content' ] ] ) ? $icons[ $element[ 'content' ] ] : $this->_tickerIcons[ $element[ 'content' ] ];
 						$element[ 'content' ] = '<i class="icon-' . $icon . '"></i>';
 					}
@@ -673,13 +673,24 @@ class SPTplParser
 			return $cell;
 		}
 		else {
+			$label = false;
 			$checked = null;
+			$id = null;
+			if ( isset( $cell[ 'label' ] ) ) {
+				$id = uniqid( SPLang::nid( strtolower( $cell[ 'label' ] ) ) );
+				$label = true;
+				$this->_out[] = '<label for="' . $id . '" class="checkbox">';
+				$id = ' id="' . $id . '" ';
+			}
+
 			if ( $this->istSet( $cell[ 'attributes' ], 'checked' ) ) {
 				$checked = 'checked="checked" ';
 			}
 			$multiple = $this->istSet( $cell[ 'attributes' ], 'multiple', 'false' ) ? null : '[]';
-			$this->_out[] = '<input type="' . $type . '" class="' . $type. '" name="' . $cell[ 'attributes' ][ 'name' ] . $multiple . '" value="' . $cell[ 'content' ] . '"' . $checked . '/>';
-
+			$this->_out[] = '<input type="' . $type . '" class="' . $type . '" name="' . $cell[ 'attributes' ][ 'name' ] . $multiple . '" value="' . $cell[ 'content' ] . '"' . $checked . $id . '/>';
+			if ( $label ) {
+				$this->_out[] = $cell[ 'label' ] . '</label>';
+			}
 			return $cell;
 		}
 	}

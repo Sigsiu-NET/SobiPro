@@ -305,7 +305,9 @@ class SPFieldType extends SPObject
 							->select( 'lang', 'spdb_field_data', [ 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ] )
 							->loadResultArray();
 					$cParams[ 'copy' ] = 0;
-					$cParams[ 'lang' ] = $languages;
+					if ( count( $languages ) ) {
+						$cParams[ 'lang' ] = $languages;
+					}
 					$db->delete( 'spdb_field_data', $cParams );
 					$db->update( 'spdb_field_data', [ 'copy' => '0', 'editLimit' => $el ], $params );
 				}
@@ -404,20 +406,20 @@ class SPFieldType extends SPObject
 						$gid = SPLang::nid( $key, true, true );
 						$group = $key;
 					}
-					$options[ ] = [ 'id' => $gid, 'name' => $group, 'parent' => null, 'position' => ++$p ];
+					$options[] = [ 'id' => $gid, 'name' => $group, 'parent' => null, 'position' => ++$p ];
 					if ( count( $value ) ) {
 						foreach ( $value as $k => $v ) {
 							if ( is_numeric( $k ) ) {
 								$k = SPLang::nid( $v );
 							}
-							$options[ ] = [ 'id' => SPLang::nid( $k ), 'name' => $v, 'parent' => $gid, 'position' => ++$p ];
+							$options[] = [ 'id' => SPLang::nid( $k ), 'name' => $v, 'parent' => $gid, 'position' => ++$p ];
 						}
 					}
 				}
 				else {
 					$group = null;
 					$gid = null;
-					$options[ ] = [ 'id' => SPLang::nid( $key ), 'name' => $value, 'parent' => null, 'position' => ++$p ];
+					$options[] = [ 'id' => SPLang::nid( $key ), 'name' => $value, 'parent' => null, 'position' => ++$p ];
 				}
 			}
 		}

@@ -960,6 +960,9 @@ class SPAdmView extends SPObject implements SPView
 				case 'rel':
 					$element[ 'label' ] = $attribute->nodeValue;
 					break;
+				case 'box-label':
+					$element[ 'label' ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
+					break;
 				case 'value':
 					$element[ 'content' ] = $this->get( $subject . '.' . $attribute->nodeValue, $i );
 					break;
