@@ -38,6 +38,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Indicator in back-end for primary category
 	(+) Possibility to add entry link to image in vCard
 	(+) Autosuggest function extended to general search field
+	(+) Autosuggest results sorted alphabetically
+	(+) Switch of some fields for a certain category (views only)
 
 	(-) Unused tabs script of SobiPro version 1.0 removed
 	(-) Clean-up of loaded scripts in template
@@ -59,6 +61,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Typo in page-header CSS class
 	(#) Section redirect parameters won't be processed if section is unpublished
 	(#) Calendar Field in entry form shown wrong (CSS)
+	(#) Notice in File/lib/models/field.php: 295
 
 
 ### 1.3.7 (28 April 2017)
