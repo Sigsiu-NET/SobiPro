@@ -121,8 +121,7 @@
 							<fieldset label="ONLY_SPECIFIC_FIELDS">
 								<div class="entryFields spFieldCheckbox">
 									<loop subject="entryFields">
-										<cell type="checkbox" name="fid" value="id" checked="included" class="spClassCheckbox" />
-										<cell type="text" value="name" class=""/>
+										<cell type="checkbox" name="fid" value="id" checked="included" class="spClassCheckbox" box-label="name"/>
 									</loop>
 								</div>
 							</fieldset>
