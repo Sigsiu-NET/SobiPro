@@ -62,6 +62,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Section redirect parameters won't be processed if section is unpublished
 	(#) Calendar Field in entry form shown wrong (CSS)
 	(#) Notice in File/lib/models/field.php: 295
+	(#) 'Fill in required fields' message if no value for max. Categories per entry is given
 
 
 ### 1.3.7 (28 April 2017)

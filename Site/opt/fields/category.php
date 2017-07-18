@@ -149,7 +149,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 		$this->showLabel = true;
 		if ( !( ( int )$this->catsMaxLimit ) ) {
-			$this->catsMaxLimit = 1;
+			$this->catsMaxLimit = 10;   //set to standard value
 		}
 		if ( count( $this->_selectedCats ) > $this->catsMaxLimit ) {
 			$this->_selectedCats = array_slice( $this->_selectedCats, 0, $this->catsMaxLimit );
@@ -599,6 +599,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			}
 		}
 		else {
+			if ( !( ( int )$this->catsMaxLimit ) ) {
+				$this->catsMaxLimit = 10;   //set to standard value
+			}
 			if ( count( $data ) > $this->catsMaxLimit && count( $data ) > 1 ) {
 				$data = array_slice( $data, 0, $this->catsMaxLimit );
 			}
