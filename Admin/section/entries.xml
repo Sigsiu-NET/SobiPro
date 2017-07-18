@@ -117,7 +117,7 @@
 								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell type="text" value="owner" class="spCell center"/>
+						<cell type="text" value="owner" class="spCell center nowrap"/>
 						<cell condition="/acl.entry.approve" type="ticker" value="state" class="spCell center" icons="{'0':'undo','1':'undo'}">
 							<url type="intern" class="btn btn-mini ctrl-entry-reject">
 								<param name="task" value="entry.edit"/>

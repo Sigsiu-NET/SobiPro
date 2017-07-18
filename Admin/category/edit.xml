@@ -119,7 +119,7 @@
 								<field type="toggle" name="category.allFields" value="category.allFields" label="USE_ALL_FIELDS" prefix="yes_no"/>
 							</fieldset>
 							<fieldset label="ONLY_SPECIFIC_FIELDS">
-								<div class="entryFields spFieldCheckbox">
+								<div class="entryFields">
 									<loop subject="entryFields">
 										<cell type="checkbox" name="fid" value="id" checked="included" class="spClassCheckbox" box-label="name"/>
 									</loop>

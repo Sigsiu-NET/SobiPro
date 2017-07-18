@@ -543,13 +543,13 @@ class SPTplParser
 				if ( $this->istSet( $cell[ 'content' ], 'element', 'button' ) ) {
 					$this->renderButton( $cell[ 'content' ] );
 				}
-				if ( $type == 'text' ) {
-					$class = null; //if text in cell directly (with optional class) add a span
-					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
-						$class = "class=\"{$cell['attributes']['class']}\"";
-					}
-					$this->_out[] = "<span {$class}>{$cell[ 'content' ]}</span>";
-				}
+//				if ( $type == 'text' ) {
+//					$class = null; //if text in cell directly (with optional class) add a span
+//					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
+//						$class = "class=\"{$cell['attributes']['class']}\"";
+//					}
+//					$this->_out[] = "<span {$class}>{$cell[ 'content' ]}</span>";
+//				}
 				else {
 					$this->_out[] = $cell[ 'content' ];
 				}
