@@ -14,12 +14,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
-SobiPro.jQuery().ready( function ()
-{
+SobiPro.jQuery().ready( function () {
 	"use strict";
 	var SpMsgType = '';
-	SobiPro.jQuery( '#SPAdminForm' ).on( 'BeforeAjaxSubmit', function ( e, handler, task )
-	{
+	SobiPro.jQuery( '#SPAdminForm' ).on( 'BeforeAjaxSubmit', function ( e, handler, task ) {
 		if ( task == 'extensions.fetch' ) {
 			handler.takeOver = true;
 			SPSetCookie( '' );
@@ -33,47 +31,40 @@ SobiPro.jQuery().ready( function ()
 		}
 	} );
 
-	SobiPro.jQuery( '.SpAddRepo' ).click( function ()
-	{
+	SobiPro.jQuery( '.SpAddRepo' ).click( function () {
 		new SpRepositoryInstall()
 	} );
 
-	function SpRepositoryInstall()
-	{
+	function SpRepositoryInstall() {
 		this.repository = SobiPro.jQuery( '[name="RepositoryURL"]' ).val();
 		var proxy = this;
-		this.error = function ( message )
-		{
+		this.error = function ( message ) {
 			var alertMsg = '<div class="alert alert-' + message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + message.text + '</div>';
 			SobiPro.jQuery( '#spMessage' )
 				.removeClass( 'alert-info' )
 				.html( alertMsg );
 
 		};
-		this.request = function ( request, callback )
-		{
+		this.request = function ( request, callback ) {
 			SobiPro.jQuery.ajax( {
 				'type': 'post',
 				'url': 'index.php',
 				'data': request,
 				'dataType': 'json',
-				success: function ( data )
-				{
+				success: function ( data ) {
 					callback( data, request )
 				}
 			} );
 		};
 
-		this.addRepo = function ( data, request )
-		{
+		this.addRepo = function ( data, request ) {
 			if ( data.message.type == 'error' ) {
 				proxy.error( data.message );
 			}
 			else {
 				SobiPro.jQuery( data.message.response ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
 				SobiPro.jQuery( '#SpRepoModal' ).find( '.modal' ).modal();
-				SobiPro.jQuery( '#SpRepoModal' ).find( '.confirm' ).click( function ()
-				{
+				SobiPro.jQuery( '#SpRepoModal' ).find( '.confirm' ).click( function () {
 					SobiPro.jQuery( '#SpRepoModal' ).remove();
 					request[ 'task' ] = 'extensions.confirmRepo';
 					proxy.request( request, proxy.repoCallback );
@@ -81,8 +72,7 @@ SobiPro.jQuery().ready( function ()
 			}
 		};
 
-		this.repoCallback = function ( data, request )
-		{
+		this.repoCallback = function ( data, request ) {
 			if ( data.message.type == 'error' ) {
 				proxy.error( data.message );
 			}
@@ -93,8 +83,7 @@ SobiPro.jQuery().ready( function ()
 					request[ 'repository' ] = data.repository;
 				}
 				if ( data.callback ) {
-					SobiPro.jQuery( '#SpRepoModal' ).find( '.confirm' ).click( function ()
-					{
+					SobiPro.jQuery( '#SpRepoModal' ).find( '.confirm' ).click( function () {
 						request[ 'task' ] = 'extensions.registerRepo';
 						request[ 'callback' ] = data.callback;
 						var form = SobiPro.jQuery( '#SpRepoModal' ).find( 'form' ).serializeArray();
@@ -131,14 +120,12 @@ SobiPro.jQuery().ready( function ()
 		}
 	}
 
-	function SPProgressMessage()
-	{
+	function SPProgressMessage() {
 		SobiPro.jQuery.ajax( {
 			'type': 'get',
 			'url': SobiProAdmUrl.replace( '%task%', 'progress' ),
 			'dataType': 'json',
-			success: function ( response )
-			{
+			success: function ( response ) {
 				if ( SpMsgType != response.type ) {
 					SobiPro.jQuery( '#SpProgress .alert' )
 						.removeClass( SpMsgType )
@@ -160,15 +147,13 @@ SobiPro.jQuery().ready( function ()
 		} );
 	}
 
-	SobiPro.jQuery( '.SpExtInstall' ).click( function ()
-	{
+	SobiPro.jQuery( '.SpExtInstall' ).click( function () {
 		if ( !( SobiPro.jQuery( this ).hasClass( 'disabled' ) ) ) {
 			new SpExtInstall( SobiPro.jQuery( this ).parent(), SobiPro.jQuery( this ).attr( 'rel' ) );
 		}
 	} );
 
-	SobiPro.jQuery( '.SpRemoveRepo' ).click( function ()
-	{
+	SobiPro.jQuery( '.SpRemoveRepo' ).click( function () {
 		var repository = SobiPro.jQuery( this ).attr( 'rel' );
 		var def = SobiPro.jQuery( '#SP_method' ).next( 'input' );
 		var request = {
@@ -184,16 +169,14 @@ SobiPro.jQuery().ready( function ()
 				'url': 'index.php',
 				'data': request,
 				'dataType': 'json',
-				success: function ( response )
-				{
+				success: function ( response ) {
 					window.location.replace( response.redirect.url );
 				}
 			}
 		);
 	} );
 
-	function SpExtInstall( canvas, eid )
-	{
+	function SpExtInstall( canvas, eid ) {
 		this.ident = eid.replace( /\./g, '-' );
 		this.canvas = canvas;
 		canvas.html( '<div id="' + this.ident + '"><div class="progress"><div class="bar" style="width: 1%;"></div></div></div>' );
@@ -202,22 +185,20 @@ SobiPro.jQuery().ready( function ()
 		var url = SobiProAdmUrl.replace( '%task%', 'extensions.download' ) + '&exid=' + eid + '&session=' + this.ident + '&' + def.attr( 'name' ) + '=' + def.val();
 		this.progressBar = SobiPro.jQuery( '#' + this.ident ).find( '.bar' );
 		var proxy = this;
-		this.progress = function ()
-		{
+		this.progress = function () {
 			SobiPro.jQuery.ajax( {
 				'type': 'get',
 				'url': SobiProAdmUrl.replace( '%task%', 'progress' ) + '&session=' + proxy.ident,
 				'dataType': 'json',
-				success: function ( response )
-				{
+				success: function ( response ) {
 					if ( response.type != 'info' && response.type != 'success' ) {
 						var labelType = response.type == 'error' ? 'important' : response.type;
 						var label = '<p><span class="label label-' + labelType + '">' + response.typeText + '&nbsp;</span></p>';
-						var modal = '<div class="modal hide" id="' + proxy.ident + 'Modal"><div class="modal-body">' + '<div class="spModalForm">' + label + '<div>' + response.message + '</div></div></div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>';
+						var modal = '<div class="modal tiny hide" id="' + proxy.ident + 'Modal"><div class="modal-body">' +
+							'<div class="spModalForm spRepoError">' + label + '<div>' + response.message + '</div></div></div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>';
 						SobiPro.jQuery( modal ).appendTo( proxy.canvas );
 						var modalMessage = SobiPro.jQuery( '#' + proxy.ident + 'Modal' ).modal();
-						SobiPro.jQuery( '#' + proxy.ident + 'Modal' ).find( '.btn' ).click( function ()
-						{
+						SobiPro.jQuery( '#' + proxy.ident + 'Modal' ).find( '.btn' ).click( function () {
 							modalMessage.modal( 'hide' )
 						} );
 
@@ -225,8 +206,7 @@ SobiPro.jQuery().ready( function ()
 					SobiPro.jQuery( proxy.progressBar ).css( 'width', response.progress + '%' );
 					SobiPro.jQuery( proxy.progressBar ).html( response.progress + '%' );
 					if ( response.progress < 100 && response.type != 'error' ) {
-						setTimeout( function ()
-						{
+						setTimeout( function () {
 							proxy.progress();
 						}, response.interval );
 					}
@@ -234,14 +214,12 @@ SobiPro.jQuery().ready( function ()
 			} );
 		};
 		SobiPro.jQuery.ajax( {'type': 'get', 'url': url, 'dataType': 'json'} );
-		setTimeout( function ()
-		{
+		setTimeout( function () {
 			proxy.progress();
 		}, 500 );
 	}
 
-	function SPSetCookie( ident )
-	{
+	function SPSetCookie( ident ) {
 		var expDate = new Date();
 		expDate.setHours( expDate.getHours() + 1 );
 		var cid = expDate.getTime() + Math.floor( Math.random() * 11 ) * 100;
@@ -250,22 +228,19 @@ SobiPro.jQuery().ready( function ()
 
 	try {
 
-		SobiPro.jQuery( '#repositoryurl' ).keydown( function ( e )
-		{
+		SobiPro.jQuery( '#repositoryurl' ).keydown( function ( e ) {
 			if ( e.keyCode == 13 ) {
 				e.preventDefault();
-				setTimeout( function ()
-				{
+				setTimeout( function () {
 					SobiPro.jQuery( '.SpAddRepo' ).click();
 				}, 100 )
 			}
 		} );
 	}
-	catch ( e ) {
+	catch (e) {
 	}
 } );
 
-function SPExtensionInstaller()
-{
+function SPExtensionInstaller() {
 	window.location.reload();
 }
