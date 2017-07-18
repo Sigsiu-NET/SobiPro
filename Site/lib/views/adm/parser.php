@@ -35,10 +35,10 @@ class SPTplParser
 	protected $loopOpen = false;
 	/** @var array */
 	protected $_tickerIcons = [
-			0 => 'remove',
-			1 => 'ok',
-			-1 => 'stop',
-			-2 => 'pause'
+		0  => 'remove',
+		1  => 'ok',
+		-1 => 'stop',
+		-2 => 'pause'
 	];
 	/** @var string */
 	protected $_checkedOutIcon = 'lock';
@@ -152,7 +152,7 @@ class SPTplParser
 					}
 					if ( isset( $element[ 'attributes' ][ 'icons' ] ) && $element[ 'attributes' ][ 'icons' ] ) {
 						$icons = json_decode( str_replace( "'", '"', $element[ 'attributes' ][ 'icons' ] ), true );
-						$element[ 'content' ] = (int)$element[ 'content' ];
+						$element[ 'content' ] = (int) $element[ 'content' ];
 						$icon = ( isset( $icons[ $element[ 'content' ] ] ) && $icons[ $element[ 'content' ] ] ) ? $icons[ $element[ 'content' ] ] : $this->_tickerIcons[ $element[ 'content' ] ];
 						$element[ 'content' ] = '<i class="icon-' . $icon . '"></i>';
 					}
@@ -543,6 +543,13 @@ class SPTplParser
 				if ( $this->istSet( $cell[ 'content' ], 'element', 'button' ) ) {
 					$this->renderButton( $cell[ 'content' ] );
 				}
+				if ( $type == 'text' ) {
+					$class = null; //if text in cell directly (with optional class) add a span
+					if ( $this->istSet( $cell[ 'attributes' ], 'class' ) ) {
+						$class = "class=\"{$cell['attributes']['class']}\"";
+					}
+					$this->_out[] = "<span {$class}>{$cell[ 'content' ]}</span>";
+				}
 				else {
 					$this->_out[] = $cell[ 'content' ];
 				}
@@ -671,7 +678,8 @@ class SPTplParser
 				$checked = 'checked="checked" ';
 			}
 			$multiple = $this->istSet( $cell[ 'attributes' ], 'multiple', 'false' ) ? null : '[]';
-			$this->_out[] = '<input type="' . $type . '" name="' . $cell[ 'attributes' ][ 'name' ] . $multiple . '" value="' . $cell[ 'content' ] . '"' . $checked . '/>';
+			$this->_out[] = '<input type="' . $type . '" class="' . $type. '" name="' . $cell[ 'attributes' ][ 'name' ] . $multiple . '" value="' . $cell[ 'content' ] . '"' . $checked . '/>';
+
 			return $cell;
 		}
 	}

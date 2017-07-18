@@ -16,81 +16,90 @@
 
 <definition>
 	<header>
-		<title value="{'category.add':'ADD_NEW_CATEGORY','category.edit':'EDIT_EXISTING_CATEGORY'}" />
-		<file type="script" filename="adm.category" />
-		<file type="script" filename="bootstrap.tabs" />
+		<title value="{'category.add':'ADD_NEW_CATEGORY','category.edit':'EDIT_EXISTING_CATEGORY'}"/>
+		<file type="script" filename="adm.category"/>
+		<file type="script" filename="bootstrap.tabs"/>
 	</header>
 	<toolbar title="var:[site_title]" icon="" class="category edit">
-		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES" />
-		<divider />
+		<buttons icon="globe" buttons="languages-list" label="TB.LANGUAGES"/>
+		<divider/>
 		<button task="category.apply" type="apply" condition="acl.category.edit">
-			<button type="save" task="category.save" />
-			<button task="category.saveAndNew" label="TB.SAVE_AND_NEW" icon="file-text" />
-			<button type="duplicate" task="category.clone" />
+			<button type="save" task="category.save"/>
+			<button task="category.saveAndNew" label="TB.SAVE_AND_NEW" icon="file-text"/>
+			<button type="duplicate" task="category.clone"/>
 		</button>
-		<divider />
-		<button type="exit" task="category.cancel" />
-		<divider />
-		<button type="help" target="_blank" />
+		<divider/>
+		<button type="exit" task="category.cancel"/>
+		<divider/>
+		<button type="help" target="_blank"/>
 	</toolbar>
 	<body disable-menu="true">
 		<div class="row-fluid">
 			<div class="span12 spMainArea">
-				<message id="spMessage" />
+				<message id="spMessage"/>
 				<tabs>
 					<tab label="CAT.CATEGORY_GENERAL_DATA">
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="text" name="category.name" value="category.name" label="CATN.CATEGORY_NAME" class="input-xlarge" maxlength="255" required="true" />
-									<field type="text" name="category.nid" value="category.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge" placeholder="EN.ENTRY_PLACEHOLDER_ALIAS" />
+									<field type="text" name="category.name" value="category.name" label="CATN.CATEGORY_NAME" class="input-xlarge"
+									       maxlength="255" required="true"/>
+									<field type="text" name="category.nid" value="category.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge"
+									       placeholder="EN.ENTRY_PLACEHOLDER_ALIAS"/>
 								</fieldset>
 
 								<fieldset label="CATN.CATEGORY_LOCATION">
-									<field type="output" value="parent_path" label="CATN.CATEGORY_PATH" id="selectedCatPath" class="spPath" />
-									<field type="button" label="CATN.SELECT_PARENT_BUTTON" name="parent_cat" value="parent_cat" class="btn spCategoryChooser" id="categoryParentName" rel="var:[cat_chooser_url]" />
+									<field type="output" value="parent_path" label="CATN.CATEGORY_PATH" id="selectedCatPath" class="spPath"/>
+									<field type="button" label="CATN.SELECT_PARENT_BUTTON" name="parent_cat" value="parent_cat" class="btn spCategoryChooser"
+									       id="categoryParentName" rel="var:[cat_chooser_url]"/>
 								</fieldset>
 
 								<fieldset label="CATN.CATEGORY_DATA">
 									<field type="select" label="CAT.SHOW_ICON" name="category.showIcon" selected="category.showIcon" class="">
 										<values>
-											<option value="2" label="OPT_GLOBAL" />
-											<option value="1" label="OPT_YES" />
-											<option value="0" label="OPT_NO" />
+											<option value="2" label="OPT_GLOBAL"/>
+											<option value="1" label="OPT_YES"/>
+											<option value="0" label="OPT_NO"/>
 										</values>
 									</field>
-									<field type="select" label="CAT.USE_ICON_FONT" name="category.params[icon-font]" selected="category.params.icon-font" class="">
+									<field type="select" label="CAT.USE_ICON_FONT" name="category.params[icon-font]" selected="category.params.icon-font"
+									       class="">
 										<values>
-											<option value="0" label="OPT_NO" />
-											<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3" />
-											<option value="font-awesome-3-2x" label="SECN.CFG.ICONS_FONT_AWESOME_3_2" />
-											<option value="font-awesome-3-3x" label="SECN.CFG.ICONS_FONT_AWESOME_3_3" />
-											<option value="font-awesome-3-4x" label="SECN.CFG.ICONS_FONT_AWESOME_3_4" />
-											<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4" />
-											<option value="font-awesome-4-2x" label="SECN.CFG.ICONS_FONT_AWESOME_4_2" />
-											<option value="font-awesome-4-4x" label="SECN.CFG.ICONS_FONT_AWESOME_4_4" />
-											<option value="font-awesome-4-5x" label="SECN.CFG.ICONS_FONT_AWESOME_4_5" />
-											<option value="font-google-materials" label="SECN.CFG.ICONS_MATERIAL" />
+											<option value="0" label="OPT_NO"/>
+											<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3"/>
+											<option value="font-awesome-3-2x" label="SECN.CFG.ICONS_FONT_AWESOME_3_2"/>
+											<option value="font-awesome-3-3x" label="SECN.CFG.ICONS_FONT_AWESOME_3_3"/>
+											<option value="font-awesome-3-4x" label="SECN.CFG.ICONS_FONT_AWESOME_3_4"/>
+											<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4"/>
+											<option value="font-awesome-4-2x" label="SECN.CFG.ICONS_FONT_AWESOME_4_2"/>
+											<option value="font-awesome-4-4x" label="SECN.CFG.ICONS_FONT_AWESOME_4_4"/>
+											<option value="font-awesome-4-5x" label="SECN.CFG.ICONS_FONT_AWESOME_4_5"/>
+											<option value="font-google-materials" label="SECN.CFG.ICONS_MATERIAL"/>
 										</values>
 									</field>
 									<div class="hide ctrl-add-font-class">
-										<field type="text" name="category.params[icon-font-add-class]" value="category.params.icon-font-add-class" label="CAT.ICON_FONT_ADD_CLASS" class="input" />
+										<field type="text" name="category.params[icon-font-add-class]" value="category.params.icon-font-add-class"
+										       label="CAT.ICON_FONT_ADD_CLASS" class="input"/>
 									</div>
-									<field type="button" label="CATN.SELECT_CATEGORY_ICON" name="cat_ico" class="btn catIconBtn" id="catIcoChooser" rel="var:[icon_chooser_url]" />
-									<field type="select" label="CAT.SHOW_INTROTEXT" name="category.showIntrotext" selected="category.showIntrotext" class="input-small">
+									<field type="button" label="CATN.SELECT_CATEGORY_ICON" name="cat_ico" class="btn catIconBtn" id="catIcoChooser"
+									       rel="var:[icon_chooser_url]"/>
+									<field type="select" label="CAT.SHOW_INTROTEXT" name="category.showIntrotext" selected="category.showIntrotext"
+									       class="input-small">
 										<values>
-											<option value="2" label="OPT_GLOBAL" />
-											<option value="1" label="OPT_YES" />
-											<option value="0" label="OPT_NO" />
+											<option value="2" label="OPT_GLOBAL"/>
+											<option value="1" label="OPT_YES"/>
+											<option value="0" label="OPT_NO"/>
 										</values>
 									</field>
-									<field type="textarea" name="category.introtext" value="category.introtext" label="CATN.CATEGORY_INTROTEXT" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="textarea" name="category.description" value="category.description" label="CATN.CATEGORY_DESCRIPTION" editor="true" class="input-splarge" rows="2" style="" />
+									<field type="textarea" name="category.introtext" value="category.introtext" label="CATN.CATEGORY_INTROTEXT" editor="false"
+									       class="input-splarge" rows="2" style=""/>
+									<field type="textarea" name="category.description" value="category.description" label="CATN.CATEGORY_DESCRIPTION"
+									       editor="true" class="input-splarge" rows="2" style=""/>
 									<field type="select" label="CATN.PARSE_CAT_DES" name="category.parseDesc" selected="category.parseDesc" class="input-small">
 										<values>
-											<option value="2" label="OPT_GLOBAL" />
-											<option value="1" label="OPT_YES" />
-											<option value="0" label="OPT_NO" />
+											<option value="2" label="OPT_GLOBAL"/>
+											<option value="1" label="OPT_YES"/>
+											<option value="0" label="OPT_NO"/>
 										</values>
 									</field>
 								</fieldset>
@@ -100,18 +109,20 @@
 					<tab label="CAT.CATEGORY_CUSTOM_FIELDS" condition="fields">
 						<div class="span12">
 							<fieldset>
-								<loop subject="category.fields" />
+								<loop subject="category.fields"/>
 							</fieldset>
 						</div>
 					</tab>
 					<tab label="CAT.CATEGORY_ENTRY_FIELDS" condition="entryFields">
 						<div class="span12">
 							<fieldset>
-								<field type="toggle" name="category.allFields" value="category.allFields" label="USE_ALL_FIELDS" prefix="yes_no" />
-								<div class="entryFields">
+								<field type="toggle" name="category.allFields" value="category.allFields" label="USE_ALL_FIELDS" prefix="yes_no"/>
+							</fieldset>
+							<fieldset label="ONLY_SPECIFIC_FIELDS">
+								<div class="entryFields spFieldCheckbox">
 									<loop subject="entryFields">
-										<cell type="checkbox" name="fid" value="id" checked="included" />
-										<cell type="text" value="name" />
+										<cell type="checkbox" name="fid" value="id" checked="included" class="spClassCheckbox" />
+										<cell type="text" value="name" class=""/>
 									</loop>
 								</div>
 							</fieldset>
@@ -121,16 +132,19 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="textarea" name="category.metaDesc" value="category.metaDesc" label="DESCRIPTION" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="textarea" name="category.metaKeys" value="category.metaKeys" label="KEYS" editor="false" class="input-splarge" rows="2" style="" />
-									<field type="text" name="category.metaAuthor" value="category.metaAuthor" label="AUTHOR" class="input-large" maxlength="255" />
+									<field type="textarea" name="category.metaDesc" value="category.metaDesc" label="DESCRIPTION" editor="false"
+									       class="input-splarge" rows="2" style=""/>
+									<field type="textarea" name="category.metaKeys" value="category.metaKeys" label="KEYS" editor="false" class="input-splarge"
+									       rows="2" style=""/>
+									<field type="text" name="category.metaAuthor" value="category.metaAuthor" label="AUTHOR" class="input-large"
+									       maxlength="255"/>
 									<field type="select" label="ROBOTS" name="category.metaRobots" selected="category.metaRobots" class="input-large">
 										<values>
-											<option value="" label="ROBOTS_NONE" />
-											<option value="index, follow" label="index, follow" />
-											<option value="index, nofollow" label="index, nofollow" />
-											<option value="noindex, follow" label="noindex, follow" />
-											<option value="noindex, nofollow" label="noindex, nofollow" />
+											<option value="" label="ROBOTS_NONE"/>
+											<option value="index, follow" label="index, follow"/>
+											<option value="index, nofollow" label="index, nofollow"/>
+											<option value="noindex, follow" label="noindex, follow"/>
+											<option value="noindex, nofollow" label="noindex, nofollow"/>
 										</values>
 									</field>
 								</fieldset>
@@ -141,33 +155,40 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
-									<field type="toggle" name="category.state" value="category.state" label="PUBLISHED" prefix="yes_no" />
-									<field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class="" dateFormat="d-m-Y H:i:s" icon="unlock" addOffset="true" />
-									<field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class="" dateFormat="d-m-Y H:i:s" icon="lock" addOffset="true" />
+									<field type="toggle" name="category.state" value="category.state" label="PUBLISHED" prefix="yes_no"/>
+									<field type="datePicker" label="VALID_SINCE" name="category.validSince" value="category.validSince" class=""
+									       dateFormat="d-m-Y H:i:s" icon="unlock" addOffset="true"/>
+									<field type="datePicker" label="VALID_UNTIL" name="category.validUntil" value="category.validUntil" class=""
+									       dateFormat="d-m-Y H:i:s" icon="lock" addOffset="true"/>
 								</fieldset>
 								<fieldset label="CATN.EDIT_DATA">
-									<field type="output" value="category.version" label="VERSION" class="badge" />
-									<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class="" dateFormat="d-m-Y H:i:s" icon="calendar" addOffset="true" />
-									<field type="userSelector" label="CREATED_BY" name="category.owner" value="category.owner" class="span2" format="%name (%id)" />
+									<field type="output" value="category.version" label="VERSION" class="badge"/>
+									<field type="datePicker" label="CREATED_AT" name="category.createdTime" value="category.createdTime" class=""
+									       dateFormat="d-m-Y H:i:s" icon="calendar" addOffset="true"/>
+									<field type="userSelector" label="CREATED_BY" name="category.owner" value="category.owner" class="span2"
+									       format="%name (%id)"/>
 									<field type="output" label="CREATED_BY_IP" name="category.ownerIP" class="infoText">
 										<value>
 											<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="category.ownerIP" target="_blank">
-												<param name="searchtext" value="category.ownerIP" parse="true" />
+												<param name="searchtext" value="category.ownerIP" parse="true"/>
 											</url>
 										</value>
 									</field>
-									<field type="dateGetter" label="MODIFIED_AT" name="category.updatedTime" value="category.updatedTime" class="infoText" dateFormat="d-m-Y H:i:s" />
-									<field type="userGetter" label="MODIFIED_BY" name="category.updater" value="category.updater" class="infoText" format="%name (%id)" />
+									<field type="dateGetter" label="MODIFIED_AT" name="category.updatedTime" value="category.updatedTime" class="infoText"
+									       dateFormat="d-m-Y H:i:s"/>
+									<field type="userGetter" label="MODIFIED_BY" name="category.updater" value="category.updater" class="infoText"
+									       format="%name (%id)"/>
 									<field type="output" label="MODIFIED_BY_IP" name="category.updaterIP" class="infoText">
 										<value>
 											<url type="external" host="http://apps.db.ripe.net/search/query.html?" content="category.updaterIP" target="_blank">
-												<param name="searchtext" value="category.updaterIP" parse="true" />
+												<param name="searchtext" value="category.updaterIP" parse="true"/>
 											</url>
 										</value>
 									</field>
 								</fieldset>
 								<fieldset label="CLICKCOUNTER">
-									<field type="button" label="CAT.RESET_COUNT" value="category.counter" name="counter" class="btn counter-reset" rel="category" />
+									<field type="button" label="CAT.RESET_COUNT" value="category.counter" name="counter" class="btn counter-reset"
+									       rel="category"/>
 								</fieldset>
 							</div>
 						</div>
@@ -178,10 +199,10 @@
 				<div class="spCategorySelect spModalIframe modal tiny hide" id="spCat">
 					<div class="modal-header">
 						<button class="close" data-dismiss="modal">
-							<text value="CLOSE_X" />
+							<text value="CLOSE_X"/>
 						</button>
 						<h3>
-							<text value="CAT.SELECT_CATEGORY_PATH" />
+							<text value="CAT.SELECT_CATEGORY_PATH"/>
 						</h3>
 					</div>
 					<div class="modal-body">
@@ -189,20 +210,20 @@
 					</div>
 					<div class="modal-footer">
 						<a href="#" class="btn" data-dismiss="modal">
-							<text value="CAT.CATEGORY_CLOSE_WINDOW" />
+							<text value="CAT.CATEGORY_CLOSE_WINDOW"/>
 						</a>
 						<a href="#" id="spCatSelect" class="btn btn-primary" data-dismiss="modal">
-							<text value="CAT.CATEGORY_SAVE_SELECTION" />
+							<text value="CAT.CATEGORY_SAVE_SELECTION"/>
 						</a>
 					</div>
 				</div>
 				<div class="spIconSelect spModalPopup modal normal hide" id="spIco">
 					<div class="modal-header">
 						<button class="close" data-dismiss="modal">
-							<text value="CLOSE_X" />
+							<text value="CLOSE_X"/>
 						</button>
 						<h3>
-							<text value="CAT.JS_SELECT_CAT_ICON" />
+							<text value="CAT.JS_SELECT_CAT_ICON"/>
 						</h3>
 					</div>
 					<div class="modal-body">
@@ -210,7 +231,7 @@
 					</div>
 					<div class="modal-footer">
 						<a href="#" class="btn" data-dismiss="modal">
-							<text value="CAT.CATEGORY_CLOSE_WINDOW" />
+							<text value="CAT.CATEGORY_CLOSE_WINDOW"/>
 						</a>
 					</div>
 				</div>
@@ -218,19 +239,19 @@
 		</div>
 	</body>
 	<config>
-		<action value="index.php" />
+		<action value="index.php"/>
 		<hidden>
-			<field name="option" default="com_sobipro" />
-			<field name="task" default="" />
-			<field name="sp-language" default="" />
-			<field name="selectedCid" default="" />
-			<field name="selectedCatName" default="" />
-			<field name="selectedCatPath" default="" />
-			<field name="categoryIconHolder" value="category_icon" />
-			<field name="category.icon" value="category.icon" />
-			<field name="category.id" value="category.id" />
-			<field name="category.parent" value="category.parent" />
-			<field name="method" default="xhr" />
+			<field name="option" default="com_sobipro"/>
+			<field name="task" default=""/>
+			<field name="sp-language" default=""/>
+			<field name="selectedCid" default=""/>
+			<field name="selectedCatName" default=""/>
+			<field name="selectedCatPath" default=""/>
+			<field name="categoryIconHolder" value="category_icon"/>
+			<field name="category.icon" value="category.icon"/>
+			<field name="category.id" value="category.id"/>
+			<field name="category.parent" value="category.parent"/>
+			<field name="method" default="xhr"/>
 		</hidden>
 	</config>
 </definition>
