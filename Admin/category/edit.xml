@@ -117,8 +117,7 @@
 						<div class="span12">
 							<fieldset>
 								<field type="toggle" name="category.allFields" value="category.allFields" label="USE_ALL_FIELDS" prefix="yes_no"/>
-							</fieldset>
-							<fieldset label="ONLY_SPECIFIC_FIELDS">
+								<field type="output" value="" label="ONLY_SPECIFIC_FIELDS" class="novalue"/>
 								<div class="entryFields">
 									<loop subject="entryFields">
 										<cell type="checkbox" name="fid" value="id" checked="included" class="spClassCheckbox" box-label="name"/>
