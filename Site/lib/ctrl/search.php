@@ -140,7 +140,14 @@ class SPSearchCtrl extends SPSectionCtrl
 			}
 		}
 //		usort( $results, [ 'self', 'sortByLen' ] );
-		natcasesort( $results );
+		if ( class_exists( 'Collator' ) ) {
+			$collator = new Collator( Sobi::Cfg( 'language' ) );
+			$collator->sort( $results );
+		}
+		else {
+			natcasesort( $results );
+		}
+
 		Sobi::Trigger( 'AfterSuggest', 'Search', [ &$results ] );
 		if ( count( $results ) ) {
 			foreach ( $results as $i => $term ) {

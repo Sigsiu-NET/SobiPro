@@ -21,14 +21,14 @@ SobiPro.jQuery( document ).ready( function ()
 	SobiPro.jQuery( '.search-query' ).typeahead( {
 		source: function ( query, typeahead )
 		{
-			var request = {
+			const request = {
 				'option': 'com_sobipro',
 				'task': 'search.suggest',
 				'sid': SobiProSection,
 				'term': query,
 				'format': 'raw'
 			};
-			var proxy = this;
+			// const proxy = this;
 			return SobiPro.jQuery.ajax( {
 				'type': 'post',
 				'url': 'index.php',
@@ -36,9 +36,9 @@ SobiPro.jQuery( document ).ready( function ()
 				'dataType': 'json',
 				success: function ( response )
 				{
-					responseData = [];
+					let responseData = [];
 					if ( response.length ) {
-						for ( var i = 0; i < response.length; i ++ ) {
+						for ( let i = 0; i < response.length; i ++ ) {
 							responseData[ i ] = { 'name': response[ i ] };
 						}
 						typeahead( responseData );
@@ -49,6 +49,10 @@ SobiPro.jQuery( document ).ready( function ()
 		property: 'name',
 		sorter: function ( items ) {
 			return items;
+		},
+		matcher: function ( item )
+		{
+			return true;
 		}
 	} );
 } );
