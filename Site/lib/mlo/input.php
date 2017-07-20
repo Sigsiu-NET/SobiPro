@@ -189,7 +189,7 @@ abstract class SPHtml_Input
 		$f .= self::file( $name . '-file', 0, $classes, $accept );
 		$f .= '</div>';
 		$b3class = '';
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$b3class = ' form-control';
 		}
 		if ( !( $stupidInternetExplorer ) ) {
@@ -229,7 +229,7 @@ abstract class SPHtml_Input
 	 */
 	public static function _text( $name, $value = null, $params = null )
 	{
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			SPHtml_Input::checkArray( $params );
 			if ( isset( $params[ 'class' ] ) ) {
 				$params[ 'class' ] .= ' form-control';
@@ -391,7 +391,7 @@ abstract class SPHtml_Input
 		if ( !isset( $params[ 'style' ] ) ) {
 			$params[ 'style' ] = "height: {$height}px;";
 		}
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$editorParams[ 'class' ] = "form-control";
 		}
 
@@ -406,7 +406,7 @@ abstract class SPHtml_Input
 			}
 		}
 		else {
-			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+			if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 				SPHtml_Input::checkArray( $params );
 				if ( isset( $params[ 'class' ] ) ) {
 					$params[ 'class' ] .= ' form-control';
@@ -455,7 +455,7 @@ abstract class SPHtml_Input
 		$f = "<input type=\"radio\" name=\"{$name}\" id=\"{$id}\" value=\"{$value}\"{$checked}{$params}/>";
 
 		$l = strlen( $label ) ? "\n<label for=\"{$id}\">{$label}</label>" : null;
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$lstart = strlen( $label ) ? "\n<label for=\"{$id}\" class=\"radio-inline\">" : null;
 		}
 		else {
@@ -469,7 +469,7 @@ abstract class SPHtml_Input
 			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
 		}
 		if ( is_array( $order ) ) {
-//			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+//			if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			//im Moment weiss ich nichts besseres hierfür
 			$f = ( $order == 'left' ) ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 //			}
@@ -492,7 +492,7 @@ abstract class SPHtml_Input
 //			}
 		}
 		else {
-//			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+//			if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$f = ( $order == 'left' ) ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 //			}
 //			else {
@@ -543,7 +543,7 @@ abstract class SPHtml_Input
 				else {
 					$image = null;
 				}
-//				if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+//				if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 //					$container = '<div class="checkbox-inline ' . $order . '">';
 //				$container = '<div class="checkbox-inline">';
 //					$containerend = '</div>';
@@ -594,7 +594,7 @@ abstract class SPHtml_Input
 		$f = "<input type=\"checkbox\" name=\"{$name}\" {$ids}value=\"{$value}\"{$checked}{$params}/>";
 
 		$l = strlen( $label ) ? "\n<label for=\"{$id}\">{$label}</label>" : null;
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$lstart = $label ? "\n<label for=\"{$id}\" class=\"checkbox-inline\">" : null;
 		}
 		else {
@@ -613,7 +613,7 @@ abstract class SPHtml_Input
 			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
 		}
 //		if ( is_array( $order ) ) {
-		//if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		//if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 		//im Moment weiss ich nichts besseres hierfür
 //				$f = ( $order == 'left' ) ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 //			}
@@ -637,7 +637,7 @@ abstract class SPHtml_Input
 //			}
 //		}
 //		else {
-//			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+//			if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 //				$f = ( $order == 'left' ) ? $lstart . $lcontent . $f . $lend : $lstart . $f . $lcontent . $lend;
 		$f = $lstart . $f . $lcontent . $lend;
 //			}
@@ -671,7 +671,7 @@ abstract class SPHtml_Input
 	{
 		self::checkArray( $values );
 
-//		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+//		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 //			$container = '<div class="radio-inline ' . $field . '">';
 //			$containerend = '</div>';
 //		}
@@ -817,7 +817,7 @@ abstract class SPHtml_Input
 	 */
 	public static function _select( $name, $values, $selected = null, $multi = false, $params = null )
 	{
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			SPHtml_Input::checkArray( $params );
 			if ( isset( $params[ 'class' ] ) ) {
 				$params[ 'class' ] .= ' form-control';
@@ -1044,7 +1044,7 @@ abstract class SPHtml_Input
 			$params[ 'data' ][ 'time-offset' ] = SPFactory::config()->getTimeOffset();
 //			$offset = $params[ 'data' ][ 'time-offset' ];
 		}
-		$bs3 = ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) );
+		$bs3 = ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) );
 		$data = self::createDataTag( $params );
 		SPFactory::header()
 				->addCssFile( 'bootstrap.datepicker' )
@@ -1079,7 +1079,7 @@ abstract class SPHtml_Input
 //		$f .= '<input type="hidden" value="' . ( $value ? (int)( ( $value + SPFactory::config()->getTimeOffset() ) * 1000 ) : null ) . '" name="' . $name . '"/>';
 //		$f .= '<input type="hidden" value="' . ( $value ? ( $value + SPFactory::config()->getTimeOffset() ) * 1000 : null ) . '" name="' . $name . '"/>';
 
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$f .= '<span class="input-group-addon add-on">';
 		}
 		else {
@@ -1298,12 +1298,12 @@ abstract class SPHtml_Input
 
 		$save = $saveText ? '<a href="#" id="' . $bid . '-save" class="btn btn-primary btn-sigsiu save" data-dismiss="modal">' . Sobi::Txt( $saveText ) . '</a>' : null;
 
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			//remove hide from modal windows as BS3 modals aren't controlled via hide
 			$classes = str_replace( 'hide', null, $classes );
 		}
 		$html .= '<div class="' . $classes . $id . $style . '>';
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$html .= '<div class="modal-dialog"><div class="modal-content">';
 		}
 		$html .= '  <div class="modal-header">
@@ -1316,7 +1316,7 @@ abstract class SPHtml_Input
 						<a href="#" class="btn btn-default" data-dismiss="modal">' . Sobi::Txt( $closeText ) . '</a>
 						' . $save . '
 					</div>';
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$html .= '</div></div>';
 		}
 		$html .= '</div>';

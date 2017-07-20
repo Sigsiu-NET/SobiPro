@@ -126,7 +126,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		}
 		$params = [ 'id' => $this->nid . '_protocol', 'size' => 1, 'class' => $this->cssClass . 'Protocol' ];
 
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) ) {
 			$protofield = '<div class="input-group"><div class="input-group-btn">';
 		}
 		else {

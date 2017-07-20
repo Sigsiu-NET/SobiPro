@@ -207,7 +207,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				->addJsFile( 'opt.field_category_tree' )
 				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { new SigsiuTreeEdit( ' . json_encode( $params ) . '); } );' );
 
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$selector = $selector . '<div class="row"><div class="tree col-sm-6"' . $setheight . '>' . $tree->display( true ) . '</div>';
 		}
 		else {
@@ -236,7 +236,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		elseif ( !( count( $selectedCategories ) ) ) {
 			$delBtParams[ 'disabled' ] = 'disabled';
 		}
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$selector .= '<div class="selected col-sm-6">';
 			$treeclass = 'SigsiuTree container-fluid';
 		}
@@ -254,7 +254,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$selector .= SPHtml_Input::hidden( $this->nid, 'json://' . json_encode( array_keys( $selectedCategories ) ) );
 		$selector .= '</div></div>';
 
-		if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$selector .= '<div class="row"><div class="spCatSelectBtns buttons col-sm-12">';
 		}
 		else {
@@ -267,7 +267,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 		if ( $this->modal ) {
 			$modalclass = 'modaltree modal hide';
-			if ( Sobi::Cfg( 'template.bootstrap3-styles' ) && !defined( 'SOBIPRO_ADM' ) ) {
+			if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 				$modalclass = 'modaltree modal fade';
 			}
 

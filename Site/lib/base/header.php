@@ -87,7 +87,7 @@ final class SPHeader
 				$this->addCssFile( [ 'sobipro' ] );
 			}
 			$this->addJsFile( [ 'sobipro', 'jquery', 'jqnc' ] );
-			if ( Sobi::Cfg( 'template.bootstrap3-load', false ) && !defined( 'SOBIPRO_ADM' ) ) {
+			if ( Sobi::Cfg( 'template.bootstrap3-load', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 				if ( Sobi::Cfg( 'template.bootstrap3-source', true ) ) { //true=local, false=CDN
 					$this->addCssFile( 'b3bootstrap.b3bootstrap' )
 						->addJsFile( 'b3bootstrap' );
