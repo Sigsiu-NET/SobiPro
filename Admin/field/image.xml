@@ -221,6 +221,7 @@
 		<hidden>
 			<field name="option" default="com_sobipro"/>
 			<field name="task" default=""/>
+			<field name="field.fieldType" default="image" />
 			<field name="sp-language" default=""/>
 			<field name="method" default="xhr"/>
 			<field name="format" default="raw"/>

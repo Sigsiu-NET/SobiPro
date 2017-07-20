@@ -156,6 +156,7 @@
 		<hidden>
 			<field name="option" default="com_sobipro" />
 			<field name="sp-language" default="" />
+			<field name="field.fieldType" default="email" />
 			<field name="task" default="" />
 			<field name="method" default="xhr" />
 			<field name="format" default="raw" />
