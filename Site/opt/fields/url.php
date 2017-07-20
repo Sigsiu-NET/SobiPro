@@ -113,7 +113,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 				//$fieldTitle .= "<label for=\"{$this->nid}\" class=\"{$this->cssClass}Title\">{$this->labelsLabel}</label>\n";
 				$params[ 'placeholder' ] = $this->labelsLabel;
 			}
-			$fieldTitle .= SPHtml_Input::text( $this->nid, ( ( is_array( $raw ) && isset( $raw[ 'label' ] ) ) ? SPLang::clean( $raw[ 'label' ] ) : null ), $params );
+			$value = ( ( is_array( $raw ) && isset( $raw[ 'label' ] ) ) ? SPLang::clean( $raw[ 'label' ] ) : null );
+			$fieldTitle .= SPHtml_Input::text( $this->nid, $value, $params );
 		}
 		$protocols = [];
 		if ( count( $this->allowedProtocols ) ) {
@@ -133,7 +134,9 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			$protofield = '<div class="input-prepend"><div class="btn-group">';
 		}
 		$fliped_protocols = array_flip( $protocols );
-		$protofield .= SPHtml_Input::select( $this->nid . '_protocol', $protocols, ( ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : $fliped_protocols[ 0 ] ), false, $params );
+		$fliped_protocols = array_values($fliped_protocols);
+		$selected = ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : $fliped_protocols[ 0 ];
+		$protofield .= SPHtml_Input::select( $this->nid . '_protocol', $protocols, $selected, false, $params );
 		$protofield .= '</div>';
 
 		//$field .= '<span class="spFieldUrlProtocol">://</span>';
