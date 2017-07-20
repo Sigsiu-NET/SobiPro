@@ -22,10 +22,6 @@
 		</sql>
 	</install>
 	<scriptfile>spinstall.php</scriptfile>
-	<files folder="/">
-		<filename>CHANGELOG.md</filename>
-		<filename>README.md</filename>
-	</files>
 	<files folder="Site">
 		<folder>etc</folder>
 		<folder>lib</folder>
@@ -35,6 +31,8 @@
 		<folder>usr</folder>
 		<folder>var</folder>
 		<folder>views</folder>
+		<filename>CHANGELOG.md</filename>
+		<filename>README.md</filename>
 		<filename>sobipro.php</filename>
 		<filename>router.php</filename>
 		<filename>metadata.xml</filename>
