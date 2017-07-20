@@ -20,7 +20,7 @@
 		<file type="script" filename="bootstrap.tabs"/>
 		<file type="script" filename="adm.front"/>
 	</header>
-	<toolbar title="var:[site_title]" icon="" class="front cpanel">
+	<toolbar title="var:[site_title]" icon="" class="front cPanel">
 		<divider/>
 		<buttons type="action" icon="sitemap" label="TB.SECTION" condition="acl.config">
 			<button type="new" task="section.add" label="AMN.ADD" icon="plus"/>
@@ -100,7 +100,7 @@
 					</div>
 				</div>
 
-				<ul class="cpanel thumbnails">
+				<ul class="spGlobals thumbnails">
 					<li class="spBox" condition="acl.config">
 						<url type="intern" label="CPANEL.GCONF" icon="cogs icon-4x">
 							<param name="task" value="config"/>
@@ -210,9 +210,9 @@
 											<![CDATA[<a href="https://www.Sigsiu.NET/support" target="_blank">SobiPro Support System</a>]]></param>
 									</text>
 								</p>
-								<a href="https://www.sigsiu.net/subscribe" target="_blank"
+								<a href="https://www.sigsiu.net/subscribe"
 								   title="Join the SobiPro Club and get professional support, an advanced documentation, and additional applications from the makers of SobiPro!">
-									<img src="../media/sobipro/jointheclub.png"
+									<img src="../media/sobipro/professionalsupport.png"
 									     alt="Join the SobiPro Club and get professional support, an advanced documentation, and additional applications from the makers of SobiPro!"/>
 								</a>
 							</div>

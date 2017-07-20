@@ -352,7 +352,7 @@
 										<cell type="link" value="repository.maintainer.supporturl" class="spCell left">
 											<url type="extern" host="repository.maintainer.supporturl"/>
 										</cell>
-										<cell>
+										<cell class="spCell">
 											<button label="TB.DELETE" rel="var:[repository.id]" icon="trash" class="SpRemoveRepo"/>
 										</cell>
 									</loop>

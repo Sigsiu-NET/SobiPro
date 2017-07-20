@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="2.5" method="upgrade" overwrite="true">
+<extension type="component" version="3.0" method="upgrade" overwrite="true">
 	<name>SobiPro</name>
-	<creationDate>09 May 2017</creationDate>
+	<creationDate>19 July 2017</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>https://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2017 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.4.0.B</version>
+	<version>1.4.0.C</version>
 	<codename>Owl</codename>
 	<description>SobiPro directory component for Joomla!</description>
 	<version_number>1.4</version_number>
-	<svn>$Revision$</svn>
 	<SobiPro>
 		<requirements>
 			<core version="1.3" />
@@ -23,10 +22,6 @@
 		</sql>
 	</install>
 	<scriptfile>spinstall.php</scriptfile>
-	<files folder="/">
-		<filename>CHANGELOG.md</filename>
-		<filename>README.md</filename>
-	</files>
 	<files folder="Site">
 		<folder>etc</folder>
 		<folder>lib</folder>
@@ -36,6 +31,8 @@
 		<folder>usr</folder>
 		<folder>var</folder>
 		<folder>views</folder>
+		<filename>CHANGELOG.md</filename>
+		<filename>README.md</filename>
 		<filename>sobipro.php</filename>
 		<filename>router.php</filename>
 		<filename>metadata.xml</filename>

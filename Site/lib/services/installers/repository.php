@@ -128,7 +128,7 @@ class SPRepository extends SPInstaller
 			$this->_server = SPFactory::Instance( 'services.soap', null, [ 'location' => $this->xGetString( 'url' ) ] );
 		}
 		else {
-			throw new SPException( SPLang::e( 'No repository definition file at %s or the definition is invalid.', $this->xmlFile ) );
+			throw new SPException( SPLang::e( 'No repository definition file %s or the definition is invalid.', $this->xmlFile ) );
 		}
 	}
 

@@ -292,7 +292,7 @@ class SPField extends SPObject
 			$this->checkMethod( 'cleanData' );
 		}
 		if ( $this->_type && method_exists( $this->_type, 'cleanData' ) ) {
-			$r =& $this->_type->cleanData( $html );
+			$r = $this->_type->cleanData( $html );
 		}
 		else {
 			$r =& $this->_data;

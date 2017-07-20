@@ -146,7 +146,7 @@
 								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell type="text" value="owner" class="spCell center"/>
+						<cell type="text" value="owner" class="spCell center nowrap"/>
 						<cell condition="/acl.category.edit" class="spCell position">
 							<cell type="ordering" value="position" name="cp_sid[var:[id]]" condition="/corder.contains(position)">
 								<cell type="text" class="arrow">
@@ -240,7 +240,7 @@
 								<param name="sid" value="id" parse="true"/>
 							</url>
 						</cell>
-						<cell type="text" value="owner" class="spCell center"/>
+						<cell type="text" value="owner" class="spCell center nowrap"/>
 						<cell condition="/acl.entry.edit" class="spCell position">
 							<cell type="ordering" value="position" name="ep_sid[var:[id]]" condition="/eorder.contains(position)">
 								<cell type="text" class="arrow">
