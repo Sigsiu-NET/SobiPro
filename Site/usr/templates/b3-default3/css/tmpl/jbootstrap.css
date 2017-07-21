@@ -64,16 +64,6 @@ body {
 .SobiPro .navbar-collapse.collapse {
 	overflow: hidden!important;
 }
-.SobiPro .editor a.btn {
-	color: #333;
-	background-color: #FFF;
-	border-color: #CCC;
-}
-.SobiPro .editor a.btn:active,
-.SobiPro .editor a.btn:hover {
-	background-color: #e6e6e6;
-	border-color: #adadad;
-}
 .SobiPro .btn-group {
 	font-size: inherit;
 	white-space: inherit;

@@ -1033,11 +1033,16 @@ body.modal-open {
 
 	// New button colour
 	// ----------------------------------------
+	.toggle-editor .btn,
 	.btn-sigsiu {
 		color: @text-color !important;
 		background-color: lighten(@base-color, 5%);
 		border-color: darken(@base-color, 5%);
 	}
+	.toggle-editor .btn:hover,
+	.toggle-editor .btn:focus,
+	.toggle-editor .btn:active,
+	.toggle-editor .btn.active,
 	.btn-group.open .btn-sigsiu.dropdown-toggle,
 	.btn-sigsiu:hover,
 	.btn-sigsiu:focus,
