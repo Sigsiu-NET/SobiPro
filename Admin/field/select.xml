@@ -201,6 +201,7 @@
 										</values>
 									</field>
 									<field type="text" name="field.cssClassSearch" value="field.cssClassSearch" label="FM.CSS_CLASS" class="input-large" />
+									<field type="toggle" name="field.suggesting" value="field.suggesting" label="FMN.SUGGESTING" prefix="yes_no" />
 								</fieldset>
 							</div>
 						</div>

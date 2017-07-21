@@ -116,7 +116,7 @@ class SPSearchCtrl extends SPSectionCtrl
 			$search = str_replace( '.', '\.', $this->_request[ 'search_for' ] );
 			if ( count( $this->_fields ) ) {
 				foreach ( $this->_fields as $field ) {
-					if ( count( $fieldNids ) && !( in_array( $field->get( 'nid' ), $fieldNids ) ) ) {
+					if ( !( $field->get( 'suggesting' ) ) || ( count( $fieldNids ) && !( in_array( $field->get( 'nid' ), $fieldNids ) ) ) ) {
 						continue;
 					}
 					else {

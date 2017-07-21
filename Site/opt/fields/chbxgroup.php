@@ -1,22 +1,20 @@
 <?php
 /**
  * @package: SobiPro Component for Joomla!
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: http://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
-
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.radio' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -42,9 +40,10 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	protected $dType = 'predefined_multi_data_multi_choice';
 	/** * @var string */
 	protected $metaSeparator = ' ';
-	/** @var bool  */
+	/** @var bool */
 	static private $CAT_FIELD = true;
-
+	/*** @var bool */
+	protected $suggesting = false;
 
 	/**
 	 * Shows the field in the edit entry or add entry form
@@ -58,9 +57,9 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 		}
 		$class = $this->required ? $this->cssClass . ' required' : $this->cssClass;
 		if ( defined( 'SOBIPRO_ADM' ) ) {
-			if ($this->bsWidth) {
-				$width = SPHtml_Input::_translateWidth($this->bsWidth);
-				$class .=  ' ' . $width;
+			if ( $this->bsWidth ) {
+				$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+				$class .= ' ' . $width;
 			}
 		}
 //		$params = array( 'class' => $class . ' checkbox-inline ' . $this->labelSite );
@@ -76,9 +75,9 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 		if ( is_array( $selected ) && !( is_string( $selected ) ) && count( $selected ) ) {
 			$selected = array_merge( $selected, array_keys( $selected ) );
 		}
-		if (($selected == null) && ($this->defaultValue)) {
-			$selected = explode(',', $this->defaultValue);
-			$selected = array_map('trim', $selected);
+		if ( ( $selected == null ) && ( $this->defaultValue ) ) {
+			$selected = explode( ',', $this->defaultValue );
+			$selected = array_map( 'trim', $selected );
 		}
 		$this->labelSite = 'right';
 		$list = SPHtml_Input::checkBoxGroup( $this->nid, $values, $this->nid, $selected, $params, $this->labelSite, true );
@@ -144,24 +143,24 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 			$lang = Sobi::Lang( false );
 		}
 		$table = $db->join(
-			[
-				[ 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ],
-				[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ],
-				[ 'table' => 'spdb_language', 'as' => 'ldata', 'key' => [ 'sdata.optValue', 'ldata.sKey' ] ],
-			]
+				[
+						[ 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ],
+						[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => 'fid' ],
+						[ 'table' => 'spdb_language', 'as' => 'ldata', 'key' => [ 'sdata.optValue', 'ldata.sKey' ] ],
+				]
 		);
 		try {
 			$db->select(
-				'*, sdata.copy as scopy',
-				$table,
-				[
-					'sdata.fid' => $this->id,
-					'sdata.sid' => $sid,
-					'fdata.sid' => $sid,
-					'ldata.oType' => 'field_option',
-					'ldata.fid' => $this->id,
-				],
-				'scopy', 0, 0, true /*, 'sdata.optValue' */
+					'*, sdata.copy as scopy',
+					$table,
+					[
+							'sdata.fid' => $this->id,
+							'sdata.sid' => $sid,
+							'fdata.sid' => $sid,
+							'ldata.oType' => 'field_option',
+							'ldata.fid' => $this->id,
+					],
+					'scopy', 0, 0, true /*, 'sdata.optValue' */
 			);
 			$data = $db->loadObjectList();
 			if ( $data && count( $data ) ) {
@@ -193,7 +192,7 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 				}
 				foreach ( $order as $opt ) {
 					if ( isset( $rawData[ $opt ] ) ) {
-						$sRawData[ ] = $rawData[ $opt ];
+						$sRawData[] = $rawData[ $opt ];
 					}
 				}
 				$fData = implode( "</li>\n\t<li>", $sRawData );
@@ -217,7 +216,7 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 				if ( !( isset( $this->optionsById[ $opt ] ) ) ) {
 					throw new SPException( SPLang::e( 'FIELD_NO_SUCH_OPT', $opt, $this->name ) );
 				}
-				$selected[ ] = preg_replace( '/^[a-z0-9]\.\-\_/i', null, $opt );
+				$selected[] = preg_replace( '/^[a-z0-9]\.\-\_/i', null, $opt );
 			}
 			return $selected;
 		}
@@ -245,30 +244,30 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 			$this->cleanCss();
 			foreach ( $order as $opt ) {
 				if ( isset( $baseData[ $opt ] ) ) {
-					$list[ ] = [ '_tag' => 'li', '_value' => SPLang::clean( $baseData[ $opt ] ), '_class' => $opt, /*'_id' => trim( $this->nid.'_'.strtolower( $opt ) )*/ ];
+					$list[] = [ '_tag' => 'li', '_value' => SPLang::clean( $baseData[ $opt ] ), '_class' => $opt, /*'_id' => trim( $this->nid.'_'.strtolower( $opt ) )*/ ];
 				}
 			}
 			foreach ( $this->options as $opt ) {
-				$struct[ ] = [
-					'_complex' => 1,
-					'_data' => $opt[ 'label' ],
-					'_attributes' => [ 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] ]
+				$struct[] = [
+						'_complex' => 1,
+						'_data' => $opt[ 'label' ],
+						'_attributes' => [ 'selected' => ( isset( $baseData[ $opt[ 'id' ] ] ) ? 'true' : 'false' ), 'id' => $opt[ 'id' ], 'position' => $opt[ 'position' ] ]
 				];
 			}
 			$data = [
-				'ul' => [
-					'_complex' => 1,
-					'_data' => $list,
-					'_attributes' => [ /* 'id' => $this->nid, */
-						'class' => $this->cssClass ] ]
+					'ul' => [
+							'_complex' => 1,
+							'_data' => $list,
+							'_attributes' => [ /* 'id' => $this->nid, */
+									'class' => $this->cssClass ] ]
 			];
 		}
 		if ( count( $list ) ) {
 			return [
-				'_complex' => 1,
-				'_data' => $data,
-				'_attributes' => [ 'lang' => $this->lang, 'class' => $this->cssClass ],
-				'_options' => $struct,
+					'_complex' => 1,
+					'_data' => $data,
+					'_attributes' => [ 'lang' => $this->lang, 'class' => $this->cssClass ],
+					'_options' => $struct,
 			];
 		}
 	}
@@ -280,6 +279,6 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	protected function getAttr()
 	{
 //		return array( 'optInLine', 'labelSite', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue' );
-		return [ 'optInLine', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsSearchWidth', 'ssize', 'selectLabel' ];
+		return [ 'suggesting', 'optInLine', 'optWidth', 'searchMethod', 'itemprop', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsSearchWidth', 'ssize', 'selectLabel' ];
 	}
 }
