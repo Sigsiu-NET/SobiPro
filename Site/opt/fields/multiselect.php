@@ -40,6 +40,8 @@ class SPField_MultiSelect extends SPField_Select implements SPFieldInterface
 	protected $cssClassSearch = 'spClassSearchMSelect';
 	/** @var bool  */
 	static private $CAT_FIELD = true;
+	/*** @var bool */
+	protected $suggesting = false;
 
 	/**
 	 * Get field specific values if these are in an other table

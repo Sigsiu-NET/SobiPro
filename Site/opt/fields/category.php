@@ -69,6 +69,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	protected $searchOrderCatsBy = 'name.asc';
 	/** @var string */
 	protected static $_filter = '';
+	/*** @var bool */
+	protected $suggesting = false;
 
 	public function __construct( &$field )
 	{

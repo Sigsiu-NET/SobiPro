@@ -38,7 +38,8 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 	protected $cssClassEdit = 'spClassEditEmail';
 	/** @var bool */
 	static private $CAT_FIELD = true;
-
+	/*** @var bool */
+	protected $suggesting = false;
 
 	/**
 	 * Shows the field in the edit entry or add entry form

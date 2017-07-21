@@ -77,6 +77,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	static private $CAT_FIELD = true;
 	/** @var bool */
 	protected $detectTransparency = true;
+	/*** @var bool */
+	protected $suggesting = false;
 
 	/**
 	 * Returns the parameter list

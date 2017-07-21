@@ -49,6 +49,8 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 	protected $dType = 'special';
 	/** @var bool */
 	static private $CAT_FIELD = true;
+	/*** @var bool */
+	protected $suggesting = false;
 
 
 	/**

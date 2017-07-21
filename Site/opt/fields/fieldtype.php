@@ -37,6 +37,8 @@ class SPFieldType extends SPObject
 	protected $showEditLabel = true;
 	/** @var array */
 	protected $sets = [];
+	/*** @var bool */
+	protected $suggesting = true;
 
 
 	public function __construct( &$field )

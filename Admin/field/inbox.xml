@@ -180,6 +180,7 @@
                                     <field type="textarea" name="field.searchRangeValues" value="field.searchRangeValues" label="FM.SEARCH_RANGE_SETTINGS" editor="false" class="input-splarge" rows="4" style="" />
 									<field type="toggle" name="field.freeRange" value="field.freeRange" label="FMN.FREE_RANGE" prefix="yes_no" />
                                     <field type="text" name="field.cssClassSearch" value="field.cssClassSearch" label="FM.CSS_CLASS" class="input-large" />
+									<field type="toggle" name="field.suggesting" value="field.suggesting" label="FMN.SUGGESTING" prefix="yes_no" />
 								</fieldset>
 							</div>
 						</div>
