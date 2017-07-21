@@ -63,6 +63,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Calendar Field in entry form shown wrong (CSS)
 	(#) Notice in File/lib/models/field.php: 295
 	(#) 'Fill in required fields' message if no value for max. Categories per entry is given
+	(#) general class attribute for info field not saved
 
 
 ### 1.3.7 (28 April 2017)

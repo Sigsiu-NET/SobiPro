@@ -137,7 +137,7 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return [ 'cssClassView', 'cssClassEdit', 'showEditLabel', 'bsWidth' ];
+		return [ 'cssClass', 'cssClassView', 'cssClassEdit', 'showEditLabel', 'bsWidth' ];
 	}
 
 	/**
