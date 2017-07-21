@@ -38,7 +38,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Indicator in back-end for primary category
 	(+) Possibility to add entry link to image in vCard
 	(+) Autosuggest function extended to general search field
-	(+) Autosuggest results sorted alphabetically
+	(+) Autosuggest results	 sorted alphabetically
 	(+) Switch of some fields for a certain category (views only)
 	(+) script to use map in tabs in entry form added
 

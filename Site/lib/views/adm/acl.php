@@ -38,10 +38,10 @@ class SPAclView extends SPAdmView
 				$this->edit();
 				$this->determineTemplate( 'acl', 'edit' );
 				break;
-			case 'section':
-				$this->edit();
-				$this->section();
-				$this->determineTemplate( 'acl', 'rules' );
+//			case 'section':
+//				$this->edit();
+//				$this->section();
+//				$this->determineTemplate( 'acl', 'rules' );
 		}
 		parent::display();
 	}
