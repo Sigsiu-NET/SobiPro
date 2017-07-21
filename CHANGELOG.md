@@ -40,6 +40,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Autosuggest function extended to general search field
 	(+) Autosuggest results sorted alphabetically
 	(+) Switch of some fields for a certain category (views only)
+	(+) script to use map in tabs in entry form added
 
 	(-) Unused tabs script of SobiPro version 1.0 removed
 	(-) Clean-up of loaded scripts in template
