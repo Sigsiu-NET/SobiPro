@@ -36,7 +36,12 @@ SobiPro.jQuery( document ).ready( function ()
 				.siblings( 'div' )
 				.removeClass( 'span9' )
 				.addClass( 'span12' )
-                .addClass('firstspan');
+				.addClass( 'firstspan' );
+			try {
+				localStorage.setItem( 'SobiProSideMenu', 'closed' );
+			}
+			catch ( x ) {
+			}
 		}
 		else {
 			SobiPro.jQuery( '#SPRightMenu' ).show( 'slide' );
@@ -46,12 +51,18 @@ SobiPro.jQuery( document ).ready( function ()
 			SobiPro.jQuery( '#SPRightMenu' )
 				.siblings( 'div' )
 				.removeClass( 'span12' )
-                .removeClass('firstspan')
+				.removeClass( 'firstspan' )
 				.addClass( 'span9' );
+			try {
+				localStorage.setItem( 'SobiProSideMenu', 'open' );
+			}
+			catch ( x ) {
+			}
 		}
-		SobiPro.jQuery( '#SPMenuCtrlBt' ).click( function ()
-		{
-			SPRightMenu();
-		} );
+	}
+
+	const menuState = localStorage.getItem( 'SobiProSideMenu' );
+	if ( menuState == 'closed' ) {
+		SobiPro.jQuery( '#SPMenuCtrlBt' ).click();
 	}
 } );

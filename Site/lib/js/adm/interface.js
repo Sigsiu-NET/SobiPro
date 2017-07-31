@@ -505,7 +505,6 @@ SobiPro.jQuery( document ).ready( function ()
 	{
 		try {
 			localStorage.setItem( 'SobiProOpenTab', SobiPro.jQuery( e.target ).attr( 'href' ) );
-
 		}
 		catch ( x ) {
 		}

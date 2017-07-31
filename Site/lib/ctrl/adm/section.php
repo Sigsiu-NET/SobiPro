@@ -93,7 +93,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		/** yes - this is needed. In case we have entries without data in the name field */
 		elseif ( !( $term && $allEntries ) ) {
 			$c = $this->_model->getChilds( 'category', true );
-			$c[ ] = Sobi::Section();
+			$c[] = Sobi::Section();
 			if ( count( $c ) ) {
 				try {
 					$e1 = $db
@@ -118,7 +118,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
-
+		$e = array_unique( $e );
 		// just in case the given site is grater than all existing sites
 		$cCount = count( $c );
 		$cPages = ceil( $cCount / $cLimit );
@@ -254,7 +254,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				$fit = new $fModel();
 				/* @var SPField $fit */
 				$fit->extend( $field );
-				$fields[ ] = $fit;
+				$fields[] = $fit;
 			}
 		}
 		return $fields;
