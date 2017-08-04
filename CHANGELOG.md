@@ -65,6 +65,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Notice in File/lib/models/field.php: 295
 	(#) 'Fill in required fields' message if no value for max. Categories per entry is given
 	(#) general class attribute for info field not saved
+	(#) Storing left menu state (Issue #2)
 
 
 ### 1.3.7 (28 April 2017)

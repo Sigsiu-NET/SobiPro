@@ -37,24 +37,25 @@ SobiPro.jQuery( document ).ready( function ()
 		SobiPro.jQuery('.nav-tabs a[href="' + window.location.hash + '"]').tab('show');
 	}
 
-	//resize the map, necessary if the map is in a tab
-	SobiPro.jQuery( '#tab_map' ).on( 'shown.bs.tab', function ( e )
+	//resize the map in entry form, necessary if the map is in a tab
+	SobiPro.jQuery( 'a[href="#location"]' ).on( 'shown.bs.tab', function ( e )
 	{
+		SobiPro.jQuery( window ).trigger( 'resize' );
 		try {
 			var handler = SPGeoMapsReg[ jQuery( 'div[id^=field_map_canvas_]' ).attr( 'id' ) ];
-			google.maps.event.trigger( handler.Map, 'resize' );
 			handler.Map.setCenter( handler.Position );
 		}
 		catch ( e ) {
 		}
+
 	} );
 
 	//resize the map, necessary if the map is in a collapsable element
-	SobiPro.jQuery( '#address' ).on( 'shown.bs.collapse', function ( e )
+	SobiPro.jQuery( 'a[href="#location"]' ).on( 'shown.bs.collapse', function ( e )
 	{
+		SobiPro.jQuery( window ).trigger( 'resize' );
 		try {
 			var handler = SPGeoMapsReg[ jQuery( 'div[id^=field_map_canvas_]' ).attr( 'id' ) ];
-			google.maps.event.trigger( handler.Map, 'resize' );
 			handler.Map.setCenter( handler.Position );
 		}
 		catch ( e ) {
