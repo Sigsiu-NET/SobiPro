@@ -246,11 +246,11 @@ abstract class SPFactory
 			$obj = new ReflectionClass( $loaded[ $class ] );
 			$instance = $obj->newInstanceArgs( $argsProcessed );
 		} catch ( LogicException $Exception ) {
-			throw new SPException( SPLang::e( 'Cannot create instance of "%s". Class file does not exist. Error %s', $class, $Exception->getMessage() ) );
+			throw new SPException( SPLang::e( 'Cannot create instance of "%s". Error: %s', $class, $Exception->getMessage() ) );
 		} catch ( ReflectionException $Exception ) {
-			throw new SPException( SPLang::e( 'Cannot create instance of "%s". Class file does not exist. Error %s', $class, $Exception->getMessage() ) );
+			throw new SPException( SPLang::e( 'Cannot create instance of "%s". Error: %s', $class, $Exception->getMessage() ) );
 		} catch ( Exception $Exception ) {
-			throw new SPException( SPLang::e( 'Cannot create instance of "%s". Class file does not exist. Error %s', $class, $Exception->getMessage() ) );
+			throw new SPException( SPLang::e( 'Cannot create instance of "%s". Error: %s', $class, $Exception->getMessage() ) );
 		}
 		return $instance;
 	}
