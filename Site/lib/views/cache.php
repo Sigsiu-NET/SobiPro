@@ -99,6 +99,10 @@ class SPCachedView extends SPFrontView implements SPView
 				}
 			}
 		}
+		$tokens = $this->_xml->getElementsByTagName( 'token' );
+		foreach ( $tokens as $node ) {
+			$node->nodeValue = SPFactory::mainframe()->token();
+		}
 	}
 
 	protected function parseXml()
@@ -213,16 +217,16 @@ class SPCachedView extends SPFrontView implements SPView
 					$methodArgs = [];
 					foreach ( $methodParams as $param ) {
 						if ( isset( $call[ $param->name ] ) ) {
-							$methodArgs[ ] = $call[ $param->name ];
+							$methodArgs[] = $call[ $param->name ];
 						}
 						elseif ( $param->name == 'value' && !( isset( $call[ 'value' ] ) ) && isset( $call[ 'name' ] ) ) {
-							$methodArgs[ ] = $this->get( $call[ 'name' ] );
+							$methodArgs[] = $this->get( $call[ 'name' ] );
 						}
 						elseif ( $param->isDefaultValueAvailable() ) {
-							$methodArgs[ ] = $param->getDefaultValue();
+							$methodArgs[] = $param->getDefaultValue();
 						}
 						else {
-							$methodArgs[ ] = null;
+							$methodArgs[] = null;
 						}
 					}
 					call_user_func_array( [ $header, $methods[ $method ] ], $methodArgs );
@@ -254,7 +258,7 @@ class SPCachedView extends SPFrontView implements SPView
 				$value = $node->nodeValue;
 			}
 			if ( $node->nodeName == 'value' ) {
-				$params[ ] = $value;
+				$params[] = $value;
 			}
 			else {
 				$params[ $node->nodeName ] = $value;
