@@ -56,6 +56,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Category images now located in /images instead /media folder
 	(!) Configuration ini files cleaned up
 	(!) Changes in b3-default3 template for basic accessibility
+	(!) default.less/default.css renamed to custom.less/custom.css
 
 	(#) Font Awesome 3 local does not show icons in front-end datepicker
 	(#) Solution to overcome Joomla's IcoMoon when Font Awesome 3 is loaded via CDN
