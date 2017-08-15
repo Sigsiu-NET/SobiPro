@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -19,6 +17,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadController( 'controller' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -183,7 +182,7 @@ class SPRequirements extends SPController
 
 	private function PEAR()
 	{
-		@include_once ( 'PEAR.php' );
+		@include_once( 'PEAR.php' );
 		$v = class_exists( 'PEAR' ) ? true : false;
 		if ( $v ) {
 			echo $this->ok( $this->txt( 'REQ.PEAR_AVAILABLE' ), __FUNCTION__ );
@@ -650,9 +649,9 @@ class SPRequirements extends SPController
 //		}
 		$this->prepareStoredData( $settings );
 		$settings[ 'env' ] = [
-			'PHP_OS' => PHP_OS,
-			'php_uname' => php_uname(),
-			'PHP_VERSION_ID' => PHP_VERSION_ID
+				'PHP_OS' => PHP_OS,
+				'php_uname' => php_uname(),
+				'PHP_VERSION_ID' => PHP_VERSION_ID
 		];
 		$settings[ 'ftp' ] = $this->ftp();
 		$settings[ 'curl' ] = $this->curlFull();
@@ -780,7 +779,10 @@ class SPRequirements extends SPController
 			$c = curl_init( "https://www.sigsiu.net/sobipro-check/testcurl" );
 			if ( $c !== false ) {
 				$fp = fopen( "temp.txt", "w" );
-				//curl_setopt( $c, CURLOPT_MUTE, true );
+				// 'ssl_verifypeer' => false,
+				// 'ssl_verifyhost' => 2,
+				curl_setopt( $c, CURLOPT_SSL_VERIFYPEER, false );
+					curl_setopt( $c, CURLOPT_SSL_VERIFYHOST, 2 );
 				curl_setopt( $c, CURLOPT_FILE, $fp );
 				curl_setopt( $c, CURLOPT_HEADER, 0 );
 				curl_exec( $c );

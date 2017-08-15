@@ -65,4 +65,10 @@ SobiPro.jQuery( document ).ready( function ()
 	if ( menuState == 'closed' ) {
 		SobiPro.jQuery( '#SPMenuCtrlBt' ).click();
 	}
+
+	SobiPro.jQuery( '#SPMenuCtrlBt' ).click( function ()
+	{
+		SPRightMenu();
+	} );
+
 } );

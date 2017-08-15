@@ -392,6 +392,7 @@ abstract class Sobi
 	 * If the $_POST array contain "sp_language" index and the $storage param is set, this language will be returned.
 	 * In other cases it is recommended to call this function with $storage = false. However because this happen only while recieving data from POST ///
 	 * @param bool $allowEmpty
+	 * @deprecated use \Sobi\FileSystem\FileSystem::FixPath
 	 * @return string
 	 */
 	public static function Lang( $storage = true, $allowEmpty = false )

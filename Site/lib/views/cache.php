@@ -15,6 +15,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\FileSystem\FileSystem;
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadView( 'view' );
@@ -31,24 +34,31 @@ class SPCachedView extends SPFrontView implements SPView
 		$this->_xml = $xml;
 		Sobi::Trigger( 'Start', ucfirst( __FUNCTION__ ), [ &$this->_xml ] );
 		$templatePackage = SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' );
-		$templateOverride = SPRequest::cmd( 'sptpl' );
-		if ( $templateOverride ) {
-			if ( strstr( $templateOverride, '.' ) ) {
-				$templateOverride = str_replace( '.', '/', $templateOverride );
-			}
-			$template = $templateOverride . '.xsl';
+
+		if ( file_exists( $templatePackage . $template ) ) {
+			$template = $templatePackage . $template;
 		}
-		if ( !( file_exists( $template ) ) ) {
-			if ( file_exists( Sobi::FixPath( $templatePackage . '/' . $template ) ) ) {
-				$template = Sobi::FixPath( $templatePackage . '/' . $template );
+		else {
+			$templateOverride = Input::Cmd( 'sptpl' );
+			if ( $templateOverride ) {
+				if ( strstr( $templateOverride, '.' ) ) {
+					$templateOverride = str_replace( '.', '/', $templateOverride );
+				}
+				$template = $templateOverride . '.xsl';
 			}
-			else {
-				$type = SPFactory::db()
-						->select( 'oType', 'spdb_object', [ 'id' => SPRequest::sid() ] )
-						->loadResult();
-				$template = ( $templatePackage . '/' . $type . '/' . $template );
+			if ( !( file_exists( $template ) ) ) {
+				if ( file_exists( FileSystem::FixPath( $templatePackage . '/' . $template ) ) ) {
+					$template = FileSystem::FixPath( $templatePackage . '/' . $template );
+				}
+				else {
+					$type = SPFactory::db()
+							->select( 'oType', 'spdb_object', [ 'id' => SPRequest::sid() ] )
+							->loadResult();
+					$template = ( $templatePackage . '/' . $type . '/' . $template );
+				}
 			}
 		}
+
 		SPFactory::registry()->set( 'current_template', $templatePackage );
 		$this->_templatePath = $templatePackage;
 		$this->_template = str_replace( '.xsl', null, $template );
@@ -98,6 +108,10 @@ class SPCachedView extends SPFrontView implements SPView
 					}
 				}
 			}
+		}
+		$tokens = $this->_xml->getElementsByTagName( 'token' );
+		foreach ( $tokens as $node ) {
+			$node->nodeValue = SPFactory::mainframe()->token();
 		}
 	}
 
@@ -213,16 +227,16 @@ class SPCachedView extends SPFrontView implements SPView
 					$methodArgs = [];
 					foreach ( $methodParams as $param ) {
 						if ( isset( $call[ $param->name ] ) ) {
-							$methodArgs[ ] = $call[ $param->name ];
+							$methodArgs[] = $call[ $param->name ];
 						}
 						elseif ( $param->name == 'value' && !( isset( $call[ 'value' ] ) ) && isset( $call[ 'name' ] ) ) {
-							$methodArgs[ ] = $this->get( $call[ 'name' ] );
+							$methodArgs[] = $this->get( $call[ 'name' ] );
 						}
 						elseif ( $param->isDefaultValueAvailable() ) {
-							$methodArgs[ ] = $param->getDefaultValue();
+							$methodArgs[] = $param->getDefaultValue();
 						}
 						else {
-							$methodArgs[ ] = null;
+							$methodArgs[] = null;
 						}
 					}
 					call_user_func_array( [ $header, $methods[ $method ] ], $methodArgs );
@@ -254,7 +268,7 @@ class SPCachedView extends SPFrontView implements SPView
 				$value = $node->nodeValue;
 			}
 			if ( $node->nodeName == 'value' ) {
-				$params[ ] = $value;
+				$params[] = $value;
 			}
 			else {
 				$params[ $node->nodeName ] = $value;

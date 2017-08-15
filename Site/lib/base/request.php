@@ -23,6 +23,7 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  * @author Radek Suski
  * @version 1.0
  * @created 20-Jul-2008 12:43:29
+ * @deprecated use Sobi\Input\Input
  */
 abstract class SPRequest
 {
