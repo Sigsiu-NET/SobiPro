@@ -66,6 +66,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) 'Fill in required fields' message if no value for max. Categories per entry is given
 	(#) general class attribute for info field not saved
 	(#) Storing left menu state (Issue #2)
+	(#) Skipping unnecessary template's pathe detection in cache view (Issue 18)  
 
 
 ### 1.3.7 (28 April 2017)
