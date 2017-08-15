@@ -40,7 +40,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Autosuggest function extended to general search field
 	(+) Autosuggest results	 sorted alphabetically
 	(+) Switch of some fields for a certain category (views only)
-	(+) script to use map in tabs in entry form added
+	(+) Script to use map in tabs in entry form added
 
 	(-) Unused tabs script of SobiPro version 1.0 removed
 	(-) Clean-up of loaded scripts in template
@@ -66,7 +66,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) 'Fill in required fields' message if no value for max. Categories per entry is given
 	(#) general class attribute for info field not saved
 	(#) Storing left menu state (Issue #2)
-	(#) Skipping unnecessary template's pathe detection in cache view (Issue 18)  
+	(#) Skipping unnecessary template path detection in cache view (Issue 18)  
 
 
 ### 1.3.7 (28 April 2017)
