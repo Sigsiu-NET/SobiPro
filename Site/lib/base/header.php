@@ -783,7 +783,7 @@ final class SPHeader
 				}
 				$check = md5( serialize( $check ) );
 				if ( !( SPFs::exists( SOBI_PATH . "/var/css/{$check}.css" ) ) ) {
-					$cssContent = "* Created at: " . date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ) . " */\n";
+					$cssContent = "/* Created at: " . date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ) . " */\n";
 					foreach ( $this->_cache[ 'css' ] as $file ) {
 						$fName = str_replace( Sobi::FixPath( SOBI_ROOT ), null, $file );
 						$cssContent .= "/** ==== File: {$fName} ==== */\n";
@@ -846,7 +846,7 @@ final class SPHeader
 				$check = md5( serialize( $check ) );
 				if ( !( SPFs::exists( SOBI_PATH . "/var/js/{$check}.js" ) ) ) {
 					$noCompress = explode( ',', Sobi::Cfg( 'cache.js_compress_exceptions' ) );
-					$jsContent = "* Created at: " . date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ) . " */\n";
+					$jsContent = "/* Created at: " . date( SPFactory::config()->key( 'date.log_format', 'D M j G:i:s T Y' ) ) . " */\n";
 					foreach ( $this->_cache[ 'js' ] as $file ) {
 						$fName = str_replace( SOBI_ROOT, null, $file );
 						$jsContent .= "// ==== File: {$fName} ==== \n";
