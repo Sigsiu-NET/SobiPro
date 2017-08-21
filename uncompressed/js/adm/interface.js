@@ -159,96 +159,94 @@ SobiPro.jQuery( document ).ready( function ()
 		}
 		var task = SobiPro.jQuery( this ).attr( 'rel' );
 		SobiPro.jQuery( '#SP_task' ).val( task );
-		if ( task.length ) {
-			e.preventDefault();
-			e.stopPropagation();
-			if ( SobiPro.jQuery.inArray( task, serialActions ) != - 1 ) {
-				SobiPro.jQuery( this ).parent().parent().parent().parent().removeClass( 'open' );
-				return new SpSerialAction( task );
-			}
-			else if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
-				SobiPro.jQuery( '#SP_task' ).val( task );
-				if ( (( task == 'entry.save' || task == 'entry.apply' ) && SobiPro.jQuery( '#SP_history-note' ).length && SobiPro.jQuery( '#SP_history-note' ).val() != 0 ) || task == 'entry.saveWithRevision' ) {
-					var note = prompt( SobiPro.Txt( 'HISTORY_NOTE' ), '' );
-					if ( ( typeof note ) == 'string' ) {
-						SobiPro.jQuery( '#SP_history-note' ).val( note );
-					}
-					else {
-						return;
-					}
+		if (typeof task != 'undefined') {
+			if ( task.length ) {
+				e.preventDefault();
+				e.stopPropagation();
+				if ( SobiPro.jQuery.inArray( task, serialActions ) != -1 ) {
+					SobiPro.jQuery( this ).parent().parent().parent().parent().removeClass( 'open' );
+					return new SpSerialAction( task );
 				}
-				var handler = { 'takeOver': false };
-				SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit', [ handler, task ] );
-				if ( handler.takeOver == true ) {
-					return true;
-				}
-				SPTriggerFrakingWYSIWYGEditors();
-				var req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
-				SobiPro.jQuery( SobiPro.jQuery( '#SPAdminForm' ).find( ':button' ) ).each( function ( i, b )
-				{
-					var bt = SobiPro.jQuery( b );
-					if ( bt.attr( 'disabled' ) != 'disabled' && bt.hasClass( 'active' ) ) {
-						req += '&' + bt.attr( 'name' ) + '=' + bt.val();
-					}
-				} );
-				SobiPro.jQuery( '#SobiPro' ).css( 'opacity', 0.3 );
-				SobiPro.jQuery( '#SobiPro' ).before( SobiPro.jQuery( '#SpSpinner' ) );
-				SobiPro.jQuery( '#SpSpinner' ).removeClass( 'hide' );
-				SobiPro.jQuery.ajax( {
-					'url': 'index.php',
-					'data': req,
-					'type': 'post',
-					'dataType': 'json',
-					success: function ( data )
-					{
-						if ( ! ( data.redirect.execute ) ) {
-							var handler = { 'takeOver': false };
-							SobiPro.jQuery( '#SPAdminForm' ).trigger( 'AfterAjaxSubmit', [ handler, data ] );
-							if ( handler.takeOver == true ) {
-								return true;
-							}
-							count ++;
-							c = '';
-							if ( count > 1 ) {
-								c = '&nbsp;(' + count + ')';
-							}
-							SobiPro.jQuery( '#SobiPro' ).css( 'opacity', 1 );
-							SobiPro.jQuery( '#SpSpinner' ).addClass( 'hide' );
-							var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + c + '</div>';
-							SobiPro.jQuery( '#spMessage' ).html( Message );
-							try {
-								SobiPro.jQuery.each( data.data.sets, function ( i, val )
-								{
-									SobiPro.jQuery( '[name^="' + i + '"]' ).val( val );
-								} );
-							}
-							catch ( e ) {
-							}
-							if ( data.data.required ) {
-								SobiPro.jQuery( '[name*="' + data.data.required + '"]' )
-									.addClass( 'error' )
-									.attr( 'required', 'required' )
-									.focus()
-									.focusout( function ()
-									{
-										if ( SobiPro.jQuery( this ).val() ) {
-											SobiPro.jQuery( this )
-												.removeClass( 'error' )
-												.removeAttr( 'required' )
-												.addClass( 'success' );
-										}
-									} )
-								;
-							}
+				else if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
+					SobiPro.jQuery( '#SP_task' ).val( task );
+					if ( (( task == 'entry.save' || task == 'entry.apply' ) && SobiPro.jQuery( '#SP_history-note' ).length && SobiPro.jQuery( '#SP_history-note' ).val() != 0 ) || task == 'entry.saveWithRevision' ) {
+						var note = prompt( SobiPro.Txt( 'HISTORY_NOTE' ), '' );
+						if ( ( typeof note ) == 'string' ) {
+							SobiPro.jQuery( '#SP_history-note' ).val( note );
 						}
 						else {
-							window.location.replace( data.redirect.url );
+							return;
 						}
 					}
-				} );
-			}
-			else {
-				SobiPro.jQuery( '#SPAdminForm' ).submit();
+					var handler = {'takeOver': false};
+					SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit', [ handler, task ] );
+					if ( handler.takeOver == true ) {
+						return true;
+					}
+					SPTriggerFrakingWYSIWYGEditors();
+					var req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
+					SobiPro.jQuery( SobiPro.jQuery( '#SPAdminForm' ).find( ':button' ) ).each( function ( i, b ) {
+						var bt = SobiPro.jQuery( b );
+						if ( bt.attr( 'disabled' ) != 'disabled' && bt.hasClass( 'active' ) ) {
+							req += '&' + bt.attr( 'name' ) + '=' + bt.val();
+						}
+					} );
+					SobiPro.jQuery( '#SobiPro' ).css( 'opacity', 0.3 );
+					SobiPro.jQuery( '#SobiPro' ).before( SobiPro.jQuery( '#SpSpinner' ) );
+					SobiPro.jQuery( '#SpSpinner' ).removeClass( 'hide' );
+					SobiPro.jQuery.ajax( {
+						'url': 'index.php',
+						'data': req,
+						'type': 'post',
+						'dataType': 'json',
+						success: function ( data ) {
+							if ( !( data.redirect.execute ) ) {
+								var handler = {'takeOver': false};
+								SobiPro.jQuery( '#SPAdminForm' ).trigger( 'AfterAjaxSubmit', [ handler, data ] );
+								if ( handler.takeOver == true ) {
+									return true;
+								}
+								count++;
+								c = '';
+								if ( count > 1 ) {
+									c = '&nbsp;(' + count + ')';
+								}
+								SobiPro.jQuery( '#SobiPro' ).css( 'opacity', 1 );
+								SobiPro.jQuery( '#SpSpinner' ).addClass( 'hide' );
+								var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + c + '</div>';
+								SobiPro.jQuery( '#spMessage' ).html( Message );
+								try {
+									SobiPro.jQuery.each( data.data.sets, function ( i, val ) {
+										SobiPro.jQuery( '[name^="' + i + '"]' ).val( val );
+									} );
+								}
+								catch (e) {
+								}
+								if ( data.data.required ) {
+									SobiPro.jQuery( '[name*="' + data.data.required + '"]' )
+										.addClass( 'error' )
+										.attr( 'required', 'required' )
+										.focus()
+										.focusout( function () {
+											if ( SobiPro.jQuery( this ).val() ) {
+												SobiPro.jQuery( this )
+													.removeClass( 'error' )
+													.removeAttr( 'required' )
+													.addClass( 'success' );
+											}
+										} )
+									;
+								}
+							}
+							else {
+								window.location.replace( data.redirect.url );
+							}
+						}
+					} );
+				}
+				else {
+					SobiPro.jQuery( '#SPAdminForm' ).submit();
+				}
 			}
 		}
 	} );
