@@ -392,6 +392,9 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		unset( $eFields[ Sobi::Cfg( 'entry.name_field' ) ] );
 		$entryFields = [];
 		$selectedEntryFields = $this->_model->get( 'entryFields' );
+        if( !( is_array( $selectedEntryFields ) ) ) {
+            $selectedEntryFields = [];
+        }
 		$all = $this->_model->get( 'allFields' );
 		foreach ( $eFields as $id => $field ) {
 			$entryFields[] = [ 'id' => $id, 'name' => $field, 'included' => $all ? true : in_array( $id, $selectedEntryFields ) ];
