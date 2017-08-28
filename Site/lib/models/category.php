@@ -56,7 +56,7 @@ class SPCategory extends SPDBObject implements SPDataModel
 			'introtext' => 'string',
 			'showIntrotext' => 'int',
 			'parseDesc' => 'int',
-			'parseDesc' => 'int',
+			'entryFields' => 'int',
 			'allFields' => 'int'
 	];
 	/*** @var array */
