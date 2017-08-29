@@ -16,6 +16,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+ // DO NOT SHRINK VARIABLES WHILE PACKING!!!!!
+
 SobiPro.jQuery( document ).ready( function ()
 {
 	new SpUserSelector();
@@ -138,5 +140,5 @@ function SpUserSelector()
 				} );
 			}
 		} );
-	}
+	};
 }
