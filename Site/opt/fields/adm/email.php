@@ -29,13 +29,6 @@ class SPField_EmailAdm extends SPField_Email {
 
 	public function save( &$attr )
 	{
-		static $lang = null;
-		static $defLang = null;
-		if ( !( $lang ) ) {
-			$lang = Sobi::Lang();
-			$defLang = Sobi::DefLang();
-		}
-
 		$myAttr = $this->getAttr();
 		$properties = [];
 		if( count( $myAttr ) ) {
