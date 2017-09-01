@@ -41,6 +41,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Autosuggest results	 sorted alphabetically
 	(+) Switch of some fields for a certain category (views only)
 	(+) Script to use map in tabs in entry form added
+	(+) Dates, author, url and state of a category available in XML data
 
 	(-) Unused tabs script of SobiPro version 1.0 removed
 	(-) Clean-up of loaded scripts in template

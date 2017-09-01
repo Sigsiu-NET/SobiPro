@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -27,7 +29,7 @@ class SPSectionView extends SPFrontView implements SPView
 {
 	protected function category( $category, $fields = true )
 	{
-		$cat = [ ];
+		$cat = [];
 		if ( is_numeric( $category ) ) {
 			$cat = $this->cachedCategory( $category );
 		}
@@ -38,16 +40,16 @@ class SPSectionView extends SPFrontView implements SPView
 			$cat[ 'id' ] = $category->get( 'id' );
 			$cat[ 'nid' ] = $category->get( 'nid' );
 			$cat[ 'name' ] = [
-					'_complex' => 1,
-					'_data' => $category->get( 'name' ),
-					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+				'_complex'    => 1,
+				'_data'       => $category->get( 'name' ),
+				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 			];
 			if ( Sobi::Cfg( 'list.cat_desc', false ) ) {
 				$cat[ 'description' ] = [
-						'_complex' => 1,
-						'_cdata' => 1,
-						'_data' => $category->get( 'description' ),
-						'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+					'_complex'    => 1,
+					'_cdata'      => 1,
+					'_data'       => $category->get( 'description' ),
+					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 				];
 			}
 			$cat[ 'created_time' ] = $category->get( 'createdTime' );
@@ -62,10 +64,10 @@ class SPSectionView extends SPFrontView implements SPView
 			}
 			if ( $showIntro ) {
 				$cat[ 'introtext' ] = [
-						'_complex' => 1,
-						'_cdata' => 1,
-						'_data' => $category->get( 'introtext' ),
-						'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+					'_complex'    => 1,
+					'_cdata'      => 1,
+					'_data'       => $category->get( 'introtext' ),
+					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 				];
 			}
 			$showIcon = $category->get( 'showIcon' );
@@ -79,9 +81,9 @@ class SPSectionView extends SPFrontView implements SPView
 						$icon[ 'class' ] .= ' ' . $category->param( 'icon-font-add-class' );
 					}
 					$cat[ 'icon' ] = [
-							'_complex' => 1,
-							'_data' => '',
-							'_attributes' => $icon
+						'_complex'    => 1,
+						'_data'       => '',
+						'_attributes' => $icon
 					];
 				}
 				elseif ( SPFs::exists( Sobi::Cfg( 'images.category_icons' ) . '/' . $category->get( 'icon' ) ) ) {
@@ -107,10 +109,10 @@ class SPSectionView extends SPFrontView implements SPView
 			}
 			if ( Sobi::Cfg( 'list.cat_meta', false ) ) {
 				$cat[ 'meta' ] = [
-						'description' => $category->get( 'metaDesc' ),
-						'keys' => $this->metaKeys( $category ),
-						'author' => $category->get( 'metaAuthor' ),
-						'robots' => $category->get( 'metaRobots' ),
+					'description' => $category->get( 'metaDesc' ),
+					'keys'        => $this->metaKeys( $category ),
+					'author'      => $category->get( 'metaAuthor' ),
+					'robots'      => $category->get( 'metaRobots' ),
 				];
 			}
 			if ( $fields ) {
@@ -124,10 +126,10 @@ class SPSectionView extends SPFrontView implements SPView
 				$sc = [];
 				if ( count( $subcats ) ) {
 					foreach ( $subcats as $id => $name ) {
-						$sc[ ] = [
-								'_complex' => 1,
-								'_data' => SPLang::clean( $name[ 'name' ] ),
-								'_attributes' => [ 'lang' => Sobi::Lang( false ), 'nid' => $name[ 'alias' ], 'id' => $id, 'url' => Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $name[ 'alias' ] : $name[ 'name' ], 'sid' => $id, ] ) ]
+						$sc[] = [
+							'_complex'    => 1,
+							'_data'       => SPLang::clean( $name[ 'name' ] ),
+							'_attributes' => [ 'lang' => Sobi::Lang( false ), 'nid' => $name[ 'alias' ], 'id' => $id, 'url' => Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $name[ 'alias' ] : $name[ 'name' ], 'sid' => $id, ] ) ]
 						];
 					}
 				}
@@ -139,6 +141,7 @@ class SPSectionView extends SPFrontView implements SPView
 		}
 		$cat[ 'counter' ] = $this->getNonStaticData( $cat[ 'id' ], 'counter' );
 		Sobi::Trigger( 'List', ucfirst( __FUNCTION__ ), [ &$cat ] );
+
 		return $cat;
 	}
 
@@ -196,6 +199,7 @@ class SPSectionView extends SPFrontView implements SPView
 			if ( isset( $en[ 'fields' ] ) && count( $en[ 'fields' ] ) ) {
 				$this->validateFields( $en[ 'fields' ] );
 			}
+
 			return $en;
 		}
 		else {
@@ -217,9 +221,9 @@ class SPSectionView extends SPFrontView implements SPView
 			$en[ 'id' ] = $entry->get( 'id' );
 			$en[ 'nid' ] = $entry->get( 'nid' );
 			$en[ 'name' ] = [
-					'_complex' => 1,
-					'_data' => $entry->get( 'name' ),
-					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+				'_complex'    => 1,
+				'_data'       => $entry->get( 'name' ),
+				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 			];
 			$ownership = 'valid';
 			if ( Sobi::My( 'id' ) && Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
@@ -228,9 +232,9 @@ class SPSectionView extends SPFrontView implements SPView
 			// don't ask
 			SPRequest::set( 'sid', $entry->get( 'id' ) );
 			$en[ 'acl' ] = [
-					'_complex' => 1,
-					'_data' => null,
-					'_attributes' => [ 'accessible' => Sobi::Can( 'entry', 'access', $ownership ) ? 'true' : 'false' ]
+				'_complex'    => 1,
+				'_data'       => null,
+				'_attributes' => [ 'accessible' => Sobi::Can( 'entry', 'access', $ownership ) ? 'true' : 'false' ]
 			];
 			SPRequest::set( 'sid', $currentSid );
 //			SPRequest::set( 'sid', $currentSid );
@@ -249,10 +253,10 @@ class SPSectionView extends SPFrontView implements SPView
 			}
 			if ( Sobi::Cfg( 'list.entry_meta', true ) ) {
 				$en[ 'meta' ] = [
-						'description' => $entry->get( 'metaDesc' ),
-						'keys' => $this->metaKeys( $entry ),
-						'author' => $entry->get( 'metaAuthor' ),
-						'robots' => $entry->get( 'metaRobots' ),
+					'description' => $entry->get( 'metaDesc' ),
+					'keys'        => $this->metaKeys( $entry ),
+					'author'      => $entry->get( 'metaAuthor' ),
+					'robots'      => $entry->get( 'metaRobots' ),
 				];
 			}
 			if ( $manager || ( ( Sobi::My( 'id' ) && ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) && Sobi::Can( 'entry', 'edit', 'own', Sobi::Section() ) ) ) ) {
@@ -294,10 +298,10 @@ class SPSectionView extends SPFrontView implements SPView
 					$cn = SPLang::translateObject( array_keys( $cats ), [ 'name', 'alias' ] );
 				}
 				foreach ( $cats as $cid => $cat ) {
-					$categories[ ] = [
-							'_complex' => 1,
-							'_data' => SPLang::clean( $cn[ $cid ][ 'value' ] ),
-							'_attributes' => [ 'lang' => Sobi::Lang( false ), 'id' => $cat[ 'pid' ], 'position' => $cat[ 'position' ], 'url' => Sobi::Url( [ 'sid' => $cat[ 'pid' ], 'title' => Sobi::Cfg( 'sef.alias', true ) ? $cat[ 'alias' ] : $cat[ 'name' ] ] ) ]
+					$categories[] = [
+						'_complex'    => 1,
+						'_data'       => SPLang::clean( $cn[ $cid ][ 'value' ] ),
+						'_attributes' => [ 'lang' => Sobi::Lang( false ), 'id' => $cat[ 'pid' ], 'position' => $cat[ 'position' ], 'url' => Sobi::Url( [ 'sid' => $cat[ 'pid' ], 'title' => Sobi::Cfg( 'sef.alias', true ) ? $cat[ 'alias' ] : $cat[ 'name' ] ] ) ]
 					];
 				}
 				$en[ 'categories' ] = $categories;
@@ -315,8 +319,8 @@ class SPSectionView extends SPFrontView implements SPView
 				$en[ 'fields' ] = $this->fieldStruct( $fields, 'vcard' );
 			}
 			SPFactory::cache()
-					->addObj( $entry, 'entry', $entry->get( 'id' ) )
-					->addObj( $en, 'entry_struct', $entry->get( 'id' ) );
+				->addObj( $entry, 'entry', $entry->get( 'id' ) )
+				->addObj( $en, 'entry_struct', $entry->get( 'id' ) );
 			unset( $en[ 'url_array' ] );
 			unset( $en[ 'edit_url_array' ] );
 			unset( $entry );
@@ -330,6 +334,7 @@ class SPSectionView extends SPFrontView implements SPView
 		$task = 'list.custom';
 		SPFactory::registry()->set( 'task', $task );
 		Sobi::Trigger( 'List', ucfirst( __FUNCTION__ ), [ &$en ] );
+
 		return $en;
 	}
 
@@ -361,29 +366,52 @@ class SPSectionView extends SPFrontView implements SPView
 			$data = [];
 			$data[ 'id' ] = $current->get( 'id' );
 
-			if ($current->get( 'oType' ) != 'section') {
+			if ( $current->get( 'oType' ) != 'section' ) {
 				$data[ 'counter' ] = $current->get( 'counter' );
 			}
 			$data[ 'section' ] = [
-					'_complex' => 1,
-					'_data' => Sobi::Section( true ),
-					'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
+				'_complex'    => 1,
+				'_data'       => Sobi::Section( true ),
+				'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
 			];
 			$data[ 'name' ] = [
-					'_complex' => 1,
-					'_data' => $current->get( 'name' ),
-					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+				'_complex'    => 1,
+				'_data'       => $current->get( 'name' ),
+				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 			];
+
+			$data[ 'created_time' ] = $current->get( 'createdTime' );
+			$data[ 'updated_time' ] = $current->get( 'updatedTime' );
+			$data[ 'valid_since' ] = $current->get( 'validSince' );
+			$data[ 'valid_until' ] = $current->get( 'validUntil' );
+
+			$data[ 'author' ] = $current->get( 'owner' );
+			if ( $current->get( 'state' ) == 0 ) {
+				$data[ 'state' ] = 'unpublished';
+			}
+			else {
+				if ( strtotime( $current->get( 'validUntil' ) ) != 0 && strtotime( $current->get( 'validUntil' ) ) < time() ) {
+					$data[ 'state' ] = 'expired';
+				}
+				elseif ( strtotime( $current->get( 'validSince' ) ) != 0 && strtotime( $current->get( 'validSince' ) ) > time() ) {
+					$data[ 'state' ] = 'pending';
+				}
+				else {
+					$data[ 'state' ] = 'published';
+				}
+			}
+			$data[ 'url' ] = Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $current->get( 'nid' ) : $current->get( 'name' ), 'sid' => $current->get( 'id' ) ], true, true, true );
+
 			if ( Sobi::Cfg( 'category.show_desc' ) || $current->get( 'oType' ) == 'section' ) {
 				$desc = $current->get( 'description' );
 				if ( Sobi::Cfg( 'category.parse_desc' ) ) {
 					Sobi::Trigger( 'prepare', 'Content', [ &$desc, $current ] );
 				}
 				$data[ 'description' ] = [
-						'_complex' => 1,
-						'_cdata' => 1,
-						'_data' => $desc,
-						'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+					'_complex'    => 1,
+					'_cdata'      => 1,
+					'_data'       => $desc,
+					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 				];
 			}
 			$showIcon = $current->get( 'showIcon' );
@@ -397,9 +425,9 @@ class SPSectionView extends SPFrontView implements SPView
 						$icon[ 'class' ] .= ' ' . $current->param( 'icon-font-add-class' );
 					}
 					$data[ 'icon' ] = [
-							'_complex' => 1,
-							'_data' => '',
-							'_attributes' => $icon
+						'_complex'    => 1,
+						'_data'       => '',
+						'_attributes' => $icon
 					];
 				}
 				if ( SPFs::exists( Sobi::Cfg( 'images.category_icons' ) . '/' . $current->get( 'icon' ) ) ) {
@@ -407,10 +435,10 @@ class SPSectionView extends SPFrontView implements SPView
 				}
 			}
 			$data[ 'meta' ] = [
-					'description' => $current->get( 'metaDesc' ),
-					'keys' => $this->metaKeys( $current ),
-					'author' => $current->get( 'metaAuthor' ),
-					'robots' => $current->get( 'metaRobots' ),
+				'description' => $current->get( 'metaDesc' ),
+				'keys'        => $this->metaKeys( $current ),
+				'author'      => $current->get( 'metaAuthor' ),
+				'robots'      => $current->get( 'metaRobots' ),
 			];
 			$this->categoryFields( $data );
 			$data[ 'entries_in_line' ] = $this->get( '$eInLine' );
@@ -423,10 +451,10 @@ class SPSectionView extends SPFrontView implements SPView
 				$this->loadNonStaticData( $categories );
 				foreach ( $categories as $category ) {
 					$cat = $this->category( $category );
-					$data[ 'categories' ][ ] = [
-							'_complex' => 1,
-							'_attributes' => [ 'id' => $cat[ 'id' ], 'nid' => $cat[ 'nid' ] ],
-							'_data' => $cat
+					$data[ 'categories' ][] = [
+						'_complex'    => 1,
+						'_attributes' => [ 'id' => $cat[ 'id' ], 'nid' => $cat[ 'nid' ] ],
+						'_data'       => $cat
 					];
 				}
 				if ( strstr( $orderings[ 'categories' ], 'name' ) && Sobi::Cfg( 'lang.multimode', false ) ) {
@@ -441,10 +469,10 @@ class SPSectionView extends SPFrontView implements SPView
 				$manager = Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ? true : false;
 				foreach ( $entries as $eid ) {
 					$en = $this->entry( $eid, $manager );
-					$data[ 'entries' ][ ] = [
-							'_complex' => 1,
-							'_attributes' => [ 'id' => $en[ 'id' ], 'nid' => $en[ 'nid' ] ],
-							'_data' => $en
+					$data[ 'entries' ][] = [
+						'_complex'    => 1,
+						'_attributes' => [ 'id' => $en[ 'id' ], 'nid' => $en[ 'nid' ] ],
+						'_data'       => $en
 					];
 				}
 				if ( strstr( $orderings[ 'entries' ], 'name' ) && Sobi::Cfg( 'lang.multimode', false ) ) {
@@ -466,14 +494,14 @@ class SPSectionView extends SPFrontView implements SPView
 		return strcasecmp( $from[ '_data' ][ 'name' ][ '_data' ], $to[ '_data' ][ 'name' ][ '_data' ] );
 	}
 
-	protected function categoryFields( &$data, $fields = [ ] )
+	protected function categoryFields( &$data, $fields = [] )
 	{
 		if ( !( count( $fields ) ) ) {
 			$fields = $this->get( 'fields' );
 		}
 		if ( count( $fields ) ) {
 			foreach ( $fields as $field ) {
-				$field->set('currentView', 'category' );
+				$field->set( 'currentView', 'category' );
 				$struct = $field->struct();
 				$options = null;
 				if ( isset( $struct[ '_options' ] ) ) {
@@ -481,23 +509,23 @@ class SPSectionView extends SPFrontView implements SPView
 					unset( $struct[ '_options' ] );
 				}
 				$data[ 'fields' ][ $field->get( 'nid' ) ] = [
-						'_complex' => 1,
-						'_data' => [
-								'label' => [
-										'_complex' => 1,
-										'_data' => $field->get( 'name' ),
-										'_attributes' => [ 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) ]
-								],
-								'data' => $struct,
+					'_complex'    => 1,
+					'_data'       => [
+						'label' => [
+							'_complex'    => 1,
+							'_data'       => $field->get( 'name' ),
+							'_attributes' => [ 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) ]
 						],
-						'_attributes' => [ 'id' => $field->get( 'id' ),
-								'itemprop' => $field->get( 'itemprop' ),
-								'type' => $field->get( 'type' ),
-								'suffix' => $field->get( 'suffix' ),
-								'position' => $field->get( 'position' ),
-								'css_view' => $field->get( 'cssClassView' ),
-								'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
-						]
+						'data'  => $struct,
+					],
+					'_attributes' => [ 'id'        => $field->get( 'id' ),
+					                   'itemprop'  => $field->get( 'itemprop' ),
+					                   'type'      => $field->get( 'type' ),
+					                   'suffix'    => $field->get( 'suffix' ),
+					                   'position'  => $field->get( 'position' ),
+					                   'css_view'  => $field->get( 'cssClassView' ),
+					                   'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
+					]
 				];
 				if ( Sobi::Cfg( 'category.field_description', false ) ) {
 					$data[ 'fields' ][ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = [ '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) ];
