@@ -1,17 +1,20 @@
 <?php
 /**
  * @package: SobiPro Component for Joomla!
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
- * Url: http://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * Url: https://www.Sigsiu.NET
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -171,7 +174,13 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 		}
 	}
 
-	public static function validateVisibility( &$data )
+	public function __construct( &$field )
+	{
+		parent::__construct( $field );
+		$this->getLabelsLabel();
+	}
+
+		public static function validateVisibility( &$data )
 	{
 		SPLoader::loadClass( 'env.browser' );
 		$humanity = SPBrowser::getInstance()
@@ -412,4 +421,27 @@ class SPField_Email extends SPField_Url implements SPFieldInterface
 		return $this->verifyEmail( $entry, $request );
 	}
 
+	protected function getLabelsLabel()
+	{
+		$data = SPLang::getValue( $this->nid . '-labels-label', 'field_email', Sobi::Section(), null, null, $this->fid );
+		if ( $data ) {
+			$this->labelsLabel = $data;
+		}
+	}
+
+	/**
+	 * @param $attr
+	 */
+	protected function saveLabelsLabel( &$attr )
+	{
+		$data = [
+			'key' => $this->nid . '-labels-label',
+			'value' => $attr[ 'labelsLabel' ],
+			'type' => 'field_email',
+			'fid' => $this->fid,
+			'id' => Sobi::Section(),
+			'section' => Sobi::Section()
+		];
+		SPLang::saveValues( $data );
+	}
 }

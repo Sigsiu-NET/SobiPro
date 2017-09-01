@@ -1,17 +1,20 @@
 <?php
 /**
  * @package: SobiPro Component for Joomla!
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
- * Url: http://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * Url: https://www.Sigsiu.NET
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -89,7 +92,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			if ( !( is_array( $raw ) ) ) {
 				try {
 					$raw = SPConfig::unserialize( $raw );
-				} catch ( SPException $x ) {
+				}
+				catch ( SPException $x ) {
 					$raw = null;
 				}
 			}
@@ -136,7 +140,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			$protofield = '<div class="input-prepend"><div class="btn-group">';
 		}
 		$fliped_protocols = array_flip( $protocols );
-		$fliped_protocols = array_values($fliped_protocols);
+		$fliped_protocols = array_values( $fliped_protocols );
 		$selected = ( is_array( $raw ) && isset( $raw[ 'protocol' ] ) ) ? $raw[ 'protocol' ] : $fliped_protocols[ 0 ];
 		$protofield .= SPHtml_Input::select( $this->nid . '_protocol', $protocols, $selected, false, $params );
 		$protofield .= '</div>';
@@ -258,8 +262,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			$query[ 'humanity>' ] = Sobi::Cfg( 'field_url.humanity', 90 );
 		}
 		$counter = SPFactory::db()
-				->select( 'count(*)', 'spdb_field_url_clicks', $query )
-				->loadResult();
+			->select( 'count(*)', 'spdb_field_url_clicks', $query )
+			->loadResult();
 
 		return $counter;
 	}
@@ -322,20 +326,27 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 					}
 				}
 				$data = [
-						'_complex' => 1,
-						'_data' => SPLang::clean( $data[ 'label' ] ),
+					'_complex'    => 1,
+					'_data'       => SPLang::clean( $data[ 'label' ] ),
 //						'_data' => SPLang::clean( $this->ownLabel ? $data[ 'label' ] : $data[ 'url' ] ),
-						'_attributes' => $attributes
+					'_attributes' => $attributes
 				];
 
 				return [
-						'_complex' => 1,
-						'_data' => [ 'a' => $data ],
-						'_attributes' => [ 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass, 'counter' => $counter ]
+					'_complex'    => 1,
+					'_data'       => [ 'a' => $data ],
+					'_attributes' => [ 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass, 'counter' => $counter ]
 				];
 			}
 		}
 	}
+
+	public function __construct( &$field )
+	{
+		parent::__construct( $field );
+		$this->getLabelsLabel();
+	}
+
 
 	protected function getCounter( $real = true )
 	{
@@ -464,12 +475,12 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			try {
 				$connection = new $rclass();
 				$connection->setOptions(
-						[
-								'url' => $save[ 'protocol' ] . '://' . $data,
-								'connecttimeout' => 10,
-								'header' => false,
-								'returntransfer' => true
-						]
+					[
+						'url'            => $save[ 'protocol' ] . '://' . $data,
+						'connecttimeout' => 10,
+						'header'         => false,
+						'returntransfer' => true
+					]
 				);
 				$connection->exec();
 				$response = $connection->info( 'response_code' );
@@ -479,7 +490,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 				if ( $err ) {
 					Sobi::Error( $this->name(), SPLang::e( 'FIELD_URL_CANNOT_VALIDATE', $errTxt ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'FIELD_URL_CANNOT_VALIDATE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			if ( $err || ( $response != 200 ) ) {
@@ -556,7 +568,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			 * " ... " if a copy already exist it is update again
 			 * */
 			$db->insertUpdate( 'spdb_field_data', $params );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
@@ -565,7 +578,8 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			$params[ 'lang' ] = Sobi::DefLang();
 			try {
 				$db->insert( 'spdb_field_data', $params, true, true );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
@@ -579,7 +593,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 //		$entry = SPFactory::Entry( $eid );
 		if ( Sobi::Can( 'entry.manage.any' ) ) {
 			SPFactory::db()
-					->delete( 'spdb_field_url_clicks', [ 'section' => Sobi::Section(), 'sid' => $eid, 'fid' => $this->nid ] );
+				->delete( 'spdb_field_url_clicks', [ 'section' => Sobi::Section(), 'sid' => $eid, 'fid' => $this->nid ] );
 		}
 		echo 1;
 	}
@@ -587,7 +601,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	public function ProxyHits()
 	{
 		SPFactory::mainframe()->cleanBuffer()->customHeader();
-		$r = ( int )self::getHits( true, SPRequest::int( 'eid' ), $this->nid );
+		$r = ( int ) self::getHits( true, SPRequest::int( 'eid' ), $this->nid );
 		echo $r;
 		exit;
 	}
@@ -602,18 +616,43 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		$check = SPRequest::cmd( 'count_' . $ident, null, 'cookie' );
 		if ( !( $check ) ) {
 			$data = [
-					'date' => 'FUNCTION:NOW()',
-					'uid' => Sobi::My( 'id' ),
-					'sid' => SPRequest::int( 'eid' ),
-					'fid' => $this->nid,
-					'ip' => SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ),
-					'section' => Sobi::Section(),
-					'browserData' => $browser->get( 'browser' ),
-					'osData' => $browser->get( 'system' ),
-					'humanity' => $browser->get( 'humanity' )
+				'date'        => 'FUNCTION:NOW()',
+				'uid'         => Sobi::My( 'id' ),
+				'sid'         => SPRequest::int( 'eid' ),
+				'fid'         => $this->nid,
+				'ip'          => SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ),
+				'section'     => Sobi::Section(),
+				'browserData' => $browser->get( 'browser' ),
+				'osData'      => $browser->get( 'system' ),
+				'humanity'    => $browser->get( 'humanity' )
 			];
 			SPCookie::set( 'count_' . $ident, 1, SPCookie::hours( 2 ) );
 			SPFactory::db()->insert( 'spdb_field_url_clicks', $data );
 		}
+	}
+
+
+	protected function getLabelsLabel()
+	{
+		$data = SPLang::getValue( $this->nid . '-labels-label', 'field_email', Sobi::Section(), null, null, $this->fid );
+		if ( $data ) {
+			$this->labelsLabel = $data;
+		}
+	}
+
+	/**
+	 * @param $attr
+	 */
+	protected function saveLabelsLabel( &$attr )
+	{
+		$data = [
+			'key'     => $this->nid . '-labels-label',
+			'value'   => $attr[ 'labelsLabel' ],
+			'type'    => 'field_email',
+			'fid'     => $this->fid,
+			'id'      => Sobi::Section(),
+			'section' => Sobi::Section()
+		];
+		SPLang::saveValues( $data );
 	}
 }
