@@ -811,7 +811,8 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	public function checkToken( $method = 'post' )
 	{
 		if ( Sobi::Cfg( 'security.token', true ) ) {
-			return JRequest::checkToken( $method );
+//			return JRequest::checkToken( $method );
+			return JSession::checkToken( $method );
 		}
 		else {
 			return true;
