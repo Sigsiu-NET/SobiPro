@@ -353,7 +353,6 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$count = Input::Int( 'counter' );
 		$eid = Input::Eid();
 		if ( !( $eid ) ) {
-			$entries = [];
 			if ( !( $count ) ) {
 				$entries = SPFactory::Section( Sobi::Section() )
 						->getChilds( 'entry', true, 0, false );
