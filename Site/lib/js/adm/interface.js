@@ -503,7 +503,7 @@ SobiPro.jQuery( document ).ready( function () {
 		catch ( x ) {
 		}
 	} );
-	var lastTab = localStorage.getItem( 'SobiProOpenTab' );
+	let lastTab = localStorage.getItem( 'SobiProOpenTab' );
 	try {
 		if ( lastTab ) {
 			SobiPro.jQuery( '[href="' + lastTab + '"]' ).tab( 'show' );
