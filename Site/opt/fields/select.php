@@ -75,6 +75,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	static private $CAT_FIELD = true;
 	/*** @var bool */
 	protected $suggesting = false;
+
 	/**
 	 * Shows the field in the edit entry or add entry form
 	 *
@@ -345,7 +346,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return [ 'suggesting','width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsWidth', 'bsSearchWidth' ];
+		return [ 'suggesting', 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsWidth', 'bsSearchWidth' ];
 	}
 
 	protected function fetchData( $data, $request = 'post' )
@@ -419,7 +420,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$cdata = count( $data );
 
 		/* check if it was required */
-		if ( $this->required && !( $cdata ) ) {
+		if ( $this->required && ( !( $cdata ) || ( isset( $data[ 0 ] ) ) && $data[ 0 ] == 0 ) ) {
 			throw new SPException( SPLang::e( 'FIELD_REQUIRED_ERR_OPT', $this->name ) );
 		}
 

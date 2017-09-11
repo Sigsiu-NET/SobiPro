@@ -167,7 +167,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					$list = array_merge( $list, $l );
 				}
 			}
- 			if ( count( $list ) ) {
+			if ( count( $list ) ) {
 				$updates = [];
 				$updates [ 'created' ] = time();
 				$updates [ 'createdBy' ] = [ 'id' => Sobi::My( 'id' ), 'name' => Sobi::My( 'name' ) ];
@@ -804,7 +804,8 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$values[ 'name' ] = 'RepositoryResponse[' . $values[ 'params' ][ 'id' ] . ']';
 			$fields[] = $values;
 		}
-		$fields[] = [ 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => [ 'id' => 'url', /*'size' => 30,*/ 'readonly' => 'readonly' ] ];
+		$fields[] = [ 'label' => 'Website URL', 'value' => Sobi::Cfg( 'live_site' ), 'name' => 'RepositoryResponse[url]', 'type' => 'text', 'required' => true, 'params' => [ 'id' => 'url', /*'size' => 30,*/
+				'readonly' => 'readonly' ] ];
 		$request = [ 'fields' => $fields ];
 		$view->assign( $request, 'request' );
 		$view->determineTemplate( 'extensions', 'soap-request' );
@@ -1033,13 +1034,13 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 	private function install( $file = null )
 	{
 		$arch = SPFactory::Instance( 'base.fs.archive' );
-		$ajax = strlen( Input::Cmd( 'ident', 'post', null  ) );
+		$ajax = strlen( Input::Cmd( 'ident', 'post', null ) );
 		if ( !( $file ) && Input::String( 'root' ) ) {
 			$file = str_replace( '.xml', null, Input::String( 'root' ) );
 			$file = SPLoader::path( 'tmp.install.' . $file, 'front', true, 'xml' );
 		}
 		if ( !( $file ) ) {
-			$ident = Input::Cmd( 'ident', null, 'post' );
+			$ident = Input::Cmd( 'ident', 'post', null );
 			$data = SPRequest::file( $ident );
 			$name = str_replace( [ '.' . SPFs::getExt( $data[ 'name' ] ), '.' ], null, $data[ 'name' ] );
 			$path = SPLoader::dirPath( 'tmp.install.' . $name, 'front', false );
@@ -1047,9 +1048,7 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			while ( FileSystem::Exists( $path ) ) {
 				$path = SPLoader::dirPath( 'tmp.install.' . $name . '_' . ++$c, 'front', false );
 			}
-			/*
-			 * temp directory - will be removed later but it needs to be writable for apache and Joomla! fs (FTP mode)
-			 */
+			/** temp directory - will be removed later but it needs to be writable for apache and Joomla! fs (FTP mode)*/
 			try {
 				if ( Sobi::Cfg( 'ftp_mode' ) ) {
 					FileSystem::Mkdir( $path, 0777 );

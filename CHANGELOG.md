@@ -72,6 +72,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Storing left menu state (Issue #2)
 	(#) Skipping unnecessary template path detection in cache view (Issue #18)
 	(#) Title label for url and email fields not translatable (Issue #28)
+	(#) Select list validation doesn't work (Issue #21)
+	(#) Wrong arguments order after changing to Sobi Framework (Issue #23)
 	(#) Class css-search not output in the template
 
 
