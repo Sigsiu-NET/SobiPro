@@ -72,6 +72,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Skipping unnecessary template path detection in cache view (Issue #18)
 	(#) Title label for url and email fields not translatable (Issue #28)
 	(#) Select list validation doesn't work (Issue #21)
+	(#) Wrong arguments order after changing to Sobi Framework (Issue #23)
 
 
 ### 1.3.7 (28 April 2017)
