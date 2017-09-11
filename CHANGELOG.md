@@ -43,6 +43,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Script to use map in tabs in entry form added
 	(+) Dates, author, url and state of a category available in XML data
 	(+) Possibility to delete all entries in a section
+	(+) Basic template development support added (fields highlighting)
 
 	(-) Unused tabs script of SobiPro version 1.0 removed
 	(-) Clean-up of loaded scripts in template
@@ -71,6 +72,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Storing left menu state (Issue #2)
 	(#) Skipping unnecessary template path detection in cache view (Issue #18)
 	(#) Title label for url and email fields not translatable (Issue #28)
+	(#) Class css-search not output in the template
 
 
 ### 1.3.7 (28 April 2017)

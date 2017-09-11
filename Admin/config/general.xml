@@ -22,6 +22,8 @@
 			input[type=checkbox] { float: left; margin-right: 5px!important; }
 			.deprecated::after { content: "DEPRECATED"; padding: 4px 10px 6px 10px; margin-left: 15px; color: #9e0e0e; background-color: #f8b1a9; border-color:
 			#f8b1a9; }
+			.support::after { content: "TEMPLATE SUPPORT NEEDED"; padding: 4px 10px 6px 10px; margin-left: 15px; color: #9e0e0e; background-color: #f8b1a9; border-color:
+			#f8b1a9; }
 		</style>
 	</header>
 	<toolbar title="var:[site_title]" icon="" class="config general">
@@ -131,6 +133,11 @@
 												</values>
 											</field>
 										</fieldset>
+										<fieldset label="CFG.DEVTEMPLATE">
+											<field type="toggle" name="spcfg[template.development]" value="template.development"
+											       label="CFG.DEVELOPMENT" prefix="show" warn="support"/>
+										</fieldset>
+
 									</tab>
 									<tab label="SECN.CFG.CLISTING_SETTINGS">
 										<fieldset>

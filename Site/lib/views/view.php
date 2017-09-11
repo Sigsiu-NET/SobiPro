@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -238,7 +240,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		 * So this actually encoded here just to protect some people from their own, well, "intelligence" ....
 		 * */
 		$p = "YToxOntpOjA7czoxODA6IjxkaXYgaWQ9InNvYmlQcm9Gb290ZXIiPlBvd2VyZWQgYnkgPGEgdGl0bGU9IlNvYmlQcm8gLSBKb29tbGEgRGlyZWN0b3J5IENvbXBvbmVudCB3aXRoIGNvbnRlbnQgY29uc3RydWN0aW9uIHN1cHBvcnQiIGhyZWY9Imh0dHBzOi8vd3d3LnNpZ3NpdS5uZXQiIHRhcmdldD0iX2JsYW5rIj5Tb2JpUHJvPC9hPjwvZGl2PiI7fQ==";
-		if ( !( Sobi::Cfg( 'show_pb', true ) ) || SPRequest::cmd( 'method', null, 'post' ) == 'xhr' ) {
+		if ( !( Sobi::Cfg( 'show_pb', true ) ) || Input::Cmd( 'method', 'post' ) == 'xhr' ) {
 			return;
 		}
 		try {
@@ -260,13 +262,13 @@ abstract class SPFrontView extends SPObject implements SPView
 	 */
 	public function display( $o = null )
 	{
-		if ( SPRequest::cmd( 'format' ) == 'json' && Sobi::Cfg( 'output.json_enabled', false ) ) {
+		if ( Input::Cmd( 'format' ) == 'json' && Sobi::Cfg( 'output.json_enabled', false ) ) {
 			return $this->jsonDisplay();
 		}
 		$this->templateSettings();
 		$type = $this->key( 'template_type', 'xslt' );
 		$f = null;
-		$task = SPRequest::task();
+		$task = Input::Task();
 		if ( $this->key( 'functions' ) ) {
 			$f = $this->registerFunctions();
 		}
@@ -340,9 +342,9 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 		}
 		header( 'SobiPro: ' . Sobi::Section() );
-		if ( $o == 'html' && ( !strlen( SPRequest::cmd( 'format' ) ) || SPRequest::cmd( 'format' ) == 'html' || SPRequest::int( 'crawl' ) ) ) {
+		if ( $o == 'html' && ( !strlen( Input::Cmd( 'format' ) ) || Input::Cmd( 'format' ) == 'html' || Input::Int( 'crawl' ) ) ) {
 			$out .= $this->pb();
-			if ( ( SPRequest::cmd( 'dbg' ) || Sobi::Cfg( 'debug' ) ) && Sobi::My( 'id' ) ) {
+			if ( ( Input::Cmd( 'dbg' ) || Sobi::Cfg( 'debug' ) ) && Sobi::My( 'id' ) ) {
 				$start = Sobi::Reg( 'start' );
 				$mem = $start[ 0 ];
 				$time = $start[ 1 ];
@@ -369,10 +371,10 @@ abstract class SPFrontView extends SPObject implements SPView
 		if ( strlen( $header ) ) {
 			header( $header );
 		}
-		if ( SPRequest::int( 'crawl' ) ) {
+		if ( Input::Int( 'crawl' ) ) {
 			header( 'SobiPro: ' . Sobi::Section() );
 		}
-		if ( SPRequest::cmd( 'xhr' ) == 1 ) {
+		if ( Input::Cmd( 'xhr' ) == 1 ) {
 			SPFactory::mainframe()
 					->cleanBuffer()
 					->customHeader();
@@ -516,7 +518,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 		if ( isset( $this->_config[ 'hidden' ] ) ) {
 			foreach ( $this->_config[ 'hidden' ] as $name => $defValue ) {
-				$this->addHidden( SPRequest::string( $name, $defValue ), $name );
+				$this->addHidden( Input::String( $name, 'request', $defValue ), $name );
 			}
 		}
 		Sobi::Trigger( 'afterLoadConfig', $this->name(), [ &$this->_config ] );
@@ -642,8 +644,8 @@ abstract class SPFrontView extends SPObject implements SPView
 					$letters[ $i ] = trim( $letter );
 				}
 			}
-			$field = explode( '.', SPRequest::task( 'get' ) );
-			if ( strstr( SPRequest::task( 'get' ), 'field' ) && isset( $field[ 3 ] ) ) {
+			$field = explode( '.', Input::Task( 'get' ) );
+			if ( strstr( Input::Task( 'get' ), 'field' ) && isset( $field[ 3 ] ) ) {
 				$field = $field[ 3 ];
 				$defField = false;
 			}
@@ -791,6 +793,10 @@ abstract class SPFrontView extends SPObject implements SPView
 	protected function fieldStruct( $fields, $view )
 	{
 		$data = [];
+		$css_debug = '';
+		if ( $development = (Sobi::Cfg( 'template.development', true ) && !defined( 'SOBIPRO_ADM' )) ) {
+			$css_debug = ' development';
+		}
 		foreach ( $fields as $field ) {
 			if ( $field->enabled( $view ) && $field->get( 'id' ) != Sobi::Cfg( 'entry.name_field' ) ) {
 				$struct = $field->struct();
@@ -814,7 +820,8 @@ abstract class SPFrontView extends SPObject implements SPView
 								'type' => $field->get( 'type' ),
 								'suffix' => $field->get( 'suffix' ),
 								'position' => $field->get( 'position' ),
-								'css_view' => $field->get( 'cssClassView' ),
+								'debug' => $development,
+								'css_view' => $field->get( 'cssClassView' ) . $css_debug,
 								'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
 						]
 				];
@@ -899,7 +906,7 @@ abstract class SPFrontView extends SPObject implements SPView
 						'_complex' => 1,
 						'_data' => Sobi::Txt( 'MN.ADD_ENTRY' ),
 						'_attributes' => [
-								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'task' => 'entry.add', 'sid' => SPRequest::sid() ] )
+								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'task' => 'entry.add', 'sid' => Input::Sid() ] )
 						]
 				];
 			}

@@ -25,7 +25,12 @@
 		<xsl:param name="position"/>
 
 		<xsl:if test="$position &gt; 3">
-			<div class="form-group {$fieldname/css-search}">
+			<div class="form-group {$fieldname/@css-search}">
+				<xsl:if test="//development = 1">
+					<xsl:attribute name="title">
+						<xsl:value-of select="name($fieldname)"/><xsl:text> (</xsl:text><xsl:value-of select="$fieldname/@type"/><xsl:text>)</xsl:text>
+					</xsl:attribute>
+				</xsl:if>
 				<label class="col-sm-3 control-label" for="{name($fieldname)}">
 					<xsl:value-of select="label"/>
 				</label>

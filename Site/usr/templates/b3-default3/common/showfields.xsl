@@ -31,7 +31,11 @@
 							<xsl:value-of select="$fieldname/@css-view"/>
 						</xsl:attribute>
 					</xsl:if>
-
+					<xsl:if test="//development = 1">
+						<xsl:attribute name="title">
+							<xsl:value-of select="name()"/><xsl:text> (</xsl:text><xsl:value-of select="$fieldname/@type"/><xsl:text>)</xsl:text>
+						</xsl:attribute>
+					</xsl:if>
 					<xsl:choose>
 						<xsl:when test="count($fieldname/data/*)">  <!-- complex data -->
 							<xsl:if test="string-length($fieldname/@itemprop)"> <!-- itemprop attached to div container -->
@@ -119,7 +123,12 @@
 				<xsl:if test="$view != 'category'">
 					<xsl:if test="$fieldname/@type = 'image'">
 						<xsl:if test="//config/noimage/@value = 1">
-							<div class="spNoImageContainer right">
+							<div class="spNoImageContainer {$fieldname/@css-view} right">
+								<xsl:if test="//development = 1">
+									<xsl:attribute name="title">
+										<xsl:value-of select="name()"/><xsl:text> (</xsl:text><xsl:value-of select="$fieldname/@type"/><xsl:text>)</xsl:text>
+									</xsl:attribute>
+								</xsl:if>
 								<div class="spNoImage">
 									<i class="icon icon-ban-circle"></i>
 								</div>

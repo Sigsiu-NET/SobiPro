@@ -58,6 +58,9 @@ class SPPaymentView extends SPFrontView implements SPView
 		$positions = [];
 		$xml = [];
 		$this->menu( $xml );
+		if ( $development = (Sobi::Cfg( 'template.development', true ) && !defined( 'SOBIPRO_ADM' )) ) {
+			$xml[ 'development' ] = $development;
+		}
 		if ( count( $data[ 'positions' ] ) ) {
 			foreach ( $data[ 'positions' ] as $position ) {
 				$ref = $position[ 'reference' ];

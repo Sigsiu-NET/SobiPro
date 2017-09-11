@@ -17,6 +17,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadView( 'view' );
 
@@ -176,11 +178,11 @@ class SPSectionView extends SPFrontView implements SPView
 		}
 		$en = SPFactory::cache()->getObj( 'entry_struct', $entry );
 		if ( is_array( $en ) && count( $en ) ) {
-			if ( strstr( SPRequest::task(), 'search' ) || $noId || ( Sobi::Cfg( 'section.force_category_id', false ) && SPRequest::sid() == Sobi::Section() ) ) {
+			if ( strstr( Input::Task(), 'search' ) || $noId || ( Sobi::Cfg( 'section.force_category_id', false ) && Input::Sid() == Sobi::Section() ) ) {
 				$en[ 'url' ] = Sobi::Url( $en[ 'url_array' ] );
 			}
 			else {
-				$en[ 'url_array' ][ 'pid' ] = SPRequest::sid();
+				$en[ 'url_array' ][ 'pid' ] = Input::Sid();
 				$en[ 'url' ] = Sobi::Url( $en[ 'url_array' ] );
 			}
 			if ( $manager || ( ( Sobi::My( 'id' ) && ( Sobi::My( 'id' ) == $en[ 'author' ] ) && Sobi::Can( 'entry', 'edit', 'own', Sobi::Section() ) ) ) ) {
@@ -214,7 +216,7 @@ class SPSectionView extends SPFrontView implements SPView
 			$en = $this->cachedEntry( $entry, $manager, $noId );
 		}
 		if ( !( is_array( $en ) ) || !( count( $en ) ) ) {
-			$currentSid = SPRequest::sid();
+			$currentSid = Input::Sid();
 			if ( is_numeric( $entry ) ) {
 				$entry = SPFactory::Entry( $entry );
 			}
@@ -223,33 +225,33 @@ class SPSectionView extends SPFrontView implements SPView
 			$en[ 'name' ] = [
 				'_complex'    => 1,
 				'_data'       => $entry->get( 'name' ),
-				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+				'_attributes' => [ 'lang' => Sobi::Lang( false ), 'type' => 'inbox', 'alias' => $entry->get( 'nameField' ) ]
 			];
 			$ownership = 'valid';
 			if ( Sobi::My( 'id' ) && Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
 				$ownership = 'own';
 			}
 			// don't ask
-			SPRequest::set( 'sid', $entry->get( 'id' ) );
+			Input::Set( 'sid', $entry->get( 'id' ) );
 			$en[ 'acl' ] = [
 				'_complex'    => 1,
 				'_data'       => null,
 				'_attributes' => [ 'accessible' => Sobi::Can( 'entry', 'access', $ownership ) ? 'true' : 'false' ]
 			];
-			SPRequest::set( 'sid', $currentSid );
-//			SPRequest::set( 'sid', $currentSid );
+			Input::Set( 'sid', $currentSid );
+//			Input::Set( 'sid', $currentSid );
 //			$en[ 'acl' ] = array(
 //					'_complex' => 1,
 //					'_data' => null,
 //					'_attributes' => array( 'accessible' => Sobi::Can( 'entry', 'access', $ownership ) ? 'true' : 'false' )
 //			);
-//			SPRequest::set( 'sid', $entry->get( 'id' ) );
+//			Input::Set( 'sid', $entry->get( 'id' ) );
 			$en[ 'url_array' ] = [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) ];
-			if ( strstr( SPRequest::task(), 'search' ) || $noId || ( Sobi::Cfg( 'section.force_category_id', false ) && SPRequest::sid() == Sobi::Section() ) ) {
+			if ( strstr( Input::Task(), 'search' ) || $noId || ( Sobi::Cfg( 'section.force_category_id', false ) && Input::Sid() == Sobi::Section() ) ) {
 				$en[ 'url' ] = Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => $entry->get( 'primary' ), 'sid' => $entry->get( 'id' ) ] );
 			}
 			else {
-				$en[ 'url' ] = Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => SPRequest::sid(), 'sid' => $entry->get( 'id' ) ] );
+				$en[ 'url' ] = Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $entry->get( 'nid' ) : $entry->get( 'name' ), 'pid' => Input::Sid(), 'sid' => $entry->get( 'id' ) ] );
 			}
 			if ( Sobi::Cfg( 'list.entry_meta', true ) ) {
 				$en[ 'meta' ] = [
@@ -260,14 +262,14 @@ class SPSectionView extends SPFrontView implements SPView
 				];
 			}
 			if ( $manager || ( ( Sobi::My( 'id' ) && ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) && Sobi::Can( 'entry', 'edit', 'own', Sobi::Section() ) ) ) ) {
-				$en[ 'edit_url' ] = Sobi::Url( [ 'task' => 'entry.edit', 'pid' => SPRequest::sid(), 'sid' => $entry->get( 'id' ) ] );
+				$en[ 'edit_url' ] = Sobi::Url( [ 'task' => 'entry.edit', 'pid' => Input::Sid(), 'sid' => $entry->get( 'id' ) ] );
 			}
 			else {
 				if ( isset( $en[ 'edit_url' ] ) ) {
 					unset( $en[ 'edit_url' ] );
 				}
 			}
-			$en[ 'edit_url_array' ] = [ 'task' => 'entry.edit', 'pid' => SPRequest::sid(), 'sid' => $entry->get( 'id' ) ];
+			$en[ 'edit_url_array' ] = [ 'task' => 'entry.edit', 'pid' => Input::Sid(), 'sid' => $entry->get( 'id' ) ];
 			$en[ 'created_time' ] = $entry->get( 'createdTime' );
 			$en[ 'updated_time' ] = $entry->get( 'updatedTime' );
 			$en[ 'valid_since' ] = $entry->get( 'validSince' );
@@ -359,8 +361,8 @@ class SPSectionView extends SPFrontView implements SPView
 			$categories = $this->get( 'categories' );
 			$entries = $this->get( 'entries' );
 			$cUrl = [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $current->get( 'nid' ) : $current->get( 'name' ), 'sid' => $current->get( 'id' ) ];
-			if ( SPRequest::int( 'site', 0 ) ) {
-				$cUrl[ 'site' ] = SPRequest::int( 'site', 0 );
+			if ( Input::Int( 'site' ) ) {
+				$cUrl[ 'site' ] = Input::Int( 'site' );
 			}
 			SPFactory::header()->addCanonical( Sobi::Url( $cUrl, true, true, true ) );
 			$data = [];
@@ -379,6 +381,9 @@ class SPSectionView extends SPFrontView implements SPView
 				'_data'       => $current->get( 'name' ),
 				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 			];
+			if ( $development = ( Sobi::Cfg( 'template.development', true ) && !defined( 'SOBIPRO_ADM' ) ) ) {
+				$data[ 'development' ] = $development;
+			}
 
 			$data[ 'created_time' ] = $current->get( 'createdTime' );
 			$data[ 'updated_time' ] = $current->get( 'updatedTime' );
@@ -499,6 +504,10 @@ class SPSectionView extends SPFrontView implements SPView
 		if ( !( count( $fields ) ) ) {
 			$fields = $this->get( 'fields' );
 		}
+		$css_debug = '';
+		if ( $development = ( Sobi::Cfg( 'template.development', true ) && !defined( 'SOBIPRO_ADM' ) ) ) {
+			$css_debug = ' development';
+		}
 		if ( count( $fields ) ) {
 			foreach ( $fields as $field ) {
 				$field->set( 'currentView', 'category' );
@@ -523,7 +532,7 @@ class SPSectionView extends SPFrontView implements SPView
 					                   'type'      => $field->get( 'type' ),
 					                   'suffix'    => $field->get( 'suffix' ),
 					                   'position'  => $field->get( 'position' ),
-					                   'css_view'  => $field->get( 'cssClassView' ),
+					                   'css_view'  => $field->get( 'cssClassView' ) . $css_debug,
 					                   'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
 					]
 				];

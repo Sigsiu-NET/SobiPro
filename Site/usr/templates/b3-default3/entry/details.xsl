@@ -36,6 +36,12 @@
 
 	<xsl:template match="/entry_details">
 
+		<xsl:variable name="css">
+			<xsl:if test="//development = 1">
+				<xsl:text>namefield development</xsl:text>
+			</xsl:if>
+		</xsl:variable>
+
 		<!-- for proper work a container is needed, we assume that the component area is placed into a container by the template.
 		If not, you need to add a container around the SobiPro output here -->
 		<div class="spDetails">
@@ -52,7 +58,12 @@
 				<xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../common/review.xsl'] ">
 					<xsl:call-template name="ratingStars"/>
 				</xsl:if>
-				<h1>
+				<h1 class="{$css}">
+					<xsl:if test="//development = 1">
+						<xsl:attribute name="title">
+							<xsl:value-of select="entry/name/@alias"/><xsl:text> (</xsl:text><xsl:value-of select="entry/name/@type"/><xsl:text>)</xsl:text>
+						</xsl:attribute>
+					</xsl:if>
 					<xsl:value-of select="entry/name"/>
 					<xsl:call-template name="status">
 						<xsl:with-param name="entry" select="entry"/>

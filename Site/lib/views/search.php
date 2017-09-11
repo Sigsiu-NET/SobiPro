@@ -32,15 +32,15 @@ class SPSearchView extends SPSectionView implements SPView
 	public function display()
 	{
 		$this->_type = 'search';
-		$type        = $this->key( 'template_type', 'xslt' );
+		$type = $this->key( 'template_type', 'xslt' );
 		if ( $type != 'php' && Sobi::Cfg( 'global.disable_xslt', false ) ) {
 			$type = 'php';
 		}
 		if ( $type == 'xslt' ) {
 			$searchData = [];
-			$fields     = $this->get( 'fields' );
-			$visitor    = $this->get( 'visitor' );
-			$p          = $this->get( 'priorities' );
+			$fields = $this->get( 'fields' );
+			$visitor = $this->get( 'visitor' );
+			$p = $this->get( 'priorities' );
 			$priorities = [];
 			if ( is_array( $p ) && count( $p ) ) {
 				foreach ( $p as $priority => $eids ) {
@@ -57,20 +57,25 @@ class SPSearchView extends SPSectionView implements SPView
 				'_data'       => Sobi::Section( true ),
 				'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
 			];
-			$section                 = SPFactory::Section( Sobi::Section() );
-			$searchData[ 'name' ]         = [
+			$section = SPFactory::Section( Sobi::Section() );
+			$searchData[ 'name' ] = [
 				'_complex'    => 1,
 				'_data'       => $section->get( 'sfTitle' ),
 				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 			];
-			$searchData[ 'description' ]   = [
+			$css_debug = '';
+			if ( $development = ( Sobi::Cfg( 'template.development', true ) && !defined( 'SOBIPRO_ADM' ) ) ) {
+				$searchData[ 'development' ] = $development;
+				$css_debug = ' development';
+			}
+			$searchData[ 'description' ] = [
 				'_complex'    => 1,
 				'_data'       => $section->get( 'sfDesc' ),
 				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 			];
 
 			$searchPhrase = $this->get( 'search_for' );
-			$phrase       = $this->get( 'search_phrase' );
+			$phrase = $this->get( 'search_phrase' );
 			$searchPhrase = strlen( $searchPhrase ) ? $searchPhrase : Sobi::Txt( 'SH.SEARCH_FOR_BOX' );
 
 			SPFactory::header()->addJsCode( 'var spSearchDefStr = "' . Sobi::Txt( 'SH.SEARCH_FOR_BOX' ) . '"' );
@@ -150,7 +155,7 @@ class SPSearchView extends SPSectionView implements SPView
 			}
 			if ( count( $fields ) ) {
 				foreach ( $fields as $field ) {
-					$data   = $field->searchForm();
+					$data = $field->searchForm();
 					$suffix = $field->get( 'searchMethod' ) != 'range' ? $field->get( 'suffix' ) : null;
 					if ( strlen( $data ) ) {
 						$fData[ $field->get( 'nid' ) ] = [
@@ -171,7 +176,8 @@ class SPSearchView extends SPSectionView implements SPView
 							                   'type'       => $field->get( 'type' ),
 							                   'suffix'     => $suffix,
 							                   'position'   => $field->get( 'position' ),
-							                   'css_search' => $field->get( 'cssClassSearch' ),
+							                   'css_search' => $field->get( 'cssClassSearch' ) . $css_debug,
+							                   'debug'      => $development,
 							                   'width'      => $field->get( 'bsSearchWidth' ),
 							                   'css_class'  => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
 							]
@@ -202,7 +208,7 @@ class SPSearchView extends SPSectionView implements SPView
 				$this->loadNonStaticData( $entries );
 				$manager = Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ? true : false;
 				foreach ( $entries as $entry ) {
-					$en                        = $this->entry( $entry, $manager );
+					$en = $this->entry( $entry, $manager );
 					$searchData[ 'entries' ][] = [
 						'_complex'    => 1,
 						'_attributes' => [ 'id' => $en[ 'id' ], 'search-priority' => isset( $priorities[ $en[ 'id' ] ] ) ? $priorities[ $en[ 'id' ] ] : 'undefined' ],
@@ -212,7 +218,7 @@ class SPSearchView extends SPSectionView implements SPView
 				$this->navigation( $searchData );
 			}
 			$searchData[ 'visitor' ] = $this->visitorArray( $visitor );
-			$this->_attr             = $searchData;
+			$this->_attr = $searchData;
 		}
 		Sobi::Trigger( $this->_type, ucfirst( __FUNCTION__ ), [ &$this->_attr ] );
 		parent::display( $this->_type );
