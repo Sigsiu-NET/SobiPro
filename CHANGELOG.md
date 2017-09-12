@@ -75,7 +75,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Select list validation doesn't work (Issue #21)
 	(#) Wrong arguments order after changing to Sobi Framework (Issue #23)
 	(#) Class css-search not output in the template
-
+	(#) Missing input range search styles added
+	
 
 ### 1.3.7 (28 April 2017)
 
