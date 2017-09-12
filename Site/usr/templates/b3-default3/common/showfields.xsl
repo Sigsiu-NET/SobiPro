@@ -33,7 +33,7 @@
 					</xsl:if>
 					<xsl:if test="//development = 1">
 						<xsl:attribute name="title">
-							<xsl:value-of select="name()"/><xsl:text> (</xsl:text><xsl:value-of select="$fieldname/@type"/><xsl:text>)</xsl:text>
+							<xsl:value-of select="name($fieldname)"/><xsl:text> (</xsl:text><xsl:value-of select="$fieldname/@type"/><xsl:text>)</xsl:text>
 						</xsl:attribute>
 					</xsl:if>
 					<xsl:choose>
