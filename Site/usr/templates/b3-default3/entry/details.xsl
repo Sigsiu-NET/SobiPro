@@ -36,7 +36,7 @@
 
 	<xsl:template match="/entry_details">
 
-		<xsl:variable name="css">
+		<xsl:variable name="development">
 			<xsl:if test="//development = 1">
 				<xsl:text>namefield development</xsl:text>
 			</xsl:if>
@@ -58,7 +58,7 @@
 				<xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:include[@href='../common/review.xsl'] ">
 					<xsl:call-template name="ratingStars"/>
 				</xsl:if>
-				<h1 class="{$css}">
+				<h1 class="{$development}">
 					<xsl:if test="//development = 1">
 						<xsl:attribute name="title">
 							<xsl:value-of select="entry/name/@alias"/><xsl:text> (</xsl:text><xsl:value-of select="entry/name/@type"/><xsl:text>)</xsl:text>

@@ -29,13 +29,13 @@
 			<xsl:call-template name="ratingStars"/>
 		</xsl:if>
 
-		<xsl:variable name="css">
+		<xsl:variable name="development">
 			<xsl:if test="//development = 1">
 				<xsl:text>namefield development</xsl:text>
 			</xsl:if>
 		</xsl:variable>
 
-		<h2 class="page-header lead {$css}">
+		<h2 class="page-header lead {$development}">
 			<xsl:if test="//development = 1">
 				<xsl:attribute name="title">
 					<xsl:value-of select="name/@alias"/><xsl:text> (</xsl:text><xsl:value-of select="name/@type"/><xsl:text>)</xsl:text>
