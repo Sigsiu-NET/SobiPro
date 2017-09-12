@@ -51,6 +51,11 @@
 			</xsl:variable>
 
 			<div class="form-group {$fieldname/@css-edit}" id="{$fieldId}-container">
+				<xsl:if test="//development = 1">
+					<xsl:attribute name="title">
+						<xsl:value-of select="name($fieldname)"/><xsl:text> (</xsl:text><xsl:value-of select="$fieldname/@type"/><xsl:text>)</xsl:text>
+					</xsl:attribute>
+				</xsl:if>
 				<xsl:if test="$fieldname/label/@show = 1">
 					<label class="col-sm-2 control-label" for="{$fieldId}-input-container">
 						<xsl:choose>

@@ -17,35 +17,46 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
-    <!-- Uncomment only if Review & Ratings App is installed -->
-    <!--<xsl:import href="review.xsl" />-->
-    <xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
-    <xsl:include href="showfields.xsl" />
-    <!-- Uncomment only if Collection App is installed -->
-    <!--<xsl:include href="collection.xsl" />-->
+	<!-- Uncomment only if Review & Ratings App is installed -->
+	<!--<xsl:import href="review.xsl" />-->
+	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
+	<xsl:include href="showfields.xsl"/>
+	<!-- Uncomment only if Collection App is installed -->
+	<!--<xsl:include href="collection.xsl" />-->
 
-    <xsl:template name="vcard">
-        <xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:import[@href='review.xsl']" >
-            <xsl:call-template name="ratingStars" />
-        </xsl:if>
+	<xsl:template name="vcard">
+		<xsl:if test="( //reviews/settings/rating_enabled = 1 ) and document('')/*/xsl:import[@href='review.xsl']">
+			<xsl:call-template name="ratingStars"/>
+		</xsl:if>
 
-        <h2 class="page-header lead">
-            <a href="{url}">
-                <xsl:value-of select="name" />
-                <xsl:call-template name="status">
-                    <xsl:with-param name="entry" select="." />
-                </xsl:call-template>
-            </a>
-        </h2>
-        <!-- Uncomment only if Collection App is installed -->
-        <!--<xsl:call-template name="collection"><xsl:with-param name="entry" select="."/></xsl:call-template>-->
+		<xsl:variable name="css">
+			<xsl:if test="//development = 1">
+				<xsl:text>namefield development</xsl:text>
+			</xsl:if>
+		</xsl:variable>
 
-        <xsl:for-each select="fields/*">
-            <xsl:call-template name="showfield">
-                <xsl:with-param name="fieldname" select="." />
-                <xsl:with-param name="view" select="'vcard'" />
-            </xsl:call-template>
-        </xsl:for-each>
-    </xsl:template>
+		<h2 class="page-header lead {$css}">
+			<xsl:if test="//development = 1">
+				<xsl:attribute name="title">
+					<xsl:value-of select="name/@alias"/><xsl:text> (</xsl:text><xsl:value-of select="name/@type"/><xsl:text>)</xsl:text>
+				</xsl:attribute>
+			</xsl:if>
+			<a href="{url}">
+				<xsl:value-of select="name"/>
+				<xsl:call-template name="status">
+					<xsl:with-param name="entry" select="."/>
+				</xsl:call-template>
+			</a>
+		</h2>
+		<!-- Uncomment only if Collection App is installed -->
+		<!--<xsl:call-template name="collection"><xsl:with-param name="entry" select="."/></xsl:call-template>-->
+
+		<xsl:for-each select="fields/*">
+			<xsl:call-template name="showfield">
+				<xsl:with-param name="fieldname" select="."/>
+				<xsl:with-param name="view" select="'vcard'"/>
+			</xsl:call-template>
+		</xsl:for-each>
+	</xsl:template>
 
 </xsl:stylesheet>
