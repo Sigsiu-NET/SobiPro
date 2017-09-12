@@ -18,6 +18,11 @@
 
 SobiPro.jQuery( document ).ready( function ()
 {
+	SobiPro.jQuery( '#SPMenuCtrlBt' ).click( function ()
+	{
+		SPRightMenu();
+	} );
+
 	function SPRightMenu()
 	{
 		if ( SobiPro.jQuery( '#SPRightMenu' ).css( 'display' ) == 'block' ) {
@@ -64,15 +69,8 @@ SobiPro.jQuery( document ).ready( function ()
 			}
 		}
 	}
-
 	const menuState = localStorage.getItem( 'SobiProSideMenu' );
 	if ( menuState == 'closed' ) {
 		SobiPro.jQuery( '#SPMenuCtrlBt' ).click();
 	}
-
-	SobiPro.jQuery( '#SPMenuCtrlBt' ).click( function ()
-	{
-		SPRightMenu();
-	} );
-
 } );
