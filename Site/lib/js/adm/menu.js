@@ -18,11 +18,6 @@
 
 SobiPro.jQuery( document ).ready( function ()
 {
-	SobiPro.jQuery( '#SPMenuCtrlBt' ).click( function ()
-	{
-		SPRightMenu();
-	} );
-
 	function SPRightMenu()
 	{
 		if ( SobiPro.jQuery( '#SPRightMenu' ).css( 'display' ) == 'block' ) {
@@ -37,6 +32,11 @@ SobiPro.jQuery( document ).ready( function ()
 				.removeClass( 'span9' )
 				.addClass( 'span12' )
 				.addClass( 'firstspan' );
+
+			SobiPro.jQuery( '#SPMenuCtrlBt' ).click( function ()
+			{
+				SPRightMenu();
+			} );
 			try {
 				localStorage.setItem( 'SobiProSideMenu', 'closed' );
 			}
@@ -53,6 +53,10 @@ SobiPro.jQuery( document ).ready( function ()
 				.removeClass( 'span12' )
 				.removeClass( 'firstspan' )
 				.addClass( 'span9' );
+			SobiPro.jQuery( '#SPMenuCtrlBt' ).click( function ()
+			{
+				SPRightMenu();
+			} );
 			try {
 				localStorage.setItem( 'SobiProSideMenu', 'open' );
 			}

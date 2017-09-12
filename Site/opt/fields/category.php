@@ -323,7 +323,6 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 					->customHeader();
 			echo json_encode( [ 'categories' => $this->_cats[ Sobi::Section() ][ 'childs' ] ] );
 			exit;
-
 		}
 	}
 
