@@ -35,6 +35,12 @@
 			<xsl:variable name="form-orientation">
 				<xsl:value-of select="//config/form-class/@value"/>
 			</xsl:variable>
+			<xsl:variable name="development">
+				<xsl:if test="//development = 1">
+					<xsl:text>development</xsl:text>
+				</xsl:if>
+			</xsl:variable>
+
 			<div class="form-{$form-orientation}">
 				<xsl:for-each select="entry/fields/*">
 					<xsl:call-template name="editfield">

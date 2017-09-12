@@ -488,9 +488,9 @@ body.modal-open {
 		font-size: 32px;
 		color: @base-color;
 	}
-	.noblock {
-		display: inline;
-	}
+	.inline { display: inline; }
+	.inherit { display: inherit; }
+
 	// general distances on top and bottom
 	.distance-top-xs {
 		margin-top: 12px;
@@ -519,6 +519,7 @@ body.modal-open {
 
 	.development {
 		border: 1px dashed grey;
+		margin: -1px;
 		background-color: #ebebeb;
 
 		&.namefield,
@@ -607,10 +608,18 @@ body.modal-open {
 		&.spClassViewMap {
 			background-color: #f9fbde;
 		}
+		&.spClassViewMap {
+			margin: 0;
+		}
 		&.spClassSearchQRCode,
 		&.spClassEditQRCode,
 		&.spClassViewQRCode {
 			background-color: #defef2;
+		}
+		&.spClassSearchContact,
+		&.spClassEditContact,
+		&.spClassViewContact {
+			background-color: #fbeadb;
 		}
 	}
 

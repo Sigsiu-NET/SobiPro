@@ -31,16 +31,14 @@
 
 		<xsl:variable name="development">
 			<xsl:if test="//development = 1">
-				<xsl:text>namefield development</xsl:text>
+				<xsl:text>development</xsl:text>
 			</xsl:if>
 		</xsl:variable>
 
-		<h2 class="page-header lead {$development}">
-			<xsl:if test="//development = 1">
-				<xsl:attribute name="title">
-					<xsl:value-of select="name/@alias"/><xsl:text> (</xsl:text><xsl:value-of select="name/@type"/><xsl:text>)</xsl:text>
-				</xsl:attribute>
-			</xsl:if>
+		<h2 class="page-header lead namefield {$development}">
+			<xsl:call-template name="development">
+				<xsl:with-param name="fieldname" select="entry/name" />
+			</xsl:call-template>
 			<a href="{url}">
 				<xsl:value-of select="name"/>
 				<xsl:call-template name="status">
