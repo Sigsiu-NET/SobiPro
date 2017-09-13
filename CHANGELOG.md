@@ -44,6 +44,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Dates, author, url and state of a category available in XML data
 	(+) Possibility to delete all entries in a section
 	(+) Basic template development support added (fields highlighting)
+	(+) Description in entry form can be placed on the right side too
 
 	(-) Unused tabs script of SobiPro version 1.0 removed
 	(-) Clean-up of loaded scripts in template
@@ -61,6 +62,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Changes in b3-default3 template for basic accessibility
 	(!) default.less/default.css renamed to custom.less/custom.css
 	(!) Layout improvement of payment control in entry form
+	(!) Description in entry form uses full width (not longer limited to field width)
 
 	(#) Font Awesome 3 local does not show icons in front-end datepicker
 	(#) Solution to overcome Joomla's IcoMoon when Font Awesome 3 is loaded via CDN

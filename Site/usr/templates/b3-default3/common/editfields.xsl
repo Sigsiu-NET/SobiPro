@@ -51,6 +51,11 @@
 					</div>
 				</xsl:if>
 
+				<xsl:if test="string-length( $fieldname/description ) and //config/help-position/@value = 'above'">
+					<div class="col-sm-10 col-sm-offset-2 help-block above">
+						<xsl:copy-of select="$fieldname/description"/>
+					</div>
+				</xsl:if>
 				<xsl:if test="$fieldname/label/@show = 1">
 					<label class="col-sm-2 control-label" for="{$fieldId}-input-container">
 						<xsl:choose>
@@ -81,11 +86,6 @@
 					</xsl:choose>
 				</xsl:variable>
 				<div class="col-sm-{$colwidth}{$offset}" id="{$fieldId}-input-container">
-					<xsl:if test="string-length( $fieldname/description ) and //config/help-position/@value = 'above'">
-						<div class="help-block">
-							<xsl:copy-of select="$fieldname/description"/>
-						</div>
-					</xsl:if>
 					<div>
 						<xsl:choose>
 							<xsl:when test="string-length( $fieldname/@suffix )">
@@ -115,13 +115,19 @@
 						</xsl:choose>
 					</div>
 					<div id="{$fieldId}-message" class="hide message-lightbulb"></div>
-
-					<xsl:if test="string-length( $fieldname/description ) and //config/help-position/@value = 'below'">
-						<div class="help-block">
-							<xsl:copy-of select="$fieldname/description"/>
-						</div>
-					</xsl:if>
 				</div>
+
+				<xsl:if test="string-length( $fieldname/description ) and //config/help-position/@value = 'right'">
+					<div class="col-sm-{10 - $colwidth} help-block right">
+						<xsl:copy-of select="$fieldname/description"/>
+					</div>
+				</xsl:if>
+
+				<xsl:if test="string-length( $fieldname/description ) and //config/help-position/@value = 'below'">
+					<div class="col-sm-10 help-block below">
+						<xsl:copy-of select="$fieldname/description"/>
+					</div>
+				</xsl:if>
 			</div>
 		</xsl:if>
 	</xsl:template>

@@ -703,6 +703,8 @@ body.modal-open {
 	.help-block {
 		font-size: calc(@fontsize - 1px);
 		color: @font-color;
+
+		&.above { margin-top: 10px; }
 	}
 	.well {
 		box-shadow: none;
@@ -1251,13 +1253,11 @@ body.modal-open {
 		}
 	}
 	.spAlert {
-		margin-bottom: 0;
-		margin-top: 0;
-		background-color: @alert-color;
+		margin-bottom: 8px;
+		margin-top: 20px;
+		background-color: transparent;
 		color: @active-color;
-		border-color: darken(@alert-color, 10%);
 		font-weight: 500;
-		font-size: 95%;
 	}
 
 	// has to be defined by the template as several apps are using it
