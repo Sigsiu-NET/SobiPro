@@ -420,7 +420,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$cdata = count( $data );
 
 		/* check if it was required */
-		if ( $this->required && ( !( $cdata ) || ( isset( $data[ 0 ] ) ) && $data[ 0 ] == 0 ) ) {
+		if ( $this->required && ( !( $cdata ) || ( isset( $data[ 0 ] ) ) && $data[ 0 ] == '0' ) ) {
 			throw new SPException( SPLang::e( 'FIELD_REQUIRED_ERR_OPT', $this->name ) );
 		}
 
