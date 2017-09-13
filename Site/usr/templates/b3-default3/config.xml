@@ -168,11 +168,12 @@
 									<field type="toggle" name="settings[entry.edit][entry-edit][required-star]"
 									       value="settings.entry-edit.entry-edit.required-star" label="TP.CONFIG.ENTRY_STAR" prefix="yes_no"/>
 									<field type="select" label="TP.CONFIG.ENTRY_HELPPOSITION" name="settings[entry.edit][entry-edit][help-position]"
-									       selected="settings.entry-edit.entry-edit.help-position" class="input-medium">
+									       selected="settings.entry-edit.entry-edit.help-position" class="input-large">
 										<values>
 											<option value="popup" label="TP.CONFIG.ENTRY_HELPPOSITION_POPUP"/>
 											<option value="above" label="TP.CONFIG.ENTRY_HELPPOSITION_ABOVE"/>
 											<option value="below" label="TP.CONFIG.ENTRY_HELPPOSITION_BELOW"/>
+											<option value="right" label="TP.CONFIG.ENTRY_HELPPOSITION_RIGHT"/>
 										</values>
 									</field>
 									<field type="text" label="TP.CONFIG.ENTRY_REDIRECTLOGIN" name="settings[config][general][redirectlogin]"

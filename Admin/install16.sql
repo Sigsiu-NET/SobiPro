@@ -1150,7 +1150,7 @@ INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language
 ('metaDesc', 'Business Directory', NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
 ('name', 'Street', NULL, 'en-GB', 'field', 14, 0, NULL, NULL, NULL),
 ('name', 'Category', NULL, 'en-GB', 'field', 15, 0, NULL, NULL, NULL),
-  ('field_contact_information-entryInfo', '<div class="alert spAlert">Enter your contact information below to get contacted.</p>', 1, 'en-GB', 'field_information', 16, 1, '', '', ''),
+  ('field_contact_information-entryInfo', '<div class="spAlert">Enter your contact information below to get contacted.</p>', 1, 'en-GB', 'field_information', 16, 1, '', '', ''),
   ('field_contact_information-viewInfo', '<br/><p>\r\n<i class="icon-comments-alt icon-large"></i> <em>If you have any questions, please get in contact with us.</em></p>', 1, 'en-GB', 'field_information', 16, 1, '', '', ''),
   ('name', 'Contact Information', NULL, 'en-GB', 'field', 16, 0, NULL, NULL, NULL),
   ('suffix', '', NULL, 'en-GB', 'field', 16, 0, NULL, NULL, NULL),

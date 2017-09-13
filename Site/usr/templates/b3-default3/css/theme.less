@@ -488,9 +488,9 @@ body.modal-open {
 		font-size: 32px;
 		color: @base-color;
 	}
-	.noblock {
-		display: inline;
-	}
+	.inline { display: inline; }
+	.inherit { display: inherit; }
+
 	// general distances on top and bottom
 	.distance-top-xs {
 		margin-top: 12px;
@@ -519,6 +519,7 @@ body.modal-open {
 
 	.development {
 		border: 1px dashed grey;
+		margin: -1px;
 		background-color: #ebebeb;
 
 		&.namefield,
@@ -537,17 +538,14 @@ body.modal-open {
 		&.spClassViewRadio {
 			background-color: #dfebfd;
 		}
-		&.spClassSearchUrl,
 		&.spClassEditUrl,
 		&.spClassViewUrl {
 			background-color: #fdf8d9;
 		}
-		&.spClassSearchEmail,
 		&.spClassEditEmail,
 		&.spClassViewEmail {
 			background-color: #fdeaf5;
 		}
-		&.spClassSearchImage,
 		&.spClassEditImage,
 		&.spClassViewImage {
 			background-color: #e7fffd;
@@ -557,7 +555,6 @@ body.modal-open {
 		&.spClassViewSelect {
 			background-color: #ededfd;
 		}
-		&.spClassSearchInfo,
 		&.spClassEditInfo,
 		&.spClassViewInfo {
 			background-color: #ffe7ec;
@@ -572,14 +569,12 @@ body.modal-open {
 		&.spClassViewText {
 			background-color: #e3f5fd;
 		}
-		&.spClassSearchButton,
 		&.spClassEditButton,
 		&.spClassViewButton {
 			background-color: #f2ffd4;
 		}
 		&.spClassSearchCategory,
-		&.spClassEditCategory,
-		&.spClassViewCategory {
+		&.spClassEditCategory {
 			background-color: #fbe5f3;
 		}
 		&.spClassSearchCalendar,
@@ -587,7 +582,6 @@ body.modal-open {
 		&.spClassViewCalendar {
 			background-color: #e6fddd;
 		}
-		&.spClassSearchGallery,
 		&.spClassEditGallery,
 		&.spClassViewGallery {
 			background-color: #fff1e6;
@@ -597,7 +591,6 @@ body.modal-open {
 		&.spClassViewAggregation {
 			background-color: #f1f6fe;
 		}
-		&.spClassSearchProfile,
 		&.spClassEditProfile,
 		&.spClassViewProfile {
 			background-color: #f7f1fe;
@@ -607,10 +600,31 @@ body.modal-open {
 		&.spClassViewMap {
 			background-color: #f9fbde;
 		}
-		&.spClassSearchQRCode,
-		&.spClassEditQRCode,
+		&.spClassViewMap {
+			margin: 0;
+		}
 		&.spClassViewQRCode {
 			background-color: #defef2;
+		}
+		&.spClassViewContact {
+			background-color: #fbeadb;
+		}
+		&.spClassEditCoupon {
+			background-color: #d7fbdd;
+		}
+		&.spClassViewDownload,
+		&.spClassEditDownload {
+			background-color: #e3e3fb;
+		}
+		&.spClassSearchBirthday,
+		&.spClassEditBirthday,
+		&.spClassViewBirthday {
+			background-color: #e1fdf5;
+		}
+		&.form-group {
+			margin-bottom: 14px;
+			margin-right: -14px;
+			margin-left: -14px;
 		}
 	}
 
@@ -689,6 +703,8 @@ body.modal-open {
 	.help-block {
 		font-size: calc(@fontsize - 1px);
 		color: @font-color;
+
+		&.above { margin-top: 10px; }
 	}
 	.well {
 		box-shadow: none;
@@ -1237,13 +1253,11 @@ body.modal-open {
 		}
 	}
 	.spAlert {
-		margin-bottom: 0;
-		margin-top: 0;
-		background-color: @alert-color;
+		margin-bottom: 8px;
+		margin-top: 20px;
+		background-color: transparent;
 		color: @active-color;
-		border-color: darken(@alert-color, 10%);
 		font-weight: 500;
-		font-size: 95%;
 	}
 
 	// has to be defined by the template as several apps are using it
@@ -2044,20 +2058,24 @@ body.modal-open {
 	}
 
 	// Range inputs
-	.spSelectRangeFrom select,
-	.spSelectRangeTo select,
+	.spRangeFrom input,
+	.spRangeTo input,
+	.spRangeFrom select,
+	.spRangeTo select,
 	.spSelectRangeFrom .input-group,
 	.spSelectRangeTo .input-group {
 		float: left;
 		width: calc(100% / 2 - 5px);
 	}
 
-	.spSelectRangeFrom select,
+	.spRangeFrom select,
+	.spRangeFrom input,
 	.spSelectRangeFrom .input-group {
 		margin: 0 5px 10px 0;
 	}
 
-	.spSelectRangeTo select,
+	.spRangeTo select,
+	.spRangeTo input,
 	.spSelectRangeTo .input-group {
 		margin: 0 0 10px 5px;
 	}
@@ -2073,20 +2091,17 @@ body.modal-open {
 
 	// Edit entry payment control
 	// ----------------------------------------
-	.control-label div.paybox span {
-		border-radius: 45px;
-		padding: 5px 9px 9px 9px;
-		border: 1px solid darken(@alert-color, 10%);;
-		background-color: @alert-color;
-	}
+	.form-group {
+		.paytext {
+			margin-top: 15px;
+			margin-bottom: 15px;
+			font-weight: 500;
+		}
 
-	.form-inline .control-label div.paybox {
-		margin-bottom: 12px;
-	}
-
-	.form-group.payment-message,
-	.control-group.payment-message {
-		padding-top: 10px;
+		.paybox {
+			border-radius: 45px;
+			padding: 11px 0 0;
+		}
 	}
 
 	// Search

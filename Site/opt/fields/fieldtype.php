@@ -68,6 +68,7 @@ class SPFieldType extends SPObject
 
 	/**
 	 * @param string $val
+	 *
 	 * @return void
 	 */
 	public function setCSS( $val = 'spField' )
@@ -77,6 +78,7 @@ class SPFieldType extends SPObject
 
 	/**
 	 * @param string $val
+	 *
 	 * @return void
 	 */
 	public function setSelected( $val )
@@ -86,8 +88,10 @@ class SPFieldType extends SPObject
 
 	/**
 	 * Proxy pattern
+	 *
 	 * @param string $method
 	 * @param array $args
+	 *
 	 * @throws SPException
 	 * @return mixed
 	 */
@@ -104,6 +108,7 @@ class SPFieldType extends SPObject
 	/**
 	 * @param string $var
 	 * @param mixed $val
+	 *
 	 * @return \SPObject|void
 	 */
 	public function & set( $var, $val )
@@ -111,6 +116,7 @@ class SPFieldType extends SPObject
 		if ( isset( $this->$var ) ) {
 			$this->$var = $val;
 		}
+
 		return $this;
 	}
 
@@ -119,8 +125,10 @@ class SPFieldType extends SPObject
 	 * But it has to perform some operation
 	 * E.g. Category field is set to be administrative and isn't used
 	 * but it needs to pass the previously selected categories to the entry model
+	 *
 	 * @param SPEntry $entry
 	 * @param string $request
+	 *
 	 * @return bool
 	 * */
 	public function finaliseSave( $entry, $request = 'post' )
@@ -130,8 +138,8 @@ class SPFieldType extends SPObject
 
 	protected function rangeSearch( $values, $freeInput = false )
 	{
-		$request[ 'from' ] = isset( $this->_selected[ 'from' ] ) ? (int)$this->_selected[ 'from' ] : '';
-		$request[ 'to' ] = isset( $this->_selected[ 'to' ] ) ? (int)$this->_selected[ 'to' ] : '';
+		$request[ 'from' ] = isset( $this->_selected[ 'from' ] ) ? (int) $this->_selected[ 'from' ] : '';
+		$request[ 'to' ] = isset( $this->_selected[ 'to' ] ) ? (int) $this->_selected[ 'to' ] : '';
 		if ( !( $freeInput ) ) {
 			$values = str_replace( [ "\n", "\r", "\t" ], null, $values );
 			$values = explode( ',', $values );
@@ -147,16 +155,19 @@ class SPFieldType extends SPObject
 			}
 			$from = SPHtml_Input::select( $this->nid . '[from]', $data, $request[ 'from' ], false, [ 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1' ] );
 			$to = SPHtml_Input::select( $this->nid . '[to]', $data2, $request[ 'to' ], false, [ 'class' => $this->cssClass . ' ' . Sobi::Cfg( 'search.form_list_def_css', 'SPSearchSelect' ), 'size' => '1' ] );
-
-//			return '<div class="SPSearchSelectRangeFrom"><span>' . Sobi::Txt( 'SH.RANGE_FROM' ) . '</span> ' . $from . ' ' . $this->suffix . '</div><div class="SPSearchSelectRangeTo"><span>' . Sobi::Txt( 'SH.RANGE_TO' ) . '</span> ' . $to . ' ' . $this->suffix . '</div>';
-			return '<div class="spSelectRangeFrom">' . $from . ' ' . $this->suffix . '</div><div class="spSelectRangeTo">' . $to . ' ' . $this->suffix . '</div>';
 		}
 		else {
 			$from = SPHtml_Input::text( $this->nid . '[from]', $request[ 'from' ], [ 'size' => '1', 'placeholder' => Sobi::Txt( 'SH.RANGE_FROM' ) ] );
 			$to = SPHtml_Input::text( $this->nid . '[to]', $request[ 'to' ], [ 'size' => '1', 'placeholder' => Sobi::Txt( 'SH.RANGE_TO' ) ] );
-//			return '<div class="SPSearchInputRangeFrom"><span>' . Sobi::Txt( 'SH.RANGE_FROM' ) . '</span> ' . $from . ' ' . $this->suffix . '</div><div class="SPSearchInputRangeTo"><span>' . Sobi::Txt( 'SH.RANGE_TO' ) . '</span> ' . $to . ' ' . $this->suffix . '</div>';
-			return '<div class="spInputRangeFrom">' . $from . ' ' . $this->suffix . '</div><div class="spInputRangeTo">' . $to . ' ' . $this->suffix . '</div>';
 		}
+		if ( $this->suffix ) {
+			return '<div class="spSelectRangeFrom"><div class="input-group input-append">' . $from . '<span class="input-group-addon add-on">' . $this->suffix . '</span></div></div>' .
+				'<div class="spSelectRangeTo"><div class="input-group input-append">' . $to . '<span class="input-group-addon add-on">' . $this->suffix . '</span></div></div>';
+		}
+		else {
+			return '<div class="spRangeFrom">' . $from . '</div><div class="spRangeTo">' . $to . '</div>';
+		}
+
 	}
 
 	protected function searchForRange( &$request, $section )
@@ -165,16 +176,18 @@ class SPFieldType extends SPObject
 		if ( $request[ 'from' ] || $request[ 'to' ] ) {
 			$request[ 'from' ] = isset( $request[ 'from' ] ) ? $request[ 'from' ] : SPC::NO_VALUE;
 			$request[ 'to' ] = isset( $request[ 'to' ] ) ? $request[ 'to' ] : SPC::NO_VALUE;
-			$request[ 'from' ] = strstr( $request[ 'from' ], '.' ) ? ( floatval( $request[ 'from' ] ) ) : (int)$request[ 'from' ];
-			$request[ 'to' ] = strstr( $request[ 'to' ], '.' ) ? ( floatval( $request[ 'to' ] ) ) : (int)$request[ 'to' ];
+			$request[ 'from' ] = strstr( $request[ 'from' ], '.' ) ? ( floatval( $request[ 'from' ] ) ) : (int) $request[ 'from' ];
+			$request[ 'to' ] = strstr( $request[ 'to' ], '.' ) ? ( floatval( $request[ 'to' ] ) ) : (int) $request[ 'to' ];
 			try {
 				$sids = SPFactory::db()
-						->dselect( 'sid', 'spdb_field_data', [ 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $request, 'section' => $section ] )
-						->loadResultArray();
-			} catch ( SPException $x ) {
+					->dselect( 'sid', 'spdb_field_data', [ 'fid' => $this->fid, 'copy' => '0', 'enabled' => 1, 'baseData' => $request, 'section' => $section ] )
+					->loadResultArray();
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_SEARCH_DB_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
+
 		return $sids;
 	}
 
@@ -204,7 +217,9 @@ class SPFieldType extends SPObject
 
 	/**
 	 * Proxy pattern
+	 *
 	 * @param string $property
+	 *
 	 * @return mixed
 	 */
 	public function __get( $property )
@@ -219,6 +234,7 @@ class SPFieldType extends SPObject
 
 	/**
 	 * @param $vals
+	 *
 	 * @return void
 	 */
 	public function save( &$vals )
@@ -256,8 +272,8 @@ class SPFieldType extends SPObject
 		}
 		try {
 			$copy = $db
-					->select( 'COUNT( fid )', 'spdb_field_data', [ 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ] )
-					->loadResult();
+				->select( 'COUNT( fid )', 'spdb_field_data', [ 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ] )
+				->loadResult();
 			if ( $copy ) {
 				/**
 				 * Fri, Apr 6, 2012
@@ -275,8 +291,8 @@ class SPFieldType extends SPObject
 				 * Therefore we have to check if the approved data is maybe newer than the non-approved copy
 				 */
 				$date = $db
-						->select( 'copy', 'spdb_field_data', [ 'sid' => $sid, 'fid' => $this->fid ], 'updatedTime.desc', 1 )
-						->loadResult();
+					->select( 'copy', 'spdb_field_data', [ 'sid' => $sid, 'fid' => $this->fid ], 'updatedTime.desc', 1 )
+					->loadResult();
 				/**
 				 * If the copy flag of the newer version is 0 - then delete all non-approved versions
 				 * and this is our current version
@@ -299,13 +315,13 @@ class SPFieldType extends SPObject
 //						$params[ 'lang' ] = array( $lang, SPC::NO_VALUE );
 //					}
 					$el = $db
-							->select( 'editLimit', 'spdb_field_data', $params )
-							->loadResult();
+						->select( 'editLimit', 'spdb_field_data', $params )
+						->loadResult();
 					$cParams = $params;
 					/** we need to delete only the entries that have the copy flag set to 1 with the selected language */
 					$languages = $db
-							->select( 'lang', 'spdb_field_data', [ 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ] )
-							->loadResultArray();
+						->select( 'lang', 'spdb_field_data', [ 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ] )
+						->loadResultArray();
 					$cParams[ 'copy' ] = 0;
 					if ( count( $languages ) ) {
 						$cParams[ 'lang' ] = $languages;
@@ -314,7 +330,8 @@ class SPFieldType extends SPObject
 					$db->update( 'spdb_field_data', [ 'copy' => '0', 'editLimit' => $el ], $params );
 				}
 			}
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELDS_DATA_DB_ERR', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 	}
@@ -324,7 +341,8 @@ class SPFieldType extends SPObject
 		$db =& SPFactory::db();
 		try {
 			$db->update( 'spdb_field_data', [ 'enabled' => $state ], [ 'sid' => $sid, 'fid' => $this->fid ] );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_CHANGE_FIELD_STATE', $x->getMessage() ), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 	}
@@ -332,6 +350,7 @@ class SPFieldType extends SPObject
 	/**
 	 * @param $data
 	 * @param $section
+	 *
 	 * @return bool
 	 */
 	public function searchString( $data, $section )
@@ -351,6 +370,7 @@ class SPFieldType extends SPObject
 
 	/**
 	 * @param int $sid - entry id
+	 *
 	 * @return void
 	 */
 	public function rejectChanges( $sid )
@@ -360,7 +380,8 @@ class SPFieldType extends SPObject
 			$db =& SPFactory::db();
 			try {
 				$db->delete( 'spdb_field_data', [ 'sid' => $sid, 'copy' => 1 ] );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DELETE_FIELD_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			$deleted[ $sid ] = true;
@@ -369,6 +390,7 @@ class SPFieldType extends SPObject
 
 	/**
 	 * @param int $sid - entry id
+	 *
 	 * @return void
 	 */
 	public function deleteData( $sid )
@@ -378,7 +400,8 @@ class SPFieldType extends SPObject
 			$db =& SPFactory::db();
 			try {
 				$db->delete( 'spdb_field_data', [ 'sid' => $sid ] );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'CANNOT_DELETE_FIELD_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			$deleted[ $sid ] = true;
@@ -425,12 +448,14 @@ class SPFieldType extends SPObject
 				}
 			}
 		}
+
 		return $options;
 	}
 
 	/**
 	 * @param SPEntry $entry
 	 * @param string $request
+	 *
 	 * @return string
 	 */
 	public function validate( $entry, $request )
