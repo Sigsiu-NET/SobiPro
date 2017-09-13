@@ -25,24 +25,6 @@
 
 		<xsl:if test="( name($fieldname) != 'save_button' ) and ( name($fieldname) != 'cancel_button' )">
 			<xsl:variable name="fieldId" select="name($fieldname)"/>
-			<xsl:if test="string-length( $fieldname/fee ) > 0 and not(contains($fieldname/@css-edit, 'entryprice') and $fieldname/@type = 'chbxgroup' and $fieldname/@required = '1')">
-				<div class="form-group payment-message">
-					<label class="col-sm-2 control-label">
-						<div class="paybox">
-							<span>
-								<input name="{$fieldId}Payment" id="{$fieldId}-payment" value="" type="checkbox" class="payment-box"/>
-							</span>
-						</div>
-					</label>
-					<div class="col-sm-10">
-						<div class="alert spAlert">
-							<xsl:value-of select="$fieldname/fee_msg"/><xsl:text> </xsl:text>
-							<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )"/>
-						</div>
-					</div>
-				</div>
-			</xsl:if>
-
 			<xsl:variable name="offset">
 				<xsl:choose>
 					<xsl:when test="$fieldname/label/@show = 1"></xsl:when>
@@ -58,6 +40,17 @@
 						<xsl:value-of select="name($fieldname)"/><xsl:text> (</xsl:text><xsl:value-of select="$fieldname/@type"/><xsl:text>)</xsl:text>
 					</xsl:attribute>
 				</xsl:if>
+
+				<xsl:if test="string-length( $fieldname/fee ) > 0 and not(contains($fieldname/@css-edit, 'entryprice') and $fieldname/@type = 'chbxgroup' and $fieldname/@required = '1')">
+					<label class="col-sm-2 control-label paybox">
+						<input name="{$fieldId}Payment" id="{$fieldId}-payment" value="" type="checkbox" class="payment-box"/>
+					</label>
+					<div class="col-sm-10 paytext">
+						<xsl:value-of select="$fieldname/fee_msg"/><xsl:text> </xsl:text>
+						<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.PAYMENT_ADD' )"/>
+					</div>
+				</xsl:if>
+
 				<xsl:if test="$fieldname/label/@show = 1">
 					<label class="col-sm-2 control-label" for="{$fieldId}-input-container">
 						<xsl:choose>
