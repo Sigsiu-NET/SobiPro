@@ -538,17 +538,14 @@ body.modal-open {
 		&.spClassViewRadio {
 			background-color: #dfebfd;
 		}
-		&.spClassSearchUrl,
 		&.spClassEditUrl,
 		&.spClassViewUrl {
 			background-color: #fdf8d9;
 		}
-		&.spClassSearchEmail,
 		&.spClassEditEmail,
 		&.spClassViewEmail {
 			background-color: #fdeaf5;
 		}
-		&.spClassSearchImage,
 		&.spClassEditImage,
 		&.spClassViewImage {
 			background-color: #e7fffd;
@@ -558,7 +555,6 @@ body.modal-open {
 		&.spClassViewSelect {
 			background-color: #ededfd;
 		}
-		&.spClassSearchInfo,
 		&.spClassEditInfo,
 		&.spClassViewInfo {
 			background-color: #ffe7ec;
@@ -573,14 +569,12 @@ body.modal-open {
 		&.spClassViewText {
 			background-color: #e3f5fd;
 		}
-		&.spClassSearchButton,
 		&.spClassEditButton,
 		&.spClassViewButton {
 			background-color: #f2ffd4;
 		}
 		&.spClassSearchCategory,
-		&.spClassEditCategory,
-		&.spClassViewCategory {
+		&.spClassEditCategory {
 			background-color: #fbe5f3;
 		}
 		&.spClassSearchCalendar,
@@ -588,7 +582,6 @@ body.modal-open {
 		&.spClassViewCalendar {
 			background-color: #e6fddd;
 		}
-		&.spClassSearchGallery,
 		&.spClassEditGallery,
 		&.spClassViewGallery {
 			background-color: #fff1e6;
@@ -598,7 +591,6 @@ body.modal-open {
 		&.spClassViewAggregation {
 			background-color: #f1f6fe;
 		}
-		&.spClassSearchProfile,
 		&.spClassEditProfile,
 		&.spClassViewProfile {
 			background-color: #f7f1fe;
@@ -611,15 +603,23 @@ body.modal-open {
 		&.spClassViewMap {
 			margin: 0;
 		}
-		&.spClassSearchQRCode,
-		&.spClassEditQRCode,
 		&.spClassViewQRCode {
 			background-color: #defef2;
 		}
-		&.spClassSearchContact,
-		&.spClassEditContact,
 		&.spClassViewContact {
 			background-color: #fbeadb;
+		}
+		&.spClassEditCoupon {
+			background-color: #d7fbdd;
+		}
+		&.spClassViewDownload,
+		&.spClassEditDownload {
+			background-color: #e3e3fb;
+		}
+		&.spClassSearchBirthday,
+		&.spClassEditBirthday,
+		&.spClassViewBirthday {
+			background-color: #e1fdf5;
 		}
 		&.form-group {
 			margin-bottom: 14px;
@@ -627,6 +627,7 @@ body.modal-open {
 			margin-left: -14px;
 		}
 	}
+
 	//otherwise buttons are a bit too high to align with input boxes
 	.btn i {
 		//font-size: 0.97em; //removes the possibility to resize the icon in a button
