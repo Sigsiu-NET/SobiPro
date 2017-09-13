@@ -124,7 +124,7 @@
 				</xsl:if>
 
 				<xsl:if test="string-length( $fieldname/description ) and //config/help-position/@value = 'below'">
-					<div class="col-sm-10 help-block below">
+					<div class="col-sm-10 col-sm-offset-2 help-block below">
 						<xsl:copy-of select="$fieldname/description"/>
 					</div>
 				</xsl:if>
