@@ -80,6 +80,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Class css-search not output in the template
 	(#) Missing input range search not styled
 	(#) Range search with suffix not styled
+	(#) RSS News work again
 	
 
 ### 1.3.7 (28 April 2017)

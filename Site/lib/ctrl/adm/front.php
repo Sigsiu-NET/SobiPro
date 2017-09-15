@@ -197,7 +197,7 @@ class SPAdminPanel extends SPController
 		}
 		try {
 			$open = false;
-			if ( ( strpos( "DOCTYPE html", $content ) == false ) or ( strpos( "?xml", $content ) == false ) ) { // wenn kein XML format (passiert z.B. bei SSL Fehler)
+			if ( ( strpos( $content, "DOCTYPE html" ) > 0 ) ) { // wenn kein XML format (passiert z.B. bei SSL Fehler)
 				$content = "";
 			}
 			if ( strlen( $content ) ) {
@@ -205,7 +205,7 @@ class SPAdminPanel extends SPController
 				$document->loadXML( $content );
 				$news = new DOMXPath( $document );
 
-				$atom = false;
+				$atom = false;  // to show an image, our RSS feeds are RSS 2.0 and not Atom!
 				if ( $atom ) {    //Atom
 					$news->registerNamespace( 'atom', 'http://www.w3.org/2005/Atom' );
 					$out[ 'title' ] = $news->query( '/atom:feed/atom:title' )->item( 0 )->nodeValue;
