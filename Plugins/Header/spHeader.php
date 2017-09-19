@@ -64,7 +64,7 @@ class plgSystemSpHeader extends JPlugin
 			require_once( JPATH_ROOT . '/components/com_sobipro/lib/sobi.php' );
 			Sobi::Initialise();
 			require_once( JPATH_ROOT . '/components/com_sobipro/lib/ctrl/adm/extensions.php' );
-			if ( Sobi::Can( 'cms.apps' ) ) {
+			if ( Sobi::Can( 'cms.apps' ) && Sobi::Cfg( 'extensions.check_updates' ) ) {
 				$ctrl = new SPExtensionsCtrl();
 				$updates = $ctrl->updates( false );
 				$apps = [];
