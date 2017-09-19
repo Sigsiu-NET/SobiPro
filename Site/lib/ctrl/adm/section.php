@@ -335,8 +335,11 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			 * We could use the same field 'sortBy' method for backend and frontend.
 			 * The current method could be very inefficient !!!
 			 */
-			if ( $field && method_exists( $field, 'sortByAdm' ) ) {
-				$fields = call_user_func_array( [ $field, 'sortByAdm' ], [ &$ord, &$dir ] );
+			if ( $field && method_exists( $field, 'sortBy' ) ) {
+				$table = null;
+				$oPrefix = null;
+				$conditions = null;
+				$fields = call_user_func_array( [ $field, 'sortBy' ], [ &$table, &$conditions, &$oPrefix, &$ord, &$dir ] );
 			}
 			else {
 				$join = [
