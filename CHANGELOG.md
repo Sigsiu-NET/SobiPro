@@ -30,7 +30,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
-### 1.4 ()
+### 1.4 (19 September 2017)
 
 	(+) Back-end layout improved and adapted to Joomla! 3.7
 	(+) Back-end Bootstrap Less files evacuated to separate package 'sobiadmin'
@@ -39,7 +39,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Possibility to add entry link to image in vCard
 	(+) Autosuggest function extended to general search field
 	(+) Autosuggest results	 sorted alphabetically
-	(+) Switch of some fields for a certain category (views only)
+	(+) Switch off some fields for a certain category (entry fields; views only)
 	(+) Script to use map in tabs in entry form added
 	(+) Dates, author, url and state of a category available in XML data
 	(+) Possibility to delete all entries in a section
