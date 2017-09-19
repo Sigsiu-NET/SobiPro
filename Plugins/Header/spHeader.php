@@ -90,6 +90,9 @@ class plgSystemSpHeader extends JPlugin
 					FileSystem::Delete( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' );
 				}
 			}
+			else {
+				FileSystem::Delete( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' );
+			}
 		}
 	}
 }
