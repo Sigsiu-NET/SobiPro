@@ -45,6 +45,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Possibility to delete all entries in a section
 	(+) Basic template development support added (fields highlighting)
 	(+) Description in entry form can be placed on the right side too
+	(+) Possibility to disable check for updates in plugin via config.ini (extensions.check_updates)
 
 	(-) Unused tabs script of SobiPro version 1.0 removed
 	(-) Clean-up of loaded scripts in template
