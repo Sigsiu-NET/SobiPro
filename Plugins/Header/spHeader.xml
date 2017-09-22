@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5.0" type="plugin" group="system" method="upgrade">
+<extension version="3.0" type="plugin" group="system" method="upgrade">
 	<name>SobiPro Header</name>
-	<creationDate>28 September 2015</creationDate>
+	<creationDate>22 September 2017</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
-	<copyright>Copyright (C) 2006-2015 Sigsiu.NET GmbH</copyright>
+	<copyright>Copyright (C) 2006-2017 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
 	<version>1.3.0</version>
 	<description><![CDATA[SobiPro Header Plugin - please do not disable!<br/>
