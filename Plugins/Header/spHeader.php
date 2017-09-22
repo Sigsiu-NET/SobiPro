@@ -60,7 +60,8 @@ class plgSystemSpHeader extends JPlugin
 
 	public function onUserAfterLogin( $options )
 	{
-		if ( JFactory::getApplication()->isClient( 'administrator' ) ) {
+		$app = JFactory::getApplication();
+		if ( ( method_exists( $app, 'isClient' ) && $app->isClient( 'administrator' ) ) || $app->isAdmin() ) {
 			require_once( JPATH_ROOT . '/components/com_sobipro/lib/sobi.php' );
 			Sobi::Initialise();
 			require_once( JPATH_ROOT . '/components/com_sobipro/lib/ctrl/adm/extensions.php' );
