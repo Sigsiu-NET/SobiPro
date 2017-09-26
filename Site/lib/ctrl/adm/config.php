@@ -447,7 +447,7 @@ class SPConfigAdmCtrl extends SPController
 		$ls = Sobi::FixPath( Sobi::Cfg( 'media_folder_live' ) . '/tree' );
 		static $root = null;
 		if ( !( $root ) ) {
-			$root = new File( str_replace('\\','/',SOBI_PATH) );
+			$root = new File( str_replace( '\\', '/', SOBI_PATH ) );
 		}
 		$exceptions = [ 'config.xml', 'config.json', 'tmp' ];
 		foreach ( $dir as $file ) {
@@ -580,10 +580,10 @@ class SPConfigAdmCtrl extends SPController
 			$i = 0;
 			foreach ( $cfg as $section => $keys ) {
 				$i++;
-				if ( $i < 3 && !( Sobi::Can( 'cms.admin' )  ) ) {
+				if ( $i < 3 && !( Sobi::Can( 'cms.admin' ) ) ) {
 					continue;
 				}
-				elseif( $i > 2 && !( Sobi::Can( 'cms.apps' )  )) {
+				elseif ( $i > 2 && !( Sobi::Can( 'cms.apps' ) ) ) {
 					continue;
 				}
 				$menu->addSection( $section, $keys );
@@ -711,7 +711,7 @@ class SPConfigAdmCtrl extends SPController
 			foreach ( $fields as $sec => $keys ) {
 				if ( count( $keys ) ) {
 					foreach ( $keys as $k => $v ) {
-						$values[ ] = [ 'sKey' => $k, 'sValue' => $v, 'section' => Sobi::Section(), 'critical' => 0, 'cSection' => $sec ];
+						$values[] = [ 'sKey' => $k, 'sValue' => $v, 'section' => Sobi::Section(), 'critical' => 0, 'cSection' => $sec ];
 					}
 				}
 			}
@@ -729,7 +729,7 @@ class SPConfigAdmCtrl extends SPController
 		} catch ( SPException $x ) {
 			$this->response( Sobi::Back(), $x->getMessage(), false, SPC::ERROR_MSG );
 		}
-		if ( !( $section && !( Sobi::Section() ) ) ) {
+		if ( !( $section ) ) {
 			SPFactory::cache()->cleanAll();
 		}
 		else {

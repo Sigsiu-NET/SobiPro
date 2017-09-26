@@ -30,6 +30,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
+### 1.4.1 ()
+    (#) Entire chache is being deleted while saving section settings
+
 ### 1.4 (19 September 2017)
 
 	(+) Back-end layout improved and adapted to Joomla! 3.7
