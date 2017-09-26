@@ -933,19 +933,19 @@ abstract class SPHtml_Input
 	 */
 	public static function _calendar( $name, $value, $id = null, $params = null )
 	{
-		self::loadCalendar();
-		self::checkArray( $params );
-		$value = $value ? SPFactory::config()->date( $value, 'calendar.date_format' ) : null;
-		$id = $id ? $id : $name;
-		$params = array_merge( $params, [ 'id' => $id ] );
-		$calendar = self::text( $name, $value, $params );
-		$bt = self::translate( SPFactory::config()->key( 'calendar.button_label', ' ... ' ) );
-		$bt = "<input name=\"reset\" type=\"reset\" id=\"{$id}CalBt\" class=\"button\" onclick=\"return SPCalendar( '{$id}', '{$id}CalBt');\" value=\"{$bt}\" />";
-		$site = SPFactory::config()->key( 'calendar.button_side', 'right' );
-		$calendar = ( $site == 'right' ) ? $calendar . $bt : $bt . $calendar;
-		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$calendar ] );
-
-		return $calendar;
+//		self::loadCalendar();
+//		self::checkArray( $params );
+//		$value = $value ? SPFactory::config()->date( $value, 'calendar.date_format' ) : null;
+//		$id = $id ? $id : $name;
+//		$params = array_merge( $params, [ 'id' => $id ] );
+//		$calendar = self::text( $name, $value, $params );
+//		$bt = self::translate( SPFactory::config()->key( 'calendar.button_label', ' ... ' ) );
+//		$bt = "<input name=\"reset\" type=\"reset\" id=\"{$id}CalBt\" class=\"button\" onclick=\"return SPCalendar( '{$id}', '{$id}CalBt');\" value=\"{$bt}\" />";
+//		$site = SPFactory::config()->key( 'calendar.button_side', 'right' );
+//		$calendar = ( $site == 'right' ) ? $calendar . $bt : $bt . $calendar;
+//		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$calendar ] );
+//
+//		return $calendar;
 	}
 
 	/**
@@ -953,22 +953,22 @@ abstract class SPHtml_Input
 	 */
 	protected static function _loadCalendar()
 	{
-		static $loaded = false;
-		if ( $loaded ) {
-			return $loaded;
-		}
-		$config =& SPFactory::config();
-		$header =& SPFactory::header();
-		$config->addIniFile( 'etc.calendar' );
-		$theme = $config->key( 'calendar.theme', 'system' );
-		$dateFormat = $config->key( 'calendar.date_format', 'dd-mm-y' );
-		$dateFormatTxt = $config->key( 'calendar.date_format_txt', 'D, M d' );
-		$sLang = Sobi::Lang( false );
-		$lang = $config->key( 'calendar_lang_map.' . $sLang, 'en' );
-		$header->addCssFile( "calendar.calendar-{$theme}" );
-		$header->addJsFile( 'calendar.calendar' );
-		$header->addJsFile( "calendar.lang.calendar-{$lang}" );
-		$header->addJsVarFile( 'calendar.init', md5( "{$dateFormat}_{$dateFormatTxt}" ), [ 'FORMAT' => $dateFormat, 'FORMAT_TXT' => $dateFormatTxt ] );
+//		static $loaded = false;
+//		if ( $loaded ) {
+//			return $loaded;
+//		}
+//		$config =& SPFactory::config();
+//		$header =& SPFactory::header();
+//		$config->addIniFile( 'etc.calendar' );
+//		$theme = $config->key( 'calendar.theme', 'system' );
+//		$dateFormat = $config->key( 'calendar.date_format', 'dd-mm-y' );
+//		$dateFormatTxt = $config->key( 'calendar.date_format_txt', 'D, M d' );
+//		$sLang = Sobi::Lang( false );
+//		$lang = $config->key( 'calendar_lang_map.' . $sLang, 'en' );
+//		$header->addCssFile( "calendar.calendar-{$theme}" );
+//		$header->addJsFile( 'calendar.calendar' );
+//		$header->addJsFile( "calendar.lang.calendar-{$lang}" );
+//		$header->addJsVarFile( 'calendar.init', md5( "{$dateFormat}_{$dateFormatTxt}" ), [ 'FORMAT' => $dateFormat, 'FORMAT_TXT' => $dateFormatTxt ] );
 	}
 
 	/**

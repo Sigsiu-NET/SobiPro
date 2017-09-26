@@ -110,9 +110,9 @@
 									<field type="toggle" name="spcfg[cache.xml_enabled]" value="cache.xml_enabled" label="GB.CFG.XML_ACCELERATOR_YES" prefix="yes_no" />
 									<field type="toggle" name="spcfg[cache.xml_no_reg]" value="cache.xml_no_reg" label="GB.CFG.XML_ACCELERATOR_NO_REG" prefix="yes_no" />
 								</fieldset>
-								<fieldset label="GB.CFG.CACHE">
-									<field type="toggle" name="spcfg[cache.include_js_files]" value="cache.include_js_files" label="GBN.CFG.INCLUDE_JS_FILES_CACHE" prefix="onoff" />
-									<field type="toggle" name="spcfg[cache.include_css_files]" value="cache.include_css_files" label="GBN.CFG.INCLUDE_CSS_FILES_CACHE" prefix="onoff" />
+								<fieldset label="GB.CFG.FILES">
+									<field type="toggle" name="spcfg[cache.include_js_files]" value="cache.include_js_files" label="GBN.CFG.INCLUDE_JS_CACHE" prefix="onoff" />
+									<field type="toggle" name="spcfg[cache.include_css_files]" value="cache.include_css_files" label="GBN.CFG.INCLUDE_CSS_CACHE" prefix="onoff" />
 								</fieldset>
 								<fieldset label="GBN.CFG.COMPRESS_FILES">
 									<field type="toggle" name="spcfg[cache.compress_js]" value="cache.compress_js" label="GBN.CFG.COMPRESS_JS_FILES" prefix="onoff" />

@@ -822,6 +822,7 @@ final class SPHeader
 						}
 						// and add to content
 						$cssContent .= $fc;
+						$cssContent .= "\n";
 					}
 					SPFs::write( SOBI_PATH . "/var/css/{$check}.css", $cssContent );
 				}
