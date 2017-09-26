@@ -32,6 +32,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 
 ### 1.4.1 ()
     (#) Entire chache is being deleted while saving section settings
+    (#) Version checker reports outdated version due to use of an undefinied constant
 
 ### 1.4 (19 September 2017)
 

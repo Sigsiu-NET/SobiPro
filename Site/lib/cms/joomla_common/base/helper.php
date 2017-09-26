@@ -1,12 +1,10 @@
 <?php
 /**
  * @package: SobiPro Library
-
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
  * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
@@ -17,7 +15,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\FileSystem\FileSystem;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -49,7 +50,7 @@ class SPJoomlaCMSHelper
 			//$def = SOBI_CMS == 'joomla15' ? 'sobipro.xml' : 'com_sobipro.xml';
 			$def = 'com_sobipro.xml';
 			$doc = new DOMDocument();
-			$doc->load(Sobi::FixPath( SOBI_ADM_PATH . '/' . $def ));
+			$doc->load( FileSystem::FixPath( JPATH_ADMINISTRATOR . '/components/com_sobipro/' . $def ) );
 			if ( $str ) {
 				$ver[ $str ] = $doc->getElementsByTagName( 'version' )->item( 0 )->nodeValue;
 				$codename = $doc->getElementsByTagName( 'codename' )->item( 0 )->nodeValue;
@@ -160,7 +161,7 @@ class SPJoomlaCMSHelper
 						$target = $file[ 'adm' ] ? implode( '/', [ JPATH_ADMINISTRATOR, 'language', $language ] ) : implode( '/', [ SOBI_ROOT, 'language', $language ] );
 						if ( $force || SPFs::exists( $target ) ) {
 							$iFile = $target . '/' . trim( $file[ 'name' ] );
-							$log[ ] = $iFile;
+							$log[] = $iFile;
 							$move ? SPFs::move( Sobi::FixPath( $file[ 'path' ] ), $iFile ) : SPFs::copy( Sobi::FixPath( $file[ 'path' ] ), $iFile );
 						}
 					}
@@ -243,12 +244,12 @@ class SPJoomlaCMSHelper
 		$run = false;
 		$strings = [];
 		foreach ( $tasks as $label ) {
-			$strings[ ] = $label;
-			$strings[ ] = $label . '_EXPL';
+			$strings[] = $label;
+			$strings[] = $label . '_EXPL';
 		}
 		if ( count( $additionalStrings ) ) {
 			foreach ( $additionalStrings as $additionalString ) {
-				$strings[ ] = $additionalString;
+				$strings[] = $additionalString;
 			}
 		}
 		/** check if it hasn't been already added */
