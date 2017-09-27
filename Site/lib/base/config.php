@@ -478,8 +478,8 @@ class SPConfig
 			}
 		}
 		elseif ( is_array( $str ) ) {
-			$str = @print_r( $str, true );
-			$str = highlight_string( $str, true );
+			$result = @print_r( $str, true );
+			$str = highlight_string( $result, true );
 		}
 		if ( !( $return ) ) {
 			echo $str;
