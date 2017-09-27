@@ -30,7 +30,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
-### 1.4.1 ()
+### 1.4.1 (28 September 2017)
 
 	(-) Old calendar script removed
 	
@@ -43,7 +43,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 
 ### 1.4 (19 September 2017)
 
-	(+) Back-end layout improved and adapted to Joomla! 3.7
+	(+) Back-end layout improved and adapted to Joomla! 3.7s
 	(+) Back-end Bootstrap Less files evacuated to separate package 'sobiadmin'
 	(+) Font Awesome for back-end included in sobiadmin.css; separate version for front-end available (sobifont.css)
 	(+) Indicator in back-end for primary category
