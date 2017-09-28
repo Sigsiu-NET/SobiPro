@@ -44,6 +44,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Core button field not listed in the list of installed applications
     (#) Purge entries didn't worked (Issue #31)
     
+   
 
 ### 1.4 (19 September 2017)
 
