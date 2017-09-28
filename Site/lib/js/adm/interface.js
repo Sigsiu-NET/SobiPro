@@ -1,1 +1,530 @@
-eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('2.4(21).2I(6(){2.4(\'2J:2K\').1z(6(){7(!(2.4(5).1g(\'2L\'))&&2.4(5).9()){2.4(\'#22\').9(\'G\')}});6 23(l){8 m=[];8 n=5;5.X=0;5.1h=0;5.1A=2.4(\'#1B\').F(\'.2M\');5.12=2.4(\'#1B .t\');5.H={\'2N\':[],\'1i\':[],\'1C\':[],\'B\':[]};5.24=6(j){8 k={\'1D\':\'1E\',\'1j\':\'2O.H\',\'1k\':\'1l\',\'1F\':\'1m\',\'25\':2.4(\'#26\').9()};2.4.Y({\'N\':\'14.15\',\'s\':k,\'C\':\'16\',\'1n\':\'1o\',B:6(d){7(d&&d.s.H.y){1p(8 i=0;i<d.s.H.y;i++){n.H[d.s.H[i].C].18(d.s.H[i].1a)}}8 e=0;8 f=[];2.4.O(n.H,6(a,b){8 c=[];1p(8 i=0;i<b.y;i++){e++;c.18(\'<u><27> \'+e+\')&28;</27>\'+b[i]+\'</u>\')}7(c.y){f.18(\'<u I="2P t-\'+a+\' t">\'+c.29("\\n")+\'</u>\')}});7(e>0){8 g=\'<u I="1b U" 2a="2b"><u I="1b-2Q">\'+f.29("\\n")+\'</u><u I="1b-2R"><a V="#" I="D" s-1G="1b">2S</a></u></u>\';2.4(g).2T(2.4(\'#2\'));8 h=2.4(\'#2b\').1b();h.2c(\'2U\',6(){n.1H(j)})}J{n.1H(j)}}})};5.2d=6(a){5.1h++;5.1A.1q(\'2e\',2V/(5.X-5.1h+1)+\'%\');5.1I(a.K.C);5.12.G(a.K.1a);8 b=a.1J.N;7(a.K.C!=\'B\'){5.H[a.K.C].18(a.K.1a)}7(5.1h==5.X){5.24(b)}};5.1H=6(a){5.1I(\'1C\');5.12.G(2.1r(\'2W\'));1c.2f.1K(a)};5.1I=6(a){5.12.L(\'t t-1C t-B t-1i\').Z(\'t t-\'+a)};2.4(\'[P="2X[]"]\').O(6(i,e){8 a=2.4(e);7(a.2g(\'1L\')){m.18(a)}});7(m.y){5.X=m.y;5.12.G(2.1r(\'2Y\'));2.4(\'#1B\').L(\'U\');5.1A.1q(\'2e\',\'0%\');8 o={\'1D\':\'1E\',\'1j\':l,\'1k\':\'1l\',\'1F\':\'1m\',\'25\':2.4(\'#26\').9()};1p(8 i=0;i<m.y;i++){o[\'1M\']=m[i].9();2.4.Y({\'N\':\'14.15\',\'s\':o,\'C\':\'16\',\'1n\':\'1o\',B:6(a){n.2d(a)}})}}}8 p=0;8 q=[\'Q.2Z\',\'Q.U\',\'Q.30\',\'Q.31\'];2.4(\'#32 a\').A(6(e){7(2.4(5).z(\'2h\')){7(!(2i(2.4(5).z(\'2h\')))){e.R();e.1s();10 W}}7(2.4(5).1g(\'33\')){10 W}8 g=2.4(5).z(\'M\');2.4(\'#1N\').9(g);7(2j g!=\'34\'){7(g.y){e.R();e.1s();7(2.4.35(g,q)!=-1){2.4(5).E().E().E().E().L(\'36\');10 37 23(g)}J 7(2.4(\'#22\').9()==\'1m\'){2.4(\'#1N\').9(g);7(((g==\'Q.1O\'||g==\'Q.1P\')&&2.4(\'#1Q-1R\').y&&2.4(\'#1Q-1R\').9()!=0)||g==\'Q.38\'){8 h=39(2.1r(\'3a\'),\'\');7((2j h)==\'3b\'){2.4(\'#1Q-1R\').9(h)}J{10}}8 j={\'1t\':W};2.4(\'#S\').2k(\'3c\',[j,g]);7(j.1t==1d){10 1d}2l();8 k=2.4(\'#S\').3d();2.4(2.4(\'#S\').F(\':1S\')).O(6(i,b){8 a=2.4(b);7(a.z(\'T\')!=\'T\'&&a.1g(\'2m\')){k+=\'&\'+a.z(\'P\')+\'=\'+a.9()}});2.4(\'#2\').1q(\'2n\',0.3);2.4(\'#2\').3e(2.4(\'#1T\'));2.4(\'#1T\').L(\'U\');2.4.Y({\'N\':\'14.15\',\'s\':k,\'C\':\'16\',\'1n\':\'1o\',B:6(b){7(!(b.1J.3f)){8 d={\'1t\':W};2.4(\'#S\').2k(\'3g\',[d,b]);7(d.1t==1d){10 1d}p++;c=\'\';7(p>1){c=\'&28;(\'+p+\')\'}2.4(\'#2\').1q(\'2n\',1);2.4(\'#1T\').Z(\'U\');8 f=\'<u I="t t-\'+b.K.C+\'"><a I="2o" s-1G="t" V="#">×</a>\'+b.K.1a+c+\'</u>\';2.4(\'#2p\').G(f);v{2.4.O(b.s.3h,6(i,a){2.4(\'[P^="\'+i+\'"]\').9(a)})}w(e){}7(b.s.1e){2.4(\'[P*="\'+b.s.1e+\'"]\').Z(\'1i\').z(\'1e\',\'1e\').3i().3j(6(){7(2.4(5).9()){2.4(5).L(\'1i\').3k(\'1e\').Z(\'B\')}})}}J{1c.2f.1K(b.1J.N)}}})}J{2.4(\'#S\').1u()}}}});2.4(\'.3l\').1z(6(){2.4(\'#S\').1u()});2.4(\'[P="3m"]\').1z(6(){2.4(5).E().E().E().E().E().F(\'[P="\'+2.4(5).z(\'M\')+\'[]"]\').2g(\'1L\',2.4(5).3n(\':1L\'))});2.4(\'[P="3o"]\').A(6(e){e.R();2.4(\'#1N\').9(2.4(5).z(\'M\')+\'.3p\');2.4(\'#S\').1u()});v{2.4(\'.X-2q\').O(6(i,e){"1U 1V";8 a=2.4(e);7(a.G()==0){a.z(\'T\',\'T\')}})}w(e){}2.4(\'.X-2q\').A(6(){8 a=2.4(5);8 b=2.4(\'#2r\').9()?2.4(\'#2r\').9():2.4(\'[P^="3q.2a"]\').9();7(a.G()){2.4.Y({\'C\':\'16\',\'N\':3r.1K(\'%1j%\',a.z(\'M\')+\'.3s\'),\'s\':{\'1M\':b,\'1k\':\'1l\'},\'1n\':\'1o\',B:6(){a.G(0);a.z(\'T\',\'T\')}})}J{a.z(\'T\',\'T\')}});6 2l(){v{8 b=3t.3u(1v.2s);2.4.O(b,6(i,a){7(a!=0){1v.2t(\'2u\',W,a);1v.2t(\'2u\',W,a)}})}w(e){}8 c=[\'3v\',\'3w\',\'3x\'];1p(8 i=0;i<c.y;i++){v{1c.3y(c[i])}w(e){}v{1c.3z(c[i])}w(e){}v{2.4(21).3A(c[i])}w(e){}v{}w(e){}}v{1v.3B()}w(e){}2.4.O(3C.2s.3D,6(){v{5.1O()}w(e){}})}2.4(\'.3E\').1W(6(e){"1U 1V";7(e.1X==13){e.R();e.1s();2.4(\'#S\').1u()}});2.4(\'.3F\').1W(6(e){"1U 1V";7(e.1X==13){e.R();e.1s()}});2.4(\'.2v-2w :1S\').O(6(i,e){8 e=2.4(e);7(!(e.1g(\'3G\'))){e.L(\'D-B\').L(\'D-1Y\')}e.A(6(){2.4(e).E().E().F(\'.2v-2w :1S\').L(\'D-1Y\').L(\'D-B\');3H(3I(2.4(5).9())){2x 0:e.Z(\'D-1Y\');2y;2x 1:e.Z(\'D-B\');2y}})});v{2.4(\'#2z-3J-1w-3K\').A(6(){7(2.4(5).F(\'.2m\').9()==1){2.3L(\'3M\')}})}w(e){}v{2.4(\'#2z-3N-3O-2A\').A(6(){7(2.4(5).9()==\'\'){2.4(5).9(2.4(\'#3P-2A\').9())}})}w(e){}7(2.4(\'.2B\').y){2.4(\'.2B\').3Q()}6 1Z(){4.Y({N:\'14.15\'});3R(1Z,3S)}1Z();2.4(\'.3T-3U-3V\').A(6(e){e.R();7(2i(2.1r(\'3W\'))){2.4.Y({\'C\':\'16\',\'N\':\'14.15\',\'s\':{\'1M\':3X,\'1k\':\'1l\',\'1D\':\'1E\',\'3Y\':\'3Z\',\'1j\':\'40.41\',\'20\':2.4(5).s(\'20\'),\'1F\':\'1m\'}}).42(6(a){8 b=\'<u I="t t-\'+a.K.C+\'"><a I="2o" s-1G="t" V="#">×</a>\'+a.K.1a+\'</u>\';2.4(\'#2p\').G(b)})}});2.4(\'a[V="#2C-43-2D"]\').A(6(){2.4(\'#2 .D-1x\')[0].U();2.4(\'#2 .D-1x\')[1].1w()});2.4(\'a[V="#2C-Q-2D"]\').A(6(){2.4(\'#2 .D-1x\')[1].U();2.4(\'#2 .D-1x\')[0].1w()});2.4(1c).1W(6(e){7(e.11==44||e.11==17||e.11==45||e.11==46){2.1y=1d}J{7((e.11==47||e.11==19||e.1X==48)&&(e.49||e.1y||2.1y)){e.R();v{e.R();7(2.4(\'.1f\').F(\'[M*="\\.1P"]\').y){2.4(\'.1f\').F(\'[M*="\\.1P"]\').A()}J 7(2.4(\'.1f\').F(\'[M*="\\.2E"]\').y){2.4(\'.1f\').F(\'[M*="\\.2E"]\').A()}J{2.4(\'.1f\').F(\'[M$="\\.1O"]\').A()}}w(x){}}2.1y=W}});2.4(\'4a.4b-4c > 4d > a\').2c(\'4e.4f.2F\',6(e){v{2G.4g(\'2H\',2.4(e.20).z(\'V\'))}w(x){}});8 r=2G.4h(\'2H\');v{7(r){2.4(\'[V="\'+r+\'"]\').2F(\'1w\')}}w(x){}});',62,266,'||SobiPro||jQuery|this|function|if|var|val|||||||||||||||||||data|alert|div|try|catch||length|attr|click|success|type|btn|parent|find|html|messages|class|else|message|removeClass|rel|url|each|name|entry|preventDefault|SPAdminForm|disabled|hide|href|false|counter|ajax|addClass|return|which|progressMessage||index|php|post||push||text|modal|window|true|required|spIconBar|hasClass|doneCounter|error|task|format|raw|xhr|dataType|json|for|css|Txt|stopPropagation|takeOver|submit|tinyMCE|show|group|cmdKey|change|progressBar|SpProgress|info|option|com_sobipro|method|dismiss|refresh|messageType|redirect|replace|checked|sid|SP_task|save|apply|SP_history|note|button|SpSpinner|use|strict|keydown|keyCode|danger|spKeepAlive|target|document|SP_method|SpSerialAction|finish|spsid|SP_spsid|strong|nbsp|join|id|SpModalMsg|on|progress|width|location|prop|title|confirm|typeof|trigger|SPTriggerFrakingWYSIWYGEditors|active|opacity|close|spMessage|reset|SP_sid|editors|execCommand|mceToggleEditor|buttons|radio|case|break|spcfg|ip|spFileUpload|fmn|fields|saveConfig|tab|localStorage|SobiProOpenTab|ready|input|file|spFileUploadHidden|bar|warning|txt|smallmessage|body|footer|OK|appendTo|hidden|100|PROGRESS_DONE_REDIRECTING|e_sid|PROGRESS_WORKING|publish|approve|unapprove|SPAdmToolbar|legacy|undefined|inArray|open|new|saveWithRevision|prompt|HISTORY_NOTE|string|BeforeAjaxSubmit|serialize|before|execute|AfterAjaxSubmit|sets|focus|focusout|removeAttr|spOrdering|spToggle|is|spReorder|reorder|category|SobiProAdmUrl|resetCounter|Object|keys|unload|onbeforeunload|onunload|dispatchEvent|fireEvent|triggerHandler|triggerSave|Joomla|instances|spSubmit|spDisableEnter|selected|switch|parseInt|general|pb|Alert|PBY_NO|debug|xml|SP_current|SPFileUploader|setTimeout|300000|ctrl|default|ordering|STORE_DEFAULT_ORDERING|SobiProSection|tmpl|component|config|saveOrdering|done|categories|224|91|93|115|83|ctrlKey|ul|nav|tabs|li|shown|bs|setItem|getItem'.split('|'),0,{}))
+/**
+ * @package: SobiPro Library
+ *
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: https://www.Sigsiu.NET
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license GNU/LGPL Version 3
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ */
+
+SobiPro.jQuery( document ).ready( function () {
+	SobiPro.jQuery( 'input:file' ).change( function () {
+		if ( ! ( SobiPro.jQuery( this ).hasClass( 'spFileUploadHidden' ) ) && SobiPro.jQuery( this ).val() ) {
+			SobiPro.jQuery( '#SP_method' ).val( 'html' );
+		}
+	} );
+
+	function SpSerialAction( task )
+	{
+		let entries = [];
+		let proxy = this;
+		this.counter = 0;
+		this.doneCounter = 0;
+		this.progressBar = SobiPro.jQuery( '#SpProgress' ).find( '.bar' );
+		this.progressMessage = SobiPro.jQuery( '#SpProgress .alert' );
+		this.messages = { 'warning': [], 'error': [], 'info': [], 'success': [] };
+		this.finish = function ( url ) {
+			const request = {
+				'option': 'com_sobipro',
+				'task': 'txt.messages',
+				'format': 'raw',
+				'method': 'xhr',
+				'spsid': SobiPro.jQuery( '#SP_spsid' ).val()
+			};
+			SobiPro.jQuery.ajax( {
+				'url': 'index.php', 'data': request, 'type': 'post', 'dataType': 'json',
+				success: function ( response ) {
+					if ( response && response.data.messages.length ) {
+						for ( let i = 0; i < response.data.messages.length; i ++ ) {
+							proxy.messages[ response.data.messages[ i ].type ].push( response.data.messages[ i ].text );
+						}
+					}
+					let counter = 0;
+					let output = [];
+					SobiPro.jQuery.each( proxy.messages, function ( type, reports ) {
+						let container = [];
+						for ( let i = 0; i < reports.length; i ++ ) {
+							counter ++;
+							container.push( '<div><strong> ' + counter + ')&nbsp;</strong>' + reports[ i ] + '</div>' );
+						}
+						if ( container.length ) {
+							output.push( '<div class="smallmessage alert-' + type + ' alert">' + container.join( "\n" ) + '</div>' );
+						}
+					} );
+					if ( counter > 0 ) {
+						let modal = '<div class="modal hide" id="SpModalMsg"><div class="modal-body">' + output.join( "\n" ) + '</div><div class="modal-footer"><a href="#" class="btn" data-dismiss="modal">OK</a></div></div>';
+						SobiPro.jQuery( modal ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
+						let modalMessage = SobiPro.jQuery( '#SpModalMsg' ).modal();
+						modalMessage.on( 'hidden', function () {
+							proxy.refresh( url );
+						} );
+					}
+					else {
+						proxy.refresh( url );
+					}
+				}
+			} );
+		};
+		this.progress = function ( response ) {
+			this.doneCounter ++;
+			this.progressBar.css( 'width', 100 / ( this.counter - this.doneCounter + 1 ) + '%' );
+			this.messageType( response.message.type );
+			this.progressMessage.html( response.message.text );
+			let url = response.redirect.url;
+			if ( response.message.type != 'success' ) {
+				this.messages[ response.message.type ].push( response.message.text );
+			}
+			if ( this.doneCounter == this.counter ) {
+				this.finish( url );
+			}
+		};
+
+		this.refresh = function ( url ) {
+			this.messageType( 'info' );
+			this.progressMessage.html( SobiPro.Txt( 'PROGRESS_DONE_REDIRECTING' ) );
+			window.location.replace( url );
+		};
+
+		this.messageType = function ( type ) {
+			this.progressMessage
+				.removeClass( 'alert alert-info alert-success alert-error' )
+				.addClass( 'alert alert-' + type );
+
+		};
+		SobiPro.jQuery( '[name="e_sid[]"]' ).each( function ( i, e ) {
+			let element = SobiPro.jQuery( e );
+			if ( element.prop( 'checked' ) ) {
+				entries.push( element );
+			}
+		} );
+		const request = {
+			'option': 'com_sobipro',
+			'task': task,
+			'format': 'raw',
+			'method': 'xhr',
+			'spsid': SobiPro.jQuery( '#SP_spsid' ).val()
+		};
+		if ( entries.length ) {
+			this.counter = entries.length;
+			this.progressMessage.html( SobiPro.Txt( 'PROGRESS_WORKING' ) );
+			SobiPro.jQuery( '#SpProgress' ).removeClass( 'hide' );
+			this.progressBar.css( 'width', '0%' );
+			for ( let i = 0; i < entries.length; i ++ ) {
+				request[ 'sid' ] = entries[ i ].val();
+				SobiPro.jQuery.ajax( {
+					'url': 'index.php',
+					'data': request,
+					'type': 'post',
+					'dataType': 'json',
+					success: function ( response ) {
+						proxy.progress( response );
+					}
+				} );
+			}
+		}
+		else {
+			// delete all entries in a section
+			request[ SobiPro.jQuery( '#SP_task' ).next().attr( 'name' ) ] = 1;
+			request[ 'sid' ] = SobiPro.jQuery( '#SP_pid' ).val();
+			SobiPro.jQuery.ajax( {
+				'url': 'index.php',
+				'data': request,
+				'type': 'post',
+				'dataType': 'json',
+				success: function ( response ) {
+					SobiPro.jQuery( '#SpProgress' ).removeClass( 'hide' );
+					proxy.counter = response.data.counter;
+					proxy.progress( response );
+					SobiPro.jQuery.each( response.data.entries, function ( i, e ) {
+						request[ 'eid' ] = e;
+						SobiPro.jQuery.ajax( {
+							'url': 'index.php',
+							'data': request,
+							'type': 'post',
+							'dataType': 'json',
+							success: function ( response ) {
+								proxy.progress( response );
+							}
+						} );
+					} );
+				}
+			} );
+		}
+	}
+
+	let count = 0;
+	let serialActions = [ 'entry.publish', 'entry.hide', 'entry.approve', 'entry.unapprove', 'entry.deleteAll' ];
+	SobiPro.jQuery( '#SPAdmToolbar a' ).click( function ( e ) {
+		if ( SobiPro.jQuery( this ).attr( 'title' ) ) {
+			if ( ! ( confirm( SobiPro.jQuery( this ).attr( 'title' ) ) ) ) {
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
+		}
+		if ( SobiPro.jQuery( this ).hasClass( 'legacy' ) ) {
+			return false;
+		}
+		var task = SobiPro.jQuery( this ).attr( 'rel' );
+		SobiPro.jQuery( '#SP_task' ).val( task );
+		if ( task.length ) {
+			e.preventDefault();
+			e.stopPropagation();
+			if ( SobiPro.jQuery.inArray( task, serialActions ) != - 1 ) {
+				SobiPro.jQuery( this ).parent().parent().parent().parent().removeClass( 'open' );
+				return new SpSerialAction( task );
+			}
+			else if ( SobiPro.jQuery( '#SP_method' ).val() == 'xhr' ) {
+				SobiPro.jQuery( '#SP_task' ).val( task );
+				if ( (( task == 'entry.save' || task == 'entry.apply' ) && SobiPro.jQuery( '#SP_history-note' ).length && SobiPro.jQuery( '#SP_history-note' ).val() != 0 ) || task == 'entry.saveWithRevision' ) {
+					var note = prompt( SobiPro.Txt( 'HISTORY_NOTE' ), '' );
+					if ( ( typeof note ) == 'string' ) {
+						SobiPro.jQuery( '#SP_history-note' ).val( note );
+					}
+					else {
+						return;
+					}
+				}
+				var handler = { 'takeOver': false };
+				SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit', [ handler, task ] );
+				if ( handler.takeOver == true ) {
+					return true;
+				}
+				SPTriggerFrakingWYSIWYGEditors();
+				var req = SobiPro.jQuery( '#SPAdminForm' ).serialize();
+				SobiPro.jQuery( SobiPro.jQuery( '#SPAdminForm' ).find( ':button' ) ).each( function ( i, b ) {
+					var bt = SobiPro.jQuery( b );
+					if ( bt.attr( 'disabled' ) != 'disabled' && bt.hasClass( 'active' ) ) {
+						req += '&' + bt.attr( 'name' ) + '=' + bt.val();
+					}
+				} );
+				SobiPro.jQuery( '#SobiPro' ).css( 'opacity', 0.3 );
+				SobiPro.jQuery( '#SobiPro' ).before( SobiPro.jQuery( '#SpSpinner' ) );
+				SobiPro.jQuery( '#SpSpinner' ).removeClass( 'hide' );
+				SobiPro.jQuery.ajax( {
+					'url': 'index.php',
+					'data': req,
+					'type': 'post',
+					'dataType': 'json',
+					success: function ( data ) {
+						if ( ! ( data.redirect.execute ) ) {
+							var handler = { 'takeOver': false };
+							SobiPro.jQuery( '#SPAdminForm' ).trigger( 'AfterAjaxSubmit', [ handler, data ] );
+							if ( handler.takeOver == true ) {
+								return true;
+							}
+							count ++;
+							c = '';
+							if ( count > 1 ) {
+								c = '&nbsp;(' + count + ')';
+							}
+							SobiPro.jQuery( '#SobiPro' ).css( 'opacity', 1 );
+							SobiPro.jQuery( '#SpSpinner' ).addClass( 'hide' );
+							var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + c + '</div>';
+							SobiPro.jQuery( '#spMessage' ).html( Message );
+							try {
+								SobiPro.jQuery.each( data.data.sets, function ( i, val ) {
+									SobiPro.jQuery( '[name^="' + i + '"]' ).val( val );
+								} );
+							}
+							catch ( e ) {
+							}
+							if ( data.data.required ) {
+								SobiPro.jQuery( '[name*="' + data.data.required + '"]' )
+									.addClass( 'error' )
+									.attr( 'required', 'required' )
+									.focus()
+									.focusout( function () {
+										if ( SobiPro.jQuery( this ).val() ) {
+											SobiPro.jQuery( this )
+												.removeClass( 'error' )
+												.removeAttr( 'required' )
+												.addClass( 'success' );
+										}
+									} )
+								;
+							}
+						}
+						else {
+							window.location.replace( data.redirect.url );
+						}
+					}
+				} );
+			}
+			else {
+				SobiPro.jQuery( '#SPAdminForm' ).submit();
+			}
+		}
+	} );
+
+	SobiPro.jQuery( '.spOrdering' ).change( function () {
+		SobiPro.jQuery( '#SPAdminForm' ).submit();
+	} );
+
+	SobiPro.jQuery( '[name="spToggle"]' ).change( function () {
+		SobiPro.jQuery( this ).parent().parent().parent().parent().parent().find( '[name="' + SobiPro.jQuery( this ).attr( 'rel' ) + '[]"]' ).prop( 'checked', SobiPro.jQuery( this ).is( ':checked' ) );
+	} );
+
+	SobiPro.jQuery( '[name="spReorder"]' ).click( function ( e ) {
+		e.preventDefault();
+		SobiPro.jQuery( '#SP_task' ).val( SobiPro.jQuery( this ).attr( 'rel' ) + '.reorder' );
+		SobiPro.jQuery( '#SPAdminForm' ).submit();
+	} );
+
+	try {
+		SobiPro.jQuery( '.counter-reset' ).each( function ( i, e ) {
+			"use strict";
+			var el = SobiPro.jQuery( e );
+			if ( el.html() == 0 ) {
+				el.attr( 'disabled', 'disabled' );
+			}
+		} );
+	}
+	catch ( e ) {
+	}
+	SobiPro.jQuery( '.counter-reset' ).click( function () {
+		var button = SobiPro.jQuery( this );
+		var sid = SobiPro.jQuery( '#SP_sid' ).val() ? SobiPro.jQuery( '#SP_sid' ).val() : SobiPro.jQuery( '[name^="category.id"]' ).val();
+		if ( button.html() ) {
+			SobiPro.jQuery.ajax( {
+				'type': 'post',
+				'url': SobiProAdmUrl.replace( '%task%', button.attr( 'rel' ) + '.resetCounter' ),
+				'data': {
+					'sid': sid,
+					'format': 'raw'
+				},
+				'dataType': 'json',
+				success: function () {
+					button.html( 0 );
+					button.attr( 'disabled', 'disabled' );
+				}
+			} );
+		}
+		else {
+			button.attr( 'disabled', 'disabled' );
+		}
+	} );
+
+	function SPTriggerFrakingWYSIWYGEditors()
+	{
+
+		try {
+			var Editors = Object.keys( tinyMCE.editors );
+			SobiPro.jQuery.each( Editors, function ( i, eid ) {
+				if ( eid != 0 ) {
+					// facepalm - mceAddControl is simply not working
+					tinyMCE.execCommand( 'mceToggleEditor', false, eid );
+					tinyMCE.execCommand( 'mceToggleEditor', false, eid );
+				}
+			} );
+		}
+		catch ( e ) {
+		}
+		var events = [ 'unload', 'onbeforeunload', 'onunload' ];
+		for ( var i = 0; i < events.length; i ++ ) {
+			try {
+				window.dispatchEvent( events[ i ] );
+			}
+			catch ( e ) {
+			}
+			try {
+				window.fireEvent( events[ i ] );
+			}
+			catch ( e ) {
+			}
+			try {
+				SobiPro.jQuery( document ).triggerHandler( events[ i ] );
+			}
+			catch ( e ) {
+			}
+			try {
+			}
+			catch ( e ) {
+			}
+		}
+		try {
+			tinyMCE.triggerSave();
+		}
+		catch ( e ) {
+		}
+		SobiPro.jQuery.each( Joomla.editors.instances, function () {
+			try {
+				this.save();
+			}
+			catch ( e ) {
+			}
+		} );
+	}
+
+	SobiPro.jQuery( '.spSubmit' ).keydown(
+		function ( e ) {
+			"use strict";
+			if ( e.keyCode == 13 ) {
+				e.preventDefault();
+				e.stopPropagation();
+				SobiPro.jQuery( '#SPAdminForm' ).submit();
+			}
+		}
+	);
+
+	SobiPro.jQuery( '.spDisableEnter' ).keydown(
+		function ( e ) {
+			"use strict";
+			if ( e.keyCode == 13 ) {
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		}
+	);
+
+	SobiPro.jQuery( '.buttons-radio :button' ).each( function ( i, e ) {
+		var e = SobiPro.jQuery( e );
+		if ( ! ( e.hasClass( 'selected' ) ) ) {
+			e.removeClass( 'btn-success' )
+				.removeClass( 'btn-danger' );
+		}
+		e.click( function () {
+			SobiPro.jQuery( e )
+				.parent()
+				.parent()
+				.find( '.buttons-radio :button' )
+				.removeClass( 'btn-danger' )
+				.removeClass( 'btn-success' );
+			switch ( parseInt( SobiPro.jQuery( this ).val() ) ) {
+				case 0:
+					e.addClass( 'btn-danger' );
+					break;
+				case 1:
+					e.addClass( 'btn-success' );
+					break;
+			}
+		} );
+	} );
+	try {
+		SobiPro.jQuery( '#spcfg-general-show-pb' ).click( function () {
+			if ( SobiPro.jQuery( this ).find( '.active' ).val() == 1 ) {
+				SobiPro.Alert( 'PBY_NO' );
+			}
+		} );
+	}
+	catch ( e ) {
+	}
+	//P_current-ip
+	try {
+		SobiPro.jQuery( '#spcfg-debug-xml-ip' ).click( function () {
+			if ( SobiPro.jQuery( this ).val() == '' ) {
+				SobiPro.jQuery( this ).val( SobiPro.jQuery( '#SP_current-ip' ).val() );
+			}
+		} )
+	}
+	catch ( e ) {
+	}
+	if ( SobiPro.jQuery( '.spFileUpload' ).length ) {
+		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
+	}
+
+	function spKeepAlive()
+	{
+		jQuery.ajax( { url: 'index.php' } );
+		setTimeout( spKeepAlive, 300000 );
+	}
+
+	spKeepAlive();
+
+	SobiPro.jQuery( '.ctrl-default-ordering' ).click( function ( e ) {
+		e.preventDefault();
+		if ( confirm( SobiPro.Txt( 'STORE_DEFAULT_ORDERING' ) ) ) {
+			SobiPro.jQuery.ajax( {
+				'type': 'post',
+				'url': 'index.php',
+				'data': {
+					'sid': SobiProSection,
+					'format': 'raw',
+					'option': 'com_sobipro',
+					'tmpl': 'component',
+					'task': 'config.saveOrdering',
+					'target': SobiPro.jQuery( this ).data( 'target' ),
+					'method': 'xhr'
+				}
+			} ).done( function ( data ) {
+				var Message = '<div class="alert alert-' + data.message.type + '"><a class="close" data-dismiss="alert" href="#">×</a>' + data.message.text + '</div>';
+				SobiPro.jQuery( '#spMessage' ).html( Message );
+			} );
+		}
+	} );
+
+	SobiPro.jQuery( 'a[href="#fmn-categories-fields"]' ).click( function () {
+		SobiPro.jQuery( '#SobiPro .btn-group' )[ 0 ].hide();
+		SobiPro.jQuery( '#SobiPro .btn-group' )[ 1 ].show();
+	} );
+	SobiPro.jQuery( 'a[href="#fmn-entry-fields"]' ).click( function () {
+		SobiPro.jQuery( '#SobiPro .btn-group' )[ 1 ].hide();
+		SobiPro.jQuery( '#SobiPro .btn-group' )[ 0 ].show();
+	} );
+
+	SobiPro.jQuery( window ).keydown( function ( e ) {
+		if ( e.which == 224 || e.which == 17 || e.which == 91 || e.which == 93 ) {
+			SobiPro.cmdKey = true;
+		}
+		else {
+			if ( (e.which == 115 || e.which == 19 || e.keyCode == 83) && (e.ctrlKey || e.cmdKey || SobiPro.cmdKey ) ) {
+				e.preventDefault();
+				try {
+					e.preventDefault();
+					if ( SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).length ) {
+						SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.apply"]' ).click();
+					}
+					else if ( SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.saveConfig"]' ).length ) {
+						SobiPro.jQuery( '.spIconBar' ).find( '[rel*="\.saveConfig"]' ).click();
+					}
+					else {
+						SobiPro.jQuery( '.spIconBar' ).find( '[rel$="\.save"]' ).click();
+					}
+				}
+				catch ( x ) {
+				}
+			}
+			SobiPro.cmdKey = false;
+		}
+	} );
+
+	SobiPro.jQuery( 'ul.nav-tabs > li > a' ).on( 'shown.bs.tab', function ( e ) {
+		try {
+			localStorage.setItem( 'SobiProOpenTab', SobiPro.jQuery( e.target ).attr( 'href' ) );
+		}
+		catch ( x ) {
+		}
+	} );
+	var lastTab = localStorage.getItem( 'SobiProOpenTab' );
+	try {
+		if ( lastTab ) {
+			SobiPro.jQuery( '[href="' + lastTab + '"]' ).tab( 'show' );
+		}
+	}
+	catch ( x ) {
+	}
+
+	try {
+		if ( SobiPro.jQuery( '.active[name="category.allFields"]' ).hasClass( 'btn-success' ) ) {
+			SobiPro.jQuery( '.entryFields' ).fadeTo( 'slow', 0.2 );
+		}
+		SobiPro.jQuery( '[value="0"][name="category.allFields"]' ).click( function () {
+			SobiPro.jQuery( '.entryFields' ).fadeTo( 'slow', 1 );
+		} );
+		SobiPro.jQuery( '[value="1"][name="category.allFields"]' ).click( function () {
+			SobiPro.jQuery( '.entryFields' ).fadeTo( 'slow', 0.2 );
+		} );
+	}
+	catch ( x ) {
+	}
+
+} );

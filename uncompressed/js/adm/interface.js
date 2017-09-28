@@ -40,7 +40,8 @@ SobiPro.jQuery( document ).ready( function ()
 				'task': 'txt.messages',
 				'format': 'raw',
 				'method': 'xhr',
-				'spsid': SobiPro.jQuery( '#SP_spsid' ).val()
+				'spsid': SobiPro.jQuery( '#SP_spsid' ).val(),
+				'sid' : SobiPro.jQuery( '#SP_pid' ).val(),
 			};
 			SobiPro.jQuery.ajax( {
 				'url': 'index.php', 'data': request, 'type': 'post', 'dataType': 'json',
@@ -125,7 +126,8 @@ SobiPro.jQuery( document ).ready( function ()
 				'task': task,
 				'format': 'raw',
 				'method': 'xhr',
-				'spsid': SobiPro.jQuery( '#SP_spsid' ).val()
+				'spsid': SobiPro.jQuery( '#SP_spsid' ).val(),
+				'sid' : SobiPro.jQuery( '#SP_pid' ).val(),
 			};
 			for ( var i = 0; i < entries.length; i ++ ) {
 				request[ 'sid' ] = entries[ i ].val();

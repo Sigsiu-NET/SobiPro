@@ -42,6 +42,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Entire chache is being deleted while saving section settings
     (#) Version checker reports outdated version due to use of an undefinied constant
     (#) Core button field not listed in the list of installed applications
+    (#) Purge entries didn't worked (Issue #31)
     
 
 ### 1.4 (19 September 2017)
