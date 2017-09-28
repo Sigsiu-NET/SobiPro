@@ -62,6 +62,10 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
 			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
 		}
+
+		if ( !( file_exists( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) ) ) ) {
+			JFolder::create( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) );
+		}
 		$srcpath = JPATH_ROOT . '/media/sobipro/icons';
 		if ( file_exists( $srcpath ) ) {
 			$files = scandir( $srcpath );
@@ -302,10 +306,7 @@ class com_sobiproInstallerScript
 			JFolder::create( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) );
 
 			if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'image.png' ] ) ) ) {
-				JFolder::move(
-					implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'image.png' ] ),
-					implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] )
-				);
+				JFile::move(JPATH_ROOT . '/components/com_sobipro/tmp/image.png',JPATH_ROOT . '/images/sobipro/categories/image.png' );
 			}
 		}
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ) ) ) {
