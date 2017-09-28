@@ -43,6 +43,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Version checker reports outdated version due to use of an undefinied constant
     (#) Core button field not listed in the list of installed applications
     (#) Purge entries didn't work (Issue #31)
+    (#) New categories folder not created; default image moved to categiories folder
     
    
 ### 1.4 (19 September 2017)
