@@ -134,7 +134,7 @@ SobiPro.jQuery( document ).ready( function () {
 		else {
 			// delete all entries in a section
 			request[ SobiPro.jQuery( '#SP_task' ).next().attr( 'name' ) ] = 1;
-			request['sid'] = SobiPro.jQuery( '#SP_pid' ).val();
+			request[ 'sid' ] = SobiPro.jQuery( '#SP_pid' ).val();
 			SobiPro.jQuery.ajax( {
 				'url': 'index.php',
 				'data': request,
