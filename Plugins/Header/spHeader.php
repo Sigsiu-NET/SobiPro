@@ -39,7 +39,7 @@ class plgSystemSpHeader extends JPlugin
 	public function onAfterRender( $context = null )
 	{
 		$app = JFactory::getApplication();
-		if ( ( method_exists( $app, 'isClient' ) && $app->isClient( 'administrator' ) ) || $app->isAdmin() && JFactory::getApplication()->input->getWord( 'option' ) == 'com_cpanel' ) {
+		if ( JFactory::getApplication()->input->getWord( 'option' ) == 'com_cpanel' && ( ( method_exists( $app, 'isClient' ) && $app->isClient( 'administrator' ) ) || $app->isAdmin() ) ) {
 			if ( file_exists( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' ) ) {
 				$data = json_decode( file_get_contents( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' ), true );
 				$content = '<div class="alert alert-error alert-joomlaupdate">
