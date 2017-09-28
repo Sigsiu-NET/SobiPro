@@ -30,7 +30,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
-### 1.4.1 (28 September 2017)
+### 1.4.1 (29 September 2017)
 
 	(-) Old calendar script removed
 	
