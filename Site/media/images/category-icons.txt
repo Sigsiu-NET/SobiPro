@@ -1,3 +1,0 @@
-Images as SobiPro category icons:
-If you want to use images as category icons, simply upload them into this folder and you can select them within
-SobiPro category configuration.

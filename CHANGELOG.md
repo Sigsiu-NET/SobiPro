@@ -30,7 +30,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
-### 1.4.1 (28 September 2017)
+### 1.4.1 (29 September 2017)
 
 	(-) Old calendar script removed
 	
@@ -39,13 +39,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Core field versions changed to 1.4
 	(!) Improvements of input filter messages
 	
-    (#) Entire chache is being deleted while saving section settings
+    (#) Entire cache is being deleted while saving section settings
     (#) Version checker reports outdated version due to use of an undefinied constant
     (#) Core button field not listed in the list of installed applications
-    (#) Purge entries didn't worked (Issue #31)
+    (#) Purge entries didn't work (Issue #31)
+    (#) New categories folder not created; default image moved to categories folder
     
    
-
 ### 1.4 (19 September 2017)
 
 	(+) Back-end layout improved and adapted to Joomla! 3.7s
