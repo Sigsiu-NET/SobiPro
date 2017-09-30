@@ -281,7 +281,7 @@ class com_sobiproInstallerScript
 //
 //			}
 //		}
-		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.2.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
+		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.4.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$this->installFramework();
 
 		echo '<div class="alert alert-info" style="margin-top: 20px;"><h3>Thank you for updating SobiPro!</h3><p>SobiPro is checking your system now, please see if there are errors or warnings. If the system check reports errors, your SobiPro installation will probably not work. If you see warnings, some functionality of SobiPro can be disturbed or malfunction. In these cases you should take a look to the <a href="https://www.sigsiu.net/sobipro/requirements"><strong>Requirements for SobiPro</strong></a> page on our website.</p>
@@ -324,7 +324,7 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
 			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
 		}
-		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.2.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
+		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.4.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$db = JFactory::getDBO();
 		$db->setQuery( 'SHOW COLUMNS FROM #__sobipro_field_data' );
 		$cols = $db->loadAssocList( 'Field' );

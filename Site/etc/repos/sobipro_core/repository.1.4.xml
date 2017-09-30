@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ @package: SobiPro Component for Joomla!
+
+ @author
+ Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ Email: sobi[at]sigsiu.net
+ Url: https://www.Sigsiu.NET
+
+ @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @license GNU/GPL Version 3
+ This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
+
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+-->
+<repository>
+  <name>SobiPro Repository</name>
+  <id>sobipro_core</id>
+  <url>https://repository.sigsiu.net/repository.php</url>
+  <token>3cad5644ad3336426985d1319001315e</token>
+  <certificate>
+    <serialnumber>48510912739439614692296583868224538281</serialnumber>
+    <validfrom>2017-09-30 02:00:00</validfrom>
+    <validto>2020-09-30 01:59:59</validto>
+    <subject>
+      <ou>
+        <value>PositiveSSL</value>
+      </ou>
+      <cn>repository.sigsiu.net</cn>
+    </subject>
+    <issuer>
+      <c>GB</c>
+      <st>Greater Manchester</st>
+      <l>Salford</l>
+      <o>COMODO CA Limited</o>
+      <cn>COMODO RSA Domain Validation Secure Server CA</cn>
+    </issuer>
+    <hash>1389856a</hash>
+  </certificate>
+  <description>
+		SobiPro Repository at https://repository.sigsiu.net
+    </description>
+  <maintainer>
+    <name>Sigsiu.NET GmbH</name>
+    <email>sobi[at]sigsiu.net</email>
+    <url>https://www.sigsiu.net/</url>
+    <supporturl>https://www.sigsiu.net/support/</supporturl>
+  </maintainer>
+</repository>
