@@ -7,12 +7,14 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
- This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 -->
 
 <definition>
@@ -31,10 +33,10 @@
 					<div class="spModalForm narrow">
 						<fieldset label="EX.SSL_TO">
 							<field type="output" value="certificate.subject.CN" label="EX.SSL_COMMON_NAME" />
-							<field type="output" value="certificate.subject.O" label="EX.SSL_ORGANIZATION" />
-							<field type="output" value="certificate.subject.L" />
-							<field type="output" value="certificate.subject.ST" />
-							<field type="output" value="certificate.subject.C" />
+							<!--<field type="output" value="certificate.subject.O" label="EX.SSL_ORGANIZATION" />-->
+							<!--<field type="output" value="certificate.subject.L" />-->
+							<!--<field type="output" value="certificate.subject.ST" />-->
+							<!--<field type="output" value="certificate.subject.C" />-->
 						</fieldset>
 						<fieldset label="EX.SSL_CERT_INFO">
 							<field type="output" value="certificate.serialNumber" label="EX.SSL_CERT_SN" />
