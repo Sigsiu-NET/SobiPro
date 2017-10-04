@@ -50,7 +50,7 @@
 							<cell label="EXTENSIONS.HEADER_AUTHOR" type="text" class="spCell center"/>
 						</head>
 						<loop subject="applications">
-							<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove-sign','1':'ok'}">
+							<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove','1':'ok'}">
 								<url type="intern">
 									<param name="task" value="extensions.toggle"/>
 									<param name="eid" value="id" parse="true"/>

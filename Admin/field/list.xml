@@ -118,7 +118,7 @@
 											<cell type="text" value="name" class="invalid"/>
 											<cell type="text" value="nid" class="subText invalid"/>
 										</cell>
-										<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove-sign','1':'ok'}">
+										<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove','1':'ok'}">
 											<url type="intern">
 												<param name="task" value="field.toggle.enabled"/>
 												<param name="fid" value="fid" parse="true"/>
@@ -204,7 +204,7 @@
 											<cell type="text" value="name" class="invalid"/>
 											<cell type="text" value="nid" class="subText invalid"/>
 										</cell>
-										<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove-sign','1':'ok'}">
+										<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove','1':'ok'}">
 											<url type="intern">
 												<param name="task" value="field.toggle.enabled"/>
 												<param name="fid" value="fid" parse="true"/>

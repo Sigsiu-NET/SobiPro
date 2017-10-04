@@ -55,7 +55,7 @@
 							<cell label="ACL.HEADER_NAME" type="text" class="spCell left"/>
 						</head>
 						<loop subject="rules">
-							<cell type="ticker" value="state" class="spCell center" icons="{'0':'remove-sign','1':'ok'}" valid-since="validSince"
+							<cell type="ticker" value="state" class="spCell center" icons="{'0':'remove','1':'ok'}" valid-since="validSince"
 							      valid-until="validUntil">
 								<url type="intern">
 									<param name="task" value="acl.toggle.enabled"/>

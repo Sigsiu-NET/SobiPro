@@ -300,7 +300,7 @@
 											</cell>
 										</cell>
 										<cell type="text" value="version" class="spCell center"/>
-										<cell type="ticker" value="installed" class="spCell center" icons="{'-1':'remove-sign','-2':'check','-3':'bell-alt'}"
+										<cell type="ticker" value="installed" class="spCell center" icons="{'-1':'remove','-2':'check','-3':'bell-alt'}"
 										      status-text="{'-1':'EX.UPDATE_OLD_EXPL', '-2':'', '-3':'EX.UPDATE_REQUIRED' }"/>
 										<cell class="SpCloudInstall">
 											<button label="var:[action.text]" rel="var:[eid]" icon="cloud-download" class="var:[action.class] SpExtInstall"/>

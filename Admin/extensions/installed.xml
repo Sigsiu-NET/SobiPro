@@ -60,7 +60,7 @@
 						<cell type="text" value="name" class="spCell left"/>
 						<cell type="text" value="version" class="spCell center"/>
 						<cell type="text" value="type" class="spCell center"/>
-						<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove-sign','1':'ok', '-1':'lock'}"
+						<cell type="ticker" value="enabled" class="spCell center" icons="{'0':'remove','1':'ok', '-1':'lock'}"
 						      status-text="{'-1':'EX.NOT_APPLICABLE'}">
 							<url type="intern">
 								<param name="task" value="extensions.toggle"/>

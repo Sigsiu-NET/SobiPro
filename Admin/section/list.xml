@@ -132,7 +132,7 @@
 								</url>
 							</cell>
 						</cell>
-						<cell condition="/acl.category.edit" type="ticker" value="state" class="spCell center" icons="{'0':'remove-sign','1':'ok'}"
+						<cell condition="/acl.category.edit" type="ticker" value="state" class="spCell center" icons="{'0':'remove','1':'ok'}"
 						      valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="category.toggle.enabled"/>
@@ -226,7 +226,7 @@
 							</cell>
 						</cell>
 						<cells value="customFields" class="spCell center"/>
-						<cell condition="/acl.entry.publish" type="ticker" value="state" class="spCell center" icons="{'0':'remove-sign','1':'ok'}"
+						<cell condition="/acl.entry.publish" type="ticker" value="state" class="spCell center" icons="{'0':'remove','1':'ok'}"
 						      valid-since="validSince" valid-until="validUntil">
 							<url type="intern">
 								<param name="task" value="entry.toggle.enabled"/>
