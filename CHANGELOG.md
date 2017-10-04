@@ -34,6 +34,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) New repository SSL certificate
 	
 	(!) Modal layout adapted to new certificate type
+	(!) Primary category indicator more discreet
 
 
 ### 1.4.1 (29 September 2017)
