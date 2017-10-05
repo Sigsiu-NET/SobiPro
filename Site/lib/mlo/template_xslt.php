@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadClass( 'mlo.template' );
@@ -26,29 +28,17 @@ SPLoader::loadClass( 'mlo.template' );
  */
 class SPTemplateXSLT implements SPTemplate
 {
-	/**
-	 * @var SPFrontView
-	 */
+	/*** @var SPFrontView */
 	private $_proxy = null;
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $_data = [];
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	private $_tpl = null;
-	/**
-	 * @var string
-	 */
+	/*** @var string */
 	private $_type = 'root';
-	/**
-	 * @var DOMDocument
-	 */
+	/*** @var DOMDocument */
 	private $_xml = null;
-	/**
-	 * @var array
-	 */
+	/*** @var array */
 	private $_cacheData = [];
 
 	/**
@@ -75,7 +65,7 @@ class SPTemplateXSLT implements SPTemplate
 		$methods = get_class_methods( $class );
 		if ( count( $methods ) ) {
 			foreach ( $methods as $method ) {
-				$functions[ ] = $class . '::' . $method;
+				$functions[] = $class . '::' . $method;
 			}
 		}
 		/* standard function registered via the core ini file */
@@ -88,7 +78,7 @@ class SPTemplateXSLT implements SPTemplate
 				if ( count( $fns ) ) {
 					foreach ( $fns as $method => $state ) {
 						if ( $state ) {
-							$functions[ ] = ( $class == 'functions' ) ? $method : $class . '::' . $method;
+							$functions[] = ( $class == 'functions' ) ? $method : $class . '::' . $method;
 						}
 					}
 				}
@@ -96,12 +86,12 @@ class SPTemplateXSLT implements SPTemplate
 		}
 		Sobi::Trigger( 'TemplateEngine', 'RegisterFunctions', [ &$functions ] );
 		$this->createXML();
-		if ( SPRequest::cmd( 'xml' ) && Sobi::Cfg( 'debug.xml_raw', false ) && ( !( Sobi::Cfg( 'debug.xml_ip', null ) ) || ( Sobi::Cfg( 'debug.xml_ip' ) == SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) ) ) ) {
+		if ( Input::Cmd( 'xml' ) && Sobi::Cfg( 'debug.xml_raw', false ) && ( !( Sobi::Cfg( 'debug.xml_ip', null ) ) || ( Sobi::Cfg( 'debug.xml_ip' ) == SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) ) ) ) {
 			SPFactory::mainframe()->cleanBuffer();
 			echo $this->_xml->saveXML();
 			exit();
 		}
-		elseif ( SPRequest::cmd( 'xml' ) ) {
+		elseif ( Input::Cmd( 'xml' ) ) {
 			Sobi::Error( 'Debug', 'You have no permission to access this site', SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$template = SPLoader::loadTemplate( $this->_tpl, 'xsl' );
@@ -132,9 +122,7 @@ class SPTemplateXSLT implements SPTemplate
 			}
 			SPException::catchErrors( 0 );
 			if ( $out == 'html' ) {
-				$doc = $processor->transformToDoc( $this->_xml );
-				$doc->formatOutput = true;
-				return $this->cleanOut( $doc->saveXML() );
+				return $this->cleanOut( $processor->transformToXml( $this->_xml ) );
 			}
 			else {
 				$doc = $processor->transformToDoc( $this->_xml );
