@@ -46,7 +46,7 @@
 				<tabs>
 					<tab label="TP.INFO">
 						<div class="row-fluid">
-							<div class="span6">
+							<div class="span12">
 								<fieldset>
 									<field type="output" value="template.name" label="TP.TEMPLATE_NAME"/>
 									<field type="output" value="template.author.url" label="TP.AUTHORURL" condition="template.author.url">
@@ -62,8 +62,14 @@
 									<field type="output" value="template.description" label="TP.DESC"/>
 								</fieldset>
 							</div>
-							<div class="span6" condition="template.preview">
-								<img class="img-rounded img-polaroid" width="95%" src="var:[template.preview]" alt=""/>
+						</div>
+						<div class="row-fluid">
+							<div class="span12" condition="template.preview">
+								<fieldset label="Preview">
+									<div class="spTemplatePreview">
+										<img class="img-rounded img-polaroid" src="var:[template.preview]" alt=""/>
+									</div>
+								</fieldset>
 							</div>
 						</div>
 					</tab>
