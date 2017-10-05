@@ -29,7 +29,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (-) Removed  
 (!) Change  
 
-### 1.4.2 ()
+### 1.4.2 (5 October 2017)
 
 	(+) New repository SSL certificate
 	
@@ -39,6 +39,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) XSLT processor: changed from transformToDoc to transformToXml due to issues with "disable-output-escaping"
 	
 	(#) Missing icons in template manager's save options
+	(#) if some SobiPro applications are outdated, the message is shown on each page (should be only the Joomla cPanel page)
 
 
 ### 1.4.1 (29 September 2017)
