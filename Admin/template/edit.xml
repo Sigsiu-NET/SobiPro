@@ -7,12 +7,14 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
- This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 -->
 
 <definition>
@@ -22,9 +24,9 @@
 	</header>
 	<toolbar title="var:[site_title]" icon="" class="template edit">
 		<button type="apply" task="template.save">
+			<button type="compile" task="template.compile" icon="file" condition="file_ext=less" />
+			<button type="compileSave" task="template.compileSave" icon="file-alt" condition="file_ext=less" />
 			<button type="duplicate" task="template.saveAs" />
-			<button type="compile" task="template.compile" condition="file_ext=less" />
-			<button type="compileSave" task="template.compileSave" condition="file_ext=less" />
 		</button>
 		<divider />
 		<buttons icon="sitemap" buttons="sections-list" dropdown-class="right" label="TB.SECTIONS"/>

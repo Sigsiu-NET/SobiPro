@@ -37,6 +37,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Primary category indicator more discreet
 	(!) Template information window improved
 	(!) XSLT processor: changed from transformToDoc to transformToXml due to issues with "disable-output-escaping"
+	
+	(#) Missing icons in template manager's save options
 
 
 ### 1.4.1 (29 September 2017)
