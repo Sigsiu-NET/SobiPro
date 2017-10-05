@@ -35,6 +35,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	
 	(!) Modal layout adapted to new certificate type
 	(!) Primary category indicator more discreet
+	(!) XSLT processor: changed from transformToDoc to transformToXml due to issues with "disable-output-escaping"
 
 
 ### 1.4.1 (29 September 2017)
