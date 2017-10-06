@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadController( 'config', true );
 
@@ -50,7 +52,7 @@ class SPFilter extends SPConfigAdmCtrl
 				$this->delete();
 				break;
 			case 'save':
-				$this->save();
+				$this->save( false );
 				break;
 			default:
 				/* case plugin didn't registered this task, it was an error */
@@ -64,7 +66,7 @@ class SPFilter extends SPConfigAdmCtrl
 	protected function delete()
 	{
 		$filters = $this->getFilters();
-		$id = SPRequest::cmd( 'filter_id' );
+		$id = Input::Cmd( 'filter_id' );
 		if ( $id && isset( $filters[ $id ] ) && ( strlen( $filters[ $id ][ 'options' ] ) ) ) {
 			unset( $filters[ $id ] );
 			SPFactory::registry()->saveDBSection( $filters, 'fields_filter' );
@@ -78,15 +80,15 @@ class SPFilter extends SPConfigAdmCtrl
 	protected function save( $apply, $clone = false )
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
-			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$id = SPRequest::cmd( 'filter_id' );
+		$id = Input::Cmd( 'filter_id' );
 		if ( $id ) {
 			$this->validate( 'field.filter', 'filter' );
 			$filters = $this->getFilters();
-			$name = SPRequest::string( 'filter_name', 'Filter Name' );
-			$msg = str_replace( [ "\n", "\t", "\r" ], null, SPLang::clean( SPRequest::string( 'filter_message', 'The data entered in the $field field contains not allowed characters' ) ) );
-			$regex = SPLang::clean( SPRequest::raw( 'filter_regex', '/^[\.*]+$/' ) );
+			$name = Input::String( 'filter_name', 'request','Filter Name' );
+			$msg = str_replace( [ "\n", "\t", "\r" ], null, SPLang::clean( Input::String( 'filter_message', 'request','The data entered in the $field field contains not allowed characters' ) ) );
+			$regex = SPLang::clean( Input::Raw( 'filter_regex', 'request','/^[\.*]+$/' ) );
 			$regex = str_replace( '[:apostrophes:]', '\"' . "\'", $regex );
 			$regex = base64_encode( str_replace( [ "\n", "\t", "\r" ], null, $regex ) );
 			$custom = 'custom';
@@ -130,7 +132,7 @@ class SPFilter extends SPConfigAdmCtrl
 
 	private function edit()
 	{
-		$id = SPRequest::cmd( 'fid' );
+		$id = Input::Cmd( 'fid' );
 		$filters = $this->getFilters();
 		if ( count( $filters ) && isset( $filters[ $id ] ) ) {
 			$Filter = [
@@ -159,7 +161,7 @@ class SPFilter extends SPConfigAdmCtrl
 		$Filters = [];
 		if ( count( $filters ) ) {
 			foreach ( $filters as $name => $filter ) {
-				$Filters[ ] = [
+				$Filters[] = [
 						'id' => $name,
 						'regex' => str_replace( '\"' . "\'", '[:apostrophes:]', base64_decode( $filter[ 'params' ] ) ),
 						'name' => $filter[ 'value' ],
