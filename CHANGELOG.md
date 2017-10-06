@@ -37,6 +37,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Primary category indicator more discreet
 	(!) Template information window improved
 	(!) XSLT processor: changed from transformToDoc to transformToXml due to issues with "disable-output-escaping"
+	(!) General settings for title and description of the forms moved down to template tab
 	
 	(#) Missing icons in template manager's save options
 	(#) if some SobiPro applications are outdated, the message is shown on each page (should be only the Joomla cPanel page)

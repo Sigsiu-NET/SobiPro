@@ -79,24 +79,6 @@
 							</div>
 						</div>
 					</tab>
-					<tab label="FORMS">
-						<div class="row-fluid">
-							<div class="span12">
-								<fieldset label="SECN.CFG.META_DATA_INPUT">
-									<field type="text" name="section.efTitle" value="section.efTitle" label="FORMS_TITLE"
-									       class="input-xlarge"/>
-									<field type="textarea" name="section.efDesc" value="section.efDesc" label="DESCRIPTION" editor="false"
-									       class="input-splarge" rows="2" style=""/>
-								</fieldset>
-								<fieldset label="SECN.CFG.META_DATA_SEARCH">
-									<field type="text" name="section.sfTitle" value="section.sfTitle" label="FORMS_TITLE"
-									       class="input-xlarge"/>
-									<field type="textarea" name="section.sfDesc" value="section.sfDesc" label="DESCRIPTION" editor="false"
-									       class="input-splarge" rows="2" style=""/>
-								</fieldset>
-							</div>
-						</div>
-					</tab>
 
 					<tab label="SECN.CFG.TEMPLATE_DATA">
 						<div class="row-fluid">
@@ -291,6 +273,24 @@
 											</field>
 
 										</fieldset>
+									</tab>
+									<tab label="FORMS">
+										<div class="row-fluid">
+											<div class="span12">
+												<fieldset label="SECN.CFG.META_DATA_INPUT">
+													<field type="text" name="section.efTitle" value="section.efTitle" label="FORMS_TITLE"
+													       class="input-xlarge"/>
+													<field type="textarea" name="section.efDesc" value="section.efDesc" label="DESCRIPTION" editor="false"
+													       class="input-splarge" rows="2" style=""/>
+												</fieldset>
+												<fieldset label="SECN.CFG.META_DATA_SEARCH">
+													<field type="text" name="section.sfTitle" value="section.sfTitle" label="FORMS_TITLE"
+													       class="input-xlarge"/>
+													<field type="textarea" name="section.sfDesc" value="section.sfDesc" label="DESCRIPTION" editor="false"
+													       class="input-splarge" rows="2" style=""/>
+												</fieldset>
+											</div>
+										</div>
 									</tab>
 									<tab label="SEC.CFG.ALPHAMENU_SETTINGS">
 										<fieldset>
