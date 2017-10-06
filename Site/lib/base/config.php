@@ -438,7 +438,7 @@ class SPConfig
 					$l[ $i ] = isset( $level[ $i ] ) ? $level[ $i ] : 'none';
 					$l[ $i ] = str_replace( SOBI_ROOT, null, $l[ $i ] );
 				}
-				$trace[ ] = $l;
+				$trace[] = $l;
 			}
 		}
 		if ( $do ) {
@@ -471,15 +471,13 @@ class SPConfig
 		}
 		if ( is_object( $str ) /*|| is_array( $str )*/ ) {
 			try {
-				$str = @var_export( $str );
-				$str = trim( highlight_string( $str, true ) );
+				$str = highlight_string( "<?php\n\$data = " . var_export( $str, true ) , true );
 			} catch ( Exception $x ) {
 				$str = $x->getMessage();
 			}
 		}
 		elseif ( is_array( $str ) ) {
-			$result = @print_r( $str, true );
-			$str = highlight_string( $result, true );
+			$str = highlight_string( "<?php\n\$data = " . var_export( $str, true ) , true );
 		}
 		if ( !( $return ) ) {
 			echo $str;
@@ -759,7 +757,7 @@ class SPConfig
 						->select( 'pid', 'spdb_relations', [ 'id' => $id, '!pid' => $id ] )
 						->loadResult();
 				if ( $id ) {
-					$path[ ] = ( int )$id;
+					$path[] = ( int )$id;
 				}
 			} catch ( SPException $x ) {
 				Sobi::Error( __FUNCTION__, SPLang::e( 'CANNOT_GET_PARENT_ID', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __CLASS__ );
@@ -786,8 +784,8 @@ class SPConfig
 	protected function initIcons()
 	{
 		if ( !( count( $this->_icons ) ) ) {
-			if ( Sobi::Reg( 'current_template' ) && SPFs::exists( Sobi::Reg( 'current_template' ) . '/js/icons.json') ) {
-				$this->_icons = json_decode( SPFs::read(Sobi::FixPath(Sobi::Reg( 'current_template' ) . '/js/icons.json')), true );
+			if ( Sobi::Reg( 'current_template' ) && SPFs::exists( Sobi::Reg( 'current_template' ) . '/js/icons.json' ) ) {
+				$this->_icons = json_decode( SPFs::read( Sobi::FixPath( Sobi::Reg( 'current_template' ) . '/js/icons.json' ) ), true );
 			}
 			else {
 				$this->_icons = json_decode( SPFs::read( SOBI_PATH . '/etc/icons.json' ), true );
