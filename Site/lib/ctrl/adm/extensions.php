@@ -17,6 +17,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Error\Exception;
 use Sobi\FileSystem\FileSystem;
 use Sobi\Input\Input;
 use Sobi\FileSystem\Directory;
@@ -150,6 +151,9 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 					$repository->connect();
 					$l = $repository->updates( $installed );
 				} catch ( SPException $x ) {
+					if ( !( $json ) ) {
+						throw new Exception( $x->getMessage() );
+					}
 					SPFactory::mainframe()->cleanBuffer();
 					//echo json_encode( array( 'err' => SPLang::e( '%s Repository: %s', $x->getMessage(), $repository->get( 'id' ) ) ) );
 					echo json_encode( [ 'err' => SPLang::e( '%s', $x->getMessage() ) ] );

@@ -39,15 +39,21 @@ class plgSystemSpHeader extends JPlugin
 	public function onAfterRender( $context = null )
 	{
 		$app = JFactory::getApplication();
-		if ( (JFactory::getApplication()->input->getWord( 'option' ) == 'com_cpanel') && ( ( method_exists( $app, 'isClient' ) && $app->isClient( 'administrator' ) ) || $app->isAdmin() ) ) {
+		if ( ( JFactory::getApplication()->input->getWord( 'option' ) == 'com_cpanel' ) && ( ( method_exists( $app, 'isClient' ) && $app->isClient( 'administrator' ) ) || $app->isAdmin() ) ) {
 			if ( file_exists( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' ) ) {
 				$data = json_decode( file_get_contents( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' ), true );
+				if ( $data[ 'btn-text' ] ) {
+					$btn = ': <button class="btn btn-primary" onclick="document.location=\'index.php?option=com_sobipro&amp;task=extensions.browse\'">
+					         ' . $data[ 'btn-text' ] . '
+					     </button>
+				';
+				}
+				else {
+					$btn = null;
+				}
 				$content = '<div class="alert alert-error alert-joomlaupdate">
 	       						<span class="label label-important">' . $data[ 'count' ] . '</span>
-	       							' . $data[ 'text' ] . ':
-	       							<button class="btn btn-primary" onclick="document.location=\'index.php?option=com_sobipro&amp;task=extensions.browse\'">
-	           							' . $data[ 'btn-text' ] . '
-	       							</button>
+	       							' . $data[ 'text' ] . $btn . '
 	   						</div>';
 				$buffer = JFactory::getApplication()->getBody();
 				preg_match( '|\<div id="system-message-container"\>(.+?)\<\/div\>|s', $buffer, $matches );
@@ -68,7 +74,14 @@ class plgSystemSpHeader extends JPlugin
 			require_once( JPATH_ROOT . '/components/com_sobipro/lib/ctrl/adm/extensions.php' );
 			if ( Sobi::Can( 'cms.apps' ) && Sobi::Cfg( 'extensions.check_updates', true ) ) {
 				$ctrl = new SPExtensionsCtrl();
-				$updates = $ctrl->updates( false );
+				try {
+					$updates = $ctrl->updates( false );
+				} catch ( Exception $x ) {
+					$message = [ 'count' => 1, 'text' => Sobi::Txt( 'UPDATE.SSL_ERROR' ), 'btn-text' => null ];
+					$message = json_encode( $message );
+					FileSystem::Write( JPATH_ROOT . '/components/com_sobipro/tmp/message.json', $message );
+					return true;
+				}
 				$apps = [];
 				if ( count( $updates ) ) {
 					foreach ( $updates as $update ) {

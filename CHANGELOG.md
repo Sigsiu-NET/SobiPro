@@ -41,6 +41,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Missing icons in template manager's save options
 	(#) if some SobiPro applications are outdated, the message is shown on each page (should be only the Joomla cPanel page)
 	(#) Missing argument 1 for SPFilter::save() (Issue #37)
+	
 
 
 ### 1.4.1 (29 September 2017)
