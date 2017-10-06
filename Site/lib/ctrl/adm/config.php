@@ -548,6 +548,10 @@ class SPConfigAdmCtrl extends SPController
 		}
 	}
 
+	/**
+	 * @param string $task
+	 * @return SPAdmSiteMenu
+	 */
 	protected function & createMenu( $task = null )
 	{
 		if ( !( $task ) ) {
@@ -556,6 +560,7 @@ class SPConfigAdmCtrl extends SPController
 		/* load the menu definition */
 		if ( Sobi::Section() ) {
 			/* create menu */
+			/** @var SPAdmSiteMenu $menu */
 			$menu =& SPFactory::Instance( 'views.adm.menu', $task, Sobi::Section() );
 			$cfg = SPLoader::loadIniFile( 'etc.adm.section_menu' );
 			/* create new SigsiuTree */

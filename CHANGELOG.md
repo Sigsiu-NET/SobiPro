@@ -42,6 +42,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) if some SobiPro applications are outdated, the message is shown on each page (should be only the Joomla cPanel page)
 	(#) Missing argument 1 for SPFilter::save() (Issue #37)
 	(#) Error in Joomla cPanel when SSL certificate expires (Issue #32)
+	(#) Wrong template name in duplicated template (Issue #34)
 
 
 ### 1.4.1 (29 September 2017)

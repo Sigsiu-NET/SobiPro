@@ -15,6 +15,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\C;
+use Sobi\FileSystem\DirectoryIterator;
+use Sobi\FileSystem\File;
+use Sobi\FileSystem\FileSystem;
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'config', true );
@@ -41,12 +47,12 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	{
 		if ( Sobi::Section() ) {
 			if ( !( Sobi::Can( 'section.configure' ) ) ) {
-				Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+				Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 				exit();
 			}
 		}
 		elseif ( !( Sobi::Can( 'cms.apps' ) ) ) {
-			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			exit();
 		}
 	}
@@ -69,9 +75,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			case 'info':
 				$this->info();
 				break;
-			case 'deleteFile':
-				$this->deleteFile();
-				break;
+//			case 'deleteFile':
+//				$this->deleteFile();
+//				break;
 			case 'delete':
 				$this->delete();
 				break;
@@ -93,7 +99,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			default:
 				/* case plugin didn't registered this task, it was an error */
 				if ( !( parent::execute() ) ) {
-					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
+					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', Input::Task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}
 				break;
 		}
@@ -102,11 +108,10 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	protected function saveConfig()
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
-			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$config = SPRequest::arr( 'settings' );
-
-		$templateName = SPRequest::cmd( 'templateName' );
+		$config = Input::Arr( 'settings' );
+		$templateName = Input::Cmd( 'templateName' );
 		if ( !( strlen( $templateName ) ) ) {
 			$templateName = SPC::DEFAULT_TEMPLATE;
 		}
@@ -114,8 +119,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$store = json_encode( $settings );
 			if ( isset( $settings[ 'less' ] ) && count( $settings[ 'less' ] ) ) {
 				foreach ( $settings[ 'less' ] as $file => $variables ) {
-					$lessFile = Sobi::FixPath( $this->dir( $templateName ) . '/css/' . $file . '.less' );
-					if ( SPFs::exists( $lessFile ) ) {
+					$lessFile = FileSystem::FixPath( $this->dir( $templateName ) . '/css/' . $file . '.less' );
+					if ( FileSystem::exists( $lessFile ) ) {
 						$lessContent = SPFs::read( $lessFile );
 						foreach ( $variables as $variable => $value ) {
 							// @colour-set: sobipro;
@@ -131,7 +136,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				}
 			}
 			try {
-				SPFs::write( Sobi::FixPath( $this->dir( $templateName ) . str_replace( '.', '/', $configFile ) . '.json' ), $store );
+				FileSystem::Write( FileSystem::FixPath( $this->dir( $templateName ) . str_replace( '.', '/', $configFile ) . '.json' ), $store );
 			} catch ( SPException $x ) {
 				$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
 			}
@@ -143,8 +148,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	protected function templateSettings()
 	{
-		$templateName = SPRequest::cmd( 'template' );
+		$templateName = Input::Cmd( 'template' );
 		$templateSettings = [];
+		$file = null;
 		if ( !( strlen( $templateName ) ) ) {
 			$templateName = SPC::DEFAULT_TEMPLATE;
 		}
@@ -166,9 +172,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 					->setSystemMessage();
 		}
 		/** search for all json files */
-		/** @var  SPDirectoryIterator $directory */
-		$directory = SPFactory::Instance( 'base.fs.directory', $dir );
-		$configs = array_keys( $directory->searchFile( '.json', false, 2 ) );
+		$directory = new DirectoryIterator( $dir );
+		$configs = array_keys( $directory->searchFile( '.json', false ) );
 		if ( count( $configs ) ) {
 			foreach ( $configs as $file ) {
 				$prefix = null;
@@ -206,17 +211,17 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	protected function compile( $outputMessage = true )
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
-			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$file = $this->file( SPRequest::cmd( 'fileName' ) );
+		$file = $this->file( Input::Cmd( 'fileName' ) );
 		$output = str_replace( 'less', 'css', $file );
 		Sobi::Trigger( 'BeforeCompileLess', $this->name(), [ &$file ] );
-		$u = [ 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) ];
+		$u = [ 'task' => 'template.edit', 'file' => Input::Cmd( 'fileName' ) ];
 		if ( Sobi::Section() ) {
 			$u[ 'sid' ] = Sobi::Section();
 		}
 		if ( !( $file ) ) {
-			$this->response( Sobi::Url( $u ), SPLang::e( 'Missing file to compile %s', SPRequest::cmd( 'fileName' ) ), false, SPC::ERROR_MSG );
+			$this->response( Sobi::Url( $u ), SPLang::e( 'Missing file to compile %s', Input::cmd( 'fileName' ) ), false, SPC::ERROR_MSG );
 		}
 		$this->compileLessFile( $file, $output, $u );
 		if ( $outputMessage ) {
@@ -229,13 +234,14 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	protected function getTemplateFiles()
 	{
-		$type = SPRequest::cmd( 'type', null, 'post' );
+		$type = Input::Cmd( 'type', 'post' );
 		if ( strstr( $type, '.' ) ) {
 			$type = explode( '.', $type );
 			$type = $type[ 0 ];
 		}
 		$directory = $this->dir( Sobi::Cfg( 'section.template' ) );
-		$directory = Sobi::FixPath( $directory . '/' . $type );
+		$directory = FileSystem::FixPath( $directory . '/' . $type );
+		$arr = [];
 		if ( file_exists( $directory ) ) {
 			$files = scandir( $directory );
 			if ( count( $files ) ) {
@@ -256,19 +262,19 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 //	protected function deleteFile()
 //	{
 //		if( !( SPFactory::mainframe()->checkToken() ) ) {
-//			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+//			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 //		}
-//		$file = $this->file( SPRequest::cmd( 'sp_fedit' ) );
+//		$file = $this->file( Input::Cmd( 'sp_fedit' ) );
 //		Sobi::Trigger( 'Delete', $this->name(), array( &$content, &$file ) );
 //		if( !$file ) {
-//			throw new SPException( SPLang::e( 'Missing  file to delete %s', SPRequest::cmd( 'sp_fedit' ) ) );
+//			throw new SPException( SPLang::e( 'Missing  file to delete %s', Input::Cmd( 'sp_fedit' ) ) );
 //		}
 //		$fClass = SPLoader::loadClass( 'base.fs.file' );
 //		$File = new $fClass( $file );
 //		if( $File->delete() ) {
 //			$u = array( 'task' => 'template.edit', 'file' => 'template.xml' );
-//			if( SPRequest::sid() ) {
-//				$u[ 'sid' ] = SPRequest::sid();
+//			if( Input::Sid() ) {
+//				$u[ 'sid' ] = Input::Sid();
 //			}
 //			Sobi::Redirect( Sobi::Url( $u ), 'File has been deleted' );
 //		}
@@ -279,11 +285,11 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	private function delete()
 	{
-		$dir = $this->dir( SPRequest::cmd( 'templateName' ) );
-		if ( SPRequest::cmd( 'templateName' ) == SPC::DEFAULT_TEMPLATE ) {
+		$dir = $this->dir( Input::Cmd( 'templateName' ) );
+		if ( Input::Cmd( 'templateName' ) == SPC::DEFAULT_TEMPLATE ) {
 			$this->response( Sobi::Url( 'template.info' ), Sobi::Txt( 'TP.DO_NOT_REMOVE' ), true, 'error' );
 		}
-		if ( $dir && SPFs::delete( $dir ) ) {
+		if ( $dir && FileSystem::Delete( $dir ) ) {
 			$this->response( Sobi::Url( [ 'task' => 'config.general' ] ), Sobi::Txt( 'TP.REMOVED' ), false, 'success' );
 		}
 		else {
@@ -293,8 +299,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	private function cloneTpl()
 	{
-		$dir = $this->dir( SPRequest::cmd( 'templateName' ) );
-		$newName = SPRequest::word( 'templateNewName', 'Duplicated Template', 'post' );
+		$dir = $this->dir( Input::Cmd( 'templateName' ) );
+		$newName = Input::String( 'templateNewName', 'post', 'Duplicated Template' );
 		$newName = str_replace( [ '-', '_' ], ' ', $newName );
 		$newName = explode( ' ', $newName );
 		foreach ( $newName as $i => $part ) {
@@ -304,39 +310,38 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$dirName = ( $newName );
 		$dirNameOrg = $dirName;
 		$c = 1;
-		while ( SPFs::exists( SPLoader::dirPath( 'usr.templates.' . $dirName, 'front', false ) ) ) {
+		while ( FileSystem::Exists( SPLoader::dirPath( 'usr.templates.' . $dirName, 'front', false ) ) ) {
 			$dirName = $dirNameOrg . '-' . $c++;
 		}
 		$newPath = SPLoader::dirPath( 'usr.templates.' . $dirName, 'front', false );
-		if ( !( SPFs::copy( $dir, $newPath ) ) ) {
+		if ( !( FileSystem::Copy( $dir, $newPath ) ) ) {
 			throw new SPException( SPLang::e( 'COULD_NOT_COPY_DIRECTORY', $dir, $newPath ) );
 		}
 		$defFile = SPLoader::path( $newPath . '.template', 'absolute', true, 'xml' );
 		if ( $defFile ) {
-			$fc = SPLoader::loadClass( 'base.fs.file' );
 			$def = new DOMDocument();
 			$def->load( $defFile );
 			$xdef = new DOMXPath( $def );
 			$oldName = $xdef->query( '/template/name' )->item( 0 )->nodeValue;
 			$oldDesc = $xdef->query( '/template/description' )->item( 0 )->nodeValue;
 			$date = SPFactory::config()->date( time(), null, 'Y-m-d' );
-			$xdef->query( '/template/name' )->item( 0 )->nodeValue = $newName;
+			$xdef->query( '/template/name' )->item( 0 )->nodeValue = Input::String( 'templateNewName', 'post', 'Duplicated Template' );
 			$xdef->query( '/template/creationDate' )->item( 0 )->nodeValue = $date;
 			$xdef->query( '/template/id' )->item( 0 )->nodeValue = $dirName;
 			$newDesc = Sobi::Txt( 'TP.CLONE_NOTE', [ 'name' => $oldName, 'date' => $date ] );
 			$xdef->query( '/template/description' )->item( 0 )->nodeValue = "{$newDesc}\n{$oldDesc}";
-			$file = new $fc( $defFile );
+			$file = new File( $defFile );
 			$file->content( $def->saveXML() );
 			$file->save();
 		}
 		/** Replace template's prefixes  */
 		$newDir = $this->dir( $dirName );
-		if ( SPFs::exists( $newDir . '/template.php' ) ) {
-			$content = file_get_contents( $newDir . '/template.php' );
+		if ( FileSystem::Exists( $newDir . '/template.php' ) ) {
+			$content = FileSystem::Read( $newDir . '/template.php' );
 			$class = [];
 			preg_match( '/\s*(class)\s+(\w+)/', $content, $class );
 			$className = $class[ 2 ];
-			$oldTplName = SPRequest::cmd( 'templateName' );
+			$oldTplName = Input::Cmd( 'templateName' );
 			// if for example bs3-default
 			if ( strstr( $oldTplName, '-' ) ) {
 				$oldTplName = explode( '-', $oldTplName );
@@ -356,7 +361,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			}
 			$newClassName = ucfirst( $newClassName );
 			$content = str_replace( 'class ' . $className, 'class ' . $newClassName, $content );
-			SPFs::write( $newDir . '/template.php', $content );
+			FileSystem::Write( $newDir . '/template.php', $content );
 			// now go through all XSL files
 			/** @var SPDirectory $directory */
 			$directory = SPFactory::Instance( 'base.fs.directory', $newDir );
@@ -364,10 +369,10 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			if ( count( $files ) ) {
 				$files = array_keys( $files );
 				foreach ( $files as $file ) {
-					$c = SPFs::read( $file );
+					$c = FileSystem::Read( $file );
 					if ( strstr( $c, "'{$className}::" ) ) {
 						$c = str_replace( "'{$className}::", "'{$newClassName}::", $c );
-						SPFs::write( $file, $c );
+						FileSystem::Write( $file, $c );
 					}
 				}
 			}
@@ -377,13 +382,13 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$directory = SPFactory::Instance( 'base.fs.directory', $newDir );
 		$files = $directory->searchFile( [ '.less', '.css' ], false, 2 );
 		if ( count( $files ) ) {
-			$oldTplName = SPRequest::cmd( 'templateName' );
+			$oldTplName = Input::Cmd( 'templateName' );
 			$files = array_keys( $files );
 			foreach ( $files as $file ) {
-				$c = SPFs::read( $file );
+				$c = FileSystem::Read( $file );
 				if ( strstr( $c, $oldTplName ) ) {
 					$c = str_replace( $oldTplName, $newName, $c );
-					SPFs::write( $file, $c );
+					FileSystem::Write( $file, $c );
 				}
 			}
 		}
@@ -392,11 +397,11 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	private function info()
 	{
-		$templateName = SPRequest::cmd( 'template' );
+		$templateName = Input::Cmd( 'template' );
+		$file = null;
 		if ( !( strlen( $templateName ) ) ) {
 			$templateName = SPC::DEFAULT_TEMPLATE;
 		}
-
 		$dir = $this->dir( $templateName );
 		/** @var $view SPAdmTemplateView */
 		$view = SPFactory::View( 'template', true );
@@ -406,7 +411,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 					->setSystemMessage();
 		}
 
-		if ( SPFs::exists( $dir . '/template.xml' ) ) {
+		if ( FileSystem::Exists( $dir . '/template.xml' ) ) {
 			$file = $this->getTemplateData( $dir, $view, $templateName );
 		}
 		else {
@@ -433,7 +438,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	public function getTemplateTree( $template )
 	{
-		if ( SPFs::exists( SPLoader::dirPath( 'usr.templates.' ) . $template ) ) {
+		if ( FileSystem::Exists( SPLoader::dirPath( 'usr.templates.' ) . $template ) ) {
 			return $this->listTemplates( SPLoader::dirPath( 'usr.templates.' ) . $template, false );
 		}
 		else {
@@ -446,15 +451,15 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	protected function save( $new = false, $compile = false )
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
-			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$content = SPRequest::raw( 'file_content', null, 'post' );
-		$file = $this->file( SPRequest::cmd( 'fileName' ), !( $new ) );
+		$content = Input::Raw( 'file_content', 'post' );
+		$file = $this->file( Input::Cmd( 'fileName' ), !( $new ) );
 		Sobi::Trigger( 'Save', $this->name(), [ &$content, &$file ] );
 		if ( !( $file ) ) {
-			throw new SPException( SPLang::e( 'Missing  file to save %s', SPRequest::cmd( 'fileName' ) ) );
+			throw new SPException( SPLang::e( 'Missing  file to save %s', Input::Cmd( 'fileName' ) ) );
 		}
-		$File = SPFactory::Instance( 'base.fs.file', $file );
+		$File = new File( $file );
 		$File->content( stripslashes( $content ) );
 		try {
 			$File->save();
@@ -464,7 +469,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				$message .= "\n" . $this->compile( false );
 			}
 
-			$u = [ 'task' => 'template.edit', 'file' => SPRequest::cmd( 'fileName' ) ];
+			$u = [ 'task' => 'template.edit', 'file' => Input::Cmd( 'fileName' ) ];
 			if ( Sobi::Section() ) {
 				$u[ 'sid' ] = Sobi::Section();
 			}
@@ -476,16 +481,16 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 	private function file( $file, $exits = true )
 	{
-		$ext = SPFs::getExt( $file );
+		$ext = FileSystem::GetExt( $file );
 		$file = explode( '.', $file );
 		unset( $file[ count( $file ) - 1 ] );
 		if ( strstr( $file[ 0 ], 'cms:' ) ) {
 			$file[ 0 ] = str_replace( 'cms:', null, $file[ 0 ] );
 			$file = SPFactory::mainframe()->path( implode( '.', $file ) );
-			$file = Sobi::FixPath( SPLoader::path( $file, 'root', $exits, $ext ) );
+			$file = FileSystem::FixPath( SPLoader::path( $file, 'root', $exits, $ext ) );
 		}
 		else {
-			$file = Sobi::FixPath( SPLoader::path( 'usr.templates.' . implode( '.', $file ), 'front', $exits, $ext ) );
+			$file = FileSystem::FixPath( SPLoader::path( 'usr.templates.' . implode( '.', $file ), 'front', $exits, $ext ) );
 		}
 		if ( !$file ) {
 			$file = SPLoader::path( 'usr.templates.' . implode( '.', $file ), 'front', false, $ext );
@@ -519,10 +524,10 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
 					->setSystemMessage();
 		}
-		$file = SPRequest::cmd( 'file' );
+		$file = Input::Cmd( 'file' );
 		$file = $this->file( $file );
-		$ext = SPFs::getExt( $file );
-		$fileContent = SPFs::read( $file );
+		$ext = FileSystem::GetExt( $file );
+		$fileContent = FileSystem::read( $file );
 		$path = str_replace( '\\', '/', SOBI_PATH );
 		if ( strstr( $file, $path ) ) {
 			$filename = str_replace( $path . '/usr/templates/', null, $file );
@@ -546,7 +551,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				->assign( $menu, 'menu' )
 				->assign( $this->_task, 'task' )
 				->assign( $sid, 'sid' )
-				->addHidden( SPRequest::cmd( 'file' ), 'fileName' )
+				->addHidden( Input::Cmd( 'file' ), 'fileName' )
 				->addHidden( $filename, 'filePath' )
 				->determineTemplate( 'template', 'edit' );
 		Sobi::Trigger( 'Edit', $this->name(), [ &$file, &$view ] );
@@ -579,7 +584,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$template[ 'description' ] = $xinfo->query( '/template/description' )->item( 0 )->nodeValue;
 		$template[ 'id' ] = $xinfo->query( '/template/id' )->item( 0 )->nodeValue;
 		if ( $xinfo->query( '/template/previewImage' )->length && $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue ) {
-			$template[ 'preview' ] = Sobi::FixPath( Sobi::Cfg( 'live_site' ) . str_replace( '\\', '/', str_replace( SOBI_ROOT . DS, null, $dir ) ) . '/' . $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue );
+			$template[ 'preview' ] = FileSystem::FixPath( Sobi::Cfg( 'live_site' ) . str_replace( '\\', '/', str_replace( SOBI_ROOT . C::DS, null, $dir ) ) . '/' . $xinfo->query( '/template/previewImage' )->item( 0 )->nodeValue );
 		}
 		$file = '';
 		if ( $xinfo->query( '/template/files/file' )->length ) {
@@ -629,10 +634,10 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$parser = new Less_Parser( $options );
 			$parser->parseFile( $file );
 			$css = $parser->getCss();
-			if ( SPFs::exists( $output ) ) {
-				SPFs::delete( $output );
+			if ( FileSystem::Exists( $output ) ) {
+				FileSystem::Delete( $output );
 			}
-			SPFs::write( $output, $css );
+			FileSystem::Write( $output, $css );
 		} catch ( Exception $x ) {
 			$this->response( Sobi::Url( $u ), SPLang::e( 'TP.LESS_FILE_NOT_COMPILED', $x->getMessage() ), false, SPC::ERROR_MSG );
 		}

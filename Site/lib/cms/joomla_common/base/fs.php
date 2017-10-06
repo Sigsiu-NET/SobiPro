@@ -25,7 +25,8 @@ jimport( 'joomla.filesystem.folder' );
  * @author Radek Suski
  * @version 1.0
  * @created 10-Jan-2009 5:02:55 PM
- * @todo !!!! verify - Joomla changed this class
+ * @deprecated
+ * @see * @see Sobi\FileSystem\FileSystem
  */
 abstract class SPJoomlaFs
 {
