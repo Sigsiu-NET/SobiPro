@@ -15,7 +15,8 @@ Url: https://www.Sigsiu.NET
 
 Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.  
 @license GNU/GPL Version 3  
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.  
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 
+as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.  
 See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -29,7 +30,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (-) Removed  
 (!) Change  
 
-### 1.4.2 (5 October 2017)
+### 1.4.2 (6 October 2017)
 
 	(+) New repository SSL certificate
 	
@@ -37,6 +38,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Primary category indicator more discreet
 	(!) Template information window improved
 	(!) XSLT processor: changed from transformToDoc to transformToXml due to issues with "disable-output-escaping"
+	(!) General settings for title and description of the forms moved down to template tab
 	
 	(#) Missing icons in template manager's save options
 	(#) if some SobiPro applications are outdated, the message is shown on each page (should be only the Joomla cPanel page)
