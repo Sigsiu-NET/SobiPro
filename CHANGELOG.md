@@ -29,7 +29,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (-) Removed  
 (!) Change  
 
-### 1.4.2 (5 October 2017)
+### 1.4.2 (6 October 2017)
 
 	(+) New repository SSL certificate
 	
