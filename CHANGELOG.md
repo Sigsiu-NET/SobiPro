@@ -15,7 +15,8 @@ Url: https://www.Sigsiu.NET
 
 Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.  
 @license GNU/GPL Version 3  
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.  
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 
+as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.  
 See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
