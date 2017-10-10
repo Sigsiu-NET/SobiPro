@@ -22,36 +22,61 @@ defined( '_JEXEC' ) || exit( 'Restricted access' );
 class com_sobiproInstallerScript
 {
 	/**
-	 * Called before any type of action
+	 * Runs just before any installation action is preformed on the component.
+	 * Verifications and pre-requisites should run in this function.
 	 *
-	 * @param   string $route Which action is happening (install|uninstall|discover_install)
-	 * @param   JAdapterInstance $adapter The object responsible for running this script
+	 * @param  string $type - Type of PreFlight action. Possible values are:
+	 *                           - * install
+	 *                           - * update
+	 *                           - * discover_install
+	 * @param  \stdClass $parent - Parent object calling object.
 	 *
-	 * @return  boolean  True on success
+	 * @return void
 	 */
-	function preflight( $route, JAdapterInstance $adapter )
+	public function preflight( $type, $parent )
 	{
-		if ( $adapter instanceof JInstallerAdapterComponent ) {
-			$this->installPlugins( $adapter->get( 'parent' )->get( 'paths' ) );
+		if ( $parent instanceof JInstallerAdapterComponent ) {
+			$this->installPlugins( $parent->getParent()->get( 'paths' ) );
 		}
-		elseif ( $adapter instanceof JInstallerComponent ) {
-			$this->installPlugins( $adapter->get( 'parent' )->get( '_paths' ) );
+		elseif ( $parent instanceof JInstallerComponent ) {
+			$this->installPlugins( $parent->getParent->get( '_paths' ) );
 		}
-		// Installing component manifest file version
-		$this->release = $adapter->get( 'manifest' )->version;
-		// Show the essential information at the install/update back-end
-		echo '<h2>Installing SobiPro version ' . $this->release . ' ...</h2>';
+
+		if ( $type != 'uninstall' ) {
+			// Installing component manifest file version
+			$this->release = $parent->get( 'manifest' )->version;
+			// Show the essential information at the install/update back-end
+			echo '<h2>Installing SobiPro version ' . $this->release . ' ...</h2>';
+		}
 
 	}
 
 	/**
-	 * method to update the component
+	 * Runs right after any installation action is preformed on the component.
 	 *
-	 * @param JAdapterInstance $adapter
+	 * @param  string $type - Type of PostFlight action. Possible values are:
+	 *                           - * install
+	 *                           - * update
+	 *                           - * discover_install
+	 * @param  \stdClass $parent - Parent object calling object.
 	 *
 	 * @return void
 	 */
-	function update( JAdapterInstance $adapter )
+//	function postflight($type, $parent)
+//	{
+//		echo '<p>' . JText::_('COM_HELLOWORLD_POSTFLIGHT_' . $type . '_TEXT') . '</p>';
+//
+//	}
+
+
+	/**
+	 * This method is called after a component is updated.
+	 *
+	 * @param  \stdClass $parent - Parent object calling object.
+	 *
+	 * @return void
+	 */
+	public function update( $parent )
 	{
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) ) ) {
 			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) );
@@ -104,22 +129,22 @@ class com_sobiproInstallerScript
 		}
 
 		$db = JFactory::getDBO();
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (  `cid` int(11) NOT NULL AUTO_INCREMENT,  `section` int(11) NOT NULL,  `sid` int(11) NOT NULL,  `fileName` varchar(100) NOT NULL,  `task` varchar(100) NOT NULL,  `site` int(11) NOT NULL,  `request` varchar(255) NOT NULL,  `language` varchar(15) NOT NULL,  `template` varchar(150) NOT NULL,  `configFile` text NOT NULL,  `userGroups` varchar(200) NOT NULL,  `created` datetime NOT NULL,PRIMARY KEY (`cid`),KEY `sid` (`sid`),KEY `section` (`section`),KEY `language` (`language`),KEY `task` (`task`),KEY `request` (`request`),KEY `site` (`site`),KEY `userGroups` (`userGroups`));' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (  `cid` INT(11) NOT NULL AUTO_INCREMENT,  `section` INT(11) NOT NULL,  `sid` INT(11) NOT NULL,  `fileName` VARCHAR(100) NOT NULL,  `task` VARCHAR(100) NOT NULL,  `site` INT(11) NOT NULL,  `request` VARCHAR(255) NOT NULL,  `language` VARCHAR(15) NOT NULL,  `template` VARCHAR(150) NOT NULL,  `configFile` TEXT NOT NULL,  `userGroups` VARCHAR(200) NOT NULL,  `created` DATETIME NOT NULL,PRIMARY KEY (`cid`),KEY `sid` (`sid`),KEY `section` (`section`),KEY `language` (`language`),KEY `task` (`task`),KEY `request` (`request`),KEY `site` (`site`),KEY `userGroups` (`userGroups`));' );
 		$db->execute();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (`cid` int(11) NOT NULL,`sid` int(11) NOT NULL,PRIMARY KEY (`cid`,`sid`));' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (`cid` INT(11) NOT NULL,`sid` INT(11) NOT NULL,PRIMARY KEY (`cid`,`sid`));' );
 		$db->execute();
 
 		$db->setQuery( "UPDATE #__sobipro_permissions SET value =  '*' WHERE  pid = 18;" );
 		$db->execute();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (`description` text,`gid` int(11) NOT NULL AUTO_INCREMENT,`enabled` int(11) NOT NULL,`pid` int(11) NOT NULL,`groupName` varchar(150) NOT NULL,PRIMARY KEY (`gid`) ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (`description` TEXT,`gid` INT(11) NOT NULL AUTO_INCREMENT,`enabled` INT(11) NOT NULL,`pid` INT(11) NOT NULL,`groupName` VARCHAR(150) NOT NULL,PRIMARY KEY (`gid`) ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;' );
 		$db->execute();
 
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_counter` ( `sid` INT(11)  NOT NULL, `counter` INT(11) NOT NULL, `lastUpdate` DATETIME NOT NULL, PRIMARY KEY (`sid`) );' );
 		$db->execute();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_history` ( `revision` varchar(150) NOT NULL, `changedAt` datetime NOT NULL, `uid` int(11) NOT NULL, `userName` varchar(150) NOT NULL, `userEmail` varchar(150) NOT NULL, `change` varchar(150) NOT NULL, `site` enum(\'site\',\'adm\') NOT NULL, `sid` int(11) NOT NULL, `changes` text NOT NULL, `params` text NOT NULL, `reason` text NOT NULL, `language` varchar(50) NOT NULL, PRIMARY KEY (`revision`) ) DEFAULT CHARSET=utf8;' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_history` ( `revision` VARCHAR(150) NOT NULL, `changedAt` DATETIME NOT NULL, `uid` INT(11) NOT NULL, `userName` VARCHAR(150) NOT NULL, `userEmail` VARCHAR(150) NOT NULL, `change` VARCHAR(150) NOT NULL, `site` ENUM(\'site\',\'adm\') NOT NULL, `sid` INT(11) NOT NULL, `changes` TEXT NOT NULL, `params` TEXT NOT NULL, `reason` TEXT NOT NULL, `language` VARCHAR(50) NOT NULL, PRIMARY KEY (`revision`) ) DEFAULT CHARSET=utf8;' );
 		$db->execute();
 
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( 'engb_preload',  '1',  '0', NULL ,  'lang' )" );
@@ -136,7 +161,8 @@ class com_sobiproInstallerScript
 		try {
 			$db->setQuery( 'DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;' );
 			$db->execute();
-		} catch ( Exception $x ) {
+		}
+		catch ( Exception $x ) {
 		}
 
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES (89, 'section', 'access', '*', 'adm', 1), (90, 'section', 'configure', '*', 'adm', 1), (91, 'section', 'delete', '*', 'adm', 0), (92, 'category', 'edit', '*', 'adm', 1), (93, 'category', 'add', '*', 'adm', 1), (94, 'category', 'delete', '*', 'adm', 1), (95, 'entry', 'edit', '*', 'adm', 1), (96, 'entry', 'add', '*', 'adm', 1), (97, 'entry', 'delete', '*', 'adm', 1), (98, 'entry', 'approve', '*', 'adm', 1), (99, 'entry', 'publish', '*', 'adm', 1), (86, 'entry', '*', '*', 'adm', 1), (87, 'category', '*', '*', 'adm', 1), (88, 'section', '*', '*', 'adm', 1);" );
@@ -170,12 +196,14 @@ class com_sobiproInstallerScript
 				try {
 					$db->setQuery( 'ALTER TABLE #__sobipro_field_data ENGINE = MYISAM;;' );
 					$db->execute();
-				} catch ( Exception $x ) {
+				}
+				catch ( Exception $x ) {
 				}
 				$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD FULLTEXT  `baseData` (`baseData`);' );
 				$db->execute();
 			}
-		} catch ( Exception $x ) {
+		}
+		catch ( Exception $x ) {
 		}
 
 		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_language' );
@@ -191,7 +219,8 @@ class com_sobiproInstallerScript
 			try {
 				$db->setQuery( 'ALTER TABLE #__sobipro_language ENGINE = MYISAM;;' );
 				$db->execute();
-			} catch ( Exception $x ) {
+			}
+			catch ( Exception $x ) {
 			}
 			$db->setQuery( 'ALTER TABLE  `#__sobipro_language` ADD FULLTEXT  `sValue` (`sValue`);' );
 			$db->execute();
@@ -210,7 +239,8 @@ class com_sobiproInstallerScript
 			try {
 				$db->setQuery( 'ALTER TABLE #__sobipro_history CHANGE `change` `changeAction` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;' );
 				$db->execute();
-			} catch ( Exception $x ) {
+			}
+			catch ( Exception $x ) {
 			}
 		}
 
@@ -227,9 +257,10 @@ class com_sobiproInstallerScript
 			try {
 				$db->setQuery( 'ALTER TABLE `#__sobipro_category` ADD `allFields` TINYINT(2) NOT NULL AFTER `showIcon`, ADD `entryFields` TEXT NOT NULL AFTER `allFields`;' );
 				$db->execute();
-				$db->setQuery( 'UPDATE `#__sobipro_category` SET `allFields` = 1');
+				$db->setQuery( 'UPDATE `#__sobipro_category` SET `allFields` = 1' );
 				$db->execute();
-			} catch ( Exception $x ) {
+			}
+			catch ( Exception $x ) {
 			}
 		}
 
@@ -248,7 +279,7 @@ class com_sobiproInstallerScript
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) VALUES ('button', 'Button', 'special', 5);" );
 		$db->execute();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (  `date` datetime NOT NULL,  `uid` int(11) NOT NULL,  `sid` int(11) NOT NULL,  `fid` varchar(50) NOT NULL,  `ip` varchar(15) NOT NULL,  `section` int(11) NOT NULL,  `browserData` text NOT NULL,  `osData` text NOT NULL,  `humanity` int(3) NOT NULL,  PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`) );' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (  `date` DATETIME NOT NULL,  `uid` INT(11) NOT NULL,  `sid` INT(11) NOT NULL,  `fid` VARCHAR(50) NOT NULL,  `ip` VARCHAR(15) NOT NULL,  `section` INT(11) NOT NULL,  `browserData` TEXT NOT NULL,  `osData` TEXT NOT NULL,  `humanity` INT(3) NOT NULL,  PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`) );' );
 		$db->execute();
 
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES ('category', 'Category', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');" );
@@ -258,10 +289,10 @@ class com_sobiproInstallerScript
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES ('button', 'Button', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');" );
 		$db->execute();
 
-		$db->setQuery( "CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` ( `url` varchar(255) NOT NULL,`crid` int(11) NOT NULL AUTO_INCREMENT,`state` tinyint(1) NOT NULL, PRIMARY KEY (`crid`), UNIQUE KEY `url` (`url`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;" );
+		$db->setQuery( "CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` ( `url` VARCHAR(255) NOT NULL,`crid` INT(11) NOT NULL AUTO_INCREMENT,`state` TINYINT(1) NOT NULL, PRIMARY KEY (`crid`), UNIQUE KEY `url` (`url`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;" );
 		$db->execute();
 
-		$db->setQuery( "CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` ( `url` varchar(255) NOT NULL,`crid` int(11) NOT NULL AUTO_INCREMENT,`state` tinyint(1) NOT NULL, PRIMARY KEY (`crid`), UNIQUE KEY `url` (`url`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;" );
+		$db->setQuery( "CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` ( `url` VARCHAR(255) NOT NULL,`crid` INT(11) NOT NULL AUTO_INCREMENT,`state` TINYINT(1) NOT NULL, PRIMARY KEY (`crid`), UNIQUE KEY `url` (`url`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;" );
 		$db->execute();
 
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES ('rejection-of-a-new-entry', 'Entry {entry.name} has been rejected as it does not comply with the rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', ''), ('rejection-of-changes', 'Changes in {entry.name} discarded as these changes violating rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', '');" );
@@ -291,13 +322,13 @@ class com_sobiproInstallerScript
 	}
 
 	/**
-	 * Called on installation
+	 * This method is called after a component is installed.
 	 *
-	 * @param   JAdapterInstance $adapter The object responsible for running this script
+	 * @param  \stdClass $parent - Parent object calling this method.
 	 *
-	 * @return  boolean  True on success
+	 * @return void
 	 */
-	public function install( JAdapterInstance $adapter )
+	public function install( $parent )
 	{
 		if ( !( file_exists( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) ) ) ) {
 			JFolder::create( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) );
@@ -305,14 +336,14 @@ class com_sobiproInstallerScript
 		if ( !( file_exists( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) ) ) ) {
 			JFolder::create( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) );
 
-			if ( file_exists(JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png' ) ) {
-				JFile::move(JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png',JPATH_ROOT . '/images/sobipro/categories/image.png' );
+			if ( file_exists( JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png' ) ) {
+				JFile::move( JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png', JPATH_ROOT . '/images/sobipro/categories/image.png' );
 			}
 		}
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ) ) ) {
 			JFolder::move(
-					implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ),
-					implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'entries' ] )
+				implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ),
+				implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'entries' ] )
 			);
 		}
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) ) ) {
@@ -355,12 +386,16 @@ class com_sobiproInstallerScript
 	}
 
 	/**
-	 * Called on uninstallation
+	 * This method is called after a component is uninstalled.
 	 *
-	 * @param   JAdapterInstance $adapter The object responsible for running this script
+	 * @param  \stdClass $parent - Parent object calling this method.
+	 *
+	 * @return void
 	 */
-	public function uninstall( JAdapterInstance $adapter )
+	public function uninstall( $parent )
 	{
+		echo '<h2>Un-Installing SobiPro ...</h2>';
+
 		$db = JFactory::getDBO();
 		$query = "show tables like '" . $db->getPrefix() . "sobipro_%'";
 		$db->setQuery( $query );
@@ -370,6 +405,9 @@ class com_sobiproInstallerScript
 			$db->execute();
 		}
 		JFolder::delete( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) );
+
+		echo '<p style="margin-bottom: 50px;"><strong>Done! All SobiPro files and database tables have been removed from your system.</strong></p>';
+
 	}
 
 	protected function installFramework()
@@ -391,7 +429,7 @@ class com_sobiproInstallerScript
 //		}
 		JFile::copy( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/Sobi-1.0.2.phar.tar.gz' );
 		JFile::delete( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz' );
-		// I am guessing that this was wath cached the PHAR file. Let's see
+		// I am guessing that this was what cached the PHAR file. Let's see...
 		if ( function_exists( 'opcache_reset' ) ) {
 			opcache_reset();
 		}
