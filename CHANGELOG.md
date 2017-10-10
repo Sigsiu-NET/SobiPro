@@ -39,6 +39,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Template information window improved
 	(!) XSLT processor: changed from transformToDoc to transformToXml due to issues with "disable-output-escaping"
 	(!) General settings for title and description of the forms moved down to template tab
+	(!) SQL installation changes added to clean install script too
 	
 	(#) Missing icons in template manager's save options
 	(#) if some SobiPro applications are outdated, the message is shown on each page (should be only the Joomla cPanel page)
@@ -56,7 +57,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Template debug options moved to section settings
 	(!) Core field versions changed to 1.4
 	(!) Improvements of input filter messages
-	(!) SQL installation changes added to clean install script too
 	
     (#) Entire cache is being deleted while saving section settings
     (#) Version checker reports outdated version due to use of an undefinied constant
