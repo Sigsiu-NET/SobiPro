@@ -56,6 +56,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Template debug options moved to section settings
 	(!) Core field versions changed to 1.4
 	(!) Improvements of input filter messages
+	(!) SQL installation changes added to clean install script too
 	
     (#) Entire cache is being deleted while saving section settings
     (#) Version checker reports outdated version due to use of an undefinied constant

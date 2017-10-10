@@ -1588,7 +1588,7 @@ INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`
   ('radio', 'Radio Buttons', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('select', 'Single Select List', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('textarea', 'Text Area', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
-  ('url', 'URL', '1.2', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
+  ('url', 'URL', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('category', 'Category', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('info', 'Information', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('button', 'Button', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');
