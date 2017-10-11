@@ -30,7 +30,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (-) Removed  
 (!) Change  
 
-### 1.4.2 (6 October 2017)
+### 1.4.2 (11 October 2017)
 
 	(+) New repository SSL certificate
 	
@@ -39,13 +39,16 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Template information window improved
 	(!) XSLT processor: changed from transformToDoc to transformToXml due to issues with "disable-output-escaping"
 	(!) General settings for title and description of the forms moved down to template tab
+	(!) SQL installation changes added to clean install script too
 	
 	(#) Missing icons in template manager's save options
-	(#) if some SobiPro applications are outdated, the message is shown on each page (should be only the Joomla cPanel page)
+	(#) If some SobiPro applications are outdated, the message is shown on each page (should be only the Joomla cPanel page)
 	(#) Missing argument 1 for SPFilter::save() (Issue #37)
 	(#) Error in Joomla cPanel when SSL certificate expires (Issue #32)
 	(#) Wrong template name in duplicated template (Issue #34)
 	(#) Changed print_r to var_export in error log output (Issue #36)
+	(#) Un-installation message corrected and improved
+	(#) Entry approval leads to MYSQL error if calendar field 2.3 installed and used
 
 
 ### 1.4.1 (29 September 2017)
