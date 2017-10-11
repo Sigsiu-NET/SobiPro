@@ -453,7 +453,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$content = Input::Raw( 'file_content', 'post' );
+		$content = Input::Html( 'file_content', 'post' );
 		$file = $this->file( Input::Cmd( 'fileName' ), !( $new ) );
 		Sobi::Trigger( 'Save', $this->name(), [ &$content, &$file ] );
 		if ( !( $file ) ) {
@@ -463,7 +463,6 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$File->content( stripslashes( $content ) );
 		try {
 			$File->save();
-
 			$message = Sobi::Txt( 'TP.FILE_SAVED' );
 			if ( $compile ) {
 				$message .= "\n" . $this->compile( false );
@@ -499,6 +498,13 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		return $file;
 	}
 
+	/**
+	 * @param array $file
+	 *
+	 * @return array|string
+	 *
+	 * @since version
+	 */
 	private function dir( $file )
 	{
 		$file = explode( '.', $file );
@@ -508,6 +514,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$file = SPLoader::dirPath( $file, 'root', true );
 		}
 		else {
+			/** @var array $file */
 			$file = SPLoader::dirPath( 'usr.templates.' . implode( '.', $file ), 'front', true );
 		}
 		if ( !$file ) {
