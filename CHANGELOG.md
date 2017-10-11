@@ -48,6 +48,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Wrong template name in duplicated template (Issue #34)
 	(#) Changed print_r to var_export in error log output (Issue #36)
 	(#) Un-installation message corrected and improved
+	(#) Entry approval leads to MYSQL error if calendar field 2.3 installed and used
 
 
 ### 1.4.1 (29 September 2017)

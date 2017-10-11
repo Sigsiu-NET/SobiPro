@@ -323,7 +323,7 @@ class SPFieldType extends SPObject
 						->select( 'lang', 'spdb_field_data', [ 'sid' => $sid, 'copy' => '1', 'fid' => $this->fid ] )
 						->loadResultArray();
 					$cParams[ 'copy' ] = 0;
-					if ( count( $languages ) ) {
+					if ( $languages[0] != '' ) {
 						$cParams[ 'lang' ] = $languages;
 					}
 					$db->delete( 'spdb_field_data', $cParams );
