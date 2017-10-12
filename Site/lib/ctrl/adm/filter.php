@@ -88,7 +88,7 @@ class SPFilter extends SPConfigAdmCtrl
 			$filters = $this->getFilters();
 			$name = Input::String( 'filter_name', 'request','Filter Name' );
 			$msg = str_replace( [ "\n", "\t", "\r" ], null, SPLang::clean( Input::String( 'filter_message', 'request','The data entered in the $field field contains not allowed characters!' ) ) );
-			$regex = SPLang::clean( Input::Raw( 'filter_regex', 'request','/^[\.*]+$/' ) );
+			$regex = SPLang::clean( SPRequest::raw( 'filter_regex', '/^[\.*]+$/' ) );
 			$regex = str_replace( '[:apostrophes:]', '\"' . "\'", $regex );
 			$regex = base64_encode( str_replace( [ "\n", "\t", "\r" ], null, $regex ) );
 			$custom = 'custom';
