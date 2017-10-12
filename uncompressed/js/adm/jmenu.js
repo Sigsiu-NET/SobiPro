@@ -16,208 +16,199 @@
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
-var SobiProUrl = '';
-SobiPro.jQuery( document ).ready( function ()
-{
-	var modal = SobiPro.jQuery( '#SobiProModal' );
-	SobiPro.jQuery( '#jform_link' ).css( 'min-width', '400px' );
-	modal.find( '.ctrl-save' ).click( function ( e )
-	{
-		e.preventDefault();
-		var fields = modal.find( 'iframe' ).contents().find( ':input' );
-		var setting = {};
-		var request = [];
-		SobiPro.jQuery.each( fields, function ( i, e )
-		{
-			e = SobiPro.jQuery( e );
-			switch ( e.attr( 'name' ) ) {
-				case 'sid':
-					SobiPro.jQuery( '#selectedSid' ).val( e.val() );
-					break;
-				case 'function-name':
-					var functionName = e.val();
-					if ( functionName.indexOf( '%s' ) != -1 ) {
-						functionName = functionName.replace( '%s', SobiPro.jQuery( "#SobiSection" ).find( ':selected' ).text() );
-					}
-					SobiPro.jQuery( '#SobiProSelectedFunction' ).html( functionName );
-					break;
-				default:
-					if ( e.attr( 'name' ).indexOf( 'params' ) != -1 ) {
-						var name = e.attr( 'name' ).replace( 'params[', '' ).replace( ']', '' );
-						setting[ name ] = e.val();
-					}
-					else if ( e.attr( 'name' ).indexOf( 'request' ) != -1 ) {
-						var name = e.attr( 'name' ).replace( 'request[', '' ).replace( ']', '' );
-						request.push( { 'name': name, 'value': e.val() } );
-					}
-					break;
-			}
-		} );
-		if ( request.length ) {
-			var link = 'index.php?option=com_sobipro&';
-			SobiPro.jQuery.each( request, function ( i, e )
-			{
-				if ( e.value.length ) {
-					link = link + e.name + '=' + e.value;
-					if ( i + 1 < request.length ) {
-						link = link + '&';
-					}
-				}
-			} );
-			SobiProUrl = link;
-			SPUpdateUrl();
-		}
-		SobiPro.jQuery( '.SobiProSettings' ).val( SobiPro.jQuery.base64.encode( JSON.stringify( setting ) ) );
-	} );
-
-	modal.find( '.ctrl-clear' ).click( function ( e )
-	{
-		SobiProUrl = '';
-		SPUpdateUrl();
-		SobiPro.jQuery( '#SobiProSelectedFunction' ).html( SpStrings.buttonLabel )
-	} );
-
-	SobiPro.jQuery( '#SobiProSelector' ).bind( 'click', function ( e )
-	{
-		if ( SobiPro.jQuery( "#SobiSection" ).val() == 0 || SobiPro.jQuery( "#SobiSection" ).val() == "" ) {
-			SobiPro.Alert( 'YOU_HAVE_TO_AT_LEAST_SELECT_A_SECTION' );
-			return false;
-		}
-		modal.modal();
-		var mid = SobiPro.jQuery( '#SobiProSelector' ).data( 'mid' );
-		var section = SobiPro.jQuery( '#SobiSection' ).val();
-		modal.find( '.modal-body' )
-			.html( '<iframe src="index.php?option=com_sobipro&section=' + section + '&task=menu&tmpl=component&format=html&mid=' + mid + '" class="spJMenu"> </iframe>' );
-	} );
-
-	try {
-		var JSubmit = Joomla.submitbutton;
-		Joomla.submitbutton = function ( pressbutton, type )
-		{
-			if ( pressbutton.indexOf( 'save' ).indexOf == -1 || pressbutton.indexOf( 'apply' ) == -1 || SPValidate() ) {
-				JSubmit( pressbutton, type );
-			}
-		}
-	}
-	catch ( x ) {
-		var JSubmit = submitbutton;
-		submitbutton = function ( pressbutton, type )
-		{
-			if ( pressbutton.indexOf( 'save' ).indexOf == -1 || pressbutton.indexOf( 'apply' ) == -1 || SPValidate() ) {
-				JSubmit( pressbutton, type );
-			}
-		}
-	}
-	SobiPro.jQuery( '#SobiProFunctions' ).change( function ()
-	{
-		if ( SobiPro.jQuery( this ).val() ) {
-			SobiPro.jQuery( 'body' ).find( 'form' ).submit();
-		}
-	} );
-
-	SobiPro.jQuery( '.SobiProCalendar' ).change( function ()
-		{
-			"use strict";
-			var date = [];
-			SobiPro.jQuery( '.SobiProCalendar' ).each( function ( i, e )
-			{
-				if ( SobiPro.jQuery( this ).val() ) {
-					date.push( SobiPro.jQuery( this ).val() );
-				}
-			} );
-			SobiPro.jQuery( '[name=request\\[date\\]]' ).val( date.join( '.' ) );
-		}
-	);
-
-	SobiPro.jQuery( '.SobiProEntryChooser' ).typeahead( {
-		source: function ( typeahead, query )
-		{
-			var request = {
-				'option': 'com_sobipro',
-				'task': 'entry.search',
-				'sid': SobiPro.jQuery( '#SP_section' ).val(),
-				'search': query,
-				'format': 'raw'
-			};
-			return  SobiPro.jQuery.ajax( {
-				'type': 'post',
-				'url': 'index.php',
-				'data': request,
-				'dataType': 'json'
-			} ).done(
-				function ( response )
-				{
-					responseData = [];
-					if ( response.length ) {
-						for ( var i = 0; i < response.length; i++ ) {
-							responseData[ i ] = { 'name': response[ i ].name + ' ( ' + response[ i ].id + ' )', 'id': response[ i ].id, 'title': response[ i ].name  };
-						}
-						typeahead.process( responseData );
-					}
-				}
-			);
-		},
-		onselect: function ( obj )
-		{
-			SobiPro.jQuery( '#SP_sid' ).val( obj.id );
-			SobiPro.jQuery( '#selectedEntryName' ).val( obj.title );
-			SobiPro.jQuery( 'input[name=function-name]' ).val( SobiPro.jQuery( '#entryName' ).html().replace( '%s', obj.title ) );
-		},
-		property: "name"
-	} );
-	try {
-		SobiPro.jQuery( SobiPro.jQuery( '#jform_type-lbl' ).siblings()[ 0 ] ).val( SpStrings.component );
-	}
-	catch ( e ) {
-	}
-	try {
-		var lType = SobiPro.jQuery( '[name*="jform[type]"]' ).parent().find( 'input[type=text]' );
-		lType.val( SpStrings.component );
-		lType.css( 'min-width', '200px' );
-		SobiPro.jQuery( '#jform_link' ).css( 'min-width', '500px' );
-	}
-	catch ( e ) {
-	}
+SobiPro.jQuery( document ).ready( function () {
+	SPJoomlaMenu()
 } );
 
-function SP_selectCat( sid )
-{
-	SobiPro.jQuery( 'input[name*=sid]' ).val( sid );
-	SobiPro.jQuery( '#sobiCats_CatUrl' + sid ).focus();
-	SobiPro.jQuery.ajax( {
-		'url': 'index.php',
-		'data': { 'task': 'category.parents', 'out': 'json', 'option': 'com_sobipro', 'format': 'raw', 'tmpl': 'component', 'sid': sid },
-		'type': 'post',
-		'dataType': 'json'
-	} ).done(
-		function ( response )
-		{
-			var catName = '';
-			SobiPro.jQuery.each( response.categories, function ( i, cat )
-			{
-				catName = cat.name;
-			} );
-			SobiPro.jQuery( 'input[name=function-name]' ).val( SobiPro.jQuery( '#categoryName' ).html().replace( '%s', catName ) );
+function SPJmenuFixTask( b ) {
+	SobiPro.jQuery( document ).ready( function () {
+		try {
+			SobiPro.jQuery( SobiPro.jQuery( '#jform_type-lbl' ).siblings()[ 0 ] ).val( b );
+		} catch (e) {
 		}
-	);
+		try {
+			var a = SobiPro.jQuery( '[name*="jform[type]"]' ).parent().find( 'input[type=text]' );
+			a.val( b );
+			a.css( 'min-width', '200px' );
+			SobiPro.jQuery( '#jform_link' ).css( 'min-width', '500px' );
+		} catch (e) {
+		}
+	} );
 }
 
-function SPUpdateUrl()
-{
-	if ( !( SobiPro.jQuery( '#selectedSid' ).val() ) ) {
-		SobiPro.jQuery( '#selectedSid' ).val( SobiPro.jQuery( '#SobiSection' ).val() );
+function SPJoomlaMenu() {
+	try {
+		var f = Joomla.submitbutton;
+		Joomla.submitbutton = function ( a, b ) {
+			if ( a.indexOf( 'save' ).indexOf == -1 || a.indexOf( 'apply' ) == -1 || SPValidate() ) {
+				f( a, b );
+			}
+		}
+	} catch (x) {
+		var f = submitbutton;
+		submitbutton = function ( a, b ) {
+			if ( a.indexOf( 'save' ).indexOf == -1 || a.indexOf( 'apply' ) == -1 || SPValidate() ) {
+				f( a, b );
+			}
+		}
 	}
-	if ( SobiProUrl == '' ) {
-		SobiProUrl = 'index.php?option=com_sobipro&sid=' + SobiPro.jQuery( '#selectedSid' ).val();
-		SobiPro.jQuery( '.SobiProSettings' ).val( '' );
+	SobiPro.jQuery( "#spsection" ).bind( "change", function () {
+		if ( !(SobiPro.jQuery( "#spsection option:selected" ).val()) ) {
+			return;
+		}
+		sid = SobiPro.jQuery( "#spsection option:selected" ).val();
+		SobiPro.jQuery( "#sid" ).val( sid );
+		SPSetObjectType( SPJmenuStrings.objects.section );
+		SobiPro.jQuery( "#oname" ).val( SobiPro.htmlEntities( SobiPro.jQuery( "#spsection option:selected" ).html() ) );
+		SobiPro.jQuery( "#sp_category" ).removeClass( 'btn-primary' ).html( SPJmenuStrings.labels.category );
+		SobiPro.jQuery( "#sp_entry" ).removeClass( 'btn-primary' ).html( SPJmenuStrings.labels.entry );
+		SPReloadTemplates( 'section' );
+	} );
+	if ( SobiPro.jQuery( "#sp_category" ) != null ) {
+		SobiPro.jQuery( "#sp_category" ).bind( "click", function ( e ) {
+			if ( SobiPro.jQuery( "#sid" ).val() == 0 ) {
+				SobiPro.Alert( "PLEASE_SELECT_SECTION_FIRST" );
+				semaphore = 0;
+				return false;
+			}
+			else {
+				var a = SobiProUrl.replace( '%task%', 'category.chooser' ) + '&treetpl=rchooser&multiple=1&tmpl=component&sid=' + SobiPro.jQuery( "#sid" ).val();
+				jQuery( "#spCatsChooser" ).html( '<iframe id="spCatSelectFrame" src="' + a + '" style="width: 480px; height: 400px; border: none;"> </iframe>' );
+				SobiPro.jQuery( '#spCat' ).modal();
+				semaphore = 0;
+			}
+		} );
 	}
-	SobiPro.jQuery( '#jform_link' ).val( SobiProUrl );
+	if ( SobiPro.jQuery( "#sp_entry" ) != null ) {
+		SobiPro.jQuery( "#sp_entry" ).bind( "click", function ( e ) {
+			if ( SobiPro.jQuery( "#sid" ).val() == 0 ) {
+				SobiPro.Alert( "PLEASE_SELECT_SECTION_FIRST" );
+				return false;
+			}
+			else {
+				SobiPro.jQuery( '#spEntryChooser' ).typeahead( {
+					source: function ( b, c ) {
+						var d = {
+							'option': 'com_sobipro',
+							'task': 'entry.search',
+							'sid': SobiPro.jQuery( "#sid" ).val(),
+							'search': c,
+							'format': 'raw'
+						};
+						return SobiPro.jQuery.ajax( {
+							'type': 'post',
+							'url': 'index.php',
+							'data': d,
+							'dataType': 'json',
+							success: function ( a ) {
+								responseData = [];
+								if ( a.length ) {
+									for ( var i = 0; i < a.length; i++ ) {
+										responseData[ i ] = {
+											'name': a[ i ].name + ' ( ' + a[ i ].id + ' )',
+											'id': a[ i ].id,
+											'title': a[ i ].name
+										}
+									}
+									b.process( responseData );
+									SobiPro.jQuery( '.typeahead' ).addClass( 'typeahead-width' ).css( 'font-size', '13px' );
+									SobiPro.jQuery( '#spEntryChooser' ).after( SobiPro.jQuery( '.typeahead' ) );
+								}
+							}
+						} );
+					},
+					onselect: function ( a ) {
+						SobiPro.jQuery( '#selectedEntry' ).val( a.id );
+						SobiPro.jQuery( '#selectedEntryName' ).val( a.title );
+					},
+					property: "name"
+				} );
+				SobiPro.jQuery( '#spEntry' ).modal();
+			}
+		} );
+	}
+	SobiPro.jQuery( '#spEntrySelect' ).bind( "click", function ( e ) {
+		if ( !(SobiPro.jQuery( '#selectedEntry' ).val()) ) {
+			return;
+		}
+		SobiPro.jQuery( '#sid' ).val( SobiPro.jQuery( '#selectedEntry' ).val() );
+		SPSetObjectType( SPJmenuStrings.objects.entry );
+		SobiPro.jQuery( "#sp_entry" ).addClass( 'btn-primary' ).html( SobiPro.htmlEntities( SobiPro.jQuery( '#selectedEntryName' ).val() ) );
+		SobiPro.jQuery( "#sp_category" ).removeClass( 'btn-primary' ).html( SPJmenuStrings.labels.category );
+		SPReloadTemplates( 'entry' );
+	} );
+	SobiPro.jQuery( '#spCatSelect' ).bind( "click", function ( e ) {
+		if ( !(SobiPro.jQuery( '#selectedCat' ).val()) ) {
+			return;
+		}
+		SobiPro.jQuery( '#sid' ).val( SobiPro.jQuery( '#selectedCat' ).val() );
+		SPSetObjectType( SPJmenuStrings.objects.category );
+		SobiPro.jQuery( "#sp_category" ).addClass( 'btn-primary' ).html( SobiPro.htmlEntities( SobiPro.jQuery( '#selectedCatName' ).val() ) );
+		SobiPro.jQuery( "#sp_entry" ).removeClass( 'btn-primary' ).html( SPJmenuStrings.labels.entry );
+		SPReloadTemplates( 'category' );
+	} );
+	SobiPro.jQuery( '#sptpl' ).change( function () {
+		if ( SobiPro.jQuery( this ).find( 'option:selected' ).val() ) {
+			SobiPro.jQuery( this ).attr( 'name', SobiPro.jQuery( this ).attr( 'name' ).replace( '-sptpl-', 'sptpl' ) );
+		}
+		else {
+			SobiPro.jQuery( this ).attr( 'name', SobiPro.jQuery( this ).attr( 'name' ).replace( 'sptpl', '-sptpl-' ) );
+			SobiPro.jQuery( '#jform_link' ).val( SobiPro.jQuery( '#jform_link' ).val().replace( /\&sptpl\=[a-zA-Z0-9\-\_\.]*/gi, '' ) )
+		}
+	} );
+	SobiPro.jQuery( '.SobiProCalendar' ).find( 'select' ).change( function () {
+		"use strict";
+		var a = [];
+		SobiPro.jQuery( '.SobiProCalendar' ).find( 'select' ).each( function ( i, e ) {
+			if ( SobiPro.jQuery( this ).val() ) {
+				a.push( SobiPro.jQuery( this ).val() );
+			}
+		} );
+		SobiPro.jQuery( '#selectedDate' ).val( a.join( '.' ) );
+	} );
 }
 
-function SPValidate()
-{
-	SPUpdateUrl();
-	if ( SobiPro.jQuery( "#selectedSid" ).val() == 0 || SobiPro.jQuery( "#selectedSid" ).val() == "" ) {
+function SPSetObjectType( a ) {
+	if ( !(SPJmenuStrings.task) ) {
+		SobiPro.jQuery( "#otype" ).val( a );
+	}
+}
+
+function SPReloadTemplates( b ) {
+	if ( (SPJmenuStrings.task) ) {
+		b = SPJmenuStrings.task;
+	}
+	sid = SobiPro.jQuery( "#spsection option:selected" ).val();
+	var c = {
+		'option': 'com_sobipro',
+		'task': 'template.list',
+		'sid': sid,
+		'type': b,
+		'format': 'raw'
+	};
+	SobiPro.jQuery.ajax( {
+		'type': 'post',
+		'url': 'index.php',
+		'data': c,
+		'dataType': 'json',
+		success: function ( a ) {
+			responseData = [];
+			SobiPro.jQuery( "#sptpl option" ).each( function () {
+				if ( SobiPro.jQuery( this ).val() ) {
+					SobiPro.jQuery( this ).remove();
+				}
+			} );
+			if ( a.length ) {
+				for ( var i = 0; i < a.length; i++ ) {
+					SobiPro.jQuery( "#sptpl" ).append( '<option value="' + a[ i ].name + '">' + a[ i ].filename + '</option>' );
+				}
+			}
+		}
+	} );
+}
+
+function SPValidate() {
+	if ( SobiPro.jQuery( "#sid" ).val() == 0 || SobiPro.jQuery( "#sid" ).val() == "" ) {
 		SobiPro.Alert( 'YOU_HAVE_TO_AT_LEAST_SELECT_A_SECTION' );
 		return false;
 	}

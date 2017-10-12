@@ -1,13 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
-
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
-
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -16,6 +16,8 @@
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
+
+use Sobi\Input\Input;
 
 defined( '_JEXEC' ) or die();
 
@@ -71,6 +73,7 @@ if ( !( class_exists( 'JElement' ) ) ) {
 		 * Constructor
 		 *
 		 * @access protected
+		 *
 		 * @param null $parent
 		 */
 		function __construct( $parent = null )
@@ -125,6 +128,7 @@ if ( !( class_exists( 'JElement' ) ) ) {
 if ( !( defined( 'SOBI_CMS' ) ) ) {
 	define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : 'joomla16' );
 }
+
 class JElementSPSection extends JElement
 {
 	protected $task = null;
@@ -143,6 +147,7 @@ class JElementSPSection extends JElement
 		if ( !( $instance instanceof self ) ) {
 			$instance = new self();
 		}
+
 		return $instance;
 	}
 
@@ -176,16 +181,18 @@ class JElementSPSection extends JElement
 
 		$head = SPFactory::header();
 		if ( SOBI_CMS == 'joomla3' ) {
+			$head->initBase( true );
 			$head->addJsFile( [ 'sobipro', 'jqnc', 'adm.sobipro', 'adm.jmenu' ] );
 		}
 		else {
+			$head->initBase( true );
 			$head->addJsFile( [ 'sobipro', 'jquery', 'adm.sobipro', 'adm.jmenu', 'jquery-migrate' ] );
 		}
 
 		if ( SOBI_CMS != 'joomla3' ) {
 			$head->addCssFile( 'bootstrap.bootstrap' )
-					->addJsFile( [ 'bootstrap' ] )
-					->addCSSCode( '
+				->addJsFile( [ 'bootstrap' ] )
+				->addCSSCode( '
 							#jform_request_SOBI_SELECT_SECTION-lbl { margin-top: 8px; }
                             #jform_request_cid-lbl { margin-top: 8px; }
                             #jform_request_eid-lbl { margin-top: 18px; }
@@ -200,29 +207,29 @@ class JElementSPSection extends JElement
             ' );
 		}
 		// Joomla! 1.5
-		$this->cid = SPRequest::arr( 'cid' );
+		$this->cid = Input::Arr( 'cid' );
 		// Joomla! 1.6+
 		if ( !( count( $this->cid ) && is_numeric( $this->cid[ 0 ] ) ) ) {
-			$this->cid = SPRequest::int( 'id', 0 );
+			$this->cid = Input::Int( 'id' );
 		}
 		$this->determineTask();
 		$strings = [
 			'objects' => [
-				'entry' => Sobi::Txt( 'OTYPE_ENTRY' ),
+				'entry'    => Sobi::Txt( 'OTYPE_ENTRY' ),
 				'category' => Sobi::Txt( 'OTYPE_CATEGORY' ),
-				'section' => Sobi::Txt( 'OTYPE_SECTION' ),
+				'section'  => Sobi::Txt( 'OTYPE_SECTION' ),
 			],
-			'labels' => [
+			'labels'  => [
 				'category' => Sobi::Txt( 'SOBI_SELECT_CATEGORY' ),
-				'entry' => Sobi::Txt( 'SOBI_SELECT_ENTRY' )
+				'entry'    => Sobi::Txt( 'SOBI_SELECT_ENTRY' )
 			],
-			'task' => $this->task
+			'task'    => $this->task
 		];
 		$strings = json_encode( $strings );
 
 		$head->addJsCode( "SPJmenuFixTask( '{$this->taskName}' );" )
-				->addJsFile( 'bootstrap.typeahead' )
-				->addJsCode( "var SPJmenuStrings = {$strings}" );
+			->addJsFile( 'bootstrap.typeahead' )
+			->addJsCode( "var SPJmenuStrings = {$strings}" );
 		if ( $this->task != 'list.date' ) {
 			if ( SOBI_CMS == 'joomla3' ) {
 				$head->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( "#spCalendar" ).parent().parent().css( "display", "none" ); } );' );
@@ -268,15 +275,16 @@ class JElementSPSection extends JElement
 			}
 			elseif ( SOBI_CMS == 'joomla3' ) {
 				$model = JModelLegacy::getInstance( 'MenusModelItem' )
-						->getItem();
+					->getItem();
 				$link = $model->link;
 			}
 			else {
 				$link = JModel::getInstance( 'MenusModelItem' )
-						->getItem()
-						->get( 'link' );
+					->getItem()
+					->get( 'link' );
 			}
 		}
+
 		return str_replace( 'amp;', null, $link );
 	}
 
@@ -297,23 +305,25 @@ class JElementSPSection extends JElement
 				break;
 
 		}
+
 		return parent::fetchTooltip( $label, $node->attributes( 'msg' ), $node, $control_name, $name );
 	}
 
 	protected function getCat()
 	{
 		$params = [
-			'id' => 'sp_category',
+			'id'    => 'sp_category',
 			'class' => $this->oType == 'category' ? 'btn input-medium btn-primary' : 'btn input-medium',
 			'style' => 'width: 300px'
 		];
 		if ( $this->task && $this->task != 'entry.add' ) {
 			$params[ 'disabled' ] = 'disabled';
 		}
+
 		return
-				'<div class="SobiPro">' .
-				SPHtml_Input::button( 'sp_category', $this->oType == 'category' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_CATEGORY' ), $params ) .
-				'<div class="spCategoryChooser modal hide" id="spCat">
+			'<div class="SobiPro">' .
+			SPHtml_Input::button( 'sp_category', $this->oType == 'category' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_CATEGORY' ), $params ) .
+			'<div class="spCategoryChooser spModalIframe narrow modal hide" id="spCat">
 					<div class="modal-header"><button class="close" data-dismiss="modal">×</button>
 						<h3>' . Sobi::Txt( 'SOBI_SELECT_CATEGORY' ) . '</h3>
                 </div>
@@ -333,21 +343,22 @@ class JElementSPSection extends JElement
 	private function getEntry()
 	{
 		$params = [
-			'id' => 'sp_entry',
+			'id'    => 'sp_entry',
 			'class' => $this->oType == 'entry' ? 'btn input-large btn-primary' : 'btn input-medium',
 			'style' => 'margin-top: 10px; width: 300px'
 		];
 		if ( $this->task ) {
 			$params[ 'disabled' ] = 'disabled';
 		}
+
 		return
-				'<div class="SobiPro">' .
-				SPHtml_Input::button(
-					'sp_entry',
-					$this->oType == 'entry' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_ENTRY' ),
-					$params
-				) .
-				'<div class="modal hide" id="spEntry" overflow: visible;">
+			'<div class="SobiPro">' .
+			SPHtml_Input::button(
+				'sp_entry',
+				$this->oType == 'entry' ? $this->oName : Sobi::Txt( 'SOBI_SELECT_ENTRY' ),
+				$params
+			) .
+			'<div class="modal hide" id="spEntry" overflow: visible;">
 					<div class="modal-header"><button class="close" data-dismiss="modal">×</button>
 						<h3>' . Sobi::Txt( 'SOBI_SELECT_ENTRY' ) . '</h3>
                 </div>
@@ -397,9 +408,10 @@ class JElementSPSection extends JElement
 								$db->select( 'pid', 'spdb_relations', [ 'id' => $id ] );
 								$id = $db->loadResult();
 								if ( $id ) {
-									$path[ ] = ( int )$id;
+									$path[] = ( int ) $id;
 								}
-							} catch ( SPException $x ) {
+							}
+							catch ( SPException $x ) {
 							}
 						}
 						$path = array_reverse( $path );
@@ -418,10 +430,11 @@ class JElementSPSection extends JElement
 		switch ( $name ) {
 			case 'sid':
 				$params = [ 'id' => 'sid', 'class' => 'input-mini', 'style' => 'text-align: center; margin-top: 10px; margin-left: 10px;', 'readonly' => 'readonly' ];
+
 				return '<div class="SobiPro" id="jform_request_sid">'
-				. SPHtml_Input::text( 'type', $this->oTypeName, [ 'id' => 'otype', 'class' => 'input-medium', 'style' => 'text-align: center; margin-top: 10px;', 'readonly' => 'readonly' ] )
-				. SPHtml_Input::text( 'urlparams[sid]', $sid, $params )
-				. '</div>';
+					. SPHtml_Input::text( 'type', $this->oTypeName, [ 'id' => 'otype', 'class' => 'input-medium', 'style' => 'text-align: center; margin-top: 10px;', 'readonly' => 'readonly' ] )
+					. SPHtml_Input::text( 'urlparams[sid]', $sid, $params )
+					. '</div>';
 				break;
 			case 'cid':
 				return $this->getCat();
@@ -442,15 +455,16 @@ class JElementSPSection extends JElement
 		$sout = [];
 		try {
 			$sections = $db->select( '*', 'spdb_object', [ 'oType' => 'section' ], 'id' )
-					->loadObjectList();
-		} catch ( SPException $x ) {
+				->loadObjectList();
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( $this->name(), $x->getMessage(), SPC::ERROR, 500, __LINE__, __FILE__ );
 		}
 		if ( count( $sections ) ) {
 			SPLoader::loadClass( 'models.datamodel' );
 			SPLoader::loadClass( 'models.dbobject' );
 			SPLoader::loadModel( 'section' );
-			$sout[ ] = Sobi::Txt( 'SOBI_SELECT_SECTION' );
+			$sout[] = Sobi::Txt( 'SOBI_SELECT_SECTION' );
 			foreach ( $sections as $section ) {
 				if ( Sobi::Can( 'section', 'access', 'valid', $section->id ) ) {
 					$s = new SPSection();
@@ -461,6 +475,7 @@ class JElementSPSection extends JElement
 		}
 		$params = [ 'id' => 'spsection', 'class' => 'required' ];
 		$field = SPHtml_Input::select( 'sid', $sout, $selected, false, $params );
+
 		return "<div class=\"SobiPro\" style=\"margin-top: 2px;\">{$field}</div>";
 	}
 
@@ -493,24 +508,26 @@ class JElementSPSection extends JElement
 				$days[ $i ] = $i;
 			}
 			$exYears = SPFactory::db()
-					->dselect( 'EXTRACT( YEAR FROM createdTime )', 'spdb_object' )
-					->loadResultArray();
+				->dselect( 'EXTRACT( YEAR FROM createdTime )', 'spdb_object' )
+				->loadResultArray();
 			if ( count( $exYears ) ) {
 				foreach ( $exYears as $year ) {
 					$years[ $year ] = $year;
 				}
 			}
+
 			return
-					'<div class="SobiPro SobiProCalendar">' .
-					SPHtml_Input::select( 'sp_year', $years, $selected[ 'year' ] ) .
-					SPHtml_Input::select( 'sp_month', $months, $selected[ 'month' ] ) .
-					SPHtml_Input::select( 'sp_day', $days, $selected[ 'day' ] ) .
-					'<input type="hidden" name="urlparams[date]" id="selectedDate" value="' . trim( $query[ 'date' ] ) . '"/>
+				'<div class="SobiPro SobiProCalendar">' .
+				SPHtml_Input::select( 'sp_year', $years, $selected[ 'year' ] ) .
+				SPHtml_Input::select( 'sp_month', $months, $selected[ 'month' ] ) .
+				SPHtml_Input::select( 'sp_day', $days, $selected[ 'day' ] ) .
+				'<input type="hidden" name="urlparams[date]" id="selectedDate" value="' . trim( $query[ 'date' ] ) . '"/>
 				</div>';
 
 		}
 		else {
 			SPFactory::header()->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( "#spCalendar" ).parent().css( "display", "none" ); } );' );
+
 			return '<span id="spCalendar"></span>';
 		}
 	}
@@ -522,12 +539,13 @@ class JElementSPSection extends JElement
 		$name = $this->tpl ? 'urlparams[sptpl]' : 'urlparams[-sptpl-]';
 		$templates[ '' ] = Sobi::Txt( 'SELECT_TEMPLATE_OVERRIDE' );
 		$template = SPFactory::db()
-				->select( 'sValue', 'spdb_config', [ 'section' => $this->section, 'sKey' => 'template', 'cSection' => 'section' ] )
-				->loadResult();
+			->select( 'sValue', 'spdb_config', [ 'section' => $this->section, 'sKey' => 'template', 'cSection' => 'section' ] )
+			->loadResult();
 		$templateDir = $this->templatePath( $template );
 		$this->listTemplates( $templates, $templateDir, $this->oType );
 		$params = [ 'id' => 'sptpl' ];
 		$field = SPHtml_Input::select( $name, $templates, $selected, false, $params );
+
 		return "<div class=\"SobiPro\" style=\"margin-top: 2px;\">{$field}</div>";
 	}
 
@@ -542,6 +560,7 @@ class JElementSPSection extends JElement
 		else {
 			$template = SOBI_PATH . '/usr/templates/' . str_replace( '.', '/', $tpl );
 		}
+
 		return $template;
 	}
 
@@ -586,22 +605,22 @@ class JElementSPSection extends JElement
 		}
 		elseif ( $sid ) {
 			$this->oType = SPFactory::db()
-					->select( 'oType', 'spdb_object', [ 'id' => $sid ] )
-					->loadResult();
+				->select( 'oType', 'spdb_object', [ 'id' => $sid ] )
+				->loadResult();
 			$this->oTypeName = Sobi::Txt( 'OTYPE_' . strtoupper( $this->oType ) );
 		}
 		switch ( $this->oType ) {
 			case 'entry':
 				$this->oName = SPFactory::Entry( $sid )
-						->get( 'name' );
+					->get( 'name' );
 				break;
 			case 'section':
 				$this->oName = SPFactory::Section( $sid )
-						->get( 'name' );
+					->get( 'name' );
 				break;
 			case 'category':
 				$this->oName = SPFactory::Category( $sid )
-						->get( 'name' );
+					->get( 'name' );
 				break;
 			default:
 				$this->oName = null;
