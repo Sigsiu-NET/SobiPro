@@ -50,6 +50,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Un-installation message corrected and improved
 	(#) Entry approval leads to MYSQL error if calendar field 2.3 installed and used
 	(#) Section and category selection in SobiPro modules does not longer work
+	(#) 'Notice: A non well formed numeric value encountered'
 
 
 ### 1.4.1 (29 September 2017)
