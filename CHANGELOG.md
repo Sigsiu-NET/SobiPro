@@ -30,6 +30,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (-) Removed  
 (!) Change  
 
+### 1.4.3 (19 October 2017)
+
+	(#) Saving of XSL files in the template editor corrupts the file (Issue #43)
+	
+
 ### 1.4.2 (13 October 2017)
 
 	(+) New repository SSL certificate
