@@ -453,7 +453,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
-		$content = SPRequest::raw( 'file_content', null, 'post' );
+		$content = Input::Raw( 'file_content', 'post' );
 		$file = $this->file( Input::Cmd( 'fileName' ), !( $new ) );
 		Sobi::Trigger( 'Save', $this->name(), [ &$content, &$file ] );
 		if ( !( $file ) ) {

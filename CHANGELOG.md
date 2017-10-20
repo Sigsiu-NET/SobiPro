@@ -30,6 +30,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (-) Removed  
 (!) Change  
 
+### 1.4.4 ()
+
+    (!) Extracting Sobi Framework in case PHAR isn't usable
+
 ### 1.4.3 (19 October 2017)
 
 	(#) Saving of XSL files in the template editor corrupts the file (Issue #43)
