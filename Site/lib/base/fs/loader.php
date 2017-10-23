@@ -24,7 +24,7 @@ use Sobi\Framework;
 
 if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
 	// Suppressing warning because the error is being handled
-	@include_once 'phar://' . SOBI_ROOT . '/libraries/sobi/Sobi-1.0.2.phar.tar.gz/Framework.php';
+	@include_once 'phar://' . SOBI_ROOT . '/libraries/sobi/Sobi-1.0.3.phar.tar.gz/Framework.php';
 	if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
 		if ( file_exists( SOBI_ROOT . '/libraries/sobi/Framework.php' ) ) {
 			include_once SOBI_ROOT . '/libraries/sobi/Framework.php';
