@@ -241,7 +241,6 @@ abstract class SobiPro
 	 * check permission for an action.
 	 * Can be also used like this:
 	 *         SobiPro::Can( 'subject.action.ownership' )
-	 *         SobiPro::Can( 'entry.see_unpublished.own' )
 	 *
 	 * @param $subject
 	 * @param string $action - e.g. edit

@@ -32,7 +32,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 
 ### 1.4.4 ()
 
-    (!) Extracting Sobi Framework in case PHAR isn't usable
+    (!) Extracting Sobi Framework automatically in case PHAR isn't usable
+    
+    (#) Visitors are treated as users if checking permissions
+    (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
+    
 
 ### 1.4.3 (19 October 2017)
 

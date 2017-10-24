@@ -242,10 +242,10 @@ abstract class Sobi
 	 * check permission for an action.
 	 * Can be also used like this:
 	 *         Sobi::Can( 'subject.action.ownership' )
-	 *         Sobi::Can( 'entry.see_unpublished.own' )
+	 *         Sobi::Can( 'entry.access.unpublished_own' )
 	 * @param $subject
 	 * @param string $action - e.g. edit
-	 * @param string $ownership - e.g. own, all or valid
+	 * @param string $ownership - e.g. xx_own, all or valid
 	 * @param int $section - section. If not given, the current section will be used
 	 * @return bool - true if authorized
 	 */
