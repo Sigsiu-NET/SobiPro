@@ -257,33 +257,25 @@ class SPSectionCtrl extends SPController
 			}
 			//else no state is given to have both states
 
-				if ( Sobi::Can( 'entry.access.unapproved_own' ) ) {
+			if ( Sobi::Can( 'entry.access.unapproved_own' ) ) {
 				if ( !( Sobi::Can( 'entry.access.unapproved_any' ) ) ) {
-					$conditions[ ] = $db->argsOr( [ $oPrefix . 'approved' => '1', $oPrefix . 'owner' => Sobi::My( 'id' ) ] );
+					$conditions[] = $db->argsOr( [ $oPrefix . 'approved' => '1', $oPrefix . 'owner' => Sobi::My( 'id' ) ] );
 				}
 			}
 			elseif ( !( Sobi::Can( 'entry.access.unapproved_any' ) ) ) {
-					$conditions[ $oPrefix . 'approved' ] = '1';
-				}
+				$conditions[ $oPrefix . 'approved' ] = '1';
+			}
 			//else no approval is given to have both approval states
 
-		}
-		if ( !( Sobi::Can( 'entry.access.*' ) ) ) {
-			// @todo: expired permission
 			if ( Sobi::Can( 'entry.access.expired_own' ) ) {
-				$conditions[] = $db->argsOr( [ '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ] );
+				if ( !( Sobi::Can( 'entry.access.expired_any' ) ) ) {
+					$conditions[] = $db->argsOr( [ '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ] );
+				}
 			}
-			else {
-				// conflicts with "entry.access.unpublished_own" See #521
-				//$conditions[ 'state' ] = '1';
-//				if ( false && ( Sobi::Can( 'entry.access.unpublished_own' ) ) ) {
-//					$conditions[ '@VALID' ] = $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince', null, array( 'owner' => Sobi::My( 'id' ) ) );
-//				}
-//				elseif ( !( Sobi::Can( 'entry.access.unpublished_any' ) ) ) {
+			elseif ( !( Sobi::Can( 'entry.access.expired_any' ) ) ) {
 				$conditions[ '@VALID' ] = $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' );
-//				}
-
 			}
+			//else no valid until given at all
 		}
 
 		return $conditions;

@@ -33,6 +33,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 ### 1.4.4 ()
 
 	(+) New ACL rule 'approve.own'
+	(+) New ACL rules 'access.expired_any' and 'access.expired.own'
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     

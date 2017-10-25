@@ -361,7 +361,7 @@ abstract class SPController extends SPObject implements SPControl
 		/* if it's unpublished */
 		if ( !( $state ) ) {
 			if ( $owner && ( $owner == Sobi::My( 'id' ) ) ) {   //if the owner of an entry
-				if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) || Sobi::Can( $type, 'access', 'unpublished_any' ) )) {
+				if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) || Sobi::Can( $type, 'access', 'unpublished_any' ) ) ) {
 					$error = true;
 				}
 			}
@@ -393,6 +393,7 @@ abstract class SPController extends SPObject implements SPControl
 		$va = $this->_model->get( 'validUntil' );
 		$va = $va ? strtotime( $va . ' UTC' ) : 0;
 		if ( !( $error ) ) {
+			//pending entries
 			if ( strtotime( $this->_model->get( 'validSince' ) . ' UTC' ) > gmdate( 'U' ) ) {
 				if ( $owner && ( $owner == Sobi::My( 'id' ) ) ) {
 					if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) ) ) {
@@ -405,14 +406,15 @@ abstract class SPController extends SPObject implements SPControl
 					}
 				}
 			}
+			//expired entries
 			elseif ( $va > 0 && $va < gmdate( 'U' ) ) {
 				if ( $owner && ( $owner == Sobi::My( 'id' ) ) ) {
-					if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) ) ) {
+					if ( !( Sobi::Can( $type, 'access', 'expired_own' ) ) && !( Sobi::Can( $type, 'access', 'expired_any' ) ) ) {
 						$error = true;
 					}
 				}
 				else {
-					if ( !( Sobi::Can( $type, 'access', 'unpublished_any' ) ) ) {
+					if ( !( Sobi::Can( $type, 'access', 'expired_any' ) ) ) {
 						$error = true;
 					}
 				}

@@ -1515,7 +1515,9 @@ INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`
   (NULL, 'section', 'search', '*', 'front', 1),
   (NULL, 'entry', 'delete', 'own', 'front', 1),
   (NULL, 'entry', 'delete', '*', 'front', 1),
-  (NULL, 'entry', 'manage', 'own', 'front', 1);
+  (NULL, 'entry', 'manage', 'own', 'front', 1),
+  (NULL, 'entry', 'access', 'expired_own', 'front', 1),
+  (NULL, 'entry', 'access', 'expired_any', 'front', 1);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_groups` (
   `rid` INT(11) NOT NULL,
