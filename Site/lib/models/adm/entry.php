@@ -164,7 +164,7 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 	{
 		return !(
 				in_array( SPRequest::task(), [ 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit' ] ) ||
-						Sobi::Can( 'entry.see.unapproved_any' ) ||
+						Sobi::Can( 'entry.access.unapproved_any' ) ||
 						( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.manage.own' ) ) ||
 						Sobi::Can( 'entry.manage.*' )
 		);

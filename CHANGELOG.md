@@ -32,6 +32,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 
 ### 1.4.4 ()
 
+	(+) New ACL rule 'approve.own'
+
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     
     (#) Visitors are treated as users if checking permissions

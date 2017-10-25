@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -44,6 +46,7 @@ abstract class SPController extends SPObject implements SPControl
 
 	/**
 	 * @param string $model
+	 *
 	 * @throws SPException
 	 * @return void
 	 */
@@ -64,6 +67,7 @@ abstract class SPController extends SPObject implements SPControl
 	/**
 	 * @param stdClass $obj
 	 * @param bool $cache
+	 *
 	 * @return void
 	 */
 	public function extend( $obj, $cache = false )
@@ -82,8 +86,10 @@ abstract class SPController extends SPObject implements SPControl
 
 	/**
 	 * authorise action
+	 *
 	 * @param string $action
 	 * @param string $ownership
+	 *
 	 * @return bool
 	 */
 	protected function authorise( $action = 'access', $ownership = 'valid' )
@@ -92,6 +98,7 @@ abstract class SPController extends SPObject implements SPControl
 			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			exit;
 		}
+
 		return true;
 	}
 
@@ -196,6 +203,7 @@ abstract class SPController extends SPObject implements SPControl
 				$r = Sobi::Trigger( 'Execute', $this->name(), [ &$this ] );
 				break;
 		}
+
 		return $r;
 	}
 
@@ -205,7 +213,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $lang && $lang != Sobi::Cfg( 'language' ) ) {
 			$languages = SPFactory::CmsHelper()->availableLanguages();
 			SPFactory::message()
-					->info( Sobi::Txt( 'INFO_DIFFERENT_LANGUAGE', $this->_type, $languages[ $lang ][ 'name' ] ), false );
+				->info( Sobi::Txt( 'INFO_DIFFERENT_LANGUAGE', $this->_type, $languages[ $lang ][ 'name' ] ), false );
 		}
 	}
 
@@ -214,7 +222,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $this->_model->get( 'id' ) ) {
 			if ( $this->authorise( 'manage' ) ) {
 				$this->_model->changeState( $state );
-				$state = ( int )( $this->_task == 'publish' ) ? true : $state;
+				$state = ( int ) ( $this->_task == 'publish' ) ? true : $state;
 				$this->response( Sobi::Back(), Sobi::Txt( $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', [ 'type' => Sobi::Txt( $this->_type ) ] ), false );
 			}
 		}
@@ -253,6 +261,7 @@ abstract class SPController extends SPObject implements SPControl
 
 	/**
 	 * Save an object
+	 *
 	 * @param bool $apply
 	 * @param bool $clone
 	 */
@@ -263,7 +272,7 @@ abstract class SPController extends SPObject implements SPControl
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$this->validate( $this->_type . '.edit', $this->_type );
-		$apply = ( int )$apply;
+		$apply = ( int ) $apply;
 		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
 		}
@@ -273,9 +282,9 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		/** store previous state for possible triggers */
 		$preState = [
-				'approved' => $this->_model->get( 'approved' ),
-				'state' => $this->_model->get( 'state' ),
-				'new' => !( $this->_model->get( 'id' ) )
+			'approved' => $this->_model->get( 'approved' ),
+			'state'    => $this->_model->get( 'state' ),
+			'new'      => !( $this->_model->get( 'id' ) )
 		];
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 		$this->_model->getRequest( $this->_type );
@@ -351,12 +360,12 @@ abstract class SPController extends SPObject implements SPControl
 		Sobi::Trigger( $type, 'CheckVisibility', [ &$state, &$owner ] );
 		/* if it's unpublished */
 		if ( !( $state ) ) {
-			if ( $owner == Sobi::My( 'id' ) ) {
-				if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) ) ) {
+			if ( $owner && ( $owner == Sobi::My( 'id' ) ) ) {   //if the owner of an entry
+				if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) || Sobi::Can( $type, 'access', 'unpublished_any' ) )) {
 					$error = true;
 				}
 			}
-			else {
+			else { //not the owner of an entry
 				if ( !( Sobi::Can( $type, 'access', 'unpublished_any' ) ) ) {
 					$error = true;
 				}
@@ -385,7 +394,7 @@ abstract class SPController extends SPObject implements SPControl
 		$va = $va ? strtotime( $va . ' UTC' ) : 0;
 		if ( !( $error ) ) {
 			if ( strtotime( $this->_model->get( 'validSince' ) . ' UTC' ) > gmdate( 'U' ) ) {
-				if ( $owner == Sobi::My( 'id' ) ) {
+				if ( $owner && ( $owner == Sobi::My( 'id' ) ) ) {
 					if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) ) ) {
 						$error = true;
 					}
@@ -397,7 +406,7 @@ abstract class SPController extends SPObject implements SPControl
 				}
 			}
 			elseif ( $va > 0 && $va < gmdate( 'U' ) ) {
-				if ( $owner == Sobi::My( 'id' ) ) {
+				if ( $owner && ( $owner == Sobi::My( 'id' ) ) ) {
 					if ( !( Sobi::Can( $type, 'access', 'unpublished_own' ) ) ) {
 						$error = true;
 					}
@@ -530,6 +539,7 @@ abstract class SPController extends SPObject implements SPControl
 	 * @param $section
 	 * @param $key
 	 * @param null $default
+	 *
 	 * @return null
 	 */
 	protected function tKey( $section, $key, $default = null )
@@ -541,6 +551,7 @@ abstract class SPController extends SPObject implements SPControl
 	 * @param string $subject
 	 * @param string $col
 	 * @param string $def
+	 *
 	 * @return string
 	 */
 	protected function parseOrdering( $subject, $col, $def )
@@ -551,6 +562,7 @@ abstract class SPController extends SPObject implements SPControl
 	/**
 	 * @param int $sid
 	 * @param bool $redirect
+	 *
 	 * @return void
 	 */
 	protected function checkIn( $sid, $redirect = true )
@@ -577,14 +589,14 @@ abstract class SPController extends SPObject implements SPControl
 			}
 			$url = str_replace( '&amp;', '&', $url );
 			SPFactory::mainframe()
-					->cleanBuffer()
-					->customHeader();
+				->cleanBuffer()
+				->customHeader();
 			echo json_encode(
-					[
-							'message' => [ 'text' => $message, 'type' => $type ],
-							'redirect' => [ 'url' => $url, 'execute' => ( bool )$redirect ],
-							'data' => $data
-					]
+				[
+					'message'  => [ 'text' => $message, 'type' => $type ],
+					'redirect' => [ 'url' => $url, 'execute' => ( bool ) $redirect ],
+					'data'     => $data
+				]
 			);
 			exit;
 		}

@@ -458,7 +458,7 @@ class SPEntryCtrl extends SPController
 			}
 		}
 		/* I know, it could be in one statement but it is more readable like this */
-		elseif ( $this->_model->get( 'approved' ) || Sobi::Can( 'entry.see_unapproved.own' ) ) {
+		elseif ( $this->_model->get( 'approved' ) || Sobi::Can( 'entry.access.unapproved_own' ) || Sobi::Can( 'entry.access.unapproved_any' )) {
 			$url = Sobi::Url( [ 'sid' => $sid, 'pid' => $pid ] );
 			$msg = $this->_model->get( 'approved' ) ? Sobi::Txt( 'EN.ENTRY_SAVED' ) : Sobi::Txt( 'EN.ENTRY_SAVED_NA' );
 		}
