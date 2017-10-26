@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -22,7 +22,7 @@
 		<xsl:if test="entry/approve_url or entry/edit_url or entry/publish_url or entry/delete_url">
 			<div class="btn-group spManage pull-left">
 				<a class="btn btn-sigsiu dropdown-toggle btn-sm" data-toggle="dropdown" href="#">
-					<i class="icon-edit"></i>
+					<i class="icon-edit" />
 				</a>
 				<ul class="dropdown-menu">
 					<xsl:if test="entry/publish_url">
@@ -68,13 +68,18 @@
 	<xsl:template name="status">
 		<xsl:param name="entry"/>
 		<xsl:if test="$entry/approved = 0">
-			<a class="entry-status" href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNAPPROVED' )}" title="" >
+			<a tabindex="0" role="button" class="entry-status" data-toggle="popover" data-trigger="focus" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNAPPROVED' )}" title="" >
 				<i class="icon-thumbs-down-alt" />
 			</a>
 		</xsl:if>
 		<xsl:if test="$entry/state = 'unpublished'">
-			<a class="entry-status" href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNPUBLISHED' )}" title="" >
-				<i class="icon-remove-sign" />
+			<a tabindex="0" role="button" class="entry-status" data-toggle="popover" data-trigger="focus" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_UNPUBLISHED' )}" title="" >
+				<i class="icon-ban-circle" />
+			</a>
+		</xsl:if>
+		<xsl:if test="$entry/state = 'expired'">
+			<a tabindex="0" role="button" class="entry-status" data-toggle="popover" data-trigger="focus" data-content="{php:function( 'SobiPro::Txt', 'ENTRY_STATUS_EXPIRED' )}" title="" >
+				<i class="icon-warning-sign" />
 			</a>
 		</xsl:if>
 	</xsl:template>

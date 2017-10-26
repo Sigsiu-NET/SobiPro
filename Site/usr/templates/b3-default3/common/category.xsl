@@ -86,8 +86,8 @@
 	<xsl:template name="cat-status">
 		<xsl:param name="entry"/>
 		<xsl:if test="$entry/state = 'unpublished'">
-			<a class="entry-status" href="#" data-toggle="popover" data-content="{php:function( 'SobiPro::Txt', 'CATEGORY_STATUS_UNPUBLISHED' )}" title="" >
-				<i class="icon-remove-sign" />
+			<a tabindex="0" role="button" class="entry-status" data-toggle="popover" data-trigger="focus" data-content="{php:function( 'SobiPro::Txt', 'CATEGORY_STATUS_UNPUBLISHED' )}" title="" >
+				<i class="icon-ban-circle" />
 			</a>
 		</xsl:if>
 	</xsl:template>
