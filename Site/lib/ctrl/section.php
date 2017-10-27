@@ -208,7 +208,7 @@ class SPSectionCtrl extends SPController
 				}
 				if ( !( Sobi::Can( 'category.access.*' ) ) ) {
 					if ( Sobi::Can( 'category.access.expired_own' ) ) {
-						$conditions[] = $db->argsOr( [ '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ] );
+						$conditions['@VALID'] = $db->argsOr( [ '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ] );
 					}
 					else {
 						$conditions[ 'state' ] = '1';
@@ -269,7 +269,7 @@ class SPSectionCtrl extends SPController
 
 			if ( Sobi::Can( 'entry.access.expired_own' ) ) {
 				if ( !( Sobi::Can( 'entry.access.expired_any' ) ) ) {
-					$conditions[] = $db->argsOr( [ '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ] );
+					$conditions['@VALID'] = $db->argsOr( [ '@VALID' => $db->valid( $oPrefix . 'validUntil', $oPrefix . 'validSince' ), 'owner' => Sobi::My( 'id' ) ] );
 				}
 			}
 			elseif ( !( Sobi::Can( 'entry.access.expired_any' ) ) ) {
