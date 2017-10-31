@@ -37,6 +37,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Expired flag on front-end for expired entries (if user can see expired entries)
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
+    (!) Separate icon from label in Button field
     
     (#) Visitors are treated as users if checking permissions
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving

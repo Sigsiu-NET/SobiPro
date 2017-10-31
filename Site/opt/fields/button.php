@@ -228,6 +228,9 @@ class SPField_Button extends SPField_Url implements SPFieldInterface
 			if ( !( isset( $data[ 'label' ] ) && strlen( $data[ 'label' ] ) ) ) {
 				$data[ 'label' ] = ( $this->labelsLabel == '' && !$this->useIcon ) ? $url : $this->labelsLabel;
 			}
+			if ( $this->useIcon && isset( $data[ 'label' ] ) && strlen( $data[ 'label' ] ) ) {
+				$data[ 'label' ] = ' ' . $data[ 'label' ];
+			}
 			$this->cssClass = strlen( $this->cssClass ) ? $this->cssClass : 'spFieldsData';
 			$this->cssClass = $this->cssClass . ' ' . $this->cssButtonClass;
 			$this->cssClass = $this->cssClass . ' ' . $this->nid;
