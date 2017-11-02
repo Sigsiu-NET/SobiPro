@@ -43,6 +43,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
     (#) Status explanation popover on front-end does not longer work
     (#) Button bar top menu shows wrong directory name
+    (#) button margins corrected
     
 
 ### 1.4.3 (19 October 2017)

@@ -71,13 +71,13 @@
 									       class="form-control input-large pull-left search-query" autocomplete="off" id="SPSearchBox"
 									       placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}"/>
 									<xsl:if test="/search/fields/top_button/label">
-										<button type="submit" class="btn btn-primary btn-sigsiu">
+										<button type="submit" class="btn btn-primary btn-sigsiu top-search">
 											<xsl:text>&#160;</xsl:text>
 											<xsl:value-of select="/search/fields/top_button/label"/>
 										</button>
 									</xsl:if>
 									<xsl:if test="count( /search/fields/* ) &gt; 3 and //config/extendedsearch/@value = 'show'">
-										<button type="button" class="btn btn-default" name="SPExOptBt" id="SPExOptBt">
+										<button type="button" class="btn btn-default extended-search" name="SPExOptBt" id="SPExOptBt">
 											<xsl:text>&#160;</xsl:text>
 											<xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )"/>
 										</button>
@@ -129,21 +129,21 @@
 				<div class="spSearchBottom">
 				<xsl:choose>
 					<xsl:when test="$sparam = 'in'">
-						<button class="btn btn-info" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea" aria-expanded="true"
+						<button class="btn btn-info search-parameters" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea" aria-expanded="true"
 						        aria-controls="collapsearea" data-visible="true" type="button">
 							<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.SEARCH_HIDE' )"/>
 						</button>
-						<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu">
+						<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu bottom-search">
 							<xsl:text>&#160;</xsl:text>
 							<xsl:value-of select="/search/fields/top_button/label"/>
 						</button>
 					</xsl:when>
 					<xsl:otherwise>
-						<button class="btn btn-info" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea" aria-expanded="false"
+						<button class="btn btn-info search-parameters" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea" aria-expanded="false"
 						        aria-controls="collapsearea" data-visible="false" type="button">
 							<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.SEARCH_REFINE' )"/>
 						</button>
-						<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu hidden">
+						<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu hidden bottom-search">
 							<xsl:text>&#160;</xsl:text>
 							<xsl:value-of select="/search/fields/top_button/label"/>
 						</button>
