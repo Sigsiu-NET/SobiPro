@@ -232,7 +232,7 @@
 			<div class="menu" role="menubar">
 				<xsl:if test="//menu/front">
 					<a href="{//menu/front/@url}" tabindex="0" class="btn btn-sigsiu" role="menuitem">
-						<xsl:text>Showcase Directory</xsl:text>
+						<xsl:value-of select="//menu/front"/>
 					</a>
 				</xsl:if>
 			</div>

@@ -42,6 +42,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Visitors are treated as users if checking permissions
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
     (#) Status explanation popover on front-end does not longer work
+    (#) Button bar top menu shows wrong directory name
     
 
 ### 1.4.3 (19 October 2017)
