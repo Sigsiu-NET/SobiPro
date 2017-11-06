@@ -16,7 +16,7 @@
  */
 
 use Sobi\C;
-use Sobi\FileSystem\DirectoryIterator;
+use Sobi\FileSystem\Directory;
 use Sobi\FileSystem\File;
 use Sobi\FileSystem\FileSystem;
 use Sobi\Input\Input;
@@ -146,6 +146,11 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_SAVED' ), false, SPC::SUCCESS_MSG );
 	}
 
+	/**
+	 *
+	 *
+	 * @since version
+	 */
 	protected function templateSettings()
 	{
 		$templateName = Input::Cmd( 'template' );
@@ -172,8 +177,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 					->setSystemMessage();
 		}
 		/** search for all json files */
-		$directory = new DirectoryIterator( $dir );
-		$configs = array_keys( $directory->searchFile( '.json', false ) );
+		$directory = new Directory( $dir );
+		$configs = array_keys( $directory->searchFile( '.json', false, 2 ) );
 		if ( count( $configs ) ) {
 			foreach ( $configs as $file ) {
 				$prefix = null;

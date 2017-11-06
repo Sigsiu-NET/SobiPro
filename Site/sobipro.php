@@ -42,7 +42,7 @@ SPLoader::loadClass( 'base.request' );
 if ( preg_match( '/\.php$/', Input::Task() ) || strlen( Input::Task() ) > 50 ) {
 	throw new Exception( 'Unauthorized Access', 403 );
 }
-
 $class = SPLoader::loadController( 'sobipro' );
 $sobi = new $class( Input::Task() );
 $sobi->execute();
+
