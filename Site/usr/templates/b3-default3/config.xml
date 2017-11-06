@@ -20,6 +20,7 @@
 	<header>
 		<title value="TP.CONFIG_SITE_TITLE"/>
 		<file type="script" filename="bootstrap.tabs"/>
+		<file type="script" filename="jscolor"/>
 		<file type="language" filename="SpTpl.default3"/>
 	</header>
 	<toolbar title="var:[site_title]" icon="SobiTemplate" class="templatesettings">
@@ -62,6 +63,7 @@
 											<option value="roses"/>
 											<option value="terra"/>
 											<option value="waterfall"/>
+											<option value="custom"/>
 										</values>
 									</field>
 									<field type="select" label="TP.CONFIG.CSS_EDGE" name="settings[config][less][theme][corners]"
@@ -86,6 +88,29 @@
 											<option value="left" label="TP.CONFIG.LEFT"/>
 											<option value="right" label="TP.CONFIG.RIGHT"/>
 										</values>
+									</field>
+								</fieldset>
+								<fieldset label="TP.CONFIG.CUSTOM">
+									<field type="text" label="TP.CONFIG.CUSTOM_BASE" name="settings[config][theme][custom][base-color]"
+									       value="settings.config.theme.custom.base-color" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_TEXT" name="settings[config][theme][custom][text-color]"
+									       value="settings.config.theme.custom.text-color" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_HOVER" name="settings[config][theme][custom][hover-color]"
+									       value="settings.config.theme.custom.hover-color" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_FONT" name="settings[config][theme][custom][font-color]"
+									       value="settings.config.theme.custom.font-color" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_ACTIVE" name="settings[config][theme][custom][active-color]"
+									       value="settings.config.theme.custom.active-color" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_ALERT" name="settings[config][theme][custom][alert-color]"
+									       value="settings.config.theme.custom.alert-color" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_IMPORTANT" name="settings[config][theme][custom][important-color]"
+									       value="settings.config.theme.custom.important-color" class="input-medium colourpicker {hash:true}">
 									</field>
 								</fieldset>
 								<fieldset label="TP.CONFIG.FONTS">
