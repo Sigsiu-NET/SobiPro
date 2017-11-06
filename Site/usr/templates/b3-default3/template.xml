@@ -15,12 +15,12 @@
 		<file path="category/view.xsl">
 			Default category view template with top menu, navigation, entries and categories.
 		</file>
+		<file path="common/alphaindex.xsl">
+			Template for the alpha index (letters) only.
+		</file>
 		<file path="common/alphamenu.xsl">
 			Template for the alpha menu. Fields chooser and calls the alpha index (letters) template.
 		</file>
-        <file path="common/alphaindex.xsl">
-            Template for the alpha index (letters) only.
-        </file>
         <file path="common/categories.xsl">
             Template for the categories list (categoriesLoop). Calls the template for a single category.
         </file>
@@ -63,11 +63,11 @@
 		<file path="css/tmpl/joostrap.css">
 			CSS classes to restore changes made by Joostrap templates.
 		</file>
-		<file path="css/default.css">
-			Default CSS file. Your own CSS changes goes in here.
+		<file path="css/custom.css">
+			Custom CSS file. Your own CSS changes goes in here.
 		</file>
-        <file path="css/default.less">
-            LESS file for the default CSS file. Your own CSS changes goes in here.
+        <file path="css/custom.less">
+            LESS file for the custom CSS file. Your own CSS changes goes in here.
         </file>
         <file path="css/theme.css">
             The theme CSS file. Automatically generated!
@@ -75,29 +75,29 @@
         <file path="css/theme.less">
             LESS file for the theme CSS file.
         </file>
-		<file path="entry/details.xsl">
-			Template for the entry details view page.
-		</file>
 		<file path="entry/details.ini">
 			Configuration file to load JS files in details view.
 		</file>
-		<file path="entry/edit.xsl">
-			Template for the add/edit entry page.
+		<file path="entry/details.xsl">
+			Template for the entry details view page.
 		</file>
 		<file path="entry/edit.ini">
 			Configuration file to load JS files in entry form.
 		</file>
 		<file path="entry/edit.json">
-			Configuration file for the entry form. Automatically generated!
+			Template configuration file for the entry form. Automatically generated!
 		</file>
-		<file path="feeds/rss.xsl">
-			Template for Atom/RSS feeds.
+		<file path="entry/edit.xsl">
+			Template for the add/edit entry page.
 		</file>
 		<file path="feeds/rss.ini">
 			Configuration file for RSS feeds.
 		</file>
 		<file path="feeds/rss.json">
 			Configuration file for RSS feeds. Automatically generated!
+		</file>
+		<file path="feeds/rss.xsl">
+			Template for Atom/RSS feeds.
 		</file>
 		<file path="js/alpha.js">
 			JavaScript functions for the alpha menu.
@@ -107,6 +107,9 @@
 		</file>
 		<file path="js/details.js">
 			JavaScript functions for the details view.
+		</file>
+		<file path="js/form.js">
+			JavaScript functions for the entry form.
 		</file>
 		<file path="js/navigation.js">
 			JavaScript functions for AJAX navigation.
@@ -138,14 +141,14 @@
 		<file path="search/search.ini">
 			Configuration file to load JS files in search form.
 		</file>
-		<file path="section/view.xsl">
-			Template for the section main view.
+		<file path="section/ajax.ini">
+			Configuration file for AJAX navigation.
 		</file>
 		<file path="section/ajax.xsl">
 			Template for AJAX navigation.
 		</file>
-		<file path="section/ajax.ini">
-			Configuration file for AJAX navigation.
+		<file path="section/view.xsl">
+			Template for the section main view.
 		</file>
         <file path="themes/cornfield.less">
             Cornfield color theme (yellow/orange/brown).
@@ -165,6 +168,9 @@
         <file path="themes/roses.less">
             Roses color theme (red/rose).
         </file>
+		<file path="themes/custom.less">
+			Custom color theme (defined in the template settings
+		</file>
         <file path="themes/sobipro.less">
             SobiPro color theme (SobiPro colors; default).
         </file>
@@ -183,11 +189,11 @@
         <file path="config.ini">
             Main template configuration file.
         </file>
-        <file path="config.xml">
-            Template settings file.
-        </file>
 		<file path="config.json">
 			Template settings configuration file. Automatically generated!
+		</file>
+		<file path="config.xml">
+			Template settings file.
 		</file>
 	</files>
 </template>

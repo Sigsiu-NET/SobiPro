@@ -1,11 +1,13 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -117,6 +119,23 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		foreach ( $config as $configFile => $settings ) {
 			$store = json_encode( $settings );
+			if (isset( $settings['theme']) && count( $settings[ 'theme' ] ) ) {
+				foreach ( $settings[ 'theme' ] as $file => $variables ) {
+					$themeFile = FileSystem::FixPath( $this->dir( $templateName ) . '/themes/' . $file . '.less' );
+					if ( FileSystem::exists( $themeFile ) ) {
+						$themesContent = SPFs::read( $themeFile );
+						foreach ( $variables as $variable => $value ) {
+							// @colour-set: sobipro;
+							$themesContent = preg_replace( "/@{$variable}:[^\n]*\;/", "@{$variable}: {$value};", $themesContent );
+						}
+						try {
+							SPFs::write( $themeFile, $themesContent );
+						} catch ( SPException $x ) {
+							$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
+						}
+					}
+				}
+			}
 			if ( isset( $settings[ 'less' ] ) && count( $settings[ 'less' ] ) ) {
 				foreach ( $settings[ 'less' ] as $file => $variables ) {
 					$lessFile = FileSystem::FixPath( $this->dir( $templateName ) . '/css/' . $file . '.less' );

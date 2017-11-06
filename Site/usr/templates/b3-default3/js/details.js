@@ -21,6 +21,9 @@ SobiPro.jQuery( document ).ready( function ()
 	// initialize tooltips
 	SobiPro.jQuery('[data-toggle="tooltip"]').tooltip();
 
+	//initialize popovers
+	SobiPro.jQuery('[data-toggle="popover"]').popover();
+
 	// initialize carousel slider
 	SobiPro.jQuery( '#spCarousel' ).carousel();
 

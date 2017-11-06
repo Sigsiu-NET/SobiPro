@@ -37,13 +37,24 @@
     "countentries": "0",
     "entries_recursive": "1"
   },
+  "theme": {
+    "custom": {
+      "base-color": "#993333",
+      "text-color": "#FFFFFF",
+      "hover-color": "#FFFFFF",
+      "font-color": "#333333",
+      "active-color": "#000066",
+      "alert-color": "#CCCCCC",
+      "important-color": "#FEC1AF"
+    }
+  },
   "section-view": {
-    "entries_limit": "2",
+    "entries_limit": "20",
     "entries_in_line": "2",
-    "entries_ordering": "position.asc",
+    "entries_ordering": "createdTime.desc",
     "categories_in_line": "2",
     "categories_ordering": "name.asc",
-    "entries_recursive": "0"
+    "entries_recursive": "1"
   },
   "category-view": {
     "entries_limit": "6",
@@ -52,9 +63,6 @@
     "categories_in_line": "2",
     "categories_ordering": "name.asc",
     "entries_recursive": "1"
-  },
-  "collection": {
-    "entries_limit": "2"
   },
   "entry-details": {
     "entries_in_line": "1"

@@ -1514,7 +1514,10 @@ ALTER TABLE `#__sobipro_permissions`
 INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
   (NULL, 'section', 'search', '*', 'front', 1),
   (NULL, 'entry', 'delete', 'own', 'front', 1),
-  (NULL, 'entry', 'delete', '*', 'front', 1);
+  (NULL, 'entry', 'delete', '*', 'front', 1),
+  (NULL, 'entry', 'manage', 'own', 'front', 1),
+  (NULL, 'entry', 'access', 'expired_own', 'front', 1),
+  (NULL, 'entry', 'access', 'expired_any', 'front', 1);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_groups` (
   `rid` INT(11) NOT NULL,
@@ -1563,16 +1566,16 @@ INSERT IGNORE INTO `#__sobipro_permissions_rules` (`rid`, `name`, `nid`, `validS
   (2, 'Registered', 'registered', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '', 1);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
-  `pid`         VARCHAR(50) NOT NULL,
+  `pid`         VARCHAR(50)  NOT NULL,
   `name`        VARCHAR(150) DEFAULT NULL,
-  `version`     VARCHAR(50) NOT NULL,
+  `version`     VARCHAR(50)  NOT NULL,
   `description` TEXT,
   `author`      VARCHAR(150) DEFAULT NULL,
   `authorURL`   VARCHAR(250) DEFAULT NULL,
   `authorMail`  VARCHAR(150) DEFAULT NULL,
   `enabled`     TINYINT(1)   DEFAULT NULL,
   `type`        VARCHAR(250) NOT NULL,
-  `depend`      TEXT        NOT NULL,
+  `depend`      TEXT         NOT NULL,
   UNIQUE KEY `pid` (`pid`, `type`)
 )
   DEFAULT CHARSET = utf8;
@@ -1610,9 +1613,9 @@ INSERT IGNORE INTO `#__sobipro_plugin_section` (`section`, `pid`, `type`, `enabl
   (1, 'paypal', 'payment', 1, 0);
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_task` (
-  `pid`      VARCHAR(50) NOT NULL DEFAULT '',
+  `pid`      VARCHAR(50)  NOT NULL DEFAULT '',
   `onAction` VARCHAR(150) NOT NULL,
-  `type`     VARCHAR(50) NOT NULL,
+  `type`     VARCHAR(50)  NOT NULL,
   UNIQUE KEY `pid` (`pid`, `onAction`, `type`)
 )
   DEFAULT CHARSET = utf8;

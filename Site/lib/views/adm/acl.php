@@ -89,6 +89,34 @@ class SPAclView extends SPAdmView
 //		if ( is_array( $rule[ 'permissions' ] ) && count( $rule[ 'permissions' ] ) ) {
 //
 //		}
+
+		//Sorting of the entry permissions
+		$ePerms = [];
+		$perms = [ 'all', 'access', 'add', 'edit', 'adm_fields', 'delete', 'publish', 'manage', 'payment' ];
+		foreach ( $perms as $perm ) {
+			foreach ( $get as $key => $permission ) {
+				if ( $permission->subject == 'entry' ) {
+					if ( $permission->action == $perm ) {  //first select all access permissions
+						$ePerms[] = $permission;
+						unset( $get[ $key ] );
+					}
+				}
+			}
+		}
+		//Sorting of the review permissions
+		$rPerms = [];
+		$perms = [ 'see', 'add', 'edit', 'delete', 'autopublish', 'manage' ];
+		foreach ( $perms as $perm ) {
+			foreach ( $get as $key => $permission ) {
+				if ( $permission->subject == 'review' ) {
+					if ( $permission->action == $perm ) {  //first select all access permissions
+						$rPerms[] = $permission;
+						unset( $get[ $key ] );
+					}
+				}
+			}
+		}
+
 		foreach ( $get as $permission ) {
 			$subject = ucfirst( $permission->subject );
 			if ( !isset( $put[ $subject ] ) ) {
@@ -97,12 +125,26 @@ class SPAclView extends SPAdmView
 			$k = $permission->action . '_' . $permission->value;
 			$put[ $subject ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
 		}
+		foreach ( $ePerms as $permission ) {
+			if ( !isset( $put[ 'Entry' ] ) ) {
+				$put[ 'Entry' ] = [];
+			}
+			$k = $permission->action . '_' . $permission->value;
+			$put[ 'Entry' ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
+		}
+		foreach ( $rPerms as $permission ) {
+			if ( !isset( $put[ 'Review' ] ) ) {
+				$put[ 'Review' ] = [];
+			}
+			$k = $permission->action . '_' . $permission->value;
+			$put[ 'Review' ][ $permission->pid ] = Sobi::Txt( 'permissions.' . $k );
+		}
 
-		// default ordering
+		// default ordering for section and category
 		$permissionsOrder = [
-				'Section' => [ 3, 4 ],
-				'Category' => [ 8, 7 ],
-				'Entry' => [ 9, 11, 10, 14, 12, 16, 18, 17, 20, 21, 19, 15, 24, 25 ]
+			'Section'  => [ 3, 4 ],
+			'Category' => [ 8, 7 ]
+//			'Entry'    => [ 9, 11, 10, 14, 15, 12, 16, 17, 18, 20, 21, 19, 24, 25 ]
 		];
 		// to show current
 //		 SPConfig::debOut( $put );
@@ -156,6 +198,7 @@ class SPAclView extends SPAdmView
 
 	/**
 	 * @param string $title
+	 *
 	 * @return string
 	 */
 	public function setTitle( $title )
@@ -164,6 +207,7 @@ class SPAclView extends SPAdmView
 		Sobi::Trigger( 'setTitle', $this->name(), [ &$title ] );
 		$title = Sobi::Txt( $title, [ 'rule_name' => $name ] );
 		$title = parent::setTitle( $title );
+
 		return $title;
 	}
 }

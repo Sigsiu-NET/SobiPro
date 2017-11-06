@@ -726,7 +726,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params[ 'updatedTime' ] = $time;
 		$params[ 'updatedBy' ] = $uid;
 		$params[ 'updatedIP' ] = $IP;
-		$params[ 'copy' ] = !( $entry->get( 'approved' ) );
+		$params[ 'copy' ] = (int) !( $entry->get( 'approved' ) );
 		if ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
 			--$this->editLimit;
 		}

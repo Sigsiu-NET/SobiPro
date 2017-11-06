@@ -32,7 +32,20 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 
 ### 1.4.4 ()
 
-    (!) Extracting Sobi Framework in case PHAR isn't usable
+	(+) New ACL rule 'approve.own'
+	(+) New ACL rules 'access.expired_any' and 'access.expired.own'
+	(+) Expired flag on front-end for expired entries (if user can see expired entries)
+	(+) Possibility to define own template colours in the template settings
+
+    (!) Extracting Sobi Framework automatically in case PHAR isn't usable
+    (!) Separate icon from label in Button field
+    
+    (#) Visitors are treated as users if checking permissions
+    (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
+    (#) Status explanation popover on front-end does not longer work
+    (#) Button bar top menu shows wrong directory name
+    (#) button margins corrected
+    
 
 ### 1.4.3 (19 October 2017)
 
