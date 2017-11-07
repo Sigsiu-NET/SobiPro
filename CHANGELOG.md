@@ -37,6 +37,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Expired flag on front-end for expired entries (if user can see expired entries)
 	(+) Possibility to define own template colours in the template settings
 	(+) Additional button colours
+	(+) New colour theme 'pastels'
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     (!) Separate icon from label in Button field
@@ -46,7 +47,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
     (#) Status explanation popover on front-end does not longer work
     (#) Button bar top menu shows wrong directory name
-    (#) button margins corrected
+    (#) Button margins corrected
     (#) Only config.json file of template settings is re-read (Issue #49)
     
 
