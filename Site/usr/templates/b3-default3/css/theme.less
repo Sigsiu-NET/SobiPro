@@ -22,6 +22,9 @@
 @carousel-image: 500px;
 @print-gallery: 150px;
 @fontsize: 14px;
+@font-color: #3e3e3e;
+@back-color: #ffffff;
+
 
 //-------------------------------------------------------------------------------------*/
 
@@ -45,7 +48,6 @@
 @basetext-color: #ffffff;
 @active-color: #000066;
 @activetext-color: #ffffff;
-@font-color: #333333;
 @alert-color: #e7e7e7;
 @important-color: #fe4426;
 @background-light: #fbeeee;
@@ -53,7 +55,6 @@
 @background-dark: #ed8282;
 
 @inverse: standard;
-@back-color: #ffffff;
 
 // same for all themes if not set
 @error-color: #a30000;
@@ -104,6 +105,7 @@
 	padding: 4px;
 	margin-top: 10px;
 	background-color: @back-color;
+	color: @font-color;
 }
 
 // Firefox-specific table hack
@@ -925,9 +927,9 @@ body.modal-open {
 	.btn-sigsiu-active {
 		background-color: @active-color;
 		border-color: darken(@active-color, 4%);
-		color: @basetext-color;
+		color: @activetext-color;
 		& when (lightness(@active-color) < 35%) {
-			& when (lightness(@basetext-color) < 35%) {
+			& when (lightness(@activetext-color) < 35%) {
 				color: white;
 			}
 		}
@@ -939,9 +941,9 @@ body.modal-open {
 	.btn-sigsiu-active.active {
 		background-color: darken(@active-color, 8%);
 		border-color: darken(@active-color, 12%);
-		color: @basetext-color;
+		color: @activetext-color;
 		& when (lightness(@active-color) < 35%) {
-			& when (lightness(@basetext-color) < 35%) {
+			& when (lightness(@activetext-color) < 35%) {
 				color: white;
 			}
 		}
@@ -1135,6 +1137,7 @@ body.modal-open {
 		font-size: calc(@fontsize + 1px);
 		color: @font-color;
 		background-color: @back-color;
+		border: none;
 		border-color: @back-color;
 	}
 	.text-error,

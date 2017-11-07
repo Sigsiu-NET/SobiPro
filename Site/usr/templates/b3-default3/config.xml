@@ -67,6 +67,12 @@
 											<option value="custom"/>
 										</values>
 									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_BACK" name="settings[config][less][theme][back-color]"
+									       value="settings.config.less.theme.back-color" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_FONT" name="settings[config][less][theme][font-color]"
+									       value="settings.config.less.theme.font-color" class="input-medium colourpicker {hash:true}">
+									</field>
 									<field type="select" label="TP.CONFIG.CSS_EDGE" name="settings[config][less][theme][corners]"
 									       selected="settings.config.less.theme.corners" class="input-medium">
 										<values>
@@ -103,9 +109,6 @@
 									</field>
 									<field type="text" label="TP.CONFIG.CUSTOM_ATEXT" name="settings[config][theme][custom][activetext-color]"
 									       value="settings.config.theme.custom.activetext-color" class="input-medium colourpicker {hash:true}">
-									</field>
-									<field type="text" label="TP.CONFIG.CUSTOM_FONT" name="settings[config][theme][custom][font-color]"
-									       value="settings.config.theme.custom.font-color" class="input-medium colourpicker {hash:true}">
 									</field>
 									<field type="text" label="TP.CONFIG.CUSTOM_ALERT" name="settings[config][theme][custom][alert-color]"
 									       value="settings.config.theme.custom.alert-color" class="input-medium colourpicker {hash:true}">

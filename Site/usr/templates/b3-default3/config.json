@@ -2,6 +2,8 @@
   "less": {
     "theme": {
       "colour-set": "sobipro",
+      "back-color": "#FFFFFF",
+      "font-color": "#3E3E3E",
       "corners": "angular",
       "fontsize": "14px",
       "image-ratio": "0.75",
@@ -40,12 +42,11 @@
   "theme": {
     "custom": {
       "base-color": "#993333",
-      "text-color": "#FFFFFF",
-      "hover-color": "#FFFFFF",
-      "font-color": "#333333",
+      "basetext-color": "#FFFFFF",
       "active-color": "#000066",
-      "alert-color": "#e7e7e7",
-      "important-color": "#fe4426",
+      "activetext-color": "#FFFFFF",
+      "alert-color": "#E7E7E7",
+      "important-color": "#FE4426",
       "background-light": "#FBEEEE",
       "background-medium": "#F9D1D1",
       "background-dark": "#ED8282"
