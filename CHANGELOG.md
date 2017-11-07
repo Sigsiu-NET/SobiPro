@@ -36,9 +36,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) New ACL rules 'access.expired_any' and 'access.expired.own'
 	(+) Expired flag on front-end for expired entries (if user can see expired entries)
 	(+) Possibility to define own template colours in the template settings
+	(+) Additional button colours
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     (!) Separate icon from label in Button field
+    (!) Redefinition of theme colours
     
     (#) Visitors are treated as users if checking permissions
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving

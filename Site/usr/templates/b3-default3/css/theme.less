@@ -27,24 +27,30 @@
 
 // This template is based on Bootstrap 3
 // and defines the following new classes based on the used colour theme:
-// .btn-sigsiu = a new button colour
-// .text-sigsiu = a new text colour
-// .text-sigsiu-active
-// .text-sigsiu-important
-// .bg-sigsiu = a new background colour
-// .bg-sigsiu-light = a lighter new background colour
-// .bg-sigsiu-alert
+// .btn-sigsiu = new button colour 1
+// .btn-sigsiu-active = new button colour 2
+// .btn-sigsiu-alert = new button colour 3
+// .text-sigsiu = new text colour 1
+// .text-sigsiu-active = new text colour 2
+// .text-sigsiu-important = new text colour 3
+// .bg-sigsiu = new background colour 1
+// .bg-sigsiu-light = new background colour 2
+// .bg-sigsiu-dark = new background colour 3
+// .bg-sigsiu-alert = new background colour 4
 
 //-------------------------------------------------------------------------------------*/
 
 // fallback to sobipro layout
 @base-color: #993333;
-@text-color: #ffffff;
-@hover-color: #ffffff;
+@text-color: #FFFFFF;
+@hover-color: #FFFFFF;
 @font-color: #333333;
 @active-color: #000066;
-@alert-color: #cccccc;
-@important-color: #fec1af;
+@alert-color: #CCCCCC;
+@important-color: #feb495;
+@background-light: #fbeeee;
+@background-medium: #f9d1d1;
+@background-dark: #ed8282;
 
 @inverse: standard;
 @back-color: #ffffff;
@@ -70,285 +76,23 @@
 
 // Mixins
 // ----------------------------------------
-.background(dark) {
-	background-color: lighten(@base-color, 20%);
-	& when (@colour-set = cornflower) {
-		background-color: lighten(@base-color, 22%);
-	}
-	& when (@colour-set = cornfield) {
-		background-color: lighten(@base-color, 8%);
-	}
-	& when (@colour-set = malva) {
-		border-color: lighten(@base-color, 18%);
-	}
-	& when (@colour-set = meadow) {
-		background-color: lighten(desaturate(@base-color, 15%), 20%);
-	}
-	& when (@colour-set = poppyseed) {
-		background-color: lighten(@base-color, 25%);
-	}
-	& when (@colour-set = roses) {
-		background-color: lighten(@base-color, 22%);
-	}
-	& when (@colour-set = terra) {
-		background-color: lighten(@base-color, 21%);
-	}
-	& when (@colour-set = waterfall) {
-		background-color: lighten(desaturate(@base-color, 25%), 20%);
-	}
-}
+.background(dark) { background-color: @background-dark; }
 
-.borders(dark) {
-	border-color: lighten(@base-color, 16%);
-	& when (@colour-set = cornflower) {
-		background-color: lighten(@base-color, 22%);
-	}
-	& when (@colour-set = cornfield) {
-		border-color: lighten(@base-color, 4%);
-	}
-	& when (@colour-set = malva) {
-		border-color: lighten(@base-color, 14%);
-	}
-	& when (@colour-set = meadow) {
-		border-color: lighten(desaturate(@base-color, 15%), 16%);
-	}
-	& when (@colour-set = poppyseed) {
-		border-color: lighten(@base-color, 21%);
-	}
-	& when (@colour-set = roses) {
-		border-color: lighten(@base-color, 18%);
-	}
-	& when (@colour-set = terra) {
-		border-color: lighten(@base-color, 17%);
-	}
-	& when (@colour-set = waterfall) {
-		border-color: lighten(desaturate(@base-color, 25%), 16%);
-	}
-}
+.background(medium) { background-color: @background-medium; }
 
-.background(medium) {
-	background-color: lighten(saturate(@base-color, 20%), 48%);
-	& when (@colour-set = cornflower) {
-		background-color: lighten(saturate(@base-color, 15%), 35%);
-	}
-	& when (@colour-set = cornfield) {
-		background-color: lighten(saturate(@base-color, 24%), 25%);
-	}
-	& when (@colour-set = malva) {
-		background-color: lighten(saturate(@base-color, 15%), 40%);
-	}
-	& when (@colour-set = meadow) {
-		background-color: lighten(desaturate(@base-color, 10%), 46%);
-	}
-	& when (@colour-set = poppyseed) {
-		background-color: lighten(@base-color, 48%);
-	}
-	& when (@colour-set = roses) {
-		background-color: lighten(saturate(@base-color, 28%), 40%);
-	}
-	& when (@colour-set = terra) {
-		background-color: lighten(saturate(@base-color, 3%), 42%);
-	}
-	& when (@colour-set = waterfall) {
-		background-color: lighten(desaturate(@base-color, 25%), 43%);
-	}
-}
+.background(light) { background-color: @background-light; }
 
-.borders(medium) {
-	border-color: lighten(@base-color, 33%);
-	& when (@colour-set = cornflower) {
-		border-color: lighten(@base-color, 22%);
-	}
-	& when (@colour-set = cornfield) {
-		border-color: lighten(@base-color, 12%);
-	}
-	& when (@colour-set = malva) {
-		border-color: lighten(@base-color, 24%);
-	}
-	& when (@colour-set = meadow) {
-		border-color: lighten(desaturate(@base-color, 15%), 28%);
-	}
-	& when (@colour-set = poppyseed) {
-		border-color: lighten(@base-color, 35%);
-	}
-	& when (@colour-set = roses) {
-		border-color: lighten(@base-color, 32%);
-	}
-	& when (@colour-set = terra) {
-		border-color: lighten(@base-color, 27%);
-	}
-	& when (@colour-set = waterfall) {
-		border-color: lighten(desaturate(@base-color, 25%), 30%);
-	}
-}
+.borders(dark) { border-color: darken(@background-dark, 14%) }
 
-.topborder(medium) {
-	border-top-color: lighten(@base-color, 33%);
-	& when (@colour-set = cornflower) {
-		border-top-color: lighten(@base-color, 22%);
-	}
-	& when (@colour-set = cornfield) {
-		border-top-color: lighten(@base-color, 12%);
-	}
-	& when (@colour-set = malva) {
-		border-top-color: lighten(@base-color, 24%);
-	}
-	& when (@colour-set = meadow) {
-		border-top-color: lighten(desaturate(@base-color, 15%), 28%);
-	}
-	& when (@colour-set = poppyseed) {
-		border-top-color: lighten(@base-color, 35%);
-	}
-	& when (@colour-set = roses) {
-		border-top-color: lighten(@base-color, 32%);
-	}
-	& when (@colour-set = terra) {
-		border-top-color: lighten(@base-color, 27%);
-	}
-	& when (@colour-set = waterfall) {
-		border-top-color: lighten(desaturate(@base-color, 25%), 30%);
-	}
-}
+.borders(medium) { border-color: darken(@background-medium, 9%); }
 
-.background(light) {
-	background-color: lighten(saturate(@base-color, 15%), 56%);
-	& when (@colour-set = cornflower) {
-		background-color: lighten(saturate(@base-color, 15%), 45%);
-	}
-	& when (@colour-set = cornfield) {
-		background-color: lighten(saturate(@base-color, 17%), 40%);
-	}
-	& when (@colour-set = malva) {
-		background-color: lighten(saturate(@base-color, 15%), 50%);
-	}
-	& when (@colour-set = meadow) {
-		background-color: lighten(saturate(@base-color, 10%), 59%);
-	}
-	& when (@colour-set = poppyseed) {
-		background-color: lighten(saturate(@base-color, 2%), 60%);
-	}
-	& when (@colour-set = roses) {
-		background-color: lighten(saturate(@base-color, 28%), 47%);
-	}
-	& when (@colour-set = terra) {
-		background-color: lighten(saturate(@base-color, 25%), 62%);
-	}
-	& when (@colour-set = waterfall) {
-		background-color: lighten(desaturate(@base-color, 10%), 56%);
-	}
-}
+.topborder(medium) { border-top-color: darken(@background-medium, 9%); }
 
-.borders(light) {
-	border-color: lighten(@base-color, 48%);
-	& when (@colour-set = cornflower) {
-		border-color: lighten(@base-color, 36%);
-	}
-	& when (@colour-set = cornfield) {
-		border-color: lighten(@base-color, 28%);
-	}
-	& when (@colour-set = malva) {
-		border-color: lighten(@base-color, 40%);
-	}
-	& when (@colour-set = meadow) {
-		border-color: lighten(@base-color, 48%);
-	}
-	& when (@colour-set = poppyseed) {
-		border-color: lighten(@base-color, 50%);
-	}
-	& when (@colour-set = roses) {
-		border-color: lighten(@base-color, 40%);
-	}
-	& when (@colour-set = terra) {
-		border-color: lighten(@base-color, 50%);
-	}
-	& when (@colour-set = waterfall) {
-		border-color: lighten(desaturate(@base-color, 20%), 45%);
-	}
-}
+.borders(light) { border-color: darken(@background-light, 7%); }
 
-.bottomborder(light) {
-	border-bottom-color: lighten(@base-color, 48%);
-	& when (@colour-set = cornflower) {
-		border-bottom-color: lighten(@base-color, 36%);
-	}
-	& when (@colour-set = cornfield) {
-		border-bottom-color: lighten(@base-color, 28%);
-	}
-	& when (@colour-set = malva) {
-		border-bottom-color: lighten(@base-color, 40%);
-	}
-	& when (@colour-set = meadow) {
-		border-bottom-color: lighten(@base-color, 48%);
-	}
-	& when (@colour-set = poppyseed) {
-		border-bottom-color: lighten(@base-color, 50%);
-	}
-	& when (@colour-set = roses) {
-		border-bottom-color: lighten(@base-color, 40%);
-	}
-	& when (@colour-set = terra) {
-		border-bottom-color: lighten(@base-color, 50%);
-	}
-	& when (@colour-set = waterfall) {
-		border-bottom-color: lighten(desaturate(@base-color, 20%), 45%);
-	}
-}
+.bottomborder(light) { border-bottom-color: darken(@background-light, 7%); }
 
-.topborder(light) {
-	border-top-color: lighten(@base-color, 48%);
-	& when (@colour-set = cornflower) {
-		border-top-color: lighten(@base-color, 36%);
-	}
-	& when (@colour-set = cornfield) {
-		border-top-color: lighten(@base-color, 28%);
-	}
-	& when (@colour-set = malva) {
-		border-top-color: lighten(@base-color, 40%);
-	}
-	& when (@colour-set = meadow) {
-		border-top-color: lighten(@base-color, 48%);
-	}
-	& when (@colour-set = poppyseed) {
-		border-top-color: lighten(@base-color, 50%);
-	}
-	& when (@colour-set = roses) {
-		border-top-color: lighten(@base-color, 40%);
-	}
-	& when (@colour-set = terra) {
-		border-top-color: lighten(@base-color, 50%);
-	}
-	& when (@colour-set = waterfall) {
-		border-top-color: lighten(desaturate(@base-color, 20%), 45%);
-	}
-}
-
-.bottomborder(lightbackground) {
-	border-bottom-color: lighten(saturate(@base-color, 15%), 56%);
-	& when (@colour-set = cornflower) {
-		border-bottom-color: lighten(saturate(@base-color, 15%), 45%);
-	}
-	& when (@colour-set = cornfield) {
-		border-bottom-color: lighten(saturate(@base-color, 17%), 40%);
-	}
-	& when (@colour-set = malva) {
-		border-bottom-color: lighten(saturate(@base-color, 15%), 50%);
-	}
-	& when (@colour-set = meadow) {
-		border-bottom-color: lighten(saturate(@base-color, 10%), 59%);
-	}
-	& when (@colour-set = poppyseed) {
-		border-bottom-color: lighten(saturate(@base-color, 2%), 60%);
-	}
-	& when (@colour-set = roses) {
-		border-bottom-color: lighten(saturate(@base-color, 28%), 47%);
-	}
-	& when (@colour-set = terra) {
-		border-bottom-color: lighten(saturate(@base-color, 25%), 62%);
-	}
-	& when (@colour-set = waterfall) {
-		border-bottom-color: lighten(desaturate(@base-color, 10%), 56%);
-	}
-}
+.topborder(light) { border-top-color: darken(@background-light, 7%); }
 
 .headertext {
 	font-size: calc(@fontsize + 8px);
@@ -388,7 +132,7 @@ body.modal-open {
 	border-style: solid;
 	border-width: 1px;
 	background-color: @alert-color;
-	color: @active-color;
+	color: @important-color;
 	border-color: darken(@alert-color, 10%);
 	& when (@corners = angular) {
 		border-radius: 0;
@@ -1146,11 +890,17 @@ body.modal-open {
 
 	// New button colour
 	// ----------------------------------------
+	// Button 1
 	.toggle-editor .btn,
 	.btn-sigsiu {
-		color: @text-color !important;
-		background-color: lighten(@base-color, 5%);
-		border-color: darken(@base-color, 5%);
+		background-color: @base-color;
+		border-color: darken(@base-color, 4%);
+		color: @text-color;
+		& when (lightness(@base-color) < 35%) {
+			& when (lightness(@text-color) < 35%) {
+				color: white;
+			}
+		}
 	}
 	.toggle-editor .btn:hover,
 	.toggle-editor .btn:focus,
@@ -1161,13 +911,76 @@ body.modal-open {
 	.btn-sigsiu:focus,
 	.btn-sigsiu:active,
 	.btn-sigsiu.active {
-		background-color: @base-color;
+		background-color: darken(@base-color, 8%);
+		border-color: darken(@base-color, 12%);
 		color: @text-color;
-		border-color: darken(@base-color, 10%);
+		& when (lightness(@base-color) < 35%) {
+			& when (lightness(@text-color) < 35%) {
+				color: white;
+			}
+		}
 	}
-	.btn-sigsiu .caret {
+
+	// Button 2
+	.btn-sigsiu-active {
+		background-color: @active-color;
+		border-color: darken(@active-color, 4%);
+		color: @text-color;
+		& when (lightness(@active-color) < 35%) {
+			& when (lightness(@text-color) < 35%) {
+				color: white;
+			}
+		}
+	}
+	.btn-group.open .btn-sigsiu-active.dropdown-toggle,
+	.btn-sigsiu-active:hover,
+	.btn-sigsiu-active:focus,
+	.btn-sigsiu-active:active,
+	.btn-sigsiu-active.active {
+		background-color: darken(@active-color, 8%);
+		border-color: darken(@active-color, 12%);
+		color: @text-color;
+		& when (lightness(@active-color) < 35%) {
+			& when (lightness(@text-color) < 35%) {
+				color: white;
+			}
+		}
+	}
+
+	// Button 3
+	.btn-sigsiu-alert {
+		background-color: @alert-color;
+		border-color: darken(@alert-color, 4%);
+		color: @important-color;
+		& when (lightness(@alert-color) < 35%) {
+			& when (lightness(@important-color) < 35%) {
+				color: white;
+			}
+		}
+	}
+	.btn-group.open .btn-sigsiu-alert.dropdown-toggle,
+	.btn-sigsiu-alert:hover,
+	.btn-sigsiu-alert:focus,
+	.btn-sigsiu-alert:active,
+	.btn-sigsiu-alert.active {
+		background-color: darken(@alert-color, 6%);
+		border-color: darken(@alert-color, 10%);
+		color: @important-color;
+		& when (lightness(@alert-color) < 35%) {
+			& when (lightness(@important-color) < 35%) {
+				color: white;
+			}
+		}
+	}
+
+	.btn-sigsiu .caret,
+	.btn-sigsiu-active .caret,
+	.btn-sigsiu-alert .caret {
 		border-top-color: @text-color;
 	}
+	.btn.btn-right { margin-right: 5px; }
+	.btn.btn-left { margin-left: 5px; }
+	.btn.btn-both { margin-right: 5px; margin-left: 5px; }
 
 	// New text and background  color
 	// ----------------------------------------
@@ -1192,11 +1005,17 @@ body.modal-open {
 		.background(light);
 		.borders(light);
 	}
+	.bg-sigsiu-dark {
+		border-style: solid;
+		border-width: 1px;
+		.background(dark);
+		.borders(dark);
+	}
 	.bg-sigsiu-alert {
 		border-style: solid;
 		border-width: 1px;
 		background-color: @alert-color;
-		color: @active-color;
+		color: @important-color;
 		border-color: darken(@alert-color, 10%);
 		& when (@corners = angular) {
 			border-radius: 0;
@@ -1255,9 +1074,10 @@ body.modal-open {
 	.spAlert {
 		margin-bottom: 8px;
 		margin-top: 20px;
-		background-color: transparent;
-		color: @active-color;
+		background-color: @alert-color;
+		color: @important-color;
 		font-weight: 500;
+		padding: 10px;
 	}
 
 	// has to be defined by the template as several apps are using it
@@ -1711,7 +1531,7 @@ body.modal-open {
 		border-width: 1px;
 		.background(light);
 		.borders(light);
-		.bottomborder(lightbackground);
+		border-bottom-color: @background-light;
 	}
 
 	.nav-tabs.coloured {
@@ -2134,7 +1954,6 @@ body.modal-open {
 		margin-left: 5px;
 	}
 
-
 	// Payment popup
 	// ----------------------------------------
 	table.payment td {
@@ -2332,6 +2151,30 @@ body.modal-open {
 		}
 	}
 
+	.carousel-fade .carousel-inner .item {
+		opacity: 0.3;
+		-webkit-transition: opacity 2s ease;
+		-moz-transition: opacity 2s ease;
+		-o-transition: opacity 2s ease;
+		transition: opacity 2s ease;
+	}
+	.carousel-fade .carousel-inner .active {
+		opacity: 1;
+	}
+	.carousel-fade .carousel-inner .active.left,
+	.carousel-fade .carousel-inner .active.right {
+		left: 0;
+		opacity: 0;
+		z-index: 1;
+	}
+	.carousel-fade .carousel-inner .next.left,
+	.carousel-fade .carousel-inner .prev.right {
+		opacity: 1;
+	}
+	.carousel-fade .carousel-control {
+		z-index: 2;
+	}
+
 	// Entries Module
 	// -----------------------------------------------
 	.ctrl-emod-navigation {
@@ -2475,7 +2318,7 @@ body.modal-open {
 
 	.SpCalDay.badge {
 		background-color: @alert-color;
-		color: @active-color;
+		color: @important-color;
 		border-bottom-width: 1px;
 		border-left-width: 1px;
 		border-bottom-style: solid;
@@ -2648,8 +2491,7 @@ body.modal-open {
 	}
 
 	/* Small devices (tablets, 768px and up) */
-	@screen-sm-min: 768px;
-	@media (max-width: @screen-sm-min) {
+	@media (max-width: 768px) {
 		.topmenu .nav > li a {
 			line-height: 20px;
 		}

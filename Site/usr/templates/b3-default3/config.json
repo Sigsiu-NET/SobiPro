@@ -45,7 +45,10 @@
       "font-color": "#333333",
       "active-color": "#000066",
       "alert-color": "#CCCCCC",
-      "important-color": "#FEC1AF"
+      "important-color": "#FEC1AF",
+      "background-light": "#FBEEEE",
+      "background-medium": "#F9D1D1",
+      "background-dark": "#ED8282"
     }
   },
   "section-view": {

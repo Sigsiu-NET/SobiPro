@@ -112,6 +112,15 @@
 									<field type="text" label="TP.CONFIG.CUSTOM_IMPORTANT" name="settings[config][theme][custom][important-color]"
 									       value="settings.config.theme.custom.important-color" class="input-medium colourpicker {hash:true}">
 									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_LIGHTB" name="settings[config][theme][custom][background-light]"
+									       value="settings.config.theme.custom.background-light" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_MEDIUMB" name="settings[config][theme][custom][background-medium]"
+									       value="settings.config.theme.custom.background-medium" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_DARKB" name="settings[config][theme][custom][background-dark]"
+									       value="settings.config.theme.custom.background-dark" class="input-medium colourpicker {hash:true}">
+									</field>
 								</fieldset>
 								<fieldset label="TP.CONFIG.FONTS">
 									<field type="select" label="TP.CONFIG.FONT" name="settings[config][general][basefont]"
