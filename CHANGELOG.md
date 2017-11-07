@@ -45,6 +45,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Status explanation popover on front-end does not longer work
     (#) Button bar top menu shows wrong directory name
     (#) button margins corrected
+    (#) Only config.json file of template settings is re-read (Issue #49)
     
 
 ### 1.4.3 (19 October 2017)
