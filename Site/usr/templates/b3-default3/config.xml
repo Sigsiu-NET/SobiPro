@@ -95,17 +95,17 @@
 									<field type="text" label="TP.CONFIG.CUSTOM_BASE" name="settings[config][theme][custom][base-color]"
 									       value="settings.config.theme.custom.base-color" class="input-medium colourpicker {hash:true}">
 									</field>
-									<field type="text" label="TP.CONFIG.CUSTOM_TEXT" name="settings[config][theme][custom][text-color]"
-									       value="settings.config.theme.custom.text-color" class="input-medium colourpicker {hash:true}">
-									</field>
-									<field type="text" label="TP.CONFIG.CUSTOM_HOVER" name="settings[config][theme][custom][hover-color]"
-									       value="settings.config.theme.custom.hover-color" class="input-medium colourpicker {hash:true}">
-									</field>
-									<field type="text" label="TP.CONFIG.CUSTOM_FONT" name="settings[config][theme][custom][font-color]"
-									       value="settings.config.theme.custom.font-color" class="input-medium colourpicker {hash:true}">
+									<field type="text" label="TP.CONFIG.CUSTOM_BTEXT" name="settings[config][theme][custom][basetext-color]"
+									       value="settings.config.theme.custom.basetext-color" class="input-medium colourpicker {hash:true}">
 									</field>
 									<field type="text" label="TP.CONFIG.CUSTOM_ACTIVE" name="settings[config][theme][custom][active-color]"
 									       value="settings.config.theme.custom.active-color" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_ATEXT" name="settings[config][theme][custom][activetext-color]"
+									       value="settings.config.theme.custom.activetext-color" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_FONT" name="settings[config][theme][custom][font-color]"
+									       value="settings.config.theme.custom.font-color" class="input-medium colourpicker {hash:true}">
 									</field>
 									<field type="text" label="TP.CONFIG.CUSTOM_ALERT" name="settings[config][theme][custom][alert-color]"
 									       value="settings.config.theme.custom.alert-color" class="input-medium colourpicker {hash:true}">

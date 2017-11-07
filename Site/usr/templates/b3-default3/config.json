@@ -44,8 +44,8 @@
       "hover-color": "#FFFFFF",
       "font-color": "#333333",
       "active-color": "#000066",
-      "alert-color": "#CCCCCC",
-      "important-color": "#FEC1AF",
+      "alert-color": "#e7e7e7",
+      "important-color": "#fe4426",
       "background-light": "#FBEEEE",
       "background-medium": "#F9D1D1",
       "background-dark": "#ED8282"

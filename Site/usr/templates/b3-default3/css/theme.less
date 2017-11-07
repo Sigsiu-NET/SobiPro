@@ -42,12 +42,12 @@
 
 // fallback to sobipro layout
 @base-color: #993333;
-@text-color: #FFFFFF;
-@hover-color: #FFFFFF;
-@font-color: #333333;
+@basetext-color: #ffffff;
 @active-color: #000066;
-@alert-color: #CCCCCC;
-@important-color: #feb495;
+@activetext-color: #ffffff;
+@font-color: #333333;
+@alert-color: #e7e7e7;
+@important-color: #fe4426;
 @background-light: #fbeeee;
 @background-medium: #f9d1d1;
 @background-dark: #ed8282;
@@ -159,7 +159,7 @@ body.modal-open {
 	td.active.disabled:hover,
 	td.active[disabled],
 	td.active[disabled]:hover {
-		color: @text-color;
+		color: @basetext-color;
 		background-color: @base-color;
 	}
 	td span.active,
@@ -463,12 +463,12 @@ body.modal-open {
 	.badge-sigsiu i,
 	.label-sigsiu a,
 	.badge-sigsiu a {
-		color: @text-color;
+		color: @basetext-color;
 		text-shadow: none;
 	}
 	.label-sigsiu,
 	.badge-sigsiu {
-		color: @text-color !important;
+		color: @basetext-color !important;
 		background-color: lighten(@base-color, 5%);
 	}
 
@@ -778,7 +778,7 @@ body.modal-open {
 	}
 	.pagination > ul > li > a,
 	.pagination > li > a {
-		color: @text-color;
+		color: @basetext-color;
 		background-color: @base-color;
 		font-weight: bold;
 	}
@@ -790,7 +790,7 @@ body.modal-open {
 	.pagination > li > a:focus,
 	.pagination > .active > a,
 	.pagination > .active > span {
-		color: @hover-color;
+		color: @activetext-color;
 		background-color: @active-color;
 		border-color: @active-color;
 		text-decoration: none;
@@ -831,7 +831,7 @@ body.modal-open {
 	.dropdown-menu > li > a:focus,
 	.dropdown-submenu:hover > a,
 	.dropdown-submenu:focus > a {
-		color: @hover-color;
+		color: @activetext-color;
 		background-color: @active-color;
 		background-image: none;
 	}
@@ -895,9 +895,9 @@ body.modal-open {
 	.btn-sigsiu {
 		background-color: @base-color;
 		border-color: darken(@base-color, 4%);
-		color: @text-color;
+		color: @basetext-color;
 		& when (lightness(@base-color) < 35%) {
-			& when (lightness(@text-color) < 35%) {
+			& when (lightness(@basetext-color) < 35%) {
 				color: white;
 			}
 		}
@@ -913,9 +913,9 @@ body.modal-open {
 	.btn-sigsiu.active {
 		background-color: darken(@base-color, 8%);
 		border-color: darken(@base-color, 12%);
-		color: @text-color;
+		color: @basetext-color;
 		& when (lightness(@base-color) < 35%) {
-			& when (lightness(@text-color) < 35%) {
+			& when (lightness(@basetext-color) < 35%) {
 				color: white;
 			}
 		}
@@ -925,9 +925,9 @@ body.modal-open {
 	.btn-sigsiu-active {
 		background-color: @active-color;
 		border-color: darken(@active-color, 4%);
-		color: @text-color;
+		color: @basetext-color;
 		& when (lightness(@active-color) < 35%) {
-			& when (lightness(@text-color) < 35%) {
+			& when (lightness(@basetext-color) < 35%) {
 				color: white;
 			}
 		}
@@ -939,9 +939,9 @@ body.modal-open {
 	.btn-sigsiu-active.active {
 		background-color: darken(@active-color, 8%);
 		border-color: darken(@active-color, 12%);
-		color: @text-color;
+		color: @basetext-color;
 		& when (lightness(@active-color) < 35%) {
-			& when (lightness(@text-color) < 35%) {
+			& when (lightness(@basetext-color) < 35%) {
 				color: white;
 			}
 		}
@@ -976,7 +976,7 @@ body.modal-open {
 	.btn-sigsiu .caret,
 	.btn-sigsiu-active .caret,
 	.btn-sigsiu-alert .caret {
-		border-top-color: @text-color;
+		border-top-color: @basetext-color;
 	}
 	.btn.btn-right { margin-right: 5px; }
 	.btn.btn-left { margin-left: 5px; }
@@ -1182,7 +1182,7 @@ body.modal-open {
 	.nav-pills > .active > a:hover,
 	.nav-pills > .active > a:focus {
 		background-color: @active-color;
-		color: @hover-color;
+		color: @activetext-color;
 	}
 	.navbar .nav > li > a {
 		padding-left: 10px;
@@ -1212,7 +1212,7 @@ body.modal-open {
 		}
 		.nav > li,
 		.nav > li a {
-			color: @text-color;
+			color: @basetext-color;
 			line-height: 40px;
 			border-bottom: inherit;
 			text-align: inherit;
@@ -1221,7 +1221,7 @@ body.modal-open {
 		.nav > li a:focus,
 		.nav > li a:hover {
 			background-color: @active-color;
-			color: @hover-color;
+			color: @activetext-color;
 		}
 		.navbar-nav > li > a {
 			padding-top: 15px;
@@ -2045,7 +2045,7 @@ body.modal-open {
 	// -----------------------------------------------
 	.tooltip-inner {
 		background-color: @base-color;
-		color: @text-color;
+		color: @basetext-color;
 	}
 
 	.tooltip.top .tooltip-arrow {
@@ -2216,10 +2216,10 @@ body.modal-open {
 	// -----------------------------------------------
 	.bootstrap-tagsinput {
 		.tag {
-			color: @text-color;
+			color: @basetext-color;
 		}
 		.tag [data-role="remove"] {
-			color: darken(@text-color, 10%);
+			color: darken(@basetext-color, 10%);
 		}
 		input {
 			width: initial;
@@ -2307,7 +2307,7 @@ body.modal-open {
 
 	.spCalDayHead .navbar-inner {
 		background-color: @alert-color;
-		color: @text-color;
+		color: @important-color;
 		font-size: calc(@fontsize + 1px);;
 	}
 
@@ -2370,8 +2370,8 @@ body.modal-open {
 
 	.spCollection .nav > li > a:hover,
 	.spCollection .nav > li > a:focus {
-		border-color: darken(@hover-color, 10%);
-		background-color: @hover-color;
+		border-color: darken(@activetext-color, 10%);
+		background-color: @activetext-color;
 		color: @active-color;
 	}
 
@@ -2399,7 +2399,7 @@ body.modal-open {
 	}
 
 	.pswp__share-tooltip a:hover {
-		color: @hover-color;
+		color: @activetext-color;
 		background-color: @active-color;
 	}
 
