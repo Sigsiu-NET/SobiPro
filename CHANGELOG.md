@@ -50,6 +50,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Button bar top menu shows wrong directory name
     (#) Button margins corrected
     (#) Only config.json file of template settings is re-read (Issue #49)
+    (#) 'Hide search parameter' template settings wasn't remembered
     
 
 ### 1.4.3 (19 October 2017)

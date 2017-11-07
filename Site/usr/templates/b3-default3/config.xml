@@ -233,7 +233,7 @@
 										</values>
 									</field>
 									<field type="toggle" label="TP.CONFIG.HIDESEARCH" name="settings[config][general][hidesearch]"
-									       selected="settings.config.general.hidesearch" prefix="yes_no">
+									       value="settings.config.general.hidesearch" prefix="yes_no">
 									</field>
 								</fieldset>
 							</div>
