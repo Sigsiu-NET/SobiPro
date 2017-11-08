@@ -32,15 +32,16 @@
 			</xsl:call-template>
 			<xsl:apply-templates select="messages"/>
 
-			<xsl:variable name="form-orientation">
-				<xsl:value-of select="//config/form-class/@value"/>
-			</xsl:variable>
+			<!-- Snippet for the field highlighting feature. Do not remove or change it! -->
 			<xsl:variable name="development">
 				<xsl:if test="//development = 1">
 					<xsl:text>development</xsl:text>
 				</xsl:if>
 			</xsl:variable>
 
+			<xsl:variable name="form-orientation">
+				<xsl:value-of select="//config/form-class/@value"/>
+			</xsl:variable>
 			<div class="form-{$form-orientation}">
 				<xsl:for-each select="entry/fields/*">
 					<xsl:call-template name="editfield">

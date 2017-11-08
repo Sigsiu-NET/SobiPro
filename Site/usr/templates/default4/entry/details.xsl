@@ -36,6 +36,7 @@
 
 	<xsl:template match="/entry_details">
 
+		<!-- Snippet for the field highlighting feature. Do not remove or change it! -->
 		<xsl:variable name="development">
 			<xsl:if test="//development = 1">
 				<xsl:text>development</xsl:text>

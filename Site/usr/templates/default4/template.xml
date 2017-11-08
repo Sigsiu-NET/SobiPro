@@ -34,7 +34,7 @@
 			Template to display all entries (entriesLoop) within a category or the search function. Build the structure of all entries and calls the "vCard" template while displaying single entry.
 		</file>
 		<file path="common/font.xsl">
-			Template to load Google fonts.
+			Template to load Google fonts. Will be called from the topmenu template.
 		</file>
 		<file path="common/manage.xsl">
 			Displays the managing functions like edit entry, approve aso, within an entry.
