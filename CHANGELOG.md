@@ -43,6 +43,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (!) Separate icon from label in Button field
     (!) Redefinition of theme colours
     (!) SobiPro background and font colours adjustable via template settings
+    (!) Default template is now default4
+    (!) Several fixes and improvements in the default template
     
     (#) Visitors are treated as users if checking permissions
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
