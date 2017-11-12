@@ -167,6 +167,7 @@ class SPImage extends SPFile
 			list( $wOrg, $hOrg, $this->type ) = getimagesize( $this->_filename );
 		}
 		$currentImg = $this->createImage( $this->type );
+//		ini_set('memory_limit', '256M') ;   //imagerotate function needs a lot of memory. Used with original camera images may result in a memory_exhausted error!
 		$this->image = imagerotate( $currentImg, $angle, $backgroundColor, $ignoreTransparent );
 		$this->storeImage();
 	}

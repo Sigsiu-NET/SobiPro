@@ -54,6 +54,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Only config.json file of template settings is re-read (Issue #49)
     (#) 'Hide search parameter' template settings wasn't remembered
     (#) Left side of text in Codemirror editor may be not visible
+    (#) Handling for image EXIF data with invalid GPS data
+    (#) Non-well formed warning while processing GPS coordinates of images
     
 
 ### 1.4.3 (19 October 2017)
