@@ -45,6 +45,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (!) SobiPro background and font colours adjustable via template settings
     (!) Default template is now default4
     (!) Several fixes and improvements in the default template
+    (!) Field widths in administrator edit entry screen are now responsive
     
     (#) Visitors are treated as users if checking permissions
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
