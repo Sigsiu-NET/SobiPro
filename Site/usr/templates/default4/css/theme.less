@@ -2418,13 +2418,20 @@ body.modal-open {
 	}
 
 	.spCalendarLabel.label-info,
-	.SpCalEntry.label-info {
-		background-color: lighten(@alert-color, 10%);
+	.spCalEntry.label-info {
+		background-color: lighten(@alert-color, 4%);
+		border: 1px solid darken(@alert-color, 10%);
 		color: @active-color;
 
 		a {
 			color: @base-color;
 			text-shadow: none;
+
+			&:hover,
+			&:active,
+			&:focus {
+				color: darken(@base-color,5%);
+			}
 		}
 	}
 
