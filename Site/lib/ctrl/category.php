@@ -78,7 +78,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 	protected function iconChooser()
 	{
 		if ( !( Sobi::Can( 'category.edit' ) ) ) {
-			Sobi::Error( 'category', 'You have no permission to access this site', SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'category', 'You have no (longer) permission to access this site', SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		if ( strlen( SPRequest::cmd( 'font' ) ) ) {
 			return $this->iconFont();
@@ -207,7 +207,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 			$tree->disable( Sobi::Reg( 'current_section' ) );
 		}
 
-		/* case we extending existing tree */
+		/* case we are extending the existing tree */
 		if ( $out == 'xml' && $exp ) {
 			$pid = SPRequest::int( 'pid', 0 );
 			$pid = $pid ? $pid : SPRequest::sid();
@@ -216,7 +216,7 @@ class SPCategoryCtrl extends SPSectionCtrl
 			$tree->extend( $exp );
 		}
 
-		/* otherwise we are creating new tree */
+		/* otherwise we are creating a new tree */
 		else {
 			/* init the tree for the current section */
 			$tree->init( Sobi::Reg( 'current_section' ) );

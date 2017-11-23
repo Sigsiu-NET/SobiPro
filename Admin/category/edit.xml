@@ -67,13 +67,13 @@
 										<values>
 											<option value="0" label="OPT_NO"/>
 											<option value="font-awesome-3" label="SECN.CFG.ICONS_FONT_AWESOME_3"/>
-											<option value="font-awesome-3-2x" label="SECN.CFG.ICONS_FONT_AWESOME_3_2"/>
-											<option value="font-awesome-3-3x" label="SECN.CFG.ICONS_FONT_AWESOME_3_3"/>
-											<option value="font-awesome-3-4x" label="SECN.CFG.ICONS_FONT_AWESOME_3_4"/>
+											<!--<option value="font-awesome-3-2x" label="SECN.CFG.ICONS_FONT_AWESOME_3_2"/>-->
+											<!--<option value="font-awesome-3-3x" label="SECN.CFG.ICONS_FONT_AWESOME_3_3"/>-->
+											<!--<option value="font-awesome-3-4x" label="SECN.CFG.ICONS_FONT_AWESOME_3_4"/>-->
 											<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4"/>
-											<option value="font-awesome-4-2x" label="SECN.CFG.ICONS_FONT_AWESOME_4_2"/>
-											<option value="font-awesome-4-4x" label="SECN.CFG.ICONS_FONT_AWESOME_4_4"/>
-											<option value="font-awesome-4-5x" label="SECN.CFG.ICONS_FONT_AWESOME_4_5"/>
+											<!--<option value="font-awesome-4-2x" label="SECN.CFG.ICONS_FONT_AWESOME_4_2"/>-->
+											<!--<option value="font-awesome-4-4x" label="SECN.CFG.ICONS_FONT_AWESOME_4_4"/>-->
+											<!--<option value="font-awesome-4-5x" label="SECN.CFG.ICONS_FONT_AWESOME_4_5"/>-->
 											<option value="font-google-materials" label="SECN.CFG.ICONS_MATERIAL"/>
 										</values>
 									</field>
