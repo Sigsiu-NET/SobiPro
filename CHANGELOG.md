@@ -38,6 +38,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Possibility to define own template colours in the template settings
 	(+) Additional button colours
 	(+) New colour theme 'pastels'
+	(+) Show icon next to category name
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     (!) Separate icon from label in Button field

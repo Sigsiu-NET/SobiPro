@@ -350,11 +350,14 @@
 											<option value="std" label="TP.CONFIG.PAG_STD"/>
 										</values>
 									</field>
+									<field type="toggle" name="settings[config][general][showicon]"
+									       value="settings.config.general.showicon" label="TP.CONFIG.SHOWICON"
+									       prefix="yes_no"/>
 								</fieldset>
 
 								<fieldset label="TP.CONFIG.SECTION">
 									<field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][section-view][entries_limit]"
-									       selected="settings.config.section-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
+									       selected="settings.config.section-view.entries_limit" class="input-small"> <!-- SobiPro setting! -->
 										<values>
 											<option value="1" label="1"/>
 											<option value="2" label="2"/>
@@ -424,7 +427,7 @@
 										</values>
 									</field>
 									<field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][category-view][entries_limit]"
-									       selected="settings.config.category-view.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
+									       selected="settings.config.category-view.entries_limit" class="input-small"> <!-- SobiPro setting! -->
 										<values>
 											<option value="1" label="1"/>
 											<option value="2" label="2"/>
@@ -485,7 +488,7 @@
 								</fieldset>
 								<fieldset label="TP.CONFIG.LIST">
 									<field type="select" label="TP.CONFIG.LST_ENTRIESLIMIT" name="settings[config][general][entries_limit]"
-									       selected="settings.config.general.entries_limit" class="input-mini"> <!-- SobiPro setting! -->
+									       selected="settings.config.general.entries_limit" class="input-msmall"> <!-- SobiPro setting! -->
 										<values>
 											<option value="1" label="1"/>
 											<option value="2" label="2"/>

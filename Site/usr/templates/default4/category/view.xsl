@@ -57,6 +57,23 @@
 			<xsl:apply-templates select="alphaMenu"/>
 
 			<h1 class="page-header lead">
+				<xsl:if test="//config/showicon/@value = 1">
+					<xsl:choose>
+						<xsl:when test="string-length(icon/@element) > 0">
+							<xsl:element name="{icon/@element}">
+								<xsl:attribute name="class">
+									<xsl:value-of select="icon/@class"/>
+								</xsl:attribute>
+								<xsl:value-of select="icon/@content"/>
+							</xsl:element>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:if test="string-length( icon ) > 0">
+								<img alt="{name}" src="{icon}"/>
+							</xsl:if>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:if>
 				<xsl:value-of select="name"/>
 			</h1>
 			<xsl:if test="string-length(description) > 0">
