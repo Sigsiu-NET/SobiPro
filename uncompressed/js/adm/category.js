@@ -123,7 +123,7 @@ SobiPro.jQuery(document).ready(function () {
 						e.font = SobiPro.jQuery('#category-params-icon-font').val();
 						SobiPro.jQuery('#spIcoChooser')
 							.append('<div class="spIconElCont">' +
-								'<' + e.element + ' class="spIconElement ' + e.class + '" data-setting="' + JSON.stringify(e).replace(/"/g, "'") + '">' +
+								'<' + e.element + ' class="spIconElement ' + e.class + ' title="' + e.class + '" data-setting="' + JSON.stringify(e).replace(/"/g, "'") + '">' +
 								Content +
 								'</' + e.element + '></div>');
 					});
