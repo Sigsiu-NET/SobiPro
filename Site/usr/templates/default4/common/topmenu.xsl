@@ -45,96 +45,106 @@
 					</xsl:variable>
 					<div class="navbar navbar-default topmenu standard" role="navigation">
 						<div class="container-fluid">
-							<ul class="nav navbar-nav" role="menubar" aria-label="for {section}/>">
-								<xsl:if test="//menu/front">
-									<li role="none">
-										<a href="{//menu/front/@url}" tabindex="0" role="menuitem">
-											<xsl:choose>
-												<xsl:when test="//menu/add">
-													<xsl:choose>
-														<xsl:when test="//menu/search">
-															<xsl:if test="$currentUrl != //menu/add/@url and not(contains($currentUrl, //menu/search/@url))">
-																<xsl:attribute name="class">active</xsl:attribute>
-															</xsl:if>
-														</xsl:when>
-														<xsl:otherwise>
-															<xsl:if test="$currentUrl != //menu/add/@url">
-																<xsl:attribute name="class">active</xsl:attribute>
-															</xsl:if>
-														</xsl:otherwise>
-													</xsl:choose>
-												</xsl:when>
-												<xsl:otherwise>
-													<xsl:if test="not(contains($currentUrl, //menu/search/@url))">
-														<xsl:attribute name="class">active</xsl:attribute>
-													</xsl:if>
-												</xsl:otherwise>
-											</xsl:choose>
-											<span class="icon-th-list" aria-hidden="true"></span>
-											<xsl:text> </xsl:text>
-											<xsl:value-of select="//menu/front"/>
-										</a>
-									</li>
-								</xsl:if>
-
-								<xsl:choose>
-									<xsl:when test="//menu/add">
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topmenu" aria-expanded="false">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+							</div>
+							<div id="topmenu" class="collapse navbar-collapse">
+								<ul class="nav navbar-nav" role="menubar" aria-label="for {section}/>">
+									<xsl:if test="//menu/front">
 										<li role="none">
-											<a href="{//menu/add/@url}" role="menuitem">
-												<xsl:if test="$currentUrl = //menu/add/@url">
+											<a href="{//menu/front/@url}" tabindex="0" role="menuitem">
+												<xsl:choose>
+													<xsl:when test="//menu/add">
+														<xsl:choose>
+															<xsl:when test="//menu/search">
+																<xsl:if test="$currentUrl != //menu/add/@url and not(contains($currentUrl, //menu/search/@url))">
+																	<xsl:attribute name="class">active</xsl:attribute>
+																</xsl:if>
+															</xsl:when>
+															<xsl:otherwise>
+																<xsl:if test="$currentUrl != //menu/add/@url">
+																	<xsl:attribute name="class">active</xsl:attribute>
+																</xsl:if>
+															</xsl:otherwise>
+														</xsl:choose>
+													</xsl:when>
+													<xsl:otherwise>
+														<xsl:if test="not(contains($currentUrl, //menu/search/@url))">
+															<xsl:attribute name="class">active</xsl:attribute>
+														</xsl:if>
+													</xsl:otherwise>
+												</xsl:choose>
+												<span class="icon-th-list" aria-hidden="true"></span>
+												<xsl:text> </xsl:text>
+												<xsl:value-of select="//menu/front"/>
+											</a>
+										</li>
+									</xsl:if>
+
+									<xsl:choose>
+										<xsl:when test="//menu/add">
+											<li role="none">
+												<a href="{//menu/add/@url}" role="menuitem">
+													<xsl:if test="$currentUrl = //menu/add/@url">
+														<xsl:attribute name="class">active</xsl:attribute>
+														<span class="sr-only">(current)</span>
+													</xsl:if>
+													<span class="icon-plus-sign" aria-hidden="true"></span>
+													<xsl:text> </xsl:text>
+													<xsl:value-of select="//menu/add"/>
+												</a>
+											</li>
+										</xsl:when>
+										<xsl:otherwise>
+											<xsl:if test="string-length(//config/redirectlogin/@value) > 0">
+												<li role="none">
+													<a href="{//config/redirectlogin/@value}" role="menuitem">
+														<span class="icon-plus-sign" aria-hidden="true"></span>
+														<xsl:text> </xsl:text>
+														<xsl:value-of select="php:function( 'SobiPro::Txt', 'MN.ADD_ENTRY' )"/>
+													</a>
+												</li>
+											</xsl:if>
+										</xsl:otherwise>
+									</xsl:choose>
+
+									<xsl:if test="//menu/search">
+										<li role="none">
+											<a href="{//menu/search/@url}/?sparam=in" tabindex="0" role="menuitem">
+												<xsl:if test="contains($currentUrl, //menu/search/@url)">
 													<xsl:attribute name="class">active</xsl:attribute>
 													<span class="sr-only">(current)</span>
 												</xsl:if>
-												<span class="icon-plus-sign" aria-hidden="true"></span>
+												<span class="icon-search" aria-hidden="true"></span>
 												<xsl:text> </xsl:text>
-												<xsl:value-of select="//menu/add"/>
+												<xsl:value-of select="//menu/search"/>
 											</a>
 										</li>
-									</xsl:when>
-									<xsl:otherwise>
-										<xsl:if test="string-length(//config/redirectlogin/@value) > 0">
-											<li role="none">
-												<a href="{//config/redirectlogin/@value}" role="menuitem">
-													<span class="icon-plus-sign" aria-hidden="true"></span>
-													<xsl:text> </xsl:text>
-													<xsl:value-of select="php:function( 'SobiPro::Txt', 'MN.ADD_ENTRY' )"/>
-												</a>
-											</li>
-										</xsl:if>
-									</xsl:otherwise>
-								</xsl:choose>
-
-								<xsl:if test="//menu/search">
+									</xsl:if>
 									<li role="none">
-										<a href="{//menu/search/@url}/?sparam=in" tabindex="0" role="menuitem">
-											<xsl:if test="contains($currentUrl, //menu/search/@url)">
-												<xsl:attribute name="class">active</xsl:attribute>
-												<span class="sr-only">(current)</span>
-											</xsl:if>
-											<span class="icon-search" aria-hidden="true"></span>
-											<xsl:text> </xsl:text>
-											<xsl:value-of select="//menu/search"/>
-										</a>
+										<xsl:copy-of select="/*/collection/button/*"/>
 									</li>
+								</ul>
+								<xsl:if test="//menu/search and $searchbox = 'true'">
+									<div class="collapse navbar-collapse">
+										<form class="navbar-form navbar-right navbar-search">
+											<div class="form-group">
+												<label class="hidden" for="quicksearch">{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR' )}</label>
+												<input type="text" id="quicksearch" name="sp_search_for" autocomplete="off" class="search-query form-control"
+												       placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR' )}"/>
+												<input type="hidden" name="task" value="search.search"/>
+												<input type="hidden" name="option" value="com_sobipro"/>
+												<input type="hidden" name="sid" value="{//@id}"/>
+											</div>
+										</form>
+									</div>
 								</xsl:if>
-								<li role="none">
-									<xsl:copy-of select="/*/collection/button/*"/>
-								</li>
-							</ul>
-							<xsl:if test="//menu/search and $searchbox = 'true'">
-								<div class="collapse navbar-collapse">
-									<form class="navbar-form navbar-right navbar-search">
-										<div class="form-group">
-											<label class="hidden" for="quicksearch">{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR' )}</label>
-											<input type="text" id="quicksearch" name="sp_search_for" autocomplete="off" class="search-query form-control"
-											       placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR' )}"/>
-											<input type="hidden" name="task" value="search.search"/>
-											<input type="hidden" name="option" value="com_sobipro"/>
-											<input type="hidden" name="sid" value="{//@id}"/>
-										</div>
-									</form>
-								</div>
-							</xsl:if>
+							</div>
 						</div>
 					</div>
 				</xsl:when>

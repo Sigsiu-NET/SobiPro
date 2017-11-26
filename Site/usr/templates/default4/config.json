@@ -37,6 +37,7 @@
     "hidesearch": "0",
     "noimage": "1",
     "countentries": "0",
+    "showicon": "1",
     "entries_recursive": "1"
   },
   "theme": {
