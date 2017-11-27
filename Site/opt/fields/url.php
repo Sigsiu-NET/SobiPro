@@ -92,8 +92,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			if ( !( is_array( $raw ) ) ) {
 				try {
 					$raw = SPConfig::unserialize( $raw );
-				}
-				catch ( SPException $x ) {
+				} catch ( SPException $x ) {
 					$raw = null;
 				}
 			}
@@ -154,7 +153,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			}
 		}
 
-		$params = [ 'id' => $this->nid . '_url', 'class' => $class ];
+		$params = [ 'id' => $this->nid . '_url', 'class' => $class, 'data-field' => 'url' ];
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
@@ -186,12 +185,9 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		else {
 			$field = "\n<div class=\"spFieldUrl\">{$field}</div>";
 		}
-
+		SPFactory::header()->addJsFile( 'opt.field_url_edit' );
 		if ( $this->countClicks && $this->sid && ( $this->deleteClicks || SPFactory::user()->isAdmin() ) ) {
 			$counter = $this->getCounter();
-			if ( $counter ) {
-				SPFactory::header()->addJsFile( 'opt.field_url_edit' );
-			}
 			$classes = 'btn btn-default spCountableReset';
 			$attr = [];
 			if ( !( $counter ) ) {
@@ -229,8 +225,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	}
 
 
-	private
-	function fromCache( $cache )
+	private function fromCache( $cache )
 	{
 		$data = [];
 		if ( isset( $cache ) && isset( $cache[ $this->nid ] ) ) {
@@ -254,16 +249,15 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	 *
 	 * @return string
 	 */
-	protected
-	static function getHits( $real, $sid, $nid )
+	protected static function getHits( $real, $sid, $nid )
 	{
 		$query = [ 'sid' => $sid, 'fid' => $nid, 'section' => Sobi::Section() ];
 		if ( $real ) {
 			$query[ 'humanity>' ] = Sobi::Cfg( 'field_url.humanity', 90 );
 		}
 		$counter = SPFactory::db()
-			->select( 'count(*)', 'spdb_field_url_clicks', $query )
-			->loadResult();
+				->select( 'count(*)', 'spdb_field_url_clicks', $query )
+				->loadResult();
 
 		return $counter;
 	}
@@ -326,16 +320,16 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 					}
 				}
 				$data = [
-					'_complex'    => 1,
-					'_data'       => SPLang::clean( $data[ 'label' ] ),
+						'_complex' => 1,
+						'_data' => SPLang::clean( $data[ 'label' ] ),
 //						'_data' => SPLang::clean( $this->ownLabel ? $data[ 'label' ] : $data[ 'url' ] ),
-					'_attributes' => $attributes
+						'_attributes' => $attributes
 				];
 
 				return [
-					'_complex'    => 1,
-					'_data'       => [ 'a' => $data ],
-					'_attributes' => [ 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass, 'counter' => $counter ]
+						'_complex' => 1,
+						'_data' => [ 'a' => $data ],
+						'_attributes' => [ 'lang' => Sobi::Lang( false ), 'class' => $this->cssClass, 'counter' => $counter ]
 				];
 			}
 		}
@@ -475,12 +469,12 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			try {
 				$connection = new $rclass();
 				$connection->setOptions(
-					[
-						'url'            => $save[ 'protocol' ] . '://' . $data,
-						'connecttimeout' => 10,
-						'header'         => false,
-						'returntransfer' => true
-					]
+						[
+								'url' => $save[ 'protocol' ] . '://' . $data,
+								'connecttimeout' => 10,
+								'header' => false,
+								'returntransfer' => true
+						]
 				);
 				$connection->exec();
 				$response = $connection->info( 'response_code' );
@@ -490,8 +484,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 				if ( $err ) {
 					Sobi::Error( $this->name(), SPLang::e( 'FIELD_URL_CANNOT_VALIDATE', $errTxt ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'FIELD_URL_CANNOT_VALIDATE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			if ( $err || ( $response != 200 ) ) {
@@ -568,8 +561,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			 * " ... " if a copy already exist it is update again
 			 * */
 			$db->insertUpdate( 'spdb_field_data', $params );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
@@ -578,8 +570,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 			$params[ 'lang' ] = Sobi::DefLang();
 			try {
 				$db->insert( 'spdb_field_data', $params, true, true );
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
@@ -593,7 +584,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 //		$entry = SPFactory::Entry( $eid );
 		if ( Sobi::Can( 'entry.manage.any' ) ) {
 			SPFactory::db()
-				->delete( 'spdb_field_url_clicks', [ 'section' => Sobi::Section(), 'sid' => $eid, 'fid' => $this->nid ] );
+					->delete( 'spdb_field_url_clicks', [ 'section' => Sobi::Section(), 'sid' => $eid, 'fid' => $this->nid ] );
 		}
 		echo 1;
 	}
@@ -601,7 +592,7 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	public function ProxyHits()
 	{
 		SPFactory::mainframe()->cleanBuffer()->customHeader();
-		$r = ( int ) self::getHits( true, SPRequest::int( 'eid' ), $this->nid );
+		$r = ( int )self::getHits( true, SPRequest::int( 'eid' ), $this->nid );
 		echo $r;
 		exit;
 	}
@@ -616,15 +607,15 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 		$check = SPRequest::cmd( 'count_' . $ident, null, 'cookie' );
 		if ( !( $check ) ) {
 			$data = [
-				'date'        => 'FUNCTION:NOW()',
-				'uid'         => Sobi::My( 'id' ),
-				'sid'         => SPRequest::int( 'eid' ),
-				'fid'         => $this->nid,
-				'ip'          => SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ),
-				'section'     => Sobi::Section(),
-				'browserData' => $browser->get( 'browser' ),
-				'osData'      => $browser->get( 'system' ),
-				'humanity'    => $browser->get( 'humanity' )
+					'date' => 'FUNCTION:NOW()',
+					'uid' => Sobi::My( 'id' ),
+					'sid' => SPRequest::int( 'eid' ),
+					'fid' => $this->nid,
+					'ip' => SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ),
+					'section' => Sobi::Section(),
+					'browserData' => $browser->get( 'browser' ),
+					'osData' => $browser->get( 'system' ),
+					'humanity' => $browser->get( 'humanity' )
 			];
 			SPCookie::set( 'count_' . $ident, 1, SPCookie::hours( 2 ) );
 			SPFactory::db()->insert( 'spdb_field_url_clicks', $data );
@@ -646,12 +637,12 @@ class SPField_Url extends SPField_Inbox implements SPFieldInterface
 	protected function saveLabelsLabel( &$attr )
 	{
 		$data = [
-			'key'     => $this->nid . '-labels-label',
-			'value'   => $attr[ 'labelsLabel' ],
-			'type'    => 'field_email',
-			'fid'     => $this->fid,
-			'id'      => Sobi::Section(),
-			'section' => Sobi::Section()
+				'key' => $this->nid . '-labels-label',
+				'value' => $attr[ 'labelsLabel' ],
+				'type' => 'field_email',
+				'fid' => $this->fid,
+				'id' => Sobi::Section(),
+				'section' => Sobi::Section()
 		];
 		SPLang::saveValues( $data );
 	}

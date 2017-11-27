@@ -16,18 +16,38 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
-SobiPro.jQuery( document ).ready( function ()
-{
-	SobiPro.jQuery( '.spCountableReset' ).click( function ( e )
-	{
+"use strict";
+
+SobiPro.jQuery( document ).ready( function () {
+	SobiPro.jQuery( '.spCountableReset' ).click( function ( e ) {
 		if ( confirm( SobiPro.Txt( 'CONFIRM_URL_COUNT_RESET' ) ) ) {
 			var sid = SobiPro.jQuery( '#SP_sid' ).val();
 			var fid = SobiPro.jQuery( this ).attr( 'name' ).replace( '_reset', '' ).replace( 'field_', 'field.' );
 			if ( fid && sid ) {
-				SobiPro.jQuery.ajax( { 'url':'index.php', 'data':{ 'sid':SobiProSection, 'task':fid + '.reset', 'eid':sid, 'option':'com_sobipro', 'format':'raw' }, 'type':'post', 'dataType':'json' } );
+				SobiPro.jQuery.ajax( {
+					'url': 'index.php',
+					'data': {
+						'sid': SobiProSection,
+						'task': fid + '.reset',
+						'eid': sid,
+						'option': 'com_sobipro',
+						'format': 'raw'
+					},
+					'type': 'post',
+					'dataType': 'json'
+				} );
 				SobiPro.jQuery( this ).html( SobiPro.jQuery( this ).html().replace( /\d{1,}/, 0 ) );
 				SobiPro.jQuery( this ).attr( 'disabled', 'disabled' );
 			}
 		}
 	} );
+	SobiPro.jQuery( '[data-field=url]' ).on( 'paste', function ( e ) {
+		let Text = e.originalEvent.clipboardData.getData( 'text' );
+		if ( Text.includes( '://' ) ) {
+			Text = Text.split( '://' );
+			const Protocol = Text[ 0 ] + '://';
+			SobiPro.jQuery( this ).val( Text[ 1 ] );
+			SobiPro.jQuery( this ).parent().find( 'select' ).val( Text[ 0 ] );
+		}
+	} )
 } );
