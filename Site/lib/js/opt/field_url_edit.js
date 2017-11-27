@@ -48,6 +48,7 @@ SobiPro.jQuery( document ).ready( function () {
 			const Protocol = Text[ 0 ] + '://';
 			SobiPro.jQuery( this ).val( Text[ 1 ] );
 			SobiPro.jQuery( this ).parent().find( 'select' ).val( Text[ 0 ] );
+			e.preventDefault();
 		}
 	} )
 } );
