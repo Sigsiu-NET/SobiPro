@@ -279,7 +279,7 @@ class SPEntryAdmCtrl extends SPEntryCtrl
 		$this->_model->init( $sid );
 
 		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
-		$this->tplCfg( $tplPackage );
+		$this->tplCfg( $tplPackage, Input::Task() );
 		$customClass = null;
 		if ( isset( $this->_tCfg[ 'general' ][ 'functions' ] ) && $this->_tCfg[ 'general' ][ 'functions' ] ) {
 			$customClass = SPLoader::loadClass( '/' . str_replace( '.php', null, $this->_tCfg[ 'general' ][ 'functions' ] ), false, 'templates' );

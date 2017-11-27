@@ -60,6 +60,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Left side of text in Codemirror editor may be not visible
     (#) Handling for image EXIF data with invalid GPS data
     (#) Non-well formed warning while processing GPS coordinates of images
+    (#) A duplicated entry is not longer set to unpublished after duplication (Issue #44)
     
 
 ### 1.4.3 (19 October 2017)

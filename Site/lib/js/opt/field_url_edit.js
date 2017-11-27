@@ -45,7 +45,6 @@ SobiPro.jQuery( document ).ready( function () {
 		let Text = e.originalEvent.clipboardData.getData( 'text' );
 		if ( Text.includes( '://' ) ) {
 			Text = Text.split( '://' );
-			const Protocol = Text[ 0 ] + '://';
 			SobiPro.jQuery( this ).val( Text[ 1 ] );
 			SobiPro.jQuery( this ).parent().find( 'select' ).val( Text[ 0 ] );
 			e.preventDefault();
