@@ -284,27 +284,35 @@ abstract class SPHtml_Input
 
 		switch ( $width ) {
 			case 1:
-				$newwidth = 'input-small';
+				$newwidth = 'input-10p';
 				break;
 			case 2:
+				$newwidth = 'input-20p';
+				break;
 			case 3:
-				$newwidth = 'input-medium';
+				$newwidth = 'input-30p';
 				break;
 			case 4:
-				$newwidth = 'input-large';
+				$newwidth = 'input-40p';
 				break;
 			case 5:
+				$newwidth = 'input-50p';
+				break;
 			case 6:
-				$newwidth = 'input-xlarge';
+				$newwidth = 'input-60p';
 				break;
 			case 7:
+				$newwidth = 'input-70p';
+				break;
 			case 8:
-				$newwidth = 'input-splarge';
+				$newwidth = 'input-80p';
 				break;
 			case 9:
+				$newwidth = 'input-90p';
+				break;
 			case 10:
 			default:
-				$newwidth = 'input-xxxlarge'; //no limit
+				$newwidth = 'input-98p';
 				break;
 		}
 

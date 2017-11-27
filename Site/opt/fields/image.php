@@ -617,7 +617,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 	protected function convertGPS( $deg, $min, $sec, $hem )
 	{
-		$d = $deg + ( ( ( $min / 60 ) + ( $sec / 3600 ) / 100 ) );
+		$d = (float)$deg + ( ( ( (float)$min / 60 ) + ( (float)$sec / 3600 ) / 100 ) );
 
 		return ( $hem == 'S' || $hem == 'W' ) ? $d *= -1 : $d;
 	}
@@ -666,7 +666,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					}
 				}
 			}
-			if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) ) {
+			if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) && ($files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSStatus' ] != 'V')) { //and if not 'void'
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'latitude-ref' ] = isset( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] ) ? $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] : 'unknown';

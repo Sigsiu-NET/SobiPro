@@ -37,7 +37,6 @@ SobiPro.jQuery(document).ready(function () {
 	}
 
 	if (SobiPro.jQuery('[name^="category.icon"]').val() && SobiPro.jQuery('[name^="category.icon"]').val().indexOf('font-') != -1) {
-		SobiPro.jQuery('#catIcoChooser').addClass('el5');
 		var Icon = JSON.parse(SobiPro.jQuery('[name^="category.icon"]').val().replace(/\\'/g, '"'));
 		var Content = ( Icon.content != undefined ) ? Icon.content : '';
 		SobiPro.jQuery('#catIcoChooser').html('<' + Icon.element + ' class="spIconElement ' + Icon.class + '">' + Content + '</' + Icon.element + '>');
@@ -123,8 +122,8 @@ SobiPro.jQuery(document).ready(function () {
 						Element = e.element;
 						e.font = SobiPro.jQuery('#category-params-icon-font').val();
 						SobiPro.jQuery('#spIcoChooser')
-							.append('<div class="spIconElCont el' + Size + '">' +
-								'<' + e.element + ' class="spIconElement ' + e.class + '" data-setting="' + JSON.stringify(e).replace(/"/g, "'") + '">' +
+							.append('<div class="spIconElCont">' +
+								'<' + e.element + ' class="spIconElement ' + e.class + ' title="' + e.class + '" data-setting="' + JSON.stringify(e).replace(/"/g, "'") + '">' +
 								Content +
 								'</' + e.element + '></div>');
 					});
@@ -132,12 +131,6 @@ SobiPro.jQuery(document).ready(function () {
 						SobiPro.jQuery('#catIcoChooser').html('');
 						SobiPro.jQuery('#catIcoChooser').append(SobiPro.jQuery(this).clone());
 						SobiPro.jQuery('[name^="category.icon"]').val(SobiPro.jQuery(this).data('setting'));
-						SobiPro.jQuery('#catIcoChooser').removeClass('el1');
-						SobiPro.jQuery('#catIcoChooser').removeClass('el2');
-						SobiPro.jQuery('#catIcoChooser').removeClass('el3');
-						SobiPro.jQuery('#catIcoChooser').removeClass('el4');
-						SobiPro.jQuery('#catIcoChooser').removeClass('el5');
-						SobiPro.jQuery('#catIcoChooser').addClass('el' + Size);
 						SobiPro.jQuery('.spIconElCont').removeClass('active');
 						SobiPro.jQuery(this).parent().addClass('active');
 					});
@@ -152,11 +145,6 @@ SobiPro.jQuery(document).ready(function () {
 			SobiPro.jQuery( '#spIcoChooser' ).html( '<iframe id="spIcoSelectFrame" src="' + requestUrl + '"> </iframe>' );
 			SobiPro.jQuery('#spIco').addClass('spModalIframe');
 			SobiPro.jQuery('#spIco').removeClass('spModalPopup');
-			SobiPro.jQuery('#catIcoChooser').removeClass('el1');
-			SobiPro.jQuery('#catIcoChooser').removeClass('el2');
-			SobiPro.jQuery('#catIcoChooser').removeClass('el3');
-			SobiPro.jQuery('#catIcoChooser').removeClass('el4');
-			SobiPro.jQuery('#catIcoChooser').removeClass('el5');
 			SobiPro.jQuery('#spIco').modal();
 		}
 	});

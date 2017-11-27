@@ -1,0 +1,75 @@
+{
+  "less": {
+    "theme": {
+      "colour-set": "sobipro",
+      "back-color": "#FFFFFF",
+      "font-color": "#3E3E3E",
+      "corners": "angular",
+      "fontsize": "14px",
+      "image-ratio": "0.75",
+      "big-image": "inherit",
+      "carousel-image": "inherit",
+      "small-image": "100px"
+    },
+    "review": {
+      "stars": "red-grey",
+      "bsversion": "bs3"
+    }
+  },
+  "general": {
+    "navigationlinks": "topmenu",
+    "buttonpos": "left",
+    "basefont": "none",
+    "specialfont": "none",
+    "redirectlogin": "",
+    "extendedsearch": "show",
+    "textlength": "no",
+    "hidecategories": "show",
+    "pagination": "std",
+    "fieldsposition": "above",
+    "entries_limit": "6",
+    "entries_in_line": "2",
+    "entries_ordering": "updatedTime.desc",
+    "categories_in_line": "1",
+    "categories_ordering": "name.asc",
+    "module_eil": "1",
+    "bs": "bs3",
+    "hidesearch": "0",
+    "noimage": "1",
+    "countentries": "0",
+    "showicon": "1",
+    "entries_recursive": "1"
+  },
+  "theme": {
+    "custom": {
+      "base-color": "#993333",
+      "basetext-color": "#FFFFFF",
+      "active-color": "#000066",
+      "activetext-color": "#FFFFFF",
+      "alert-color": "#E7E7E7",
+      "important-color": "#FE4426",
+      "background-light": "#FBEEEE",
+      "background-medium": "#F9D1D1",
+      "background-dark": "#ED8282"
+    }
+  },
+  "section-view": {
+    "entries_limit": "20",
+    "entries_in_line": "2",
+    "entries_ordering": "createdTime.desc",
+    "categories_in_line": "2",
+    "categories_ordering": "name.asc",
+    "entries_recursive": "1"
+  },
+  "category-view": {
+    "entries_limit": "6",
+    "entries_in_line": "2",
+    "entries_ordering": "updatedTime.desc",
+    "categories_in_line": "2",
+    "categories_ordering": "name.asc",
+    "entries_recursive": "1"
+  },
+  "entry-details": {
+    "entries_in_line": "1"
+  }
+}

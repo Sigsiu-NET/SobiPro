@@ -37,15 +37,29 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Expired flag on front-end for expired entries (if user can see expired entries)
 	(+) Possibility to define own template colours in the template settings
 	(+) Extracting protocol from pasted URL into an URL field and setting the right protocol in the select list
+	(+) Additional button colours
+	(+) New colour theme 'pastels'
+	(+) Show icon next to category name
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     (!) Separate icon from label in Button field
+    (!) Redefinition of theme colours
+    (!) SobiPro background and font colours adjustable via template settings
+    (!) Default template is now default4
+    (!) Several fixes and improvements in the default template
+    (!) Field widths in administrator edit entry screen are now responsive
+    (!) Category icon handling improved; global category icon added
     
     (#) Visitors are treated as users if checking permissions
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
     (#) Status explanation popover on front-end does not longer work
     (#) Button bar top menu shows wrong directory name
-    (#) button margins corrected
+    (#) Button margins corrected
+    (#) Only config.json file of template settings is re-read (Issue #49)
+    (#) 'Hide search parameter' template settings wasn't remembered
+    (#) Left side of text in Codemirror editor may be not visible
+    (#) Handling for image EXIF data with invalid GPS data
+    (#) Non-well formed warning while processing GPS coordinates of images
     
 
 ### 1.4.3 (19 October 2017)

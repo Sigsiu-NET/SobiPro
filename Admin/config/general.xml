@@ -131,6 +131,18 @@
 											       prefix="show"/>
 											<field type="toggle" name="spcfg[category.parse_desc]" value="category.parse_desc"
 											       label="SECN.CFG.PARSE_CATEGORY_DESC" prefix="yes_no"/>
+
+											<field type="select" label="SECN.CFG.CATEGORY_ICON_SIZE" name="spcfg[category.iconsize]"
+											       selected="category.iconsize" class="input-medium">
+												<values>
+													<option value="0" label="none"/>
+													<option value="1" label="larger (33% increase)"/>
+													<option value="2" label="2x"/>
+													<option value="3" label="3x"/>
+													<option value="4" label="4x"/>
+													<option value="5" label="5x"/>
+												</values>
+											</field>
 										</fieldset>
 										<fieldset label="SECN.CFG.CATEGORY_SETTINGS">
 											<field type="toggle" name="spcfg[category.show_icon]" value="category.show_icon"
