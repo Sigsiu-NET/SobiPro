@@ -155,6 +155,7 @@ SobiPro.jQuery( document ).ready( function ()
 
         SobiPro.jQuery( '.sobipro-submit' ).click( function ( e )
         {
+	        SPTriggerSpinner();
             SPTriggerFrakingWYSIWYGEditors();
             proxy.sendRequest();
         } );
@@ -223,4 +224,7 @@ function SPTriggerFrakingWYSIWYGEditors()
     }
     catch ( e ) {
     }
+}
+
+function SPTriggerSpinner() {
 }
