@@ -61,6 +61,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Handling for image EXIF data with invalid GPS data
     (#) Non-well formed warning while processing GPS coordinates of images
     (#) A duplicated entry is not longer set to unpublished after duplication (Issue #44)
+    (#) Deleting a template from within section redirects to section configuration (Issue #45)
     
 
 ### 1.4.3 (19 October 2017)
