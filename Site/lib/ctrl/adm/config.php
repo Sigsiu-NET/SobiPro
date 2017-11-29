@@ -109,10 +109,10 @@ class SPConfigAdmCtrl extends SPController
 		unset( $templates[ SPRequest::cmd( 'tid' ) ] );
 		if ( count( $templates ) ) {
 			SPFactory::registry()
-					->saveDBSection( $templates, 'rejections-templates_' . Sobi::Section() );
+				->saveDBSection( $templates, 'rejections-templates_' . Sobi::Section() );
 		}
 		SPFactory::db()
-				->delete( 'spdb_language', [ 'sKey' => SPRequest::cmd( 'tid' ), 'section' => Sobi::Section() ] );
+			->delete( 'spdb_language', [ 'sKey' => SPRequest::cmd( 'tid' ), 'section' => Sobi::Section() ] );
 		$this->response( Sobi::Back(), Sobi::Txt( 'ENTRY_REJECT_DELETED_TPL' ), false, SPC::SUCCESS_MSG );
 	}
 
@@ -120,8 +120,8 @@ class SPConfigAdmCtrl extends SPController
 	{
 		$templates = $this->getRejectionsTemplates();
 		SPFactory::mainframe()
-				->cleanBuffer()
-				->customHeader();
+			->cleanBuffer()
+			->customHeader();
 		echo json_encode( $templates );
 		exit;
 	}
@@ -134,30 +134,30 @@ class SPConfigAdmCtrl extends SPController
 		$templates = $this->getRejectionsTemplates();
 		$id = SPLang::nid( SPRequest::string( 'templateName' ) );
 		$templates[ $id ] = [
-				'params' => SPConfig::serialize(
-						[
-								'trigger.unpublish' => SPRequest::bool( 'trigger_unpublish' ),
-								'trigger.unapprove' => SPRequest::bool( 'trigger_unapprove' ),
-								'unpublish' => SPRequest::bool( 'unpublish' ),
-								'discard' => SPRequest::bool( 'discard' ),
-						]
-				),
-				'key' => $id,
-				'value' => SPRequest::string( 'templateName' ),
-				'options' => []
+			'params'  => SPConfig::serialize(
+				[
+					'trigger.unpublish' => SPRequest::bool( 'trigger_unpublish' ),
+					'trigger.unapprove' => SPRequest::bool( 'trigger_unapprove' ),
+					'unpublish'         => SPRequest::bool( 'unpublish' ),
+					'discard'           => SPRequest::bool( 'discard' ),
+				]
+			),
+			'key'     => $id,
+			'value'   => SPRequest::string( 'templateName' ),
+			'options' => []
 		];
 		foreach ( $templates as $tid => $template ) {
 			unset( $templates[ $tid ][ 'description' ] );
 		}
 		SPFactory::registry()
-				->saveDBSection( $templates, 'rejections-templates_' . Sobi::Section() );
+			->saveDBSection( $templates, 'rejections-templates_' . Sobi::Section() );
 		$data = [
-				'key' => $id,
-				'value' => SPRequest::string( 'reason', null, true, 'post' ),
-				'type' => 'rejections-templates',
-				'id' => Sobi::Section(),
-				'section' => Sobi::Section(),
-				'options' => SPRequest::string( 'templateName' )
+			'key'     => $id,
+			'value'   => SPRequest::string( 'reason', null, true, 'post' ),
+			'type'    => 'rejections-templates',
+			'id'      => Sobi::Section(),
+			'section' => Sobi::Section(),
+			'options' => SPRequest::string( 'templateName' )
 		];
 		SPLang::saveValues( $data );
 		$this->response( Sobi::Back(), Sobi::Txt( 'ENTRY_REJECT_SAVED_TPL' ), false, SPC::SUCCESS_MSG );
@@ -166,12 +166,12 @@ class SPConfigAdmCtrl extends SPController
 	protected function getRejectionsTemplates()
 	{
 		$templates = SPFactory::registry()
-				->loadDBSection( 'rejections-templates_' . Sobi::Section() )
-				->get( 'rejections-templates_' . Sobi::Section() );
+			->loadDBSection( 'rejections-templates_' . Sobi::Section() )
+			->get( 'rejections-templates_' . Sobi::Section() );
 		if ( !( $templates ) ) {
 			$templates = SPFactory::registry()
-					->loadDBSection( 'rejections-templates' )
-					->get( 'rejections-templates' );
+				->loadDBSection( 'rejections-templates' )
+				->get( 'rejections-templates' );
 		}
 		$f = [];
 		foreach ( $templates as $tid => $template ) {
@@ -180,14 +180,15 @@ class SPConfigAdmCtrl extends SPController
 				$desc = SPLang::getValue( $tid, 'rejections-templates', 0 );
 			}
 			$f[ $tid ] = [
-					'params' => SPConfig::unserialize( $template[ 'params' ] ),
-					'key' => $tid,
-					'value' => $template[ 'value' ],
-					'description' => $desc,
-					'options' => $template[ 'options' ]
+				'params'      => SPConfig::unserialize( $template[ 'params' ] ),
+				'key'         => $tid,
+				'value'       => $template[ 'value' ],
+				'description' => $desc,
+				'options'     => $template[ 'options' ]
 			];
 		}
 		ksort( $f );
+
 		return $f;
 	}
 
@@ -203,8 +204,8 @@ class SPConfigAdmCtrl extends SPController
 		$fields = SPConfig::fields( $sid, $types );
 		if ( SPRequest::bool( 'fields-xhr' ) ) {
 			SPFactory::mainframe()
-					->cleanBuffer()
-					->customHeader();
+				->cleanBuffer()
+				->customHeader();
 			exit( json_encode( $fields ) );
 		}
 		else {
@@ -222,8 +223,8 @@ class SPConfigAdmCtrl extends SPController
 		$section = Sobi::Section();
 		$liveUrl = Sobi::Cfg( 'live_site' );
 		$cron = [
-				'type' => 'info',
-				'label' => nl2br( Sobi::Txt( 'CRAWLER_CRON_INFO', "{$phpCmd} {$cronCommandFile} section={$section} liveURL={$liveUrl}", "{$phpCmd} {$cronCommandFile} liveURL={$liveUrl}", "{$phpCmd} {$cronCommandFile} --help" ) ),
+			'type'  => 'info',
+			'label' => nl2br( Sobi::Txt( 'CRAWLER_CRON_INFO', "{$phpCmd} {$cronCommandFile} section={$section} liveURL={$liveUrl}", "{$phpCmd} {$cronCommandFile} liveURL={$liveUrl}", "{$phpCmd} {$cronCommandFile} --help" ) ),
 		];
 
 		/** @var $view SPAdmView */
@@ -233,6 +234,7 @@ class SPConfigAdmCtrl extends SPController
 		$view->determineTemplate( 'config', $this->_task );
 		$view->display();
 		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), [ &$view ] );
+
 		return true;
 	}
 
@@ -257,6 +259,7 @@ class SPConfigAdmCtrl extends SPController
 
 	/**
 	 * @param string
+	 *
 	 * @return SPConfigAdmView
 	 */
 	protected function getView( $task )
@@ -283,8 +286,8 @@ class SPConfigAdmCtrl extends SPController
 		if ( $sid ) {
 			if ( Sobi::Cfg( 'section.template' ) == SPC::DEFAULT_TEMPLATE && strstr( SPRequest::task(), 'config' ) ) {
 				SPFactory::message()
-						->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
-						->setSystemMessage();
+					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
+					->setSystemMessage();
 			}
 			/* create new SigsiuTree */
 			$tree = SPLoader::loadClass( 'mlo.tree' );
@@ -310,6 +313,7 @@ class SPConfigAdmCtrl extends SPController
 		$view->assign( $cSec, 'section' );
 		$view->assign( $menu, 'menu' );
 		$view->addHidden( SPFactory::registry()->get( 'current_section' ), 'sid' );
+
 		return $view;
 	}
 
@@ -355,13 +359,14 @@ class SPConfigAdmCtrl extends SPController
 		$view->determineTemplate( 'config', $this->_task );
 		$view->display();
 		Sobi::Trigger( 'After' . ucfirst( $this->_task ), $this->name(), [ &$view ] );
+
 		return true;
 	}
 
 	protected function listTemplates( $tpl = null, $cmsOv = true )
 	{
 		SPFactory::header()
-				->addJsFile( 'dtree' );
+			->addJsFile( 'dtree' );
 //				->addCssFile( 'dtree', true );
 		SPLoader::loadClass( 'base.fs.directory_iterator' );
 		$ls = Sobi::Cfg( 'live_site' ) . 'media/sobipro/tree';
@@ -432,6 +437,7 @@ class SPConfigAdmCtrl extends SPController
 				try { document.getElementById( 'spTpl' ).innerHTML = spTpl } catch( e ) {}
 			} );
 		" );
+
 		/** for some reason jQuery is not able to add the tree  */
 		return "<div id=\"spTpl\"></div>";
 	}
@@ -442,6 +448,7 @@ class SPConfigAdmCtrl extends SPController
 	 * @param $current int
 	 * @param $count
 	 * @param bool $package
+	 *
 	 * @return void
 	 */
 	private function travelTpl( $dir, &$nodes, $current, &$count, $package = false )
@@ -550,6 +557,7 @@ class SPConfigAdmCtrl extends SPController
 
 	/**
 	 * @param string $task
+	 *
 	 * @return SPAdmSiteMenu
 	 */
 	protected function & createMenu( $task = null )
@@ -600,16 +608,19 @@ class SPConfigAdmCtrl extends SPController
 			$menu->addCustom( 'GB.CFG.GLOBAL_TEMPLATES', $this->listTemplates() );
 		}
 		Sobi::Trigger( 'AfterCreate', 'AdmMenu', [ &$menu ] );
+
 		return $menu;
 	}
 
 	/**
 	 * Returns an array with field object of field type which is possible to use it as entry name field
+	 *
 	 * @param bool $pos
 	 * @param array $types
+	 *
 	 * @return array
 	 */
-	public function getNameFields( $pos = false, $types = [] )
+	public function getNameFields( $pos = false, $types = [], $catFields = false )
 	{
 		// removed static because we have different settings for Alpha Index
 		/*static */
@@ -635,10 +646,18 @@ class SPConfigAdmCtrl extends SPController
 		}
 
 		try {
-			$fids = SPFactory::db()
+			if ($catFields) {
+				$fids = SPFactory::db()
+					->select( 'fid', 'spdb_field', [ 'fieldType' => $types, 'section' => Sobi::Reg( 'current_section' ), 'adminField' => -1 ] )
+					->loadResultArray();
+			}
+			else {
+				$fids = SPFactory::db()
 					->select( 'fid', 'spdb_field', [ 'fieldType' => $types, 'section' => Sobi::Reg( 'current_section' ), 'adminField>' => -1 ] )
 					->loadResultArray();
-		} catch ( SPException $x ) {
+			}
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_FOR_NAMES', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		$fields = [];
@@ -648,17 +667,20 @@ class SPConfigAdmCtrl extends SPController
 				$f->init( $fid );
 				try {
 					$f->setCustomOrdering( $fields );
-				} catch ( SPException $x ) {
+				}
+				catch ( SPException $x ) {
 					$fields[ $fid ] = $f;
 				}
 			}
 		}
 		$cache[ $pos ? 'pos' : 'npos' ] = $fields;
+
 		return $fields;
 	}
 
 	/**
 	 * Save the config
+	 *
 	 * @param bool $apply
 	 * @param bool $clone
 	 */
@@ -733,7 +755,8 @@ class SPConfigAdmCtrl extends SPController
 		Sobi::Trigger( 'SaveConfig', $this->name(), [ &$values ] );
 		try {
 			SPFactory::db()->insertArray( 'spdb_config', $values, true );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			$this->response( Sobi::Back(), $x->getMessage(), false, SPC::ERROR_MSG );
 		}
 		if ( !( $section ) ) {
