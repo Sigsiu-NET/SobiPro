@@ -63,6 +63,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) A duplicated entry is not longer set to unpublished after duplication (Issue #44)
     (#) Deleting a template from within section redirects to section configuration (Issue #45)
     (#) CodeMirror editor now with word-wrap; content-area styles corrected on front-end
+    (#) Joomla toolbar not visible in modules when using 3rd party module manager
     
 
 ### 1.4.3 (19 October 2017)
