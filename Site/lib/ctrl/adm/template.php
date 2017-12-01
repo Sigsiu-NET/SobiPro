@@ -119,7 +119,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		foreach ( $config as $configFile => $settings ) {
 			$store = json_encode( $settings );
-			if (isset( $settings['theme']) && count( $settings[ 'theme' ] ) ) {
+			if ( isset( $settings[ 'theme' ] ) && count( $settings[ 'theme' ] ) ) {
 				foreach ( $settings[ 'theme' ] as $file => $variables ) {
 					$themeFile = FileSystem::FixPath( $this->dir( $templateName ) . '/themes/' . $file . '.less' );
 					if ( FileSystem::exists( $themeFile ) ) {
@@ -314,7 +314,14 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$this->response( Sobi::Url( 'template.info' ), Sobi::Txt( 'TP.DO_NOT_REMOVE' ), true, 'error' );
 		}
 		if ( $dir && FileSystem::Delete( $dir ) ) {
-			$this->response( Sobi::Url( [ 'task' => 'config.general' ] ), Sobi::Txt( 'TP.REMOVED' ), false, 'success' );
+			$sid = Input::Pid();
+			if ( $sid ) {
+				$url = [ 'task' => 'config.general', 'pid' => $sid ];
+			}
+			else {
+				$url = [ 'task' => 'config.general' ];
+			}
+			$this->response( Sobi::Url( $url ), Sobi::Txt( 'TP.REMOVED' ), false, 'success' );
 		}
 		else {
 			$this->response( Sobi::Back(), Sobi::Txt( 'TP.CANNOT_REMOVE' ), false, 'error' );
@@ -523,7 +530,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	}
 
 	/**
-	 * @param array $file
+	 * @param string $file
 	 *
 	 * @return array|string
 	 *

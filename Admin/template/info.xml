@@ -110,6 +110,7 @@
 			<field name="option" default="com_sobipro"/>
 			<field name="task" default=""/>
 			<field name="templateNewName" default=""/>
+			<field name="pid" value="sid" />
 		</hidden>
 	</config>
 </definition>
