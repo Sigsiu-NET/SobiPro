@@ -283,7 +283,15 @@ class SPEntryCtrl extends SPController
 				$request = 'post';
 			}
 		}
-
+		/**
+		 * Mon, Dec 4, 2017 12:30:49 - changing to Input from Sobi Framework
+		 * While changing from SPRequest to Sobi\Input, hardcode method to 'post'
+		 */
+		if ( count( $post ) ) {
+			foreach ( $post as $index => $value ) {
+				Input::Set( $index, $value, 'post' );
+			}
+		}
 		return $request;
 	}
 
@@ -438,7 +446,7 @@ class SPEntryCtrl extends SPController
 		$sid = $this->_model->get( 'id' );
 		$pid = SPRequest::int( 'pid' ) ? SPRequest::int( 'pid' ) : Sobi::Section();
 		if ( $new ) {
-			if ( $this->_model->get( 'state' ) || Sobi::Can( 'entry','access','unpublished_own' ) || Sobi::Can( 'entry','access','unpublished_any' ) ) {
+			if ( $this->_model->get( 'state' ) || Sobi::Can( 'entry', 'access', 'unpublished_own' ) || Sobi::Can( 'entry', 'access', 'unpublished_any' ) ) {
 				$msg = $this->_model->get( 'state' ) ? Sobi::Txt( 'EN.ENTRY_SAVED' ) : Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
 				$url = Sobi::Url( [ 'sid' => $sid, 'pid' => $pid ], false, false );
 			}
@@ -458,7 +466,7 @@ class SPEntryCtrl extends SPController
 			}
 		}
 		/* I know, it could be in one statement but it is more readable like this */
-		elseif ( $this->_model->get( 'approved' ) || Sobi::Can( 'entry.access.unapproved_own' ) || Sobi::Can( 'entry.access.unapproved_any' )) {
+		elseif ( $this->_model->get( 'approved' ) || Sobi::Can( 'entry.access.unapproved_own' ) || Sobi::Can( 'entry.access.unapproved_any' ) ) {
 			$url = Sobi::Url( [ 'sid' => $sid, 'pid' => $pid ] );
 			$msg = $this->_model->get( 'approved' ) ? Sobi::Txt( 'EN.ENTRY_SAVED' ) : Sobi::Txt( 'EN.ENTRY_SAVED_NA' );
 		}

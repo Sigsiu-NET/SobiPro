@@ -49,6 +49,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (!) Several fixes and improvements in the default template
     (!) Field widths in administrator edit entry screen are now responsive
     (!) Category icon handling improved; global category icon added
+    (!) Setting 'cacherequest' back to 'post' in Sobi\Input (While changing from SPRequest to Sobi\Input, hardcode method to 'post')
     
     (#) Visitors are treated as users if checking permissions
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
@@ -64,7 +65,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Deleting a template from within section redirects to section configuration (Issue #45)
     (#) CodeMirror editor now with word-wrap; content-area styles corrected on front-end
     (#) Joomla toolbar not visible in modules when using 3rd party module manager
-    
+    (#) Wrong data handling with disabled multi-language mode (Issue #51)
 
 ### 1.4.3 (19 October 2017)
 

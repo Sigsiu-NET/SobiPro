@@ -60,6 +60,10 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	/** @var bool */
 	static private $CAT_FIELD = true;
 
+	public function __construct( &$field )
+	{
+		parent::__construct( $field );
+	}
 
 	/**
 	 * Shows the field in the edit entry or add entry form

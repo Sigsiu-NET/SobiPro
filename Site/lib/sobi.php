@@ -411,6 +411,14 @@ abstract class Sobi
 		elseif ( $langGet && self::Cfg( 'lang.multimode', false ) ) {
 			$lang = SPRequest::cmd( 'sp-language', false, 'get' );
 		}
+		elseif ( $storage ) {
+			/**
+			 * Mon, Dec 4, 2017 11:27:13
+			 * Not quite sure if this is correct. Anyway it seems to be related to #51
+			 * But it would means it was wrong the entire time.
+			 */
+			$lang = self::DefLang();
+		}
 		else {
 			static $lang = null;
 			if ( !( strlen( $lang ) ) ) {
