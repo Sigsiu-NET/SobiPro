@@ -287,7 +287,7 @@ class SPEntryCtrl extends SPController
 		 * Mon, Dec 4, 2017 12:30:49 - changing to Input from Sobi Framework
 		 * While changing from SPRequest to Sobi\Input, hardcode method to 'post'
 		 */
-		if ( count( $post ) ) {
+		if ( isset( $post ) && count( $post ) ) {
 			foreach ( $post as $index => $value ) {
 				Input::Set( $index, $value, 'post' );
 			}

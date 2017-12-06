@@ -305,7 +305,6 @@ abstract class SPFactory
 	{
 		$cached = SPFactory::cache()->getObj( 'entry_row', $sid );
 		if ( $cached && is_object( $cached ) ) {
-//			SPConfig::debOut( "$sid: cached" );
 			return $cached;
 		}
 		else {

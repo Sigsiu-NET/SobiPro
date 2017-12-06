@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 SPLoader::loadController( 'controller' );
@@ -64,10 +66,10 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 	protected function viewSection( $allEntries, $term = null )
 	{
 		if ( $allEntries ) {
-			SPRequest::set( 'task', 'section.entries' );
+			Input::Set( 'task', 'section.entries' );
 		}
 		else {
-			SPRequest::set( 'task', 'section.view' );
+			Input::set( 'task', 'section.view' );
 		}
 		/* @var SPdb $db */
 		$db = SPFactory::db();
@@ -81,8 +83,8 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$eLimit = Sobi::GetUserState( 'entries.limit', 'elimit', Sobi::Cfg( 'admin.entries-limit', 25 ) );
 		$cLimit = Sobi::GetUserState( 'categories.limit', 'climit', Sobi::Cfg( 'admin.categories-limit', 15 ) );
 
-		$eLimStart = SPRequest::int( 'eSite', 0 );
-		$cLimStart = SPRequest::int( 'cSite', 0 );
+		$eLimStart = Input::Int( 'eSite', 'request',0 );
+		$cLimStart = Input::Int( 'cSite', 'request',0 );
 
 		/* get child categories and entries */
 		/* @todo: need better method - the query can be very large with lot of entries */
@@ -124,13 +126,13 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$cPages = ceil( $cCount / $cLimit );
 		if ( $cLimStart > $cPages ) {
 			$cLimStart = $cPages;
-			SPRequest::set( 'cSite', $cPages );
+			Input::Set( 'cSite', $cPages );
 		}
 		$eCount = count( $e );
 		$ePages = ceil( $eCount / $eLimit );
 		if ( $eLimStart > $ePages ) {
 			$eLimStart = $ePages;
-			SPRequest::set( 'eSite', $ePages );
+			Input::Set( 'eSite', $ePages );
 		}
 
 		$entries = [];
@@ -200,15 +202,15 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 		$entriesName = SPFactory::config()->nameField()->get( 'name' );
 		$entriesField = SPFactory::config()->nameField()->get( 'nid' );
 		$view = SPFactory::View( 'section', true );
-		$eSite = SPRequest::int( 'eSite', 1 );
-		$cSite = SPRequest::int( 'cSite', 1 );
+		$eSite = Input::Int( 'eSite', 'request',1 );
+		$cSite = Input::Int( 'cSite', 'request',1 );
 		$customCols = $this->customCols();
 		$nameField = SPFactory::config()->nameField()->get( 'name' );
 		$eUserOrder = Sobi::GetUserState( 'entries.eorder', 'eorder', 'order.asc' );
 		$cUserOrder = Sobi::GetUserState( 'categories.corder', 'corder', 'order.asc' );
 		$sectionName = Sobi::Section( true );
 		$sectionId = Sobi::Section();
-		$sid = SPRequest::sid();
+		$sid = Input::Sid();
 		$root = $sectionId == $sid ? true : false;
 		$view->assign( $entriesName, 'entries_name' )
 				->assign( $entriesField, 'entries_field' )
