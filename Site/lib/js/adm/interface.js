@@ -316,7 +316,6 @@ SobiPro.jQuery( document ).ready( function () {
 
 	function SPTriggerFrakingWYSIWYGEditors()
 	{
-
 		try {
 			var Editors = Object.keys( tinyMCE.editors );
 			SobiPro.jQuery.each( Editors, function ( i, eid ) {
@@ -347,6 +346,10 @@ SobiPro.jQuery( document ).ready( function () {
 			catch ( e ) {
 			}
 			try {
+				SobiPro.jQuery.each( CKEDITOR.instances, function ( i, k ) {
+					k.destroy();
+					CKEDITOR.replace( i );
+				} )
 			}
 			catch ( e ) {
 			}
