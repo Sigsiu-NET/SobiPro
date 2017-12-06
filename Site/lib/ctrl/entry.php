@@ -290,6 +290,7 @@ class SPEntryCtrl extends SPController
 		if ( isset( $post ) && count( $post ) ) {
 			foreach ( $post as $index => $value ) {
 				Input::Set( $index, $value, 'post' );
+				Input::Set( $index, $value, 'request' );
 			}
 		}
 		return $request;

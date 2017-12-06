@@ -607,8 +607,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 	}
 
-	private
-	function checkCopy()
+	private function checkCopy()
 	{
 		return !(
 				in_array( SPRequest::task(), [ 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit', 'entry.payment' ] )
@@ -622,16 +621,14 @@ class SPEntry extends SPDBObject implements SPDataModel
 	/**
 	 * @return array
 	 */
-	protected
-	function types()
+	protected function types()
 	{
 		return self::$types;
 	}
 
 	/**
 	 */
-	public
-	function delete()
+	public function delete()
 	{
 		parent::delete();
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ $this->id ] );
@@ -660,8 +657,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 * @throws SPException
 	 * @return void
 	 */
-	public
-	function validate( $request = 'post' )
+	public function validate( $request = 'post' )
 	{
 		$this->loadFields( Sobi::Section() );
 		foreach ( $this->fields as $field ) {
@@ -686,8 +682,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 *
 	 * @throws SPException
 	 */
-	public
-	function save( $request = 'post' )
+	public function save( $request = 'post' )
 	{
 		$this->loadFields( Sobi::Section(), true );
 		// Thu, Feb 19, 2015 12:12:47 - it should be actually "beforeSave"
@@ -842,8 +837,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	/**
 	 * @return array
 	 */
-	public
-	function getCurrentBaseData()
+	public function getCurrentBaseData()
 	{
 		$data = [];
 		$data[ 'owner' ] = $this->owner;
@@ -865,8 +859,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		return $data;
 	}
 
-	public
-	function setRevData( $attr, $value )
+	public function setRevData( $attr, $value )
 	{
 		$this->$attr = $value;
 	}

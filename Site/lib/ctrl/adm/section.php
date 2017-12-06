@@ -69,7 +69,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			Input::Set( 'task', 'section.entries' );
 		}
 		else {
-			Input::set( 'task', 'section.view' );
+			Input::Set( 'task', 'section.view' );
 		}
 		/* @var SPdb $db */
 		$db = SPFactory::db();
