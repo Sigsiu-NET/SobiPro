@@ -193,21 +193,22 @@ abstract class SPHtml_Input
 			$b3class = ' form-control';
 		}
 		if ( !( $stupidInternetExplorer ) ) {
-			$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-large selected pull-left{$b3class}\" value=\"{$value}\"/>";
+			$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-xlarge selected pull-left{$b3class}\" value=\"{$value}\"/>";
 		}
-		$f .= '<div class="btn-group">';
+		$f .= '<div class="btn-group" role="group" aria-label="' . Sobi::Txt( 'ARIA.FILEUP-GROUP' ) . '">';
 		if ( !( $stupidInternetExplorer ) ) {
 			$f .= '<button class="btn btn-default select" type="button"><i class="' . Sobi::Ico( 'upload-field.search-button' ) . '"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
 		}
-		$f .= '<button class="btn btn-default upload hide" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '&nbsp;<i class="icon-upload-alt"></i></button>';
-		$f .= '<button class="btn btn-default remove" disabled="disabled" type="button">' . '&nbsp;<i class="' . Sobi::Ico( 'upload-field.remove-button' ) . '"></i></button>';
-		$f .= '</div>';
+		$f .= '<button class="btn btn-default upload hide" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '<i class="icon-upload-alt"></i></button>';
+		$f .= '<button class="btn btn-default remove disabled" disabled="disabled" type="button">' . '<i class="' . Sobi::Ico( 'upload-field.remove-button' ) . '"></i></button>';
+		$f .= '</div>'; //end btn-group
 
 		$f .= '<div class="hide progress-container">';
 		$f .= '<div class="progress progress-success">';
 		$f .= '<div class="bar progress-bar progress-bar-success"><span class="progress-message">0%</span></div>';
 		$f .= '</div>';
 		$f .= '</div>';
+
 		//no close button as it won't open again without reload -> no further messages
 //		$f .= '<div class="alert hide"><button type="button" class="close" data-dismiss="alert">×</button><div>&nbsp;</div></div>';
 		$f .= '<div class="alert hide"><div>&nbsp;</div></div>';

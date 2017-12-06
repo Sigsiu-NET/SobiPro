@@ -143,28 +143,31 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 //		$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '100:100' ) );
 		if ( $show ) {
 			$img = Sobi::Cfg( 'live_site' ) . $show;
-			if ( !$this->crop ) {
+//			if ( !$this->crop ) {
 //				$noncropsize = "style=\"width: {$icoSize[0]}px; height: {$icoSize[1]}px;\"";
-			}
+//			}
 		}
-		$field .= "\n<div class=\"spImageField\">";
-		$field .= "\n<div>";
-		$field .= "\n<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
-		$field .= "\n<div class=\"spEditImagePreview\" >";
+		$field .= '<div class="spImageField">';
+
+//		$field .= '<div>';
+		$field .= "<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
+		$field .= '<div class="spEditImagePreview" >';
 		if ( $show ) {
 //			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\" {$noncropsize} />";
-			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\" />";
+			$field .= "<img src=\"{$img}\" alt=\"{$this->name}\" />";
 		}
-		$field .= "\n</div>";
-		$field .= "\n</div>";
-		$field .= "\n</div>";
-		$field .= "\n<div class=\"spImageUpDelete\">";
+		$field .= '</div>';
+		$field .= '</div>';
+//		$field .= '</div>';
+
+		$field .= '<div class="spImageUpDelete">';
 		if ( $show ) {
 			$field .= SPHtml_Input::checkbox( $this->nid . '_delete', 1, Sobi::Txt( 'FD.IMG_DELETE_CURRENT_IMAGE' ), $this->nid . '_delete', false, [ 'class' => $this->cssClass ] );
 		}
 		$field .= SPHtml_Input::fileUpload( $this->nid, 'image/*', null, 'spImageUpload', str_replace( 'field_', 'field.', $this->nid ) . '.upload' );
-		$field .= "\n</div>";
-		$field .= "\n</div>";
+		$field .= '</div>';
+
+		$field .= '</div>';
 
 		if ( !( $js ) ) {
 			SPFactory::header()
