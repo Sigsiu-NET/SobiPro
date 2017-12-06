@@ -18,6 +18,7 @@
  */
 
 use Sobi\Framework;
+use Sobi\Input\Input;
 
 defined( 'SOBIPRO' ) || defined( '_JEXEC' ) || exit( 'Restricted access' );
 
@@ -401,15 +402,15 @@ abstract class Sobi
 		static $langPost = -1;
 		static $langGet = -1;
 		if ( $langPost == -1 || $langGet == -1 ) {
-			$langPost = SPRequest::cmd( 'sp-language', false, 'post' );
-			$langGet = SPRequest::cmd( 'sp-language', false, 'get' );
+			$langPost = Input::Cmd( 'sp-language', 'post' );
+			$langGet = Input::Cmd( 'sp-language', 'get' );
 		}
 		if ( $storage && $langPost ) {
-			$lang = SPRequest::cmd( 'sp-language', false, 'post' );
+			$lang = Input::Cmd( 'sp-language', 'post' );
 		}
 		/* Otherwise we maybe translating now */
 		elseif ( $langGet && self::Cfg( 'lang.multimode', false ) ) {
-			$lang = SPRequest::cmd( 'sp-language', false, 'get' );
+			$lang = Input::Cmd( 'sp-language', 'get' );
 		}
 		elseif ( $storage ) {
 			/**

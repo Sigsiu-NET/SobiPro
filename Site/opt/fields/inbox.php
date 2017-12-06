@@ -128,7 +128,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	{
 		$data = $this->verify( $entry, $request );
 		if ( strlen( $data ) ) {
-			return SPRequest::search( $this->nid, $request );
+			return Input::Search( $this->nid, $request );
 		}
 		else {
 			return [];
@@ -143,7 +143,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
-		$data = SPRequest::raw( $this->nid, null, $request );
+		$data = Input::Html( $this->nid, 'post' );
 		$dexs = strlen( $data );
 		/* check if it was required */
 		if ( $this->required && !( $dexs ) ) {

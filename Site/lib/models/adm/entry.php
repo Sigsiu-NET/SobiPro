@@ -59,7 +59,7 @@ class SPEntryAdm extends SPEntry implements SPDataModel
 
 		static $fields = [];
 		static $lang = null;
-		$lang = $lang ? $lang : Sobi::Lang( false );
+		$lang = $lang ? $lang : Sobi::Lang( !( Sobi::Cfg( 'lang.multimode', false ) ) );
 		if ( !isset( $fields[ $sid ] ) ) {
 			/* get fields */
 			try {

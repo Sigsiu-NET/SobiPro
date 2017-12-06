@@ -501,7 +501,12 @@ class SPEntry extends SPDBObject implements SPDataModel
 
 		static $fields = [];
 		static $lang = null;
-		$lang = $lang ? $lang : Sobi::Lang( false );
+		/**
+		 * Wed, Dec 6, 2017 10:57:28
+		 * When multilingual mode is disabled and we are editing in administrator area
+		 * Use the default frontend language
+		 */
+		$lang = $lang ? $lang : Sobi::Lang( ( defined( 'SOBI_ADM_PATH' ) && !( Sobi::Cfg( 'lang.multimode', false ) ) ) );
 		if ( !isset( $fields[ $sid ] ) ) {
 			/* get fields */
 			try {
@@ -528,6 +533,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 					if ( $this->approved || $noCopy ) {
 						$ordering = 'copy.desc';
 					}
+
 					/* otherwise - if the entry is not approved, get the non-copies first */
 					else {
 						$ordering = 'copy.asc';
@@ -601,7 +607,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 	}
 
-	private function checkCopy()
+	private
+	function checkCopy()
 	{
 		return !(
 				in_array( SPRequest::task(), [ 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit', 'entry.payment' ] )
@@ -615,14 +622,16 @@ class SPEntry extends SPDBObject implements SPDataModel
 	/**
 	 * @return array
 	 */
-	protected function types()
+	protected
+	function types()
 	{
 		return self::$types;
 	}
 
 	/**
 	 */
-	public function delete()
+	public
+	function delete()
 	{
 		parent::delete();
 		Sobi::Trigger( $this->name(), ucfirst( __FUNCTION__ ), [ $this->id ] );
@@ -651,7 +660,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 * @throws SPException
 	 * @return void
 	 */
-	public function validate( $request = 'post' )
+	public
+	function validate( $request = 'post' )
 	{
 		$this->loadFields( Sobi::Section() );
 		foreach ( $this->fields as $field ) {
@@ -676,7 +686,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 	 *
 	 * @throws SPException
 	 */
-	public function save( $request = 'post' )
+	public
+	function save( $request = 'post' )
 	{
 		$this->loadFields( Sobi::Section(), true );
 		// Thu, Feb 19, 2015 12:12:47 - it should be actually "beforeSave"
@@ -831,7 +842,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 	/**
 	 * @return array
 	 */
-	public function getCurrentBaseData()
+	public
+	function getCurrentBaseData()
 	{
 		$data = [];
 		$data[ 'owner' ] = $this->owner;
@@ -853,7 +865,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 		return $data;
 	}
 
-	public function setRevData( $attr, $value )
+	public
+	function setRevData( $attr, $value )
 	{
 		$this->$attr = $value;
 	}
