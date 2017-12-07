@@ -511,11 +511,13 @@ SobiPro.jQuery( document ).ready( function () {
 	try {
 		if ( lastTab ) {
 			SobiPro.jQuery( '[href="' + lastTab + '"]' ).tab( 'show' );
+			SobiPro.jQuery.each( Joomla.editors.instances, function ( i, k )  {
+				k.refresh();
+			} );
 		}
 	}
 	catch ( x ) {
 	}
-
 	try {
 		if ( SobiPro.jQuery( '.active[name="category.allFields"]' ).hasClass( 'btn-success' ) ) {
 			SobiPro.jQuery( '.entryFields' ).fadeTo( 'slow', 0.2 );

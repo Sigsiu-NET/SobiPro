@@ -67,6 +67,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Joomla toolbar not visible in modules when using 3rd party module manager
     (#) Wrong data handling with disabled multi-language mode (Issue #51)
     (#) Added handling for CKEDITOR (Issue #50)
+    (#) Display problems when CodeMirror editor is in active tab
 
 ### 1.4.3 (19 October 2017)
 
