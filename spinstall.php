@@ -434,10 +434,10 @@ class com_sobiproInstallerScript
 			opcache_reset();
 		}
 
-		@include_once 'phar://' . SOBI_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz/Framework.php';
+		@include_once 'phar://' . JPATH_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz/Framework.php';
 		if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
 			$arch = new JArchiveGzip();
-			$arch->extract( SOBI_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz', SOBI_ROOT . '/libraries/sobi/' );
+			$arch->extract( JPATH_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/' );
 		}
 	}
 }
