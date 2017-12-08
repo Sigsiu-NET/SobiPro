@@ -78,7 +78,7 @@
 									</xsl:if>
 									<xsl:if test="count( /search/fields/* ) &gt; 3 and //config/extendedsearch/@value = 'show'">
 										<button type="button" class="btn btn-default extended-search" name="SPExOptBt" id="SPExOptBt">
-											<xsl:text>&#160;</xsl:text>
+											<!--<xsl:text>&#160;</xsl:text>-->
 											<xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )"/>
 										</button>
 									</xsl:if>

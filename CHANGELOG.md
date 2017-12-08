@@ -41,6 +41,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) New colour theme 'pastels'
 	(+) Show icon next to category name
 	(+) Additional template style added: elevated (selectable from template settings)
+	(+) Small template improvements of file upload elements
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     (!) Separate icon from label in Button field
