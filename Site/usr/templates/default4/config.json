@@ -1,6 +1,7 @@
 {
   "less": {
     "theme": {
+      "design": "standard",
       "colour-set": "sobipro",
       "back-color": "#FFFFFF",
       "font-color": "#3E3E3E",
