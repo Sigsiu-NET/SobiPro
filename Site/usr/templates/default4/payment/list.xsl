@@ -19,7 +19,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
 	<xsl:template name="paymentTable">
-		<div class="tyble-responsive">
+		<div class="table-responsive">
 			<table class="table table-striped payment">
 				<thead>
 					<tr>

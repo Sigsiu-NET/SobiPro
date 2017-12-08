@@ -1682,7 +1682,11 @@ body.modal-open {
 		font-size: calc(@fontsize + 1px);
 	}
 
-	.spCaticon i {
+	.spCaticon [class^="fa-"],
+	.spCaticon [class*=" fa-"],
+	.spCaticon [class^="icon-"],
+	.spCaticon [class*=" icon-"] {
+		margin-right: 0;
 		color: @base-color;
 
 		&.active,
@@ -1693,16 +1697,6 @@ body.modal-open {
 		&:focus {
 			outline: 2px solid @outline-color;
 		}
-	}
-
-	.spCaticon [class^="fa-"],
-	.spCaticon [class*=" fa-"] {
-		margin-right: 0;
-	}
-
-	.spCaticon [class^="icon-"],
-	.spCaticon [class*=" icon-"] {
-		margin-right: 0;
 	}
 
 	.spCaticon {
