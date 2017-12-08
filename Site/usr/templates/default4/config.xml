@@ -51,6 +51,13 @@
 							<div class="span12">
 								<fieldset label="TP.CONFIG.CSS">
 									<!-- name="settings[folder.configfile][less=compile][lessfile][variable]" -->
+									<field type="select" label="TP.CONFIG.DESIGN" name="settings[config][less][theme][design]"
+									       selected="settings.config.less.theme.design" class="input-medium">
+										<values>
+											<option value="standard" label="TP.CONFIG.DESIGN_STANDARD"/>
+											<option value="elevated" label="TP.CONFIG.DESIGN_ELEVATED"/>
+										</values>
+									</field>
 									<field type="select" label="TP.CONFIG.CSS_COLOUR" name="settings[config][less][theme][colour-set]"
 									       selected="settings.config.less.theme.colour-set" class="input-medium">
 										<values>

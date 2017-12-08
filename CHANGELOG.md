@@ -40,6 +40,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Additional button colours
 	(+) New colour theme 'pastels'
 	(+) Show icon next to category name
+	(+) Additional template style added: elevated (selectable from template settings)
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     (!) Separate icon from label in Button field
@@ -66,8 +67,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) CodeMirror editor now with word-wrap; content-area styles corrected on front-end
     (#) Joomla toolbar not visible in modules when using 3rd party module manager
     (#) Wrong data handling with disabled multi-language mode (Issue #51)
-    (#) Added handling for CKEDITOR (Issue #50)
+    (#) Handling for CKEDITOR added (Issue #50)
     (#) Display problems when CodeMirror editor is in active tab
+    
 
 ### 1.4.3 (19 October 2017)
 

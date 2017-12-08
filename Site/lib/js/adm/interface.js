@@ -18,20 +18,19 @@
 
 SobiPro.jQuery( document ).ready( function () {
 	SobiPro.jQuery( 'input:file' ).change( function () {
-		if ( ! ( SobiPro.jQuery( this ).hasClass( 'spFileUploadHidden' ) ) && SobiPro.jQuery( this ).val() ) {
+		if ( !( SobiPro.jQuery( this ).hasClass( 'spFileUploadHidden' ) ) && SobiPro.jQuery( this ).val() ) {
 			SobiPro.jQuery( '#SP_method' ).val( 'html' );
 		}
 	} );
 
-	function SpSerialAction( task )
-	{
+	function SpSerialAction( task ) {
 		let entries = [];
 		let proxy = this;
 		this.counter = 0;
 		this.doneCounter = 0;
 		this.progressBar = SobiPro.jQuery( '#SpProgress' ).find( '.bar' );
 		this.progressMessage = SobiPro.jQuery( '#SpProgress .alert' );
-		this.messages = { 'warning': [], 'error': [], 'info': [], 'success': [] };
+		this.messages = {'warning': [], 'error': [], 'info': [], 'success': []};
 		this.finish = function ( url ) {
 			const request = {
 				'option': 'com_sobipro',
@@ -44,7 +43,7 @@ SobiPro.jQuery( document ).ready( function () {
 				'url': 'index.php', 'data': request, 'type': 'post', 'dataType': 'json',
 				success: function ( response ) {
 					if ( response && response.data.messages.length ) {
-						for ( let i = 0; i < response.data.messages.length; i ++ ) {
+						for ( let i = 0; i < response.data.messages.length; i++ ) {
 							proxy.messages[ response.data.messages[ i ].type ].push( response.data.messages[ i ].text );
 						}
 					}
@@ -52,8 +51,8 @@ SobiPro.jQuery( document ).ready( function () {
 					let output = [];
 					SobiPro.jQuery.each( proxy.messages, function ( type, reports ) {
 						let container = [];
-						for ( let i = 0; i < reports.length; i ++ ) {
-							counter ++;
+						for ( let i = 0; i < reports.length; i++ ) {
+							counter++;
 							container.push( '<div><strong> ' + counter + ')&nbsp;</strong>' + reports[ i ] + '</div>' );
 						}
 						if ( container.length ) {
@@ -75,7 +74,7 @@ SobiPro.jQuery( document ).ready( function () {
 			} );
 		};
 		this.progress = function ( response ) {
-			this.doneCounter ++;
+			this.doneCounter++;
 			this.progressBar.css( 'width', 100 / ( this.counter - this.doneCounter + 1 ) + '%' );
 			this.messageType( response.message.type );
 			this.progressMessage.html( response.message.text );
@@ -118,7 +117,7 @@ SobiPro.jQuery( document ).ready( function () {
 			this.progressMessage.html( SobiPro.Txt( 'PROGRESS_WORKING' ) );
 			SobiPro.jQuery( '#SpProgress' ).removeClass( 'hide' );
 			this.progressBar.css( 'width', '0%' );
-			for ( let i = 0; i < entries.length; i ++ ) {
+			for ( let i = 0; i < entries.length; i++ ) {
 				request[ 'sid' ] = entries[ i ].val();
 				SobiPro.jQuery.ajax( {
 					'url': 'index.php',
@@ -165,7 +164,7 @@ SobiPro.jQuery( document ).ready( function () {
 	let serialActions = [ 'entry.publish', 'entry.hide', 'entry.approve', 'entry.unapprove', 'entry.deleteAll' ];
 	SobiPro.jQuery( '#SPAdmToolbar a' ).click( function ( e ) {
 		if ( SobiPro.jQuery( this ).attr( 'title' ) ) {
-			if ( ! ( confirm( SobiPro.jQuery( this ).attr( 'title' ) ) ) ) {
+			if ( !( confirm( SobiPro.jQuery( this ).attr( 'title' ) ) ) ) {
 				e.preventDefault();
 				e.stopPropagation();
 				return false;
@@ -179,7 +178,7 @@ SobiPro.jQuery( document ).ready( function () {
 		if ( task.length ) {
 			e.preventDefault();
 			e.stopPropagation();
-			if ( SobiPro.jQuery.inArray( task, serialActions ) != - 1 ) {
+			if ( SobiPro.jQuery.inArray( task, serialActions ) != -1 ) {
 				SobiPro.jQuery( this ).parent().parent().parent().parent().removeClass( 'open' );
 				return new SpSerialAction( task );
 			}
@@ -194,7 +193,7 @@ SobiPro.jQuery( document ).ready( function () {
 						return;
 					}
 				}
-				var handler = { 'takeOver': false };
+				var handler = {'takeOver': false};
 				SobiPro.jQuery( '#SPAdminForm' ).trigger( 'BeforeAjaxSubmit', [ handler, task ] );
 				if ( handler.takeOver == true ) {
 					return true;
@@ -216,13 +215,13 @@ SobiPro.jQuery( document ).ready( function () {
 					'type': 'post',
 					'dataType': 'json',
 					success: function ( data ) {
-						if ( ! ( data.redirect.execute ) ) {
-							var handler = { 'takeOver': false };
+						if ( !( data.redirect.execute ) ) {
+							var handler = {'takeOver': false};
 							SobiPro.jQuery( '#SPAdminForm' ).trigger( 'AfterAjaxSubmit', [ handler, data ] );
 							if ( handler.takeOver == true ) {
 								return true;
 							}
-							count ++;
+							count++;
 							c = '';
 							if ( count > 1 ) {
 								c = '&nbsp;(' + count + ')';
@@ -236,7 +235,7 @@ SobiPro.jQuery( document ).ready( function () {
 									SobiPro.jQuery( '[name^="' + i + '"]' ).val( val );
 								} );
 							}
-							catch ( e ) {
+							catch (e) {
 							}
 							if ( data.data.required ) {
 								SobiPro.jQuery( '[name*="' + data.data.required + '"]' )
@@ -289,7 +288,7 @@ SobiPro.jQuery( document ).ready( function () {
 			}
 		} );
 	}
-	catch ( e ) {
+	catch (e) {
 	}
 	SobiPro.jQuery( '.counter-reset' ).click( function () {
 		var button = SobiPro.jQuery( this );
@@ -314,8 +313,7 @@ SobiPro.jQuery( document ).ready( function () {
 		}
 	} );
 
-	function SPTriggerFrakingWYSIWYGEditors()
-	{
+	function SPTriggerFrakingWYSIWYGEditors() {
 		try {
 			var Editors = Object.keys( tinyMCE.editors );
 			SobiPro.jQuery.each( Editors, function ( i, eid ) {
@@ -326,24 +324,24 @@ SobiPro.jQuery( document ).ready( function () {
 				}
 			} );
 		}
-		catch ( e ) {
+		catch (e) {
 		}
 		var events = [ 'unload', 'onbeforeunload', 'onunload' ];
-		for ( var i = 0; i < events.length; i ++ ) {
+		for ( var i = 0; i < events.length; i++ ) {
 			try {
 				window.dispatchEvent( events[ i ] );
 			}
-			catch ( e ) {
+			catch (e) {
 			}
 			try {
 				window.fireEvent( events[ i ] );
 			}
-			catch ( e ) {
+			catch (e) {
 			}
 			try {
 				SobiPro.jQuery( document ).triggerHandler( events[ i ] );
 			}
-			catch ( e ) {
+			catch (e) {
 			}
 			try {
 				SobiPro.jQuery.each( CKEDITOR.instances, function ( i, k ) {
@@ -351,19 +349,19 @@ SobiPro.jQuery( document ).ready( function () {
 					CKEDITOR.replace( i );
 				} )
 			}
-			catch ( e ) {
+			catch (e) {
 			}
 		}
 		try {
 			tinyMCE.triggerSave();
 		}
-		catch ( e ) {
+		catch (e) {
 		}
 		SobiPro.jQuery.each( Joomla.editors.instances, function () {
 			try {
 				this.save();
 			}
-			catch ( e ) {
+			catch (e) {
 			}
 		} );
 	}
@@ -391,7 +389,7 @@ SobiPro.jQuery( document ).ready( function () {
 
 	SobiPro.jQuery( '.buttons-radio :button' ).each( function ( i, e ) {
 		var e = SobiPro.jQuery( e );
-		if ( ! ( e.hasClass( 'selected' ) ) ) {
+		if ( !( e.hasClass( 'selected' ) ) ) {
 			e.removeClass( 'btn-success' )
 				.removeClass( 'btn-danger' );
 		}
@@ -419,7 +417,7 @@ SobiPro.jQuery( document ).ready( function () {
 			}
 		} );
 	}
-	catch ( e ) {
+	catch (e) {
 	}
 	//P_current-ip
 	try {
@@ -429,15 +427,14 @@ SobiPro.jQuery( document ).ready( function () {
 			}
 		} )
 	}
-	catch ( e ) {
+	catch (e) {
 	}
 	if ( SobiPro.jQuery( '.spFileUpload' ).length ) {
 		SobiPro.jQuery( '.spFileUpload' ).SPFileUploader();
 	}
 
-	function spKeepAlive()
-	{
-		jQuery.ajax( { url: 'index.php' } );
+	function spKeepAlive() {
+		jQuery.ajax( {url: 'index.php'} );
 		setTimeout( spKeepAlive, 300000 );
 	}
 
@@ -493,7 +490,7 @@ SobiPro.jQuery( document ).ready( function () {
 						SobiPro.jQuery( '.spIconBar' ).find( '[rel$="\.save"]' ).click();
 					}
 				}
-				catch ( x ) {
+				catch (x) {
 				}
 			}
 			SobiPro.cmdKey = false;
@@ -504,19 +501,19 @@ SobiPro.jQuery( document ).ready( function () {
 		try {
 			localStorage.setItem( 'SobiProOpenTab', SobiPro.jQuery( e.target ).attr( 'href' ) );
 		}
-		catch ( x ) {
+		catch (x) {
 		}
 	} );
 	var lastTab = localStorage.getItem( 'SobiProOpenTab' );
 	try {
 		if ( lastTab ) {
 			SobiPro.jQuery( '[href="' + lastTab + '"]' ).tab( 'show' );
-			SobiPro.jQuery.each( Joomla.editors.instances, function ( i, k )  {
+			SobiPro.jQuery.each( Joomla.editors.instances, function ( i, k ) {
 				k.refresh();
 			} );
 		}
 	}
-	catch ( x ) {
+	catch (x) {
 	}
 	try {
 		if ( SobiPro.jQuery( '.active[name="category.allFields"]' ).hasClass( 'btn-success' ) ) {
@@ -529,7 +526,7 @@ SobiPro.jQuery( document ).ready( function () {
 			SobiPro.jQuery( '.entryFields' ).fadeTo( 'slow', 0.2 );
 		} );
 	}
-	catch ( x ) {
+	catch (x) {
 	}
 
 } );

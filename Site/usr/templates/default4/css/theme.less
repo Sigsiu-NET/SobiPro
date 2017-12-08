@@ -17,13 +17,14 @@
 @corners: angular;
 @colour-set: sobipro;
 @small-image: 100px;
-@big-image: 300px;
+@big-image: inherit;
 @image-ratio: 0.75;
-@carousel-image: 500px;
+@carousel-image: inherit;
 @print-gallery: 150px;
 @fontsize: 14px;
 @font-color: #3e3e3e;
 @back-color: #ffffff;
+@design: elevated;
 
 //-------------------------------------------------------------------------------------*/
 
@@ -52,6 +53,28 @@
 @background-light: #fbeeee;
 @background-medium: #f9d1d1;
 @background-dark: #ed8282;
+
+@success-backcolor: #5cb85c;
+@success-backcolor-hover: #449d44;
+@success-color: #fff;
+@info-backcolor: #5bc0de;
+@info-backcolor-hover: #31b0d5;
+@info-color: #fff;
+@danger-backcolor: #d9534f;
+@danger-backcolor-hover: #c9302c;
+@danger-color: #fff;
+@warning-backcolor: #f0ad4e;
+@warning-backcolor-hover: #ec971f;
+@warning-color: #fff;
+@default-backcolor: #bcbcbc;
+@default-backcolor-hover: #a2a0a0;
+@default-color: #fff;
+@primary-backcolor: #337ab7;
+@primary-backcolor-hover: #286090;
+@primary-color: #fff;
+@sigsiu-backcolor-hover: darken(@base-color, 5%);
+@sigsiu-active-backcolor-hover: darken(@active-color, 5%);
+@sigsiu-alert-backcolor-hover: darken(@alert-color, 6%);
 
 @inverse: standard;
 
@@ -98,6 +121,8 @@
 	box-shadow: 0 0 8px rgba(0, 0, 0, .18), 0 8px 16px rgba(0, 0, 0, .36);
 }
 
+// elevated Shadow Mixins
+// ----------------------------------------
 @shadow-a: 0.2;
 @shadow-b: 0.14;
 @shadow-c: 0.12;
@@ -118,6 +143,30 @@
 	box-shadow: 0 4px 5px 0 rgba(0, 0, 0, @shadow-b),
 	0 1px 10px 0 rgba(0, 0, 0, @shadow-c),
 	0 2px 4px -1px rgba(0, 0, 0, @shadow-a);
+}
+
+.shadow-6dp() {
+	box-shadow: 0 6px 10px 0 rgba(0, 0, 0, @shadow-b),
+	0 1px 18px 0 rgba(0, 0, 0, @shadow-c),
+	0 3px 5px -1px rgba(0, 0, 0, @shadow-a);
+}
+
+.shadow-8dp() {
+	box-shadow: 0 8px 10px 1px rgba(0, 0, 0, @shadow-b),
+	0 3px 14px 2px rgba(0, 0, 0, @shadow-c),
+	0 5px 5px -3px rgba(0, 0, 0, @shadow-a);
+}
+
+.shadow-16dp() {
+	box-shadow: 0 16px 24px 2px rgba(0, 0, 0, @shadow-b),
+	0 6px 30px 5px rgba(0, 0, 0, @shadow-c),
+	0 8px 10px -5px rgba(0, 0, 0, @shadow-a);
+}
+
+.shadow-24dp() {
+	box-shadow: 0 9px 46px 8px rgba(0, 0, 0, @shadow-b),
+	0 11px 15px -7px rgba(0, 0, 0, @shadow-c),
+	0 24px 38px 3px rgba(0, 0, 0, @shadow-a);
 }
 
 .headertext {
@@ -259,6 +308,15 @@ body.modal-open {
 	}
 	.inline { display: inline; }
 	.inherit { display: inherit; }
+
+	// elevated Shadow classes
+	.shadow-2dp { .shadow-2dp(); }
+	.shadow-3dp { .shadow-3dp(); }
+	.shadow-4dp { .shadow-4dp(); }
+	.shadow-6dp { .shadow-6dp(); }
+	.shadow-8dp { .shadow-8dp(); }
+	.shadow-16dp { .shadow-16dp(); }
+	.shadow-24dp { .shadow-24dp(); }
 
 	// colour test classes
 	.colortest {
@@ -925,6 +983,10 @@ body.modal-open {
 		background-color: @active-color;
 		border-color: @active-color;
 		text-decoration: none;
+
+		& when (@design = elevated) {
+			.shadow-2dp();
+		}
 	}
 	.well,
 	.pagination ul > .disabled > span,
@@ -938,6 +1000,9 @@ body.modal-open {
 		.background(light);
 		.borders(light);
 		color: saturate(darken(@base-color, 12%), 20%);
+		& when (@design = elevated) {
+			box-shadow: none;
+		}
 	}
 
 	// new Pagination size between normal and mini
@@ -1006,6 +1071,9 @@ body.modal-open {
 	.uneditable-input:focus {
 		border-color: fade(@base-color, 80%) !important;
 		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(red(@base-color), green(@base-color), blue(@base-color), 60%);
+		& when (@design = elevated) {
+			box-shadow: 0 3px 4px rgba(0, 0, 0, 0.075), 0 3px 3px -2px rgba(0, 0, 0, @shadow-a), 0 1px 8px 0 rgba(red(@base-color), green(@base-color), blue(@base-color), 60%);
+		}
 		border-style: solid;
 		border-width: 1px;
 	}
@@ -1015,6 +1083,11 @@ body.modal-open {
 	select option:focus {
 		background-color: @active-color;
 	}
+	& when (@design = elevated) {
+		.CodeMirror-focused {
+			.shadow-2dp();
+		}
+	}
 	.thumbnail {
 		margin-bottom: 9px;
 	}
@@ -1022,10 +1095,15 @@ body.modal-open {
 	// New button colour
 	// ----------------------------------------
 	// Button 1
+	.btn-success.btn-sigsiu,
+	.btn-primary.btn-sigsiu,
 	.toggle-editor .btn,
 	.btn-sigsiu {
 		background-color: @base-color;
 		border-color: darken(@base-color, 4%);
+		& when (@design = elevated) {
+			border-color: @base-color;
+		}
 		color: @basetext-color;
 		& when (lightness(@base-color) < 35%) {
 			& when (lightness(@basetext-color) < 35%) {
@@ -1037,26 +1115,39 @@ body.modal-open {
 	.toggle-editor .btn:focus,
 	.toggle-editor .btn:active,
 	.toggle-editor .btn.active,
+	.btn-primary.btn-sigsiu:hover,
+	.btn-primary.btn-sigsiu:focus,
+	.btn-primary.btn-sigsiu:active,
+	.btn-primary.btn-sigsiu.active,
+	.btn-success.btn-sigsiu:hover,
+	.btn-success.btn-sigsiu:focus,
+	.btn-success.btn-sigsiu:active,
+	.btn-success.btn-sigsiu.active,
 	.btn-group.open .btn-sigsiu.dropdown-toggle,
 	.btn-sigsiu:hover,
 	.btn-sigsiu:focus,
 	.btn-sigsiu:active,
 	.btn-sigsiu.active {
-		background-color: darken(@base-color, 8%);
-		border-color: darken(@base-color, 12%);
+		background-color: @sigsiu-backcolor-hover;
+		border-color: darken(@base-color, 8%);
+		& when (@design = elevated) {
+			border-color: @sigsiu-backcolor-hover;
+		}
 		color: @basetext-color;
 		& when (lightness(@base-color) < 35%) {
 			& when (lightness(@basetext-color) < 35%) {
 				color: white;
 			}
 		}
-		.shadow-2dp();
 	}
 
 	// Button 2
 	.btn-sigsiu-active {
 		background-color: @active-color;
 		border-color: darken(@active-color, 4%);
+		& when (@design = elevated) {
+			border-color: @active-color;
+		}
 		color: @activetext-color;
 		& when (lightness(@active-color) < 35%) {
 			& when (lightness(@activetext-color) < 35%) {
@@ -1069,21 +1160,26 @@ body.modal-open {
 	.btn-sigsiu-active:focus,
 	.btn-sigsiu-active:active,
 	.btn-sigsiu-active.active {
-		background-color: darken(@active-color, 8%);
-		border-color: darken(@active-color, 12%);
+		background-color: @sigsiu-active-backcolor-hover;
+		border-color: darken(@active-color, 8%);
+		& when (@design = elevated) {
+			border-color: @sigsiu-active-backcolor-hover;
+		}
 		color: @activetext-color;
 		& when (lightness(@active-color) < 35%) {
 			& when (lightness(@activetext-color) < 35%) {
 				color: white;
 			}
 		}
-		.shadow-2dp();
 	}
 
 	// Button 3
 	.btn-sigsiu-alert {
 		background-color: @alert-color;
 		border-color: darken(@alert-color, 4%);
+		& when (@design = elevated) {
+			border-color: @alert-color;
+		}
 		color: @important-color;
 		& when (lightness(@alert-color) < 35%) {
 			& when (lightness(@important-color) < 35%) {
@@ -1096,22 +1192,117 @@ body.modal-open {
 	.btn-sigsiu-alert:focus,
 	.btn-sigsiu-alert:active,
 	.btn-sigsiu-alert.active {
-		background-color: darken(@alert-color, 6%);
+		background-color: @sigsiu-alert-backcolor-hover;
 		border-color: darken(@alert-color, 10%);
+		& when (@design = elevated) {
+			border-color: @sigsiu-alert-backcolor-hover;
+		}
 		color: @important-color;
 		& when (lightness(@alert-color) < 35%) {
 			& when (lightness(@important-color) < 35%) {
 				color: white;
 			}
 		}
-		.shadow-2dp();
 	}
 
-	.btn:hover,
-	.btn:focus,
-	.btn:active,
-	.btn.active {
-		.shadow-2dp();
+	.btn:focus {
+		outline: 2px solid @outline-color;
+	}
+
+	& when (@design = elevated) {
+		.btn {
+			//text-transform: uppercase;
+			box-shadow: none;
+			font-variant: small-caps;
+			font-weight: 500;
+		}
+		.btn-success {
+			color: @success-color;
+			background-color: @success-backcolor;
+			border-color: @success-backcolor;
+			&.active,
+			&:active,
+			&:hover,
+			.open > .dropdown-toggle.btn-success {
+				color: @success-color;
+				background-color: @success-backcolor-hover;
+				border-color: @success-backcolor-hover;
+			}
+		}
+		.btn-info {
+			color: @info-backcolor;
+			background-color: @info-backcolor;
+			border-color: @info-backcolor;
+			&.active,
+			&:active,
+			&:hover,
+			.open > .dropdown-toggle.btn-info {
+				color: @info-backcolor;
+				background-color: @info-backcolor-hover;
+				border-color: @info-backcolor-hover;
+			}
+		}
+		.btn-danger {
+			color: @danger-color;
+			background-color: @danger-backcolor;
+			border-color: @danger-backcolor;
+			&.active,
+			&:active,
+			&:hover,
+			.open > .dropdown-toggle.btn-danger {
+				color: @danger-color;
+				background-color: @danger-backcolor-hover;
+				border-color: @danger-backcolor-hover;
+			}
+		}
+		.btn-warning {
+			color: @warning-color;
+			background-color: @warning-backcolor;
+			border-color: @warning-backcolor;
+			&.active,
+			&:active,
+			&:hover,
+			.open > .dropdown-toggle.btn-warning {
+				color: @warning-color;
+				background-color: @warning-backcolor-hover;
+				border-color: @warning-backcolor-hover;
+			}
+		}
+		.btn-default {
+			color: @default-color;
+			background-color: @default-backcolor;
+			border-color: @default-backcolor;
+			&.active,
+			&:active,
+			&:hover,
+			.open > .dropdown-toggle.btn-default {
+				color: @default-color;
+				background-color: @default-backcolor-hover;
+				border-color: @default-backcolor-hover;
+			}
+		}
+		.btn-primary {
+			color: @primary-color;
+			background-color: @primary-backcolor;
+			border-color: @primary-backcolor;
+			&.active,
+			&:active,
+			&:hover,
+			.open > .dropdown-toggle.btn-primary {
+				color: @primary-color;
+				background-color: @primary-backcolor-hover;
+				border-color: @primary-backcolor-hover;
+			}
+		}
+
+		.btn:hover,
+		.btn:active,
+		.btn.active {
+			.shadow-2dp();
+		}
+		.btn.disabled:hover {
+			box-shadow: none;
+		}
 	}
 
 	.btn-sigsiu .caret,
@@ -1336,7 +1527,7 @@ body.modal-open {
 
 	// Topmenu
 	// ----------------------------------------
-	.topmenu.navbar {
+	.topmenu.standard {
 		box-shadow: none;
 		margin-bottom: 20px;
 		min-height: inherit;
@@ -1355,7 +1546,6 @@ body.modal-open {
 		}
 		.navbar-toggle:hover {
 			background-color: @base-color;
-			.shadow-2dp;
 		}
 		.navbar-toggle:focus {
 			background-color: @base-color;
@@ -1369,6 +1559,10 @@ body.modal-open {
 				text-shadow: none;
 				padding: 15px 10px 15px 10px;
 				font-size: inherit;
+				& when (@design = elevated) {
+					font-variant: small-caps;
+					font-weight: 500;
+				}
 			}
 			li,
 			li a {
@@ -1386,12 +1580,16 @@ body.modal-open {
 			li a:focus {
 				outline: 2px solid @outline-color;
 			}
+
+			& when (@design = elevated) {
+				li a.active,
+				li a:hover {
+					.shadow-3dp();
+				}
+			}
 		}
 		.navbar-search {
 			margin-top: 15px;
-
-			input {
-			}
 		}
 		input[type="text"] {
 			border-color: darken(@base-color, 5%);
@@ -1486,6 +1684,15 @@ body.modal-open {
 
 	.spCaticon i {
 		color: @base-color;
+
+		&.active,
+		&:active,
+		&:hover {
+			color: @sigsiu-backcolor-hover;
+		}
+		&:focus {
+			outline: 2px solid @outline-color;
+		}
 	}
 
 	.spCaticon [class^="fa-"],
@@ -1782,16 +1989,18 @@ body.modal-open {
 
 	// Entry Status
 	// ----------------------------------------
-	.entry-status i {
-		font-size: 70%;
-		color: @important-color;
-		padding-left: 5px;
-	}
-
-	a.entry-status:hover,
-	a.entry-status:active,
-	a.entry-status:focus {
-		text-decoration: none;
+	.entry-status {
+		i {
+			font-size: 70%;
+			color: @important-color;
+			padding-left: 5px;
+			vertical-align: super;
+		}
+		&:hover,
+		&:active,
+		&:focus {
+			text-decoration: none;
+		}
 	}
 
 	// Popover in General
@@ -1828,7 +2037,7 @@ body.modal-open {
 
 		textarea,
 		input[type="text"] {
-			margin-bottom: inherit;
+			//margin-bottom: inherit;
 		}
 
 		.progress {
@@ -1907,6 +2116,9 @@ body.modal-open {
 	}
 
 	.spUpload {
+		.select {
+			margin-left: -1px;
+		}
 		.span1 {
 			margin-left: 10px;
 		}
@@ -1957,7 +2169,7 @@ body.modal-open {
 	// ----------------------------------------
 	.spEditImagePreview {
 		float: left;
-		min-height: 65px;
+		//min-height: 65px;
 
 		img {
 			padding: 4px;
@@ -1969,6 +2181,15 @@ body.modal-open {
 			min-height: 50px;
 			& when (@corners = rounded) {
 				border-radius: 4px;
+			}
+			& when (@design = elevated) {
+				& when (@corners = rounded) {
+					border-radius: 2px;
+				}
+				padding: 0;
+				border: none;
+				box-shadow: none;
+				.shadow-2dp;
 			}
 		}
 	}
@@ -1988,6 +2209,7 @@ body.modal-open {
 		}
 		.alert {
 			margin-top: 5px;
+			margin-bottom: 0;
 		}
 		margin-bottom: 3px;
 	}
@@ -2124,6 +2346,7 @@ body.modal-open {
 		margin-bottom: 10px;
 	}
 
+	button.extended-search,
 	button.bottom-search,
 	button.top-search {
 		margin-left: 5px;
@@ -2169,6 +2392,20 @@ body.modal-open {
 		margin: 5px;
 		& when (@corners = rounded) {
 			border-radius: 4px;
+		}
+
+		& when (@design = elevated) {
+			& when (@corners = rounded) {
+				border-radius: 2px;
+			}
+			padding: 0;
+			border: none;
+			box-shadow: none;
+			.shadow-2dp;
+
+			&:hover {
+				.shadow-4dp;
+			}
 		}
 	}
 
@@ -2369,12 +2606,17 @@ body.modal-open {
 	// SP-GeoMap Field
 	// -----------------------------------------------
 	& when (@corners = rounded) {
-		.ctrl-geomap {
+		div.spClassMap {
 			border-radius: 4px;
 		}
 	}
-
-	.mapSearch input {
+	& when (@design = elevated) {
+		div.spClassMap {
+			& when (@corners = rounded) {
+				border-radius: 2px;
+			}
+			.shadow-4dp();
+		}
 	}
 
 	// Aggregation Field
@@ -2632,8 +2874,111 @@ body.modal-open {
 	}
 
 	.modal-footer {
+		a.btn,
 		.btn {
 			font-size: 14px;
+			& when (@design = elevated) {
+				border: none;
+				background-color: transparent;
+				text-transform: uppercase;
+				font-weight: 500;
+
+				&:hover {
+					box-shadow: none;
+				}
+			}
+		}
+		& when (@design = elevated) {
+			.btn-success {
+				color: @success-backcolor-hover;
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					color: @success-backcolor-hover;
+					background-color: fade(@success-backcolor-hover, 12%);
+				}
+			}
+			.btn-info {
+				color: @info-backcolor-hover;
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					color: @info-backcolor-hover;
+					background-color: fade(@info-backcolor-hover, 12%);
+				}
+			}
+			.btn-danger {
+				color: @danger-backcolor-hover;
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					color: @danger-backcolor-hover;
+					background-color: fade(@danger-backcolor-hover, 12%);
+				}
+			}
+			.btn-warning {
+				color: @warning-backcolor-hover;
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					color: @warning-backcolor-hover;
+					background-color: fade(@warning-backcolor-hover, 12%);
+				}
+			}
+			.btn-default {
+				color: @default-backcolor-hover;
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					color: @default-backcolor-hover;
+					background-color: fade(@default-backcolor-hover, 12%);
+				}
+			}
+			.btn-primary {
+				color: @primary-backcolor-hover;
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					color: @primary-backcolor-hover;
+					background-color: fade(@primary-backcolor-hover, 12%);
+				}
+			}
+			.btn-sigsiu {
+				color: @sigsiu-backcolor-hover;
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					color: @sigsiu-backcolor-hover;
+					background-color: fade(@sigsiu-backcolor-hover, 12%);
+				}
+			}
+			.btn-sigsiu-active {
+				color: @sigsiu-active-backcolor-hover;
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					color: @sigsiu-active-backcolor-hover;
+					background-color: fade(@sigsiu-active-backcolor-hover, 12%);
+				}
+			}
+			.btn-sigsiu-alert {
+				color: @sigsiu-alert-backcolor-hover;
+				&.active,
+				&:active,
+				&:focus,
+				&:hover {
+					color: @sigsiu-alert-backcolor-hover;
+					background-color: fade(@sigsiu-alert-backcolor-hover, 12%);
+				}
+			}
 		}
 	}
 
@@ -2915,5 +3260,4 @@ body.modal-open {
 			text-align: center;
 		}
 	}
-
 }
