@@ -70,6 +70,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Wrong data handling with disabled multi-language mode (Issue #51)
     (#) Handling for CKEDITOR added (Issue #50)
     (#) Display problems when CodeMirror editor is in active tab
+    (#) Removing "canonical" only in case our own was added (Issue #53) 
     
 
 ### 1.4.3 (19 October 2017)

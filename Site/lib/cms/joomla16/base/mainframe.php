@@ -90,16 +90,20 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 			if ( defined( 'SOBI_ADM_PATH' ) ) {
 				$document->addCustomTag( "\n\t<script type=\"text/javascript\">/* <![CDATA[ */ \n\tvar SobiProAdmUrl = '" . Sobi::FixPath( Sobi::Cfg( 'live_site' ) . SOBI_ADM_FOLDER . '/' . self::Url( [ 'task' => '%task%' ], true, false ) ) . "'; \n/* ]]> */</script>\n" );
 			}
+			$canonicalSet = false;
 			foreach ( $head as $type => $code ) {
 				switch ( $type ) {
 					default: {
-					if ( count( $code ) ) {
-						foreach ( $code as $html ) {
-							++$c;
-							$document->addCustomTag( $html );
+						if ( count( $code ) ) {
+							foreach ( $code as $html ) {
+								++$c;
+								$document->addCustomTag( $html );
+								if ( $type == 'links' && strstr( $html, 'canonical' ) ) {
+									$canonicalSet = true;
+								}
+							}
 						}
-					}
-					break;
+						break;
 					}
 					case 'robots' :
 					case 'author': {
@@ -164,7 +168,7 @@ class SPJ16MainFrame extends SPJoomlaMainFrame implements SPMainframeInterface
 			$document->addCustomTag( "\n\t<!--  SobiPro ({$c}) Head Tags Output -->\n" );
 			// we would like to set our own canonical please :P
 			// https://groups.google.com/forum/?fromgroups=#!topic/joomla-dev-cms/sF3-JBQspQU
-			if ( count( $document->_links ) ) {
+			if ( count( $document->_links ) && $canonicalSet ) {
 				foreach ( $document->_links as $index => $link ) {
 					if ( $link[ 'relation' ] == 'canonical' ) {
 						unset( $document->_links[ $index ] );
