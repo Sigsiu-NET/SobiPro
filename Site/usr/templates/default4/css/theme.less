@@ -169,6 +169,12 @@
 	0 24px 38px 3px rgba(0, 0, 0, @shadow-a);
 }
 
+.textshadow-2dp() {
+	text-shadow: 0 2px 2px rgba(0, 0, 0, @shadow-b),
+	0 3px 1px rgba(0, 0, 0, @shadow-a),
+	0 1px 5px rgba(0, 0, 0, @shadow-c);
+}
+
 .headertext {
 	font-size: calc(@fontsize + 8px);
 	color: @base-color;
@@ -1685,7 +1691,9 @@ body.modal-open {
 	.spCaticon [class^="fa-"],
 	.spCaticon [class*=" fa-"],
 	.spCaticon [class^="icon-"],
-	.spCaticon [class*=" icon-"] {
+	.spCaticon [class*=" icon-"],
+	.spCaticon [class^="material-icons"],
+	.spCaticon [class*="material-icons"] {
 		margin-right: 0;
 		color: @base-color;
 
@@ -1693,6 +1701,9 @@ body.modal-open {
 		&:active,
 		&:hover {
 			color: @sigsiu-backcolor-hover;
+			& when (@design = elevated) {
+				.textshadow-2dp;
+			}
 		}
 		&:focus {
 			outline: 2px solid @outline-color;
@@ -1702,15 +1713,14 @@ body.modal-open {
 	.spCaticon {
 		text-align: center;
 		margin-top: 5px;
-	}
 
-	.spCaticon a {
-		color: @base-color;
-	}
-
-	.spCaticon a:hover {
-		color: @base-color;
-		text-decoration: none;
+		a {
+			color: @base-color;
+			&:hover {
+				color: @base-color;
+				text-decoration: none;
+			}
+		}
 	}
 
 	.spCatintro {
