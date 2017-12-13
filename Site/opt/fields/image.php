@@ -372,7 +372,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$del = Input::Bool( $this->nid . '_delete', $request );
+		$del = SPRequest::bool( $this->nid . '_delete', null, $request ); //don't use Framework function -> fatal error
 		if ( $clone ) {
 			$orgSid = Input::Sid();
 			$this->loadData( $orgSid );
@@ -419,7 +419,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		 * */
 
 		if ( !( $data ) ) {
-			$directory = Input::String( $this->nid, $request );
+			$directory = SPRequest::string( $this->nid, null, $request );   //don't use Framework function -> fatal error
 			if ( strlen( $directory ) ) {
 				list( $data, $dirName, $files, $coordinates ) = $this->getAjaxFiles( $directory );
 				if ( count( $files ) ) {

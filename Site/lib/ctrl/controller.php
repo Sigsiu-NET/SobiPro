@@ -95,7 +95,7 @@ abstract class SPController extends SPObject implements SPControl
 	protected function authorise( $action = 'access', $ownership = 'valid' )
 	{
 		if ( !( Sobi::Can( $this->_type, $action, $ownership, Sobi::Section() ) ) ) {
-			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			exit;
 		}
 
@@ -122,7 +122,7 @@ abstract class SPController extends SPObject implements SPControl
 	public function execute()
 	{
 		$r = false;
-		SPRequest::set( 'task', $this->_type . '.' . $this->_task );
+		Input::Set( 'task', $this->_type . '.' . $this->_task );
 		switch ( $this->_task ) {
 			/* if someone want edit an object - just check if it is not checked out */
 			case 'edit':
@@ -149,10 +149,10 @@ abstract class SPController extends SPObject implements SPControl
 				break;
 			case 'cancel':
 				if ( defined( 'SOBI_ADM_PATH' ) ) {
-					$this->checkIn( SPRequest::sid(), false );
+					$this->checkIn( Input::Sid(), false );
 					$this->response( Sobi::Back() );
 				}
-				$this->checkIn( SPRequest::int( 'sid' ) );
+				$this->checkIn( Input::Int( 'sid' ) );
 				$r = true;
 				if ( Input::Sid() ) {
 					$url = Sobi::Url( [ 'sid' => Input::Sid() ] );
@@ -171,8 +171,8 @@ abstract class SPController extends SPObject implements SPControl
 					if ( $this->_model->get( 'id' ) ) {
 						$this->_model->delete();
 						if ( $this->_type == 'entry' && !( defined( 'SOBIPRO_ADM' ) ) ) {
-							if ( SPRequest::int( 'pid' ) ) {
-								$url = Sobi::Url( [ 'sid' => SPRequest::int( 'pid' ) ] );
+							if ( Input::Int( 'pid' ) ) {
+								$url = Sobi::Url( [ 'sid' => Input::Int( 'pid' ) ] );
 							}
 							else {
 								$url = Sobi::Url( [ 'sid' => Sobi::Section() ] );
@@ -269,7 +269,7 @@ abstract class SPController extends SPObject implements SPControl
 	{
 		$sets = [];
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
-			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$this->validate( $this->_type . '.edit', $this->_type );
 		$apply = ( int ) $apply;
@@ -423,12 +423,12 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $error ) {
 			$redirect = Sobi::Cfg( 'redirects.' . $type . '_access_url', null );
 			if ( Sobi::Cfg( 'redirects.' . $type . '_access_enabled', false ) && strlen( $redirect ) ) {
-				$this->escape( $redirect, Sobi::Cfg( 'redirects.' . $type . '_access_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ) ),
+				$this->escape( $redirect, Sobi::Cfg( 'redirects.' . $type . '_access_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', Input::Task() ) ),
 					Sobi::Cfg( 'redirects.' . $type . '_access_msgtype', 'message' ) );
 				exit;
 			}
 			else {
-				Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+				Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			}
 		}
 	}
@@ -436,7 +436,7 @@ abstract class SPController extends SPObject implements SPControl
 	protected function template()
 	{
 		/* determine template file */
-		$template = SPRequest::cmd( 'sptpl', $this->_task );
+		$template = Input::Cmd( 'sptpl', 'request', $this->_task );
 		if ( strstr( $template, '.' ) ) {
 			$template = explode( '.', $template );
 			$this->templateType = $template[ 0 ];
@@ -525,7 +525,7 @@ abstract class SPController extends SPObject implements SPControl
 					$this->_tCfg[ 'general' ][ $k ] = $v;
 				}
 			}
-			$task = SPRequest::task() == 'entry.add' ? 'entry.edit' : SPRequest::task();
+			$task = Input::Task() == 'entry.add' ? 'entry.edit' : Input::Task();
 			if ( isset( $settings[ $task ] ) ) {
 				foreach ( $settings[ $task ] as $k => $v ) {
 					$this->_tCfg[ 'general' ][ $k ] = $v;
@@ -585,7 +585,7 @@ abstract class SPController extends SPObject implements SPControl
 			$type = $message[ 'type' ];
 			$message = $message[ 'text' ];
 		}
-		if ( SPRequest::cmd( 'method', null, $request ) == 'xhr' ) {
+		if ( Sprequest::cmd( 'method', null, $request ) == 'xhr' ) { //don't use Framework function -> results in true
 			if ( $redirect && $message ) {
 				SPFactory::message()->setMessage( $message, false, $type );
 			}
@@ -625,7 +625,7 @@ abstract class SPController extends SPObject implements SPControl
 				$errorUrl = Sobi::Url( $type );
 			}
 			else {
-				$errorUrl = Sobi::Url( [ 'task' => $type . '.edit', 'sid' => SPRequest::sid() ] );
+				$errorUrl = Sobi::Url( [ 'task' => $type . '.edit', 'sid' => Input::Sid() ] );
 			}
 			$xdef = new DOMXPath( SPFactory::LoadXML( $definition ) );
 			$required = $xdef->query( '//field[@required="true"]' );

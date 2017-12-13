@@ -445,7 +445,7 @@ class SPEntryCtrl extends SPController
 		SPCookie::delete( 'editentry' );
 
 		$sid = $this->_model->get( 'id' );
-		$pid = SPRequest::int( 'pid' ) ? SPRequest::int( 'pid' ) : Sobi::Section();
+		$pid = Input::Int( 'pid' ) ? SPRequest::int( 'pid' ) : Sobi::Section();
 		if ( $new ) {
 			if ( $this->_model->get( 'state' ) || Sobi::Can( 'entry', 'access', 'unpublished_own' ) || Sobi::Can( 'entry', 'access', 'unpublished_any' ) ) {
 				$msg = $this->_model->get( 'state' ) ? Sobi::Txt( 'EN.ENTRY_SAVED' ) : Sobi::Txt( 'EN.ENTRY_SAVED_NP' );

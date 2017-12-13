@@ -24,7 +24,7 @@
 @fontsize: 14px;
 @font-color: #3e3e3e;
 @back-color: #ffffff;
-@design: standard;
+@design: elevated;
 
 //-------------------------------------------------------------------------------------*/
 
@@ -220,6 +220,33 @@ body.modal-open {
 		border-radius: 0;
 		-webkit-border-radius: 0;
 		-moz-border-radius: 0;
+	}
+	font-size: @fontsize;
+	& when (@design = elevated) {
+		border-color: @alert-color;
+		.shadow-2dp;
+		font-variant: small-caps;
+		font-size: calc(@fontsize + 1px);
+		font-weight: 500;
+	}
+	.close {
+		position: relative;
+		top: -2px;
+		right: -21px;
+		line-height: 18px;
+		cursor: pointer;
+	}
+	h4 {
+		margin: 0;
+		font-size: calc(@fontsize + 1px);
+		& when (@design = elevated) {
+			font-variant: small-caps;
+			font-size: calc(@fontsize + 2px);
+			font-weight: 500;
+			&:hover {
+			}
+		}
+
 	}
 }
 
@@ -1389,6 +1416,51 @@ body.modal-open {
 	// Alert windows and error messages
 	// ----------------------------------------
 	// Alert messages outside SobiPro without given color class
+	// define bootstrap alert to use it as mixin
+	.alert {
+		padding: 8px 15px 8px 14px;
+		margin-bottom: 20px;
+		margin-top: 5px;
+		text-shadow: none;
+		font-size: @fontsize;
+		& when (@design = elevated) {
+			border-color: @alert-color;
+			.shadow-2dp;
+			font-variant: small-caps;
+			font-size: calc(@fontsize + 1px);
+			font-weight: 500;
+		}
+
+		.close {
+			position: relative;
+			top: -2px;
+			right: -21px;
+			line-height: 18px;
+			cursor: pointer;
+		}
+		h4 {
+			margin: 0;
+			font-size: calc(@fontsize + 1px);
+			& when (@design = elevated) {
+				font-variant: small-caps;
+				font-size: calc(@fontsize + 2px);
+				font-weight: 500;
+				&:hover {
+				}
+			}
+		}
+	}
+	.close {
+		float: right;
+		font-size: 20px;
+		font-weight: bold;
+		line-height: 18px;
+		color: #000;
+		text-shadow: 0 1px 0 #ffffff;
+		opacity: 0.2;
+		filter: alpha(opacity=20);
+	}
+
 	.alert-sigsiu {
 		background-color: @alert-color;
 		border: 1px solid darken(@alert-color, 10%);
@@ -1398,17 +1470,6 @@ body.modal-open {
 		color: @active-color;
 	}
 
-	// define bootstrap alert to use it as mixin
-	.alert {
-		padding: 8px 15px 8px 14px;
-		margin-bottom: 20px;
-		margin-top: 5px;
-		text-shadow: none;
-
-		.close {
-			right: 0;
-		}
-	}
 	.spAlert {
 		margin-bottom: 8px;
 		margin-top: 20px;
@@ -1435,6 +1496,9 @@ body.modal-open {
 		color: #a94442;
 		background-color: #f2dede;
 		border-color: #ebccd1;
+		& when (@design = elevated) {
+			border-color: #f2dede;
+		}
 	}
 	// Bootbox
 	.bootbox-alert i.error {
@@ -1458,13 +1522,18 @@ body.modal-open {
 		border-color: lighten(@error-color, 58%);
 		background-color: lighten(@error-color, 62%);
 		color: @error-color;
+		& when (@design = elevated) {
+			border-color: lighten(@error-color, 62%);
+		}
 	}
 	.spMessage .alert-success,
 	.spSearch .alert-info {
 		border-color: @alert-color;
 		background-color: lighten(@alert-color, 5%);
 		color: @active-color;
-		font-weight: 500;
+		& when (@design = elevated) {
+			border-color: lighten(@alert-color, 5%);
+		}
 	}
 
 	// Looks as a normal text (removal of the message design)
@@ -2245,7 +2314,7 @@ body.modal-open {
 				& when (@design = elevated) {
 					width: calc(100% - 152px);
 				}
-				}
+			}
 			.select {
 				//margin-left: -1px;
 			}
