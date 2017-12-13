@@ -66,9 +66,9 @@
 								<label class="col-sm-3 control-label" for="SPSearchBox">
 									<xsl:value-of select="/search/fields/searchbox/label"/>
 								</label>
-								<div class="col-sm-9 sp-search-controls">
+								<div class="col-sm-9 spSearchTop">
 									<input type="text" name="sp_search_for" value="{/search/fields/searchbox/data/input/@value}"
-									       class="form-control input-large pull-left search-query" autocomplete="off" id="SPSearchBox"
+									       class="form-control pull-left search-query" autocomplete="off" id="SPSearchBox"
 									       placeholder="{php:function( 'SobiPro::Txt', 'SH.SEARCH_FOR_BOX' )}"/>
 									<xsl:if test="/search/fields/top_button/label">
 										<button type="submit" class="btn btn-primary btn-sigsiu top-search">
@@ -78,7 +78,6 @@
 									</xsl:if>
 									<xsl:if test="count( /search/fields/* ) &gt; 3 and //config/extendedsearch/@value = 'show'">
 										<button type="button" class="btn btn-default extended-search" name="SPExOptBt" id="SPExOptBt">
-											<!--<xsl:text>&#160;</xsl:text>-->
 											<xsl:value-of select="php:function( 'SobiPro::Txt', 'EXTENDED_SEARCH' )"/>
 										</button>
 									</xsl:if>
