@@ -130,7 +130,8 @@ abstract class SPHtml_Input
 	 *
 	 * @param string $name - name of the html field
 	 * @param int $size - field size
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 * @param string $accept - accepted file types
 	 *
 	 * @return string
@@ -167,12 +168,12 @@ abstract class SPHtml_Input
 		SPFactory::header()->addJsFile( $scripts );
 		if ( !( $request ) ) {
 			$request = [
-					'option' => 'com_sobipro',
-					'task' => $task,
-					'sid' => Sobi::Section(),
-					'ident' => $name . '-file',
-					SPFactory::mainframe()->token() => 1,
-					'format' => 'raw'
+				'option'                        => 'com_sobipro',
+				'task'                          => $task,
+				'sid'                           => Sobi::Section(),
+				'ident'                         => $name . '-file',
+				SPFactory::mainframe()->token() => 1,
+				'format'                        => 'raw'
 			];
 		}
 		$classes = [ 'class' => 'hide spFileUploadHidden' ];
@@ -184,24 +185,34 @@ abstract class SPHtml_Input
 			$stupidInternetExplorer = true;
 		}
 		$f = null;
-		$f .= "<div class=\"{$class} spUpload\" data-section=" . Sobi::Section() . ">";
+		$b3class = '';
+		$group = '';
+		$btngroup = 'btn-group';
+		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
+			$b3class = 'form-control';
+			$group = 'input-group';
+			$btngroup = 'input-group-btn';
+		}
+
+		$f .= "<div class=\"spUpload {$class} {$group}\" data-section=" . Sobi::Section() . ">";
+		$f .= '<div>';
+
 		$f .= '<div class="file">';
 		$f .= self::file( $name . '-file', 0, $classes, $accept );
 		$f .= '</div>';
-		$b3class = '';
-		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
-			$b3class = ' form-control';
-		}
+
 		if ( !( $stupidInternetExplorer ) ) {
-			$f .= "<input type=\"text\" readonly=\"readonly\" class=\"input-xlarge selected pull-left{$b3class}\" value=\"{$value}\"/>";
+			$f .= "<input type=\"text\" readonly=\"readonly\" class=\"selected {$b3class}\" value=\"{$value}\"/>";
 		}
-		$f .= '<div class="btn-group" role="group" aria-label="' . Sobi::Txt( 'ARIA.FILEUP-GROUP' ) . '">';
+		$f .= "<div class=\"{$btngroup}\" role=\"group\" aria-label=\"" . Sobi::Txt( 'ARIA.FILEUP-GROUP' ) . '">';
 		if ( !( $stupidInternetExplorer ) ) {
 			$f .= '<button class="btn btn-default select" type="button"><i class="' . Sobi::Ico( 'upload-field.search-button' ) . '"></i>&nbsp;' . Sobi::Txt( 'UPLOAD_SELECT' ) . '</button>';
 		}
 		$f .= '<button class="btn btn-default upload hide" disabled="disabled" type="button" rel=\'' . json_encode( $request ) . '\'>' . Sobi::Txt( 'START_UPLOAD' ) . '<i class="icon-upload-alt"></i></button>';
 		$f .= '<button class="btn btn-default remove disabled" disabled="disabled" type="button">' . '<i class="' . Sobi::Ico( 'upload-field.remove-button' ) . '"></i></button>';
-		$f .= '</div>'; //end btn-group
+		$f .= '</div>'; //end $btngroup
+
+		$f .= '</div>';
 
 		$f .= '<div class="hide progress-container">';
 		$f .= '<div class="progress progress-success">';
@@ -213,6 +224,7 @@ abstract class SPHtml_Input
 //		$f .= '<div class="alert hide"><button type="button" class="close" data-dismiss="alert">×</button><div>&nbsp;</div></div>';
 		$f .= '<div class="alert hide"><div>&nbsp;</div></div>';
 		$f .= "<input type=\"hidden\" name=\"{$name}\" value=\"\" class='idStore'/>";
+
 		$f .= '</div>';
 
 		return $f;
@@ -224,7 +236,8 @@ abstract class SPHtml_Input
 	 *
 	 * @param string $name - name of the html field
 	 * @param string $value - selected value
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 *
 	 * @return string
 	 */
@@ -253,7 +266,8 @@ abstract class SPHtml_Input
 	 *
 	 * @param string $name - name of the html field
 	 * @param string $value - selected value
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 *
 	 * @return string
 	 */
@@ -262,7 +276,7 @@ abstract class SPHtml_Input
 		$params = self::params( $params );
 		$value = self::translate( $value );
 		$value = strlen( $value ) ? SPLang::entities( /*Sobi::Txt*/
-				( $value ), true ) : null;
+			( $value ), true ) : null;
 		$f = "<input type=\"submit\" name=\"{$name}\" value=\"{$value}\"{$params}/>";
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$f ] );
 
@@ -274,10 +288,12 @@ abstract class SPHtml_Input
 	 * Creates a HTML file box
 	 *
 	 * @param $width
+	 *
 	 * @return string
 	 * @internal param string $name - name of the html field
 	 * @internal param string $value - selected value
-	 * @internal param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @internal param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign
+	 *     as key to index separator.
 	 *
 	 */
 	public static function _translateWidth( $width )
@@ -334,7 +350,8 @@ abstract class SPHtml_Input
 	 *
 	 * @param string $name - name of the html field
 	 * @param string $value - selected value
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 * @param string $class
 	 * @param null $icon
 	 *
@@ -387,8 +404,10 @@ abstract class SPHtml_Input
 	 * @param bool $editor - enables WYSIWYG editor
 	 * @param int|string $width - width of the created textarea field in pixel
 	 * @param int $height - height of the created textarea field in pixel
-	 * @param array|string $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array|string $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign
+	 *     as key to index separator.
 	 * @param string | array $editorParams
+	 *
 	 * @return string
 	 */
 	public static function _textarea( $name, $value = null, $editor = false, $width = '', $height = 350, $params = '', $editorParams = null )
@@ -411,7 +430,7 @@ abstract class SPHtml_Input
 			$c = SPLoader::loadClass( $e );
 			if ( $c ) {
 				$e = new $c();
-				$area = $e->display( $name, $value, $width, $height, ( boolean )Sobi::Cfg( 'html.editor_buttons', false ), $editorParams );
+				$area = $e->display( $name, $value, $width, $height, ( boolean ) Sobi::Cfg( 'html.editor_buttons', false ), $editorParams );
 			}
 		}
 		else {
@@ -445,7 +464,8 @@ abstract class SPHtml_Input
 	 * @param string $label - label to display beside the field.
 	 * @param string $id - id of the field
 	 * @param bool $checked - is selected or not / or string $checked the checked value
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 * @param array $order - on which site from the label the field should be displayed and on which the image
 	 * @param string $image - url of an image
 	 *
@@ -455,7 +475,7 @@ abstract class SPHtml_Input
 	{
 		$params = self::params( $params );
 		if ( !( is_bool( $checked ) ) ) {
-			$checked = ( ( string )$checked == ( string )$value ) ? true : false;
+			$checked = ( ( string ) $checked == ( string ) $value ) ? true : false;
 		}
 		$label = strlen( $label ) ? self::translate( $label ) : null;
 		$checked = $checked ? " checked=\"checked\" " : null;
@@ -525,7 +545,8 @@ abstract class SPHtml_Input
 	 * @param array $values - two-dimensional array with values and their labels. array( 'enabled' => 1, 'disabled' => 0 )
 	 * @param string $id - id prefix of the field
 	 * @param array $selected - two-dimensional array with values and their labels. array( 'enabled' => 1, 'disabled' => 0 )
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 * @param array $order
 	 * @param bool $asArray - returns array instead of a string
 	 *
@@ -536,7 +557,7 @@ abstract class SPHtml_Input
 	{
 		self::checkArray( $values );
 		if ( $selected !== null && !( is_array( $selected ) ) ) {
-			$selected = [ ( string )$selected ];
+			$selected = [ ( string ) $selected ];
 		}
 		elseif ( !( is_array( $selected ) ) ) {
 			$selected = [];
@@ -544,7 +565,7 @@ abstract class SPHtml_Input
 		$list = [];
 		if ( count( $values ) ) {
 			foreach ( $values as $value => $label ) {
-				$checked = in_array( ( string )$value, $selected, true ) ? true : false;
+				$checked = in_array( ( string ) $value, $selected, true ) ? true : false;
 				if ( is_array( $label ) ) {
 					$image = $label[ 'image' ];
 					$value = $label[ 'label' ];
@@ -582,7 +603,8 @@ abstract class SPHtml_Input
 	 * @param string $label - label to display beside the field.
 	 * @param string $id - id of the field
 	 * @param bool $checked - is selected or not / or string $checked the checked value
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 * @param array $order - on which site from the label the field should be displayed and on which the image
 	 * @param null $image
 	 *
@@ -592,9 +614,9 @@ abstract class SPHtml_Input
 	{
 		$params = self::params( $params );
 		if ( !( is_bool( $checked ) ) ) {
-			$checked = ( ( string )$checked == ( string )$value ) ? true : false;
+			$checked = ( ( string ) $checked == ( string ) $value ) ? true : false;
 		}
-		$label = (string)$label;
+		$label = (string) $label;
 		$label = strlen( $label ) ? self::cleanOpt( self::translate( $label ) ) : null;
 		$checked = $checked ? " checked=\"checked\" " : null;
 		$ids = $id ? "id=\"{$id}\" " : $id;
@@ -670,7 +692,8 @@ abstract class SPHtml_Input
 	 * @param array $values - two-dimensional array with values and their labels. array( 'enabled' => 1, 'disabled' => 0 )
 	 * @param string $id - id prefix of the field
 	 * @param string $checked - value of the selected field
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 * @param string $field - on which site from the label the field should be displayed
 	 * @param bool $asArray - returns array instead of a string
 	 *
@@ -727,7 +750,7 @@ abstract class SPHtml_Input
 							else {
 								/** when we have special params */
 								if ( is_array( $ol ) && ( isset( $ol[ 'label' ] ) ) ) {
-									$sel = in_array( ( string )$ol[ 'value' ], $selected, true ) ? ' selected="selected" ' : null;
+									$sel = in_array( ( string ) $ol[ 'value' ], $selected, true ) ? ' selected="selected" ' : null;
 									$ol = self::cleanOpt( $ol[ 'label' ] );
 									$ov = self::cleanOpt( $ol[ 'value' ] );
 									$p = null;
@@ -744,7 +767,7 @@ abstract class SPHtml_Input
 									$cells[] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
 								}
 								else {
-									$sel = in_array( ( string )$ov, $selected, true ) ? ' selected="selected" ' : null;
+									$sel = in_array( ( string ) $ov, $selected, true ) ? ' selected="selected" ' : null;
 									$ol = self::cleanOpt( $ol );
 									$ov = self::cleanOpt( $ov );
 									$cells[] = "\t<option {$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
@@ -757,7 +780,7 @@ abstract class SPHtml_Input
 				else {
 					/** when we have special params */
 					if ( is_array( $l ) && ( isset( $l[ 'label' ] ) ) ) {
-						$sel = in_array( ( string )$l[ 'value' ], $selected, true ) ? ' selected="selected" ' : null;
+						$sel = in_array( ( string ) $l[ 'value' ], $selected, true ) ? ' selected="selected" ' : null;
 						$ol = self::cleanOpt( $l[ 'label' ] );
 						$ov = self::cleanOpt( $l[ 'value' ] );
 						$p = null;
@@ -774,7 +797,7 @@ abstract class SPHtml_Input
 						$cells[] = "\t<option {$p}{$sel}value=\"{$ov}\"{$t}>{$ol}</option>";
 					}
 					else {
-						$sel = in_array( ( string )$v, $selected, true ) ? ' selected="selected" ' : null;
+						$sel = in_array( ( string ) $v, $selected, true ) ? ' selected="selected" ' : null;
 						$v = self::cleanOpt( $v );
 						$l = self::cleanOpt( self::translate( $l ) );
 						$cells[] = "<option {$sel}value=\"{$v}\"{$t}>{$l}</option>";
@@ -795,10 +818,8 @@ abstract class SPHtml_Input
 	 *
 	 * SPHtml_Input::select(
 	 *             'fieldname',
-	 *             array( 'translate:[perms.can_delete]' => 'can_delete', 'translate:[perms.can_edit]' => 'can_edit', 'translate:[perms.can_see]' => 'can_see' ),
-	 *             array( 'can_see', 'can_delete' ),
-	 *          true,
-	 *           array( 'class' => 'inputbox', 'size' => 5 )
+	 *             array( 'translate:[perms.can_delete]' => 'can_delete', 'translate:[perms.can_edit]' => 'can_edit', 'translate:[perms.can_see]' => 'can_see'
+	 * ), array( 'can_see', 'can_delete' ), true, array( 'class' => 'inputbox', 'size' => 5 )
 	 * );
 	 *
 	 *
@@ -807,8 +828,10 @@ abstract class SPHtml_Input
 	 * SPHtml_Input::select(
 	 *             'fieldname',
 	 *             array(
-	 *                     'categories' => array( 'translate:[perms.can_delete_categories]' => 'can_delete_categories', 'translate:[perms.can_edit_categories]' => 'can_edit_categories', 'translate:[perms.can_see_categories]' => 'can_see_categories' ),
-	 *                     'entries' => array( 'translate:[perms.can_delete_entries]' => 'can_delete_entries', 'translate:[perms.can_edit_entries]' => 'can_edit_entries', 'translate:[perms.can_see_entries]' => 'can_see_entries' ),
+	 *                     'categories' => array( 'translate:[perms.can_delete_categories]' => 'can_delete_categories', 'translate:[perms.can_edit_categories]'
+	 * => 'can_edit_categories', 'translate:[perms.can_see_categories]' => 'can_see_categories' ),
+	 *                     'entries' => array( 'translate:[perms.can_delete_entries]' => 'can_delete_entries', 'translate:[perms.can_edit_entries]' =>
+	 * 'can_edit_entries', 'translate:[perms.can_see_entries]' => 'can_see_entries' ),
 	 *             )
 	 *             array( 'can_see_categories', 'can_delete_entries', 'can_edit_entries' ),
 	 *          true,
@@ -819,10 +842,12 @@ abstract class SPHtml_Input
 	 * @param array $values - two-dimensional array with values and their labels. array( 'enabled' => 1, 'disabled' => 0 )
 	 * @param array $selected - one-dimensional array with selected values
 	 * @param bool $multi - multiple select is allowed or not
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 *
 	 * @return string
-	 * @internal param string $title - language section for the title tags. If given, the options/optgroup will get a title tag. The title will be search in the language file under the given section
+	 * @internal param string $title - language section for the title tags. If given, the options/optgroup will get a title tag. The title will be search in
+	 *     the language file under the given section
 	 */
 	public static function _select( $name, $values, $selected = null, $multi = false, $params = null )
 	{
@@ -845,7 +870,7 @@ abstract class SPHtml_Input
 		}
 		self::checkArray( $values );
 		if ( $selected !== null && !( is_array( $selected ) ) ) {
-			$selected = [ ( string )$selected ];
+			$selected = [ ( string ) $selected ];
 		}
 		elseif ( !( is_array( $selected ) ) ) {
 			$selected = [];
@@ -877,10 +902,10 @@ abstract class SPHtml_Input
 			$v = SPLang::entities( $v, true );
 			if ( is_array( $l ) ) {
 				self::optGrp( $cells, $selected, $l, /*Sobi::Txt*/
-						( $v ) );
+					( $v ) );
 			}
 			else {
-				$sel = in_array( ( string )$v, $selected, true ) ? ' selected="selected" ' : null;
+				$sel = in_array( ( string ) $v, $selected, true ) ? ' selected="selected" ' : null;
 				$l = SPLang::entities( self::translate( $l ), true );
 				$cells[] = "\t<option {$sel}value=\"{$v}\">{$l}</option>";
 			}
@@ -895,7 +920,8 @@ abstract class SPHtml_Input
 	 * @param array $value - selected value
 	 * @param string $id - id prefix of the field
 	 * @param string $label - label prefix to display beside the fields
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 * @param string $side - on which site from the field the label should be displayed
 	 *
 	 * @return string
@@ -903,7 +929,7 @@ abstract class SPHtml_Input
 	 */
 	public static function _states( $name, $value, $id, $label, $params = null, $side = 'right' )
 	{
-		return self::radioList( $name, [ '0' => "translate:[{$label}_no]", '1' => "translate:[{$label}_yes]" ], $id, ( int )$value, $params, $side );
+		return self::radioList( $name, [ '0' => "translate:[{$label}_no]", '1' => "translate:[{$label}_yes]" ], $id, ( int ) $value, $params, $side );
 	}
 
 	/**
@@ -915,12 +941,13 @@ abstract class SPHtml_Input
 	 * @param        $prefix
 	 *
 	 * @internal param string $label - label prefix to display beside the fields
-	 * @internal param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @internal param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign
+	 *     as key to index separator.
 	 * @return string
 	 */
 	public static function _toggle( $name, $value, $id, $prefix /*, $params = null*/ )
 	{
-		$value = (int)$value;
+		$value = (int) $value;
 		$field = '<div class="btn-group buttons-radio" data-toggle="buttons-radio" id="' . $id . '">';
 		$field .= '<button type="button" name="' . $name . '" class="btn btn-success' . ( $value ? ' active selected' : '' ) . '" value="1">' . Sobi::Txt( $prefix . '_yes' ) . '</button>';
 		$field .= '<button type="button" name="' . $name . '" class="btn btn-danger' . ( $value ? '' : ' active selected' ) . '" value="0">' . Sobi::Txt( $prefix . '_no' ) . '</button>';
@@ -936,7 +963,8 @@ abstract class SPHtml_Input
 	 * @param string $name - name of the html field
 	 * @param array $value - selected value
 	 * @param string $id - id prefix of the field
-	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key to index separator.
+	 * @param array $params - two-dimensional array with additional html parameters. Can be also string defined, comma separated array with equal sign as key
+	 *     to index separator.
 	 *
 	 * @return string
 	 */
@@ -1009,19 +1037,19 @@ abstract class SPHtml_Input
 		}
 		$jsDateFormat = $dateFormat;
 		$jsReplacements = [
-				'y' => 'yy',
-				'Y' => 'yyyy',
-				'F' => 'MM',
-				'n' => 'm',
-				'm' => 'MM',
-				'd' => 'dd',
-				'j' => 'd',
-				'H' => 'hh',
-				'g' => 'HH',
-				'G' => 'HH',
-				'i' => 'mm',
-				's' => 'ss',
-				'A' => 'PP'
+			'y' => 'yy',
+			'Y' => 'yyyy',
+			'F' => 'MM',
+			'n' => 'm',
+			'm' => 'MM',
+			'd' => 'dd',
+			'j' => 'd',
+			'H' => 'hh',
+			'g' => 'HH',
+			'G' => 'HH',
+			'i' => 'mm',
+			's' => 'ss',
+			'A' => 'PP'
 		];
 		foreach ( $jsReplacements as $php => $js ) {
 			$jsDateFormat = str_replace( $php, $js, $jsDateFormat );
@@ -1056,8 +1084,8 @@ abstract class SPHtml_Input
 		$bs3 = ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) );
 		$data = self::createDataTag( $params );
 		SPFactory::header()
-				->addCssFile( 'bootstrap.datepicker' )
-				->addJsFile( [ 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ] );
+			->addCssFile( 'bootstrap.datepicker' )
+			->addJsFile( [ 'locale.' . Sobi::Lang( false ) . '_date_picker', 'bootstrap.datepicker' ] );
 		if ( $bs3 ) {
 			$f = '<div class="input-group input-append date spDatePicker">';
 			if ( !( isset( $params[ 'class' ] ) ) ) {
@@ -1162,12 +1190,12 @@ abstract class SPHtml_Input
 		static $loaded = false;
 		if ( !( $loaded ) ) {
 			$lang = [
-					'months' => Sobi::Txt( 'JS_CALENDAR_MONTHS' ),
-					'monthsShort' => Sobi::Txt( 'JS_CALENDAR_MONTHS_SHORT' ),
-					'days' => Sobi::Txt( 'JS_CALENDAR_DAYS' ),
-					'daysShort' => Sobi::Txt( 'JS_CALENDAR_DAYS_SHORT' ),
-					'daysMin' => Sobi::Txt( 'JS_CALENDAR_DAYS_MINI' ),
-					'today' => Sobi::Txt( 'JS_CALENDAR_TODAY' ),
+				'months'      => Sobi::Txt( 'JS_CALENDAR_MONTHS' ),
+				'monthsShort' => Sobi::Txt( 'JS_CALENDAR_MONTHS_SHORT' ),
+				'days'        => Sobi::Txt( 'JS_CALENDAR_DAYS' ),
+				'daysShort'   => Sobi::Txt( 'JS_CALENDAR_DAYS_SHORT' ),
+				'daysMin'     => Sobi::Txt( 'JS_CALENDAR_DAYS_MINI' ),
+				'today'       => Sobi::Txt( 'JS_CALENDAR_TODAY' ),
 			];
 			$check = md5( serialize( $lang ) );
 			if ( !( SPLoader::JsFile( 'locale.' . Sobi::Lang( false ) . '_date_picker', false, true, false ) ) || !( stripos( SPFs::read( SPLoader::JsFile( 'locale.' . Sobi::Lang( false ) . '_date_picker', false, false, false ) ), $check ) ) ) {
@@ -1196,13 +1224,13 @@ abstract class SPHtml_Input
 		}
 		$user = null;
 		SPFactory::header()->addJsFile( 'user_selector' );
-		$user = SPUser::getBaseData( ( int )$value );
+		$user = SPUser::getBaseData( ( int ) $value );
 		$settings = [
-				'groups' => $groups,
-				'format' => $format,
-				'user' => Sobi::My( 'id' ),
-				'ordering' => $orderBy,
-				'time' => microtime( true ),
+			'groups'   => $groups,
+			'format'   => $format,
+			'user'     => Sobi::My( 'id' ),
+			'ordering' => $orderBy,
+			'time'     => microtime( true ),
 		];
 		if ( count( $session ) ) {
 			foreach ( $session as $id => $data ) {
@@ -1265,7 +1293,7 @@ abstract class SPHtml_Input
 			$params[ 'class' ] = $class;
 		}
 		$user = null;
-		$user = SPUser::getBaseData( ( int )$value );
+		$user = SPUser::getBaseData( ( int ) $value );
 		$userData = null;
 		if ( $user ) {
 			$replacements = [];

@@ -160,11 +160,11 @@
 	</xsl:template>
 
 	<xsl:template name="linkbar">
-		<div class="topmenu linkbar alert alert-navigationlinks" role="navigation">
+		<div class="topmenu linkbar" role="menubar">
 			<xsl:variable name="currentUrl">
 				<xsl:value-of select="php:function( 'SobiPro::Url', 'current' )"/>
 			</xsl:variable>
-			<ul class="spNavigationLinks" role="menubar">
+			<ul class="spNavigationLinks">
 				<xsl:if test="//menu/front">
 					<li role="none">
 						<a href="{//menu/front/@url}" tabindex="0" role="menuitem">
@@ -238,8 +238,8 @@
 		<!--<xsl:value-of select="php:function( 'SobiPro::Url', 'current' )"/>-->
 		<!--</xsl:variable>-->
 
-		<div class="topmenu buttonbar" role="navigation">
-			<div class="menu" role="menubar">
+		<div class="topmenu buttonbar" role="menubar">
+			<div class="menu">
 				<xsl:if test="//menu/front">
 					<a href="{//menu/front/@url}" tabindex="0" class="btn btn-sigsiu" role="menuitem">
 						<xsl:value-of select="//menu/front"/>
@@ -255,7 +255,7 @@
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:if test="string-length(//config/redirectlogin/@value) > 0">
-							<a href="{//config/redirectlogin/@value}" class="btn btn-success" role="menuitem">
+							<a href="{//config/redirectlogin/@value}" class="btn btn-success" tabindex="0" role="menuitem">
 								<xsl:value-of select="php:function( 'SobiPro::Txt', 'MN.ADD_ENTRY' )"/>
 							</a>
 						</xsl:if>
@@ -264,7 +264,7 @@
 			</div>
 			<div class="search {//config/buttonpos/@value}">
 				<xsl:if test="//menu/search">
-					<a href="{//menu/search/@url}/?sparam=in" class="btn btn-sigsiu" role="menuitem">
+					<a href="{//menu/search/@url}/?sparam=in" class="btn btn-sigsiu" tabindex="0" role="menuitem">
 						<xsl:value-of select="//menu/search"/>
 					</a>
 				</xsl:if>

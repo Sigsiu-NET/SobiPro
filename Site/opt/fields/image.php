@@ -86,7 +86,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return [ 'width', 'savePath', 'inDetails', 'inVcard', 'thumbHeight', 'thumbWidth', 'thumbName', 'keepOrg', 'resize', 'maxSize', 'resizeWidth', 'resizeHeight', 'imageName', 'generateThumb', 'thumbFloat', 'imageFloat', 'itemprop', 'crop', 'cssClassView', 'cssClassEdit', 'showEditLabel', 'inCategory', 'float', 'detectTransparency' ];
+		return [ 'width', 'savePath', 'inDetails', 'inVcard', 'thumbHeight', 'thumbWidth', 'thumbName', 'keepOrg', 'resize', 'maxSize', 'resizeWidth', 'resizeHeight', 'imageName', 'generateThumb', 'thumbFloat', 'imageFloat', 'itemprop', 'crop', 'cssClassView', 'cssClassEdit', 'showEditLabel', 'inCategory', 'float', 'detectTransparency', 'bsWidth' ];
 	}
 
 	public function compareRevisions( $revision, $current )
@@ -150,13 +150,11 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$field .= '<div class="spImageField">';
 
 //		$field .= '<div>';
-		$field .= "<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
-		$field .= '<div class="spEditImagePreview" >';
+		$field .= "<div id=\"{$this->nid}_img_preview\" class=\"spEditImagePreview\">";
 		if ( $show ) {
 //			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\" {$noncropsize} />";
 			$field .= "<img src=\"{$img}\" alt=\"{$this->name}\" />";
 		}
-		$field .= '</div>';
 		$field .= '</div>';
 //		$field .= '</div>';
 

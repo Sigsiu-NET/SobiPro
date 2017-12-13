@@ -1236,14 +1236,14 @@ body.modal-open {
 			}
 		}
 		.btn-info {
-			color: @info-backcolor;
+			color: @info-color;
 			background-color: @info-backcolor;
 			border-color: @info-backcolor;
 			&.active,
 			&:active,
 			&:hover,
 			.open > .dropdown-toggle.btn-info {
-				color: @info-backcolor;
+				color: @info-color;
 				background-color: @info-backcolor-hover;
 				border-color: @info-backcolor-hover;
 			}
@@ -1533,90 +1533,130 @@ body.modal-open {
 
 	// Topmenu
 	// ----------------------------------------
-	.topmenu.standard {
-		box-shadow: none;
+	.topmenu {
 		margin-bottom: 20px;
-		min-height: inherit;
-		position: inherit;
-		width: inherit;
-		z-index: auto;
-		background-color: @base-color;
-		font-size: calc(@fontsize + 1px);
-		border: none;
-		& when (@corners = rounded) {
-			border-radius: 4px;
+
+		& when (@design = elevated) {
+			font-variant: small-caps;
+			font-size: calc(@fontsize + 2px);
+			font-weight: 500;
+			&:hover {
+			}
 		}
 
-		.navbar-toggle {
-			background-color: darken(@base-color, 5%);
-		}
-		.navbar-toggle:hover {
+		&.standard {
+			box-shadow: none;
+			min-height: inherit;
+			position: inherit;
+			width: inherit;
+			z-index: auto;
 			background-color: @base-color;
-		}
-		.navbar-toggle:focus {
-			background-color: @base-color;
-			.focus-shadow;
-		}
+			border: none;
+			& when (@corners = rounded) {
+				border-radius: 4px;
+			}
 
-		.nav {
-			background: inherit;
+			.navbar-toggle {
+				background-color: darken(@base-color, 5%);
+			}
+			.navbar-toggle:hover {
+				background-color: @base-color;
+			}
+			.navbar-toggle:focus {
+				background-color: @base-color;
+				.focus-shadow;
+			}
 
-			li a {
-				text-shadow: none;
-				padding: 15px 10px 15px 10px;
-				font-size: inherit;
-				& when (@design = elevated) {
-					font-variant: small-caps;
-					font-weight: 500;
+			.nav {
+				background: inherit;
+
+				li a {
+					text-shadow: none;
+					padding: 15px 10px 15px 10px;
+					font-size: inherit;
+					& when (@design = elevated) {
+						font-variant: small-caps;
+						font-weight: 500;
+					}
 				}
-			}
-			li,
-			li a {
-				color: @basetext-color;
-				line-height: 30px;
-				border-bottom: inherit;
-				text-align: inherit;
-			}
-			li a.active,
-			li a:focus,
-			li a:hover {
-				background-color: @active-color;
-				color: @activetext-color;
-			}
-			li a:focus {
-				outline: 2px solid @outline-color;
-			}
-
-			& when (@design = elevated) {
+				li,
+				li a {
+					color: @basetext-color;
+					line-height: 30px;
+					border-bottom: inherit;
+					text-align: inherit;
+				}
 				li a.active,
+				li a:focus,
 				li a:hover {
-					.shadow-3dp();
+					background-color: @active-color;
+					color: @activetext-color;
+				}
+				li a:focus {
+					outline: 2px solid @outline-color;
+				}
+
+				& when (@design = elevated) {
+					li a.active,
+					li a:hover {
+						.shadow-3dp();
+					}
 				}
 			}
+			.navbar-search {
+				margin-top: 15px;
+			}
+			input[type="text"] {
+				border-color: darken(@base-color, 5%);
+				height: inherit;
+				margin-bottom: inherit;
+				width: 140px;
+			}
 		}
-		.navbar-search {
-			margin-top: 15px;
+		&.buttonbar {
+			.menu {
+				float: left;
+			}
+			.add.right,
+			.search.right {
+				float: right;
+				margin-left: 5px;
+			}
+			.add.left,
+			.search.left {
+				float: left;
+				margin-left: 5px;
+			}
 		}
-		input[type="text"] {
-			border-color: darken(@base-color, 5%);
-			height: inherit;
-			margin-bottom: inherit;
-			width: 140px;
-		}
-	}
-	.topmenu.buttonbar {
-		.menu {
-			float: left;
-		}
-		.add.right,
-		.search.right {
-			float: right;
-			margin-left: 5px;
-		}
-		.add.left,
-		.search.left {
-			float: left;
-			margin-left: 5px;
+
+		&.linkbar {
+			background-color: @back-color;
+			color: @base-color;
+			margin-top: 20px;
+			height: 30px;
+			padding: 4px 15px 4px 14px;
+
+			a {
+				color: @base-color;
+				&:hover {
+					color: darken(@base-color, 10%);
+					text-decoration: none;
+				}
+			}
+			ul {
+				text-align: right;
+				border-bottom: 1px solid;
+				border-bottom-color: @base-color;
+				margin-left: 0;
+
+				li {
+					display: inline;
+					margin-left: 20px;
+					& when (@design = standard) {
+						font-size: calc(@fontsize - 2px);
+					}
+				}
+			}
 		}
 	}
 
@@ -2119,18 +2159,6 @@ body.modal-open {
 		overflow: visible;
 	}
 
-	.spUpload {
-		.select {
-			margin-left: -1px;
-		}
-		.span1 {
-			margin-left: 10px;
-		}
-		.alert {
-			margin-top: 5px;
-		}
-	}
-
 	.spClassEditInfo {
 		margin-top: 10px;
 	}
@@ -2171,51 +2199,65 @@ body.modal-open {
 
 	// Image Field
 	// ----------------------------------------
-	.spEditImagePreview {
-		float: left;
-		//min-height: 65px;
+	.spImageField {
+		.spEditImagePreview {
+			float: left;
+			//min-height: 65px;
 
-		img {
-			padding: 4px;
-			background-color: #fff;
-			border: 1px solid rgba(0, 0, 0, 0.2);
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-			margin: 0 5px 5px 0;
-			min-width: 50px;
-			min-height: 50px;
-			& when (@corners = rounded) {
-				border-radius: 4px;
-			}
-			& when (@design = elevated) {
+			img {
+				padding: 4px;
+				background-color: #fff;
+				border: 1px solid rgba(0, 0, 0, 0.2);
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+				margin: 0 5px 5px 0;
+				min-width: 50px;
+				min-height: 50px;
 				& when (@corners = rounded) {
-					border-radius: 2px;
+					border-radius: 4px;
 				}
-				padding: 0;
-				border: none;
-				box-shadow: none;
-				.shadow-2dp;
+				& when (@design = elevated) {
+					& when (@corners = rounded) {
+						border-radius: 2px;
+					}
+					padding: 0;
+					border: none;
+					box-shadow: none;
+					.shadow-2dp;
+				}
 			}
 		}
-	}
 
-	.spImageField input[type='checkbox'] {
-		margin: 4px 5px 5px -20px;
-	}
-
-	.spImageField label {
-		display: inline-block;
-		padding-left: 20px;
-	}
-
-	.spImageUpload {
-		.span1 {
-			margin-left: 10px;
+		input[type='checkbox'] {
+			margin: 3px 5px 5px -20px;
 		}
-		.alert {
-			margin-top: 5px;
-			margin-bottom: 0;
+
+		label {
+			display: inline-block;
+			padding-left: 20px;
+			margin-bottom: 5px;
 		}
-		margin-bottom: 3px;
+
+		.spImageUpload {
+			width: calc(100% - 116px);
+			//width: calc(100% - 108px);
+			input {
+				width: calc(100% - 145px);
+				& when (@design = elevated) {
+					width: calc(100% - 152px);
+				}
+				}
+			.select {
+				//margin-left: -1px;
+			}
+			.span1 {
+				margin-left: 10px;
+			}
+			.alert {
+				margin-top: 5px;
+				margin-bottom: 0;
+			}
+			margin-bottom: 3px;
+		}
 	}
 
 	// Sigsiu Tree
@@ -2342,8 +2384,9 @@ body.modal-open {
 		background-color: yellow;
 	}
 
-	.sp-search-controls input {
+	.spSearchTop input {
 		margin-bottom: 10px;
+		width: 250px;
 	}
 
 	.spSearchBottom {
@@ -2416,35 +2459,6 @@ body.modal-open {
 	.spEntryContainer .spClassViewImage img {
 		width: @small-image;
 		margin-bottom: 5px;
-	}
-
-	// Navigation Link Bar
-	// -----------------------------------------------
-	.alert-navigationlinks {
-		background-color: @back-color;
-		color: @base-color;
-		margin-top: 20px;
-		height: 30px;
-		padding: 4px 15px 4px 14px;
-		a {
-			color: @base-color;
-			&:hover {
-				color: darken(@base-color, 10%);
-				text-decoration: none;
-			}
-		}
-	}
-
-	ul.spNavigationLinks {
-		text-align: right;
-		border-bottom: 1px solid;
-		border-bottom-color: @base-color;
-		margin-left: 0;
-		li {
-			display: inline;
-			margin-left: 20px;
-			font-size: calc(@fontsize - 2px);
-		}
 	}
 
 	// Tooltip Settings
@@ -2765,6 +2779,18 @@ body.modal-open {
 	.spEditDownloadPreview p {
 		font-size: @fontsize;
 	}
+	.spdFileUpload {
+		width: 100%;
+		input {
+			width: calc(100% - 152px);
+		}
+		.span1 {
+			margin-left: 10px;
+		}
+		.alert {
+			margin-top: 5px;
+		}
+	}
 
 	// QR-Code Field
 	// -----------------------------------------------
@@ -3013,23 +3039,23 @@ body.modal-open {
 
 	/* Small devices (tablets, 768px and up) */
 	@media (max-width: 768px) {
-		.topmenu .nav > li a {
-			line-height: 20px;
-		}
+		.topmenu {
+			&.standard {
+				min-height: 20px;
+				padding-left: 0;
+				padding-right: 0;
 
-		.navbar .nav,
-		.navbar .nav > li {
-			float: none;
-		}
-
-		.navbar .nav > li > a {
-			padding-left: 15px;
-		}
-
-		.navbar.topmenu {
-			min-height: 20px;
-			padding-left: 0;
-			padding-right: 0;
+				.nav {
+					float: none;
+					li {
+						float: none;
+						a {
+							line-height: 20px;
+							padding-left: 15px;
+						}
+					}
+				}
+			}
 		}
 
 		.control-label div.paybox {
@@ -3129,16 +3155,27 @@ body.modal-open {
 			margin-left: 0;
 		}
 
-		.spEditImagePreview {
-			float: none;
+		// Image Field
+		// ---------------------------------------------
+		.spImageField {
+			.spImageUpload {
+				width: 100%;
+				input {
+					width: 100%;
+					margin-bottom: 6px;
+				}
+				.spEditImagePreview {
+					float: none;
+				}
+			}
 		}
 
-		.spUpload input {
-			width: 100%;
-		}
-
-		.spUpload button.btn.select {
-			width: calc(100% - 44px);
+		// Download Field
+		// ---------------------------------------------
+		.spdFileUpload {
+			input {
+				margin-bottom: 6px;
+			}
 		}
 
 		.controls {
@@ -3150,9 +3187,26 @@ body.modal-open {
 		}
 
 		.input-medium,
-		.sp-search-phrases .btn-group,
-		.spUpload .btn-group {
+		.sp-search-phrases .btn-group {
 			width: 100%;
+		}
+
+		//Search
+		// ---------------------------------------------
+		.spSearchBottom,
+		.spSearchTop {
+			.btn {
+				margin-bottom: 6px;
+			}
+			input[name="sp_search_for"] {
+				margin-bottom: 10px;
+				width: 100%;
+			}
+			button {
+				&.top-search {
+					margin-left: 0;
+				}
+			}
 		}
 	}
 
@@ -3190,7 +3244,7 @@ body.modal-open {
 
 		.input-large,
 		.input-medium,
-		.sp-search-controls .btn {
+		.spSearchTop .btn {
 			width: 100%;
 		}
 
@@ -3200,62 +3254,62 @@ body.modal-open {
 			width: 100%;
 		}
 
-		.sp-search-controls .btn {
-			margin-bottom: 6px;
+		.tab-pane {
+			min-height: inherit;
 		}
 
+		// Search
+		// ---------------------------------------------
 		.sp-search-phrases .btn {
 			width: calc(100% / 3);
-			font-size: calc(@fontsize - 1px);
+			font-size: calc(@fontsize - 2px);
 		}
 
-		input[name="sp_search_for"] {
-			margin-bottom: 10px;
+		button {
+			&.bottom-search, &.extended-search, &.top-search {
+				margin-left: 0;
+			}
 		}
 
 		.spSearchBottom button {
 			width: 100%;
 		}
 
-		.tab-pane {
-			min-height: inherit;
-		}
-
-		// Link Bar
-		// -----------------------------------------------
-		.alert-navigationlinks {
-			height: auto;
-			margin-bottom: 0;
-			margin-top: 0;
-		}
-
-		ul.spNavigationLinks {
-			border-bottom: none;
-			text-align: center;
-			margin: 0;
-
-			li {
-				display: block;
-				font-size: calc(@fontsize + 1px);
-				font-weight: 500;
-				line-height: 24px;
-			}
-		}
-
 		// Button Bar
 		// -----------------------------------------------
-		.topmenu.buttonbar {
-			margin-bottom: 0;
-			.menu,
-			.add,
-			.search {
-				float: none;
-				width: 100%;
-				padding-bottom: 4px;
-				margin-left: 0;
-
-				a {
+		.topmenu {
+			&.buttonbar {
+				.menu,
+				.add,
+				.add.left,
+				.search,
+				.search.left {
+					float: none;
 					width: 100%;
+					padding-bottom: 4px;
+					margin-left: 0;
+
+					a {
+						width: 100%;
+					}
+				}
+			}
+			&.linkbar {
+				height: auto;
+				margin-top: 0;
+
+				ul {
+					border-bottom: none;
+					text-align: center;
+					margin: 0;
+
+					li {
+						display: block;
+						font-size: calc(@fontsize + 1px);
+						font-weight: 500;
+						line-height: 24px;
+						padding: 5px 0 5px 0;
+					}
 				}
 			}
 		}
