@@ -489,6 +489,10 @@ abstract class SPLoader
 			case 'media.less':
 				$spoint = SOBI_MEDIA . '/less/';
 				break;
+			case 'icons':
+			case 'media.icons':
+				$spoint = SOBI_MEDIA . '/icons/';
+				break;
 			case 'media':
 				$spoint = SOBI_MEDIA . '/';
 				break;

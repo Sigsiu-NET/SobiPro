@@ -17,6 +17,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.inbox' );
 
@@ -86,7 +88,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return [ 'width', 'savePath', 'inDetails', 'inVcard', 'thumbHeight', 'thumbWidth', 'thumbName', 'keepOrg', 'resize', 'maxSize', 'resizeWidth', 'resizeHeight', 'imageName', 'generateThumb', 'thumbFloat', 'imageFloat', 'itemprop', 'crop', 'cssClassView', 'cssClassEdit', 'showEditLabel', 'inCategory', 'float', 'detectTransparency' ];
+		return [ 'width', 'savePath', 'inDetails', 'inVcard', 'thumbHeight', 'thumbWidth', 'thumbName', 'keepOrg', 'resize', 'maxSize', 'resizeWidth', 'resizeHeight', 'imageName', 'generateThumb', 'thumbFloat', 'imageFloat', 'itemprop', 'crop', 'cssClassView', 'cssClassEdit', 'showEditLabel', 'inCategory', 'float', 'detectTransparency', 'bsWidth' ];
 	}
 
 	public function compareRevisions( $revision, $current )
@@ -150,13 +152,11 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$field .= '<div class="spImageField">';
 
 //		$field .= '<div>';
-		$field .= "<div id=\"{$this->nid}_img_preview\" class=\"spEditImage\">";
-		$field .= '<div class="spEditImagePreview" >';
+		$field .= "<div id=\"{$this->nid}_img_preview\" class=\"spEditImagePreview\">";
 		if ( $show ) {
 //			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\" {$noncropsize} />";
 			$field .= "<img src=\"{$img}\" alt=\"{$this->name}\" />";
 		}
-		$field .= '</div>';
 		$field .= '</div>';
 //		$field .= '</div>';
 
@@ -238,7 +238,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$save = [];
 		if ( $this->verify( $entry, $request ) ) {
 			// check if we are using the ajax upload - then we don't need to play with temp data
-			$check = SPRequest::string( $this->nid, null, $request );
+			$check = Input::String( $this->nid, $request );
 			if ( !( $check ) ) {
 				/* save the file to temporary folder */
 				$data = SPRequest::file( $this->nid, 'tmp_name' );
@@ -255,7 +255,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			else {
 				$save[ $this->nid ] = $check;
 			}
-			$save[ $this->nid . '_delete' ] = SPRequest::bool( $this->nid . '_delete' );
+			$save[ $this->nid . '_delete' ] = Input::Bool( $this->nid . '_delete' );
 		}
 
 		return $save;
@@ -271,7 +271,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	private function verify( $entry, $request )
 	{
 		static $store = null;
-		$directory = SPRequest::string( $this->nid, null, false, $request );
+		$directory = Input::String( $this->nid, $request );
 		if ( strtolower( $request ) == 'post' || strtolower( $request ) == 'get' ) {
 			$data = SPRequest::file( $this->nid, 'tmp_name' );
 		}
@@ -319,7 +319,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		else {
 //			$fileSize = SPRequest::file( $this->nid, 'size' );
 		}
-		$del = SPRequest::bool( $this->nid . '_delete', false, $request );
+		$del = Input::Bool( $this->nid . '_delete', $request, false );
 		$dexs = strlen( $data );
 		if ( $this->required && !( $dexs ) ) {
 			$files = $this->getRaw();
@@ -372,9 +372,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$del = SPRequest::bool( $this->nid . '_delete', false, $request );
+		$del = SPRequest::bool( $this->nid . '_delete', null, $request ); //don't use Framework function -> fatal error
 		if ( $clone ) {
-			$orgSid = SPRequest::sid();
+			$orgSid = Input::Sid();
 			$this->loadData( $orgSid );
 			$files = $this->getExistingFiles();
 			$cloneFiles = [];
@@ -400,7 +400,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$orgName = SPRequest::file( $this->nid, 'name', $request );
 			}
 			else {
-				SPRequest::set( $this->nid, $store[ $this->nid ] );
+				Input::Set( $this->nid, $store[ $this->nid ] );
 				$orgName = SPRequest::file( $this->nid, 'name' );
 				$data = SPRequest::file( $this->nid, 'tmp_name' );
 			}
@@ -419,7 +419,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		 * */
 
 		if ( !( $data ) ) {
-			$directory = SPRequest::string( $this->nid, null, false, $request );
+			$directory = SPRequest::string( $this->nid, null, $request );   //don't use Framework function -> fatal error
 			if ( strlen( $directory ) ) {
 				list( $data, $dirName, $files, $coordinates ) = $this->getAjaxFiles( $directory );
 				if ( count( $files ) ) {
@@ -779,7 +779,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 * */
 	public function ProxyUpload()
 	{
-		$ident = SPRequest::cmd( 'ident', null, 'post' );
+		$ident = Input::cmd( 'ident', 'post' );
 		$data = SPRequest::file( $ident, 'tmp_name' );
 		$secret = md5( Sobi::Cfg( 'secret' ) );
 		if ( $data ) {
@@ -895,7 +895,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	public function ProxyIcon()
 	{
 		$secret = md5( Sobi::Cfg( 'secret' ) );
-		$file = SPRequest::string( 'file' );
+		$file = Input::String( 'file' );
 		$file = explode( '/', $file );
 		$dirName = SPLoader::dirPath( "tmp.files.{$secret}.{$file[0]}", 'front', true );
 		$fileName = $dirName . $file[ 1 ];
@@ -962,8 +962,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$this->verify( $entry, $request );
 		}
 
-		$time = SPRequest::now();
-		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$time = Input::Now();
+		$IP = Input::Ip4( 'REMOTE_ADDR','SERVER',0 );
 		$uid = Sobi::My( 'id' );
 
 		/* if we are here, we can save these data */

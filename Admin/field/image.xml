@@ -62,6 +62,15 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
+									<field type="select" name="field.bsWidth" selected="field.bsWidth" label="FMN.FIELD_WIDTH" class="input-mini">
+										<values>
+											<option value="6" label="6" />
+											<option value="7" label="7" />
+											<option value="8" label="8" />
+											<option value="9" label="9" />
+											<option value="10" label="10" />
+										</values>
+									</field>
 									<field type="textarea" name="field.description" value="field.description" label="FM.DESCRIPTION" editor="false"
 									       class="input-splarge" rows="4" style=""/>
 									<field type="toggle" name="field.showEditLabel" value="field.showEditLabel" label="FM.SHOW_LABEL" prefix="yes_no"/>
