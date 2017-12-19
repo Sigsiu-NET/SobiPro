@@ -1489,6 +1489,9 @@ body.modal-open {
 	//}
 	.spMessage {
 		margin-top: 10px;
+		.close {
+			right: 0;
+		}
 	}
 
 	//simulate default alert-danger, used by SobiPro apps instead of alert-message
@@ -1524,6 +1527,7 @@ body.modal-open {
 		color: @error-color;
 		& when (@design = elevated) {
 			border-color: lighten(@error-color, 62%);
+			.shadow-2dp;
 		}
 	}
 	.spMessage .alert-success,
@@ -1533,6 +1537,7 @@ body.modal-open {
 		color: @active-color;
 		& when (@design = elevated) {
 			border-color: lighten(@alert-color, 5%);
+			.shadow-2dp;
 		}
 	}
 
@@ -1978,6 +1983,15 @@ body.modal-open {
 
 	.spTablist {
 		margin-top: 20px;
+		& when (@design = elevated) {
+			li {
+				font-variant: small-caps;
+				font-weight: 500;
+				&.active a {
+					.shadow-2dp;
+				}
+			}
+		}
 	}
 
 	.nav-pills a:focus,
