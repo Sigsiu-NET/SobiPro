@@ -73,8 +73,8 @@ class SPAdminPanel extends SPController
 	protected function getOrdering()
 	{
 		$order = Sobi::GetUserState( 'sections.order', 'order', 'name.asc' );
-		$ord   = $order;
-		$dir   = 'asc';
+		$ord = $order;
+		$dir = 'asc';
 		if ( strstr( $order, '.' ) ) {
 			$ord = explode( '.', $ord );
 			$dir = $ord[ 1 ];
@@ -101,7 +101,7 @@ class SPAdminPanel extends SPController
 			}
 			if ( count( $fields ) ) {
 				$fields = implode( ',', $fields );
-				$ord    = "field( id, {$fields} )";
+				$ord = "field( id, {$fields} )";
 			}
 			else {
 				$ord = 'id.' . $dir;
@@ -123,15 +123,15 @@ class SPAdminPanel extends SPController
 			case 'panel':
 				$this->getSections();
 				/** @var $view SPAdmPanelView */
-				$news      = $this->getNews();
-				$ordering  = Sobi::GetUserState( 'sections.order', 'order', 'name.asc' );
+				$news = $this->getNews();
+				$ordering = Sobi::GetUserState( 'sections.order', 'order', 'name.asc' );
 				$myVersion = SPFactory::CmsHelper()->myVersion( true );
-				$cfg       = Sobi::Cfg( 'cpanel.show_entries', true );
-				$cfgCats   = Sobi::Cfg( 'cpanel.show_categories', false );
-				$fVersion  = \Sobi\C::VERSION;
+				$cfg = Sobi::Cfg( 'cpanel.show_entries', true );
+				$cfgCats = Sobi::Cfg( 'cpanel.show_categories', false );
+				$fVersion = \Sobi\C::VERSION;
 
 				$state = $this->getState();
-				$view  = SPFactory::View( 'front', true )
+				$view = SPFactory::View( 'front', true )
 					->assign( $acl, 'acl' )
 					->assign( $this->_sections, 'sections' )
 					->assign( $news, 'news' )
@@ -165,7 +165,7 @@ class SPAdminPanel extends SPController
 
 	private function getNews()
 	{
-		$out  = [];
+		$out = [];
 		$path = SPLoader::path( 'etc.news', 'front', false, 'xml' );
 		if ( SPFs::exists( $path ) && ( time() - filemtime( $path ) < ( 60 * 60 * 12 ) ) ) {
 			$content = SPFs::read( SPLoader::path( 'etc.news', 'front', false, 'xml' ) );
@@ -173,7 +173,7 @@ class SPAdminPanel extends SPController
 		else {
 			try {
 				$connection = SPFactory::Instance( 'services.remote' );
-				$news       = 'http://rss.sigsiu.net';
+				$news = 'http://rss.sigsiu.net';
 				$connection->setOptions(
 					[
 						'url'            => $news,
@@ -182,9 +182,9 @@ class SPAdminPanel extends SPController
 						'returntransfer' => true,
 					]
 				);
-				$file    = SPFactory::Instance( 'base.fs.file', $path );
+				$file = SPFactory::Instance( 'base.fs.file', $path );
 				$content = $connection->exec();
-				$cinf    = $connection->info();
+				$cinf = $connection->info();
 				if ( isset( $cinf[ 'http_code' ] ) && $cinf[ 'http_code' ] != 200 ) {
 					return Sobi::Error( 'about', sprintf( 'CANNOT_GET_NEWS', $news, $cinf[ 'http_code' ] ), SPC::WARNING, 0, __LINE__, __FILE__ );
 				}
@@ -209,8 +209,8 @@ class SPAdminPanel extends SPController
 				if ( $atom ) {    //Atom
 					$news->registerNamespace( 'atom', 'http://www.w3.org/2005/Atom' );
 					$out[ 'title' ] = $news->query( '/atom:feed/atom:title' )->item( 0 )->nodeValue;
-					$items          = $news->query( '/atom:feed/atom:entry[*]' );
-					$c              = 5;
+					$items = $news->query( '/atom:feed/atom:entry[*]' );
+					$c = 5;
 					foreach ( $items as $item ) {
 						$date = $item->getElementsByTagName( 'updated' )->item( 0 )->nodeValue;
 						if ( !( $open ) && time() - strtotime( $date ) < ( 60 * 60 * 24 ) ) {
@@ -229,9 +229,9 @@ class SPAdminPanel extends SPController
 				}
 				else {  //RSS
 					$out[ 'title' ] = $news->query( '/rss/channel/title' )->item( 0 )->nodeValue;
-					$items          = $news->query( '/rss/channel/item[*]' );
-					$c              = 5;
-					$open           = false;
+					$items = $news->query( '/rss/channel/item[*]' );
+					$c = 5;
+					$open = false;
 					foreach ( $items as $item ) {
 						$date = $item->getElementsByTagName( 'pubDate' )->item( 0 )->nodeValue;
 						if ( !( $open ) && time() - strtotime( $date ) < ( 60 * 60 * 24 ) ) {
@@ -267,16 +267,16 @@ class SPAdminPanel extends SPController
 		if ( $entries && is_array( $entries ) ) {
 			return $entries;
 		}
-		$entries                 = [];
-		$popular                 = SPFactory::db()
+		$entries = [];
+		$popular = SPFactory::db()
 			->select( 'id', 'spdb_object', [ 'oType' => 'entry' ], 'counter.desc', 15 )
 			->loadResultArray();
-		$entries[ 'popular' ]    = $this->addEntries( $popular );
-		$latest                  = SPFactory::db()
+		$entries[ 'popular' ] = $this->addEntries( $popular );
+		$latest = SPFactory::db()
 			->select( 'id', 'spdb_object', [ 'oType' => 'entry' ], 'createdTime.desc', 15 )
 			->loadResultArray();
-		$entries[ 'latest' ]     = $this->addEntries( $latest );
-		$unapproved              = SPFactory::db()
+		$entries[ 'latest' ] = $this->addEntries( $latest );
+		$unapproved = SPFactory::db()
 			->select( 'id', 'spdb_object', [ 'oType' => 'entry', 'approved' => 0 ], 'createdTime.desc', 15 )
 			->loadResultArray();
 		$entries[ 'unapproved' ] = $this->addEntries( $unapproved );
@@ -291,15 +291,15 @@ class SPAdminPanel extends SPController
 		if ( $categories && is_array( $categories ) ) {
 			return $categories;
 		}
-		$categories              = [];
-		$popular                 = SPFactory::db()
+		$categories = [];
+		$popular = SPFactory::db()
 			->select( 'id', 'spdb_object', [ 'oType' => 'category' ], 'counter.desc', 15 )
 			->loadResultArray();
 		$categories[ 'popular' ] = $this->addCategories( $popular );
-		$latest                  = SPFactory::db()
+		$latest = SPFactory::db()
 			->select( 'id', 'spdb_object', [ 'oType' => 'category' ], 'createdTime.desc', 15 )
 			->loadResultArray();
-		$categories[ 'latest' ]  = $this->addCategories( $latest );
+		$categories[ 'latest' ] = $this->addCategories( $latest );
 		SPFactory::cache()->addObj( $categories, 'cpanel_categories', -1 );
 
 		return $categories;
@@ -346,11 +346,11 @@ class SPAdminPanel extends SPController
 					break;
 				}
 				$category = SPFactory::Category( $sid );
-				$section = SPFactory::config()->getParentPath( $sid )[0];
+				$section = SPFactory::config()->getParentPath( $sid )[ 0 ];
 				if ( !( isset( $sections[ $section ] ) ) ) {
 					$sections[ $section ] = SPFactory::Section( $section );
 				}
-				$category->setProperty( 'section', $sections[ $section] );
+				$category->setProperty( 'section', $sections[ $section ] );
 				$categories[] = $category;
 			}
 		}
@@ -363,12 +363,12 @@ class SPAdminPanel extends SPController
 		$state = SPFactory::cache()->getVar( 'system_state' );
 		if ( !( $state ) ) {
 			SPLang::load( 'com_sobipro.messages' );
-			$state                       = [];
-			$state[ 'accelerator' ]      = [
-				'type'  => Sobi::Cfg( 'cache.l3_enabled', true ) ? 'success' : 'error',
-				'label' => Sobi::Cfg( 'cache.l3_enabled', true ) ? Sobi::Txt( 'ACCELERATOR_ENABLED' ) : Sobi::Txt( 'ACCELERATOR_DISABLED' ),
+			$state = [];
+			$state[ 'accelerator' ] = [
+				'type'   => Sobi::Cfg( 'cache.l3_enabled', true ) ? 'success' : 'error',
+				'label'  => Sobi::Cfg( 'cache.l3_enabled', true ) ? Sobi::Txt( 'ACCELERATOR_ENABLED' ) : Sobi::Txt( 'ACCELERATOR_DISABLED' ),
 			];
-			$state[ 'xml-optimiser' ]    = [
+			$state[ 'xml-optimiser' ] = [
 				'type'  => Sobi::Cfg( 'cache.xml_enabled', true ) ? 'success' : 'error',
 				'label' => Sobi::Cfg( 'cache.xml_enabled', true ) ? Sobi::Txt( 'XML_CACHE_ENABLED' ) : Sobi::Txt( 'XML_CACHE_DISABLED' ),
 			];
@@ -376,32 +376,41 @@ class SPAdminPanel extends SPController
 				'type'  => Sobi::Cfg( 'cache.include_js_files', false ) ? 'success' : 'warning',
 				'label' => Sobi::Cfg( 'cache.include_js_files', false ) ? Sobi::Txt( 'JS_CACHE_ENABLED' ) : Sobi::Txt( 'JS_CACHE_DISABLED' ),
 			];
-			$state[ 'css-cache' ]        = [
+			$state[ 'css-cache' ] = [
 				'type'  => Sobi::Cfg( 'cache.include_css_files', false ) ? 'success' : 'warning',
 				'label' => Sobi::Cfg( 'cache.include_css_files', false ) ? Sobi::Txt( 'CSS_CACHE_ENABLED' ) : Sobi::Txt( 'CSS_CACHE_DISABLED' ),
 			];
-			$state[ 'display-errors' ]   = [
+			$state[ 'display-errors' ] = [
 				'type'  => Sobi::Cfg( 'debug.display_errors', false ) ? 'error' : 'success',
 				'label' => Sobi::Cfg( 'debug.display_errors', false ) ? Sobi::Txt( 'DISPLAY_ERRORS_ENABLED' ) : Sobi::Txt( 'DISPLAY_ERRORS_DISABLED' ),
 			];
-			$state[ 'debug-level' ]      = [
+			$state[ 'debug-level' ] = [
 				'type'  => Sobi::Cfg( 'debug.level', 0 ) > 2 ? 'warning' : 'success',
 				'label' => Sobi::Cfg( 'debug.level', 0 ) > 2 ? Sobi::Txt( 'DEBUG_LEVEL_TOO_HIGH' ) : Sobi::Txt( 'DEBUG_LEVEL_OK' ),
 			];
-			$state[ 'debug-xml' ]        = [
-				'type'  => Sobi::Cfg( 'debug.xml_raw', false ) ? 'error' : 'success',
-				'label' => Sobi::Cfg( 'debug.xml_raw', false ) ? Sobi::Txt( 'DEBUG_XML_ENABLED' ) : Sobi::Txt( 'DEBUG_XML_DISABLED' ),
+			$xmlraw = SPFactory::db()
+				->select( 'COUNT(section)', 'spdb_config', [ 'sKey' => 'xml_raw', 'sValue' => 1, 'section>' => 0 ] )
+				->loadResult();
+			$state[ 'debug-xml' ] = [
+				'type'  => $xmlraw ? 'error' : 'success',
+				'label' => $xmlraw ? Sobi::Txt( 'DEBUG_XML_ENABLED' ) : Sobi::Txt( 'DEBUG_XML_DISABLED' ),
 			];
+			if ( $xmlraw > 0 ) {
+				$xmlraw = SPFactory::db()
+					->select( 'section', 'spdb_config', [ 'sKey' => 'xml_raw', 'sValue' => 1, 'section>' => 0 ] )
+					->loadResultArray();
+				$state[ 'debug-xml' ][ 'label' ] .= ' ' . Sobi::Txt( 'CPANEL_SECTONS' ) . ': ' . implode( ', ', $xmlraw );
+			}
 //			uasort( $state, array( $this, 'sortMessages' ) );
 			$messages = SPFactory::message()->getSystemMessages();
-			$content  = null;
+			$content = null;
 			if ( count( $messages ) ) {
 				foreach ( $messages as $message ) {
-					$url                            = Sobi::Url( [ 'sid' => $message[ 'section' ][ 'id' ] ] );
-					$url                            = "<a href=\"{$url}\">{$message['section']['name']}</a> ";
+					$url = Sobi::Url( [ 'sid' => $message[ 'section' ][ 'id' ] ] );
+					$url = "<a href=\"{$url}\">{$message['section']['name']}</a> ";
 					$message[ 'section' ][ 'link' ] = $url;
-					$message[ 'type-text' ]         = ucfirst( Sobi::Txt( $message[ 'type' ] ) );
-					$state[ 'messages' ][]          = $message;
+					$message[ 'type-text' ] = ucfirst( Sobi::Txt( $message[ 'type' ] ) );
+					$state[ 'messages' ][] = $message;
 				}
 			}
 			SPFactory::cache()->addVar( $state, 'system_state' );

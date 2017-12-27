@@ -305,6 +305,13 @@ class com_sobiproInstallerScript
 		$db->setQuery( "UPDATE `#__sobipro_registry` SET `params` = 'L15bXHdcLi1dK0BbXHdcLi1dK1wuW2EtekEtWl17MiwyNH0kLw==' WHERE `key` = 'email' " );
 		$db->execute();
 
+		try {
+			$db->setQuery( 'DELETE FROM `#__sobipro_config` WHERE `sKey` = "xml_raw" AND `section` = 0;' );
+			$db->execute();
+		}
+		catch ( Exception $x ) {
+		}
+
 //		$db->setQuery( 'SELECT pid FROM `#__sobipro_permissions` WHERE subject = "section" AND  action = "search";' );
 //		$pid = $db->loadResult();
 //
