@@ -52,7 +52,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (!) Field widths in administrator edit entry screen are now responsive
     (!) Category icon handling improved; global category icon added
     (!) Setting 'cacherequest' back to 'post' in Sobi\Input (While changing from SPRequest to Sobi\Input, hardcode method to 'post')
-    
+   	(!) Includes Sobi Framework 1.0.3
+
     (#) Visitors are treated as users if checking permissions
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
     (#) Status explanation popover on front-end does not longer work
