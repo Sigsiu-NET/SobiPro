@@ -14,7 +14,7 @@
  * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -573,16 +573,6 @@ abstract class SPHtml_Input
 				else {
 					$image = null;
 				}
-//				if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
-//					$container = '<div class="checkbox-inline ' . $order . '">';
-//				$container = '<div class="checkbox-inline">';
-//					$containerend = '</div>';
-//				}
-//				else {
-//					$container = '<span>';
-//					$containerend = '</span>';
-//				}
-//				$list[ ] = $container . self::checkbox( $name . '[]', $value, $label, $id . '_' . $value, $checked, $params, $order, $image ) . $containerend;
 				$list[] = self::checkbox( $name . '[]', $value, $label, $id . '_' . $value, $checked, $params, $order, $image );
 			}
 		}
@@ -620,11 +610,11 @@ abstract class SPHtml_Input
 		$label = strlen( $label ) ? self::cleanOpt( self::translate( $label ) ) : null;
 		$checked = $checked ? " checked=\"checked\" " : null;
 		$ids = $id ? "id=\"{$id}\" " : $id;
-		$$name = self::cleanOpt( $name );
+		$name = self::cleanOpt( $name );
 		$value = self::cleanOpt( $value );
 		$f = "<input type=\"checkbox\" name=\"{$name}\" {$ids}value=\"{$value}\"{$checked}{$params}/>";
 
-		$l = strlen( $label ) ? "\n<label for=\"{$id}\">{$label}</label>" : null;
+//		$l = strlen( $label ) ? "\n<label for=\"{$id}\">{$label}</label>" : null;
 		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$lstart = $label ? "\n<label for=\"{$id}\" class=\"checkbox-inline\">" : null;
 		}
@@ -640,9 +630,9 @@ abstract class SPHtml_Input
 		$lend = $label ? "</label>" : null;
 		$lcontent = $label ? $label : null;
 
-		if ( $image ) {
-			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
-		}
+//		if ( $image ) {
+//			$image = "\n<img src=\"{$image}\" alt=\"{$label}\"/>";
+//		}
 //		if ( is_array( $order ) ) {
 		//if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 		//im Moment weiss ich nichts besseres hierfür

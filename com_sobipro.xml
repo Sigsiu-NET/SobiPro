@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.2.0" method="upgrade" overwrite="true">
 	<name>SobiPro</name>
-	<creationDate>27 December 2017</creationDate>
+	<creationDate>30 December 2017</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>https://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2017 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.4.4.F</version>
+	<version>1.4.4.G</version>
 	<codename>Owl</codename>
 	<description>SobiPro directory component for Joomla!</description>
 	<version_number>1.4.4</version_number>

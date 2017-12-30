@@ -128,6 +128,11 @@
 						<xsl:copy-of select="$fieldname/description"/>
 					</div>
 				</xsl:if>
+				<xsl:if test="$fieldname/@data-administrative = 1">
+					<div class="col-sm-10 col-sm-offset-2 help-block below administrative">
+						<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.ADMINISTRATIVE', $fieldId )"/>
+					</div>
+				</xsl:if>
 			</div>
 		</xsl:if>
 	</xsl:template>

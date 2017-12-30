@@ -42,6 +42,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Show icon next to category name
 	(+) Additional template style added: elevated (selectable from template settings)
 	(+) Small template improvements of file upload elements
+	(+) Information in entry form if a field is administrative
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     (!) Separate icon from label in Button field

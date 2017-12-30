@@ -14,7 +14,7 @@
  * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -74,6 +74,7 @@ class SPEntryView extends SPFrontView implements SPView
 							$pf = SPLang::currency( $field->get( 'fee' ) );
 							$pfm = Sobi::Txt( 'EN.FIELD_NOT_FREE_MSG', [ 'fee' => $pf, 'fieldname' => $field->get( 'name' ) ] );
 						}
+						$administrative = ( $field->get( 'adminField' ) == 1 ) ? 1 : 0;
 						$f[ $field->get( 'nid' ) ] = [
 							'_complex'    => 1,
 							'_data'       => [
@@ -87,14 +88,15 @@ class SPEntryView extends SPFrontView implements SPView
 								'fee'         => $pf,
 								'fee_msg'     => $pfm
 							],
-							'_attributes' => [ 'id'        => $field->get( 'id' ),
-							                   'type'      => $field->get( 'type' ),
-							                   'suffix'    => $field->get( 'suffix' ),
-							                   'position'  => $field->get( 'position' ),
-							                   'required'  => $field->get( 'required' ),
-							                   'css_edit'  => $field->get( 'cssClassEdit' ) . $css_debug,
-							                   'width'     => $field->get( 'bsWidth' ),
-							                   'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
+							'_attributes' => [ 'id'                  => $field->get( 'id' ),
+							                   'type'                => $field->get( 'type' ),
+							                   'suffix'              => $field->get( 'suffix' ),
+							                   'position'            => $field->get( 'position' ),
+							                   'required'            => $field->get( 'required' ),
+							                   'css_edit'            => $field->get( 'cssClassEdit' ) . $css_debug,
+							                   'width'               => $field->get( 'bsWidth' ),
+							                   'css_class'           => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' ),
+							                   'data-administrative' => $administrative
 							]
 						];
 					}
