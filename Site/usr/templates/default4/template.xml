@@ -10,7 +10,8 @@
 	<creationDate>2017-11-01</creationDate>
 	<version>4.0</version>
 	<description>Default Template for SobiPro 1.4+ with Bootstrap 3 support.
-	This template makes use of Bootstrap 3 and Font Awesome 3 elements and styles.</description>
+		This template makes use of Bootstrap 3 and Font Awesome 3 elements and styles.
+	</description>
 	<files>
 		<file path="category/view.xsl">
 			Default category view template with top menu, navigation, entries and categories.
@@ -21,9 +22,9 @@
 		<file path="common/alphamenu.xsl">
 			Template for the alpha menu. Fields chooser and calls the alpha index (letters) template.
 		</file>
-        <file path="common/categories.xsl">
-            Template for the categories list (categoriesLoop). Calls the template for a single category.
-        </file>
+		<file path="common/categories.xsl">
+			Template for the categories list (categoriesLoop). Calls the template for a single category.
+		</file>
 		<file path="common/category.xsl">
 			Template for a single category in the categories list.
 		</file>
@@ -31,7 +32,8 @@
 			Template to output one field in entry form. Called from default loop in edit.xsl.
 		</file>
 		<file path="common/entries.xsl">
-			Template to display all entries (entriesLoop) within a category or the search function. Build the structure of all entries and calls the "vCard" template while displaying single entry.
+			Template to display all entries (entriesLoop) within a category or the search function. Build the structure of all entries and calls the "vCard"
+			template while displaying single entry.
 		</file>
 		<file path="common/font.xsl">
 			Template to load Google fonts. Will be called from the topmenu template.
@@ -39,9 +41,9 @@
 		<file path="common/manage.xsl">
 			Displays the managing functions like edit entry, approve aso, within an entry.
 		</file>
-        <file path="common/messages.xsl">
-            Displays the message bar.
-        </file>
+		<file path="common/messages.xsl">
+			Displays the message bar.
+		</file>
 		<file path="common/navigation.xsl">
 			Template for the site navigation.
 		</file>
@@ -66,15 +68,15 @@
 		<file path="css/custom.css">
 			Custom CSS file. Your own CSS changes goes in here.
 		</file>
-        <file path="css/custom.less">
-            LESS file for the custom CSS file. Your own CSS changes goes in here.
-        </file>
-        <file path="css/theme.css">
-            The theme CSS file. Automatically generated!
-        </file>
-        <file path="css/theme.less">
-            LESS file for the theme CSS file.
-        </file>
+		<file path="css/custom.less">
+			LESS file for the custom CSS file. Your own CSS changes goes in here.
+		</file>
+		<file path="css/theme.css">
+			The theme CSS file. Automatically generated!
+		</file>
+		<file path="css/theme.less">
+			LESS file for the theme CSS file.
+		</file>
 		<file path="entry/details.ini">
 			Configuration file to load JS files in details view.
 		</file>
@@ -103,7 +105,7 @@
 			JavaScript functions for the alpha menu.
 		</file>
 		<file path="js/autosuggest.js">
-            JavaScript functions for the auto-suggest feature used in search and entry form.
+			JavaScript functions for the auto-suggest feature used in search and entry form.
 		</file>
 		<file path="js/details.js">
 			JavaScript functions for the details view.
@@ -150,33 +152,33 @@
 		<file path="section/view.xsl">
 			Template for the section main view.
 		</file>
-        <file path="themes/cornfield.less">
-            Cornfield color theme (yellow/orange/brown).
-        </file>
-        <file path="themes/cornflower.less">
-            Cornflower color theme (blue).
-        </file>
-        <file path="themes/malva.less">
-            Malva color theme (violett).
-        </file>
-        <file path="themes/meadow.less">
-            Meadow color theme (green).
-        </file>
+		<file path="themes/cornfield.less">
+			Cornfield color theme (yellow/orange/brown).
+		</file>
+		<file path="themes/cornflower.less">
+			Cornflower color theme (blue).
+		</file>
+		<file path="themes/malva.less">
+			Malva color theme (violett).
+		</file>
+		<file path="themes/meadow.less">
+			Meadow color theme (green).
+		</file>
 		<file path="themes/pastels.less">
 			Pastels color theme (pastel colours).
 		</file>
-        <file path="themes/poppyseed.less">
-            Poppyseed color theme (shades of grey).
-        </file>
-        <file path="themes/roses.less">
-            Roses color theme (red/rose).
-        </file>
+		<file path="themes/poppyseed.less">
+			Poppyseed color theme (shades of grey).
+		</file>
+		<file path="themes/roses.less">
+			Roses color theme (red/rose).
+		</file>
 		<file path="themes/custom.less">
 			Custom color theme (defined in the template settings)
 		</file>
-        <file path="themes/sobipro.less">
-            SobiPro color theme (SobiPro colors; default).
-        </file>
+		<file path="themes/sobipro.less">
+			SobiPro color theme (SobiPro colors; default).
+		</file>
 		<file path="themes/terra.less">
 			Terra color theme (brown).
 		</file>
@@ -186,12 +188,12 @@
 		<file path="template.php">
 			PHP file with additional functions to use within templates.
 		</file>
-        <file path="translation.xml">
-            Translation file for texts in templates.
-        </file>
-        <file path="config.ini">
-            Main template configuration file.
-        </file>
+		<file path="translation.xml">
+			Translation file for texts in templates.
+		</file>
+		<file path="config.ini">
+			Main template configuration file.
+		</file>
 		<file path="config.json">
 			Template settings configuration file. Automatically generated!
 		</file>

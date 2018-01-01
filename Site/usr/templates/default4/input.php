@@ -1,4 +1,6 @@
 <?php
-abstract class InputElements {
+
+abstract class InputElements
+{
 }
 

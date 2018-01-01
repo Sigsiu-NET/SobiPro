@@ -38,7 +38,7 @@
 
 		<h2 class="page-header lead namefield {$development}">
 			<xsl:call-template name="development">
-				<xsl:with-param name="fieldname" select="entry/name" />
+				<xsl:with-param name="fieldname" select="entry/name"/>
 			</xsl:call-template>
 			<a href="{url}">
 				<xsl:value-of select="name"/>

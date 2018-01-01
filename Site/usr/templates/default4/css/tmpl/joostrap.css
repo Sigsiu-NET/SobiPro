@@ -66,16 +66,16 @@
 .SobiPro body.contentpane button {
 	font-weight: 400;
 	background-image: none;
-	border: 1px solid #CCC;
+	border: 1px solid #ccc;
 	border-radius: 4px;
-
 	color: #333;
-	background-color: #FFF;
+	background-color: #fff;
 }
 
 .SobiPro .payment-details input {
 	width: inherit;
 }
+
 .SobiPro .form .form-group .form-control {
 	display: block;
 }

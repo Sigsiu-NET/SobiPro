@@ -14,14 +14,12 @@
 
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-**/
+ **/
 
 
- SobiPro.jQuery( document ).ready( function ()
-{
+SobiPro.jQuery( document ).ready( function () {
 	//resize the map in entry form, necessary if the map is in a tab
-	SobiPro.jQuery( 'a[href="#address"]' ).on( 'shown.bs.tab', function ( e )
-	{
+	SobiPro.jQuery( 'a[href="#address"]' ).on( 'shown.bs.tab', function ( e ) {
 		SobiPro.jQuery( window ).trigger( 'resize' )
 	} );
 } );

@@ -17,52 +17,49 @@
  */
 
 
-SobiPro.jQuery( document ).ready( function ()
-{
+SobiPro.jQuery( document ).ready( function () {
 	//initialize popovers
-	SobiPro.jQuery('[data-toggle="popover"]').popover();
+	SobiPro.jQuery( '[data-toggle="popover"]' ).popover();
 
-	SobiPro.jQuery( '.alpha-switch' ).bind( 'click', function ( e )
-	{
+	SobiPro.jQuery( '.alpha-switch' ).bind( 'click', function ( e ) {
 		e.preventDefault();
 		SobiPro.jQuery.ajax( {
-			url:SobiProUrl.replace( '%task%', 'list.alpha.switch.' + SobiPro.jQuery( this ).attr( 'rel' ) ),
-			data:{ sid:SobiProSection, tmpl:"component", format:"raw" },
-			success:function ( jsonObj )
-			{
+			url: SobiProUrl.replace( '%task%', 'list.alpha.switch.' + SobiPro.jQuery( this ).attr( 'rel' ) ),
+			data: {sid: SobiProSection, tmpl: "component", format: "raw"},
+			success: function ( jsonObj ) {
 				SobiPro.jQuery( '#alpha-index' ).html( jsonObj.index );
 			}
 		} );
 	} );
 	SobiPro.jQuery( '.dropdown-toggle' ).dropdown();
 	try {
-		SobiPro.jQuery( '#spDeleteEntry' ).click( function ( e )
-		{
+		SobiPro.jQuery( '#spDeleteEntry' ).click( function ( e ) {
 			"use strict";
-			if ( !( confirm( SobiPro.Txt( 'CONFIRM_DELETE_ENTRY' ) ) ) ) {
+			if ( !(confirm( SobiPro.Txt( 'CONFIRM_DELETE_ENTRY' ) )) ) {
 				e.preventDefault();
 			}
 		} );
 	}
-	catch ( e ) {
+	catch (e) {
 	}
 
 	try {
 		SobiPro.jQuery( '#spCategoryContainer-hide' ).slideToggle( 'fast' );
-		SobiPro.jQuery( '#spCategoryShow').attr('data-visible', false);
+		SobiPro.jQuery( '#spCategoryShow' ).attr( 'data-visible', false );
 
-		SobiPro.jQuery( '#spCategoryShow' ).bind( 'click', function() {
-			if (SobiPro.jQuery( '#spCategoryShow').attr('data-visible') == 'false') {
-				SobiPro.jQuery( '#spCategoryShow').attr('data-showtext', SobiPro.jQuery( '#spCategoryShow').val()); //save the origin
-				SobiPro.jQuery( '#spCategoryShow').val(SobiPro.jQuery('#hidetext').val());  //set new
-				SobiPro.jQuery( '#spCategoryShow').attr('data-visible', true);
+		SobiPro.jQuery( '#spCategoryShow' ).bind( 'click', function () {
+			if ( SobiPro.jQuery( '#spCategoryShow' ).attr( 'data-visible' ) == 'false' ) {
+				SobiPro.jQuery( '#spCategoryShow' ).attr( 'data-showtext', SobiPro.jQuery( '#spCategoryShow' ).val() ); //save the origin
+				SobiPro.jQuery( '#spCategoryShow' ).val( SobiPro.jQuery( '#hidetext' ).val() );  //set new
+				SobiPro.jQuery( '#spCategoryShow' ).attr( 'data-visible', true );
 			}
 			else {
-				SobiPro.jQuery( '#spCategoryShow').attr('data-visible', false);
-				SobiPro.jQuery( '#spCategoryShow').val(SobiPro.jQuery( '#spCategoryShow').attr('data-showtext'));
+				SobiPro.jQuery( '#spCategoryShow' ).attr( 'data-visible', false );
+				SobiPro.jQuery( '#spCategoryShow' ).val( SobiPro.jQuery( '#spCategoryShow' ).attr( 'data-showtext' ) );
 			}
 			SobiPro.jQuery( '#spCategoryContainer-hide' ).slideToggle( 'fast' );
 		} );
-	} catch( e ) {}
+	} catch (e) {
+	}
 } );
 

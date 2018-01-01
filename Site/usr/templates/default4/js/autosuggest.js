@@ -17,11 +17,9 @@
  */
 
 // Autosuggest script for B3-Typeahead.js
-SobiPro.jQuery( document ).ready( function ()
-{
+SobiPro.jQuery( document ).ready( function () {
 	SobiPro.jQuery( '.search-query' ).typeahead( {
-		source: function ( query, typeahead )
-		{
+		source: function ( query, typeahead ) {
 			const request = {
 				'option': 'com_sobipro',
 				'task': 'search.suggest',
@@ -35,12 +33,11 @@ SobiPro.jQuery( document ).ready( function ()
 				'url': 'index.php',
 				'data': request,
 				'dataType': 'json',
-				success: function ( response )
-				{
+				success: function ( response ) {
 					let responseData = [];
 					if ( response.length ) {
-						for ( let i = 0; i < response.length; i ++ ) {
-							responseData[ i ] = { 'name': response[ i ] };
+						for ( let i = 0; i < response.length; i++ ) {
+							responseData[ i ] = {'name': response[ i ]};
 						}
 						typeahead( responseData );
 					}
@@ -51,8 +48,7 @@ SobiPro.jQuery( document ).ready( function ()
 		sorter: function ( items ) {
 			return items;
 		},
-		matcher: function ( item )
-		{
+		matcher: function ( item ) {
 			return true;
 		}
 	} );

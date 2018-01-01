@@ -16,52 +16,49 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
-SobiPro.jQuery( document ).ready( function ()
-{
+SobiPro.jQuery( document ).ready( function () {
 	// initialize tooltips
-	SobiPro.jQuery('[data-toggle="tooltip"]').tooltip();
+	SobiPro.jQuery( '[data-toggle="tooltip"]' ).tooltip();
 
 	//initialize popovers
-	SobiPro.jQuery('[data-toggle="popover"]').popover();
+	SobiPro.jQuery( '[data-toggle="popover"]' ).popover();
 
 	// initialize carousel slider
 	SobiPro.jQuery( '#spCarousel' ).carousel();
 
-	SobiPro.jQuery('.nav-pills li a').click(function (e) {
+	SobiPro.jQuery( '.nav-pills li a' ).click( function ( e ) {
 		e.preventDefault();
-		SobiPro.jQuery(this).tab('show');
-	});
-	SobiPro.jQuery('.nav-tabs li a').click(function (e) {
+		SobiPro.jQuery( this ).tab( 'show' );
+	} );
+	SobiPro.jQuery( '.nav-tabs li a' ).click( function ( e ) {
 		e.preventDefault();
-		SobiPro.jQuery(this).tab('show');
-	});
-	if (window.location.hash) {
-		SobiPro.jQuery('.nav-pills a[href="' + window.location.hash + '"]').tab('show');
-		SobiPro.jQuery('.nav-tabs a[href="' + window.location.hash + '"]').tab('show');
+		SobiPro.jQuery( this ).tab( 'show' );
+	} );
+	if ( window.location.hash ) {
+		SobiPro.jQuery( '.nav-pills a[href="' + window.location.hash + '"]' ).tab( 'show' );
+		SobiPro.jQuery( '.nav-tabs a[href="' + window.location.hash + '"]' ).tab( 'show' );
 	}
 
 	//resize the map in entry form, necessary if the map is in a tab
-	SobiPro.jQuery( 'a[href="#location"]' ).on( 'shown.bs.tab', function ( e )
-	{
+	SobiPro.jQuery( 'a[href="#location"]' ).on( 'shown.bs.tab', function ( e ) {
 		SobiPro.jQuery( window ).trigger( 'resize' );
 		try {
 			var handler = SPGeoMapsReg[ jQuery( 'div[id^=field_map_canvas_]' ).attr( 'id' ) ];
 			handler.Map.setCenter( handler.Position );
 		}
-		catch ( e ) {
+		catch (e) {
 		}
 
 	} );
 
 	//resize the map, necessary if the map is in a collapsable element
-	SobiPro.jQuery( 'a[href="#location"]' ).on( 'shown.bs.collapse', function ( e )
-	{
+	SobiPro.jQuery( 'a[href="#location"]' ).on( 'shown.bs.collapse', function ( e ) {
 		SobiPro.jQuery( window ).trigger( 'resize' );
 		try {
 			var handler = SPGeoMapsReg[ jQuery( 'div[id^=field_map_canvas_]' ).attr( 'id' ) ];
 			handler.Map.setCenter( handler.Position );
 		}
-		catch ( e ) {
+		catch (e) {
 		}
 	} );
 } );

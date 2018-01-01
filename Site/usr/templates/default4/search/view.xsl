@@ -126,28 +126,30 @@
 
 			<xsl:if test="//config/hidesearch/@value = 1">
 				<div class="spSearchBottom">
-				<xsl:choose>
-					<xsl:when test="$sparam = 'in'">
-						<button class="btn btn-info search-parameters" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea" aria-expanded="true"
-						        aria-controls="collapsearea" data-visible="true" type="button">
-							<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.SEARCH_HIDE' )"/>
-						</button>
-						<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu bottom-search">
-							<xsl:text>&#160;</xsl:text>
-							<xsl:value-of select="/search/fields/top_button/label"/>
-						</button>
-					</xsl:when>
-					<xsl:otherwise>
-						<button class="btn btn-info search-parameters" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea" aria-expanded="false"
-						        aria-controls="collapsearea" data-visible="false" type="button">
-							<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.SEARCH_REFINE' )"/>
-						</button>
-						<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu hidden bottom-search">
-							<xsl:text>&#160;</xsl:text>
-							<xsl:value-of select="/search/fields/top_button/label"/>
-						</button>
-					</xsl:otherwise>
-				</xsl:choose>
+					<xsl:choose>
+						<xsl:when test="$sparam = 'in'">
+							<button class="btn btn-info search-parameters" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea"
+							        aria-expanded="true"
+							        aria-controls="collapsearea" data-visible="true" type="button">
+								<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.SEARCH_HIDE' )"/>
+							</button>
+							<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu bottom-search">
+								<xsl:text>&#160;</xsl:text>
+								<xsl:value-of select="/search/fields/top_button/label"/>
+							</button>
+						</xsl:when>
+						<xsl:otherwise>
+							<button class="btn btn-info search-parameters" id="info-window-btn" data-toggle="collapse" data-target="#collapsearea"
+							        aria-expanded="false"
+							        aria-controls="collapsearea" data-visible="false" type="button">
+								<xsl:value-of select="php:function( 'SobiPro::Txt', 'TP.SEARCH_REFINE' )"/>
+							</button>
+							<button type="submit" id="bottom_button" class="btn btn-primary btn-sigsiu hidden bottom-search">
+								<xsl:text>&#160;</xsl:text>
+								<xsl:value-of select="/search/fields/top_button/label"/>
+							</button>
+						</xsl:otherwise>
+					</xsl:choose>
 				</div>
 			</xsl:if>
 

@@ -16,60 +16,60 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
-SobiPro.jQuery(document).ready(function () {
+SobiPro.jQuery( document ).ready( function () {
 	var spSearchDefStr = '';
-	SobiPro.jQuery('#SPSearchBox').bind('click', function () {
-		spSearchDefStr = spSearchDefStr == '' ? SobiPro.Txt('SH.SEARCH_FOR_BOX') : spSearchDefStr;
-		if (SobiPro.jQuery('#SPSearchBox').val() == spSearchDefStr) {
-			SobiPro.jQuery('#SPSearchBox').val('');
+	SobiPro.jQuery( '#SPSearchBox' ).bind( 'click', function () {
+		spSearchDefStr = spSearchDefStr == '' ? SobiPro.Txt( 'SH.SEARCH_FOR_BOX' ) : spSearchDefStr;
+		if ( SobiPro.jQuery( '#SPSearchBox' ).val() == spSearchDefStr ) {
+			SobiPro.jQuery( '#SPSearchBox' ).val( '' );
 		}
-	});
-	SobiPro.jQuery('#SPSearchBox').bind('blur', function () {
-		spSearchDefStr = spSearchDefStr == '' ? SobiPro.Txt('SH.SEARCH_FOR_BOX') : spSearchDefStr;
-		if (SobiPro.jQuery('#SPSearchBox').val() == '') {
-			SobiPro.jQuery('#SPSearchBox').val(spSearchDefStr);
+	} );
+	SobiPro.jQuery( '#SPSearchBox' ).bind( 'blur', function () {
+		spSearchDefStr = spSearchDefStr == '' ? SobiPro.Txt( 'SH.SEARCH_FOR_BOX' ) : spSearchDefStr;
+		if ( SobiPro.jQuery( '#SPSearchBox' ).val() == '' ) {
+			SobiPro.jQuery( '#SPSearchBox' ).val( spSearchDefStr );
 		}
-	});
+	} );
 
 	try {
-		SobiPro.jQuery('#SPExtSearch').slideToggle('fast');
-		SobiPro.jQuery('#SPExOptBt').bind('click', function () {
-			SobiPro.jQuery('#SPExtSearch').slideToggle('fast');
-		});
+		SobiPro.jQuery( '#SPExtSearch' ).slideToggle( 'fast' );
+		SobiPro.jQuery( '#SPExOptBt' ).bind( 'click', function () {
+			SobiPro.jQuery( '#SPExtSearch' ).slideToggle( 'fast' );
+		} );
 	}
 	catch (e) {
 	}
 
 	try {
-		SobiPro.jQuery('#info-window-btn').bind('click', function () {
-			if (SobiPro.jQuery('#info-window-btn').attr('data-visible') == 'false') {
+		SobiPro.jQuery( '#info-window-btn' ).bind( 'click', function () {
+			if ( SobiPro.jQuery( '#info-window-btn' ).attr( 'data-visible' ) == 'false' ) {
 
-				SobiPro.jQuery('#info-window-btn').html(SobiPro.Txt('TP.SEARCH_HIDE'));  //set new
-				SobiPro.jQuery('#info-window-btn').attr('data-visible', true);
-				SobiPro.jQuery('#bottom_button').removeClass('hidden');
+				SobiPro.jQuery( '#info-window-btn' ).html( SobiPro.Txt( 'TP.SEARCH_HIDE' ) );  //set new
+				SobiPro.jQuery( '#info-window-btn' ).attr( 'data-visible', true );
+				SobiPro.jQuery( '#bottom_button' ).removeClass( 'hidden' );
 			}
 			else {
-				SobiPro.jQuery('#info-window-btn').attr('data-visible', false);
-				SobiPro.jQuery('#info-window-btn').html(SobiPro.Txt('TP.SEARCH_REFINE'));
-				SobiPro.jQuery('#bottom_button').addClass('hidden');
+				SobiPro.jQuery( '#info-window-btn' ).attr( 'data-visible', false );
+				SobiPro.jQuery( '#info-window-btn' ).html( SobiPro.Txt( 'TP.SEARCH_REFINE' ) );
+				SobiPro.jQuery( '#bottom_button' ).addClass( 'hidden' );
 			}
-		});
+		} );
 	} catch (e) {
 	}
 
 
-	SobiPro.jQuery('.sphrase').each(function (i, e) {
-		var e = SobiPro.jQuery(e);
-		if (!( e.hasClass('active') )) {
-			e.removeClass('btn-sigsiu');
+	SobiPro.jQuery( '.sphrase' ).each( function ( i, e ) {
+		var e = SobiPro.jQuery( e );
+		if ( !(e.hasClass( 'active' )) ) {
+			e.removeClass( 'btn-sigsiu' );
 		}
-		e.click(function () {
-			SobiPro.jQuery(e)
+		e.click( function () {
+			SobiPro.jQuery( e )
 				.parent()
-				.find('.sphrase')
-				.removeClass('btn-sigsiu').addClass('btn-default').removeClass('btn-success');
-			SobiPro.jQuery(e).removeClass('btn-default').addClass('btn-sigsiu');
-		});
-	});
+				.find( '.sphrase' )
+				.removeClass( 'btn-sigsiu' ).addClass( 'btn-default' ).removeClass( 'btn-success' );
+			SobiPro.jQuery( e ).removeClass( 'btn-default' ).addClass( 'btn-sigsiu' );
+		} );
+	} );
 
-});
+} );

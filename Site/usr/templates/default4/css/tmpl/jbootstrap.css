@@ -36,24 +36,30 @@ body {
 	height: 34px;
 	padding: 6px 12px;
 }
+
 .SobiPro .btn {
 	text-shadow: none;
 	box-shadow: none;
 }
+
 .SobiPro .navbar .nav > li > a {
 	text-shadow: none;
 }
+
 .SobiPro input[type="checkbox"] {
 	vertical-align: top;
 }
+
 .SobiPro .modal-body {
 	width: inherit;
 }
+
 .SobiPro .alert .close {
 	position: inherit;
 	top: inherit;
 	right: inherit;
 }
+
 .SobiPro .carousel-control {
 	height: inherit;
 	margin-top: 0;
@@ -61,14 +67,15 @@ body {
 	border: none;
 	border-radius: 0;
 }
+
 .SobiPro .navbar-collapse.collapse {
-	overflow: hidden!important;
+	overflow: hidden !important;
 }
+
 .SobiPro .btn-group {
 	font-size: inherit;
 	white-space: inherit;
 }
-
 
 @media (max-width: 768px) {
 	.SobiPro .form-horizontal .control-label {
@@ -77,6 +84,7 @@ body {
 		padding-top: 0;
 		text-align: left;
 	}
+
 	.SobiPro .navbar .nav > li,
 	.SobiPro .navbar .nav {
 		float: none;

@@ -16,8 +16,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
- SobiPro.jQuery( document ).ready( function ()
-{
+SobiPro.jQuery( document ).ready( function () {
 	if ( SobiPro.jQuery( '.ctrl-static-navigation' ).length ) {
 		SobiPro.jQuery( '.ctrl-ajax-navigation' ).removeClass( 'hide' );
 		SobiPro.jQuery( '.ctrl-static-navigation' ).addClass( 'hide' );
@@ -25,9 +24,8 @@
 			.last()
 			.find( 'a' )
 			.attr( 'href' )
-			.match( /site=([^&]+)/ )[1];
-		SobiPro.jQuery( '.ctrl-ajax-navigation' ).click( function ()
-		{
+			.match( /site=([^&]+)/ )[ 1 ];
+		SobiPro.jQuery( '.ctrl-ajax-navigation' ).click( function () {
 			var Site = parseInt( SobiPro.jQuery( '[name="currentSite"]' ).val() ) + 1;
 			var Proxy = this;
 			SobiPro.jQuery( Proxy )
@@ -44,8 +42,7 @@
 					type: 'POST',
 					dataType: 'html'
 				} )
-				.done( function ( data )
-				{
+				.done( function ( data ) {
 					SobiPro.jQuery( Proxy ).before( data );
 					SobiPro.jQuery( '[name="currentSite"]' ).val( Site );
 					SobiPro.jQuery( Proxy )

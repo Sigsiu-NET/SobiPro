@@ -17,16 +17,20 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
-	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
+	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
 	<xsl:template name="font">
 
 		<!-- Load and apply the special fonts -->
-		<xsl:variable name="basefont"><xsl:value-of select="//config/basefont/@value" /></xsl:variable>
+		<xsl:variable name="basefont">
+			<xsl:value-of select="//config/basefont/@value"/>
+		</xsl:variable>
 		<xsl:if test="//config/basefont/@value != 'none' and //config/basefont/@value != ''">
 			<xsl:value-of select="php:function( 'tplDefault4::LoadFont', $basefont)"/>
 			<xsl:value-of select="php:function( 'tplDefault4::ApplyBaseFont', $basefont)"/>
 		</xsl:if>
-		<xsl:variable name="specialfont"><xsl:value-of select="//config/specialfont/@value" /></xsl:variable>
+		<xsl:variable name="specialfont">
+			<xsl:value-of select="//config/specialfont/@value"/>
+		</xsl:variable>
 		<xsl:if test="$basefont != $specialfont and //config/specialfont/@value != '' and //config/specialfont/@value != 'none'">
 			<xsl:value-of select="php:function( 'tplDefault4::LoadFont', $specialfont)"/>
 			<xsl:value-of select="php:function( 'tplDefault4::ApplyFont', $specialfont)"/>

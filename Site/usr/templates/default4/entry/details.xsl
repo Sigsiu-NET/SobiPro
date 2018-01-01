@@ -61,7 +61,7 @@
 				</xsl:if>
 				<h1 class="namefield {$development}">
 					<xsl:call-template name="development">
-						<xsl:with-param name="fieldname" select="entry/name" />
+						<xsl:with-param name="fieldname" select="entry/name"/>
 					</xsl:call-template>
 					<xsl:value-of select="entry/name"/>
 					<xsl:call-template name="status">

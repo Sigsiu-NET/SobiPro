@@ -17,9 +17,9 @@
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
-	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8" />
-	<xsl:include href="../common/entries.xsl" />
+	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
+	<xsl:include href="../common/entries.xsl"/>
 	<xsl:template match="/section|/category|/listing|/search">
-		<xsl:call-template name="entriesLoop" />
+		<xsl:call-template name="entriesLoop"/>
 	</xsl:template>
 </xsl:stylesheet>
