@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -27,13 +27,24 @@
 		<!-- load the fonts needed -->
 		<xsl:call-template name="font"/>
 
-		<!-- Show the Directory name -->
-		<div class="lead">
-			<xsl:value-of select="section"/>
-			<xsl:if test="string-length($title) > 0">
-				<xsl:text> - </xsl:text><xsl:value-of select="$title"/>
-			</xsl:if>
-		</div>
+		<!-- Show the Directory name, resp. Joomla page heading -->
+		<xsl:choose>
+			<xsl:when test="jheading/@show-page-heading = 1">
+				<div class="page-header {jheading/@pageclass-sfx}">
+					<h1>
+						<xsl:value-of select="jheading"/>
+					</h1>
+				</div>
+			</xsl:when>
+			<xsl:otherwise>
+				<div class="lead">
+					<xsl:value-of select="section"/>
+					<xsl:if test="string-length($title) > 0">
+						<xsl:text> - </xsl:text><xsl:value-of select="$title"/>
+					</xsl:if>
+				</div>
+			</xsl:otherwise>
+		</xsl:choose>
 
 		<!-- if top menu is switched on in SobiPro settings -->
 		<xsl:if test="count(//menu/*)">
@@ -48,9 +59,9 @@
 							<div class="navbar-header">
 								<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topmenu" aria-expanded="false">
 									<span class="sr-only">Toggle navigation</span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
+									<span class="icon-bar"/>
+									<span class="icon-bar"/>
+									<span class="icon-bar"/>
 								</button>
 							</div>
 							<div id="topmenu" class="collapse navbar-collapse">
@@ -79,7 +90,7 @@
 														</xsl:if>
 													</xsl:otherwise>
 												</xsl:choose>
-												<span class="icon-th-list" aria-hidden="true"></span>
+												<span class="icon-th-list" aria-hidden="true"/>
 												<xsl:text> </xsl:text>
 												<xsl:value-of select="//menu/front"/>
 											</a>
@@ -94,7 +105,7 @@
 														<xsl:attribute name="class">active</xsl:attribute>
 														<span class="sr-only">(current)</span>
 													</xsl:if>
-													<span class="icon-plus-sign" aria-hidden="true"></span>
+													<span class="icon-plus-sign" aria-hidden="true"/>
 													<xsl:text> </xsl:text>
 													<xsl:value-of select="//menu/add"/>
 												</a>
@@ -104,7 +115,7 @@
 											<xsl:if test="string-length(//config/redirectlogin/@value) > 0">
 												<li role="none">
 													<a href="{//config/redirectlogin/@value}" role="menuitem">
-														<span class="icon-plus-sign" aria-hidden="true"></span>
+														<span class="icon-plus-sign" aria-hidden="true"/>
 														<xsl:text> </xsl:text>
 														<xsl:value-of select="php:function( 'SobiPro::Txt', 'MN.ADD_ENTRY' )"/>
 													</a>
@@ -120,7 +131,7 @@
 													<xsl:attribute name="class">active</xsl:attribute>
 													<span class="sr-only">(current)</span>
 												</xsl:if>
-												<span class="icon-search" aria-hidden="true"></span>
+												<span class="icon-search" aria-hidden="true"/>
 												<xsl:text> </xsl:text>
 												<xsl:value-of select="//menu/search"/>
 											</a>
@@ -269,7 +280,7 @@
 					</a>
 				</xsl:if>
 			</div>
-			<div class="clearfix"></div>
+			<div class="clearfix" />
 		</div>
 	</xsl:template>
 

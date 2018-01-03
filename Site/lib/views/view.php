@@ -7,14 +7,14 @@
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
  *
- * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
 use Sobi\Input\Input;
@@ -104,6 +104,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 		}
 		SPFactory::registry()->set( 'current_template_path', $this->_templatePath );
+
 		return $this->_templatePath;
 	}
 
@@ -111,11 +112,13 @@ abstract class SPFrontView extends SPObject implements SPView
 	 *
 	 * @param var
 	 * @param label
+	 *
 	 * @return \SPFrontView
 	 */
 	public function & assign( &$var, $label )
 	{
 		$this->_attr[ $label ] =& $var;
+
 		return $this;
 	}
 
@@ -123,11 +126,13 @@ abstract class SPFrontView extends SPObject implements SPView
 	 *
 	 * @param var
 	 * @param label
+	 *
 	 * @return $this
 	 */
 	public function & addHidden( $var, $label )
 	{
 		$this->_hidden[ $label ] = $var;
+
 		return $this;
 	}
 
@@ -171,6 +176,7 @@ abstract class SPFrontView extends SPObject implements SPView
 
 	/**
 	 * @param string $template
+	 *
 	 * @return $this
 	 */
 	public function & setTemplate( $template )
@@ -185,6 +191,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			$this->_template = SOBI_PATH . '/usr/templates/' . str_replace( '.', '/', $template );
 		}
 		Sobi::Trigger( 'setTemplate', $this->name(), [ &$this->_template ] );
+
 		return $this;
 	}
 
@@ -204,6 +211,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 * @param $key
 	 * @param mixed $def
 	 * @param string $section
+	 *
 	 * @internal param string $label
 	 * @return mixed
 	 */
@@ -214,6 +222,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			$section = $key[ 0 ];
 			$key = $key[ 1 ];
 		}
+
 		return isset( $this->_config[ $section ][ $key ] ) ? $this->_config[ $section ][ $key ] : Sobi::Cfg( $key, $def, $section );
 	}
 
@@ -221,6 +230,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 * Returns copy of stored key
 	 *
 	 * @param string $section
+	 *
 	 * @return array
 	 */
 	public function csection( $section )
@@ -245,9 +255,11 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 		try {
 			$p = SPConfig::unserialize( $p );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			return;
 		}
+
 		return $p[ 0 ];
 	}
 
@@ -258,6 +270,7 @@ abstract class SPFrontView extends SPObject implements SPView
 
 	/**
 	 * @param null $o
+	 *
 	 * @throws SPException
 	 */
 	public function display( $o = null )
@@ -284,6 +297,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		else {
 			throw new SPException( SPLang::e( 'CANNOT_LOAD_PARSER', $type ) );
 		}
+
 		$this->_attr[ 'template_path' ] = Sobi::FixPath( str_replace( SOBI_ROOT, Sobi::Cfg( 'live_site' ), $this->_templatePath ) );
 		$messages = SPFactory::message()->getMessages();
 		if ( count( $messages ) ) {
@@ -376,8 +390,8 @@ abstract class SPFrontView extends SPObject implements SPView
 		}
 		if ( Input::Cmd( 'xhr' ) == 1 ) {
 			SPFactory::mainframe()
-					->cleanBuffer()
-					->customHeader();
+				->cleanBuffer()
+				->customHeader();
 		}
 		echo $output;
 		if ( $this->key( 'output.close', false ) ) {
@@ -404,6 +418,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 			else {
 				Sobi::Error( $this->name(), SPLang::e( 'Cannot determine class name in file %s.', str_replace( SOBI_ROOT . DS, null, $path ) ), SPC::WARNING, 0 );
+
 				return false;
 			}
 			if ( !( isset( $classes[ $className ] ) ) ) {
@@ -413,6 +428,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			else {
 				if ( $classes[ $className ] != $path ) {
 					Sobi::Error( __CLASS__, 'Class with this name has already been defined, but this is not the same class.', SPC::WARNING );
+
 					return [];
 				}
 			}
@@ -426,6 +442,7 @@ abstract class SPFrontView extends SPObject implements SPView
 		else {
 			Sobi::Error( $this->name(), SPLang::e( 'FUNCFILE_DEFINED_BUT_FILE_DOES_NOT_EXISTS', $this->_template . DS . $this->key( 'functions' ) ), SPC::WARNING, 0 );
 		}
+
 		return $functions;
 	}
 
@@ -446,6 +463,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				$arr[ $i ] = trim( $v );
 			}
 		}
+
 		return $arr;
 	}
 
@@ -487,6 +505,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	/**
 	 * @param array $cfg
 	 * @param string $template
+	 *
 	 * @return $this
 	 */
 	public function & setConfig( $cfg, $template )
@@ -522,6 +541,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 		}
 		Sobi::Trigger( 'afterLoadConfig', $this->name(), [ &$this->_config ] );
+
 		return $this;
 	}
 
@@ -542,11 +562,13 @@ abstract class SPFrontView extends SPObject implements SPView
 	/**
 	 * @param mixed $attr
 	 * @param int $index
+	 *
 	 * @return int
 	 */
 	public function count( $attr, $index = -1 )
 	{
 		$el =& $this->get( $attr, $index );
+
 		return count( $el );
 	}
 
@@ -554,12 +576,14 @@ abstract class SPFrontView extends SPObject implements SPView
 	 *
 	 * @param mixed $attr
 	 * @param mixed $name
+	 *
 	 * @internal param int $index
 	 * @return mixed
 	 */
 	public function & set( $attr, $name )
 	{
 		$this->_attr[ $name ] = $attr;
+
 		return $this;
 	}
 
@@ -567,6 +591,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	 *
 	 * @param mixed $attr
 	 * @param int $index
+	 *
 	 * @return mixed
 	 */
 	public function & get( $attr, $index = -1 )
@@ -606,6 +631,7 @@ abstract class SPFrontView extends SPObject implements SPView
 						else {
 							/*@TODO need to create error object */
 							$r = '';
+
 							return $r;
 						}
 					}
@@ -618,6 +644,7 @@ abstract class SPFrontView extends SPObject implements SPView
 						Sobi::Error( $this->name(), SPLang::e( 'NO_PROPERTY_TO_SHOW', $attr ), SPC::NOTICE, 0, __LINE__, __FILE__ );
 						/*@TODO need to create error object */
 						$r = '';
+
 						return $r;
 					}
 				}
@@ -628,6 +655,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			$r = null;
 		}
 		$r = is_string( $r ) ? Sobi::Clean( $r ) : $r;
+
 		return $r;
 	}
 
@@ -677,10 +705,10 @@ abstract class SPFrontView extends SPObject implements SPView
 					$le = [ '_complex' => 1, '_data' => trim( $letter ) ];
 
 					$urlLetter =
-							SPFactory::Instance( 'types.string', $letter )
-									->toLower()
-									->trim()
-									->get();
+						SPFactory::Instance( 'types.string', $letter )
+							->toLower()
+							->trim()
+							->get();
 					if ( count( $entries[ $letter ] ) ) {
 						if ( !( $defField ) ) {
 							$task = 'list.alpha.' . $urlLetter . '.' . $field;
@@ -696,14 +724,14 @@ abstract class SPFrontView extends SPObject implements SPView
 			else {
 				foreach ( $letters as $i => $letter ) {
 					$urlLetter =
-							SPFactory::Instance( 'types.string', $letter )
-									->toLower()
-									->trim()
-									->get();
+						SPFactory::Instance( 'types.string', $letter )
+							->toLower()
+							->trim()
+							->get();
 					$l[] = [
-							'_complex' => 1,
-							'_data' => trim( $letter ),
-							'_attributes' => [ 'url' => Sobi::Url( [ 'sid' => Sobi::Section(), 'task' => 'list.alpha.' . $urlLetter ] ) ]
+						'_complex'    => 1,
+						'_data'       => trim( $letter ),
+						'_attributes' => [ 'url' => Sobi::Url( [ 'sid' => Sobi::Section(), 'task' => 'list.alpha.' . $urlLetter ] ) ]
 					];
 				}
 			}
@@ -722,13 +750,28 @@ abstract class SPFrontView extends SPObject implements SPView
 					$extraFields = [];
 				}
 				$extraFields = [
-						'_complex' => 1,
-						'_data' => $extraFields,
-						'_attributes' => [ 'current' => $field ]
+					'_complex'    => 1,
+					'_data'       => $extraFields,
+					'_attributes' => [ 'current' => $field ]
 				];
 			}
 			$data[ 'alphaMenu' ] = [ '_complex' => 1, '_data' => [ 'letters' => $l, 'fields' => $extraFields ] ];
 		}
+	}
+
+	protected function menuOptions( &$data )
+	{
+		$menuparams = SPFactory::mainframe()->getMenuParams();
+		$data[ 'jheading' ] = [
+			'_complex'    => 1,
+			'_data'       => $menuparams->get( 'page_heading' ),
+			'_attributes' => [
+				'lang'              => Sobi::Lang( false ),
+				'page_heading'      => $menuparams->get( 'page_heading' ),
+				'show_page_heading' => ( $menuparams->get( 'show_page_heading' ) == '' ) ? 0 : $menuparams->get( 'show_page_heading' ),
+				'pageclass_sfx'     => $menuparams->get( 'pageclass_sfx' ),
+			]
+		];;
 	}
 
 	protected function visitorArray( $visitor )
@@ -736,18 +779,19 @@ abstract class SPFrontView extends SPObject implements SPView
 		$usertype = $visitor->get( 'usertype' );
 		if ( strlen( $usertype ) == 0 )
 			$usertype = 'Visitor';
+
 		return [
-				'_complex' => 1,
-				'_data' => [
-						'name' => $visitor->get( 'name' ),
-						'username' => $visitor->get( 'username' ),
-						'usertype' => [
-								'_complex' => 1,
-								'_data' => $usertype,
-								'_attributes' => [ 'gid' => implode( ', ', $visitor->get( 'gid' ) ) ]
-						]
-				],
-				'_attributes' => [ 'id' => $visitor->get( 'id' ) ]
+			'_complex'    => 1,
+			'_data'       => [
+				'name'     => $visitor->get( 'name' ),
+				'username' => $visitor->get( 'username' ),
+				'usertype' => [
+					'_complex'    => 1,
+					'_data'       => $usertype,
+					'_attributes' => [ 'gid' => implode( ', ', $visitor->get( 'gid' ) ) ]
+				]
+			],
+			'_attributes' => [ 'id' => $visitor->get( 'id' ) ]
 		];
 	}
 
@@ -762,6 +806,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	/**
 	 * @param int $id
 	 * @param bool $parents
+	 *
 	 * @return string
 	 */
 	protected function parentPath( $id, $parents = false )
@@ -773,15 +818,16 @@ abstract class SPFrontView extends SPObject implements SPView
 		else {
 			$path = null;
 		}
+
 		return SPLang::clean( $path );
 	}
 
 	protected function loadNonStaticData( $objects )
 	{
 		$this->nonStaticData
-				= SPFactory::db()
-				->select( [ 'counter', 'sid' ], 'spdb_counter', [ 'sid' => $objects ] )
-				->loadAssocList( 'sid' );
+			= SPFactory::db()
+			->select( [ 'counter', 'sid' ], 'spdb_counter', [ 'sid' => $objects ] )
+			->loadAssocList( 'sid' );
 	}
 
 	protected function getNonStaticData( $id, $att )
@@ -794,7 +840,7 @@ abstract class SPFrontView extends SPObject implements SPView
 	{
 		$data = [];
 		$css_debug = '';
-		if ( $development = (Sobi::Cfg( 'template.development', true ) && !defined( 'SOBIPRO_ADM' )) ) {
+		if ( $development = ( Sobi::Cfg( 'template.development', true ) && !defined( 'SOBIPRO_ADM' ) ) ) {
 			$css_debug = ' development';
 		}
 		foreach ( $fields as $field ) {
@@ -806,24 +852,24 @@ abstract class SPFrontView extends SPObject implements SPView
 					unset( $struct[ '_options' ] );
 				}
 				$data[ $field->get( 'nid' ) ] = [
-						'_complex' => 1,
-						'_data' => [
-								'label' => [
-										'_complex' => 1,
-										'_data' => $field->get( 'name' ),
-										'_attributes' => [ 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) ]
-								],
-								'data' => $struct,
+					'_complex'    => 1,
+					'_data'       => [
+						'label' => [
+							'_complex'    => 1,
+							'_data'       => $field->get( 'name' ),
+							'_attributes' => [ 'lang' => Sobi::Lang( false ), 'show' => $field->get( 'withLabel' ) ]
 						],
-						'_attributes' => [ 'id' => $field->get( 'id' ),
-								'itemprop' => $field->get( 'itemprop' ),
-								'type' => $field->get( 'type' ),
-								'suffix' => $field->get( 'suffix' ),
-								'position' => $field->get( 'position' ),
-								'debug' => $development,
-								'css_view' => $field->get( 'cssClassView' ) . $css_debug,
-								'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
-						]
+						'data'  => $struct,
+					],
+					'_attributes' => [ 'id'        => $field->get( 'id' ),
+					                   'itemprop'  => $field->get( 'itemprop' ),
+					                   'type'      => $field->get( 'type' ),
+					                   'suffix'    => $field->get( 'suffix' ),
+					                   'position'  => $field->get( 'position' ),
+					                   'debug'     => $development,
+					                   'css_view'  => $field->get( 'cssClassView' ) . $css_debug,
+					                   'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
+					]
 				];
 				if ( Sobi::Cfg( 'entry.field_description', false ) ) {
 					$data[ $field->get( 'nid' ) ][ '_data' ][ 'description' ] = [ '_complex' => 1, '_xml' => 1, '_data' => $field->get( 'description' ) ];
@@ -838,6 +884,7 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 		}
 		$this->validateFields( $data );
+
 		return $data;
 	}
 
@@ -868,14 +915,14 @@ abstract class SPFrontView extends SPObject implements SPView
 			}
 			$timestamp = strtotime( $data[ $index ] . 'UTC' );
 			$data[ $index ] = [
-					'_complex' => 1,
-					'_data' => gmdate( Sobi::Cfg( 'db.publishing_format', 'j F Y H:i:s' ), $timestamp + $offset ),
-					'_attributes' => [
-							'UTC' => $data[ $index ],
-							'timestamp' => $timestamp,
-							'offset' => $offset,
-							'timezone' => Sobi::Cfg( 'time_offset' )
-					]
+				'_complex'    => 1,
+				'_data'       => gmdate( Sobi::Cfg( 'db.publishing_format', 'j F Y H:i:s' ), $timestamp + $offset ),
+				'_attributes' => [
+					'UTC'       => $data[ $index ],
+					'timestamp' => $timestamp,
+					'offset'    => $offset,
+					'timezone'  => Sobi::Cfg( 'time_offset' )
+				]
 			];
 		}
 	}
@@ -884,30 +931,30 @@ abstract class SPFrontView extends SPObject implements SPView
 	{
 		if ( Sobi::Cfg( 'general.top_menu', true ) ) {
 			$data[ 'menu' ] = [
-					'front' => [
-							'_complex' => 1,
-							'_data' => Sobi::Reg( 'current_section_name' ),
-							'_attributes' => [
-									'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'sid' => Sobi::Section() ] )
-							]
+				'front' => [
+					'_complex'    => 1,
+					'_data'       => Sobi::Reg( 'current_section_name' ),
+					'_attributes' => [
+						'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'sid' => Sobi::Section() ] )
 					]
+				]
 			];
 			if ( Sobi::Can( 'section.search' ) ) {
 				$data[ 'menu' ][ 'search' ] = [
-						'_complex' => 1,
-						'_data' => Sobi::Txt( 'MN.SEARCH' ),
-						'_attributes' => [
-								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'task' => 'search', 'sid' => Sobi::Section() ] )
-						]
+					'_complex'    => 1,
+					'_data'       => Sobi::Txt( 'MN.SEARCH' ),
+					'_attributes' => [
+						'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'task' => 'search', 'sid' => Sobi::Section() ] )
+					]
 				];
 			}
 			if ( Sobi::Can( 'entry', 'add', 'own', Sobi::Section() ) ) {
 				$data[ 'menu' ][ 'add' ] = [
-						'_complex' => 1,
-						'_data' => Sobi::Txt( 'MN.ADD_ENTRY' ),
-						'_attributes' => [
-								'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'task' => 'entry.add', 'sid' => Input::Sid() ] )
-						]
+					'_complex'    => 1,
+					'_data'       => Sobi::Txt( 'MN.ADD_ENTRY' ),
+					'_attributes' => [
+						'lang' => Sobi::Lang( false ), 'url' => Sobi::Url( [ 'task' => 'entry.add', 'sid' => Input::Sid() ] )
+					]
 				];
 			}
 		}
@@ -932,6 +979,7 @@ abstract class SPFrontView extends SPObject implements SPView
 				$fieldsToDisplay = $primaryCat->get( 'entryFields' );
 			}
 		}
+
 		return $fieldsToDisplay;
 	}
 
@@ -976,20 +1024,20 @@ abstract class SPFrontView extends SPObject implements SPView
 			if ( isset( $settings[ 'general' ] ) ) {
 				foreach ( $settings[ 'general' ] as $k => $v ) {
 					$this->_attr[ 'config' ][ $k ] = [
-							'_complex' => 1,
-							'_attributes' => [
-									'value' => $v
-							]
+						'_complex'    => 1,
+						'_attributes' => [
+							'value' => $v
+						]
 					];
 				}
 			}
 			if ( isset( $settings[ $task ] ) ) {
 				foreach ( $settings[ $task ] as $k => $v ) {
 					$this->_attr[ 'config' ][ $k ] = [
-							'_complex' => 1,
-							'_attributes' => [
-									'value' => $v
-							]
+						'_complex'    => 1,
+						'_attributes' => [
+							'value' => $v
+						]
 					];
 				}
 			}

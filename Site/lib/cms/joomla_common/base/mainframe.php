@@ -48,6 +48,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 	/**
 	 * @param $path
+	 *
 	 * @return array|string
 	 */
 	public function path( $path )
@@ -62,6 +63,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				$path = $type . implode( '.', $path );
 				break;
 		}
+
 		return $path;
 	}
 
@@ -133,7 +135,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 						// really ;)
 						if ( !( JFolder::create( $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro/Cache', 0775 ) ) ) {
 							SPFactory::message()
-									->setSilentSystemMessage( Sobi::e( 'CANNOT_CREATE_CACHE_DIRECTORY' ), SPC::ERROR_MSG );
+								->setSilentSystemMessage( Sobi::e( 'CANNOT_CREATE_CACHE_DIRECTORY' ), SPC::ERROR_MSG );
 						}
 
 					}
@@ -152,6 +154,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 	/**
 	 * @param $value
+	 *
 	 * @return mixed
 	 */
 	protected function JConfigValue( $value )
@@ -168,15 +171,19 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		if ( !$mf || !( $mf instanceof self ) ) {
 			$mf = new self();
 		}
+
 		return $mf;
 	}
 
 	/**
 	 * @static
+	 *
 	 * @param string $msg The error message, which may also be shown the user if need be.
 	 * @param int $code The application-internal error code for this error
-	 * @param mixed $info Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database DSN).
+	 * @param mixed $info Optional: Additional error information (usually only developer-relevant information that the user should never see, like a database
+	 *     DSN).
 	 * @param bool $translate
+	 *
 	 * @throws Exception
 	 * @return object    $error    The configured JError object
 	 */
@@ -197,11 +204,13 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		if ( !( $r ) ) {
 			$r = SPRequest::string( 'HTTP_REFERER', self::url(), false, 'SERVER' );
 		}
+
 		return $r;
 	}
 
 	/**
 	 * @static
+	 *
 	 * @param $add
 	 * @param string $msg - The message, which may also be shown the user if need be.
 	 * @param string $msgtype
@@ -222,6 +231,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 	/**
 	 * @static
+	 *
 	 * @param string $msg The message, which may also be shown the user if need be.
 	 * @param null $type
 	 */
@@ -241,11 +251,12 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	public function proceedMessageQueue()
 	{
 		JFactory::getSession()
-				->set( 'application.queue', JFactory::getApplication()->getMessageQueue() );
+			->set( 'application.queue', JFactory::getApplication()->getMessageQueue() );
 	}
 
 	/**
 	 * @static
+	 *
 	 * @param int $code HTTP response code
 	 */
 	public function redirect( $code = 302 )
@@ -266,9 +277,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				$type = 'message';
 			}
 			JFactory::getApplication()
-					->enqueueMessage( $msg, $type );
+				->enqueueMessage( $msg, $type );
 			JFactory::getApplication()
-					->redirect( $r[ 'address' ], $code );
+				->redirect( $r[ 'address' ], $code );
 
 		}
 	}
@@ -276,6 +287,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	/**
 	 * @param $name
 	 * @param $url
+	 *
 	 * @return SPJoomlaMainFrame
 	 */
 	public function & addToPathway( $name, $url )
@@ -300,10 +312,11 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		$a = preg_replace( '/&Itemid=\d+/', null, str_replace( '/', null, $url ) );
 		if ( $menu != $a ) {
 			JFactory::getApplication()
-					->getPathway()
-					->addItem( $name, $url );
+				->getPathway()
+				->addItem( $name, $url );
 			$this->pathway[] = [ 'name' => $name, 'url' => $url ];
 		}
+
 		return $this;
 	}
 
@@ -336,8 +349,10 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 	/**
 	 * Adds object to the pathway
+	 *
 	 * @param SPDBObject $obj
 	 * @param array $site
+	 *
 	 * @return mixed
 	 */
 	public function & addObjToPathway( $obj, $site = [] )
@@ -368,8 +383,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				 */
 				$mid = true;
 				SPFactory::registry()
-						->set( 'cache_view_recreate_request', $mid )
-						->set( 'cache_view_add_itemid', JFactory::getApplication()->getMenu()->getActive()->id );
+					->set( 'cache_view_recreate_request', $mid )
+					->set( 'cache_view_add_itemid', JFactory::getApplication()->getMenu()->getActive()->id );
+
 				return $this;
 
 			}
@@ -414,8 +430,8 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				 *    It wouldn't be normally a problem but when SEF is enabled we do not have the pid so we don't know how it has been enetered
 				 */
 				JFactory::getApplication()
-						->getPathway()
-						->setPathway( [] );
+					->getPathway()
+					->setPathway( [] );
 			}
 			foreach ( $path as $data ) {
 				if ( !( isset( $data[ 'name' ] ) || isset( $data[ 'id' ] ) ) || !( $data[ 'id' ] ) ) {
@@ -439,6 +455,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 	/**
 	 * @param array $head
+	 *
 	 * @return bool
 	 */
 	public function addHead( $head )
@@ -539,11 +556,13 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 	/**
 	 * Creating URL from a array for the current CMS
+	 *
 	 * @param array $var
 	 * @param bool $js
 	 * @param bool $sef
 	 * @param bool $live
 	 * @param bool $forceItemId
+	 *
 	 * @return string
 	 */
 	public static function url( $var = null, $js = false, $sef = true, $live = false, $forceItemId = false )
@@ -661,17 +680,19 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 			$url = html_entity_decode( $url );
 		}
 		$url = str_replace( ' ', '%20', urldecode( $url ) );
+
 		return $js ? str_replace( 'amp;', null, $url ) : $url;
 	}
 
 	/**
 	 * @param $url
+	 *
 	 * @return bool
 	 */
 	protected function getItemid( &$url )
 	{
 		$sid = isset( $url[ 'pid' ] ) && $url[ 'pid' ] ? $url[ 'pid' ] : $url[ 'sid' ];
-		if ( !( ( int )$sid ) ) {
+		if ( !( ( int ) $sid ) ) {
 			return false;
 		}
 		$url[ 'Itemid' ] = 0;
@@ -731,8 +752,8 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		// if we still don't have an Itemid it means that there is no link to SobiPro section
 		if ( !( $url[ 'Itemid' ] ) && !( defined( 'SOBIPRO_ADM' ) ) ) {
 			SPFactory::message()
-					->warning( Sobi::Txt( 'ITEMID_MISSING_WARN', 'https://www.sigsiu.net/help_screen/joomla.menu', $sid ), false, false )
-					->setSystemMessage( 'SEF-URL' );
+				->warning( Sobi::Txt( 'ITEMID_MISSING_WARN', 'https://www.sigsiu.net/help_screen/joomla.menu', $sid ), false, false )
+				->setSystemMessage( 'SEF-URL' );
 		}
 	}
 
@@ -758,6 +779,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 	/**
 	 *
 	 * @param int $id
+	 *
 	 * @return \JUser
 	 * @internal param $id
 	 */
@@ -779,11 +801,13 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		JResponse::setBody( null );
 		while ( ob_get_length() )
 			ob_end_clean();
+
 		return $this;
 	}
 
 	/**
 	 * @param string $type
+	 *
 	 * @return $this
 	 */
 	public function & customHeader( $type = 'application/json' )
@@ -791,6 +815,7 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 		header( 'Content-type: ' . $type );
 		header( 'Cache-Control: no-cache, must-revalidate' );
 		header( 'Expires: Sat, 26 Jul 1997 05:00:00 GMT' );
+
 		return $this;
 	}
 
@@ -805,7 +830,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 
 	/**
 	 * Checks for a form token in the request.
+	 *
 	 * @param string $method
+	 *
 	 * @return boolean
 	 */
 	public function checkToken( $method = 'post' )
@@ -884,10 +911,12 @@ class SPMainFrame
 {
 	/**
 	 * @deprecated
+	 *
 	 * @param $msg
 	 * @param int $code
 	 * @param null $info
 	 * @param bool $translate
+	 *
 	 * @return object
 	 */
 	public static function runAway( $msg, $code = 500, $info = null, $translate = false )
@@ -906,6 +935,7 @@ class SPMainFrame
 
 	/**
 	 * @deprecated
+	 *
 	 * @param $add
 	 * @param null $msg
 	 * @param string $msgtype
@@ -918,8 +948,10 @@ class SPMainFrame
 
 	/**
 	 * @deprecated
+	 *
 	 * @param $msg
 	 * @param null $type
+	 *
 	 * @return string
 	 */
 	public static function msg( $msg, $type = null )
@@ -946,11 +978,13 @@ class SPMainFrame
 
 	/**
 	 * @deprecated
+	 *
 	 * @param null $var
 	 * @param bool $js
 	 * @param bool $sef
 	 * @param bool $live
 	 * @param bool $forceItemId
+	 *
 	 * @return string
 	 */
 	public static function url( $var = null, $js = false, $sef = true, $live = false, $forceItemId = false )
