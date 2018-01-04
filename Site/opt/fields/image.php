@@ -7,7 +7,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
  *
- * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -238,7 +238,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$save = [];
 		if ( $this->verify( $entry, $request ) ) {
 			// check if we are using the ajax upload - then we don't need to play with temp data
-			$check = Input::String( $this->nid, $request );
+			$check = Input::String( $this->nid );
 			if ( !( $check ) ) {
 				/* save the file to temporary folder */
 				$data = SPRequest::file( $this->nid, 'tmp_name' );
@@ -271,7 +271,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	private function verify( $entry, $request )
 	{
 		static $store = null;
-		$directory = Input::String( $this->nid, $request );
+		$directory = Input::String( $this->nid );
 		if ( strtolower( $request ) == 'post' || strtolower( $request ) == 'get' ) {
 			$data = SPRequest::file( $this->nid, 'tmp_name' );
 		}
@@ -319,7 +319,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		else {
 //			$fileSize = SPRequest::file( $this->nid, 'size' );
 		}
-		$del = Input::Bool( $this->nid . '_delete', $request, false );
+		$del = Input::Bool( $this->nid . '_delete' );
 		$dexs = strlen( $data );
 		if ( $this->required && !( $dexs ) ) {
 			$files = $this->getRaw();
@@ -372,7 +372,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$del = SPRequest::bool( $this->nid . '_delete', null, $request ); //don't use Framework function -> fatal error
+		$del = Input::Bool( $this->nid . '_delete' );
 		if ( $clone ) {
 			$orgSid = Input::Sid();
 			$this->loadData( $orgSid );
@@ -419,7 +419,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		 * */
 
 		if ( !( $data ) ) {
-			$directory = SPRequest::string( $this->nid, null, $request );   //don't use Framework function -> fatal error
+			$directory = Input::String( $this->nid );
 			if ( strlen( $directory ) ) {
 				list( $data, $dirName, $files, $coordinates ) = $this->getAjaxFiles( $directory );
 				if ( count( $files ) ) {
