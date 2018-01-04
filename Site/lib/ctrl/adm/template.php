@@ -7,14 +7,14 @@
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
  *
- * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
 
 use Sobi\C;
@@ -130,7 +130,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 						}
 						try {
 							SPFs::write( $themeFile, $themesContent );
-						} catch ( SPException $x ) {
+						}
+						catch ( SPException $x ) {
 							$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
 						}
 					}
@@ -148,7 +149,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 						try {
 							SPFs::write( $lessFile, $lessContent );
 							$this->compileLessFile( $lessFile, str_replace( 'less', 'css', $lessFile ), Sobi::Url( 'template.settings' ), true );
-						} catch ( SPException $x ) {
+						}
+						catch ( SPException $x ) {
 							$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
 						}
 					}
@@ -156,12 +158,13 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			}
 			try {
 				FileSystem::Write( FileSystem::FixPath( $this->dir( $templateName ) . str_replace( '.', '/', $configFile ) . '.json' ), $store );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_NOT_SAVED', $x->getMessage() ), false, SPC::ERROR_MSG );
 			}
 		}
 		SPFactory::cache()
-				->cleanSectionXML( Sobi::Section() );
+			->cleanSectionXML( Sobi::Section() );
 		$this->response( Sobi::Url( 'template.settings' ), Sobi::Txt( 'TP.SETTINGS_SAVED' ), false, SPC::SUCCESS_MSG );
 	}
 
@@ -184,16 +187,16 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$view = SPFactory::View( 'template', true );
 		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == SPC::DEFAULT_TEMPLATE ) {
 			SPFactory::message()
-					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
-					->setSystemMessage();
+				->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
+				->setSystemMessage();
 		}
 		if ( SPFs::exists( $dir . '/template.xml' ) ) {
 			$file = $this->getTemplateData( $dir, $view, $templateName );
 		}
 		else {
 			SPFactory::message()
-					->warning( Sobi::Txt( 'TP.MISSING_DEFINITION_FILE' ), false )
-					->setSystemMessage();
+				->warning( Sobi::Txt( 'TP.MISSING_DEFINITION_FILE' ), false )
+				->setSystemMessage();
 		}
 		/** search for all json files */
 		$directory = new Directory( $dir );
@@ -209,8 +212,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		$menu = $this->createMenu();
 		$plugins = SPFactory::db()
-				->select( 'pid', 'spdb_plugins' )
-				->loadAssocList( 'pid' );
+			->select( 'pid', 'spdb_plugins' )
+			->loadAssocList( 'pid' );
 		if ( Sobi::Section() ) {
 			$menu->setOpen( 'AMN.APPS_SECTION_TPL' );
 		}
@@ -221,13 +224,13 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$entriesOrdering = $view->namesFields( null, true );
 		$sid = Sobi::Section();
 		$view->assign( $menu, 'menu' )
-				->assign( $this->_task, 'task' )
-				->assign( $sid, 'sid' )
-				->assign( $templateSettings, 'settings' )
-				->assign( $entriesOrdering, 'entriesOrdering' )
-				->assign( $plugins, 'apps' )
-				->addHidden( $templateName, 'templateName' )
-				->determineTemplate( 'template', 'config', $dir );
+			->assign( $this->_task, 'task' )
+			->assign( $sid, 'sid' )
+			->assign( $templateSettings, 'settings' )
+			->assign( $entriesOrdering, 'entriesOrdering' )
+			->assign( $plugins, 'apps' )
+			->addHidden( $templateName, 'templateName' )
+			->determineTemplate( 'template', 'config', $dir );
 		Sobi::Trigger( 'Settings', $this->name(), [ &$file, &$view ] );
 		$view->display();
 	}
@@ -319,7 +322,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				$url = [ 'task' => 'config.general', 'pid' => $sid ];
 			}
 			else {
-				$url = [ 'task' => 'config.general' ];
+//				$url = [ 'task' => 'config.general' ];
+				$url = [ 'task' => 'template.info', 'template' => SPC::DEFAULT_TEMPLATE ];
 			}
 			$this->response( Sobi::Url( $url ), Sobi::Txt( 'TP.REMOVED' ), false, 'success' );
 		}
@@ -438,8 +442,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$view = SPFactory::View( 'template', true );
 		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == SPC::DEFAULT_TEMPLATE ) {
 			SPFactory::message()
-					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
-					->setSystemMessage();
+				->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
+				->setSystemMessage();
 		}
 
 		if ( FileSystem::Exists( $dir . '/template.xml' ) ) {
@@ -447,8 +451,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		else {
 			SPFactory::message()
-					->warning( Sobi::Txt( 'TP.MISSING_DEFINITION_FILE' ), false )
-					->setSystemMessage();
+				->warning( Sobi::Txt( 'TP.MISSING_DEFINITION_FILE' ), false )
+				->setSystemMessage();
 		}
 		$menu = $this->createMenu();
 		if ( Sobi::Section() ) {
@@ -459,10 +463,10 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		$sid = Sobi::Section();
 		$view->assign( $menu, 'menu' )
-				->assign( $this->_task, 'task' )
-				->assign( $sid, 'sid' )
-				->addHidden( $templateName, 'templateName' )
-				->determineTemplate( 'template', 'info' );
+			->assign( $this->_task, 'task' )
+			->assign( $sid, 'sid' )
+			->addHidden( $templateName, 'templateName' )
+			->determineTemplate( 'template', 'info' );
 		Sobi::Trigger( 'Info', $this->name(), [ &$file, &$view ] );
 		$view->display();
 	}
@@ -474,7 +478,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		}
 		else {
 			SPFactory::message()
-					->error( Sobi::Txt( 'TP.TEMPLATE_MISSING', Sobi::Cfg( 'section.template' ) ), false );
+				->error( Sobi::Txt( 'TP.TEMPLATE_MISSING', Sobi::Cfg( 'section.template' ) ), false );
+
 			return null;
 		}
 	}
@@ -504,7 +509,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				$u[ 'sid' ] = Sobi::Section();
 			}
 			$this->response( Sobi::Url( $u ), $message, $new, 'success' );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			$this->response( Sobi::Back(), $x->getMessage(), false, 'error' );
 		}
 	}
@@ -526,6 +532,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$file = SPLoader::path( 'usr.templates.' . implode( '.', $file ), 'front', false, $ext );
 			Sobi::Error( $this->name(), SPLang::e( 'FILE_NOT_FOUND', $file ), SPC::WARNING, 404, __LINE__, __FILE__ );
 		}
+
 		return $file;
 	}
 
@@ -552,6 +559,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$file = SPLoader::path( 'usr.templates.' . implode( '.', $file ), 'front', false );
 			Sobi::Error( $this->name(), SPLang::e( 'FILE_NOT_FOUND', $file ), SPC::WARNING, 404, __LINE__, __FILE__ );
 		}
+
 		return $file;
 	}
 
@@ -559,8 +567,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	{
 		if ( Sobi::Section() && Sobi::Cfg( 'section.template' ) == SPC::DEFAULT_TEMPLATE ) {
 			SPFactory::message()
-					->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
-					->setSystemMessage();
+				->warning( Sobi::Txt( 'TP.DEFAULT_WARN', 'https://www.sigsiu.net/help_screen/template.info' ), false )
+				->setSystemMessage();
 		}
 		$file = Input::Cmd( 'file' );
 		$file = $this->file( $file );
@@ -583,15 +591,15 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		/** @var $view SPAdmTemplateView */
 		$sid = Sobi::Section();
 		$view = SPFactory::View( 'template', true )
-				->assign( $fileContent, 'file_content' )
-				->assign( $filename, 'file_name' )
-				->assign( $ext, 'file_ext' )
-				->assign( $menu, 'menu' )
-				->assign( $this->_task, 'task' )
-				->assign( $sid, 'sid' )
-				->addHidden( Input::Cmd( 'file' ), 'fileName' )
-				->addHidden( $filename, 'filePath' )
-				->determineTemplate( 'template', 'edit' );
+			->assign( $fileContent, 'file_content' )
+			->assign( $filename, 'file_name' )
+			->assign( $ext, 'file_ext' )
+			->assign( $menu, 'menu' )
+			->assign( $this->_task, 'task' )
+			->assign( $sid, 'sid' )
+			->addHidden( Input::Cmd( 'file' ), 'fileName' )
+			->addHidden( $filename, 'filePath' )
+			->determineTemplate( 'template', 'edit' );
 		Sobi::Trigger( 'Edit', $this->name(), [ &$file, &$view ] );
 		$view->display();
 	}
@@ -600,6 +608,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	 * @param $dir
 	 * @param $view
 	 * @param $templateName
+	 *
 	 * @return mixed
 	 */
 	protected function getTemplateData( $dir, $view, $templateName )
@@ -611,9 +620,9 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$template[ 'name' ] = $xinfo->query( '/template/name' )->item( 0 )->nodeValue;
 		$view->assign( $template[ 'name' ], 'template_name' );
 		$template[ 'author' ] = [
-				'name' => $xinfo->query( '/template/authorName' )->item( 0 )->nodeValue,
-				'email' => $xinfo->query( '/template/authorEmail' )->item( 0 )->nodeValue,
-				'url' => $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue ? $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue : null,
+			'name'  => $xinfo->query( '/template/authorName' )->item( 0 )->nodeValue,
+			'email' => $xinfo->query( '/template/authorEmail' )->item( 0 )->nodeValue,
+			'url'   => $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue ? $xinfo->query( '/template/authorUrl' )->item( 0 )->nodeValue : null,
 		];
 		$template[ 'copyright' ] = $xinfo->query( '/template/copyright' )->item( 0 )->nodeValue;
 		$template[ 'license' ] = $xinfo->query( '/template/license' )->item( 0 )->nodeValue;
@@ -636,15 +645,16 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 					$filePath = null;
 				}
 				$files[] = [
-						'file' => $file->attributes->getNamedItem( 'path' )->nodeValue,
-						'description' => $file->nodeValue,
-						'filepath' => $filePath
+					'file'        => $file->attributes->getNamedItem( 'path' )->nodeValue,
+					'description' => $file->nodeValue,
+					'filepath'    => $filePath
 				];
 			}
 			$template[ 'files' ] = $files;
 			$view->assign( $files, 'files' );
 		}
 		$view->assign( $template, 'template' );
+
 		return $file;
 	}
 
@@ -662,8 +672,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 
 			if ( $compress ) {
 				$options = [
-						'compress' => true,
-						'strictMath' => true
+					'compress'   => true,
+					'strictMath' => true
 				];
 			}
 			else {
@@ -676,7 +686,8 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 				FileSystem::Delete( $output );
 			}
 			FileSystem::Write( $output, $css );
-		} catch ( Exception $x ) {
+		}
+		catch ( Exception $x ) {
 			$this->response( Sobi::Url( $u ), SPLang::e( 'TP.LESS_FILE_NOT_COMPILED', $x->getMessage() ), false, SPC::ERROR_MSG );
 		}
 	}
