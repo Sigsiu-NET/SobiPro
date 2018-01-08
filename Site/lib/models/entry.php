@@ -146,7 +146,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		$this->translate();
 		// if the visitor can't see unapproved entries we are showing the approved version anyway
 		if ( !( Sobi::Can( 'entry.access.unapproved_any' ) )
-				&& ( SPRequest::task() != 'entry.edit' && SPRequest::task() != 'entry.submit' && SPRequest::task() != 'entry.save' )
+				&& ( Input::Task() != 'entry.edit' && Input::Task() != 'entry.submit' && Input::Task() != 'entry.save' )
 				&& !( $this->approved )
 				&& !( Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ) ) {
 			$this->approved = 1;
@@ -408,7 +408,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 				/* get fields */
 				try {
 					$c = [ 'id' => $this->id, 'oType' => 'entry' ];
-					if ( !( $this->approved || ( SPRequest::task() == 'entry.edit' || ( Sobi::Can( 'entry.access.unapproved_any' ) ) ) ) ) {
+					if ( !( $this->approved || ( Input::Task() == 'entry.edit' || ( Sobi::Can( 'entry.access.unapproved_any' ) ) ) ) ) {
 						$c[ 'copy' ] = '0';
 					}
 					$db->select( [ 'pid', 'position', 'validSince', 'validUntil' ], 'spdb_relations', $c, 'position' );
@@ -610,7 +610,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	private function checkCopy()
 	{
 		return !(
-				in_array( SPRequest::task(), [ 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit', 'entry.payment' ] )
+				in_array( Input::Task(), [ 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit', 'entry.payment' ] )
 				|| Sobi::Can( 'entry.access.unapproved_any' )
 				|| ( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.manage.own' ) )
 				|| ( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.access.unpublished_own' ) )
@@ -694,15 +694,15 @@ class SPEntry extends SPDBObject implements SPDataModel
 		$clone = Input::Task() == 'entry.clone';
 
 		if ( !( $this->nid ) || $clone ) {
-			$this->nid = strtolower( SPLang::nid( SPRequest::string( $this->nameField, null, false, $request ), true ) );
+			$this->nid = strtolower( SPLang::nid( Input::String( $this->nameField ), true ) );
 			$this->nid = $this->createAlias();
 			/** Thu, Jul 30, 2015 12:15:25 - what the hell was that? */
 //			$this->name = $this->nid;
 		}
 		if ( !( $this->id ) && Sobi::Cfg( 'entry.publish_limit', 0 ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
-			Input::Set( 'entry_createdTime', 0, $request );
-			Input::Set( 'entry_validSince', 0, $request );
-			Input::Set( 'entry_validUntil', 0, $request );
+			Input::Set( 'entry_createdTime', 0 );
+			Input::Set( 'entry_validSince', 0 );
+			Input::Set( 'entry_validUntil', 0 );
 			$this->validUntil = gmdate( 'Y-m-d H:i:s', time() + ( Sobi::Cfg( 'entry.publish_limit', 0 ) * 24 * 3600 ) );
 		}
 		$preState = Sobi::Reg( 'object_previous_state' );
@@ -728,7 +728,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 					$this->nameField = $field->get( 'nid' );
 				}
 			} catch ( SPException $x ) {
-				if ( SPRequest::task() != 'entry.clone' ) {
+				if ( Input::Task() != 'entry.clone' ) {
 					$db->rollback();
 					throw new SPException( SPLang::e( 'CANNOT_SAVE_FIELS_DATA', $x->getMessage() ) );
 				}
@@ -741,11 +741,11 @@ class SPEntry extends SPDBObject implements SPDataModel
 		/* get categories */
 		$cats = Sobi::Reg( 'request_categories' );
 		if ( !( count( $cats ) ) ) {
-			$cats = SPRequest::arr( 'entry_parent', SPFactory::registry()->get( 'request_categories', [] ), $request );
+			$cats = Input::Arr( 'entry_parent', 'request', SPFactory::registry()->get( 'request_categories', [] ) );
 		}
 		/* by default it should be comma separated string */
 		if ( !( count( $cats ) ) ) {
-			$cats = SPRequest::string( 'entry_parent', null, $request );
+			$cats = Input::string( 'entry_parent' );
 			if ( strlen( $cats ) && strpos( $cats, ',' ) ) {
 				$cats = explode( ',', $cats );
 				foreach ( $cats as $i => $cat ) {

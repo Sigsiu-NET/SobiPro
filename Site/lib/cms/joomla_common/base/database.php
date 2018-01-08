@@ -191,9 +191,9 @@ class SPJoomlaDb
 	/**
 	 * Creates a "select" SQL query.
 	 *
-	 * @param string $toSelect - table rows to select
+	 * @param string | array $toSelect - table rows to select
 	 * @param string $tables - from which table(s)
-	 * @param string $where - SQL select condition
+	 * @param string | array $where - SQL select condition
 	 * @param null $order
 	 * @param int $limit - maximal number of rows
 	 * @param int $limitStart - start position
