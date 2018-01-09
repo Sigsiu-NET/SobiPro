@@ -404,7 +404,7 @@ class SPJoomlaLang
 			$toSselect = [ $select ];
 		}
 		try {
-			$toSselect[ ] = 'language';
+			$toSselect[] = 'language';
 			$params = [
 					'sKey' => $key,
 					'oType' => $type,
@@ -484,7 +484,7 @@ class SPJoomlaLang
 		if ( $adm ) {
 			$front = $this->_jsLang( false );
 		}
-		$path = $adm ? implode( DS, [ JPATH_ADMINISTRATOR, 'language', 'en-GB', 'en-GB.com_sobipro.js' ] ) : implode( DS, [ SOBI_ROOT, 'language', 'en-GB', 'en-GB.com_sobipro.js' ] );
+		$path = $adm ? JPATH_ADMINISTRATOR . '/language/en-GB/en-GB.com_sobipro.js' : SOBI_ROOT . '/language/en-GB/en-GB.com_sobipro.js';
 		if ( $this->_lang != 'en-GB' && Sobi::Cfg( 'lang.engb_preload', true ) ) {
 			$strings = SPLoader::loadIniFile( str_replace( 'en-GB', str_replace( '_', '-', $this->_lang ), $path ), false, false, true, true, true );
 			$def = SPLoader::loadIniFile( $path, false, false, true, true, true );
@@ -494,6 +494,7 @@ class SPJoomlaLang
 		}
 		else {
 			$def = SPLoader::loadIniFile( str_replace( 'en-GB', str_replace( '_', '-', $this->_lang ), $path ), false, false, true, true, true );
+			$def = array_merge( $front, $def );
 		}
 		return $def;
 	}
@@ -692,7 +693,7 @@ class SPJoomlaLang
 			$params[ 'oType' ] = $type;
 		}
 		if ( in_array( 'alias', $fields ) ) {
-			$fields[ ] = 'nid';
+			$fields[] = 'nid';
 		}
 		if ( $fields && count( $fields ) ) {
 			$params[ 'sKey' ] = $fields;

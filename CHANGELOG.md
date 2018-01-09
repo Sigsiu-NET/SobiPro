@@ -77,6 +77,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Removing 'canonical' only in case our own was added (Issue #53)
     (#) Responsive search form layout corrected
     (#) Status of 'xml output' does not refelect the status of the setting in the sections
+    (#) Missing part of JavaScript translations in backend (Issue #56)
     
 
 ### 1.4.3 (19 October 2017)

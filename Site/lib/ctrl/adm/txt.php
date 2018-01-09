@@ -17,6 +17,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadController( 'txt' );
 
@@ -37,7 +39,7 @@ class SPJsTxtAdm extends SPJsTxt
 				$lang[ $term ] = $text;
 			}
 		}
-		if( !( SPRequest::int( 'deb' ) ) ) {
+		if( !( Input::Int( 'deb' ) ) ) {
 			SPFactory::mainframe()->cleanBuffer();
 			header( 'Content-type: text/javascript' );
 		}
