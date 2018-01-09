@@ -44,6 +44,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Small template improvements of file upload elements
 	(+) Information in entry form if a field is administrative
 	(+) The Joomla menu page heading (if any) will be shown instead of the SobiPro page heading
+	(+) Added support for emojis in field_data and language
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     (!) Separate icon from label in Button field

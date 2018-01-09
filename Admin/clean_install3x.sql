@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
 )
   -- needs to be MyISAM as InnoDB support FULLTEXT indices first since 5.6
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_option` (
@@ -278,7 +278,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
 )
   -- needs to be MyISAM as InnoDB support FULLTEXT indices first since 5.6
   ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 
 INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES
