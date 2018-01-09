@@ -613,6 +613,49 @@ class SPConfigAdmCtrl extends SPController
 	}
 
 	/**
+	 * Returns an array with field object of field type which is given as parameters
+	 *
+	 * @param bool $pos
+	 * @param array $types
+	 *
+	 * @return array
+	 */
+	public function getTypedFields( $types = [], $catFields = false )
+	{
+		try {
+			if ( $catFields ) {
+				$fids = SPFactory::db()
+					->select( 'fid', 'spdb_field', [ 'fieldType' => $types, 'section' => Sobi::Reg( 'current_section' ), 'adminField' => -1 ] )
+					->loadResultArray();
+			}
+			else {
+				$fids = SPFactory::db()
+					->select( 'fid', 'spdb_field', [ 'fieldType' => $types, 'section' => Sobi::Reg( 'current_section' ), 'adminField>' => -1 ] )
+					->loadResultArray();
+			}
+		}
+		catch ( SPException $x ) {
+			Sobi::Error( $this->name(), SPLang::e( 'CANNOT_GET_FIELD_FOR_NAMES', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+		}
+		$fields = [];
+		if ( count( $fids ) ) {
+			foreach ( $fids as $fid ) {
+				$f = SPFactory::Model( 'field', true );
+				$f->init( $fid );
+				try {
+					$f->setCustomOrdering( $fields );
+				}
+				catch ( SPException $x ) {
+					$fields[ $fid ] = $f;
+				}
+			}
+		}
+
+		return $fields;
+	}
+
+
+	/**
 	 * Returns an array with field object of field type which is possible to use it as entry name field
 	 *
 	 * @param bool $pos
@@ -646,7 +689,7 @@ class SPConfigAdmCtrl extends SPController
 		}
 
 		try {
-			if ($catFields) {
+			if ( $catFields ) {
 				$fids = SPFactory::db()
 					->select( 'fid', 'spdb_field', [ 'fieldType' => $types, 'section' => Sobi::Reg( 'current_section' ), 'adminField' => -1 ] )
 					->loadResultArray();
