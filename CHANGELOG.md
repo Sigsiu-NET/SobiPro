@@ -13,7 +13,7 @@ Url: https://www.Sigsiu.NET
 
 #### @copyright
 
-Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.  
+Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.  
 @license GNU/GPL Version 3  
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 
 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.  
@@ -56,7 +56,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (!) Category icon handling improved; global category icon added
     (!) Setting 'cacherequest' back to 'post' in Sobi\Input (While changing from SPRequest to Sobi\Input, hardcode method to 'post')
    	(!) Includes Sobi Framework 1.0.3
-   	(!) Conditional requirement for /cms/version/version.php
+   	(!) Conditional requirement for /cms/version/version.php (cron jobs no longer worked with new Joomla)
 
     (#) Visitors are treated as users if checking permissions
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving
