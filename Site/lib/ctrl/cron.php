@@ -16,7 +16,13 @@
  */
 
 define( '_JEXEC', 1 );
-//error_reporting( E_ALL );
+/**
+ * Wed, Jan 10, 2018 12:44:23
+ * This is not a good practice but Joomla throwsome notices on its own
+ * and it will screw the output for cronjobs
+ * */
+error_reporting( 0 );
+
 require dirname( __FILE__ ) . '/../../../../libraries/import.php';
 if ( !( defined( 'JPATH_BASE' ) ) ) {
 	define( 'JPATH_BASE', realpath( dirname( __FILE__ ) . '/../../../../' ) );
@@ -25,7 +31,10 @@ require_once JPATH_BASE . '/includes/defines.php';
 if ( file_exists( JPATH_LIBRARIES . '/import.legacy.php' ) ) {
 	require_once JPATH_LIBRARIES . '/import.legacy.php';
 }
-require_once JPATH_LIBRARIES . '/cms/version/version.php';
+if ( file_exists( JPATH_LIBRARIES . '/version.php' ) ) {
+	require_once JPATH_LIBRARIES . '/cms/version/version.php';
+}
+
 if ( file_exists( JPATH_LIBRARIES . '/cms.php' ) ) {
 	require_once JPATH_LIBRARIES . '/cms.php';
 }
@@ -39,6 +48,8 @@ if ( version_compare( JVERSION, '3.4.9999', 'ge' ) ) {
 	JFactory::getConfig( JPATH_CONFIGURATION . '/configuration.php' );
 }
 require_once( JPATH_ROOT . '/components/com_sobipro/lib/sobi.php' );
+
+$_SERVER[ 'HTTP_HOST' ] = NULL;
 
 class SobiProCrawler extends JApplicationCli
 {
@@ -63,6 +74,7 @@ class SobiProCrawler extends JApplicationCli
 	{
 		Sobi::Initialise();
 		$continue = $this->parseParameters( $this->args );
+		$_SERVER[ 'HTTP_HOST' ] = $this->liveURL;
 		if ( $continue ) {
 			if ( !( $this->section ) ) {
 				$this->sections = SPFactory::db()
@@ -120,7 +132,7 @@ class SobiProCrawler extends JApplicationCli
 				$done = true;
 				$this->out( '[ERROR] Invalid return code: ' . $response[ 'http_code' ] );
 				$this->out( '[ERROR] Returned Error : ' . $connection->error() );
-				$this->out( '[ERROR] While accessing following URL : |' . $url .'|' );
+				$this->out( '[ERROR] While accessing following URL : |' . $url . '|' );
 			}
 		}
 	}
