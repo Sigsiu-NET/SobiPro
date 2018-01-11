@@ -194,7 +194,7 @@ abstract class SPHtml_Input
 			$btngroup = 'input-group-btn';
 		}
 
-		$f .= "<div class=\"spUpload {$class} {$group}\" data-section=" . Sobi::Section() . ">";
+		$f .= "<div class=\"{$class} {$group}\" data-section=" . Sobi::Section() . ">";
 		$f .= '<div>';
 
 		$f .= '<div class="file">';
