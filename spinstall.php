@@ -1,7 +1,7 @@
 <?php
 /**
- *  @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
- *  @license GNU/GPL Version 3
+ * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @license GNU/GPL Version 3
  *  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  *  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  *  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
@@ -36,7 +36,7 @@ class com_sobiproInstallerScript
 
 		if ( $type != 'uninstall' ) {
 			// Installing component manifest file version
-			$this->release = $parent->get( 'manifest' )->version;
+			$this->release = $parent->getManifest()->version;
 			// Show the essential information at the install/update back-end
 			echo '<h2>Installing SobiPro version ' . $this->release . ' ...</h2>';
 		}
@@ -153,8 +153,7 @@ class com_sobiproInstallerScript
 		try {
 			$db->setQuery( 'DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;' );
 			$db->execute();
-		}
-		catch ( Exception $x ) {
+		} catch ( Exception $x ) {
 		}
 
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES (89, 'section', 'access', '*', 'adm', 1), (90, 'section', 'configure', '*', 'adm', 1), (91, 'section', 'delete', '*', 'adm', 0), (92, 'category', 'edit', '*', 'adm', 1), (93, 'category', 'add', '*', 'adm', 1), (94, 'category', 'delete', '*', 'adm', 1), (95, 'entry', 'edit', '*', 'adm', 1), (96, 'entry', 'add', '*', 'adm', 1), (97, 'entry', 'delete', '*', 'adm', 1), (98, 'entry', 'approve', '*', 'adm', 1), (99, 'entry', 'publish', '*', 'adm', 1), (86, 'entry', '*', '*', 'adm', 1), (87, 'category', '*', '*', 'adm', 1), (88, 'section', '*', '*', 'adm', 1);" );
@@ -188,14 +187,12 @@ class com_sobiproInstallerScript
 				try {
 					$db->setQuery( 'ALTER TABLE #__sobipro_field_data ENGINE = MYISAM;;' );
 					$db->execute();
-				}
-				catch ( Exception $x ) {
+				} catch ( Exception $x ) {
 				}
 				$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD FULLTEXT  `baseData` (`baseData`);' );
 				$db->execute();
 			}
-		}
-		catch ( Exception $x ) {
+		} catch ( Exception $x ) {
 		}
 
 		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_language' );
@@ -211,8 +208,7 @@ class com_sobiproInstallerScript
 			try {
 				$db->setQuery( 'ALTER TABLE #__sobipro_language ENGINE = MYISAM;;' );
 				$db->execute();
-			}
-			catch ( Exception $x ) {
+			} catch ( Exception $x ) {
 			}
 			$db->setQuery( 'ALTER TABLE  `#__sobipro_language` ADD FULLTEXT  `sValue` (`sValue`);' );
 			$db->execute();
@@ -231,8 +227,7 @@ class com_sobiproInstallerScript
 			try {
 				$db->setQuery( 'ALTER TABLE #__sobipro_history CHANGE `change` `changeAction` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;' );
 				$db->execute();
-			}
-			catch ( Exception $x ) {
+			} catch ( Exception $x ) {
 			}
 		}
 
@@ -251,8 +246,7 @@ class com_sobiproInstallerScript
 				$db->execute();
 				$db->setQuery( 'UPDATE `#__sobipro_category` SET `allFields` = 1' );
 				$db->execute();
-			}
-			catch ( Exception $x ) {
+			} catch ( Exception $x ) {
 			}
 		}
 
@@ -296,8 +290,7 @@ class com_sobiproInstallerScript
 		try {
 			$db->setQuery( 'DELETE FROM `#__sobipro_config` WHERE `sKey` = "xml_raw" AND `section` = 0;' );
 			$db->execute();
-		}
-		catch ( Exception $x ) {
+		} catch ( Exception $x ) {
 		}
 
 
@@ -305,8 +298,7 @@ class com_sobiproInstallerScript
 			$db->setQuery( 'ALTER TABLE #__sobipro_field_data CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin' );
 			$db->setQuery( 'ALTER TABLE #__sobipro_language CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin' );
 			$db->execute();
-		}
-		catch ( Exception $x ) {
+		} catch ( Exception $x ) {
 		}
 
 
@@ -351,8 +343,8 @@ class com_sobiproInstallerScript
 		}
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ) ) ) {
 			JFolder::move(
-				implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ),
-				implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'entries' ] )
+					implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ),
+					implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'entries' ] )
 			);
 		}
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) ) ) {
