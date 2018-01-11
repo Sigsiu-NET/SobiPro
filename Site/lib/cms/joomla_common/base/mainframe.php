@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Joomla\CMS\Factory;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 /**
@@ -341,8 +343,9 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				}
 				break;
 			default:
-				$dispatcher = JEventDispatcher::getInstance();
-				$dispatcher->trigger( $action, $params );
+				Factory::getApplication()->triggerEvent( $action, $params );
+//				$dispatcher = JEventDispatcher::getInstance();
+//				$dispatcher->trigger( $action, $params );
 				break;
 		}
 	}
