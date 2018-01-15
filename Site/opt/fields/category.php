@@ -71,6 +71,10 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	protected static $_filter = '';
 	/*** @var bool */
 	protected $suggesting = false;
+	/** * @var int */
+	protected $size = 0;
+	/** * @var int */
+	protected $ssize = 0;
 
 	public function __construct( &$field )
 	{
@@ -378,9 +382,14 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				'id'    => $this->nid,
 				'class' => 'required ' . $class
 			];
-			if ( $this->height ) {
-				$params[ 'style' ] = "height: {$this->height}px";
-			}
+			$this->size = ( $this->height != null ) ? ( $this->height / 20 ) : $this->size; //compatibility
+			$this->size = ( $this->size == '' ) ? 10 : $this->size;
+
+//			if ( $this->height ) {
+//				$params[ 'style' ] = "height: {$this->height}px";
+//			}
+			$params [ 'size' ] = $this->size;
+
 			$this->createValues( $this->_cats, $values, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) );
 			$selected = $this->_selectedCats;
 			if ( count( $selected ) ) {
@@ -540,9 +549,13 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				'id'    => $this->nid,
 				'class' => $this->cssClass
 			];
-			if ( $this->searchHeight ) {
-				$params[ 'style' ] = "height: {$this->searchHeight}px";
-			}
+			$this->ssize = ( $this->searchHeight != null ) ? ( $this->searchHeight / 20 ) : $this->ssize; //compatibility
+			$this->ssize = ( $this->ssize == '' ) ? 10 : $this->ssize;
+//			if ( $this->searchHeight ) {
+//				$params[ 'style' ] = "height: {$this->searchHeight}px";
+//			}
+			$params [ 'size' ] = $this->ssize;
+
 			$field = SPHtml_Input::select( $this->nid, $values, $selected, true, $params );
 		}
 		elseif ( $this->searchMethod == 'pselect' ) {

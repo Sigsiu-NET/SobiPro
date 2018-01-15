@@ -178,11 +178,18 @@
 													<option value="10" label="10" />
 												</values>
 											</field>
-											<field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
+											<field type="text" name="field.size" value="field.size" label="FMN.SEL.SIZE_IN_SEARCH" maxlength="10" class="input-mini">
 												<add where="after">
-													<text>px</text>
+													<call function="Sobi::Txt">
+														<param>FMN.LENGTH_ROWS</param>
+													</call>
 												</add>
 											</field>
+											<!--<field type="text" name="field.height" value="field.height" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">-->
+												<!--<add where="after">-->
+													<!--<text>px</text>-->
+												<!--</add>-->
+											<!--</field>-->
 											<field type="select" name="field.orderCatsBy" selected="field.orderCatsBy" label="ORDER_BY" class="input-large">
 												<values>
 													<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
@@ -238,6 +245,13 @@
 											<option value="pselect" label="FMN.CC_POPULATED_SELECT_LIST" />
 										</values>
 									</field>
+									<field type="text" name="field.ssize" value="field.ssize" label="FMN.SEL.SIZE_IN_SEARCH" maxlength="10" class="input-mini">
+										<add where="after">
+											<call function="Sobi::Txt">
+												<param>FMN.LENGTH_ROWS</param>
+											</call>
+										</add>
+									</field>
 									<field type="select" name="field.searchOrderCatsBy" selected="field.searchOrderCatsBy" label="ORDER_BY" class="input-large">
 										<values>
 											<option value="name.asc" label="CATN.ORDER_BY_NAME_ASC" />
@@ -259,11 +273,11 @@
 											<option value="9" label="9" />
 										</values>
 									</field>
-									<field type="text" name="field.searchHeight" value="field.searchHeight" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">
-										<add where="after">
-											<text>px</text>
-										</add>
-									</field>
+									<!--<field type="text" name="field.searchHeight" value="field.searchHeight" label="FMN.FIELD_HEIGHT" maxlength="10" class="input-mini">-->
+										<!--<add where="after">-->
+											<!--<text>px</text>-->
+										<!--</add>-->
+									<!--</field>-->
 									<field type="text" name="field.cssClassSearch" value="field.cssClassSearch" label="FM.CSS_CLASS" class="input-large" />
 								</fieldset>
 							</div>
