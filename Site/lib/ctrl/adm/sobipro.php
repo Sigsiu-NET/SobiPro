@@ -95,7 +95,7 @@ final class SobiProAdmCtrl
 
 		/* initialise translator and load language files */
 		SPLoader::loadClass( 'cms.base.lang' );
-		SPLang::setLang( Sobi::Lang() );
+		SPLang::setLang( Sobi::Lang(false ) );
 		try {
 			SPLang::registerDomain( 'admin' );
 		} catch ( SPException $x ) {
