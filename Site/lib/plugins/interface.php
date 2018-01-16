@@ -1,19 +1,23 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
+
+use Sobi\Input\Input;
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
@@ -76,7 +80,7 @@ final class SPPlugins
 		/* if we didn't get section it can be also because it wasn't initialized yet
 		   * but then we have at lease on of these id in request - if so; just do nothing
 		   * it will be initialized later anyway */
-		elseif ( !( SPRequest::sid() || SPRequest::int( 'pid' ) ) ) {
+		elseif ( !( Input::Sid() || Input::Int( 'pid' ) ) ) {
 			$this->_actions[ $task ] = $pids;
 		}
 		// here is a special exception for the custom listings
@@ -91,7 +95,7 @@ final class SPPlugins
 		static $count = 0;
 		$count++;
 		$this->_plugins[ 'dynamic_' . $count ] = $object;
-		$task = Sobi::Reg( 'task', SPRequest::task() );
+		$task = Sobi::Reg( 'task', Input::Task() );
 		$this->_actions[ $task ][ ] = 'dynamic_' . $count;
 	}
 
@@ -118,7 +122,7 @@ final class SPPlugins
 		static $count = 0;
 		$action = ucfirst( $action ) . ucfirst( $subject );
 		$action = str_replace( 'SP', null, $action );
-		$task = Sobi::Reg( 'task', SPRequest::task() );
+		$task = Sobi::Reg( 'task', Input::Task() );
 		$task = strlen( $task ) ? $task : '*';
 		if ( strstr( $task, '.' ) ) {
 			$t = explode( '.', $task );
@@ -127,7 +131,7 @@ final class SPPlugins
 		/**
 		 * Joomla! -> Unable to load renderer class
 		 */
-		if ( $action == 'ParseContent' && SPRequest::cmd( 'format' ) == 'raw' ) {
+		if ( $action == 'ParseContent' && Input::Cmd( 'format' ) == 'raw' ) {
 			return;
 		}
 		$actions[ $count++ ] = $action;
@@ -153,6 +157,10 @@ final class SPPlugins
 			if ( !( isset( $this->_actions[ $task ] ) ) || !( count( $this->_actions[ $task ] ) ) ) {
 				$this->load( $task );
 			}
+
+//			if (substr( $action, 0, 3 ) == 'App') {
+//				$app = 1;   //for breakpoints
+//			}
 
 			/* if there were any plugin for this action, check if these are loaded */
 			if ( is_array( $this->_actions[ $task ] ) && count( $this->_actions[ $task ] ) ) {

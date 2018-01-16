@@ -1,25 +1,23 @@
 <?php
 /**
- * @version: $Id$
  * @package: SobiPro Component for Joomla!
-
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
- * Url: http://www.Sigsiu.NET
-
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * Url: https://www.Sigsiu.NET
+ *
+ * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
- * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
-
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-
- * $Date$
- * $Revision$
- * $Author$
- * $HeadURL$
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
+
+use Sobi\Input\Input;
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 /**
@@ -92,7 +90,7 @@ class SPPPaypal extends SPPlugin
         );
         $values[ 'expl' ] = $expl;
         $values[ 'subject' ] = $subject;
-        $values[ 'ip' ] = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+        $values[ 'ip' ] = Input::Ip4();
         $methods[ $this->id ] = [
             'content' => ( $message ? $this->raw( $cfg, $values ) : $this->content( $cfg, $values ) ),
             'title' => Sobi::Txt( 'APP.PPP.PAY_TITLE' )
@@ -136,6 +134,7 @@ class SPPPaypal extends SPPlugin
         $img = SPLang::replacePlaceHolders( $config[ 'general' ][ 'image' ] );
         $out .= '<input src="' . $img . '" name="submit" alt="" type="image"/>' . "\n";
         $out .= '</form>' . "\n";
-        return SPLang::clean($out);
+	    return $out;
+//        return SPLang::clean($out);   //destroys form output
     }
 }

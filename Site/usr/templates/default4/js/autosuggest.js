@@ -34,9 +34,9 @@ SobiPro.jQuery( document ).ready( function () {
 				'data': request,
 				'dataType': 'json',
 				success: function ( response ) {
-					let responseData = [];
+					var responseData = [];
 					if ( response.length ) {
-						for ( let i = 0; i < response.length; i++ ) {
+						for ( var i = 0; i < response.length; i++ ) {
 							responseData[ i ] = {'name': response[ i ]};
 						}
 						typeahead( responseData );
