@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -377,7 +377,7 @@
 											<option value="10" label="10"/>
 											<option value="12" label="12"/>
 											<option value="15" label="15"/>
-											<option value="20" label="20 (not recommended)"/>
+											<option value="20" label="SELECT_20_NOT_RECOMMENDED"/>
 										</values>
 									</field>
 									<field type="select" label="TP.CONFIG.LST_ENTRIESINLINE" name="settings[config][section-view][entries_in_line]"
@@ -445,7 +445,7 @@
 											<option value="8" label="8"/>
 											<option value="10" label="10"/>
 											<option value="15" label="15"/>
-											<option value="20" label="20 (not recommended)"/>
+											<option value="20" label="SELECT_20_NOT_RECOMMENDED"/>
 										</values>
 									</field>
 									<field type="select" label="TP.CONFIG.LST_ENTRIESINLINE" name="settings[config][category-view][entries_in_line]"
@@ -506,7 +506,7 @@
 											<option value="8" label="8"/>
 											<option value="10" label="10"/>
 											<option value="15" label="15"/>
-											<option value="20" label="20 (not recommended)"/>
+											<option value="20" label="SELECT_20_NOT_RECOMMENDED"/>
 										</values>
 									</field>
 									<field type="select" label="TP.CONFIG.LST_ENTRIESINLINE" name="settings[config][general][entries_in_line]"

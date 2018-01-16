@@ -6,7 +6,7 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
@@ -181,7 +181,7 @@
 											<field type="toggle" name="spcfg[list.subcats]" value="list.subcats" label="SECN.CFG.PASS_SUBCATS_TO_TEMPLATE"
 											       prefix="show"/>
 											<field type="select" label="SECN.CFG.NUMBER_SUBCATS" name="spcfg[list.num_subcats]" selected="list.num_subcats"
-											       class="input-mini">
+											       class="input-small">
 												<values>
 													<option value="1"/>
 													<option value="2"/>
@@ -194,7 +194,9 @@
 													<option value="9"/>
 													<option value="10"/>
 													<option value="15"/>
-													<option value="20"/>
+													<option value="20" label="SELECT_20_NOT_RECOMMENDED"/>
+													<option value="25" label="SELECT_25_NOT_RECOMMENDED"/>
+													<option value="30" label="SELECT_30_NOT_RECOMMENDED"/>
 												</values>
 											</field>
 										</fieldset>
