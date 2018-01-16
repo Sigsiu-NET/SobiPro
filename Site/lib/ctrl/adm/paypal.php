@@ -1,19 +1,23 @@
 <?php
 /**
  * @package: SobiPro Library
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ *
+ * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/lgpl.html and https://www.sigsiu.net/licenses.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
  */
+
+use Sobi\Input\Input;
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadController( 'config', true );
@@ -50,30 +54,33 @@ class SPPaymentPP extends SPConfigAdmCtrl
 	protected function save( $apply, $clone = false )
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
-			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$this->validate( 'extensions.paypal', [ 'task' => 'paypal', 'pid' => Sobi::Section() ] );
 		SPFactory::registry()->saveDBSection(
-				[
-						[ 'key' => 'ppurl', 'value' => SPRequest::string( 'ppurl' ) ],
-						[ 'key' => 'ppemail', 'value' => SPRequest::string( 'ppemail' ) ],
-						[ 'key' => 'ppcc', 'value' => SPRequest::string( 'ppcc' ) ],
-						[ 'key' => 'pprurl', 'value' => SPRequest::string( 'pprurl' ) ],
-				], 'paypal_' . Sobi::Section()
+			[
+				[ 'key' => 'ppurl', 'value' => Input::String( 'ppurl' ) ],
+				[ 'key' => 'ppemail', 'value' => Input::String( 'ppemail' ) ],
+				[ 'key' => 'ppcc', 'value' => input::String( 'ppcc' ) ],
+				[ 'key' => 'pprurl', 'value' => Input::String( 'pprurl' ) ],
+				[ 'key' => 'ppcancel', 'value' => Input::String( 'ppcancel' ) ],
+				[ 'key' => 'pploc', 'value' => Input::Int( 'pploc' ) ],
+			], 'paypal_' . Sobi::Section()
 		);
 		$data = [
-				'key' => 'ppexpl',
-				'value' => SPRequest::string( 'ppexpl', null, true ),
-				'type' => 'application',
-				'id' => Sobi::Section(),
-				'section' => Sobi::Section()
+			'key'     => 'ppexpl',
+			'value'   => Input::Raw( 'ppexpl' ),
+			'type'    => 'application',
+			'id'      => Sobi::Section(),
+			'section' => Sobi::Section()
 		];
 		try {
 			SPLang::saveValues( $data );
 			$data[ 'key' ] = 'ppsubject';
-			$data[ 'value' ] = SPRequest::string( 'ppsubject', true );
+			$data[ 'value' ] = Input::String( 'ppsubject', 'request', true );
 			SPLang::saveValues( $data );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			$message = SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() );
 			Sobi::Error( 'SPPaymentBt', $message, SPC::WARNING, 0, __LINE__, __FILE__ );
 			$this->response( Sobi::Back(), $message, false, 'error' );
@@ -84,12 +91,12 @@ class SPPaymentPP extends SPConfigAdmCtrl
 	private function screen()
 	{
 		$data = SPFactory::registry()
-				->loadDBSection( 'paypal_' . Sobi::Section() )
-				->get( 'paypal_' . Sobi::Section() );
+			->loadDBSection( 'paypal_' . Sobi::Section() )
+			->get( 'paypal_' . Sobi::Section() );
 		if ( !( count( $data ) ) ) {
 			$data = SPFactory::registry()
-					->loadDBSection( 'paypal' )
-					->get( 'paypal' );
+				->loadDBSection( 'paypal' )
+				->get( 'paypal' );
 		}
 		$ppexpl = SPLang::getValue( 'ppexpl', 'application', Sobi::Section() );
 		$ppsubj = SPLang::getValue( 'ppsubject', 'application', Sobi::Section() );
@@ -97,13 +104,15 @@ class SPPaymentPP extends SPConfigAdmCtrl
 			$ppsubj = SPLang::getValue( 'ppsubject', 'application' );
 		}
 		$this->getView( 'paypal' )
-				->assign( $data[ 'ppurl' ][ 'value' ], 'ppurl' )
-				->assign( $data[ 'ppemail' ][ 'value' ], 'ppemail' )
-				->assign( $data[ 'pprurl' ][ 'value' ], 'pprurl' )
-				->assign( $data[ 'ppcc' ][ 'value' ], 'ppcc' )
-				->assign( $ppexpl, 'ppexpl' )
-				->assign( $ppsubj, 'ppsubject' )
-				->determineTemplate( 'extensions', 'paypal' )
-				->display();
+			->assign( $data[ 'ppurl' ][ 'value' ], 'ppurl' )
+			->assign( $data[ 'ppemail' ][ 'value' ], 'ppemail' )
+			->assign( $data[ 'pprurl' ][ 'value' ], 'pprurl' )
+			->assign( $data[ 'ppcancel' ][ 'value' ], 'ppcancel' )
+			->assign( $data[ 'ppcc' ][ 'value' ], 'ppcc' )
+			->assign( $ppexpl, 'ppexpl' )
+			->assign( $ppsubj, 'ppsubject' )
+			->assign( $data[ 'pploc' ][ 'value' ], 'pploc' )
+			->determineTemplate( 'extensions', 'paypal' )
+			->display();
 	}
 }

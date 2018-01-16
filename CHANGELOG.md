@@ -58,6 +58,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
    	(!) Includes Sobi Framework 1.0.3
    	(!) Conditional requirement for /cms/version/version.php (cron jobs no longer worked with new Joomla)
    	(!) Multiselect list height settings for category field changed to size
+   	(!) User interface of Paypal payment application improved
 
     (#) Visitors are treated as users if checking permissions
     (#) Even if user may see own unpublished entry, a newly created entry wasn't shown after saving

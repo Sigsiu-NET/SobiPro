@@ -190,9 +190,10 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
   KEY `copy` (`copy`),
   FULLTEXT KEY `baseData` (`baseData`)
 )
-  -- needs to be MyISAM as InnoDB support FULLTEXT indices first since 5.6
+  -- needs to be MyISAM as InnoDB supports FULLTEXT indices first since 5.6
   ENGINE = MyISAM
-  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_bin;
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_option` (
@@ -278,7 +279,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
 )
   -- needs to be MyISAM as InnoDB support FULLTEXT indices first since 5.6
   ENGINE = MyISAM
-  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_bin;
 
 
 INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES
@@ -534,8 +536,10 @@ INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `
   ('fields_filter', 'alpha', 'Alphabetic String', 'L15bYS16QS1aXSskLw==', 'In the $field field only letters are allowed!', ''),
   ('paypal', 'ppcc', 'EUR', '', '', ''),
   ('paypal', 'pprurl', '{cfg:live_site}/index.php?option=com_sobipro&sid={section.id}', '', '', ''),
+  ('paypal', 'ppcancel', '{cfg:live_site}/index.php?option=com_sobipro&sid={section.id}', '', '', ''),
   ('paypal', 'ppurl', 'https://www.paypal.com/cgi-bin/webscr', '', '', ''),
   ('paypal', 'ppemail', 'change@me.com', '', '', ''),
+  ('paypal', 'pploc', '1', '', '', ''),
   ('rejections-templates', 'rejection-of-a-new-entry', 'Rejection of a new entry',
    'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjoxO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjA7czo5OiJ1bnB1Ymxpc2giO2I6MTtzOjc6ImRpc2NhcmQiO2I6MDt9', '', ''),
   ('rejections-templates', 'rejection-of-changes', 'Rejection of changes',
