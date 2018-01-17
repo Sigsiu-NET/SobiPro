@@ -75,19 +75,32 @@ class SPPPaypal extends SPPlugin
 		$rp = $cfg[ 'general' ][ 'replace' ];
 		$to = ( $cfg[ 'general' ][ 'replace' ] == ',' ) ? '.' : ',';
 		$amount = str_replace( $rp, $to, $payment[ 'summary' ][ 'sum_brutto' ] );
-		$values = [
-			'entry'    => $entry,
-			'amount'   => preg_replace( '/[^0-9\.,]/', null, $amount ),
-			'ppurl'    => SPLang::replacePlaceHolders( $data[ 'ppurl' ][ 'value' ], $entry ),
-			'ppemail'  => SPLang::replacePlaceHolders( $data[ 'ppemail' ][ 'value' ], $entry ),
-			'pprurl'   => SPLang::replacePlaceHolders( $data[ 'pprurl' ][ 'value' ], $entry ),
-			'ppcancel' => SPLang::replacePlaceHolders( $data[ 'ppcancel' ][ 'value' ], $entry ),
-			'ppcc'     => SPLang::replacePlaceHolders( $data[ 'ppcc' ][ 'value' ], $entry ),
-			'ppbn'     => SPLang::replacePlaceHolders( $data[ 'ppemail' ][ 'value' ], $entry ) . '_BuyNow_WPS_' . substr( Sobi::Lang(), 3, 2 ),
-			'pplang'   => str_replace( '-', '_', Sobi::Lang() ),
-			'pplc'     => substr( Sobi::Lang(), 3, 2 ),
-			'pploc'    => $data[ 'pploc' ][ 'value' ],
-		];
+
+		//compatibility for existing sites
+		if ( array_key_exists( 'ppcancel', $data ) ) {
+			$ppcancel = SPLang::replacePlaceHolders( $data[ 'ppcancel' ][ 'value' ], $entry );
+		}
+		else {
+			$ppcancel = $data[ 'pprurl' ][ 'value' ];
+		}
+		if ( array_key_exists( 'pploc', $data ) ) {
+			$pploc = $data[ 'pploc' ][ 'value' ];
+		}
+		else {
+			$pploc = 0;
+		}
+
+		$values = [ 'entry'    => $entry,
+		            'amount'   => preg_replace( '/[^0-9\.,]/', null, $amount ),
+		            'ppurl'    => SPLang::replacePlaceHolders( $data[ 'ppurl' ][ 'value' ], $entry ),
+		            'ppemail'  => SPLang::replacePlaceHolders( $data[ 'ppemail' ][ 'value' ], $entry ),
+		            'pprurl'   => SPLang::replacePlaceHolders( $data[ 'pprurl' ][ 'value' ], $entry ),
+		            'ppcancel' => $ppcancel,
+		            'ppcc'     => SPLang::replacePlaceHolders( $data[ 'ppcc' ][ 'value' ], $entry ),
+		            'ppbn'     => SPLang::replacePlaceHolders( $data[ 'ppemail' ][ 'value' ], $entry ) . '_BuyNow_WPS_' . substr( Sobi::Lang(), 3, 2 ),
+		            'pplang'   => str_replace( '-', '_', Sobi::Lang() ),
+		            'pplc'     => substr( Sobi::Lang(), 3, 2 ),
+		            'pploc'    => $pploc ];
 		$expl = SPLang::replacePlaceHolders(
 			SPLang::getValue( 'ppexpl', 'plugin', Sobi::Section() ),
 			$values
@@ -99,10 +112,8 @@ class SPPPaypal extends SPPlugin
 		$values[ 'expl' ] = $expl;
 		$values[ 'subject' ] = $subject;
 		$values[ 'ip' ] = Input::Ip4();
-		$methods[ $this->id ] = [
-			'content' => ( $message ? $this->raw( $cfg, $values ) : $this->content( $cfg, $values ) ),
-			'title'   => Sobi::Txt( 'APP.PPP.PAY_TITLE' )
-		];
+		$methods[ $this->id ] = [ 'content' => ( $message ? $this->raw( $cfg, $values ) : $this->content( $cfg, $values ) ),
+		                          'title'   => Sobi::Txt( 'APP.PPP.PAY_TITLE' ) ];
 	}
 
 	/**
@@ -111,7 +122,8 @@ class SPPPaypal extends SPPlugin
 	 *
 	 * @return string
 	 */
-	private function raw( $config, $values )
+	private
+	function raw( $config, $values )
 	{
 		$out = "\n";
 		$out .= $values[ 'expl' ];
@@ -133,7 +145,8 @@ class SPPPaypal extends SPPlugin
 	 *
 	 * @return string
 	 */
-	private function content( $config, $values )
+	private
+	function content( $config, $values )
 	{
 		$out = "\n";
 		$out .= $values[ 'expl' ];
@@ -142,7 +155,7 @@ class SPPPaypal extends SPPlugin
 		foreach ( $config[ 'fields' ] as $field => $value ) {
 			$out .= '<input name="' . $field . '" value="' . SPLang::replacePlaceHolders( $value, $values ) . '" type="hidden"/>' . "\n";
 		}
-		if ($values['pploc'] == 1) {
+		if ( $values[ 'pploc' ] == 1 ) {
 			$img = SPLang::replacePlaceHolders( $config[ 'general' ][ 'image_localized' ], $values );
 		}
 		else {
