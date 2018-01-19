@@ -1,21 +1,23 @@
 <?php
 /**
  * @package: SobiPro Component for Joomla!
-
+ *
  * @author
  * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
  * Email: sobi[at]sigsiu.net
- * Url: http://www.Sigsiu.NET
-
- * @copyright Copyright (C) 2006 - 2015 Sigsiu.NET GmbH (http:s//www.sigsiu.net). All rights reserved.
+ * Url: https://www.Sigsiu.NET
+ *
+ * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
-
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
+
+use Sobi\Input\Input;
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.inbox' );
@@ -47,7 +49,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	protected $allowHtml = 2;
 	/** * @var string */
 	protected $metaSeparator = ' ';
-	/** @var bool  */
+	/** @var bool */
 	static private $CAT_FIELD = true;
 	/*** @var bool */
 	protected $suggesting = false;
@@ -55,7 +57,9 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 
 	/**
 	 * Shows the field in the edit entry or add entry form
+	 *
 	 * @param bool $return return or display directly
+	 *
 	 * @return string
 	 */
 	public function field( $return = false )
@@ -63,12 +67,12 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$class = $this->cssClass . (strlen($this->cssClassEdit) ? ' ' . $this->cssClassEdit : '');
+		$class = $this->cssClass . ( strlen( $this->cssClassEdit ) ? ' ' . $this->cssClassEdit : '' );
 		$class = $this->required ? $class . ' required' : $class;
 		if ( defined( 'SOBIPRO_ADM' ) ) {
-			if ($this->bsWidth) {
-				$width = SPHtml_Input::_translateWidth($this->bsWidth);
-				$class .=  ' ' . $width;
+			if ( $this->bsWidth ) {
+				$width = SPHtml_Input::_translateWidth( $this->bsWidth );
+				$class .= ' ' . $width;
 			}
 		}
 
@@ -96,13 +100,13 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		if ( $this->maxLength ) {
 			$params[ 'maxlength' ] = $this->maxLength;
 		}
-		if ($this->labelAsPlaceholder) {
-			$params['placeholder'] = $this->__get('name');
+		if ( $this->labelAsPlaceholder ) {
+			$params[ 'placeholder' ] = $this->__get( 'name' );
 		}
 		$value = $this->getRaw();
-		$value = strlen( $value )? $value : $this->defaultValue;
+		$value = strlen( $value ) ? $value : $this->defaultValue;
 
-		$this->height = ($this->height)?$this->height:100;
+		$this->height = ( $this->height ) ? $this->height : 100;
 
 		// textarea width set to 100% if WYSIWYG is used
 		$field = SPHtml_Input::textarea( $this->nid, $value, $this->editor, '100%', $this->height, $params );
@@ -126,8 +130,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			$this->cssClass = $this->cssClass . ' ' . $this->nid;
 			$this->cleanCss();
 			$attributes = [
-					'lang' => Sobi::Lang(),
-					'class' => $this->cssClass
+				'lang'  => Sobi::Lang(),
+				'class' => $this->cssClass
 			];
 		}
 		else {
@@ -136,22 +140,24 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		if ( !( $this->editor || $this->allowHtml ) ) {
 			$data = nl2br( $data );
 		}
+
 		return [
-				'_complex' => 1,
-				'_data' => $data,
-				'_attributes' => $attributes
+			'_complex'    => 1,
+			'_data'       => $data,
+			'_attributes' => $attributes
 		];
 	}
 
 	/**
 	 * @param SPEntry $entry
 	 * @param string $request
+	 *
 	 * @throws SPException
 	 * @return string
 	 */
 	private function verify( $entry, $request )
 	{
-		$data = SPRequest::raw( $this->nid, null, $request );
+		$data = Input::Raw( $this->nid );
 		$dexs = strlen( $data );
 		/* check if it was required */
 		if ( $this->required && !( $dexs ) ) {
@@ -180,7 +186,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 				$checkMethod = function_exists( 'mb_strlen' ) ? 'mb_strlen' : 'strlen';
 				$check = $checkMethod( str_replace( [ "\n", "\r", "\t" ], null, strip_tags( $data ) ) );
 				if ( $this->maxLength && $check > $this->maxLength ) {
-					throw new SPException( SPLang::e( 'FIELD_TEXTAREA_LIMIT', $this->maxLength, $this->name, $dexs ) );
+					throw new SPException( SPLang::e( 'FIELD_TEXTAREA_LIMIT', $this->maxLength, $this->name, $check ) );
 				}
 			}
 			else {
@@ -189,16 +195,19 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 				}
 			}
 		}
-		$data = SPRequest::string( $this->nid, null, true, $request );
+//		$data = Input::Raw( $this->nid );
 		$this->setData( $data );
+
 		return $data;
 	}
 
 	/**
 	 * Gets the data for a field, verify it and pre-save it.
+	 *
 	 * @param SPEntry $entry
 	 * @param string $tsId
 	 * @param string $request
+	 *
 	 * @return array
 	 */
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
@@ -223,8 +232,10 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 
 	/**
 	 * Gets the data for a field and save it in the database
+	 *
 	 * @param SPEntry $entry
 	 * @param string $request
+	 *
 	 * @return bool
 	 */
 	public function saveData( &$entry, $request = 'POST' )
@@ -234,8 +245,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		}
 
 		$data = $this->verify( $entry, $request );
-		$time = SPRequest::now();
-		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$time = Input::Now();
+		$IP = Input::Ip4();
 		$uid = Sobi::My( 'id' );
 
 		/* if we are here, we can save these data */
@@ -250,7 +261,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			if ( count( $this->allowedTags ) ) {
 				SPRequest::setTagsAllowed( $this->allowedTags );
 			}
-			$data = SPRequest::string( $this->nid, null, $this->allowHtml, $request );
+			$data = Input::Raw( $this->nid );
 			SPRequest::resetFilter();
 			if ( !( $this->editor ) && $this->maxLength && ( strlen( $data ) > $this->maxLength ) ) {
 				$data = substr( $data, 0, $this->maxLength );
@@ -292,7 +303,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		/* save it */
 		try {
 			$db->insertUpdate( 'spdb_field_data', $params );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
@@ -301,7 +313,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			$params[ 'lang' ] = Sobi::DefLang();
 			try {
 				$db->insert( 'spdb_field_data', $params, true, true );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
@@ -310,6 +323,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	/**
 	 * @param $request
 	 * @param $section
+	 *
 	 * @return bool
 	 */
 	public function searchData( $request, $section )
