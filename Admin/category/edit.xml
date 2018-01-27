@@ -42,6 +42,7 @@
 						<div class="row-fluid">
 							<div class="span12">
 								<fieldset>
+									<field type="output" value="category.id" label="HEADER_ID" class="badge"/>
 									<field type="text" name="category.name" value="category.name" label="CATN.CATEGORY_NAME" class="input-xlarge"
 									       maxlength="255" required="true"/>
 									<field type="text" name="category.nid" value="category.nid" label="CATN.CATEGORY_ALIAS" class="input-xlarge"
