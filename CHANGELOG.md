@@ -30,7 +30,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (-) Removed  
 (!) Change  
 
-### 1.4.4 ()
+### 1.4.4 (29 January 2018)
 
 	(+) New ACL rule 'approve.own'
 	(+) New ACL rules 'access.expired_any' and 'access.expired.own'
@@ -45,6 +45,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) Information in entry form if a field is administrative
 	(+) The Joomla menu page heading (if any) will be shown instead of the SobiPro page heading
 	(+) Added support for emojis in field_data and language
+	(+) Changed repository SSL certificate added
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     (!) Separate icon from label in Button field
