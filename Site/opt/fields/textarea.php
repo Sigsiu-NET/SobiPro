@@ -157,7 +157,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
-		$data = Input::Raw( $this->nid );
+		$data = SPRequest::raw( $this->nid, null, $request );
 		$dexs = strlen( $data );
 		/* check if it was required */
 		if ( $this->required && !( $dexs ) ) {
@@ -195,7 +195,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 				}
 			}
 		}
-//		$data = Input::Raw( $this->nid );
+		$data = SPRequest::string( $this->nid, null, true, $request );
 		$this->setData( $data );
 
 		return $data;
@@ -261,7 +261,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			if ( count( $this->allowedTags ) ) {
 				SPRequest::setTagsAllowed( $this->allowedTags );
 			}
-			$data = Input::Raw( $this->nid );
+			$data = SPRequest::string( $this->nid, null, true, $request );
 			SPRequest::resetFilter();
 			if ( !( $this->editor ) && $this->maxLength && ( strlen( $data ) > $this->maxLength ) ) {
 				$data = substr( $data, 0, $this->maxLength );

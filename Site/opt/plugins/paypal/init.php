@@ -76,12 +76,12 @@ class SPPPaypal extends SPPlugin
 		$to = ( $cfg[ 'general' ][ 'replace' ] == ',' ) ? '.' : ',';
 		$vat       = Sobi::Cfg( 'payments.vat', 0 );
 
-//		if ($vat) {
+		if ($vat) {
 			$amount = str_replace( $rp, $to, $payment[ 'summary' ][ 'sum_brutto' ] );
-//		}
-//		else {
-//			$amount = str_replace( $rp, $to, $payment[ 'summary' ][ 'sum_amount' ] );
-//		}
+		}
+		else {
+			$amount = str_replace( $rp, $to, $payment[ 'summary' ][ 'sum_amount' ] );
+		}
 
 		//compatibility for existing sites
 		if ( array_key_exists( 'ppcancel', $data ) ) {
