@@ -86,7 +86,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Missing part of JavaScript translations in backend (Issue #56)
     (#) {payment.methods.html} placeholder doesn't generate correct HTML output for Paypal payment method
     (#) Shown number of characters in textarea with HTML code corrected (if limitation is used)
-    
+ 	(#) Wrong amount for Paypal payment if tax is set to 0 (Issue #62)
+   
 
 ### 1.4.3 (19 October 2017)
 

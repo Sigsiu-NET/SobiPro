@@ -74,7 +74,14 @@ class SPPPaypal extends SPPlugin
 		$cfg = SPLoader::loadIniFile( 'etc.paypal' );
 		$rp = $cfg[ 'general' ][ 'replace' ];
 		$to = ( $cfg[ 'general' ][ 'replace' ] == ',' ) ? '.' : ',';
-		$amount = str_replace( $rp, $to, $payment[ 'summary' ][ 'sum_brutto' ] );
+		$vat       = Sobi::Cfg( 'payments.vat', 0 );
+
+		if ($vat) {
+			$amount = str_replace( $rp, $to, $payment[ 'summary' ][ 'sum_brutto' ] );
+		}
+		else {
+			$amount = str_replace( $rp, $to, $payment[ 'summary' ][ 'sum_amount' ] );
+		}
 
 		//compatibility for existing sites
 		if ( array_key_exists( 'ppcancel', $data ) ) {
