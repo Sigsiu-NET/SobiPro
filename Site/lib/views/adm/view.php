@@ -83,11 +83,13 @@ class SPAdmView extends SPObject implements SPView
 	 *
 	 * @param var
 	 * @param label
+	 *
 	 * @return SPAdmView
 	 */
 	public function & assign( &$var, $label )
 	{
 		$this->_attr[ $label ] =& $var;
+
 		return $this;
 	}
 
@@ -95,12 +97,14 @@ class SPAdmView extends SPObject implements SPView
 	 *
 	 * @param var
 	 * @param label
+	 *
 	 * @return SPAdmView
 	 */
 	public function & addHidden( $var, $label )
 	{
 		$this->_hidden[ $label ] = $var;
 		$this->_attr[ 'request' ][ $label ] = $var;
+
 		return $this;
 	}
 
@@ -125,25 +129,25 @@ class SPAdmView extends SPObject implements SPView
 	public function & determineTemplate( $type, $template, $absolutePath = null )
 	{
 		$acl = [
-				'config' => Sobi::Can( 'cms.admin' ),
-				'apps' => Sobi::Can( 'cms.apps' ),
-				'section' => [
-						'config' => Sobi::Can( 'section.configure' )
-				],
-				'category' => [
-						'add' => Sobi::Can( 'category.add' ),
-						'edit' => Sobi::Can( 'category.edit' ),
-						'delete' => Sobi::Can( 'category.delete' ),
-						'visible' => Sobi::Can( 'category.delete' ) || Sobi::Can( 'category.add' ),
-				],
-				'entry' => [
-						'add' => Sobi::Can( 'entry.add' ),
-						'edit' => Sobi::Can( 'entry.edit' ),
-						'delete' => Sobi::Can( 'entry.delete' ),
-						'approve' => Sobi::Can( 'entry.approve' ),
-						'publish' => Sobi::Can( 'entry.publish' ),
-						'visible' => Sobi::Can( 'entry.delete' ) || Sobi::Can( 'entry.add' ),
-				]
+			'config'   => Sobi::Can( 'cms.admin' ),
+			'apps'     => Sobi::Can( 'cms.apps' ),
+			'section'  => [
+				'config' => Sobi::Can( 'section.configure' )
+			],
+			'category' => [
+				'add'     => Sobi::Can( 'category.add' ),
+				'edit'    => Sobi::Can( 'category.edit' ),
+				'delete'  => Sobi::Can( 'category.delete' ),
+				'visible' => Sobi::Can( 'category.delete' ) || Sobi::Can( 'category.add' ),
+			],
+			'entry'    => [
+				'add'     => Sobi::Can( 'entry.add' ),
+				'edit'    => Sobi::Can( 'entry.edit' ),
+				'delete'  => Sobi::Can( 'entry.delete' ),
+				'approve' => Sobi::Can( 'entry.approve' ),
+				'publish' => Sobi::Can( 'entry.publish' ),
+				'visible' => Sobi::Can( 'entry.delete' ) || Sobi::Can( 'entry.add' ),
+			]
 		];
 		$this->assign( $acl, 'acl' );
 
@@ -170,7 +174,7 @@ class SPAdmView extends SPObject implements SPView
 				$this->setTemplate( "{$type}.{$nid}.{$template}" );
 			}
 			else {
-				$this->setTemplate('default' );
+				$this->setTemplate( 'default' );
 			}
 		}
 		elseif ( $absolutePath ) {
@@ -180,6 +184,7 @@ class SPAdmView extends SPObject implements SPView
 			$this->loadConfig( "{$type}.{$template}" );
 			$this->setTemplate( "{$type}.{$template}" );
 		}
+
 		return $this;
 	}
 
@@ -188,9 +193,10 @@ class SPAdmView extends SPObject implements SPView
 		$subMenu = [];
 		try {
 			$sections = SPFactory::db()
-					->select( 'id', 'spdb_object', [ 'oType' => 'section' ], 'id' )
-					->loadResultArray();
-		} catch ( SPException $x ) {
+				->select( 'id', 'spdb_object', [ 'oType' => 'section' ], 'id' )
+				->loadResultArray();
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __FILE__ );
 		}
 		$sectionLength = 30;
@@ -200,16 +206,17 @@ class SPAdmView extends SPObject implements SPView
 			foreach ( $sections as $section ) {
 				if ( Sobi::Can( 'section', 'access', 'any', $section[ 'id' ] ) ) {
 					$subMenu[] = [
-							'type' => 'url',
-							'task' => '',
-							'url' => [ 'sid' => $section[ 'id' ] ],
-							'label' => SPLang::clean( strlen( $section[ 'value' ] ) < $sectionLength ? $section[ 'value' ] : substr( $section[ 'value' ], 0, $sectionLength - 3 ) . ' ...' ),
-							'icon' => '',
-							'element' => 'button'
+						'type'    => 'url',
+						'task'    => '',
+						'url'     => [ 'sid' => $section[ 'id' ] ],
+						'label'   => SPLang::clean( strlen( $section[ 'value' ] ) < $sectionLength ? $section[ 'value' ] : substr( $section[ 'value' ], 0, $sectionLength - 3 ) . ' ...' ),
+						'icon'    => '',
+						'element' => 'button'
 					];
 				}
 			}
 		}
+
 		return $subMenu;
 	}
 
@@ -233,22 +240,24 @@ class SPAdmView extends SPObject implements SPView
 				foreach ( $availableLanguages as $language ) {
 					$url[ 'sp-language' ] = $language[ 'tag' ];
 					$subMenu[] = [
-							'type' => 'url',
-							'task' => '',
-							'url' => $url,
-							'label' => strlen( $language[ 'name' ] ) < $sectionLength ? $language[ 'name' ] : substr( $language[ 'name' ], 0, $sectionLength - 3 ) . ' ...',
-							'icon' => 's',
-							'element' => 'button',
-							'selected' => $language[ 'tag' ] == Sobi::Lang()
+						'type'     => 'url',
+						'task'     => '',
+						'url'      => $url,
+						'label'    => strlen( $language[ 'name' ] ) < $sectionLength ? $language[ 'name' ] : substr( $language[ 'name' ], 0, $sectionLength - 3 ) . ' ...',
+						'icon'     => 's',
+						'element'  => 'button',
+						'selected' => $language[ 'tag' ] == Sobi::Lang()
 					];
 				}
 			}
 		}
+
 		return $subMenu;
 	}
 
 	/**
 	 * @param DOMNodeList $xml
+	 *
 	 * @return void
 	 */
 	protected function parseDefinition( DOMNodeList $xml )
@@ -289,6 +298,7 @@ class SPAdmView extends SPObject implements SPView
 	public function getData()
 	{
 		Sobi::Trigger( 'beforeReturnData', $this->name(), [ &$this->_output ] );
+
 		return $this->_output;
 	}
 
@@ -303,27 +313,33 @@ class SPAdmView extends SPObject implements SPView
 		if ( !( $parser ) ) {
 			$parser = SPFactory::Instance( 'views.adm.parser' );
 		}
+
 		return $parser;
 	}
 
 	/**
 	 * @param DOMNode $xml
+	 *
 	 * @return void
 	 */
 	protected function xmlToolbar( $xml )
 	{
 		$title = $xml
-				->attributes
-				->getNamedItem( 'title' )
-				->nodeValue;
+			->attributes
+			->getNamedItem( 'title' );
+		if ( $title )
+			$title = $title->nodeValue;
 		$icon = $xml
-				->attributes
-				->getNamedItem( 'icon' )
-				->nodeValue;
+			->attributes
+			->getNamedItem( 'icon' );
+		if ( $icon )
+			$icon = $icon->nodeValue;
 		$class = $xml
-				->attributes
-				->getNamedItem( 'class' )
-				->nodeValue;
+			->attributes
+			->getNamedItem( 'class' );
+		if ( $class )
+			$class = $class->nodeValue;
+
 		SPFactory::AdmToolbar()->setTitle( [ 'title' => $this->parseValue( $title ), 'icon' => $icon, 'class' => $class ] );
 		$buttons = [];
 		foreach ( $xml->childNodes as $node ) {
@@ -401,6 +417,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNode $xml
 	 * @param string $subject
 	 * @param integer $i
+	 *
 	 * @return bool
 	 */
 	protected function xmlCondition( $xml, $subject = null, $i = -1 )
@@ -437,6 +454,7 @@ class SPAdmView extends SPObject implements SPView
 			else {
 				$value = $this->get( $condition, $i );
 			}
+
 			return $invert ? !( $value ) : $value;
 		}
 		else {
@@ -447,19 +465,20 @@ class SPAdmView extends SPObject implements SPView
 	/**
 	 * @param DOMNode $xml
 	 * @param $attributes
+	 *
 	 * @return void
 	 */
 	protected function xmlButton( $xml, $attributes = [] )
 	{
 
 		$button = [
-				'type' => null,
-				'task' => null,
-				'label' => null,
-				'icon' => null,
-				'target' => null,
-				'buttons' => null,
-				'element' => 'button'
+			'type'    => null,
+			'task'    => null,
+			'label'   => null,
+			'icon'    => null,
+			'target'  => null,
+			'buttons' => null,
+			'element' => 'button'
 		];
 		if ( $xml->attributes->length ) {
 			/** @var DOMElement $attr */
@@ -486,6 +505,7 @@ class SPAdmView extends SPObject implements SPView
 		if ( count( $attributes ) ) {
 			$button = array_merge( $button, $attributes );
 		}
+
 		return $button;
 	}
 
@@ -500,6 +520,7 @@ class SPAdmView extends SPObject implements SPView
 			// for keys like: 'var:[section]'
 			$key = str_replace( $matches[ 0 ], Sobi::Section( true ), $key );
 		}
+
 		return $key;
 	}
 
@@ -514,12 +535,14 @@ class SPAdmView extends SPObject implements SPView
 		if ( strstr( $key, 'var:[' ) ) {
 			$key = $this->replaceValue( $key, $i );
 		}
+
 		return $key;
 	}
 
 	/**
 	 * @param DOMNodeList $xml
 	 * @param $output
+	 *
 	 * @return void
 	 */
 	protected function xmlBody( $xml, &$output )
@@ -532,10 +555,10 @@ class SPAdmView extends SPObject implements SPView
 				continue;
 			}
 			$element = [
-					'label' => null,
-					'type' => $node->nodeName,
-					'content' => null,
-					'attributes' => null
+				'label'      => null,
+				'type'       => $node->nodeName,
+				'content'    => null,
+				'attributes' => null
 			];
 			$element = $this->xmlAttriutes( $node, $element );
 
@@ -615,10 +638,10 @@ class SPAdmView extends SPObject implements SPView
 						if ( count( $customCells ) ) {
 							foreach ( $customCells as $cell ) {
 								$element[ 'content' ][] = [
-										'label' => isset( $cell[ 'label' ] ) ? $cell[ 'label' ] : null,
-										'type' => 'cell',
-										'content' => $cell[ 'content' ],
-										'attributes' => $element[ 'attributes' ]
+									'label'      => isset( $cell[ 'label' ] ) ? $cell[ 'label' ] : null,
+									'type'       => 'cell',
+									'content'    => $cell[ 'content' ],
+									'attributes' => $element[ 'attributes' ]
 								];
 							}
 						}
@@ -700,6 +723,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNode $node
 	 * @param $subject
 	 * @param $i
+	 *
 	 * @return string
 	 */
 	protected function xmlText( $node, $subject = 0, $i = -1 )
@@ -737,12 +761,14 @@ class SPAdmView extends SPObject implements SPView
 				$value = call_user_func_array( [ 'SPLang', '_' ], $args );
 			}
 		}
+
 		return $value;
 	}
 
 	/**
 	 * @param DOMNode $node
 	 * @param array $element
+	 *
 	 * @return void
 	 */
 	protected function xmlLoop( $node, &$element )
@@ -778,14 +804,14 @@ class SPAdmView extends SPObject implements SPView
 						}
 					}
 					$objects[] = [
-							'label' => $field[ 'label' ],
-							'type' => 'field',
-							'content' => call_user_func_array( [ 'SPHtml_input', $field[ 'type' ] ], $methodArgs ),
-							'args' => [ 'type' => $field[ 'type' ] ],
-							'adds' => [
-									'after' => [ $field[ 'required' ] ? Sobi::Txt( 'EX.SOAP_RESP_REQ' ) : Sobi::Txt( 'EX.SOAP_RESP_OPT' ) ],
-									'before' => null
-							]
+						'label'   => $field[ 'label' ],
+						'type'    => 'field',
+						'content' => call_user_func_array( [ 'SPHtml_input', $field[ 'type' ] ], $methodArgs ),
+						'args'    => [ 'type' => $field[ 'type' ] ],
+						'adds'    => [
+							'after'  => [ $field[ 'required' ] ? Sobi::Txt( 'EX.SOAP_RESP_REQ' ) : Sobi::Txt( 'EX.SOAP_RESP_OPT' ) ],
+							'before' => null
+						]
 					];
 				}
 			}
@@ -808,10 +834,10 @@ class SPAdmView extends SPObject implements SPView
 					}
 				}
 				$objects[] = [
-						'label' => null,
-						'type' => 'loop-row',
-						'content' => $row,
-						'attributes' => $a
+					'label'      => null,
+					'type'       => 'loop-row',
+					'content'    => $row,
+					'attributes' => $a
 				];
 			}
 		}
@@ -833,14 +859,14 @@ class SPAdmView extends SPObject implements SPView
 				$adds = [ $suffix ];
 			}
 			$objects[ $i ] = [
-					'label' => $field->get( 'name' ),
-					'type' => 'field',
-					'content' => $output,
-					'args' => [ 'type' => $field->get( 'type' ) ],
-					'adds' => [ 'before' => null, 'after' => $adds ],
-					'help-text' => $field->get( 'description' ),
-					'id' => $field->get( 'nid' ),
-					'revisions-change' => $field->get( 'revisionChange' ),
+				'label'            => $field->get( 'name' ),
+				'type'             => 'field',
+				'content'          => $output,
+				'args'             => [ 'type' => $field->get( 'type' ) ],
+				'adds'             => [ 'before' => null, 'after' => $adds ],
+				'help-text'        => $field->get( 'description' ),
+				'id'               => $field->get( 'nid' ),
+				'revisions-change' => $field->get( 'revisionChange' ),
 			];
 			// show label is for details view only. Right?
 //			if ( !( $field->get( 'showLabel' ) ) ) {
@@ -855,6 +881,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param string $subject
 	 * @param integer $i
 	 * @param array $objects
+	 *
 	 * @return void
 	 */
 	protected function xmlCell( $cell, $subject, $i, &$objects )
@@ -863,10 +890,10 @@ class SPAdmView extends SPObject implements SPView
 			return;
 		}
 		$element = [
-				'label' => null,
-				'type' => $cell->nodeName,
-				'content' => null,
-				'attributes' => null,
+			'label'      => null,
+			'type'       => $cell->nodeName,
+			'content'    => null,
+			'attributes' => null,
 		];
 		@$type = $cell->attributes->getNamedItem( 'type' ) ? $cell->attributes->getNamedItem( 'type' )->nodeValue : null;
 		$this->cellAttributes( $cell, $element, $subject, $i );
@@ -877,10 +904,10 @@ class SPAdmView extends SPObject implements SPView
 				$a[ 'type' ] = 'text';
 				foreach ( $customCells as $customCell ) {
 					$objects[] = [
-							'label' => null,
-							'type' => 'cell',
-							'content' => $customCell,
-							'attributes' => $a,
+						'label'      => null,
+						'type'       => 'cell',
+						'content'    => $customCell,
+						'attributes' => $a,
 					];
 				}
 			}
@@ -1028,6 +1055,7 @@ class SPAdmView extends SPObject implements SPView
 				$link .= http_build_query( $url );
 			}
 		}
+
 		return $link;
 	}
 
@@ -1035,6 +1063,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param DOMNode $param
 	 * @param string $subject
 	 * @param integer $index
+	 *
 	 * @return mixed
 	 */
 	protected function xmlParams( $param, $subject = null, $index = -1 )
@@ -1078,6 +1107,7 @@ class SPAdmView extends SPObject implements SPView
 				}
 			}
 		}
+
 		return $value;
 	}
 
@@ -1088,6 +1118,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param bool $skipCondition
 	 * @param null $subject
 	 * @param $i
+	 *
 	 * @return void
 	 */
 	protected function xmlField( $node, &$element, $value = null, $skipCondition = false, $subject = null, $i = -1 )
@@ -1388,11 +1419,13 @@ class SPAdmView extends SPObject implements SPView
 				Sobi::Error( $this->name(), SPLang::e( 'METHOD_DOES_NOT_EXISTS', $function ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
+
 		return $r;
 	}
 
 	/**
 	 * @param DOMNodeList $xml
+	 *
 	 * @return void
 	 */
 	protected function xmlConfig( $xml )
@@ -1441,6 +1474,7 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param DOMNodeList $xml
+	 *
 	 * @return void
 	 */
 	protected function xmlHeader( $xml )
@@ -1453,11 +1487,11 @@ class SPAdmView extends SPObject implements SPView
 			switch ( $node->nodeName ) {
 				case 'script':
 					SPFactory::header()
-							->addJsCode( $node->nodeValue );
+						->addJsCode( $node->nodeValue );
 					break;
 				case 'style':
 					SPFactory::header()
-							->addCSSCode( $node->nodeValue );
+						->addCSSCode( $node->nodeValue );
 					break;
 				case 'language':
 					SPLang::load( $node->nodeValue );
@@ -1484,13 +1518,14 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param string $path
+	 *
 	 * @deprecated since 1.1
 	 */
 	public function loadConfig( $path )
 	{
 		SPFactory::header()
-				->addCssFile( 'adm.legacy' )
-				->addJsFile( [ 'adm.legacy', 'menu' ] );
+			->addCssFile( 'adm.legacy' )
+			->addJsFile( [ 'adm.legacy', 'menu' ] );
 		$this->_legacy = true;
 		if ( strlen( $path ) ) {
 			$this->_config = SPLoader::loadIniFile( $path, true, true, true );
@@ -1567,13 +1602,13 @@ class SPAdmView extends SPObject implements SPView
 			$buttons = [];
 			foreach ( $settings as $row ) {
 				$button = [
-						'type' => null,
-						'task' => null,
-						'label' => null,
-						'icon' => null,
-						'target' => null,
-						'buttons' => null,
-						'element' => 'button-legacy'
+					'type'    => null,
+					'task'    => null,
+					'label'   => null,
+					'icon'    => null,
+					'target'  => null,
+					'buttons' => null,
+					'element' => 'button-legacy'
 				];
 				switch ( $row[ 'type' ] ) {
 					case 'title':
@@ -1625,11 +1660,13 @@ class SPAdmView extends SPObject implements SPView
 				}
 			}
 		}
+
 		return implode( '', $out );
 	}
 
 	/**
 	 * @param array $cfg
+	 *
 	 * @return array
 	 */
 	public function parseMenu( $cfg )
@@ -1672,6 +1709,7 @@ class SPAdmView extends SPObject implements SPView
 				}
 			}
 		}
+
 		return $cfg;
 	}
 
@@ -1679,6 +1717,7 @@ class SPAdmView extends SPObject implements SPView
 	 *
 	 * @param $path
 	 * @param bool $adm
+	 *
 	 * @return void
 	 * @internal param $path
 	 */
@@ -1697,6 +1736,7 @@ class SPAdmView extends SPObject implements SPView
 	 *
 	 * @param $path
 	 * @param bool $adm
+	 *
 	 * @return void
 	 * @internal param $path
 	 */
@@ -1717,23 +1757,26 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param string $template
+	 *
 	 * @return $this
 	 */
 	public function & setTemplate( $template )
 	{
 		$this->_template = $template;
 		Sobi::Trigger( 'setTemplate', $this->name(), [ &$this->_template ] );
+
 		return $this;
 	}
 
 	/**
 	 * @param string $title
+	 *
 	 * @return string
 	 */
 	public function setTitle( $title )
 	{
 		if ( strstr( $title, '{' ) ) {
-			$title = ( array )SPFactory::config()->structuralData( 'json://' . $title );
+			$title = ( array ) SPFactory::config()->structuralData( 'json://' . $title );
 			$task = SPRequest::task();
 			$title = $title[ $task ];
 		}
@@ -1741,6 +1784,7 @@ class SPAdmView extends SPObject implements SPView
 		Sobi::Trigger( 'setTitle', $this->name(), [ &$title ] );
 		SPFactory::header()->setTitle( $title );
 		$this->set( $title, 'site_title' );
+
 		return $title;
 	}
 
@@ -1750,6 +1794,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param $key
 	 * @param mixed $def
 	 * @param string $section
+	 *
 	 * @internal param string $label
 	 * @return mixed
 	 */
@@ -1760,6 +1805,7 @@ class SPAdmView extends SPObject implements SPView
 			$section = $key[ 0 ];
 			$key = $key[ 1 ];
 		}
+
 		return isset( $this->_config[ $section ][ $key ] ) ? $this->_config[ $section ][ $key ] : Sobi::Cfg( $key, $def, $section );
 	}
 
@@ -1780,6 +1826,7 @@ class SPAdmView extends SPObject implements SPView
 	/**
 	 * @param $date
 	 * @param bool $start
+	 *
 	 * @return string
 	 * @internal param mixed $attr
 	 */
@@ -1790,6 +1837,7 @@ class SPAdmView extends SPObject implements SPView
 		if ( $date == 0 ) {
 			$date = $start ? Sobi::Txt( 'ALWAYS_VALID' ) : Sobi::Txt( 'NEVER_EXPIRES' );
 		}
+
 		return $date;
 	}
 
@@ -1849,11 +1897,13 @@ class SPAdmView extends SPObject implements SPView
 	 *
 	 * @param mixed $attr
 	 * @param int $index
+	 *
 	 * @return int
 	 */
 	protected function count( $attr, $index = -1 )
 	{
 		$el =& $this->get( $attr, $index );
+
 		return count( $el );
 	}
 
@@ -1861,11 +1911,13 @@ class SPAdmView extends SPObject implements SPView
 	 *
 	 * @param mixed $attr
 	 * @param mixed $name
+	 *
 	 * @return mixed
 	 */
 	public function & set( $attr, $name )
 	{
 		$this->_attr[ $name ] = $attr;
+
 		return $this;
 	}
 
@@ -1873,6 +1925,7 @@ class SPAdmView extends SPObject implements SPView
 	 *
 	 * @param mixed $attr
 	 * @param int $index
+	 *
 	 * @return mixed
 	 */
 	public function & get( $attr, $index = -1 )
@@ -1917,6 +1970,7 @@ class SPAdmView extends SPObject implements SPView
 						}
 						elseif ( $property == 'length' && is_array( $var ) ) {
 							$r = count( $var );
+
 							return $r;
 						}
 						/* otherwise try to access array field */
@@ -1938,6 +1992,7 @@ class SPAdmView extends SPObject implements SPView
 			$r = null;
 		}
 		$r = is_string( $r ) ? Sobi::Clean( $r ) : $r;
+
 		return $r;
 	}
 
@@ -1993,6 +2048,7 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param bool $return
+	 *
 	 * @return mixed
 	 */
 	protected function menu( $return = false )
@@ -2010,6 +2066,7 @@ class SPAdmView extends SPObject implements SPView
 
 	/**
 	 * @param $ids
+	 *
 	 * @internal param int $id
 	 * @return SPUser
 	 */
@@ -2031,6 +2088,7 @@ class SPAdmView extends SPObject implements SPView
 	 * @param bool $parents
 	 * @param bool $last
 	 * @param int $offset
+	 *
 	 * @return array
 	 */
 	protected function parentPath( $id, $parents = false, $last = false, $offset = 2 )
@@ -2053,6 +2111,7 @@ class SPAdmView extends SPObject implements SPView
 				$path = $pathArray[ count( $pathArray ) - $offset ];
 			}
 		}
+
 		return SPLang::clean( $path );
 	}
 
@@ -2085,6 +2144,7 @@ class SPAdmView extends SPObject implements SPView
 				}
 			}
 		}
+
 		return $element;
 	}
 }
