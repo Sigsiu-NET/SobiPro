@@ -7,7 +7,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: https://www.Sigsiu.NET
  *
- * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -15,12 +15,8 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-/*
-
-/**
- * @param $query
- * @return array
  */
+
 function SobiProBuildRoute( &$query )
 {
 	$cfg = SobiProRouterCfg();
@@ -92,6 +88,7 @@ function SobiProBuildRoute( &$query )
 	if ( isset( $segments[ count( $segments ) - 1 ] ) && $segments[ count( $segments ) - 1 ] == '' ) {
 		unset( $segments[ count( $segments ) - 1 ] );
 	}
+
 	return $segments;
 }
 
@@ -101,6 +98,7 @@ function SobiProTransformValue( $val, $cfg, $back )
 	if ( $back ) {
 		$replacement = array_flip( $replacement );
 	}
+
 	return isset( $replacement[ $val ] ) ? $replacement[ $val ] : $val;
 }
 
@@ -145,6 +143,7 @@ function SobiProRouterCfg()
 			$config[ 'remove_vars' ][ $condition ] = [ 'condition' => $cond[ 1 ], 'query' => $query ];
 		}
 	}
+
 	return $config;
 }
 
@@ -155,6 +154,7 @@ function SobiProTaskEnhancement( $value, $task, $values )
 			return true;
 		}
 	}
+
 	return false;
 }
 
@@ -167,7 +167,10 @@ function SobiProParseRoute( $segments )
 	}
 	$cfg = SobiProRouterCfg();
 	$vars = [];
-	$return = JFactory::getApplication()->getMenu()->getActive()->query;
+	$return = JFactory::getApplication()->getMenu()->getActive();
+	if ( $return ) {
+		$return = $return->query;
+	}
 	$tasks = array_flip( $cfg[ 'tasks' ] );
 	$taskEnhancement = array_flip( $cfg[ 'segments_to_task' ] );
 	$key = false;
@@ -213,7 +216,7 @@ function SobiProParseRoute( $segments )
 	}
 	$sid = explode( ':', $sid );
 	$sid = $sid[ 0 ];
-	if ( !( ( int )$sid ) ) {
+	if ( !( ( int ) $sid ) ) {
 		$vars[ 'sid' ] = JFactory::getApplication()->getMenu()->getActive()->query[ 'sid' ];
 		if ( count( $segments ) && !( isset( $vars[ 'task' ] ) ) ) {
 			$vars[ 'task' ] = implode( '.', $segments );
@@ -237,6 +240,7 @@ function SobiProParseRoute( $segments )
 		}
 		$return[ $k ] = $v;
 	}
+
 	return $return;
 }
 
@@ -258,7 +262,13 @@ function SobiProIsLinked( $id, $sid, $task = null )
 	$sid = explode( ':', $sid );
 	$sid = $sid[ 0 ];
 	if ( !( $task ) ) {
-		return $menu->getItem( $id )->query[ 'sid' ] == $sid;
+		$item = $menu->getItem( $id );
+		if ( $item )
+			$result = $item->query[ 'sid' ] == $sid;
+		else
+			$result = false;
+
+		return $result;
 	}
 	else {
 		$item = $menu->getItem( $id );
@@ -268,5 +278,6 @@ function SobiProIsLinked( $id, $sid, $task = null )
 			}
 		}
 	}
+
 	return false;
 }

@@ -34,6 +34,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 ### 1.4.5 (30 January 2018)
 
 	(#) Fatal error on Urls without Joomla Itemid set
+	(#) Notices in router for Urls without or without valid Itemid
 	
 
 ### 1.4.4 (29 January 2018)
