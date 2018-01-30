@@ -762,16 +762,18 @@ abstract class SPFrontView extends SPObject implements SPView
 	protected function menuOptions( &$data )
 	{
 		$menuparams = SPFactory::mainframe()->getMenuParams();
-		$data[ 'jheading' ] = [
-			'_complex'    => 1,
-			'_data'       => $menuparams->get( 'page_heading' ),
-			'_attributes' => [
-				'lang'              => Sobi::Lang( false ),
-				'page_heading'      => $menuparams->get( 'page_heading' ),
-				'show_page_heading' => ( $menuparams->get( 'show_page_heading' ) == '' ) ? 0 : $menuparams->get( 'show_page_heading' ),
-				'pageclass_sfx'     => $menuparams->get( 'pageclass_sfx' ),
-			]
-		];;
+		if ($menuparams) {
+			$data[ 'jheading' ] = [
+				'_complex'    => 1,
+				'_data'       => $menuparams->get( 'page_heading' ),
+				'_attributes' => [
+					'lang'              => Sobi::Lang( false ),
+					'page_heading'      => $menuparams->get( 'page_heading' ),
+					'show_page_heading' => ( $menuparams->get( 'show_page_heading' ) == '' ) ? 0 : $menuparams->get( 'show_page_heading' ),
+					'pageclass_sfx'     => $menuparams->get( 'pageclass_sfx' ),
+				]
+			];;
+		}
 	}
 
 	protected function visitorArray( $visitor )

@@ -30,6 +30,12 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (-) Removed  
 (!) Change  
 
+
+### 1.4.5 (30 January 2018)
+
+	(#) Fatal error on Urls without Joomla Itemid set
+	
+
 ### 1.4.4 (29 January 2018)
 
 	(+) New ACL rule 'approve.own'

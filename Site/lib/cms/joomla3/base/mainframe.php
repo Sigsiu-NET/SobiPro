@@ -19,6 +19,7 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 require_once dirname( __FILE__ ) . '/../../joomla16/base/mainframe.php';
+
 /**
  * Interface between SobiPro and the used CMS
  * @author Radek Suski
@@ -36,6 +37,7 @@ class SPJ3MainFrame extends SPJ16MainFrame implements SPMainframeInterface
 		if ( !( $mf ) || !( $mf instanceof self ) ) {
 			$mf = new self();
 		}
+
 		return $mf;
 	}
 
@@ -48,7 +50,10 @@ class SPJ3MainFrame extends SPJ16MainFrame implements SPMainframeInterface
 	{
 		$active = JFactory::getApplication()->getMenu()->getActive();
 
-		return $active->params;
+		if ( $active )
+			return $active->params;
+		else
+			return null;
 	}
 }
 
