@@ -718,6 +718,7 @@
 			<field name="format" default="raw"/>
 			<field name="pid" value="pid"/>
 			<field name="settings[config][general][bs]" default="bs3"/>
+			<field name="settings[config][general][version]" default="4"/>
 			<field condition="apps.review_rating" name="settings[config][less][review][bsversion]" default="bs3"/>
 			<field name="settings[feeds.rss][section-view][showrss]" default="entries"/>
 		</hidden>

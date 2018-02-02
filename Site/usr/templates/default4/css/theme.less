@@ -4,7 +4,7 @@
 /* Authors: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH */
 /* Url: https://www.Sigsiu.NET */
 /**/
-/* @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved. */
+/* @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved. */
 /* @license GNU/GPL Version 3 */
 /* This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 */
 /* as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3. */
@@ -46,8 +46,9 @@
 // fallback to sobipro layout
 @base-color: #993333;
 @basetext-color: #ffffff;
-@active-color: #000066;
-@activetext-color: #ffffff;
+@active-color: #000066;     // Background Colour
+@activetext-color: #ffffff; // Text on active colour
+@link-color: #000066;       // Colour for links, text
 @alert-color: #e7e7e7;
 @important-color: #fe4426;
 @background-light: #fbeeee;
@@ -292,7 +293,7 @@ body.modal-open {
 	font-size: @fontsize;
 	-moz-osx-font-smoothing: grayscale;
 
-	a { color: @active-color; }
+	a { color: @link-color; }
 	.hidden {
 		display: none;
 		visibility: hidden;
@@ -365,6 +366,7 @@ body.modal-open {
 		&.basetextc { background-color: @basetext-color; color: @base-color; }
 		&.activec { background-color: @active-color; color: @activetext-color; }
 		&.activetextc { background-color: @activetext-color; color: @active-color; }
+		&.linkc { background-color: @link-color; color: #ffffff; }
 		&.alertc { background-color: @alert-color; color: @important-color; }
 		&.importantc { background-color: @important-color; color: @alert-color }
 	}
@@ -874,7 +876,7 @@ body.modal-open {
 	// Headers
 	// -----------------------------------------------
 	h1 {
-		color: @active-color;
+		color: @basetext-color;
 		font-size: calc(@fontsize + 12px);
 		line-height: 1.1;
 		margin-top: 0.67em;
@@ -883,10 +885,17 @@ body.modal-open {
 		margin: 0 0 5px 0;
 	}
 	h2 {
-		font-size: calc(@fontsize + 11px);
+		color: @basetext-color;
+		font-size: calc(@fontsize + 10px);
 	}
 	h3 {
-		font-size: calc(@fontsize + 10px);
+		font-size: calc(@fontsize + 8px);
+	}
+	h4 {
+		font-size: calc(@fontsize + 6px);
+	}
+	h5 {
+		font-size: calc(@fontsize + 4px);
 	}
 
 	& when (@corners = angular) {
@@ -1468,7 +1477,7 @@ body.modal-open {
 	}
 	.alert-sigsiu,
 	.alert-sigsiu h4 {
-		color: @active-color;
+		color: @link-color;
 	}
 
 	.spAlert {
@@ -1535,7 +1544,7 @@ body.modal-open {
 	.spSearch .alert-info {
 		border-color: @alert-color;
 		background-color: lighten(@alert-color, 5%);
-		color: @active-color;
+		color: @link-color;
 		& when (@design = elevated) {
 			border-color: lighten(@alert-color, 5%);
 			.shadow-2dp;
@@ -2043,7 +2052,7 @@ body.modal-open {
 	.nav-pills.staples > .active > a:focus,
 	.nav-pills.staples > .active > a:hover {
 		.background(medium);
-		color: @active-color;
+		color: @link-color;
 		border-bottom: 2px solid @active-color;
 		top: 20px;
 	}
@@ -2742,7 +2751,7 @@ body.modal-open {
 
 	div.spClassViewAggregation,
 	div.spClassViewAggregation a {
-		color: @active-color;
+		color: @link-color;
 	}
 
 	// Review and Rating App
@@ -2840,7 +2849,7 @@ body.modal-open {
 	.spCalEntry.label-info {
 		background-color: lighten(@alert-color, 4%);
 		border: 1px solid darken(@alert-color, 10%);
-		color: @active-color;
+		color: @link-color;
 
 		a {
 			color: @base-color;
