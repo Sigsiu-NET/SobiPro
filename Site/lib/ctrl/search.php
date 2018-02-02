@@ -425,7 +425,7 @@ class SPSearchCtrl extends SPSectionCtrl
 		$matches = [];
 
 		/* extrapolate single words */
-		preg_match_all( Sobi::Cfg( 'search.word_filter', '/\p{L}+|\d+|%/iu' ), $this->_request[ 'search_for' ], $matches );
+		preg_match_all( Sobi::Cfg( 'search.word_filter', '/[\p{L}-_]+|\d+|%/iu' ), $this->_request[ 'search_for' ], $matches );
 		if ( count( $matches ) && isset( $matches[ 0 ] ) ) {
 			$wordResults = [];
 			$results = null;
