@@ -31,6 +31,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
+### 1.4.6 ()
+
+	(#) Backslashes are added prior apostrophe to input field in back-end
+
+
 ### 1.4.5 (30 January 2018)
 
 	(#) Fatal error on Urls without Joomla Itemid set
