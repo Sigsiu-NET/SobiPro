@@ -37,6 +37,10 @@ abstract class tplDefault4
 	{
 	}
 
+	public static function AddCSSStyles( $styles )
+	{
+		SPFactory::header()->addCSSCode( $styles );
+	}
 	public static function LoadFont( $name )
 	{
 		SPFactory::header()->addHeadLink( "//fonts.googleapis.com/css?family=" . $name, "text/css", null, "stylesheet" );
