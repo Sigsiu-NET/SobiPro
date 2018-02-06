@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!--
- @package: SobiPro Component for Joomla!
+ @package: Default Template V4 for SobiPro Component for Joomla!
 
  @author
  Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
