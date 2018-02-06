@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
- @package: SobiPro Component for Joomla!
+ @package: Default Template V4 for SobiPro Component for Joomla!
 
  @author
  Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
@@ -116,6 +116,9 @@
 									</field>
 									<field type="text" label="TP.CONFIG.CUSTOM_ATEXT" name="settings[config][theme][custom][activetext-color]"
 									       value="settings.config.theme.custom.activetext-color" class="input-medium colourpicker {hash:true}">
+									</field>
+									<field type="text" label="TP.CONFIG.CUSTOM_LINK" name="settings[config][theme][custom][link-color]"
+									       value="settings.config.theme.custom.link-color" class="input-medium colourpicker {hash:true}">
 									</field>
 									<field type="text" label="TP.CONFIG.CUSTOM_ALERT" name="settings[config][theme][custom][alert-color]"
 									       value="settings.config.theme.custom.alert-color" class="input-medium colourpicker {hash:true}">
@@ -718,7 +721,7 @@
 			<field name="format" default="raw"/>
 			<field name="pid" value="pid"/>
 			<field name="settings[config][general][bs]" default="bs3"/>
-			<field name="settings[config][general][version]" default="4"/>
+			<field name="settings[config][general][version]" default="4.1"/>
 			<field condition="apps.review_rating" name="settings[config][less][review][bsversion]" default="bs3"/>
 			<field name="settings[feeds.rss][section-view][showrss]" default="entries"/>
 		</hidden>

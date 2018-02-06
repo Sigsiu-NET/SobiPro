@@ -5,10 +5,10 @@
 	<authorName>Sigrid Suski and Radek Suski</authorName>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>http://www.Sigsiu.NET</authorUrl>
-	<copyright>Copyright (C) 2006-2017 Sigsiu.NET GmbH</copyright>
+	<copyright>Copyright (C) 2006-2018 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License</license>
-	<creationDate>2017-11-01</creationDate>
-	<version>4.0</version>
+	<creationDate>2018-02-06</creationDate>
+	<version>4.1</version>
 	<description>Default Template for SobiPro 1.4+ with Bootstrap 3 support.
 		This template makes use of Bootstrap 3 and Font Awesome 3 elements and styles.
 	</description>
