@@ -477,8 +477,25 @@ abstract class SPController extends SPObject implements SPControl
 			$task = ( $this->_task == 'add' || $this->_task == 'submit' || $this->_task == 'edit' ) ? 'edit' : $this->_defTask;
 			Input::Set( 'task', "{$this->_type}.{$task}" );
 		}
-		if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'ini' ) ) {
-			$taskCfg = SPLoader::loadIniFile( "{$path}.{$this->templateType}.{$task}", true, false, false, true );
+
+		/* Read the necessary ini files */
+		if ( Input::Cmd( 'sptpl' ) ) {
+			$file = Input::String( 'sptpl' );
+		}
+		else {
+			$file = $task;
+		}
+		if ( strstr( $file, $this->templateType ) ) {
+			$file = str_replace( $this->templateType . '.', null, $file );
+		}
+
+		if ($file != $task) {
+			if (!( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'ini' ) )) {
+				$file = $task;
+			}
+		}
+		if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'ini' ) ) {
+			$taskCfg = SPLoader::loadIniFile( "{$path}.{$this->templateType}.{$file}", true, false, false, true );
 			$files[] = SPLoader::iniStorage();
 			foreach ( $taskCfg as $section => $keys ) {
 				if ( isset( $this->_tCfg[ $section ] ) ) {
@@ -490,26 +507,28 @@ abstract class SPController extends SPObject implements SPControl
 			}
 		}
 		if ( count( $files ) ) {
-			foreach ( $files as $i => $file ) {
-				$files[ $i ] = [ 'file' => str_replace( SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' ), null, $file ), 'checksum' => md5_file( $file ) ];
+			foreach ( $files as $i => $onefile ) {
+				$files[ $i ] = [ 'file' => str_replace( SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' ), null, $file ), 'checksum' => md5_file( $onefile ) ];
 			}
 			SPFactory::registry()->set( 'template_config', $files );
 		}
+
+		/* Read the necessary json files */
 		if ( SPLoader::translatePath( "{$path}.config", 'absolute', true, 'json' ) ) {
 			$config = json_decode( SPFs::read( SPLoader::translatePath( "{$path}.config", 'absolute', true, 'json' ) ), true );
 			$settings = [];
 			foreach ( $config as $section => $setting ) {
 				$settings[ str_replace( '-', '.', $section ) ] = $setting;
 			}
-			if ( Input::Cmd( 'sptpl' ) ) {
-				$file = Input::String( 'sptpl' );
-			}
-			else {
-				$file = $task;
-			}
-			if ( strstr( $file, $this->templateType ) ) {
-				$file = str_replace( $this->templateType, null, $file );
-			}
+//			if ( Input::Cmd( 'sptpl' ) ) {
+//				$file = Input::String( 'sptpl' );
+//			}
+//			else {
+//				$file = $task;
+//			}
+//			if ( strstr( $file, $this->templateType ) ) {
+//				$file = str_replace( $this->templateType, null, $file );
+//			}
 			if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'json' ) ) {
 				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'json' ) ), true );
 				if ( count( $subConfig ) ) {
