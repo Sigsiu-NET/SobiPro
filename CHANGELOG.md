@@ -40,6 +40,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Default template version V4.1
 
 	(#) Backslashes are added prior apostrophe to input field in back-end
+	(#) Ini file for template override (sptpl) not loaded
 
 
 ### 1.4.5 (30 January 2018)
