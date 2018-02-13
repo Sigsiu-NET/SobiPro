@@ -147,10 +147,10 @@ abstract class SPFrontView extends SPObject implements SPView
 		$tplPath = $this->tplPath();
 		if ( SPFs::exists( $tplPath . DS . 'css' . DS . $path . '.css' ) ) {
 			$path = 'absolute.' . $tplPath . '.css.' . $path;
-			SPFactory::header()->addCSSFile( $path, false, 'all' );
+			SPFactory::header()->addCssFile( $path, false, 'all' );
 		}
 		else {
-			SPFactory::header()->addCSSFile( $path );
+			SPFactory::header()->addCssFile( $path );
 		}
 	}
 

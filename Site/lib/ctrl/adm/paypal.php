@@ -61,7 +61,7 @@ class SPPaymentPP extends SPConfigAdmCtrl
 			[
 				[ 'key' => 'ppurl', 'value' => Input::String( 'ppurl' ) ],
 				[ 'key' => 'ppemail', 'value' => Input::String( 'ppemail' ) ],
-				[ 'key' => 'ppcc', 'value' => input::String( 'ppcc' ) ],
+				[ 'key' => 'ppcc', 'value' => Input::String( 'ppcc' ) ],
 				[ 'key' => 'pprurl', 'value' => Input::String( 'pprurl' ) ],
 				[ 'key' => 'ppcancel', 'value' => Input::String( 'ppcancel' ) ],
 				[ 'key' => 'pploc', 'value' => Input::Int( 'pploc' ) ],

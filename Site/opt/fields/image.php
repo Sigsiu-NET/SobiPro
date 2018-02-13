@@ -779,7 +779,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	 * */
 	public function ProxyUpload()
 	{
-		$ident = Input::cmd( 'ident', 'post' );
+		$ident = Input::Cmd( 'ident', 'post' );
 		$data = SPRequest::file( $ident, 'tmp_name' );
 		$secret = md5( Sobi::Cfg( 'secret' ) );
 		if ( $data ) {

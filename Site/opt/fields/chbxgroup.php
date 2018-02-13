@@ -119,7 +119,6 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	public function metaDesc()
 	{
 		return ( $this->addToMetaDesc && count( $this->getRaw() ) ) ? implode( ', ', $this->getRaw() ) : null;
-		return $this->metaKeys();
 	}
 
 	/**
