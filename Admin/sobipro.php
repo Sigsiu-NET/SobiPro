@@ -17,6 +17,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( '_JEXEC' ) || exit( 'Restricted access' );
 define( 'SOBI_TESTS', false );
 defined( 'DS' ) || define( 'DS', DIRECTORY_SEPARATOR );
@@ -45,5 +47,5 @@ SPLoader::loadClass( 'base.request' );
 JHtml::_( 'behavior.tooltip' );
 JHTML::_( 'behavior.modal' );
 $class = SPLoader::loadController( 'adm.sobipro' );
-$sobi = new $class( SPRequest::task() );
+$sobi = new $class( Input::Task() );
 $sobi->execute();

@@ -19,7 +19,7 @@
 
 use Sobi\Input\Input;
 
-define( 'SOBI_TESTS', false );
+define( 'SOBI_TESTS', true );
 defined( '_JEXEC' ) || exit( 'Restricted access' );
 defined( 'DS' ) || define( 'DS', DIRECTORY_SEPARATOR );
 define( 'SOBI_CMS', version_compare( JVERSION, '3.0.0', 'ge' ) ? 'joomla3' : 'joomla16' );

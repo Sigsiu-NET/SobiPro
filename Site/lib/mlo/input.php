@@ -885,7 +885,7 @@ abstract class SPHtml_Input
 		return preg_replace( '/(&)([^a-zA-Z0-9#]+)/', '&amp;\2', self::translate( $opt ) );
 	}
 
-	protected function optGrp( &$cells, $selected, $grp, $title )
+	protected static function optGrp( &$cells, $selected, $grp, $title )
 	{
 		$cells[] = "\n\t<optgroup label=\"{$title}\">";
 		foreach ( $grp as $v => $l ) {

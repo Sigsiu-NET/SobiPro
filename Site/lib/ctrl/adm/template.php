@@ -54,7 +54,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			}
 		}
 		elseif ( !( Sobi::Can( 'cms.apps' ) ) ) {
-			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			exit();
 		}
 	}
@@ -122,7 +122,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			if ( isset( $settings[ 'theme' ] ) && count( $settings[ 'theme' ] ) ) {
 				foreach ( $settings[ 'theme' ] as $file => $variables ) {
 					$themeFile = FileSystem::FixPath( $this->dir( $templateName ) . '/themes/' . $file . '.less' );
-					if ( FileSystem::exists( $themeFile ) ) {
+					if ( FileSystem::Exists( $themeFile ) ) {
 						$themesContent = SPFs::read( $themeFile );
 						foreach ( $variables as $variable => $value ) {
 							// @colour-set: sobipro;
@@ -140,7 +140,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			if ( isset( $settings[ 'less' ] ) && count( $settings[ 'less' ] ) ) {
 				foreach ( $settings[ 'less' ] as $file => $variables ) {
 					$lessFile = FileSystem::FixPath( $this->dir( $templateName ) . '/css/' . $file . '.less' );
-					if ( FileSystem::exists( $lessFile ) ) {
+					if ( FileSystem::Exists( $lessFile ) ) {
 						$lessContent = SPFs::read( $lessFile );
 						foreach ( $variables as $variable => $value ) {
 							// @colour-set: sobipro;
@@ -238,7 +238,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 	protected function compile( $outputMessage = true )
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
-			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$file = $this->file( Input::Cmd( 'fileName' ) );
 		$output = str_replace( 'less', 'css', $file );
@@ -248,7 +248,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 			$u[ 'sid' ] = Sobi::Section();
 		}
 		if ( !( $file ) ) {
-			$this->response( Sobi::Url( $u ), SPLang::e( 'Missing file to compile %s', Input::cmd( 'fileName' ) ), false, SPC::ERROR_MSG );
+			$this->response( Sobi::Url( $u ), SPLang::e( 'Missing file to compile %s', Input::Cmd( 'fileName' ) ), false, SPC::ERROR_MSG );
 		}
 		$this->compileLessFile( $file, $output, $u );
 		if ( $outputMessage ) {
@@ -573,7 +573,7 @@ class SPTemplateCtrl extends SPConfigAdmCtrl
 		$file = Input::Cmd( 'file' );
 		$file = $this->file( $file );
 		$ext = FileSystem::GetExt( $file );
-		$fileContent = FileSystem::read( $file );
+		$fileContent = FileSystem::Read( $file );
 		$path = str_replace( '\\', '/', SOBI_PATH );
 		if ( strstr( $file, $path ) ) {
 			$filename = str_replace( $path . '/usr/templates/', null, $file );

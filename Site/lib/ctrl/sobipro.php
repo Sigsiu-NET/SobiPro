@@ -46,7 +46,7 @@ final class SobiProCtrl
 	private $_sid = 0;
 	/*** @var SPController - can be also array of */
 	private $_ctrl = null;
-	/*** @var mixed*/
+	/*** @var mixed */
 	private $_model = null;
 	/** * @var int */
 	private $_err = 0;
@@ -84,8 +84,13 @@ final class SobiProCtrl
 		/* get sid if any */
 		$this->_sid = Input::Sid();
 
-		/* determine section */
-		$access = $this->getSection();
+		if ( $this->_sid ) {
+			/* determine section */
+			$access = $this->getSection();
+		}
+		else {
+			$access = strstr( Input::Task(), 'api.' );
+		}
 
 		/* initialise mainframe interface to CMS */
 		$this->_mainframe = SPFactory::mainframe();

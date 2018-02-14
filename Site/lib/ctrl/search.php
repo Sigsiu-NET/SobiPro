@@ -576,7 +576,7 @@ class SPSearchCtrl extends SPSectionCtrl
 			$view->assign( $this->_request[ 'search_for' ], 'search_for' )
 					->assign( $this->_request[ 'phrase' ], 'search_phrase' );
 		}
-		$visitor = SPFactory::user()->getCurrent();
+		$visitor = SPFactory::user();
 		$sid = Sobi::Section();
 		$view->assign( $fields, 'fields' )
 				->assign( $visitor, 'visitor' )

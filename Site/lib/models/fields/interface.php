@@ -32,7 +32,7 @@ interface SPFieldInterface
 	 */
 	public function field( $return = false );
 
-	public function __construct(  &$field  );
+//	public function __construct(  &$field  );
 
 	/**
 	 * Gets the data for a field, verify it and pre-save it.

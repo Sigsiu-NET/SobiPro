@@ -577,7 +577,7 @@ class SPRequirements extends SPController
 			echo $this->warning( $this->txt( 'REQ.CMS_NOT_REC_VER', [ 'cms' => $cmsName, 'recommended' => implode( '.', $rminVer ), 'installed' => implode( '.', $cmsVer ) ] ), __FUNCTION__ );
 		}
 		else {
-			echo $this->ok( $this->txt( 'REQ.CMS_VERSION_OK', [ 'cms' => $cmsName, 'installed' => implode( '.', $cmsVer ), 'cms' => $cmsName, ] ), __FUNCTION__ );
+			echo $this->ok( $this->txt( 'REQ.CMS_VERSION_OK', [ 'cms' => $cmsName, 'installed' => implode( '.', $cmsVer ) ] ), __FUNCTION__ );
 		}
 	}
 

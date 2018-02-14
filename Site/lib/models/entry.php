@@ -745,7 +745,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 		}
 		/* by default it should be comma separated string */
 		if ( !( count( $cats ) ) ) {
-			$cats = Input::string( 'entry_parent' );
+			$cats = Input::String( 'entry_parent' );
 			if ( strlen( $cats ) && strpos( $cats, ',' ) ) {
 				$cats = explode( ',', $cats );
 				foreach ( $cats as $i => $cat ) {

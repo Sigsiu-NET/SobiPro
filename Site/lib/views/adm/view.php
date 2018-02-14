@@ -1729,7 +1729,7 @@ class SPAdmView extends SPObject implements SPView
 			$adm = $path[ 1 ];
 			$path = $path[ 0 ];
 		}
-		SPFactory::header()->addCSSFile( $path, $adm );
+		SPFactory::header()->addCssFile( $path, $adm );
 	}
 
 	/**

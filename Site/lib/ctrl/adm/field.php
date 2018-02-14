@@ -275,7 +275,6 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 					'priority' => 5,
 					'showIn' => 'details',
 					'editLimit' => '',
-					'version' => 1,
 					'inSearch' => 0,
 					'cssClass' => '',
 					'fieldType' => $this->_fieldType,
@@ -694,7 +693,7 @@ final class SPFieldAdmCtrl extends SPFieldCtrl
 		else {
 			$ord = $ord . '.' . $dir;
 		}
-		Sobi::setUserState( 'fields.order', $order );
+		Sobi::SetUserState( 'fields.order', $order );
 		return $ord;
 	}
 
