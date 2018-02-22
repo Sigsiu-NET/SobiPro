@@ -84,13 +84,13 @@ final class SobiProCtrl
 		/* get sid if any */
 		$this->_sid = Input::Sid();
 
-		if ( $this->_sid ) {
-			/* determine section */
+//		if ( $this->_sid ) {
+//			/* determine section */
 			$access = $this->getSection();
-		}
-		else {
-			$access = strstr( Input::Task(), 'api.' );
-		}
+//		}
+//		else {
+//			$access = strstr( Input::Task(), 'api.' );
+//		}
 
 		/* initialise mainframe interface to CMS */
 		$this->_mainframe = SPFactory::mainframe();
