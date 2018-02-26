@@ -17,6 +17,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
+use Sobi\FileSystem\File;
 use Sobi\FileSystem\Image;
 use Sobi\Input\Input;
 
@@ -242,13 +243,12 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$check = Input::String( $this->nid );
 			if ( !( $check ) ) {
 				/* save the file to temporary folder */
-				$data = SPRequest::file( $this->nid, 'tmp_name' );
+				$data = Input::File( $this->nid, 'tmp_name' );
 				if ( $data ) {
 					$temp = str_replace( '.', '-', $tsId );
 					$path = SPLoader::dirPath( "tmp.edit.{$temp}.images", 'front', false );
-					$path .= '/' . SPRequest::file( $this->nid, 'name' );
-					$fileClass = SPLoader::loadClass( 'base.fs.file' );
-					$file = new $fileClass();
+					$path .= '/' . Input::File( $this->nid, 'name' );
+					$file = new File();
 					$file->upload( $data, $path );
 					$save[ $this->nid ] = $path;
 				}
@@ -274,10 +274,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		static $store = null;
 		$directory = Input::String( $this->nid );
 		if ( strtolower( $request ) == 'post' || strtolower( $request ) == 'get' ) {
-			$data = SPRequest::file( $this->nid, 'tmp_name' );
+			$data = Input::File( $this->nid, 'tmp_name' );
 		}
 		else {
-			$data = SPRequest::file( $this->nid, 'tmp_name', $request );
+			$data = Input::File( $this->nid, 'tmp_name', $request );
 		}
 		if ( $store == null ) {
 			$store = SPFactory::registry()->get( 'requestcache_stored' );
@@ -290,7 +290,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$directory = $store[ $this->nid ];
 			}
 		}
-		$fileSize = SPRequest::file( $this->nid, 'size' );
+		$fileSize = Input::File( $this->nid, 'size' );
 		if ( $directory && strstr( $directory, 'directory://' ) ) {
 			list( $data, $dirName, $files ) = $this->getAjaxFiles( $directory );
 			if ( count( $files ) ) {
@@ -385,7 +385,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 
 		//initializations
-		$fileSize = SPRequest::file( $this->nid, 'size' );
+		$fileSize = Input::File( $this->nid, 'size' );
 		$data = null;
 
 		$cropped = null;
@@ -398,17 +398,17 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			if ( !( strstr( $store[ $this->nid ], 'file://' ) ) && !( strstr( $store[ $this->nid ], 'directory://' ) ) ) {
 				$data = $store[ $this->nid ];
 				$cache = true;
-				$orgName = SPRequest::file( $this->nid, 'name', $request );
+				$orgName = Input::File( $this->nid, 'name', $request );
 			}
 			else {
 				Input::Set( $this->nid, $store[ $this->nid ] );
-				$orgName = SPRequest::file( $this->nid, 'name' );
-				$data = SPRequest::file( $this->nid, 'tmp_name' );
+				$orgName = Input::File( $this->nid, 'name' );
+				$data = Input::File( $this->nid, 'tmp_name' );
 			}
 		}
 		else {
-			$data = SPRequest::file( $this->nid, 'tmp_name' );
-			$orgName = SPRequest::file( $this->nid, 'name' );
+			$data = Input::File( $this->nid, 'tmp_name' );
+			$orgName = Input::File( $this->nid, 'name' );
 		}
 		$sPath = $this->parseName( $entry, $orgName, $this->savePath );
 		$path = SPLoader::dirPath( $sPath, 'root', false );
@@ -505,7 +505,6 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				}
 			}
 			if ( $this->resize ) {
-				/** @var SPImage $image */
 				$image = clone $orgImage;
 				$image->setTransparency( $this->detectTransparency );
 				try {
@@ -781,10 +780,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	public function ProxyUpload()
 	{
 		$ident = Input::Cmd( 'ident', 'post' );
-		$data = SPRequest::file( $ident, 'tmp_name' );
+		$data = Input::File( $ident, 'tmp_name' );
 		$secret = md5( Sobi::Cfg( 'secret' ) );
 		if ( $data ) {
-			$properties = SPRequest::file( $ident );
+			$properties = Input::File( $ident );
 			$orgFileName = $properties[ 'name' ];
 			$extension = SPFs::getExt( $orgFileName );
 			$orgFileName = str_replace( '.' . $extension, '.' . strtolower( $extension ), $orgFileName );
