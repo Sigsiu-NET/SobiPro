@@ -38,6 +38,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Improvement of template style 'elevated'
 	(!) Improvement of all colour themes
 	(!) Default template version V4.1
+	(!) Image field using Framework for image manipulation 
 
 	(#) Backslashes are added prior apostrophe to input field in back-end
 	(#) Ini file for template override (sptpl) not loaded

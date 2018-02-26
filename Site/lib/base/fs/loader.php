@@ -301,7 +301,7 @@ abstract class SPLoader
 				$name = 'adm.' . $name;
 			}
 		}
-		return self::loadClass( $name, false, 'model', $redirect );
+		return self::loadClass( $name, $adm, 'model', $redirect );
 	}
 
 	/**

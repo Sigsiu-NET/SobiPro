@@ -17,6 +17,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
+use Sobi\FileSystem\Image;
 use Sobi\Input\Input;
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -476,7 +477,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$orgImage->move( $path . $orgName );
 			}
 			else {
-				$orgImage = SPFactory::Instance( 'base.fs.image' );
+				$orgImage = new Image();
 				$nameArray = explode( '.', $orgName );
 				$ext = strtolower( array_pop( $nameArray ) );
 				$nameArray[] = $ext;
@@ -669,7 +670,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					}
 				}
 			}
-			if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) && ($files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSStatus' ] != 'V')) { //and if not 'void'
+			if ( isset( $files[ 'data' ][ 'exif' ][ 'GPS' ] ) && ( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSStatus' ] != 'V' ) ) { //and if not 'void'
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'latitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] );
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'longitude' ] = $this->convertGPS( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 0 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 1 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitude' ][ 2 ], $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLongitudeRef' ] );
 				$exifToPass[ 'GPS' ][ 'coordinates' ][ 'latitude-ref' ] = isset( $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] ) ? $files[ 'data' ][ 'exif' ][ 'GPS' ][ 'GPSLatitudeRef' ] : 'unknown';
@@ -794,8 +795,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$dirName = SPLoader::dirPath( "tmp.files.{$secret}.{$dirNameHash}", 'front', false );
 			SPFs::mkdir( $dirName );
 			$path = $dirName . $orgFileName;
-			/** @var $file SPImage */
-			$orgImage = SPFactory::Instance( 'base.fs.image' );
+			$orgImage = new Image();
 			if ( !( $orgImage->upload( $data, $path ) ) ) {
 				$this->message( [ 'type' => 'error', 'text' => SPLang::e( 'CANNOT_UPLOAD_FILE' ), 'id' => '' ] );
 			}
@@ -963,7 +963,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 
 		$time = Input::Now();
-		$IP = Input::Ip4( 'REMOTE_ADDR','SERVER',0 );
+		$IP = Input::Ip4( 'REMOTE_ADDR', 'SERVER', 0 );
 		$uid = Sobi::My( 'id' );
 
 		/* if we are here, we can save these data */
