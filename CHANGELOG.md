@@ -33,12 +33,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 
 ### 1.4.6 ()
 
-	(+) new template colour @link-color
+	(+) New template colour @link-color
 
 	(!) Improvement of template style 'elevated'
 	(!) Improvement of all colour themes
 	(!) Default template version V4.1
-	(!) Image field using Framework for image manipulation 
+	(!) Image field is using a framework for image manipulation
+	(!) Info field set to not im-/exportable
 
 	(#) Backslashes are added prior apostrophe to input field in back-end
 	(#) Ini file for template override (sptpl) not loaded

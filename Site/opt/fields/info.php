@@ -41,6 +41,8 @@ class SPField_Info extends SPField_Inbox implements SPFieldInterface
 	protected $bsWidth = 10;
 	/** @var bool  */
 	static private $CAT_FIELD = true;
+	/** @var bool  */
+	static private $NO_IMEX = true;
 	/*** @var bool */
 	protected $suggesting = false;
 
