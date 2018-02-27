@@ -143,8 +143,8 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
-		$data = SPRequest::raw( $this->nid, null, $request );
-//		$data = Input::Html( $this->nid, 'post' );
+//		$data = SPRequest::raw( $this->nid, null, $request );
+		$data = Input::Html( $this->nid, 'post' );
 		$dexs = strlen( $data );
 		/* check if it was required */
 		if ( $this->required && !( $dexs ) ) {

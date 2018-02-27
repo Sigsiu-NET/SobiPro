@@ -17,6 +17,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+use Sobi\Utils\Serialiser;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.fieldtype' );
 
@@ -157,7 +160,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			}
 		}
 		$this->showLabel = true;
-		if ( !( ( int ) $this->catsMaxLimit ) ) {
+		if ( !( ( int )$this->catsMaxLimit ) ) {
 			$this->catsMaxLimit = 10;   //set to standard value
 		}
 		if ( count( $this->_selectedCats ) > $this->catsMaxLimit ) {
@@ -215,8 +218,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$delBtParams = [ 'class' => 'btn btn-sm btn-small btn-default' ];
 		$selectParams = [];
 		SPFactory::header()
-			->addJsFile( 'opt.field_category_tree' )
-			->addJsCode( 'SobiPro.jQuery( document ).ready( function () { new SigsiuTreeEdit( ' . json_encode( $params ) . '); } );' );
+				->addJsFile( 'opt.field_category_tree' )
+				->addJsCode( 'SobiPro.jQuery( document ).ready( function () { new SigsiuTreeEdit( ' . json_encode( $params ) . '); } );' );
 
 		if ( Sobi::Cfg( 'template.bootstrap3-styles', true ) && !defined( 'SOBIPRO_ADM' ) ) {
 			$selector = $selector . '<div class="row"><div class="tree col-sm-6"' . $setheight . '>' . $tree->display( true ) . '</div>';
@@ -308,8 +311,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				}
 			}
 			$params = [
-				'id'    => $this->nid,
-				'class' => 'required ' . $class
+					'id' => $this->nid,
+					'class' => 'required ' . $class
 			];
 			//still there for compatibility reason
 			if ( $this->width ) {
@@ -319,7 +322,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$selected = $this->_selectedCats;
 			if ( count( $selected ) ) {
 				foreach ( $selected as $i => $v ) {
-					$selected[ $i ] = (string) $v;
+					$selected[ $i ] = (string)$v;
 				}
 			}
 			$field = SPHtml_Input::select( $this->nid, $values, $selected, false, $params );
@@ -334,8 +337,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			self::$_filter = explode( '.', SPRequest::cmd( 'method' ) == 'search' ? $this->searchOrderCatsBy : $this->orderCatsBy );
 			$this->loadCategories();
 			SPFactory::mainframe()
-				->cleanBuffer()
-				->customHeader();
+					->cleanBuffer()
+					->customHeader();
 			echo json_encode( [ 'categories' => $this->_cats[ Sobi::Section() ][ 'childs' ] ] );
 			exit;
 		}
@@ -344,7 +347,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	protected function pselect()
 	{
 		SPFactory::header()
-			->addJsFile( 'opt.field_category_pselect' );
+				->addJsFile( 'opt.field_category_pselect' );
 		$class = $this->cssClass;
 		if ( defined( 'SOBIPRO_ADM' ) ) {
 			if ( $this->bsWidth ) {
@@ -353,8 +356,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			}
 		}
 		$params = [
-			'id'    => $this->nid,
-			'class' => 'ctrl-field-category required ' . $class
+				'id' => $this->nid,
+				'class' => 'ctrl-field-category required ' . $class
 		];
 		$selected = $this->_selectedCats;
 		$params[ 'data' ][ 'task' ] = str_replace( '_', '.', $this->nid ) . '.loadCategories';
@@ -379,8 +382,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				}
 			}
 			$params = [
-				'id'    => $this->nid,
-				'class' => 'required ' . $class
+					'id' => $this->nid,
+					'class' => 'required ' . $class
 			];
 			$this->size = ( $this->height != null ) ? ( $this->height / 20 ) : $this->size; //compatibility
 			$this->size = ( $this->size == '' ) ? 10 : $this->size;
@@ -394,14 +397,14 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$selected = $this->_selectedCats;
 			if ( count( $selected ) ) {
 				foreach ( $selected as $i => $v ) {
-					$selected[ $i ] = (string) $v;
+					$selected[ $i ] = (string)$v;
 				}
 			}
 			$field = SPHtml_Input::select( $this->nid, $values, $selected, true, $params );
 			$opt = json_encode( [ 'id' => $this->nid, 'limit' => $this->catsMaxLimit ] );
 			SPFactory::header()
-				->addJsFile( 'opt.field_category' )
-				->addJsCode( "SPCategoryChooser( {$opt} )" );
+					->addJsFile( 'opt.field_category' )
+					->addJsCode( "SPCategoryChooser( {$opt} )" );
 
 			return $field;
 		}
@@ -420,9 +423,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				}
 			}
 			$result[] = [
-				'label'  => $margin . ' ' . $cat[ 'name' ],
-				'value'  => $cat[ 'sid' ],
-				'params' => $params
+					'label' => $margin . ' ' . $cat[ 'name' ],
+					'value' => $cat[ 'sid' ],
+					'params' => $params
 			];
 			if ( count( ( $cat[ 'childs' ] ) ) ) {
 				$this->createValues( $cat[ 'childs' ], $result, Sobi::Cfg( 'category_chooser.margin_sign', '-' ) . $margin, $selector );
@@ -437,11 +440,11 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 		if ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
 			$this->_cats = SPFactory::cache()
-				->getVar( 'categories_tree', Sobi::Section() );
+					->getVar( 'categories_tree', Sobi::Section() );
 			if ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
 				$this->travelCats( Sobi::Section(), $this->_cats, true );
 				SPFactory::cache()
-					->addVar( $this->_cats, 'categories_tree', Sobi::Section() );
+						->addVar( $this->_cats, 'categories_tree', Sobi::Section() );
 			}
 			$cache = json_encode( $this->_cats );
 			if ( !( defined( 'SOBIPRO_ADM' ) ) ) {
@@ -487,13 +490,13 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$category = $init == true ? SPFactory::Section( $sid ) : SPFactory::Category( $sid );
 		if ( $category->get( 'state' ) ) {
 			$cats[ $sid ] = [
-				'sid'      => $sid,
-				'state'    => $category->get( 'state' ),
-				'name'     => $category->get( 'name' ),
-				'type'     => $category->get( 'oType' ),
-				'position' => $category->get( 'position' ),
-				'url'      => Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $category->get( 'nid' ) : $category->get( 'name' ), 'sid' => $category->get( 'id' ) ] ),
-				'childs'   => [],
+					'sid' => $sid,
+					'state' => $category->get( 'state' ),
+					'name' => $category->get( 'name' ),
+					'type' => $category->get( 'oType' ),
+					'position' => $category->get( 'position' ),
+					'url' => Sobi::Url( [ 'title' => Sobi::Cfg( 'sef.alias', true ) ? $category->get( 'nid' ) : $category->get( 'name' ), 'sid' => $category->get( 'id' ) ] ),
+					'childs' => [],
 			];
 			$childs = $category->getChilds( 'category' );
 			if ( count( $childs ) ) {
@@ -529,14 +532,14 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 					$selected = [ $selected ];
 				}
 				foreach ( $selected as $i => $v ) {
-					$selected[ $i ] = (string) $v;
+					$selected[ $i ] = (string)$v;
 				}
 			}
 		}
 		if ( $this->searchMethod == 'select' ) {
 			$params = [
-				'id'    => $this->nid,
-				'class' => $this->cssClass
+					'id' => $this->nid,
+					'class' => $this->cssClass
 			];
 			//still there for compatibility reason
 			if ( $this->searchWidth ) {
@@ -546,8 +549,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 		elseif ( $this->searchMethod == 'mselect' ) {
 			$params = [
-				'id'    => $this->nid,
-				'class' => $this->cssClass
+					'id' => $this->nid,
+					'class' => $this->cssClass
 			];
 			$this->ssize = ( $this->searchHeight != null ) ? ( $this->searchHeight / 20 ) : $this->ssize; //compatibility
 			$this->ssize = ( $this->ssize == '' ) ? 10 : $this->ssize;
@@ -560,11 +563,11 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		}
 		elseif ( $this->searchMethod == 'pselect' ) {
 			SPFactory::header()
-				->addJsFile( 'opt.field_category_pselect' );
+					->addJsFile( 'opt.field_category_pselect' );
 			$class = $this->cssClass;
 			$params = [
-				'id'    => $this->nid,
-				'class' => 'ctrl-field-category ' . $class
+					'id' => $this->nid,
+					'class' => 'ctrl-field-category ' . $class
 			];
 			$params[ 'data' ][ 'task' ] = str_replace( '_', '.', $this->nid ) . '.loadCategories';
 			$params[ 'data' ][ 'method' ] = 'search';
@@ -619,21 +622,21 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
-		$data = SPRequest::arr( $this->nid, [], $request );
+		$data = Input::Arr( $this->nid, 'post', [] );
 		if ( !( $data ) ) {
-			$dataString = SPRequest::string( $this->nid, null, false, $request );
+			$dataString = Input::String( $this->nid, 'post', null );
 			if ( strstr( $dataString, '://' ) ) {
 				$data = SPFactory::config()->structuralData( $dataString );
 			}
 			else {
-				$dataString = SPRequest::int( $this->nid, 0, $request );
+				$dataString = Input::Int( $this->nid, 'post' );
 				if ( $dataString ) {
 					$data = [ $dataString ];
 				}
 			}
 		}
 		else {
-			if ( !( ( int ) $this->catsMaxLimit ) ) {
+			if ( !( ( int )$this->catsMaxLimit ) ) {
 				$this->catsMaxLimit = 10;   //set to standard value
 			}
 			if ( count( $data ) > $this->catsMaxLimit && count( $data ) > 1 ) {
@@ -734,8 +737,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		else {
 			$data = $this->verify( $entry, $request );
 		}
-		$time = SPRequest::now();
-		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$time = Input::Now();
+		$IP = Input::Ip4();
 		$uid = Sobi::My( 'id' );
 
 		/* if we are here, we can save these data */
@@ -753,7 +756,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params[ 'enabled' ] = $entry->get( 'state' );
 		$params[ 'params' ] = null;
 		$params[ 'options' ] = null;
-		$params[ 'baseData' ] = SPConfig::serialize( $data );
+		$params[ 'baseData' ] = Serialiser::Serialise( $data );
 		$params[ 'approved' ] = $entry->get( 'approved' );
 		$params[ 'confirmed' ] = $entry->get( 'confirmed' );
 		/* if it is the first version, it is new entry */
@@ -765,7 +768,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 		$params[ 'updatedTime' ] = $time;
 		$params[ 'updatedBy' ] = $uid;
 		$params[ 'updatedIP' ] = $IP;
-		$params[ 'copy' ] = (int) !( $entry->get( 'approved' ) );
+		$params[ 'copy' ] = (int)!( $entry->get( 'approved' ) );
 		if ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
 			--$this->editLimit;
 		}
@@ -781,8 +784,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				* " ... " if a copy already exist it is update again
 				* */
 			$db->insertUpdate( 'spdb_field_data', $params );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
@@ -791,8 +793,7 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 			$params[ 'lang' ] = Sobi::DefLang();
 			try {
 				$db->insert( 'spdb_field_data', $params, true, true );
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
@@ -831,8 +832,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				if ( count( $results ) ) {
 					foreach ( $results as $index => $sid ) {
 						$relation = SPFactory::db()
-							->dselect( 'id', 'spdb_relations', [ 'id' => $sid, 'oType' => 'entry', 'pid' => $categories ] )
-							->loadResultArray();
+								->dselect( 'id', 'spdb_relations', [ 'id' => $sid, 'oType' => 'entry', 'pid' => $categories ] )
+								->loadResultArray();
 						if ( !( count( $relation ) ) ) {
 							unset( $results[ $index ] );
 						}
@@ -841,8 +842,8 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 				} // it's a real search now - in case we hadn't nothing to filter out
 				else {
 					$results = SPFactory::db()
-						->dselect( 'id', 'spdb_relations', [ 'oType' => 'entry', 'pid' => $categories ] )
-						->loadResultArray();
+							->dselect( 'id', 'spdb_relations', [ 'oType' => 'entry', 'pid' => $categories ] )
+							->loadResultArray();
 					$priorities[ $this->priority ] = $results;
 				}
 			}

@@ -213,7 +213,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $lang && $lang != Sobi::Cfg( 'language' ) ) {
 			$languages = SPFactory::CmsHelper()->availableLanguages();
 			SPFactory::message()
-				->info( Sobi::Txt( 'INFO_DIFFERENT_LANGUAGE', $this->_type, $languages[ $lang ][ 'name' ] ), false );
+					->info( Sobi::Txt( 'INFO_DIFFERENT_LANGUAGE', $this->_type, $languages[ $lang ][ 'name' ] ), false );
 		}
 	}
 
@@ -222,7 +222,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $this->_model->get( 'id' ) ) {
 			if ( $this->authorise( 'manage' ) ) {
 				$this->_model->changeState( $state );
-				$state = ( int ) ( $this->_task == 'publish' ) ? true : $state;
+				$state = ( int )( $this->_task == 'publish' ) ? true : $state;
 				$this->response( Sobi::Back(), Sobi::Txt( $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', [ 'type' => Sobi::Txt( $this->_type ) ] ), false );
 			}
 		}
@@ -272,7 +272,7 @@ abstract class SPController extends SPObject implements SPControl
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$this->validate( $this->_type . '.edit', $this->_type );
-		$apply = ( int ) $apply;
+		$apply = ( int )$apply;
 		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
 		}
@@ -282,9 +282,9 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		/** store previous state for possible triggers */
 		$preState = [
-			'approved' => $this->_model->get( 'approved' ),
-			'state'    => $this->_model->get( 'state' ),
-			'new'      => !( $this->_model->get( 'id' ) )
+				'approved' => $this->_model->get( 'approved' ),
+				'state' => $this->_model->get( 'state' ),
+				'new' => !( $this->_model->get( 'id' ) )
 		];
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 		$this->_model->getRequest( $this->_type );
@@ -424,7 +424,7 @@ abstract class SPController extends SPObject implements SPControl
 			$redirect = Sobi::Cfg( 'redirects.' . $type . '_access_url', null );
 			if ( Sobi::Cfg( 'redirects.' . $type . '_access_enabled', false ) && strlen( $redirect ) ) {
 				$this->escape( $redirect, Sobi::Cfg( 'redirects.' . $type . '_access_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', Input::Task() ) ),
-					Sobi::Cfg( 'redirects.' . $type . '_access_msgtype', 'message' ) );
+						Sobi::Cfg( 'redirects.' . $type . '_access_msgtype', 'message' ) );
 				exit;
 			}
 			else {
@@ -489,8 +489,8 @@ abstract class SPController extends SPObject implements SPControl
 			$file = str_replace( $this->templateType . '.', null, $file );
 		}
 
-		if ($file != $task) {
-			if (!( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'ini' ) )) {
+		if ( $file != $task ) {
+			if ( !( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'ini' ) ) ) {
 				$file = $task;
 			}
 		}
@@ -604,20 +604,20 @@ abstract class SPController extends SPObject implements SPControl
 			$type = $message[ 'type' ];
 			$message = $message[ 'text' ];
 		}
-		if ( Sprequest::cmd( 'method', null, $request ) == 'xhr' ) { //don't use Framework function -> results in true
+		if ( Input::Cmd( 'method' ) == 'xhr' ) { //don't use Framework function -> results in true
 			if ( $redirect && $message ) {
 				SPFactory::message()->setMessage( $message, false, $type );
 			}
 			$url = str_replace( '&amp;', '&', $url );
 			SPFactory::mainframe()
-				->cleanBuffer()
-				->customHeader();
+					->cleanBuffer()
+					->customHeader();
 			echo json_encode(
-				[
-					'message'  => [ 'text' => $message, 'type' => $type ],
-					'redirect' => [ 'url' => $url, 'execute' => ( bool ) $redirect ],
-					'data'     => $data
-				]
+					[
+							'message' => [ 'text' => $message, 'type' => $type ],
+							'redirect' => [ 'url' => $url, 'execute' => ( bool )$redirect ],
+							'data' => $data
+					]
 			);
 			exit;
 		}

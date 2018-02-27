@@ -46,7 +46,7 @@ class SPEntryCtrl extends SPController
 	public function execute()
 	{
 		$r = false;
-		SPRequest::set( 'task', $this->_type . '.' . $this->_task );
+		Input::Set( 'task', $this->_type . '.' . $this->_task );
 		switch ( $this->_task ) {
 			case 'edit':
 			case 'add':
@@ -277,10 +277,6 @@ class SPEntryCtrl extends SPController
 				}
 				SPFactory::registry()->set( $cache, $post );
 				SPFactory::registry()->set( 'requestcache_stored', $store );
-				$request = $cache;
-			}
-			else {
-				$request = 'post';
 			}
 		}
 		/**
@@ -293,7 +289,7 @@ class SPEntryCtrl extends SPController
 				Input::Set( $index, $value, 'request' );
 			}
 		}
-		return $request;
+		return 'post';
 	}
 
 	private function payment()
@@ -384,10 +380,10 @@ class SPEntryCtrl extends SPController
 		/* check if we have stored last edit in cache */
 		$tsId = SPRequest::string( 'editentry', null, false, 'cookie' );
 		if ( !( $tsId ) ) {
-			$tsId = SPRequest::cmd( 'ssid' );
+			$tsId = Input::Cmd( 'ssid' );
 		}
-		$request = $this->getCache( $tsId );
-		$this->_model->init( SPRequest::sid( $request ) );
+		$this->getCache( $tsId );
+		$this->_model->init( Input::Sid() );
 
 		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		$this->tplCfg( $tplPackage );
@@ -398,6 +394,11 @@ class SPEntryCtrl extends SPController
 				$customClass::BeforeStoreEntry( $this->_model, $this->store[ 'post' ] );
 				SPFactory::registry()->set( 'requestcache_stored', $this->store );
 				SPFactory::registry()->set( 'requestcache', $this->store[ 'post' ] );
+				if ( count( $this->store[ 'post' ] ) ) {
+					foreach ( $this->store[ 'post' ] as $index => $value ) {
+						Input::Set( $index, $value, 'post' );
+					}
+				}
 			}
 		}
 		$preState = [
@@ -407,7 +408,7 @@ class SPEntryCtrl extends SPController
 		];
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 
-		$this->_model->getRequest( $this->_type, $request );
+		$this->_model->getRequest( $this->_type, 'post' );
 		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_model ] );
 
 		if ( $this->_model->get( 'id' ) && $this->_model->get( 'id' ) == Input::Sid() ) {
@@ -422,7 +423,7 @@ class SPEntryCtrl extends SPController
 		else {
 			$this->authorise( 'add', 'own' );
 		}
-		$this->_model->save( $request );
+		$this->_model->save( 'post' );
 
 		/* if there is something pay */
 		$pCount = SPFactory::payment()->count( $this->_model->get( 'id' ) );
@@ -445,7 +446,7 @@ class SPEntryCtrl extends SPController
 		SPCookie::delete( 'editentry' );
 
 		$sid = $this->_model->get( 'id' );
-		$pid = Input::Int( 'pid' ) ? SPRequest::int( 'pid' ) : Sobi::Section();
+		$pid = Input::Pid() ? Input::Pid() : Sobi::Section();
 		if ( $new ) {
 			if ( $this->_model->get( 'state' ) || Sobi::Can( 'entry', 'access', 'unpublished_own' ) || Sobi::Can( 'entry', 'access', 'unpublished_any' ) ) {
 				$msg = $this->_model->get( 'state' ) ? Sobi::Txt( 'EN.ENTRY_SAVED' ) : Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
@@ -497,7 +498,8 @@ class SPEntryCtrl extends SPController
 		if ( $customClass && method_exists( $customClass, 'AfterStoreEntry' ) ) {
 			$customClass::AfterStoreEntry( $this->_model );
 		}
-		$this->logChanges( 'save', SPRequest::string( 'history-note' ) );
+		$this->logChanges( 'save', Input::String( 'history-note' ) );
+		Input::Set( 'method', 'html' );
 		$this->response( $url, $msg, true, SPC::SUCCESS_MSG );
 	}
 

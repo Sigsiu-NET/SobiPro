@@ -314,7 +314,7 @@ final class SPCache
 				if ( $file ) {
 					SPFs::delete( $file );
 				}
-				$relations[ ] = $cache[ 'cid' ];
+				$relations[] = $cache[ 'cid' ];
 			}
 			if ( count( $relations ) ) {
 				SPFactory::db()
@@ -374,7 +374,7 @@ final class SPCache
 			$section = $section ? $section : $this->_section;
 			$sid = ( int )$sid;
 			$sid = $sid ? $sid : $section;
-			$lang = $lang ? $lang : Sobi::Lang();
+			$lang = $lang ? $lang : Sobi::Lang( false );
 			$checksum = null; //md5( serialize( $var ) );
 			if ( $this->_apc ) {
 				apc_store( "com_sobipro_var_{$sid}_{$id}_{$lang}", $var );
@@ -746,7 +746,7 @@ final class SPCache
 							if ( md5_file( $configFile ) != $config->checksum ) {
 								return false;
 							}
-							$ini[ ] = $configFile;
+							$ini[] = $configFile;
 						}
 						else {
 							return false;

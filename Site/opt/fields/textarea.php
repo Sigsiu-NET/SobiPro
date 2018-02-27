@@ -130,8 +130,8 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			$this->cssClass = $this->cssClass . ' ' . $this->nid;
 			$this->cleanCss();
 			$attributes = [
-				'lang'  => Sobi::Lang(),
-				'class' => $this->cssClass
+					'lang' => Sobi::Lang(),
+					'class' => $this->cssClass
 			];
 		}
 		else {
@@ -142,9 +142,9 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		}
 
 		return [
-			'_complex'    => 1,
-			'_data'       => $data,
-			'_attributes' => $attributes
+				'_complex' => 1,
+				'_data' => $data,
+				'_attributes' => $attributes
 		];
 	}
 
@@ -157,7 +157,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
-		$data = SPRequest::raw( $this->nid, null, $request );
+		$data = Input::Raw( $this->nid );
 		$dexs = strlen( $data );
 		/* check if it was required */
 		if ( $this->required && !( $dexs ) ) {
@@ -195,7 +195,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 				}
 			}
 		}
-		$data = SPRequest::string( $this->nid, null, true, $request );
+		$data = Input::String( $this->nid );
 		$this->setData( $data );
 
 		return $data;
@@ -214,7 +214,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	{
 		$data = $this->verify( $entry, $request );
 		if ( strlen( $data ) ) {
-			return SPRequest::search( $this->nid, $request );
+			return Input::Search( $this->nid );
 		}
 		else {
 			return [];
@@ -294,7 +294,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		$params[ 'updatedTime' ] = $time;
 		$params[ 'updatedBy' ] = $uid;
 		$params[ 'updatedIP' ] = $IP;
-		$params[ 'copy' ] = (int) !( $entry->get( 'approved' ) );
+		$params[ 'copy' ] = (int)!( $entry->get( 'approved' ) );
 		if ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
 			--$this->editLimit;
 		}
@@ -303,8 +303,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		/* save it */
 		try {
 			$db->insertUpdate( 'spdb_field_data', $params );
-		}
-		catch ( SPException $x ) {
+		} catch ( SPException $x ) {
 			Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 
@@ -313,8 +312,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			$params[ 'lang' ] = Sobi::DefLang();
 			try {
 				$db->insert( 'spdb_field_data', $params, true, true );
-			}
-			catch ( SPException $x ) {
+			} catch ( SPException $x ) {
 				Sobi::Error( __CLASS__, SPLang::e( 'CANNOT_SAVE_DATA', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
