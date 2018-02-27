@@ -42,6 +42,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 
 	(#) Backslashes are added prior apostrophe to input field in back-end
 	(#) Ini file for template override (sptpl) not loaded
+	(#) Categories not translated properly in multilingual mode (Issue #63)
 
 
 ### 1.4.5 (30 January 2018)
