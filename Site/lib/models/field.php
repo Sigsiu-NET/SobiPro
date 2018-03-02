@@ -608,6 +608,7 @@ class SPField extends SPObject
 			$this->_data = $this->_fData->baseData;
 
 			// if the field has own method we have to re-init
+			// ToDo check double call to specific loadData function in FullInit
 			$this->checkMethod( 'loadData' );
 			if ( $this->_type && method_exists( $this->_type, 'loadData' ) ) {
 				$this->_type->loadData( $sid, $this->_fData, $this->_rawData, $this->_data );
