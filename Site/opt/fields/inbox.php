@@ -342,7 +342,7 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 		}
 		if ( function_exists( 'iconv' ) ) {
 			uasort( $fdata, function ( $a, $b ) {
-				return strcmp( iconv( 'UTF-8', 'ASCII//TRANSLIT', $a ), iconv( 'UTF-8', 'ASCII//TRANSLIT', $b ) );
+				return strcmp( iconv( 'UTF-8', 'ASCII//TRANSLIT', strtolower( $a ) ), iconv( 'UTF-8', 'ASCII//TRANSLIT', strtolower( $b ) ) );
 			} );
 		}
 		else {

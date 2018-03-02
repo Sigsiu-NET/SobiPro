@@ -17,6 +17,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 /**
@@ -566,8 +568,8 @@ abstract class SPDBObject extends SPObject
 	{
 		$this->version++;
 		/* get current data */
-		$this->updatedTime = SPRequest::now();
-		$this->updaterIP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$this->updatedTime = Input::Now();
+		$this->updaterIP = Input::Ip4();
 		$this->updater = Sobi::My( 'id' );
 		$this->nid = SPLang::nid( $this->nid, true );
 		if ( !( $this->nid ) ) {
@@ -578,7 +580,7 @@ abstract class SPDBObject extends SPObject
 
 		/* if new object */
 		if ( !$this->id ) {
-			/** @var the notification App is using it to recognise if it is a new entry or an update */
+			/** the notification App is using it to recognise if it is a new entry or an update */
 			$this->createdTime = $this->updatedTime;
 			$this->owner = $this->owner ? $this->owner : $this->updater;
 			$this->ownerIP = $this->updaterIP;
@@ -586,11 +588,6 @@ abstract class SPDBObject extends SPObject
 
 		/* just a security check to avoid mistakes */
 		else {
-			/** Fri, Dec 19, 2014 19:33:52
-			 * When storing it we should actually get already UTC unix time stamp
-			 * so there is not need to remove it again
-			 */
-//			$this->createdTime = $this->createdTime && is_numeric( $this->createdTime ) ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->createdTime - SPFactory::config()->getTimeOffset() ) : $this->createdTime;
 			$this->createdTime = $this->createdTime && is_numeric( $this->createdTime ) ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->createdTime ) : $this->createdTime;
 			$obj = SPFactory::object( $this->id );
 			if ( $obj->oType != $this->oType ) {
@@ -600,7 +597,6 @@ abstract class SPDBObject extends SPObject
 
 		}
 		if ( is_numeric( $this->validUntil ) ) {
-//			$this->validUntil = $this->validUntil ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validUntil - SPFactory::config()->getTimeOffset() ) : null;
 			$this->validUntil = $this->validUntil ? gmdate( Sobi::Cfg( 'db.date_format', 'Y-m-d H:i:s' ), $this->validUntil ) : null;
 		}
 		if ( is_numeric( $this->validSince ) ) {
@@ -621,9 +617,13 @@ abstract class SPDBObject extends SPObject
 				$this->state = Sobi::Can( $this->type(), 'publish', 'own' );
 			}
 			// check if user has right to approve his entry
-			if ( !( $this->approved ) ) {
+			/***
+			 * Wed, Feb 28, 2018 11:43:35
+			 * So if it was already approved then it will stay approved. WTF is wrong with you Radek?
+			 */
+//			if ( !( $this->approved ) ) {
 				$this->approved = Sobi::Can( $this->type(), 'manage', 'own' );
-			}
+//			}
 		}
 //		elseif ( defined( 'SOBIPRO_ADM' ) ) {
 //			$this->approved = Sobi::Can( $this->type(), 'publish', 'own' );

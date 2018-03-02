@@ -18,6 +18,7 @@
  */
 
 use Sobi\Input\Input;
+use Sobi\Utils\StringUtils;
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadModel( 'datamodel' );
@@ -709,10 +710,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 		$clone = Input::Task() == 'entry.clone';
 
 		if ( !( $this->nid ) || $clone ) {
-			$this->nid = strtolower( SPLang::nid( Input::String( $this->nameField ), true ) );
+			$this->nid = strtolower( StringUtils::Nid( Input::String( $this->nameField ), true ) );
 			$this->nid = $this->createAlias();
-			/** Thu, Jul 30, 2015 12:15:25 - what the hell was that? */
-//			$this->name = $this->nid;
 		}
 		if ( !( $this->id ) && Sobi::Cfg( 'entry.publish_limit', 0 ) && !( defined( 'SOBI_ADM_PATH' ) ) ) {
 			Input::Set( 'entry_createdTime', 0 );
@@ -848,7 +847,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 			Sobi::Trigger( $this->name(), 'AfterUpdate', [ &$this ] );
 		}
 		else {
-			Sobi::Trigger( $this->name(), 'After' . ucfirst( __FUNCTION__ ), [ &$this ] );
+			Sobi::Trigger( $this->name(), 'After' . ucfirst( __FUNCTION__ ), [ $this ] );
 		}
 	}
 
