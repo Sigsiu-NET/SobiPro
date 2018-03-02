@@ -40,6 +40,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Default template version V4.1
 	(!) Image field is using a framework for image manipulation
 	(!) Info field set to not im-/exportable
+   	(!) Includes Sobi Framework 1.0.4
 
 	(#) Backslashes are added prior apostrophe to input field in back-end
 	(#) Ini file for template override (sptpl) not loaded
