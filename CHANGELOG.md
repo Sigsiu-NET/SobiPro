@@ -34,6 +34,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 ### 1.4.6 ()
 
 	(+) New template colour @link-color
+   	(+) Support for Import of Gallery field (Imex) added
 
 	(!) Improvement of template style 'elevated'
 	(!) Improvement of all colour themes

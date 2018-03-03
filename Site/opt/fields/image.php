@@ -463,9 +463,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		}
 
 		$files = [];
-		/* if we have an image */
-		$imex = Input::Bool( 'imex' );
+		$task = Input::String( 'task' );
+		$imex = ($task == 'imex.doImport' || $task == 'imex.doCImport');
 
+		/* if we have an image */
 		if ( $data && $orgName ) {
 			if ( ( $fileSize > $this->maxSize ) && !$imex ) {
 				throw new SPException( SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $fileSize, $this->maxSize ) );
