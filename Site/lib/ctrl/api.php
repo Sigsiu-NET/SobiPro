@@ -40,22 +40,21 @@ class SPApiCtrl extends SPController
         try {
             switch ( $this->_task ) {
                 case 'sections':
-                    $data = $this->sections();
+                    $this->sections();
                     break;
                 case 'category':
-                    $data = $this->category();
+                    $this->category();
                     break;
                 case 'entries':
-                    $data = $this->entries();
+                    $this->entries();
                     break;
                 case 'entry':
-                    $data = $this->entry();
+                    $this->entry();
                     break;
                 case 'fields':
-                    $data = $this->fields();
+                    $this->fields();
                     break;
             }
-            $this->answer( $data );
         }
         catch ( Exception $x ) {
             $this->answer( $x->getMessage(), $x->getCode() );
@@ -89,7 +88,7 @@ class SPApiCtrl extends SPController
                 }
             }
         }
-        return $fields;
+        $this->answer( $fields );
     }
 
     protected function entries()
@@ -138,7 +137,7 @@ class SPApiCtrl extends SPController
                 'fields' => $fieldData
             ];
         }
-        return [ 'entries' => $data, 'count' => $count ];
+        $this->answer( $data, 0, [ 'count' => $count ] );
     }
 
     protected function entry()
@@ -170,7 +169,7 @@ class SPApiCtrl extends SPController
         ];
         $data[ 'fields' ] = [];
         $data = $this->travelFields( $fields, $data );
-        return $data;
+        $this->answer( $data );
     }
 
     protected function category()
@@ -223,7 +222,7 @@ class SPApiCtrl extends SPController
                 ];
             }
         }
-        return $data;
+        $this->answer( $data );
     }
 
     protected function sections()
@@ -249,15 +248,15 @@ class SPApiCtrl extends SPController
                 }
             }
         }
-        return $data;
+        $this->answer( $data );
     }
 
-    protected function answer( $data, $code = 0 )
+    protected function answer( $data, $code = 0, $header = [] )
     {
         SPFactory::mainframe()
             ->cleanBuffer()
             ->customHeader( 'application/json', $code );
-        exit( json_encode( $data, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_LINE_TERMINATORS ) );
+        exit( json_encode( [ 'header' => $header, 'data' => $data ], JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_LINE_TERMINATORS ) );
     }
 
     /**
@@ -283,7 +282,7 @@ class SPApiCtrl extends SPController
                 ];
             }
         }
-        return $data;
+        $this->answer( $data );
     }
 }
 
