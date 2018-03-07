@@ -142,25 +142,16 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$show = $files[ 'thumb' ];
 			}
 		}
-		/** Mon, Jun 20, 2016 13:45:41 - we do not need the style for it */
-//		$noncropsize = "";
-//		$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '100:100' ) );
 		if ( $show ) {
 			$img = Sobi::Cfg( 'live_site' ) . $show;
-//			if ( !$this->crop ) {
-//				$noncropsize = "style=\"width: {$icoSize[0]}px; height: {$icoSize[1]}px;\"";
-//			}
 		}
 		$field .= '<div class="spImageField">';
 
-//		$field .= '<div>';
 		$field .= "<div id=\"{$this->nid}_img_preview\" class=\"spEditImagePreview\">";
 		if ( $show ) {
-//			$field .= "\n\t<img src=\"{$img}\" alt=\"{$this->name}\" {$noncropsize} />";
 			$field .= "<img src=\"{$img}\" alt=\"{$this->name}\" />";
 		}
 		$field .= '</div>';
-//		$field .= '</div>';
 
 		$field .= '<div class="spImageUpDelete">';
 		if ( $show ) {
@@ -228,7 +219,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	}
 
 	/**
-	 * Gets the data for a field, verify it and pre-save it.
+	 * Get the data for a field, verify it and pre-save it.
 	 *
 	 * @param SPEntry $entry
 	 * @param string $tsId
@@ -321,39 +312,45 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		else {
 //			$fileSize = SPRequest::file( $this->nid, 'size' );
 		}
-		$del = Input::Bool( $this->nid . '_delete' );
-		$dexs = strlen( $data );
-		if ( $this->required && !( $dexs ) ) {
-			$files = $this->getRaw();
-			if ( !( count( $files ) ) ) {
-				throw new SPException( SPLang::e( 'FIELD_REQUIRED_ERR', $this->name ) );
+		$del = Input::Bool( $this->nid . '_delete' );   //if image should be deleted (checkbox ticked)
+
+		$task = Input::String( 'task' );
+		$imex = ( $task == 'imex.doImport' || $task == 'imex.doCImport' );
+
+		if ( !$imex ) {  // do the checks only if no data import
+			$dexs = strlen( $data );
+			if ( $this->required && !( $dexs ) ) {
+				$files = $this->getRaw();
+				if ( !( count( $files ) ) ) {
+					throw new SPException( SPLang::e( 'FIELD_REQUIRED_ERR', $this->name ) );
+				}
 			}
-		}
 
-		if ( $fileSize > $this->maxSize ) {
-			throw new SPException( SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $fileSize, $this->maxSize ) );
-		}
-
-		/* check if there was an adminField */
-		if ( $this->adminField && ( $dexs || $del ) ) {
-			if ( !( Sobi:: Can( 'entry.adm_fields.edit' ) ) ) {
-				throw new SPException( SPLang::e( 'FIELD_NOT_AUTH', $this->name ) );
+			if ( $fileSize > $this->maxSize ) {
+				throw new SPException( SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $fileSize, $this->maxSize ) );
 			}
-		}
 
-		/* check if it was free */
-		if ( !( $this->isFree ) && $this->fee && $dexs ) {
-			SPFactory::payment()->add( $this->fee, $this->name, $entry->get( 'id' ), $this->fid );
-		}
+			/* check if there was an adminField */
+			if ( $this->adminField && ( $dexs || $del ) ) {
+				if ( !( Sobi:: Can( 'entry.adm_fields.edit' ) ) ) {
+					throw new SPException( SPLang::e( 'FIELD_NOT_AUTH', $this->name ) );
+				}
+			}
 
-		/* check if it was editLimit */
-		if ( $this->editLimit == 0 && !( Sobi::Can( 'entry.adm_fields.edit' ) ) && $dexs ) {
-			throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_EXP', $this->name ) );
-		}
+			/* check if it was free */
+			if ( !( $this->isFree ) && $this->fee && $dexs ) {
+				SPFactory::payment()->add( $this->fee, $this->name, $entry->get( 'id' ), $this->fid );
+			}
 
-		/* check if it was editable */
-		if ( !( $this->editable ) && !( Sobi::Can( 'entry.adm_fields.edit' ) ) && $dexs && $entry->get( 'version' ) > 1 ) {
-			throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_NOT_ED', $this->name ) );
+			/* check if it was editLimit */
+			if ( $this->editLimit == 0 && !( Sobi::Can( 'entry.adm_fields.edit' ) ) && $dexs ) {
+				throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_EXP', $this->name ) );
+			}
+
+			/* check if it was editable */
+			if ( !( $this->editable ) && !( Sobi::Can( 'entry.adm_fields.edit' ) ) && $dexs && $entry->get( 'version' ) > 1 ) {
+				throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_NOT_ED', $this->name ) );
+			}
 		}
 
 		return true;
@@ -375,7 +372,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			return false;
 		}
 		$del = Input::Bool( $this->nid . '_delete' );
-		if ( $clone ) {
+
+		if ( $clone ) { // if the entry should be duplicated
 			$orgSid = Input::Sid();
 			$this->loadData( $orgSid );
 			$files = $this->getExistingFiles();
@@ -392,6 +390,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$cropped = null;
 		static $store = null;
 		$cache = false;
+
 		if ( $store == null ) {
 			$store = SPFactory::registry()->get( 'requestcache_stored' );
 		}
@@ -423,8 +422,15 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		if ( !( $data ) ) {
 			$directory = Input::String( $this->nid );
 			if ( strlen( $directory ) ) {
+
+				$files = $this->getExistingFiles();
+				if ( isset ( $files ) ) {       // if there is already an old image, delete it
+					$this->delImgs();
+				}
+
 				list( $data, $dirName, $files, $coordinates ) = $this->getAjaxFiles( $directory );
 				if ( count( $files ) ) {
+					// check all temporary generated files
 					foreach ( $files as $file ) {
 						if ( $file == '.' ) {
 							continue;
@@ -438,9 +444,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 						if ( strpos( $file, 'resized_' ) !== false ) {
 							continue;
 						}
+						// upload the cropped file (will be deleted later)
 						if ( strpos( $file, 'cropped_' ) !== false ) {
 							$cropped = $dirName . $file;
-							SPFs::upload( $cropped, $path . basename( $cropped ) );
+							SPFs::upload( $cropped, $path . basename( $cropped ) ); // upload cropped image
 							continue;
 						}
 						if ( strpos( $file, '.var' ) !== false ) {
@@ -450,13 +457,12 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 						$orgName = $file;
 					}
 				}
-				if ( strlen( $coordinates ) ) {
+				if ( strlen( $coordinates ) ) { // if the user changed the cropped area then crop again
 					$coordinates = json_decode( SPLang::clean( $coordinates ), true );
-					/** @var SPImage $croppedImage */
-					$croppedImage = SPFactory::Instance( 'base.fs.image', $dirName . $orgName );
-					$croppedImage->crop( $coordinates[ 'width' ], $coordinates[ 'height' ], $coordinates[ 'x' ], $coordinates[ 'y' ] );
+					$croppedImage = new Image( $dirName . $orgName );
+					$croppedImage->crop( $coordinates[ 'width' ], $coordinates[ 'height' ], 'top-left', $coordinates[ 'x' ], $coordinates[ 'y' ] );
 					$cropped = 'cropped_' . $orgName;
-					$croppedImage->saveAs( $path . $cropped );
+//					$croppedImage->saveAs( $path . $cropped );
 				}
 				$data = strlen( $cropped ) ? $cropped : $dirName . $file;
 			}
@@ -464,21 +470,18 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 
 		$files = [];
 		$task = Input::String( 'task' );
-		$imex = ($task == 'imex.doImport' || $task == 'imex.doCImport');
+		$imex = ( $task == 'imex.doImport' || $task == 'imex.doCImport' );
 
-		/* if we have an image */
+		/* if we have an image to process */
 		if ( $data && $orgName ) {
 			if ( ( $fileSize > $this->maxSize ) && !$imex ) {
 				throw new SPException( SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $fileSize, $this->maxSize ) );
 			}
-			if ( $cropped ) {
-				SPFs::upload( $dirName . $orgName, $path . $orgName );
+			if ( $cropped ) {   // if we have a cropped image ...
+				SPFs::upload( $dirName . $orgName, $path . $orgName );  // ... upload the original image
 			}
-			/**
-			 * @var SPImage $orgImage
-			 */
 			if ( $cache ) {
-				$orgImage = SPFactory::Instance( 'base.fs.image', $data );
+				$orgImage = new Image( $data );
 				$orgImage->move( $path . $orgName );
 			}
 			else {
@@ -488,15 +491,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$nameArray[] = $ext;
 				$orgName = implode( '.', $nameArray );
 				if ( $cropped ) {
-					// Fri, Jul 3, 2015 17:15:05
-					// it has been actually uploaded at ~425
-					// not sure why we are trying to upload it again
-					if ( SPFs::exists( $dirName . $data ) ) {
-						$orgImage->upload( $dirName . $data, $path . basename( $data ) );
-					}
-					else {
-						$orgImage->setFile( $path . basename( $data ) );
-					}
+					$orgImage->setFile( $path . basename( $data ) );    // original image is now the cropped image
 				}
 				else {
 					$orgImage->upload( $dirName . $orgName, $path . $orgName );
@@ -509,11 +504,11 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					$orgImage->save();
 				}
 			}
+			$image = clone $orgImage;
+			$image->setTransparency( $this->detectTransparency );
 			if ( $this->resize ) {
-				$image = clone $orgImage;
-				$image->setTransparency( $this->detectTransparency );
 				try {
-					$image->resample( $this->resizeWidth, $this->resizeHeight, false );
+					$image->resample( $this->resizeWidth, $this->resizeHeight );
 					$files[ 'image' ] = $this->parseName( $entry, $orgName, $this->imageName, true );
 					$image->saveAs( $path . $files[ 'image' ] );
 				}
@@ -523,11 +518,23 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					throw new SPException( SPLang::e( 'FIELD_IMG_CANNOT_RESAMPLE', $x->getMessage() ) );
 				}
 			}
-			if ( $this->generateThumb ) {
+			else {  // the large image always exists even if not resized
+				try {
+					$image->read();
+					$files[ 'image' ] = $this->parseName( $entry, $orgName, $this->imageName, true );
+					$image->saveAs( $path . $files[ 'image' ] );
+				}
+				catch ( SPException $x ) {
+					Sobi::Error( $this->name(), SPLang::e( 'FIELD_IMG_CANNOT_SAVE', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
+					$image->delete();
+					throw new SPException( SPLang::e( 'FIELD_IMG_CANNOT_SAVE', $x->getMessage() ) );
+				}
+			}
+			if ( $this->generateThumb ) {   // if cropping is set, thumbnail will be generated from the cropped image
 				$thumb = clone $orgImage;
 				$thumb->setTransparency( $this->detectTransparency );
 				try {
-					$thumb->resample( $this->thumbWidth, $this->thumbHeight, false );
+					$thumb->resample( $this->thumbWidth, $this->thumbHeight );
 					$files[ 'thumb' ] = $this->parseName( $entry, $orgName, $this->thumbName, true );
 					$thumb->saveAs( $path . $files[ 'thumb' ] );
 
@@ -542,7 +549,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			try {
 				$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '100:100' ) );
 				$ico->setTransparency( $this->detectTransparency );
-				$ico->resample( $icoSize[ 0 ], $icoSize[ 1 ], false );
+				$ico->resample( $icoSize[ 0 ], $icoSize[ 1 ] );  // resize
 				$files[ 'ico' ] = $this->parseName( $entry, strtolower( $orgName ), 'ico_{orgname}_' . $this->nid, true );
 				$ico->saveAs( $path . $files[ 'ico' ] );
 			}
@@ -558,21 +565,29 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				$files[ 'original' ] = $this->parseName( $entry, $orgName, '{orgname}', true );
 			}
 			foreach ( $files as $i => $file ) {
-				if ( $i == 'data' ) {
+				if ( $i == 'data' ) {   // exif data
 					continue;
 				}
 				$files[ $i ] = $sPath . $file;
 			}
 		}
-		/* otherwise deleting an image */
-		elseif ( $del ) {
+
+		// if no image to process
+		elseif ( $del ) {   // should we delete the existing ones (checkbox ticked)?
 			$this->delImgs();
 			$files = [];
 		}
 		else {
-			return true;
+			return true;    // we have nothing to do here
 		}
-		$this->storeData( $entry, $request, $files );
+
+		if ( $cropped ) {   // delete the cropped image as it is a temporary file
+			$this->delImage( $path . basename( $cropped ) );
+		}
+
+		if ( !$imex ) { // Imex is doing that by itself
+			$this->storeData( $entry, $request, $files );   // store the general field's data
+		}
 	}
 
 	protected function cleanExif( &$data )
@@ -605,6 +620,10 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$this->delImgs();
 	}
 
+
+	/**
+	 *  Delete all existing images on one entry
+	 */
 	private function delImgs()
 	{
 		$files = SPConfig::unserialize( $this->getRaw() );
@@ -622,6 +641,23 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				if ( SPFs::exists( $file ) ) {
 					SPFs::delete( $file );
 				}
+			}
+		}
+	}
+
+	/**
+	 *  Delete one images on one entry
+	 */
+	private function delImage( $image )
+	{
+		SPLoader::loadClass( 'cms.base.fs' );
+		if ( strlen( $image ) ) {
+			// should never happen but who knows ....
+			if ( $image == SOBI_ROOT ) {
+				return;
+			}
+			if ( SPFs::exists( $image ) ) {
+				SPFs::delete( $image );
 			}
 		}
 	}
@@ -793,16 +829,16 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$secret = md5( Sobi::Cfg( 'secret' ) );
 		if ( $data ) {
 			$properties = Input::File( $ident );
-			$orgFileName = $properties[ 'name' ];
-			$extension = SPFs::getExt( $orgFileName );
-			$orgFileName = str_replace( '.' . $extension, '.' . strtolower( $extension ), $orgFileName );
+			$orgName = $properties[ 'name' ];
+			$extension = SPFs::getExt( $orgName );
+			$orgName = str_replace( '.' . $extension, '.' . strtolower( $extension ), $orgName );
 			if ( $properties[ 'size' ] > $this->maxSize ) {
 				$this->message( [ 'type' => 'error', 'text' => SPLang::e( 'FIELD_IMG_TOO_LARGE', $this->name, $properties[ 'size' ], $this->maxSize ), 'id' => '', ] );
 			}
-			$dirNameHash = md5( $orgFileName . time() . $secret );
+			$dirNameHash = md5( $orgName . time() . $secret );
 			$dirName = SPLoader::dirPath( "tmp.files.{$secret}.{$dirNameHash}", 'front', false );
 			SPFs::mkdir( $dirName );
-			$path = $dirName . $orgFileName;
+			$path = $dirName . $orgName;
 			$orgImage = new Image();
 			if ( !( $orgImage->upload( $data, $path ) ) ) {
 				$this->message( [ 'type' => 'error', 'text' => SPLang::e( 'CANNOT_UPLOAD_FILE' ), 'id' => '' ] );
@@ -812,6 +848,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					$orgImage->save();
 				}
 			}
+			// generate a cropped file in case the user doesn't crop it manually
 			if ( $this->crop ) {
 				$croppedImage = clone $orgImage;
 				list( $originalWidth, $originalHeight ) = getimagesize( $path );
@@ -821,8 +858,8 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 				try {
 					$croppedImage->setTransparency( $this->detectTransparency );
 					$croppedImage->crop( $width, $height );
-					$croppedImage->saveAs( $dirName . 'cropped_' . $orgFileName );
-					$ico = SPFactory::Instance( 'base.fs.image', $dirName . 'cropped_' . $orgFileName );
+					$croppedImage->saveAs( $dirName . 'cropped_' . $orgName );
+					$ico = clone $croppedImage;
 				}
 				catch ( SPException $x ) {
 					$this->message( [ 'type' => 'error', 'text' => SPLang::e( 'FIELD_IMG_CANNOT_CROP', $x->getMessage() ), 'id' => '', ] );
@@ -833,10 +870,11 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			}
 			$image = clone $orgImage;
 			try {
+				// if cropping, generate the image representing the cropped area
 				$previewSize = explode( ':', Sobi::Cfg( 'image.preview_size', '500:500' ) );
 				$image->setTransparency( $this->detectTransparency );
-				$image->resample( $previewSize[ 0 ], $previewSize[ 1 ], false );
-				$image->saveAs( $dirName . 'resized_' . $orgFileName );
+				$image->resample( $previewSize[ 0 ], $previewSize[ 1 ] );
+				$image->saveAs( $dirName . 'resized_' . $orgName );
 			}
 			catch ( SPException $x ) {
 				$image->delete();
@@ -844,8 +882,9 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			}
 			try {
 				$icoSize = explode( ':', Sobi::Cfg( 'image.ico_size', '100:100' ) );
-				$ico->resample( $icoSize[ 0 ], $icoSize[ 1 ], false );
-				$ico->saveAs( $dirName . 'icon_' . $orgFileName );
+				$ico->setTransparency( $this->detectTransparency );
+				$ico->resample( $icoSize[ 0 ], $icoSize[ 1 ] );
+				$ico->saveAs( $dirName . 'icon_' . $orgName );
 			}
 			catch ( SPException $x ) {
 				$ico->delete();
@@ -856,7 +895,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 			$type = $this->check( $path );
 			$properties[ 'tmp_name' ] = $path;
 			$out = SPConfig::serialize( $properties );
-			SPFs::write( SPLoader::dirPath( "tmp.files.{$secret}", 'front', false ) . '/' . $orgFileName . '.var', $out );
+			SPFs::write( SPLoader::dirPath( "tmp.files.{$secret}", 'front', false ) . '/' . $orgName . '.var', $out );
 
 			$response = [
 				'type' => 'success',
@@ -867,7 +906,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 					'type'     => $properties[ 'type' ],
 					'size'     => $properties[ 'size' ],
 					'original' => $dirNameHash . '/' . $properties[ 'name' ],
-					'icon'     => $dirNameHash . '/' . 'icon_' . $orgFileName,
+					'icon'     => $dirNameHash . '/' . 'icon_' . $orgName,
 					'crop'     => $this->crop,
 					'height'   => $this->resizeHeight,
 					'width'    => $this->resizeWidth,
@@ -970,7 +1009,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 	{
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
-		if ( get_class( $this ) == 'SPField_Image' ) {
+		if ( get_class( $this ) == 'SPField_Image' ) {  // if saved from frontend
 			$this->verify( $entry, $request );
 		}
 
@@ -1004,7 +1043,7 @@ class SPField_Image extends SPField_Inbox implements SPFieldInterface
 		$params[ 'updatedIP' ] = $IP;
 		$params[ 'copy' ] = (int) !( $entry->get( 'approved' ) );
 
-		if ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) {
+		if ( ( Sobi::My( 'id' ) == $entry->get( 'owner' ) ) && ( $this->editLimit > 0 ) ) {
 			--$this->editLimit;
 		}
 		$params[ 'editLimit' ] = $this->editLimit;
