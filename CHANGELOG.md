@@ -42,11 +42,15 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(!) Image field is using a framework for image manipulation
 	(!) Info field set to not im-/exportable
    	(!) Includes Sobi Framework 1.0.4
+   	(!) If uploading a new image for an entry, the old images of this field will be deleted
+   	(!) Default JPG quality set to 90%
 
 	(#) Backslashes are added prior apostrophe to input field in back-end
 	(#) Ini file for template override (sptpl) not loaded
 	(#) Categories not translated properly in multilingual mode (Issue #63)
 	(#) Approved flag not reset after editing an entry (Issue #67)
+	(#) Large image was not created if it should not be resized
+	(#) Cropped image (cropped_) will be deleted after image processing (temporary file)
 
 
 ### 1.4.5 (30 January 2018)
