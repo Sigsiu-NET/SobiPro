@@ -51,6 +51,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Approved flag not reset after editing an entry (Issue #67)
 	(#) Large image was not created if it should not be resized
 	(#) Cropped image (cropped_) will be deleted after image processing (temporary file)
+	(#) RegEx in URL field corrected
 
 
 ### 1.4.5 (30 January 2018)

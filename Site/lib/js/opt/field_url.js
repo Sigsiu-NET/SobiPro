@@ -50,8 +50,8 @@ SobiPro.jQuery( document ).ready( function ()
 					done( function ( response )
 					{
 						var current = ' ' + e.data( 'counter' ) + ' ';
-						var c = new String( current ).replace( /[0-9]/, response );
-						e.html( e.html().replace( current, c ))
+                        var c = new String( current ).replace( /{\d{*}/g, response );
+						e.html( e.html().replace( current, c ) );
 					} );
 			}
 		}
