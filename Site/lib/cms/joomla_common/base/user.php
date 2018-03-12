@@ -17,6 +17,8 @@
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
+use Sobi\Input\Input;
+
 /**
  * @author Radek Suski
  * @version 1.0
@@ -24,32 +26,20 @@ defined( 'SOBIPRO' ) || exit( 'Restricted access' );
  */
 class SPJoomlaUser extends JUser
 {
-	/**
-	 * @var array
-	 */
+	/** @var array */
 	protected $_permReq = [];
-	/**
-	 * @var array
-	 */
+	/** @var array */
 	protected $_permissions = [];
-	/**
-	 * @var array
-	 */
+	/** @var array */
 	protected $_availablePerm = [];
-	/**
-	 * @var array
-	 */
+	/** @var array */
 	protected $_pmap = [];
-	/**
-	 * @var array
-	 */
+	/** @var array */
 	protected $_prules = [];
-	/**
-	 * @var array
-	 */
+	/** @var array */
 	protected $_prequest = [];
-
-	protected $_special = [ 'txt.js', 'progress' ];
+    /** @var array  */
+    protected $_special = [ 'txt.js', 'progress', 'api.sections', 'api.category', 'api.entries', 'api.entry', 'api.fields' ];
 
 
 	/* get all parent groups */
@@ -227,7 +217,7 @@ class SPJoomlaUser extends JUser
 		}
 		if ( !$section ) {
 			$value = 'global';
-			if ( in_array( SPRequest::task(), $this->_special ) ) {
+			if ( in_array( Input::task(), $this->_special ) ) {
 				return true;
 			}
 		}
@@ -412,7 +402,7 @@ class SPJoomlaUser extends JUser
 	public function & getUserState( $key, $request, $default = null, $type = 'none' )
 	{
 		$r = JFactory::getApplication()->getUserStateFromRequest( "com_sobipro.{$key}", $request, $default, $type );
-		SPRequest::set( $request, $r );
+		Input::Set( $request, $r );
 		return $r;
 	}
 
