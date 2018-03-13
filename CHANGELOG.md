@@ -52,6 +52,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Large image was not created if it should not be resized
 	(#) Cropped image (cropped_) will be deleted after image processing (temporary file)
 	(#) RegEx in URL field corrected
+	(#) Windows 10 falsely recognised as old operating system
 
 
 ### 1.4.5 (30 January 2018)
