@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 
 /**
@@ -29,7 +31,7 @@ final class SPBrowser
 
 	private function __construct()
 	{
-		$this->client = $this->parse_user_agent( SPRequest::raw( 'HTTP_USER_AGENT', null, 'server' ) );
+		$this->client = $this->parse_user_agent( Input::Raw( 'HTTP_USER_AGENT', 'server' ) );
 	}
 
 	public function get( $property = null )
@@ -687,7 +689,7 @@ final class SPBrowser
 			$client_data[ 'browser' ] = "Microsoft Internet Explorer 11";
 			$client_data[ 'browser_icon' ] = 'msie';
 			$client_data[ 'type' ] = 'normal';
-			$client_data[ 'humanity' ] = 130;
+			$client_data[ 'humanity' ] = 30;
 		}
 
 		if ( preg_match( '/mozilla.*MSIE ([0-9a-z\+\-\.]+).*/si', $user_agent, $tmp_array ) && !$client_data[ 'browser' ] ) {
@@ -710,6 +712,19 @@ final class SPBrowser
 			$client_data[ 'humanity' ] = 75;
 		}
 
+		// Catchall for other Mozilla compatible browsers
+		if ( preg_match( '/mozilla/si', $user_agent, $tmp_array ) && !$client_data[ 'browser' ] ) {
+			$client_data[ 'browser' ] = "Mozilla compatible";
+			$client_data[ 'browser_icon' ] = 'mozilla';
+			$client_data[ 'humanity' ] = 75;
+		}
+
+		// Edge
+		if ( preg_match( '/Edge/si', $user_agent, $tmp_array ) ) {
+			$client_data[ 'browser' ] = "Edge";
+			$client_data[ 'browser_icon' ] = 'msie';
+			$client_data[ 'humanity' ] = 100;
+		}
 		//
 		// Check system
 		//
@@ -1136,12 +1151,12 @@ final class SPBrowser
 			elseif ( $tmp_array[ 1 ] == "32" ) {
 				$client_data[ 'system' ] = "Windows";
 				$client_data[ 'system_icon' ] = "win_old";
-				$client_data[ 'humanity' ] -= 20;
+				$client_data[ 'humanity' ] -= 10;
 			}
-			else {
+			elseif ( $tmp_array[ 1 ] < 64 ) {
 				$client_data[ 'system' ] = "Windows" . ( $tmp_array[ 1 ] ? " " . $tmp_array[ 1 ] : "" );
 				$client_data[ 'system_icon' ] = "win_old";
-				$client_data[ 'humanity' ] -= 20;
+				$client_data[ 'humanity' ] -= 10;
 			}
 		}
 
@@ -1187,6 +1202,7 @@ final class SPBrowser
 				$client_data[ 'system' ] = "Windows 10";
 				$client_data[ 'system_icon' ] = "win_new";
 				$client_data[ 'humanity' ] += 40;
+
 			}
 			elseif ( $tmp_array[ 1 ] == "5.2" ) {
 				$client_data[ 'system' ] = "Windows Server Home/Server 2003";
