@@ -32,7 +32,7 @@ SPLoader::loadController( 'controller' );
  */
 class SPApiCtrl extends SPController
 {
-	const ENTRIES_LIMIT = 5;
+	const ENTRIES_LIMIT = 25;
 
 	public function execute()
 	{
@@ -139,7 +139,7 @@ class SPApiCtrl extends SPController
 					'fields' => $fieldData
 			];
 		}
-		$this->answer( $data, 0, [ 'count' => $count ] );
+		$this->answer( $data, 0, [ 'count' => $count, 'limit' => self::ENTRIES_LIMIT, 'sites' => ceil( $count / self::ENTRIES_LIMIT ) ] );
 	}
 
 	protected function entry()
