@@ -36,17 +36,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 
 ### 1.4.6 ()
 
-	(+) new template colour @link-color
-
-	(!) Improvement of template style 'elevated'
-	(!) Improvement of all colour themes
-	(!) Default template version V4.1
-
-	(#) Backslashes are added prior apostrophe to input field in back-end
-
-
-### 1.4.6 ()
-
 	(+) New template colour @link-color
    	(+) Support for Import of Gallery field (Imex) added
 

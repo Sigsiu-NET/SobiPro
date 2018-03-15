@@ -7,13 +7,13 @@
 	<authorUrl>https://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2018 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.4.6.B</version>
+	<version>1.5.0.A</version>
 	<codename>Owl</codename>
 	<description>SobiPro directory component for Joomla!</description>
-	<version_number>1.4.5</version_number>
+	<version_number>1.5</version_number>
 	<SobiPro>
 		<requirements>
-			<core version="1.3" />
+			<core version="1.4" />
 		</requirements>
 	</SobiPro>
 	<install>
