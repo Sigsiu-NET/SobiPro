@@ -9,7 +9,7 @@
 
 defined( '_JEXEC' ) || exit( 'Restricted access' );
 
-define( 'SOBI_FRAMEWORK_VERSION', '1.0.3' );
+define( 'SOBI_FRAMEWORK_VERSION', '1.0.4' );
 
 class com_sobiproInstallerScript
 {
@@ -295,8 +295,8 @@ class com_sobiproInstallerScript
 
 
 		try {
-			$db->setQuery( 'ALTER TABLE #__sobipro_field_data CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin' );
-			$db->setQuery( 'ALTER TABLE #__sobipro_language CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin' );
+			$db->setQuery( 'ALTER TABLE #__sobipro_field_data CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
+			$db->setQuery( 'ALTER TABLE #__sobipro_language CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
 			$db->execute();
 		} catch ( Exception $x ) {
 		}

@@ -45,6 +45,31 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Backslashes are added prior apostrophe to input field in back-end
 
 
+### 1.4.6 ()
+
+	(+) New template colour @link-color
+   	(+) Support for Import of Gallery field (Imex) added
+
+	(!) Improvement of template style 'elevated'
+	(!) Improvement of all colour themes
+	(!) Default template version V4.1
+	(!) Image field is using a framework for image manipulation
+	(!) Info field set to not im-/exportable
+   	(!) Includes Sobi Framework 1.0.4
+   	(!) If uploading a new image for an entry, the old images of this field will be deleted
+   	(!) Default JPG quality set to 90%
+
+	(#) Backslashes are added prior apostrophe to input field in back-end
+	(#) Ini file for template override (sptpl) not loaded
+	(#) Categories not translated properly in multilingual mode (Issue #63)
+	(#) Approved flag not reset after editing an entry (Issue #67)
+	(#) Large image was not created if it should not be resized
+	(#) Cropped image (cropped_) will be deleted after image processing (temporary file)
+	(#) RegEx in URL field corrected
+	(#) Windows 10 falsely recognised as old operating system
+	(#) Collation changed from utf8mb4_bin to utf8mb4_unicode_ci (Issue #69)
+
+
 ### 1.4.5 (30 January 2018)
 
 	(#) Fatal error on Urls without Joomla Itemid set

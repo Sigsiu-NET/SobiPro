@@ -17,6 +17,9 @@
  * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
+use Sobi\FileSystem\FileSystem;
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadClass( 'opt.fields.fieldtype' );
 
@@ -157,7 +160,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( $this->dependency ) {
 			SPFactory::header()
 					->addJsFile( 'opt.field_select' );
-			$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+			$options = json_decode( FileSystem::Read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 			if ( isset( $options[ 'translation' ] ) ) {
 				SPLang::load( $options[ 'translation' ] );
 				$values[ 0 ] = Sobi::Txt( $this->selectLabel, $this->name );
@@ -353,9 +356,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	{
 		if ( ( $data !== null ) && strlen( $data ) || $this->dependency ) {
 			if ( $this->dependency ) {
-				$path = json_decode( str_replace( "'", '"', Sobi::Clean( SPRequest::string( $this->nid . '_path', null, false, $request ) ) ), true );
+				$path = json_decode( str_replace( "'", '"', Sobi::Clean( Input::String( $this->nid . '_path', 'post' ) ) ), true );
 				if ( count( $path ) ) {
-					$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+					$options = json_decode( FileSystem::Read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 					$selected = $options[ 'options' ];
 					foreach ( $path as $part ) {
 						if ( isset( $selected[ $part ] ) && isset( $selected[ $part ][ 'childs' ] ) && count( $selected[ $part ][ 'childs' ] ) ) {
@@ -398,9 +401,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{
-		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, [], $request ) : SPRequest::word( $this->nid, null, $request ) );
+		$data = $this->fetchData( $this->multi ? Input::Arr( $this->nid ) : Input::Word( $this->nid ) );
 		if ( count( $this->verify( $entry, $request, $data ) ) ) {
-			return SPRequest::search( $this->nid, $request );
+			return Input::Search( $this->nid );
 		}
 		else {
 			return [];
@@ -456,9 +459,9 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function saveDependencyField( &$entry, $data, $request )
 	{
-		$time = SPRequest::now();
+		$time = Input::Now();
 		$uid = Sobi::My( 'id' );
-		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$IP = Input::Ip4();
 		$params = [];
 		$params[ 'publishUp' ] = $entry->get( 'publishUp' );
 		$params[ 'publishDown' ] = $entry->get( 'publishDown' );
@@ -534,10 +537,10 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( !( $this->enabled ) ) {
 			return false;
 		}
-		$data = $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, [], $request ) : SPRequest::word( $this->nid, null, $request ), $request );
+		$data = $this->fetchData( $this->multi ? Input::Arr( $this->nid, 'post', [] ) : Input::Word( $this->nid, 'post' ), 'post' );
 		$cdata = $this->verify( $entry, $request, $data );
-		$time = SPRequest::now();
-		$IP = SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' );
+		$time = Input::Now();
+		$IP = Input::Ip4();
 		$uid = Sobi::My( 'id' );
 
 		/* @var SPdb $db */
@@ -630,7 +633,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 * @param string $oPrefix
 	 * @param string $eOrder
 	 * @param string $eDir
-	 * @return void
+	 * @return bool
 	 */
 	public static function sortBy( &$tables, &$conditions, &$oPrefix, &$eOrder, $eDir )
 	{
@@ -649,11 +652,10 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		$oPrefix = 'spo.';
 		$conditions[ 'spo.oType' ] = 'entry';
 		if ( !( isset( $conditions[ 'sprl.pid' ] ) ) ) {
-			$conditions[ 'sprl.pid' ] = SPRequest::sid();
+			$conditions[ 'sprl.pid' ] = Input::Sid();
 		}
 		$conditions[ 'ldata.oType' ] = 'field_option';
 		$conditions[ 'fdef.nid' ] = $eOrder;
-
 		$eOrder = 'sValue.' . $eDir . ", field( language, '" . Sobi::Lang( false ) . "', '" . Sobi::DefLang() . "' )";
 
 		return true;
@@ -710,7 +712,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		if ( $this->dependency ) {
 			SPFactory::header()
 					->addJsFile( 'opt.field_select' );
-			$request = json_decode( SPLang::clean( SPRequest::raw( $this->nid . '_path', null, 'requestcache' ) ), true );
+			$request = json_decode( Sobi::Clean( Input::String( $this->nid . '_path' ) ), true );
 			$params[ 'class' ] .= ' ctrl-dependency-field';
 			$hidden = $this->travelDependencyPath( $request, $params );
 			$this->_selected = isset( $request[ 1 ] ) ? $request[ 1 ] : null;
@@ -851,7 +853,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	public function searchData( $request, $section )
 	{
 		if ( ( $this->dependency ) ) {
-			$path = json_decode( Sobi::Clean( SPRequest::string( $this->nid . '_path' ) ), true );
+			$path = json_decode( Sobi::Clean( Input::String( $this->nid . '_path' ) ), true );
 			if ( count( $path ) ) {
 				$request = array_pop( $path );
 			}
@@ -921,7 +923,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 		/** it can be for core files only at the moment because a stupid developer (yes, we all know which one) declared too many private methods and inherited classes returning always wrong results */
 		$class = strtolower( get_class( $this ) );
 		if ( strstr( $class, 'select' ) || strstr( $class, 'radio' ) || strstr( $class, 'chbxgr' ) ) {
-			return $this->verify( $entry, $request, $this->fetchData( $this->multi ? SPRequest::arr( $this->nid, [], $request ) : SPRequest::word( $this->nid, null, $request ) ) );
+			return $this->verify( $entry, $request, $this->fetchData( $this->multi ? Input::Arr( $this->nid ) : Input::Word( $this->nid ) ) );
 		}
 		else {
 			return true;
@@ -972,7 +974,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 * */
 	public function ProxyDependency()
 	{
-		$path = json_decode( Sobi::Clean( SPRequest::string( 'path' ) ), true );
+		$path = json_decode( Sobi::Clean( Input::String( 'path' ) ), true );
 		$values = $this->loadDependencyDefinition( $path );
 		SPFactory::mainframe()
 				->cleanBuffer()
@@ -989,7 +991,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	{
 		static $options = [];
 		if ( !( count( $options ) ) ) {
-			$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+			$options = json_decode( FileSystem::Read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 		}
 		if ( isset( $options[ 'translation' ] ) ) {
 			SPLang::load( $options[ 'translation' ] );
@@ -1034,7 +1036,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 				return null;
 			}
 			$selectedPath = [];
-			$options = json_decode( SPFs::read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
+			$options = json_decode( FileSystem::Read( SOBI_PATH . '/etc/fields/select-list/definitions/' . ( str_replace( '.xml', '.json', $this->dependencyDefinition ) ) ), true );
 			if ( isset( $options[ 'translation' ] ) ) {
 				SPLang::load( $options[ 'translation' ] );
 				$data = Sobi::Txt( strtoupper( $options[ 'prefix' ] ) . '.' . strtoupper( $selected ) );

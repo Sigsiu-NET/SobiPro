@@ -29,7 +29,7 @@ SPLoader::loadView( 'section' );
 class SPSearchView extends SPSectionView implements SPView
 {
 
-	public function display()
+	public function display( $type = 'section', $out = null )
 	{
 		$this->_type = 'search';
 		$type = $this->key( 'template_type', 'xslt' );
@@ -53,15 +53,15 @@ class SPSearchView extends SPSectionView implements SPView
 			}
 			$entries = $this->get( 'entries' );
 			$searchData[ 'section' ] = [
-				'_complex'    => 1,
-				'_data'       => Sobi::Section( true ),
-				'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
+					'_complex' => 1,
+					'_data' => Sobi::Section( true ),
+					'_attributes' => [ 'id' => Sobi::Section(), 'lang' => Sobi::Lang( false ) ]
 			];
 			$section = SPFactory::Section( Sobi::Section() );
 			$searchData[ 'name' ] = [
-				'_complex'    => 1,
-				'_data'       => $section->get( 'sfTitle' ),
-				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+					'_complex' => 1,
+					'_data' => $section->get( 'sfTitle' ),
+					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 			];
 			$css_debug = '';
 			if ( $development = ( Sobi::Cfg( 'template.development', true ) && !defined( 'SOBIPRO_ADM' ) ) ) {
@@ -69,9 +69,9 @@ class SPSearchView extends SPSectionView implements SPView
 				$css_debug = ' development';
 			}
 			$searchData[ 'description' ] = [
-				'_complex'    => 1,
-				'_data'       => $section->get( 'sfDesc' ),
-				'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+					'_complex' => 1,
+					'_data' => $section->get( 'sfDesc' ),
+					'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 			];
 
 			$searchPhrase = $this->get( 'search_for' );
@@ -90,67 +90,67 @@ class SPSearchView extends SPSectionView implements SPView
 			$fData = [];
 			if ( Sobi::Cfg( 'search.show_searchbox', true ) ) {
 				$fData[ 'searchbox' ] = [
-					'_complex'    => 1,
-					'_data'       => [
-						'label' => [
-							'_complex'    => 1,
-							'_data'       => Sobi::Txt( 'SH.SEARCH_FOR' ),
-							'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+						'_complex' => 1,
+						'_data' => [
+								'label' => [
+										'_complex' => 1,
+										'_data' => Sobi::Txt( 'SH.SEARCH_FOR' ),
+										'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+								],
+								'data' => [
+										'_complex' => 1,
+										'_xml' => 1,
+										'_data' => SPHtml_Input::text( 'sp_search_for', $searchPhrase, [ 'class' => Sobi::Cfg( 'search.form_box_def_css', 'SPSearchBox' ), 'id' => 'SPSearchBox' ] ),
+								],
 						],
-						'data'  => [
-							'_complex' => 1,
-							'_xml'     => 1,
-							'_data'    => SPHtml_Input::text( 'sp_search_for', $searchPhrase, [ 'class' => Sobi::Cfg( 'search.form_box_def_css', 'SPSearchBox' ), 'id' => 'SPSearchBox' ] ),
-						],
-					],
-					'_attributes' => [ 'position' => 1, 'css_class' => 'SPSearchBox' ]
+						'_attributes' => [ 'position' => 1, 'css_class' => 'SPSearchBox' ]
 				];
 			}
 			if ( Sobi::Cfg( 'search.top_button', true ) ) {
 				$fData[ 'top_button' ] = [
-					'_complex'    => 1,
-					'_data'       => [
-						'label' => [
-							'_complex'    => 1,
-							'_data'       => Sobi::Txt( 'SH.SEARCH_START' ),
-							'_attributes' => [ 'lang' => Sobi::Lang() ]
+						'_complex' => 1,
+						'_data' => [
+								'label' => [
+										'_complex' => 1,
+										'_data' => Sobi::Txt( 'SH.SEARCH_START' ),
+										'_attributes' => [ 'lang' => Sobi::Lang() ]
+								],
+								'data' => [
+										'_complex' => 1,
+										'_xml' => 1,
+										'_data' => SPHtml_Input::submit( 'search', Sobi::Txt( 'SH.START' ), [ 'id' => 'top_button' ] ),
+								],
 						],
-						'data'  => [
-							'_complex' => 1,
-							'_xml'     => 1,
-							'_data'    => SPHtml_Input::submit( 'search', Sobi::Txt( 'SH.START' ), [ 'id' => 'top_button' ] ),
-						],
-					],
-					'_attributes' => [ 'position' => 1, 'css_class' => 'SPSearchButton' ]
+						'_attributes' => [ 'position' => 1, 'css_class' => 'SPSearchButton' ]
 				];
 			}
 			if ( Sobi::Cfg( 'search.show_phrase', true ) ) {
 				$fData[ 'phrase' ] = [
-					'_complex'    => 1,
-					'_data'       => [
-						'label' => [
-							'_complex'    => 1,
-							'_data'       => Sobi::Txt( 'SH.FIND_ENTRIES_THAT_HAVE' ),
-							'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
-						],
-						'data'  => [
-							'_complex' => 1,
-							'_xml'     => 1,
-							'_data'    => SPHtml_Input::radioList(
-								'spsearchphrase',
-								[
-									'all'   => Sobi::Txt( 'SH.FIND_ENTRIES_THAT_HAVE_ALL_WORDS' ),
-									'any'   => Sobi::Txt( 'SH.FIND_ENTRIES_THAT_HAVE_ANY_WORDS' ),
-									'exact' => Sobi::Txt( 'SH.FIND_ENTRIES_THAT_HAVE_EXACT_PHRASE' ),
+						'_complex' => 1,
+						'_data' => [
+								'label' => [
+										'_complex' => 1,
+										'_data' => Sobi::Txt( 'SH.FIND_ENTRIES_THAT_HAVE' ),
+										'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
 								],
-								'spsearchphrase',
-								strlen( $phrase ) ? $phrase : Sobi::Cfg( 'search.form_searchphrase_def', 'all' ),
-								null,
-								'right'
-							)
+								'data' => [
+										'_complex' => 1,
+										'_xml' => 1,
+										'_data' => SPHtml_Input::radioList(
+												'spsearchphrase',
+												[
+														'all' => Sobi::Txt( 'SH.FIND_ENTRIES_THAT_HAVE_ALL_WORDS' ),
+														'any' => Sobi::Txt( 'SH.FIND_ENTRIES_THAT_HAVE_ANY_WORDS' ),
+														'exact' => Sobi::Txt( 'SH.FIND_ENTRIES_THAT_HAVE_EXACT_PHRASE' ),
+												],
+												'spsearchphrase',
+												strlen( $phrase ) ? $phrase : Sobi::Cfg( 'search.form_searchphrase_def', 'all' ),
+												null,
+												'right'
+										)
+								],
 						],
-					],
-					'_attributes' => [ 'position' => 1, 'css_class' => 'SPSearchPhrase' ]
+						'_attributes' => [ 'position' => 1, 'css_class' => 'SPSearchPhrase' ]
 				];
 			}
 			if ( count( $fields ) ) {
@@ -159,48 +159,48 @@ class SPSearchView extends SPSectionView implements SPView
 					$suffix = $field->get( 'searchMethod' ) != 'range' ? $field->get( 'suffix' ) : null;
 					if ( strlen( $data ) ) {
 						$fData[ $field->get( 'nid' ) ] = [
-							'_complex'    => 1,
-							'_data'       => [
-								'label' => [
-									'_complex'    => 1,
-									'_data'       => $field->get( 'name' ),
-									'_attributes' => [ 'lang' => Sobi::Lang() ]
+								'_complex' => 1,
+								'_data' => [
+										'label' => [
+												'_complex' => 1,
+												'_data' => $field->get( 'name' ),
+												'_attributes' => [ 'lang' => Sobi::Lang() ]
+										],
+										'data' => [
+												'_complex' => 1,
+												'_xml' => 1,
+												'_data' => $data,
+										],
 								],
-								'data'  => [
-									'_complex' => 1,
-									'_xml'     => 1,
-									'_data'    => $data,
-								],
-							],
-							'_attributes' => [ 'id'         => $field->get( 'id' ),
-							                   'type'       => $field->get( 'type' ),
-							                   'suffix'     => $suffix,
-							                   'position'   => $field->get( 'position' ),
-							                   'css_search' => $field->get( 'cssClassSearch' ) . $css_debug,
-							                   'debug'      => $development,
-							                   'width'      => $field->get( 'bsSearchWidth' ),
-							                   'css_class'  => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
-							]
+								'_attributes' => [ 'id' => $field->get( 'id' ),
+										'type' => $field->get( 'type' ),
+										'suffix' => $suffix,
+										'position' => $field->get( 'position' ),
+										'css_search' => $field->get( 'cssClassSearch' ) . $css_debug,
+										'debug' => $development,
+										'width' => $field->get( 'bsSearchWidth' ),
+										'css_class' => ( strlen( $field->get( 'cssClass' ) ) ? $field->get( 'cssClass' ) : 'spField' )
+								]
 						];
 					}
 				}
 			}
 			if ( Sobi::Cfg( 'search.bottom_button', false ) ) {
 				$fData[ 'bottom_button' ] = [
-					'_complex'    => 1,
-					'_data'       => [
-						'label' => [
-							'_complex'    => 1,
-							'_data'       => Sobi::Txt( 'SH.SEARCH_START' ),
-							'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+						'_complex' => 1,
+						'_data' => [
+								'label' => [
+										'_complex' => 1,
+										'_data' => Sobi::Txt( 'SH.SEARCH_START' ),
+										'_attributes' => [ 'lang' => Sobi::Lang( false ) ]
+								],
+								'data' => [
+										'_complex' => 1,
+										'_xml' => 1,
+										'_data' => SPHtml_Input::submit( 'search', Sobi::Txt( 'SH.START' ) ),
+								],
 						],
-						'data'  => [
-							'_complex' => 1,
-							'_xml'     => 1,
-							'_data'    => SPHtml_Input::submit( 'search', Sobi::Txt( 'SH.START' ) ),
-						],
-					],
-					'_attributes' => [ 'position' => 1, 'css_class' => 'SPSearchButton' ]
+						'_attributes' => [ 'position' => 1, 'css_class' => 'SPSearchButton' ]
 				];
 			}
 			$searchData[ 'fields' ] = $fData;
@@ -210,9 +210,9 @@ class SPSearchView extends SPSectionView implements SPView
 				foreach ( $entries as $entry ) {
 					$en = $this->entry( $entry, $manager );
 					$searchData[ 'entries' ][] = [
-						'_complex'    => 1,
-						'_attributes' => [ 'id' => $en[ 'id' ], 'search-priority' => isset( $priorities[ $en[ 'id' ] ] ) ? $priorities[ $en[ 'id' ] ] : 'undefined' ],
-						'_data'       => $en
+							'_complex' => 1,
+							'_attributes' => [ 'id' => $en[ 'id' ], 'search-priority' => isset( $priorities[ $en[ 'id' ] ] ) ? $priorities[ $en[ 'id' ] ] : 'undefined' ],
+							'_data' => $en
 					];
 				}
 				$this->navigation( $searchData );

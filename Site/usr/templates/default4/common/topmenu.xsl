@@ -28,6 +28,9 @@
 		<xsl:call-template name="font"/>
 
 		<!-- Show the Directory name, resp. Joomla page heading -->
+		<xsl:variable name="currentUrl">
+			<xsl:value-of select="php:function( 'SobiPro::Url', 'current' )"/>
+		</xsl:variable>
 		<xsl:choose>
 			<xsl:when test="jheading/@show-page-heading = 1">
 				<div class="page-header {jheading/@pageclass-sfx}">
@@ -48,12 +51,8 @@
 
 		<!-- if top menu is switched on in SobiPro settings -->
 		<xsl:if test="count(//menu/*)">
-
 			<xsl:choose>
 				<xsl:when test="//config/navigationlinks/@value = 'topmenu'">
-					<xsl:variable name="currentUrl">
-						<xsl:value-of select="php:function( 'SobiPro::Url', 'current' )"/>
-					</xsl:variable>
 					<div class="navbar navbar-default topmenu standard" role="navigation">
 						<div class="container-fluid">
 							<div class="navbar-header">
@@ -280,7 +279,7 @@
 					</a>
 				</xsl:if>
 			</div>
-			<div class="clearfix" />
+			<div class="clearfix"/>
 		</div>
 	</xsl:template>
 

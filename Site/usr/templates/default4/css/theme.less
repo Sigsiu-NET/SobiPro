@@ -529,7 +529,7 @@ body.modal-open {
 	// ----------------------------------------
 	a:hover,
 	a:focus {
-		color: darken(@link-color, 10%);
+		color: darken(@active-color, 10%);
 	}
 
 	//Redefine standard Bootstrap btn link colours
@@ -608,7 +608,6 @@ body.modal-open {
 	.badge-sigsiu {
 		color: @basetext-color !important;
 		background-color: lighten(@base-color, 5%);
-		text-shadow: none;
 	}
 
 	// Tables
@@ -616,23 +615,14 @@ body.modal-open {
 
 	.table {
 		font-size: @fontsize;
-		&.table-sigsiu th,
-		&.table-sigsiu td {
+		th,
+		td {
 			.borders(medium);
 		}
-		&.table-sigsiu th {
+		th {
 			.background(dark);
-			color: darken(@base-color,10%);
-			& when (@design = elevated) {
-				font-variant: small-caps;
-				font-size: calc(@fontsize + 1px);
-				font-weight: 500;
-			}
+			color: @basetext-color;
 		}
-		& when (@design = elevated) {
-			.shadow-2dp;
-		}
-
 		// with class .sigsiu
 		tbody > tr.sigsiu td,
 		tbody > tr.sigsiu th,
@@ -649,15 +639,8 @@ body.modal-open {
 			tfoot > tr > th,
 			thead > tr > td,
 			thead > tr > th {
+				//border: 1px solid darken(@background-medium, 9%);
 				border-radius: 0;
-			}
-			&.table-sigsiu tbody > tr > td,
-			&.table-sigsiu tbody > tr > th,
-			&.table-sigsiu tfoot > tr > td,
-			&.table-sigsiu tfoot > tr > th,
-			&.table-sigsiu thead > tr > td,
-			&.table-sigsiu thead > tr > th {
-				border: 1px solid darken(@background-medium, 9%);
 				.borders(medium);
 			}
 			thead:first-child tr:first-child > th:first-child,
@@ -684,10 +667,10 @@ body.modal-open {
 
 		// Striped table
 		&.table-striped {
-			&.table-sigsiu tbody > tr:nth-of-type(2n+1) {
-				background-color: #f9f9f9;
+			tbody > tr:nth-of-type(2n+1) {
+				//background-color: #f9f9f9;
 			}
-			&.table-sigsiu tbody > tr:nth-child(2n+1) > td {
+			tbody > tr:nth-child(2n+1) > td {
 				.background(light);
 			}
 			// for class .sigsiu
@@ -697,8 +680,8 @@ body.modal-open {
 			tbody > tr th.sigsiu {
 				.background(medium);
 			}
-			&.table-hover {
-				&.table-sigsiu tbody > tr:nth-child(2n+1):hover > td {
+			&.table-hover { //standard
+				tbody > tr:nth-child(2n+1):hover > td {
 					background-color: darken(@background-light, 5%);
 				}
 			}
@@ -721,7 +704,7 @@ body.modal-open {
 				border-right-style: solid;
 				border-right-width: 1px;
 			}
-			&.table-sigsiu tbody > tr > td:nth-child(2n+1) {
+			tbody > tr > td:nth-child(2n+1) {
 				.background(light);
 			}
 			thead > tr > th {
@@ -734,8 +717,8 @@ body.modal-open {
 			tbody > tr th.sigsiu {
 				.background(medium);
 			}
-			&.table-hover {
-				&.table-sigsiu tbody > tr > td:nth-child(2n+1):hover {
+			&.table-hover { //standard
+				tbody > tr > td:nth-child(2n+1):hover {
 					background-color: darken(@background-light, 5%);
 				}
 			}
@@ -748,18 +731,12 @@ body.modal-open {
 				}
 			}
 		}
-		&.table-sigsiu td a {
-			color: @link-color;
-			&.active,
-			&:hover,
-			&:focus {
-				color: @link-color;
-			}
-		}
 		td a {
+			color: @basetext-color;
 			&.active,
 			&:hover,
 			&:focus {
+				color: @basetext-color;
 				text-decoration: underline;
 			}
 		}
@@ -769,18 +746,11 @@ body.modal-open {
 	// ------------------------
 	.panel-sigsiu {
 		.borders(dark);
-		& when (@design = elevated) {
-			.shadow-2dp;
-		}
 
 		.panel-heading {
 			.background(dark);
 			.borders(dark);
 			color: white;
-			& when (@design = elevated) {
-				font-variant: small-caps;
-				font-weight: 500;
-			}
 			font-size: calc(@fontsize + 2px);
 			h1 {
 				font-size: calc(@fontsize + 8px);
@@ -795,10 +765,10 @@ body.modal-open {
 		.panel-title,
 		.panel-title a:visited,
 		.panel-title a {
-			color: darken(@base-color,10%);
+			color: @basetext-color;
 		}
 		.panel-title a:hover {
-			color: darken(@base-color, 15%);
+			color: darken(@basetext-color, 5%);
 			text-decoration: underline;
 		}
 		.panel-footer {
@@ -807,10 +777,6 @@ body.modal-open {
 		}
 	}
 	.panel-heading {
-		& when (@design = elevated) {
-			font-variant: small-caps;
-			font-weight: 500;
-		}
 		font-size: calc(@fontsize + 2px);
 		h1 {
 			font-size: calc(@fontsize + 8px);
@@ -910,7 +876,7 @@ body.modal-open {
 	// Headers
 	// -----------------------------------------------
 	h1 {
-		color: @link-color;
+		color: @base-color;
 		font-size: calc(@fontsize + 12px);
 		line-height: 1.1;
 		margin-top: 0.67em;
@@ -919,7 +885,7 @@ body.modal-open {
 		margin: 0 0 5px 0;
 	}
 	h2 {
-		color: @link-color;
+		color: @base-color;
 		font-size: calc(@fontsize + 10px);
 	}
 	h3 {
@@ -1478,7 +1444,7 @@ body.modal-open {
 		.close {
 			position: relative;
 			top: -2px;
-			right: 0;
+			right: -21px;
 			line-height: 18px;
 			cursor: pointer;
 		}
@@ -1511,7 +1477,7 @@ body.modal-open {
 	}
 	.alert-sigsiu,
 	.alert-sigsiu h4 {
-		color: @base-color;
+		color: @link-color;
 	}
 
 	.spAlert {
@@ -1533,6 +1499,9 @@ body.modal-open {
 	//}
 	.spMessage {
 		margin-top: 10px;
+		.close {
+			right: 0;
+		}
 	}
 
 	//simulate default alert-danger, used by SobiPro apps instead of alert-message
@@ -1575,7 +1544,7 @@ body.modal-open {
 	.spSearch .alert-info {
 		border-color: @alert-color;
 		background-color: lighten(@alert-color, 5%);
-		color: @base-color;
+		color: @link-color;
 		& when (@design = elevated) {
 			border-color: lighten(@alert-color, 5%);
 			.shadow-2dp;
@@ -1989,9 +1958,6 @@ body.modal-open {
 			height: calc(@big-image * @image-ratio);
 			font-size: calc((@big-image * 6) / 10);
 		}
-		& when (@design = elevated) {
-			.shadow-2dp;
-		}
 	}
 
 	.spNoImageContainer {
@@ -2037,21 +2003,12 @@ body.modal-open {
 			}
 		}
 	}
-	& when (@design = elevated) {
-		.tab-content {
-			.shadow-2dp;
-		}
-	}
+
 	.nav-pills a:focus,
 	.nav-tabs a:focus {
 		outline: none;
 	}
 
-	& when (@design = elevated) {
-		.nav-tabs {
-			border-bottom-style: hidden;
-		}
-	}
 	.nav-tabs > li > a {
 		& when (@corners = angular) {
 			border-radius: 0;
@@ -2059,11 +2016,10 @@ body.modal-open {
 	}
 
 	// Coloured tabs
-	& when (@design = standard) {
-		.tab-content.tabs.coloured .tab-pane {
-			margin-top: 0;
-		}
+	.tab-content.tabs.coloured .tab-pane {
+		margin-top: 0;
 	}
+
 	.tab-content.tabs.coloured .tab-pane.active {
 		border-top-left-radius: 0;
 	}
@@ -2098,7 +2054,7 @@ body.modal-open {
 		.background(medium);
 		color: @link-color;
 		border-bottom: 2px solid @active-color;
-		top: 16px;
+		top: 20px;
 	}
 
 	.tab-content.pills.staples .tab-pane {
@@ -2130,7 +2086,7 @@ body.modal-open {
 
 	.nav-pills.staples > li.active::before,
 	.nav-pills.staples > li.active::after {
-		top: 17px;
+		top: 20px;
 		content: '';
 		position: absolute;
 		width: 0;
@@ -2663,11 +2619,11 @@ body.modal-open {
 	}
 
 	.carousel-control.right {
-		background-image: linear-gradient(to right, transparent 0, rgba(red(@link-color), green(@link-color), blue(@link-color), 0.5) 100%);
+		background-image: linear-gradient(to right, transparent 0, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 100%);
 	}
 
 	.carousel-control.left {
-		background-image: linear-gradient(to right, rgba(red(@link-color), green(@link-color), blue(@link-color), 0.5) 0, transparent 100%);
+		background-image: linear-gradient(to right, rgba(red(@active-color), green(@active-color), blue(@active-color), 0.5) 0, transparent 100%);
 	}
 
 	// Support for Font Awesome 3 and 4
@@ -2893,16 +2849,16 @@ body.modal-open {
 	.spCalEntry.label-info {
 		background-color: lighten(@alert-color, 4%);
 		border: 1px solid darken(@alert-color, 10%);
-		color: @base-color;
+		color: @link-color;
 
 		a {
-			color: @link-color;
+			color: @base-color;
 			text-shadow: none;
 
 			&:hover,
 			&:active,
 			&:focus {
-				color: darken(@link-color, 5%);
+				color: darken(@base-color, 5%);
 			}
 		}
 	}

@@ -135,7 +135,7 @@ abstract class SobiPro
 			$tplPath = str_replace( Sobi::Cfg( 'live_site' ), SOBI_ROOT . DS, $tplPath );
 			$file = 'absolute.' . $tplPath . '.css.' . $file;
 		}
-		SPFactory::header()->addCSSFile( $file );
+		SPFactory::header()->addCssFile( $file );
 	}
 
 	/**

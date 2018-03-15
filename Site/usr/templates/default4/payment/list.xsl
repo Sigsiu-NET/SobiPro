@@ -20,7 +20,7 @@
 	<xsl:output method="xml" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" encoding="UTF-8"/>
 	<xsl:template name="paymentTable">
 		<div class="table-responsive">
-			<table class="table table-striped table-sigsiu payment">
+			<table class="table table-striped payment">
 				<thead>
 					<tr>
 						<td>#</td>
@@ -134,7 +134,7 @@
 									</div>
 								</td>
 							</tr>
-							<tr class="sum">
+							<tr class="sigsiu sum">
 								<td colspan="3">
 									<div class="pull-right">
 										<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_GROSS' )"/>
@@ -148,7 +148,7 @@
 							</tr>
 						</xsl:when>
 						<xsl:otherwise>
-							<tr class="sum">
+							<tr class="sigsiu sum">
 								<td colspan="3">
 									<div class="pull-right">
 										<xsl:value-of select="php:function( 'SobiPro::Txt', 'PAYMENT_POSITION_TOTAL' )"/>

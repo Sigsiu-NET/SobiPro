@@ -153,7 +153,7 @@ class SPCachedView extends SPFrontView implements SPView
 				}
 			}
 		}
-		$visitor = $this->visitorArray( SPFactory::user()->getCurrent() );
+		$visitor = $this->visitorArray( SPFactory::user() );
 		if ( is_array( $visitor ) && ( isset( $visitor[ '_data' ] ) ) ) {
 			$this->importData( $this->_xml->documentElement, $visitor, 'visitor' );
 		}

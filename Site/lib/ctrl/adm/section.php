@@ -39,7 +39,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 				$this->editForm();
 				break;
 			case 'edit':
-				Sobi::Redirect( Sobi::Url( [ 'task' => 'config', 'sid' => SPRequest::sid() ] ), null, true );
+				Sobi::Redirect( Sobi::Url( [ 'task' => 'config', 'sid' => Input::Sid() ] ), null, true );
 				break;
 			case 'view':
 			case 'entries':
@@ -53,7 +53,7 @@ class SPSectionAdmCtrl extends SPSectionCtrl
 			default:
 				/* case plugin didn't register this task, it was an error */
 				if ( !( parent::execute() ) ) {
-					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', SPRequest::task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
+					Sobi::Error( $this->name(), SPLang::e( 'SUCH_TASK_NOT_FOUND', Input::Task() ), SPC::NOTICE, 404, __LINE__, __FILE__ );
 				}
 				break;
 		}

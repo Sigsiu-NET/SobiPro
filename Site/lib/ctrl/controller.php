@@ -213,7 +213,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $lang && $lang != Sobi::Cfg( 'language' ) ) {
 			$languages = SPFactory::CmsHelper()->availableLanguages();
 			SPFactory::message()
-				->info( Sobi::Txt( 'INFO_DIFFERENT_LANGUAGE', $this->_type, $languages[ $lang ][ 'name' ] ), false );
+					->info( Sobi::Txt( 'INFO_DIFFERENT_LANGUAGE', $this->_type, $languages[ $lang ][ 'name' ] ), false );
 		}
 	}
 
@@ -222,7 +222,7 @@ abstract class SPController extends SPObject implements SPControl
 		if ( $this->_model->get( 'id' ) ) {
 			if ( $this->authorise( 'manage' ) ) {
 				$this->_model->changeState( $state );
-				$state = ( int ) ( $this->_task == 'publish' ) ? true : $state;
+				$state = ( int )( $this->_task == 'publish' ) ? true : $state;
 				$this->response( Sobi::Back(), Sobi::Txt( $state ? 'OBJ_PUBLISHED' : 'OBJ_UNPUBLISHED', [ 'type' => Sobi::Txt( $this->_type ) ] ), false );
 			}
 		}
@@ -272,7 +272,7 @@ abstract class SPController extends SPObject implements SPControl
 			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$this->validate( $this->_type . '.edit', $this->_type );
-		$apply = ( int ) $apply;
+		$apply = ( int )$apply;
 		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
 		}
@@ -282,9 +282,9 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		/** store previous state for possible triggers */
 		$preState = [
-			'approved' => $this->_model->get( 'approved' ),
-			'state'    => $this->_model->get( 'state' ),
-			'new'      => !( $this->_model->get( 'id' ) )
+				'approved' => $this->_model->get( 'approved' ),
+				'state' => $this->_model->get( 'state' ),
+				'new' => !( $this->_model->get( 'id' ) )
 		];
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 		$this->_model->getRequest( $this->_type );
@@ -424,7 +424,7 @@ abstract class SPController extends SPObject implements SPControl
 			$redirect = Sobi::Cfg( 'redirects.' . $type . '_access_url', null );
 			if ( Sobi::Cfg( 'redirects.' . $type . '_access_enabled', false ) && strlen( $redirect ) ) {
 				$this->escape( $redirect, Sobi::Cfg( 'redirects.' . $type . '_access_msg', SPLang::e( 'UNAUTHORIZED_ACCESS', Input::Task() ) ),
-					Sobi::Cfg( 'redirects.' . $type . '_access_msgtype', 'message' ) );
+						Sobi::Cfg( 'redirects.' . $type . '_access_msgtype', 'message' ) );
 				exit;
 			}
 			else {
@@ -477,8 +477,25 @@ abstract class SPController extends SPObject implements SPControl
 			$task = ( $this->_task == 'add' || $this->_task == 'submit' || $this->_task == 'edit' ) ? 'edit' : $this->_defTask;
 			Input::Set( 'task', "{$this->_type}.{$task}" );
 		}
-		if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$task}", 'absolute', true, 'ini' ) ) {
-			$taskCfg = SPLoader::loadIniFile( "{$path}.{$this->templateType}.{$task}", true, false, false, true );
+
+		/* Read the necessary ini files */
+		if ( Input::Cmd( 'sptpl' ) ) {
+			$file = Input::String( 'sptpl' );
+		}
+		else {
+			$file = $task;
+		}
+		if ( strstr( $file, $this->templateType ) ) {
+			$file = str_replace( $this->templateType . '.', null, $file );
+		}
+
+		if ( $file != $task ) {
+			if ( !( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'ini' ) ) ) {
+				$file = $task;
+			}
+		}
+		if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'ini' ) ) {
+			$taskCfg = SPLoader::loadIniFile( "{$path}.{$this->templateType}.{$file}", true, false, false, true );
 			$files[] = SPLoader::iniStorage();
 			foreach ( $taskCfg as $section => $keys ) {
 				if ( isset( $this->_tCfg[ $section ] ) ) {
@@ -490,26 +507,28 @@ abstract class SPController extends SPObject implements SPControl
 			}
 		}
 		if ( count( $files ) ) {
-			foreach ( $files as $i => $file ) {
-				$files[ $i ] = [ 'file' => str_replace( SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' ), null, $file ), 'checksum' => md5_file( $file ) ];
+			foreach ( $files as $i => $onefile ) {
+				$files[ $i ] = [ 'file' => str_replace( SPLoader::translateDirPath( Sobi::Cfg( 'section.template' ), 'templates' ), null, $file ), 'checksum' => md5_file( $onefile ) ];
 			}
 			SPFactory::registry()->set( 'template_config', $files );
 		}
+
+		/* Read the necessary json files */
 		if ( SPLoader::translatePath( "{$path}.config", 'absolute', true, 'json' ) ) {
 			$config = json_decode( SPFs::read( SPLoader::translatePath( "{$path}.config", 'absolute', true, 'json' ) ), true );
 			$settings = [];
 			foreach ( $config as $section => $setting ) {
 				$settings[ str_replace( '-', '.', $section ) ] = $setting;
 			}
-			if ( Input::Cmd( 'sptpl' ) ) {
-				$file = Input::String( 'sptpl' );
-			}
-			else {
-				$file = $task;
-			}
-			if ( strstr( $file, $this->templateType ) ) {
-				$file = str_replace( $this->templateType, null, $file );
-			}
+//			if ( Input::Cmd( 'sptpl' ) ) {
+//				$file = Input::String( 'sptpl' );
+//			}
+//			else {
+//				$file = $task;
+//			}
+//			if ( strstr( $file, $this->templateType ) ) {
+//				$file = str_replace( $this->templateType, null, $file );
+//			}
 			if ( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'json' ) ) {
 				$subConfig = json_decode( SPFs::read( SPLoader::translatePath( "{$path}.{$this->templateType}.{$file}", 'absolute', true, 'json' ) ), true );
 				if ( count( $subConfig ) ) {
@@ -585,20 +604,20 @@ abstract class SPController extends SPObject implements SPControl
 			$type = $message[ 'type' ];
 			$message = $message[ 'text' ];
 		}
-		if ( Sprequest::cmd( 'method', null, $request ) == 'xhr' ) { //don't use Framework function -> results in true
+		if ( Input::Cmd( 'method' ) == 'xhr' ) { //don't use Framework function -> results in true
 			if ( $redirect && $message ) {
 				SPFactory::message()->setMessage( $message, false, $type );
 			}
 			$url = str_replace( '&amp;', '&', $url );
 			SPFactory::mainframe()
-				->cleanBuffer()
-				->customHeader();
+					->cleanBuffer()
+					->customHeader();
 			echo json_encode(
-				[
-					'message'  => [ 'text' => $message, 'type' => $type ],
-					'redirect' => [ 'url' => $url, 'execute' => ( bool ) $redirect ],
-					'data'     => $data
-				]
+					[
+							'message' => [ 'text' => $message, 'type' => $type ],
+							'redirect' => [ 'url' => $url, 'execute' => ( bool )$redirect ],
+							'data' => $data
+					]
 			);
 			exit;
 		}

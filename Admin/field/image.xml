@@ -7,12 +7,14 @@
  Email: sobi[at]sigsiu.net
  Url: https://www.Sigsiu.NET
 
- @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  @license GNU/GPL Version 3
- This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
 
- This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 -->
 
 <definition>
@@ -95,12 +97,12 @@
 									<field type="toggle" name="field.keepOrg" value="field.keepOrg" label="FMN.IMG.KEEP_ORG" prefix="yes_no"/>
 									<field type="toggle" name="field.detectTransparency" value="field.detectTransparency" label="FMN.IMG.DETECT_TRANSPARENCY"
 									       prefix="yes_no"/>
-									<field type="toggle" name="field.resize" value="field.resize" label="FM.IMG.RESIZE_IMG" prefix="yes_no"/>
 									<field type="toggle" name="field.crop" value="field.crop" label="FM.IMG.CROP_IMG" prefix="yes_no"/>
 								</fieldset>
 								<fieldset label="FMN.FIELD_ENTRYINPUT_DVIMAGE">
 									<field type="text" name="field.imageName" value="field.imageName" label="FM.FIELD_IMAGE_NAME" maxlength="100"
 									       class="input-large"/>
+									<field type="toggle" name="field.resize" value="field.resize" label="FM.IMG.RESIZE_IMG" prefix="yes_no"/>
 									<field type="text" name="field.resizeWidth" value="field.resizeWidth" label="FM.IMG.RESIZEWIDTH_TO" maxlength="50"
 									       class="input-mini">
 										<add where="after">

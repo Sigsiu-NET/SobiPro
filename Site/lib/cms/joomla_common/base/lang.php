@@ -718,7 +718,7 @@ class SPJoomlaLang
 						$result[ $label[ 'id' ] ][ 'alias' ] = $label[ 'value' ];
 					}
 					else {
-						if ( !( isset( $result[ $label[ 'id' ] ] ) ) || $label[ 'language' ] == Sobi::Lang() ) {
+						if ( !( isset( $result[ $label[ 'id' ] ] ) ) || $label[ 'language' ] == Sobi::Lang( false ) ) {
 							$result[ $label[ 'id' ] ] = $label;
 						}
 					}
@@ -729,7 +729,7 @@ class SPJoomlaLang
 					}
 				}
 				foreach ( $labels as $label ) {
-					if ( !( isset( $result[ $label[ 'id' ] ][ $label[ 'label' ] ] ) ) || $label[ 'language' ] == Sobi::Lang() ) {
+					if ( !( isset( $result[ $label[ 'id' ] ][ $label[ 'label' ] ] ) ) || $label[ 'language' ] == Sobi::Lang( false ) ) {
 						$result[ $label[ 'id' ] ][ $label[ 'label' ] ] = $label[ 'value' ];
 					}
 				}

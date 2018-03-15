@@ -17,6 +17,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Input\Input;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadModel( 'datamodel' );
 SPLoader::loadModel( 'dbobject' );
@@ -144,6 +146,8 @@ final class SPSection extends SPDBObject implements SPDataModel
 	 */
 	public function save( $update = false, $init = true )
 	{
+		$test = Input::Html('section_description');
+		JComponentHelper::filterText($test);
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		/* check nid */
