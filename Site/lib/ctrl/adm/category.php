@@ -122,6 +122,7 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 					->deleteObj( 'category', $this->_model->get( 'parent' ) );
 
 			$this->response( Sobi::Back(), Sobi::Txt( $state ? 'CAT.PUBLISHED' : 'CAT.UNPUBLISHED' ), false );
+			SPFactory::message()->logAction( $state ? 'publish' : 'unpublish', $this->_model->get( 'id' ) );
 		}
 		else {
 			$this->response( Sobi::Back(), Sobi::Txt( 'CHANGE_NO_ID' ), false, SPC::ERROR_MSG );
@@ -392,9 +393,9 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 		unset( $eFields[ Sobi::Cfg( 'entry.name_field' ) ] );
 		$entryFields = [];
 		$selectedEntryFields = $this->_model->get( 'entryFields' );
-        if( !( is_array( $selectedEntryFields ) ) ) {
-            $selectedEntryFields = [];
-        }
+		if ( !( is_array( $selectedEntryFields ) ) ) {
+			$selectedEntryFields = [];
+		}
 		$all = $this->_model->get( 'allFields' );
 		foreach ( $eFields as $id => $field ) {
 			$entryFields[] = [ 'id' => $id, 'name' => $field, 'included' => $all ? true : in_array( $id, $selectedEntryFields ) ];

@@ -146,8 +146,6 @@ final class SPSection extends SPDBObject implements SPDataModel
 	 */
 	public function save( $update = false, $init = true )
 	{
-		$test = Input::Html('section_description');
-		JComponentHelper::filterText($test);
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		/* check nid */

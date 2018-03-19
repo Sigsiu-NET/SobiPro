@@ -34,10 +34,13 @@ class SPApiCtrl extends SPController
 {
 	const ENTRIES_LIMIT = 25;
 
+	/**
+	 *
+	 */
 	public function execute()
 	{
 		if ( !( Sobi::Cfg( 'api.enabled' ) ) ) {
-			$this->answer( 'Unauthorised access', 403 );
+			$this->answer( [], 403, [ 'error' => 'Unauthorised access' ] );
 		}
 		$data = null;
 		try {
@@ -59,10 +62,13 @@ class SPApiCtrl extends SPController
 					break;
 			}
 		} catch ( Exception $x ) {
-			$this->answer( $x->getMessage(), $x->getCode() );
+			$this->answer( [], $x->getCode(), [ 'error' => $x->getMessage() ] );
 		}
 	}
 
+	/**
+	 *
+	 */
 	protected function fields()
 	{
 		$fields = [];
@@ -93,6 +99,9 @@ class SPApiCtrl extends SPController
 		$this->answer( $fields );
 	}
 
+	/**
+	 *
+	 */
 	protected function entries()
 	{
 		$sid = Input::Sid();
@@ -142,6 +151,9 @@ class SPApiCtrl extends SPController
 		$this->answer( $data, 0, [ 'count' => $count, 'limit' => self::ENTRIES_LIMIT, 'sites' => ceil( $count / self::ENTRIES_LIMIT ) ] );
 	}
 
+	/**
+	 *
+	 */
 	protected function entry()
 	{
 		$sid = Input::Sid();
@@ -174,6 +186,9 @@ class SPApiCtrl extends SPController
 		$this->answer( $data );
 	}
 
+	/**
+	 *
+	 */
 	protected function category()
 	{
 		$sid = Input::Sid();
@@ -227,6 +242,9 @@ class SPApiCtrl extends SPController
 		$this->answer( $data );
 	}
 
+	/**
+	 *
+	 */
 	protected function sections()
 	{
 		$data = [];
@@ -253,8 +271,17 @@ class SPApiCtrl extends SPController
 		$this->answer( $data );
 	}
 
+	/**
+	 * @param array $data
+	 * @param int $code
+	 * @param array $header
+	 *
+	 *
+	 * @since version
+	 */
 	protected function answer( $data, $code = 0, $header = [] )
 	{
+		Sobi::Trigger( 'Api', ucfirst( $this->_task ), [ &$data ] );
 		SPFactory::mainframe()
 				->cleanBuffer()
 				->customHeader( 'application/json', $code );
@@ -262,9 +289,8 @@ class SPApiCtrl extends SPController
 	}
 
 	/**
-	 * @param $fields
-	 * @param $data
-	 * @return mixed
+	 * @param array $fields
+	 * @param array $data
 	 */
 	protected function travelFields( $fields, $data )
 	{
