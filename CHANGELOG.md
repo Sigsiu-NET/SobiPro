@@ -54,6 +54,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) RegEx in URL field corrected
 	(#) Windows 10 falsely recognised as old operating system
 	(#) Collation changed from utf8mb4_bin to utf8mb4_unicode_ci (Issue #69)
+	(#) Correct icon font selected for new SobiPro installation
 
 
 ### 1.4.5 (30 January 2018)
