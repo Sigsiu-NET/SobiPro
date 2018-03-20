@@ -60,10 +60,26 @@ class SPApiCtrl extends SPController
 				case 'fields':
 					$this->fields();
 					break;
+				case 'changes':
+					$this->changes();
+					break;
 			}
 		} catch ( Exception $x ) {
 			$this->answer( [], $x->getCode(), [ 'error' => $x->getMessage() ] );
 		}
+	}
+
+	/**
+	 *
+	 */
+	protected function changes()
+	{
+		$from = Input::Int( 'from' );
+		$from = date( 'Y-m-d H:i:s', $from );
+		$changes = SPFactory::db()
+				->dselect( [ 'sid', 'changeAction' ], 'spdb_history', [ 'changedAt' => [ 'from' => $from ] ] )
+				->loadAssocList();
+		$this->answer( $changes );
 	}
 
 	/**
