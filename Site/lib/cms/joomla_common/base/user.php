@@ -39,7 +39,7 @@ class SPJoomlaUser extends JUser
 	/** @var array */
 	protected $_prequest = [];
     /** @var array  */
-    protected $_special = [ 'txt.js', 'progress', 'api.sections', 'api.category', 'api.entries', 'api.entry', 'api.fields' ];
+    protected $_special = [ 'txt.js', 'progress', 'api.sections', 'api.category', 'api.entries', 'api.entry', 'api.fields', 'api.changes' ];
 
 
 	/* get all parent groups */
