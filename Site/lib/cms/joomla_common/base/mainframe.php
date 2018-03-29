@@ -347,9 +347,13 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				}
 				break;
 			default:
-				Factory::getApplication()->triggerEvent( $action, $params );
-//				$dispatcher = JEventDispatcher::getInstance();
-//				$dispatcher->trigger( $action, $params );
+				if (class_exists('Joomla\CMS\Factory')) {
+					Factory::getApplication()->triggerEvent( $action, $params );
+				}
+				else {  // for Joomla < 3.8.0
+					$dispatcher = JEventDispatcher::getInstance();
+					$dispatcher->trigger( $action, $params );
+				}
 				break;
 		}
 	}
