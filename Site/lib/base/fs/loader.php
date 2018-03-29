@@ -297,9 +297,9 @@ abstract class SPLoader
 	{
 		if ( strstr( $name, 'field' ) ) {
 			self::loadClass( 'fields.interface', false, 'model', $redirect );
-			if ( $adm ) {
-				$name = 'adm.' . $name;
-			}
+//			if ( $adm ) {
+//				$name = 'adm.' . $name;
+//			}
 		}
 		return self::loadClass( $name, $adm, 'model', $redirect );
 	}
