@@ -230,6 +230,43 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	}
 
 	/**
+	 * Static function to create the right SQL-Query if a entries list should be sorted by this field
+	 *
+	 * @param string $tables - table or tables join
+	 * @param array $conditions - array with conditions
+	 * @param string $oPrefix
+	 * @param string $eOrder
+	 * @param string $eDir
+	 * @return bool
+	 */
+	public static function sortBy( &$tables, &$conditions, &$oPrefix, &$eOrder, $eDir )
+	{
+		/* @var SPdb $db */
+		$db =& SPFactory::db();
+		$tables = $db->join(
+			[
+				[ 'table' => 'spdb_field_option_selected', 'as' => 'sdata', 'key' => 'fid' ],
+				[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => [ 'sdata.sid', 'spo.id' ] ],
+				[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => [ 'fdata.fid', 'sdata.fid' ] ],
+				[ 'table' => 'spdb_field', 'as' => 'fdef', 'key' => [ 'fdef.fid', 'sdata.fid' ] ],
+				[ 'table' => 'spdb_language', 'as' => 'ldata', 'key' => [ 'sdata.optValue', 'ldata.sKey' ] ],
+				[ 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => [ 'spo.id', 'sprl.id' ] ],
+			]
+		);
+		$oPrefix = 'spo.';
+		$conditions[ 'spo.oType' ] = 'entry';
+		if ( !( isset( $conditions[ 'sprl.pid' ] ) ) ) {
+			$conditions[ 'sprl.pid' ] = Input::Sid();
+		}
+		$conditions[ 'ldata.oType' ] = 'field_option';
+		$conditions[ 'fdef.nid' ] = $eOrder;
+		$eOrder = 'sValue.' . $eDir . ", field( language, '" . Sobi::Lang( false ) . "', '" . Sobi::DefLang() . "' )";
+
+		return true;
+	}
+
+
+	/**
 	 * @return array
 	 */
 	public function struct()
