@@ -195,7 +195,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 				}
 			}
 		}
-		$data = Input::String( $this->nid );
+		$data = Input::Raw( $this->nid );
 		$this->setData( $data );
 
 		return $data;
