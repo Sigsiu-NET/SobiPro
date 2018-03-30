@@ -241,6 +241,10 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 	 */
 	public static function sortBy( &$tables, &$conditions, &$oPrefix, &$eOrder, $eDir )
 	{
+		// it sorts the entries by the option names of a checkbox group (the invisible thing).
+		// Important: each entry needs to have an option set, means you need at least 2 options. Entries without option set, are not shown at all!!
+		// This sorting method makes sense only for 'yes'/'no' options (e.g. isFavoured) as it does not sort by the shown value and is therefore not language dependant.
+
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 		$tables = $db->join(
@@ -249,7 +253,6 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 				[ 'table' => 'spdb_object', 'as' => 'spo', 'key' => [ 'sdata.sid', 'spo.id' ] ],
 				[ 'table' => 'spdb_field_data', 'as' => 'fdata', 'key' => [ 'fdata.fid', 'sdata.fid' ] ],
 				[ 'table' => 'spdb_field', 'as' => 'fdef', 'key' => [ 'fdef.fid', 'sdata.fid' ] ],
-				[ 'table' => 'spdb_language', 'as' => 'ldata', 'key' => [ 'sdata.optValue', 'ldata.sKey' ] ],
 				[ 'table' => 'spdb_relations', 'as' => 'sprl', 'key' => [ 'spo.id', 'sprl.id' ] ],
 			]
 		);
@@ -258,13 +261,11 @@ class SPField_ChbxGr extends SPField_Radio implements SPFieldInterface
 		if ( !( isset( $conditions[ 'sprl.pid' ] ) ) ) {
 			$conditions[ 'sprl.pid' ] = Input::Sid();
 		}
-		$conditions[ 'ldata.oType' ] = 'field_option';
 		$conditions[ 'fdef.nid' ] = $eOrder;
-		$eOrder = 'sValue.' . $eDir . ", field( language, '" . Sobi::Lang( false ) . "', '" . Sobi::DefLang() . "' )";
+		$eOrder = 'sdata.optValue.' . $eDir ;
 
 		return true;
 	}
-
 
 	/**
 	 * @return array

@@ -292,6 +292,11 @@ class com_sobiproInstallerScript
 			$db->execute();
 		} catch ( Exception $x ) {
 		}
+		try {
+			$db->setQuery( 'DELETE FROM `#__sobipro_config` WHERE `sKey` = "field_types_for_ordering"' );
+			$db->execute();
+		} catch ( Exception $x ) {
+		}
 
 
 		try {

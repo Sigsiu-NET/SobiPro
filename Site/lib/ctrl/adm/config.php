@@ -676,7 +676,8 @@ class SPConfigAdmCtrl extends SPController
 				return $cache[ 'pos' ];
 			}
 			if ( !( count( $types ) ) ) {
-				$types = explode( ', ', Sobi::Cfg( 'field_types_for_ordering', 'inbox, select, chbxgroup' ) );
+				// field types for ordering by field (needs corresponding sortBy method)
+				$types = explode( ', ', Sobi::Cfg( 'field_types_for_ordering', 'inbox, select, chbxgroup', 'calendar' ) );
 			}
 		}
 		else {
