@@ -58,7 +58,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Collation changed from utf8mb4_bin to utf8mb4_unicode_ci (Issue #69)
 	(#) Correct icon font selected for new SobiPro installation
 	(#) Removal of incompatibility with Joomla < 3.8.0
-
+	(#) Development highlighting feature is set on after installation for the example section
+	
 
 ### 1.4.5 (30 January 2018)
 
