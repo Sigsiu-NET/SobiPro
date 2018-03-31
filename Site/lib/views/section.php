@@ -82,10 +82,11 @@ class SPSectionView extends SPFrontView implements SPView
 					$icon = json_decode( str_replace( "'", '"', $category->get( 'icon' ) ), true );
 
 					$fontclass = '';
-					$iconsize = Sobi::Cfg( 'category.iconsize', 0 );
+					$iconsize = Sobi::Cfg( 'category.iconsize', 3 );
 					switch ( $iconsize ) {
 						case 1:
 							switch ($category->param('icon-font')) {
+								default:
 								case 'font-awesome-3':
 									$fontclass= 'icon-large';
 									break;
@@ -102,6 +103,7 @@ class SPSectionView extends SPFrontView implements SPView
 						case 4:
 						case 5:
 							switch ($category->param('icon-font')) {
+								default:
 								case 'font-awesome-3':
 									$fontclass= 'icon-' . $iconsize . 'x';
 								break;

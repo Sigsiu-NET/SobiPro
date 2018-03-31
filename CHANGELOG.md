@@ -46,6 +46,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
    	(!) Includes Sobi Framework 1.0.4
    	(!) If uploading a new image for an entry, the old images of this field will be deleted
    	(!) Default JPG quality set to 90%
+	(!) Category icon size set to 3 by default
 
 	(#) Backslashes are added prior apostrophe to input field in back-end
 	(#) Ini file for template override (sptpl) not loaded
