@@ -195,6 +195,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 				}
 			}
 		}
+		$data = Input::Html( $this->nid );
 		$data = Input::Raw( $this->nid );
 		$this->setData( $data );
 
@@ -261,7 +262,9 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 			if ( count( $this->allowedTags ) ) {
 				SPRequest::setTagsAllowed( $this->allowedTags );
 			}
+			$data = Input::Html( $this->nid );
 			$data = SPRequest::string( $this->nid, null, true, $request );
+			$data = Input::Raw( $this->nid );
 			SPRequest::resetFilter();
 			if ( !( $this->editor ) && $this->maxLength && ( strlen( $data ) > $this->maxLength ) ) {
 				$data = substr( $data, 0, $this->maxLength );
