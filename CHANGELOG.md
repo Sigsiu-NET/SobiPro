@@ -85,6 +85,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(+) The Joomla menu page heading (if any) will be shown instead of the SobiPro page heading
 	(+) Added support for emojis in field_data and language
 	(+) Changed repository SSL certificate added
+	(+) Possibility not to load but to use specific fonts
 
     (!) Extracting Sobi Framework automatically in case PHAR isn't usable
     (!) Separate icon from label in Button field
@@ -127,7 +128,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) {payment.methods.html} placeholder doesn't generate correct HTML output for Paypal payment method
     (#) Shown number of characters in textarea with HTML code corrected (if limitation is used)
  	(#) Wrong amount for Paypal payment if tax is set to 0 (Issue #62)
-   
+  	(#) edit.js no longer compressed as it causes problems
+  	 
 
 ### 1.4.3 (19 October 2017)
 

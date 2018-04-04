@@ -114,6 +114,8 @@
 													<option value="font-awesome-3-local" label="SECN.CFG.ICONS_FONT_AWESOME_3_LOCAL"/>
 												</values>
 											</field>
+											<field type="toggle" name="spcfg[template.icon_fonts_noload]" value="spcfg[template.icon_fonts_noload]"
+											       label="SECN.CFG.ICONS_FONT_NOLOAD" prefix="yes_no"/>
 										</fieldset>
 										<fieldset label="CFG.DEVTEMPLATE">
 											<field type="toggle" name="spcfg[template.development]" value="template.development"
