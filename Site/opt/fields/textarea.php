@@ -17,6 +17,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
  */
 
+use AthosHun\HTMLFilter\Configuration;
+use AthosHun\HTMLFilter\HTMLFilter;
+use Sobi\Framework;
 use Sobi\Input\Input;
 
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
@@ -254,16 +257,24 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		$db =& SPFactory::db();
 
 		if ( $this->allowHtml ) {
-			/* filter data */
-			if ( count( $this->allowedAttributes ) ) {
-				SPRequest::setAttributesAllowed( $this->allowedAttributes );
+			static $config = null;
+			static $filter = null;
+			if ( !( $config ) ) {
+				$config = new Configuration();
+				$filter = new HTMLFilter();
+				$data = Input::Html( $this->nid );
+				if ( count( $this->allowedTags ) ) {
+					foreach ( $this->allowedTags as $tag ) {
+						$config->allowTag( $tag );
+						if ( count( $this->allowedAttributes ) ) {
+							foreach ( $this->allowedAttributes as $attribute ) {
+								$config->allowAttribute( $tag, $attribute );
+							}
+						}
+					}
+				}
 			}
-			if ( count( $this->allowedTags ) ) {
-				SPRequest::setTagsAllowed( $this->allowedTags );
-			}
-			$data = Input::Html( $this->nid );
-//			$data = SPRequest::string( $this->nid, null, true, $request ); //it removes tags
-			SPRequest::resetFilter();
+			$filter->filter( $config, $data );
 			if ( !( $this->editor ) && $this->maxLength && ( strlen( $data ) > $this->maxLength ) ) {
 				$data = substr( $data, 0, $this->maxLength );
 			}
