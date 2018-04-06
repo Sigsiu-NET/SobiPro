@@ -60,6 +60,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Correct icon font selected for new SobiPro installation
 	(#) Removal of incompatibility with Joomla < 3.8.0
 	(#) Development highlighting feature is set on for the example section after installation
+	(#) All plugins are being loaded if task contain "list"
+	(#) Multiple calls into plugins load method
+	(#) alpaindex.xsl wrong "match" definition (Issue #76)
 	
 
 ### 1.4.5 (30 January 2018)

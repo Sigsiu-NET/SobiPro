@@ -397,7 +397,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 * @param string $tsId
 	 * @param string $request
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function submit( &$entry, $tsId = null, $request = 'POST' )
 	{

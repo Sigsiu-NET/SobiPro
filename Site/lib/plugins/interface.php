@@ -49,7 +49,7 @@ final class SPPlugins
 
 	private function load( $task )
 	{
-		$db =& SPFactory::db();
+		$db = SPFactory::db();
 		$adm = defined( 'SOBIPRO_ADM' ) ? 'adm.' : null;
 		$enabled = $db->select( 'pid', 'spdb_plugins', [ 'enabled' => 1 ] )
 				->loadResultArray();
@@ -72,21 +72,32 @@ final class SPPlugins
 		// get section depend apps
 		if ( Sobi::Section() && count( $pids ) ) {
 			try {
-				$this->_actions[ $task ] = $db->select( 'pid', 'spdb_plugin_section', [ 'section' => Sobi::Section(), 'enabled' => 1, 'pid' => $pids ] )->loadResultArray();
+				$this->_actions[ $task ] = $db
+						->select( 'pid', 'spdb_plugin_section', [ 'section' => Sobi::Section(), 'enabled' => 1, 'pid' => $pids ] )
+						->loadResultArray();
 			} catch ( SPException $x ) {
 				Sobi::Error( 'Plugins', $x->getMessage(), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 		}
 		/* if we didn't get section it can be also because it wasn't initialized yet
-		   * but then we have at lease on of these id in request - if so; just do nothing
-		   * it will be initialized later anyway */
-		elseif ( !( Input::Sid() || Input::Int( 'pid' ) ) ) {
+		   * but then we have at least on of these id in request - if so; just do nothing
+		   * it will be initialized later anyway
+		 * */
+		elseif ( !( Input::Sid() || Input::Pid() ) ) {
 			$this->_actions[ $task ] = $pids;
 		}
 		// here is a special exception for the custom listings
 		// it can be l.alpha or list.alpha or listing.alpha
+		/**
+		 * Fri, Apr 6, 2018 11:44:02
+		 * This is most likely wrong. It should add it for different task.
+		 * Now it loads all plugins, even those that are disabled for this section
+		 * every time the task contains "list" or similar
+		 */
 		if ( preg_match( '/^list\..*/', $task ) || preg_match( '/^l\..*/', $task ) ) {
-			$this->_actions[ 'listing' . '.' . $t[ 1 ] ] = $pids;
+//			$this->_actions[ 'listing' . '.' . $t[ 1 ] ] = $pids;
+			$this->_actions[ 'listing' . '.' . $t[ 1 ] ] =& $this->_actions[ $task ];
+			$this->_actions[ 'section' . '.' . $t[ 1 ] ] =& $this->_actions[ $task ];
 		}
 	}
 

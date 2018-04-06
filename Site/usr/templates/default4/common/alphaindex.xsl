@@ -18,12 +18,12 @@
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" exclude-result-prefixes="php">
 	<xsl:output method="xml" encoding="UTF-8"/>
-	<xsl:template match="letters|/menu/alphaMenu/letters">
+	<xsl:template match="letters|/menu">
 		<xsl:variable name="letter">
 			<xsl:value-of select="php:function( 'SobiPro::Request', 'letter' )"/>
 		</xsl:variable>
 		<ul class="pagination pagination-xs">
-			<xsl:for-each select="letter">
+			<xsl:for-each select="alphaMenu/letters/letter | letter">
 				<li>
 					<xsl:if test=". = $letter">
 						<xsl:attribute name="class">active</xsl:attribute>
