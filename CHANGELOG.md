@@ -63,6 +63,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) All plugins are being loaded if task contain "list"
 	(#) Multiple calls into plugins load method
 	(#) alpaindex.xsl wrong "match" definition (Issue #76)
+	(#) Field descriptions are now within CDATA (Issue #77)
 	
 
 ### 1.4.5 (30 January 2018)
