@@ -47,6 +47,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
    	(!) If uploading a new image for an entry, the old images of this field will be deleted
    	(!) Default JPG quality set to 90%
 	(!) Category icon size set to 3 by default
+	(!) Collation of all tables changed to utf8mb4_unicode_ci (new installations only)
 
 	(#) Backslashes are added prior apostrophe to input field in back-end
 	(#) Ini file for template override (sptpl) not loaded
@@ -64,6 +65,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Multiple calls into plugins load method
 	(#) alpaindex.xsl wrong "match" definition (Issue #76)
 	(#) Field descriptions are now within CDATA (Issue #77)
+	(#) Continents in country list are capitalized now
 	
 
 ### 1.4.5 (30 January 2018)
