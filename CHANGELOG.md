@@ -65,7 +65,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Multiple calls into plugins load method
 	(#) alpaindex.xsl wrong "match" definition (Issue #76)
 	(#) Field descriptions are now within CDATA (Issue #77)
-	(#) Continents in country list are capitalized now
+	(#) Continents in country list are capitalized now (new installations only)
 	
 
 ### 1.4.5 (30 January 2018)
