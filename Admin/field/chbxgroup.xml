@@ -172,6 +172,12 @@
 											<option value="mselect" label="FM.MSELECT_LIST_OPT" />
 										</values>
 									</field>
+									<field type="select" name="field.searchOperator" selected="field.searchOperator" label="FM.SEARCH_OPERATOR" multi="false" class="input-large">
+										<values>
+											<option value="and" label="FM.SEARCH_OPERATOR_AND" />
+											<option value="or" label="FM.SEARCH_OPERATOR_OR" />
+										</values>
+									</field>
 									<field type="text" name="field.ssize" value="field.ssize" label="FMN.SEL.SIZE_IN_SEARCH" maxlength="10" class="input-mini">
 										<add where="after">
 											<call function="Sobi::Txt">

@@ -54,6 +54,8 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	protected $multi = false;
 	/** * @var string */
 	protected $searchMethod = 'general';
+	/** * @var string */
+	protected $searchOperator = 'and';
 	/** * @var int */
 	protected $swidth = 350;
 	/** * @var int */
@@ -349,7 +351,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 	 */
 	protected function getAttr()
 	{
-		return [ 'suggesting', 'width', 'size', 'selectLabel', 'searchMethod', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsWidth', 'bsSearchWidth' ];
+		return [ 'suggesting', 'width', 'size', 'selectLabel', 'searchMethod', 'searchOperator', 'swidth', 'ssize', 'itemprop', 'dependencyDefinition', 'dependency', 'allowParents', 'metaSeparator', 'cssClassView', 'cssClassSearch', 'cssClassEdit', 'showEditLabel', 'defaultValue', 'bsWidth', 'bsSearchWidth' ];
 	}
 
 	protected function fetchData( $data, $request = 'post' )
@@ -882,7 +884,11 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 						}
 						else {
 							$cids = $db->loadResultArray();
-							$results = array_intersect( $results, $cids );
+							if ($this->searchOperator === 'and') {
+								$results = array_intersect( $results, $cids );
+							} else {
+								$results = array_merge( $results, $cids );
+							}
 						}
 					}
 					$sids = $results;
