@@ -120,7 +120,7 @@ class SPEntryCtrl extends SPController
 	 */
 	protected function checkIn( $sid, $redirect = true )
 	{
-		parent::checkIn( SPRequest::int( 'entry_id', $sid, 'request', true ), $redirect );
+		parent::checkIn( Input::Int( 'entry_id', $sid ), $redirect );
 	}
 
 	/**
@@ -153,19 +153,19 @@ class SPEntryCtrl extends SPController
 	protected function submit()
 	{
 		if ( !( SPFactory::mainframe()->checkToken() ) ) {
-			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Token', SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		if ( !$this->_model ) {
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
 		}
 		else {
 			if ( $this->_model->get( 'oType' ) != 'entry' ) {
-				Sobi::Error( 'Entry', sprintf( 'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+				Sobi::Error( 'Entry', sprintf( 'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 				exit;
 			}
 		}
 
-		$ajax = SPRequest::cmd( 'method', 'html' ) == 'xhr';
+		$ajax = Input::Cmd( 'method' ) == 'xhr';
 		/** let's create a simple plug-in method from the template to allow to modify the request */
 		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
 		$this->tplCfg( $tplPackage );
@@ -178,7 +178,7 @@ class SPEntryCtrl extends SPController
 		}
 
 		$sid = $this->_model->get( 'id' );
-		$this->_model->init( SPRequest::sid() );
+		$this->_model->init( Input::Sid() );
 		$this->_model->getRequest( $this->_type );
 		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_model ] );
 		if ( $sid ) {
@@ -195,12 +195,11 @@ class SPEntryCtrl extends SPController
 
 		$this->_model->loadFields( Sobi::Reg( 'current_section' ) );
 		$fields = $this->_model->get( 'fields' );
-		$tsId = SPRequest::string( 'editentry', null, false, 'cookie' );
+		$tsId = Input::String( 'editentry', 'cookie', null );
 
 		$tsIdToRequest = false;
 		if ( !strlen( $tsId ) ) {
-//			$tsId = date( 'Y-m-d_H-m-s_' ) . str_replace( array( '.', ':' ), array( '-', null ), SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
-			$tsId = ( microtime( true ) * 100 ) . '.' . rand( 0, 99 ) . '.' . str_replace( [ ':', '.' ], null, SPRequest::ip( 'REMOTE_ADDR', 0, 'SERVER' ) );
+			$tsId = ( microtime( true ) * 100 ) . '.' . rand( 0, 99 ) . '.' . str_replace( [ ':', '.' ], null, Input::Ip4() );
 			SPLoader::loadClass( 'env.cookie' );
 			// in case we wre not able for some reason to set the cookie - we are going to pass this id into the URL
 			if ( !( SPCookie::set( 'editentry', $tsId, SPCookie::hours( 48 ) ) ) ) {
@@ -294,10 +293,10 @@ class SPEntryCtrl extends SPController
 
 	private function payment()
 	{
-		$sid = SPRequest::sid();
+		$sid = Input::Sid();
 		$data = SPFactory::cache()->getObj( 'payment', $sid, Sobi::Section(), true );
 		if ( !( $data ) ) {
-			$tsId = SPRequest::string( 'tsid' );
+			$tsId = Input::String( 'tsid' );
 			$tfile = SPLoader::path( 'tmp.edit.' . $tsId . '.payment', 'front', false, 'var' );
 			if ( SPFs::exists( $tfile ) ) {
 				$data = SPConfig::unserialize( SPFs::read( $tfile ) );
@@ -316,7 +315,7 @@ class SPEntryCtrl extends SPController
 		//		else {
 		//			$this->authorise( 'edit', '*' );
 		//		}
-		if ( ( $data[ 'ident' ] != SPRequest::string( 'payment_' . $sid, null, false, 'cookie' ) ) ) {
+		if ( ( $data[ 'ident' ] != Input::String( 'payment_' . $sid, 'cookie', null ) ) ) {
 			Sobi::Error( 'payment', SPLang::e( 'UNAUTHORIZED_ACCESS' ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$this->paymentView( null, $data[ 'data' ] );
@@ -346,7 +345,7 @@ class SPEntryCtrl extends SPController
 		$view->setConfig( $this->_tCfg, $this->_task );
 		$view->setTemplate( $tplPackage . '.payment.' . $this->_task );
 		Sobi::Trigger( ucfirst( $this->_task ), $this->name(), [ &$view, &$this->_model ] );
-		if ( SPRequest::cmd( 'method', null, 'post' ) == 'xhr' ) {
+		if ( Input::Cmd( 'method', null, 'post' ) == 'xhr' ) {
 			SPFactory::mainframe()->cleanBuffer();
 			$view->display();
 			$response = ob_get_contents();
@@ -373,12 +372,12 @@ class SPEntryCtrl extends SPController
 			$this->setModel( SPLoader::loadModel( $this->_type ) );
 		}
 		if ( $this->_model->get( 'oType' ) != 'entry' ) {
-			Sobi::Error( 'Entry', sprintf( 'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Entry', sprintf( 'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			exit;
 		}
 
 		/* check if we have stored last edit in cache */
-		$tsId = SPRequest::string( 'editentry', null, false, 'cookie' );
+		$tsId = Input::String( 'editentry', 'cookie', null );
 		if ( !( $tsId ) ) {
 			$tsId = Input::Cmd( 'ssid' );
 		}
@@ -447,6 +446,7 @@ class SPEntryCtrl extends SPController
 
 		$sid = $this->_model->get( 'id' );
 		$pid = Input::Pid() ? Input::Pid() : Sobi::Section();
+		Input::Set( 'method', 'html' );
 		if ( $new ) {
 			if ( $this->_model->get( 'state' ) || Sobi::Can( 'entry', 'access', 'unpublished_own' ) || Sobi::Can( 'entry', 'access', 'unpublished_any' ) ) {
 				$msg = $this->_model->get( 'state' ) ? Sobi::Txt( 'EN.ENTRY_SAVED' ) : Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
@@ -499,7 +499,6 @@ class SPEntryCtrl extends SPController
 			$customClass::AfterStoreEntry( $this->_model );
 		}
 		$this->logChanges( 'save', Input::String( 'history-note' ) );
-		Input::Set( 'method', 'html' );
 		$this->response( $url, $msg, true, SPC::SUCCESS_MSG );
 	}
 
@@ -521,11 +520,11 @@ class SPEntryCtrl extends SPController
 						$this->escape( Sobi::Cfg( 'redirects.entry_add_url', null ), SPLang::e( Sobi::Cfg( 'redirects.entry_add_msg', 'UNAUTHORIZED_ACCESS' ) ), Sobi::Cfg( 'redirects.entry_add_msgtype', 'message' ) );
 					}
 					else {
-						Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+						Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 					}
 					break;
 				default:
-					Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+					Sobi::Error( $this->name(), SPLang::e( 'UNAUTHORIZED_ACCESS_TASK', Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 					break;
 			}
 		}
@@ -544,16 +543,16 @@ class SPEntryCtrl extends SPController
 			$this->authorise( $this->_task, 'any' );
 		}
 		if ( $this->_task != 'add' ) {
-			$sid = SPRequest::sid();
-			$sid = $sid ? $sid : SPRequest::int( 'pid' );
+			$sid = Input::Sid();
+			$sid = $sid ? $sid : Input::Pid();
 		}
 		else {
 			$this->_model = null;
-			$sid = SPRequest::int( 'pid' );
+			$sid = Input::Pid();
 		}
 
 		if ( $this->_model && $this->_model->isCheckedOut() ) {
-			Sobi::Redirect( Sobi::Url( [ 'sid' => SPRequest::sid() ] ), Sobi::Txt( 'EN.IS_CHECKED_OUT', $this->_model->get( 'name' ) ), SPC::ERROR_MSG, true );
+			Sobi::Redirect( Sobi::Url( [ 'sid' => Input::Sid() ] ), Sobi::Txt( 'EN.IS_CHECKED_OUT', $this->_model->get( 'name' ) ), SPC::ERROR_MSG, true );
 		}
 
 		/* determine template package */
@@ -564,7 +563,7 @@ class SPEntryCtrl extends SPController
 		$this->tplCfg( $tplPackage );
 
 		/* check if we have stored last edit in cache */
-		$this->getCache( SPRequest::string( 'editentry', null, false, 'cookie' ), 'editcache' );
+		$this->getCache( Input::String( 'editentry', 'cookie', null ), 'editcache' );
 		$section = SPFactory::Model( 'section' );
 		$section->init( Sobi::Section() );
 
@@ -668,9 +667,9 @@ class SPEntryCtrl extends SPController
 		$view->assign( $visitor, 'visitor' );
 		$view->setConfig( $this->_tCfg, $this->template );
 		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . ( $this->template == 'add' ? 'edit' : $this->template ) );
-		$view->addHidden( ( $sid ? $sid : SPRequest::sid() ), 'pid' );
+		$view->addHidden( ( $sid ? $sid : Input::Sid() ), 'pid' );
 		$view->addHidden( $id, 'sid' );
-		$view->addHidden( ( SPRequest::int( 'pid' ) && SPRequest::int( 'pid' ) != $id ) ? SPRequest::int( 'pid' ) : Sobi::Section(), 'pid' );
+		$view->addHidden( ( Input::Pid() && Input::Pid() != $id ) ? Input::Pid() : Sobi::Section(), 'pid' );
 		$view->addHidden( 'entry.submit', SOBI_TASK );
 		Sobi::Trigger( $this->name(), __FUNCTION__, [ &$view ] );
 		$view->display();
@@ -690,7 +689,7 @@ class SPEntryCtrl extends SPController
 		$this->tplCfg( $tplPackage );
 
 		if ( $this->_model->get( 'oType' ) != 'entry' ) {
-			Sobi::Error( 'Entry', sprintf( 'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), SPRequest::task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
+			Sobi::Error( 'Entry', sprintf( 'Serious security violation. Trying to save an object which claims to be an entry but it is a %s. Task was %s', $this->_model->get( 'oType' ), Input::Task() ), SPC::ERROR, 403, __LINE__, __FILE__ );
 			exit;
 		}
 		/* add pathway */

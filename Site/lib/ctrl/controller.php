@@ -446,7 +446,7 @@ abstract class SPController extends SPObject implements SPControl
 			$this->templateType = $this->_type;
 			$this->template = $template ? $template : $this->_task;
 		}
-		if ( strlen( $template && $template != $this->_task ) && !( SPRequest::bool( 'xmlc' ) ) ) {
+		if ( strlen( $template && $template != $this->_task ) && !( Input::Bool( 'xmlc' ) ) ) {
 			$template = "/{$this->templateType}/{$this->template}.xsl";
 			SPFactory::registry()->set( 'cache_view_template', $template );
 		}
@@ -604,7 +604,7 @@ abstract class SPController extends SPObject implements SPControl
 			$type = $message[ 'type' ];
 			$message = $message[ 'text' ];
 		}
-		if ( Input::Cmd( 'method' ) == 'xhr' ) { //don't use Framework function -> results in true
+		if ( Input::Cmd( 'method' ) == 'xhr' ) {
 			if ( $redirect && $message ) {
 				SPFactory::message()->setMessage( $message, false, $type );
 			}
@@ -652,7 +652,7 @@ abstract class SPController extends SPObject implements SPControl
 				for ( $i = 0; $i < $required->length; $i++ ) {
 					$node = $required->item( $i );
 					$name = $node->attributes->getNamedItem( 'name' )->nodeValue;
-					if ( !( SPRequest::raw( str_replace( '.', '_', $name ) ) ) ) {
+					if ( !( Input::Raw( str_replace( '.', '_', $name ) ) ) ) {
 						$this->response( $errorUrl, Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, SPC::ERROR_MSG, [ 'required' => $name ] );
 					}
 				}

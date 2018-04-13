@@ -140,6 +140,8 @@ SobiPro.jQuery( document ).ready( function () {
 			SPTriggerSpinner();
 			SPTriggerFrakingWYSIWYGEditors();
 			proxy.sendRequest();
+			e.preventDefault();
+			e.stopPropagation();
 		} );
 		SobiPro.jQuery( '.sobipro-cancel' ).click( function ( e ) {
 			SobiPro.jQuery( '#SP_task' ).val( 'entry.cancel' );
@@ -193,13 +195,14 @@ function SPTriggerFrakingWYSIWYGEditors()
 	}
 	catch ( e ) {
 	}
-	SobiPro.jQuery.each( Joomla.editors.instances, function () {
-		try {
+	try {
+		SobiPro.jQuery.each( Joomla.editors.instances, function () {
 			this.save();
-		}
-		catch ( e ) {
-		}
-	} );
+		} );
+	}
+	catch ( e ) {
+
+	}
 }
 
 
