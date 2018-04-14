@@ -4,7 +4,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_counter` (
   `lastUpdate` DATETIME NOT NULL,
   PRIMARY KEY (`sid`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
@@ -29,7 +30,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
   KEY `site` (`site`),
   KEY `userGroups` (`userGroups`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (
@@ -37,7 +39,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (
   `sid` INT(11) NOT NULL,
   PRIMARY KEY (`cid`, `sid`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` (
@@ -47,7 +50,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` (
   PRIMARY KEY (`crid`),
   UNIQUE KEY `url` (`url`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 
@@ -62,7 +66,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_category` (
   `showIcon`      ENUM ('0', '1', '2') NOT NULL DEFAULT '2',
   PRIMARY KEY (`id`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 
@@ -74,7 +79,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_config` (
   `cSection` VARCHAR(30)  NOT NULL,
   PRIMARY KEY (`sKey`, `section`, `cSection`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`, `cSection`) VALUES
@@ -126,7 +132,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
   `errBacktrace` TEXT         NOT NULL,
   PRIMARY KEY (`eid`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
   AUTO_INCREMENT = 1;
 
@@ -171,7 +178,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
   KEY `position` (`position`),
   KEY `section` (`section`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
@@ -217,7 +225,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_option` (
   `optParent` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`fid`, `optValue`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 
@@ -229,7 +238,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_option_selected` (
   `copy`     TINYINT(1)   NOT NULL,
   PRIMARY KEY (`fid`, `sid`, `optValue`, `copy`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 
@@ -241,7 +251,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_types` (
   PRIMARY KEY (`tid`, `tGroup`),
   UNIQUE KEY `pos` (`fPos`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
   AUTO_INCREMENT = 13;
 
@@ -272,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (
   PRIMARY KEY (`date`, `sid`, `fid`, `ip`, `section`)
 )
   ENGINE = InnoDB
-  DEFAULT CHARSET = utf8
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
@@ -350,7 +361,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
   KEY `validUntil` (`validUntil`),
   KEY `version` (`version`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
   AUTO_INCREMENT = 54;
 
@@ -369,7 +381,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_payments` (
   `params`     TEXT         NOT NULL,
   PRIMARY KEY (`pid`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
   AUTO_INCREMENT = 16;
 
@@ -383,7 +396,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_permissions` (
   `published` TINYINT(1)  NOT NULL,
   PRIMARY KEY (`pid`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
   AUTO_INCREMENT = 26;
 
@@ -444,7 +458,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_groups` (
   `gid` INT(11) NOT NULL,
   PRIMARY KEY (`rid`, `gid`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 
@@ -454,7 +469,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_map` (
   `pid` INT(11) NOT NULL,
   PRIMARY KEY (`rid`, `sid`, `pid`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 
@@ -468,7 +484,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_rules` (
   `state`      TINYINT(4)   NOT NULL,
   PRIMARY KEY (`rid`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
   AUTO_INCREMENT = 3;
 
@@ -513,7 +530,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_section` (
   `position` INT(11)              DEFAULT NULL,
   PRIMARY KEY (`section`, `pid`, `type`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 
@@ -523,7 +541,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugin_task` (
   `type`     VARCHAR(50)  NOT NULL,
   UNIQUE KEY `pid` (`pid`, `onAction`, `type`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `#__sobipro_plugin_task` (`pid`, `onAction`, `type`) VALUES
@@ -544,7 +563,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_registry` (
   `description` TEXT         NOT NULL,
   `options`     TEXT         NOT NULL
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `description`, `options`) VALUES
@@ -582,7 +602,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_relations` (
   PRIMARY KEY (`id`, `pid`),
   KEY `oType` (`oType`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_search` (
@@ -596,14 +617,16 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_search` (
   `catsResults`    TEXT      NOT NULL,
   PRIMARY KEY (`ssid`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_section` (
   `id`          INT(11) NOT NULL,
   `description` TEXT
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_users_relation` (
@@ -613,7 +636,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_users_relation` (
   `validUntil` DATETIME,
   PRIMARY KEY (`uid`, `gid`, `validSince`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `#__sobipro_user_group`;
@@ -625,7 +649,8 @@ CREATE TABLE `#__sobipro_user_group` (
   `groupName`   VARCHAR(150) NOT NULL,
   PRIMARY KEY (`gid`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
   AUTO_INCREMENT = 5000;
 
@@ -644,5 +669,6 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_history` (
   `language`     VARCHAR(50)          NOT NULL,
   PRIMARY KEY (`revision`)
 )
-  DEFAULT CHARSET = utf8
+  ENGINE=InnoDB
+  DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
