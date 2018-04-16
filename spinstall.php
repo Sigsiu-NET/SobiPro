@@ -438,7 +438,7 @@ class com_sobiproInstallerScript
 
 		@include_once 'phar://' . JPATH_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz/Framework.php';
 		if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
-			$arch = new JArchiveGzip();
+			$arch = new Joomla\Archive\Gzip();
 			$arch->extract( JPATH_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/' );
 		}
 	}
