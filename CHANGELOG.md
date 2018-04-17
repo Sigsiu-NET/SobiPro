@@ -48,6 +48,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
    	(!) Default JPG quality set to 90%
 	(!) Category icon size set to 3 by default
 	(!) Collation of all tables changed to utf8mb4_unicode_ci (new installations only)
+	(!) Database engine for new installations changed to InnoDB
+	(!) Database character set for new installations changed to utf8mb4
 
 	(#) Backslashes are added prior apostrophe to input field in back-end
 	(#) Ini file for template override (sptpl) not loaded
@@ -134,7 +136,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) {payment.methods.html} placeholder doesn't generate correct HTML output for Paypal payment method
     (#) Shown number of characters in textarea with HTML code corrected (if limitation is used)
  	(#) Wrong amount for Paypal payment if tax is set to 0 (Issue #62)
-  	(#) edit.js no longer compressed as it causes problems
   	 
 
 ### 1.4.3 (19 October 2017)
