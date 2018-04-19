@@ -402,12 +402,20 @@ class SPConfigAdmCtrl extends SPController
 				}
 			}
 		}
+		$t = null;
 		if ( Sobi::Section() ) {
 			$file = SPLoader::path( 'usr.templates.' . Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE ) . '.template', 'front', true, 'xml' );
-			$def = new DOMDocument();
-			$def->load( $file );
-			$xdef = new DOMXPath( $def );
-			$t = $xdef->query( '/template/name' )->item( 0 )->nodeValue;
+			if ($file) {
+				$def = new DOMDocument();
+				$def->load( $file );
+				$xdef = new DOMXPath( $def );
+				$t = $xdef->query( '/template/name' )->item( 0 )->nodeValue;
+			}
+			// templates .xml file does not longer exist
+			else {
+				SPFactory::message()
+					->error( Sobi::Txt( 'TP.TEMPLATE_MISSING', Sobi::Cfg( 'section.template' ) ), false );
+			}
 		}
 		else {
 			$t = Sobi::Txt( 'GB.TEMPLATES' );

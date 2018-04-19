@@ -69,6 +69,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Field descriptions are now within CDATA (Issue #77)
 	(#) Continents in country list are capitalized now (new installations only)
 	(#) Data aren't passed to the notification app when new entry is added from front-end (Issue #66)
+	(#) Error message instead of warnings if the template's .xml file does not longer exist
 
 
 ### 1.4.5 (30 January 2018)
