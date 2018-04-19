@@ -633,12 +633,12 @@ abstract class SPDBObject extends SPObject
 			if ( !$this->id ) {
 				$db->insert( 'spdb_object', $values );
 				$this->id = $db->insertid();
-				SPFactory::message()->logAction( 'change', $this->id );
+				SPFactory::message()->logAction( 'add', $this->id );
 			}
 			/* if update */
 			else {
 				$db->update( 'spdb_object', $values, [ 'id' => $this->id ] );
-				SPFactory::message()->logAction( 'add', $this->id );
+				SPFactory::message()->logAction( 'save', $this->id );
 			}
 		} catch ( SPException $x ) {
 			$db->rollback();
