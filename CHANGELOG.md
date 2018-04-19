@@ -68,7 +68,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) alpaindex.xsl wrong "match" definition (Issue #76)
 	(#) Field descriptions are now within CDATA (Issue #77)
 	(#) Continents in country list are capitalized now (new installations only)
-	
+	(#) Data aren't passed to the notification app when new entry is added from front-end (Issue #66)
+
 
 ### 1.4.5 (30 January 2018)
 

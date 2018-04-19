@@ -36,11 +36,11 @@ class SPField extends SPObject
 	/**
 	 * @var mixed
 	 */
-	protected $_rawData = null;
+	protected $_rawData = null; //contains the raw data; means if data are encoded this is also encoded
 	/**
 	 * @var string
 	 */
-	protected $_data = null;
+	protected $_data = null;    // contains the plain data; means if data are encoded, this is decoded
 	/**
 	 * @var string
 	 */
@@ -255,6 +255,7 @@ class SPField extends SPObject
 			$r =& $data;
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$r ] );
+
 		return $r;
 	}
 
@@ -274,12 +275,14 @@ class SPField extends SPObject
 	public function & revisionChanged()
 	{
 		$this->revisionChange = true;
+
 		return $this;
 	}
 
 	/**
 	 * @param bool $html
 	 * @param bool $raw
+	 *
 	 * @return string
 	 */
 	public function data( $html = false, $raw = false )
@@ -295,7 +298,8 @@ class SPField extends SPObject
 			$r = $this->_type->cleanData( $html );
 		}
 		else {
-			$r =& $this->_data;
+//			$r =& $this->_data;     // this is empty for new entries
+			$r =& $this->_rawData;
 		}
 		/** Wed, Aug 31, 2016 10:26:08  - Profile field overrides this data but also expect this data to be serialised
 		 * @todo Need to be fixed in Profile Field and then we can remove it here
@@ -311,11 +315,13 @@ class SPField extends SPObject
 		if ( $this->parse ) {
 			Sobi::Trigger( 'Parse', 'Content', [ &$r ] );
 		}
+
 		return is_string( $r ) ? SPLang::clean( $r ) : $r;
 	}
 
 	/**
 	 * @param bool $skipNative
+	 *
 	 * @return array
 	 */
 	public function struct( $skipNative = false )
@@ -343,17 +349,18 @@ class SPField extends SPObject
 				}
 
 				$attributes = [
-						'lang' => Sobi::Lang( false ),
-						'class' => $this->cssClass
+					'lang'  => Sobi::Lang( false ),
+					'class' => $this->cssClass
 				];
 			}
 			$r = [
-					'_complex' => 1,
-					'_data' => $this->data(),
-					'_attributes' => $attributes
+				'_complex'    => 1,
+				'_data'       => $this->data(),
+				'_attributes' => $attributes
 			];
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$r ] );
+
 		return $r;
 	}
 
@@ -375,13 +382,15 @@ class SPField extends SPObject
 		/* @var SPdb $db */
 		try {
 			$field = SPFactory::db()
-					->select( '*', 'spdb_field', [ 'fid' => $id ] )
-					->loadObject();
+				->select( '*', 'spdb_field', [ 'fid' => $id ] )
+				->loadObject();
 			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$field ] );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		$this->extend( $field );
+
 		return $this;
 	}
 
@@ -416,6 +425,7 @@ class SPField extends SPObject
 	/**
 	 * @param string $var
 	 * @param mixed $val
+	 *
 	 * @return \SPObject|void
 	 */
 	public function & set( $var, $val )
@@ -426,6 +436,7 @@ class SPField extends SPObject
 		if ( $this->_type && method_exists( $this->_type, 'set' ) ) {
 			$this->_type->set( $var, $val );
 		}
+
 		return $this;
 	}
 
@@ -442,19 +453,23 @@ class SPField extends SPObject
 		$db =& SPFactory::db();
 		try {
 			$db->delete( 'spdb_field', [ 'fid' => $this->id ] );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		try {
 			$db->delete( 'spdb_field_data', [ 'fid' => $this->id ] );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		try {
 			$db->delete( 'spdb_language', [ 'fid' => $this->id, 'oType' => 'field' ] );
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
+
 		return Sobi::Txt( 'FD.DELETED', [ 'field' => $this->name ] );
 	}
 
@@ -490,6 +505,7 @@ class SPField extends SPObject
 				Sobi::Error( 'Field', sprintf( 'Field type %s does not exist!', $this->fieldType ), SPC::WARNING );
 			}
 		}
+
 		return $this->_class;
 	}
 
@@ -500,21 +516,22 @@ class SPField extends SPObject
 		try {
 			$lang = Sobi::Lang( false );
 			$labels = SPFactory::db()
-					->select( [ 'sValue', 'sKey' ], 'spdb_language', [ 'fid' => $this->id, 'sKey' => $this->_translatable, 'oType' => 'field' ], "FIELD( language, '{$lang}', '%' ) ASC" )
-					->loadAssocList( 'sKey' );
+				->select( [ 'sValue', 'sKey' ], 'spdb_language', [ 'fid' => $this->id, 'sKey' => $this->_translatable, 'oType' => 'field' ], "FIELD( language, '{$lang}', '%' ) ASC" )
+				->loadAssocList( 'sKey' );
 			if ( !( count( $labels ) ) ) {
 				// last fallback
 				$labels = SPFactory::db()
-						->select( [ 'sValue', 'sKey' ], 'spdb_language', [ 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => 'en-GB', 'oType' => 'field' ] )
-						->loadAssocList( 'sKey' );
+					->select( [ 'sValue', 'sKey' ], 'spdb_language', [ 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => 'en-GB', 'oType' => 'field' ] )
+					->loadAssocList( 'sKey' );
 			}
 			if ( Sobi::Lang( false ) != Sobi::DefLang() ) {
 				$labels2 = SPFactory::db()
-						->select( [ 'sValue', 'sKey' ], 'spdb_language', [ 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => Sobi::DefLang(), 'oType' => 'field' ] )
-						->loadAssocList( 'sKey' );
+					->select( [ 'sValue', 'sKey' ], 'spdb_language', [ 'fid' => $this->id, 'sKey' => $this->_translatable, 'language' => Sobi::DefLang(), 'oType' => 'field' ] )
+					->loadAssocList( 'sKey' );
 				$labels = array_merge( $labels2, $labels );
 			}
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		if ( count( $labels ) ) {
@@ -543,6 +560,7 @@ class SPField extends SPObject
 				}
 			}
 		}
+
 		return $key;
 	}
 
@@ -556,7 +574,8 @@ class SPField extends SPObject
 			if ( is_array( $this->$var ) && is_string( $val ) ) {
 				try {
 					$val = SPConfig::unserialize( $val, $var );
-				} catch ( SPException $x ) {
+				}
+				catch ( SPException $x ) {
 					Sobi::Error( $this->name(), sprintf( 'Cannot unserialize: %s.', $x->getMessage() ), SPC::NOTICE, 0, __LINE__, __FILE__ );
 				}
 			}
@@ -581,18 +600,26 @@ class SPField extends SPObject
 				$ret[] = $k;
 			}
 		}
+
 		return $ret;
 	}
 
 	/**
 	 * @param int $sid
+	 *
 	 * @return void
 	 */
 	public function loadData( $sid )
 	{
-		if ( $this->_off ) {
-			return null;
+		if ( $this->_off ) {    // what does 'off' mean?
+			return;
 		}
+
+		//why loading the data of disabled fields?
+		if ( !$this->enabled ) {
+			return;
+		}
+
 		if ( !( $this->_fData ) ) {
 			$this->_fData = new stdClass();
 			$this->_fData->baseData = new stdClass();
@@ -642,8 +669,8 @@ class SPField extends SPObject
 				}
 				else {
 					$this->_rawData = SPFactory::db()
-							->select( 'baseData', 'spdb_field_data', [ 'sid' => $this->sid, 'fid' => $this->fid, 'lang' => Sobi::Lang( false ) ] )
-							->loadResult();
+						->select( 'baseData', 'spdb_field_data', [ 'sid' => $this->sid, 'fid' => $this->fid, 'lang' => Sobi::Lang( false ) ] )
+						->loadResult();
 				}
 			}
 		}
@@ -675,6 +702,7 @@ class SPField extends SPObject
 			$args = func_get_args();
 			$r = $this->_type->field( $args );
 			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$r ] );
+
 			return $r;
 		}
 	}
@@ -692,14 +720,17 @@ class SPField extends SPObject
 			$args = func_get_args();
 			$r = $this->_type->searchForm( $args );
 			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$r ] );
+
 			return $r;
 		}
 	}
 
 	/**
 	 * Std. getter. Returns a property of the object or the default value if the property is not set.
+	 *
 	 * @param string $attr
 	 * @param mixed $default
+	 *
 	 * @return mixed
 	 */
 	public function get( $attr, $default = null )
@@ -723,6 +754,7 @@ class SPField extends SPObject
 
 	/**
 	 * @param string $attr
+	 *
 	 * @return bool
 	 */
 	public function has( $attr )
@@ -732,12 +764,20 @@ class SPField extends SPObject
 
 	/**
 	 * Checks if the field should be displayed or not
+	 *
 	 * @param string $view
 	 * @param bool $new
+	 *
 	 * @return bool
 	 */
 	public function enabled( $view, $new = false )
 	{
+		// why checking this first at the end after doing a full init although the enabled information is already available?
+		// Disabled fields also can't be seen by administrators
+		if ( !( $this->enabled ) ) {
+			return false;
+		}
+
 		if ( $view == 'form' ) {
 			// while editing an entry we have to get the real data
 			$this->fullInit( true );
@@ -767,9 +807,9 @@ class SPField extends SPObject
 			}
 		}
 		$this->currentView = $view;
-		if ( !( $this->enabled ) /*&& !( Sobi::Can( 'field', 'see_disabled', 'all' ) )*/ ) {
-			return false;
-		}
+//		if ( !( $this->enabled ) /*&& !( Sobi::Can( 'field', 'see_disabled', 'all' ) )*/ ) {
+//			return false;
+//		}
 		if ( ( $view != 'form' ) && !( $this->showIn == $view || $this->showIn == 'both' ) ) {
 			return false;
 		}
@@ -812,6 +852,7 @@ class SPField extends SPObject
 	 *
 	 * @param string $method
 	 * @param array $args
+	 *
 	 * @throws SPException
 	 * @return mixed|null
 	 */
@@ -828,6 +869,7 @@ class SPField extends SPObject
 				$Args[ $k ] =& $arg;
 			}
 			Sobi::Trigger( 'Field', ucfirst( $method ), [ &$Args ] );
+
 			return call_user_func_array( [ $this->_type, $method ], $Args );
 		}
 		else {
