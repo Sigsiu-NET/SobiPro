@@ -298,8 +298,8 @@ class SPField extends SPObject
 			$r = $this->_type->cleanData( $html );
 		}
 		else {
-//			$r =& $this->_data;     // this is empty for new entries
-			$r =& $this->_rawData;
+			$r =& $this->_data;     // this is empty for new entries
+//			$r =& $this->_rawData;
 		}
 		/** Wed, Aug 31, 2016 10:26:08  - Profile field overrides this data but also expect this data to be serialised
 		 * @todo Need to be fixed in Profile Field and then we can remove it here
