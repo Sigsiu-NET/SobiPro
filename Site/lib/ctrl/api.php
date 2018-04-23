@@ -138,7 +138,13 @@ class SPApiCtrl extends SPController
 			throw new Exception( 'Wrong object type', 404 );
 		}
 
-		$entries = $category->getChilds( 'entry', true, 1 );
+		/**
+		 * @var SPSectionCtrl $controller
+		 */
+		$controller = SPFactory::Controller( 'section' );
+		$controller->setModel( $category );
+		$entries = $controller->getEntries( Sobi::Cfg( 'list.entries_ordering', 'name.asc' ), 0, 0, false, null, true );
+
 		$count = count( $entries );
 		if ( count( $entries ) > self::ENTRIES_LIMIT ) {
 			$from = $site == 1 ? $site - 1 : $site - 1 * self::ENTRIES_LIMIT;
@@ -154,17 +160,18 @@ class SPApiCtrl extends SPController
 					$fieldData[] = [
 							'name' => $field->get( 'name' ),
 							'nid' => $field->get( 'nid' ),
-							'data' => method_exists( $field, 'api' ) ? $field->api() : $field->data()
+							'data' => method_exists( $field, 'apiData' ) ? $field->apiData() : $field->data()
 					];
 				}
 			}
 			$data[] = [
 					'sid' => $sid,
 					'name' => $entry->get( 'name' ),
+					'categories' => $entry->getCategories( true ),
 					'fields' => $fieldData
 			];
 		}
-		$this->answer( $data, 0, [ 'count' => $count, 'limit' => self::ENTRIES_LIMIT, 'sites' => ceil( $count / self::ENTRIES_LIMIT ) ] );
+		$this->answer( $data, 0, [ 'count' => $count, 'limit' => self::ENTRIES_LIMIT, 'sites' => (int)ceil( $count / self::ENTRIES_LIMIT ) ] );
 	}
 
 	/**

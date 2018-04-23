@@ -15,6 +15,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
+use Sobi\Utils\StringUtils;
+
 defined( 'SOBIPRO' ) || exit( 'Restricted access' );
 SPLoader::loadModel( 'field' );
 
@@ -269,6 +271,7 @@ class SPField extends SPObject
 	public function setRawData( $data )
 	{
 		$this->_rawData = $data;
+		$this->_data = $data;
 		$this->_rawDataChanged = true;
 	}
 
@@ -316,7 +319,7 @@ class SPField extends SPObject
 			Sobi::Trigger( 'Parse', 'Content', [ &$r ] );
 		}
 
-		return is_string( $r ) ? SPLang::clean( $r ) : $r;
+		return is_string( $r ) ? StringUtils::Clean( $r ) : $r;
 	}
 
 	/**
@@ -390,7 +393,6 @@ class SPField extends SPObject
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		$this->extend( $field );
-
 		return $this;
 	}
 
