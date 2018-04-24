@@ -31,7 +31,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
-### 1.4.6 ()
+### 1.4.6 (24 April 2018)
 
 	(+) New template colour @link-color
    	(+) Support for Import of Gallery field (Imex) added

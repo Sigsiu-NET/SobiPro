@@ -42,7 +42,7 @@ class SPField extends SPObject
 	/**
 	 * @var string
 	 */
-	protected $_data = null;    // contains the plain data; means if data are encoded, this is decoded
+	protected $_data = null;    // contains the plain data; means if data are encoded, this is decoded or these are the values for options
 	/**
 	 * @var string
 	 */
