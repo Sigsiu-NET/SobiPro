@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (
   COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` (
-  `url`   VARCHAR(255) NOT NULL,
+  `url`   VARCHAR(190) NOT NULL,
   `crid`  INT(11)      NOT NULL AUTO_INCREMENT,
   `state` TINYINT(1)   NOT NULL,
   PRIMARY KEY (`crid`),
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_category` (
   `position`      INT(11)                       DEFAULT NULL,
   `description`   TEXT,
   `parseDesc`     ENUM ('0', '1', '2') NOT NULL DEFAULT '2',
-  `introtext`     VARCHAR(255)         NOT NULL,
+  `introtext`     TEXT                 NOT NULL,
   `showIntrotext` ENUM ('0', '1', '2') NOT NULL DEFAULT '2',
   `icon`          VARCHAR(150)                  DEFAULT NULL,
   `showIcon`      ENUM ('0', '1', '2') NOT NULL DEFAULT '2',
@@ -235,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
   `errNum`       INT(5)       NOT NULL,
   `errCode`      INT(5)       NOT NULL,
   `errMsg`       TEXT         NOT NULL,
-  `errFile`      VARCHAR(255) NOT NULL,
+  `errFile`      MEDIUMTEXT   NOT NULL,
   `errLine`      INT(10)      NOT NULL,
   `errSect`      VARCHAR(50)  NOT NULL,
   `errUid`       INT(11)      NOT NULL,
@@ -256,23 +256,23 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
 CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
   `fid`               INT(11)                                     NOT NULL AUTO_INCREMENT,
   `nid`               VARCHAR(150)                                NOT NULL,
-  `adminField`        TINYINT(1)                                           DEFAULT NULL,
+  `adminField`        TINYINT(1)                                  DEFAULT NULL,
   `admList`           INT(10)                                     NOT NULL,
-  `dataType`          INT(11)                                              DEFAULT NULL,
-  `enabled`           TINYINT(1)                                           DEFAULT NULL,
-  `fee`               DOUBLE                                               DEFAULT NULL,
-  `fieldType`         VARCHAR(50)                                          DEFAULT NULL,
-  `filter`            VARCHAR(150)                                         DEFAULT NULL,
-  `isFree`            TINYINT(1)                                           DEFAULT NULL,
-  `position`          INT(11)                                              DEFAULT NULL,
+  `dataType`          INT(11)                                     DEFAULT NULL,
+  `enabled`           TINYINT(1)                                  DEFAULT NULL,
+  `fee`               DOUBLE                                      DEFAULT NULL,
+  `fieldType`         VARCHAR(50)                                 DEFAULT NULL,
+  `filter`            VARCHAR(150)                                DEFAULT NULL,
+  `isFree`            TINYINT(1)                                  DEFAULT NULL,
+  `position`          INT(11)                                     DEFAULT NULL,
   `priority`          INT(11)                                     NOT NULL,
-  `required`          TINYINT(1)                                           DEFAULT NULL,
-  `section`           INT(11)                                              DEFAULT NULL,
-  `multiLang`         TINYINT(4)                                           DEFAULT NULL,
-  `uniqueData`        TINYINT(1)                                           DEFAULT NULL,
-  `validate`          TINYINT(1)                                           DEFAULT NULL,
-  `addToMetaDesc`     TINYINT(1)                                           DEFAULT NULL,
-  `addToMetaKeys`     TINYINT(1)                                           DEFAULT '0',
+  `required`          TINYINT(1)                                  DEFAULT NULL,
+  `section`           INT(11)                                     DEFAULT NULL,
+  `multiLang`         TINYINT(4)                                  DEFAULT NULL,
+  `uniqueData`        TINYINT(1)                                  DEFAULT NULL,
+  `validate`          TINYINT(1)                                  DEFAULT NULL,
+  `addToMetaDesc`     TINYINT(1)                                  DEFAULT NULL,
+  `addToMetaKeys`     TINYINT(1)                                  DEFAULT '0',
   `editLimit`         INT(11)                                     NOT NULL DEFAULT '0',
   `editable`          TINYINT(4)                                  NOT NULL,
   `showIn`            ENUM ('both', 'details', 'vcard', 'hidden') NOT NULL DEFAULT 'both',
@@ -1548,6 +1548,7 @@ DELETE FROM `#__sobipro_permissions`
 WHERE `pid` = 5;
 ALTER TABLE `#__sobipro_permissions`
   ADD UNIQUE `uniquePermission` (`subject`, `action`, `value`, `site`);
+
 INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
   (NULL, 'section', 'search', '*', 'front', 1),
   (NULL, 'entry', 'delete', 'own', 'front', 1),
@@ -1617,7 +1618,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
   `authorURL`   VARCHAR(250) DEFAULT NULL,
   `authorMail`  VARCHAR(150) DEFAULT NULL,
   `enabled`     TINYINT(1)   DEFAULT NULL,
-  `type`        VARCHAR(250) NOT NULL,
+  `type`        VARCHAR(100) NOT NULL,
   `depend`      TEXT         NOT NULL,
   UNIQUE KEY `pid` (`pid`, `type`)
 )

@@ -122,6 +122,7 @@ class SPJoomlaLang
 			$m = str_replace( "\n", '\n', $m );
 		}
 		$m = str_replace( '_QQ_', '"', $m );
+
 		return str_replace( [ '[JS]', '[MSG]', '[URL]' ], null, $m );
 	}
 
@@ -163,12 +164,15 @@ class SPJoomlaLang
 
 			}
 		}
+
 		return false;
 	}
 
 	/**
 	 * Removes slashes from string
+	 *
 	 * @param string $txt
+	 *
 	 * @return string
 	 */
 	public static function clean( $txt )
@@ -176,12 +180,15 @@ class SPJoomlaLang
 		while ( strstr( $txt, "\'" ) || strstr( $txt, '\"' ) || strstr( $txt, '\\\\' ) ) {
 			$txt = stripslashes( $txt );
 		}
+
 		return $txt;
 	}
 
 	/**
 	 * Create JS friendly script
+	 *
 	 * @param string $txt
+	 *
 	 * @return string
 	 */
 	public static function js( $txt )
@@ -201,6 +208,7 @@ class SPJoomlaLang
 			self::getInstance()->_eload();
 		}
 		$a = func_get_args();
+
 		return call_user_func_array( [ self::getInstance(), '_txt' ], $a );
 	}
 
@@ -227,8 +235,10 @@ class SPJoomlaLang
 
 	/**
 	 * Load additional language file
+	 *
 	 * @param $file
 	 * @param $lang
+	 *
 	 * @return void
 	 */
 	public static function load( $file, $lang = null )
@@ -246,9 +256,11 @@ class SPJoomlaLang
 
 	/**
 	 * Save language depend data into the database
+	 *
 	 * @param $values - values array
 	 * @param $lang - language
 	 * @param $section - section
+	 *
 	 * @throws SPException
 	 * @return void
 	 */
@@ -259,16 +271,16 @@ class SPJoomlaLang
 			$values[ 'type' ] = 'application';
 		}
 		$data = [
-				'sKey' => $values[ 'key' ],
-				'sValue' => $values[ 'value' ],
-				'section' => isset( $values[ 'section' ] ) ? $values[ 'section' ] : null,
-				'language' => $lang,
-				'oType' => $values[ 'type' ],
-				'fid' => isset( $values[ 'fid' ] ) ? $values[ 'fid' ] : 0,
-				'id' => isset( $values[ 'id' ] ) ? $values[ 'id' ] : 0,
-				'params' => isset( $values[ 'params' ] ) ? $values[ 'params' ] : null,
-				'options' => isset( $values[ 'options' ] ) ? $values[ 'options' ] : null,
-				'explanation' => isset( $values[ 'explanation' ] ) ? $values[ 'explanation' ] : null,
+			'sKey'        => $values[ 'key' ],
+			'sValue'      => $values[ 'value' ],
+			'section'     => isset( $values[ 'section' ] ) ? $values[ 'section' ] : null,
+			'language'    => $lang,
+			'oType'       => $values[ 'type' ],
+			'fid'         => isset( $values[ 'fid' ] ) ? $values[ 'fid' ] : 0,
+			'id'          => isset( $values[ 'id' ] ) ? $values[ 'id' ] : 0,
+			'params'      => isset( $values[ 'params' ] ) ? $values[ 'params' ] : null,
+			'options'     => isset( $values[ 'options' ] ) ? $values[ 'options' ] : null,
+			'explanation' => isset( $values[ 'explanation' ] ) ? $values[ 'explanation' ] : null,
 		];
 		try {
 			SPFactory::db()->replace( 'spdb_language', $data );
@@ -276,17 +288,20 @@ class SPJoomlaLang
 				$data[ 'language' ] = Sobi::DefLang();
 				SPFactory::db()->insert( 'spdb_language', $data, true );
 			}
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			throw new SPException( sprintf( 'Cannot save language data. Error: %s', $x->getMessage() ) );
 		}
 	}
 
 	/**
 	 * Parse text and replaces placeholders
+	 *
 	 * @param string $text
 	 * @param SPDBObject $obj
 	 * @param bool $html
 	 * @param bool $dropEmpty
+	 *
 	 * @return string
 	 */
 	public static function replacePlaceHolders( $text, $obj = null, $html = false, $dropEmpty = false )
@@ -325,13 +340,18 @@ class SPJoomlaLang
 						}
 				}
 				if ( $replacement && ( is_string( $replacement ) || is_numeric( $replacement ) ) ) {
-					$text = str_replace( '{' . $placeHolder . '}', ( string )$replacement, $text );
+					$text = str_replace( '{' . $placeHolder . '}', ( string ) $replacement, $text );
+				}
+				elseif ( $replacement && ( is_array( $replacement ) ) ) {
+					$replacement = implode( ',', $replacement );
+					$text = str_replace( '{' . $placeHolder . '}', ( string ) $replacement, $text );
 				}
 				elseif ( $dropEmpty ) {
 					$text = str_replace( '{' . $placeHolder . '}', null, $text );
 				}
 			}
 		}
+
 		return $text;
 	}
 
@@ -339,6 +359,7 @@ class SPJoomlaLang
 	 * @param $label
 	 * @param $obj
 	 * @param bool $html
+	 *
 	 * @return mixed|string
 	 */
 	protected static function parseVal( $label, $obj, $html = false )
@@ -363,7 +384,7 @@ class SPJoomlaLang
 				}
 				// after an entry has been saved this attribute is being emptied
 				elseif ( ( $property == 'name' ) && ( $var instanceof SPEntry ) && !( strlen( $var->get( $property ) ) ) ) {
-					$var = $var->getField( ( int )Sobi::Cfg( 'entry.name_field' ) )->data( $html );
+					$var = $var->getField( ( int ) Sobi::Cfg( 'entry.name_field' ) )->data( $html );
 				}
 				/** For the placeholder we need for sure the full URL */
 				elseif ( ( $property == 'url' ) && ( $var instanceof SPEntry ) ) {
@@ -380,17 +401,20 @@ class SPJoomlaLang
 				$var = $var->$property;
 			}
 		}
+
 		return $var;
 	}
 
 	/**
 	 * Gets a translatable values from the language DB
+	 *
 	 * @param $key - key to get
 	 * @param $type - type of object/field/plugin etc
 	 * @param int $sid - section id
 	 * @param string $select - what is to select, key, descritpion, params
 	 * @param null $lang
 	 * @param int $fid
+	 *
 	 * @return string
 	 */
 	public static function getValue( $key, $type, $sid = 0, $select = 'sValue', $lang = null, $fid = 0 )
@@ -406,9 +430,9 @@ class SPJoomlaLang
 		try {
 			$toSselect[] = 'language';
 			$params = [
-					'sKey' => $key,
-					'oType' => $type,
-					'language' => array_unique( [ $lang, Sobi::DefLang(), 'en-GB' ] )
+				'sKey'     => $key,
+				'oType'    => $type,
+				'language' => array_unique( [ $lang, Sobi::DefLang(), 'en-GB' ] )
 			];
 			if ( $sid ) {
 				$params[ 'section' ] = $sid;
@@ -432,9 +456,11 @@ class SPJoomlaLang
 			else {
 				$r = null;
 			}
-		} catch ( SPException $x ) {
+		}
+		catch ( SPException $x ) {
 			Sobi::Error( 'language', SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __CLASS__ );
 		}
+
 		return $r;
 	}
 
@@ -449,13 +475,16 @@ class SPJoomlaLang
 		if ( !( $instance instanceof self ) ) {
 			$instance = new self();
 		}
+
 		return $instance;
 	}
 
 	/**
 	 * Returns correctly formatted currency amount
+	 *
 	 * @param double $value - amount
 	 * @param bool $currency
+	 *
 	 * @return string
 	 */
 	public static function currency( $value, $currency = true )
@@ -465,12 +494,15 @@ class SPJoomlaLang
 		if ( $currency ) {
 			$value = str_replace( [ '%value', '%currency' ], [ $value, Sobi::Cfg( 'payments.currency', 'EUR' ) ], Sobi::Cfg( 'payments.format', '%value %currency' ) );
 		}
+
 		return $value;
 	}
 
 	/**
 	 * Load java script language file
+	 *
 	 * @param $adm
+	 *
 	 * @return string
 	 */
 	public static function jsLang( $adm = false )
@@ -496,6 +528,7 @@ class SPJoomlaLang
 			$def = SPLoader::loadIniFile( str_replace( 'en-GB', str_replace( '_', '-', $this->_lang ), $path ), false, false, true, true, true );
 			$def = array_merge( $front, $def );
 		}
+
 		return $def;
 	}
 
@@ -516,6 +549,7 @@ class SPJoomlaLang
 	 * Register new language domain.
 	 *
 	 * @param string $domain
+	 *
 	 * @internal param string $path
 	 * @return string
 	 */
@@ -533,6 +567,7 @@ class SPJoomlaLang
 	 *
 	 * @param string $domain
 	 * @param string $path
+	 *
 	 * @return string
 	 */
 	public static function registerDomain( $domain, $path = null )
@@ -544,6 +579,7 @@ class SPJoomlaLang
 	 * Set the used language/locale
 	 *
 	 * @param string $lang
+	 *
 	 * @return bool
 	 */
 	public static function setLang( $lang )
@@ -555,6 +591,7 @@ class SPJoomlaLang
 	 * Set the used language/locale
 	 *
 	 * @param string $lang
+	 *
 	 * @return bool
 	 */
 	protected function _setLang( $lang )
@@ -566,7 +603,9 @@ class SPJoomlaLang
 	/**
 	 * Used for XML nodes creation
 	 * Creates singular form from plural
+	 *
 	 * @param string $txt
+	 *
 	 * @return string
 	 */
 	public static function singular( $txt )
@@ -583,13 +622,16 @@ class SPJoomlaLang
 		elseif ( substr( $txt, -1 ) == 's' ) {
 			$txt = substr( $txt, 0, -1 );
 		}
+
 		return $txt;
 	}
 
 	/**
 	 * Replaces HTML entities to valid XML entities
+	 *
 	 * @param $txt
 	 * @param $amp
+	 *
 	 * @return unknown_type
 	 */
 	public static function entities( $txt, $amp = false )
@@ -603,12 +645,15 @@ class SPJoomlaLang
 		foreach ( $entities as $ent => $repl ) {
 			$txt = preg_replace( '/&' . $ent . ';?/m', $repl, $txt );
 		}
+
 		return $txt;
 	}
 
 	/**
 	 * Creates URL saf string
+	 *
 	 * @param string $str
+	 *
 	 * @return string
 	 */
 	public static function urlSafe( $str )
@@ -629,12 +674,15 @@ class SPJoomlaLang
 		$str = preg_replace( '/\x20+/', '-', $str );
 		$str = preg_replace( [ '/\s+/', Sobi::Cfg( 'browser.url_filter', '/[^A-Za-z0-9\p{L}\-\_]/iu' ) ], [ '-', null ], $str );
 		$str = trim( $str, '_-\[\]\(\)' );
+
 		return $str;
 	}
 
 	/**
 	 * Creates alias/nid suitable string
+	 *
 	 * @param string $txt
+	 *
 	 * @return string
 	 */
 	public static function varName( $txt )
@@ -649,6 +697,7 @@ class SPJoomlaLang
 			}
 			$txt .= $pieces[ $i ];
 		}
+
 		return $txt;
 	}
 
@@ -656,14 +705,16 @@ class SPJoomlaLang
 	 * @param string $txt
 	 * @param bool $unicode
 	 * @param bool $forceUnicode
+	 *
 	 * @return string
 	 */
 	public static function nid( $txt, $unicode = false, $forceUnicode = false )
 	{
 		$txt = trim( str_replace( [ '.', '_' ], '-', $txt ) );
+
 		return ( Sobi::Cfg( 'sef.unicode' ) && $unicode ) || $forceUnicode ?
-				self::urlSafe( $txt ) :
-				trim( preg_replace( '/(\s|[^A-Za-z0-9\-])+/', '-', JFactory::getLanguage()->transliterate( $txt ) ), '_-\[\]\(\)' );
+			self::urlSafe( $txt ) :
+			trim( preg_replace( '/(\s|[^A-Za-z0-9\-])+/', '-', JFactory::getLanguage()->transliterate( $txt ) ), '_-\[\]\(\)' );
 	}
 
 	/**
@@ -674,6 +725,7 @@ class SPJoomlaLang
 	 * @param string $type - (optional) type of object (section, category, entry). If not given, translates all
 	 * @param string $lang - (optional) specific language. If not given, use currently set language
 	 * @param string $ident
+	 *
 	 * @return array
 	 */
 	public static function translateObject( $sids, $fields = [], $type = null, $lang = null, $ident = 'id' )
@@ -704,14 +756,14 @@ class SPJoomlaLang
 		try {
 
 			$labels = SPFactory::db()
-					->select( $ident . ' AS id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
-					->loadAssocList();
+				->select( $ident . ' AS id, sKey AS label, sValue AS value, language', 'spdb_language', $params, "FIELD( language, '{$lang}', '" . Sobi::DefLang() . "' )" )
+				->loadAssocList();
 			if ( count( $labels ) ) {
 				$aliases = [];
 				if ( in_array( 'alias', $fields ) ) {
 					$aliases = SPFactory::db()
-							->select( [ 'nid', 'id' ], 'spdb_object', [ 'id' => $sids ] )
-							->loadAssocList( 'id' );
+						->select( [ 'nid', 'id' ], 'spdb_object', [ 'id' => $sids ] )
+						->loadAssocList( 'id' );
 				}
 				foreach ( $labels as $label ) {
 					if ( $label[ 'label' ] == 'nid' && ( !( isset( $result[ $label[ 'id' ] ][ 'alias' ] ) ) || $label[ 'language' ] == $lang ) ) {
@@ -735,9 +787,11 @@ class SPJoomlaLang
 				}
 			}
 			$store[ $lang ][ json_encode( $params ) ][ $ident ] = $result;
-		} catch ( SPError $x ) {
+		}
+		catch ( SPError $x ) {
 			Sobi::Error( 'language', SPLang::e( 'CANNOT_TRANSLATE_OBJECT', $x->getMessage() ), SPC::WARNING, 500, __LINE__, __CLASS__ );
 		}
+
 		return $result;
 	}
 }
