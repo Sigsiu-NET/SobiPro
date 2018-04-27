@@ -175,9 +175,9 @@
 
 								<!--
 	                            <fieldset label="TP.SETTINGS_PRINT">
-		                            <field type="toggle" name="settings[config][general][showprint]" value="settings.settings.config.general.showprint" label="TP.CONFIG.SHOWPRT" prefix="yes_no" />
-		                            <field type="toggle" name="settings[config][general][printimage]" value="settings.settings.config.general.printimage" label="TP.CONFIG.PRINTIMG" prefix="yes_no" />
-		                            <field type="select" label="TP.CONFIG.GALLERY" name="settings[config][less][theme][print-gallery]" selected="settings.config.less.theme.print-gallery" class="input-medium">
+		                            <field type="toggle" name="settings[config][general][showprint]" value="settings.settings.config.general.showprint" label="TP.Config.SHOWPRT" prefix="yes_no" />
+		                            <field type="toggle" name="settings[config][general][printimage]" value="settings.settings.config.general.printimage" label="TP.Config.PRINTIMG" prefix="yes_no" />
+		                            <field type="select" label="TP.Config.GALLERY" name="settings[config][less][theme][print-gallery]" selected="settings.config.less.theme.print-gallery" class="input-medium">
 			                            <values>
 				                            <option value="inherit" label="inherit" />
 				                            <option value="100px" label="100px" />
@@ -206,7 +206,7 @@
 									<field type="select" label="TP.CONFIG.ENTRY_CSS_CLASS" name="settings[entry.edit][entry-edit][form-class]"
 									       selected="settings.entry-edit.entry-edit.form-class" class="input-large">
 										<values>
-											<!--<option value="inline" label="TP.CONFIG.ENTRY_CSS_CLASS_INLINE" />-->
+											<!--<option value="inline" label="TP.Config.ENTRY_CSS_CLASS_INLINE" />-->
 											<option value="horizontal" label="TP.CONFIG.ENTRY_CSS_CLASS_HORIZONTAL"/>
 										</values>
 									</field>
@@ -293,7 +293,7 @@
 										</values>
 									</field>
 									<!--
-									<field type="select" label="TP.CONFIG.TABSTYLE" name="settings[config][general][tabstyle]" selected="settings.config.general.tabstyle" class="input-medium">
+									<field type="select" label="TP.Config.TABSTYLE" name="settings[config][general][tabstyle]" selected="settings.config.general.tabstyle" class="input-medium">
 										<values>
 											<option value="pills" label="Pills" />
 											<option value="tabs" label="Standard Tabs" />

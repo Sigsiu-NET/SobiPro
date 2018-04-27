@@ -30,6 +30,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (-) Removed  
 (!) Change  
 
+### 1.4.7 ()
+
+    (#) Double filtering of textarea (Issue #87)
 
 ### 1.4.6 (25 April 2018)
 

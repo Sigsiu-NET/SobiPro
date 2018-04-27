@@ -171,7 +171,7 @@ class SPApiCtrl extends SPController
 					'fields' => $fieldData
 			];
 		}
-		$this->answer( $data, 0, [ 'count' => $count, 'limit' => self::ENTRIES_LIMIT, 'sites' => (int)ceil( $count / self::ENTRIES_LIMIT ) ] );
+		$this->answer( $data, 0, [ 'count' => $count, 'limit' => self::ENTRIES_LIMIT, 'sites' => (int)ceil( $count / self::ENTRIES_LIMIT ), 'site' => $site ] );
 	}
 
 	/**
@@ -308,6 +308,7 @@ class SPApiCtrl extends SPController
 		SPFactory::mainframe()
 				->cleanBuffer()
 				->customHeader( 'application/json', $code );
+		header( 'Access-Control-Allow-Origin: *' );
 		exit( json_encode( [ 'header' => $header, 'data' => $data ], JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_LINE_TERMINATORS ) );
 	}
 
