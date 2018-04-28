@@ -393,10 +393,10 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_payments` (
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions` (
   `pid`       INT(11)     NOT NULL AUTO_INCREMENT,
-  `subject`   VARCHAR(150)         DEFAULT NULL,
-  `action`    VARCHAR(50)          DEFAULT NULL,
-  `value`     VARCHAR(50) NOT NULL,
-  `site`      VARCHAR(50) NOT NULL,
+  `subject`   VARCHAR(150)         DEFAULT NULL UNIQUE,
+  `action`    VARCHAR(50)          DEFAULT NULL UNIQUE,
+  `value`     VARCHAR(50) NOT NULL UNIQUE,
+  `site`      VARCHAR(50) NOT NULL UNIQUE,
   `published` TINYINT(1)  NOT NULL,
   PRIMARY KEY (`pid`)
 )
@@ -444,11 +444,6 @@ INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`
   (97, 'entry', 'delete', '*', 'adm', 1),
   (98, 'entry', 'approve', '*', 'adm', 1),
   (99, 'entry', 'publish', '*', 'adm', 1);
-
-DELETE FROM `#__sobipro_permissions`
-WHERE `pid` = 5;
-ALTER TABLE `#__sobipro_permissions`
-  ADD UNIQUE `uniquePermission` (`subject`, `action`, `value`, `site`);
 
 INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
   (NULL, 'section', 'search', '*', 'front', 1),
