@@ -105,7 +105,7 @@
 											       label="SECN.CFG.SETTINGS_BOOTSTRAP3STYLES" prefix="bootstrap"/>
 										</fieldset>
 										<fieldset label="SECN.CFG.SETTINGS_FONTS">
-											<field type="checkBoxGroup" label="SECN.CFG.LOAD_ICONS_FONTS" name="spcfg[template.icon_fonts_arr]"
+											<field type="checkBoxGroup" label="SECN.CFG.USE_ICONS_FONTS" name="spcfg[template.icon_fonts_arr]"
 											       selected="template.icon_fonts_arr" class="input-xlarge">
 												<values>
 													<option value="font-awesome-4" label="SECN.CFG.ICONS_FONT_AWESOME_4"/>
@@ -114,8 +114,8 @@
 													<option value="font-awesome-3-local" label="SECN.CFG.ICONS_FONT_AWESOME_3_LOCAL"/>
 												</values>
 											</field>
-											<field type="toggle" name="spcfg[template.icon_fonts_noload]" value="spcfg[template.icon_fonts_noload]"
-											       label="SECN.CFG.ICONS_FONT_NOLOAD" prefix="yes_no"/>
+											<field type="toggle" name="spcfg[template.icon_fonts_load]" value="template.icon_fonts_load"
+											       label="SECN.CFG.LOAD_ICONS_FONTS" prefix="yes_no"/>
 										</fieldset>
 										<fieldset label="CFG.DEVTEMPLATE">
 											<field type="toggle" name="spcfg[template.development]" value="template.development"

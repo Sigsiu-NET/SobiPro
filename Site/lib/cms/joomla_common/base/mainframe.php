@@ -149,7 +149,6 @@ class SPJoomlaMainFrame /*implements SPMainframeInterface*/
 				$cfg->set( 'store', $this->JConfigValue( 'config.tmp_path' ) . '/SobiPro/Cache/' );
 			}
 		}
-		// Mon, Jun 29, 2015 10:52:09 - compat mode
 		if ( $cfg->get( 'template.icon_fonts_arr', -1 ) == -1 ) {
 			$cfg->set( 'icon_fonts_arr', [ 'font-awesome-3-local' ], 'template' );
 		}

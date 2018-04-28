@@ -33,6 +33,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 ### 1.4.7 ()
 
     (#) Double filtering of textarea (Issue #87)
+    (#) Loading fonts on front-end independent from font usage settings
+    
 
 ### 1.4.6 (25 April 2018)
 

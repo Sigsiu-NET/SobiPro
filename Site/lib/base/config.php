@@ -464,7 +464,7 @@ class SPConfig
 			$str = 'Empty';
 		}
 		if ( $hide ) {
-			echo "\n\n<!-- Sobi Pro Debug: ";
+			echo "\n\n<!-- SobiPro Debug: ";
 		}
 		elseif ( !( $return ) ) {
 			echo "<h4>";

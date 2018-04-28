@@ -76,7 +76,7 @@
 								</small>
 							</a>
 							<xsl:if test="position() != last() and position() &lt; $subcatsNumber">
-								<span role="separator">,</span>
+								<span role="separator">, </span>
 							</xsl:if>
 						</xsl:if>
 					</xsl:for-each>
