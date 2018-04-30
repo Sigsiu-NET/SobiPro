@@ -56,6 +56,10 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 	static private $CAT_FIELD = true;
 	/*** @var bool */
 	protected $suggesting = false;
+//	/*** @var array */
+//	protected $allowedAttributes = [];
+//	/*** @var array */
+//	protected $allowedTags = [];
 
 
 	/**
@@ -255,25 +259,25 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 
+		$a = $this->allowedTags;
+		$b = $this->allowedAttributes;
+
 		if ( $this->allowHtml ) {
-			static $config = null;
-			static $filter = null;
-			if ( !( $config ) ) {
-				$config = new Configuration();
-				$filter = new HTMLFilter();
-				$data = Input::Html( $this->nid );
-				if ( count( $this->allowedTags ) ) {
-					foreach ( $this->allowedTags as $tag ) {
-						$config->allowTag( $tag );
-						if ( count( $this->allowedAttributes ) ) {
-							foreach ( $this->allowedAttributes as $attribute ) {
-								$config->allowAttribute( $tag, $attribute );
-							}
+			$config = new Configuration();
+			$filter = new HTMLFilter();
+			$data = Input::Raw( $this->nid );
+			if ( count( $this->allowedTags ) ) {
+				foreach ( $this->allowedTags as $tag ) {
+					$config->allowTag( $tag );
+					if ( count( $this->allowedAttributes ) ) {
+						foreach ( $this->allowedAttributes as $attribute ) {
+							$config->allowAttribute( $tag, $attribute );
 						}
 					}
 				}
 			}
-			$filter->filter( $config, $data );
+			$data = str_replace( '&#13;', "\n", $filter->filter( $config, $data ) );
+			$data = str_replace( "\n\n", "\n", $data );
 			if ( !( $this->editor ) && $this->maxLength && ( strlen( $data ) > $this->maxLength ) ) {
 				$data = substr( $data, 0, $this->maxLength );
 			}
