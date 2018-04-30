@@ -143,7 +143,9 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
-		$data = Input::Html( $this->nid, 'post' );
+		// input box does not need to be filtered for HTML tags
+		$data = Input::Raw( $this->nid, 'post' );
+//		$data = Input::Html( $this->nid, 'post' );
 		$dexs = strlen( $data );
 		/* check if it was required */
 		if ( $this->required && !( $dexs ) ) {
