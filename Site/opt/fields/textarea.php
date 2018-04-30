@@ -262,27 +262,34 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		$a = $this->allowedTags;
 		$b = $this->allowedAttributes;
 
-		if ( $this->allowHtml ) {
+		if ( $this->allowHtml) {
 			$config = new Configuration();
 			$filter = new HTMLFilter();
 			$data = Input::Raw( $this->nid );
 			if ( count( $this->allowedTags ) ) {
 				foreach ( $this->allowedTags as $tag ) {
-					$config->allowTag( $tag );
-					if ( count( $this->allowedAttributes ) ) {
-						foreach ( $this->allowedAttributes as $attribute ) {
-							$config->allowAttribute( $tag, $attribute );
+					if ($tag) {
+						$config->allowTag( $tag );
+						if ( count( $this->allowedAttributes ) ) {
+							foreach ( $this->allowedAttributes as $attribute ) {
+								$config->allowAttribute( $tag, $attribute );
+							}
 						}
 					}
 				}
 			}
-			$data = str_replace( '&#13;', "\n", $filter->filter( $config, $data ) );
+			if ($this->allowHtml == 2) {    // do not filter
+				$data = str_replace( '&#13;', "\n", Input::Raw( $this->nid ));
+			}
+			else {  //do filter
+				$data = str_replace( '&#13;', "\n", $filter->filter( $config, $data ) );
+			}
 			$data = str_replace( "\n\n", "\n", $data );
 			if ( !( $this->editor ) && $this->maxLength && ( strlen( $data ) > $this->maxLength ) ) {
 				$data = substr( $data, 0, $this->maxLength );
 			}
 		}
-		else {
+		else {  // no HTML tags
 			$data = strip_tags( $data );
 		}
 
