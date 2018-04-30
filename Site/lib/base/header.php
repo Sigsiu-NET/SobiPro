@@ -105,12 +105,14 @@ final class SPHeader
 			}
 			$fonts = Sobi::Cfg( 'template.icon_fonts_arr', [] );
 			if ( count( $fonts ) ) {
-				foreach ( $fonts as $font ) {
-					if ( $font == 'font-awesome-3-local' ) {
-						$this->addCssFile( 'sobifont' );
-					}
-					elseif ((Sobi::Cfg( 'template.icon_fonts_noload', '0' ) == '0') && Sobi::Cfg( 'icon-fonts.' . $font ) ) {
-						$this->addHeadLink( Sobi::Cfg( 'icon-fonts.' . $font ), null, null, 'stylesheet' );
+				if (Sobi::Cfg( 'template.icon_fonts_load', '1' ) == '1') {
+					foreach ( $fonts as $font ) {
+						if ( $font == 'font-awesome-3-local' ) {
+							$this->addCssFile( 'sobifont' );
+						}
+						elseif ( Sobi::Cfg( 'icon-fonts.' . $font ) ) {
+							$this->addHeadLink( Sobi::Cfg( 'icon-fonts.' . $font ), null, null, 'stylesheet' );
+						}
 					}
 				}
 			}

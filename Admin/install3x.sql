@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_category` (
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-INSERT IGNORE INTO `#__sobipro_category` (`id`, `position`, `description`, `parseDesc`, `introtext`, `showIntrotext`, `icon`, `showIcon`) VALUES
+INSERT IGNORE INTO `#__sobipro_category` (`id`, `position`, `description`, `parseDesc`, `introtext`, `showIntrotext`, `icon`, `showIcon`)
+VALUES
   (2, 1,
    '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque laoreet rhoncus tempor. Suspendisse dapibus vulputate dolor ut tincidunt. Suspendisse tristique laoreet dui, ut tempor orci dictum ut. Quisque aliquam urna ac justo tristique interdum. Aliquam in dui eget lectus elementum lacinia eget eu sem. Nam eu felis tellus, ac cursus velit. </p>',
    '2', '', '2',
@@ -108,7 +109,9 @@ INSERT IGNORE INTO `#__sobipro_category` (`id`, `position`, `description`, `pars
   (33, 4, '<p>A <b>toy</b> is an item that can be used for <a title=\\"Play (activity)\\" href=\\"https://en.wikipedia.org/wiki/Play_%28activity%29\\">play</a>. Toys are generally played with by <a title=\\"Child\\" href=\\"https://en.wikipedia.org/wiki/Child\\">children</a> and <a title=\\"Pet\\" href=\\"https://en.wikipedia.org/wiki/Pet\\">pets</a>. Playing with toys is an enjoyable means of training the young for life in society. Different materials are used to make toys enjoyable to both young and old.</p>', '2', 'A toy is an item that can be used for play. Toys are generally played with by children and pets.', '2', '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-rocket\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
   (34, 5,
    '<p><b>Home improvement</b>, <b>home renovation</b> or <b>remodeling</b> is the process of <a title=\\"Renovation\\" href=\\"https://en.wikipedia.org/wiki/Renovation\\">renovating</a> or making additions to one\\''s home. <a title=\\"Building material\\" href=\\"https://en.wikipedia.org/wiki/Building_material\\">Building materials</a> and hardware for home improvement projects are typically purchased at <a class=\\"mw-redirect\\" title=\\"Home improvement store\\" href=\\"https://en.wikipedia.org/wiki/Home_improvement_store\\">home improvement stores</a>.</p>',
-   '2', 'Home improvement, home renovation or remodeling is the process of renovating or making additions to one\\''s home. ', '2',
+   '2',
+   'Home improvement, home renovation or remodeling is the process of renovating or making additions to one\\''s home. ',
+   '2',
    '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-home\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
   (36, 1,
    '<p>A <b>car</b> is a wheeled, self-powered <a title=\\"Motor vehicle\\" href=\\"https://en.wikipedia.org/wiki/Motor_vehicle\\">motor vehicle</a> used for <a class=\\"mw-redirect\\" title=\\"Transportation\\" href=\\"https://en.wikipedia.org/wiki/Transportation\\">transportation</a>. Most definitions of the term specify that cars are designed to run primarily on roads, to have seating for one to eight people, to typically have four wheels, and to be constructed principally for the transport of people rather than goods.</p>',
@@ -184,6 +187,7 @@ INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`,
   ('fontawesome-disabled', '0', 1, 0, 'template'),
   ('format', '%value %currency', 0, 0, 'payments'),
   ('icon_fonts_arr', 'YToxOntpOjA7czoyMDoiZm9udC1hd2Vzb21lLTMtbG9jYWwiO30=', 1, 0, 'template'),
+  ('icon_fonts_load', '1', 1, 0, 'template'),
   ('iconsize', '3', 1, 0, 'category'),
   ('include_css_files', '1', 0, 0, 'cache'),
   ('include_js_files', '1', 0, 0, 'cache'),
@@ -256,23 +260,23 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
 CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
   `fid`               INT(11)                                     NOT NULL AUTO_INCREMENT,
   `nid`               VARCHAR(150)                                NOT NULL,
-  `adminField`        TINYINT(1)                                  DEFAULT NULL,
+  `adminField`        TINYINT(1)                                           DEFAULT NULL,
   `admList`           INT(10)                                     NOT NULL,
-  `dataType`          INT(11)                                     DEFAULT NULL,
-  `enabled`           TINYINT(1)                                  DEFAULT NULL,
-  `fee`               DOUBLE                                      DEFAULT NULL,
-  `fieldType`         VARCHAR(50)                                 DEFAULT NULL,
-  `filter`            VARCHAR(150)                                DEFAULT NULL,
-  `isFree`            TINYINT(1)                                  DEFAULT NULL,
-  `position`          INT(11)                                     DEFAULT NULL,
+  `dataType`          INT(11)                                              DEFAULT NULL,
+  `enabled`           TINYINT(1)                                           DEFAULT NULL,
+  `fee`               DOUBLE                                               DEFAULT NULL,
+  `fieldType`         VARCHAR(50)                                          DEFAULT NULL,
+  `filter`            VARCHAR(150)                                         DEFAULT NULL,
+  `isFree`            TINYINT(1)                                           DEFAULT NULL,
+  `position`          INT(11)                                              DEFAULT NULL,
   `priority`          INT(11)                                     NOT NULL,
-  `required`          TINYINT(1)                                  DEFAULT NULL,
-  `section`           INT(11)                                     DEFAULT NULL,
-  `multiLang`         TINYINT(4)                                  DEFAULT NULL,
-  `uniqueData`        TINYINT(1)                                  DEFAULT NULL,
-  `validate`          TINYINT(1)                                  DEFAULT NULL,
-  `addToMetaDesc`     TINYINT(1)                                  DEFAULT NULL,
-  `addToMetaKeys`     TINYINT(1)                                  DEFAULT '0',
+  `required`          TINYINT(1)                                           DEFAULT NULL,
+  `section`           INT(11)                                              DEFAULT NULL,
+  `multiLang`         TINYINT(4)                                           DEFAULT NULL,
+  `uniqueData`        TINYINT(1)                                           DEFAULT NULL,
+  `validate`          TINYINT(1)                                           DEFAULT NULL,
+  `addToMetaDesc`     TINYINT(1)                                           DEFAULT NULL,
+  `addToMetaKeys`     TINYINT(1)                                           DEFAULT '0',
   `editLimit`         INT(11)                                     NOT NULL DEFAULT '0',
   `editable`          TINYINT(4)                                  NOT NULL,
   `showIn`            ENUM ('both', 'details', 'vcard', 'hidden') NOT NULL DEFAULT 'both',
@@ -299,7 +303,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
 
 INSERT IGNORE INTO `#__sobipro_field` (`fid`, `nid`, `adminField`, `admList`, `dataType`, `enabled`, `fee`, `fieldType`, `filter`, `isFree`, `position`, `priority`, `required`, `section`, `multiLang`, `uniqueData`, `validate`, `addToMetaDesc`, `addToMetaKeys`, `editLimit`, `editable`, `showIn`, `allowedAttributes`, `allowedTags`, `editor`, `inSearch`, `withLabel`, `cssClass`, `parse`, `template`, `notice`, `params`, `defaultValue`, `version`)
 VALUES
-  (1, 'field_name', 0, 0, 0, 1, 0, 'inbox', '0', 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, -1, 1, 'both', '', '', '', 1, 0, 'spClassInbox', 0, '', '',
+  (1, 'field_name', 0, 0, 0, 1, 0, 'inbox', '0', 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, -1, 1, 'both', '', '', '', 1, 0,
+                                                                                      'spClassInbox', 0, '', '',
    'YToxNTp7czo5OiJtYXhMZW5ndGgiO3M6MzoiMTUwIjtzOjU6IndpZHRoIjtOO3M6MTI6InNlYXJjaE1ldGhvZCI7czo3OiJnZW5lcmFsIjtzOjE3OiJzZWFyY2hSYW5nZVZhbHVlcyI7czowOiIiO3M6OToiZnJlZVJhbmdlIjtzOjE6IjAiO3M6ODoiaXRlbXByb3AiO3M6MDoiIjtzOjEzOiJtZXRhU2VwYXJhdG9yIjtzOjE6IiAiO3M6MTI6ImNzc0NsYXNzVmlldyI7czoxNjoic3BDbGFzc1ZpZXdJbmJveCI7czoxNDoiY3NzQ2xhc3NTZWFyY2giO3M6MTg6InNwQ2xhc3NTZWFyY2hJbmJveCI7czoxMjoiY3NzQ2xhc3NFZGl0IjtzOjE2OiJzcENsYXNzRWRpdEluYm94IjtzOjEzOiJzaG93RWRpdExhYmVsIjtzOjE6IjEiO3M6MTg6ImxhYmVsQXNQbGFjZWhvbGRlciI7czoxOiIxIjtzOjEyOiJkZWZhdWx0VmFsdWUiO3M6MDoiIjtzOjc6ImJzV2lkdGgiO3M6MToiNCI7czoxMzoiYnNTZWFyY2hXaWR0aCI7czoxOiI0Ijt9',
    '', 1),
   (2, 'field_zip', 0, 0, 0, 1, 0, 'inbox', 'alphanum', 1, 7, 10, 0, 1, 0, 0, 0, 0, 0, -1, 1, 'details', '', '', '', 0, 0, 'spClassInbox', 0, '', '', 'YToxNTp7czo5OiJtYXhMZW5ndGgiO3M6MzoiMTUwIjtzOjU6IndpZHRoIjtOO3M6MTI6InNlYXJjaE1ldGhvZCI7czo1OiJyYW5nZSI7czoxNzoic2VhcmNoUmFuZ2VWYWx1ZXMiO3M6MDoiIjtzOjk6ImZyZWVSYW5nZSI7czoxOiIxIjtzOjg6Iml0ZW1wcm9wIjtzOjA6IiI7czoxMzoibWV0YVNlcGFyYXRvciI7czoxOiIgIjtzOjEyOiJjc3NDbGFzc1ZpZXciO3M6MjU6InNwQ2xhc3NWaWV3SW5ib3ggcG9zdGNvZGUiO3M6MTQ6ImNzc0NsYXNzU2VhcmNoIjtzOjE4OiJzcENsYXNzU2VhcmNoSW5ib3giO3M6MTI6ImNzc0NsYXNzRWRpdCI7czoxNjoic3BDbGFzc0VkaXRJbmJveCI7czoxMzoic2hvd0VkaXRMYWJlbCI7czoxOiIxIjtzOjE4OiJsYWJlbEFzUGxhY2Vob2xkZXIiO3M6MToiMSI7czoxMjoiZGVmYXVsdFZhbHVlIjtzOjA6IiI7czo3OiJic1dpZHRoIjtzOjE6IjIiO3M6MTM6ImJzU2VhcmNoV2lkdGgiO3M6MToiNCI7fQ==', '', 1),
@@ -312,19 +317,29 @@ VALUES
   (9, 'field_full_description', 0, 0, 0, 1, 20, 'textarea', '', 0, 16, 7, 0, 1, 0, 0, 0, 0, 0, -1, 1, 'details', 'YToxOntpOjA7czowOiIiO30=', 'YToxOntpOjA7czowOiIiO30=', '1', 1, 0, 'spClassText', 0, '', '', 'YToxNDp7czo5OiJtYXhMZW5ndGgiO3M6MDoiIjtzOjU6IndpZHRoIjtOO3M6NjoiaGVpZ2h0IjtzOjM6IjEwMCI7czo2OiJlZGl0b3IiO3M6MToiMSI7czo5OiJhbGxvd0h0bWwiO3M6MToiMiI7czo4OiJpdGVtcHJvcCI7czowOiIiO3M6MTM6Im1ldGFTZXBhcmF0b3IiO3M6MToiICI7czoxMjoiY3NzQ2xhc3NWaWV3IjtzOjMxOiJzcENsYXNzVmlld1RleHQgZnVsbGRlc2NyaXB0aW9uIjtzOjE0OiJjc3NDbGFzc1NlYXJjaCI7czoxNzoic3BDbGFzc1NlYXJjaFRleHQiO3M6MTI6ImNzc0NsYXNzRWRpdCI7czoxNToic3BDbGFzc0VkaXRUZXh0IjtzOjEzOiJzaG93RWRpdExhYmVsIjtzOjE6IjEiO3M6MTg6ImxhYmVsQXNQbGFjZWhvbGRlciI7czoxOiIwIjtzOjEyOiJkZWZhdWx0VmFsdWUiO3M6MDoiIjtzOjc6ImJzV2lkdGgiO3M6MToiNSI7fQ==', '', 1),
   (10, 'field_company_logo', 0, 0, 0, 1, 0, 'image', '', 1, 3, 10, 0, 1, 0, 0, 0, 0, 0, -1, 1, 'both', '', '', '', 0, 0, 'spClassImage', 0, '', '', 'bVHZTsMwEPwX/0DjtOnhPnIIJFSQQOUROckqscglryGIqv+O19mkh3iKd2Y2M7urVSzVAVWiRG9yV4rtbotqrQTqb3jRBKCKfW1qXQDOsE1NZ9sZNM4aXx9MfpyRZuMlzS04bSqkOuEWeq+I22fa5sy48qtO6S0lFw9gitIRNFdiHkWBjJh8H5IFbjFwG6Z2ug4Wcvzrx6G1RePRIzt/AnTPtggiJULzUgkLaH6BQcnSWv+8MuorGS3WyWo5xhw6zqPEHDMeyYshZDIGDXuYgs4JKC5jElhAA1Y7eJt2w8GmNdxXrXa8QTs6ERsM/mXpcA5qf7GOSq+lz0KJjJHJxA+RId5UGnFvoA+Y3xN2E/Q4nvNce5cbd6Ul6KT1k2HZ9gQ+6RSqk+nxDw==', '', 1),
   (11, 'field_website', 0, 0, 0, 1, 10, 'url', 'title', 0, 13, 9, 0, 1, 0, 0, 0, 0, 0, -1, 1, 'details', '', '', '', 0, 0, 'spClassUrl', 0, '', '', 'bVLBTsMwDP0VlC9YRwebe0ITnAbaAdZz1hga4dVVnRGkiX/H6brRAafIz+/ZfnYsZAs4CMzBcGxWdotkCoEMTNa/EzCUwNK7UJviKWH5gD3azxU2bwkXuFbFbNJrsiEvP+U0W+JWfMArOoPK+7DknQ340p3aHkvcgLFEHNGtOw5cMYkpLEzh4GGiBB2hDqE1hYdMw9kxVM6XwAJMg7H0jeM49qL47v+JVR5H/lRQ8b4JS/LVu1zMlQ8p7J55vKw+qztUg7u24zaFuro+O1WNyJKsyMZjPNWR9gyd3I+Y986HX8wEDUzt1PADpw1dXEstSc0xMf+ecj6c5U7WZCusmRx2Fwzt7/DV7ilsLO1xZOIWzFaGP9ALcl31Nw==', '', 1),
-  (12, 'field_business_days', 0, 0, 0, 1, 0, 'chbxgroup', '', 1, 14, 9, 1, 1, 0, 0, 0, 0, 0, -1, 1, 'details', '', '', '', 1, 1, 'spClassCheckbox', 0, '', '',
+  (12, 'field_business_days', 0, 0, 0, 1, 0, 'chbxgroup', '', 1, 14, 9, 1, 1, 0, 0, 0, 0, 0, -1, 1, 'details', '', '',
+                                                                                                    '', 1, 1,
+                                                                                                    'spClassCheckbox',
+                                                                                                    0, '', '',
    'YToxMTp7czo5OiJvcHRJbkxpbmUiO3M6MToiMiI7czo5OiJsYWJlbFNpdGUiO3M6NToicmlnaHQiO3M6ODoib3B0V2lkdGgiO3M6MzoiMTUwIjtzOjEyOiJzZWFyY2hNZXRob2QiO3M6NDoiY2hieCI7czo4OiJpdGVtcHJvcCI7czowOiIiO3M6MTM6Im1ldGFTZXBhcmF0b3IiO3M6MToiICI7czoxMjoiY3NzQ2xhc3NWaWV3IjtzOjI0OiJzcENsYXNzVmlld0NoZWNrYm94IGRheXMiO3M6MTQ6ImNzc0NsYXNzU2VhcmNoIjtzOjIxOiJzcENsYXNzU2VhcmNoQ2hlY2tib3giO3M6MTI6ImNzc0NsYXNzRWRpdCI7czoxOToic3BDbGFzc0VkaXRDaGVja2JveCI7czoxMzoic2hvd0VkaXRMYWJlbCI7czoxOiIxIjtzOjEyOiJkZWZhdWx0VmFsdWUiO3M6MDoiIjt9',
    '', 1),
-  (13, 'field_country', 0, 0, 0, 1, 0, 'select', '', 1, 8, 1, 1, 1, 0, 0, 0, 0, 0, -1, 1, 'details', '', '', '', 1, 0, 'spClassSelect', 0, '', '',
+  (13, 'field_country', 0, 0, 0, 1, 0, 'select', '', 1, 8, 1, 1, 1, 0, 0, 0, 0, 0, -1, 1, 'details', '', '', '', 1, 0,
+                                                                                          'spClassSelect', 0, '', '',
    'XVFNT8MwDP0rUySuqN0G27wjcAOEVGmcvdZTI6VJFacqH+K/k482dJziPPv5PdsI5R6+Ge5AjLJxrTi+Hhm2IFh+kfBhCaKMrw+YFNXuGc+kAnQAUUVkdcOxZB1K0NbtC7nWNAHbgegSLfzufcFCxovyrOO5ZRGCPQjpqOut6cO3ABHT/m2oJ92Qrj8f6SK1dNLoqLsBUZtBOyuJbz+6aK68IkyTFLNNVMqMb2hJO76a0rfqyGFFPVp0xk7J1UysmR8UMp8kjdFXmKHP0LSP5Capbv9IVVxORA+ZlsAq72ip8tTIhO1yeYAWxd4vt2YMaL5LHmYdVnDBQbkTqoEW6/T9zvyeLhEJm7nbeTL0L/nzCw==',
    '', 1),
-  (14, 'field_street', 0, 0, 0, 1, 0, 'inbox', '0', 1, 5, 5, 0, 1, 0, 0, 0, 0, 0, -1, 1, 'details', '', '', '', 0, 0, 'spClassInbox', 0, '', '',
+  (14, 'field_street', 0, 0, 0, 1, 0, 'inbox', '0', 1, 5, 5, 0, 1, 0, 0, 0, 0, 0, -1, 1, 'details', '', '', '', 0, 0,
+                                                                                         'spClassInbox', 0, '', '',
    'YToxNTp7czo5OiJtYXhMZW5ndGgiO3M6MzoiMTUwIjtzOjU6IndpZHRoIjtOO3M6MTI6InNlYXJjaE1ldGhvZCI7czo3OiJnZW5lcmFsIjtzOjE3OiJzZWFyY2hSYW5nZVZhbHVlcyI7czowOiIiO3M6OToiZnJlZVJhbmdlIjtzOjE6IjAiO3M6ODoiaXRlbXByb3AiO3M6MDoiIjtzOjEzOiJtZXRhU2VwYXJhdG9yIjtzOjE6IiAiO3M6MTI6ImNzc0NsYXNzVmlldyI7czoyMzoic3BDbGFzc1ZpZXdJbmJveCBzdHJlZXQiO3M6MTQ6ImNzc0NsYXNzU2VhcmNoIjtzOjE4OiJzcENsYXNzU2VhcmNoSW5ib3giO3M6MTI6ImNzc0NsYXNzRWRpdCI7czoxNjoic3BDbGFzc0VkaXRJbmJveCI7czoxMzoic2hvd0VkaXRMYWJlbCI7czoxOiIxIjtzOjE4OiJsYWJlbEFzUGxhY2Vob2xkZXIiO3M6MToiMSI7czoxMjoiZGVmYXVsdFZhbHVlIjtzOjA6IiI7czo3OiJic1dpZHRoIjtzOjE6IjQiO3M6MTM6ImJzU2VhcmNoV2lkdGgiO3M6MToiNCI7fQ==',
    '', 1),
-  (15, 'field_category', 0, 0, 0, 1, 0, 'category', '', 1, 2, 10, 1, 1, 0, 0, 0, 0, 0, -1, 1, 'hidden', '', '', '', 1, 0, 'spClassCategory', 0, '', '',
+  (15, 'field_category', 0, 0, 0, 1, 0, 'category', '', 1, 2, 10, 1, 1, 0, 0, 0, 0, 0, -1, 1, 'hidden', '', '', '', 1,
+                                                                                              0, 'spClassCategory', 0,
+                                                                                              '', '',
    'ZZHdasMwDIXfxU9Qp23WuZdh0It2FDroZVBiLzYkpESGtoy9++T/jV3q6Fj6jgyiqsUXip1gPWIzAiLbo+BbwfDmywasGubl6eWq2N6ksV57zVYn/bFviv2iYOm1UyueHwTx95NasElZPUtXvFCBalS9X0RI0yxhZPv3hAIWT/A4mimgkMRXeTE1r8bqRptRhlDUjoPuRlodBtGSjoy+9p515NDKDNrPXQtWbf1gOtOneSjZGBkxqNcGRlJpZZBpRdvnii5k8LyYCVzIRI8+/CmnrZ2UwnKeDNeC6pZ18Wj/iMvIQwZfCRYDt2DtkmkycaaVH8+bChVxtIsEC9mOer4foVNjwXCS++4ol+NuHEUKvnO/iQiD8sL3Dw==',
    '', 1),
-  (16, 'field_contact_information', 0, 0, 0, 1, 0, 'info', '', 1, 9, 0, 0, 1, 0, 0, 0, 0, 0, -1, 0, 'details', '', '', '', 0, 0, 'spClassInfo', 0, '', '',
+  (16, 'field_contact_information', 0, 0, 0, 1, 0, 'info', '', 1, 9, 0, 0, 1, 0, 0, 0, 0, 0, -1, 0, 'details', '', '',
+                                                                                                    '', 0, 0,
+                                                                                                    'spClassInfo', 0,
+                                                                                                    '', '',
    'YTo0OntzOjEyOiJjc3NDbGFzc1ZpZXciO3M6MTU6InNwQ2xhc3NWaWV3SW5mbyI7czoxMjoiY3NzQ2xhc3NFZGl0IjtzOjE1OiJzcENsYXNzRWRpdEluZm8iO3M6MTM6InNob3dFZGl0TGFiZWwiO3M6MToiMCI7czo3OiJic1dpZHRoIjtzOjE6IjUiO30=',
    '', 1);
 
@@ -362,7 +377,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
 
 INSERT IGNORE INTO `#__sobipro_field_data` (`publishUp`, `publishDown`, `fid`, `sid`, `section`, `lang`, `enabled`, `params`, `options`, `baseData`, `approved`, `confirmed`, `createdTime`, `createdBy`, `createdIP`, `updatedTime`, `updatedBy`, `updatedIP`, `copy`, `editLimit`)
 VALUES
-  ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 37, 1, 'en-GB', 1, '', '', 'Neo Electronics', 1, 0, '2017-01-01 00:00:00', 0, '0.0.0',
+  ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 37, 1, 'en-GB', 1, '', '', 'Neo Electronics', 1, 0,
+   '2017-01-01 00:00:00', 0, '0.0.0',
    '2017-01-01 00:00:00', 0, '0.0.0', 0, 2),
   ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 4, 37, 1, 'en-GB', 1, '', '', 'John Doe', 1, 0, '2017-01-01 00:00:00', 0, '0.0.0', '2017-01-01 00:00:00', 0, '0.0.0', 0, 2),
   ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 7, 37, 1, 'en-GB', 1, '', '', 'example@example.com', 1, 0, '2017-01-01 00:00:00', 0, '0.0.0', '2017-01-01 00:00:00', 0, '0.0.0', 0, 2),
@@ -407,11 +423,14 @@ VALUES
   ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 9, 39, 1, 'en-GB', 1, '', '',
                           '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque laoreet rhoncus tempor. Suspendisse dapibus vulputate dolor ut tincidunt. Suspendisse tristique laoreet dui, ut tempor orci dictum ut. Quisque aliquam urna ac justo tristique interdum. Aliquam in dui eget lectus elementum lacinia eget eu sem. Nam eu felis tellus, ac cursus velit. Etiam magna libero, condimentum at facilisis a, fermentum eget leo. Nulla gravida imperdiet neque, accumsan auctor magna viverra a. Aliquam eget augue a ante malesuada convallis a nec mi. Phasellus mollis, urna et interdum congue, lacus ante lacinia ipsum, vitae fringilla quam mi id ipsum.</p>',
                           1, 0, '2017-01-01 00:00:00', 0, '0.0.0', '2017-01-01 00:00:00', 0, '0.0.0', 0, 2),
-  ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 13, 39, 1, 'en-GB', 1, NULL, NULL, '', 1, 0, '2017-01-01 00:00:00', 0, '0.0.0', '2017-01-01 00:00:00', 0,
+  ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 13, 39, 1, 'en-GB', 1, NULL, NULL, '', 1, 0, '2017-01-01 00:00:00', 0,
+   '0.0.0', '2017-01-01 00:00:00', 0,
    '0.0.0', 0, 2),
-  ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 15, 39, 1, 'en-GB', 1, '', '', 'YTo0OntpOjA7czoxOiI3IjtpOjE7czoyOiIzMSI7aToyO3M6MjoiMzIiO2k6MztzOjI6IjMzIjt9',
+  ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 15, 39, 1, 'en-GB', 1, '', '',
+                          'YTo0OntpOjA7czoxOiI3IjtpOjE7czoyOiIzMSI7aToyO3M6MjoiMzIiO2k6MztzOjI6IjMzIjt9',
                           1, 0, '2017-01-01 00:00:00', 0, '0.0.0', '2017-01-01 00:00:00', 0, '0.0.0', 0, 2),
-  ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 14, 39, 1, 'en-GB', 1, '', '', 'Barcley Street', 1, 0, '2017-01-01 00:00:00', 0, '0.0.0',
+  ('0000-00-00 00:00:00', '0000-00-00 00:00:00', 14, 39, 1, 'en-GB', 1, '', '', 'Barcley Street', 1, 0,
+   '2017-01-01 00:00:00', 0, '0.0.0',
    '2017-01-01 00:00:00', 0, '0.0.0', 0, 2);
 
 
@@ -430,7 +449,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_option` (
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-INSERT IGNORE INTO `#__sobipro_field_option` (`fid`, `optValue`, `optPos`, `img`, `optClass`, `actions`, `class`, `optParent`) VALUES
+INSERT IGNORE INTO `#__sobipro_field_option` (`fid`, `optValue`, `optPos`, `img`, `optClass`, `actions`, `class`, `optParent`)
+VALUES
   (12, 'monday', 1, '', '', '', '', ''),
   (12, 'tuesday', 2, '', '', '', '', ''),
   (12, 'wednesday', 3, '', '', '', '', ''),
@@ -806,7 +826,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
   COLLATE = utf8mb4_unicode_ci;
 
 
-INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES
+INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`)
+VALUES
   ('description',
    '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque laoreet rhoncus tempor. Suspendisse dapibus vulputate dolor ut tincidunt. Suspendisse tristique laoreet dui, ut tempor orci dictum ut. Quisque aliquam urna ac justo tristique interdum. Aliquam in dui eget lectus elementum lacinia eget eu sem. Nam eu felis tellus, ac cursus velit. Etiam magna libero, condimentum at facilisis a, fermentum eget leo.</p>',
    NULL, 'en-GB', 'section', 0, 1, NULL, NULL, NULL),
@@ -1407,8 +1428,9 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
 
 INSERT IGNORE INTO `#__sobipro_object` (`id`, `nid`, `name`, `approved`, `confirmed`, `counter`, `cout`, `coutTime`, `createdTime`, `defURL`, `metaDesc`, `metaKeys`, `metaAuthor`, `metaRobots`, `options`, `oType`, `owner`, `ownerIP`, `params`, `parent`, `state`, `stateExpl`, `updatedTime`, `updater`, `updaterIP`, `validSince`, `validUntil`, `version`)
 VALUES
-  (1, 'business-directory', '', 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', 'Business Directory', 'Business, Directory', 'Radek Suski', '',
-                                                                                                                    '', 'section', 0, '0', '', 0, 1, '',
+  (1, 'business-directory', '', 1, 1, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', 'Business Directory',
+    'Business, Directory', 'Radek Suski', '',
+    '', 'section', 0, '0', '', 0, 1, '',
    '0000-00-00 00:00:00', 0, '0', '2017-01-01 00:00:00', '0000-00-00 00:00:00', 1),
   (2, 'computers-and-internet', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'category', 0, '0', 'YToyOntzOjk6Imljb24tZm9udCI7czoxNzoiZm9udC1hd2Vzb21lLTMtM3giO3M6MTk6Imljb24tZm9udC1hZGQtY2xhc3MiO3M6MDoiIjt9', 1, 1, '', '2017-01-01 00:00:00', 0, '0', '2017-01-01 00:00:00', '0000-00-00 00:00:00', 1),
   (3, 'games', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'category', 0, '0', 'YToyOntzOjk6Imljb24tZm9udCI7czoxNzoiZm9udC1hd2Vzb21lLTMtM3giO3M6MTk6Imljb24tZm9udC1hZGQtY2xhc3MiO3M6MDoiIjt9', 1, 1, '', '2017-01-01 00:00:00', 0, '0', '2017-01-01 00:00:00', '0000-00-00 00:00:00', 1),
@@ -1442,21 +1464,29 @@ VALUES
   (32, 'movies-music', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'category', 0, '0', 'YToyOntzOjk6Imljb24tZm9udCI7czoxNzoiZm9udC1hd2Vzb21lLTMtM3giO3M6MTk6Imljb24tZm9udC1hZGQtY2xhc3MiO3M6MDoiIjt9', 7, 1, '', '2017-01-01 00:00:00', 0, '0', '2017-01-01 00:00:00', '0000-00-00 00:00:00', 1),
   (33, 'toys', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'category', 0, '0',
                                                                                      'YToyOntzOjk6Imljb24tZm9udCI7czoxNzoiZm9udC1hd2Vzb21lLTMtM3giO3M6MTk6Imljb24tZm9udC1hZGQtY2xhc3MiO3M6MDoiIjt9',
-                                                                                     7, 1, '', '2017-01-01 00:00:00', 0, '0', '2017-01-01 00:00:00',
+                                                                                     7, 1, '', '2017-01-01 00:00:00', 0,
+   '0', '2017-01-01 00:00:00',
    '0000-00-00 00:00:00', 1),
-  (34, 'home-improvement', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'category', 0, '0',
+  (34, 'home-improvement', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '',
+                                                                                                 'category', 0, '0',
                                                                                                  'YToyOntzOjk6Imljb24tZm9udCI7czoxNzoiZm9udC1hd2Vzb21lLTMtM3giO3M6MTk6Imljb24tZm9udC1hZGQtY2xhc3MiO3M6MDoiIjt9',
-                                                                                                 7, 1, '', '2017-01-01 00:00:00', 0, '0', '2017-01-01 00:00:00',
+                                                                                                 7, 1, '',
+   '2017-01-01 00:00:00', 0, '0', '2017-01-01 00:00:00',
    '0000-00-00 00:00:00', 1),
   (36, 'cars', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'category', 0, '0',
                                                                                      'YToyOntzOjk6Imljb24tZm9udCI7czoxNzoiZm9udC1hd2Vzb21lLTMtM3giO3M6MTk6Imljb24tZm9udC1hZGQtY2xhc3MiO3M6MDoiIjt9',
-                                                                                     7, 1, '', '2017-01-01 00:00:00', 0, '0', '2017-01-01 00:00:00',
+                                                                                     7, 1, '', '2017-01-01 00:00:00', 0,
+   '0', '2017-01-01 00:00:00',
    '0000-00-00 00:00:00', 1),
-  (37, 'neo-electronics', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'entry', 0, '0', '', 2, 1, '',
+  (37, 'neo-electronics', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'entry',
+                                                                                                0, '0', '', 2, 1, '',
    '2017-01-01 00:00:00', 0, '0', '2017-01-01 00:00:00', '0000-00-00 00:00:00', 1),
-  (38, 'n-communications', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'entry', 0, '0', '', 8, 1, '',
+  (38, 'n-communications', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '',
+                                                                                                 'entry', 0, '0', '', 8,
+                                                                                                 1, '',
    '2017-01-01 00:00:00', 0, '0', '2017-01-01 00:00:00', '0000-00-00 00:00:00', 1),
-  (39, 'sun-bookstore', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'entry', 0, '0', '', 32, 1, '',
+  (39, 'sun-bookstore', '', 1, 0, 0, 0, '0000-00-00 00:00:00', '2017-01-01 00:00:00', '', '', '', '', '', '', 'entry',
+                                                                                              0, '0', '', 32, 1, '',
    '2017-01-01 00:00:00', 0, '0', '2017-01-01 00:00:00', '0000-00-00 00:00:00', 1);
 
 
@@ -1479,23 +1509,33 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_payments` (
   COLLATE = utf8mb4_unicode_ci
   AUTO_INCREMENT = 16;
 
-INSERT IGNORE INTO `#__sobipro_payments` (`pid`, `refNum`, `sid`, `fid`, `subject`, `dateAdded`, `datePaid`, `validUntil`, `paid`, `amount`, `params`) VALUES
-  (1, '1282745518.37', 37, 9, 'Full Description', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 20, ''),
-  (2, '1282745518.37', 37, 10, 'Company Logo', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 5, ''),
-  (3, '1282745518.37', 37, 11, 'Website', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 10, ''),
-  (4, '1282748655.38', 38, 10, 'Company Logo', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 5, ''),
-  (5, '1282748655.38', 38, 11, 'Website', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 10, ''),
-  (6, '1282748655.38', 38, 9, 'Full Description', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 20, ''),
-  (7, '1282750744.39', 39, 10, 'Company Logo', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 5, ''),
-  (8, '1282750744.39', 39, 11, 'Website', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 10, ''),
-  (9, '1282750744.39', 39, 9, 'Full Description', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 20, '');
+INSERT IGNORE INTO `#__sobipro_payments` (`pid`, `refNum`, `sid`, `fid`, `subject`, `dateAdded`, `datePaid`, `validUntil`, `paid`, `amount`, `params`)
+VALUES
+  (1, '1282745518.37', 37, 9, 'Full Description', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00',
+    0, 20, ''),
+  (2, '1282745518.37', 37, 10, 'Company Logo', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0,
+    5, ''),
+  (3, '1282745518.37', 37, 11, 'Website', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 10,
+    ''),
+  (4, '1282748655.38', 38, 10, 'Company Logo', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0,
+    5, ''),
+  (5, '1282748655.38', 38, 11, 'Website', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 10,
+    ''),
+  (6, '1282748655.38', 38, 9, 'Full Description', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00',
+    0, 20, ''),
+  (7, '1282750744.39', 39, 10, 'Company Logo', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0,
+    5, ''),
+  (8, '1282750744.39', 39, 11, 'Website', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 10,
+    ''),
+  (9, '1282750744.39', 39, 9, 'Full Description', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00',
+    0, 20, '');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions` (
   `pid`       INT(11)     NOT NULL AUTO_INCREMENT,
-  `subject`   VARCHAR(150)         DEFAULT NULL,
-  `action`    VARCHAR(50)          DEFAULT NULL,
-  `value`     VARCHAR(50) NOT NULL,
-  `site`      VARCHAR(50) NOT NULL,
+  `subject`   VARCHAR(150)         DEFAULT NULL UNIQUE,
+  `action`    VARCHAR(50)          DEFAULT NULL UNIQUE,
+  `value`     VARCHAR(50) NOT NULL UNIQUE,
+  `site`      VARCHAR(50) NOT NULL UNIQUE,
   `published` TINYINT(1)  NOT NULL,
   PRIMARY KEY (`pid`)
 )
@@ -1543,11 +1583,6 @@ INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`
   (97, 'entry', 'delete', '*', 'adm', 1),
   (98, 'entry', 'approve', '*', 'adm', 1),
   (99, 'entry', 'publish', '*', 'adm', 1);
-
-DELETE FROM `#__sobipro_permissions`
-WHERE `pid` = 5;
-ALTER TABLE `#__sobipro_permissions`
-  ADD UNIQUE `uniquePermission` (`subject`, `action`, `value`, `site`);
 
 INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
   (NULL, 'section', 'search', '*', 'front', 1),
@@ -1605,7 +1640,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_rules` (
   COLLATE = utf8mb4_unicode_ci
   AUTO_INCREMENT = 3;
 
-INSERT IGNORE INTO `#__sobipro_permissions_rules` (`rid`, `name`, `nid`, `validSince`, `validUntil`, `note`, `state`) VALUES
+INSERT IGNORE INTO `#__sobipro_permissions_rules` (`rid`, `name`, `nid`, `validSince`, `validUntil`, `note`, `state`)
+VALUES
   (1, 'Visitor', 'visitor', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '', 1),
   (2, 'Registered', 'registered', '2017-01-01 00:00:00', '0000-00-00 00:00:00', '', 1);
 
@@ -1626,8 +1662,10 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
   COLLATE = utf8mb4_unicode_ci
   DEFAULT CHARSET = utf8mb4;
 
-INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES
-  ('bank_transfer', 'Offline Payment', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'payment', ''),
+INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`)
+VALUES
+  ('bank_transfer', 'Offline Payment', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1,
+   'payment', ''),
   ('paypal', 'PayPal', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'payment', ''),
   ('chbxgroup', 'Check Box Group', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('email', 'Email', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
@@ -1638,7 +1676,8 @@ INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`
   ('select', 'Single Select List', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('textarea', 'Text Area', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('url', 'URL', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
-  ('category', 'Category', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
+  ('category', 'Category', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field',
+   ''),
   ('info', 'Information', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('button', 'Button', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');
 
@@ -1693,7 +1732,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_registry` (
   COLLATE = utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `description`, `options`) VALUES
-  ('fields_filter', 'website_full', 'Website with Protocol', 'L15odHRwKHMpPzpcL1wvW1x3XC4tXStcLnsxfVthLXpBLVpdezIsNX0oXC9bXlxzXSopPyQv',
+  ('fields_filter', 'website_full', 'Website with Protocol',
+   'L15odHRwKHMpPzpcL1wvW1x3XC4tXStcLnsxfVthLXpBLVpdezIsNX0oXC9bXlxzXSopPyQv',
    'Please enter a valid URL address in the $field field!', ''),
   ('fields_filter', 'website', 'Website w/o Protocol', 'L15bXHdcLi1dK1wuezF9W2EtekEtWl17Miw1fShcL1teXHNdKik/JC8=', 'Please enter a valid website address without the protocol in the $field field!', ''),
   ('fields_filter', 'title', 'Valid Title', 'L15bXHdcZF0rW1x3XGRccyFAXCRcJVwmXCpcIlwnXC1cK19dKiQv', 'The data entered in the $field field contains not allowed characters!', 'custom'),
@@ -1711,9 +1751,11 @@ INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `
   ('paypal', 'ppemail', 'change@me.com', '', '', ''),
   ('paypal', 'pploc', '1', '', '', ''),
   ('rejections-templates', 'rejection-of-a-new-entry', 'Rejection of a new entry',
-   'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjoxO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjA7czo5OiJ1bnB1Ymxpc2giO2I6MTtzOjc6ImRpc2NhcmQiO2I6MDt9', '', ''),
+   'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjoxO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjA7czo5OiJ1bnB1Ymxpc2giO2I6MTtzOjc6ImRpc2NhcmQiO2I6MDt9',
+   '', ''),
   ('rejections-templates', 'rejection-of-changes', 'Rejection of changes',
-   'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjowO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjE7czo5OiJ1bnB1Ymxpc2giO2I6MDtzOjc6ImRpc2NhcmQiO2I6MTt9', '', '');
+   'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjowO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjE7czo5OiJ1bnB1Ymxpc2giO2I6MDtzOjc6ImRpc2NhcmQiO2I6MTt9',
+   '', '');
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_relations` (
@@ -1782,7 +1824,8 @@ INSERT IGNORE INTO `#__sobipro_relations` (`id`, `pid`, `oType`, `position`, `va
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_search` (
   `ssid`           DOUBLE    NOT NULL,
-  `lastActive`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `lastActive`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  ON UPDATE CURRENT_TIMESTAMP,
   `searchCreated`  TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
   `requestData`    TEXT      NOT NULL,
   `uid`            INT(11)   NOT NULL,

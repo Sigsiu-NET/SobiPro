@@ -139,7 +139,10 @@ class com_sobiproInstallerScript
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_history` ( `revision` VARCHAR(150) NOT NULL, `changedAt` DATETIME NOT NULL, `uid` INT(11) NOT NULL, `userName` VARCHAR(150) NOT NULL, `userEmail` VARCHAR(150) NOT NULL, `change` VARCHAR(150) NOT NULL, `site` ENUM(\'site\',\'adm\') NOT NULL, `sid` INT(11) NOT NULL, `changes` TEXT NOT NULL, `params` TEXT NOT NULL, `reason` TEXT NOT NULL, `language` VARCHAR(50) NOT NULL, PRIMARY KEY (`revision`) ) DEFAULT CHARSET=utf8;' );
 		$db->execute();
 
-		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( 'engb_preload',  '1',  '0', NULL ,  'lang' )" );
+//		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( 'engb_preload',  '1',  '0', NULL ,  'lang' )" );
+//		$db->execute();
+
+		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( '	icon_fonts_load',  '1',  '0', NULL ,  'template' )" );
 		$db->execute();
 
 		$db->setQuery( "UPDATE #__sobipro_field_option_selected SET `optValue` = REPLACE (`optValue`, '_', '-')" );
