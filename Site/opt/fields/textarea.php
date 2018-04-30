@@ -259,9 +259,6 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 		/* @var SPdb $db */
 		$db =& SPFactory::db();
 
-		$a = $this->allowedTags;
-		$b = $this->allowedAttributes;
-
 		if ( $this->allowHtml) {
 			$config = new Configuration();
 			$filter = new HTMLFilter();
@@ -279,7 +276,7 @@ class SPField_Textarea extends SPField_Inbox implements SPFieldInterface
 				}
 			}
 			if ($this->allowHtml == 2) {    // do not filter
-				$data = str_replace( '&#13;', "\n", Input::Raw( $this->nid ));
+				$data = str_replace( '&#13;', "\n", $data);
 			}
 			else {  //do filter
 				$data = str_replace( '&#13;', "\n", $filter->filter( $config, $data ) );
