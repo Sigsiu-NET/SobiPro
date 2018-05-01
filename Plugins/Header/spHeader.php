@@ -76,10 +76,12 @@ class plgSystemSpHeader extends JPlugin
 				$ctrl = new SPExtensionsCtrl();
 				try {
 					$updates = $ctrl->updates( false );
-				} catch ( Exception $x ) {
+				}
+				catch ( Exception $x ) {
 					$message = [ 'count' => 1, 'text' => Sobi::Txt( 'UPDATE.SSL_ERROR' ), 'btn-text' => null ];
 					$message = json_encode( $message );
 					FileSystem::Write( JPATH_ROOT . '/components/com_sobipro/tmp/message.json', $message );
+
 					return true;
 				}
 				$apps = [];

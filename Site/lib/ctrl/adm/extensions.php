@@ -124,7 +124,16 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 			$repos = SPFactory::Instance( 'base.fs.directory', $repos );
 			$repos = $repos->searchFile( 'repository.xml', true, 2 );
 			$repos = array_keys( $repos );
+
+			//are there any repositories installed?
 			$cr = count( $repos );
+			if ( !( $cr ) ) {   //no
+				SPFactory::mainframe()->cleanBuffer();
+				// best is to be quiet in this case
+				//echo json_encode( [ 'err' => SPLang::e( 'UPD_NO_REPOS_FOUND' ) ] );
+				return 0;
+			}
+
 			$list = [];
 			$repository = SPFactory::Instance( 'services.installers.repository' );
 			try {
@@ -139,11 +148,6 @@ class SPExtensionsCtrl extends SPConfigAdmCtrl
 				exit;
 			}
 
-			if ( !( $cr ) ) {
-				SPFactory::mainframe()->cleanBuffer();
-				echo json_encode( [ 'err' => SPLang::e( 'UPD_NO_REPOS_FOUND' ) ] );
-				exit;
-			}
 
 			for ( $i = 0; $i < $cr; $i++ ) {
 				$repository->loadDefinition( $repos[ $i ] );
