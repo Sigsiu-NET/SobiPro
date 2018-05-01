@@ -88,7 +88,9 @@ class plgSystemSpHeader extends JPlugin
 				if ( count( $updates ) ) {
 					foreach ( $updates as $update ) {
 						if ( $update[ 'update' ] == 'true' ) {
-							$apps[] = $update[ 'name' ];
+							if ( $update[ 'name' ] != 'SobiPro' ) {
+								$apps[] = $update[ 'name' ];
+							}
 						}
 					}
 				}
