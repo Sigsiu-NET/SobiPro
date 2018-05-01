@@ -36,6 +36,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (!) Loading fonts on front-end independent from font usage settings
    	(!) Includes Sobi Framework 1.0.5
    	(!) SobiPro itself does not longer count as application which needs to be updated
+	(!) Update link for SobiPro goes to com_installer now
 
     (#) Double filtering of textarea (Issue #87)
     (#) Although Allow HTML Code ist set to 'do not filter', the tags are filtered using the filters set in the configuration

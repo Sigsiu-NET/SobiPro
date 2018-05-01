@@ -6,7 +6,7 @@
  * Email: sobi[at]sigsiu.net
  * Url: httsp://www.Sigsiu.NET
  *
- * @copyright Copyright (C) 2006 - 2017 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
+ * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/LGPL Version 3
  * This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
@@ -47,7 +47,12 @@ SobiPro.jQuery( document ).ready( function ()
 							else {
 								var state = '<i class="icon-remove-sign" ' + title + '></i>';
 								var addclass = ' outdated';
-								name = '<a href="index.php?option=com_sobipro&task=extensions.installed" ' + title + '>' + name + '</a>'
+								if (name == 'SobiPro') {
+									name = '<a href="index.php?option=com_installer&view=update" ' + title + '>' + name + '</a>'
+								}
+								else {
+									name = '<a href="index.php?option=com_sobipro&task=extensions.installed" ' + title + '>' + name + '</a>'
+								}
 								// var state = '&nbsp;<span class="outdated">' + updates[ x ].update_txt + '</span>';
 							}
 							output += '<div class="spUpdatesApp">' + '<span class="spUpdatesState' +  addclass + '"> ' + state + ' ' + name + ' (' + updates[ x ].update_txt + ')</span></div>';
