@@ -37,6 +37,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
    	(!) Includes Sobi Framework 1.0.5
    	(!) SobiPro itself does not longer count as application which needs to be updated
 	(!) Update link for SobiPro goes to com_installer now
+	(!) List of outdated applications opens in cPanel automatically
 
     (#) Double filtering of textarea (Issue #87)
     (#) Although Allow HTML Code ist set to 'do not filter', the tags are filtered using the filters set in the configuration

@@ -122,7 +122,11 @@ class SPAdminPanel extends SPController
 		switch ( $this->_task ) {
 			case 'panel':
 				$this->getSections();
-				/** @var $view SPAdmPanelView */
+
+				if ( file_exists( JPATH_ROOT . '/components/com_sobipro/tmp/message.json' ) ) {
+					SPFactory::header()->addJsCode( 'SobiPro.jQuery( document ).ready( function () { SobiPro.jQuery( \'#SobiProUpdate\' ).trigger(\'click\'); } );' );
+				}
+					/** @var $view SPAdmPanelView */
 				$news = $this->getNews();
 				$ordering = Sobi::GetUserState( 'sections.order', 'order', 'name.asc' );
 				$myVersion = SPFactory::CmsHelper()->myVersion( true );

@@ -220,7 +220,7 @@
 					</div>
 					<div class="accordion-group" condition="acl.apps">
 						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProUpdates">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#SobiProPanel" href="#SobiProUpdates" id="SobiProUpdate">
 								<text value="ABOUT.UPDATES_PANE"/>
 							</a>
 						</div>
