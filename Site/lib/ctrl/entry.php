@@ -276,19 +276,39 @@ class SPEntryCtrl extends SPController
 				}
 				SPFactory::registry()->set( $cache, $post );
 				SPFactory::registry()->set( 'requestcache_stored', $store );
+				// Bug #66
+				// 1.4.3
+				$request = $cache;
+				//1.4.3
 			}
+
+			// Bug #66
+			// 1.4.3
+			else {
+				$request = 'post';
+			}
+			//1.4.3
 		}
+		// Bug #66
+		// 1.4.3
+		return $request;
+		//1.4.3
+
+		// Bug #66
+		// 1.4.6
 		/**
 		 * Mon, Dec 4, 2017 12:30:49 - changing to Input from Sobi Framework
 		 * While changing from SPRequest to Sobi\Input, hardcode method to 'post'
 		 */
-		if ( isset( $post ) && count( $post ) ) {
-			foreach ( $post as $index => $value ) {
-				Input::Set( $index, $value, 'post' );
-				Input::Set( $index, $value, 'request' );
-			}
-		}
-		return 'post';
+//		if ( isset( $post ) && count( $post ) ) {
+//			foreach ( $post as $index => $value ) {
+//			Input::Set( $index, $value, 'post' );
+//				Input::Set( $index, $value, 'request' );
+//			}
+//		}
+//		return 'post';
+		
+		// 1.4.6
 	}
 
 	private function payment()
@@ -381,7 +401,13 @@ class SPEntryCtrl extends SPController
 		if ( !( $tsId ) ) {
 			$tsId = Input::Cmd( 'ssid' );
 		}
-		$this->getCache( $tsId );
+		// Bug #66
+		// 1.4.3
+		$request = $this->getCache( $tsId );
+
+		// 1.4.6
+//		$this->getCache( $tsId );
+
 		$this->_model->init( Input::Sid() );
 
 		$tplPackage = Sobi::Cfg( 'section.template', SPC::DEFAULT_TEMPLATE );
@@ -422,7 +448,12 @@ class SPEntryCtrl extends SPController
 		else {
 			$this->authorise( 'add', 'own' );
 		}
-		$this->_model->save( 'post' );
+		// Bug #66
+		// 1.4.3
+		$this->_model->save( $request );
+		
+		//1.4.6
+		//$this->_model->save( 'post' );
 
 		/* if there is something pay */
 		$pCount = SPFactory::payment()->count( $this->_model->get( 'id' ) );
