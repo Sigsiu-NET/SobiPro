@@ -1,10 +1,20 @@
 <?php
 /**
+ * @package: SobiPro Component for Joomla!
+ *
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: https://www.Sigsiu.NET
+ *
  * @copyright Copyright (C) 2006 - 2018 Sigsiu.NET GmbH (https://www.sigsiu.net). All rights reserved.
  * @license GNU/GPL Version 3
- *  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
- *  as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
- *  See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  */
 
 defined( '_JEXEC' ) || exit( 'Restricted access' );
@@ -121,30 +131,24 @@ class com_sobiproInstallerScript
 		}
 
 		$db = JFactory::getDBO();
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (  `cid` INT(11) NOT NULL AUTO_INCREMENT,  `section` INT(11) NOT NULL,  `sid` INT(11) NOT NULL,  `fileName` VARCHAR(100) NOT NULL,  `task` VARCHAR(100) NOT NULL,  `site` INT(11) NOT NULL,  `request` VARCHAR(255) NOT NULL,  `language` VARCHAR(15) NOT NULL,  `template` VARCHAR(150) NOT NULL,  `configFile` TEXT NOT NULL,  `userGroups` VARCHAR(200) NOT NULL,  `created` DATETIME NOT NULL,PRIMARY KEY (`cid`),KEY `sid` (`sid`),KEY `section` (`section`),KEY `language` (`language`),KEY `task` (`task`),KEY `request` (`request`),KEY `site` (`site`),KEY `userGroups` (`userGroups`));' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (`cid` INT(11) NOT NULL AUTO_INCREMENT, `section` INT(11) NOT NULL, `sid` INT(11) NOT NULL, `fileName` VARCHAR(100) NOT NULL, `task` VARCHAR(100) NOT NULL, `site` INT(11) NOT NULL, `request` VARCHAR(255) NOT NULL, `language` VARCHAR(15) NOT NULL, `template` VARCHAR(150) NOT NULL, `configFile` TEXT NOT NULL, `userGroups` VARCHAR(200) NOT NULL, `created` DATETIME NOT NULL, PRIMARY KEY (`cid`), KEY `sid` (`sid`), KEY `section` (`section`), KEY `language` (`language`), KEY `task` (`task`), KEY `request` (`request`), KEY `site` (`site`), KEY `userGroups` (`userGroups`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+'
+		);
 		$db->execute();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (`cid` INT(11) NOT NULL,`sid` INT(11) NOT NULL,PRIMARY KEY (`cid`,`sid`));' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (`cid` INT(11) NOT NULL, `sid` INT(11) NOT NULL, PRIMARY KEY (`cid`, `sid`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;' );
 		$db->execute();
 
-		$db->setQuery( "UPDATE #__sobipro_permissions SET value =  '*' WHERE  pid = 18;" );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (`description` TEXT, `gid` INT(11) NOT NULL AUTO_INCREMENT, `enabled` INT(11) NOT NULL, `pid` INT(11) NOT NULL, `groupName` VARCHAR(150) NOT NULL, PRIMARY KEY (`gid`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci AUTO_INCREMENT = 5000;' );
 		$db->execute();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_user_group` (`description` TEXT,`gid` INT(11) NOT NULL AUTO_INCREMENT,`enabled` INT(11) NOT NULL,`pid` INT(11) NOT NULL,`groupName` VARCHAR(150) NOT NULL,PRIMARY KEY (`gid`) ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=5000 ;' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_counter` (`sid` INT(11) NOT NULL, `counter` INT(11) NOT NULL, `lastUpdate` DATETIME NOT NULL, PRIMARY KEY (`sid`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;' );
 		$db->execute();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_counter` ( `sid` INT(11)  NOT NULL, `counter` INT(11) NOT NULL, `lastUpdate` DATETIME NOT NULL, PRIMARY KEY (`sid`) );' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_history` (`revision` VARCHAR(150) NOT NULL, `changedAt` DATETIME NOT NULL, `uid` INT(11) NOT NULL, `userName` VARCHAR(150) NOT NULL, `userEmail` VARCHAR(150) NOT NULL, `changeAction` VARCHAR(150) NOT NULL, `site` ENUM (\'site\', \'adm\') NOT NULL, `sid` INT(11) NOT NULL, `changes` TEXT NOT NULL, `params` TEXT NOT NULL, `reason` TEXT NOT NULL, `language` VARCHAR(50) NOT NULL, PRIMARY KEY (`revision`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;' );
 		$db->execute();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_history` ( `revision` VARCHAR(150) NOT NULL, `changedAt` DATETIME NOT NULL, `uid` INT(11) NOT NULL, `userName` VARCHAR(150) NOT NULL, `userEmail` VARCHAR(150) NOT NULL, `change` VARCHAR(150) NOT NULL, `site` ENUM(\'site\',\'adm\') NOT NULL, `sid` INT(11) NOT NULL, `changes` TEXT NOT NULL, `params` TEXT NOT NULL, `reason` TEXT NOT NULL, `language` VARCHAR(50) NOT NULL, PRIMARY KEY (`revision`) ) DEFAULT CHARSET=utf8;' );
-		$db->execute();
-
-//		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( 'engb_preload',  '1',  '0', NULL ,  'lang' )" );
-//		$db->execute();
-
-		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( '	icon_fonts_load',  '1',  '0', NULL ,  'template' )" );
-		$db->execute();
-
+		//1.1
 		$db->setQuery( "UPDATE #__sobipro_field_option_selected SET `optValue` = REPLACE (`optValue`, '_', '-')" );
 		$db->execute();
 
@@ -153,13 +157,21 @@ class com_sobiproInstallerScript
 
 		$db->setQuery( "UPDATE #__sobipro_language SET  `sKey` = REPLACE(  `sKey` ,  '_',  '-' ) WHERE  `oType` =  'field_option'" );
 		$db->execute();
+
+
+		// Table __sobipro_permissions
+		$db->setQuery( "UPDATE #__sobipro_permissions SET value =  '*' WHERE  pid = 18;" );
+		$db->execute();
+
 		try {
 			$db->setQuery( 'DELETE FROM `#__sobipro_permissions` WHERE `pid` = 5;' );
 			$db->execute();
-		} catch ( Exception $x ) {
 		}
-
-		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES (89, 'section', 'access', '*', 'adm', 1), (90, 'section', 'configure', '*', 'adm', 1), (91, 'section', 'delete', '*', 'adm', 0), (92, 'category', 'edit', '*', 'adm', 1), (93, 'category', 'add', '*', 'adm', 1), (94, 'category', 'delete', '*', 'adm', 1), (95, 'entry', 'edit', '*', 'adm', 1), (96, 'entry', 'add', '*', 'adm', 1), (97, 'entry', 'delete', '*', 'adm', 1), (98, 'entry', 'approve', '*', 'adm', 1), (99, 'entry', 'publish', '*', 'adm', 1), (86, 'entry', '*', '*', 'adm', 1), (87, 'category', '*', '*', 'adm', 1), (88, 'section', '*', '*', 'adm', 1);" );
+		catch ( Exception $x ) {
+		}
+		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES (86, 'entry', '*', '*', 'adm', 1), (87, 'category', '*', '*', 'adm', 1), (88, 'section', '*', '*', 'adm', 1), (89, 'section', 'access', '*', 'adm', 1), (90, 'section', 'configure', '*', 'adm', 1), (91, 'section', 'delete', '*', 'adm', 0), (92, 'category', 'edit', '*', 'adm', 1), (93, 'category', 'add', '*', 'adm', 1), (94, 'category', 'delete', '*', 'adm', 1), (95, 'entry', 'edit', '*', 'adm', 1), (96, 'entry', 'add', '*', 'adm', 1), (97, 'entry', 'delete', '*', 'adm', 1), (98, 'entry', 'approve', '*', 'adm', 1), (99, 'entry', 'publish', '*', 'adm', 1);
+"
+		);
 		$db->execute();
 
 		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_permissions' );
@@ -176,6 +188,31 @@ class com_sobiproInstallerScript
 			$db->execute();
 		}
 
+		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES (NULL, 'section', 'search', '*', 'front', 1), (NULL, 'entry', 'delete', 'own', 'front', 1),(NULL, 'entry', 'delete', '*', 'front', 1), (NULL, 'entry', 'manage', 'own', 'front', 1), (NULL, 'entry', 'access', 'expired_own', 'front', 1),  (NULL, 'entry', 'access', 'expired_any', 'front', 1);;;" );
+		$db->execute();
+
+//		$db->setQuery( 'SELECT pid FROM `#__sobipro_permissions` WHERE subject = "section" AND  action = "search";' );
+//		$pid = $db->loadResult();
+//
+//		$db->setQuery( 'SELECT rid FROM #__sobipro_permissions_rules' );
+//		$rids = $db->loadRowList();
+//		if ( count( $rids ) ) {
+//			$insert = array();
+//			foreach ( $rids as $rid ) {
+//
+//			}
+//		}
+
+
+		try {
+			$db->setQuery( 'ALTER TABLE #__sobipro_field_data CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
+			$db->setQuery( 'ALTER TABLE #__sobipro_language CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
+			$db->execute();
+		}
+		catch ( Exception $x ) {
+		}
+
+		// Table __sobipro_field_data
 		try {
 			$db->setQuery( 'SHOW INDEX FROM  #__sobipro_field_data' );
 			$cols = $db->loadAssocList();
@@ -188,16 +225,23 @@ class com_sobiproInstallerScript
 			}
 			if ( !( $skip ) ) {
 				try {
-					$db->setQuery( 'ALTER TABLE #__sobipro_field_data ENGINE = MYISAM;;' );
+					$db->setQuery( 'ALTER TABLE #__sobipro_field_data ENGINE = MYISAM;' );
 					$db->execute();
-				} catch ( Exception $x ) {
 				}
-				$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD FULLTEXT  `baseData` (`baseData`);' );
-				$db->execute();
+				catch ( Exception $x ) {
+				}
+				try {
+					$db->setQuery( 'ALTER TABLE  `#__sobipro_field_data` ADD FULLTEXT  `baseData` (`baseData`);' );
+					$db->execute();
+				}
+				catch ( Exception $x ) {
+				}
 			}
-		} catch ( Exception $x ) {
+		}
+		catch ( Exception $x ) {
 		}
 
+		// Table __sobipro_language
 		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_language' );
 		$cols = $db->loadAssocList();
 		$skip = false;
@@ -209,14 +253,24 @@ class com_sobiproInstallerScript
 		}
 		if ( !( $skip ) ) {
 			try {
-				$db->setQuery( 'ALTER TABLE #__sobipro_language ENGINE = MYISAM;;' );
+				$db->setQuery( 'ALTER TABLE #__sobipro_language ENGINE = MYISAM;' );
 				$db->execute();
-			} catch ( Exception $x ) {
 			}
-			$db->setQuery( 'ALTER TABLE  `#__sobipro_language` ADD FULLTEXT  `sValue` (`sValue`);' );
-			$db->execute();
+			catch ( Exception $x ) {
+			}
+			try {
+				$db->setQuery( 'ALTER TABLE  `#__sobipro_language` ADD FULLTEXT  `sValue` (`sValue`);' );
+				$db->execute();
+			}
+			catch ( Exception $x ) {
+			}
 		}
 
+		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES ('rejection-of-a-new-entry', 'Entry {entry.name} has been rejected as it does not comply with the rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', ''), ('rejection-of-changes', 'Changes in {entry.name} discarded as these changes violating rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', '');" );
+		$db->execute();
+
+
+		// Table __sobipro_history
 		$db->setQuery( 'SHOW INDEX FROM  #__sobipro_history' );
 		$cols = $db->loadAssocList();
 		$skip = false;
@@ -228,12 +282,14 @@ class com_sobiproInstallerScript
 		}
 		if ( !( $skip ) ) {
 			try {
-				$db->setQuery( 'ALTER TABLE #__sobipro_history CHANGE `change` `changeAction` VARCHAR(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;' );
+				$db->setQuery( 'ALTER TABLE #__sobipro_history CHANGE `change` `changeAction` VARCHAR(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;' );
 				$db->execute();
-			} catch ( Exception $x ) {
+			}
+			catch ( Exception $x ) {
 			}
 		}
 
+		// Table __sobipro_category
 		$db->setQuery( 'SHOW INDEX FROM #__sobipro_category' );
 		$cols = $db->loadAssocList();
 		$skip = false;
@@ -249,17 +305,17 @@ class com_sobiproInstallerScript
 				$db->execute();
 				$db->setQuery( 'UPDATE `#__sobipro_category` SET `allFields` = 1' );
 				$db->execute();
-			} catch ( Exception $x ) {
+			}
+			catch ( Exception $x ) {
 			}
 		}
 
-
+		//Table __sobipro_registry
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `description`, `options`) VALUES ('rejections-templates', 'rejection-of-a-new-entry', 'Rejection of a new entry', 'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjoxO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjA7czo5OiJ1bnB1Ymxpc2giO2I6MTtzOjc6ImRpc2NhcmQiO2I6MDt9', '', ''), ('rejections-templates', 'rejection-of-changes', 'Rejection of changes', 'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjowO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjE7czo5OiJ1bnB1Ymxpc2giO2I6MDtzOjc6ImRpc2NhcmQiO2I6MTt9', '', '');" );
 		$db->execute();
 
-		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES (NULL, 'section', 'search', '*', 'front', 1), (NULL, 'entry', 'delete', 'own', 'front', 1),(NULL, 'entry', 'delete', '*', 'front', 1), (NULL, 'entry', 'manage', 'own', 'front', 1), (NULL, 'entry', 'access', 'expired_own', 'front', 1),  (NULL, 'entry', 'access', 'expired_any', 'front', 1);;;" );
+		$db->setQuery( "UPDATE `#__sobipro_registry` SET `params` = 'L15bXHdcLi1dK0BbXHdcLi1dK1wuW2EtekEtWl17MiwyNH0kLw==' WHERE `key` = 'email' " );
 		$db->execute();
-
 
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) VALUES ('category', 'Category', 'special', 11);" );
 		$db->execute();
@@ -268,7 +324,7 @@ class com_sobiproInstallerScript
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_field_types` (`tid`, `fType`, `tGroup`, `fPos`) VALUES ('button', 'Button', 'special', 5);" );
 		$db->execute();
 
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (  `date` DATETIME NOT NULL,  `uid` INT(11) NOT NULL,  `sid` INT(11) NOT NULL,  `fid` VARCHAR(50) NOT NULL,  `ip` VARCHAR(15) NOT NULL,  `section` INT(11) NOT NULL,  `browserData` TEXT NOT NULL,  `osData` TEXT NOT NULL,  `humanity` INT(3) NOT NULL,  PRIMARY KEY (`date`,`sid`,`fid`,`ip`,`section`) );' );
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_field_url_clicks` (`date` DATETIME NOT NULL, `uid` INT(11) NOT NULL, `sid` INT(11) NOT NULL, `fid` VARCHAR(50) NOT NULL, `ip` VARCHAR(15) NOT NULL, `section` INT(11) NOT NULL, `browserData` TEXT NOT NULL, `osData` TEXT NOT NULL, `humanity` INT(3) NOT NULL, PRIMARY KEY (`date`, `sid`, `fid`, `ip`, `section`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;' );
 		$db->execute();
 
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES ('category', 'Category', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');" );
@@ -278,49 +334,33 @@ class com_sobiproInstallerScript
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES ('button', 'Button', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');" );
 		$db->execute();
 
-		$db->setQuery( "CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` ( `url` VARCHAR(255) NOT NULL,`crid` INT(11) NOT NULL AUTO_INCREMENT,`state` TINYINT(1) NOT NULL, PRIMARY KEY (`crid`), UNIQUE KEY `url` (`url`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;" );
+		$db->setQuery( "CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` ( `url` VARCHAR(255) NOT NULL,`crid` INT(11) NOT NULL AUTO_INCREMENT,`state` TINYINT(1) NOT NULL, PRIMARY KEY (`crid`), UNIQUE KEY `url` (`url`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;" );
 		$db->execute();
 
-		$db->setQuery( "CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` ( `url` VARCHAR(255) NOT NULL,`crid` INT(11) NOT NULL AUTO_INCREMENT,`state` TINYINT(1) NOT NULL, PRIMARY KEY (`crid`), UNIQUE KEY `url` (`url`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;" );
-		$db->execute();
 
-		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES ('rejection-of-a-new-entry', 'Entry {entry.name} has been rejected as it does not comply with the rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', ''), ('rejection-of-changes', 'Changes in {entry.name} discarded as these changes violating rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', '');" );
-		$db->execute();
+		// Table __sobipro_config
+		//removed in 1.4.6
+//		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( 'engb_preload',  '1',  '0', NULL ,  'lang' )" );
+//		$db->execute();
 
-		$db->setQuery( "UPDATE `#__sobipro_registry` SET `params` = 'L15bXHdcLi1dK0BbXHdcLi1dK1wuW2EtekEtWl17MiwyNH0kLw==' WHERE `key` = 'email' " );
+		//1.4.6
+		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( '	icon_fonts_load',  '1',  '0', NULL ,  'template' )" );
 		$db->execute();
 
 		try {
 			$db->setQuery( 'DELETE FROM `#__sobipro_config` WHERE `sKey` = "xml_raw" AND `section` = 0;' );
 			$db->execute();
-		} catch ( Exception $x ) {
+		}
+		catch ( Exception $x ) {
 		}
 		try {
 			$db->setQuery( 'DELETE FROM `#__sobipro_config` WHERE `sKey` = "field_types_for_ordering"' );
 			$db->execute();
-		} catch ( Exception $x ) {
+		}
+		catch ( Exception $x ) {
 		}
 
 
-		try {
-			$db->setQuery( 'ALTER TABLE #__sobipro_field_data CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
-			$db->setQuery( 'ALTER TABLE #__sobipro_language CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
-			$db->execute();
-		} catch ( Exception $x ) {
-		}
-
-
-//		$db->setQuery( 'SELECT pid FROM `#__sobipro_permissions` WHERE subject = "section" AND  action = "search";' );
-//		$pid = $db->loadResult();
-//
-//		$db->setQuery( 'SELECT rid FROM #__sobipro_permissions_rules' );
-//		$rids = $db->loadRowList();
-//		if ( count( $rids ) ) {
-//			$insert = array();
-//			foreach ( $rids as $rid ) {
-//
-//			}
-//		}
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.4.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$this->installFramework();
 
@@ -351,8 +391,8 @@ class com_sobiproInstallerScript
 		}
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ) ) ) {
 			JFolder::move(
-					implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ),
-					implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'entries' ] )
+				implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'tmp', 'SampleData', 'entries' ] ),
+				implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'entries' ] )
 			);
 		}
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) ) ) {
