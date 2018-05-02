@@ -625,7 +625,7 @@ class SPEntry extends SPDBObject implements SPDataModel
 	private function checkCopy()
 	{
 		return !(
-			in_array( Input::Task(), [ 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit', 'entry.payment' ] )
+			in_array( SPRequest::task(), [ 'entry.approve', 'entry.edit', 'entry.save', 'entry.submit', 'entry.payment' ] )
 			|| Sobi::Can( 'entry.access.unapproved_any' )
 			|| ( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.manage.own' ) )
 			|| ( $this->owner == Sobi::My( 'id' ) && Sobi::Can( 'entry.access.unpublished_own' ) )
