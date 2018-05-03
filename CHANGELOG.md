@@ -31,7 +31,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
-### 1.4.7 ()
+### 1.4.7 (3 May 2018)
 
     (!) Loading fonts on front-end independent from font usage settings
    	(!) Includes Sobi Framework 1.0.5
@@ -42,7 +42,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Double filtering of textarea (Issue #87)
     (#) Although Allow HTML Code ist set to 'do not filter', the tags are filtered using the filters set in the configuration
     (#) Login procedure does not end normally if no repository is installed
-	(#) Some data aren't passed to the notification app when new entry is added from front-end (Issue #66)
     
 
 ### 1.4.6 (25 April 2018)

@@ -158,7 +158,8 @@ class SPEntry extends SPDBObject implements SPDataModel
 		if ( !( Sobi::Can( 'entry.access.unapproved_any' ) )
 			&& ( Input::Task() != 'entry.edit' && Input::Task() != 'entry.submit' && Input::Task() != 'entry.save' )
 			&& !( $this->approved )
-			&& !( Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) ) ) {
+			&& !( Sobi::Can( 'entry', 'edit', '*', Sobi::Section() ) )
+		) {
 			$this->approved = 1;
 		}
 	}
@@ -603,18 +604,20 @@ class SPEntry extends SPDBObject implements SPDataModel
 					/* @var SPField $field */
 					$field = SPFactory::Model( 'field', defined( 'SOBIPRO_ADM' ) );
 					$field->extend( $f );
-					if ( isset( $fieldsdata[ $f->fid ] ) ) {
-						$field->loadData( $this->id );
-					}
-					$this->fields[] = $field;
-					$this->fieldsNids[ $field->get( 'nid' ) ] = $this->fields[ count( $this->fields ) - 1 ];
-					$this->fieldsIds[ $field->get( 'fid' ) ] = $this->fields[ count( $this->fields ) - 1 ];
-					/* case it was the name field */
-					if ( $field->get( 'fid' ) == $nameField ) {
-						/* get the entry name */
-						$this->name = $field->getRaw();
-						/* save the nid (name id) of the field where the entry name is saved */
-						$this->nameField = $field->get( 'nid' );
+					if ( $field->get( 'enabled' ) ) {
+						if ( isset( $fieldsdata[ $f->fid ] ) ) {
+							$field->loadData( $this->id );
+						}
+						$this->fields[] = $field;
+						$this->fieldsNids[ $field->get( 'nid' ) ] = $this->fields[ count( $this->fields ) - 1 ];
+						$this->fieldsIds[ $field->get( 'fid' ) ] = $this->fields[ count( $this->fields ) - 1 ];
+						/* case it was the name field */
+						if ( $field->get( 'fid' ) == $nameField ) {
+							/* get the entry name */
+							$this->name = $field->getRaw();
+							/* save the nid (name id) of the field where the entry name is saved */
+							$this->nameField = $field->get( 'nid' );
+						}
 					}
 				}
 				$this->_loaded = true;

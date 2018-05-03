@@ -448,6 +448,7 @@ class SPField_Select extends SPFieldType implements SPFieldInterface
 			throw new SPException( SPLang::e( 'FIELD_NOT_AUTH_NOT_ED', $this->name ) );
 		}
 
+//		$this->setData( $data );
 		return $cdata;
 	}
 

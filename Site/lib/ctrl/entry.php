@@ -100,7 +100,8 @@ class SPEntryCtrl extends SPController
 			try {
 				SPFactory::db()->update( 'spdb_object', [ 'approved' => 1 ], [ 'id' => $this->_model->get( 'id' ), 'oType' => 'entry' ] );
 				$this->_model->approveFields( true );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_model ] );
@@ -209,14 +210,16 @@ class SPEntryCtrl extends SPController
 		$store = [];
 		if ( count( $fields ) ) {
 			foreach ( $fields as $field ) {
-				$field->enabled( 'form' );
-				try {
-					$request = $field->submit( $this->_model, $tsId );
-					if ( is_array( $request ) && count( $request ) ) {
-						$store = array_merge( $store, $request );
+					if ($field->enabled( 'form' )) {
+					try {
+						$request = $field->submit( $this->_model, $tsId );
+						if ( is_array( $request ) && count( $request ) ) {
+							$store = array_merge( $store, $request );
+						}
 					}
-				} catch ( SPException $x ) {
-					$this->response( Sobi::Back(), $x->getMessage(), !( $ajax ), SPC::ERROR_MSG, [ 'error' => $field->get( 'nid' ) ] );
+					catch ( SPException $x ) {
+						$this->response( Sobi::Back(), $x->getMessage(), !( $ajax ), SPC::ERROR_MSG, [ 'error' => $field->get( 'nid' ) ] );
+					}
 				}
 			}
 		}
@@ -278,20 +281,20 @@ class SPEntryCtrl extends SPController
 				SPFactory::registry()->set( 'requestcache_stored', $store );
 				// Bug #66
 				// 1.4.3
-				$request = $cache;
+//				$request = $cache;
 				//1.4.3
 			}
 
 			// Bug #66
 			// 1.4.3
-			else {
-				$request = 'post';
-			}
+//			else {
+//				$request = 'post';
+//			}
 			//1.4.3
 		}
 		// Bug #66
 		// 1.4.3
-		return $request;
+//		return $request;
 		//1.4.3
 
 		// Bug #66
@@ -300,14 +303,15 @@ class SPEntryCtrl extends SPController
 		 * Mon, Dec 4, 2017 12:30:49 - changing to Input from Sobi Framework
 		 * While changing from SPRequest to Sobi\Input, hardcode method to 'post'
 		 */
-//		if ( isset( $post ) && count( $post ) ) {
-//			foreach ( $post as $index => $value ) {
-//			Input::Set( $index, $value, 'post' );
-//				Input::Set( $index, $value, 'request' );
-//			}
-//		}
-//		return 'post';
-		
+		if ( isset( $post ) && count( $post ) ) {
+			foreach ( $post as $index => $value ) {
+				Input::Set( $index, $value, 'post' );
+				Input::Set( $index, $value, 'request' );
+			}
+		}
+
+		return 'post';
+
 		// 1.4.6
 	}
 
@@ -403,10 +407,10 @@ class SPEntryCtrl extends SPController
 		}
 		// Bug #66
 		// 1.4.3
-		$request = $this->getCache( $tsId );
+//		$request = $this->getCache( $tsId );
 
 		// 1.4.6
-//		$this->getCache( $tsId );
+		$this->getCache( $tsId );
 
 		$this->_model->init( Input::Sid() );
 
@@ -427,9 +431,9 @@ class SPEntryCtrl extends SPController
 			}
 		}
 		$preState = [
-				'approved' => $this->_model->get( 'approved' ),
-				'state' => $this->_model->get( 'state' ),
-				'new' => !( $this->_model->get( 'id' ) )
+			'approved' => $this->_model->get( 'approved' ),
+			'state'    => $this->_model->get( 'state' ),
+			'new'      => !( $this->_model->get( 'id' ) ),
 		];
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 
@@ -450,10 +454,10 @@ class SPEntryCtrl extends SPController
 		}
 		// Bug #66
 		// 1.4.3
-		$this->_model->save( $request );
-		
+//		$this->_model->save( $request );
+
 		//1.4.6
-		//$this->_model->save( 'post' );
+		$this->_model->save( 'post' );
 
 		/* if there is something pay */
 		$pCount = SPFactory::payment()->count( $this->_model->get( 'id' ) );
@@ -614,14 +618,14 @@ class SPEntryCtrl extends SPController
 			}
 			if ( $this->_task == 'add' ) {
 				SPFactory::header()
-						->addKeyword( $section->get( 'efMetaKeys' ) );
+					->addKeyword( $section->get( 'efMetaKeys' ) );
 
 				$desc = $section->get( 'efMetaDesc' );
 				if ( $desc ) {
 					$separator = Sobi::Cfg( 'meta.separator', '.' );
 					$desc .= $separator;
 					SPFactory::header()
-							->addDescription( $desc );
+						->addDescription( $desc );
 				}
 			}
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'EN.ADD_PATH_TITLE' ), Sobi::Url( 'current' ) );
@@ -670,7 +674,7 @@ class SPEntryCtrl extends SPController
 		if ( count( $cats ) ) {
 			$tCats = [];
 			foreach ( $cats as $cid ) {
-				$tCats2 = SPFactory::config()->getParentPath( ( int )$cid, true );
+				$tCats2 = SPFactory::config()->getParentPath( ( int ) $cid, true );
 				if ( is_array( $tCats2 ) && count( $tCats2 ) ) {
 					$tCats[] = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), $tCats2 );
 				}
@@ -785,7 +789,8 @@ class SPEntryCtrl extends SPController
 			foreach ( $fields as $nid => $field ) {
 				try {
 					$changes[ 'fields' ][ $nid ] = $field->saveHistory();
-				} catch ( SPException $x ) {
+				}
+				catch ( SPException $x ) {
 					$changes[ 'fields' ][ $nid ] = $field->getRaw();
 				}
 			}
