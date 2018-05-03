@@ -210,7 +210,7 @@ class SPEntryCtrl extends SPController
 		$store = [];
 		if ( count( $fields ) ) {
 			foreach ( $fields as $field ) {
-					if ($field->enabled( 'form' )) {
+				if ( $field->enabled( 'form' ) ) {
 					try {
 						$request = $field->submit( $this->_model, $tsId );
 						if ( is_array( $request ) && count( $request ) ) {
@@ -340,7 +340,7 @@ class SPEntryCtrl extends SPController
 		//		else {
 		//			$this->authorise( 'edit', '*' );
 		//		}
-		if ( ( $data[ 'ident' ] != Input::String( 'payment_' . $sid, 'cookie', null ) ) ) {
+		if ( ( $data[ 'ident' ] != Input::String( 'SPro_payment_' . $sid, 'cookie', null ) ) ) {
 			Sobi::Error( 'payment', SPLang::e( 'UNAUTHORIZED_ACCESS' ), SPC::ERROR, 403, __LINE__, __FILE__ );
 		}
 		$this->paymentView( null, $data[ 'data' ] );
