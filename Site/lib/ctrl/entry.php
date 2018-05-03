@@ -369,7 +369,7 @@ class SPEntryCtrl extends SPController
 		$view->setConfig( $this->_tCfg, $this->_task );
 		$view->setTemplate( $tplPackage . '.payment.' . $this->_task );
 		Sobi::Trigger( ucfirst( $this->_task ), $this->name(), [ &$view, &$this->_model ] );
-		if ( Input::Cmd( 'method', null, 'post' ) == 'xhr' ) {
+		if ( Input::Cmd( 'method', 'post', null ) == 'xhr' ) {
 			SPFactory::mainframe()->cleanBuffer();
 			$view->display();
 			$response = ob_get_contents();

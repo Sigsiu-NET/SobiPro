@@ -42,6 +42,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
     (#) Double filtering of textarea (Issue #87)
     (#) Although Allow HTML Code ist set to 'do not filter', the tags are filtered using the filters set in the configuration
     (#) Login procedure does not end normally if no repository is installed
+    (#) Call to undefined method Joomla\CMS\Document\RawDocument::addHeadLink(): Call to a member function getString() on null in payment view
     
 
 ### 1.4.6 (25 April 2018)
