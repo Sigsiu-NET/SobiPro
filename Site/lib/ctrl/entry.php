@@ -100,7 +100,8 @@ class SPEntryCtrl extends SPController
 			try {
 				SPFactory::db()->update( 'spdb_object', [ 'approved' => 1 ], [ 'id' => $this->_model->get( 'id' ), 'oType' => 'entry' ] );
 				$this->_model->approveFields( true );
-			} catch ( SPException $x ) {
+			}
+			catch ( SPException $x ) {
 				Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 			}
 			Sobi::Trigger( $this->name(), __FUNCTION__, [ &$this->_model ] );
@@ -195,7 +196,7 @@ class SPEntryCtrl extends SPController
 
 		$this->_model->loadFields( Sobi::Reg( 'current_section' ) );
 		$fields = $this->_model->get( 'fields' );
-		$tsId = Input::String( 'editentry', 'cookie', null );
+		$tsId = Input::String( 'SPro_editentry', 'cookie', null );
 
 		$tsIdToRequest = false;
 		if ( !strlen( $tsId ) ) {
@@ -209,13 +210,14 @@ class SPEntryCtrl extends SPController
 		$store = [];
 		if ( count( $fields ) ) {
 			foreach ( $fields as $field ) {
-				if ( $field->enabled( 'form' ) ) {
+					if ($field->enabled( 'form' )) {
 					try {
 						$request = $field->submit( $this->_model, $tsId );
 						if ( is_array( $request ) && count( $request ) ) {
 							$store = array_merge( $store, $request );
 						}
-					} catch ( SPException $x ) {
+					}
+					catch ( SPException $x ) {
 						$this->response( Sobi::Back(), $x->getMessage(), !( $ajax ), SPC::ERROR_MSG, [ 'error' => $field->get( 'nid' ) ] );
 					}
 				}
@@ -430,9 +432,9 @@ class SPEntryCtrl extends SPController
 			}
 		}
 		$preState = [
-				'approved' => $this->_model->get( 'approved' ),
-				'state' => $this->_model->get( 'state' ),
-				'new' => !( $this->_model->get( 'id' ) ),
+			'approved' => $this->_model->get( 'approved' ),
+			'state'    => $this->_model->get( 'state' ),
+			'new'      => !( $this->_model->get( 'id' ) ),
 		];
 		SPFactory::registry()->set( 'object_previous_state', $preState );
 
@@ -597,7 +599,7 @@ class SPEntryCtrl extends SPController
 		$this->tplCfg( $tplPackage );
 
 		/* check if we have stored last edit in cache */
-		$this->getCache( Input::String( 'editentry', 'cookie', null ), 'editcache' );
+		$this->getCache( Input::String( 'SPro_editentry', 'cookie', null ), 'editcache' );
 		$section = SPFactory::Model( 'section' );
 		$section->init( Sobi::Section() );
 
@@ -617,14 +619,14 @@ class SPEntryCtrl extends SPController
 			}
 			if ( $this->_task == 'add' ) {
 				SPFactory::header()
-						->addKeyword( $section->get( 'efMetaKeys' ) );
+					->addKeyword( $section->get( 'efMetaKeys' ) );
 
 				$desc = $section->get( 'efMetaDesc' );
 				if ( $desc ) {
 					$separator = Sobi::Cfg( 'meta.separator', '.' );
 					$desc .= $separator;
 					SPFactory::header()
-							->addDescription( $desc );
+						->addDescription( $desc );
 				}
 			}
 			SPFactory::mainframe()->addToPathway( Sobi::Txt( 'EN.ADD_PATH_TITLE' ), Sobi::Url( 'current' ) );
@@ -673,7 +675,7 @@ class SPEntryCtrl extends SPController
 		if ( count( $cats ) ) {
 			$tCats = [];
 			foreach ( $cats as $cid ) {
-				$tCats2 = SPFactory::config()->getParentPath( ( int )$cid, true );
+				$tCats2 = SPFactory::config()->getParentPath( ( int ) $cid, true );
 				if ( is_array( $tCats2 ) && count( $tCats2 ) ) {
 					$tCats[] = implode( Sobi::Cfg( 'string.path_separator', ' > ' ), $tCats2 );
 				}
@@ -788,7 +790,8 @@ class SPEntryCtrl extends SPController
 			foreach ( $fields as $nid => $field ) {
 				try {
 					$changes[ 'fields' ][ $nid ] = $field->saveHistory();
-				} catch ( SPException $x ) {
+				}
+				catch ( SPException $x ) {
 					$changes[ 'fields' ][ $nid ] = $field->getRaw();
 				}
 			}
