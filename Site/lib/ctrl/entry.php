@@ -229,6 +229,7 @@ class SPEntryCtrl extends SPController
 		}
 		else {
 			$file = str_replace( '.', '-', $tsId );
+			// the following lines throws NOTICE: "Only variables should be passed by reference"
 			SPFs::write( SPLoader::path( 'tmp.edit.' . $file . '.post', 'front', false, 'var' ), SPConfig::serialize( $_POST ) );
 			SPFs::write( SPLoader::path( 'tmp.edit.' . $file . '.files', 'front', false, 'var' ), SPConfig::serialize( $_FILES ) );
 			SPFs::write( SPLoader::path( 'tmp.edit.' . $file . '.store', 'front', false, 'var' ), SPConfig::serialize( $store ) );
