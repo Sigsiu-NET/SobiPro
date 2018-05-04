@@ -143,7 +143,6 @@ class SPField_Inbox extends SPFieldType implements SPFieldInterface
 	 */
 	private function verify( $entry, $request )
 	{
-		// input box does not need to be filtered for HTML tags but Input::raw does not work
 		$data = Input::Html( $this->nid, 'post' );
 		$dexs = strlen( $data );
 		/* check if it was required */

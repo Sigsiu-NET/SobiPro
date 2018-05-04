@@ -475,7 +475,10 @@ abstract class SPController extends SPObject implements SPControl
 		}
 		if ( !$task ) {
 			$task = ( $this->_task == 'add' || $this->_task == 'submit' || $this->_task == 'edit' ) ? 'edit' : $this->_defTask;
-			Input::Set( 'task', "{$this->_type}.{$task}" );
+			// Fri, May 4, 2018 12:34:28
+			// It seems to causing #90
+			// not sure what for it was :(
+//			Input::Set( 'task', "{$this->_type}.{$task}" );
 		}
 
 		/* Read the necessary ini files */

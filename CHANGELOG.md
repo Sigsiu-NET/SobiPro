@@ -34,6 +34,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 ### 1.4.7.1 (4 May 2018)
 
    	(!) Includes Sobi Framework 1.0.6
+   	
+   	(#) Setting incorrect task in listing (Issue #90)
 
 
 ### 1.4.7 (3 May 2018)
