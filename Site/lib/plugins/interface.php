@@ -95,9 +95,9 @@ final class SPPlugins
 		 * every time the task contains "list" or similar
 		 */
 		if ( preg_match( '/^list\..*/', $task ) || preg_match( '/^l\..*/', $task ) ) {
-			$this->_actions[ 'listing' . '.' . $t[ 1 ] ] = $pids;
-//			$this->_actions[ 'listing' . '.' . $t[ 1 ] ] =& $this->_actions[ $task ];
-//			$this->_actions[ 'section' . '.' . $t[ 1 ] ] =& $this->_actions[ $task ];
+//			$this->_actions[ 'listing' . '.' . $t[ 1 ] ] = $pids;
+			$this->_actions[ 'listing' . '.' . $t[ 1 ] ] =& $this->_actions[ $task ];
+			$this->_actions[ 'section' . '.' . $t[ 1 ] ] =& $this->_actions[ $task ];
 		}
 	}
 
