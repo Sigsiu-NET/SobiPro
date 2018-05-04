@@ -30,14 +30,17 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (-) Removed  
 (!) Change  
 
-### 1.4.7.21 (x May 2018)
+
+### 1.4.7.2 (x May 2018)
 
    	(#) Setting incorrect task in listing (Issue #90)
    	(#) Added paragraph to response message in SAM (Issue #92)
+   	(#) reverted previous commits for #90 and #91 as it didn't help
+   	
    	
 ### 1.4.7.1 (4 May 2018)
 
-   	(!) Includes Sobi Framework 1.0.6   
+   	(!) Includes Sobi Framework 1.0.6
 
 
 ### 1.4.7 (3 May 2018)

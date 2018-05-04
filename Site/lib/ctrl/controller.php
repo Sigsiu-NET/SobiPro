@@ -657,8 +657,7 @@ abstract class SPController extends SPObject implements SPControl
 					$name = $node->attributes->getNamedItem( 'name' )->nodeValue;
 
 					// switched back to Sprequest as it throws ''PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' even if filled in
-//					if ( !( Input::Raw( str_replace( '.', '_', $name ) ) ) ) {
-					if ( !( SPRequest::raw( str_replace( '.', '_', $name ) ) ) ) {
+					if ( !( Input::Raw( str_replace( '.', '_', $name ) ) ) ) {
 						$this->response( $errorUrl, Sobi::Txt( 'PLEASE_FILL_IN_ALL_REQUIRED_FIELDS' ), false, SPC::ERROR_MSG, [ 'required' => $name ] );
 					}
 				}
