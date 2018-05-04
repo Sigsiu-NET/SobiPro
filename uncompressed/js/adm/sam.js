@@ -77,7 +77,7 @@ SobiPro.jQuery().ready( function () {
 				proxy.error( data.message );
 			}
 			else {
-				SobiPro.jQuery( data.message.response ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
+				SobiPro.jQuery( '<p>' + data.message.response + '</p>' ).appendTo( SobiPro.jQuery( '#SobiPro' ) );
 				SobiPro.jQuery( '#SpRepoModal' ).find( '.modal' ).modal();
 				if ( data.repository != undefined ) {
 					request[ 'repository' ] = data.repository;

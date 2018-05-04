@@ -33,6 +33,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 ### 1.4.7.21 (x May 2018)
 
    	(#) Setting incorrect task in listing (Issue #90)
+   	(#) Added paragraph to response message in SAM (Issue #92)
    	
 ### 1.4.7.1 (4 May 2018)
 
