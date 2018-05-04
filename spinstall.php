@@ -19,7 +19,7 @@
 
 defined( '_JEXEC' ) || exit( 'Restricted access' );
 
-define( 'SOBI_FRAMEWORK_VERSION', '1.0.5' );
+define( 'SOBI_FRAMEWORK_VERSION', '1.0.6' );
 
 class com_sobiproInstallerScript
 {

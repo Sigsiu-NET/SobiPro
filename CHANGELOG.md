@@ -31,6 +31,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
+### 1.4.7.1 (4 May 2018)
+
+   	(!) Includes Sobi Framework 1.0.6
+
+
 ### 1.4.7 (3 May 2018)
 
     (!) Loading fonts on front-end independent from font usage settings
