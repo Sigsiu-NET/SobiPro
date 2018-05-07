@@ -25,15 +25,6 @@ class com_sobiproInstallerScript
 {
 
 	/**
-	 * Constructor
-	 *
-	 * @param   JAdapterInstance $adapter The object responsible for running this script
-	 */
-	public function __construct( JAdapterInstance $adapter )
-	{
-	}
-
-	/**
 	 * Called before any type of action
 	 *
 	 * @param   string $route Which action is happening (install|uninstall|discover_install|update)
@@ -41,8 +32,8 @@ class com_sobiproInstallerScript
 	 *
 	 * @return  boolean  True on success
 	 */
-	public function preflight( $route, JAdapterInstance $adapter )
-//	public function preflight( $type, $parent )
+//	public function preflight( $route, JAdapterInstance $adapter )
+	public function preflight( $route, $adapter )
 	{
 		if ( $adapter instanceof JInstallerAdapterComponent ) {
 			$this->installPlugins( $adapter->getParent()->get( 'paths' ) );

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="3.0" method="upgrade" overwrite="true">
+<extension type="component" version="3.3.0" method="upgrade" overwrite="true">
 	<name>SobiPro</name>
 	<creationDate>07 May 2018</creationDate>
 	<author>Sigsiu.NET GmbH</author>
@@ -18,7 +18,7 @@
 	</SobiPro>
 	<install>
 		<sql>
-			<file charset="utf8mb4" driver="mysql">install3x.sql</file>
+			<file charset="utf8" driver="mysql">install3x.sql</file>
 		</sql>
 	</install>
 	<scriptfile>spinstall.php</scriptfile>
