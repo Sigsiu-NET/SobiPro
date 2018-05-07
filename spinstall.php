@@ -23,48 +23,51 @@ define( 'SOBI_FRAMEWORK_VERSION', '1.0.6' );
 
 class com_sobiproInstallerScript
 {
+
 	/**
-	 * Runs just before any installation action is preformed on the component.
-	 * Verifications and pre-requisites should run in this function.
+	 * Constructor
 	 *
-	 * @param  string $type - Type of PreFlight action. Possible values are:
-	 *                           - * install
-	 *                           - * update
-	 *                           - * discover_install
-	 * @param  \stdClass $parent - Parent object calling object.
-	 *
-	 * @return void
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 */
-	public function preflight( $type, $parent )
+	public function __construct( JAdapterInstance $adapter )
 	{
-		if ( $parent instanceof JInstallerAdapterComponent ) {
-			$this->installPlugins( $parent->getParent()->get( 'paths' ) );
-		}
-		elseif ( $parent instanceof JInstallerComponent ) {
-			$this->installPlugins( $parent->getParent->get( '_paths' ) );
-		}
-
-		if ( $type != 'uninstall' ) {
-			// Installing component manifest file version
-			$this->release = $parent->getManifest()->version;
-			// Show the essential information at the install/update back-end
-			echo '<h2>Installing SobiPro version ' . $this->release . ' ...</h2>';
-		}
-
 	}
 
 	/**
-	 * Runs right after any installation action is preformed on the component.
+	 * Called before any type of action
 	 *
-	 * @param  string $type - Type of PostFlight action. Possible values are:
-	 *                           - * install
-	 *                           - * update
-	 *                           - * discover_install
-	 * @param  \stdClass $parent - Parent object calling object.
+	 * @param   string $route Which action is happening (install|uninstall|discover_install|update)
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 *
-	 * @return void
+	 * @return  boolean  True on success
 	 */
-//	function postflight($type, $parent)
+	public function preflight( $route, JAdapterInstance $adapter )
+//	public function preflight( $type, $parent )
+	{
+		if ( $adapter instanceof JInstallerAdapterComponent ) {
+			$this->installPlugins( $adapter->getParent()->get( 'paths' ) );
+		}
+		elseif ( $adapter instanceof JInstallerComponent ) {
+			$this->installPlugins( $adapter->getParent->get( '_paths' ) );
+		}
+
+		if ( $route != 'uninstall' ) {
+			// Installing component manifest file version
+			$this->release = $adapter->getManifest()->version;
+			// Show the essential information at the install/update back-end
+			echo '<h2>Installing SobiPro version ' . $this->release . ' ...</h2>';
+		}
+	}
+
+	/**
+	 * Called after any type of action
+	 *
+	 * @param   string  $route  Which action is happening (install|uninstall|discover_install|update)
+	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 *
+	 * @return  boolean  True on success
+	 */
+//	public function postflight($route, JAdapterInstance $adapter)
 //	{
 //		echo '<p>' . JText::_('COM_HELLOWORLD_POSTFLIGHT_' . $type . '_TEXT') . '</p>';
 //
@@ -72,13 +75,14 @@ class com_sobiproInstallerScript
 
 
 	/**
-	 * This method is called after a component is updated.
+	 * Called on update
 	 *
-	 * @param  \stdClass $parent - Parent object calling object.
+	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
 	 *
-	 * @return void
+	 * @return  boolean  True on success
 	 */
-	public function update( $parent )
+	public function update(JAdapterInstance $adapter)
+//	public function update( $parent )
 	{
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) ) ) {
 			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) );
@@ -97,6 +101,8 @@ class com_sobiproInstallerScript
 		if ( !( file_exists( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) ) ) ) {
 			JFolder::create( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) );
 		}
+
+		// copy category images from media to images folder
 		$srcpath = JPATH_ROOT . '/media/sobipro/icons';
 		if ( file_exists( $srcpath ) ) {
 			$files = scandir( $srcpath );
@@ -104,7 +110,7 @@ class com_sobiproInstallerScript
 			$dest = JPATH_ROOT . '/images/sobipro/categories';
 			if ( count( $files ) ) {
 				foreach ( $files as $file ) {
-					if ( $file != '.' && $file != '..' ) {
+					if ( $file != '.' && $file != '..' && $file != 'Mime') {
 						if ( is_dir( $srcpath . '/' . $file ) ) {
 							JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file, '', true );
 						}
@@ -115,24 +121,35 @@ class com_sobiproInstallerScript
 				}
 			}
 		}
+		// copy category images from media to images folder
 		$srcpath = JPATH_ROOT . '/media/sobipro/images';
 		if ( file_exists( $srcpath ) ) {
 			$files = scandir( $srcpath );
 
-			$dest = JPATH_ROOT . '/images/sobipro/categories';
-			if ( count( $files ) ) {
-				foreach ( $files as $file ) {
-					if ( $file != '.' && $file != '..' ) {
-						if ( is_dir( $srcpath . '/' . $file ) ) {
-							JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file, '', true );
-						}
-						elseif ( !( file_exists( $dest . '/' . $file ) ) ) {
-							JFile::copy( $srcpath . '/' . $file, $dest . '/' . $file );
+			if ($files != 'clustermarker') {
+				$dest = JPATH_ROOT . '/images/sobipro/categories';
+				if ( count( $files ) ) {
+					foreach ( $files as $file ) {
+						if ( $file != '.' && $file != '..' && $file != 'clustermarker' ) {
+							if ( is_dir( $srcpath . '/' . $file ) ) {
+								JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file, '', true );
+							}
+							elseif ( !( file_exists( $dest . '/' . $file ) ) ) {
+								JFile::copy( $srcpath . '/' . $file, $dest . '/' . $file );
+							}
 						}
 					}
 				}
 			}
 		}
+
+		$dest = JPATH_ROOT . '/images/sobipro/categories/image.png';
+		$src = JPATH_ROOT . '/media/sobipro/images/image.png';
+		if ( !(file_exists( $dest )) && file_exists($src)) {
+			JFile::copy( $src, $dest );
+		}
+
+
 
 		$db = JFactory::getDBO();
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (`cid` INT(11) NOT NULL AUTO_INCREMENT, `section` INT(11) NOT NULL, `sid` INT(11) NOT NULL, `fileName` VARCHAR(100) NOT NULL, `task` VARCHAR(100) NOT NULL, `site` INT(11) NOT NULL, `request` VARCHAR(255) NOT NULL, `language` VARCHAR(15) NOT NULL, `template` VARCHAR(150) NOT NULL, `configFile` TEXT NOT NULL, `userGroups` VARCHAR(200) NOT NULL, `created` DATETIME NOT NULL, PRIMARY KEY (`cid`), KEY `sid` (`sid`), KEY `section` (`section`), KEY `language` (`language`), KEY `task` (`task`), KEY `request` (`request`), KEY `site` (`site`), KEY `userGroups` (`userGroups`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
@@ -374,14 +391,18 @@ class com_sobiproInstallerScript
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px; padding-top: 10px;"></iframe>';
 	}
 
+
+
+
 	/**
-	 * This method is called after a component is installed.
+	 * Called on installation
 	 *
-	 * @param  \stdClass $parent - Parent object calling this method.
+	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
 	 *
-	 * @return void
+	 * @return  boolean  True on success
 	 */
-	public function install( $parent )
+	public function install(JAdapterInstance $adapter)
+//	public function install( $parent )
 	{
 		if ( !( file_exists( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) ) ) ) {
 			JFolder::create( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) );
@@ -439,13 +460,12 @@ class com_sobiproInstallerScript
 	}
 
 	/**
-	 * This method is called after a component is uninstalled.
+	 * Called on uninstallation
 	 *
-	 * @param  \stdClass $parent - Parent object calling this method.
-	 *
-	 * @return void
+	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
 	 */
-	public function uninstall( $parent )
+	public function uninstall(JAdapterInstance $adapter)
+//	public function uninstall( $parent )
 	{
 		echo '<h2>Un-Installing SobiPro ...</h2>';
 
