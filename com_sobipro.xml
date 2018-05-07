@@ -25,7 +25,6 @@
 	<files folder="Site">
 		<folder>etc</folder>
 		<folder>lib</folder>
-		<folder>media</folder>
 		<folder>opt</folder>
 		<folder>tmp</folder>
 		<folder>usr</folder>
@@ -48,7 +47,7 @@
 		<language tag="en-GB">Site/usr/locale/site/en-GB.SpApp.select-list.countries.ini</language>
 	</languages>
 
-	<media folder="Site/media" destination="sobipro">
+	<media folder="Media" destination="sobipro">
 		<folder>css</folder>
 		<folder>images</folder>
 		<folder>adm</folder>

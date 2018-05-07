@@ -86,13 +86,13 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) ) ) {
 			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) );
 		}
-		try {
-			if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
-				JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
-			}
-		}
-		catch ( Exception $x ) {
-		}
+//		try {
+//			if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
+//				JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
+//			}
+//		}
+//		catch ( Exception $x ) {
+//		}
 
 		if ( !( file_exists( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) ) ) ) {
 			JFolder::create( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) );
@@ -405,9 +405,9 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) ) ) {
 			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) );
 		}
-		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
-			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
-		}
+//		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
+//			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
+//		}
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.4.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$db = JFactory::getDBO();
 		$db->setQuery( 'SHOW COLUMNS FROM #__sobipro_field_data' );
