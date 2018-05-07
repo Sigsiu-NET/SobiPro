@@ -1,0 +1,73 @@
+/**
+ * @package: SobiPro Component for Joomla!
+
+ * @author
+ * Name: Sigrid Suski & Radek Suski, Sigsiu.NET GmbH
+ * Email: sobi[at]sigsiu.net
+ * Url: http://www.Sigsiu.NET
+
+ * @copyright Copyright (C) 2006 - 2016 Sigsiu.NET GmbH (http://www.sigsiu.net). All rights reserved.
+ * @license GNU/GPL Version 3
+ * This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3
+ * as published by the Free Software Foundation, and under the additional terms according section 7 of GPL v3.
+ * See http://www.gnu.org/licenses/gpl.html and https://www.sigsiu.net/licenses.
+
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ */
+
+/* Styles for SigsiuTree on Frontend */
+/* --------------------------------- */
+.sigsiuTree {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 13px;
+	color: #666;
+	white-space: nowrap;
+	overflow: auto;
+	line-height: 18px;
+}
+
+.sigsiuTree img {
+	border: 0;
+	vertical-align: middle;
+	float: none;
+	margin: 0;
+}
+
+.sigsiuTree a {
+	color: #333;
+	text-decoration: none;
+	font-weight: normal;
+	padding: 0;
+}
+
+.sigsiuTree a.node,.sigsiuTree a.nodeSel {
+	white-space: nowrap;
+	padding: 1px 2px 1px 2px;
+}
+
+.sigsiuTree a.node:hover,.sigsiuTree a.nodeSel:hover {
+	color: #333333;
+	text-decoration: underline;
+}
+
+.sigsiuTree a.nodeSel {
+	background-color: #c0d2ec;
+}
+
+.sigsiuTree .clip {
+	overflow: hidden;
+}
+
+div.sigsiuTree a,.sigsiuTree a,a.treeNode:hover,a.treeNode,a.treeNode:visited {
+	color: #333333 !important;
+	text-decoration: none !important;
+	font-weight: normal !important;
+}
+
+a.treeNode:active,a.treeNode:focus {
+	color: #333333;
+	text-decoration: none;
+	font-weight: normal;
+	background-color: #c0d2ec;
+}
