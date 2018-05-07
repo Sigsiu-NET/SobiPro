@@ -15,11 +15,11 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
   `fileName`   VARCHAR(100) NOT NULL,
   `task`       VARCHAR(100) NOT NULL,
   `site`       INT(11)      NOT NULL,
-  `request`    VARCHAR(255) NOT NULL,
+  `request`    VARCHAR(190) NOT NULL,
   `language`   VARCHAR(15)  NOT NULL,
   `template`   VARCHAR(150) NOT NULL,
   `configFile` TEXT         NOT NULL,
-  `userGroups` VARCHAR(200) NOT NULL,
+  `userGroups` VARCHAR(190) NOT NULL,
   `created`    DATETIME     NOT NULL,
   PRIMARY KEY (`cid`),
   KEY `sid` (`sid`),
@@ -71,11 +71,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_category` (
   COLLATE = utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `#__sobipro_category` (`id`, `position`, `description`, `parseDesc`, `introtext`, `showIntrotext`, `icon`, `showIcon`) VALUES
-  (2, 1,
-   '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque laoreet rhoncus tempor. Suspendisse dapibus vulputate dolor ut tincidunt. Suspendisse tristique laoreet dui, ut tempor orci dictum ut. Quisque aliquam urna ac justo tristique interdum. Aliquam in dui eget lectus elementum lacinia eget eu sem. Nam eu felis tellus, ac cursus velit. </p>',
-   '2', '', '2',
-   '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-desktop\\'',\\''font\\'':\\''font-awesome-3\\''}',
-   '2'),
+  (2, 1, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque laoreet rhoncus tempor. Suspendisse dapibus vulputate dolor ut tincidunt. Suspendisse tristique laoreet dui, ut tempor orci dictum ut. Quisque aliquam urna ac justo tristique interdum. Aliquam in dui eget lectus elementum lacinia eget eu sem. Nam eu felis tellus, ac cursus velit. </p>', '2', '', '2', '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-desktop\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
   (3, 2, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque laoreet rhoncus tempor. Suspendisse dapibus vulputate dolor ut tincidunt. Suspendisse tristique laoreet dui, ut tempor orci dictum ut. Quisque aliquam urna ac justo tristique interdum. Aliquam in dui eget lectus elementum lacinia eget eu sem. Nam eu felis tellus, ac cursus velit. </p>', '2', '', '2', '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-gamepad\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
   (4, 3, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque laoreet rhoncus tempor. Suspendisse dapibus vulputate dolor ut tincidunt. Suspendisse tristique laoreet dui, ut tempor orci dictum ut. Quisque aliquam urna ac justo tristique interdum. Aliquam in dui eget lectus elementum lacinia eget eu sem. Nam eu felis tellus, ac cursus velit. </p>', '2', '', '2', '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-medkit\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
   (5, 4, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque laoreet rhoncus tempor. Suspendisse dapibus vulputate dolor ut tincidunt. Suspendisse tristique laoreet dui, ut tempor orci dictum ut. Quisque aliquam urna ac justo tristique interdum. Aliquam in dui eget lectus elementum lacinia eget eu sem. Nam eu felis tellus, ac cursus velit. </p>', '2', '', '2', '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-home\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
@@ -106,14 +102,8 @@ INSERT IGNORE INTO `#__sobipro_category` (`id`, `position`, `description`, `pars
   (31, 2, '<p>A <b>book</b> is a set of written, printed, illustrated, or blank sheets, made of <a title=\\"Ink\\" href=\\"https://en.wikipedia.org/wiki/Ink\\">ink</a>, <a title=\\"Paper\\" href=\\"https://en.wikipedia.org/wiki/Paper\\">paper</a>, <a title=\\"Parchment\\" href=\\"https://en.wikipedia.org/wiki/Parchment\\">parchment</a>, or other materials, fastened together to hinge at one side. A single sheet within a book is a <a class=\\"mw-redirect\\" title=\\"Recto\\" href=\\"https://en.wikipedia.org/wiki/Recto\\">leaf</a>, and each side of a leaf is a <a title=\\"Page (paper)\\" href=\\"https://en.wikipedia.org/wiki/Page_%28paper%29\\">page</a>.</p>', '2', 'A book is a set of written, printed, illustrated, or blank sheets, made of ink, paper, parchment, or other materials, fastened together to hinge at one side.', '2', '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-book\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
   (32, 3, '<p><b>Music</b> is an <a title=\\"Art\\" href=\\"https://en.wikipedia.org/wiki/Art\\">art</a> form whose <a class=\\"mw-redirect\\" title=\\"Media (arts)\\" href=\\"https://en.wikipedia.org/wiki/Media_%28arts%29\\">medium</a> is <a title=\\"Sound\\" href=\\"https://en.wikipedia.org/wiki/Sound\\">sound</a>. Generally, a <b><a title=\\"Song\\" href=\\"https://en.wikipedia.org/wiki/Song\\">song</a></b> is considered the smallest standalone work of music, especially when involving <a title=\\"Singing\\" href=\\"https://en.wikipedia.org/wiki/Singing\\">singing</a>.</p>', '2', 'Music is an art form whose medium is sound. ', '2', '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-music\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
   (33, 4, '<p>A <b>toy</b> is an item that can be used for <a title=\\"Play (activity)\\" href=\\"https://en.wikipedia.org/wiki/Play_%28activity%29\\">play</a>. Toys are generally played with by <a title=\\"Child\\" href=\\"https://en.wikipedia.org/wiki/Child\\">children</a> and <a title=\\"Pet\\" href=\\"https://en.wikipedia.org/wiki/Pet\\">pets</a>. Playing with toys is an enjoyable means of training the young for life in society. Different materials are used to make toys enjoyable to both young and old.</p>', '2', 'A toy is an item that can be used for play. Toys are generally played with by children and pets.', '2', '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-rocket\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
-  (34, 5,
-   '<p><b>Home improvement</b>, <b>home renovation</b> or <b>remodeling</b> is the process of <a title=\\"Renovation\\" href=\\"https://en.wikipedia.org/wiki/Renovation\\">renovating</a> or making additions to one\\''s home. <a title=\\"Building material\\" href=\\"https://en.wikipedia.org/wiki/Building_material\\">Building materials</a> and hardware for home improvement projects are typically purchased at <a class=\\"mw-redirect\\" title=\\"Home improvement store\\" href=\\"https://en.wikipedia.org/wiki/Home_improvement_store\\">home improvement stores</a>.</p>',
-   '2', 'Home improvement, home renovation or remodeling is the process of renovating or making additions to one\\''s home. ', '2',
-   '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-home\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
-  (36, 1,
-   '<p>A <b>car</b> is a wheeled, self-powered <a title=\\"Motor vehicle\\" href=\\"https://en.wikipedia.org/wiki/Motor_vehicle\\">motor vehicle</a> used for <a class=\\"mw-redirect\\" title=\\"Transportation\\" href=\\"https://en.wikipedia.org/wiki/Transportation\\">transportation</a>. Most definitions of the term specify that cars are designed to run primarily on roads, to have seating for one to eight people, to typically have four wheels, and to be constructed principally for the transport of people rather than goods.</p>',
-   '2', 'A car is a wheeled, self-powered motor vehicle used for transportation. ', '2',
-   '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-truck\\'',\\''font\\'':\\''font-awesome-3\\''}', '2');
+  (34, 5, '<p><b>Home improvement</b>, <b>home renovation</b> or <b>remodeling</b> is the process of <a title=\\"Renovation\\" href=\\"https://en.wikipedia.org/wiki/Renovation\\">renovating</a> or making additions to one\\''s home. <a title=\\"Building material\\" href=\\"https://en.wikipedia.org/wiki/Building_material\\">Building materials</a> and hardware for home improvement projects are typically purchased at <a class=\\"mw-redirect\\" title=\\"Home improvement store\\" href=\\"https://en.wikipedia.org/wiki/Home_improvement_store\\">home improvement stores</a>.</p>', '2', 'Home improvement, home renovation or remodeling is the process of renovating or making additions to one\\''s home. ', '2', '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-home\\'',\\''font\\'':\\''font-awesome-3\\''}', '2'),
+  (36, 1, '<p>A <b>car</b> is a wheeled, self-powered <a title=\\"Motor vehicle\\" href=\\"https://en.wikipedia.org/wiki/Motor_vehicle\\">motor vehicle</a> used for <a class=\\"mw-redirect\\" title=\\"Transportation\\" href=\\"https://en.wikipedia.org/wiki/Transportation\\">transportation</a>. Most definitions of the term specify that cars are designed to run primarily on roads, to have seating for one to eight people, to typically have four wheels, and to be constructed principally for the transport of people rather than goods.</p>', '2', 'A car is a wheeled, self-powered motor vehicle used for transportation. ', '2', '{\\''element\\'':\\''i\\'',\\''class\\'':\\''icon-truck\\'',\\''font\\'':\\''font-awesome-3\\''}', '2');
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_config` (
   `sKey`     VARCHAR(150) NOT NULL DEFAULT '',
@@ -128,9 +118,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_config` (
   COLLATE = utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`, `cSection`) VALUES
-  ('allowed_attributes_array',
-   'YTo4OntpOjA7czo1OiJjbGFzcyI7aToxO3M6MjoiaWQiO2k6MjtzOjU6InN0eWxlIjtpOjM7czo0OiJocmVmIjtpOjQ7czozOiJzcmMiO2k6NTtzOjQ6Im5hbWUiO2k6NjtzOjM6ImFsdCI7aTo3O3M6NToidGl0bGUiO30=',
-   0, 0, 'html'),
+  ('allowed_attributes_array', 'YTo4OntpOjA7czo1OiJjbGFzcyI7aToxO3M6MjoiaWQiO2k6MjtzOjU6InN0eWxlIjtpOjM7czo0OiJocmVmIjtpOjQ7czozOiJzcmMiO2k6NTtzOjQ6Im5hbWUiO2k6NjtzOjM6ImFsdCI7aTo3O3M6NToidGl0bGUiO30=', 0, 0, 'html'),
   ('allowed_attributes_array', 'YTo4OntpOjA7czo1OiJjbGFzcyI7aToxO3M6MjoiaWQiO2k6MjtzOjU6InN0eWxlIjtpOjM7czo0OiJocmVmIjtpOjQ7czozOiJzcmMiO2k6NTtzOjQ6Im5hbWUiO2k6NjtzOjM6ImFsdCI7aTo3O3M6NToidGl0bGUiO30=', 1, 0, 'html'),
   ('allowed_tags_array', 'YToxNzp7aTowO3M6MToiYSI7aToxO3M6MToicCI7aToyO3M6MjoiYnIiO2k6MztzOjI6ImhyIjtpOjQ7czozOiJkaXYiO2k6NTtzOjI6ImxpIjtpOjY7czoyOiJ1bCI7aTo3O3M6NDoic3BhbiI7aTo4O3M6NToidGFibGUiO2k6OTtzOjI6InRyIjtpOjEwO3M6MjoidGQiO2k6MTE7czozOiJpbWciO2k6MTI7czoyOiJoMSI7aToxMztzOjI6ImgyIjtpOjE0O3M6MjoiaDMiO2k6MTU7czoyOiJoNCI7aToxNjtzOjI6Img1Ijt9', 0, 0, 'html'),
   ('allowed_tags_array', 'YToxNzp7aTowO3M6MToiYSI7aToxO3M6MToicCI7aToyO3M6MjoiYnIiO2k6MztzOjI6ImhyIjtpOjQ7czozOiJkaXYiO2k6NTtzOjI6ImxpIjtpOjY7czoyOiJ1bCI7aTo3O3M6NDoic3BhbiI7aTo4O3M6NToidGFibGUiO2k6OTtzOjI6InRyIjtpOjEwO3M6MjoidGQiO2k6MTE7czozOiJpbWciO2k6MTI7czoyOiJoMSI7aToxMztzOjI6ImgyIjtpOjE0O3M6MjoiaDMiO2k6MTU7czoyOiJoNCI7aToxNjtzOjI6Img1Ijt9', 1, 0, 'html'),
@@ -241,9 +229,9 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
   `errSect`      VARCHAR(50)  NOT NULL,
   `errUid`       INT(11)      NOT NULL,
   `errIp`        VARCHAR(15)  NOT NULL,
-  `errRef`       VARCHAR(255) NOT NULL,
-  `errUa`        VARCHAR(255) NOT NULL,
-  `errReq`       VARCHAR(255) NOT NULL,
+  `errRef`       TEXT NOT NULL,
+  `errUa`        TEXT NOT NULL,
+  `errReq`       TEXT NOT NULL,
   `errCont`      TEXT         NOT NULL,
   `errBacktrace` TEXT         NOT NULL,
   PRIMARY KEY (`eid`)
@@ -279,12 +267,12 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
   `showIn`            ENUM ('both', 'details', 'vcard', 'hidden') NOT NULL DEFAULT 'both',
   `allowedAttributes` TEXT                                        NOT NULL,
   `allowedTags`       TEXT                                        NOT NULL,
-  `editor`            VARCHAR(255)                                NOT NULL,
+  `editor`            VARCHAR(190)                                NOT NULL,
   `inSearch`          TINYINT(4)                                  NOT NULL DEFAULT '1',
   `withLabel`         TINYINT(4)                                  NOT NULL,
   `cssClass`          VARCHAR(50)                                 NOT NULL,
   `parse`             TINYINT(4)                                  NOT NULL,
-  `template`          VARCHAR(255)                                NOT NULL,
+  `template`          VARCHAR(190)                                NOT NULL,
   `notice`            VARCHAR(150)                                NOT NULL,
   `params`            TEXT                                        NOT NULL,
   `defaultValue`      TEXT                                        NOT NULL,
@@ -1364,15 +1352,15 @@ INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
   `id`          INT(11)      NOT NULL AUTO_INCREMENT,
-  `nid`         VARCHAR(255) NOT NULL,
-  `name`        VARCHAR(250)          DEFAULT NULL,
+  `nid`         VARCHAR(190) NOT NULL,
+  `name`        VARCHAR(190)          DEFAULT NULL,
   `approved`    TINYINT(1)            DEFAULT NULL,
   `confirmed`   TINYINT(1)            DEFAULT NULL,
   `counter`     INT(11)      NOT NULL DEFAULT '0',
   `cout`        INT(11)               DEFAULT NULL,
   `coutTime`    DATETIME              DEFAULT NULL,
   `createdTime` DATETIME              DEFAULT NULL,
-  `defURL`      VARCHAR(250)          DEFAULT NULL,
+  `defURL`      VARCHAR(190)          DEFAULT NULL,
   `metaDesc`    TEXT,
   `metaKeys`    TEXT,
   `metaAuthor`  VARCHAR(150) NOT NULL,
@@ -1384,7 +1372,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
   `params`      TEXT,
   `parent`      INT(11)               DEFAULT NULL,
   `state`       TINYINT(4)   NOT NULL,
-  `stateExpl`   VARCHAR(250)          DEFAULT NULL,
+  `stateExpl`   MEDIUMTEXT          DEFAULT NULL,
   `updatedTime` DATETIME     NOT NULL,
   `updater`     INT(11)               DEFAULT NULL,
   `updaterIP`   VARCHAR(15)           DEFAULT NULL,
@@ -1580,11 +1568,11 @@ INSERT IGNORE INTO `#__sobipro_permissions_map` (`rid`, `sid`, `pid`) VALUES
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_rules` (
   `rid`        INT(11)      NOT NULL AUTO_INCREMENT,
-  `name`       VARCHAR(250) NOT NULL,
+  `name`       VARCHAR(190) NOT NULL,
   `nid`        VARCHAR(50)  NOT NULL,
   `validSince` DATETIME     NOT NULL,
   `validUntil` DATETIME     NOT NULL,
-  `note`       VARCHAR(250) NOT NULL,
+  `note`       MEDIUMTEXT NOT NULL,
   `state`      TINYINT(4)   NOT NULL,
   PRIMARY KEY (`rid`)
 )
@@ -1603,7 +1591,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
   `version`     VARCHAR(50)  NOT NULL,
   `description` TEXT,
   `author`      VARCHAR(150) DEFAULT NULL,
-  `authorURL`   VARCHAR(250) DEFAULT NULL,
+  `authorURL`   VARCHAR(190) DEFAULT NULL,
   `authorMail`  VARCHAR(150) DEFAULT NULL,
   `enabled`     TINYINT(1)   DEFAULT NULL,
   `type`        VARCHAR(100) NOT NULL,

@@ -15,11 +15,11 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (
   `fileName`   VARCHAR(100) NOT NULL,
   `task`       VARCHAR(100) NOT NULL,
   `site`       INT(11)      NOT NULL,
-  `request`    VARCHAR(255) NOT NULL,
+  `request`    VARCHAR(190) NOT NULL,
   `language`   VARCHAR(15)  NOT NULL,
   `template`   VARCHAR(150) NOT NULL,
   `configFile` TEXT         NOT NULL,
-  `userGroups` VARCHAR(200) NOT NULL,
+  `userGroups` VARCHAR(190) NOT NULL,
   `created`    DATETIME     NOT NULL,
   PRIMARY KEY (`cid`),
   KEY `sid` (`sid`),
@@ -84,9 +84,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_config` (
   COLLATE = utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `#__sobipro_config` (`sKey`, `sValue`, `section`, `critical`, `cSection`) VALUES
-  ('allowed_attributes_array',
-   'YTo4OntpOjA7czo1OiJjbGFzcyI7aToxO3M6MjoiaWQiO2k6MjtzOjU6InN0eWxlIjtpOjM7czo0OiJocmVmIjtpOjQ7czozOiJzcmMiO2k6NTtzOjQ6Im5hbWUiO2k6NjtzOjM6ImFsdCI7aTo3O3M6NToidGl0bGUiO30=',
-   0, 0, 'html'),
+  ('allowed_attributes_array', 'YTo4OntpOjA7czo1OiJjbGFzcyI7aToxO3M6MjoiaWQiO2k6MjtzOjU6InN0eWxlIjtpOjM7czo0OiJocmVmIjtpOjQ7czozOiJzcmMiO2k6NTtzOjQ6Im5hbWUiO2k6NjtzOjM6ImFsdCI7aTo3O3M6NToidGl0bGUiO30=', 0, 0, 'html'),
   ('allowed_tags_array', 'YToxNzp7aTowO3M6MToiYSI7aToxO3M6MToicCI7aToyO3M6MjoiYnIiO2k6MztzOjI6ImhyIjtpOjQ7czozOiJkaXYiO2k6NTtzOjI6ImxpIjtpOjY7czoyOiJ1bCI7aTo3O3M6NDoic3BhbiI7aTo4O3M6NToidGFibGUiO2k6OTtzOjI6InRyIjtpOjEwO3M6MjoidGQiO2k6MTE7czozOiJpbWciO2k6MTI7czoyOiJoMSI7aToxMztzOjI6ImgyIjtpOjE0O3M6MjoiaDMiO2k6MTU7czoyOiJoNCI7aToxNjtzOjI6Img1Ijt9', 0, 0, 'html'),
   ('alphamenu_extra_fields_array', '', 0, 0, 'alphamenu_extra_fields_array'),
   ('compress_js', '0', 0, 0, 'cache'),
@@ -125,9 +123,9 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_errors` (
   `errSect`      VARCHAR(50)  NOT NULL,
   `errUid`       INT(11)      NOT NULL,
   `errIp`        VARCHAR(15)  NOT NULL,
-  `errRef`       VARCHAR(255) NOT NULL,
-  `errUa`        VARCHAR(255) NOT NULL,
-  `errReq`       VARCHAR(255) NOT NULL,
+  `errRef`       TEXT NOT NULL,
+  `errUa`        TEXT NOT NULL,
+  `errReq`       TEXT NOT NULL,
   `errCont`      TEXT         NOT NULL,
   `errBacktrace` TEXT         NOT NULL,
   PRIMARY KEY (`eid`)
@@ -163,12 +161,12 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field` (
   `showIn`            ENUM ('both', 'details', 'vcard', 'hidden') NOT NULL DEFAULT 'both',
   `allowedAttributes` TEXT                                        NOT NULL,
   `allowedTags`       TEXT                                        NOT NULL,
-  `editor`            VARCHAR(255)                                NOT NULL,
+  `editor`            VARCHAR(190)                                NOT NULL,
   `inSearch`          TINYINT(4)                                  NOT NULL DEFAULT '1',
   `withLabel`         TINYINT(4)                                  NOT NULL,
   `cssClass`          VARCHAR(50)                                 NOT NULL,
   `parse`             TINYINT(4)                                  NOT NULL,
-  `template`          VARCHAR(255)                                NOT NULL,
+  `template`          VARCHAR(190)                                NOT NULL,
   `notice`            VARCHAR(150)                                NOT NULL,
   `params`            TEXT                                        NOT NULL,
   `defaultValue`      TEXT                                        NOT NULL,
@@ -309,34 +307,25 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_language` (
   COLLATE = utf8mb4_unicode_ci;
 
 
-INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`)
-VALUES
-  ('bankdata',
-   '<p>Payment Subject: "Entry #{entry.id} in {section.name} at {cfg:site_name}."</p>\r\n<ul>\r\n<li>Account Owner: Jon Doe </li>\r\n<li>Account No.: 8274230479 </li>\r\n<li>Bank No.: 8038012380 </li>\r\n<li>IBAN: 234242343018 </li>\r\n<li>BIC: 07979079779ABCDEFGH</li>\r\n</ul>',
-   1, 'en-GB', 'application', 0, 1, '', '', ''),
-  ('ppexpl', '<p>Please click on the button below to pay via Paypal.</p>\r\n<p> </p>', 1, 'en-GB', 'application', 0, 1,
-   '', '', ''),
-  ('ppsubject', 'Entry #{entry.id} in {section.name} at {cfg:site_name}.', 1, 'en-GB', 'application', 0, 1, '', '', ''),
-  ('rejection-of-a-new-entry',
-   'Entry {entry.name} has been rejected as it does not comply with the rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n',
-   0, 'en-GB',
-   'rejections-templates', 0, 1, '', '', ''),
-  ('rejection-of-changes',
-   'Changes in {entry.name} discarded as these changes violating rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}\n',
-   0, 'en-GB', 'rejections-templates', 0, 1, '', '', '');
+INSERT IGNORE INTO `#__sobipro_language` (`sKey`, `sValue`, `section`, `language`, `oType`, `fid`, `id`, `params`, `options`, `explanation`) VALUES
+('bankdata', '<p>Payment Subject: "Entry #{entry.id} in {section.name} at {cfg:site_name}."</p>\r\n<ul>\r\n<li>Account Owner: Jon Doe </li>\r\n<li>Account No.: 8274230479 </li>\r\n<li>Bank No.: 8038012380 </li>\r\n<li>IBAN: 234242343018 </li>\r\n<li>BIC: 07979079779ABCDEFGH</li>\r\n</ul>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
+('ppexpl', '<p>Please click on the button below to pay via Paypal.</p>\r\n<p> </p>', 1, 'en-GB', 'application', 0, 1, '', '', ''),
+('ppsubject', 'Entry #{entry.id} in {section.name} at {cfg:site_name}.', 1, 'en-GB', 'application', 0, 1, '', '', ''),
+('rejection-of-a-new-entry', 'Entry {entry.name} has been rejected as it does not comply with the rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}.\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', ''),
+('rejection-of-changes', 'Changes in {entry.name} discarded as these changes violating rules.\n\n<br/>Rejected by {user.name}\n<br/>at {date%d F Y H:i:s}.\n', 0, 'en-GB', 'rejections-templates', 0, 1, '', '', ''),
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
   `id`          INT(11)      NOT NULL AUTO_INCREMENT,
-  `nid`         VARCHAR(255) NOT NULL,
-  `name`        VARCHAR(250)          DEFAULT NULL,
+  `nid`         VARCHAR(190) NOT NULL,
+  `name`        VARCHAR(190)          DEFAULT NULL,
   `approved`    TINYINT(1)            DEFAULT NULL,
   `confirmed`   TINYINT(1)            DEFAULT NULL,
   `counter`     INT(11)      NOT NULL DEFAULT '0',
   `cout`        INT(11)               DEFAULT NULL,
   `coutTime`    DATETIME              DEFAULT NULL,
   `createdTime` DATETIME              DEFAULT NULL,
-  `defURL`      VARCHAR(250)          DEFAULT NULL,
+  `defURL`      VARCHAR(190)          DEFAULT NULL,
   `metaDesc`    TEXT,
   `metaKeys`    TEXT,
   `metaAuthor`  VARCHAR(150) NOT NULL,
@@ -348,7 +337,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_object` (
   `params`      TEXT,
   `parent`      INT(11)               DEFAULT NULL,
   `state`       TINYINT(4)   NOT NULL,
-  `stateExpl`   VARCHAR(250)          DEFAULT NULL,
+  `stateExpl`   MEDIUMTEXT          DEFAULT NULL,
   `updatedTime` DATETIME     NOT NULL,
   `updater`     INT(11)               DEFAULT NULL,
   `updaterIP`   VARCHAR(15)           DEFAULT NULL,
@@ -393,10 +382,10 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_payments` (
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions` (
   `pid`       INT(11)     NOT NULL AUTO_INCREMENT,
-  `subject`   VARCHAR(150)         DEFAULT NULL UNIQUE,
-  `action`    VARCHAR(50)          DEFAULT NULL UNIQUE,
-  `value`     VARCHAR(50) NOT NULL UNIQUE,
-  `site`      VARCHAR(50) NOT NULL UNIQUE,
+  `subject`   VARCHAR(150)         DEFAULT NULL,
+  `action`    VARCHAR(50)          DEFAULT NULL,
+  `value`     VARCHAR(50) NOT NULL,
+  `site`      VARCHAR(50) NOT NULL,
   `published` TINYINT(1)  NOT NULL,
   PRIMARY KEY (`pid`)
 )
@@ -445,6 +434,10 @@ INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`
   (98, 'entry', 'approve', '*', 'adm', 1),
   (99, 'entry', 'publish', '*', 'adm', 1);
 
+DELETE FROM `#__sobipro_permissions`
+WHERE `pid` = 5;
+ALTER TABLE `#__sobipro_permissions`
+  ADD UNIQUE `uniquePermission` (`subject`, `action`, `value`, `site`);
 INSERT IGNORE INTO `#__sobipro_permissions` (`pid`, `subject`, `action`, `value`, `site`, `published`) VALUES
   (NULL, 'section', 'search', '*', 'front', 1),
   (NULL, 'entry', 'delete', 'own', 'front', 1),
@@ -476,11 +469,11 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_map` (
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_permissions_rules` (
   `rid`        INT(11)      NOT NULL AUTO_INCREMENT,
-  `name`       VARCHAR(250) NOT NULL,
+  `name`       VARCHAR(190) NOT NULL,
   `nid`        VARCHAR(50)  NOT NULL,
   `validSince` DATETIME     NOT NULL,
   `validUntil` DATETIME     NOT NULL,
-  `note`       VARCHAR(250) NOT NULL,
+  `note`       MEDIUMTEXT NOT NULL,
   `state`      TINYINT(4)   NOT NULL,
   PRIMARY KEY (`rid`)
 )
@@ -496,7 +489,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
   `version`     VARCHAR(50)  NOT NULL,
   `description` TEXT,
   `author`      VARCHAR(150) DEFAULT NULL,
-  `authorURL`   VARCHAR(250) DEFAULT NULL,
+  `authorURL`   VARCHAR(190) DEFAULT NULL,
   `authorMail`  VARCHAR(150) DEFAULT NULL,
   `enabled`     TINYINT(1)   DEFAULT NULL,
   `type`        VARCHAR(100) NOT NULL,
@@ -507,10 +500,8 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_plugins` (
   COLLATE = utf8mb4_unicode_ci
   DEFAULT CHARSET = utf8mb4;
 
-INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`)
-VALUES
-  ('bank_transfer', 'Offline Payment', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1,
-   'payment', ''),
+INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES
+  ('bank_transfer', 'Offline Payment', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'payment', ''),
   ('paypal', 'PayPal', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'payment', ''),
   ('chbxgroup', 'Check Box Group', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('email', 'Email', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
@@ -521,8 +512,7 @@ VALUES
   ('select', 'Single Select List', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('textarea', 'Text Area', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('url', 'URL', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
-  ('category', 'Category', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field',
-   ''),
+  ('category', 'Category', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('info', 'Information', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', ''),
   ('button', 'Button', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');
 
@@ -572,8 +562,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_registry` (
   COLLATE = utf8mb4_unicode_ci;
 
 INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `description`, `options`) VALUES
-  ('fields_filter', 'website_full', 'Website with Protocol',
-   'L15odHRwKHMpPzpcL1wvW1x3XC4tXStcLnsxfVthLXpBLVpdezIsNX0oXC9bXlxzXSopPyQv',
+  ('fields_filter', 'website_full', 'Website with Protocol', 'L15odHRwKHMpPzpcL1wvW1x3XC4tXStcLnsxfVthLXpBLVpdezIsNX0oXC9bXlxzXSopPyQv',
    'Please enter a valid URL address in the $field field!', ''),
   ('fields_filter', 'website', 'Website w/o Protocol', 'L15bXHdcLi1dK1wuezF9W2EtekEtWl17Miw1fShcL1teXHNdKik/JC8=', 'Please enter a valid website address without the protocol in the $field field!', ''),
   ('fields_filter', 'title', 'Valid Title', 'L15bXHdcZF0rW1x3XGRccyFAXCRcJVwmXCpcIlwnXC1cK19dKiQv', 'The data entered in the $field field contains not allowed characters!', 'custom'),
@@ -591,11 +580,9 @@ INSERT IGNORE INTO `#__sobipro_registry` (`section`, `key`, `value`, `params`, `
   ('paypal', 'ppemail', 'change@me.com', '', '', ''),
   ('paypal', 'pploc', '1', '', '', ''),
   ('rejections-templates', 'rejection-of-a-new-entry', 'Rejection of a new entry',
-   'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjoxO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjA7czo5OiJ1bnB1Ymxpc2giO2I6MTtzOjc6ImRpc2NhcmQiO2I6MDt9',
-   '', ''),
+   'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjoxO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjA7czo5OiJ1bnB1Ymxpc2giO2I6MTtzOjc6ImRpc2NhcmQiO2I6MDt9', '', ''),
   ('rejections-templates', 'rejection-of-changes', 'Rejection of changes',
-   'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjowO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjE7czo5OiJ1bnB1Ymxpc2giO2I6MDtzOjc6ImRpc2NhcmQiO2I6MTt9',
-   '', '');
+   'YTo0OntzOjE3OiJ0cmlnZ2VyLnVucHVibGlzaCI7YjowO3M6MTc6InRyaWdnZXIudW5hcHByb3ZlIjtiOjE7czo5OiJ1bnB1Ymxpc2giO2I6MDtzOjc6ImRpc2NhcmQiO2I6MTt9', '', '');
 
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_relations` (
@@ -615,8 +602,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_relations` (
 
 CREATE TABLE IF NOT EXISTS `#__sobipro_search` (
   `ssid`           DOUBLE    NOT NULL,
-  `lastActive`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-  ON UPDATE CURRENT_TIMESTAMP,
+  `lastActive`     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `searchCreated`  TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
   `requestData`    TEXT      NOT NULL,
   `uid`            INT(11)   NOT NULL,

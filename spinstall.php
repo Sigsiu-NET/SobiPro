@@ -144,17 +144,13 @@ class com_sobiproInstallerScript
 		}
 
 		$dest = JPATH_ROOT . '/images/sobipro/categories/image.png';
-		$src = JPATH_ROOT . '/media/sobipro/images/image.png';
-		if ( !(file_exists( $dest )) && file_exists($src)) {
-			JFile::copy( $src, $dest );
+		if ( !(file_exists( $dest )) && file_exists( JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png' ) ) {
+			JFile::move( JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png', JPATH_ROOT . '/images/sobipro/categories/image.png' );
 		}
 
 
-
 		$db = JFactory::getDBO();
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (`cid` INT(11) NOT NULL AUTO_INCREMENT, `section` INT(11) NOT NULL, `sid` INT(11) NOT NULL, `fileName` VARCHAR(100) NOT NULL, `task` VARCHAR(100) NOT NULL, `site` INT(11) NOT NULL, `request` VARCHAR(255) NOT NULL, `language` VARCHAR(15) NOT NULL, `template` VARCHAR(150) NOT NULL, `configFile` TEXT NOT NULL, `userGroups` VARCHAR(200) NOT NULL, `created` DATETIME NOT NULL, PRIMARY KEY (`cid`), KEY `sid` (`sid`), KEY `section` (`section`), KEY `language` (`language`), KEY `task` (`task`), KEY `request` (`request`), KEY `site` (`site`), KEY `userGroups` (`userGroups`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-'
-		);
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (`cid` INT(11) NOT NULL AUTO_INCREMENT, `section` INT(11) NOT NULL, `sid` INT(11) NOT NULL, `fileName` VARCHAR(100) NOT NULL, `task` VARCHAR(100) NOT NULL, `site` INT(11) NOT NULL, `request` VARCHAR(190) NOT NULL, `language` VARCHAR(15) NOT NULL, `template` VARCHAR(150) NOT NULL, `configFile` TEXT NOT NULL, `userGroups` VARCHAR(190) NOT NULL, `created` DATETIME NOT NULL, PRIMARY KEY (`cid`), KEY `sid` (`sid`), KEY `section` (`section`), KEY `language` (`language`), KEY `task` (`task`), KEY `request` (`request`), KEY `site` (`site`), KEY `userGroups` (`userGroups`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;' );
 		$db->execute();
 
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (`cid` INT(11) NOT NULL, `sid` INT(11) NOT NULL, PRIMARY KEY (`cid`, `sid`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;' );

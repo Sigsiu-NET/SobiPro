@@ -37,6 +37,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
    	(#) Added paragraph to response message in SAM (Issue #92)
    	(#) Reverted previous commits for #90 and #91 as it didn't help
    	(#) JFolder:: delete: The path is not a folder. (Issue #95)
+   	(#) 'Specified key was too long; max key length is 767 bytes' (Issue #96)
    	
    	
 ### 1.4.7.1 (4 May 2018)
