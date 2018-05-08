@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.3.0" method="upgrade" overwrite="true">
 	<name>SobiPro</name>
-	<creationDate>07 May 2018</creationDate>
+	<creationDate>08 May 2018</creationDate>
 	<author>Sigsiu.NET GmbH</author>
 	<authorEmail>sobi[at]sigsiu.net</authorEmail>
 	<authorUrl>https://www.Sigsiu.NET</authorUrl>
@@ -37,8 +37,8 @@
 		<filename>metadata.xml</filename>
 		<filename>gplv3.txt</filename>
 		<filename>gplv3addterms.txt</filename>
-		<filename>.htaccess</filename>
 		<filename>Sobi.phar.tar.gz</filename>
+		<filename>.htaccess</filename>
 	</files>
 	<languages>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.ini</language>

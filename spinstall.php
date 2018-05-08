@@ -53,26 +53,26 @@ class com_sobiproInstallerScript
 	/**
 	 * Called after any type of action
 	 *
-	 * @param   string  $route  Which action is happening (install|uninstall|discover_install|update)
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 * @param   string $route Which action is happening (install|uninstall|discover_install|update)
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 *
 	 * @return  boolean  True on success
 	 */
-//	public function postflight($route, JAdapterInstance $adapter)
-//	{
-//		echo '<p>' . JText::_('COM_HELLOWORLD_POSTFLIGHT_' . $type . '_TEXT') . '</p>';
-//
-//	}
+	public function postflight( $route, JAdapterInstance $adapter )
+	{
+		echo '<p>' . JText::_( 'COM_HELLOWORLD_POSTFLIGHT_' . $route . '_TEXT' ) . '</p>';
+
+	}
 
 
 	/**
 	 * Called on update
 	 *
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 *
 	 * @return  boolean  True on success
 	 */
-	public function update(JAdapterInstance $adapter)
+	public function update( JAdapterInstance $adapter )
 //	public function update( $parent )
 	{
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) ) ) {
@@ -101,7 +101,7 @@ class com_sobiproInstallerScript
 			$dest = JPATH_ROOT . '/images/sobipro/categories';
 			if ( count( $files ) ) {
 				foreach ( $files as $file ) {
-					if ( $file != '.' && $file != '..' && $file != 'Mime') {
+					if ( $file != '.' && $file != '..' && $file != 'Mime' ) {
 						if ( is_dir( $srcpath . '/' . $file ) ) {
 							JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file, '', true );
 						}
@@ -117,7 +117,7 @@ class com_sobiproInstallerScript
 		if ( file_exists( $srcpath ) ) {
 			$files = scandir( $srcpath );
 
-			if ($files != 'clustermarker') {
+			if ( $files != 'clustermarker' ) {
 				$dest = JPATH_ROOT . '/images/sobipro/categories';
 				if ( count( $files ) ) {
 					foreach ( $files as $file ) {
@@ -135,7 +135,7 @@ class com_sobiproInstallerScript
 		}
 
 		$dest = JPATH_ROOT . '/images/sobipro/categories/image.png';
-		if ( !(file_exists( $dest )) && file_exists( JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png' ) ) {
+		if ( !( file_exists( $dest ) ) && file_exists( JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png' ) ) {
 			JFile::move( JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png', JPATH_ROOT . '/images/sobipro/categories/image.png' );
 		}
 
@@ -368,7 +368,6 @@ class com_sobiproInstallerScript
 		catch ( Exception $x ) {
 		}
 
-
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.4.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$this->installFramework();
 
@@ -376,19 +375,19 @@ class com_sobiproInstallerScript
 <p>You can install languages directly from our <a href="index.php?option=com_sobipro&task=extensions.browse"><strong>Repository</strong></a> or download them from our <a href="https://www.sigsiu.net/center/languages"><strong>website</strong></a> and install it in the <a href="index.php?option=com_sobipro&task=extensions.installed"><strong>SobiPro Application Manager</strong></a>.</p></div>';
 
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px; padding-top: 10px;"></iframe>';
+
+		return true;
 	}
-
-
 
 
 	/**
 	 * Called on installation
 	 *
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 *
 	 * @return  boolean  True on success
 	 */
-	public function install(JAdapterInstance $adapter)
+	public function install( JAdapterInstance $adapter )
 //	public function install( $parent )
 	{
 		if ( !( file_exists( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) ) ) ) {
@@ -429,6 +428,9 @@ class com_sobiproInstallerScript
 <p>You can install languages directly from our <a href="index.php?option=com_sobipro&task=extensions.browse"><strong>Repository</strong></a> or download them from our <a href="https://www.sigsiu.net/center/languages"><strong>website</strong></a> and install it in the <a href="index.php?option=com_sobipro&task=extensions.installed"><strong>SobiPro Application Manager</strong></a>.</p></div>';
 
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px; padding-top: 10px;"></iframe>';
+
+		return true;
+
 	}
 
 	protected function installPlugins( $source )
@@ -449,9 +451,9 @@ class com_sobiproInstallerScript
 	/**
 	 * Called on uninstallation
 	 *
-	 * @param   JAdapterInstance  $adapter  The object responsible for running this script
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 */
-	public function uninstall(JAdapterInstance $adapter)
+	public function uninstall( JAdapterInstance $adapter )
 //	public function uninstall( $parent )
 	{
 		echo '<h2>Un-Installing SobiPro ...</h2>';
@@ -472,28 +474,50 @@ class com_sobiproInstallerScript
 	protected function installFramework()
 	{
 		//Sobi Framework installation
-		if ( !( file_exists( JPATH_ROOT . '/libraries/sobi' ) ) ) {
-			JFolder::create( JPATH_ROOT . '/libraries/sobi' );
+		$libpath = JPATH_ROOT . '/libraries/sobi';
+		if ( !( file_exists( $libpath ) ) ) {
+			JFolder::create( $libpath );
 		}
-		$files = scandir( JPATH_ROOT . '/libraries/sobi' );
-		if ( count( $files ) ) {
-			foreach ( $files as $file ) {
-				if ( strstr( $file, '.tar.gz' ) || strstr( $file, '.php' ) ) {
-					JFile::delete( JPATH_ROOT . '/libraries/sobi/' . $file );
+		else {
+			$files = scandir( $libpath );
+			if ( count( $files ) ) {
+				foreach ( $files as $file ) {
+					if ( strstr( $file, '.tar.gz' ) || strstr( $file, '.php' ) ) {
+						JFile::delete( $libpath . '/' . $file );
+					}
 				}
 			}
 		}
-		JFile::copy( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz' );
-		JFile::delete( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz' );
+		$src = JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz';
+		$framework = $libpath . "/Sobi-" . SOBI_FRAMEWORK_VERSION . ".phar.tar.gz";
+		if ( file_exists( $src ) ) {
+			JFile::copy( $src, $framework );
+			JFile::delete( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz' );
+		}
+		else {
+			echo "<p style=\"font-size: 15px;color: #d70303;\">Framework file " . $src . " does not exist.</p>";
+			return false;
+		}
+
 		// I am guessing that this was what cached the PHAR file. Let's see...
 		if ( function_exists( 'opcache_reset' ) ) {
 			opcache_reset();
 		}
 
-		@include_once 'phar://' . JPATH_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz/Framework.php';
+		@include_once 'phar://' . $framework . '/Framework.php';
 		if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
-			$arch = new Joomla\Archive\Gzip();
-			$arch->extract( JPATH_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/' );
+
+			echo '<p style="font-size: 15px;color: #d70303;">It seems your server does not support PHAR, or PHAR is not usable.<br/>Please install the Sobi Framework manually as described in <a href="https://www.sigsiu.net/center/sobipro-component/154-sobi-framework" style="text-decoration: underline; color: #d70303;">Install the Sobi Framework manually</a>.</p>';
+
+//			echo '<p style="font-size: 15px">Class \\Sobi\\Framework does not exist. Unpacking the framework.</p>';
+//
+//			try {
+//				$arch = new Joomla\Archive\Gzip( );
+//				$arch->extract( $framework, $libpath );
+//			}
+//			catch ( Exception $x ) {
+//				echo '<p style="font-size: 17px;color: #d70303;">Failed to extract the SobiPro framework.</p>';
+//			}
 		}
 	}
 }

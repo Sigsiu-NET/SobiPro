@@ -31,13 +31,14 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
-### 1.4.7.2 (x May 2018)
+### 1.4.7.2 (8 May 2018)
 
    	(#) Setting incorrect task in listing (Issue #90 and #91)
    	(#) Added paragraph to response message in SAM (Issue #92)
    	(#) Reverted previous commits for #90 and #91 as it didn't help
    	(#) JFolder:: delete: The path is not a folder. (Issue #95)
    	(#) 'Specified key was too long; max key length is 767 bytes' (Issue #96)
+   	(#) Removed try to unpack the framework if no Phar support is available, as it does not work (Issue #95)
    	
    	
 ### 1.4.7.1 (4 May 2018)
