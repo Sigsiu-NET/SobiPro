@@ -60,8 +60,8 @@ class com_sobiproInstallerScript
 	 */
 	public function postflight( $route, JAdapterInstance $adapter )
 	{
-		echo '<p>' . JText::_( 'COM_HELLOWORLD_POSTFLIGHT_' . $route . '_TEXT' ) . '</p>';
-
+//		echo '<p>' . JText::_( 'COM_HELLOWORLD_POSTFLIGHT_' . $route . '_TEXT' ) . '</p>';
+//
 	}
 
 
@@ -514,14 +514,15 @@ class com_sobiproInstallerScript
 					$arch = new Joomla\Archive\Zip();
 					$arch->extract( $fwPackage, $libpath );
 					echo '<p style="font-size: 15px">Unpacked the Sobi Framework. Nevertheless, you should consider to install PHAR on your server.</p>';
+
+					if ( file_exists( $framework ) ) {
+						JFile::delete( $framework );
+					}
 				}
 				catch ( Exception $x ) {
-					echo '<p style="font-size: 17px;color: #d70303;">Failed to extract the Sobi Framework.<br/>Please install the Sobi Framework manually as described in <a href="https://www.sigsiu.net/center/sobipro-component/154-sobi-framework" style="text-decoration: underline; color: #d70303;">Install the Sobi Framework manually</a>.</p>';
+					echo '<p style="font-size: 17px;color: #d70303;">Failed to unpack the Sobi Framework.<br/>Please install the Sobi Framework manually as described in <a href="https://www.sigsiu.net/center/sobipro-component/154-sobi-framework" style="text-decoration: underline; color: #d70303;">Install the Sobi Framework manually</a>.</p>';
 				}
 				JFile::delete( $fwPackage );
-				if ( file_exists( $framework ) ) {
-					JFile::delete( $framework );
-				}
 			}
 			else {
 				echo '<p style="font-size: 15px;color: #d70303;">It seems your server does not support PHAR, or PHAR is not usable.<br/>Please install the Sobi Framework manually as described in <a href="https://www.sigsiu.net/center/sobipro-component/154-sobi-framework" style="text-decoration: underline; color: #d70303;">Install the Sobi Framework manually</a>.</p>';
