@@ -506,7 +506,7 @@ class com_sobiproInstallerScript
 		}
 
 		$fwPackage = JPATH_ROOT . '/components/com_sobipro/Sobi-Framework.zip';
-//		@include_once 'phar://' . $framework . '/Framework.php';
+		@include_once 'phar://' . $framework . '/Framework.php';
 		if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
 			if ( file_exists( $fwPackage ) ) {
 				echo '<p style="font-size: 15px">It seems your server does not support PHAR, or PHAR is not usable.</p>';
