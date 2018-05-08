@@ -7,7 +7,7 @@
 	<authorUrl>https://www.Sigsiu.NET</authorUrl>
 	<copyright>Copyright (C) 2006-2018 Sigsiu.NET GmbH</copyright>
 	<license>GNU General Public License v3</license>
-	<version>1.4.7.2</version>
+	<version>1.4.7.3</version>
 	<codename>Owl</codename>
 	<description>SobiPro directory component for Joomla!</description>
 	<version_number>1.4.6</version_number>
@@ -37,8 +37,9 @@
 		<filename>metadata.xml</filename>
 		<filename>gplv3.txt</filename>
 		<filename>gplv3addterms.txt</filename>
-		<filename>Sobi.phar.tar.gz</filename>
 		<filename>.htaccess</filename>
+		<filename>Sobi.phar.tar.gz</filename>
+		<filename>Sobi-Framework.zip</filename>
 	</files>
 	<languages>
 		<language tag="en-GB">Site/usr/locale/site/en-GB.com_sobipro.ini</language>

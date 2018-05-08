@@ -31,6 +31,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
+### 1.4.7.3 (x May 2018)
+
+	(#) Unpacking of Sobi Framework in case of missing Phar support works now (Issue #80)
+
+
 ### 1.4.7.2 (8 May 2018)
 
    	(#) Setting incorrect task in listing (Issue #90 and #91)

@@ -492,10 +492,11 @@ class com_sobiproInstallerScript
 		$framework = $libpath . "/Sobi-" . SOBI_FRAMEWORK_VERSION . ".phar.tar.gz";
 		if ( file_exists( $src ) ) {
 			JFile::copy( $src, $framework );
-			JFile::delete( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz' );
+			JFile::delete( $src );
 		}
 		else {
 			echo "<p style=\"font-size: 15px;color: #d70303;\">Framework file " . $src . " does not exist.</p>";
+
 			return false;
 		}
 
@@ -504,20 +505,32 @@ class com_sobiproInstallerScript
 			opcache_reset();
 		}
 
-		@include_once 'phar://' . $framework . '/Framework.php';
+		$fwPackage = JPATH_ROOT . '/components/com_sobipro/Sobi-Framework.zip';
+//		@include_once 'phar://' . $framework . '/Framework.php';
 		if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
-
-			echo '<p style="font-size: 15px;color: #d70303;">It seems your server does not support PHAR, or PHAR is not usable.<br/>Please install the Sobi Framework manually as described in <a href="https://www.sigsiu.net/center/sobipro-component/154-sobi-framework" style="text-decoration: underline; color: #d70303;">Install the Sobi Framework manually</a>.</p>';
-
-//			echo '<p style="font-size: 15px">Class \\Sobi\\Framework does not exist. Unpacking the framework.</p>';
-//
-//			try {
-//				$arch = new Joomla\Archive\Gzip( );
-//				$arch->extract( $framework, $libpath );
-//			}
-//			catch ( Exception $x ) {
-//				echo '<p style="font-size: 17px;color: #d70303;">Failed to extract the SobiPro framework.</p>';
-//			}
+			if ( file_exists( $fwPackage ) ) {
+				echo '<p style="font-size: 15px">It seems your server does not support PHAR, or PHAR is not usable.</p>';
+				try {
+					$arch = new Joomla\Archive\Zip();
+					$arch->extract( $fwPackage, $libpath );
+					echo '<p style="font-size: 15px">Unpacked the Sobi Framework. Nevertheless, you should consider to install PHAR on your server.</p>';
+				}
+				catch ( Exception $x ) {
+					echo '<p style="font-size: 17px;color: #d70303;">Failed to extract the Sobi Framework.<br/>Please install the Sobi Framework manually as described in <a href="https://www.sigsiu.net/center/sobipro-component/154-sobi-framework" style="text-decoration: underline; color: #d70303;">Install the Sobi Framework manually</a>.</p>';
+				}
+				JFile::delete( $fwPackage );
+				if ( file_exists( $framework ) ) {
+					JFile::delete( $framework );
+				}
+			}
+			else {
+				echo '<p style="font-size: 15px;color: #d70303;">It seems your server does not support PHAR, or PHAR is not usable.<br/>Please install the Sobi Framework manually as described in <a href="https://www.sigsiu.net/center/sobipro-component/154-sobi-framework" style="text-decoration: underline; color: #d70303;">Install the Sobi Framework manually</a>.</p>';
+			}
+		}
+		else {
+			if ( file_exists( $fwPackage ) ) {
+				JFile::delete( $fwPackage );
+			}
 		}
 	}
 }
