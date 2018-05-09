@@ -435,8 +435,9 @@ class SPField_Category extends SPFieldType implements SPFieldInterface
 
 	protected function loadCategories()
 	{
-		if ( ( !( $this->_cats ) || !( count( $this->_cats ) ) ) && SPLoader::path( 'etc.categories.' . Sobi::Lang( false ) . '-' . Sobi::Section(), 'front', true, 'json' ) ) {
-			$this->_cats = json_decode( SPFs::read( SPLoader::path( 'etc.categories.' . Sobi::Lang( false ) . '-' . Sobi::Section(), 'front', true, 'json' ) ), true );
+		$catFile = SPLoader::path( 'etc.categories' . Sobi::Lang( false ) . '-' . Sobi::Section(), 'front', true, 'json' );
+		if ( ( !( $this->_cats ) || !( count( $this->_cats ) ) ) && $catFile ) {
+			$this->_cats = json_decode( SPFs::read( $catFile ), true );
 		}
 		if ( !( $this->_cats ) || !( count( $this->_cats ) ) ) {
 			$this->_cats = SPFactory::cache()
