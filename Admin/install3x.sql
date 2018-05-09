@@ -352,7 +352,7 @@ CREATE TABLE IF NOT EXISTS `#__sobipro_field_data` (
   `enabled`     TINYINT(1)  NOT NULL,
   `params`      TEXT,
   `options`     TEXT,
-  `baseData`    TEXT,
+  `baseData`    LONGTEXT,
   `approved`    TINYINT(1) DEFAULT NULL,
   `confirmed`   TINYINT(1) DEFAULT NULL,
   `createdTime` DATETIME DEFAULT NULL,

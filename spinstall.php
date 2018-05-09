@@ -214,22 +214,31 @@ class com_sobiproInstallerScript
 
 		try {
 			$db->setQuery( 'ALTER TABLE #__sobipro_field_data CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
-            $db->execute();
+			$db->execute();
 			$db->setQuery( 'ALTER TABLE #__sobipro_language CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
 			$db->execute();
 		}
 		catch ( Exception $x ) {
 		}
-        try {
-            $db->setQuery( 'ALTER TABLE `__sobipro_language` CHANGE `params` `params` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
-            $db->execute();
-            $db->setQuery( 'ALTER TABLE `__sobipro_language` CHANGE `options` `options` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
-            $db->execute();
-            $db->setQuery( 'ALTER TABLE `__sobipro_language` CHANGE `explanation` `explanation` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
-            $db->execute();
-        }
-        catch ( Exception $x ) {
-        }
+		try {
+			$db->setQuery( 'ALTER TABLE #__sobipro_language CHANGE `sValue` `sValue` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+			$db->execute();
+			$db->setQuery( 'ALTER TABLE #__sobipro_language CHANGE `params` `params` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+			$db->execute();
+			$db->setQuery( 'ALTER TABLE #__sobipro_language CHANGE `options` `options` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+			$db->execute();
+			$db->setQuery( 'ALTER TABLE #__sobipro_language CHANGE `explanation` `explanation` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+			$db->execute();
+		}
+		catch ( Exception $x ) {
+		}
+
+		try {
+			$db->setQuery( 'ALTER TABLE #__sobipro_field_data CHANGE `baseData` `baseData` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+		}
+		catch ( Exception $x ) {
+		}
+
 
 		// Table __sobipro_field_data
 		try {
@@ -379,13 +388,13 @@ class com_sobiproInstallerScript
 		catch ( Exception $x ) {
 		}
 
-        // 1.4.7.3
-        try {
-            $db->setQuery('ALTER TABLE `#__sobipro_field` CHANGE `notice` `notice` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;');
-            $db->execute();
-        }
-        catch ( Exception $x ) {
-        }
+		// 1.4.7.3
+		try {
+			$db->setQuery( 'ALTER TABLE `#__sobipro_field` CHANGE `notice` `notice` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;' );
+			$db->execute();
+		}
+		catch ( Exception $x ) {
+		}
 
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.4.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$this->installFramework();
