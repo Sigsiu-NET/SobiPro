@@ -368,6 +368,13 @@ class com_sobiproInstallerScript
 		catch ( Exception $x ) {
 		}
 
+        // 1.4.7.3
+        try {
+            $db->setQuery('ALTER TABLE #__sobipro_field MODIFY `notice` TEXT');
+        }
+        catch ( Exception $x ) {
+        }
+
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.4.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$this->installFramework();
 
