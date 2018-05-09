@@ -34,6 +34,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 ### 1.4.7.3 (x May 2018)
 
 	(#) Unpacking of Sobi Framework in case of missing Phar support works now (Issue #80)
+	(#) Error 500 instead of 404 for undefined tasks (URL addresses) (Issue #97)
 
 
 ### 1.4.7.2 (8 May 2018)
