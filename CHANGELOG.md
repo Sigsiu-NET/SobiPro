@@ -34,6 +34,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 ### 1.4.7.3 (x May 2018)
 
     (!) Increasing size of notice in fields
+    (!) Data columns in language table changed to LONGTEXT (formerly TEXT)
+    (!) Data columns in language table changed to utf8mb4_unicode_ci collation also for existing installations
 
 	(#) Unpacking of Sobi Framework in case of missing Phar support works now (Issue #80)
 	(#) Error 500 instead of 404 for undefined tasks (URL addresses) (Issue #97)

@@ -214,11 +214,22 @@ class com_sobiproInstallerScript
 
 		try {
 			$db->setQuery( 'ALTER TABLE #__sobipro_field_data CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
+            $db->execute();
 			$db->setQuery( 'ALTER TABLE #__sobipro_language CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
 			$db->execute();
 		}
 		catch ( Exception $x ) {
 		}
+        try {
+            $db->setQuery( 'ALTER TABLE `__sobipro_language` CHANGE `params` `params` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+            $db->execute();
+            $db->setQuery( 'ALTER TABLE `__sobipro_language` CHANGE `options` `options` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+            $db->execute();
+            $db->setQuery( 'ALTER TABLE `__sobipro_language` CHANGE `explanation` `explanation` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+            $db->execute();
+        }
+        catch ( Exception $x ) {
+        }
 
 		// Table __sobipro_field_data
 		try {
@@ -370,7 +381,8 @@ class com_sobiproInstallerScript
 
         // 1.4.7.3
         try {
-            $db->setQuery('ALTER TABLE `#__sobipro_field` CHANGE `notice` `notice` TEXT');
+            $db->setQuery('ALTER TABLE `#__sobipro_field` CHANGE `notice` `notice` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;');
+            $db->execute();
         }
         catch ( Exception $x ) {
         }
