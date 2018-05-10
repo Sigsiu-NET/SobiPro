@@ -486,6 +486,7 @@ class SPEntryCtrl extends SPController
 		$sid = $this->_model->get( 'id' );
 		$pid = Input::Pid() ? Input::Pid() : Sobi::Section();
 		Input::Set( 'method', 'html' );
+		$redirect = null;
 		if ( $new ) {
 			if ( $this->_model->get( 'state' ) || Sobi::Can( 'entry', 'access', 'unpublished_own' ) || Sobi::Can( 'entry', 'access', 'unpublished_any' ) ) {
 				$msg = $this->_model->get( 'state' ) ? Sobi::Txt( 'EN.ENTRY_SAVED' ) : Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
@@ -498,7 +499,7 @@ class SPEntryCtrl extends SPController
 					if ( !( preg_match( '/http[s]?:\/\/.*/', $redirect ) ) && $redirect != 'index.php' ) {
 						$redirect = Sobi::Url( $redirect );
 					}
-					$this->response( $redirect, Sobi::Txt( Sobi::Cfg( 'redirects.entry_save_msg', 'EN.ENTRY_SAVED_NP' ) ), true, Sobi::Cfg( 'redirects.entry_save_msgtype', SPC::SUCCESS_MSG ) );
+//					$this->response( $redirect, Sobi::Txt( Sobi::Cfg( 'redirects.entry_save_msg', 'EN.ENTRY_SAVED_NP' ) ), true, Sobi::Cfg( 'redirects.entry_save_msgtype', SPC::SUCCESS_MSG ) );
 				}
 				else {
 					$msg = Sobi::Txt( 'EN.ENTRY_SAVED_NP' );
@@ -538,7 +539,7 @@ class SPEntryCtrl extends SPController
 			$customClass::AfterStoreEntry( $this->_model );
 		}
 		$this->logChanges( 'save', Input::String( 'history-note' ) );
-		$this->response( $url, $msg, true, SPC::SUCCESS_MSG );
+		$this->response( $redirect ? $redirect : $url, $msg, true, $redirect ? Sobi::Cfg( 'redirects.entry_save_msgtype', SPC::SUCCESS_MSG ) : SPC::SUCCESS_MSG );
 	}
 
 
