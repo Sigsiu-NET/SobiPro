@@ -371,8 +371,8 @@ class com_sobiproInstallerScript
 //		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( 'engb_preload',  '1',  '0', NULL ,  'lang' )" );
 //		$db->execute();
 
-		//1.4.6
-		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( '	icon_fonts_load',  '1',  '0', NULL ,  'template' )" );
+		//1.4.6 (set it for section 1 if it does not exist)
+		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_config` ( `sKey` , `sValue` , `section` , `critical` , `cSection` ) VALUES ( '	icon_fonts_load',  '1',  1 , NULL , 'template' )" );
 		$db->execute();
 
 		try {

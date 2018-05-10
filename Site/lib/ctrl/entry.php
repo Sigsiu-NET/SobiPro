@@ -280,26 +280,8 @@ class SPEntryCtrl extends SPController
 				}
 				SPFactory::registry()->set( $cache, $post );
 				SPFactory::registry()->set( 'requestcache_stored', $store );
-				// Bug #66
-				// 1.4.3
-//				$request = $cache;
-				//1.4.3
 			}
-
-			// Bug #66
-			// 1.4.3
-//			else {
-//				$request = 'post';
-//			}
-			//1.4.3
 		}
-		// Bug #66
-		// 1.4.3
-//		return $request;
-		//1.4.3
-
-		// Bug #66
-		// 1.4.6
 		/**
 		 * Mon, Dec 4, 2017 12:30:49 - changing to Input from Sobi Framework
 		 * While changing from SPRequest to Sobi\Input, hardcode method to 'post'
@@ -315,8 +297,6 @@ class SPEntryCtrl extends SPController
 		}
 
 		return 'post';
-
-		// 1.4.6
 	}
 
 	private function payment()
