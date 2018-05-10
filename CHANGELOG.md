@@ -31,11 +31,27 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
-### 1.4.7.2 (x May 2018)
+### 1.4.7.3 (x May 2018)
 
-   	(#) Setting incorrect task in listing (Issue #90)
+    (!) Increasing size of notice in fields
+    (!) Data columns in language table changed to MEDIUMTEXT (formerly TEXT)
+    (!) Base data column in field_data table changed to LONGTEXT (formerly TEXT)
+    (!) Data columns in language table changed to utf8mb4_unicode_ci collation also for existing installations
+    (!) Base data column in field_data table changed to utf8mb4_unicode_ci collation also for existing installations
+
+	(#) Unpacking of Sobi Framework in case of missing Phar support works now (Issue #80)
+	(#) Error 500 instead of 404 for undefined tasks (URL addresses) (Issue #97)
+	(#) Sorting categories in category field by position doesn't reflect changes if cache is on (Issue #25)
+
+
+### 1.4.7.2 (8 May 2018)
+
+   	(#) Setting incorrect task in listing (Issue #90 and #91)
    	(#) Added paragraph to response message in SAM (Issue #92)
-   	(#) reverted previous commits for #90 and #91 as it didn't help
+   	(#) Reverted previous commits for #90 and #91 as it didn't help
+   	(#) JFolder:: delete: The path is not a folder. (Issue #95)
+   	(#) 'Specified key was too long; max key length is 767 bytes' (Issue #96)
+   	(#) Removed try to unpack the framework if no Phar support is available, as it does not work (Issue #95)
    	
    	
 ### 1.4.7.1 (4 May 2018)

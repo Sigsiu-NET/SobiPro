@@ -258,6 +258,8 @@ final class SPCache
 		if ( $file ) {
 			SPFs::delete( $file );
 		}
+		SPFactory::cache()
+			->addVar( null, 'categories_tree', Sobi::Section() );
 		return $this;
 	}
 

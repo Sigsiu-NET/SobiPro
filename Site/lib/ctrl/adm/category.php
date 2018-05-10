@@ -55,9 +55,9 @@ class SPCategoryAdmCtrl extends SPCategoryCtrl
 				break;
 			case 'reorder':
 				$this->authorise( 'edit' );
+				SPFactory::cache()->cleanCategories();
 				$r = true;
 				$this->reorder();
-				SPFactory::cache()->cleanCategories();
 				break;
 			case 'up':
 			case 'down':

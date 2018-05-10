@@ -23,62 +23,57 @@ define( 'SOBI_FRAMEWORK_VERSION', '1.0.6' );
 
 class com_sobiproInstallerScript
 {
+
 	/**
-	 * Runs just before any installation action is preformed on the component.
-	 * Verifications and pre-requisites should run in this function.
+	 * Called before any type of action
 	 *
-	 * @param  string $type - Type of PreFlight action. Possible values are:
-	 *                           - * install
-	 *                           - * update
-	 *                           - * discover_install
-	 * @param  \stdClass $parent - Parent object calling object.
+	 * @param   string $route Which action is happening (install|uninstall|discover_install|update)
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 *
-	 * @return void
+	 * @return  boolean  True on success
 	 */
-	public function preflight( $type, $parent )
+//	public function preflight( $route, JAdapterInstance $adapter )
+	public function preflight( $route, $adapter )
 	{
-		if ( $parent instanceof JInstallerAdapterComponent ) {
-			$this->installPlugins( $parent->getParent()->get( 'paths' ) );
+		if ( $adapter instanceof JInstallerAdapterComponent ) {
+			$this->installPlugins( $adapter->getParent()->get( 'paths' ) );
 		}
-		elseif ( $parent instanceof JInstallerComponent ) {
-			$this->installPlugins( $parent->getParent->get( '_paths' ) );
+		elseif ( $adapter instanceof JInstallerComponent ) {
+			$this->installPlugins( $adapter->getParent->get( '_paths' ) );
 		}
 
-		if ( $type != 'uninstall' ) {
+		if ( $route != 'uninstall' ) {
 			// Installing component manifest file version
-			$this->release = $parent->getManifest()->version;
+			$this->release = $adapter->getManifest()->version;
 			// Show the essential information at the install/update back-end
 			echo '<h2>Installing SobiPro version ' . $this->release . ' ...</h2>';
 		}
-
 	}
 
 	/**
-	 * Runs right after any installation action is preformed on the component.
+	 * Called after any type of action
 	 *
-	 * @param  string $type - Type of PostFlight action. Possible values are:
-	 *                           - * install
-	 *                           - * update
-	 *                           - * discover_install
-	 * @param  \stdClass $parent - Parent object calling object.
+	 * @param   string $route Which action is happening (install|uninstall|discover_install|update)
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 *
-	 * @return void
+	 * @return  boolean  True on success
 	 */
-//	function postflight($type, $parent)
-//	{
-//		echo '<p>' . JText::_('COM_HELLOWORLD_POSTFLIGHT_' . $type . '_TEXT') . '</p>';
+	public function postflight( $route, JAdapterInstance $adapter )
+	{
+//		echo '<p>' . JText::_( 'COM_HELLOWORLD_POSTFLIGHT_' . $route . '_TEXT' ) . '</p>';
 //
-//	}
+	}
 
 
 	/**
-	 * This method is called after a component is updated.
+	 * Called on update
 	 *
-	 * @param  \stdClass $parent - Parent object calling object.
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 *
-	 * @return void
+	 * @return  boolean  True on success
 	 */
-	public function update( $parent )
+	public function update( JAdapterInstance $adapter )
+//	public function update( $parent )
 	{
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) ) ) {
 			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'usr', 'locale' ] ) );
@@ -86,13 +81,19 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) ) ) {
 			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) );
 		}
-		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
-			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
-		}
+//		try {
+//			if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
+//				JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
+//			}
+//		}
+//		catch ( Exception $x ) {
+//		}
 
 		if ( !( file_exists( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) ) ) ) {
 			JFolder::create( implode( '/', [ JPATH_ROOT, 'images', 'sobipro', 'categories' ] ) );
 		}
+
+		// copy category images from media to images folder
 		$srcpath = JPATH_ROOT . '/media/sobipro/icons';
 		if ( file_exists( $srcpath ) ) {
 			$files = scandir( $srcpath );
@@ -100,7 +101,7 @@ class com_sobiproInstallerScript
 			$dest = JPATH_ROOT . '/images/sobipro/categories';
 			if ( count( $files ) ) {
 				foreach ( $files as $file ) {
-					if ( $file != '.' && $file != '..' ) {
+					if ( $file != '.' && $file != '..' && $file != 'Mime' ) {
 						if ( is_dir( $srcpath . '/' . $file ) ) {
 							JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file, '', true );
 						}
@@ -111,29 +112,36 @@ class com_sobiproInstallerScript
 				}
 			}
 		}
+		// copy category images from media to images folder
 		$srcpath = JPATH_ROOT . '/media/sobipro/images';
 		if ( file_exists( $srcpath ) ) {
 			$files = scandir( $srcpath );
 
-			$dest = JPATH_ROOT . '/images/sobipro/categories';
-			if ( count( $files ) ) {
-				foreach ( $files as $file ) {
-					if ( $file != '.' && $file != '..' ) {
-						if ( is_dir( $srcpath . '/' . $file ) ) {
-							JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file, '', true );
-						}
-						elseif ( !( file_exists( $dest . '/' . $file ) ) ) {
-							JFile::copy( $srcpath . '/' . $file, $dest . '/' . $file );
+			if ( $files != 'clustermarker' ) {
+				$dest = JPATH_ROOT . '/images/sobipro/categories';
+				if ( count( $files ) ) {
+					foreach ( $files as $file ) {
+						if ( $file != '.' && $file != '..' && $file != 'clustermarker' ) {
+							if ( is_dir( $srcpath . '/' . $file ) ) {
+								JFolder::copy( $srcpath . '/' . $file, $dest . '/' . $file, '', true );
+							}
+							elseif ( !( file_exists( $dest . '/' . $file ) ) ) {
+								JFile::copy( $srcpath . '/' . $file, $dest . '/' . $file );
+							}
 						}
 					}
 				}
 			}
 		}
 
+		$dest = JPATH_ROOT . '/images/sobipro/categories/image.png';
+		if ( !( file_exists( $dest ) ) && file_exists( JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png' ) ) {
+			JFile::move( JPATH_ROOT . '/components/com_sobipro/tmp/install/image.png', JPATH_ROOT . '/images/sobipro/categories/image.png' );
+		}
+
+
 		$db = JFactory::getDBO();
-		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (`cid` INT(11) NOT NULL AUTO_INCREMENT, `section` INT(11) NOT NULL, `sid` INT(11) NOT NULL, `fileName` VARCHAR(100) NOT NULL, `task` VARCHAR(100) NOT NULL, `site` INT(11) NOT NULL, `request` VARCHAR(255) NOT NULL, `language` VARCHAR(15) NOT NULL, `template` VARCHAR(150) NOT NULL, `configFile` TEXT NOT NULL, `userGroups` VARCHAR(200) NOT NULL, `created` DATETIME NOT NULL, PRIMARY KEY (`cid`), KEY `sid` (`sid`), KEY `section` (`section`), KEY `language` (`language`), KEY `task` (`task`), KEY `request` (`request`), KEY `site` (`site`), KEY `userGroups` (`userGroups`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-'
-		);
+		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache` (`cid` INT(11) NOT NULL AUTO_INCREMENT, `section` INT(11) NOT NULL, `sid` INT(11) NOT NULL, `fileName` VARCHAR(100) NOT NULL, `task` VARCHAR(100) NOT NULL, `site` INT(11) NOT NULL, `request` VARCHAR(190) NOT NULL, `language` VARCHAR(15) NOT NULL, `template` VARCHAR(150) NOT NULL, `configFile` TEXT NOT NULL, `userGroups` VARCHAR(190) NOT NULL, `created` DATETIME NOT NULL, PRIMARY KEY (`cid`), KEY `sid` (`sid`), KEY `section` (`section`), KEY `language` (`language`), KEY `task` (`task`), KEY `request` (`request`), KEY `site` (`site`), KEY `userGroups` (`userGroups`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;' );
 		$db->execute();
 
 		$db->setQuery( 'CREATE TABLE IF NOT EXISTS `#__sobipro_view_cache_relation` (`cid` INT(11) NOT NULL, `sid` INT(11) NOT NULL, PRIMARY KEY (`cid`, `sid`)) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;' );
@@ -206,11 +214,31 @@ class com_sobiproInstallerScript
 
 		try {
 			$db->setQuery( 'ALTER TABLE #__sobipro_field_data CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
+			$db->execute();
 			$db->setQuery( 'ALTER TABLE #__sobipro_language CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' );
 			$db->execute();
 		}
 		catch ( Exception $x ) {
 		}
+		try {
+			$db->setQuery( 'ALTER TABLE #__sobipro_language CHANGE `sValue` `sValue` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+			$db->execute();
+			$db->setQuery( 'ALTER TABLE #__sobipro_language CHANGE `params` `params` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+			$db->execute();
+			$db->setQuery( 'ALTER TABLE #__sobipro_language CHANGE `options` `options` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+			$db->execute();
+			$db->setQuery( 'ALTER TABLE #__sobipro_language CHANGE `explanation` `explanation` MEDIUMTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+			$db->execute();
+		}
+		catch ( Exception $x ) {
+		}
+
+		try {
+			$db->setQuery( 'ALTER TABLE #__sobipro_field_data CHANGE `baseData` `baseData` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL;' );
+		}
+		catch ( Exception $x ) {
+		}
+
 
 		// Table __sobipro_field_data
 		try {
@@ -334,7 +362,7 @@ class com_sobiproInstallerScript
 		$db->setQuery( "INSERT IGNORE INTO `#__sobipro_plugins` (`pid`, `name`, `version`, `description`, `author`, `authorURL`, `authorMail`, `enabled`, `type`, `depend`) VALUES ('button', 'Button', '1.4', NULL, 'Sigsiu.NET GmbH', 'https://www.sigsiu.net/', 'sobi@sigsiu.net', 1, 'field', '');" );
 		$db->execute();
 
-		$db->setQuery( "CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` ( `url` VARCHAR(255) NOT NULL,`crid` INT(11) NOT NULL AUTO_INCREMENT,`state` TINYINT(1) NOT NULL, PRIMARY KEY (`crid`), UNIQUE KEY `url` (`url`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;" );
+		$db->setQuery( "CREATE TABLE IF NOT EXISTS `#__sobipro_crawler` ( `url` VARCHAR(190) NOT NULL,`crid` INT(11) NOT NULL AUTO_INCREMENT,`state` TINYINT(1) NOT NULL, PRIMARY KEY (`crid`), UNIQUE KEY `url` (`url`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci;" );
 		$db->execute();
 
 
@@ -360,6 +388,13 @@ class com_sobiproInstallerScript
 		catch ( Exception $x ) {
 		}
 
+		// 1.4.7.3
+		try {
+			$db->setQuery( 'ALTER TABLE `#__sobipro_field` CHANGE `notice` `notice` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;' );
+			$db->execute();
+		}
+		catch ( Exception $x ) {
+		}
 
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.4.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$this->installFramework();
@@ -368,16 +403,20 @@ class com_sobiproInstallerScript
 <p>You can install languages directly from our <a href="index.php?option=com_sobipro&task=extensions.browse"><strong>Repository</strong></a> or download them from our <a href="https://www.sigsiu.net/center/languages"><strong>website</strong></a> and install it in the <a href="index.php?option=com_sobipro&task=extensions.installed"><strong>SobiPro Application Manager</strong></a>.</p></div>';
 
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px; padding-top: 10px;"></iframe>';
+
+		return true;
 	}
 
+
 	/**
-	 * This method is called after a component is installed.
+	 * Called on installation
 	 *
-	 * @param  \stdClass $parent - Parent object calling this method.
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 *
-	 * @return void
+	 * @return  boolean  True on success
 	 */
-	public function install( $parent )
+	public function install( JAdapterInstance $adapter )
+//	public function install( $parent )
 	{
 		if ( !( file_exists( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) ) ) ) {
 			JFolder::create( implode( '/', [ JPATH_ROOT, 'images', 'sobipro' ] ) );
@@ -401,9 +440,9 @@ class com_sobiproInstallerScript
 		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) ) ) {
 			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'services', 'installers', 'schemas', 'application.xsd' ] ) );
 		}
-		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
-			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
-		}
+//		if ( file_exists( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) ) ) {
+//			JFolder::delete( implode( '/', [ JPATH_ROOT, 'components', 'com_sobipro', 'media' ] ) );
+//		}
 		JFile::move( JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.1.4.xml', JPATH_ROOT . '/components/com_sobipro/etc/repos/sobipro_core/repository.xml' );
 		$db = JFactory::getDBO();
 		$db->setQuery( 'SHOW COLUMNS FROM #__sobipro_field_data' );
@@ -417,6 +456,9 @@ class com_sobiproInstallerScript
 <p>You can install languages directly from our <a href="index.php?option=com_sobipro&task=extensions.browse"><strong>Repository</strong></a> or download them from our <a href="https://www.sigsiu.net/center/languages"><strong>website</strong></a> and install it in the <a href="index.php?option=com_sobipro&task=extensions.installed"><strong>SobiPro Application Manager</strong></a>.</p></div>';
 
 		echo '<iframe src="index.php?option=com_sobipro&task=requirements&init=1&tmpl=component" style="border: 1px solid #e0e0e0; border-radius: 5px; height: 900px; min-width: 1000px; width: 99%; margin-bottom: 50px; padding-left: 10px; padding-top: 10px;"></iframe>';
+
+		return true;
+
 	}
 
 	protected function installPlugins( $source )
@@ -435,13 +477,12 @@ class com_sobiproInstallerScript
 	}
 
 	/**
-	 * This method is called after a component is uninstalled.
+	 * Called on uninstallation
 	 *
-	 * @param  \stdClass $parent - Parent object calling this method.
-	 *
-	 * @return void
+	 * @param   JAdapterInstance $adapter The object responsible for running this script
 	 */
-	public function uninstall( $parent )
+	public function uninstall( JAdapterInstance $adapter )
+//	public function uninstall( $parent )
 	{
 		echo '<h2>Un-Installing SobiPro ...</h2>';
 
@@ -461,28 +502,64 @@ class com_sobiproInstallerScript
 	protected function installFramework()
 	{
 		//Sobi Framework installation
-		if ( !( file_exists( JPATH_ROOT . '/libraries/sobi' ) ) ) {
-			JFolder::create( JPATH_ROOT . '/libraries/sobi' );
+		$libpath = JPATH_ROOT . '/libraries/sobi';
+		if ( !( file_exists( $libpath ) ) ) {
+			JFolder::create( $libpath );
 		}
-		$files = scandir( JPATH_ROOT . '/libraries/sobi' );
-		if ( count( $files ) ) {
-			foreach ( $files as $file ) {
-				if ( strstr( $file, '.tar.gz' ) || strstr( $file, '.php' ) ) {
-					JFile::delete( JPATH_ROOT . '/libraries/sobi/' . $file );
+		else {
+			$files = scandir( $libpath );
+			if ( count( $files ) ) {
+				foreach ( $files as $file ) {
+					if ( strstr( $file, '.tar.gz' ) || strstr( $file, '.php' ) ) {
+						JFile::delete( $libpath . '/' . $file );
+					}
 				}
 			}
 		}
-		JFile::copy( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz' );
-		JFile::delete( JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz' );
+		$src = JPATH_ROOT . '/components/com_sobipro/Sobi.phar.tar.gz';
+		$framework = $libpath . "/Sobi-" . SOBI_FRAMEWORK_VERSION . ".phar.tar.gz";
+		if ( file_exists( $src ) ) {
+			JFile::copy( $src, $framework );
+			JFile::delete( $src );
+		}
+		else {
+			echo "<p style=\"font-size: 15px;color: #d70303;\">Framework file " . $src . " does not exist.</p>";
+
+			return false;
+		}
+
 		// I am guessing that this was what cached the PHAR file. Let's see...
 		if ( function_exists( 'opcache_reset' ) ) {
 			opcache_reset();
 		}
 
-		@include_once 'phar://' . JPATH_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz/Framework.php';
+		$fwPackage = JPATH_ROOT . '/components/com_sobipro/Sobi-Framework.zip';
+		@include_once 'phar://' . $framework . '/Framework.php';
 		if ( !( class_exists( '\\Sobi\\Framework' ) ) ) {
-			$arch = new Joomla\Archive\Gzip();
-			$arch->extract( JPATH_ROOT . '/libraries/sobi/Sobi-' . SOBI_FRAMEWORK_VERSION . '.phar.tar.gz', JPATH_ROOT . '/libraries/sobi/' );
+			if ( file_exists( $fwPackage ) ) {
+				echo '<p style="font-size: 15px">It seems your server does not support PHAR, or PHAR is not usable.</p>';
+				try {
+					$arch = new Joomla\Archive\Zip();
+					$arch->extract( $fwPackage, $libpath );
+					echo '<p style="font-size: 15px">Unpacked the Sobi Framework. Nevertheless, you should consider to install PHAR on your server.</p>';
+
+					if ( file_exists( $framework ) ) {
+						JFile::delete( $framework );
+					}
+				}
+				catch ( Exception $x ) {
+					echo '<p style="font-size: 17px;color: #d70303;">Failed to unpack the Sobi Framework.<br/>Please install the Sobi Framework manually as described in <a href="https://www.sigsiu.net/center/sobipro-component/154-sobi-framework" style="text-decoration: underline; color: #d70303;">Install the Sobi Framework manually</a>.</p>';
+				}
+				JFile::delete( $fwPackage );
+			}
+			else {
+				echo '<p style="font-size: 15px;color: #d70303;">It seems your server does not support PHAR, or PHAR is not usable.<br/>Please install the Sobi Framework manually as described in <a href="https://www.sigsiu.net/center/sobipro-component/154-sobi-framework" style="text-decoration: underline; color: #d70303;">Install the Sobi Framework manually</a>.</p>';
+			}
+		}
+		else {
+			if ( file_exists( $fwPackage ) ) {
+				JFile::delete( $fwPackage );
+			}
 		}
 	}
 }
