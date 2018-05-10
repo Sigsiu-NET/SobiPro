@@ -691,11 +691,39 @@ class SPField extends SPObject
 	{
 		$fdata = Sobi::Reg( 'editcache' );
 		if ( is_array( $fdata ) && isset( $fdata[ $this->nid ] ) ) {
-			$this->_data = $fdata[ $this->nid ];
-			$this->_rawData = $fdata[ $this->nid ];
-			return true;
+			if ( is_array( $fdata[ $this->nid ] ) ) {
+				$this->cleanEmptyValues( $fdata[ $this->nid ] );
+			}
+			if ( $fdata[ $this->nid ] ) {
+				$this->_data = $fdata[ $this->nid ];
+				$this->_rawData = $fdata[ $this->nid ];
+				return true;
+			}
+			return false;
 		}
 		return false;
+	}
+
+	/**
+	 * @param $array
+	 * When getting previously not filled (i.e) calendar field we will have something like:
+	 * ['start' => ''] that will cause issue in calendar field later
+	 * Actually should be handled in calendar field itself but as we restoring the "get previously submitted data into a form"
+	 * that vanished somehow it would cause kind of incompatibility later
+	 * Thu, May 10, 2018 11:15:12
+	 */
+	protected function cleanEmptyValues( &$array )
+	{
+		foreach ( $array as $value ) {
+			if ( is_array( $value ) ) {
+				$this->cleanEmptyValues( $value );
+			}
+			else {
+				if ( !( $value ) ) {
+					$array = null;
+				}
+			}
+		}
 	}
 
 	/**
