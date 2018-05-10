@@ -31,7 +31,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 (!) Change  
 
 
-### 1.4.7.3 (x May 2018)
+### 1.4.7.3 (11 May 2018)
 
     (!) Increasing size of notice in fields
     (!) Data columns in language table changed to MEDIUMTEXT (formerly TEXT)
