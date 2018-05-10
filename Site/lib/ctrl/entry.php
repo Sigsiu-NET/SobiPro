@@ -306,8 +306,11 @@ class SPEntryCtrl extends SPController
 		 */
 		if ( isset( $post ) && count( $post ) ) {
 			foreach ( $post as $index => $value ) {
-				Input::Set( $index, $value, 'post' );
-				Input::Set( $index, $value, 'request' );
+				// only pass fields' data
+				if ( strstr( $index, 'field_' ) ) {
+					Input::Set( $index, $value, 'post' );
+					Input::Set( $index, $value, 'request' );
+				}
 			}
 		}
 
@@ -695,11 +698,11 @@ class SPEntryCtrl extends SPController
 			}
 			$view->assign( $parent, 'parents' );
 		}
+		$visitor = SPFactory::user()->getCurrent();
 		$view->assign( $this->_task, 'task' );
 		$view->assign( $fields, 'fields' );
 		$view->assign( $id, 'id' );
 		$view->assign( $id, 'sid' );
-		$visitor = SPFactory::user()->getCurrent();
 		$view->assign( $visitor, 'visitor' );
 		$view->setConfig( $this->_tCfg, $this->template );
 		$view->setTemplate( $tplPackage . '.' . $this->templateType . '.' . ( $this->template == 'add' ? 'edit' : $this->template ) );

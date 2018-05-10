@@ -353,13 +353,13 @@ class SPField extends SPObject
 
 				$attributes = [
 					'lang'  => Sobi::Lang( false ),
-					'class' => $this->cssClass
+					'class' => $this->cssClass,
 				];
 			}
 			$r = [
 				'_complex'    => 1,
 				'_data'       => $this->data(),
-				'_attributes' => $attributes
+				'_attributes' => $attributes,
 			];
 		}
 		Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$r ] );
@@ -393,6 +393,7 @@ class SPField extends SPObject
 			Sobi::Error( $this->name(), SPLang::e( 'DB_REPORTS_ERR', $x->getMessage() ), SPC::WARNING, 0, __LINE__, __FILE__ );
 		}
 		$this->extend( $field );
+		$this->fromCache();
 		return $this;
 	}
 
@@ -659,12 +660,7 @@ class SPField extends SPObject
 			}
 		}
 		else {
-			$fdata = Sobi::Reg( 'editcache' );
-			if ( is_array( $fdata ) && isset( $fdata[ $this->nid ] ) ) {
-				$this->_data = $fdata[ $this->nid ];
-				$this->_rawData = $fdata[ $this->nid ];
-			}
-			else {
+			if ( !( $this->fromCache() ) ) {
 				$this->checkMethod( 'loadData' );
 				if ( $this->_type && method_exists( $this->_type, 'loadData' ) ) {
 					$this->_type->loadData( $sid, $this->_fData, $this->_rawData, $this->_data );
@@ -691,20 +687,30 @@ class SPField extends SPObject
 		}
 	}
 
+	protected function fromCache()
+	{
+		$fdata = Sobi::Reg( 'editcache' );
+		if ( is_array( $fdata ) && isset( $fdata[ $this->nid ] ) ) {
+			$this->_data = $fdata[ $this->nid ];
+			$this->_rawData = $fdata[ $this->nid ];
+			return true;
+		}
+		return false;
+	}
+
 	/**
-	 * @return void
 	 */
 	public function field()
 	{
 		if ( $this->_off ) {
 			return null;
 		}
+		$this->fromCache();
 		$this->checkMethod( 'field' );
 		if ( $this->_type && method_exists( $this->_type, 'field' ) ) {
 			$args = func_get_args();
 			$r = $this->_type->field( $args );
 			Sobi::Trigger( 'Field', ucfirst( __FUNCTION__ ), [ &$r ] );
-
 			return $r;
 		}
 	}
