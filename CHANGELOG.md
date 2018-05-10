@@ -42,6 +42,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Unpacking of Sobi Framework in case of missing Phar support works now (Issue #80)
 	(#) Error 500 instead of 404 for undefined tasks (URL addresses) (Issue #97)
 	(#) Sorting categories in category field by position doesn't reflect changes if cache is on (Issue #25)
+	(#) No CSS styles loaded after previous cancel of a paid entry form (Issue #93)
+	(#) Aborted paid entry form not refilled although within 48 hours (Issue #98)
 
 
 ### 1.4.7.2 (8 May 2018)
