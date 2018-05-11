@@ -44,6 +44,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public 
 	(#) Sorting categories in category field by position doesn't reflect changes if cache is on (Issue #25)
 	(#) No CSS styles loaded after previous cancel of a paid entry form (Issue #93)
 	(#) Aborted paid entry form not refilled although within 48 hours (Issue #98)
+	(#) Data aren't passed to the notification app when new entry is saved from front-end (Issue #66)
 	(#) Custom entry form redirect bypasses custom template functions
 
 
